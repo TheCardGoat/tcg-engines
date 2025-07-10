@@ -1,0 +1,46 @@
+{
+  "name": "@lorcanito/lorcana-engine",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.d.ts",
+  "files": [
+    "src/"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./abilities": "./src/abilities/abilities.ts",
+    "./abilities/abilityTypeGuards": "./src/abilities/abilityTypeGuards.ts",
+    "./cards": "./src/cards/cards.ts",
+    "./cards/cardTypes": "./src/cards/cardTypes.ts",
+    "./effects": "./src/effects/effectTypes.ts",
+    "./effects/effectTargets": "./src/effects/effectTargets.ts",
+    "./lib": "./src/lib/game.ts",
+    "./lib/gameLog": "./src/lib/gameLog.ts",
+    "./lib/differ": "./src/lib/differ.ts",
+    "./store": "./src/store/RootStore.ts",
+    "./store/models": "./src/store/models/CardModel.ts",
+    "./types": "./src/types/types.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "format": "bunx @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
+    "lint": "bunx @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error ./src",
+    "test": "bun test"
+  },
+  "browserslist": "defaults, not ie <= 11",
+  "dependencies": {
+    "@lorcanito/shared": "workspace:*",
+    "@lorcanito/typescript-config": "workspace:*",
+    "@paralleldrive/cuid2": "2.2.2",
+    "@types/object-hash": "3.0.6",
+    "deep-diff": "^.0.2",
+    "mobx": "6.12.0",
+    "xstate": "5.19.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.3"
+  }
+}

@@ -1,0 +1,61 @@
+import type {
+  LorcanitoActionCard,
+  LorcanitoCharacterCard,
+  LorcanitoLocationCard,
+} from "@lorcanito/lorcana-engine";
+
+export const actionCardMock: LorcanitoActionCard = {
+  id: "actionCardMock",
+  name: "Action Mock",
+  characteristics: ["action"],
+  type: "action",
+  flavour: "flavour",
+  text: "for you",
+  inkwell: true,
+  colors: ["amethyst"],
+  cost: 3,
+  illustrator: "illustrator",
+  number: 1,
+  set: "TFC",
+  rarity: "common",
+};
+
+export const characterCardMock: LorcanitoCharacterCard = {
+  id: "characterCardMock",
+  name: "Char Mock",
+  title: "title",
+  lore: 1,
+  strength: 1,
+  willpower: 5,
+  characteristics: ["knight"],
+  type: "character",
+  flavour: "flavour",
+  text: "for you",
+  inkwell: true,
+  colors: ["amethyst"],
+  cost: 3,
+  illustrator: "illustrator",
+  number: 1,
+  set: "TFC",
+  rarity: "common",
+};
+
+export const locationCardMock: LorcanitoLocationCard = {
+  id: "locationCardMock",
+  name: "locationCardMock",
+  title: "locationCardMock",
+  characteristics: ["location"],
+  text: "locationCardMock",
+  type: "location",
+  abilities: [],
+  inkwell: true,
+  colors: ["steel"],
+  cost: 2,
+  willpower: 6,
+  lore: 1,
+  illustrator: "Alexa Rockman",
+  number: 204,
+  set: "SSK",
+  rarity: "uncommon",
+  moveCost: 1,
+};

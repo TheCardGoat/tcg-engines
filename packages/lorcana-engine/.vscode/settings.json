@@ -1,0 +1,12 @@
+{
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#1a4971",
+    "titleBar.activeForeground": "#ebf8ff",
+    "activityBar.background": "#1a4971",
+    "activityBar.foreground": "#ebf8ff",
+    "statusBar.background": "#1a4971",
+    "statusBar.foreground": "#ebf8ff"
+  },
+  "editor.fontFamily": "monospace, Menlo, Monaco, 'Courier New'",
+  "editor.fontSize": 15
+}

@@ -1,0 +1,102 @@
+{
+  "root": true,
+  "$schema": "https://biomejs.dev/schemas/2.0.4/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!**/dist/**/*",
+      "!**/build/**/*",
+      "!**/node_modules/**/*",
+      "!**/.turbo/**/*",
+      "!**/.next/**/*",
+      "!**/public/**/*"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "nursery": {
+        "useUniqueElementIds": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "warn",
+        "noChildrenProp": "warn",
+        "noConstantCondition": "warn",
+        "useJsxKeyInIterable": "warn",
+        "noUnreachable": "warn",
+        "noUndeclaredVariables": "warn",
+        "noUnusedVariables": "warn",
+        "noEmptyPattern": "warn",
+        "noUnusedImports": "warn"
+      },
+      "a11y": {
+        "useValidAnchor": "warn",
+        "noSvgWithoutTitle": "warn",
+        "useKeyWithClickEvents": "warn",
+        "useSemanticElements": "warn",
+        "useButtonType": "warn",
+        "noHeaderScope": "warn",
+        "useAltText": "warn",
+        "noStaticElementInteractions": "warn"
+      },
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noArrayIndexKey": "warn",
+        "noRedeclare": "warn",
+        "noControlCharactersInRegex": "warn",
+        "noDoubleEquals": "warn",
+        "noImplicitAnyLet": "off",
+        "noAssignInExpressions": "warn",
+        "noExportsInTest": "off",
+        "noConsole": { "level": "off", "options": { "allow": ["log"] } }
+      },
+      "complexity": {
+        "noForEach": "warn",
+        "useOptionalChain": "warn",
+        "useSimplifiedLogicExpression": "warn",
+        "noBannedTypes": "warn"
+      },
+      "style": {
+        "noUnusedTemplateLiteral": "warn",
+        "useNodejsImportProtocol": "off",
+        "noParameterAssign": "warn",
+        "useSingleVarDeclarator": "warn",
+        "useConst": "warn",
+        "useTemplate": "warn",
+        "noNegationElse": "warn",
+        "noNonNullAssertion": "warn",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "warn",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
+      },
+      "performance": {
+        "noDelete": "warn",
+        "noAccumulatingSpread": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "warn"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  }
+}

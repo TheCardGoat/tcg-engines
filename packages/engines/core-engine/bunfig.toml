@@ -1,0 +1,6 @@
+[test]
+root = "./"
+preload = ["./bun-test-setup.ts"]
+
+[install]
+exact = true

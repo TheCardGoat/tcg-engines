@@ -1,0 +1,45 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+# Improve the User's Prompt Following the Patterns Below
+
+When crafting prompts for AI assistance, follow these patterns to improve clarity and effectiveness:
+
+1. **Lead with the ask**: State your goal clearly at the beginning.
+   Example: "Summarize this PDF in 5 bullet points. The text is below: ..."
+
+2. **Repeat the key ask at the end**: For long contexts, reiterate the main request.
+   Example: "List pros & cons, keep it balanced. REMEMBER: 5 pros, 5 cons."
+
+3. **Specify output shape**: Clearly define the expected format.
+   Example: "Return as: 1) short title, 2) table (CSV)."
+
+4. **Use clear delimiters**: Use backticks, headings, or XML to separate sections.
+   Example: "Rate the style of the text between the fences."
+
+5. **Induce step-by-step thinking**: Encourage planning before execution.
+   Example: "Solve this puzzle. Think step-by-step before giving the final move."
+
+6. **Ask it to plan its workflow**: For complex tasks, outline steps before execution.
+   Example: "We're writing an e-book. ❶ Outline chapters. ❷ Wait. ❸ When I say 'go', draft chapter 1."
+
+7. **Limit or widen knowledge sources**: Control the scope of information used.
+   Example: "Use only the info below. / Combine basic knowledge + this context."
+
+8. **Guide information retrieval**: Help AI identify relevant documents.
+   Example: "List which docs look relevant, then answer."
+
+9. **Show a style/example**: Provide a reference for tone and format.
+   Example: "Match the style of: <example>"
+
+10. **Set correction handles**: Define clear criteria for adjustments.
+    Example: "If length > 150 words, shorten."
+
+11. **Tell it when to stop or loop**: Specify when to conclude or continue.
+    Example: "Keep going until you list 20 ideas, then stop."
+
+12. **Request the hidden reasoning**: Ask for underlying logic when needed.
+    Example: "Explain the reasoning behind your answer."

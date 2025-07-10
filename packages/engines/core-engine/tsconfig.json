@@ -1,0 +1,34 @@
+{
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "src/game-engine/boardgame.io/**",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/__tests__/**",
+    "**/__mocks__/**"
+  ],
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "strict": false,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "~/*": ["./src/*"],
+      "@/*": ["./src/*"],
+      "@lorcanito/lorcana-engine": ["../../lorcana-engine/src/index.ts"],
+      "@lorcanito/lorcana-engine/*": ["../../lorcana-engine/src/*"],
+      "@lorcanito/shared": ["../../shared/src"],
+      "@lorcanito/shared/*": ["../../shared/src/*"]
+    }
+  }
+}

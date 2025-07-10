@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "name": "TheCardGoat",
+  "packageManager": "bun@1.2.14",
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/engines/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "echo 'run projects individually'",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "check-types": "turbo run check-types",
+    "ci-check": "turbo run format lint check-types test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.4",
+    "@evilmartians/lefthook": "1.11.2",
+    "turbo": "2.5.4",
+    "typescript": "5.8.3"
+  },
+  "dependencies": {
+    "object-hash": "3.0.0"
+  }
+}

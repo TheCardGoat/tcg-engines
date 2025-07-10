@@ -1,0 +1,17 @@
+**/node_modules
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.log
+**/.env.local
+
+## USE BUN
+package-lock.json
+yarn.lock
+/.idx/.secrets.nix
+
+.turbo
+**/*.tsbuildinfo

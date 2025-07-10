@@ -1,0 +1,57 @@
+import type { CoreEngine } from "~/game-engine/core-engine";
+import type {
+  BaseCoreCardFilter,
+  DefaultCardDefinition,
+  DefaultGameState,
+  DefaultPlayerState,
+  GameSpecificCardDefinition,
+  GameSpecificCardFilter,
+  GameSpecificGameState,
+  GameSpecificPlayerState,
+} from "~/game-engine/core-engine/types/game-specific-types";
+import type { CoreCardInstance } from "./core-card-instance";
+
+export class CoreCardCtxProvider<
+  GameState extends GameSpecificGameState = DefaultGameState,
+  CardDefinition extends GameSpecificCardDefinition = DefaultCardDefinition,
+  PlayerState extends GameSpecificPlayerState = DefaultPlayerState,
+  CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
+  CardModel extends
+    CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
+> {
+  private engineRef: WeakRef<
+    CoreEngine<GameState, CardDefinition, PlayerState, CardFilter, CardModel>
+  >;
+
+  constructor({
+    engine,
+  }: {
+    engine: CoreEngine<
+      GameState,
+      CardDefinition,
+      PlayerState,
+      CardFilter,
+      CardModel
+    >;
+  }) {
+    this.engineRef = new WeakRef(engine);
+  }
+
+  getCtx() {
+    const engine = this.engineRef.deref();
+    if (!engine) {
+      throw new Error(
+        "Engine has been garbage collected - CoreCardCtxProvider cannot access context",
+      );
+    }
+    return engine.getGameState().ctx;
+  }
+
+  /**
+   * Check if the underlying engine is still available
+   * Useful for debugging and error handling
+   */
+  isEngineAvailable(): boolean {
+    return this.engineRef.deref() !== undefined;
+  }
+}

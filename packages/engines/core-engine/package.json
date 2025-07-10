@@ -1,0 +1,57 @@
+{
+  "name": "@lorcanito/core-engine",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.d.ts",
+  "files": [
+    "src/"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./lobby": {
+      "types": "./src/lobby.ts",
+      "default": "./src/lobby.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepack": "npm run build",
+    "typecheck": "tsc --noEmit",
+    "types:check": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "format": "bunx @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
+    "lint": "bunx @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error ./src",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "test:coverage": "bun test --coverage",
+    "check": "turbo format lint check-types test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.4",
+    "@types/bun": "1.2.14",
+    "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "typescript": "5.8.3"
+  },
+  "dependencies": {
+    "@lorcanito/typescript-config": "workspace:*",
+    "@lorcanito/lorcana-engine": "workspace:*",
+    "@tanstack/store": "0.7.0",
+    "flatted": "^3.2.1",
+    "immer": "^9.0.5",
+    "lodash.isplainobject": "^4.0.6",
+    "nanoid": "^3.1.30",
+    "p-queue": "^6.6.2",
+    "prop-types": "^15.5.10",
+    "react-cookies": "^0.1.0",
+    "redux": "^4.1.0",
+    "rfc6902": "^5.0.0",
+    "setimmediate": "^1.0.5",
+    "ts-toolbelt": "^6.3.6"
+  }
+}

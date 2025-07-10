@@ -1,0 +1,18 @@
+# Source
+src/
+tests/
+*.test.ts
+
+# Configuration
+tsconfig.json
+.eslintrc
+.prettierrc
+.github
+.gitignore
+
+# Build artifacts
+*.tsbuildinfo
+.turbo
+
+# Include type definitions
+!*.d.ts 
