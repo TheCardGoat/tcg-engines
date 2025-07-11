@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-      # Use this to control Bun's install cache directory
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
       BUN_INSTALL_CACHE_DIR: ~/.bun/install/cache
     steps:
       - name: Check out code
