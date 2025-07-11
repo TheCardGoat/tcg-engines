@@ -55,6 +55,7 @@ import type {
   Zones,
 } from "@lorcanito/lorcana-engine/types/types";
 import { autorun, computed, makeAutoObservable, runInAction, toJS } from "mobx";
+import { getGlobalObject, isBrowser } from "../lib/environment";
 import { AbilityModel } from "./models/AbilityModel";
 
 export function recursivelyNullifyUndefinedValues<T>(obj: unknown = {}) {
@@ -229,11 +230,9 @@ export class MobXRootStore {
       observable,
     );
 
-    if (
-      typeof window !== "undefined" &&
-      process.env.NODE_ENV === "development"
-    ) {
-      (window as unknown as { rootStore: MobXRootStore }).rootStore = this;
+    if (isBrowser() && process.env.NODE_ENV === "development") {
+      (getGlobalObject() as unknown as { rootStore: MobXRootStore }).rootStore =
+        this;
     }
 
     if (!this.isSpectator) {
@@ -1124,7 +1123,7 @@ export class MobXRootStore {
   }
 
   sendNotification(notification: NotificationType): MoveResponse {
-    if (process.env.NODE_ENV === "test" || typeof window !== "undefined") {
+    if (process.env.NODE_ENV === "test" || isBrowser()) {
       this.dependencies.notifier.sendNotification(notification);
     }
 

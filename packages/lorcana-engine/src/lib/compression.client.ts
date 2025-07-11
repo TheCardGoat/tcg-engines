@@ -1,4 +1,6 @@
 // Helper function to compress using Deflate
+import { isBrowser } from "./environment";
+
 async function compressToDeflateBuffer(input: any) {
   const stream = new CompressionStream("deflate");
   const writer = stream.writable.getWriter();
@@ -91,11 +93,10 @@ export async function compressAndCompareSizes(input: any) {
 
 export async function decompress<T>(base64String: string) {
   console.log("Decompressing", base64String);
-  const compressedBuffer =
-    typeof window === "undefined"
-      ? Buffer.from(base64ToArrayBuffer(base64String))
-      : base64ToArrayBuffer(base64String);
-  // console.log("compressedBuffer", window === undefined, compressedBuffer);
+  // Check if we're in a Node.js environment (not a browser)
+  const compressedBuffer = isBrowser()
+    ? base64ToArrayBuffer(base64String)
+    : Buffer.from(base64ToArrayBuffer(base64String));
 
   const decompressedString =
     await decompressFromDeflateBuffer(compressedBuffer);

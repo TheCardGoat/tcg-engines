@@ -35,7 +35,7 @@
     "@lorcanito/typescript-config": "workspace:*",
     "@paralleldrive/cuid2": "2.2.2",
     "@types/object-hash": "3.0.6",
-    "deep-diff": "^.0.2",
+    "deep-diff": "^1.0.2",
     "mobx": "6.12.0",
     "xstate": "5.19.2"
   },
