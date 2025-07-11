@@ -20,6 +20,8 @@ jobs:
           fetch-depth: 1
 
       - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: ".bun-version"
 
       - uses: actions/setup-node@v4
         with:

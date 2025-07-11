@@ -2,12 +2,6 @@
 
 A lightweight engine for managing trading card games.
 
-## Suggested Readings
-https://longwelwind.net/blog/networking-turn-based-game/#fn-1
-https://gafferongames.com/post/deterministic_lockstep/
-https://docs.boardzilla.io/
-https://boardgame.io/
-
 ## **Core Tenets for the TCG Rule Engine**
 
 These tenets will guide the development and evolution of the engine, ensuring consistency and adherence to our architectural goals.
@@ -137,9 +131,10 @@ Code
         - Provides an API (potentially a DSL) to query any aspect of the current game and card state.
     - **Characteristics:** Game-agnostic, highly reusable.
 
-2. **Game-Specific Rules Plugin (Per Game):**
+2. **Game-Specific Rules Engine (Per Game):**
     - **Responsibilities:**
-        - Defines all data for a specific TCG: card definitions, abilities, keywords, resources, zones (beyond generic ones like hand/deck if needed).
+        - Uses functions exposed by the Core Rule Engine to process actions and update the game state.
+        - Defines all data for a specific TCG: card definitions, abilities, keywords, resources, (beyond generic ones like hand/deck if needed).
         - Implements the logic for all card effects, triggers, and game-specific interactions.
         - Defines the win, loss, and draw conditions for the game.
         - Provides game-specific validation logic for actions (e.g., "Can this card be played now?").
@@ -170,10 +165,10 @@ Code
 
 1. Player on Client A interacts with UI to play a card.
 2. Client A's Platform Adapter translates this into an "PlayCardAction".
-3. Client A's Core Engine (optimistically) validates and processes the action using the Game-Specific Engine. A new local state and delta are generated. UI updates.
+3. Client A's Game Engine (optimistically) validates and processes the action using the Game-Specific Engine. A new local state and delta are generated. UI updates.
 4. Client A's Platform Adapter sends the "PlayCardAction" to the Server.
 5. Server's Platform Adapter receives the action.
-6. Server's Core Engine (authoritatively) validates and processes the action. A new authoritative state and delta are generated.
+6. Server's Game Engine (authoritatively) validates and processes the action. A new authoritative state and delta are generated.
 7. Server's Platform Adapter broadcasts the authoritative delta to all connected clients (Client A, Client B, spectators).
 8. Client A receives the server's delta. If its optimistic state matches, no change. If different, it reconciles (e.g., by reapplying the server delta to the state before its optimistic update).
 9. Client B receives the server's delta, applies it to its state, and its UI updates.
