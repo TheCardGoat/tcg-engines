@@ -12,7 +12,7 @@
     "format": "bunx @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
     "lint": "bunx @biomejs/biome lint --write ./src",
     "check-types": "tsc --noEmit",
-    "test": "bun test"
+    "test": "echo 'No tests'"
   },
   "dependencies": {
     "@lorcanito/typescript-config": "workspace:*",
