@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 ## Must Follow Rules
-- You can't take a task as finishe if `bun run check` fails, all checks must pass and you can't skip any of them.
+- You can't take a task as finished if `bun run check` fails, all checks must pass and you can't skip any of them.
 - You can't commit unless `bun run check` passes, and you can't skip any of the checks. Additionaly, any new codee must be covered by tests, which explains the expected behavior. Test expected behavior, not implementation details.
 - Update IMPLEMENTATION-LOGS.md before/after each task with progress, decisions, and learnings
 - Follow architecture/design patterns in /docs/**/*.md files
@@ -10,7 +10,7 @@
 - Run `bun run check` after each task - fix issues before proceeding
 - Use documentation from engines/** folder first (LLM-RULES.md, RULES.md, GLOSSARY.md)
 - Follow core engine tenets
-- Use logger instead of console.log
+- Use logger.log instead of console.log
 - use IMPLEMENTATION-LOGS.md for task progress, decisions, and learnings. Share a summary of your progress at the end of each task.
 
 ## Core Architecture
@@ -18,8 +18,7 @@
 Modular TCG engine with three main components:
 
 1. **Lobby Engine** (`/src/lobby-engine/`) - Game lobbies, connections, event-driven with LightweightEventBus
-2. **Game Engine** (`/src/game-engine/`) - Core rules, immutable state, phase/turn-based, plugin architecture
-3. **Game Implementations** (`/engines/`) - Specific TCG rules (Lorcana, Grand Archive, etc.)
+2. **Game Engine** (`/src/game-engine/`) - Core rules, immutable state, phase/turn-based,  architecture
 
 ### State & Architecture
 - Immutable state with delta synchronization
