@@ -1,20 +1,23 @@
 import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
 import { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
+import type { ActionPayload } from "~/game-engine/core-engine/engine/types";
 import type {
   CoreEngineState,
+  FnContext,
   GameDefinition,
   GameRuntime,
   PartialGameState,
 } from "~/game-engine/core-engine/game-configuration";
 import type {
   InvalidMoveResult,
-  LongFormMove,
   Move,
 } from "~/game-engine/core-engine/move/move-types";
-import { isInvalidMove } from "~/game-engine/core-engine/move/move-types";
+import {
+  getExecuteFunction,
+  isInvalidMove,
+} from "~/game-engine/core-engine/move/move-types";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import type { GameCards } from "~/game-engine/core-engine/types";
-import type { ActionPayload } from "../engine/types";
 import { Flow } from "./flow";
 
 export function initializeGame<GameState = unknown>({
@@ -134,34 +137,50 @@ export function processGameDefinition<G = unknown>(
     state: CoreEngineState<G>,
     action: ActionPayload.MakeMove,
   ): CoreEngineState<G> | InvalidMoveResult => {
-    const moveFn = flow.getMove(state.ctx, action.type, action.playerID);
+    const move = flow.getMove(state.ctx, action.type, action.playerID);
 
     const coreOperation = new CoreOperation({ state, engine });
 
-    const context = {
+    const fnContext = {
       G: state.G,
       ctx: state.ctx,
       coreOps: coreOperation,
-      gameOps: engine, // Pass the game engine for game-specific operations
-      playerID: action.playerID,
+      gameOps: engine,
     };
 
-    const result = moveFn(context, ...((action.args as any[]) || []));
+    try {
+      // Use getExecuteFunction to handle both function and enumerable moves
+      const moveFn = getExecuteFunction(move);
 
-    // Handle both old INVALID_MOVE string and new InvalidMoveResult structure
-    if (result === "INVALID_MOVE") {
+      const result = moveFn(
+        {
+          ...fnContext,
+          playerID: action.playerID,
+          gameOps: engine,
+        },
+        ...((action.args as any[]) || []),
+      );
+
+      if (isInvalidMove(result)) {
+        return result;
+      }
+
+      if (result === undefined) {
+        return state;
+      }
+
+      return { ...state, G: result as G };
+    } catch (error) {
+      console.error("Error processing move:", error);
       return {
         type: "INVALID_MOVE",
-        reason: "LEGACY_INVALID_MOVE",
-        messageKey: "moves.generic.errors.invalidMove",
+        reason: "MOVE_EXECUTION_ERROR",
+        messageKey: "moves.errors.executionError",
+        context: {
+          error: error instanceof Error ? error.message : String(error),
+        },
       };
     }
-
-    if (isInvalidMove(result)) {
-      return result;
-    }
-
-    return { ...state, G: result as G };
   };
 
   return {

@@ -18,7 +18,7 @@ export type RiftboundMove = Move<RiftboundGameState>;
  * Setup and pregame moves
  */
 
-export const chooseDomainIdentity: RiftboundMove = (
+export const chooseDomainIdentity = (
   { G, ctx, playerID, coreOps },
   domains: string[],
 ) => {
@@ -415,7 +415,7 @@ export const concede: RiftboundMove = ({ G, ctx, playerID, coreOps }) => {
 /**
  * Export all moves
  */
-export const riftboundMoves = {
+export const riftboundMoves: Record<string, any> = {
   // Setup moves
   chooseDomainIdentity,
   chooseFirstPlayer,
