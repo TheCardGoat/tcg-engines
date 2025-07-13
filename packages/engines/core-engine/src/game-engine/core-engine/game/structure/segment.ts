@@ -14,7 +14,8 @@ import type {
   GameDefinition,
   LogEntry,
 } from "~/game-engine/core-engine/game-configuration";
-import type { LogCollector } from "~/game-engine/utils/log-collector";
+import { logger } from "~/game-engine/core-engine/utils/logger";
+// Remove problematic import - SegmentConfig is defined in this file
 import { endPhase, startPhase } from "./phase";
 
 export interface SegmentMap<G = unknown> {
@@ -37,14 +38,13 @@ export function processSegments<G = unknown>(segmentMap: SegmentMap<G>) {
   let startingSegment = null;
   const segmentMoveMap = {};
   const segmentMoveNames = new Set<string>();
-  const warnings: string[] = [];
 
   for (const segment in segmentMap) {
     const segmentConfig = segmentMap[segment];
 
     if (segmentConfig.start === true) {
       if (startingSegment !== null) {
-        warnings.push(
+        logger.warn(
           `Multiple starting segments: ${startingSegment} and ${segment}`,
         );
       }
@@ -82,7 +82,7 @@ export function processSegments<G = unknown>(segmentMap: SegmentMap<G>) {
     }
   }
 
-  return { startingSegment, segmentMoveMap, segmentMoveNames, warnings };
+  return { startingSegment, segmentMoveMap, segmentMoveNames };
 }
 
 /**
@@ -94,12 +94,7 @@ export function startSegment(
   {
     next = [],
     engine,
-    logCollector,
-  }: {
-    next?: any[];
-    engine?: CoreEngine<any, any, any, any, any>;
-    logCollector: LogCollector;
-  },
+  }: { next?: any[]; engine?: CoreEngine<any, any, any, any, any> } = {},
 ): CoreEngineState {
   let { G, ctx } = state;
   const segmentConfig = getSegment(ctx, gameDefinition);
@@ -111,8 +106,7 @@ export function startSegment(
   const context = {
     G: state.G,
     ctx: state.ctx,
-    coreOps: new CoreOperation({ state, engine, logCollector }),
-    logCollector,
+    coreOps: new CoreOperation({ state, engine }),
   };
   // Apply segment begin hook
   const newG = segmentConfig.onBegin(context);
@@ -130,7 +124,6 @@ export function startSegment(
 export function getNextSegment(
   state: CoreEngineState,
   gameDefinition: GameDefinition,
-  logCollector: LogCollector,
   engine?: CoreEngine<any, any, any, any, any>,
 ): string | null {
   const currentSegment = state.ctx.currentSegment;
@@ -144,8 +137,7 @@ export function getNextSegment(
     const context = {
       G: state.G,
       ctx: state.ctx,
-      coreOps: new CoreOperation({ state, engine, logCollector }),
-      logCollector,
+      coreOps: new CoreOperation({ state, engine }),
     };
     const nextSegment = segmentConfig.next(context);
     return nextSegment || null;
@@ -160,7 +152,6 @@ export function getNextSegment(
 export function shouldEndSegment(
   state: CoreEngineState,
   gameDefinition: GameDefinition,
-  logCollector: LogCollector,
   engine?: CoreEngine<any, any, any, any, any>,
 ): boolean | undefined | { next: string } {
   const segmentConfig = getSegment(state.ctx, gameDefinition);
@@ -168,8 +159,7 @@ export function shouldEndSegment(
     const context = {
       G: state.G,
       ctx: state.ctx,
-      coreOps: new CoreOperation({ state, engine, logCollector }),
-      logCollector,
+      coreOps: new CoreOperation({ state, engine }),
     };
     return segmentConfig.endIf(context);
   }
@@ -182,14 +172,7 @@ export function shouldEndSegment(
 export function endSegment(
   state: CoreEngineState,
   gameDefinition: GameDefinition,
-  {
-    arg,
-    next = [],
-    turn: initialTurn,
-    automatic,
-    engine,
-    logCollector,
-  }: any = {},
+  { arg, next = [], turn: initialTurn, automatic, engine }: any = {},
 ): CoreEngineState {
   // End the current turn first
   state = endTurn(state, gameDefinition, {
@@ -198,7 +181,6 @@ export function endSegment(
     automatic: true,
     next: [],
     engine,
-    logCollector,
   });
 
   const { currentSegment, numTurns } = state.ctx;
@@ -224,8 +206,7 @@ export function endSegment(
   const context = {
     G: state.G,
     ctx: state.ctx,
-    coreOps: new CoreOperation({ state, engine, logCollector }),
-    logCollector,
+    coreOps: new CoreOperation({ state, engine }),
   };
   const newG = segmentConfig.onEnd(context);
   const G = newG !== undefined ? newG : state.G;

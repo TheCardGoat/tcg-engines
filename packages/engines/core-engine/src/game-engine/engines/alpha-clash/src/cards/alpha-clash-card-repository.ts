@@ -7,21 +7,12 @@
 
 import { CardRepository } from "~/game-engine/core-engine/card/card-repository-factory";
 import type { GameCards } from "~/game-engine/core-engine/types";
-import { logger } from "../../../../../shared/logger";
+import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { AlphaClashCardDefinition } from "../../alpha-clash-engine-types";
-
-// Temporary placeholder for card definitions
-const allAlphaClashCardsById: Record<string, AlphaClashCardDefinition> = {};
-
-// Utility function to generate a test card (placeholder)
-function generateTestCard(id: string): AlphaClashCardDefinition {
-  return {
-    id,
-    name: `Test Card ${id}`,
-    type: "contender",
-    cost: 1,
-  } as AlphaClashCardDefinition;
-}
+import {
+  allAlphaClashCardsById,
+  validateCardRegistry,
+} from "./definitions/cards";
 
 export class AlphaClashCardRepository extends CardRepository<AlphaClashCardDefinition> {
   constructor(cards: Record<string, Record<string, string>>) {
@@ -40,6 +31,14 @@ export class AlphaClashCardRepository extends CardRepository<AlphaClashCardDefin
     const processedCards: Record<string, AlphaClashCardDefinition> = {};
     const allInstanceIds = new Set<string>();
 
+    // Validate card registry first
+    const validationErrors = validateCardRegistry();
+    if (validationErrors.length > 0) {
+      throw new Error(
+        `Card registry validation failed: ${validationErrors.join(", ")}`,
+      );
+    }
+
     logger.info("Processing Alpha Clash cards for repository");
 
     for (const [playerId, playerCards] of Object.entries(cards)) {
@@ -54,11 +53,14 @@ export class AlphaClashCardRepository extends CardRepository<AlphaClashCardDefin
         }
         allInstanceIds.add(instanceId);
 
-        // Get card definition from registry or create a test card if not found
-        let cardDefinition = allAlphaClashCardsById[publicId];
+        // Get card definition from registry
+        const cardDefinition = allAlphaClashCardsById[
+          publicId
+        ] as AlphaClashCardDefinition;
         if (!cardDefinition) {
-          // For testing, generate a test card
-          cardDefinition = generateTestCard(publicId);
+          const error = `Card definition not found for public ID: ${publicId}`;
+          logger.error(error);
+          throw new Error(error);
         }
 
         processedCards[instanceId] = cardDefinition;

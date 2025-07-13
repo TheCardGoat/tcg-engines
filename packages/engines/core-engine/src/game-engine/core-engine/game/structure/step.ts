@@ -6,7 +6,6 @@ import type {
   GameDefinition,
   LogEntry,
 } from "~/game-engine/core-engine/game-configuration";
-import { LogCollector } from "../../../utils/log-collector";
 import { getPhase, getSegment, getStep } from "./utils";
 
 /**
@@ -37,7 +36,6 @@ export function startStep(
     G: state.G,
     ctx: state.ctx,
     coreOps: new CoreOperation({ state, engine: undefined }),
-    logCollector: state.ctx.logCollector || new LogCollector(),
   };
   const newG = stepConfig.onBegin(context);
   G = newG !== undefined ? newG : G;
@@ -82,7 +80,6 @@ export function updateStep(
       G: state.G,
       ctx: state.ctx,
       coreOps: new CoreOperation({ state, engine: undefined }),
-      logCollector: state.ctx.logCollector || new LogCollector(),
     };
     nextStep = nextFn(context);
   }
@@ -112,7 +109,6 @@ export function shouldEndStep(
       G: state.G,
       ctx: state.ctx,
       coreOps: new CoreOperation({ state, engine: undefined }),
-      logCollector: state.ctx.logCollector || new LogCollector(),
     };
     return stepConfig.endIf(context);
   }
@@ -147,7 +143,6 @@ export function endStep(
     G: state.G,
     ctx: state.ctx,
     coreOps: new CoreOperation({ state, engine: undefined }),
-    logCollector: state.ctx.logCollector || new LogCollector(),
   };
   const newG = stepConfig.onEnd(context);
   G = newG !== undefined ? newG : G;

@@ -10,7 +10,7 @@
 import type { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
 import { GameEngine } from "~/game-engine/core-engine/game-engine";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
-import { logger } from "../../../shared/logger";
+import { logger } from "~/game-engine/core-engine/utils/logger";
 import type {
   AlphaClashCardDefinition,
   AlphaClashCardFilter,

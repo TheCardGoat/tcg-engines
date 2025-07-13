@@ -11,14 +11,14 @@ import type {
   BaseCoreCardFilter,
   DefaultPlayerState,
 } from "./types/game-specific-types";
-export type { SegmentMap, CoreCtx };
+export type { SegmentMap };
 
 import type { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
 import type {
   InvalidMoveResult,
   Move,
 } from "~/game-engine/core-engine/move/move-types";
-import type { LogCollector } from "~/game-engine/utils/log-collector";
+
 import type { CoreCardInstance } from "./card/core-card-instance";
 import type {
   DefaultCardDefinition,
@@ -72,9 +72,9 @@ export interface MoveMap<G = unknown> {
 }
 
 // "Public" state to be communicated to clients.
-export interface CoreEngineState<G = unknown, P = unknown> {
+export interface CoreEngineState<G = unknown> {
   G: G;
-  ctx: CoreCtx<P>;
+  ctx: CoreCtx;
   deltalog?: Array<LogEntry>;
   _undo: Array<Undo<G>>;
   _redo: Array<Undo<G>>;
@@ -120,7 +120,6 @@ export type FnContext<
     CardFilter,
     CardInstance
   >;
-  logCollector: LogCollector;
 };
 
 export interface SyncInfo {

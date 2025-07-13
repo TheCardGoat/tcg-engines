@@ -2,16 +2,16 @@ import { Derived, Store } from "@tanstack/store";
 import type { CoreEngineState } from "~/game-engine/core-engine/game-configuration";
 import { hash } from "~/game-engine/core-engine/state/state-hash";
 
-export class GameStateStore<G = unknown, P = unknown> {
-  private store: Store<CoreEngineState<G, P>>;
+export class GameStateStore<G = unknown> {
+  private store: Store<CoreEngineState<G>>;
   private derivedHash: Derived<string>;
 
   constructor({
     initialState,
   }: {
-    initialState: CoreEngineState<G, P>;
+    initialState: CoreEngineState<G>;
   }) {
-    this.store = new Store<CoreEngineState<G, P>>(initialState);
+    this.store = new Store<CoreEngineState<G>>(initialState);
 
     this.derivedHash = new Derived({
       fn: () => hash(this.store.state),
@@ -21,11 +21,11 @@ export class GameStateStore<G = unknown, P = unknown> {
     this.derivedHash.mount();
   }
 
-  get state(): CoreEngineState<G, P> {
+  get state(): CoreEngineState<G> {
     return this.store.state;
   }
 
-  getState(): CoreEngineState<G, P> {
+  getState(): CoreEngineState<G> {
     return this.store.state;
   }
 
@@ -33,7 +33,7 @@ export class GameStateStore<G = unknown, P = unknown> {
     return this.derivedHash.state;
   }
 
-  updateState({ newState }: { newState: CoreEngineState<G, P> }) {
+  updateState({ newState }: { newState: CoreEngineState<G> }) {
     this.store.setState(() => newState);
   }
 }

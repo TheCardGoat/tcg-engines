@@ -11,7 +11,6 @@ import type {
   LogEntry,
   MoveMap,
 } from "~/game-engine/core-engine/game-configuration";
-import { LogCollector } from "../../../utils/log-collector";
 import { startStep } from "./step";
 
 /**
@@ -145,12 +144,7 @@ export function startPhase(
   const context = {
     G: state.G,
     ctx: state.ctx,
-    coreOps: new CoreOperation({
-      state,
-      engine: undefined,
-      logCollector: state.ctx.logCollector,
-    }),
-    logCollector: state.ctx.logCollector,
+    coreOps: new CoreOperation({ state, engine: undefined }),
   };
 
   const newG = phaseConfig.onBegin(context);
@@ -213,7 +207,6 @@ export function updatePhase(
       G: state.G,
       ctx: state.ctx,
       coreOps: new CoreOperation({ state, engine: undefined }),
-      logCollector: state.ctx.logCollector || new LogCollector(),
     };
     // Call the next function
     const nextFn = phaseConfig.next as (context: FnContext) => string;
@@ -244,12 +237,7 @@ export function shouldEndPhase(
     const context = {
       G: state.G,
       ctx: state.ctx,
-      coreOps: new CoreOperation({
-        state,
-        engine: undefined,
-        logCollector: state.ctx.logCollector,
-      }),
-      logCollector: state.ctx.logCollector,
+      coreOps: new CoreOperation({ state, engine: undefined }),
     };
     return phaseConfig.endIf(context);
   }
@@ -284,12 +272,7 @@ export function endPhase(
     const context = {
       G: state.G,
       ctx: state.ctx,
-      coreOps: new CoreOperation({
-        state,
-        engine: undefined,
-        logCollector: state.ctx.logCollector,
-      }),
-      logCollector: state.ctx.logCollector,
+      coreOps: new CoreOperation({ state, engine: undefined }),
     };
     const newG = phaseConfig.onEnd(context);
     G = newG !== undefined ? newG : G;

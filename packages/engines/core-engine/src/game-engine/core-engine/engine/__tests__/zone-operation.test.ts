@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it } from "bun:test";
-import { LogCollector } from "../../../utils/log-collector";
-import type { CoreCtx } from "../../state/context";
+import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import {
   isZoneOperationError,
   moveCardByInstanceId,
@@ -10,21 +9,15 @@ import {
 
 describe("zone-operation", () => {
   let mockCtx: CoreCtx;
-  let logCollector: LogCollector;
 
   beforeEach(() => {
-    logCollector = new LogCollector();
     mockCtx = {
       playerOrder: ["player1", "player2"],
-      turnPlayerPos: 0,
+      currentPlayerPos: 0,
       priorityPlayerPos: 0,
       currentPhase: "mainPhase",
       otp: "player1",
-      seed: "12345",
-      _random: { seed: "12345" },
-      numTurns: 1,
-      numMoves: 0,
-      seenCards: new Map(),
+      seed: 12345,
       cardZones: {
         "player1-hand": {
           id: "player1-hand",
@@ -62,7 +55,6 @@ describe("zone-operation", () => {
           instanceId: "card1",
           playerId: "player1",
           to: "inkwell",
-          logCollector,
         });
 
         expect(isZoneOperationError(result)).toBe(false);
@@ -78,7 +70,6 @@ describe("zone-operation", () => {
           instanceId: "nonexistent",
           playerId: "player1",
           to: "inkwell",
-          logCollector,
         });
 
         expect(isZoneOperationError(result)).toBe(true);
@@ -94,7 +85,6 @@ describe("zone-operation", () => {
           instanceId: "card1",
           playerId: "player1",
           to: "nonexistent",
-          logCollector,
         });
 
         expect(isZoneOperationError(result)).toBe(true);
@@ -113,7 +103,6 @@ describe("zone-operation", () => {
           playerId: "player1",
           to: "inkwell",
           from: "hand",
-          logCollector,
         });
 
         expect(isZoneOperationError(result)).toBe(false);
@@ -130,7 +119,6 @@ describe("zone-operation", () => {
           playerId: "player1",
           to: "inkwell",
           from: "player1-hand",
-          logCollector,
         });
 
         expect(isZoneOperationError(result)).toBe(false);
@@ -147,7 +135,6 @@ describe("zone-operation", () => {
           playerId: "player1",
           to: "inkwell",
           from: "hand",
-          logCollector,
         });
 
         expect(isZoneOperationError(result)).toBe(true);
@@ -169,7 +156,6 @@ describe("zone-operation", () => {
           playerId: "player1",
           to: "inkwell",
           from: "player1-hand",
-          logCollector,
         });
 
         expect(isZoneOperationError(result)).toBe(true);
@@ -187,7 +173,6 @@ describe("zone-operation", () => {
           playerId: "player1",
           to: "inkwell",
           from: "hand",
-          logCollector,
         });
 
         expect(isZoneOperationError(result)).toBe(true);
@@ -216,7 +201,6 @@ describe("zone-operation", () => {
           playerId: "player1", // But player1 is trying to move it
           to: "inkwell",
           from: "hand", // Zone name matches but ownership doesn't
-          logCollector,
         });
 
         expect(isZoneOperationError(result)).toBe(true);

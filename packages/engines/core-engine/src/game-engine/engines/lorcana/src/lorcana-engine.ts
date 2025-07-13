@@ -3,14 +3,13 @@ import { ResultHelpers } from "~/game-engine/core-engine";
 import type { CardRepository } from "~/game-engine/core-engine/card/card-repository-factory";
 import type { CoreCardFilterDSL } from "~/game-engine/core-engine/card/core-card-filter";
 import type { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
-import { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
 import { getCardZone } from "~/game-engine/core-engine/engine/zone-operation";
+import { GameEngine } from "~/game-engine/core-engine/game-engine";
 import {
   type CoreCtx,
   getCurrentPriorityPlayer,
 } from "~/game-engine/core-engine/state/context";
-import { LogLevel } from "../../../types/log-types";
-import type { LogCollector } from "../../../utils/log-collector";
+import { logger } from "~/game-engine/core-engine/utils/logger";
 import { LorcanaCardInstance } from "./cards/lorcana-card-instance";
 import type { LorcanaCardRepository } from "./cards/lorcana-card-repository";
 import { LorcanaGame } from "./game-definition/lorcana-game-definition";
@@ -29,7 +28,7 @@ import type {
 // Re-export types for external usage
 export type { LorcanaCardDefinition, LorcanaCardFilter, LorcanaPlayerState };
 
-export class LorcanaEngine extends CoreEngine<
+export class LorcanaEngine extends GameEngine<
   LorcanaGameState,
   LorcanaCardDefinition,
   LorcanaPlayerState,
@@ -49,7 +48,6 @@ export class LorcanaEngine extends CoreEngine<
     seed,
     players,
     debug,
-    logCollector,
   }: {
     initialState: LorcanaGameState;
     initialCoreCtx?: CoreCtx;
@@ -60,7 +58,6 @@ export class LorcanaEngine extends CoreEngine<
     debug?: boolean;
     seed?: string;
     players: string[];
-    logCollector?: LogCollector;
   }) {
     super({
       game: LorcanaGame,
@@ -74,7 +71,6 @@ export class LorcanaEngine extends CoreEngine<
       debug,
       repository:
         cardRepository || ({} as CardRepository<LorcanaCardDefinition>),
-      logCollector,
     });
 
     if (cardRepository) {
@@ -131,8 +127,7 @@ export class LorcanaEngine extends CoreEngine<
     timing: TriggerTiming,
     cardInstanceId: string,
   ): void {
-    this.log(
-      LogLevel.NORMAL_PLAYER,
+    logger.info(
       `Adding triggered effects to bag: ${timing} for card ${cardInstanceId}`,
     );
 
@@ -140,8 +135,7 @@ export class LorcanaEngine extends CoreEngine<
     const cardInstance =
       this.cardInstanceStore.getCardByInstanceId(cardInstanceId);
     if (!cardInstance) {
-      this.log(
-        LogLevel.DEVELOPER,
+      logger.warn(
         `Card instance ${cardInstanceId} not found for trigger timing ${timing}`,
       );
       return;
@@ -152,8 +146,7 @@ export class LorcanaEngine extends CoreEngine<
     // 1. Check if the card has triggers for this timing
     // 2. Create appropriate LayerItem entries
     // 3. Add them to the bag in the correct order
-    this.log(
-      LogLevel.DEVELOPER,
+    logger.debug(
       `Would add triggers for timing ${timing} on card ${cardInstanceId}`,
     );
   }
@@ -163,14 +156,14 @@ export class LorcanaEngine extends CoreEngine<
    * This resolves triggered effects in the proper order
    */
   resolveBag(): void {
-    this.log(LogLevel.NORMAL_PLAYER, "Resolving bag effects");
+    logger.info("Resolving bag effects");
 
     // For now, we'll just log the action
     // In a full implementation, this would:
     // 1. Process each effect in the bag according to Lorcana rules
     // 2. Handle player choices and interactions
     // 3. Update the game state accordingly
-    this.log(LogLevel.DEVELOPER, "Would resolve all effects in the bag");
+    logger.debug("Would resolve all effects in the bag");
   }
 
   get moves() {
@@ -186,10 +179,7 @@ export class LorcanaEngine extends CoreEngine<
       },
       alterHand: (cardsToAlter: string[]) => {
         if (!currentPlayer) {
-          this.log(
-            LogLevel.DEVELOPER,
-            "No current player found for alterHand move.",
-          );
+          logger.warn("No current player found for alterHand move.");
           return ResultHelpers.error(
             "No current player found for alterHand move.",
           );
@@ -199,8 +189,7 @@ export class LorcanaEngine extends CoreEngine<
       },
       putACardIntoTheInkwell: (instanceId: string) => {
         if (!currentPlayer) {
-          this.log(
-            LogLevel.DEVELOPER,
+          logger.warn(
             "No current player found for putACardIntoTheInkwell move.",
           );
           return ResultHelpers.error(
@@ -214,10 +203,7 @@ export class LorcanaEngine extends CoreEngine<
       },
       passTurn: () => {
         if (!currentPlayer) {
-          this.log(
-            LogLevel.DEVELOPER,
-            "No current player found for passTurn move.",
-          );
+          logger.warn("No current player found for passTurn move.");
           return ResultHelpers.error(
             "No current player found for passTurn move.",
           );

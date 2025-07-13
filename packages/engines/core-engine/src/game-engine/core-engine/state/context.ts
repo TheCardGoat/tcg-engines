@@ -1,67 +1,54 @@
 import type { GameCards } from "~/game-engine/core-engine/types";
+import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { PlayerId } from "~/game-engine/engines/lorcana/src/lorcana-engine-types";
-import { logger } from "../../../shared/logger";
-import { LogLevel } from "../../types/log-types";
-import { LogCollector } from "../../utils/log-collector";
 import type { Zone } from "../engine/zone-operation";
 
 export type PlayerID = string;
 export type InstanceId = string;
 
-export type PlayerState<State = unknown, PlayerTurnHistory = unknown> = {
+export type PlayerState<PlayerTurnHistory = unknown> = {
   id: string;
   name: string;
+  lore?: number;
   turnHistory?: PlayerTurnHistory[];
-} & State;
+};
 
-/**
- * This is the object containing all context-related state for a specific game.
- * It is available as ctx and represents both the state and some utility functions.
- */
-export interface CoreCtx<State = unknown, TurnHistory = unknown> {
-  // Base engine state
-  seed: string;
-  _random: { seed: string }; // Legacy for compatibility
+export interface CoreCtx<TurnHistory = unknown> {
+  playerOrder: Array<PlayerID>;
+  turnPlayerPos: number;
+  priorityPlayerPos: number;
+
+  gameId: string;
+  matchId: string;
+
+  otp?: PlayerID;
+  choosingFirstPlayer?: PlayerId;
+  pendingMulligan?: Set<PlayerId>;
+  pendingChampionSelection?: Set<PlayerId>;
+
+  gameOver?: unknown;
+  winner?: PlayerID;
+  manualMode?: boolean;
+
   numTurns: number;
-  numMoves: number;
-  seenCards: Map<string, Set<string>>; // PlayerID -> Set of card IDs that this player has seen
+  numMoves?: number;
+  numTurnMoves: number;
+
   currentSegment?: string;
-  currentPhase?: string; // Current phase in the game flow
-  currentStep?: string; // Current step within the current phase
-  currentTurn?: number; // Current turn number
-  pendingMulligan?: Set<PlayerID>; // Players who haven't made their mulligan decision
-  pendingChampionSelection?: Set<PlayerID>; // Players who haven't selected champions
-  playerOrder: PlayerID[]; // Order of players in the game
-  turnPlayerPos: number; // Position of the current turn player in playerOrder
-  priorityPlayerPos: number; // Position of the current priority player in playerOrder
-  otp?: PlayerID; // One-time player (first player of the game)
-  gameOver?: { winner?: PlayerID; reason?: string; customData?: unknown }; // Game over state
-  cardZones: Record<string, CardZone>; // All card zones in the game
-  turnData?: Record<string, unknown>; // Additional turn-specific data
-  configuration?: Record<string, unknown>; // Game specific configuration
+  currentTurn?: string;
+  currentPhase?: string;
+  currentStep?: string;
 
-  // Additional properties found being used in the codebase
-  gameId?: string;
-  matchId?: string;
-  numTurnMoves?: number;
-  moveHistory?: GameMoveHistoryEntry[];
-  cards?: Record<string, Record<string, string>>;
-  players?: Record<string, PlayerState<State, TurnHistory>>;
-  choosingFirstPlayer?: string;
-  logCollector?: LogCollector;
-}
+  cards: GameCards;
+  cardZones?: Record<string, Zone>;
 
-/**
- * Standard card zone representation in the Core Engine
- */
-export interface CardZone {
-  id: string; // Unique identifier for this zone instance (usually playerId-zoneName)
-  name: string; // Name of the zone (e.g., 'hand', 'deck')
-  owner: PlayerID; // Owner of the zone
-  cards: string[]; // Card instance IDs in this zone
-  visibility: "public" | "private" | "secret"; // Who can see the cards in this zone
-  ordered: boolean; // Whether card order matters in this zone
-  metadata?: Record<string, unknown>; // Additional zone metadata
+  moveHistory: GameMoveHistoryEntry[];
+
+  players: {
+    [id: PlayerID]: PlayerState<TurnHistory>;
+  };
+
+  seed?: string | number;
 }
 
 export type GameMoveHistoryEntry = {
@@ -72,7 +59,7 @@ export type GameMoveHistoryEntry = {
   data: Record<string, any>;
 };
 
-function isValidContext(context: CoreCtx, logCollector: LogCollector) {
+function isValidContext(context: CoreCtx) {
   // check if there's cards with the same instance id
   for (const playerId in context.cards) {
     const playerCards = context.cards[playerId];
@@ -93,9 +80,9 @@ function isValidContext(context: CoreCtx, logCollector: LogCollector) {
 
   // check if playerOrder is valid
   if (!Array.isArray(context.playerOrder) || context.playerOrder.length === 0) {
-    logCollector.log(
-      LogLevel.DEVELOPER,
+    logger.error(
       `Invalid playerOrder: ${context.playerOrder} in context`,
+      context,
     );
     throw new Error("playerOrder must be a non-empty array.");
   }
@@ -103,10 +90,7 @@ function isValidContext(context: CoreCtx, logCollector: LogCollector) {
   // check that every ctx.players  in ctx.playerOrder
   for (const playerId of context.playerOrder) {
     if (!context.players[playerId]) {
-      logCollector.log(
-        LogLevel.DEVELOPER,
-        `Player ${playerId} not found in players list.`,
-      );
+      logger.error(`Player ${playerId} not found in players list.`, context);
       throw new Error(`Player ${playerId} not found in context.`);
     }
   }
@@ -153,7 +137,6 @@ export function createCtx<TurnHistory = unknown>({
   seed,
   gameId = "default-game-id",
   matchId = "default-match-id",
-  logCollector,
 }: {
   playerOrder?: Array<PlayerID>;
   initialSegment?: string;
@@ -165,11 +148,7 @@ export function createCtx<TurnHistory = unknown>({
   gameId?: string;
   matchId?: string;
   seed?: number | string;
-  logCollector?: LogCollector;
 }): CoreCtx {
-  // Create a default LogCollector if one wasn't provided
-  const logger = logCollector || new LogCollector();
-
   const context: CoreCtx = {
     gameId,
     matchId,
@@ -184,24 +163,13 @@ export function createCtx<TurnHistory = unknown>({
     currentPhase: initialPhase,
     currentStep: initialStep,
     cards,
-    cardZones: cardZones || {},
+    cardZones,
     players,
     moveHistory: [],
-    seed:
-      typeof seed === "number"
-        ? seed.toString()
-        : seed || Math.random().toString(),
-    _random: {
-      seed:
-        typeof seed === "number"
-          ? seed.toString()
-          : seed || Math.random().toString(),
-    },
-    seenCards: new Map(),
-    logCollector: logger,
+    seed,
   };
 
-  if (!isValidContext(context, logger)) {
+  if (!isValidContext(context)) {
     throw new Error("Invalid context.");
   }
 
@@ -230,21 +198,24 @@ export function setNextTurnPlayer(ctx: CoreCtx): CoreCtx {
  * Provides deep immutability and change tracking
  */
 
-export function getCurrentTurnPlayer(ctx: CoreCtx): PlayerID | undefined {
-  if (!ctx.playerOrder || ctx.playerOrder.length === 0) {
-    return undefined;
+export function getCurrentTurnPlayer(ctx: CoreCtx): PlayerID | null {
+  if (ctx.turnPlayerPos < 0 || ctx.turnPlayerPos >= ctx.playerOrder.length) {
+    return null;
   }
   return ctx.playerOrder[ctx.turnPlayerPos];
 }
 
-export function getCurrentPriorityPlayer(ctx: CoreCtx): PlayerID | undefined {
-  if (!ctx.playerOrder || ctx.playerOrder.length === 0) {
-    return undefined;
+export function getCurrentPriorityPlayer(ctx: CoreCtx): PlayerID | null {
+  if (
+    ctx.priorityPlayerPos < 0 ||
+    ctx.priorityPlayerPos >= ctx.playerOrder.length
+  ) {
+    return null;
   }
   return ctx.playerOrder[ctx.priorityPlayerPos];
 }
 
-export function hasPriorityPlayer(ctx: CoreCtx, playerId: string): boolean {
+export function hasPriorityPlayer(ctx: CoreCtx, playerId: PlayerID): boolean {
   return getCurrentPriorityPlayer(ctx) === playerId;
 }
 

@@ -18,11 +18,9 @@ import {
 } from "~/game-engine/core-engine/move/move-types";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import type { GameCards } from "~/game-engine/core-engine/types";
-import { LogLevel } from "../../types/log-types";
-import type { LogCollector } from "../../utils/log-collector";
 import { Flow } from "./flow";
 
-export function initializeGame<GameState = unknown, PlayerState = unknown>({
+export function initializeGame<GameState = unknown>({
   game,
   initialState,
   initialCoreCtx,
@@ -30,7 +28,6 @@ export function initializeGame<GameState = unknown, PlayerState = unknown>({
   players,
   seed,
   engine,
-  logCollector,
 }: {
   game: GameDefinition;
   initialState?: GameState;
@@ -38,10 +35,9 @@ export function initializeGame<GameState = unknown, PlayerState = unknown>({
   players?: string[];
   cards: GameCards;
   seed?: string;
-  engine: CoreEngine<any, any, any, any, any>;
-  logCollector: LogCollector;
+  engine?: CoreEngine<any, any, any, any, any>;
 }): {
-  initialState: CoreEngineState<GameState, PlayerState>;
+  initialState: CoreEngineState<GameState>;
   processedGame: GameRuntime<GameState>;
 } {
   const gameRuntime = processGameDefinition(
@@ -49,11 +45,9 @@ export function initializeGame<GameState = unknown, PlayerState = unknown>({
     cards,
     players,
     engine,
-    logCollector,
   );
 
-  const ctx: CoreCtx<PlayerState> = gameRuntime.flow
-    .ctx as CoreCtx<PlayerState>;
+  const ctx: CoreCtx = gameRuntime.flow.ctx;
 
   const state: PartialGameState<GameState> = {
     // User managed state.
@@ -90,7 +84,7 @@ export function initializeGame<GameState = unknown, PlayerState = unknown>({
   }
 
   return {
-    initialState: initial as CoreEngineState<GameState, PlayerState>,
+    initialState: initial,
     processedGame: gameRuntime as GameRuntime<GameState>,
   };
 }
@@ -118,9 +112,8 @@ export function isProcessed(
 export function processGameDefinition<G = unknown>(
   game: GameDefinition | GameRuntime,
   cards: GameCards,
-  players: string[] | undefined,
-  engine: CoreEngine<any, any, any, any, any>,
-  logCollector: LogCollector,
+  players?: string[],
+  engine?: CoreEngine<any, any, any, any, any>,
 ): GameRuntime {
   // The Game() function has already been called on this
   // config object, so just pass it through.
@@ -146,14 +139,13 @@ export function processGameDefinition<G = unknown>(
   ): CoreEngineState<G> | InvalidMoveResult => {
     const move = flow.getMove(state.ctx, action.type, action.playerID);
 
-    const coreOperation = new CoreOperation({ state, engine, logCollector });
+    const coreOperation = new CoreOperation({ state, engine });
 
     const fnContext = {
       G: state.G,
       ctx: state.ctx,
       coreOps: coreOperation,
       gameOps: engine,
-      logCollector,
     };
 
     try {
@@ -179,7 +171,7 @@ export function processGameDefinition<G = unknown>(
 
       return { ...state, G: result as G };
     } catch (error) {
-      logCollector.log(LogLevel.DEVELOPER, `Error processing move: ${error}`);
+      console.error("Error processing move:", error);
       return {
         type: "INVALID_MOVE",
         reason: "MOVE_EXECUTION_ERROR",
@@ -210,13 +202,11 @@ export function initializeGameAction({
   action,
   gameDefinition,
   engine,
-  logCollector,
 }: {
   state: CoreEngineState<any>;
   action: any;
   gameDefinition: any;
-  engine: CoreEngine<any, any, any, any, any>;
-  logCollector: LogCollector;
+  engine?: CoreEngine<any, any, any, any, any>;
 }) {
   try {
     const { G, ctx } = state;
@@ -229,7 +219,7 @@ export function initializeGameAction({
         G,
         ctx,
         action,
-        coreOps: new CoreOperation({ state, engine, logCollector }),
+        coreOps: new CoreOperation({ state, engine }),
         playerID: action.playerID,
       };
 
@@ -244,10 +234,7 @@ export function initializeGameAction({
 
     return state;
   } catch (error) {
-    logCollector.log(
-      LogLevel.DEVELOPER,
-      `Error in initializeGameAction: ${error}`,
-    );
+    console.error("Error in initializeGameAction:", error);
     return state;
   }
 }

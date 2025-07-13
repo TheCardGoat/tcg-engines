@@ -1,40 +1,29 @@
-import { logger } from "../../../shared/logger";
-import { LogLevel } from "../../types/log-types";
-import { LogCollector } from "../../utils/log-collector";
-import type { CardRepository } from "../card/card-repository-factory";
-import type { CoreCardInstance } from "../card/core-card-instance";
-import { CoreCardInstanceStore } from "../card/core-card-instance-store";
-import type { AnyEngineError } from "../errors/engine-errors";
+import { type Result, ResultHelpers } from "~/game-engine/core-engine";
+import type { CardRepository } from "~/game-engine/core-engine/card/card-repository-factory";
+import { CoreCardInstanceStore } from "~/game-engine/core-engine/card/core-card-instance-store";
+import { getFilterPlayerView } from "~/game-engine/core-engine/engine/filter-player-view";
+import type { AnyEngineError } from "~/game-engine/core-engine/errors/engine-errors";
 import {
-  EngineInitializationError,
   InvalidMoveError,
   MoveExecutionError,
-  MoveRejectedError,
-  UnknownMoveError,
-} from "../errors/engine-errors";
-import type { FlowManager } from "../flow/flow-manager";
-import { createFlowManager } from "../flow/flow-manager";
-import { initializeGame } from "../game/game";
+} from "~/game-engine/core-engine/errors/engine-errors";
+import type { FlowManager } from "~/game-engine/core-engine/flow/flow-manager";
+import { initializeGame } from "~/game-engine/core-engine/game/game";
 import type {
   CoreEngineState,
   GameDefinition,
   GameRuntime,
-  PlayerID,
-  SyncInfo,
-} from "../game-configuration";
+} from "~/game-engine/core-engine/game-configuration";
 import {
-  MoveEnumerationService,
-  type MoveProvider,
-} from "../move/move-enumeration-service";
-import { MoveProcessor } from "../move/move-processor";
-import type { InvalidMoveResult, Move } from "../move/move-types";
-import type { CoreCtx } from "../state/context";
+  MoveProcessor,
+  type MoveRequest,
+} from "~/game-engine/core-engine/move/move-processor";
 import {
+  type CoreCtx,
   getCurrentPriorityPlayer,
-  getCurrentTurnPlayer,
-} from "../state/context";
-import { GameStateStore } from "../state/state-store";
-import type { GameCards } from "../types";
+} from "~/game-engine/core-engine/state/context";
+import { GameStateStore } from "~/game-engine/core-engine/state/state-store";
+import type { GameCards } from "~/game-engine/core-engine/types";
 import type {
   BaseCoreCardFilter,
   DefaultCardDefinition,
@@ -44,12 +33,12 @@ import type {
   GameSpecificCardFilter,
   GameSpecificGameState,
   GameSpecificPlayerState,
-} from "../types/game-specific-types";
-import type { Result } from "../types/result";
-import { Result as ResultHelpers } from "../types/result";
-import { CoreOperation } from "./core-operation";
-import { getFilterPlayerView } from "./filter-player-view";
-import { Zone } from "./zone-operation";
+} from "~/game-engine/core-engine/types/game-specific-types";
+import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
+import type { CoreCardInstance } from "../card/core-card-instance";
+import { createFlowManager } from "../flow/flow-manager";
+
+type PlayerID = string;
 
 export interface CoreEngineOpts<
   GameState extends GameSpecificGameState = DefaultGameState,
@@ -70,7 +59,6 @@ export interface CoreEngineOpts<
   debug?: boolean;
   seed?: string;
   repository: CardRepository<CardDefinition>;
-  logCollector?: LogCollector;
 }
 
 export type ClientState<
@@ -106,11 +94,9 @@ export class CoreEngine<
   private readonly gameRuntime: GameRuntime<GameState>;
 
   private subscribers: Array<(state: ClientState<GameState>) => void> = [];
-  private gameStateStore: GameStateStore<GameState, PlayerState>;
+  private gameStateStore: GameStateStore<GameState>;
   private moveProcessor: MoveProcessor<GameState>;
   private flowManager: FlowManager<GameState>;
-  private moveEnumerationService: MoveEnumerationService<GameState>;
-  private logCollector: LogCollector;
 
   // Generic storage for player cards and card models
   public cardInstanceStore: CoreCardInstanceStore<CardDefinition>;
@@ -143,7 +129,6 @@ export class CoreEngine<
     seed,
     repository,
     initialCoreCtx,
-    logCollector,
   }: CoreEngineOpts<
     GameState,
     CardDefinition,
@@ -155,13 +140,9 @@ export class CoreEngine<
     this.matchID = matchID || "default-match";
     this.gameID = "default-game";
     this.debug = debug;
-    this.logCollector = logCollector || new LogCollector();
 
     this.filterPlayerView = getFilterPlayerView(game);
-    const { processedGame, initialState: init } = initializeGame<
-      GameState,
-      PlayerState
-    >({
+    const { processedGame, initialState: init } = initializeGame<GameState>({
       game,
       initialState,
       initialCoreCtx,
@@ -169,11 +150,10 @@ export class CoreEngine<
       players,
       seed,
       engine: this,
-      logCollector: this.logCollector,
     });
 
     this.gameRuntime = processedGame;
-    this.gameStateStore = new GameStateStore<GameState, PlayerState>({
+    this.gameStateStore = new GameStateStore<GameState>({
       initialState: init,
     });
 
@@ -185,244 +165,101 @@ export class CoreEngine<
     });
 
     // Create move processor with reference to this engine
-    this.moveProcessor = new MoveProcessor<GameState>(this, this.logCollector);
+    this.moveProcessor = new MoveProcessor<GameState>(
+      processedGame,
+      (playerID: string) => this.canPlayerMove(playerID),
+      debug,
+      this,
+    );
 
     // Create flow manager with reference to this engine
-    this.flowManager = createFlowManager<GameState>(
-      processedGame,
-      this,
-      this.logCollector,
-    );
-
-    // Initialize move enumeration service
-    this.moveEnumerationService = new MoveEnumerationService<GameState>(
-      this as unknown as MoveProvider<GameState>,
-      this.logCollector,
-    );
+    this.flowManager = createFlowManager<GameState>(processedGame, this);
 
     // Automatically process initial flow transitions to initialize segments and phases
     const initialStateWithFlow = this.flowManager.processFlowTransitions(init);
     if (initialStateWithFlow !== init) {
-      this.gameStateStore.updateState({
-        newState: initialStateWithFlow as CoreEngineState<
-          GameState,
-          PlayerState
-        >,
-      });
+      this.gameStateStore.updateState({ newState: initialStateWithFlow });
     }
 
     // Initialize card models
     this.initializeCardModels();
   }
 
-  protected log(
-    level: LogLevel,
-    message: string,
-    data?: Record<string, unknown>,
-  ) {
-    this.logCollector.log(level, message, data);
-  }
-
   processMove(
     playerID: string,
     moveType: string,
     args: unknown[],
-  ): Result<
-    { state: CoreEngineState<GameState, PlayerState>; logs: any[] },
-    AnyEngineError
-  > {
-    const logCollector = new LogCollector();
-    logCollector.log(
-      LogLevel.DEVELOPER,
-      `[${playerID}]: making move ${moveType} ${JSON.stringify(args)}`,
-    );
+  ): Result<CoreEngineState<GameState>, AnyEngineError> {
     try {
-      // Find the move function
-      const move = this.getMove(this.getCtx(), moveType, playerID);
-
-      if (!move) {
-        logCollector.log(LogLevel.DEVELOPER, `Unknown move: ${moveType}`);
-        return ResultHelpers.error(
-          new UnknownMoveError(moveType, Object.keys(this.gameRuntime.moves)),
-        );
-      }
-
-      // Check if player is allowed to move
-      if (!this.canPlayerMove(playerID)) {
-        return ResultHelpers.error(
-          new MoveRejectedError(
-            moveType,
-            playerID,
-            "Player cannot move at this time",
-          ),
-        );
-      }
-
-      const processResult = this.moveProcessor.executeMove(
-        this.gameStateStore.state,
+      const moveRequest: MoveRequest = {
         playerID,
         moveType,
-        move,
-        logCollector,
-        ...args,
-      );
+        args,
+      };
 
-      if (processResult.error) {
-        logCollector.log(LogLevel.DEVELOPER, processResult.error.toString());
-        return {
-          success: false,
-          error: this.convertInvalidMoveResultToError(
-            processResult.error,
+      if (debuggers.moves) {
+        logger.group(
+          `Processing move: ${moveType} for player: ${playerID}`,
+          moveRequest,
+        );
+      }
+
+      // Validate player is allowed to make moves
+      if (!this.canPlayerMove(playerID)) {
+        return ResultHelpers.error(
+          new InvalidMoveError(
             moveType,
             playerID,
+            `Player ${playerID} is not allowed to make moves, priority players: ${this.getPriorityPlayers()}`,
           ),
+        );
+      }
+
+      const processResult = this.moveProcessor.process(
+        moveRequest,
+        this.gameStateStore.state,
+      );
+
+      if (!processResult.success) {
+        if (debuggers.moves) {
+          logger.error(processResult);
+        }
+        return {
+          success: false,
+          error: (processResult as { success: false; error: AnyEngineError })
+            .error,
         };
       }
 
-      const newState = processResult.state;
-      if (!newState) {
-        return ResultHelpers.error(
-          new MoveExecutionError(
-            moveType,
-            playerID,
-            "Move execution returned undefined state",
-          ),
+      const { newState } = processResult.data;
+
+      const finalState = this.flowManager.processFlowTransitions(newState);
+
+      this.gameStateStore.updateState({
+        newState: finalState,
+      });
+
+      if (this.isAuthoritative) {
+        this.broadcastToClients(finalState);
+      } else if (this.authoritativeEngine) {
+        (this.authoritativeEngine as any).receiveFromClient(
+          this.playerID,
+          finalState,
         );
       }
 
-      const finalState = this.flowManager.processFlowTransitions({
-        ...this.gameStateStore.state,
-        G: newState,
-      });
-      this.gameStateStore.updateState({
-        newState: finalState as CoreEngineState<GameState, PlayerState>,
-      });
-
-      return ResultHelpers.ok({
-        state: finalState as CoreEngineState<GameState, PlayerState>,
-        logs: logCollector.getEntries(),
-      });
+      return ResultHelpers.ok(finalState);
     } catch (error) {
-      logCollector.log(
-        LogLevel.DEVELOPER,
-        `Unexpected error processing move: ${error}`,
-      );
+      logger.error("Unexpected error processing move:", error);
       return ResultHelpers.error(
         new MoveExecutionError(
           moveType,
           playerID,
-          error instanceof Error ? error.message : String(error),
+          error instanceof Error ? error : new Error(String(error)),
         ),
       );
-    }
-  }
-
-  makeMove(
-    playerID: string,
-    moveType: string,
-    ...args: unknown[]
-  ): Result<
-    { state: CoreEngineState<GameState, PlayerState>; logs: any[] },
-    AnyEngineError
-  > {
-    // If this is a client engine, delegate to authoritative engine if available
-    if (this.authoritativeEngine) {
-      this.authoritativeEngine.receiveFromClient(playerID, {
-        ...this.gameStateStore.state,
-        _stateID: this.gameStateStore.state._stateID + 1,
-      });
-      return ResultHelpers.ok({
-        state: this.gameStateStore.state,
-        logs: [],
-      });
-    }
-
-    const logCollector = new LogCollector();
-
-    try {
-      logCollector.log(
-        LogLevel.DEVELOPER,
-        `Processing move: ${moveType} for player: ${playerID}`,
-      );
-
-      // Check if player is allowed to move
-      if (!this.canPlayerMove(playerID)) {
-        return ResultHelpers.error(
-          new MoveRejectedError(
-            moveType,
-            playerID,
-            "Player cannot move at this time",
-          ),
-        );
-      }
-
-      // Find the move function
-      const move = this.getMove(this.getCtx(), moveType, playerID);
-
-      if (!move) {
-        logCollector.log(LogLevel.DEVELOPER, `Unknown move: ${moveType}`);
-        return ResultHelpers.error(
-          new UnknownMoveError(moveType, Object.keys(this.gameRuntime.moves)),
-        );
-      }
-
-      // Execute the move directly with the move processor
-      const processResult = this.moveProcessor.executeMove(
-        this.gameStateStore.state,
-        playerID,
-        moveType,
-        move,
-        logCollector,
-        ...args,
-      );
-
-      if (processResult.error) {
-        logCollector.log(LogLevel.DEVELOPER, processResult.error.toString());
-        return {
-          success: false,
-          error: this.convertInvalidMoveResultToError(
-            processResult.error,
-            moveType,
-            playerID,
-          ),
-        };
-      }
-
-      const newState = processResult.state;
-      if (!newState) {
-        return ResultHelpers.error(
-          new MoveExecutionError(
-            moveType,
-            playerID,
-            "Move execution returned undefined state",
-          ),
-        );
-      }
-
-      const finalState = this.flowManager.processFlowTransitions({
-        ...this.gameStateStore.state,
-        G: newState,
-      });
-      this.gameStateStore.updateState({
-        newState: finalState as CoreEngineState<GameState, PlayerState>,
-      });
-
-      return ResultHelpers.ok({
-        state: finalState as CoreEngineState<GameState, PlayerState>,
-        logs: logCollector.getEntries(),
-      });
-    } catch (error) {
-      logCollector.log(
-        LogLevel.DEVELOPER,
-        `Unexpected error processing move: ${error}`,
-      );
-      return ResultHelpers.error(
-        new MoveExecutionError(
-          moveType,
-          playerID,
-          error instanceof Error ? error.message : String(error),
-        ),
-      );
+    } finally {
+      logger.groupEnd();
     }
   }
 
@@ -437,7 +274,7 @@ export class CoreEngine<
     return this.flowManager.canPlayerAct(currentState, playerID);
   }
 
-  private updateState(newState: CoreEngineState<GameState, PlayerState>): void {
+  private updateState(newState: CoreEngineState<GameState>): void {
     this.gameStateStore.updateState({ newState });
   }
 
@@ -480,16 +317,17 @@ export class CoreEngine<
 
   private receiveFromClient(
     _playerID: PlayerID,
-    state: CoreEngineState<GameState, PlayerState>,
+    state: CoreEngineState<GameState>,
   ): void {
     const hashBefore = this.gameStateStore.stateHash;
     this.updateState(state);
     const hashAfter = this.gameStateStore.stateHash;
 
-    this.logCollector.log(
-      LogLevel.DEVELOPER,
-      `Authoritative engine received state from client ${_playerID}, hash: ${hashBefore} -> ${hashAfter}`,
-    );
+    if (debuggers.transportMessages) {
+      logger.debug(
+        `Authoritative engine received state from client ${_playerID}, hash: ${hashBefore} -> ${hashAfter}`,
+      );
+    }
 
     if (hashBefore !== hashAfter) {
       this.broadcastToClients(state);
@@ -503,14 +341,12 @@ export class CoreEngine<
         args: [this.matchID, state],
       });
       engine.receiveFromAuthoritative(
-        filteredState.args[1] as CoreEngineState<GameState, PlayerState>,
+        filteredState.args[1] as CoreEngineState<GameState>,
       );
     });
   }
 
-  private receiveFromAuthoritative(
-    state: CoreEngineState<GameState, PlayerState>,
-  ): void {
+  private receiveFromAuthoritative(state: CoreEngineState<GameState>): void {
     const currentState = this.gameStateStore.getState();
 
     if (state._stateID >= currentState._stateID) {
@@ -537,8 +373,8 @@ export class CoreEngine<
   }
 
   /** Get game context (turns, phases, players) */
-  getCtx(): CoreCtx<PlayerState> {
-    return this.getGameState()?.ctx as CoreCtx<PlayerState>;
+  getCtx() {
+    return this.getGameState()?.ctx;
   }
 
   /** Get number of turns played */
@@ -638,7 +474,7 @@ export class CoreEngine<
     return getCurrentPriorityPlayer(this.gameStateStore.getState().ctx);
   }
 
-  getGameState(): CoreEngineState<GameState, PlayerState> {
+  getGameState(): CoreEngineState<GameState> {
     return this.gameStateStore.getState();
   }
 
@@ -763,93 +599,6 @@ export class CoreEngine<
   getTurnCount(): number {
     const currentState = this.getGameState();
     return currentState.ctx.numTurns || 0;
-  }
-
-  /**
-   * Get all available moves for the current player
-   * This is a placeholder for Phase 2 implementation
-   */
-  getAvailableMoves(playerID: string): any[] {
-    // In Phase 2, this will use the MoveEnumerationService
-    return [];
-  }
-
-  /**
-   * Get potential targets for a specific move
-   * This is a placeholder for Phase 2 implementation
-   */
-  getPotentialTargets(
-    playerID: string,
-    moveType: string,
-    ...args: unknown[]
-  ): any {
-    // In Phase 2, this will use the MoveEnumerationService
-    return { targets: [] };
-  }
-
-  // Implement the MoveProvider interface for move enumeration
-  getAllMovesForCurrentContext(
-    state: CoreEngineState<GameState>,
-  ): Record<string, Move> | null {
-    // Get the current phase's available moves
-    const ctx = state.ctx;
-    const currentPhase = ctx.currentPhase;
-
-    // Get moves from game runtime
-    const moves = this.gameRuntime.moves || {};
-
-    // In a complete implementation, we would also include phase-specific moves
-    // but we'll keep it simple for now
-    return moves;
-  }
-
-  getPlayerState(playerID: string): PlayerState | undefined {
-    const ctx: CoreCtx<PlayerState> = this.getCtx();
-    return ctx.players?.[playerID];
-  }
-
-  getMove(ctx: CoreCtx, moveName: string, playerID: string): Move | null {
-    // Check if the move exists in the game runtime
-    const moves = this.gameRuntime.moves || {};
-    if (moves[moveName]) {
-      return moves[moveName];
-    }
-
-    // Move not found
-    this.logCollector.log(
-      LogLevel.DEVELOPER,
-      `Move ${moveName} not found in game moves`,
-    );
-    return null;
-  }
-
-  canPlayerAct(state: CoreEngineState<GameState>, playerID: string): boolean {
-    // Check if game is over
-    if (state.ctx.gameOver) {
-      return false;
-    }
-
-    // Check if the player has priority
-    const currentTurnPlayer = getCurrentTurnPlayer(state.ctx);
-    const currentPriorityPlayer = getCurrentPriorityPlayer(state.ctx);
-
-    // Simple check - is it their turn or do they have priority?
-    return currentTurnPlayer === playerID || currentPriorityPlayer === playerID;
-  }
-
-  /**
-   * Convert InvalidMoveResult to a proper AnyEngineError
-   */
-  private convertInvalidMoveResultToError(
-    result: InvalidMoveResult,
-    moveType: string,
-    playerID: string,
-  ): AnyEngineError {
-    return new InvalidMoveError(
-      moveType,
-      playerID,
-      result.reason || "Unknown error",
-    );
   }
 }
 

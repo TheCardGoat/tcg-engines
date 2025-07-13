@@ -12,6 +12,7 @@ import {
   createCtx,
 } from "~/game-engine/core-engine/state/context";
 import type { InstanceId } from "~/game-engine/core-engine/types";
+import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
 import {
   createId,
   createShortAndUniqueIds,
@@ -531,6 +532,10 @@ export class RiftboundTestEngine {
 
     // This should be replaced with an actual chooseFirstPlayer move when implemented
     // For now, just make the test pass
+
+    if (debuggers.testEngine) {
+      logger.debug(`Selected first player: ${playerId}`, { result });
+    }
   }
 
   /**
@@ -545,6 +550,10 @@ export class RiftboundTestEngine {
     const nextPlayer =
       currentTurn === "player_one" ? "player_two" : "player_one";
     this.changeActivePlayer(nextPlayer);
+
+    if (debuggers.testEngine) {
+      logger.debug(`Turn ended. New turn: ${nextPlayer}`);
+    }
   }
 
   /**
@@ -580,6 +589,10 @@ export class RiftboundTestEngine {
       }
       return counts;
     };
+
+    if (debuggers.testEngine) {
+      logger.debug(`Drew ${count} cards`);
+    }
   }
 
   // Cleanup

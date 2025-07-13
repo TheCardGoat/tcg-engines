@@ -1,4 +1,3 @@
-import { LogCollector } from "~/game-engine/utils/log-collector";
 import { CardRepository } from "../card/card-repository-factory";
 import type { CoreCardInstance } from "../card/core-card-instance";
 import type { CoreEngineState, GameDefinition } from "../game-configuration";
@@ -54,12 +53,7 @@ export type TestMove = Move<
   TestCoreEngine
 >;
 
-const contextSharingMove: TestMove = ({
-  G,
-  coreOps,
-  gameOps,
-  logCollector,
-}) => {
+const contextSharingMove: TestMove = ({ G, coreOps, gameOps }) => {
   coreOps.incrementTurnCount();
   if (coreOps.getTurnCount() !== gameOps.getTurnCount()) {
     throw new Error(
@@ -113,71 +107,67 @@ export const testCard: TestCardDefinition = {
   cost: 1,
 };
 
-const stateSharedMove: TestMove = ({ G, coreOps, gameOps, logCollector }) => {
-  // Step 1: Modify G directly
-  G.testValue = "modified by direct G access";
-  G.directModified = true;
-
-  // Step 2: Use coreOps to modify context and check if it can see G changes
-  // This should be able to access the modified G state
-  const canCoreOpsSeeDirectChanges =
-    G.testValue === "modified by direct G access";
-  G.coreOpsModified = canCoreOpsSeeDirectChanges;
-
-  // Modify context through coreOps (example: setting priority player)
-  const players = coreOps.getPlayers();
-  if (players.length > 0) {
-    coreOps.setPriorityPlayer(players[0]);
-  }
-
-  // Step 3: Use gameOps to query state and check if it can see all previous changes
-  // This should be able to see both direct G changes and coreOps changes
-  const canGameOpsSeeAllChanges =
-    G.testValue === "modified by direct G access" &&
-    G.directModified === true &&
-    G.coreOpsModified === true;
-
-  G.gameOpsModified = canGameOpsSeeAllChanges;
-
-  return G;
-};
-
-const originalIssueTest: TestMove = ({ G, coreOps, gameOps, logCollector }) => {
-  // Test that matches your original example more closely
-
-  // Step 1: Modify G directly
-  G.testValue = "bar";
-
-  // Step 2: coreOps does something that should see G.testValue
-  const players = coreOps.getPlayers();
-  coreOps.setOTP(players[0]); // This should be able to access G state if needed
-
-  // Check if coreOps operations can indirectly "see" G changes
-  // (This is a proxy test since coreOps mainly works with ctx)
-  const canCoreOpsWorkWithGState = G.testValue === "bar";
-
-  // Step 3: gameOps does something that should see both G and coreOps changes
-  const gameEngine = gameOps as any;
-  const currentOTP = gameEngine.getCtx().otp;
-  const gameOpsCanSeeCtxChanges = currentOTP === players[0];
-  const gameOpsCanSeeGChanges = G.testValue === "bar";
-
-  // Record results
-  G.coreOpsModified = canCoreOpsWorkWithGState;
-  G.gameOpsModified = gameOpsCanSeeCtxChanges && gameOpsCanSeeGChanges;
-  G.directModified = true;
-
-  return G;
-};
-
 export const testGame: GameDefinition<TestGameState> = {
   name: "test-game",
   numPlayers: 2,
   moves: {
     simpleMove: ({ G }) => G,
-    stateSharedMove,
+    stateSharedMove: ({ G, coreOps, gameOps }) => {
+      // Step 1: Modify G directly
+      G.testValue = "modified by direct G access";
+      G.directModified = true;
+
+      // Step 2: Use coreOps to modify context and check if it can see G changes
+      // This should be able to access the modified G state
+      const canCoreOpsSeeDirectChanges =
+        G.testValue === "modified by direct G access";
+      G.coreOpsModified = canCoreOpsSeeDirectChanges;
+
+      // Modify context through coreOps (example: setting priority player)
+      const players = coreOps.getPlayers();
+      if (players.length > 0) {
+        coreOps.setPriorityPlayer(players[0]);
+      }
+
+      // Step 3: Use gameOps to query state and check if it can see all previous changes
+      // This should be able to see both direct G changes and coreOps changes
+      const canGameOpsSeeAllChanges =
+        G.testValue === "modified by direct G access" &&
+        G.directModified === true &&
+        G.coreOpsModified === true;
+
+      G.gameOpsModified = canGameOpsSeeAllChanges;
+
+      return G;
+    },
     contextSharingMove: contextSharingMove,
-    originalIssueTest,
+    originalIssueTest: ({ G, coreOps, gameOps }) => {
+      // Test that matches your original example more closely
+
+      // Step 1: Modify G directly
+      G.testValue = "bar";
+
+      // Step 2: coreOps does something that should see G.testValue
+      const players = coreOps.getPlayers();
+      coreOps.setOTP(players[0]); // This should be able to access G state if needed
+
+      // Check if coreOps operations can indirectly "see" G changes
+      // (This is a proxy test since coreOps mainly works with ctx)
+      const canCoreOpsWorkWithGState = G.testValue === "bar";
+
+      // Step 3: gameOps does something that should see both G and coreOps changes
+      const gameEngine = gameOps as any;
+      const currentOTP = gameEngine.getCtx().otp;
+      const gameOpsCanSeeCtxChanges = currentOTP === players[0];
+      const gameOpsCanSeeGChanges = G.testValue === "bar";
+
+      // Record results
+      G.coreOpsModified = canCoreOpsWorkWithGState;
+      G.gameOpsModified = gameOpsCanSeeCtxChanges && gameOpsCanSeeGChanges;
+      G.directModified = true;
+
+      return G;
+    },
   },
   playerView: ({ G }) => G,
 };
@@ -208,12 +198,10 @@ export class TestCoreEngine {
     TestCardFilter,
     TestCardInstance
   >;
-  public readonly logCollector: LogCollector;
 
   activePlayerEngine = "player_one";
 
   constructor(opts: TestEngineOpts = {}) {
-    this.logCollector = new LogCollector();
     const seed = "test-seed";
     const gameId = `TEST_GAME_${Date.now()}_${Math.random()
       .toString(36)
@@ -255,20 +243,15 @@ export class TestCoreEngine {
       game: testGame,
       cards,
       repository: repository as any, // Using 'as any' to bypass complex type issues in test setup
-      matchID: gameId,
       gameID: gameId,
       debug: opts.debug,
       seed,
       players,
       initialState,
-      logCollector: this.logCollector,
     };
 
-    // Create all engines with exactly the same configuration
-    // The key is to use the exact same seed, initialState and options
     this.authoritativeEngine = new CoreEngine({
       ...engineOpts,
-      playerID: null,
     });
 
     this.playerOneEngine = new CoreEngine({
@@ -281,7 +264,6 @@ export class TestCoreEngine {
       playerID: "player_two",
     });
 
-    // Set up the authoritative engine relationship
     this.playerOneEngine.setAuthoritativeEngine(this.authoritativeEngine);
     this.playerTwoEngine.setAuthoritativeEngine(this.authoritativeEngine);
   }

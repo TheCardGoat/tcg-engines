@@ -6,7 +6,7 @@ import type {
   BaseCoreCardFilter,
   GameSpecificCardFilter,
 } from "~/game-engine/core-engine/types/game-specific-types";
-import { logger } from "../../../shared/logger";
+import { logger } from "~/game-engine/core-engine/utils/logger";
 
 /**
  * Generic card filter that can be extended by games with specific properties

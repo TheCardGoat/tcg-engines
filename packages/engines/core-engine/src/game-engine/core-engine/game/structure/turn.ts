@@ -19,8 +19,6 @@ import {
   getCurrentTurnPlayer,
   setNextTurnPlayer,
 } from "~/game-engine/core-engine/state/context";
-import { LogLevel } from "../../../types/log-types";
-import { LogCollector } from "../../../utils/log-collector";
 
 export interface TurnMap<G = unknown> {
   [turnName: string]: TurnConfig<G>;
@@ -98,12 +96,7 @@ export function startTurn(
     const context = {
       G: state.G,
       ctx: state.ctx,
-      coreOps: new CoreOperation({
-        state,
-        engine: undefined,
-        logCollector: state.ctx.logCollector,
-      }),
-      logCollector: state.ctx.logCollector,
+      coreOps: new CoreOperation({ state, engine: undefined }),
     };
     const newG = segmentConfig.turn.onBegin(context);
     if (newG !== undefined) {
@@ -142,12 +135,7 @@ export function shouldEndTurn(
   const context = {
     G: state.G,
     ctx: state.ctx,
-    coreOps: new CoreOperation({
-      state,
-      engine: undefined,
-      logCollector: state.ctx.logCollector,
-    }),
-    logCollector: state.ctx.logCollector,
+    coreOps: new CoreOperation({ state, engine: undefined }),
   };
   return segmentConfig.turn.endIf ? segmentConfig.turn.endIf(context) : false;
 }
@@ -160,9 +148,7 @@ export function endTurn(
   // This is not the turn that EndTurn was originally
   // called for. The turn was probably ended some other way.
   if (initialTurn !== undefined && initialTurn !== state.ctx.currentTurn) {
-    const logCollector = state.ctx.logCollector || new LogCollector();
-    logCollector.log(
-      LogLevel.DEVELOPER,
+    logger.warn(
       `endTurn called for turn ${initialTurn}, but current turn is ${state.ctx.currentTurn}. Ignoring.`,
     );
     return state;
@@ -180,12 +166,7 @@ export function endTurn(
     const context = {
       G: state.G,
       ctx: state.ctx,
-      coreOps: new CoreOperation({
-        state,
-        engine: undefined,
-        logCollector: state.ctx.logCollector,
-      }),
-      logCollector: state.ctx.logCollector,
+      coreOps: new CoreOperation({ state, engine: undefined }),
     };
     const newG = segmentConfig.turn.onEnd(context);
     if (newG !== undefined) {

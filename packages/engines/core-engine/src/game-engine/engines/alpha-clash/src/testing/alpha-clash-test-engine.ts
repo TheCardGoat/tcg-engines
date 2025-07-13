@@ -6,6 +6,7 @@ import {
   createCtx,
 } from "~/game-engine/core-engine/state/context";
 import type { GameCards, InstanceId } from "~/game-engine/core-engine/types";
+import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
 import {
   createId,
   createShortAndUniqueIds,
@@ -164,7 +165,7 @@ export class AlphaClashTestEngine {
     });
 
     if (debug) {
-      console.info("Alpha Clash Test Engine initialized with debug mode");
+      logger.info("Alpha Clash Test Engine initialized with debug mode");
     }
   }
 

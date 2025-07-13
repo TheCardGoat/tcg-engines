@@ -16,8 +16,6 @@ import type {
 } from "~/game-engine/core-engine/types/game-specific-types";
 import type { AlphaClashCard } from "./src/cards/definitions/cardTypes";
 
-export type PlayerTurnHistory = {};
-
 /**
  * Alpha Clash game zones
  */
@@ -151,25 +149,25 @@ export type AlphaClashKeyword =
 /**
  * Game-specific player state extending the base player state
  */
-export type AlphaClashPlayerState = ExtendPlayerState<
-  {
-    // Contender health
-    contenderHealth?: number;
+export type AlphaClashPlayerState = ExtendPlayerState<{
+  // Contender health
+  contenderHealth?: number;
 
-    // Resources available this turn
-    availableResources?: number;
+  // Turn history for game logs
+  turnHistory: string[];
 
-    // Clash buffs used this clash
-    clashBuffsUsed?: number;
+  // Resources available this turn
+  availableResources?: number;
 
-    // Cards selected for champion selection (if applicable)
-    selectedChampion?: string;
+  // Clash buffs used this clash
+  clashBuffsUsed?: number;
 
-    // Priority windows where player can act
-    hasPriority?: boolean;
-  },
-  PlayerTurnHistory
->;
+  // Cards selected for champion selection (if applicable)
+  selectedChampion?: string;
+
+  // Priority windows where player can act
+  hasPriority?: boolean;
+}>;
 
 /**
  * Game-specific game state extending the base game state
