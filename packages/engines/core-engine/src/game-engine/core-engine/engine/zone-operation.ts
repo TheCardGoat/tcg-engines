@@ -1,9 +1,10 @@
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
-import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
 import {
   LinearCongruentialGenerator,
   shuffleCardZone,
 } from "~/game-engine/core-engine/utils/random";
+import { LogLevel } from "../../types/log-types";
+import type { LogCollector } from "../../utils/log-collector";
 
 export type ZonePosition = "top" | "bottom" | number;
 export type ZoneVisibility = "public" | "private" | "secret";
@@ -32,7 +33,7 @@ export interface Zone {
   owner: PlayerID;
   cards: CardInstanceID[];
   visibility: ZoneVisibility;
-  ordered?: boolean;
+  ordered: boolean;
   sizeLimit?: number;
   ownerRestricted?: boolean;
   metadata?: Record<string, unknown>;
@@ -137,6 +138,7 @@ function moveCardBetweenZones({
   toZone,
   cardToMove,
   destination,
+  logCollector,
 }: {
   ctx: CoreCtx;
   playerId: string;
@@ -145,23 +147,29 @@ function moveCardBetweenZones({
   cardToMove: string;
   origin: "start" | "end";
   destination: "start" | "end";
+  logCollector: LogCollector;
 }): CoreCtx {
   if (!(fromZone && toZone)) {
-    logger.warn(
+    logCollector.log(
+      LogLevel.DEVELOPER,
       `One of the zones ('${fromZone?.name}' or '${toZone?.name}') not found in context.`,
     );
     return ctx;
   }
 
   if (fromZone.owner !== playerId || toZone.owner !== playerId) {
-    logger.warn(
+    logCollector.log(
+      LogLevel.DEVELOPER,
       `Player ${playerId} does not own one of the zones ('${fromZone.id}' or '${toZone.id}').`,
     );
     return ctx;
   }
 
   if (!fromZone.cards.includes(cardToMove)) {
-    logger.warn(`Card ${cardToMove} not found in zone: '${fromZone.id}'.`);
+    logCollector.log(
+      LogLevel.DEVELOPER,
+      `Card ${cardToMove} not found in zone: '${fromZone.id}'.`,
+    );
     return ctx;
   }
 
@@ -178,17 +186,17 @@ function moveCardBetweenZones({
     newFromCards.length + newToCards.length !==
     fromZone.cards.length + toZone.cards.length
   ) {
-    logger.error(
+    logCollector.log(
+      LogLevel.DEVELOPER,
       `Card count mismatch after move: fromZone=${fromZone.cards.length}, toZone=${toZone.cards.length}, movedCard=${cardToMove}`,
     );
     return ctx;
   }
 
-  if (debuggers.zoneOperations) {
-    logger.debug(
-      `Moving card '${cardToMove}' from zone '${fromZone.id}' to zone '${toZone.id}'`,
-    );
-  }
+  logCollector.log(
+    LogLevel.DEVELOPER,
+    `Moving card '${cardToMove}' from zone '${fromZone.id}' to zone '${toZone.id}'`,
+  );
 
   return {
     ...ctx,
@@ -206,11 +214,18 @@ function moveCardBetweenZones({
   };
 }
 
-export function shuffleZone(ctx: CoreCtx, zoneId: string) {
+export function shuffleZone(
+  ctx: CoreCtx,
+  zoneId: string,
+  logCollector: LogCollector,
+) {
   const zone = getCardZone(ctx, zoneId);
 
   if (!zone) {
-    logger.warn(`[shuffeZone] Zone ${zoneId} not found in context.`);
+    logCollector.log(
+      LogLevel.DEVELOPER,
+      `[shuffeZone] Zone ${zoneId} not found in context.`,
+    );
     return ctx;
   }
 
@@ -219,7 +234,7 @@ export function shuffleZone(ctx: CoreCtx, zoneId: string) {
 
   return {
     ...ctx,
-    seed: next,
+    seed: next.toString(),
     cardZones: {
       ...ctx.cardZones,
       [zoneId]: {
@@ -237,6 +252,7 @@ export function moveCardByInstanceId({
   to,
   from,
   destination = "end",
+  logCollector,
 }: {
   ctx: CoreCtx;
   instanceId: string;
@@ -245,6 +261,7 @@ export function moveCardByInstanceId({
   from?: string; // Optional constraint - card must be in this zone
   origin?: "start" | "end"; // ignored, since we use instanceId
   destination?: "start" | "end";
+  logCollector: LogCollector;
 }): CoreCtx | ZoneOperationError {
   const fromZone = getCardZoneByInstanceId(ctx, instanceId);
   const toZone = getCardZone(ctx, to, playerId);
@@ -305,6 +322,7 @@ export function moveCardByInstanceId({
     cardToMove: instanceId,
     origin: "start", // not used in this context
     destination,
+    logCollector,
   });
 }
 
@@ -315,6 +333,7 @@ export function move({
   to,
   origin = "start",
   destination = "end",
+  logCollector,
 }: {
   ctx: CoreCtx;
   playerId: string;
@@ -322,19 +341,24 @@ export function move({
   to?: string;
   origin?: "start" | "end";
   destination?: "start" | "end";
+  logCollector: LogCollector;
 }): CoreCtx {
   const fromZone = getCardZone(ctx, from, playerId);
   const toZone = getCardZone(ctx, to, playerId);
 
   if (!(fromZone && toZone)) {
-    logger.warn(
+    logCollector.log(
+      LogLevel.DEVELOPER,
       `One of the zones ('${from}' or '${to}') not found in context.`,
     );
     return ctx;
   }
 
   if (fromZone.cards.length === 0) {
-    logger.warn(`Cannot move card from empty zone: '${fromZone.id}'.`);
+    logCollector.log(
+      LogLevel.DEVELOPER,
+      `Cannot move card from empty zone: '${fromZone.id}'.`,
+    );
     return ctx;
   }
 
@@ -355,5 +379,6 @@ export function move({
     cardToMove,
     origin,
     destination,
+    logCollector,
   });
 }

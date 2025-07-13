@@ -13,24 +13,28 @@ import type {
 } from "~/game-engine/core-engine/types/game-specific-types";
 import type { GundamitoCard } from "./cards/definitions/cardTypes";
 
+export type PlayerTurnHistory = {};
+
 /**
  * Gundam-specific player state extending the base player state
  */
-export type GundamPlayerState = ExtendPlayerState<{
-  turnHistory: string[];
-  zones: {
-    deck: string[];
-    resourceDeck: string[];
-    resourceArea: string[];
-    battleArea: string[];
-    shieldBase: string[];
-    shieldSection: string[];
-    removalArea: string[];
-    hand: string[];
-    trash: string[];
-    sideboard: string[];
-  };
-}>;
+export type GundamPlayerState = ExtendPlayerState<
+  {
+    zones: {
+      deck: string[];
+      resourceDeck: string[];
+      resourceArea: string[];
+      battleArea: string[];
+      shieldBase: string[];
+      shieldSection: string[];
+      removalArea: string[];
+      hand: string[];
+      trash: string[];
+      sideboard: string[];
+    };
+  },
+  PlayerTurnHistory
+>;
 
 /**
  * Gundam-specific game state extending the base game state

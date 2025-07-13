@@ -10,10 +10,12 @@
       "inputs": ["**/*.ts", "**/*.tsx", "tsconfig.json", "tsconfig.*.json"]
     },
     "format": {
-      "outputs": []
+      "outputs": [],
+      "cache": false
     },
     "lint": {
-      "outputs": []
+      "outputs": [],
+      "cache": false
     },
     "test": {
       "outputs": []

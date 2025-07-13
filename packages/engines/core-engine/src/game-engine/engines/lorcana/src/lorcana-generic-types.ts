@@ -16,12 +16,14 @@ import type {
 /**
  * Lorcana-specific player state extending the base player state
  */
-export type LorcanaPlayerState = ExtendPlayerState<{
-  lore: number;
-  ink: number;
-  questProgress: Record<string, number>;
-  turnHistory?: PlayerTurnHistory[];
-}>;
+export type LorcanaPlayerState = ExtendPlayerState<
+  {
+    lore: number;
+    ink: number;
+    questProgress: Record<string, number>;
+  },
+  PlayerTurnHistory
+>;
 
 export interface PlayerTurnHistory {
   turnNumber: number;

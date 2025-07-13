@@ -146,6 +146,8 @@ export type GrandArchiveAbilityType =
   | "keyword"
   | "restriction";
 
+export type PlayerTurnHistory = {};
+
 // =============================================================================
 // Extended Core Types
 // =============================================================================
@@ -153,30 +155,30 @@ export type GrandArchiveAbilityType =
 /**
  * Grand Archive specific player state extensions
  */
-export type GrandArchivePlayerState = ExtendPlayerState<{
-  // Champion management
-  championLineage: string[]; // Stack of champion cards (bottom to top)
-  championLevel: number; // Current effective level
-  championDamage: number; // Damage counters on champion
+export type GrandArchivePlayerState = ExtendPlayerState<
+  {
+    // Champion management
+    championLineage: string[]; // Stack of champion cards (bottom to top)
+    championLevel: number; // Current effective level
+    championDamage: number; // Damage counters on champion
 
-  // Element availability
-  availableElements: Set<GrandArchiveElement>;
+    // Element availability
+    availableElements: Set<GrandArchiveElement>;
+    hasMaterialized: boolean;
 
-  // Turn state
-  hasMaterialized: boolean; // One materialization per turn
-  turnActions: string[]; // Actions taken this turn
+    // Counters on champion
+    counters: Record<GrandArchiveCounterType, number>;
 
-  // Counters on champion
-  counters: Record<GrandArchiveCounterType, number>;
+    // Game state tracking
+    influence: number; // Hand + Memory card count
+    turnHistory: string[]; // Historical record of actions
 
-  // Game state tracking
-  influence: number; // Hand + Memory card count
-  turnHistory: string[]; // Historical record of actions
-
-  // Player metadata
-  isActive?: boolean;
-  joinedAt?: number;
-}>;
+    // Player metadata
+    isActive?: boolean;
+    joinedAt?: number;
+  },
+  PlayerTurnHistory
+>;
 
 /**
  * Grand Archive specific game state extensions

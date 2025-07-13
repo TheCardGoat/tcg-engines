@@ -57,29 +57,39 @@ export interface MoveConstraintFailure {
  * Target specification for a move parameter
  */
 export interface TargetSpec<
-  Context = FnContext<
-    DefaultGameState,
-    DefaultCardDefinition,
-    DefaultPlayerState,
-    BaseCoreCardFilter,
-    CoreCardInstance<DefaultCardDefinition>
-  >,
-  CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
+  Context = FnContext<any, any, any, any, any>,
+  Filter extends GameSpecificCardFilter = BaseCoreCardFilter,
 > {
+  // Unique identifier for the target
   readonly id: string;
-  readonly parameterIndex: number; // Which argument position this target corresponds to
+  // Parameter index in the move's execute function
+  readonly parameterIndex: number;
+  // Whether the target is required
   readonly required: boolean;
-  readonly targetType: "card" | "player" | "zone" | "choice";
-  readonly cardFilter?: CardFilter; // For card targets
-  readonly playerFilter?: (context: Context, playerId: PlayerID) => boolean; // For player targets
-  readonly zoneFilter?: (
-    context: Context,
-    zoneId: string,
-    playerId?: PlayerID,
-  ) => boolean; // For zone targets
-  readonly choices?: readonly string[]; // For choice targets
+  // Type of target (card, player, zone, choice)
+  readonly targetType: string;
+  // Human-readable description
   readonly description: string;
+  // Message key for localization
   readonly messageKey: string;
+  // Card filter for "card" type targets
+  readonly cardFilter?: Filter;
+  // Filter function for "player" type targets
+  readonly playerFilter?: (context: Context, playerID: PlayerID) => boolean;
+  // Zone filter for "zone" type targets
+  readonly zoneFilter?: (context: Context, zoneName: string) => boolean;
+  // Choices for "choice" type targets
+  readonly choices?: ReadonlyArray<string | Record<string, unknown>>;
+
+  // Phase 3: Enhanced target specification
+  // IDs of target specs this target depends on
+  readonly dependsOn?: ReadonlyArray<string>;
+  // Group identifier for mutually exclusive targets
+  readonly exclusivityGroup?: string;
+  // Rendering hint for UI (e.g., "highlight", "selectable", "disabled")
+  readonly renderHint?: string;
+  // Generic filter function for any target type (replaces type-specific filters)
+  readonly filter?: (context: Context & { [key: string]: unknown }) => boolean;
 }
 
 /**
@@ -177,6 +187,16 @@ export interface EnumerableMove<
       gameOps: GameEngine;
     },
   ) => number;
+
+  // Phase 3: Additional metadata for the move
+  readonly metadata?: {
+    // Category for UI organization (e.g., "basic", "card", "special")
+    readonly category?: string;
+    // Human-readable description of what the move does
+    readonly description?: string;
+    // Any additional game-specific metadata
+    readonly [key: string]: unknown;
+  };
 }
 
 /**

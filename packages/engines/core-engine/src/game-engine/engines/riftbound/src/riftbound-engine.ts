@@ -9,14 +9,15 @@ import {
   createCardRepository,
 } from "~/game-engine/core-engine/card/card-repository-factory";
 import type { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
-import { GameEngine } from "~/game-engine/core-engine/game-engine";
+import { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import type { GameCards } from "~/game-engine/core-engine/types";
 import type {
   BaseCoreCardFilter,
   DefaultCardDefinition,
 } from "~/game-engine/core-engine/types/game-specific-types";
-import { logger } from "~/game-engine/core-engine/utils/logger";
+import { LogLevel } from "../../../types/log-types";
+import type { LogCollector } from "../../../utils/log-collector";
 
 // Riftbound specific imports
 import { RiftboundGame } from "./game-definition/riftbound-game-definition";
@@ -54,6 +55,7 @@ export interface RiftboundEngineConfig {
   seed: string;
   players: string[];
   skipPreGame?: boolean;
+  logCollector?: LogCollector;
 }
 
 // Create a simple card repository for testing
@@ -70,7 +72,7 @@ const createDefaultRepository = (): CardRepository<RiftboundCardDefinition> => {
  * Main Riftbound Engine class
  * Implements the complete Riftbound TCG ruleset
  */
-export class RiftboundEngine extends GameEngine<
+export class RiftboundEngine extends CoreEngine<
   RiftboundGameState,
   RiftboundCardDefinition,
   RiftboundPlayerState,
@@ -98,6 +100,7 @@ export class RiftboundEngine extends GameEngine<
       players: config.players,
       cards: config.cards || {},
       repository,
+      logCollector: config.logCollector,
     });
 
     if (config.cardRepository) {
@@ -115,12 +118,16 @@ export class RiftboundEngine extends GameEngine<
     const state = this.getGameState();
     const G = state.G;
 
-    logger.info(`Riftbound Engine initialized: ${config.gameId}`, {
-      playerId: this.playerID,
-      gameMode: G.gameMode,
-      playerCount: config.players?.length || 0,
-      skipPreGame: config.skipPreGame,
-    });
+    this.log(
+      LogLevel.NORMAL_PLAYER,
+      `Riftbound Engine initialized: ${config.gameId}`,
+      {
+        playerId: this.playerID,
+        gameMode: G.gameMode,
+        playerCount: config.players?.length || 0,
+        skipPreGame: config.skipPreGame,
+      },
+    );
   }
 
   /**
@@ -195,8 +202,8 @@ export class RiftboundEngine extends GameEngine<
       if (result.success) {
         return {
           success: true,
-          gameState: result.data.G,
-          logs: [],
+          gameState: result.data.state.G,
+          logs: result.data.logs,
         };
       }
       return {
@@ -204,7 +211,11 @@ export class RiftboundEngine extends GameEngine<
         error: "Move failed",
       };
     } catch (error) {
-      logger.error(`Error processing move ${moveType}:`, error);
+      this.log(
+        LogLevel.DEVELOPER,
+        `Error processing move ${moveType}:`,
+        error as Record<string, unknown>,
+      );
       return {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
@@ -272,12 +283,8 @@ export class RiftboundEngine extends GameEngine<
    * Check if a player can win the game
    */
   canWin(playerId: string): boolean {
-    const G = this.getGameState().G;
-    const ctx = this.getGameState().ctx;
-    const player = ctx.players[playerId];
-    const victoryScore = G.victoryScore;
-
-    return player ? (player as any).points >= victoryScore : false;
+    const player = this.getPlayerState(playerId);
+    return player ? player.points >= 8 : false;
   }
 
   getWinners(): string[] {

@@ -21,7 +21,8 @@ import type {
   GameSpecificGameState,
   GameSpecificPlayerState,
 } from "~/game-engine/engines/grand-archive/grand-archive-engine-types";
-import { logger } from "~/shared/logger";
+import { LogLevel } from "../../types/log-types";
+import { LogCollector } from "../../utils/log-collector";
 import type { CoreCardInstance } from "../card/core-card-instance";
 
 export class CoreOperation<
@@ -40,12 +41,14 @@ export class CoreOperation<
     CardFilter,
     CardInstance
   >;
+  private logCollector: LogCollector;
 
   // This class acts as an abstraction layer for Ctx manipulations, the goals is to ensure that framework users do not
   // directly manipulate the Ctx object, but rather use this class to perform operations on it.
   constructor({
     state,
     engine,
+    logCollector,
   }: {
     state: CoreEngineState<G>;
     engine: CoreEngine<
@@ -55,9 +58,12 @@ export class CoreOperation<
       CardFilter,
       CardInstance
     >;
+    logCollector?: LogCollector;
   }) {
     this.state = state;
     this.engine = engine;
+    // Create a default LogCollector if one wasn't provided
+    this.logCollector = logCollector || new LogCollector();
   }
 
   /**
@@ -149,7 +155,10 @@ export class CoreOperation<
     const zone = getCardZone(this.state.ctx, zoneId, playerId);
 
     if (!zone) {
-      logger.error(`Zone ${zoneId} not found in context.`);
+      this.logCollector.log(
+        LogLevel.DEVELOPER,
+        `Zone ${zoneId} not found in context.`,
+      );
       throw new Error(`Zone ${zoneId} not found in context.`);
     }
 
@@ -162,8 +171,11 @@ export class CoreOperation<
     if (!zone) {
       throw new Error(`Zone ${zoneId} not found in context.`);
     }
-    logger.info(`Shuffling zone ${zoneId} for player ${playerId}`);
-    this.state.ctx = shuffleZone(this.state.ctx, zoneId);
+    this.logCollector.log(
+      LogLevel.DEVELOPER,
+      `Shuffling zone ${zoneId} for player ${playerId}`,
+    );
+    this.state.ctx = shuffleZone(this.state.ctx, zoneId, this.logCollector);
   }
 
   /**
@@ -243,6 +255,7 @@ export class CoreOperation<
         from,
         origin,
         destination,
+        logCollector: this.logCollector,
       });
 
       if (isZoneOperationError(result)) {
@@ -258,6 +271,7 @@ export class CoreOperation<
         to,
         origin,
         destination,
+        logCollector: this.logCollector,
       });
     }
 

@@ -36,29 +36,15 @@ export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
             moves: {
               putACardIntoTheInkwell: lorcanaMoves.putACardIntoTheInkwell,
               passTurn: lorcanaMoves.passTurn,
-              playCard: ({ G }) => {
-                return G;
-              },
-              quest: ({ G }) => {
-                return G;
-              },
-              challenge: ({ G }) => {
-                return G;
-              },
-              moveCharacter: ({ G }) => {
-                return G;
-              },
-              activateAbility: ({ G }) => {
-                return G;
-              },
+              playCard: lorcanaMoves.playCard,
+              quest: lorcanaMoves.quest,
+              challenge: lorcanaMoves.challenge,
+              moveCharacterToLocation: lorcanaMoves.moveCharacterToLocation,
+              useActivatedAbility: lorcanaMoves.useActivatedAbility,
             },
           },
           bag: {
-            moves: {
-              resolveBag: ({ G }) => {
-                return G;
-              },
-            },
+            moves: {},
           },
           challenge: {
             moves: {},

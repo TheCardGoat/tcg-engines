@@ -18,9 +18,11 @@ import {
 } from "~/game-engine/core-engine/move/move-types";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import type { GameCards } from "~/game-engine/core-engine/types";
+import { LogLevel } from "../../types/log-types";
+import type { LogCollector } from "../../utils/log-collector";
 import { Flow } from "./flow";
 
-export function initializeGame<GameState = unknown>({
+export function initializeGame<GameState = unknown, PlayerState = unknown>({
   game,
   initialState,
   initialCoreCtx,
@@ -28,6 +30,7 @@ export function initializeGame<GameState = unknown>({
   players,
   seed,
   engine,
+  logCollector,
 }: {
   game: GameDefinition;
   initialState?: GameState;
@@ -35,9 +38,10 @@ export function initializeGame<GameState = unknown>({
   players?: string[];
   cards: GameCards;
   seed?: string;
-  engine?: CoreEngine<any, any, any, any, any>;
+  engine: CoreEngine<any, any, any, any, any>;
+  logCollector: LogCollector;
 }): {
-  initialState: CoreEngineState<GameState>;
+  initialState: CoreEngineState<GameState, PlayerState>;
   processedGame: GameRuntime<GameState>;
 } {
   const gameRuntime = processGameDefinition(
@@ -45,9 +49,11 @@ export function initializeGame<GameState = unknown>({
     cards,
     players,
     engine,
+    logCollector,
   );
 
-  const ctx: CoreCtx = gameRuntime.flow.ctx;
+  const ctx: CoreCtx<PlayerState> = gameRuntime.flow
+    .ctx as CoreCtx<PlayerState>;
 
   const state: PartialGameState<GameState> = {
     // User managed state.
@@ -84,7 +90,7 @@ export function initializeGame<GameState = unknown>({
   }
 
   return {
-    initialState: initial,
+    initialState: initial as CoreEngineState<GameState, PlayerState>,
     processedGame: gameRuntime as GameRuntime<GameState>,
   };
 }
@@ -112,8 +118,9 @@ export function isProcessed(
 export function processGameDefinition<G = unknown>(
   game: GameDefinition | GameRuntime,
   cards: GameCards,
-  players?: string[],
-  engine?: CoreEngine<any, any, any, any, any>,
+  players: string[] | undefined,
+  engine: CoreEngine<any, any, any, any, any>,
+  logCollector: LogCollector,
 ): GameRuntime {
   // The Game() function has already been called on this
   // config object, so just pass it through.
@@ -139,13 +146,14 @@ export function processGameDefinition<G = unknown>(
   ): CoreEngineState<G> | InvalidMoveResult => {
     const move = flow.getMove(state.ctx, action.type, action.playerID);
 
-    const coreOperation = new CoreOperation({ state, engine });
+    const coreOperation = new CoreOperation({ state, engine, logCollector });
 
     const fnContext = {
       G: state.G,
       ctx: state.ctx,
       coreOps: coreOperation,
       gameOps: engine,
+      logCollector,
     };
 
     try {
@@ -171,7 +179,7 @@ export function processGameDefinition<G = unknown>(
 
       return { ...state, G: result as G };
     } catch (error) {
-      console.error("Error processing move:", error);
+      logCollector.log(LogLevel.DEVELOPER, `Error processing move: ${error}`);
       return {
         type: "INVALID_MOVE",
         reason: "MOVE_EXECUTION_ERROR",
@@ -202,11 +210,13 @@ export function initializeGameAction({
   action,
   gameDefinition,
   engine,
+  logCollector,
 }: {
   state: CoreEngineState<any>;
   action: any;
   gameDefinition: any;
-  engine?: CoreEngine<any, any, any, any, any>;
+  engine: CoreEngine<any, any, any, any, any>;
+  logCollector: LogCollector;
 }) {
   try {
     const { G, ctx } = state;
@@ -219,7 +229,7 @@ export function initializeGameAction({
         G,
         ctx,
         action,
-        coreOps: new CoreOperation({ state, engine }),
+        coreOps: new CoreOperation({ state, engine, logCollector }),
         playerID: action.playerID,
       };
 
@@ -234,7 +244,10 @@ export function initializeGameAction({
 
     return state;
   } catch (error) {
-    console.error("Error in initializeGameAction:", error);
+    logCollector.log(
+      LogLevel.DEVELOPER,
+      `Error in initializeGameAction: ${error}`,
+    );
     return state;
   }
 }

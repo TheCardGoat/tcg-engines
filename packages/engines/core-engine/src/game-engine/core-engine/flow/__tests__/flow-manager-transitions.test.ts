@@ -1,4 +1,5 @@
 import { describe, expect, it } from "bun:test";
+import { LogCollector } from "../../../utils/log-collector";
 import type { CoreEngineState, GameDefinition } from "../../game-configuration";
 import type { FlowConfiguration } from "../flow-manager";
 import { FlowManager } from "../flow-manager";
@@ -20,6 +21,10 @@ describe("FlowManager Transitions", () => {
       currentStep: null,
       currentSegment: segment,
       cards: {} as any,
+      _random: { seed: "test" },
+      seed: "test",
+      numMoves: 0,
+      seenCards: new Map(),
     },
     _stateID: 0,
     _undo: [],
@@ -35,6 +40,7 @@ describe("FlowManager Transitions", () => {
         endIf: () => {
           return true;
         },
+        turn: {}, // Add empty turn object
       },
       duringGame: {
         next: "endGame",
@@ -89,7 +95,8 @@ describe("FlowManager Transitions", () => {
     };
 
     const gameDefinition = createMockGameDefinition();
-    return new FlowManager(config, gameDefinition);
+    const logCollector = new LogCollector();
+    return new FlowManager(config, gameDefinition, null, logCollector);
   };
 
   describe("Segment to Segment Transitions", () => {
@@ -193,7 +200,13 @@ describe("FlowManager Transitions", () => {
         priority: { initialPriority: "turnPlayer" },
       };
 
-      const flowManager = new FlowManager(config, mockGameDef);
+      const logCollector = new LogCollector();
+      const flowManager = new FlowManager(
+        config,
+        mockGameDef,
+        null,
+        logCollector,
+      );
       const initialState = createTestState("duringGame", "beginningPhase");
 
       const result = flowManager.processFlowTransitions(initialState);
@@ -214,7 +227,13 @@ describe("FlowManager Transitions", () => {
         },
       };
 
-      const flowManager = new FlowManager(config, gameDefinition);
+      const logCollector = new LogCollector();
+      const flowManager = new FlowManager(
+        config,
+        gameDefinition,
+        null,
+        logCollector,
+      );
       const initialState = createTestState("unknownSegment", null);
 
       // Should not throw and return state unchanged
@@ -260,7 +279,13 @@ describe("FlowManager Transitions", () => {
         priority: { initialPriority: "turnPlayer" },
       };
 
-      const flowManager = new FlowManager(config, mockGameDef);
+      const logCollector = new LogCollector();
+      const flowManager = new FlowManager(
+        config,
+        mockGameDef,
+        null,
+        logCollector,
+      );
       const initialState = createTestState("duringGame", null);
 
       const result = flowManager.processFlowTransitions(initialState);
@@ -296,7 +321,13 @@ describe("FlowManager Transitions", () => {
         priority: { initialPriority: "turnPlayer" },
       };
 
-      const flowManager = new FlowManager(config, mockGameDef);
+      const logCollector = new LogCollector();
+      const flowManager = new FlowManager(
+        config,
+        mockGameDef,
+        null,
+        logCollector,
+      );
       const initialState = createTestState("duringGame", null);
 
       // Should not hang or throw - maxIterations should prevent infinite loop

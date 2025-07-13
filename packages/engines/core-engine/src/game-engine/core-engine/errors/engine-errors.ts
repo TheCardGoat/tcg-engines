@@ -47,18 +47,18 @@ export class UnknownMoveError extends MoveError {
   }
 }
 
+/**
+ * Error thrown when move execution fails
+ */
 export class MoveExecutionError extends MoveError {
-  readonly type = "EXECUTION_FAILED" as const;
+  readonly type = "MOVE_EXECUTION_ERROR";
 
   constructor(
     public readonly moveType: string,
     public readonly playerID: string,
-    public readonly cause: Error,
+    public readonly reason: string,
   ) {
-    super(
-      `Failed to execute move ${moveType} for player ${playerID}: ${cause.message}`,
-    );
-    this.cause = cause;
+    super(`Error executing move ${moveType} for player ${playerID}: ${reason}`);
   }
 }
 
@@ -71,6 +71,21 @@ export class InvalidMoveError extends MoveError {
     public readonly reason: string,
   ) {
     super(`Invalid move ${moveType} for player ${playerID}: ${reason}`);
+  }
+}
+
+/**
+ * Error thrown when a move is rejected by the engine for game rule reasons
+ */
+export class MoveRejectedError extends MoveError {
+  readonly type = "MOVE_REJECTED" as const;
+
+  constructor(
+    public readonly moveType: string,
+    public readonly playerID: string,
+    public readonly reason: string,
+  ) {
+    super(`Move ${moveType} rejected for player ${playerID}: ${reason}`);
   }
 }
 
@@ -264,6 +279,7 @@ export type AnyEngineError =
   | UnknownMoveError
   | MoveExecutionError
   | InvalidMoveError
+  | MoveRejectedError
   | PlayerValidationError
   | StateValidationError
   | MoveValidationError
@@ -302,13 +318,13 @@ export function createEngineError(
     return new MoveExecutionError(
       context.moveType || "unknown",
       context.playerID || "unknown",
-      thrown,
+      thrown.message,
     );
   }
 
   return new MoveExecutionError(
     context.moveType || "unknown",
     context.playerID || "unknown",
-    new Error(String(thrown)),
+    String(thrown),
   );
 }

@@ -1,18 +1,20 @@
+import type { Move } from "~/game-engine/core-engine/move/move-types";
 import type { GundamGameState } from "../gundam-engine-types";
 import { chooseFirstPlayer } from "./chooseFirstPlayer";
 import { concede } from "./concede";
 import { drawCardMove } from "./drawCard";
 import { playResourceMove } from "./playResource";
-import { redrawHandMove } from "./redrawHand";
+import { redrawHandMove, redrawHandMoveFn } from "./redrawHand";
 
 /**
  * Gundam Card Game moves collection
  * These are the actions players can take during the game
  */
-export const gundamMoves = {
-  // Setup and game management moves
+export const gundamMoves: Record<string, Move<GundamGameState>> = {
+  // Game Setup Moves
   chooseFirstPlayer,
   redrawHand: redrawHandMove,
+  redrawHandFn: redrawHandMoveFn,
   concede,
 
   // Start Phase moves

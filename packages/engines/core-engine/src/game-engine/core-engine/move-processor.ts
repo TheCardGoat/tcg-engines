@@ -1,12 +1,15 @@
-import { LogLevel } from "../../types/log-types";
-import type { LogCollector } from "../../utils/log-collector";
-import { CoreOperation } from "../engine/core-operation";
+// This is a placeholder for the move processor refactoring that will happen in Phase 2.
+// This file is not currently being used by the core engine, but it serves as a reference
+// for the implementation plan.
+
+// Do NOT import or use this file in the current codebase yet.
+
+import { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
 import type {
   CoreEngineState,
   FnContext,
   PlayerID,
-} from "../game-configuration";
-import type { BaseCoreCardFilter } from "../types/game-specific-types";
+} from "~/game-engine/core-engine/game-configuration";
 import {
   createInvalidMove,
   EnumerableMove,
@@ -17,7 +20,9 @@ import {
   type Move,
   MoveConstraintFailure,
   TargetSpec,
-} from "./move-types";
+} from "~/game-engine/core-engine/move/move-types";
+import type { BaseCoreCardFilter } from "~/game-engine/core-engine/types/game-specific-types";
+import { logger } from "../../shared/logger";
 
 /**
  * Result of move validation
@@ -50,10 +55,7 @@ interface MoveValidationContext<G> {
  * Processor for executing moves with constraints and target validation
  */
 export class MoveProcessor<G = unknown> {
-  constructor(
-    private engine: unknown,
-    private logCollector: LogCollector,
-  ) {}
+  constructor(private engine: unknown) {}
 
   /**
    * Validate a move without executing it
@@ -94,10 +96,7 @@ export class MoveProcessor<G = unknown> {
       // All validations passed
       return { isValid: true };
     } catch (error) {
-      this.logCollector.log(
-        LogLevel.DEVELOPER,
-        `Error validating move ${moveName}: ${error}`,
-      );
+      logger.error(`Error validating move ${moveName}: ${error}`);
       return {
         isValid: false,
         error: createInvalidMove(
@@ -117,7 +116,6 @@ export class MoveProcessor<G = unknown> {
     playerID: PlayerID,
     moveName: string,
     move: Move,
-    logCollector: LogCollector,
     ...args: unknown[]
   ): MoveExecutionResult<G> {
     // First validate the move
@@ -157,10 +155,7 @@ export class MoveProcessor<G = unknown> {
         state: (result as G) || state.G,
       };
     } catch (error) {
-      logCollector.log(
-        LogLevel.DEVELOPER,
-        `Error executing move ${moveName}: ${error}`,
-      );
+      logger.error(`Error executing move ${moveName}: ${error}`);
       return {
         state: state.G,
         error: createInvalidMove(
@@ -192,7 +187,7 @@ export class MoveProcessor<G = unknown> {
         return {
           isValid: false,
           error: createInvalidMove(
-            constraint.failureReason,
+            constraint.id,
             constraint.messageKey,
             constraint.context,
           ),
@@ -299,21 +294,14 @@ export class MoveProcessor<G = unknown> {
     state: CoreEngineState<G>,
     playerID: PlayerID,
   ): any {
-    // Create CoreOperation that works on the actual state reference and includes the engine reference
-    const coreOps = new CoreOperation({
-      state: state as any,
-      engine: this.engine as any,
-      logCollector: this.logCollector,
-    });
-
-    // Pass the engine directly to ensure it's the same instance
+    // For a full implementation, this would create the complete FnContext
+    // with coreOps, gameOps, etc.
     return {
       G: state.G,
       ctx: state.ctx,
       playerID,
-      coreOps,
+      coreOps: new CoreOperation(state as any),
       gameOps: this.engine,
-      logCollector: this.logCollector,
     };
   }
 }

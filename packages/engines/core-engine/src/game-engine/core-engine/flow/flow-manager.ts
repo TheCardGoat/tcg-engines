@@ -1,4 +1,6 @@
 import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
+import { LogLevel } from "../../types/log-types";
+import type { LogCollector } from "../../utils/log-collector";
 import { CoreOperation } from "../engine/core-operation";
 import type { CoreEngineState, GameDefinition } from "../game-configuration";
 import {
@@ -7,7 +9,6 @@ import {
   hasPriorityPlayer,
   setPriorityPlayer,
 } from "../state/context";
-import { debuggers, logger } from "../utils/logger";
 import type { PriorityModel } from "./priority-models";
 import { createPriorityModel } from "./priority-models";
 
@@ -82,16 +83,19 @@ export class FlowManager<G = any> {
   private priorityModel: PriorityModel<G>;
   private gameDefinition: GameDefinition<G>;
   private engine: CoreEngine<any, any, any, any, any>;
+  private logCollector: LogCollector;
 
   constructor(
     config: FlowConfiguration,
     gameDefinition: GameDefinition<G>,
     engine: CoreEngine<any, any, any, any, any>,
+    logCollector: LogCollector,
   ) {
     this.config = config;
     this.gameDefinition = gameDefinition;
     this.priorityModel = createPriorityModel<G>(config);
     this.engine = engine;
+    this.logCollector = logCollector;
   }
 
   // ===== PHASE & STEP MANAGEMENT =====
@@ -498,25 +502,24 @@ export class FlowManager<G = any> {
 
       const { ctx } = currentState;
 
-      if (debuggers.flowTransitions) {
-        logger.debug(
-          `FlowManager: Processing transitions, iteration ${11 - maxIterations}`,
-        );
-        logger.debug(
-          `Current segment: ${ctx.currentSegment}, phase: ${ctx.currentPhase}`,
-        );
-      }
+      this.logCollector.log(
+        LogLevel.DEVELOPER,
+        `FlowManager: Processing transitions, iteration ${11 - maxIterations}`,
+      );
+      this.logCollector.log(
+        LogLevel.DEVELOPER,
+        `Current segment: ${ctx.currentSegment}, phase: ${ctx.currentPhase}`,
+      );
 
       // Check if current segment should end
       if (ctx.currentSegment) {
         const shouldEndSegment = this.shouldEndSegment(currentState);
 
         if (shouldEndSegment) {
-          if (debuggers.flowTransitions) {
-            logger.debug(
-              `FlowManager: Segment ${ctx.currentSegment} should end, advancing...`,
-            );
-          }
+          this.logCollector.log(
+            LogLevel.DEVELOPER,
+            `FlowManager: Segment ${ctx.currentSegment} should end, advancing...`,
+          );
 
           const nextSegment = this.getNextSegment(currentState);
           if (nextSegment && nextSegment !== ctx.currentSegment) {
@@ -529,6 +532,7 @@ export class FlowManager<G = any> {
                 coreOps: new CoreOperation({
                   state: currentState,
                   engine: this.engine,
+                  logCollector: this.logCollector,
                 }),
               });
 
@@ -578,11 +582,10 @@ export class FlowManager<G = any> {
             };
             hasTransitions = true;
 
-            if (debuggers.flowTransitions) {
-              logger.debug(
-                `FlowManager: Advanced from segment ${ctx.currentSegment} to ${nextSegment}`,
-              );
-            }
+            this.logCollector.log(
+              LogLevel.DEVELOPER,
+              `FlowManager: Advanced from segment ${ctx.currentSegment} to ${nextSegment}`,
+            );
           }
         }
       }
@@ -592,11 +595,10 @@ export class FlowManager<G = any> {
         const shouldEndPhase = this.shouldEndPhase(currentState);
 
         if (shouldEndPhase) {
-          if (debuggers.flowTransitions) {
-            logger.debug(
-              `FlowManager: Phase ${ctx.currentPhase} should end, advancing...`,
-            );
-          }
+          this.logCollector.log(
+            LogLevel.DEVELOPER,
+            `FlowManager: Phase ${ctx.currentPhase} should end, advancing...`,
+          );
 
           const nextPhase = this.getNextPhase(currentState);
 
@@ -615,6 +617,7 @@ export class FlowManager<G = any> {
                 coreOps: new CoreOperation({
                   state: currentState,
                   engine: this.engine,
+                  logCollector: this.logCollector,
                 }),
               });
               if (result !== undefined) {
@@ -632,11 +635,10 @@ export class FlowManager<G = any> {
             };
             hasTransitions = true;
 
-            if (debuggers.flowTransitions) {
-              logger.debug(
-                `FlowManager: Advanced from phase ${ctx.currentPhase} to ${nextPhase}`,
-              );
-            }
+            this.logCollector.log(
+              LogLevel.DEVELOPER,
+              `FlowManager: Advanced from phase ${ctx.currentPhase} to ${nextPhase}`,
+            );
           }
         }
       }
@@ -652,11 +654,10 @@ export class FlowManager<G = any> {
           );
 
           if (startingPhase) {
-            if (debuggers.flowTransitions) {
-              logger.debug(
-                `FlowManager: Initializing starting phase ${startingPhase} for segment ${ctx.currentSegment}`,
-              );
-            }
+            this.logCollector.log(
+              LogLevel.DEVELOPER,
+              `FlowManager: Initializing starting phase ${startingPhase} for segment ${ctx.currentSegment}`,
+            );
 
             // Find starting step for the phase
             let startingStep = null;
@@ -810,11 +811,12 @@ export function createFlowConfiguration(
 export function createFlowManager<G = any>(
   gameDefinition: GameDefinition<G>,
   engine: CoreEngine<any, any, any, any, any>,
+  logCollector: LogCollector,
 ): FlowManager<G> {
   const config = createFlowConfiguration(
     gameDefinition.flow ?? createDefaultFlowConfiguration(),
   );
-  return new FlowManager<G>(config, gameDefinition, engine);
+  return new FlowManager<G>(config, gameDefinition, engine, logCollector);
 }
 
 export function createDefaultFlowConfiguration(): FlowConfiguration {
@@ -844,8 +846,13 @@ export function initializeFlow<G = any>(
   state: CoreEngineState<G>,
   gameDefinition: GameDefinition<G>,
   engine: CoreEngine<any, any, any, any, any>,
+  logCollector: LogCollector,
 ): CoreEngineState<G> {
-  const flowManager = createFlowManager<G>(gameDefinition, engine);
+  const flowManager = createFlowManager<G>(
+    gameDefinition,
+    engine,
+    logCollector,
+  );
   return flowManager.initializeFlow(state);
 }
 

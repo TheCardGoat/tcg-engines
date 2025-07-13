@@ -41,7 +41,6 @@ export const createDefaultGrandArchivePlayerState = (
 
     // Turn tracking
     hasMaterialized: false, // Has materialized this turn
-    turnActions: [], // Actions taken this turn
 
     // Counters on champion
     counters: {

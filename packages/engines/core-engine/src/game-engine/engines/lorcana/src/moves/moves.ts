@@ -1,3 +1,5 @@
+import type { Move } from "~/game-engine/core-engine/move/move-types";
+import type { LorcanaGameState } from "../lorcana-engine-types";
 import { alterHandMove } from "./alterHand";
 import { challengeMove } from "./challenge";
 import { chooseWhoGoesFirstMove } from "./chooseFirstPlayer";
@@ -10,7 +12,7 @@ import { questMove } from "./quest";
 import { useActivatedAbilityMove } from "./use-activated-ability";
 
 // Consolidated Lorcana move registry
-export const lorcanaMoves = {
+export const lorcanaMoves: Record<string, Move<LorcanaGameState>> = {
   // Game Setup Moves
   chooseWhoGoesFirstMove,
   alterHand: alterHandMove,

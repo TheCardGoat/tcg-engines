@@ -10,6 +10,8 @@
  * - Generic constraints ensure type safety across the engine
  */
 
+import type { PlayerState } from "../state/context";
+
 // CoreCardDefinition interface moved to core-card-instance-store.ts
 interface CoreCardDefinition {
   id: string;
@@ -38,7 +40,10 @@ export type GameSpecificGameState = BaseGameState;
 export type GameSpecificCardDefinition = CoreCardDefinition;
 
 // Utility types for game developers
-export type ExtendPlayerState<T> = BasePlayerState & T;
+export type ExtendPlayerState<State, TurnHistory> = PlayerState<
+  State,
+  TurnHistory
+>;
 export type ExtendCardFilter<T> = BaseCoreCardFilter & T;
 export type ExtendGameState<T> = BaseGameState & T;
 export type ExtendCardDefinition<T> = CoreCardDefinition & T;

@@ -1,26 +1,28 @@
 import type { CardRepository } from "~/game-engine/core-engine/card/card-repository-factory";
 import { GameEngine } from "~/game-engine/core-engine/game-engine";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
+import type { GameCards } from "~/game-engine/core-engine/types";
 import { allGundamCardsById } from "./cards/definitions/cards";
 import { GundamModel } from "./cards/gundam-card-model";
 import type { GundamCardRepository } from "./cards/gundam-card-repository";
 import { GundamGame } from "./game-definition/gundam-game-definition";
-import type {
-  GameCards,
-  GundamGameState,
-  ZoneType,
-} from "./gundam-engine-types";
+import type { GundamGameState, ZoneType } from "./gundam-engine-types";
 import type {
   GundamCardDefinition,
   GundamCardFilter,
   GundamPlayerState,
 } from "./gundam-generic-types";
+import { chooseFirstPlayerFn } from "./moves/chooseFirstPlayer";
+import { concede } from "./moves/concede";
+import { redrawHandMoveFn } from "./moves/redrawHand";
 
 export type { GundamCardDefinition, GundamCardFilter, GundamPlayerState };
 
 /**
- * GundamEngine Class
- * Main engine class for Gundam TCG game logic.
+ * Gundam Card Game Engine Implementation
+ *
+ * This class implements the Gundam card game rules using the core engine.
+ * It provides methods for game setup, card management, and game state queries.
  */
 export class GundamEngine extends GameEngine<
   GundamGameState,
@@ -29,11 +31,12 @@ export class GundamEngine extends GameEngine<
   GundamCardFilter,
   GundamModel
 > {
-  // Store the repository locally for access in card model initialization
-  protected cardRepository?: GundamCardRepository;
   /**
-   * Constructor for GundamEngine
+   * Card repository for Gundam card definitions
+   * @protected
    */
+  protected cardRepository?: GundamCardRepository;
+
   constructor({
     initialState,
     initialCoreCtx,
@@ -140,23 +143,19 @@ export class GundamEngine extends GameEngine<
    * - Used during setup phase after initial draw
    */
   get moves() {
+    // Return a dictionary of move IDs to the move functions
     return {
-      chooseFirstPlayer: (playerId: string) => {
-        return this.processMove(playerId, "chooseFirstPlayer", [playerId]);
-      },
-      alterHand: (cardsToAlter: string[]) => {
-        const currentPlayer = this.getCurrentPlayer();
-        if (!currentPlayer) return false;
-        return this.processMove(currentPlayer, "alterHand", [cardsToAlter]);
-      },
+      // Register moves with IDs that match the segment definitions
+      chooseFirstPlayer: chooseFirstPlayerFn,
       redrawHand: (shouldRedraw: boolean) => {
         const currentPlayer = this.getCurrentPlayer();
-        if (!currentPlayer) return false;
-        return this.processMove(currentPlayer, "redrawHand", [shouldRedraw]);
+        if (!currentPlayer) return { success: false };
+
+        // Convert boolean to string for the move parameter
+        const choice = shouldRedraw ? "yes" : "no";
+        return this.processMove(currentPlayer, "redrawHand", [choice]);
       },
-      concede: (playerId: string) => {
-        return this.processMove(playerId, "concede", [playerId]);
-      },
+      concede,
     };
   }
 
@@ -239,6 +238,6 @@ export class GundamEngine extends GameEngine<
 
   getWinners(): string[] {
     const ctx = this.getCtx();
-    return ctx?.winner ? [ctx.winner] : [];
+    return ctx?.gameOver?.winner ? [ctx.gameOver.winner] : [];
   }
 }
