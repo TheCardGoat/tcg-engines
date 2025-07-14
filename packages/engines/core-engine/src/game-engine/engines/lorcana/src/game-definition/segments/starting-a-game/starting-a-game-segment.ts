@@ -1,4 +1,4 @@
-import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment-types";
+import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
 import type { LorcanaGameState } from "../../../lorcana-engine-types";
 import { lorcanaMoves } from "../../../moves/moves";
 

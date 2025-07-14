@@ -1,4 +1,4 @@
-import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment-types";
+import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
 import type { GundamGameState } from "~/game-engine/engines/gundam/src/gundam-engine-types";
 import { gundamMoves } from "~/game-engine/engines/gundam/src/moves/moves";
 

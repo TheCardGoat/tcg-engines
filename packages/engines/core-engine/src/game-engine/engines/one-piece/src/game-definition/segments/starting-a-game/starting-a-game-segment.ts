@@ -1,4 +1,4 @@
-import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment-types";
+import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
 import { logger } from "~/game-engine/core-engine/utils/logger";
 import { basicDonToken } from "~/game-engine/engines/one-piece/src/cards/definitions/tokens/tokens";
 import { onePieceMoves } from "~/game-engine/engines/one-piece/src/moves/moves";

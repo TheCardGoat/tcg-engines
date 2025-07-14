@@ -1,10 +1,13 @@
 import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
+import type { PhaseConfig } from "~/game-engine/core-engine/game/structure/phase";
+import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
 import { CoreOperation } from "../engine/core-operation";
 import type {
   CoreEngineState,
   FlowConfiguration,
   FlowPhase,
   FlowPhaseType,
+  FnContext,
   GameDefinition,
 } from "../game-configuration";
 import { hasPriorityPlayer } from "../state/context";
@@ -12,12 +15,13 @@ import { debuggers, logger } from "../utils/logger";
 
 /**
  * Unified Flow Manager that handles all game flow operations
- * Combines priority management, phase/step transitions, and event processing
+ * All transitions, phases, segments, and player actions are managed here
+ * When called externally, it processes the current state and applies any necessary transitions and hooks
  */
 export class FlowManager<G> {
   private config: FlowConfiguration<G>;
   private gameDefinition: GameDefinition<G>;
-  private engine: CoreEngine<G>;
+  private readonly engine: CoreEngine<G>;
 
   constructor(gameDefinition: GameDefinition<G>, engine: CoreEngine<G>) {
     this.config = gameDefinition.flow;
@@ -25,11 +29,12 @@ export class FlowManager<G> {
     this.engine = engine;
   }
 
-  // ===== PHASE & STEP MANAGEMENT =====
-
   getCurrentPhase(state: CoreEngineState<G>): FlowPhase<G> | null {
     const phaseId = state.ctx.currentPhase;
-    if (!phaseId) return null;
+    if (!phaseId) {
+      return null;
+    }
+
     return this.getPhaseById(phaseId);
   }
 
@@ -108,7 +113,11 @@ export class FlowManager<G> {
    * Process flow transitions including segments and phases
    * This handles both segment-based transitions (pre-game) and phase-based transitions (gameplay)
    */
-  processFlowTransitions(state: CoreEngineState<G>): CoreEngineState<G> {
+  processFlowTransitions(
+    state: CoreEngineState<G>,
+    // This ensures we always have the latest FnContext, even if the state changes during processing
+    getUpdatedFnContext: () => FnContext<G>,
+  ): CoreEngineState<G> {
     let currentState = state;
     let hasTransitions = true;
     let maxIterations = 10; // Prevent infinite loops
@@ -318,7 +327,7 @@ export class FlowManager<G> {
     const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
     if (!segmentConfig?.endIf) return false;
 
-    return segmentConfig.endIf(state) ?? false;
+    return !!segmentConfig.endIf(state);
   }
 
   /**
@@ -340,7 +349,7 @@ export class FlowManager<G> {
       return false;
     }
 
-    return phaseConfig.endIf(state) ?? false;
+    return !!phaseConfig.endIf(state);
   }
 
   /**
@@ -363,14 +372,17 @@ export class FlowManager<G> {
   /**
    * Get segment configuration from game definition
    */
-  private getSegmentConfig(segmentName: string): any {
+  private getSegmentConfig(segmentName: string): SegmentConfig<G> | undefined {
     return this.gameDefinition.segments?.[segmentName];
   }
 
   /**
    * Get phase configuration from segment configuration
    */
-  private getPhaseConfig(segmentName: string, phaseName: string): any {
+  private getPhaseConfig(
+    segmentName: string,
+    phaseName: string,
+  ): PhaseConfig<G> | undefined {
     const segmentConfig = this.getSegmentConfig(segmentName);
     return segmentConfig?.turn?.phases?.[phaseName];
   }

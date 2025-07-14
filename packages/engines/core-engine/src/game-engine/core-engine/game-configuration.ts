@@ -5,7 +5,7 @@ import type {
 } from "~/game-engine/core-engine/engine/types";
 import type { Flow } from "~/game-engine/core-engine/game/flow";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
-import type { SegmentMap } from "./game/structure/segment-types";
+import type { SegmentMap } from "./game/structure/segment";
 import type {
   BaseCoreCardFilter,
   DefaultPlayerState,
@@ -143,7 +143,7 @@ export type FnContext<
   G: G;
   ctx: CoreCtx;
   gameOps?: any; // TODO: Type this properly
-  coreOps: CoreOperation<
+  coreOps?: CoreOperation<
     G,
     CardDefinition,
     PlayerState,

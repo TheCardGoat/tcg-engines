@@ -504,7 +504,7 @@ Each segment should follow this pattern:
 
 ```typescript
 // segments/starting-a-game/starting-a-game-segment.ts
-import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment-types";
+import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
 import type { [Game]GameState } from "../../[game]-generic-types";
 import { [game]Moves } from "../../moves/moves";
 

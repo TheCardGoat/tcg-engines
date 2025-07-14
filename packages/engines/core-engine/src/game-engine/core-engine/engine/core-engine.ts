@@ -155,6 +155,7 @@ export class CoreEngine<
     // Automatically process initial flow transitions to initialize segments and phases
     const initialStateWithFlow = this.flowManager.processFlowTransitions(
       this.gameRuntime.initialState,
+      () => this.getFnContext(),
     );
     if (this.gameRuntime.initialState !== initialStateWithFlow) {
       logger.debug("Applying initial flow transitions to game state");
@@ -234,7 +235,9 @@ export class CoreEngine<
 
       const { newState } = processResult.data;
 
-      const finalState = this.flowManager.processFlowTransitions(newState);
+      const finalState = this.flowManager.processFlowTransitions(newState, () =>
+        this.getFnContext(),
+      );
 
       this.gameStateStore.updateState({
         newState: finalState,

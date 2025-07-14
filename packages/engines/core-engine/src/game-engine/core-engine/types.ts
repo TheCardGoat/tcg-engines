@@ -1,5 +1,5 @@
-import type { PhaseMap } from "./game/structure/phase-types";
-import type { TurnConfig } from "./game/structure/turn-types";
+import type { PhaseMap } from "./game/structure/phase";
+import type { TurnConfig } from "./game/structure/turn";
 import type { FnContext, MoveMap, SegmentMap } from "./game-configuration";
 
 export type PlayerID = string;

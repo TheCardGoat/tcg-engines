@@ -8,7 +8,7 @@
  * - Priority windows and effect resolution
  */
 
-import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment-types";
+import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
 import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { AlphaClashGameState } from "../../../../alpha-clash-engine-types";
 import { alphaClashMoves } from "../../../moves/moves";

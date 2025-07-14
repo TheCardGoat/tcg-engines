@@ -4,7 +4,7 @@
  * Handles game conclusion, winner determination, and cleanup
  */
 
-import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment-types";
+import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
 import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { GrandArchiveGameState } from "../../../../grand-archive-engine-types";
 
