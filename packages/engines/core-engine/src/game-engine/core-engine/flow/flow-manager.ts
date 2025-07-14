@@ -3,7 +3,6 @@ import { CoreOperation } from "../engine/core-operation";
 import type { CoreEngineState, GameDefinition } from "../game-configuration";
 import { getCurrentPriorityPlayer, hasPriorityPlayer } from "../state/context";
 import { debuggers, logger } from "../utils/logger";
-import type { PriorityModel } from "./priority-models";
 
 // Flow configuration types
 export type FlowPhaseType = string;
