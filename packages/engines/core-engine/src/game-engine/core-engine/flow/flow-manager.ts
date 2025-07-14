@@ -14,12 +14,12 @@ import { debuggers, logger } from "../utils/logger";
  * Unified Flow Manager that handles all game flow operations
  * Combines priority management, phase/step transitions, and event processing
  */
-export class FlowManager<G = any> {
-  private config: FlowConfiguration;
+export class FlowManager<G> {
+  private config: FlowConfiguration<G>;
   private gameDefinition: GameDefinition<G>;
-  private engine: CoreEngine;
+  private engine: CoreEngine<G>;
 
-  constructor(gameDefinition: GameDefinition<G>, engine: CoreEngine) {
+  constructor(gameDefinition: GameDefinition<G>, engine: CoreEngine<G>) {
     this.config = gameDefinition.flow;
     this.gameDefinition = gameDefinition;
     this.engine = engine;
@@ -27,13 +27,13 @@ export class FlowManager<G = any> {
 
   // ===== PHASE & STEP MANAGEMENT =====
 
-  getCurrentPhase(state: CoreEngineState<G>): FlowPhase | null {
+  getCurrentPhase(state: CoreEngineState<G>): FlowPhase<G> | null {
     const phaseId = state.ctx.currentPhase;
     if (!phaseId) return null;
     return this.getPhaseById(phaseId);
   }
 
-  getPhaseById(phaseId: FlowPhaseType): FlowPhase | null {
+  getPhaseById(phaseId: FlowPhaseType): FlowPhase<G> | null {
     return (
       this.config.turns.phases.find((phase) => phase.id === phaseId) || null
     );

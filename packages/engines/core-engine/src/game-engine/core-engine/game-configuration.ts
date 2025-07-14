@@ -34,31 +34,31 @@ export type StageName = string;
 export type FlowPhaseType = string;
 export type FlowStepType = string;
 
-export interface FlowStep {
+export interface FlowStep<G> {
   id: FlowStepType;
   name: string;
   description?: string;
-  onBegin?: (gameState: any) => any;
-  onEnd?: (gameState: any) => any;
+  onBegin?: (context: FnContext<G>) => undefined | G;
+  onEnd?: (context: FnContext<G>) => undefined | G;
 }
 
-export interface FlowPhase {
+export interface FlowPhase<G> {
   id: FlowPhaseType;
   name: string;
   description?: string;
-  steps?: FlowStep[];
-  onBegin?: (gameState: any) => any;
-  onEnd?: (gameState: any) => any;
+  steps?: FlowStep<G>[];
+  onBegin?: (context: FnContext<G>) => undefined | G;
+  onEnd?: (context: FnContext<G>) => undefined | G;
 }
 
-export interface FlowTurn {
-  phases: FlowPhase[];
-  onBegin?: (gameState: any) => any;
-  onEnd?: (gameState: any) => any;
+export interface FlowTurn<G> {
+  phases: FlowPhase<G>[];
+  onBegin?: (context: FnContext<G>) => undefined | G;
+  onEnd?: (context: FnContext<G>) => undefined | G;
 }
 
-export interface FlowConfiguration {
-  turns: FlowTurn;
+export interface FlowConfiguration<G> {
+  turns: FlowTurn<G>;
 }
 
 export type GameRuntime<G = unknown> = GameDefinition<G> & {
@@ -82,7 +82,7 @@ export interface GameDefinition<G = unknown> {
   segments?: SegmentMap<G>;
 
   // Flow configuration for the game
-  flow?: FlowConfiguration;
+  flow?: FlowConfiguration<G>;
 
   endIf?: (context: FnContext<G>) => boolean;
   onEnd?: (context: FnContext<G>) => undefined | G;
