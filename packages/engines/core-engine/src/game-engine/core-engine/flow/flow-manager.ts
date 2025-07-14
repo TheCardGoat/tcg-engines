@@ -107,13 +107,11 @@ export class FlowManager<G> {
     return hasPriorityPlayer(state.ctx, playerID);
   }
 
-  executeHook(
-    hook:
-      | ((context: FnContext<G>) => undefined | G)
-      | ((context: FnContext<G>) => boolean | undefined),
+  executeHook<R>(
+    hook: ((context: FnContext<G>) => R) | undefined,
     ctx: FnContext<G>,
-  ) {
-    if (typeof hook !== "function" || !hook || !ctx) {
+  ): R | undefined {
+    if (typeof hook !== "function" || !ctx) {
       return undefined;
     }
 
@@ -145,22 +143,20 @@ export class FlowManager<G> {
       if (nextSegment && nextSegment !== ctx.currentSegment) {
         // Apply segment end hooks
         const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
-        if (segmentConfig?.onEnd) {
-          const newG = segmentConfig.onEnd({
-            G: currentState.G,
-            ctx: currentState.ctx,
-            coreOps: new CoreOperation({
-              state: currentState,
-              engine: this.engine,
-            }),
-          });
+        const onEnd = this.executeHook(segmentConfig.onEnd, {
+          G: currentState.G,
+          ctx: currentState.ctx,
+          coreOps: new CoreOperation({
+            state: currentState,
+            engine: this.engine,
+          }),
+        });
 
-          if (newG !== undefined) {
-            currentState = {
-              ...currentState,
-              G: newG,
-            };
-          }
+        if (onEnd !== undefined) {
+          currentState = {
+            ...currentState,
+            G: onEnd,
+          };
         }
 
         // Get the starting phase for the new segment
