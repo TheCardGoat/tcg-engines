@@ -1,4 +1,5 @@
 import { describe, expect, it } from "bun:test";
+import type { CoreEngine } from "../../engine/core-engine";
 import type { CoreEngineState, GameDefinition } from "../../game-configuration";
 import type { FlowConfiguration } from "../flow-manager";
 import { FlowManager } from "../flow-manager";
@@ -89,7 +90,7 @@ describe("FlowManager Transitions", () => {
     };
 
     const gameDefinition = createMockGameDefinition();
-    return new FlowManager(config, gameDefinition);
+    return new FlowManager(gameDefinition, {} as CoreEngine);
   };
 
   describe("Segment to Segment Transitions", () => {
@@ -255,12 +256,7 @@ describe("FlowManager Transitions", () => {
         },
       };
 
-      const config: FlowConfiguration = {
-        turns: { phases: [] },
-        priority: { initialPriority: "turnPlayer" },
-      };
-
-      const flowManager = new FlowManager(config, mockGameDef);
+      const flowManager = new FlowManager(mockGameDef, {} as CoreEngine);
       const initialState = createTestState("duringGame", null);
 
       const result = flowManager.processFlowTransitions(initialState);

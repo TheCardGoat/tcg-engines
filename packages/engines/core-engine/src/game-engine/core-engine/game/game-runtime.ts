@@ -95,7 +95,7 @@ export function initializeGame<GameState = unknown>({
   players?: string[];
   cards: GameCards;
   seed?: string;
-  engine?: CoreEngine<any, any, any, any, any>;
+  engine?: CoreEngine;
 }): {
   initialState: CoreEngineState<GameState>;
   processedGame: GameRuntime<GameState>;

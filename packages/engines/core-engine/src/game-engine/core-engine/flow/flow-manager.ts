@@ -81,13 +81,11 @@ export class FlowManager<G = any> {
   private config: FlowConfiguration;
   private priorityModel: PriorityModel<G>;
   private gameDefinition: GameDefinition<G>;
-  private engine: CoreEngine<any, any, any, any, any>;
+  private engine: CoreEngine;
 
-  constructor(
-    config: FlowConfiguration,
-    gameDefinition: GameDefinition<G>,
-    engine: CoreEngine<any, any, any, any, any>,
-  ) {
+  constructor(gameDefinition: GameDefinition<G>, engine: CoreEngine) {
+    const config = gameDefinition.flow;
+
     this.config = config;
     this.gameDefinition = gameDefinition;
     this.priorityModel = createPriorityModel<G>(config);
@@ -175,7 +173,9 @@ export class FlowManager<G = any> {
     const currentPhase = this.getCurrentPhase(state);
     const phases = this.config.turns.phases;
 
-    if (!phases || phases.length === 0) return null;
+    if (!phases || phases.length === 0) {
+      return null;
+    }
 
     if (!currentPhase) {
       return phases[0]?.id || null;
@@ -799,64 +799,7 @@ export class FlowManager<G = any> {
   }
 }
 
-// ===== FACTORY FUNCTIONS =====
-
-export function createFlowConfiguration(
-  config: FlowConfiguration,
-): FlowConfiguration {
-  return config;
-}
-
-export function createFlowManager<G = any>(
-  gameDefinition: GameDefinition<G>,
-  engine: CoreEngine<any, any, any, any, any>,
-): FlowManager<G> {
-  const config = createFlowConfiguration(
-    gameDefinition.flow ?? createDefaultFlowConfiguration(),
-  );
-  return new FlowManager<G>(config, gameDefinition, engine);
-}
-
-export function createDefaultFlowConfiguration(): FlowConfiguration {
-  return createFlowConfiguration({
-    turns: {
-      phases: [
-        {
-          id: "main",
-          name: "Main Phase",
-          allowsPriorityPassing: true,
-        },
-      ],
-    },
-    priority: {
-      initialPriority: "turnPlayer",
-      allowPriorityPassing: {
-        main: true,
-      },
-      autoPriorityAdvance: {
-        main: "nextTurn",
-      },
-    },
-  });
-}
-
-export function initializeFlow<G = any>(
-  state: CoreEngineState<G>,
-  gameDefinition: GameDefinition<G>,
-  engine: CoreEngine<any, any, any, any, any>,
-): CoreEngineState<G> {
-  const flowManager = createFlowManager<G>(gameDefinition, engine);
-  return flowManager.initializeFlow(state);
-}
-
 // ===== UTILITY FUNCTIONS =====
-
-export function validatePlayerHasPriority(
-  state: CoreEngineState,
-  playerID: string,
-): boolean {
-  return hasPriorityPlayer(state.ctx, playerID);
-}
 
 export function withPriorityCheck<G>(
   moveFn: (params: { G: G; ctx: any; playerID?: string }, ...args: any[]) => G,

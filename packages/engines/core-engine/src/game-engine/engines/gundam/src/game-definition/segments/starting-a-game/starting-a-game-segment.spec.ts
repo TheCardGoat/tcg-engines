@@ -18,11 +18,6 @@ describe("Gundam Engine - Starting a Game Segment", () => {
     testEngine.dispose();
   });
 
-  describe("5-2-1-2: Deck Shuffling", () => {
-    // We can ignore this test for now
-    it.skip("should shuffle both players' decks at segment start", () => {});
-  });
-
   describe("5-2-1-4: First Player Selection", () => {
     it("should start in chooseFirstPlayer phase", () => {
       expect(testEngine.getGameSegment()).toBe("startingAGame");

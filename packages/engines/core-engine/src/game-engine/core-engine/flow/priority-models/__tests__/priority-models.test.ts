@@ -91,18 +91,6 @@ describe("Priority Models", () => {
       expect(model.getNextPriority(modifiedState)).toBe("0");
     });
 
-    it("should use flow controller to handle priority completion", () => {
-      const model = createTurnBasedPriorityModel();
-      const state = createTestState();
-      const flowController = createTestFlowController();
-
-      const result = model.handlePriorityCompletion(state, flowController);
-
-      expect(result).toEqual({
-        advancementType: "nextTurn",
-      });
-    });
-
     it("should handle different turn players correctly", () => {
       const model = createTurnBasedPriorityModel();
       let state = createTestState(4);

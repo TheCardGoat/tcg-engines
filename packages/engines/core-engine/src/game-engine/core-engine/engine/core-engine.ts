@@ -7,7 +7,7 @@ import {
   InvalidMoveError,
   MoveExecutionError,
 } from "~/game-engine/core-engine/errors/engine-errors";
-import type { FlowManager } from "~/game-engine/core-engine/flow/flow-manager";
+import { FlowManager } from "~/game-engine/core-engine/flow/flow-manager";
 import { CoreGameRuntime } from "~/game-engine/core-engine/game/game-runtime";
 import type {
   CoreEngineState,
@@ -33,7 +33,6 @@ import type {
 } from "~/game-engine/core-engine/types/game-specific-types";
 import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
 import type { CoreCardInstance } from "../card/core-card-instance";
-import { createFlowManager } from "../flow/flow-manager";
 
 type PlayerID = string;
 
@@ -125,7 +124,15 @@ export class CoreEngine<
     this.gameID = "default-game";
     this.debug = debug;
 
-    const gameRuntime = new CoreGameRuntime<GameState>({
+    // Initialize card instance store early so it's available to other components
+    this.cardInstanceStore = new CoreCardInstanceStore({
+      repository,
+      engine: this,
+      playerCardsIds: cards,
+    });
+    this.initializeCardModels();
+
+    this.gameRuntime = new CoreGameRuntime<GameState>({
       game,
       initialState,
       initialCoreCtx,
@@ -135,33 +142,24 @@ export class CoreEngine<
       engine: this,
       debug,
     });
-    this.gameRuntime = gameRuntime;
 
     this.gameStateStore = new GameStateStore<GameState>({
-      initialState: gameRuntime.initialState,
+      initialState: this.gameRuntime.initialState,
     });
 
-    // Initialize card instance store early so it's available to other components
-    this.cardInstanceStore = new CoreCardInstanceStore({
-      repository,
-      engine: this,
-      playerCardsIds: cards,
-    });
-
-    // Create flow manager with reference to this engine
-    this.flowManager = createFlowManager<GameState>(
-      gameRuntime.processedGame,
+    this.flowManager = new FlowManager<GameState>(
+      this.gameRuntime.processedGame,
       this,
     );
 
     // Automatically process initial flow transitions to initialize segments and phases
     const initialStateWithFlow = this.flowManager.processFlowTransitions(
-      gameRuntime.initialState,
+      this.gameRuntime.initialState,
     );
-    this.gameStateStore.updateState({ newState: initialStateWithFlow });
-
-    // Initialize card models
-    this.initializeCardModels();
+    if (this.gameRuntime.initialState !== initialStateWithFlow) {
+      logger.debug("Applying initial flow transitions to game state");
+      this.gameStateStore.updateState({ newState: initialStateWithFlow });
+    }
   }
 
   getFnContext(): FnContext<
