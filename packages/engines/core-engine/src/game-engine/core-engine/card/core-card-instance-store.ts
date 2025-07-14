@@ -1,17 +1,12 @@
 import type { CoreEngine } from "~/game-engine/core-engine";
 import type { CardRepository } from "~/game-engine/core-engine/card/card-repository-factory";
 import { CoreCardCtxProvider } from "~/game-engine/core-engine/card/core-card-ctx-provider";
-import {
-  type CoreCardFilterDSL,
-  getCardsByFilter,
-} from "~/game-engine/core-engine/card/core-card-filter";
+import { getCardsByFilter } from "~/game-engine/core-engine/card/core-card-filter";
 import { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
 import type {
   BaseCoreCardFilter,
-  DefaultCardDefinition,
   DefaultGameState,
   DefaultPlayerState,
-  GameSpecificCardDefinition,
   GameSpecificCardFilter,
   GameSpecificGameState,
   GameSpecificPlayerState,
@@ -22,7 +17,6 @@ export interface CoreCardDefinition {
 }
 
 type InstanceId = string;
-type PublicId = string;
 
 // Read-only entity that provides rich information about cards' current state. With the help of CardInstance class it gives fresh information about each card.
 export class CoreCardInstanceStore<

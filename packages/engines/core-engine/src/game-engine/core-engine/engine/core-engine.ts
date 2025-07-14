@@ -1,25 +1,20 @@
 import { type Result, ResultHelpers } from "~/game-engine/core-engine";
 import type { CardRepository } from "~/game-engine/core-engine/card/card-repository-factory";
 import { CoreCardInstanceStore } from "~/game-engine/core-engine/card/core-card-instance-store";
+import { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
 import type { AnyEngineError } from "~/game-engine/core-engine/errors/engine-errors";
 import {
   InvalidMoveError,
   MoveExecutionError,
 } from "~/game-engine/core-engine/errors/engine-errors";
 import type { FlowManager } from "~/game-engine/core-engine/flow/flow-manager";
-import {
-  CoreGameRuntime,
-  initializeGame,
-} from "~/game-engine/core-engine/game/game-runtime";
+import { CoreGameRuntime } from "~/game-engine/core-engine/game/game-runtime";
 import type {
   CoreEngineState,
+  FnContext,
   GameDefinition,
-  GameRuntime,
 } from "~/game-engine/core-engine/game-configuration";
-import {
-  MoveProcessor,
-  type MoveRequest,
-} from "~/game-engine/core-engine/move/move-processor";
+import type { MoveRequest } from "~/game-engine/core-engine/move/move-processor";
 import {
   type CoreCtx,
   getCurrentPriorityPlayer,
@@ -73,18 +68,18 @@ export type ClientState<
     });
 
 export class CoreEngine<
-  GameState extends GameSpecificGameState,
-  CardDefinition extends GameSpecificCardDefinition,
-  PlayerState extends GameSpecificPlayerState,
-  CardFilter extends GameSpecificCardFilter,
-  CardInstance extends CoreCardInstance<CardDefinition>,
+  GameState extends GameSpecificGameState = DefaultGameState,
+  CardDefinition extends GameSpecificCardDefinition = DefaultCardDefinition,
+  PlayerState extends GameSpecificPlayerState = DefaultPlayerState,
+  CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
+  CardInstance extends
+    CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
 > {
   private readonly debug?: boolean;
-  private readonly gameRuntime: GameRuntime<GameState>;
+  private readonly gameRuntime: CoreGameRuntime<GameState>;
 
   private subscribers: Array<(state: ClientState<GameState>) => void> = [];
   private gameStateStore: GameStateStore<GameState>;
-  private moveProcessor: MoveProcessor<GameState>;
   private flowManager: FlowManager<GameState>;
 
   // Generic storage for player cards and card models
@@ -138,17 +133,9 @@ export class CoreEngine<
       players,
       seed,
       engine: this,
+      debug,
     });
-
-    const { processedGame } = initializeGame<GameState>({
-      game,
-      initialState,
-      initialCoreCtx,
-      cards,
-      players,
-      seed,
-      engine: this,
-    });
+    this.gameRuntime = gameRuntime;
 
     this.gameStateStore = new GameStateStore<GameState>({
       initialState: gameRuntime.initialState,
@@ -161,16 +148,11 @@ export class CoreEngine<
       playerCardsIds: cards,
     });
 
-    // Create move processor with reference to this engine
-    this.moveProcessor = new MoveProcessor<GameState>(
-      processedGame,
-      (playerID: string) => this.canPlayerMove(playerID),
-      debug,
+    // Create flow manager with reference to this engine
+    this.flowManager = createFlowManager<GameState>(
+      gameRuntime.processedGame,
       this,
     );
-
-    // Create flow manager with reference to this engine
-    this.flowManager = createFlowManager<GameState>(processedGame, this);
 
     // Automatically process initial flow transitions to initialize segments and phases
     const initialStateWithFlow = this.flowManager.processFlowTransitions(
@@ -180,6 +162,29 @@ export class CoreEngine<
 
     // Initialize card models
     this.initializeCardModels();
+  }
+
+  getFnContext(): FnContext<
+    GameState,
+    CardDefinition,
+    PlayerState,
+    CardFilter,
+    CardInstance
+  > {
+    const state = this.gameStateStore.getState();
+
+    const coreOperation = new CoreOperation({
+      state,
+      engine: this,
+    });
+
+    return {
+      G: state.G,
+      ctx: state.ctx,
+      coreOps: coreOperation,
+      gameOps: this,
+      playerID: this.playerID,
+    };
   }
 
   processMove(
@@ -212,9 +217,10 @@ export class CoreEngine<
         );
       }
 
-      const processResult = this.moveProcessor.process(
+      const processResult = this.gameRuntime.processMove(
         moveRequest,
         this.gameStateStore.state,
+        this.getFnContext(),
       );
 
       if (!processResult.success) {

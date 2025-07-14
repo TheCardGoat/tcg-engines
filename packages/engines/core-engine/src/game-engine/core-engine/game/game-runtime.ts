@@ -3,10 +3,15 @@ import { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
 import type { ActionPayload } from "~/game-engine/core-engine/engine/types";
 import type {
   CoreEngineState,
+  FnContext,
   GameDefinition,
   GameRuntime,
   PartialGameState,
 } from "~/game-engine/core-engine/game-configuration";
+import {
+  MoveProcessor,
+  type MoveRequest,
+} from "~/game-engine/core-engine/move/move-processor";
 import type { InvalidMoveResult } from "~/game-engine/core-engine/move/move-types";
 import {
   getExecuteFunction,
@@ -22,6 +27,7 @@ export class CoreGameRuntime<GameState = unknown> {
   game: GameDefinition;
   processedGame: GameRuntime<GameState>;
   initialState: CoreEngineState<GameState>;
+  moveProcessor: MoveProcessor<GameState>;
 
   constructor({
     game,
@@ -31,6 +37,7 @@ export class CoreGameRuntime<GameState = unknown> {
     players,
     seed,
     engine,
+    debug = false,
   }: {
     game: GameDefinition;
     initialState?: GameState;
@@ -38,7 +45,8 @@ export class CoreGameRuntime<GameState = unknown> {
     players?: string[];
     cards: GameCards;
     seed?: string;
-    engine?: CoreEngine<any, any, any, any, any>;
+    engine: CoreEngine;
+    debug;
   }) {
     const result = initializeGame<GameState>({
       game,
@@ -53,6 +61,22 @@ export class CoreGameRuntime<GameState = unknown> {
     this.game = result.processedGame;
     this.initialState = result.initialState;
     this.processedGame = result.processedGame;
+
+    // Create move processor with reference to this engine
+    this.moveProcessor = new MoveProcessor<GameState>(debug);
+  }
+
+  processMove(
+    request: MoveRequest,
+    currentState: CoreEngineState<GameState>,
+    fnContext: FnContext,
+  ) {
+    return this.moveProcessor.process(
+      request,
+      currentState,
+      this.processedGame.flow,
+      fnContext,
+    );
   }
 }
 

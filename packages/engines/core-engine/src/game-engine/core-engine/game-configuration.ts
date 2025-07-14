@@ -113,6 +113,7 @@ export type FnContext<
 > = {
   G: G;
   ctx: CoreCtx;
+  gameOps?: any; // TODO: Type this properly
   coreOps: CoreOperation<
     G,
     CardDefinition,
@@ -120,6 +121,7 @@ export type FnContext<
     CardFilter,
     CardInstance
   >;
+  playerID?: PlayerID | null;
 };
 
 export interface SyncInfo {
