@@ -125,19 +125,17 @@ export class FlowManager<G> {
    * This handles both segment-based transitions (pre-game) and phase-based transitions (gameplay)
    */
   processFlowTransitions(
-    state2: CoreEngineState<G>,
+    state: CoreEngineState<G>,
     // This ensures we always have the latest FnContext, even if the state changes during processing
     getUpdatedFnContext: () => FnContext<G>,
   ): CoreEngineState<G> {
     const fnContext = getUpdatedFnContext();
     let currentState: CoreEngineState<G> = {
+      ...state,
       G: fnContext.G,
       ctx: fnContext.ctx,
-      _undo: [],
-      _redo: [],
-      _stateID: 999,
     };
-    currentState = state2;
+    currentState = { ...state };
 
     let hasTransitions = true;
     let maxIterations = 10; // Prevent infinite loops

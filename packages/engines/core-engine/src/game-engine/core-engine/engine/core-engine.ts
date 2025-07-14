@@ -235,8 +235,10 @@ export class CoreEngine<
 
       const { newState } = processResult.data;
 
-      const finalState = this.flowManager.processFlowTransitions(newState, () =>
-        this.getFnContext(),
+      const finalState = this.flowManager.processFlowTransitions(
+        // JSON.parse(JSON.stringify(newState)),
+        newState,
+        () => this.getFnContext(),
       );
 
       this.gameStateStore.updateState({
