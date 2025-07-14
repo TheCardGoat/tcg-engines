@@ -1,6 +1,5 @@
 import type { Operation } from "rfc6902";
 import type { ActionShape } from "~/game-engine/core-engine/engine/types";
-import type { Flow } from "~/game-engine/core-engine/game/flow";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import type { SegmentMap } from "./game/structure/segment";
 import type {
@@ -57,7 +56,7 @@ export interface FlowConfiguration<G> {
 
 export type GameRuntime<G = unknown> = GameDefinition<G> & {
   moveNames: string[];
-  flow?: ReturnType<typeof Flow>;
+  flow?: any; // FlowManager or Flow function return - made generic to avoid circular dependency
 };
 
 // Game Definition to configure core-engine

@@ -1,6 +1,8 @@
-import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
 import type { PhaseConfig } from "~/game-engine/core-engine/game/structure/phase";
 import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
+import { processSegments } from "~/game-engine/core-engine/game/structure/segment";
+import type { CoreCtx } from "~/game-engine/core-engine/state/context";
+import type { GameCards } from "~/game-engine/core-engine/types";
 import type {
   CoreEngineState,
   FlowConfiguration,
@@ -12,6 +14,8 @@ import type {
 import { hasPriorityPlayer } from "../state/context";
 import { debuggers, logger } from "../utils/logger";
 
+type PlayerID = string;
+
 /**
  * Unified Flow Manager that handles all game flow operations
  * All transitions, phases, segments, and player actions are managed here
@@ -21,9 +25,111 @@ export class FlowManager<G> {
   private config: FlowConfiguration<G>;
   private gameDefinition: GameDefinition<G>;
 
-  constructor(gameDefinition: GameDefinition<G>) {
+  // Move resolution properties (previously from Flow function)
+  public readonly moveMap: Record<string, any> = {};
+  public readonly moveNames: string[] = [];
+  public readonly startingSegment: string | null = null;
+  public readonly initialPhase: string | null = null;
+  public readonly initialStep: string | null = null;
+
+  constructor(
+    gameDefinition: GameDefinition<G>,
+    cards: GameCards,
+    players?: string[],
+  ) {
     this.config = gameDefinition.flow;
     this.gameDefinition = gameDefinition;
+
+    // Initialize move maps and flow data (previously Flow function logic)
+    this.initializeMoveResolution(cards, players);
+  }
+
+  /**
+   * Initialize move resolution system (consolidates Flow function logic)
+   */
+  private initializeMoveResolution(cards: GameCards, players?: string[]): void {
+    const { segments } = this.gameDefinition;
+    const segmentsMap = { ...segments };
+    const moveNames = new Set<string>();
+
+    // Add top-level moves
+    if (this.gameDefinition.moves) {
+      for (const name of Object.keys(this.gameDefinition.moves)) {
+        this.moveMap[name] = this.gameDefinition.moves[name];
+        moveNames.add(name);
+      }
+    }
+
+    // Process segments and extract moves
+    const { startingSegment, segmentMoveNames, segmentMoveMap } =
+      processSegments(segmentsMap);
+
+    // Store segment-based moves with qualified and simple names
+    for (const qualifiedName of Object.keys(segmentMoveMap)) {
+      this.moveMap[qualifiedName] = segmentMoveMap[qualifiedName];
+
+      // Extract simple name from qualified name
+      const parts = qualifiedName.split(".");
+      const simpleName = parts[parts.length - 1];
+      this.moveMap[simpleName] = segmentMoveMap[qualifiedName];
+    }
+
+    // Collect all move names
+    for (const moveName of segmentMoveNames) {
+      moveNames.add(moveName);
+    }
+
+    // Set readonly properties
+    (this as any).startingSegment = startingSegment;
+    (this as any).moveNames = [...moveNames.values()];
+
+    // Determine initial phase and step
+    this.determineInitialFlow(startingSegment, segments);
+  }
+
+  /**
+   * Determine initial phase and step from starting segment
+   */
+  private determineInitialFlow(
+    startingSegment: string | null,
+    segments: any,
+  ): void {
+    let initialPhase = null;
+    let initialStep = null;
+
+    if (startingSegment && segments?.[startingSegment]) {
+      const segmentConfig = segments[startingSegment];
+      const phases = segmentConfig.turn?.phases;
+
+      if (phases) {
+        for (const phaseName in phases) {
+          if (phases[phaseName].start) {
+            initialPhase = phaseName;
+
+            const steps = phases[phaseName].steps;
+            if (steps) {
+              for (const stepName in steps) {
+                if (steps[stepName].start) {
+                  initialStep = stepName;
+                  break;
+                }
+              }
+            }
+            break;
+          }
+        }
+      }
+    }
+
+    (this as any).initialPhase = initialPhase;
+    (this as any).initialStep = initialStep;
+  }
+
+  /**
+   * Get move function by name (replaces Flow.getMove)
+   */
+  getMove(ctx: CoreCtx, name: string, playerID: PlayerID): any {
+    return this.moveMap[name] || null;
   }
 
   getCurrentPhase(state: CoreEngineState<G>): FlowPhase<G> | null {

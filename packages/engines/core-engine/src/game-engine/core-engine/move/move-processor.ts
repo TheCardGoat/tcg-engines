@@ -5,7 +5,7 @@ import {
   InvalidMoveError,
   UnknownMoveError,
 } from "~/game-engine/core-engine/errors/engine-errors";
-import type { Flow } from "~/game-engine/core-engine/game/flow";
+import type { FlowManager } from "~/game-engine/core-engine/flow/flow-manager";
 import type {
   CoreEngineState,
   FnContext,
@@ -16,7 +16,6 @@ import {
 } from "~/game-engine/core-engine/move/move-types";
 import type { Result } from "~/game-engine/core-engine/types/result";
 import { Result as ResultHelpers } from "~/game-engine/core-engine/types/result";
-import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
 
 // Types for move processing
 export type MoveRequest = {
@@ -48,9 +47,9 @@ export class MoveValidator<G> {
   validate(
     request: MoveRequest,
     fnContext: FnContext<G>,
-    flow: ReturnType<typeof Flow>,
+    flowManager: FlowManager<G>,
   ): Result<ValidatedMove<G>, AnyEngineError> {
-    const moveFunction = flow.getMove(
+    const moveFunction = flowManager.getMove(
       fnContext.ctx,
       request.moveType,
       request.playerID,
@@ -58,7 +57,7 @@ export class MoveValidator<G> {
 
     if (!moveFunction) {
       return ResultHelpers.error(
-        new UnknownMoveError(request.moveType, flow.moveNames),
+        new UnknownMoveError(request.moveType, flowManager.moveNames),
       );
     }
 
@@ -157,10 +156,14 @@ export class MoveProcessor<G> {
 
   process(
     request: MoveRequest,
-    flow: ReturnType<typeof Flow>,
+    flowManager: FlowManager<G>,
     fnContext: FnContext<G>,
   ): Result<MoveResult<G>, AnyEngineError> {
-    const validationResult = this.validator.validate(request, fnContext, flow);
+    const validationResult = this.validator.validate(
+      request,
+      fnContext,
+      flowManager,
+    );
     if (!validationResult.success) {
       // @ts-ignore
       return ResultHelpers.error(validationResult.error);

@@ -139,7 +139,6 @@ export class CoreEngine<
       cards,
       players,
       seed,
-      engine: this,
       debug,
     });
 
@@ -149,6 +148,8 @@ export class CoreEngine<
 
     this.flowManager = new FlowManager<GameState>(
       this.gameRuntime.processedGame,
+      cards,
+      players,
     );
 
     // Automatically process initial flow transitions to initialize segments and phases
@@ -160,16 +161,6 @@ export class CoreEngine<
       logger.debug("Applying initial flow transitions to game state");
       this.gameStateStore.updateState({ newState: initialStateWithFlow });
     }
-  }
-
-  getFnContext(): FnContext<
-    GameState,
-    CardDefinition,
-    PlayerState,
-    CardFilter,
-    CardInstance
-  > {
-    return this.createFnContextFromState(this.gameStateStore.getState());
   }
 
   private createFnContextFromState(

@@ -1,4 +1,4 @@
-import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
+import { FlowManager } from "~/game-engine/core-engine/flow/flow-manager";
 import type {
   CoreEngineState,
   FnContext,
@@ -11,16 +11,18 @@ import {
   type MoveRequest,
 } from "~/game-engine/core-engine/move/move-processor";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
+import { createCtx } from "~/game-engine/core-engine/state/context";
 import type { GameCards } from "~/game-engine/core-engine/types";
-import { Flow } from "./flow";
+
+type PlayerID = string;
 
 // This class is responsible for turning a GameDefinition into a live object, it encapsulates it
 // and provides a runtime interface to interact with the game state and moves.
 export class CoreGameRuntime<GameState = unknown> {
-  game: GameDefinition;
-  processedGame: GameRuntime<GameState>;
-  initialState: CoreEngineState<GameState>;
-  moveProcessor: MoveProcessor<GameState>;
+  public readonly processedGame: GameRuntime<GameState>;
+  public readonly initialState: CoreEngineState<GameState>;
+  public readonly flowManager: FlowManager<GameState>;
+  private readonly moveProcessor: MoveProcessor<GameState>;
 
   constructor({
     game,
@@ -29,145 +31,102 @@ export class CoreGameRuntime<GameState = unknown> {
     cards,
     players,
     seed,
-    engine,
     debug = false,
   }: {
-    game: GameDefinition;
+    game: GameDefinition<GameState>;
     initialState?: GameState;
     initialCoreCtx?: CoreCtx;
     players?: string[];
     cards: GameCards;
     seed?: string;
-    engine: CoreEngine;
     debug: boolean;
   }) {
-    const result = initializeGame<GameState>({
-      game,
-      initialState,
-      initialCoreCtx,
+    // Process game definition with defaults
+    const processedGameDef = this.processGameDefinition(game, seed);
+
+    // Create FlowManager (consolidates Flow function logic)
+    this.flowManager = new FlowManager<GameState>(
+      processedGameDef,
       cards,
       players,
-      seed,
+    );
+
+    // Create initial context
+    const ctx = createCtx({
+      playerOrder: players || [],
+      initialSegment: this.flowManager.startingSegment || undefined,
+      initialPhase: this.flowManager.initialPhase || undefined,
+      initialStep: this.flowManager.initialStep || undefined,
+      cards,
+      players: players?.reduce(
+        (acc, player) => {
+          acc[player] = { id: player, name: player, turnHistory: [] };
+          return acc;
+        },
+        {} as Record<
+          PlayerID,
+          { id: PlayerID; name: string; turnHistory: unknown[] }
+        >,
+      ),
     });
 
-    this.game = result.processedGame;
-    this.initialState = result.initialState;
-    this.processedGame = result.processedGame;
+    // Create initial game state
+    const state: PartialGameState<GameState> = {
+      G: (initialState || {}) as GameState,
+      ctx: initialCoreCtx ? { ...ctx, ...initialCoreCtx } : ctx,
+    };
 
-    // Create move processor with reference to this engine
+    this.initialState = {
+      ...state,
+      _undo: processedGameDef.disableUndo
+        ? []
+        : [{ G: state.G, ctx: state.ctx }],
+      _redo: [],
+      _stateID: 0,
+    };
+
+    // Create processed game runtime
+    this.processedGame = {
+      ...processedGameDef,
+      moveNames: this.flowManager.moveNames,
+      flow: this.flowManager, // FlowManager replaces Flow function return
+    } as GameRuntime<GameState>;
+
     this.moveProcessor = new MoveProcessor<GameState>(debug);
+  }
+
+  /**
+   * Process game definition and set defaults (consolidates processGameDefinition)
+   */
+  private processGameDefinition(
+    game: GameDefinition<GameState>,
+    seed?: string,
+  ): GameDefinition<GameState> {
+    const processed = { ...game };
+
+    if (seed) {
+      processed.seed = seed;
+    }
+
+    // Set defaults
+    if (processed.name === undefined) processed.name = "default";
+    if (processed.deltaState === undefined) processed.deltaState = false;
+    if (processed.disableUndo === undefined) processed.disableUndo = true;
+    if (processed.moves === undefined) processed.moves = {};
+    if (processed.playerView === undefined) processed.playerView = ({ G }) => G;
+
+    if (processed.name.includes(" ")) {
+      throw new Error(`${processed.name}: Game name must not include spaces`);
+    }
+
+    return processed;
   }
 
   processMove(request: MoveRequest, fnContext: FnContext<GameState>) {
     return this.moveProcessor.process(
       request,
-      this.processedGame.flow,
+      this.flowManager, // Pass FlowManager instead of Flow function return
       fnContext,
     );
   }
-}
-
-export function initializeGame<GameState = unknown>({
-  game,
-  initialState,
-  initialCoreCtx,
-  cards,
-  players,
-  seed,
-}: {
-  game: GameDefinition;
-  initialState?: GameState;
-  initialCoreCtx?: CoreCtx;
-  players?: string[];
-  cards: GameCards;
-  seed?: string;
-}): {
-  initialState: CoreEngineState<GameState>;
-  processedGame: GameRuntime<GameState>;
-} {
-  const gameRuntime = processGameDefinition(
-    seed ? { ...game, seed } : game,
-    cards,
-    players,
-  );
-
-  const ctx: CoreCtx = gameRuntime.flow.ctx;
-
-  const state: PartialGameState<GameState> = {
-    // User managed state.
-    G: {} as GameState,
-    // Framework managed state.
-    ctx,
-  };
-
-  if (initialState) {
-    state.G = initialState;
-  }
-
-  if (initialCoreCtx) {
-    state.ctx = {
-      ...ctx,
-      ...initialCoreCtx,
-    };
-  }
-
-  const initial: CoreEngineState<GameState> = {
-    ...state,
-    _undo: [],
-    _redo: [],
-    _stateID: 0,
-  };
-
-  if (!game.disableUndo) {
-    initial._undo = [
-      {
-        G: initial.G as GameState,
-        ctx: initial.ctx,
-      },
-    ];
-  }
-
-  return {
-    initialState: initial,
-    processedGame: gameRuntime as GameRuntime<GameState>,
-  };
-}
-
-/**
- * Helper to generate the game move reducer. The returned
- * reducer has the following signature:
- *
- * (G, action, ctx) => {}
- *
- * You can roll your own if you like, or use any Redux
- * addon to generate such a reducer.
- *
- * The convention used in this framework is to
- * have action.type contain the name of the move, and
- * action.args contain any additional arguments as an
- * Array.
- */
-export function processGameDefinition<G = unknown>(
-  game: GameDefinition | GameRuntime,
-  cards: GameCards,
-  players?: string[],
-): GameRuntime {
-  if (game.name === undefined) game.name = "default";
-  if (game.deltaState === undefined) game.deltaState = false;
-  if (game.disableUndo === undefined) game.disableUndo = true;
-  if (game.moves === undefined) game.moves = {};
-  if (game.playerView === undefined) game.playerView = ({ G }) => G;
-  if (game.name.includes(" ")) {
-    throw new Error(`${game.name}: Game name must not include spaces`);
-  }
-
-  const flow = Flow(game, cards, players);
-
-  const processedGame: GameRuntime = {
-    ...game,
-    moveNames: flow.moveNames as string[],
-    flow,
-  } as GameRuntime;
-
-  return processedGame;
 }
