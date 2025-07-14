@@ -107,18 +107,38 @@ export class FlowManager<G> {
     return hasPriorityPlayer(state.ctx, playerID);
   }
 
-  // ===== SEGMENT PROCESSING (for pre-game setup) =====
+  executeHook(
+    hook:
+      | ((context: FnContext<G>) => undefined | G)
+      | ((context: FnContext<G>) => boolean | undefined),
+    ctx: FnContext<G>,
+  ) {
+    if (typeof hook !== "function" || !hook || !ctx) {
+      return undefined;
+    }
+
+    return hook(ctx);
+  }
 
   /**
    * Process flow transitions including segments and phases
    * This handles both segment-based transitions (pre-game) and phase-based transitions (gameplay)
    */
   processFlowTransitions(
-    state: CoreEngineState<G>,
+    state2: CoreEngineState<G>,
     // This ensures we always have the latest FnContext, even if the state changes during processing
     getUpdatedFnContext: () => FnContext<G>,
   ): CoreEngineState<G> {
-    let currentState = state;
+    const fnContext = getUpdatedFnContext();
+    let currentState: CoreEngineState<G> = {
+      G: fnContext.G,
+      ctx: fnContext.ctx,
+      _undo: [],
+      _redo: [],
+      _stateID: 999,
+    };
+    currentState = state2;
+
     let hasTransitions = true;
     let maxIterations = 10; // Prevent infinite loops
 
@@ -322,12 +342,16 @@ export class FlowManager<G> {
    */
   private shouldEndSegment(state: CoreEngineState<G>): boolean {
     const { ctx } = state;
-    if (!ctx.currentSegment) return false;
+    if (!ctx.currentSegment) {
+      return false;
+    }
 
     const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
-    if (!segmentConfig?.endIf) return false;
+    if (!segmentConfig?.endIf) {
+      return false;
+    }
 
-    return !!segmentConfig.endIf(state);
+    return !!this.executeHook(segmentConfig.endIf, state);
   }
 
   /**
@@ -349,7 +373,7 @@ export class FlowManager<G> {
       return false;
     }
 
-    return !!phaseConfig.endIf(state);
+    return !!this.executeHook(phaseConfig.endIf, state);
   }
 
   /**

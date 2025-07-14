@@ -27,7 +27,7 @@ export interface TurnMap<G = unknown> {
 export interface TurnConfig<G = unknown> {
   onBegin?: (context: FnContext<G>) => undefined | G;
   onEnd?: (context: FnContext<G>) => undefined | G;
-  endIf?: (context: FnContext<G>) => boolean | undefined | { next: PlayerID };
+  endIf?: (context: FnContext<G>) => boolean | undefined;
 
   moves?: MoveMap<G>;
   phases?: PhaseMap<G>;

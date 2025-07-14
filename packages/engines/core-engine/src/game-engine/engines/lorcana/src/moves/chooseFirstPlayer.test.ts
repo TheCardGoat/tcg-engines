@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "../testing/lorcana-test-engine.ts";
+import { LorcanaTestEngine } from "../testing/lorcana-test-engine";
 
 describe("Move: Choose First Player", () => {
   let testEngine: LorcanaTestEngine;
@@ -35,7 +35,7 @@ describe("Move: Choose First Player", () => {
     expect(testEngine.getTurnPlayer()).toBe("player_one");
   });
 
-  it.only("Choosing player_two", () => {
+  it("Choosing player_two", () => {
     console.log(
       "testEngine.getPriorityPlayers()",
       testEngine.getPriorityPlayers(),

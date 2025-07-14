@@ -29,7 +29,7 @@ export interface SegmentConfig<G = unknown> {
 
   onBegin?: (context: FnContext<G>) => undefined | G;
   onEnd?: (context: FnContext<G>) => undefined | G;
-  endIf?: (context: FnContext<G>) => boolean | undefined | { next: string };
+  endIf?: (context: FnContext<G>) => boolean | undefined;
 
   turn: TurnConfig<G>;
 }
