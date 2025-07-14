@@ -126,7 +126,7 @@ export class FlowManager<G> {
   private handleSegmentTransition(
     state: CoreEngineState<G>,
   ): CoreEngineState<G> {
-    let currentState = state;
+    let currentState = { ...state };
     const { ctx } = currentState;
     if (!ctx.currentSegment) {
       return currentState;
@@ -325,7 +325,6 @@ export class FlowManager<G> {
       G: fnContext.G,
       ctx: fnContext.ctx,
     };
-    currentState = { ...state };
 
     let hasTransitions = true;
     let maxIterations = 10; // Prevent infinite loops
@@ -345,26 +344,13 @@ export class FlowManager<G> {
         );
       }
 
-      // Check if current segment should end
-      const prevState = currentState;
       currentState = this.handleSegmentTransition(currentState);
-      if (currentState !== prevState) {
-        hasTransitions = true;
-        continue;
-      }
 
       // Check if current phase should end (within segment or turn-based)
       currentState = this.handlePhaseTransition(currentState);
-      if (currentState !== prevState) {
-        hasTransitions = true;
-        continue;
-      }
 
       // Handle case where we have a segment but no phase (initialize starting phase)
       currentState = this.handleSegmentPhaseInitialization(currentState);
-      if (currentState !== prevState) {
-        hasTransitions = true;
-      }
     }
 
     return currentState;

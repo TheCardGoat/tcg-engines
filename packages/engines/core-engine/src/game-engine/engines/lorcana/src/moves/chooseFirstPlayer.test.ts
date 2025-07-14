@@ -36,10 +36,6 @@ describe("Move: Choose First Player", () => {
   });
 
   it("Choosing player_two", () => {
-    console.log(
-      "testEngine.getPriorityPlayers()",
-      testEngine.getPriorityPlayers(),
-    );
     testEngine.changeActivePlayer("player_one");
     testEngine.chooseWhoGoesFirst("player_two");
     expect(testEngine.getCtx().otp).toBe("player_two");

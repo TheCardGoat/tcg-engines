@@ -355,6 +355,12 @@ export class CoreEngine<
       });
 
       this.notifySubscribers();
+    } else {
+      if (debuggers.transportMessages) {
+        logger.warn(
+          `Received outdated state from authoritative engine: ${state._stateID} < ${currentState._stateID}`,
+        );
+      }
     }
   }
 
