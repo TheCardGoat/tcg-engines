@@ -46,7 +46,7 @@ export class CoreGameRuntime<GameState = unknown> {
     cards: GameCards;
     seed?: string;
     engine: CoreEngine;
-    debug;
+    debug: boolean;
   }) {
     const result = initializeGame<GameState>({
       game,
@@ -68,12 +68,11 @@ export class CoreGameRuntime<GameState = unknown> {
 
   processMove(
     request: MoveRequest,
-    currentState: CoreEngineState<GameState>,
-    fnContext: FnContext,
+    _: CoreEngineState<GameState>,
+    fnContext: FnContext<GameState>,
   ) {
     return this.moveProcessor.process(
       request,
-      currentState,
       this.processedGame.flow,
       fnContext,
     );

@@ -19,5 +19,7 @@ export const chooseFirstPlayer: GundamMove = (
   // Also set the turn player for phases that need it
   coreOps.setTurnPlayer(targetPlayerId);
 
+  coreOps.setPendingMulligan(coreOps.getPlayers());
+
   return G;
 };

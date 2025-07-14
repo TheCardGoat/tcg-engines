@@ -147,7 +147,7 @@ export class FlowManager<G> {
    */
   private handleSegmentTransition(
     state: CoreEngineState<G>,
-    getUpdatedFnContext: () => FnContext<G>,
+    fnContext: FnContext<G>,
   ): CoreEngineState<G> {
     let currentState = { ...state };
     const { ctx } = currentState;
@@ -168,21 +168,10 @@ export class FlowManager<G> {
       if (nextSegment && nextSegment !== ctx.currentSegment) {
         // Apply segment end hooks
         const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
-        const fnContext = getUpdatedFnContext();
-        const onEnd = this.executeHook(segmentConfig.onEnd, {
-          G: currentState.G,
-          ctx: currentState.ctx,
-          coreOps: new CoreOperation({
-            state: currentState,
-            engine: this.engine,
-          }),
-        });
+        const onEnd = this.executeHook(segmentConfig.onEnd, fnContext);
 
         if (onEnd !== undefined) {
-          currentState = {
-            ...currentState,
-            G: onEnd,
-          };
+          currentState = fnContext._getUpdatedState();
         }
 
         // Get the starting phase and step for the new segment
@@ -222,9 +211,9 @@ export class FlowManager<G> {
    */
   private handlePhaseTransition(
     state: CoreEngineState<G>,
-    getUpdatedFnContext: () => FnContext<G>,
+    fnContext: FnContext<G>,
   ): CoreEngineState<G> {
-    let currentState = state;
+    let currentState = { ...state };
     const { ctx } = currentState;
     if (!ctx.currentPhase) {
       return currentState;
@@ -244,28 +233,21 @@ export class FlowManager<G> {
       if (nextPhase && nextPhase !== ctx.currentPhase) {
         // Apply phase onBegin hook before changing phase
         const phaseConfig = this.getPhaseConfig(ctx.currentSegment, nextPhase);
-        let newG = currentState.G;
 
-        const fnContext = getUpdatedFnContext();
-        const result = this.executeHook(phaseConfig?.onBegin, {
-          G: currentState.G,
-          ctx: currentState.ctx,
-          coreOps: new CoreOperation({
-            state: currentState,
-            engine: this.engine,
-          }),
-        });
+        const result = this.executeHook(phaseConfig?.onBegin, fnContext);
 
         if (result !== undefined) {
-          newG = result;
+          currentState = fnContext._getUpdatedState();
         }
 
         currentState = {
           ...currentState,
-          G: newG,
           ctx: {
             ...currentState.ctx,
             currentPhase: nextPhase,
+            currentSegment: state.ctx.currentSegment,
+            currentTurn: state.ctx.currentTurn,
+            currentStep: null, // Reset step when changing phase
           },
         };
       }
@@ -280,11 +262,12 @@ export class FlowManager<G> {
   private handleSegmentPhaseInitialization(
     state: CoreEngineState<G>,
   ): CoreEngineState<G> {
-    let currentState = state;
+    let currentState = { ...state };
     const { ctx } = currentState;
     if (!(ctx.currentSegment && !ctx.currentPhase)) {
       return currentState;
     }
+
     const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
 
     if (segmentConfig?.turn?.phases) {
@@ -325,15 +308,14 @@ export class FlowManager<G> {
    */
   processFlowTransitions(
     state: CoreEngineState<G>,
-    // This ensures we always have the latest FnContext, even if the state changes during processing
-    getUpdatedFnContext: () => FnContext<G>,
+    fnContext: FnContext<G>,
   ): CoreEngineState<G> {
-    const fnContext = getUpdatedFnContext();
     let currentState: CoreEngineState<G> = {
       ...state,
       G: fnContext.G,
       ctx: fnContext.ctx,
     };
+    const { ctx } = currentState;
 
     let hasTransitions = true;
     let maxIterations = 10; // Prevent infinite loops
@@ -341,8 +323,6 @@ export class FlowManager<G> {
     while (hasTransitions && maxIterations > 0) {
       hasTransitions = false;
       maxIterations--;
-
-      const { ctx } = currentState;
 
       if (debuggers.flowTransitions) {
         logger.debug(
@@ -353,14 +333,8 @@ export class FlowManager<G> {
         );
       }
 
-      currentState = this.handleSegmentTransition(
-        currentState,
-        getUpdatedFnContext,
-      );
-      currentState = this.handlePhaseTransition(
-        currentState,
-        getUpdatedFnContext,
-      );
+      currentState = this.handleSegmentTransition(currentState, fnContext);
+      currentState = this.handlePhaseTransition(currentState, fnContext);
       currentState = this.handleSegmentPhaseInitialization(currentState);
     }
 

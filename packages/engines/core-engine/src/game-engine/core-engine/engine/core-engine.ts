@@ -155,7 +155,7 @@ export class CoreEngine<
     // Automatically process initial flow transitions to initialize segments and phases
     const initialStateWithFlow = this.flowManager.processFlowTransitions(
       this.gameRuntime.initialState,
-      () => this.getFnContext(),
+      this.getFnContext(),
     );
     if (this.gameRuntime.initialState !== initialStateWithFlow) {
       logger.debug("Applying initial flow transitions to game state");
@@ -183,6 +183,16 @@ export class CoreEngine<
       coreOps: coreOperation,
       gameOps: this,
       playerID: this.playerID,
+      _getUpdatedState: (): CoreEngineState<GameState> => {
+        return {
+          G: state.G,
+          // We don't want to allow mutating ctx directly, so we always return CoreOperation internal ctx
+          ctx: coreOperation.state.ctx,
+          _undo: [],
+          _redo: [],
+          _stateID: 0,
+        };
+      },
     };
   }
 
@@ -216,10 +226,15 @@ export class CoreEngine<
         );
       }
 
+      // Sharing the same context for move processing and flow management
+      // This allows temporarily persisting the FnContext across both operations
+      // In practical terms, it means that mutations to G or ctx in the move, will be reflected in the flow manager
+      const fnContext = this.getFnContext();
+
       const processResult = this.gameRuntime.processMove(
         moveRequest,
         this.gameStateStore.state,
-        this.getFnContext(),
+        fnContext,
       );
 
       if (!processResult.success) {
@@ -235,8 +250,9 @@ export class CoreEngine<
 
       const { newState } = processResult.data;
 
-      const finalState = this.flowManager.processFlowTransitions(newState, () =>
-        this.getFnContext(),
+      const finalState = this.flowManager.processFlowTransitions(
+        newState,
+        fnContext,
       );
 
       this.gameStateStore.updateState({

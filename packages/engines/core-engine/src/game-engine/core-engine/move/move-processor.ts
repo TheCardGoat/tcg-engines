@@ -1,20 +1,15 @@
-import type { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
 import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
-import { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
 import {
   type AnyEngineError,
   createEngineError,
   InvalidMoveError,
-  InvalidPlayerError,
   UnknownMoveError,
 } from "~/game-engine/core-engine/errors/engine-errors";
 import type { Flow } from "~/game-engine/core-engine/game/flow";
 import type {
   CoreEngineState,
   FnContext,
-  GameRuntime,
 } from "~/game-engine/core-engine/game-configuration";
-import type { LongFormMove } from "~/game-engine/core-engine/move/move-types";
 import {
   type InvalidMoveResult,
   isInvalidMove,
@@ -22,7 +17,6 @@ import {
 import type { Result } from "~/game-engine/core-engine/types/result";
 import { Result as ResultHelpers } from "~/game-engine/core-engine/types/result";
 import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
-import type { LorcanaEngine } from "~/game-engine/engines/lorcana/src/lorcana-engine";
 
 // Types for move processing
 export type MoveRequest = {
@@ -36,7 +30,8 @@ export type ValidatedMove<G> = {
   readonly moveType: string;
   readonly args: readonly unknown[];
   readonly moveFunction: any; // Can be regular function or LongFormMove
-  readonly state: CoreEngineState<G>;
+  // readonly state: CoreEngineState<G>;
+  readonly fnContext: FnContext<G>;
 };
 
 export type MoveResult<G> = {
@@ -52,11 +47,11 @@ export class MoveValidator<G> {
 
   validate(
     request: MoveRequest,
-    currentState: CoreEngineState<G>,
+    fnContext: FnContext<G>,
     flow: ReturnType<typeof Flow>,
   ): Result<ValidatedMove<G>, AnyEngineError> {
     const moveFunction = flow.getMove(
-      currentState.ctx,
+      fnContext.ctx,
       request.moveType,
       request.playerID,
     );
@@ -72,7 +67,7 @@ export class MoveValidator<G> {
       moveType: request.moveType,
       args: request.args,
       moveFunction,
-      state: currentState,
+      fnContext,
     });
   }
 }
@@ -91,16 +86,9 @@ export class MoveExecutor<G> {
     fnContext: FnContext,
   ): Result<MoveResult<G>, AnyEngineError> {
     try {
-      // Handle both regular moves and long-form moves
       const actualMoveFunction = this.extractMoveFunction(
         validatedMove.moveFunction,
       );
-
-      // Use standard CoreOperation
-      const coreOperation = new CoreOperation({
-        state: validatedMove.state,
-        engine: this.engine,
-      });
 
       const newG = actualMoveFunction(
         fnContext,
@@ -135,17 +123,11 @@ export class MoveExecutor<G> {
         logger.debug(
           `Move ${validatedMove.moveType} executed successfully, updating state`,
         );
-        logger.debug("Old state G:", validatedMove.state.G);
+        logger.debug("Old state G:", validatedMove.fnContext.G);
         logger.debug("New state G:", newG);
       }
 
-      const newState: CoreEngineState<G> = {
-        ...validatedMove.state,
-        G: newG,
-        // This will override any context mutations made by the move
-        ctx: coreOperation.state.ctx,
-        _stateID: validatedMove.state._stateID + 1,
-      };
+      const newState: CoreEngineState<G> = fnContext._getUpdatedState();
 
       return ResultHelpers.ok({
         newState,
@@ -183,26 +165,15 @@ export class MoveProcessor<G> {
 
   process(
     request: MoveRequest,
-    currentState: CoreEngineState<G>,
     flow: ReturnType<typeof Flow>,
-    fnContext: FnContext,
+    fnContext: FnContext<G>,
   ): Result<MoveResult<G>, AnyEngineError> {
-    const validationResult = this.validator.validate(
-      request,
-      currentState,
-      flow,
-    );
+    const validationResult = this.validator.validate(request, fnContext, flow);
     if (!validationResult.success) {
       // @ts-ignore
       return ResultHelpers.error(validationResult.error);
     }
 
-    const validatedMove = validationResult.data;
-    const executionResult = this.executor.execute(validatedMove, fnContext);
-    if (!executionResult.success) {
-      return executionResult;
-    }
-
-    return ResultHelpers.ok(executionResult.data);
+    return this.executor.execute(validationResult.data, fnContext);
   }
 }

@@ -9,6 +9,7 @@ import {
 } from "~/game-engine/core-engine/engine/zone-operation";
 import type { CoreEngineState } from "~/game-engine/core-engine/game-configuration";
 import {
+  getCurrentPriorityPlayer,
   setPriorityPlayer,
   setTurnPlayer,
 } from "~/game-engine/core-engine/state/context";
@@ -272,5 +273,12 @@ export class CoreOperation<
 
   getTurnCount() {
     return this.state.ctx.numTurns || 0;
+  }
+
+  debug() {
+    console.log({
+      otp: this.state.ctx.otp,
+      priorityPlayer: getCurrentPriorityPlayer(this.state.ctx),
+    });
   }
 }

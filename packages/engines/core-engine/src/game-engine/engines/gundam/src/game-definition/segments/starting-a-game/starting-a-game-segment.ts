@@ -23,7 +23,6 @@ export const startingAGameSegment: SegmentConfig<GundamGameState> = {
 
   onBegin: ({ G, coreOps }) => {
     coreOps.setPendingMulligan(coreOps.getPlayers());
-    logger.info("==== STARTING A GAME ====");
 
     for (const player of coreOps.getPlayers()) {
       coreOps.shuffleZone("deck", player);

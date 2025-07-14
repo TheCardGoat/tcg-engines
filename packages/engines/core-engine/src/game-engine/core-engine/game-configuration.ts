@@ -151,6 +151,7 @@ export type FnContext<
     CardInstance
   >;
   playerID?: PlayerID | null;
+  _getUpdatedState: () => CoreEngineState<G>;
 };
 
 export interface SyncInfo {

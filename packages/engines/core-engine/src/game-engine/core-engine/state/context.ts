@@ -188,8 +188,8 @@ export function setNextTurnPlayer(ctx: CoreCtx): CoreCtx {
     ...ctx,
     turnPlayerPos: nextTurnPlayerPos,
     playerOrder: [...ctx.playerOrder],
-    cards: deepCopyCards(ctx.cards),
-    cardZones: ctx.cardZones ? deepCopyZones(ctx.cardZones) : ctx.cardZones,
+    cards: ctx.cards,
+    cardZones: ctx.cardZones,
   };
 }
 
@@ -229,13 +229,12 @@ export function setPriorityPlayer(ctx: CoreCtx, player: PlayerID): CoreCtx {
     throw new Error(`Player ${player} is not in the player order.`);
   }
 
-  // Deep copy arrays and objects to prevent mutations
   return {
     ...ctx,
     priorityPlayerPos: priorityPlayerPos,
     playerOrder: [...ctx.playerOrder],
-    cards: deepCopyCards(ctx.cards),
-    cardZones: ctx.cardZones ? deepCopyZones(ctx.cardZones) : ctx.cardZones,
+    cards: ctx.cards,
+    cardZones: ctx.cardZones,
   };
 }
 
@@ -254,29 +253,7 @@ export function setTurnPlayer(ctx: CoreCtx, player: PlayerID): CoreCtx {
     ...ctx,
     turnPlayerPos: turnPlayerPos,
     playerOrder: [...ctx.playerOrder],
-    cards: deepCopyCards(ctx.cards),
-    cardZones: ctx.cardZones ? deepCopyZones(ctx.cardZones) : ctx.cardZones,
+    cards: ctx.cards,
+    cardZones: ctx.cardZones,
   };
-}
-
-// Deep copy helper functions for backward compatibility
-
-function deepCopyCards(cards: GameCards): GameCards {
-  const copiedCards: GameCards = {};
-  for (const [playerId, playerCards] of Object.entries(cards)) {
-    copiedCards[playerId] = { ...playerCards };
-  }
-  return copiedCards;
-}
-
-function deepCopyZones(zones: Record<string, Zone>): Record<string, Zone> {
-  const copiedZones: Record<string, Zone> = {};
-  for (const [zoneId, zone] of Object.entries(zones)) {
-    copiedZones[zoneId] = {
-      ...zone,
-      cards: [...zone.cards],
-      metadata: { ...zone.metadata },
-    };
-  }
-  return copiedZones;
 }

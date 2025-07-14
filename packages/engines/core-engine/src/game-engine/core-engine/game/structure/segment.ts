@@ -15,8 +15,6 @@ import type {
   LogEntry,
 } from "~/game-engine/core-engine/game-configuration";
 import { logger } from "~/game-engine/core-engine/utils/logger";
-// Remove problematic import - SegmentConfig is defined in this file
-import { endPhase, startPhase } from "./phase";
 
 export interface SegmentMap<G = unknown> {
   [segmentName: string]: SegmentConfig<G>;
@@ -91,10 +89,7 @@ export function processSegments<G = unknown>(segmentMap: SegmentMap<G>) {
 export function startSegment(
   state: CoreEngineState,
   gameDefinition: GameDefinition,
-  {
-    next = [],
-    engine,
-  }: { next?: any[]; engine?: CoreEngine<any, any, any, any, any> } = {},
+  { next = [], engine }: { next?: any[]; engine?: CoreEngine } = {},
 ): CoreEngineState {
   let { G, ctx } = state;
   const segmentConfig = getSegment(ctx, gameDefinition);

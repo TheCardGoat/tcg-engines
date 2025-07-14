@@ -31,8 +31,8 @@ describe("Move: Choose First Player", () => {
 
     expect(testEngine.getGameSegment()).toBe("duringGame");
     expect(testEngine.getGamePhase()).toBe("mainPhase");
-    expect(testEngine.getPriorityPlayers()).toEqual(["player_one"]);
     expect(testEngine.getTurnPlayer()).toBe("player_one");
+    expect(testEngine.getPriorityPlayers()).toEqual(["player_one"]);
   });
 
   it("Choosing player_two", () => {
