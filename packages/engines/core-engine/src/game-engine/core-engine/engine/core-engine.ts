@@ -169,8 +169,20 @@ export class CoreEngine<
     CardFilter,
     CardInstance
   > {
+    return this.createFnContextFromState(this.gameStateStore.getState());
+  }
+
+  private createFnContextFromState(
+    state: CoreEngineState<GameState>,
+  ): FnContext<
+    GameState,
+    CardDefinition,
+    PlayerState,
+    CardFilter,
+    CardInstance
+  > {
     const coreOperation = new CoreOperation({
-      state: this.gameStateStore.getState(),
+      state: state,
       engine: this,
     });
 
@@ -223,14 +235,12 @@ export class CoreEngine<
         );
       }
 
-      // Sharing the same context for move processing and flow management
-      // This allows temporarily persisting the FnContext across both operations
-      // In practical terms, it means that mutations to G or ctx in the move, will be reflected in the flow manager
-      const fnContext = this.getFnContext();
+      // Create initial fnContext for move processing
+      const initialFnContext = this.getFnContext();
 
       const processResult = this.gameRuntime.processMove(
         moveRequest,
-        fnContext,
+        initialFnContext,
       );
 
       if (!processResult.success) {
@@ -247,15 +257,14 @@ export class CoreEngine<
 
       const { newState } = processResult.data;
 
-      console.log("newState", newState.ctx.cardZones["player_one-inkwell"]);
-      console.log("fnContext", fnContext.ctx.cardZones["player_one-inkwell"]);
+      // Create fresh fnContext with updated state for flow processing
+      // This ensures state consistency between newState and fnContext
+      const updatedFnContext = this.createFnContextFromState(newState);
 
       const finalState = this.flowManager.processFlowTransitions(
         newState,
-        fnContext,
+        updatedFnContext,
       );
-
-      console.log("finalState", finalState.ctx.cardZones["player_one-inkwell"]);
 
       this.gameStateStore.updateState({
         newState: finalState,

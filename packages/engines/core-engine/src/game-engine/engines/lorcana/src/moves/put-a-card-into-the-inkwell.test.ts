@@ -116,7 +116,7 @@ describe("Move: Put a Card into the Inkwell", () => {
     );
   });
 
-  it.only("should only allow one card into inkwell per turn", () => {
+  it("should only allow one card into inkwell per turn", () => {
     testEngine.assertThatZonesContain(
       {
         hand: 3,
@@ -138,19 +138,19 @@ describe("Move: Put a Card into the Inkwell", () => {
       "player_one",
     );
 
-    // // Second attempt should fail (once per turn rule)
-    // expect(() => {
-    //   testEngine.putACardIntoTheInkwell(cardsWithInkwell[1].instanceId);
-    // }).toThrow();
-    //
-    // // Verify only one card moved
-    // testEngine.assertThatZonesContain(
-    //   {
-    //     hand: 2,
-    //     inkwell: 1,
-    //   },
-    //   "player_one",
-    // );
+    // Second attempt should fail (once per turn rule)
+    expect(() => {
+      testEngine.putACardIntoTheInkwell(cardsWithInkwell[1].instanceId);
+    }).toThrow();
+
+    // Verify only one card moved, in other words, zones unchanged
+    testEngine.assertThatZonesContain(
+      {
+        hand: 2,
+        inkwell: 1,
+      },
+      "player_one",
+    );
   });
 
   it("should reject card not in player's hand", () => {
