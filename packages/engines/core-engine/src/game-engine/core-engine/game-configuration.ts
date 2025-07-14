@@ -5,7 +5,6 @@ import type {
 } from "~/game-engine/core-engine/engine/types";
 import type { Flow } from "~/game-engine/core-engine/game/flow";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
-import type { FlowConfiguration } from "./flow/flow-manager";
 import type { SegmentMap } from "./game/structure/segment-types";
 import type {
   BaseCoreCardFilter,
@@ -32,6 +31,36 @@ import type {
 export type PlayerID = string;
 export type StageName = string;
 
+export type FlowPhaseType = string;
+export type FlowStepType = string;
+
+export interface FlowStep {
+  id: FlowStepType;
+  name: string;
+  description?: string;
+  onBegin?: (gameState: any) => any;
+  onEnd?: (gameState: any) => any;
+}
+
+export interface FlowPhase {
+  id: FlowPhaseType;
+  name: string;
+  description?: string;
+  steps?: FlowStep[];
+  onBegin?: (gameState: any) => any;
+  onEnd?: (gameState: any) => any;
+}
+
+export interface FlowTurn {
+  phases: FlowPhase[];
+  onBegin?: (gameState: any) => any;
+  onEnd?: (gameState: any) => any;
+}
+
+export interface FlowConfiguration {
+  turns: FlowTurn;
+}
+
 export type GameRuntime<G = unknown> = GameDefinition<G> & {
   moveNames: string[];
   flow?: ReturnType<typeof Flow>;
@@ -42,7 +71,7 @@ export type GameRuntime<G = unknown> = GameDefinition<G> & {
 };
 
 // Game Definition to configure core-engine
-export interface GameDefinition<G = unknown, SetupData = G> {
+export interface GameDefinition<G = unknown> {
   name?: string;
   numPlayers?: number;
   deltaState?: boolean;

@@ -1,38 +1,14 @@
 import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
 import { CoreOperation } from "../engine/core-operation";
-import type { CoreEngineState, GameDefinition } from "../game-configuration";
+import type {
+  CoreEngineState,
+  FlowConfiguration,
+  FlowPhase,
+  FlowPhaseType,
+  GameDefinition,
+} from "../game-configuration";
 import { hasPriorityPlayer } from "../state/context";
 import { debuggers, logger } from "../utils/logger";
-
-export type FlowPhaseType = string;
-export type FlowStepType = string;
-
-export interface FlowStep {
-  id: FlowStepType;
-  name: string;
-  description?: string;
-  onBegin?: (gameState: any) => any;
-  onEnd?: (gameState: any) => any;
-}
-
-export interface FlowPhase {
-  id: FlowPhaseType;
-  name: string;
-  description?: string;
-  steps?: FlowStep[];
-  onBegin?: (gameState: any) => any;
-  onEnd?: (gameState: any) => any;
-}
-
-export interface FlowTurn {
-  phases: FlowPhase[];
-  onBegin?: (gameState: any) => any;
-  onEnd?: (gameState: any) => any;
-}
-
-export interface FlowConfiguration {
-  turns: FlowTurn;
-}
 
 /**
  * Unified Flow Manager that handles all game flow operations
