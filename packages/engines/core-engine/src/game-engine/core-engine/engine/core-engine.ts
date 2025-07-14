@@ -1,7 +1,6 @@
 import { type Result, ResultHelpers } from "~/game-engine/core-engine";
 import type { CardRepository } from "~/game-engine/core-engine/card/card-repository-factory";
 import { CoreCardInstanceStore } from "~/game-engine/core-engine/card/core-card-instance-store";
-import { getFilterPlayerView } from "~/game-engine/core-engine/engine/filter-player-view";
 import type { AnyEngineError } from "~/game-engine/core-engine/errors/engine-errors";
 import {
   InvalidMoveError,
@@ -70,18 +69,6 @@ export type ClientState<
       isConnected: boolean;
     });
 
-/**
- * Enhanced Core Engine with Generic Type Support
- *
- * Provides complete type safety for game-specific implementations while
- * maintaining backward compatibility with existing code.
- *
- * Generic Parameters:
- * - GameState: Game-specific state structure
- * - CardDefinition: Game-specific card definition type
- * - PlayerState: Game-specific player state structure
- * - CardFilter: Game-specific card filtering capabilities
- */
 export class CoreEngine<
   GameState extends GameSpecificGameState,
   CardDefinition extends GameSpecificCardDefinition,
@@ -90,7 +77,6 @@ export class CoreEngine<
   CardInstance extends CoreCardInstance<CardDefinition>,
 > {
   private readonly debug?: boolean;
-  private readonly filterPlayerView: ReturnType<typeof getFilterPlayerView>;
   private readonly gameRuntime: GameRuntime<GameState>;
 
   private subscribers: Array<(state: ClientState<GameState>) => void> = [];
@@ -141,7 +127,6 @@ export class CoreEngine<
     this.gameID = "default-game";
     this.debug = debug;
 
-    this.filterPlayerView = getFilterPlayerView(game);
     const { processedGame, initialState: init } = initializeGame<GameState>({
       game,
       initialState,
@@ -335,15 +320,9 @@ export class CoreEngine<
   }
 
   private broadcastToClients(state: CoreEngineState<GameState>): void {
-    Object.entries(this.clientEngines).forEach(([playerID, engine]) => {
-      const filteredState = this.filterPlayerView(playerID, {
-        type: "update",
-        args: [this.matchID, state],
-      });
-      engine.receiveFromAuthoritative(
-        filteredState.args[1] as CoreEngineState<GameState>,
-      );
-    });
+    for (const [_, engine] of Object.entries(this.clientEngines)) {
+      engine.receiveFromAuthoritative(state);
+    }
   }
 
   private receiveFromAuthoritative(state: CoreEngineState<GameState>): void {

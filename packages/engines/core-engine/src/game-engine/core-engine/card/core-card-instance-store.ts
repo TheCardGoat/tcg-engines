@@ -24,7 +24,7 @@ export interface CoreCardDefinition {
 type InstanceId = string;
 type PublicId = string;
 
-// This is a generic store for card instances, allowing for dynamic properties from static definitions.
+// Read-only entity that provides rich information about cards' current state. With the help of CardInstance class it gives fresh information about each card.
 export class CoreCardInstanceStore<
   CardDefinition extends CoreCardDefinition = { id: string },
   GameState extends GameSpecificGameState = DefaultGameState,
