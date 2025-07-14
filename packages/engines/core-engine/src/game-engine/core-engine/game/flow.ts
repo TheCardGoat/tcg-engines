@@ -99,10 +99,6 @@ export function Flow(
     }),
     moveMap,
     moveNames: [...moveNames.values()],
-    isPlayerActive: (_G: unknown, _ctx: CoreCtx, _playerID: PlayerID) => {
-      // For now, simple implementation - any player is active
-      return true;
-    },
     getMove: (ctx: CoreCtx, name: string, playerID: PlayerID) => {
       // First try the collected moveMap (which includes phase-specific moves)
       if (name in moveMap) {

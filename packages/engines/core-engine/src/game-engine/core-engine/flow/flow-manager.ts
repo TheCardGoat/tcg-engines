@@ -1,7 +1,6 @@
 import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
 import type { PhaseConfig } from "~/game-engine/core-engine/game/structure/phase";
 import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
-import { CoreOperation } from "../engine/core-operation";
 import type {
   CoreEngineState,
   FlowConfiguration,
@@ -21,12 +20,10 @@ import { debuggers, logger } from "../utils/logger";
 export class FlowManager<G> {
   private config: FlowConfiguration<G>;
   private gameDefinition: GameDefinition<G>;
-  private readonly engine: CoreEngine<G>;
 
-  constructor(gameDefinition: GameDefinition<G>, engine: CoreEngine<G>) {
+  constructor(gameDefinition: GameDefinition<G>) {
     this.config = gameDefinition.flow;
     this.gameDefinition = gameDefinition;
-    this.engine = engine;
   }
 
   getCurrentPhase(state: CoreEngineState<G>): FlowPhase<G> | null {
@@ -44,7 +41,10 @@ export class FlowManager<G> {
     );
   }
 
-  getNextPhase(state: CoreEngineState<G>): FlowPhaseType | null {
+  getNextPhase(
+    state: CoreEngineState<G>,
+    fnContext: FnContext<G>,
+  ): FlowPhaseType | null {
     const { ctx } = state;
 
     // First check segment-based phases (for pre-game setup)
@@ -56,7 +56,7 @@ export class FlowManager<G> {
 
         // If next is a function, call it to get the actual next phase name
         if (typeof nextPhase === "function") {
-          nextPhase = nextPhase(state);
+          nextPhase = nextPhase(fnContext);
         }
 
         if (nextPhase) {
@@ -156,7 +156,7 @@ export class FlowManager<G> {
       return currentState;
     }
 
-    const shouldEndSegment = this.shouldEndSegment(currentState);
+    const shouldEndSegment = this.shouldEndSegment(currentState, fnContext);
     if (shouldEndSegment) {
       if (debuggers.flowTransitions) {
         logger.debug(
@@ -164,7 +164,7 @@ export class FlowManager<G> {
         );
       }
 
-      const nextSegment = this.getNextSegment(currentState);
+      const nextSegment = this.getNextSegment(currentState, fnContext);
       if (nextSegment && nextSegment !== ctx.currentSegment) {
         // Apply segment end hooks
         const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
@@ -219,7 +219,7 @@ export class FlowManager<G> {
       return currentState;
     }
 
-    const shouldEndPhase = this.shouldEndPhase(currentState);
+    const shouldEndPhase = this.shouldEndPhase(currentState, fnContext);
 
     if (shouldEndPhase) {
       if (debuggers.flowTransitions) {
@@ -228,7 +228,7 @@ export class FlowManager<G> {
         );
       }
 
-      const nextPhase = this.getNextPhase(currentState);
+      const nextPhase = this.getNextPhase(currentState, fnContext);
 
       if (nextPhase && nextPhase !== ctx.currentPhase) {
         // Apply phase onBegin hook before changing phase
@@ -344,7 +344,10 @@ export class FlowManager<G> {
   /**
    * Check if the current segment should end based on its endIf condition
    */
-  private shouldEndSegment(state: CoreEngineState<G>): boolean {
+  private shouldEndSegment(
+    state: CoreEngineState<G>,
+    fnContext: FnContext<G>,
+  ): boolean {
     const { ctx } = state;
     if (!ctx.currentSegment) {
       return false;
@@ -355,13 +358,16 @@ export class FlowManager<G> {
       return false;
     }
 
-    return !!this.executeHook(segmentConfig.endIf, state);
+    return !!this.executeHook(segmentConfig.endIf, fnContext);
   }
 
   /**
    * Check if the current phase should end based on its endIf condition
    */
-  private shouldEndPhase(state: CoreEngineState<G>): boolean {
+  private shouldEndPhase(
+    state: CoreEngineState<G>,
+    fnContext: FnContext<G>,
+  ): boolean {
     const { ctx } = state;
     if (!(ctx.currentSegment && ctx.currentPhase)) {
       return false;
@@ -377,13 +383,16 @@ export class FlowManager<G> {
       return false;
     }
 
-    return !!this.executeHook(phaseConfig.endIf, state);
+    return !!this.executeHook(phaseConfig.endIf, fnContext);
   }
 
   /**
    * Get the next segment in the game flow
    */
-  private getNextSegment(state: CoreEngineState<G>): string | null {
+  private getNextSegment(
+    state: CoreEngineState<G>,
+    fnContext: FnContext<G>,
+  ): string | null {
     const { ctx } = state;
     if (!ctx.currentSegment) return null;
 
@@ -391,7 +400,7 @@ export class FlowManager<G> {
     if (!segmentConfig?.next) return null;
 
     if (typeof segmentConfig.next === "function") {
-      return segmentConfig.next(state) ?? null;
+      return segmentConfig.next(fnContext) ?? null;
     }
 
     return segmentConfig.next;

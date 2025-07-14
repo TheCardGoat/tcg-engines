@@ -1,8 +1,5 @@
 import type { Operation } from "rfc6902";
-import type {
-  ActionPayload,
-  ActionShape,
-} from "~/game-engine/core-engine/engine/types";
+import type { ActionShape } from "~/game-engine/core-engine/engine/types";
 import type { Flow } from "~/game-engine/core-engine/game/flow";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import type { SegmentMap } from "./game/structure/segment";
@@ -13,10 +10,7 @@ import type {
 export type { SegmentMap };
 
 import type { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
-import type {
-  InvalidMoveResult,
-  Move,
-} from "~/game-engine/core-engine/move/move-types";
+import type { Move } from "~/game-engine/core-engine/move/move-types";
 
 import type { CoreCardInstance } from "./card/core-card-instance";
 import type {
@@ -64,10 +58,6 @@ export interface FlowConfiguration<G> {
 export type GameRuntime<G = unknown> = GameDefinition<G> & {
   moveNames: string[];
   flow?: ReturnType<typeof Flow>;
-  processMove: (
-    state: CoreEngineState,
-    action: ActionPayload.MakeMove,
-  ) => CoreEngineState | InvalidMoveResult;
 };
 
 // Game Definition to configure core-engine

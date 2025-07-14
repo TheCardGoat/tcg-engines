@@ -149,7 +149,6 @@ export class CoreEngine<
 
     this.flowManager = new FlowManager<GameState>(
       this.gameRuntime.processedGame,
-      this,
     );
 
     // Automatically process initial flow transitions to initialize segments and phases

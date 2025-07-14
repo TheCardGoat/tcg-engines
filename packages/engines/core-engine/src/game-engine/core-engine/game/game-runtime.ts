@@ -103,7 +103,6 @@ export function initializeGame<GameState = unknown>({
     seed ? { ...game, seed } : game,
     cards,
     players,
-    engine,
   );
 
   const ctx: CoreCtx = gameRuntime.flow.ctx;
@@ -172,7 +171,6 @@ export function processGameDefinition<G = unknown>(
   game: GameDefinition | GameRuntime,
   cards: GameCards,
   players?: string[],
-  engine?: CoreEngine<any, any, any, any, any>,
 ): GameRuntime {
   // The Game() function has already been called on this
   // config object, so just pass it through.
@@ -185,115 +183,17 @@ export function processGameDefinition<G = unknown>(
   if (game.disableUndo === undefined) game.disableUndo = true;
   if (game.moves === undefined) game.moves = {};
   if (game.playerView === undefined) game.playerView = ({ G }) => G;
-
   if (game.name.includes(" ")) {
     throw new Error(`${game.name}: Game name must not include spaces`);
   }
 
   const flow = Flow(game, cards, players);
 
-  const processMove = (
-    state: CoreEngineState<G>,
-    action: ActionPayload.MakeMove,
-  ): CoreEngineState<G> | InvalidMoveResult => {
-    const move = flow.getMove(state.ctx, action.type, action.playerID);
-
-    const coreOperation = new CoreOperation({ state, engine });
-
-    const fnContext = {
-      G: state.G,
-      ctx: state.ctx,
-      coreOps: coreOperation,
-      gameOps: engine,
-    };
-
-    try {
-      // Use getExecuteFunction to handle both function and enumerable moves
-      const moveFn = getExecuteFunction(move);
-
-      const result = moveFn(
-        {
-          ...fnContext,
-          playerID: action.playerID,
-          gameOps: engine,
-        },
-        ...((action.args as any[]) || []),
-      );
-
-      if (isInvalidMove(result)) {
-        return result;
-      }
-
-      if (result === undefined) {
-        return state;
-      }
-
-      return { ...state, G: result as G };
-    } catch (error) {
-      console.error("Error processing move:", error);
-      return {
-        type: "INVALID_MOVE",
-        reason: "MOVE_EXECUTION_ERROR",
-        messageKey: "moves.errors.executionError",
-        context: {
-          error: error instanceof Error ? error.message : String(error),
-        },
-      };
-    }
-  };
-
-  return {
+  const processedGame: GameRuntime = {
     ...game,
     moveNames: flow.moveNames as string[],
+    flow,
+  } as GameRuntime;
 
-    flow: {
-      ...flow,
-      turns: { phases: [] },
-      priority: { initialPriority: "turnPlayer" },
-    } as any,
-
-    processMove: processMove,
-  };
-}
-
-export function initializeGameAction({
-  state,
-  action,
-  gameDefinition,
-  engine,
-}: {
-  state: CoreEngineState<any>;
-  action: any;
-  gameDefinition: any;
-  engine?: CoreEngine<any, any, any, any, any>;
-}) {
-  try {
-    const { G, ctx } = state;
-    const actionArgs = action.args || [];
-    const playerID = action.playerID;
-
-    // Call onAction hook if it exists
-    if (gameDefinition.onAction) {
-      const context = {
-        G,
-        ctx,
-        action,
-        coreOps: new CoreOperation({ state, engine }),
-        playerID: action.playerID,
-      };
-
-      const result = gameDefinition.onAction(context);
-      if (result !== undefined) {
-        return {
-          ...state,
-          G: result,
-        };
-      }
-    }
-
-    return state;
-  } catch (error) {
-    console.error("Error in initializeGameAction:", error);
-    return state;
-  }
+  return processedGame;
 }

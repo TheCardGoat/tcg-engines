@@ -83,7 +83,7 @@ export class MoveExecutor<G> {
 
   execute(
     validatedMove: ValidatedMove<G>,
-    fnContext: FnContext,
+    fnContext: FnContext<G>,
   ): Result<MoveResult<G>, AnyEngineError> {
     try {
       const actualMoveFunction = this.extractMoveFunction(
@@ -127,7 +127,7 @@ export class MoveExecutor<G> {
         logger.debug("New state G:", newG);
       }
 
-      const newState: CoreEngineState<G> = fnContext._getUpdatedState();
+      const newState = fnContext._getUpdatedState();
 
       return ResultHelpers.ok({
         newState,
