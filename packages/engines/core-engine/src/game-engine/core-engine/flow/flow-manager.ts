@@ -119,6 +119,30 @@ export class FlowManager<G> {
   }
 
   /**
+   * Find the starting phase (marked with start: true) in a phases object.
+   */
+  private findStartingPhase(
+    phases: Record<string, PhaseConfig<G>>,
+  ): string | null {
+    return (
+      Object.keys(phases).find((phaseId) => phases[phaseId]?.start === true) ||
+      null
+    );
+  }
+
+  /**
+   * Find the starting step (marked with start: true) in a steps object.
+   */
+  private findStartingStep(steps: Record<string, any>): string | null {
+    for (const stepName in steps) {
+      if (steps[stepName].start) {
+        return stepName;
+      }
+    }
+    return null;
+  }
+
+  /**
    * Handles segment ending and advancing to the next segment if needed.
    */
   private handleSegmentTransition(
@@ -127,11 +151,11 @@ export class FlowManager<G> {
     let currentState = { ...state };
     const { ctx } = currentState;
     if (!ctx.currentSegment) {
+      logger.error("FlowManager: No current segment defined.");
       return currentState;
     }
 
     const shouldEndSegment = this.shouldEndSegment(currentState);
-
     if (shouldEndSegment) {
       if (debuggers.flowTransitions) {
         logger.debug(
@@ -159,29 +183,19 @@ export class FlowManager<G> {
           };
         }
 
-        // Get the starting phase for the new segment
+        // Get the starting phase and step for the new segment
         const newSegmentConfig = this.getSegmentConfig(nextSegment);
         let startingPhase = null;
         let startingStep = null;
 
-        // Find the phase marked with start: true
         if (newSegmentConfig?.turn?.phases) {
           const phases = newSegmentConfig.turn.phases;
-          startingPhase =
-            Object.keys(phases).find(
-              (phaseId) => phases[phaseId]?.start === true,
-            ) || null;
+          startingPhase = this.findStartingPhase(phases);
 
-          // Find starting step for the starting phase
           if (startingPhase) {
             const phaseConfig = phases[startingPhase];
             if (phaseConfig?.steps) {
-              for (const stepName in phaseConfig.steps) {
-                if (phaseConfig.steps[stepName].start) {
-                  startingStep = stepName;
-                  break;
-                }
-              }
+              startingStep = this.findStartingStep(phaseConfig.steps);
             }
           }
         }
@@ -210,6 +224,7 @@ export class FlowManager<G> {
     if (!ctx.currentPhase) {
       return currentState;
     }
+
     const shouldEndPhase = this.shouldEndPhase(currentState);
 
     if (shouldEndPhase) {
@@ -226,18 +241,17 @@ export class FlowManager<G> {
         const phaseConfig = this.getPhaseConfig(ctx.currentSegment, nextPhase);
         let newG = currentState.G;
 
-        if (phaseConfig?.onBegin) {
-          const result = phaseConfig.onBegin({
-            G: currentState.G,
-            ctx: currentState.ctx,
-            coreOps: new CoreOperation({
-              state: currentState,
-              engine: this.engine,
-            }),
-          });
-          if (result !== undefined) {
-            newG = result;
-          }
+        const result = this.executeHook(phaseConfig?.onBegin, {
+          G: currentState.G,
+          ctx: currentState.ctx,
+          coreOps: new CoreOperation({
+            state: currentState,
+            engine: this.engine,
+          }),
+        });
+
+        if (result !== undefined) {
+          newG = result;
         }
 
         currentState = {
@@ -269,9 +283,7 @@ export class FlowManager<G> {
 
     if (segmentConfig?.turn?.phases) {
       const phases = segmentConfig.turn.phases;
-      const startingPhase = Object.keys(phases).find(
-        (phaseId) => phases[phaseId]?.start === true,
-      );
+      const startingPhase = this.findStartingPhase(phases);
 
       if (startingPhase) {
         if (debuggers.flowTransitions) {
@@ -284,12 +296,7 @@ export class FlowManager<G> {
         let startingStep = null;
         const phaseConfig = phases[startingPhase];
         if (phaseConfig?.steps) {
-          for (const stepName in phaseConfig.steps) {
-            if (phaseConfig.steps[stepName].start) {
-              startingStep = stepName;
-              break;
-            }
-          }
+          startingStep = this.findStartingStep(phaseConfig.steps);
         }
 
         currentState = {
@@ -341,11 +348,7 @@ export class FlowManager<G> {
       }
 
       currentState = this.handleSegmentTransition(currentState);
-
-      // Check if current phase should end (within segment or turn-based)
       currentState = this.handlePhaseTransition(currentState);
-
-      // Handle case where we have a segment but no phase (initialize starting phase)
       currentState = this.handleSegmentPhaseInitialization(currentState);
     }
 
