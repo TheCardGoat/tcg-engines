@@ -124,135 +124,137 @@ export class FlowManager<G> {
    * Handles segment ending and advancing to the next segment if needed.
    */
   private handleSegmentTransition(
-    currentState: CoreEngineState<G>,
+    state: CoreEngineState<G>,
   ): CoreEngineState<G> {
+    let currentState = state;
     const { ctx } = currentState;
-    if (ctx.currentSegment) {
-      const shouldEndSegment = this.shouldEndSegment(currentState);
+    if (!ctx.currentSegment) {
+      return currentState;
+    }
 
-      if (shouldEndSegment) {
-        if (debuggers.flowTransitions) {
-          logger.debug(
-            `FlowManager: Segment ${ctx.currentSegment} should end, advancing...`,
-          );
+    const shouldEndSegment = this.shouldEndSegment(currentState);
+
+    if (shouldEndSegment) {
+      if (debuggers.flowTransitions) {
+        logger.debug(
+          `FlowManager: Segment ${ctx.currentSegment} should end, advancing...`,
+        );
+      }
+
+      const nextSegment = this.getNextSegment(currentState);
+      if (nextSegment && nextSegment !== ctx.currentSegment) {
+        // Apply segment end hooks
+        const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
+        if (segmentConfig?.onEnd) {
+          const newG = segmentConfig.onEnd({
+            G: currentState.G,
+            ctx: currentState.ctx,
+            coreOps: new CoreOperation({
+              state: currentState,
+              engine: this.engine,
+            }),
+          });
+
+          if (newG !== undefined) {
+            currentState = {
+              ...currentState,
+              G: newG,
+            };
+          }
         }
 
-        const nextSegment = this.getNextSegment(currentState);
-        if (nextSegment && nextSegment !== ctx.currentSegment) {
-          // Apply segment end hooks
-          const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
-          if (segmentConfig?.onEnd) {
-            const newG = segmentConfig.onEnd({
-              G: currentState.G,
-              ctx: currentState.ctx,
-              coreOps: new CoreOperation({
-                state: currentState,
-                engine: this.engine,
-              }),
-            });
+        // Get the starting phase for the new segment
+        const newSegmentConfig = this.getSegmentConfig(nextSegment);
+        let startingPhase = null;
+        let startingStep = null;
 
-            if (newG !== undefined) {
-              currentState = {
-                ...currentState,
-                G: newG,
-              };
-            }
-          }
+        // Find the phase marked with start: true
+        if (newSegmentConfig?.turn?.phases) {
+          const phases = newSegmentConfig.turn.phases;
+          startingPhase =
+            Object.keys(phases).find(
+              (phaseId) => phases[phaseId]?.start === true,
+            ) || null;
 
-          // Get the starting phase for the new segment
-          const newSegmentConfig = this.getSegmentConfig(nextSegment);
-          let startingPhase = null;
-          let startingStep = null;
-
-          // Find the phase marked with start: true
-          if (newSegmentConfig?.turn?.phases) {
-            const phases = newSegmentConfig.turn.phases;
-            startingPhase =
-              Object.keys(phases).find(
-                (phaseId) => phases[phaseId]?.start === true,
-              ) || null;
-
-            // Find starting step for the starting phase
-            if (startingPhase) {
-              const phaseConfig = phases[startingPhase];
-              if (phaseConfig?.steps) {
-                for (const stepName in phaseConfig.steps) {
-                  if (phaseConfig.steps[stepName].start) {
-                    startingStep = stepName;
-                    break;
-                  }
+          // Find starting step for the starting phase
+          if (startingPhase) {
+            const phaseConfig = phases[startingPhase];
+            if (phaseConfig?.steps) {
+              for (const stepName in phaseConfig.steps) {
+                if (phaseConfig.steps[stepName].start) {
+                  startingStep = stepName;
+                  break;
                 }
               }
             }
           }
-
-          currentState = {
-            ...currentState,
-            ctx: {
-              ...currentState.ctx,
-              currentSegment: nextSegment,
-              currentPhase: startingPhase, // Set starting phase for new segment
-              currentStep: startingStep, // Set starting step for new phase
-            },
-          };
         }
+
+        currentState = {
+          ...currentState,
+          ctx: {
+            ...currentState.ctx,
+            currentSegment: nextSegment,
+            currentPhase: startingPhase, // Set starting phase for new segment
+            currentStep: startingStep, // Set starting step for new phase
+          },
+        };
       }
     }
+
     return currentState;
   }
 
   /**
    * Handles phase ending and advancing to the next phase if needed.
    */
-  private handlePhaseTransition(
-    currentState: CoreEngineState<G>,
-  ): CoreEngineState<G> {
+  private handlePhaseTransition(state: CoreEngineState<G>): CoreEngineState<G> {
+    let currentState = state;
     const { ctx } = currentState;
-    if (ctx.currentPhase) {
-      const shouldEndPhase = this.shouldEndPhase(currentState);
+    if (!ctx.currentPhase) {
+      return currentState;
+    }
+    const shouldEndPhase = this.shouldEndPhase(currentState);
 
-      if (shouldEndPhase) {
-        if (debuggers.flowTransitions) {
-          logger.debug(
-            `FlowManager: Phase ${ctx.currentPhase} should end, advancing...`,
-          );
-        }
+    if (shouldEndPhase) {
+      if (debuggers.flowTransitions) {
+        logger.debug(
+          `FlowManager: Phase ${ctx.currentPhase} should end, advancing...`,
+        );
+      }
 
-        const nextPhase = this.getNextPhase(currentState);
+      const nextPhase = this.getNextPhase(currentState);
 
-        if (nextPhase && nextPhase !== ctx.currentPhase) {
-          // Apply phase onBegin hook before changing phase
-          const phaseConfig = this.getPhaseConfig(
-            ctx.currentSegment,
-            nextPhase,
-          );
-          let newG = currentState.G;
+      if (nextPhase && nextPhase !== ctx.currentPhase) {
+        // Apply phase onBegin hook before changing phase
+        const phaseConfig = this.getPhaseConfig(ctx.currentSegment, nextPhase);
+        let newG = currentState.G;
 
-          if (phaseConfig?.onBegin) {
-            const result = phaseConfig.onBegin({
-              G: currentState.G,
-              ctx: currentState.ctx,
-              coreOps: new CoreOperation({
-                state: currentState,
-                engine: this.engine,
-              }),
-            });
-            if (result !== undefined) {
-              newG = result;
-            }
+        if (phaseConfig?.onBegin) {
+          const result = phaseConfig.onBegin({
+            G: currentState.G,
+            ctx: currentState.ctx,
+            coreOps: new CoreOperation({
+              state: currentState,
+              engine: this.engine,
+            }),
+          });
+          if (result !== undefined) {
+            newG = result;
           }
-
-          currentState = {
-            ...currentState,
-            G: newG,
-            ctx: {
-              ...currentState.ctx,
-              currentPhase: nextPhase,
-            },
-          };
         }
+
+        currentState = {
+          ...currentState,
+          G: newG,
+          ctx: {
+            ...currentState.ctx,
+            currentPhase: nextPhase,
+          },
+        };
       }
     }
+
     return currentState;
   }
 
@@ -260,48 +262,51 @@ export class FlowManager<G> {
    * Handles initializing the starting phase and step for a segment if there is a segment but no phase.
    */
   private handleSegmentPhaseInitialization(
-    currentState: CoreEngineState<G>,
+    state: CoreEngineState<G>,
   ): CoreEngineState<G> {
+    let currentState = state;
     const { ctx } = currentState;
-    if (ctx.currentSegment && !ctx.currentPhase) {
-      const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
+    if (!(ctx.currentSegment && !ctx.currentPhase)) {
+      return currentState;
+    }
+    const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
 
-      if (segmentConfig?.turn?.phases) {
-        const phases = segmentConfig.turn.phases;
-        const startingPhase = Object.keys(phases).find(
-          (phaseId) => phases[phaseId]?.start === true,
-        );
+    if (segmentConfig?.turn?.phases) {
+      const phases = segmentConfig.turn.phases;
+      const startingPhase = Object.keys(phases).find(
+        (phaseId) => phases[phaseId]?.start === true,
+      );
 
-        if (startingPhase) {
-          if (debuggers.flowTransitions) {
-            logger.debug(
-              `FlowManager: Initializing starting phase ${startingPhase} for segment ${ctx.currentSegment}`,
-            );
-          }
+      if (startingPhase) {
+        if (debuggers.flowTransitions) {
+          logger.debug(
+            `FlowManager: Initializing starting phase ${startingPhase} for segment ${ctx.currentSegment}`,
+          );
+        }
 
-          // Find starting step for the phase
-          let startingStep = null;
-          const phaseConfig = phases[startingPhase];
-          if (phaseConfig?.steps) {
-            for (const stepName in phaseConfig.steps) {
-              if (phaseConfig.steps[stepName].start) {
-                startingStep = stepName;
-                break;
-              }
+        // Find starting step for the phase
+        let startingStep = null;
+        const phaseConfig = phases[startingPhase];
+        if (phaseConfig?.steps) {
+          for (const stepName in phaseConfig.steps) {
+            if (phaseConfig.steps[stepName].start) {
+              startingStep = stepName;
+              break;
             }
           }
-
-          currentState = {
-            ...currentState,
-            ctx: {
-              ...currentState.ctx,
-              currentPhase: startingPhase,
-              currentStep: startingStep,
-            },
-          };
         }
+
+        currentState = {
+          ...currentState,
+          ctx: {
+            ...currentState.ctx,
+            currentPhase: startingPhase,
+            currentStep: startingStep,
+          },
+        };
       }
     }
+
     return currentState;
   }
 
