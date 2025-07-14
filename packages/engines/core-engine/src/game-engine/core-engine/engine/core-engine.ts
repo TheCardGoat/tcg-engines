@@ -169,22 +169,20 @@ export class CoreEngine<
     CardFilter,
     CardInstance
   > {
-    const state = this.gameStateStore.getState();
-
     const coreOperation = new CoreOperation({
-      state,
+      state: this.gameStateStore.getState(),
       engine: this,
     });
 
     return {
-      G: state.G,
-      ctx: state.ctx,
+      G: coreOperation.state.G,
+      ctx: coreOperation.state.ctx,
       coreOps: coreOperation,
       gameOps: this,
       playerID: this.playerID,
       _getUpdatedState: (): CoreEngineState<GameState> => {
         return {
-          G: state.G,
+          G: coreOperation.state.G,
           // We don't want to allow mutating ctx directly, so we always return CoreOperation internal ctx
           ctx: coreOperation.state.ctx,
           _undo: [],
@@ -232,7 +230,6 @@ export class CoreEngine<
 
       const processResult = this.gameRuntime.processMove(
         moveRequest,
-        this.gameStateStore.state,
         fnContext,
       );
 
@@ -240,6 +237,7 @@ export class CoreEngine<
         if (debuggers.moves) {
           logger.error(processResult);
         }
+
         return {
           success: false,
           error: (processResult as { success: false; error: AnyEngineError })
@@ -249,10 +247,15 @@ export class CoreEngine<
 
       const { newState } = processResult.data;
 
+      console.log("newState", newState.ctx.cardZones["player_one-inkwell"]);
+      console.log("fnContext", fnContext.ctx.cardZones["player_one-inkwell"]);
+
       const finalState = this.flowManager.processFlowTransitions(
         newState,
         fnContext,
       );
+
+      console.log("finalState", finalState.ctx.cardZones["player_one-inkwell"]);
 
       this.gameStateStore.updateState({
         newState: finalState,

@@ -119,14 +119,6 @@ export class MoveExecutor<G> {
         );
       }
 
-      if (this.debug && debuggers.stateTransitions) {
-        logger.debug(
-          `Move ${validatedMove.moveType} executed successfully, updating state`,
-        );
-        logger.debug("Old state G:", validatedMove.fnContext.G);
-        logger.debug("New state G:", newG);
-      }
-
       const newState = fnContext._getUpdatedState();
 
       return ResultHelpers.ok({

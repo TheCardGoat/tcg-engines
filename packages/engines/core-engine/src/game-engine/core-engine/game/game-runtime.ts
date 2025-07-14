@@ -1,6 +1,4 @@
 import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
-import { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
-import type { ActionPayload } from "~/game-engine/core-engine/engine/types";
 import type {
   CoreEngineState,
   FnContext,
@@ -12,11 +10,6 @@ import {
   MoveProcessor,
   type MoveRequest,
 } from "~/game-engine/core-engine/move/move-processor";
-import type { InvalidMoveResult } from "~/game-engine/core-engine/move/move-types";
-import {
-  getExecuteFunction,
-  isInvalidMove,
-} from "~/game-engine/core-engine/move/move-types";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import type { GameCards } from "~/game-engine/core-engine/types";
 import { Flow } from "./flow";
@@ -55,7 +48,6 @@ export class CoreGameRuntime<GameState = unknown> {
       cards,
       players,
       seed,
-      engine,
     });
 
     this.game = result.processedGame;
@@ -66,11 +58,7 @@ export class CoreGameRuntime<GameState = unknown> {
     this.moveProcessor = new MoveProcessor<GameState>(debug);
   }
 
-  processMove(
-    request: MoveRequest,
-    _: CoreEngineState<GameState>,
-    fnContext: FnContext<GameState>,
-  ) {
+  processMove(request: MoveRequest, fnContext: FnContext<GameState>) {
     return this.moveProcessor.process(
       request,
       this.processedGame.flow,
@@ -86,7 +74,6 @@ export function initializeGame<GameState = unknown>({
   cards,
   players,
   seed,
-  engine,
 }: {
   game: GameDefinition;
   initialState?: GameState;
@@ -94,7 +81,6 @@ export function initializeGame<GameState = unknown>({
   players?: string[];
   cards: GameCards;
   seed?: string;
-  engine?: CoreEngine;
 }): {
   initialState: CoreEngineState<GameState>;
   processedGame: GameRuntime<GameState>;
@@ -147,12 +133,6 @@ export function initializeGame<GameState = unknown>({
   };
 }
 
-export function isProcessed(
-  game: GameDefinition | GameRuntime,
-): game is GameRuntime {
-  return "processMove" in game;
-}
-
 /**
  * Helper to generate the game move reducer. The returned
  * reducer has the following signature:
@@ -172,12 +152,6 @@ export function processGameDefinition<G = unknown>(
   cards: GameCards,
   players?: string[],
 ): GameRuntime {
-  // The Game() function has already been called on this
-  // config object, so just pass it through.
-  if (isProcessed(game)) {
-    return game;
-  }
-
   if (game.name === undefined) game.name = "default";
   if (game.deltaState === undefined) game.deltaState = false;
   if (game.disableUndo === undefined) game.disableUndo = true;
