@@ -147,6 +147,7 @@ export class FlowManager<G> {
    */
   private handleSegmentTransition(
     state: CoreEngineState<G>,
+    getUpdatedFnContext: () => FnContext<G>,
   ): CoreEngineState<G> {
     let currentState = { ...state };
     const { ctx } = currentState;
@@ -167,6 +168,7 @@ export class FlowManager<G> {
       if (nextSegment && nextSegment !== ctx.currentSegment) {
         // Apply segment end hooks
         const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
+        const fnContext = getUpdatedFnContext();
         const onEnd = this.executeHook(segmentConfig.onEnd, {
           G: currentState.G,
           ctx: currentState.ctx,
@@ -218,7 +220,10 @@ export class FlowManager<G> {
   /**
    * Handles phase ending and advancing to the next phase if needed.
    */
-  private handlePhaseTransition(state: CoreEngineState<G>): CoreEngineState<G> {
+  private handlePhaseTransition(
+    state: CoreEngineState<G>,
+    getUpdatedFnContext: () => FnContext<G>,
+  ): CoreEngineState<G> {
     let currentState = state;
     const { ctx } = currentState;
     if (!ctx.currentPhase) {
@@ -241,6 +246,7 @@ export class FlowManager<G> {
         const phaseConfig = this.getPhaseConfig(ctx.currentSegment, nextPhase);
         let newG = currentState.G;
 
+        const fnContext = getUpdatedFnContext();
         const result = this.executeHook(phaseConfig?.onBegin, {
           G: currentState.G,
           ctx: currentState.ctx,
@@ -347,8 +353,14 @@ export class FlowManager<G> {
         );
       }
 
-      currentState = this.handleSegmentTransition(currentState);
-      currentState = this.handlePhaseTransition(currentState);
+      currentState = this.handleSegmentTransition(
+        currentState,
+        getUpdatedFnContext,
+      );
+      currentState = this.handlePhaseTransition(
+        currentState,
+        getUpdatedFnContext,
+      );
       currentState = this.handleSegmentPhaseInitialization(currentState);
     }
 
