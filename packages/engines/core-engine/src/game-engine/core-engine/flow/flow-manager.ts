@@ -36,24 +36,8 @@ export interface FlowTurn {
   onEnd?: (gameState: any) => any;
 }
 
-export interface FlowPriority {
-  initialPriority: "turnPlayer" | string;
-  allowPriorityPassing?: {
-    [phaseId: string]: boolean;
-  };
-  stepPriorityPassing?: {
-    [stepId: string]: boolean;
-  };
-  autoPriorityAdvance?: {
-    [phaseOrStepId: string]: "nextStep" | "nextPhase" | "nextTurn" | false;
-  };
-  priorityModel?: "turn-based" | "apnap" | "focus-based" | "custom";
-  customPriorityModel?: PriorityModel<any>;
-}
-
 export interface FlowConfiguration {
   turns: FlowTurn;
-  priority: FlowPriority;
 }
 
 /**
@@ -181,21 +165,12 @@ export class FlowManager<G = any> {
       if (typeof step.allowsPriorityPassing === "boolean") {
         return step.allowsPriorityPassing;
       }
-      if (this.config.priority.stepPriorityPassing?.[step.id] !== undefined) {
-        return !!this.config.priority.stepPriorityPassing[step.id];
-      }
     }
 
     // Check phase-specific configuration
     if (phase) {
       if (typeof phase.allowsPriorityPassing === "boolean") {
         return phase.allowsPriorityPassing;
-      }
-      if (
-        phase.id &&
-        this.config.priority.allowPriorityPassing?.[phase.id] !== undefined
-      ) {
-        return !!this.config.priority.allowPriorityPassing[phase.id];
       }
     }
 
@@ -247,11 +222,6 @@ export class FlowManager<G = any> {
           return step.advancesTo;
         }
       }
-
-      const stepAdvance = this.config.priority.autoPriorityAdvance?.[step.id];
-      if (stepAdvance !== undefined) {
-        return stepAdvance;
-      }
     }
 
     // Then check phase-specific configuration
@@ -263,11 +233,6 @@ export class FlowManager<G = any> {
         ) {
           return phase.advancesTo;
         }
-      }
-
-      const phaseAdvance = this.config.priority.autoPriorityAdvance?.[phase.id];
-      if (phaseAdvance !== undefined) {
-        return phaseAdvance;
       }
     }
 
