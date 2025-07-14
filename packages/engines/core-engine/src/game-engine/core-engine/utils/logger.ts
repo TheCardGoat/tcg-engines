@@ -1,3 +1,17 @@
+export enum LogLevel {
+  VERBOSE = "VERBOSE",
+  DEVELOPER = "DEVELOPER",
+  ADVANCED_PLAYER = "ADVANCED_PLAYER",
+  NORMAL_PLAYER = "NORMAL_PLAYER",
+}
+
+export interface LogEntry {
+  level: LogLevel;
+  message: string;
+  timestamp: number;
+  data?: Record<string, unknown>;
+}
+
 import pino, { type Logger } from "pino";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -64,3 +78,24 @@ export const logger: Logger & {
   group?: (...data: any[]) => void;
   groupEnd?: (...data: any[]) => void;
 } = internalLogger;
+
+export class LogCollector {
+  private entries: LogEntry[] = [];
+
+  log(level: LogLevel, message: string, data?: Record<string, unknown>): void {
+    this.entries.push({
+      level,
+      message,
+      timestamp: Date.now(),
+      data,
+    });
+  }
+
+  getEntries(): LogEntry[] {
+    return this.entries;
+  }
+
+  merge(other: LogCollector): void {
+    this.entries.push(...other.getEntries());
+  }
+}
