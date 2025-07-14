@@ -1,10 +1,9 @@
 import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
 import { CoreOperation } from "../engine/core-operation";
 import type { CoreEngineState, GameDefinition } from "../game-configuration";
-import { getCurrentPriorityPlayer, hasPriorityPlayer } from "../state/context";
+import { hasPriorityPlayer } from "../state/context";
 import { debuggers, logger } from "../utils/logger";
 
-// Flow configuration types
 export type FlowPhaseType = string;
 export type FlowStepType = string;
 
@@ -12,8 +11,6 @@ export interface FlowStep {
   id: FlowStepType;
   name: string;
   description?: string;
-  allowsPriorityPassing?: boolean;
-  advancesTo?: "nextStep" | "nextPhase" | "nextTurn" | string;
   onBegin?: (gameState: any) => any;
   onEnd?: (gameState: any) => any;
 }
@@ -23,9 +20,6 @@ export interface FlowPhase {
   name: string;
   description?: string;
   steps?: FlowStep[];
-  allowsPriorityPassing?: boolean;
-  allowAnyPlayerToAct?: boolean;
-  advancesTo?: "nextPhase" | "nextTurn" | string;
   onBegin?: (gameState: any) => any;
   onEnd?: (gameState: any) => any;
 }
@@ -63,52 +57,10 @@ export class FlowManager<G = any> {
     return this.getPhaseById(phaseId);
   }
 
-  getCurrentStep(state: CoreEngineState<G>): FlowStep | null {
-    const phaseId = state.ctx.currentPhase;
-    const stepId = state.ctx.currentStep;
-    if (!(phaseId && stepId)) return null;
-
-    const phase = this.getPhaseById(phaseId);
-    if (!phase?.steps) return null;
-    return phase.steps.find((step) => step.id === stepId) || null;
-  }
-
   getPhaseById(phaseId: FlowPhaseType): FlowPhase | null {
     return (
       this.config.turns.phases.find((phase) => phase.id === phaseId) || null
     );
-  }
-
-  getStepById(phaseId: FlowPhaseType, stepId: FlowStepType): FlowStep | null {
-    const phase = this.getPhaseById(phaseId);
-    if (!phase?.steps) return null;
-    return phase.steps.find((step) => step.id === stepId) || null;
-  }
-
-  getFirstPhase(): FlowPhaseType | null {
-    const phases = this.config.turns.phases;
-    if (!phases || phases.length === 0) return null;
-    return phases[0].id;
-  }
-
-  getNextStepInPhase(state: CoreEngineState<G>): FlowStepType | null {
-    const phase = this.getCurrentPhase(state);
-    const currentStep = this.getCurrentStep(state);
-
-    if (!phase?.steps || phase.steps.length === 0) return null;
-
-    if (!currentStep) {
-      return phase.steps[0]?.id || null;
-    }
-
-    const currentStepIndex = phase.steps.findIndex(
-      (step) => step.id === currentStep.id,
-    );
-    if (currentStepIndex === -1 || currentStepIndex >= phase.steps.length - 1) {
-      return null;
-    }
-
-    return phase.steps[currentStepIndex + 1].id;
   }
 
   getNextPhase(state: CoreEngineState<G>): FlowPhaseType | null {
@@ -156,27 +108,6 @@ export class FlowManager<G = any> {
 
   // ===== PRIORITY MANAGEMENT =====
 
-  isPriorityPassingAllowed(state: CoreEngineState<G>): boolean {
-    const phase = this.getCurrentPhase(state);
-    const step = this.getCurrentStep(state);
-
-    // Check step-specific configuration first
-    if (step) {
-      if (typeof step.allowsPriorityPassing === "boolean") {
-        return step.allowsPriorityPassing;
-      }
-    }
-
-    // Check phase-specific configuration
-    if (phase) {
-      if (typeof phase.allowsPriorityPassing === "boolean") {
-        return phase.allowsPriorityPassing;
-      }
-    }
-
-    return false;
-  }
-
   canPlayerAct(state: CoreEngineState<G>, playerID: string): boolean {
     const { ctx } = state;
 
@@ -191,169 +122,8 @@ export class FlowManager<G = any> {
       }
     }
 
-    // Then check flow-based phases (for regular gameplay)
-    const currentPhase = this.getCurrentPhase(state);
-    if (currentPhase?.allowAnyPlayerToAct) {
-      return true;
-    }
-
     // Otherwise, check normal priority system
     return hasPriorityPlayer(state.ctx, playerID);
-  }
-
-  // ===== FLOW EVENTS =====
-
-  // ===== ADVANCEMENT LOGIC =====
-
-  private getPriorityAdvancementType(
-    state: CoreEngineState<G>,
-  ): "nextStep" | "nextPhase" | "nextTurn" | false {
-    const phase = this.getCurrentPhase(state);
-    const step = this.getCurrentStep(state);
-
-    // First check step-specific configuration
-    if (step?.id) {
-      if (step.advancesTo) {
-        if (
-          step.advancesTo === "nextStep" ||
-          step.advancesTo === "nextPhase" ||
-          step.advancesTo === "nextTurn"
-        ) {
-          return step.advancesTo;
-        }
-      }
-    }
-
-    // Then check phase-specific configuration
-    if (phase?.id) {
-      if (phase.advancesTo) {
-        if (
-          phase.advancesTo === "nextPhase" ||
-          phase.advancesTo === "nextTurn"
-        ) {
-          return phase.advancesTo;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  getAutomaticAdvancement(state: CoreEngineState<G>): {
-    advancementType: "nextStep" | "nextPhase" | "nextTurn" | null;
-    nextId?: string;
-  } {
-    const advanceType = this.getPriorityAdvancementType(state);
-
-    switch (advanceType) {
-      case "nextStep": {
-        const nextStep = this.getNextStepInPhase(state);
-        if (nextStep) {
-          return {
-            advancementType: "nextStep",
-            nextId: nextStep,
-          };
-        }
-        // If no next step, try advancing to next phase
-        return this.getAutomaticAdvancement({
-          ...state,
-          ctx: {
-            ...state.ctx,
-            currentStep: undefined,
-          },
-        });
-      }
-      case "nextPhase": {
-        const nextPhase = this.getNextPhase(state);
-        if (nextPhase) {
-          return {
-            advancementType: "nextPhase",
-            nextId: nextPhase,
-          };
-        }
-        // If no next phase, advance to next turn
-        return {
-          advancementType: "nextTurn",
-        };
-      }
-      case "nextTurn": {
-        return {
-          advancementType: "nextTurn",
-        };
-      }
-      default: {
-        return {
-          advancementType: null,
-        };
-      }
-    }
-  }
-
-  private processAdvancement(
-    state: CoreEngineState<G>,
-    advancement: {
-      advancementType: "nextStep" | "nextPhase" | "nextTurn" | null;
-      nextId?: string;
-    },
-  ): CoreEngineState<G> {
-    switch (advancement.advancementType) {
-      case "nextStep": {
-        if (advancement.nextId) {
-          return {
-            ...state,
-            ctx: {
-              ...state.ctx,
-              currentStep: advancement.nextId,
-            },
-          };
-        }
-        return state;
-      }
-
-      case "nextPhase": {
-        if (advancement.nextId) {
-          return {
-            ...state,
-            ctx: {
-              ...state.ctx,
-              currentPhase: advancement.nextId,
-              currentStep: undefined, // Reset step when changing phases
-            },
-          };
-        }
-        return state;
-      }
-
-      case "nextTurn": {
-        logger.error("NOT IMPLEMENTED: Advancing to next turn");
-        return state;
-      }
-
-      default: {
-        return state;
-      }
-    }
-  }
-
-  // ===== MOVE VALIDATION =====
-
-  createPriorityValidator<G>(): (
-    moveFn: (
-      params: { G: G; ctx: any; playerID?: string },
-      ...args: any[]
-    ) => G,
-  ) => (params: { G: G; ctx: any; playerID?: string }, ...args: any[]) => G {
-    return (moveFn) => {
-      return ({ G, ctx, playerID, ...rest }, ...args) => {
-        // If player doesn't have priority, return G unchanged
-        if (playerID && !hasPriorityPlayer(ctx, playerID)) {
-          return G;
-        }
-
-        // Otherwise, proceed with the move
-        return moveFn({ G, ctx, playerID, ...rest }, ...args);
-      };
-    };
   }
 
   // ===== SEGMENT PROCESSING (for pre-game setup) =====
@@ -628,27 +398,4 @@ export class FlowManager<G = any> {
     const segmentConfig = this.getSegmentConfig(segmentName);
     return segmentConfig?.turn?.phases?.[phaseName];
   }
-}
-
-export function getNextPlayerInTurnOrder<G>(
-  state: CoreEngineState<G>,
-): string | null {
-  const ctx = state.ctx;
-  const priorityPlayer = getCurrentPriorityPlayer(ctx);
-  if (!priorityPlayer) return null;
-
-  const playerOrder = ctx.playerOrder;
-  if (!playerOrder || playerOrder.length === 0) return null;
-  // For single player games, priority stays with the same player
-  if (playerOrder.length === 1) {
-    return playerOrder[0];
-  }
-
-  const playerIdx = playerOrder.indexOf(priorityPlayer);
-  if (playerIdx === -1) {
-    return null;
-  }
-
-  const nextPlayerIdx = (playerIdx + 1) % playerOrder.length;
-  return playerOrder[nextPlayerIdx];
 }
