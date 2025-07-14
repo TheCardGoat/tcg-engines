@@ -1,15 +1,9 @@
 import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
 import { CoreOperation } from "../engine/core-operation";
 import type { CoreEngineState, GameDefinition } from "../game-configuration";
-import {
-  getCurrentPriorityPlayer,
-  getCurrentTurnPlayer,
-  hasPriorityPlayer,
-  setPriorityPlayer,
-} from "../state/context";
+import { getCurrentPriorityPlayer, hasPriorityPlayer } from "../state/context";
 import { debuggers, logger } from "../utils/logger";
 import type { PriorityModel } from "./priority-models";
-import { createPriorityModel } from "./priority-models";
 
 // Flow configuration types
 export type FlowPhaseType = string;
@@ -63,32 +57,18 @@ export interface FlowConfiguration {
   priority: FlowPriority;
 }
 
-// Event context interface for game definitions
-export interface FlowEventContext<_G = any> {
-  passPriority(): void;
-  passTurn(): void;
-  endStep(): void;
-  progressStep(targetStep?: string): void;
-  endPhase(): void;
-  progressPhase(targetPhase?: string): void;
-}
-
 /**
  * Unified Flow Manager that handles all game flow operations
  * Combines priority management, phase/step transitions, and event processing
  */
 export class FlowManager<G = any> {
   private config: FlowConfiguration;
-  private priorityModel: PriorityModel<G>;
   private gameDefinition: GameDefinition<G>;
   private engine: CoreEngine;
 
   constructor(gameDefinition: GameDefinition<G>, engine: CoreEngine) {
-    const config = gameDefinition.flow;
-
-    this.config = config;
+    this.config = gameDefinition.flow;
     this.gameDefinition = gameDefinition;
-    this.priorityModel = createPriorityModel<G>(config);
     this.engine = engine;
   }
 
@@ -223,14 +203,6 @@ export class FlowManager<G = any> {
     return false;
   }
 
-  getInitialPriorityPlayer(ctx: any): string {
-    return this.priorityModel.getInitialPriority(ctx);
-  }
-
-  getNextPriorityPlayer(state: CoreEngineState<G>): string | null {
-    return this.priorityModel.getNextPriority(state);
-  }
-
   canPlayerAct(state: CoreEngineState<G>, playerID: string): boolean {
     const { ctx } = state;
 
@@ -256,68 +228,6 @@ export class FlowManager<G = any> {
   }
 
   // ===== FLOW EVENTS =====
-
-  passPriority(
-    state: CoreEngineState<G>,
-    playerID: string,
-  ): CoreEngineState<G> {
-    // Only the priority player can pass priority
-    const priorityPlayer = getCurrentPriorityPlayer(state.ctx);
-    if (priorityPlayer !== playerID) {
-      return state;
-    }
-
-    // Check if priority passing is allowed in current state
-    if (!this.isPriorityPassingAllowed(state)) {
-      return state;
-    }
-
-    const nextPriorityPlayer = this.getNextPriorityPlayer(state);
-    if (!nextPriorityPlayer) {
-      return state;
-    }
-
-    const turnPlayer = getCurrentTurnPlayer(state.ctx);
-
-    // If priority would return to the turn player, check for auto-advancement
-    if (nextPriorityPlayer === turnPlayer) {
-      const advancement = this.getAutomaticAdvancement(state);
-
-      if (advancement.advancementType) {
-        return this.processAdvancement(state, advancement);
-      }
-    }
-
-    // Otherwise, just update priority
-    const newCtx = setPriorityPlayer(state.ctx, nextPriorityPlayer);
-    return { ...state, ctx: newCtx };
-  }
-
-  passTurn(state: CoreEngineState<G>, playerID: string): CoreEngineState<G> {
-    // Only the priority player can pass the turn
-    const priorityPlayer = getCurrentPriorityPlayer(state.ctx);
-    if (priorityPlayer !== playerID) {
-      return state;
-    }
-
-    // Calculate next turn player
-    const nextTurnPlayerPos =
-      (state.ctx.turnPlayerPos + 1) % state.ctx.playerOrder.length;
-
-    // Create new context with updated turn and priority
-    const newCtx = {
-      ...state.ctx,
-      turnPlayerPos: nextTurnPlayerPos,
-      priorityPlayerPos: nextTurnPlayerPos, // Priority goes to new turn player
-      numTurns: state.ctx.numTurns + 1,
-      numTurnMoves: 0,
-      // Reset to first phase
-      currentPhase: this.getFirstPhase(),
-      currentStep: undefined,
-    };
-
-    return { ...state, ctx: newCtx };
-  }
 
   // ===== ADVANCEMENT LOGIC =====
 
@@ -451,7 +361,8 @@ export class FlowManager<G = any> {
       }
 
       case "nextTurn": {
-        return this.passTurn(state, getCurrentPriorityPlayer(state.ctx) || "");
+        logger.error("NOT IMPLEMENTED: Advancing to next turn");
+        return state;
       }
 
       default: {
@@ -753,66 +664,6 @@ export class FlowManager<G = any> {
     const segmentConfig = this.getSegmentConfig(segmentName);
     return segmentConfig?.turn?.phases?.[phaseName];
   }
-
-  // ===== INITIALIZATION =====
-
-  initializeFlow(state: CoreEngineState<G>): CoreEngineState<G> {
-    // Handle invalid state or context
-    if (!state?.ctx) {
-      return state;
-    }
-
-    // Set initial priority if priorityPlayerPos is 0
-    if (state.ctx.priorityPlayerPos === 0) {
-      const initialPriorityPlayer = this.getInitialPriorityPlayer(state.ctx);
-      const newCtx = setPriorityPlayer(state.ctx, initialPriorityPlayer);
-      state = {
-        ...state,
-        ctx: newCtx,
-      };
-    }
-
-    // Set initial phase if not already set
-    if (!state.ctx.currentPhase && this.config.turns.phases.length) {
-      const firstPhase = this.config.turns.phases[0];
-      state = {
-        ...state,
-        ctx: {
-          ...state.ctx,
-          currentPhase: firstPhase.id,
-        },
-      };
-
-      // Set initial step if phase has steps
-      if (firstPhase.steps?.length) {
-        state = {
-          ...state,
-          ctx: {
-            ...state.ctx,
-            currentStep: firstPhase.steps[0].id,
-          },
-        };
-      }
-    }
-
-    return state;
-  }
-}
-
-// ===== UTILITY FUNCTIONS =====
-
-export function withPriorityCheck<G>(
-  moveFn: (params: { G: G; ctx: any; playerID?: string }, ...args: any[]) => G,
-): (params: { G: G; ctx: any; playerID?: string }, ...args: any[]) => G {
-  return ({ G, ctx, playerID, ...rest }, ...args) => {
-    // If player doesn't have priority, return G unchanged
-    if (playerID && !hasPriorityPlayer(ctx, playerID)) {
-      return G;
-    }
-
-    // Otherwise, proceed with the move
-    return moveFn({ G, ctx, playerID, ...rest }, ...args);
-  };
 }
 
 export function getNextPlayerInTurnOrder<G>(
@@ -825,10 +676,14 @@ export function getNextPlayerInTurnOrder<G>(
   const playerOrder = ctx.playerOrder;
   if (!playerOrder || playerOrder.length === 0) return null;
   // For single player games, priority stays with the same player
-  if (playerOrder.length === 1) return playerOrder[0];
+  if (playerOrder.length === 1) {
+    return playerOrder[0];
+  }
 
   const playerIdx = playerOrder.indexOf(priorityPlayer);
-  if (playerIdx === -1) return null;
+  if (playerIdx === -1) {
+    return null;
+  }
 
   const nextPlayerIdx = (playerIdx + 1) % playerOrder.length;
   return playerOrder[nextPlayerIdx];
