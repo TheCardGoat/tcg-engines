@@ -154,7 +154,7 @@ export class CoreEngine<
     // Automatically process initial flow transitions to initialize segments and phases
     const initialStateWithFlow = this.flowManager.processFlowTransitions(
       this.gameRuntime.initialState,
-      this.getFnContext(),
+      this.createFnContextFromState(this.getGameState()),
     );
     if (this.gameRuntime.initialState !== initialStateWithFlow) {
       logger.debug("Applying initial flow transitions to game state");
@@ -187,21 +187,24 @@ export class CoreEngine<
     });
 
     return {
-      G: coreOperation.state.G,
-      ctx: coreOperation.state.ctx,
       coreOps: coreOperation,
       gameOps: this,
-      playerID: this.playerID,
-      _getUpdatedState: (): CoreEngineState<GameState> => {
-        return {
-          G: coreOperation.state.G,
-          // We don't want to allow mutating ctx directly, so we always return CoreOperation internal ctx
-          ctx: coreOperation.state.ctx,
-          _undo: [],
-          _redo: [],
-          _stateID: 0,
-        };
+      playerID: this.playerID || "unknown", // Make required, provide fallback
+
+      // Computed getters that always reflect current state from coreOps
+      get G() {
+        return coreOperation.state.G;
       },
+      get ctx() {
+        return coreOperation.state.ctx;
+      },
+      _getUpdatedState: () => ({
+        G: coreOperation.state.G,
+        ctx: coreOperation.state.ctx,
+        _undo: [],
+        _redo: [],
+        _stateID: 0,
+      }),
     };
   }
 
@@ -210,6 +213,25 @@ export class CoreEngine<
     moveType: string,
     args: unknown[],
   ): Result<CoreEngineState<GameState>, AnyEngineError> {
+    if (debuggers.moves) {
+      logger.group(
+        `Processing move: ${moveType} for player: ${playerID}`,
+        moveType,
+        args,
+      );
+    }
+
+    // Validate player is allowed to make moves
+    if (!this.canPlayerMove(playerID)) {
+      return ResultHelpers.error(
+        new InvalidMoveError(
+          moveType,
+          playerID,
+          `Player ${playerID} is not allowed to make moves, priority players: ${this.getPriorityPlayers()}`,
+        ),
+      );
+    }
+
     try {
       const moveRequest: MoveRequest = {
         playerID,
@@ -217,26 +239,9 @@ export class CoreEngine<
         args,
       };
 
-      if (debuggers.moves) {
-        logger.group(
-          `Processing move: ${moveType} for player: ${playerID}`,
-          moveRequest,
-        );
-      }
-
-      // Validate player is allowed to make moves
-      if (!this.canPlayerMove(playerID)) {
-        return ResultHelpers.error(
-          new InvalidMoveError(
-            moveType,
-            playerID,
-            `Player ${playerID} is not allowed to make moves, priority players: ${this.getPriorityPlayers()}`,
-          ),
-        );
-      }
-
-      // Create initial fnContext for move processing
-      const initialFnContext = this.getFnContext();
+      const initialFnContext = this.createFnContextFromState(
+        this.getGameState(),
+      );
 
       const processResult = this.gameRuntime.processMove(
         moveRequest,
@@ -256,11 +261,7 @@ export class CoreEngine<
       }
 
       const { newState } = processResult.data;
-
-      // Create fresh fnContext with updated state for flow processing
-      // This ensures state consistency between newState and fnContext
       const updatedFnContext = this.createFnContextFromState(newState);
-
       const finalState = this.flowManager.processFlowTransitions(
         newState,
         updatedFnContext,
@@ -271,7 +272,7 @@ export class CoreEngine<
       });
 
       if (this.isAuthoritative) {
-        this.broadcastToClients(finalState);
+        this.broadcastToClients(this.getGameState());
       } else if (this.authoritativeEngine) {
         (this.authoritativeEngine as any).receiveFromClient(
           this.playerID,

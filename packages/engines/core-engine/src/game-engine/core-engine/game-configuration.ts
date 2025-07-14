@@ -130,18 +130,20 @@ export type FnContext<
   CardInstance extends
     CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
 > = {
-  G: G;
-  ctx: CoreCtx;
-  gameOps?: any; // TODO: Type this properly
-  coreOps?: CoreOperation<
+  coreOps: CoreOperation<
     G,
     CardDefinition,
     PlayerState,
     CardFilter,
     CardInstance
   >;
+  gameOps: any; // TODO: Type this properly
   playerID?: PlayerID | null;
-  _getUpdatedState: () => CoreEngineState<G>;
+  readonly _getUpdatedState: () => CoreEngineState<G>;
+
+  // Convenient getters (computed properties) - always reflect current state
+  readonly G: G;
+  readonly ctx: CoreCtx;
 };
 
 export interface SyncInfo {
