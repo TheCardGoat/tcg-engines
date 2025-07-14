@@ -3,15 +3,11 @@ import { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
 import type { ActionPayload } from "~/game-engine/core-engine/engine/types";
 import type {
   CoreEngineState,
-  FnContext,
   GameDefinition,
   GameRuntime,
   PartialGameState,
 } from "~/game-engine/core-engine/game-configuration";
-import type {
-  InvalidMoveResult,
-  Move,
-} from "~/game-engine/core-engine/move/move-types";
+import type { InvalidMoveResult } from "~/game-engine/core-engine/move/move-types";
 import {
   getExecuteFunction,
   isInvalidMove,
@@ -19,6 +15,46 @@ import {
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import type { GameCards } from "~/game-engine/core-engine/types";
 import { Flow } from "./flow";
+
+// This class is responsible for turning a GameDefinition into a live object, it encapsulates it
+// and provides a runtime interface to interact with the game state and moves.
+export class CoreGameRuntime<GameState = unknown> {
+  game: GameDefinition;
+  processedGame: GameRuntime<GameState>;
+  initialState: CoreEngineState<GameState>;
+
+  constructor({
+    game,
+    initialState,
+    initialCoreCtx,
+    cards,
+    players,
+    seed,
+    engine,
+  }: {
+    game: GameDefinition;
+    initialState?: GameState;
+    initialCoreCtx?: CoreCtx;
+    players?: string[];
+    cards: GameCards;
+    seed?: string;
+    engine?: CoreEngine<any, any, any, any, any>;
+  }) {
+    const result = initializeGame<GameState>({
+      game,
+      initialState,
+      initialCoreCtx,
+      cards,
+      players,
+      seed,
+      engine,
+    });
+
+    this.game = result.processedGame;
+    this.initialState = result.initialState;
+    this.processedGame = result.processedGame;
+  }
+}
 
 export function initializeGame<GameState = unknown>({
   game,

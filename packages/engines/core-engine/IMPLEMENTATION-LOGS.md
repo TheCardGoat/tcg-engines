@@ -2400,7 +2400,7 @@ Convert all existing function-based moves in game engines to use the new `Enumer
    - Added helper functions to bridge the gap: `adaptLegacyMove`, `getExecuteFunction`
    - Type guards: `isEnumerableMove`, `isMoveFn`
 
-3. Updated `game.ts` to work with both types of moves:
+3. Updated `game-runtime.ts` to work with both types of moves:
    - Using `getExecuteFunction` to extract the callable function
    - Proper error handling for both move types
    - Consistent return types

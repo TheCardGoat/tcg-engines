@@ -7,7 +7,10 @@ import {
   MoveExecutionError,
 } from "~/game-engine/core-engine/errors/engine-errors";
 import type { FlowManager } from "~/game-engine/core-engine/flow/flow-manager";
-import { initializeGame } from "~/game-engine/core-engine/game/game";
+import {
+  CoreGameRuntime,
+  initializeGame,
+} from "~/game-engine/core-engine/game/game-runtime";
 import type {
   CoreEngineState,
   GameDefinition,
@@ -127,7 +130,7 @@ export class CoreEngine<
     this.gameID = "default-game";
     this.debug = debug;
 
-    const { processedGame, initialState: init } = initializeGame<GameState>({
+    const gameRuntime = new CoreGameRuntime<GameState>({
       game,
       initialState,
       initialCoreCtx,
@@ -137,9 +140,18 @@ export class CoreEngine<
       engine: this,
     });
 
-    this.gameRuntime = processedGame;
+    const { processedGame } = initializeGame<GameState>({
+      game,
+      initialState,
+      initialCoreCtx,
+      cards,
+      players,
+      seed,
+      engine: this,
+    });
+
     this.gameStateStore = new GameStateStore<GameState>({
-      initialState: init,
+      initialState: gameRuntime.initialState,
     });
 
     // Initialize card instance store early so it's available to other components
@@ -161,10 +173,10 @@ export class CoreEngine<
     this.flowManager = createFlowManager<GameState>(processedGame, this);
 
     // Automatically process initial flow transitions to initialize segments and phases
-    const initialStateWithFlow = this.flowManager.processFlowTransitions(init);
-    if (initialStateWithFlow !== init) {
-      this.gameStateStore.updateState({ newState: initialStateWithFlow });
-    }
+    const initialStateWithFlow = this.flowManager.processFlowTransitions(
+      gameRuntime.initialState,
+    );
+    this.gameStateStore.updateState({ newState: initialStateWithFlow });
 
     // Initialize card models
     this.initializeCardModels();
@@ -428,16 +440,10 @@ export class CoreEngine<
       isActive = false;
     }
 
-    // Apply player view filtering for multiplayer
     let viewState = currentState;
     if (this.playerID && (this.authoritativeEngine || this.isAuthoritative)) {
       viewState = {
         ...currentState,
-        G: this.gameRuntime.playerView({
-          G: currentState.G,
-          ctx: currentState.ctx,
-          playerID: this.playerID,
-        }) as GameState,
       };
     }
 
