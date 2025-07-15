@@ -6,7 +6,8 @@
     "enabled": true,
     "rules": {
       "suspicious": {
-        "noExportsInTest": "off"
+        "noExportsInTest": "off",
+        "noThenProperty": "off"
       },
       "style": {
         "noParameterAssign": "error",
