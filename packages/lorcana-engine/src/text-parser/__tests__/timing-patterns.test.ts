@@ -1,6 +1,15 @@
 // Unit tests for timing and duration pattern recognition
 
 import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  mock,
+  spyOn,
+} from "bun:test";
+import {
   areEffectsDependent,
   CONDITIONAL_PATTERNS,
   DURATION_PATTERNS,
@@ -110,7 +119,7 @@ describe("CONDITIONAL_PATTERNS", () => {
     it("should match 'if...then' pattern", () => {
       const pattern = CONDITIONAL_PATTERNS.ifThen;
       if (!pattern) {
-        fail("ifThen pattern is undefined");
+        throw new Error("ifThen pattern is undefined");
         return;
       }
       const match =
@@ -125,7 +134,7 @@ describe("CONDITIONAL_PATTERNS", () => {
     it("should match 'if...then' without comma", () => {
       const pattern = CONDITIONAL_PATTERNS.ifThen;
       if (!pattern) {
-        fail("ifThen pattern is undefined");
+        throw new Error("ifThen pattern is undefined");
         return;
       }
       const match = "if this is damaged then banish it".match(pattern);
@@ -141,7 +150,7 @@ describe("CONDITIONAL_PATTERNS", () => {
     it("should match 'when' pattern", () => {
       const pattern = CONDITIONAL_PATTERNS.when;
       if (!pattern) {
-        fail("when pattern is undefined");
+        throw new Error("when pattern is undefined");
         return;
       }
       const match = "when this enters play, draw a card".match(pattern);
@@ -155,7 +164,7 @@ describe("CONDITIONAL_PATTERNS", () => {
     it("should match 'whenever' pattern", () => {
       const pattern = CONDITIONAL_PATTERNS.whenever;
       if (!pattern) {
-        fail("whenever pattern is undefined");
+        throw new Error("whenever pattern is undefined");
         return;
       }
       const match = "whenever you play a character, gain 1 lore".match(pattern);
@@ -171,7 +180,7 @@ describe("CONDITIONAL_PATTERNS", () => {
     it("should match simple 'then' pattern", () => {
       const pattern = CONDITIONAL_PATTERNS.then;
       if (!pattern) {
-        fail("then pattern is undefined");
+        throw new Error("then pattern is undefined");
         return;
       }
       const match = "draw a card then banish chosen character".match(pattern);
@@ -187,7 +196,7 @@ describe("CONDITIONAL_PATTERNS", () => {
     it("should match 'choose one' pattern", () => {
       const pattern = CONDITIONAL_PATTERNS.chooseOne;
       if (!pattern) {
-        fail("chooseOne pattern is undefined");
+        throw new Error("chooseOne pattern is undefined");
         return;
       }
       const match = "choose one: draw a card or deal 2 damage".match(pattern);
@@ -200,7 +209,7 @@ describe("CONDITIONAL_PATTERNS", () => {
     it("should match general 'choose' pattern", () => {
       const pattern = CONDITIONAL_PATTERNS.choose;
       if (!pattern) {
-        fail("choose pattern is undefined");
+        throw new Error("choose pattern is undefined");
         return;
       }
       const match =
@@ -216,7 +225,7 @@ describe("CONDITIONAL_PATTERNS", () => {
     it("should match 'may' pattern", () => {
       const pattern = CONDITIONAL_PATTERNS.may;
       if (!pattern) {
-        fail("may pattern is undefined");
+        throw new Error("may pattern is undefined");
         return;
       }
       const match = "may draw a card".match(pattern);

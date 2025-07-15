@@ -26,8 +26,8 @@ export { describe, it, expect, beforeEach, afterEach, mock, spyOn };
 /**
  * Creates a mock function that returns the provided value
  */
-export function mockFn<T = any>(returnValue?: T): jest.Mock<T> {
-  return mock(() => returnValue) as unknown as jest.Mock<T>;
+export function mockFn<T = unknown>(returnValue?: T) {
+  return mock(() => returnValue);
 }
 
 // Removed unused functions: mockAsyncFn, mockObject, wait

@@ -1,6 +1,15 @@
 // Unit tests for the ability builder system
 
 import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  mock,
+  spyOn,
+} from "bun:test";
+import {
   chosenCharacter,
   self,
 } from "@lorcanito/lorcana-engine/abilities/targets";

@@ -27,7 +27,7 @@
     "check-types": "tsc --noEmit",
     "format": "bunx @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
     "lint": "bunx @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error ./src",
-    "test": "bun test"
+    "test": "bun test --silent"
   },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {

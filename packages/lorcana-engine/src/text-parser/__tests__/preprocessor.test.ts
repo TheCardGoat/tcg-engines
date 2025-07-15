@@ -1,6 +1,15 @@
 // Unit tests for text preprocessing functionality
 
 import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  mock,
+  spyOn,
+} from "bun:test";
+import {
   GAME_SYMBOLS,
   handleGameSymbols,
   // type NormalizationConfig,

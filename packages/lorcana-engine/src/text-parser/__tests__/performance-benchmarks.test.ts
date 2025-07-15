@@ -1,5 +1,14 @@
 // Performance benchmarking tests for the action text parser
 
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  mock,
+  spyOn,
+} from "bun:test";
 import { generateActionAbilitiesFromText, parseActionText } from "../parser";
 import { SET008_ACTION_CARDS } from "./set008-action-cards";
 

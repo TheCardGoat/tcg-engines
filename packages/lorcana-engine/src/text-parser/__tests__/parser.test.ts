@@ -1,5 +1,14 @@
 // Unit tests for the main parser function
 
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  mock,
+  spyOn,
+} from "bun:test";
 import { generateActionAbilitiesFromText, parseActionText } from "../parser";
 
 describe("generateActionAbilitiesFromText", () => {
@@ -33,7 +42,7 @@ describe("parseActionText", () => {
   });
 
   it("should enable debug logging when configured", () => {
-    const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+    const consoleSpy = spyOn(console, "log").mockImplementation(() => {});
 
     parseActionText("Draw a card.", { debug: true });
 
@@ -281,7 +290,7 @@ describe("parseActionText", () => {
 
   describe("Configuration Options", () => {
     it("should respect debug configuration", () => {
-      const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+      const consoleSpy = spyOn(console, "log").mockImplementation(() => {});
 
       parseActionText("Draw a card.", { debug: true });
 
@@ -314,7 +323,7 @@ describe("parseActionText", () => {
     });
 
     it("should run enhanced validation in debug mode", () => {
-      const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+      const consoleSpy = spyOn(console, "log").mockImplementation(() => {});
 
       const result = parseActionText("Draw a card.", { debug: true });
 

@@ -1,5 +1,14 @@
 // Unit tests for validation and type safety functions
 
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  mock,
+  spyOn,
+} from "bun:test";
 import type { ResolutionAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 import {
   isValidParsedClause,

@@ -1,6 +1,15 @@
 // Unit tests for pattern matching system
 
 import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  mock,
+  spyOn,
+} from "bun:test";
+import {
   addPattern,
   EFFECT_PATTERNS,
   extractEffectsFromText,
@@ -522,7 +531,7 @@ describe("Pattern Utility Functions", () => {
 
     it("should handle extraction errors gracefully", () => {
       // Mock console.warn to avoid test output
-      const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
+      const consoleSpy = spyOn(console, "warn").mockImplementation(() => {});
 
       if (EFFECT_PATTERNS.draw && EFFECT_PATTERNS.draw[0]) {
         // Create a pattern that will throw an error

@@ -1,6 +1,15 @@
 // Unit tests for text splitting and clause identification functionality
 
 import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  mock,
+  spyOn,
+} from "bun:test";
+import {
   analyzeTextStructure,
   identifyConditionalPhrases,
   identifyModalPatterns,

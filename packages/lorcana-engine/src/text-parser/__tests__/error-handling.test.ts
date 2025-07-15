@@ -1,5 +1,14 @@
 // Error handling and edge case tests for the action text parser
 
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  mock,
+  spyOn,
+} from "bun:test";
 import { generateActionAbilitiesFromText, parseActionText } from "../parser";
 
 describe("Error Handling and Edge Cases", () => {

@@ -1,6 +1,15 @@
 // Unit tests for target recognition patterns
 
 import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  mock,
+  spyOn,
+} from "bun:test";
+import {
   convertToEffectTarget,
   extractEffectsWithTargets,
   matchPatternWithTargets,
@@ -473,7 +482,7 @@ describe("extractEffectsWithTargets", () => {
 
   it("should handle extraction errors gracefully", () => {
     // Mock console.warn to avoid test output
-    const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
+    const consoleSpy = spyOn(console, "warn").mockImplementation(() => {});
 
     // This should not throw an error even if extraction fails
     const effects = extractEffectsWithTargets("deal damage to");
