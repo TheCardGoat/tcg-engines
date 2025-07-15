@@ -1,11 +1,16 @@
 import type { PhaseConfig } from "~/game-engine/core-engine/game/structure/phase";
-import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
+import type {
+  SegmentConfig,
+  SegmentMap,
+} from "~/game-engine/core-engine/game/structure/segment";
 import { processSegments } from "~/game-engine/core-engine/game/structure/segment";
+import type { Move } from "~/game-engine/core-engine/move/move-types";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import type { GameCards } from "~/game-engine/core-engine/types";
 import type {
   CoreEngineState,
   FlowConfiguration,
+  FlowInterface,
   FlowPhase,
   FlowPhaseType,
   FnContext,
@@ -21,12 +26,12 @@ type PlayerID = string;
  * All transitions, phases, segments, and player actions are managed here
  * When called externally, it processes the current state and applies any necessary transitions and hooks
  */
-export class FlowManager<G> {
+export class FlowManager<G> implements FlowInterface<G> {
   private config: FlowConfiguration<G>;
   private gameDefinition: GameDefinition<G>;
 
   // Move resolution properties (previously from Flow function)
-  public readonly moveMap: Record<string, any> = {};
+  public readonly moveMap: Record<string, Move<G>> = {};
   public readonly moveNames: string[] = [];
   public readonly startingSegment: string | null = null;
   public readonly initialPhase: string | null = null;
@@ -92,7 +97,7 @@ export class FlowManager<G> {
    */
   private determineInitialFlow(
     startingSegment: string | null,
-    segments: any,
+    segments: SegmentMap<G> | undefined,
   ): void {
     let initialPhase = null;
     let initialStep = null;
@@ -128,7 +133,7 @@ export class FlowManager<G> {
   /**
    * Get move function by name (replaces Flow.getMove)
    */
-  getMove(ctx: CoreCtx, name: string, playerID: PlayerID): any {
+  getMove(ctx: CoreCtx, name: string, playerID: PlayerID): Move<G> | null {
     return this.moveMap[name] || null;
   }
 

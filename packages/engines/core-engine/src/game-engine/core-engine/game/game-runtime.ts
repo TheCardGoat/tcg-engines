@@ -90,7 +90,7 @@ export class CoreGameRuntime<GameState = unknown> {
       ...processedGameDef,
       moveNames: this.flowManager.moveNames,
       flow: this.flowManager, // FlowManager replaces Flow function return
-    } as GameRuntime<GameState>;
+    } as unknown as GameRuntime<GameState>;
 
     this.moveProcessor = new MoveProcessor<GameState>(debug);
   }

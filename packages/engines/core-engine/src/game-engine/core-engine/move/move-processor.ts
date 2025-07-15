@@ -13,9 +13,11 @@ import type {
 import {
   type InvalidMoveResult,
   isInvalidMove,
+  type Move,
 } from "~/game-engine/core-engine/move/move-types";
 import type { Result } from "~/game-engine/core-engine/types/result";
 import { Result as ResultHelpers } from "~/game-engine/core-engine/types/result";
+import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
 
 // Types for move processing
 export type MoveRequest = {
@@ -28,8 +30,7 @@ export type ValidatedMove<G> = {
   readonly playerID: string;
   readonly moveType: string;
   readonly args: readonly unknown[];
-  readonly moveFunction: any; // Can be regular function or LongFormMove
-  // readonly state: CoreEngineState<G>;
+  readonly moveFunction: Move<G>; // Properly typed move function
   readonly fnContext: FnContext<G>;
 };
 
@@ -133,11 +134,48 @@ export class MoveExecutor<G> {
     }
   }
 
-  // TODO: We should properly type this
+  // Extract the actual function from Move type (could be function or object with move property)
   private extractMoveFunction(
-    moveFunction: any,
-  ): (context: any, ...args: unknown[]) => any {
-    return moveFunction as (context: any, ...args: unknown[]) => any;
+    moveFunction: Move<G>,
+  ): (
+    context: FnContext<G>,
+    ...args: unknown[]
+  ) => G | undefined | InvalidMoveResult {
+    // Handle function moves directly
+    if (typeof moveFunction === "function") {
+      return moveFunction as (
+        context: FnContext<G>,
+        ...args: unknown[]
+      ) => G | undefined | InvalidMoveResult;
+    }
+
+    // Handle object-based moves
+    if (typeof moveFunction === "object" && moveFunction !== null) {
+      // Check for EnumerableMove (has execute property)
+      if (
+        "execute" in moveFunction &&
+        typeof moveFunction.execute === "function"
+      ) {
+        return moveFunction.execute as unknown as (
+          context: FnContext<G>,
+          ...args: unknown[]
+        ) => G | undefined | InvalidMoveResult;
+      }
+
+      // Check for LongFormMove (has move property)
+      if ("move" in moveFunction && typeof moveFunction.move === "function") {
+        return moveFunction.move as (
+          context: FnContext<G>,
+          ...args: unknown[]
+        ) => G | undefined | InvalidMoveResult;
+      }
+    }
+
+    // Fallback - treat as function
+    return moveFunction as unknown as (
+      context: FnContext<G>,
+      ...args: unknown[]
+    ) => G | undefined | InvalidMoveResult;
   }
 }
 

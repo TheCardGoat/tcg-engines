@@ -27,6 +27,14 @@ export type StageName = string;
 export type FlowPhaseType = string;
 export type FlowStepType = string;
 
+// Forward declaration to avoid circular dependency
+interface CoreEngineInterface {
+  readonly playerID: PlayerID | null;
+  processMove(playerID: string, moveType: string, args: unknown[]): unknown;
+  getState(): unknown;
+  subscribe(callback: (state: unknown) => void): () => void;
+}
+
 export interface FlowStep<G> {
   id: FlowStepType;
   name: string;
@@ -54,9 +62,17 @@ export interface FlowConfiguration<G> {
   turns: FlowTurn<G>;
 }
 
+// Interface for flow objects to avoid circular dependencies
+export interface FlowInterface<G = unknown> {
+  ctx?: CoreCtx;
+  moveMap?: Record<string, Move<G>>;
+  moveNames: string[];
+  getMove: (ctx: CoreCtx, name: string, playerID: string) => Move<G> | null;
+}
+
 export type GameRuntime<G = unknown> = GameDefinition<G> & {
   moveNames: string[];
-  flow?: any; // FlowManager or Flow function return - made generic to avoid circular dependency
+  flow?: FlowInterface<G>;
 };
 
 // Game Definition to configure core-engine
@@ -136,7 +152,7 @@ export type FnContext<
     CardFilter,
     CardInstance
   >;
-  gameOps: any; // TODO: Type this properly
+  gameOps: CoreEngineInterface; // Properly typed engine interface
   playerID?: PlayerID | null;
   readonly _getUpdatedState: () => CoreEngineState<G>;
 
@@ -144,6 +160,11 @@ export type FnContext<
   readonly G: G;
   readonly ctx: CoreCtx;
 };
+
+export interface InternalUpdateGame<G> {
+  type: "UPDATE_GAME";
+  payload: unknown;
+}
 
 export interface SyncInfo {
   state: CoreEngineState;
