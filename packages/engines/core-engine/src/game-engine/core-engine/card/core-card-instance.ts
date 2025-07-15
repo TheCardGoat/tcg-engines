@@ -1,4 +1,8 @@
 import type { CoreCardCtxProvider } from "~/game-engine/core-engine/card/core-card-ctx-provider";
+import {
+  ErrorFormatters,
+  safeExecute,
+} from "~/game-engine/core-engine/utils/error-utils";
 
 export class CoreCardInstance<T extends { id: string } = { id: string }> {
   readonly instanceId: string;
@@ -77,11 +81,19 @@ export class CoreCardInstance<T extends { id: string } = { id: string }> {
     callback: (engine: TEngine) => TResult,
     errorMessage = "Engine has been garbage collected",
   ): TResult {
-    const engine = this.getEngine<TEngine>();
-    if (!engine) {
-      throw new Error(`${errorMessage} - ${this.constructor.name}`);
-    }
-    return callback(engine);
+    return safeExecute(`withEngine:${this.instanceId}`, () => {
+      const engine = this.getEngine<TEngine>();
+      if (!engine) {
+        throw new Error(
+          ErrorFormatters.state(
+            "Card",
+            this.instanceId,
+            `${errorMessage} - ${this.constructor.name}`,
+          ),
+        );
+      }
+      return callback(engine);
+    });
   }
 
   // toJSON() {

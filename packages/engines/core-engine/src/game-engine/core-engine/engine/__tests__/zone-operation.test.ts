@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "bun:test";
-import type { CoreCtx } from "~/game-engine/core-engine/state/context";
+import type { CoreCtx } from "../../state/context";
 import {
   isZoneOperationError,
   moveCardByInstanceId,
@@ -12,11 +12,34 @@ describe("zone-operation", () => {
 
   beforeEach(() => {
     mockCtx = {
+      gameId: "test-game",
+      matchId: "test-match",
       playerOrder: ["player1", "player2"],
-      currentPlayerPos: 0,
+      turnPlayerPos: 0,
       priorityPlayerPos: 0,
+      numTurns: 1,
+      numTurnMoves: 0,
+      moveHistory: [],
+      players: {
+        player1: {
+          id: "player1",
+          name: "Player 1",
+        },
+        player2: {
+          id: "player2",
+          name: "Player 2",
+        },
+      },
+      cards: {
+        player1: {
+          card1: "def1",
+          card2: "def2",
+          card3: "def3",
+          card4: "def4",
+        },
+        player2: {},
+      },
       currentPhase: "mainPhase",
-      otp: "player1",
       seed: 12345,
       cardZones: {
         "player1-hand": {
@@ -186,7 +209,7 @@ describe("zone-operation", () => {
 
       it("should return error when card is in correct zone but owned by different player", () => {
         // Add player2's hand zone to mock context
-        mockCtx.cardZones["player2-hand"] = {
+        mockCtx.cardZones!["player2-hand"] = {
           id: "player2-hand",
           name: "hand",
           owner: "player2",

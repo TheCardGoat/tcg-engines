@@ -1,4 +1,15 @@
-import type { Ability } from "../../abilities/types";
+import type {
+  BoardZones,
+  CardColor,
+  CardRarity,
+  CardZones,
+  GundamitoCardSet,
+  GundamitoCardType,
+  Traits,
+} from "../../../shared-types";
+
+// Forward declaration to break circular dependency
+export type Ability = any; // Will be properly typed in abilities/types.ts
 
 interface GundamitoRawCard {
   id: string;
@@ -8,12 +19,12 @@ interface GundamitoRawCard {
   level: number;
   number: number;
   title?: string;
-  type: "pilot" | "unit" | "command" | "base" | "resource";
+  type: GundamitoCardType;
   subType?: "pilot";
   name: string;
   color: CardColor;
   abilities?: Array<Ability>; // tirar
-  set: "ST01" | "ST02" | "ST03" | "ST04" | "ST05" | "ST06" | "GD01" | "GD02";
+  set: GundamitoCardSet;
   rarity: CardRarity;
 }
 
@@ -89,10 +100,14 @@ export const isGundamitoResourceCard = (
   card?: GundamitoCard,
 ): card is GundamitoResourceCard => card?.type === "resource";
 
-// 2-4-2-1. There are four card colors: blue, green, red, and white.
-export type CardColor = "blue" | "white" | "green" | "red" | "token";
-
-type CardRarity = "common" | "uncommon" | "rare" | "super_rare" | "legendary";
+// Re-export shared types for backward compatibility
+export type {
+  BoardZones,
+  CardColor,
+  CardRarity,
+  CardZones,
+  Traits,
+} from "../../../shared-types";
 
 export type GundamitoCard =
   | GundamitoUnitCard
@@ -100,31 +115,5 @@ export type GundamitoCard =
   | GundamitoBaseCard
   | GundamitoCommandCard
   | GundamitoResourceCard;
-
-export type CardZones = "space" | "earth";
-export type BoardZones =
-  | "hand"
-  | "deck"
-  | "trash"
-  | "base"
-  | "battle"
-  | "shield"
-  | "resourceDeck"
-  | "resource";
-
-export type Traits =
-  | "earth Federation"
-  | "stronghold"
-  | "white base team"
-  | "earth alliance"
-  | "operation meteor"
-  | "earth federation"
-  | "newtype"
-  | "academy"
-  | "civilian"
-  | "zeon"
-  | "neo zeon"
-  | "maganac corps"
-  | "warship";
 
 export type Abilities = "repair" | "blocker" | "breach";

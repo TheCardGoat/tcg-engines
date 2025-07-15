@@ -39,8 +39,8 @@
     "typescript": "5.8.3"
   },
   "dependencies": {
-    "@lorcanito/typescript-config": "workspace:*",
     "@lorcanito/lorcana-engine": "workspace:*",
+    "@lorcanito/typescript-config": "workspace:*",
     "@tanstack/store": "0.7.0",
     "flatted": "^3.2.1",
     "immer": "^9.0.5",
@@ -52,6 +52,7 @@
     "redux": "^4.1.0",
     "rfc6902": "^5.0.0",
     "setimmediate": "^1.0.5",
+    "ts-morph": "^26.0.0",
     "ts-toolbelt": "^6.3.6"
   }
 }

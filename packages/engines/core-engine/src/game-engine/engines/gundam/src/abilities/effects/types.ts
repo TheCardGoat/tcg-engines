@@ -1,4 +1,4 @@
-import type { BoardZones } from "../../cards/definitions/cardTypes";
+import type { BoardZones } from "../../../shared-types";
 import type { TargetFilter } from "./targets/targetFilters";
 import type { CardEffectTarget, PlayerEffectTarget } from "./targets/targets";
 

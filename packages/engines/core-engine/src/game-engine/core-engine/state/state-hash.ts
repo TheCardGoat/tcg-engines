@@ -1,15 +1,6 @@
 const objectHash = require("object-hash");
 
-function isEmpty(value: any): boolean {
-  return (
-    value === null ||
-    value === undefined ||
-    (Array.isArray(value) && value.length === 0)
-    // (typeof value === "object" &&
-    //   value !== null &&
-    //   Object.keys(value).length === 0)
-  );
-}
+import { isEmpty } from "../utils/array-utils";
 
 export function cleanObject(
   obj: any,

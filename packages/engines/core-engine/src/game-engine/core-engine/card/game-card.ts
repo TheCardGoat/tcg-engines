@@ -1,4 +1,4 @@
-export type InstanceId = string;
+import type { InstanceId } from "~/game-engine/core-engine/types/core-types";
 
 /**
  * Lightweight card data structure that holds basic card information

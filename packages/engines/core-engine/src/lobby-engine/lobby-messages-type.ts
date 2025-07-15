@@ -1,5 +1,111 @@
-import type { CombinedLobbyState } from "./lobby-engine-types";
+import type { CombinedLobbyState } from "./shared-types";
 
+// Public message types for the lobby API
+export type LobbyMessageType =
+  | "join"
+  | "leave"
+  | "ready"
+  | "create"
+  | "status"
+  | "player_joined"
+  | "player_left"
+  | "player_ready"
+  | "created"
+  | "failed"
+  | "force_sync";
+
+export interface LobbyMessage {
+  type: LobbyMessageType;
+  payload: unknown;
+}
+
+export interface LobbyJoinMessage extends LobbyMessage {
+  type: "join";
+  payload: {
+    playerId: string;
+    playerData?: unknown;
+  };
+}
+
+export interface LobbyLeaveMessage extends LobbyMessage {
+  type: "leave";
+  payload: {
+    playerId: string;
+  };
+}
+
+export interface LobbyReadyMessage extends LobbyMessage {
+  type: "ready";
+  payload: {
+    playerId: string;
+    isReady: boolean;
+  };
+}
+
+export interface LobbyCreateMessage extends LobbyMessage {
+  type: "create";
+  payload: {
+    lobbyId: string;
+  };
+}
+
+export interface LobbyStatusMessage extends LobbyMessage {
+  type: "status";
+  payload: {
+    status: string;
+    lobbyId: string;
+  };
+}
+
+export interface LobbyPlayerJoinedMessage extends LobbyMessage {
+  type: "player_joined";
+  payload: {
+    playerId: string;
+    playerData?: unknown;
+  };
+}
+
+export interface LobbyPlayerLeftMessage extends LobbyMessage {
+  type: "player_left";
+  payload: {
+    playerId: string;
+  };
+}
+
+export interface LobbyPlayerReadyMessage extends LobbyMessage {
+  type: "player_ready";
+  payload: {
+    playerId: string;
+    isReady: boolean;
+  };
+}
+
+export interface LobbyCreatedMessage extends LobbyMessage {
+  type: "created";
+  payload: {
+    lobbyId: string;
+    matchId: string;
+  };
+}
+
+export interface LobbyFailedMessage extends LobbyMessage {
+  type: "failed";
+  payload: {
+    lobbyId: string;
+    error: string;
+  };
+}
+
+export interface LobbyForceSyncMessage extends LobbyMessage {
+  type: "force_sync";
+  payload: {
+    state: unknown;
+  };
+}
+
+export type LobbyMessageHandler = (message: LobbyMessage) => void;
+
+// Internal message types for the lobby engine
 export type ServerMessages<T, C> =
   | MessageRejectedOutMessage
   | PlayerJoinedOutMessage<C>

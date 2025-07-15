@@ -5,13 +5,12 @@
 
 import { expect } from "bun:test";
 import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
-import { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
-import { getCardZone } from "~/game-engine/core-engine/engine/zone-operation";
+
 import {
   type CoreCtx,
   createCtx,
 } from "~/game-engine/core-engine/state/context";
-import type { InstanceId } from "~/game-engine/core-engine/types";
+
 import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
 import {
   createId,
@@ -24,9 +23,9 @@ import type {
   GamePhase,
   GameSegment,
   RiftboundGameState,
-  RiftboundPlayerState,
   ZoneType,
 } from "../riftbound-generic-types";
+
 import {
   addPlayerToGameState,
   createEmptyRiftboundGameState,

@@ -1,4 +1,3 @@
-import type { LorcanitoCard } from "@lorcanito/lorcana-engine";
 import { CoreCardCtxProvider } from "~/game-engine/core-engine/card/core-card-ctx-provider";
 import { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
 import type { LorcanaEngine } from "../lorcana-engine";

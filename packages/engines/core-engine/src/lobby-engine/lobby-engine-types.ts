@@ -1,11 +1,20 @@
 import type { Store } from "@tanstack/store";
-import type { EventBus } from "./event-bus";
+// Import types from their respective modules to avoid circular dependencies
+import type { EventBus, EventHandler, LobbyEvent } from "./event-bus";
+import type {
+  CombinedLobbyState,
+  EventType,
+  LobbyContext,
+  LobbyPlayer,
+  LobbyState,
+  PairingType,
+  Plugin,
+  StatusType,
+} from "./shared-types";
 import type {
   SideEffectsAdapter,
   TransportMessage,
 } from "./side-effects-adapter";
-
-export type * from "./event-bus";
 
 export type LobbyEngine<
   State = unknown,
@@ -56,72 +65,17 @@ export type LobbyEngine<
   dispose: () => void;
 };
 
-export type LobbyPlayer<T = unknown> = {
-  id: string;
-  data: T;
-  isReady: boolean;
-  joinedAt: number;
-};
-
-export type LobbyState<T = unknown> = {
-  id: string;
-  players: LobbyPlayer<T>[];
-  createdAt: number;
-  updatedAt: number;
-  maxPlayers: number;
-  minPlayers: number;
-  joinInProgress: number;
-};
-
-export type EventType = "sealed" | "draft";
-export type PairingType = "swiss";
-export type StatusType =
-  | "players_joining" // Lobby is open for players to join
-  | "players_accepting" // minPlayers reached, waiting for players to accept
-  | "creating_event" // minPlayers reached, all players accepted, creating event
-  | "failed" // Event failed to create, lobby is closed
-  | "created"; // Event created, lobby is closed for new players
-
-export type LobbyContext<T = unknown> = {
-  status: StatusType;
-  presences: Record<string, unknown>;
-  players: Record<string, T>;
-  joinsInProgress: number;
-  minPlayers: number;
-  maxPlayers: number;
-  playersAccepted: Record<string, boolean>;
-  emptyTicks: number;
-  maxDurationTicks: number;
-  acceptDeadlineEndTick: number;
-  createdAt: number;
-  updatedAt: number;
-  id: string;
-  matchId: string;
-  type?: string;
-};
-
-export type CombinedLobbyState<T = unknown, C = unknown> = {
-  state: T;
-  context: LobbyContext<C>;
-};
-
-export type Plugin<T = unknown, C = unknown> = {
-  name: string;
-
-  // Plugin hooks for lobby lifecycle events
-  onPlayerJoin?: (playerId: string, playerData: C) => void;
-  onPlayerLeave?: (playerId: string) => void;
-  onPlayerReady?: (playerId: string) => void;
-  onTickUpdate?: () => void;
-  onStatusChange?: (
-    oldStatus: string,
-    newStatus: string,
-    state: CombinedLobbyState<T, C>,
-  ) => void;
-
-  // Allow for additional properties
-  [key: string]: unknown;
-};
+// Re-export shared types for backward compatibility
+export type {
+  CombinedLobbyState,
+  EventType,
+  LobbyContext,
+  LobbyPlayer,
+  LobbyState,
+  PairingType,
+  Plugin,
+  StatusType,
+} from "./shared-types";
 
 export interface LobbyOptions<T, C> {
   id?: string;

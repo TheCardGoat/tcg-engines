@@ -1,4 +1,5 @@
 import { batch, Store } from "@tanstack/store";
+import { generateUniqueId } from "../game-engine/core-engine/utils/id-utils";
 import { logger as defaultLogger, type EngineLogger } from "../shared/logger";
 import { LightweightEventBus } from "./event-bus";
 import type {
@@ -763,6 +764,4 @@ export function createLobbyEngine<
   } satisfies LobbyEngine<State, Context, BroadcastMessage, ReceiveMessage>;
 }
 
-function generateUniqueId(): string {
-  return Math.random().toString(36).substring(2, 15);
-}
+// Using the consolidated generateUniqueId function from id-utils.ts

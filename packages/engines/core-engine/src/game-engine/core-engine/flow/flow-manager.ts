@@ -7,6 +7,7 @@ import { processSegments } from "~/game-engine/core-engine/game/structure/segmen
 import type { Move } from "~/game-engine/core-engine/move/move-types";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import type { GameCards } from "~/game-engine/core-engine/types";
+import type { PlayerID } from "~/game-engine/core-engine/types/core-types";
 import type {
   CoreEngineState,
   FlowConfiguration,
@@ -18,8 +19,6 @@ import type {
 } from "../game-configuration";
 import { hasPriorityPlayer } from "../state/context";
 import { debuggers, logger } from "../utils/logger";
-
-type PlayerID = string;
 
 /**
  * Unified Flow Manager that handles all game flow operations

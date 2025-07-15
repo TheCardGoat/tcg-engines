@@ -110,10 +110,19 @@ export class ZoneMoveValidationError extends ZoneError {
 
 // ========== MODIFIER ERRORS ==========
 
+/**
+ * @internal
+ * Base class for modifier-related errors
+ * Reserved for future implementation of the modifier system
+ */
 export abstract class ModifierError extends EngineError {
   readonly category = "execution" as const;
 }
 
+/**
+ * @internal
+ * Reserved for future implementation of the modifier system
+ */
 export class ModifierCreationError extends ModifierError {
   readonly type = "MODIFIER_CREATION" as const;
 
@@ -125,6 +134,10 @@ export class ModifierCreationError extends ModifierError {
   }
 }
 
+/**
+ * @internal
+ * Reserved for future implementation of the modifier system
+ */
 export class ModifierApplicationError extends ModifierError {
   readonly type = "MODIFIER_APPLICATION" as const;
 
@@ -140,6 +153,10 @@ export class ModifierApplicationError extends ModifierError {
   }
 }
 
+/**
+ * @internal
+ * Reserved for future implementation of the modifier system
+ */
 export class ModifierNotFoundError extends ModifierError {
   readonly type = "MODIFIER_NOT_FOUND" as const;
 
@@ -148,6 +165,10 @@ export class ModifierNotFoundError extends ModifierError {
   }
 }
 
+/**
+ * @internal
+ * Reserved for future implementation of the modifier system
+ */
 export class ModifierCleanupError extends ModifierError {
   readonly type = "MODIFIER_CLEANUP" as const;
 
@@ -159,6 +180,10 @@ export class ModifierCleanupError extends ModifierError {
   }
 }
 
+/**
+ * @internal
+ * Reserved for future implementation of the modifier system
+ */
 export class LayerProcessingError extends ModifierError {
   readonly type = "LAYER_PROCESSING" as const;
 
@@ -219,10 +244,19 @@ export class PlayerPositionError extends ContextError {
 
 // ========== SERIALIZATION ERRORS ==========
 
+/**
+ * @internal
+ * Base class for serialization-related errors
+ * Reserved for future implementation of serialization features
+ */
 export abstract class SerializationError extends EngineError {
   readonly category = "system" as const;
 }
 
+/**
+ * @internal
+ * Reserved for future implementation of serialization features
+ */
 export class SerializationFailedError extends SerializationError {
   readonly type = "SERIALIZATION_FAILED" as const;
 
@@ -235,6 +269,10 @@ export class SerializationFailedError extends SerializationError {
   }
 }
 
+/**
+ * @internal
+ * Reserved for future implementation of serialization features
+ */
 export class DeserializationFailedError extends SerializationError {
   readonly type = "DESERIALIZATION_FAILED" as const;
 
@@ -247,6 +285,10 @@ export class DeserializationFailedError extends SerializationError {
   }
 }
 
+/**
+ * @internal
+ * Reserved for future implementation of serialization features
+ */
 export class SchemaValidationError extends SerializationError {
   readonly type = "SCHEMA_VALIDATION" as const;
 
@@ -262,6 +304,10 @@ export class SchemaValidationError extends SerializationError {
 
 // ========== COMPLETE ERROR TYPE UNION ==========
 
+/**
+ * Type union of all domain-specific errors
+ * Note: @internal error types are excluded from this union
+ */
 export type AnyDomainError =
   | CardNotFoundError
   | CardEnrichmentError
@@ -271,17 +317,11 @@ export type AnyDomainError =
   | ZoneSizeLimitError
   | InvalidZoneIdError
   | ZoneMoveValidationError
-  | ModifierCreationError
-  | ModifierApplicationError
-  | ModifierNotFoundError
-  | ModifierCleanupError
-  | LayerProcessingError
   | ContextValidationError
   | ContextUpdateError
-  | PlayerPositionError
-  | SerializationFailedError
-  | DeserializationFailedError
-  | SchemaValidationError;
+  | PlayerPositionError;
+// ModifierError classes excluded as they're marked @internal
+// SerializationError classes excluded as they're marked @internal
 
 /**
  * Complete union of all engine errors

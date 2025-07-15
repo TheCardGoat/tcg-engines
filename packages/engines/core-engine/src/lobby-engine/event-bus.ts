@@ -1,4 +1,4 @@
-import type { CombinedLobbyState } from "./lobby-engine-types";
+import type { CombinedLobbyState } from "./shared-types";
 
 export type LobbyEvent<State = unknown, Context = unknown> =
   | { type: "player_joined"; playerId: string; playerData: Context | unknown }

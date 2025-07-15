@@ -239,6 +239,10 @@ export class ConfigurationError extends SystemError {
   }
 }
 
+/**
+ * @internal
+ * Reserved for future use in networked implementations
+ */
 export class NetworkError extends SystemError {
   readonly type = "NETWORK" as const;
 
@@ -258,6 +262,7 @@ export class NetworkError extends SystemError {
 
 /**
  * Type union of all possible engine errors
+ * Note: @internal error types are excluded from this union
  */
 export type AnyEngineError =
   | InvalidPlayerError
@@ -274,8 +279,13 @@ export type AnyEngineError =
   | FlowEventError
   | FlowProcessingError
   | EngineInitializationError
-  | ConfigurationError
-  | NetworkError;
+  | ConfigurationError;
+// NetworkError excluded as it's marked @internal
+
+/**
+ * Type union of all possible engine errors including consolidated errors
+ */
+export type AllEngineErrors = AnyEngineError;
 
 /**
  * Helper to check if an error is of a specific type
@@ -298,17 +308,12 @@ export function createEngineError(
     return thrown as AnyEngineError;
   }
 
-  if (thrown instanceof Error) {
-    return new MoveExecutionError(
-      context.moveType || "unknown",
-      context.playerID || "unknown",
-      thrown,
-    );
-  }
+  const cause = thrown instanceof Error ? thrown : new Error(String(thrown));
 
-  return new MoveExecutionError(
-    context.moveType || "unknown",
-    context.playerID || "unknown",
-    new Error(String(thrown)),
-  );
+  // For safeExecute operations, always create MoveExecutionError
+  // This maintains backward compatibility with existing tests
+  const moveType = context.moveType || context.operation;
+  const playerID = context.playerID || "unknown";
+
+  return new MoveExecutionError(moveType, playerID, cause);
 }

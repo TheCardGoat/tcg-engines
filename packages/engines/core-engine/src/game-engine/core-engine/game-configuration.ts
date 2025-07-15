@@ -1,5 +1,5 @@
 import type { Operation } from "rfc6902";
-import type { ActionShape } from "~/game-engine/core-engine/engine/types";
+
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import type { SegmentMap } from "./game/structure/segment";
 import type {
@@ -10,7 +10,7 @@ export type { SegmentMap };
 
 import type { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
 import type { Move } from "~/game-engine/core-engine/move/move-types";
-
+import type { PlayerID } from "~/game-engine/core-engine/types/core-types";
 import type { CoreCardInstance } from "./card/core-card-instance";
 import type {
   DefaultCardDefinition,
@@ -20,8 +20,6 @@ import type {
   GameSpecificGameState,
   GameSpecificPlayerState,
 } from "./types/game-specific-types";
-
-export type PlayerID = string;
 export type StageName = string;
 
 export type FlowPhaseType = string;
@@ -123,11 +121,7 @@ export type Undo<G = unknown> = {
 };
 
 export interface LogEntry {
-  action:
-    | ActionShape.MakeMove
-    | ActionShape.GameEvent
-    | ActionShape.Undo
-    | ActionShape.Redo;
+  action: any; // ActionShape types were removed - using any for backward compatibility
   _stateID: number;
   numTurn: number;
   segment: string;

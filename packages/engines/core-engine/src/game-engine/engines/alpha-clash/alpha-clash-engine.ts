@@ -19,7 +19,6 @@ import type {
 } from "./alpha-clash-engine-types";
 import { AlphaClashCardRepository } from "./src/cards/alpha-clash-card-repository";
 import { alphaClashGameDefinition } from "./src/game-definition/alpha-clash-game-definition";
-import { alphaClashMoves } from "./src/moves/moves";
 
 // Define card instance type for Alpha Clash
 type AlphaClashCardInstance = CoreCardInstance<AlphaClashCardDefinition>;

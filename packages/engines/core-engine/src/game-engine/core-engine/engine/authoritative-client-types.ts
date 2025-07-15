@@ -1,5 +1,5 @@
 import type { Operation } from "rfc6902";
-import type { ActionShape } from "~/game-engine/core-engine/engine/types";
+
 import type {
   ChatMessage,
   CoreEngineState,
@@ -11,7 +11,7 @@ import type {
 export type CallbackFn = (arg: {
   state: CoreEngineState;
   matchID: string;
-  action?: ActionShape.Any;
+  action?: any; // ActionShape.Any was removed - using any for backward compatibility
 }) => void;
 
 /**

@@ -3,7 +3,6 @@
  * This provides a clean starting point for game initialization
  */
 
-import type { Domain } from "../riftbound-engine-types";
 import type {
   RiftboundGameState,
   RiftboundPlayerState,

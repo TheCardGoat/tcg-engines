@@ -1,8 +1,11 @@
-import type {
-  BoardZones,
-  GundamitoCard,
-} from "../../../cards/definitions/cardTypes";
+import type { BoardZones, GundamitoCardType } from "../../../../shared-types";
 import type { NumericComparison, StringComparison } from "./filterResolver";
+
+// Forward declaration to break circular dependency
+export type GundamitoCard = {
+  type: GundamitoCardType;
+  // Other properties will be properly typed in cardTypes.ts
+};
 
 export type TargetFilter =
   | {

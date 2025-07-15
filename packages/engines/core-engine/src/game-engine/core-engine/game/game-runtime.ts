@@ -13,8 +13,7 @@ import {
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import { createCtx } from "~/game-engine/core-engine/state/context";
 import type { GameCards } from "~/game-engine/core-engine/types";
-
-type PlayerID = string;
+import type { PlayerID } from "~/game-engine/core-engine/types/core-types";
 
 // This class is responsible for turning a GameDefinition into a live object, it encapsulates it
 // and provides a runtime interface to interact with the game state and moves.

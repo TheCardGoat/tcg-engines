@@ -13,6 +13,11 @@ import {
   setPriorityPlayer,
   setTurnPlayer,
 } from "~/game-engine/core-engine/state/context";
+import {
+  ErrorFormatters,
+  safeExecute,
+} from "~/game-engine/core-engine/utils/error-utils";
+import { getValidatedZone } from "~/game-engine/core-engine/utils/validation";
 import type {
   BaseCoreCardFilter,
   DefaultCardDefinition,
@@ -147,22 +152,14 @@ export class CoreOperation<
   }
 
   getZone(zoneId: string, playerId?: string) {
-    const zone = getCardZone(this.state.ctx, zoneId, playerId);
-
-    if (!zone) {
-      logger.error(`Zone ${zoneId} not found in context.`);
-      throw new Error(`Zone ${zoneId} not found in context.`);
-    }
-
-    return zone;
+    // Use the new getValidatedZone function from validation.ts
+    return getValidatedZone(this.state.ctx, zoneId, playerId);
   }
 
   shuffleZone(zoneId: string, playerId?: string) {
-    const zone = getCardZone(this.state.ctx, zoneId, playerId);
+    // Use the new getValidatedZone function from validation.ts
+    getValidatedZone(this.state.ctx, zoneId, playerId);
 
-    if (!zone) {
-      throw new Error(`Zone ${zoneId} not found in context.`);
-    }
     logger.info(`Shuffling zone ${zoneId} for player ${playerId}`);
     this.state.ctx = shuffleZone(this.state.ctx, zoneId);
   }
@@ -171,16 +168,19 @@ export class CoreOperation<
    * Get a card instance by its instance ID
    * @param instanceId The instance ID of the card to retrieve
    * @returns The card instance if found and engine is available, otherwise null
+   * @throws {Error} If the card instance is not found
    */
   getCardInstance(instanceId: string) {
-    const cardInstance =
-      this.engine.cardInstanceStore.getCardByInstanceId(instanceId);
+    return safeExecute(`getCardInstance:${instanceId}`, () => {
+      const cardInstance =
+        this.engine.cardInstanceStore.getCardByInstanceId(instanceId);
 
-    if (!cardInstance) {
-      throw new Error(`Card instance ${instanceId} not found`);
-    }
+      if (!cardInstance) {
+        throw new Error(ErrorFormatters.notFound("Card instance", instanceId));
+      }
 
-    return cardInstance;
+      return cardInstance;
+    });
   }
 
   /**
@@ -235,34 +235,40 @@ export class CoreOperation<
     origin?: "start" | "end";
     destination?: "start" | "end";
   }): ZoneOperationError | undefined {
-    if (instanceId) {
-      const result = moveCardByInstanceId({
-        ctx: this.state.ctx,
-        playerId,
-        instanceId,
-        to,
-        from,
-        origin,
-        destination,
-      });
+    return safeExecute(
+      `moveCard:${instanceId || `${from}-to-${to}`}`,
+      () => {
+        if (instanceId) {
+          const result = moveCardByInstanceId({
+            ctx: this.state.ctx,
+            playerId,
+            instanceId,
+            to,
+            from,
+            origin,
+            destination,
+          });
 
-      if (isZoneOperationError(result)) {
-        return result; // Return error to caller
-      }
+          if (isZoneOperationError(result)) {
+            return result; // Return error to caller
+          }
 
-      this.state.ctx = result; // Update context on success
-    } else {
-      this.state.ctx = move({
-        ctx: this.state.ctx,
-        playerId,
-        from,
-        to,
-        origin,
-        destination,
-      });
-    }
+          this.state.ctx = result; // Update context on success
+        } else {
+          this.state.ctx = move({
+            ctx: this.state.ctx,
+            playerId,
+            from,
+            to,
+            origin,
+            destination,
+          });
+        }
 
-    return undefined; // Success
+        return undefined; // Success
+      },
+      { playerID: playerId },
+    );
   }
 
   concede(playerId: string) {}

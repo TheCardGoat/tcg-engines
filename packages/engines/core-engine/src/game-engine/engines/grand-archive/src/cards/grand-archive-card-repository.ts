@@ -9,7 +9,6 @@ import type { GameCards } from "~/game-engine/core-engine/types";
 import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { GrandArchiveCardDefinition } from "../../grand-archive-engine-types";
 import { allGrandArchiveCardsById } from "./definitions/cards";
-import type { GrandArchiveCard } from "./definitions/cardTypes";
 
 /**
  * Grand Archive card repository implementation

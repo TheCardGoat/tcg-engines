@@ -1,8 +1,8 @@
 import type { EngineLogger } from "../shared/logger";
 import { logger } from "../shared/logger";
 import type { EventHandler } from "./event-bus";
-import type { CombinedLobbyState } from "./lobby-engine-types";
 import type { ClientMessages, ServerMessages } from "./lobby-messages-type";
+import type { CombinedLobbyState } from "./shared-types";
 
 export type TransportMessage<T = unknown, C = unknown> =
   | ClientMessages<T, C>

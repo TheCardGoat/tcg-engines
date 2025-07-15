@@ -4,12 +4,13 @@ import {
   type CoreCtx,
   createCtx,
 } from "~/game-engine/core-engine/state/context";
-import type { GameCards, InstanceId } from "~/game-engine/core-engine/types";
-import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
+import type { InstanceId } from "~/game-engine/core-engine/types";
+import { range } from "~/game-engine/core-engine/utils/array-utils";
 import {
   createId,
   createShortAndUniqueIds,
-} from "~/game-engine/core-engine/utils/random";
+} from "~/game-engine/core-engine/utils/id-utils";
+import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
 import type {
   GundamGameState,
   ZoneType,
@@ -684,6 +685,4 @@ function updateInitialState(
   }
 }
 
-function range(size: number, startAt = 0) {
-  return [...Array(size).keys()].map((i) => i + startAt);
-}
+// Using the consolidated range function from array-utils.ts

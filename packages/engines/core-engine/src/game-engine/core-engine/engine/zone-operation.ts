@@ -4,6 +4,16 @@ import {
   LinearCongruentialGenerator,
   shuffleCardZone,
 } from "~/game-engine/core-engine/utils/random";
+import {
+  isCardInZone,
+  isValidPlayerId,
+  isValidZoneId,
+  validateCardInZone,
+  validatePlayerId,
+  validateZoneId,
+  validateZoneNotEmpty,
+  validateZoneOwnership,
+} from "~/game-engine/core-engine/utils/validation";
 
 export type ZonePosition = "top" | "bottom" | number;
 export type ZoneVisibility = "public" | "private" | "secret";
@@ -146,22 +156,31 @@ function moveCardBetweenZones({
   origin: "start" | "end";
   destination: "start" | "end";
 }): CoreCtx {
-  if (!(fromZone && toZone)) {
-    logger.warn(
-      `One of the zones ('${fromZone?.name}' or '${toZone?.name}') not found in context.`,
-    );
-    return ctx;
-  }
+  // Use the validation utilities to validate zones and card
+  try {
+    // Validate that both zones exist
+    if (!(fromZone && toZone)) {
+      logger.warn(
+        `One of the zones ('${fromZone?.name}' or '${toZone?.name}') not found in context.`,
+      );
+      return ctx;
+    }
 
-  if (fromZone.owner !== playerId || toZone.owner !== playerId) {
-    logger.warn(
-      `Player ${playerId} does not own one of the zones ('${fromZone.id}' or '${toZone.id}').`,
-    );
-    return ctx;
-  }
+    // Validate zone ownership
+    if (fromZone.owner !== playerId || toZone.owner !== playerId) {
+      logger.warn(
+        `Player ${playerId} does not own one of the zones ('${fromZone.id}' or '${toZone.id}').`,
+      );
+      return ctx;
+    }
 
-  if (!fromZone.cards.includes(cardToMove)) {
-    logger.warn(`Card ${cardToMove} not found in zone: '${fromZone.id}'.`);
+    // Validate card is in the source zone
+    if (!fromZone.cards.includes(cardToMove)) {
+      logger.warn(`Card ${cardToMove} not found in zone: '${fromZone.id}'.`);
+      return ctx;
+    }
+  } catch (error) {
+    logger.error(`Error in moveCardBetweenZones: ${error.message}`);
     return ctx;
   }
 
@@ -246,6 +265,18 @@ export function moveCardByInstanceId({
   origin?: "start" | "end"; // ignored, since we use instanceId
   destination?: "start" | "end";
 }): CoreCtx | ZoneOperationError {
+  // Validate player ID
+  if (!isValidPlayerId(ctx, playerId)) {
+    return {
+      type: "ZONE_OPERATION_ERROR",
+      reason: "INVALID_PLAYER",
+      context: {
+        playerId,
+        instanceId,
+      },
+    };
+  }
+
   const fromZone = getCardZoneByInstanceId(ctx, instanceId);
   const toZone = getCardZone(ctx, to, playerId);
 
@@ -284,6 +315,7 @@ export function moveCardByInstanceId({
     };
   }
 
+  // Validate both zones exist
   if (!(fromZone && toZone)) {
     return {
       type: "ZONE_OPERATION_ERROR",
@@ -323,18 +355,50 @@ export function move({
   origin?: "start" | "end";
   destination?: "start" | "end";
 }): CoreCtx {
-  const fromZone = getCardZone(ctx, from, playerId);
-  const toZone = getCardZone(ctx, to, playerId);
+  let fromZone;
+  let toZone;
 
-  if (!(fromZone && toZone)) {
-    logger.warn(
-      `One of the zones ('${from}' or '${to}') not found in context.`,
-    );
+  try {
+    // Validate player ID
+    if (!isValidPlayerId(ctx, playerId)) {
+      logger.warn(`Invalid player ID: ${playerId}`);
+      return ctx;
+    }
+
+    fromZone = getCardZone(ctx, from, playerId);
+    toZone = getCardZone(ctx, to, playerId);
+
+    // Validate zones exist
+    if (!(fromZone && toZone)) {
+      logger.warn(
+        `One of the zones ('${from}' or '${to}') not found in context.`,
+      );
+      return ctx;
+    }
+
+    // Validate zone ownership
+    if (fromZone.owner !== playerId) {
+      logger.warn(`Player ${playerId} does not own zone '${fromZone.id}'.`);
+      return ctx;
+    }
+
+    if (toZone.owner !== playerId) {
+      logger.warn(`Player ${playerId} does not own zone '${toZone.id}'.`);
+      return ctx;
+    }
+
+    // Validate source zone is not empty
+    if (fromZone.cards.length === 0) {
+      logger.warn(`Cannot move card from empty zone: '${fromZone.id}'.`);
+      return ctx;
+    }
+  } catch (error) {
+    logger.error(`Error in move operation: ${error.message}`);
     return ctx;
   }
 
-  if (fromZone.cards.length === 0) {
-    logger.warn(`Cannot move card from empty zone: '${fromZone.id}'.`);
+  // If we got here, fromZone and toZone should be defined
+  if (!(fromZone && toZone)) {
     return ctx;
   }
 

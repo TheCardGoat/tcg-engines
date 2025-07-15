@@ -1,5 +1,6 @@
 import type { Condition } from "./conditions/types";
-import type { Effect } from "./effects/types";
+// Forward declaration to break circular dependency
+export type Effect = any; // Will be properly typed in effects/types.ts
 
 export interface BaseAbility {
   type?:

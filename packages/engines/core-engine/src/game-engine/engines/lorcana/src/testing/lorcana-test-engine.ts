@@ -8,25 +8,22 @@ import { allCardsById } from "@lorcanito/lorcana-engine";
 import type { CoreCardFilterDSL } from "~/game-engine/core-engine/card/core-card-filter";
 import type { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
 import { getCardZone } from "~/game-engine/core-engine/engine/zone-operation";
-import type { CoreEngineState } from "~/game-engine/core-engine/game-configuration";
+
 import {
   type CoreCtx,
   createCtx,
 } from "~/game-engine/core-engine/state/context";
 import type { InstanceId } from "~/game-engine/core-engine/types";
-import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
+import { range } from "~/game-engine/core-engine/utils/array-utils";
 import {
   createId,
   createShortAndUniqueIds,
-} from "~/game-engine/core-engine/utils/random";
+} from "~/game-engine/core-engine/utils/id-utils";
+import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
 import { LorcanaCardRepository } from "../cards/lorcana-card-repository";
 import { LorcanaEngine } from "../lorcana-engine";
 import type { LorcanaGameState, Zone } from "../lorcana-engine-types";
 import { createEmptyLorcanaGameState } from "../utils/createEmptyLorcanaGameState";
-
-function range(size: number, startAt = 0) {
-  return [...Array(size).keys()].map((i) => i + startAt);
-}
 
 // Creates a test card repository that includes both official cards and test cards
 function createTestCardRepository(

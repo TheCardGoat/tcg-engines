@@ -1,8 +1,9 @@
 import type { CoreEngine } from "~/game-engine/core-engine";
+import { filterCoreCardInstances } from "~/game-engine/core-engine/card/card-filtering";
 import type { CardRepository } from "~/game-engine/core-engine/card/card-repository-factory";
 import { CoreCardCtxProvider } from "~/game-engine/core-engine/card/core-card-ctx-provider";
-import { getCardsByFilter } from "~/game-engine/core-engine/card/core-card-filter";
 import { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
+import type { InstanceId } from "~/game-engine/core-engine/types/core-types";
 import type {
   BaseCoreCardFilter,
   DefaultGameState,
@@ -11,12 +12,14 @@ import type {
   GameSpecificGameState,
   GameSpecificPlayerState,
 } from "~/game-engine/core-engine/types/game-specific-types";
+import {
+  ErrorFormatters,
+  safeExecute,
+} from "~/game-engine/core-engine/utils/error-utils";
 
 export interface CoreCardDefinition {
   id: string;
 }
-
-type InstanceId = string;
 
 // Read-only entity that provides rich information about cards' current state. With the help of CardInstance class it gives fresh information about each card.
 export class CoreCardInstanceStore<
@@ -85,16 +88,22 @@ export class CoreCardInstanceStore<
   }
 
   queryCards(filter: any) {
-    const engine = this.engineRef.deref();
-    if (!engine) {
-      throw new Error(
-        "Engine has been garbage collected - CoreCardInstanceStore cannot query cards",
-      );
-    }
-    return getCardsByFilter({
-      state: engine.getState(),
-      store: this,
-      filter,
+    return safeExecute("queryCards", () => {
+      const engine = this.engineRef.deref();
+      if (!engine) {
+        throw new Error(
+          ErrorFormatters.state(
+            "Engine",
+            "reference",
+            "Engine has been garbage collected - CoreCardInstanceStore cannot query cards",
+          ),
+        );
+      }
+      return filterCoreCardInstances({
+        state: engine.getState(),
+        store: this,
+        filter,
+      });
     });
   }
 

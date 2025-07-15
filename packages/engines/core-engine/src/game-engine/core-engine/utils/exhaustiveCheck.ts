@@ -1,5 +1,2 @@
-// @ts-ignore
-export function exhaustiveCheck(x: never): never {
-  const data = JSON.stringify(x || "");
-  console.error(`Exhaustive check failed: ${data}`);
-}
+// Re-export from shared directory for backward compatibility
+export { exhaustiveCheck } from "../../../shared/exhaustiveCheck";

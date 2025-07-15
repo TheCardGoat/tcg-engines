@@ -1,8 +1,22 @@
 import type { PhaseMap } from "./game/structure/phase";
 import type { TurnConfig } from "./game/structure/turn";
 import type { FnContext, MoveMap, SegmentMap } from "./game-configuration";
+import type {
+  InstanceId,
+  PlayerID,
+  PlayerId,
+  PublicId,
+  ZoneId,
+} from "./types/core-types";
 
-export type PlayerID = string;
+// Re-export core types for backward compatibility
+export type {
+  InstanceId,
+  PlayerID,
+  PlayerId,
+  PublicId,
+  ZoneId,
+} from "./types/core-types";
 
 export interface Game<G = any, SetupData = any> {
   name?: string;
@@ -34,7 +48,4 @@ export interface Game<G = any, SetupData = any> {
   onEnd?: (context: FnContext<G>) => undefined | G;
 }
 
-export type PlayerId = string;
-export type InstanceId = string;
-export type PublicId = string;
 export type GameCards = Record<PlayerId, Record<InstanceId, PublicId>>;

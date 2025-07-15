@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it } from "../../__tests__/test-utils";
 import { CardRepository } from "../card-repository-factory";
 
 // Define CoreCardDefinition locally for test

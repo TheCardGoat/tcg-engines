@@ -9,13 +9,12 @@ import type {
   CardType,
   CombatRole,
   Domain,
-  RiftboundGameState as EngineGameState,
-  PlayerState as EnginePlayerState,
   GamePhase,
   GameSegment,
   MoveResult,
+  PlayerState,
   ResourceType,
-  RiftboundGameStates,
+  RiftboundGameState,
   StatusCondition,
   ZoneType,
 } from "./riftbound-engine-types";
@@ -160,8 +159,8 @@ export type RiftboundMoves = {
 };
 
 // Re-export main types from engine-types to avoid conflicts
-export type RiftboundGameState = EngineGameState;
-export type RiftboundPlayerState = EnginePlayerState;
+export type { RiftboundGameState };
+export type { PlayerState as RiftboundPlayerState };
 
 // Additional type aliases for convenience
 export type { RiftboundMoveType as MoveType };

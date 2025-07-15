@@ -21,6 +21,7 @@ import {
 } from "~/game-engine/core-engine/state/context";
 import { GameStateStore } from "~/game-engine/core-engine/state/state-store";
 import type { GameCards } from "~/game-engine/core-engine/types";
+import type { PlayerID } from "~/game-engine/core-engine/types/core-types";
 import type {
   BaseCoreCardFilter,
   DefaultCardDefinition,
@@ -31,10 +32,12 @@ import type {
   GameSpecificGameState,
   GameSpecificPlayerState,
 } from "~/game-engine/core-engine/types/game-specific-types";
+import {
+  ErrorFormatters,
+  safeExecute,
+} from "~/game-engine/core-engine/utils/error-utils";
 import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
 import type { CoreCardInstance } from "../card/core-card-instance";
-
-type PlayerID = string;
 
 export interface CoreEngineOpts<
   GameState extends GameSpecificGameState = DefaultGameState,
@@ -163,6 +166,13 @@ export class CoreEngine<
     }
   }
 
+  /**
+   * Creates a function context from the current game state
+   * Uses the context factory pattern for consistent context creation
+   *
+   * @param state - Current game state
+   * @returns Function context for game operations
+   */
   private createFnContextFromState(
     state: CoreEngineState<GameState>,
   ): FnContext<
@@ -218,72 +228,71 @@ export class CoreEngine<
         new InvalidMoveError(
           moveType,
           playerID,
-          `Player ${playerID} is not allowed to make moves, priority players: ${this.getPriorityPlayers()}`,
+          ErrorFormatters.permission(
+            "Move",
+            moveType,
+            "made",
+            playerID,
+            `priority belongs to ${this.getPriorityPlayers().join(", ")}`,
+          ),
         ),
       );
     }
 
-    try {
-      const moveRequest: MoveRequest = {
-        playerID,
-        moveType,
-        args,
-      };
+    return safeExecute(
+      `processMove:${moveType}`,
+      () => {
+        const moveRequest: MoveRequest = {
+          playerID,
+          moveType,
+          args,
+        };
 
-      const initialFnContext = this.createFnContextFromState(
-        this.getGameState(),
-      );
+        const initialFnContext = this.createFnContextFromState(
+          this.getGameState(),
+        );
 
-      const processResult = this.gameRuntime.processMove(
-        moveRequest,
-        initialFnContext,
-      );
+        const processResult = this.gameRuntime.processMove(
+          moveRequest,
+          initialFnContext,
+        );
 
-      if (!processResult.success) {
-        if (debuggers.moves) {
-          logger.error(processResult);
+        if (!processResult.success) {
+          if (debuggers.moves) {
+            logger.error(processResult);
+          }
+
+          return {
+            success: false,
+            error: (processResult as { success: false; error: AnyEngineError })
+              .error,
+          };
         }
 
-        return {
-          success: false,
-          error: (processResult as { success: false; error: AnyEngineError })
-            .error,
-        };
-      }
-
-      const { newState } = processResult.data;
-      const updatedFnContext = this.createFnContextFromState(newState);
-      const finalState = this.flowManager.processFlowTransitions(
-        newState,
-        updatedFnContext,
-      );
-
-      this.gameStateStore.updateState({
-        newState: finalState,
-      });
-
-      if (this.isAuthoritative) {
-        this.broadcastToClients(this.getGameState());
-      } else if (this.authoritativeEngine) {
-        (this.authoritativeEngine as any).receiveFromClient(
-          this.playerID,
-          finalState,
+        const { newState } = processResult.data;
+        const updatedFnContext = this.createFnContextFromState(newState);
+        const finalState = this.flowManager.processFlowTransitions(
+          newState,
+          updatedFnContext,
         );
-      }
 
-      return ResultHelpers.ok(finalState);
-    } catch (error) {
-      logger.error("Unexpected error processing move:", error);
-      return ResultHelpers.error(
-        new MoveExecutionError(
-          moveType,
-          playerID,
-          error instanceof Error ? error : new Error(String(error)),
-        ),
-      );
-    } finally {
-      logger.groupEnd();
-    }
+        this.gameStateStore.updateState({
+          newState: finalState,
+        });
+
+        if (this.isAuthoritative) {
+          this.broadcastToClients(this.getGameState());
+        } else if (this.authoritativeEngine) {
+          (this.authoritativeEngine as any).receiveFromClient(
+            this.playerID,
+            finalState,
+          );
+        }
+
+        return ResultHelpers.ok(finalState);
+      },
+      { playerID, moveType },
+    );
   }
 
   private canPlayerMove(playerID: string): boolean {

@@ -15,7 +15,7 @@ import type {
   AlphaClashColor,
   AlphaClashKeyword,
   AlphaClashRarity,
-} from "../../../alpha-clash-engine-types";
+} from "../../../shared-types";
 
 /**
  * Base card interface - all Alpha Clash cards extend this

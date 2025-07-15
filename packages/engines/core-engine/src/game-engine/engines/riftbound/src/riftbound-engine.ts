@@ -4,10 +4,8 @@
  */
 
 // Imports from core engine
-import {
-  CardRepository,
-  createCardRepository,
-} from "~/game-engine/core-engine/card/card-repository-factory";
+import { CardRepository } from "~/game-engine/core-engine/card/card-repository-factory";
+
 import type { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
 import { GameEngine } from "~/game-engine/core-engine/game-engine";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
@@ -21,17 +19,13 @@ import { logger } from "~/game-engine/core-engine/utils/logger";
 // Riftbound specific imports
 import { RiftboundGame } from "./game-definition/riftbound-game-definition";
 import type {
-  Domain,
-  GamePhase,
-  GameSegment,
   MoveResult,
   RiftboundGameState,
-  RiftboundMoveParams,
-  RiftboundMoves,
   RiftboundMoveType,
   RiftboundPlayerState,
   ZoneType,
 } from "./riftbound-generic-types";
+
 import { createEmptyRiftboundGameState } from "./utils/createEmptyRiftboundGameState";
 
 // Type definitions

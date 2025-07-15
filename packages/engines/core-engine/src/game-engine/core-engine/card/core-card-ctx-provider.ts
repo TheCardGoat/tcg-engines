@@ -9,6 +9,10 @@ import type {
   GameSpecificGameState,
   GameSpecificPlayerState,
 } from "~/game-engine/core-engine/types/game-specific-types";
+import {
+  ErrorFormatters,
+  safeExecute,
+} from "~/game-engine/core-engine/utils/error-utils";
 import type { CoreCardInstance } from "./core-card-instance";
 
 export class CoreCardCtxProvider<
@@ -38,13 +42,19 @@ export class CoreCardCtxProvider<
   }
 
   getCtx() {
-    const engine = this.engineRef.deref();
-    if (!engine) {
-      throw new Error(
-        "Engine has been garbage collected - CoreCardCtxProvider cannot access context",
-      );
-    }
-    return engine.getGameState().ctx;
+    return safeExecute("getCardContext", () => {
+      const engine = this.engineRef.deref();
+      if (!engine) {
+        throw new Error(
+          ErrorFormatters.state(
+            "Engine",
+            "context",
+            "Engine has been garbage collected - CoreCardCtxProvider cannot access context",
+          ),
+        );
+      }
+      return engine.getGameState().ctx;
+    });
   }
 
   /**

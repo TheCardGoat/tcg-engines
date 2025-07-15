@@ -1,5 +1,6 @@
 import type { FnContext } from "~/game-engine/core-engine/game-configuration";
 import type { CoreCtx } from "~/game-engine/core-engine/state/context";
+import type { PlayerID } from "~/game-engine/core-engine/types/core-types";
 import type { CoreCardInstance } from "../card/core-card-instance";
 import type {
   BaseCoreCardFilter,
@@ -11,8 +12,6 @@ import type {
   GameSpecificGameState,
   GameSpecificPlayerState,
 } from "../types/game-specific-types";
-
-export type PlayerID = string;
 
 /**
  * Structured invalid move result with reason and human-readable message key

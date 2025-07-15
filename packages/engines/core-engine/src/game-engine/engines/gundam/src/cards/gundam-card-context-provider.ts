@@ -1,6 +1,5 @@
 import { CardNotFoundError } from "~/game-engine/core-engine/errors/domain-errors";
 import type { GundamEngine } from "~/game-engine/engines/gundam/src/gundam-engine";
-import type { GundamGameState } from "../gundam-engine-types";
 
 /**
  * LorcanaEngine implementation of CardContextProvider

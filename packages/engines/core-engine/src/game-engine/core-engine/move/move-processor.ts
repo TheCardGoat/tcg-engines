@@ -1,4 +1,5 @@
 import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
+import type { AnyConsolidatedError } from "~/game-engine/core-engine/errors/consolidated-errors";
 import {
   type AnyEngineError,
   createEngineError,
@@ -17,7 +18,6 @@ import {
 } from "~/game-engine/core-engine/move/move-types";
 import type { Result } from "~/game-engine/core-engine/types/result";
 import { Result as ResultHelpers } from "~/game-engine/core-engine/types/result";
-import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
 
 // Types for move processing
 export type MoveRequest = {
@@ -84,7 +84,7 @@ export class MoveExecutor<G> {
   execute(
     validatedMove: ValidatedMove<G>,
     fnContext: FnContext<G>,
-  ): Result<MoveResult<G>, AnyEngineError> {
+  ): Result<MoveResult<G>, AnyEngineError | AnyConsolidatedError> {
     try {
       const actualMoveFunction = this.extractMoveFunction(
         validatedMove.moveFunction,
@@ -196,14 +196,13 @@ export class MoveProcessor<G> {
     request: MoveRequest,
     flowManager: FlowManager<G>,
     fnContext: FnContext<G>,
-  ): Result<MoveResult<G>, AnyEngineError> {
+  ): Result<MoveResult<G>, AnyEngineError | AnyConsolidatedError> {
     const validationResult = this.validator.validate(
       request,
       fnContext,
       flowManager,
     );
-    if (!validationResult.success) {
-      // @ts-ignore
+    if (ResultHelpers.isError(validationResult)) {
       return ResultHelpers.error(validationResult.error);
     }
 
