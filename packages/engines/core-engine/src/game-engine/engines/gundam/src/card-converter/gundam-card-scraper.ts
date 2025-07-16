@@ -1,3 +1,5 @@
+import { mkdir, writeFile } from "fs/promises";
+import { dirname, join } from "path";
 import type {
   CardColor,
   CardRarity,
@@ -7,9 +9,14 @@ import type {
   Traits,
 } from "../../shared-types";
 import type {
+  GundamitoBaseCard,
   GundamitoCard,
+  GundamitoCommandCard,
+  GundamitoPilotCard,
+  GundamitoResourceCard,
   GundamitoUnitCard,
 } from "../cards/definitions/cardTypes";
+import { parseGundamText } from "../text-parser";
 
 interface ScrapedCardData {
   cardNumber: string;
@@ -45,6 +52,26 @@ async function scrapeCardData(
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
+    // Check if we were redirected to the homepage or a different URL
+    if (response.url !== url) {
+      console.log(
+        `Card ${cardNumber} redirected from ${url} to ${response.url}`,
+      );
+
+      // If redirected to homepage, index, or root directory, this card doesn't exist
+      if (
+        response.url.includes("/en/index.php") ||
+        response.url.endsWith("/en/") ||
+        response.url.endsWith("/en") ||
+        !response.url.includes("detail.php")
+      ) {
+        console.log(
+          `Card ${cardNumber} appears to not exist (redirected to homepage)`,
+        );
+        return null;
+      }
+    }
+
     const html = await response.text();
     return parseCardHTML(html);
   } catch (error) {
@@ -56,8 +83,47 @@ async function scrapeCardData(
 /**
  * Parses HTML content to extract card data
  */
+function isValidCardPage(html: string): boolean {
+  // Check if this is a valid card page vs the default page with just logo
+  const hasCardNumber = html.includes('class="cardNo"');
+  const hasCardName = html.includes('class="cardName"');
+  const hasDataBoxes = html.includes('class="dataBox');
+
+  // Check for homepage indicators
+  const isHomepage =
+    html.includes("The GANDAM CARD GAME launches on Friday") ||
+    html.includes("LEARN TO PLAY") ||
+    html.includes("Start playing the GUNDAM CARD GAME") ||
+    html.includes("WHAT'S NEW");
+
+  // Check for logo-only page (another indicator of invalid card)
+  const isLogoOnly =
+    html.includes("/en/images/common/logo.png") && !hasCardNumber;
+
+  // Must have card elements and not be homepage/logo-only
+  const isValid =
+    hasCardNumber && hasCardName && hasDataBoxes && !isHomepage && !isLogoOnly;
+
+  if (!isValid) {
+    console.log("Invalid card page detected:", {
+      hasCardNumber,
+      hasCardName,
+      hasDataBoxes,
+      isHomepage,
+      isLogoOnly,
+    });
+  }
+
+  return isValid;
+}
+
 function parseCardHTML(html: string): ScrapedCardData | null {
   try {
+    // Check if this is a valid card page first
+    if (!isValidCardPage(html)) {
+      return null;
+    }
+
     // Extract card number
     const cardNumberMatch = html.match(
       /<div class="cardNo">\s*([^<]+)\s*<\/div>/,
@@ -138,7 +204,7 @@ function convertToGundamitoCard(data: ScrapedCardData): GundamitoCard | null {
     const number = extractCardNumber(data.cardNumber);
 
     const baseCard = {
-      id: data.cardNumber,
+      id: generateCardId(data.cardNumber, data.cardName),
       implemented: false,
       missingTestCase: true,
       cost: Number.parseInt(data.cost, 10) || 0,
@@ -165,7 +231,8 @@ function convertToGundamitoCard(data: ScrapedCardData): GundamitoCard | null {
           linkRequirement,
           ap: Number.parseInt(data.ap, 10) || 0,
           hp: Number.parseInt(data.hp, 10) || 1,
-          abilities: [], // Will be populated later with text parsing
+          abilities: parseAbilitiesFromText(data.effectText),
+          text: data.effectText,
         } as GundamitoUnitCard;
       }
 
@@ -184,16 +251,18 @@ function convertToGundamitoCard(data: ScrapedCardData): GundamitoCard | null {
           traits,
           apModifier,
           hpModifier,
-          abilities: [], // Will be populated later with text parsing
-        };
+          abilities: parseAbilitiesFromText(data.effectText),
+          text: data.effectText,
+        } as GundamitoPilotCard;
       }
 
       case "command": {
         return {
           ...baseCard,
           type: "command",
-          abilities: [], // Will be populated later with text parsing
-        };
+          abilities: parseAbilitiesFromText(data.effectText),
+          text: data.effectText,
+        } as GundamitoCommandCard;
       }
 
       case "base": {
@@ -205,10 +274,11 @@ function convertToGundamitoCard(data: ScrapedCardData): GundamitoCard | null {
           type: "base",
           zones,
           traits,
-          abilities: [], // Will be populated later with text parsing
+          abilities: parseAbilitiesFromText(data.effectText),
+          text: data.effectText,
           ap: Number.parseInt(data.ap, 10) || 0,
           hp: Number.parseInt(data.hp, 10) || 1,
-        };
+        } as GundamitoBaseCard;
       }
 
       case "resource": {
@@ -221,7 +291,7 @@ function convertToGundamitoCard(data: ScrapedCardData): GundamitoCard | null {
           set: baseCard.set,
           rarity: baseCard.rarity,
           type: "resource",
-        };
+        } as GundamitoResourceCard;
       }
 
       default: {
@@ -330,6 +400,55 @@ function extractCardNumber(cardId: string): number {
   return Number.parseInt(numberMatch?.[1] || "1", 10);
 }
 
+function generateCardId(cardNumber: string, cardName: string): string {
+  // Extract set and number from cardNumber (e.g., "ST01-006" -> "ST01" and "006")
+  const match = cardNumber.match(/^([A-Z0-9]+)-(\d+)$/);
+  if (!match) {
+    console.warn(`Invalid card number format: ${cardNumber}`);
+    return cardNumber; // fallback to original
+  }
+
+  const [, set, number] = match;
+  return `${set}-${number.padStart(3, "0")}`;
+}
+
+function parseAbilitiesFromText(effectText: string): any[] {
+  if (!effectText || effectText.trim() === "") {
+    return [];
+  }
+
+  try {
+    // Clean the HTML entities from the effect text
+    const cleanText = effectText
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&amp;/g, "&")
+      .replace(/<br>/g, " ")
+      .replace(/<\/br>/g, " ")
+      .trim();
+
+    console.log(`Parsing abilities from text: "${cleanText}"`);
+
+    const result = parseGundamText(cleanText, { debug: false });
+
+    if (result.abilities && result.abilities.length > 0) {
+      console.log(`Generated ${result.abilities.length} abilities`);
+      if (result.warnings.length > 0) {
+        console.log(`Warnings: ${result.warnings.join(", ")}`);
+      }
+      if (result.errors.length > 0) {
+        console.log(`Errors: ${result.errors.join(", ")}`);
+      }
+      return result.abilities;
+    }
+
+    return [];
+  } catch (error) {
+    console.warn(`Error parsing abilities from text "${effectText}":`, error);
+    return [];
+  }
+}
+
 function parseZones(zoneText: string): CardZones[] {
   if (!zoneText) return [];
 
@@ -423,6 +542,188 @@ export async function scrapeAndCreateGundamitoCard(
   );
 
   return gundamitoCard;
+}
+
+/**
+ * Scrapes all cards in a set by trying sequential numbers until failure
+ */
+export async function scrapeAllCardsInSet(
+  setCode: string,
+): Promise<GundamitoCard[]> {
+  console.log(`🔍 Scraping all cards in set: ${setCode}`);
+  console.log("=".repeat(50));
+
+  const cards: GundamitoCard[] = [];
+  let currentNumber = 1;
+  let consecutiveFailures = 0;
+  const maxConsecutiveFailures = 3; // Stop after 3 consecutive failures
+
+  while (consecutiveFailures < maxConsecutiveFailures) {
+    const cardNumber = `${setCode}-${currentNumber.toString().padStart(3, "0")}`;
+    console.log(`\n🔍 Attempting to scrape: ${cardNumber}`);
+
+    try {
+      const card = await scrapeAndCreateGundamitoCard(cardNumber);
+      if (card) {
+        cards.push(card);
+        consecutiveFailures = 0; // Reset failure counter
+        console.log(`✅ Successfully scraped: ${cardNumber} - ${card.name}`);
+      } else {
+        consecutiveFailures++;
+        console.log(
+          `❌ Failed to scrape: ${cardNumber} (${consecutiveFailures}/${maxConsecutiveFailures})`,
+        );
+      }
+    } catch (error) {
+      consecutiveFailures++;
+      console.log(
+        `❌ Error scraping ${cardNumber}: ${error} (${consecutiveFailures}/${maxConsecutiveFailures})`,
+      );
+    }
+
+    currentNumber++;
+
+    // Add a small delay to avoid overwhelming the server
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+
+  console.log(`\n📊 Scraping complete for set ${setCode}`);
+  console.log(`✅ Successfully scraped ${cards.length} cards`);
+  console.log(
+    `📋 Cards found: ${cards.map((c) => `${c.name} (${c.type})`).join(", ")}`,
+  );
+
+  return cards;
+}
+
+/**
+ * Creates the file path for a card based on its properties
+ */
+function createCardFilePath(card: GundamitoCard): string {
+  const basePath = join(
+    dirname(import.meta.url.replace("file://", "")),
+    "../cards/definitions",
+  );
+
+  // Determine the card type folder name
+  let cardTypeFolder: string;
+  switch (card.type) {
+    case "unit":
+      cardTypeFolder = "units";
+      break;
+    case "pilot":
+      cardTypeFolder = "pilots";
+      break;
+    case "command":
+      cardTypeFolder = "commands";
+      break;
+    case "base":
+      cardTypeFolder = "bases";
+      break;
+    case "resource":
+      cardTypeFolder = "resources";
+      break;
+    default:
+      cardTypeFolder = "unknown";
+  }
+
+  // Create the filename with three-digit number and kebab-case name
+  const numberMatch = card.id.match(/^(\d{3})-/);
+  const threeDigitNumber = numberMatch?.[1] || "001";
+  const kebabCaseName = card.name
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  const filename = `${threeDigitNumber}-${kebabCaseName}.ts`;
+
+  return join(basePath, card.set, cardTypeFolder, filename);
+}
+
+function toCamelCase(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "")
+    .replace(/\s+(.)/g, (_, char) => char.toUpperCase())
+    .replace(/^\w/, (char) => char.toLowerCase());
+}
+
+/**
+ * Generates TypeScript code for a card
+ */
+function generateCardTypeScript(card: GundamitoCard): string {
+  const cardTypeName = `${card.type.charAt(0).toUpperCase()}${card.type.slice(1)}Card`;
+  const interfaceName = `Gundamito${cardTypeName}`;
+
+  // Generate camelCase variable name from card name only (no number prefix)
+  const variableName = toCamelCase(card.name);
+
+  // Convert to proper TypeScript object literal syntax
+  const cardObjectString = JSON.stringify(card, null, 2);
+
+  // TODO: Idea for the feature, we may have the abilities created as a separate object, referencing them in the card object.
+
+  return `import type { ${interfaceName} } from "../../cardTypes";
+
+export const ${variableName}: ${interfaceName} = ${cardObjectString} as const;
+`;
+}
+
+/**
+ * Saves a card to the appropriate file structure
+ */
+export async function saveCardToFile(card: GundamitoCard): Promise<void> {
+  try {
+    const filePath = createCardFilePath(card);
+    const directoryPath = dirname(filePath);
+
+    // Ensure directory exists
+    await mkdir(directoryPath, { recursive: true });
+
+    // Generate TypeScript content
+    const content = generateCardTypeScript(card);
+
+    // Write file
+    await writeFile(filePath, content, "utf-8");
+
+    console.log(`💾 Saved card to: ${filePath}`);
+  } catch (error) {
+    console.error(`❌ Error saving card ${card.id}:`, error);
+    throw error;
+  }
+}
+
+/**
+ * Scrapes all cards in a set and saves them to files
+ */
+export async function scrapeAndSaveAllCardsInSet(
+  setCode: string,
+  saveToFiles = true,
+): Promise<GundamitoCard[]> {
+  console.log(`🔍 Scraping and saving all cards in set: ${setCode}`);
+  console.log("=".repeat(50));
+
+  const cards = await scrapeAllCardsInSet(setCode);
+
+  if (saveToFiles && cards.length > 0) {
+    console.log(`\n💾 Saving ${cards.length} cards to files...`);
+
+    for (const card of cards) {
+      try {
+        await saveCardToFile(card);
+      } catch (error) {
+        console.error(`❌ Failed to save card ${card.id}:`, error);
+      }
+    }
+
+    console.log(
+      `✅ Successfully saved ${cards.length} cards to definition files!`,
+    );
+  }
+
+  return cards;
 }
 
 // Example usage
