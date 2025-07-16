@@ -8,11 +8,13 @@ export interface ParsedClause {
   /** The original text of this clause */
   text: string;
   /** The type of clause this represents */
-  type: "effect" | "condition" | "timing" | "modal" | "keyword";
+  type: "effect" | "condition" | "timing" | "modal" | "keyword" | "rule";
   /** The effects contained within this clause */
   effects: ParsedEffect[];
   /** Dependencies on other clauses (referenced by their text or index) */
   dependencies?: string[];
+  /** Timing type for timing clauses (e.g. "deploy", "burst", "when-paired") */
+  timingType?: string;
 }
 
 /**
@@ -66,7 +68,15 @@ export interface GundamEffectTarget {
  */
 export interface GundamTargetFilter {
   /** Type of filter */
-  filter: "owner" | "type" | "cost" | "power" | "name" | "keyword" | "color";
+  filter:
+    | "owner"
+    | "type"
+    | "cost"
+    | "power"
+    | "name"
+    | "keyword"
+    | "color"
+    | "level";
   /** Value to filter by */
   value: string | number | string[];
   /** Comparison operator for numeric filters */

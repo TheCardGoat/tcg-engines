@@ -17,6 +17,21 @@ import type {
 interface GundamEffect {
   type: string;
   target?: GundamEffectTarget;
+  amount?: number | DynamicAmount;
+  attribute?: string;
+  restriction?: string;
+  duration?: string;
+  preventable?: boolean;
+  unit?: string;
+  zone?: string;
+  fromZone?: string;
+  gained?: boolean;
+  keyword?: string;
+  value?: number;
+  searchType?: string;
+  zoneToSearch?: string;
+  searchFilter?: Record<string, any>;
+  [key: string]: any; // For additional parameters
 }
 
 /**
@@ -213,18 +228,18 @@ export function createSearchEffect(
  */
 export function createKeywordEffect(
   keyword: GundamKeyword,
-  target: GundamEffectTarget,
   value?: number,
+  target?: GundamEffectTarget,
   gained?: boolean,
   duration?: string,
 ): KeywordEffect {
   return {
     type: "keyword",
     keyword,
-    target,
-    value,
-    gained,
-    duration,
+    ...(target ? { target } : {}),
+    ...(value !== undefined ? { value } : {}),
+    ...(gained !== undefined ? { gained } : {}),
+    ...(duration ? { duration } : {}),
   };
 }
 
@@ -238,80 +253,175 @@ export function createEffectFromParsed(
 
   switch (type) {
     case "damage": {
-      if (!target || amount === undefined) {
-        throw new Error("Damage effect requires amount and target");
-      }
-      return createDamageEffect(amount, target, parameters.preventable);
+      // Provide default values instead of throwing an error
+      return {
+        type: "damage",
+        target: target || { type: "unit", value: "opponent", filters: [] },
+        amount: amount !== undefined ? amount : 1,
+        preventable:
+          parameters.preventable !== undefined ? parameters.preventable : true,
+      };
     }
 
     case "destroy": {
-      if (!target) {
-        throw new Error("Destroy effect requires target");
-      }
-      return createDestroyEffect(target, parameters.preventable);
+      // Provide default value for target if missing
+      return {
+        type: "destroy",
+        target: target || { type: "unit", value: "opponent", filters: [] },
+        preventable:
+          parameters.preventable !== undefined ? parameters.preventable : true,
+      };
     }
 
     case "draw": {
-      if (amount === undefined) {
-        throw new Error("Draw effect requires amount");
-      }
-      return createDrawEffect(amount, target);
+      // Provide default value for amount if missing
+      return {
+        type: "draw",
+        amount: amount !== undefined ? amount : 1,
+        target: target,
+      };
     }
 
     case "deploy": {
-      if (!target) {
-        throw new Error("Deploy effect requires target");
-      }
-      return createDeployEffect(
-        target,
-        parameters.unitText,
-        parameters.zoneText,
-        parameters.fromZone,
-      );
+      // Provide default value for target if missing
+      return {
+        type: "deploy",
+        target: target || { type: "unit", value: "self", filters: [] },
+        unit: parameters.unit,
+        zone: parameters.zone,
+        fromZone: parameters.fromZone,
+      };
     }
 
     case "power": {
-      if (!target || amount === undefined) {
-        throw new Error("Power effect requires amount and target");
-      }
-      return createPowerEffect(amount, target, parameters.duration);
+      // Provide default values if missing
+      return {
+        type: "power",
+        target: target || { type: "unit", value: "self", filters: [] },
+        amount: amount !== undefined ? amount : 1,
+        duration: parameters.duration,
+      };
     }
 
     case "cost": {
-      if (!target || amount === undefined) {
-        throw new Error("Cost effect requires amount and target");
-      }
-      return createCostEffect(amount, target, parameters.duration);
+      // Provide default values if missing
+      return {
+        type: "cost",
+        target: target || { type: "unit", value: "self", filters: [] },
+        amount: amount !== undefined ? amount : 1,
+        duration: parameters.duration,
+      };
     }
 
     case "search": {
-      if (!target) {
-        throw new Error("Search effect requires target");
-      }
-      return createSearchEffect(
-        target,
-        amount as number,
-        parameters.searchType,
-        parameters.zoneText,
-        parameters.searchFilter,
-      );
+      // Provide default value for target if missing
+      return {
+        type: "search",
+        target: target || { type: "zone", value: "deck", filters: [] },
+        amount: parameters.amount || 1,
+        searchType: parameters.searchType,
+        zoneToSearch: parameters.zoneToSearch,
+        searchFilter: parameters.searchFilter,
+      };
     }
 
     case "keyword": {
-      if (!(target && parameters.keyword)) {
-        throw new Error("Keyword effect requires target and keyword");
+      if (!parameters.keyword) {
+        // Use a default keyword if none specified
+        parameters.keyword = "Repair";
       }
-      return createKeywordEffect(
-        parameters.keyword,
-        target,
-        amount as number,
-        parameters.gained,
-        parameters.duration,
-      );
+
+      return {
+        type: "keyword",
+        keyword: parameters.keyword,
+        value: parameters.value,
+        target: target,
+        gained: parameters.gained,
+        duration: parameters.duration,
+      };
     }
 
-    default:
-      throw new Error(`Unknown effect type: ${type}`);
+    case "move-to-hand": {
+      return {
+        type: "move-to-hand",
+        target: target || { type: "unit", value: "self", filters: [] },
+        ...parameters,
+      };
+    }
+
+    case "rest": {
+      return {
+        type: "rest",
+        target: target || { type: "unit", value: "opponent", filters: [] },
+        ...parameters,
+      };
+    }
+
+    case "set-active": {
+      return {
+        type: "set-active",
+        target: target || { type: "unit", value: "self", filters: [] },
+        ...parameters,
+      };
+    }
+
+    case "heal": {
+      return {
+        type: "heal",
+        amount: amount || 1,
+        target: target || { type: "unit", value: "self", filters: [] },
+        ...parameters,
+      };
+    }
+
+    case "attribute-boost":
+    case "attribute-modification": {
+      return {
+        type: type,
+        target: target || { type: "unit", value: "self", filters: [] },
+        attribute: parameters.attribute || "AP",
+        amount: amount || 1,
+        duration: parameters.duration || "turn",
+        ...parameters,
+      };
+    }
+
+    case "targeting": {
+      return {
+        type: "targeting",
+        amount: parameters.amount || "1",
+        target: target,
+        condition: parameters.condition,
+        ...parameters,
+      };
+    }
+
+    case "restriction": {
+      return {
+        type: "restriction",
+        restriction: parameters.restriction || "cannot-attack",
+        target: target || { type: "unit", value: "self", filters: [] },
+        ...parameters,
+      };
+    }
+
+    case "placeholder": {
+      // This is a special case for effects that should be replaced later
+      return {
+        type: "placeholder",
+        ...parameters,
+      };
+    }
+
+    default: {
+      // Generic fallback
+      return {
+        type,
+        ...(target ? { target } : {}),
+        ...(amount !== undefined ? { amount } : {}),
+        ...parameters,
+      };
+    }
   }
 }
 

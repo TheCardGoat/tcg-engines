@@ -199,6 +199,10 @@ export function createCustomZoneTarget(
  * Parses target text and returns the appropriate target
  */
 export function parseTargetFromText(text: string): GundamEffectTarget | null {
+  if (!text || typeof text !== "string") {
+    return null;
+  }
+
   const normalizedText = text.toLowerCase().trim();
 
   // Check direct pattern matches first
@@ -206,7 +210,90 @@ export function parseTargetFromText(text: string): GundamEffectTarget | null {
     return GUNDAM_TARGET_PATTERNS[normalizedText];
   }
 
-  // Parse complex patterns
+  // Self-targeting patterns
+  if (
+    normalizedText === "this unit" ||
+    normalizedText === "itself" ||
+    normalizedText === "this card"
+  ) {
+    return {
+      type: "unit",
+      value: "self",
+      filters: [{ filter: "type", value: "unit" }],
+      zone: "battlefield",
+    };
+  }
+
+  // Parse unit counts + ownership
+  const quantityMatch = normalizedText.match(
+    /^(up to )?(\d+|a|an|all)\s+(enemy|friendly|your|opponent'?s?)?(.+?)$/i,
+  );
+  if (quantityMatch) {
+    const upTo = !!quantityMatch[1];
+    const quantity = quantityMatch[2]?.toLowerCase();
+    const ownership = quantityMatch[3]?.toLowerCase();
+    const targetType = quantityMatch[4]?.trim();
+
+    // Determine the quantity value
+    let value: number | "all";
+    if (quantity === "all") {
+      value = "all";
+    } else if (quantity === "a" || quantity === "an") {
+      value = 1;
+    } else {
+      value = Number.parseInt(quantity, 10) || 1;
+    }
+
+    // Determine ownership
+    let owner: "self" | "opponent" | undefined;
+    if (ownership?.includes("enemy") || ownership?.includes("opponent")) {
+      owner = "opponent";
+    } else if (ownership?.includes("friendly") || ownership?.includes("your")) {
+      owner = "self";
+    }
+
+    // Create the target based on type
+    if (targetType?.includes("unit")) {
+      return createCustomUnitTarget(
+        owner,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        value,
+      );
+    }
+    if (targetType?.includes("player")) {
+      return createCustomPlayerTarget(owner);
+    }
+    if (targetType?.includes("card")) {
+      return createCustomZoneTarget("hand", owner);
+    }
+  }
+
+  // Fallback: try to extract target patterns from within the text
+  // This handles cases like "During your turn, all your Units" where the target is embedded
+  const embeddedTargetPatterns = [
+    /\ball\s+(your|friendly)\s+units?\b/i,
+    /\ball\s+(enemy|opponent'?s?)\s+units?\b/i,
+    /\ball\s+units?\b/i,
+    /\btarget\s+(enemy|friendly|your|opponent'?s?)\s+units?\b/i,
+    /\btarget\s+units?\b/i,
+    /\b(your|friendly)\s+units?\b/i,
+    /\b(enemy|opponent'?s?)\s+units?\b/i,
+    /\bunits?\b/i,
+  ];
+
+  for (const pattern of embeddedTargetPatterns) {
+    const match = normalizedText.match(pattern);
+    if (match && match[0] !== normalizedText) {
+      // Recursively parse the matched target text, but only if it's different from input
+      const targetResult = parseTargetFromText(match[0]);
+      if (targetResult) {
+        return targetResult;
+      }
+    }
+  }
 
   // Handle cost-based targeting
   const costMatch = normalizedText.match(
@@ -267,169 +354,80 @@ export function parseTargetFromText(text: string): GundamEffectTarget | null {
     });
   }
 
+  // Handle level-based targeting
+  const levelMatch = normalizedText.match(
+    /(.+)\s+(?:that is|that are)\s+(?:lv\.?|level)\s*(\d+)\s+or\s+(lower|higher)/i,
+  );
+  if (levelMatch) {
+    const baseTarget = levelMatch[1]?.trim();
+    const levelValue = Number.parseInt(levelMatch[2] || "0", 10);
+    const comparison = levelMatch[3]?.toLowerCase();
+
+    const operator = comparison === "lower" ? "lte" : "gte";
+
+    // Create a custom filter for level
+    const levelFilter: GundamTargetFilter = {
+      filter: "level",
+      value: levelValue,
+      operator,
+    };
+
+    const filters: GundamTargetFilter[] = [
+      { filter: "type", value: "unit" },
+      levelFilter,
+    ];
+
+    if (baseTarget?.includes("enemy") || baseTarget?.includes("opponent")) {
+      filters.push({ filter: "owner", value: "opponent" });
+    } else if (
+      baseTarget?.includes("friendly") ||
+      baseTarget?.includes("your")
+    ) {
+      filters.push({ filter: "owner", value: "self" });
+    }
+
+    return {
+      type: "unit",
+      value: 1,
+      filters,
+      zone: "battlefield",
+    };
+  }
+
   // Handle keyword-based targeting
   const keywordMatch = normalizedText.match(
-    /(.+)\s+(?:with|that\s+(?:has|have))\s+<([^>]+)>/i,
+    /(.+)\s+(?:with|that\s+(?:has|have))\s+(?:keyword|ability)\s+([a-zA-Z]+)/i,
   );
   if (keywordMatch) {
     const baseTarget = keywordMatch[1]?.trim();
     const keyword = keywordMatch[2]?.trim();
 
-    if (baseTarget?.includes("enemy") || baseTarget?.includes("opponent")) {
-      return createCustomUnitTarget("opponent", undefined, undefined, [
-        keyword,
-      ]);
-    }
-    if (baseTarget?.includes("friendly") || baseTarget?.includes("your")) {
-      return createCustomUnitTarget("self", undefined, undefined, [keyword]);
-    }
-    return createCustomUnitTarget(undefined, undefined, undefined, [keyword]);
-  }
-
-  // Handle color-based targeting
-  const colorMatch = normalizedText.match(
-    /(.+)\s+(red|blue|green|yellow|white|black)\s+unit/i,
-  );
-  if (colorMatch) {
-    const baseTarget = colorMatch[1]?.trim();
-    const color = colorMatch[2]?.toLowerCase();
+    const keywords = [keyword];
 
     if (baseTarget?.includes("enemy") || baseTarget?.includes("opponent")) {
-      return createCustomUnitTarget(
-        "opponent",
-        undefined,
-        undefined,
-        undefined,
-        color,
-      );
+      return createCustomUnitTarget("opponent", undefined, undefined, keywords);
     }
     if (baseTarget?.includes("friendly") || baseTarget?.includes("your")) {
-      return createCustomUnitTarget(
-        "self",
-        undefined,
-        undefined,
-        undefined,
-        color,
-      );
+      return createCustomUnitTarget("self", undefined, undefined, keywords);
     }
-    return createCustomUnitTarget(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      color,
-    );
+    return createCustomUnitTarget(undefined, undefined, undefined, keywords);
   }
 
-  // Handle quantity-based targeting
-  if (normalizedText.includes("all")) {
-    if (
-      normalizedText.includes("enemy") ||
-      normalizedText.includes("opponent")
-    ) {
-      return createCustomUnitTarget(
-        "opponent",
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        "all",
-      );
-    }
-    if (
-      normalizedText.includes("friendly") ||
-      normalizedText.includes("your")
-    ) {
-      return createCustomUnitTarget(
-        "self",
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        "all",
-      );
-    }
-    if (normalizedText.includes("unit")) {
-      return createCustomUnitTarget(
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        "all",
-      );
-    }
+  // Fallback to a simple unit target
+  if (normalizedText.includes("enemy") || normalizedText.includes("opponent")) {
+    return createCustomUnitTarget("opponent");
   }
-
-  // Handle basic unit targeting
-  if (normalizedText.includes("unit")) {
-    if (
-      normalizedText.includes("enemy") ||
-      normalizedText.includes("opponent")
-    ) {
-      return createCustomUnitTarget("opponent");
-    }
-    if (
-      normalizedText.includes("friendly") ||
-      normalizedText.includes("your")
-    ) {
-      return createCustomUnitTarget("self");
-    }
+  if (
+    normalizedText.includes("friendly") ||
+    normalizedText.includes("your") ||
+    normalizedText.includes("allied")
+  ) {
+    return createCustomUnitTarget("self");
+  }
+  if (normalizedText.includes("unit") || normalizedText.includes("card")) {
     return createCustomUnitTarget();
   }
 
-  // Handle player targeting
-  if (normalizedText.includes("player")) {
-    if (
-      normalizedText.includes("opponent") ||
-      normalizedText.includes("enemy")
-    ) {
-      return createCustomPlayerTarget("opponent");
-    }
-    if (normalizedText.includes("each") || normalizedText.includes("all")) {
-      return createCustomPlayerTarget("all");
-    }
-    return createCustomPlayerTarget("self");
-  }
-
-  // Handle zone targeting
-  if (normalizedText.includes("hand")) {
-    const owner = normalizedText.includes("your")
-      ? "self"
-      : normalizedText.includes("opponent")
-        ? "opponent"
-        : undefined;
-    return createCustomZoneTarget("hand", owner);
-  }
-
-  if (normalizedText.includes("deck")) {
-    const owner = normalizedText.includes("your")
-      ? "self"
-      : normalizedText.includes("opponent")
-        ? "opponent"
-        : undefined;
-    return createCustomZoneTarget("deck", owner);
-  }
-
-  if (normalizedText.includes("discard")) {
-    const owner = normalizedText.includes("your")
-      ? "self"
-      : normalizedText.includes("opponent")
-        ? "opponent"
-        : undefined;
-    return createCustomZoneTarget("discard", owner);
-  }
-
-  if (normalizedText.includes("g zone") || normalizedText.includes("g-zone")) {
-    const owner = normalizedText.includes("your")
-      ? "self"
-      : normalizedText.includes("opponent")
-        ? "opponent"
-        : undefined;
-    return createCustomZoneTarget("g_zone", owner);
-  }
-
-  // Return null if no pattern matches
   return null;
 }
 
