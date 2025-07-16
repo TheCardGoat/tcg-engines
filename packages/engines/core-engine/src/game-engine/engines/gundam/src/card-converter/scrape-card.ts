@@ -75,7 +75,9 @@ async function main() {
         );
 
         for (const [type, count] of Object.entries(cardsByType)) {
-          console.log(`- ${type}: ${count} card${count > 1 ? "s" : ""}`);
+          console.log(
+            `- ${type}: ${count} card${Number(count) > 1 ? "s" : ""}`,
+          );
         }
 
         if (shouldSave) {

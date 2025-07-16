@@ -628,8 +628,9 @@ function createCardFilePath(card: GundamitoCard): string {
   }
 
   // Create the filename with three-digit number and kebab-case name
-  const numberMatch = card.id.match(/^(\d{3})-/);
-  const threeDigitNumber = numberMatch?.[1] || "001";
+  const numberMatch = card.id.match(/^[A-Z0-9]+-(\d+)$/);
+  const cardNumber = numberMatch?.[1] || "1";
+  const threeDigitNumber = cardNumber.padStart(3, "0");
   const kebabCaseName = card.name
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, "")
@@ -660,14 +661,48 @@ function generateCardTypeScript(card: GundamitoCard): string {
   // Generate camelCase variable name from card name only (no number prefix)
   const variableName = toCamelCase(card.name);
 
-  // Convert to proper TypeScript object literal syntax
-  const cardObjectString = JSON.stringify(card, null, 2);
+  // Extract abilities if they exist
+  const hasAbilities =
+    "abilities" in card &&
+    Array.isArray(card.abilities) &&
+    card.abilities.length > 0;
 
-  // TODO: Idea for the feature, we may have the abilities created as a separate object, referencing them in the card object.
+  let abilitiesSection = "";
+  const cardObjectWithoutAbilities = { ...card };
+
+  if (hasAbilities) {
+    // Create abilities constant
+    const abilitiesString = JSON.stringify(card.abilities, null, 2)
+      .replace(/"([^"]+)":/g, "$1:") // Remove quotes from object keys
+      .replace(/"/g, '"'); // Keep quotes for string values
+
+    abilitiesSection = `const abilities: ${interfaceName}["abilities"] = ${abilitiesString};
+
+`;
+
+    // Remove abilities from card object and add reference
+    delete cardObjectWithoutAbilities.abilities;
+  }
+
+  // Convert card object to clean TypeScript syntax
+  let cardObjectString = JSON.stringify(
+    cardObjectWithoutAbilities,
+    null,
+    2,
+  ).replace(/"([^"]+)":/g, "$1:"); // Remove quotes from object keys
+
+  // Add abilities reference if needed
+  if (hasAbilities) {
+    // Insert abilities reference before the closing brace, ensuring proper comma
+    cardObjectString = cardObjectString.replace(
+      /(\n)(\s*)}$/,
+      "$1$2abilities: abilities,$1$2}",
+    );
+  }
 
   return `import type { ${interfaceName} } from "../../cardTypes";
 
-export const ${variableName}: ${interfaceName} = ${cardObjectString} as const;
+${abilitiesSection}export const ${variableName}: ${interfaceName} = ${cardObjectString};
 `;
 }
 
