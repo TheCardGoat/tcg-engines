@@ -36,6 +36,7 @@ interface ScrapedCardData {
   sourceTitle: string;
   productInfo: string;
   imageUrl: string;
+  imgAlt: string;
 }
 
 /**
@@ -142,9 +143,12 @@ function parseCardHTML(html: string): ScrapedCardData | null {
     const cardNameMatch = html.match(/<h1 class="cardName">([^<]+)<\/h1>/);
     const cardName = cardNameMatch?.[1]?.trim() || "";
 
-    // Extract image URL
-    const imageMatch = html.match(/<img src=\s*"([^"]+)"\s*alt="[^"]*">/);
-    const imageUrl = imageMatch?.[1]?.trim() || "";
+    // Extract image URL and alt from cardImage div
+    const cardImageMatch = html.match(
+      /<div class="cardImage">\s*<img src=\s*"([^"]+)"\s*alt="([^"]*)"[^>]*>/,
+    );
+    const imageUrl = cardImageMatch?.[1]?.trim() || "";
+    const imgAlt = cardImageMatch?.[2]?.trim() || "";
 
     // Extract all data fields using a more comprehensive approach
     const dataFields: Record<string, string> = {};
@@ -184,6 +188,7 @@ function parseCardHTML(html: string): ScrapedCardData | null {
       sourceTitle: dataFields["Source Title"] || "",
       productInfo: dataFields["Where to get it"] || "",
       imageUrl,
+      imgAlt,
     };
   } catch (error) {
     console.error("Error parsing HTML:", error);
@@ -214,6 +219,8 @@ function convertToGundamitoCard(data: ScrapedCardData): GundamitoCard | null {
       color,
       set,
       rarity,
+      imageUrl: data.imageUrl,
+      imgAlt: data.imgAlt,
     };
 
     // Handle different card types
@@ -389,6 +396,8 @@ function extractCardSet(cardNumber: string): GundamitoCardSet {
       return "GD01";
     case "GD02":
       return "GD02";
+    case "EXBP":
+      return "EXBP";
     default:
       console.warn(`Unknown set: ${setCode}, defaulting to ST01`);
       return "ST01";
@@ -696,7 +705,7 @@ function generateCardTypeScript(card: GundamitoCard): string {
     // Insert abilities reference before the closing brace, ensuring proper comma
     cardObjectString = cardObjectString.replace(
       /(\n)(\s*)}$/,
-      "$1$2abilities: abilities,$1$2}",
+      ",$1$2abilities: abilities$1$2}",
     );
   }
 

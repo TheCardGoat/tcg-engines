@@ -27,6 +27,8 @@ export const vesalius: GundamitoBaseCard = {
   color: "red",
   set: "ST04",
   rarity: "common",
+  imageUrl: "../images/cards/card/ST04-016.webp?250711",
+  imgAlt: "Vesalius",
   type: "base",
   zones: ["space"],
   traits: ["warship"],

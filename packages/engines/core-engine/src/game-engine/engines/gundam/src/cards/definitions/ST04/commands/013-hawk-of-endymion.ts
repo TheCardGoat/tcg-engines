@@ -52,6 +52,8 @@ export const hawkOfEndymion: GundamitoCommandCard = {
   color: "white",
   set: "ST04",
   rarity: "common",
+  imageUrl: "../images/cards/card/ST04-013.webp?250711",
+  imgAlt: "Hawk of Endymion",
   type: "command",
   text: "【Main】/【Action】Choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand.",
   abilities: abilities,

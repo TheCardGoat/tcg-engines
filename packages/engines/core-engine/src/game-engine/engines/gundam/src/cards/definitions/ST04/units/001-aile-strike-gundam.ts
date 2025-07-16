@@ -49,6 +49,8 @@ export const aileStrikeGundam: GundamitoUnitCard = {
   color: "white",
   set: "ST04",
   rarity: "legendary",
+  imageUrl: "../images/cards/card/ST04-001.webp?250711",
+  imgAlt: "Aile Strike Gundam",
   type: "unit",
   zones: ["space", "earth"],
   traits: ["earth federation"],

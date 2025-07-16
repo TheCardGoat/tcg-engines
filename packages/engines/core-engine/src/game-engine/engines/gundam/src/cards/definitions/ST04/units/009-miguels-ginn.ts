@@ -27,6 +27,8 @@ export const miguelsGinn: GundamitoUnitCard = {
   color: "red",
   set: "ST04",
   rarity: "common",
+  imageUrl: "../images/cards/card/ST04-009.webp?250711",
+  imgAlt: "Miguel's Ginn",
   type: "unit",
   zones: ["space", "earth"],
   traits: [],

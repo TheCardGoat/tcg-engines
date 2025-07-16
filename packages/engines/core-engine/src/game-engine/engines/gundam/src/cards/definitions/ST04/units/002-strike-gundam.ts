@@ -32,6 +32,8 @@ export const strikeGundam: GundamitoUnitCard = {
   color: "white",
   set: "ST04",
   rarity: "common",
+  imageUrl: "../images/cards/card/ST04-002.webp?250711",
+  imgAlt: "Strike Gundam",
   type: "unit",
   zones: ["space", "earth"],
   traits: ["earth federation"],

@@ -11,6 +11,8 @@ export const theMagicBulletOfDusk: GundamitoCommandCard = {
   color: "red",
   set: "ST04",
   rarity: "common",
+  imageUrl: "../images/cards/card/ST04-014.webp?250711",
+  imgAlt: "The Magic Bullet of Dusk",
   type: "command",
   abilities: [],
   text: "",

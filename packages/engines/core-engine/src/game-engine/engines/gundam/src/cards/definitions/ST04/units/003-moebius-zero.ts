@@ -11,6 +11,8 @@ export const moebiusZero: GundamitoUnitCard = {
   color: "white",
   set: "ST04",
   rarity: "common",
+  imageUrl: "../images/cards/card/ST04-003.webp?250711",
+  imgAlt: "Moebius Zero",
   type: "unit",
   zones: ["space"],
   traits: ["earth federation"],

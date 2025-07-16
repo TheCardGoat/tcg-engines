@@ -39,6 +39,8 @@ export const kiraYamato: GundamitoPilotCard = {
   color: "white",
   set: "ST04",
   rarity: "common",
+  imageUrl: "../images/cards/card/ST04-010.webp?250711",
+  imgAlt: "Kira Yamato",
   type: "pilot",
   traits: ["earth federation"],
   apModifier: 2,

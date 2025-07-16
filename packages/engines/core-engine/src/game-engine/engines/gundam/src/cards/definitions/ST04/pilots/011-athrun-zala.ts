@@ -39,6 +39,8 @@ export const athrunZala: GundamitoPilotCard = {
   color: "red",
   set: "ST04",
   rarity: "common",
+  imageUrl: "../images/cards/card/ST04-011.webp?250711",
+  imgAlt: "Athrun Zala",
   type: "pilot",
   traits: [],
   apModifier: 1,

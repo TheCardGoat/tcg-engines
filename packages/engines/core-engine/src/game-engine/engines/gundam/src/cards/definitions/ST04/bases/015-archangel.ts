@@ -27,6 +27,8 @@ export const archangel: GundamitoBaseCard = {
   color: "white",
   set: "ST04",
   rarity: "common",
+  imageUrl: "../images/cards/card/ST04-015.webp?250711",
+  imgAlt: "Archangel",
   type: "base",
   zones: ["space", "earth"],
   traits: ["earth federation", "warship"],

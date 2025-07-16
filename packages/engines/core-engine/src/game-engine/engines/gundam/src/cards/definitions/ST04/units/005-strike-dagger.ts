@@ -11,6 +11,8 @@ export const strikeDagger: GundamitoUnitCard = {
   color: "white",
   set: "ST04",
   rarity: "common",
+  imageUrl: "../images/cards/card/ST04-005.webp?250711",
+  imgAlt: "Strike Dagger",
   type: "unit",
   zones: ["space", "earth"],
   traits: ["earth federation"],

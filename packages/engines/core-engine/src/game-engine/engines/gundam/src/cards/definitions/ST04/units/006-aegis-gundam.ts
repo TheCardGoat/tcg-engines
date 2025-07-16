@@ -62,6 +62,8 @@ export const aegisGundam: GundamitoUnitCard = {
   color: "red",
   set: "ST04",
   rarity: "legendary",
+  imageUrl: "../images/cards/card/ST04-006.webp?250711",
+  imgAlt: "Aegis Gundam",
   type: "unit",
   zones: ["space", "earth"],
   traits: [],

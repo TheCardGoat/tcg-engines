@@ -25,6 +25,8 @@ export const aegisGundamMaMode: GundamitoUnitCard = {
   color: "red",
   set: "ST04",
   rarity: "common",
+  imageUrl: "../images/cards/card/ST04-007.webp?250711",
+  imgAlt: "Aegis Gundam (MA Mode)",
   type: "unit",
   zones: ["space", "earth"],
   traits: [],
