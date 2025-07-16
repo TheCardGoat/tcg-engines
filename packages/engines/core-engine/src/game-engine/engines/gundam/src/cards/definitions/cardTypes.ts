@@ -24,6 +24,7 @@ interface GundamitoRawCard {
   name: string;
   color: CardColor;
   abilities?: Array<Ability>; // tirar
+  text?: string;
   set: GundamitoCardSet;
   rarity: CardRarity;
 }

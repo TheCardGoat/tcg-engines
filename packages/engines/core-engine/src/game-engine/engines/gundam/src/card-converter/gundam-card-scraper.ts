@@ -11,7 +11,7 @@ import type {
   GundamitoUnitCard,
 } from "../cards/definitions/cardTypes";
 
-interface ScrapedCardData {
+export interface ScrapedCardData {
   cardNumber: string;
   rarity: string;
   blockIcon: string;
@@ -34,7 +34,7 @@ interface ScrapedCardData {
 /**
  * Scrapes card data from the Gundam Card Game website
  */
-async function scrapeCardData(
+export async function scrapeCardData(
   cardNumber: string,
 ): Promise<ScrapedCardData | null> {
   const url = `https://www.gundam-gcg.com/en/cards/detail.php?detailSearch=${cardNumber}`;
@@ -94,11 +94,22 @@ function parseCardHTML(html: string): ScrapedCardData | null {
       dataFields[key] = value;
     }
 
-    // Extract effect text (overview section)
-    const effectMatch = html.match(
-      /<div class="cardDataRow overview">\s*<div class="dataTxt isRegular">\s*([^<]+)<br>/,
-    );
-    const effectText = effectMatch?.[1]?.trim() || "";
+    // Extract effect text (overview section) - Improved to capture more text content
+    let effectText = "";
+
+    // Try to extract from the overview section
+    const overviewRegex =
+      /<div class="cardDataRow overview">\s*<div class="dataTxt isRegular">([\s\S]*?)<\/div>\s*<\/div>/;
+    const overviewMatch = html.match(overviewRegex);
+
+    if (overviewMatch && overviewMatch[1]) {
+      // Remove HTML tags and normalize spacing
+      effectText = overviewMatch[1]
+        .replace(/<br\s*\/?>/gi, "\n") // Convert <br> to newlines
+        .replace(/<[^>]*>/g, "") // Remove remaining HTML tags
+        .replace(/&nbsp;/g, " ") // Replace &nbsp; with spaces
+        .trim();
+    }
 
     return {
       cardNumber,
@@ -128,7 +139,9 @@ function parseCardHTML(html: string): ScrapedCardData | null {
 /**
  * Converts scraped data to GundamitoCard
  */
-function convertToGundamitoCard(data: ScrapedCardData): GundamitoCard | null {
+export function convertToGundamitoCard(
+  data: ScrapedCardData,
+): GundamitoCard | null {
   try {
     // Parse basic info
     const cardType = convertCardType(data.type);
