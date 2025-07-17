@@ -43,7 +43,6 @@ export const deepDevotion: GundamitoCommandCard = {
   set: "GD01",
   rarity: "rare",
   imageUrl: "../images/cards/card/GD01-101.webp?250711",
-  imgAlt: "Deep Devotion",
   type: "command",
   text: "【Main】/【Action】Choose 1 friendly Link Unit. It recovers 3 HP.",
   abilities: abilities,
