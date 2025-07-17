@@ -74,8 +74,15 @@ The scraper extracts the following information from each card:
 - HP Modifier
 - Traits
 
+### Command-Specific Information
+- Effect Text
+- Pilot Properties (for command cards that can function as pilots):
+  - Pilot Name (extracted from 【Pilot】[Name] pattern)
+  - AP Modifier
+  - HP Modifier
+  - Traits
+
 ### Other Information
-- Effect Text (parsed but not converted to abilities yet)
 - Source Title
 - Product Information
 - Card Image URL
@@ -85,6 +92,7 @@ The scraper extracts the following information from each card:
 The scraper converts the scraped data into a `GundamitoCard` object that matches the engine's type definitions:
 
 ```typescript
+// Unit card example
 {
   "id": "ST01-006",
   "implemented": false,
@@ -104,6 +112,28 @@ The scraper converts the scraped data into a `GundamitoCard` object that matches
   "hp": 4,
   "abilities": []
 }
+
+// Command card with pilot properties example
+{
+  "id": "GD01-101",
+  "implemented": false,
+  "missingTestCase": true,
+  "cost": 1,
+  "level": 2,
+  "number": 101,
+  "name": "Deep Devotion",
+  "color": "blue",
+  "set": "GD01",
+  "rarity": "rare",
+  "type": "command",
+  "subType": "pilot",
+  "pilotName": "Lucrezia Noin",
+  "traits": ["oz"],
+  "apModifier": 1,
+  "hpModifier": 0,
+  "text": "【Main】/【Action】Choose 1 friendly Link Unit. It recovers 3 HP.\n【Pilot】[Lucrezia Noin]",
+  "abilities": []
+}
 ```
 
 ## Limitations
@@ -111,6 +141,66 @@ The scraper converts the scraped data into a `GundamitoCard` object that matches
 - **Abilities**: The scraper extracts effect text but doesn't parse it into structured abilities yet. The `abilities` array is left empty for manual implementation.
 - **Error Handling**: Network errors or parsing failures are logged but may not be comprehensive.
 - **Rate Limiting**: No built-in rate limiting - be respectful when scraping multiple cards.
+
+## Trait Discovery & Management
+
+The scraper includes comprehensive trait discovery to help identify and manage new traits:
+
+### Automatic Discovery Features
+
+1. **Individual Card Warnings**: Unknown traits are logged when scraping single cards
+2. **Set-Level Summary**: All discovered traits are listed when scraping entire sets  
+3. **Usage Analysis**: The `analyzeTraitUsage()` function provides detailed trait statistics
+
+### Unknown Trait Handling
+
+When the scraper encounters unknown traits, it:
+- ✅ **Logs warnings** with clear instructions for resolution
+- ✅ **Continues processing** without crashing (graceful degradation)
+- ✅ **Tracks all discovered traits** for batch analysis
+- ❌ **Does not add unknown traits** to card definitions (type safety)
+
+### Adding New Traits
+
+To add support for new traits:
+
+1. **Update Type Definition** (`shared-types.ts`):
+   ```typescript
+   export type Traits =
+     | "existing traits..."
+     | "new-trait-name";
+   ```
+
+2. **Update Trait Mappings** (`gundam-card-scraper.ts`):
+   ```typescript
+   const traitMappings: Record<string, Traits> = {
+     // existing mappings...
+     "new-pattern": "new-trait-name",
+   };
+   ```
+
+### Examples
+
+**Unknown Trait Warning:**
+```
+🔍 Unknown traits found in "(PLANT, Coordinator)": [plant, coordinator]
+   Consider adding these to the Traits type and traitMappings
+```
+
+**Set Discovery Summary:**
+```
+🔍 Traits discovered in GD01: [academy, civilian, oz, zeon]
+```
+
+**Usage Analysis:**
+```
+📊 Trait Usage Analysis
+========================================
+• oz: 12 cards
+• academy: 8 cards  
+• zeon: 3 cards
+  Examples: GD01-045 (Zaku II), GD01-067 (Gouf), GD01-089 (Gelgoog)
+```
 
 ## Future Enhancements
 

@@ -36,7 +36,6 @@ interface ScrapedCardData {
   sourceTitle: string;
   productInfo: string;
   imageUrl: string;
-  imgAlt: string;
 }
 
 /**
@@ -143,12 +142,11 @@ function parseCardHTML(html: string): ScrapedCardData | null {
     const cardNameMatch = html.match(/<h1 class="cardName">([^<]+)<\/h1>/);
     const cardName = cardNameMatch?.[1]?.trim() || "";
 
-    // Extract image URL and alt from cardImage div
+    // Extract image URL from cardImage div
     const cardImageMatch = html.match(
-      /<div class="cardImage">\s*<img src=\s*"([^"]+)"\s*alt="([^"]*)"[^>]*>/,
+      /<div class="cardImage">\s*<img src=\s*"([^"]+)"[^>]*>/,
     );
     const imageUrl = cardImageMatch?.[1]?.trim() || "";
-    const imgAlt = cardImageMatch?.[2]?.trim() || "";
 
     // Extract all data fields using a more comprehensive approach
     const dataFields: Record<string, string> = {};
@@ -164,11 +162,11 @@ function parseCardHTML(html: string): ScrapedCardData | null {
       dataFields[key] = value;
     }
 
-    // Extract effect text (overview section)
+    // Extract effect text (overview section) - capture everything including pilot info
     const effectMatch = html.match(
-      /<div class="cardDataRow overview">\s*<div class="dataTxt isRegular">\s*([^<]+)<br>/,
+      /<div class="cardDataRow overview">\s*<div class="dataTxt isRegular">\s*(.*?)\s*<\/div>/s,
     );
-    const effectText = effectMatch?.[1]?.trim() || "";
+    const effectText = effectMatch?.[1]?.trim().replace(/<br>/g, "\n") || "";
 
     return {
       cardNumber,
@@ -188,7 +186,6 @@ function parseCardHTML(html: string): ScrapedCardData | null {
       sourceTitle: dataFields["Source Title"] || "",
       productInfo: dataFields["Where to get it"] || "",
       imageUrl,
-      imgAlt,
     };
   } catch (error) {
     console.error("Error parsing HTML:", error);
@@ -220,7 +217,6 @@ function convertToGundamitoCard(data: ScrapedCardData): GundamitoCard | null {
       set,
       rarity,
       imageUrl: data.imageUrl,
-      imgAlt: data.imgAlt,
     };
 
     // Handle different card types
@@ -264,6 +260,31 @@ function convertToGundamitoCard(data: ScrapedCardData): GundamitoCard | null {
       }
 
       case "command": {
+        // Check if this command has pilot properties
+        const pilotInfo = parsePilotInfo(data.effectText);
+        const traits = parseTraits(data.trait);
+
+        if (pilotInfo) {
+          const apModifier = data.ap.startsWith("+")
+            ? Number.parseInt(data.ap.replace("+", ""), 10) || 0
+            : Number.parseInt(data.ap, 10) || 0;
+          const hpModifier = data.hp.startsWith("+")
+            ? Number.parseInt(data.hp.replace("+", ""), 10) || 0
+            : Number.parseInt(data.hp, 10) || 0;
+
+          return {
+            ...baseCard,
+            type: "command",
+            subType: "pilot",
+            pilotName: pilotInfo,
+            traits,
+            apModifier,
+            hpModifier,
+            abilities: parseAbilitiesFromText(data.effectText),
+            text: data.effectText,
+          } as GundamitoCommandCard;
+        }
+
         return {
           ...baseCard,
           type: "command",
@@ -475,15 +496,18 @@ function parseZones(zoneText: string): CardZones[] {
 }
 
 function parseTraits(traitText: string): Traits[] {
-  if (!traitText) return [];
+  if (!traitText || traitText.trim() === "" || traitText.trim() === "-") {
+    return [];
+  }
 
   // Remove parentheses and split by common delimiters
   const cleanTraitText = traitText.replace(/[()]/g, "").toLowerCase();
   const traitParts = cleanTraitText
     .split(/[,\s]+/)
-    .filter((part) => part.length > 0);
+    .filter((part) => part.length > 0 && part !== "-");
 
   const traits: Traits[] = [];
+  const unknownTraits: string[] = [];
 
   // Map common trait patterns
   const traitMappings: Record<string, Traits> = {
@@ -491,6 +515,7 @@ function parseTraits(traitText: string): Traits[] {
     earth: "earth federation",
     federation: "earth federation",
     zeon: "zeon",
+    oz: "oz",
     newtype: "newtype",
     civilian: "civilian",
     stronghold: "stronghold",
@@ -498,13 +523,32 @@ function parseTraits(traitText: string): Traits[] {
   };
 
   for (const part of traitParts) {
+    let matched = false;
+
     for (const [key, trait] of Object.entries(traitMappings)) {
       if (part.includes(key)) {
         if (!traits.includes(trait)) {
           traits.push(trait);
         }
+        matched = true;
+        break; // Found a match, no need to check other mappings
       }
     }
+
+    // Track unknown traits for logging (exclude empty/null indicators)
+    if (!matched && part.trim().length > 0 && part !== "-") {
+      unknownTraits.push(part);
+    }
+  }
+
+  // Log unknown traits to help with discovery
+  if (unknownTraits.length > 0) {
+    console.warn(
+      `🔍 Unknown traits found in "${traitText}": [${unknownTraits.join(", ")}]`,
+    );
+    console.warn(
+      "   Consider adding these to the Traits type and traitMappings",
+    );
   }
 
   return traits;
@@ -519,6 +563,12 @@ function parseLinkRequirement(linkText: string): string[] {
     .split(",")
     .map((link) => link.trim().toLowerCase())
     .filter((link) => link.length > 0);
+}
+
+function parsePilotInfo(effectText: string): string | null {
+  // Look for 【Pilot】[Name] pattern in the effect text
+  const pilotMatch = effectText.match(/【Pilot】\[([^\]]+)\]/);
+  return pilotMatch ? pilotMatch[1].trim() : null;
 }
 
 /**
@@ -563,6 +613,7 @@ export async function scrapeAllCardsInSet(
   console.log("=".repeat(50));
 
   const cards: GundamitoCard[] = [];
+  const discoveredTraits = new Set<string>();
   let currentNumber = 1;
   let consecutiveFailures = 0;
   const maxConsecutiveFailures = 3; // Stop after 3 consecutive failures
@@ -577,6 +628,11 @@ export async function scrapeAllCardsInSet(
         cards.push(card);
         consecutiveFailures = 0; // Reset failure counter
         console.log(`✅ Successfully scraped: ${cardNumber} - ${card.name}`);
+
+        // Collect traits for discovery report
+        if ("traits" in card && Array.isArray(card.traits)) {
+          card.traits.forEach((trait) => discoveredTraits.add(trait));
+        }
       } else {
         consecutiveFailures++;
         console.log(
@@ -601,6 +657,12 @@ export async function scrapeAllCardsInSet(
   console.log(
     `📋 Cards found: ${cards.map((c) => `${c.name} (${c.type})`).join(", ")}`,
   );
+
+  if (discoveredTraits.size > 0) {
+    console.log(
+      `\n🔍 Traits discovered in ${setCode}: [${Array.from(discoveredTraits).sort().join(", ")}]`,
+    );
+  }
 
   return cards;
 }
@@ -768,6 +830,45 @@ export async function scrapeAndSaveAllCardsInSet(
   }
 
   return cards;
+}
+
+/**
+ * Utility function to analyze trait usage across scraped cards
+ * Helps identify patterns and missing trait mappings
+ */
+export function analyzeTraitUsage(cards: GundamitoCard[]): void {
+  const traitCount = new Map<string, number>();
+  const cardsByTrait = new Map<string, string[]>();
+
+  cards.forEach((card) => {
+    if ("traits" in card && Array.isArray(card.traits)) {
+      card.traits.forEach((trait) => {
+        traitCount.set(trait, (traitCount.get(trait) || 0) + 1);
+
+        if (!cardsByTrait.has(trait)) {
+          cardsByTrait.set(trait, []);
+        }
+        cardsByTrait.get(trait)!.push(`${card.id} (${card.name})`);
+      });
+    }
+  });
+
+  if (traitCount.size > 0) {
+    console.log("\n📊 Trait Usage Analysis");
+    console.log("=".repeat(40));
+
+    Array.from(traitCount.entries())
+      .sort(([, a], [, b]) => b - a)
+      .forEach(([trait, count]) => {
+        console.log(`• ${trait}: ${count} card${count > 1 ? "s" : ""}`);
+        if (count <= 3) {
+          // Show examples for rare traits
+          console.log(
+            `  Examples: ${cardsByTrait.get(trait)!.slice(0, 3).join(", ")}`,
+          );
+        }
+      });
+  }
 }
 
 // Example usage

@@ -54,7 +54,8 @@ export type Traits =
   | "zeon"
   | "neo zeon"
   | "maganac corps"
-  | "warship";
+  | "warship"
+  | "oz";
 
 /**
  * Static abilities
