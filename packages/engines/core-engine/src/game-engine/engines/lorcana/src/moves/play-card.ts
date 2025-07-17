@@ -101,28 +101,37 @@ export const playCardMove: LorcanaMove = (
     }
 
     // Check if player has enough ink to pay the cost
-    const inkCards = coreOps.getCardsInZone("inkwell", playerID);
-    // Note: We'll need to implement proper card state tracking for exerted status
-    // For now, assume all inkwell cards are ready
-
-    if (inkCards.length < totalCost) {
+    const availableInk = gameOps?.getAvailableInk(playerID) || 0;
+    if (availableInk < totalCost) {
       logger.error(
-        `Player ${playerID} does not have enough ink to play card. Required: ${totalCost}, Available: ${inkCards.length}`,
+        `Player ${playerID} does not have enough ink to play card. Required: ${totalCost}, Available: ${availableInk}`,
       );
       return createInvalidMove(
         "INSUFFICIENT_INK",
         "moves.playCard.errors.insufficientInk",
         {
           required: totalCost,
-          available: inkCards.length,
+          available: availableInk,
           playerId: playerID,
         },
       );
     }
 
-    // Note: Exerting ink cards would need to be implemented through proper card state management
-    // For now, we skip the exerting step as the CoreOperation doesn't have an exertCard method
-    // This would need to be implemented in the game-specific operations
+    // Pay the cost using game operations
+    const paymentSuccessful = gameOps?.exertInkForCost(playerID, totalCost);
+    if (!paymentSuccessful) {
+      logger.error(
+        `Player ${playerID} failed to pay ${totalCost} ink to play card`,
+      );
+      return createInvalidMove(
+        "PAYMENT_FAILED",
+        "moves.playCard.errors.paymentFailed",
+        {
+          required: totalCost,
+          playerId: playerID,
+        },
+      );
+    }
 
     // Determine target zone based on card type
     if (lorcanaCard.card.type.includes("Action")) {

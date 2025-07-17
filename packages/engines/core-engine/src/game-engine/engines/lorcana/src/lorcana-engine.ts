@@ -149,6 +149,68 @@ export class LorcanaEngine extends GameEngine<
   }
 
   /**
+   * Exert ink cards to pay for costs
+   * This is a Lorcana-specific mechanism for paying costs with ink
+   */
+  exertInkForCost(playerId: string, cost: number): boolean {
+    logger.info(`Player ${playerId} attempting to pay ${cost} ink`);
+
+    if (cost <= 0) {
+      logger.debug("No ink cost to pay");
+      return true;
+    }
+
+    // Get the current game state to access metadata
+    const gameState = this.getGameState();
+
+    // Get only ready (non-exerted) ink cards for the player
+    const readyInkCards = this.cardInstanceStore.queryCards({
+      zone: "inkwell",
+      owner: playerId,
+      exerted: false,
+    } as LorcanaCardFilter);
+
+    if (readyInkCards.length < cost) {
+      logger.warn(
+        `Player ${playerId} does not have enough ready ink. Required: ${cost}, Available: ${readyInkCards.length}`,
+      );
+      return false;
+    }
+
+    // Exert the required number of ink cards
+    for (let i = 0; i < cost; i++) {
+      const inkCard = readyInkCards[i];
+      if (inkCard) {
+        // Mark ink card as exerted in game state metadata
+        if (!gameState.G.metas[inkCard.instanceId]) {
+          gameState.G.metas[inkCard.instanceId] = {};
+        }
+        gameState.G.metas[inkCard.instanceId].exerted = true;
+
+        logger.debug(`Exerted ink card ${inkCard.instanceId}`);
+      }
+    }
+
+    logger.info(`Player ${playerId} successfully paid ${cost} ink`);
+    return true;
+  }
+
+  /**
+   * Get the number of available (ready) ink cards for a player
+   * This is used for cost validation
+   */
+  getAvailableInk(playerId: string): number {
+    // Get only ready (non-exerted) ink cards for the player
+    const readyInkCards = this.cardInstanceStore.queryCards({
+      zone: "inkwell",
+      owner: playerId,
+      exerted: false,
+    } as LorcanaCardFilter);
+
+    return readyInkCards.length;
+  }
+
+  /**
    * Process all effects currently in the bag
    * This resolves triggered effects in the proper order
    */

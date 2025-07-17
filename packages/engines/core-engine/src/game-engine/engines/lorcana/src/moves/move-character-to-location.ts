@@ -126,35 +126,35 @@ export const moveCharacterToLocationMove: LorcanaMove = (
     // Get the move cost of the location
     const moveCost = (location.card as any).moveCost || 0;
 
-    // Check if player has enough ink to pay the move cost
-    const inkCards = coreOps.getCardsInZone("inkwell", playerID);
-    if (inkCards.length < moveCost) {
+    // Check if player has enough ink to pay the move cost using game operations
+    const availableInk = gameOps?.getAvailableInk(playerID) || 0;
+    if (availableInk < moveCost) {
       logger.error(
-        `Player ${playerID} does not have enough ink to move character. Required: ${moveCost}, Available: ${inkCards.length}`,
+        `Player ${playerID} does not have enough ink to move character. Required: ${moveCost}, Available: ${availableInk}`,
       );
       return createInvalidMove(
         "INSUFFICIENT_INK",
         "moves.moveCharacterToLocation.errors.insufficientInk",
         {
           required: moveCost,
-          available: inkCards.length,
+          available: availableInk,
           playerId: playerID,
         },
       );
     }
 
-    // Pay the move cost by marking ink cards as exerted
-    // Note: In full implementation, should track exerted vs ready ink cards
-    // For now, we simulate payment by marking ink as exerted
-    for (let i = 0; i < moveCost; i++) {
-      const inkCard = inkCards[i];
-      if (inkCard) {
-        // Mark ink card as exerted in game state metadata
-        if (!G.metas[inkCard.instanceId]) {
-          G.metas[inkCard.instanceId] = {};
-        }
-        G.metas[inkCard.instanceId].exerted = true;
-      }
+    // Pay the move cost using game operations
+    const paymentSuccessful = gameOps?.exertInkForCost(playerID, moveCost);
+    if (!paymentSuccessful) {
+      logger.error(`Player ${playerID} failed to pay ${moveCost} ink for move`);
+      return createInvalidMove(
+        "PAYMENT_FAILED",
+        "moves.moveCharacterToLocation.errors.paymentFailed",
+        {
+          required: moveCost,
+          playerId: playerID,
+        },
+      );
     }
 
     logger.info(`Player ${playerID} pays ${moveCost} ink to move character`);
