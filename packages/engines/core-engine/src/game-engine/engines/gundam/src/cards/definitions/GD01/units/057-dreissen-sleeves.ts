@@ -1,6 +1,6 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+export const dreissenSleeves: GundamitoUnitCard = {
   id: "GD01-057",
   implemented: false,
   missingTestCase: true,
@@ -11,6 +11,8 @@ export const card: GundamitoCard = {
   color: "red",
   set: "GD01",
   rarity: "common",
+  imageUrl: "../images/cards/card/GD01-057.webp?250711",
+  imgAlt: "Dreissen (Sleeves)",
   type: "unit",
   zones: ["space", "earth"],
   traits: ["zeon"],
@@ -18,4 +20,5 @@ export const card: GundamitoCard = {
   ap: 2,
   hp: 3,
   abilities: [],
+  text: "",
 };

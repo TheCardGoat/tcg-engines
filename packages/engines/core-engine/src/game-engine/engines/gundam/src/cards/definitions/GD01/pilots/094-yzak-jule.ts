@@ -1,6 +1,34 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoPilotCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoPilotCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "move-to-hand",
+        target: {
+          type: "unit",
+          value: "self",
+          filters: [
+            {
+              filter: "type",
+              value: "unit",
+            },
+          ],
+          zone: "battlefield",
+        },
+        targetText: "this card",
+        originalText: "Add this card to your hand",
+      },
+    ],
+    trigger: {
+      event: "burst",
+    },
+    text: "【burst】",
+  },
+];
+
+export const yzakJule: GundamitoPilotCard = {
   id: "GD01-094",
   implemented: false,
   missingTestCase: true,
@@ -11,64 +39,12 @@ export const card: GundamitoCard = {
   color: "red",
   set: "GD01",
   rarity: "uncommon",
+  imageUrl: "../images/cards/card/GD01-094.webp?250711",
+  imgAlt: "Yzak Jule",
   type: "pilot",
   traits: [],
   apModifier: 1,
   hpModifier: 1,
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "move-to-hand",
-          target: {
-            type: "unit",
-            value: "self",
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-          },
-          targetText: "this card",
-          originalText: "Add this card to your hand",
-        },
-      ],
-      trigger: {
-        event: "burst",
-      },
-      text: "【burst】",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "destroy",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          preventable: true,
-        },
-        {
-          type: "draw",
-          amount: 1,
-        },
-      ],
-      trigger: {
-        event: "once-per-turn",
-      },
-      text: "【once per turn】",
-    },
-  ],
+  text: "【Burst】Add this card to your hand.",
+  abilities: abilities,
 };

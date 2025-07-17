@@ -1,6 +1,46 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoUnitCard["abilities"] = [
+  {
+    type: "continuous",
+    effects: [
+      {
+        type: "keyword",
+        keyword: "Support",
+        value: 1,
+      },
+    ],
+    text: "<Support 1>",
+  },
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "rest",
+        target: {
+          type: "unit",
+          value: 1,
+          filters: [
+            {
+              filter: "type",
+              value: "unit",
+            },
+          ],
+          zone: "battlefield",
+          isMultiple: false,
+        },
+        targetText: "this Unit.",
+        originalText: "Rest this Unit.",
+      },
+    ],
+    trigger: {
+      event: "activate･main",
+    },
+    text: "【activate･main】",
+  },
+];
+
+export const zakuISniperType: GundamitoUnitCard = {
   id: "GD01-048",
   implemented: false,
   missingTestCase: true,
@@ -11,78 +51,14 @@ export const card: GundamitoCard = {
   color: "red",
   set: "GD01",
   rarity: "rare",
+  imageUrl: "../images/cards/card/GD01-048.webp?250711",
+  imgAlt: "Zaku I Sniper Type",
   type: "unit",
   zones: ["space", "earth"],
   traits: ["zeon"],
   linkRequirement: ["(zeon) trait"],
   ap: 0,
   hp: 1,
-  abilities: [
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Support",
-          value: 1,
-        },
-      ],
-      text: "<Support 1>",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "rest",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          targetText: "this Unit.",
-          originalText: "Rest this Unit.",
-        },
-      ],
-      trigger: {
-        event: "activate･main",
-      },
-      text: "【activate･main】",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "move-to-hand",
-          target: {
-            type: "unit",
-            value: "self",
-            filters: [],
-          },
-          targetText: "it",
-          originalText: "add it to your hand",
-        },
-        {
-          type: "rule",
-          ruleText: "Zeon",
-          originalText: "(Zeon)",
-        },
-        {
-          type: "rule",
-          ruleText: "Neo Zeon",
-          originalText: "(Neo Zeon)",
-        },
-      ],
-      trigger: {
-        event: "deploy",
-      },
-      text: "【deploy】",
-    },
-  ],
+  text: "【Activate･Main】&lt;Support 1&gt; (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+  abilities: abilities,
 };

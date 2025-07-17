@@ -1,6 +1,20 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoUnitCard["abilities"] = [
+  {
+    type: "continuous",
+    effects: [
+      {
+        type: "keyword",
+        keyword: "Repair",
+        value: 1,
+      },
+    ],
+    text: "<Repair 1>",
+  },
+];
+
+export const deltaPlus: GundamitoUnitCard = {
   id: "GD01-006",
   implemented: false,
   missingTestCase: true,
@@ -11,51 +25,14 @@ export const card: GundamitoCard = {
   color: "blue",
   set: "GD01",
   rarity: "rare",
+  imageUrl: "../images/cards/card/GD01-006.webp?250711",
+  imgAlt: "Delta Plus",
   type: "unit",
   zones: ["space", "earth"],
   traits: ["earth federation"],
   linkRequirement: ["(earth federation) trait"],
   ap: 4,
   hp: 3,
-  abilities: [
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Repair",
-          value: 1,
-        },
-      ],
-      text: "<Repair 1>",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "attribute-boost",
-          target: {
-            type: "unit",
-            value: "self",
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-          },
-          attribute: "HP",
-          amount: 1,
-          duration: "turn",
-          targetText: "This Unit",
-          originalText: "This Unit gets HP+1",
-        },
-      ],
-      trigger: {
-        event: "during-link",
-      },
-      text: "【during link】",
-    },
-  ],
+  text: "&lt;Repair 1&gt; (At the end of your turn, this Unit recovers the specified number of HP.)",
+  abilities: abilities,
 };

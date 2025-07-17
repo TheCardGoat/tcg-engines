@@ -1,6 +1,6 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+export const gundamAerial: GundamitoUnitCard = {
   id: "GD01-070",
   implemented: false,
   missingTestCase: true,
@@ -11,6 +11,8 @@ export const card: GundamitoCard = {
   color: "white",
   set: "GD01",
   rarity: "rare",
+  imageUrl: "../images/cards/card/GD01-070.webp?250711",
+  imgAlt: "Gundam Aerial",
   type: "unit",
   zones: ["space", "earth"],
   traits: ["academy"],
@@ -18,4 +20,5 @@ export const card: GundamitoCard = {
   ap: 3,
   hp: 3,
   abilities: [],
+  text: "While there are 4 or more Command cards in your trash, this card in your hand gets cost -2.",
 };

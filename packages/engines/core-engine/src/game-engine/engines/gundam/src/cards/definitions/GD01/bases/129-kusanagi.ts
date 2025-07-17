@@ -1,6 +1,22 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoBaseCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoBaseCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "placeholder",
+        parameters: {},
+      },
+    ],
+    trigger: {
+      event: "burst",
+    },
+    text: "【burst】",
+  },
+];
+
+export const kusanagi: GundamitoBaseCard = {
   id: "GD01-129",
   implemented: false,
   missingTestCase: true,
@@ -11,73 +27,13 @@ export const card: GundamitoCard = {
   color: "white",
   set: "GD01",
   rarity: "uncommon",
+  imageUrl: "../images/cards/card/GD01-129.webp?250711",
+  imgAlt: "Kusanagi",
   type: "base",
   zones: ["space"],
   traits: ["warship"],
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "placeholder",
-          parameters: {},
-        },
-      ],
-      trigger: {
-        event: "burst",
-      },
-      text: "【burst】",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "move-to-hand",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-              {
-                filter: "owner",
-                value: "self",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          targetText: "1 of your Shields",
-          originalText: "Add 1 of your Shields to your hand",
-        },
-        {
-          type: "targeting",
-          amount: "1",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: "3 or less HP",
-          targetText: "enemy Unit",
-          originalText: "choose 1 enemy Unit with 3 or less HP.",
-        },
-      ],
-      trigger: {
-        event: "deploy",
-      },
-      text: "【deploy】",
-    },
-  ],
+  text: "【Burst】Deploy this card.",
   ap: 0,
   hp: 4,
+  abilities: abilities,
 };

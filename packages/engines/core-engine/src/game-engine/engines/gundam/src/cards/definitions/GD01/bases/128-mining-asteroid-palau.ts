@@ -1,6 +1,22 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoBaseCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoBaseCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "placeholder",
+        parameters: {},
+      },
+    ],
+    trigger: {
+      event: "burst",
+    },
+    text: "【burst】",
+  },
+];
+
+export const miningAsteroidPalau: GundamitoBaseCard = {
   id: "GD01-128",
   implemented: false,
   missingTestCase: true,
@@ -11,54 +27,13 @@ export const card: GundamitoCard = {
   color: "red",
   set: "GD01",
   rarity: "common",
+  imageUrl: "../images/cards/card/GD01-128.webp?250711",
+  imgAlt: "Mining Asteroid Palau",
   type: "base",
   zones: ["space"],
   traits: ["zeon", "stronghold"],
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "placeholder",
-          parameters: {},
-        },
-      ],
-      trigger: {
-        event: "burst",
-      },
-      text: "【burst】",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "move-to-hand",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-              {
-                filter: "owner",
-                value: "self",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          targetText: "1 of your Shields",
-          originalText: "Add 1 of your Shields to your hand",
-        },
-      ],
-      trigger: {
-        event: "deploy",
-      },
-      text: "【deploy】",
-    },
-  ],
+  text: "【Burst】Deploy this card.",
   ap: 0,
   hp: 6,
+  abilities: abilities,
 };

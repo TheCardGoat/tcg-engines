@@ -1,6 +1,6 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+export const blitzGundam: GundamitoUnitCard = {
   id: "GD01-049",
   implemented: false,
   missingTestCase: true,
@@ -11,45 +11,14 @@ export const card: GundamitoCard = {
   color: "red",
   set: "GD01",
   rarity: "rare",
+  imageUrl: "../images/cards/card/GD01-049.webp?250711",
+  imgAlt: "Blitz Gundam",
   type: "unit",
   zones: ["space", "earth"],
   traits: [],
   linkRequirement: ["nicol amarfi"],
   ap: 3,
   hp: 3,
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "targeting",
-          amount: "1",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: "5 or more AP",
-          targetText: "of your (ZAFT) Units",
-          originalText: "Choose 1 of your (ZAFT) Units with 5 or more AP.",
-        },
-        {
-          type: "rule",
-          ruleText: "ZAFT",
-          originalText: "(ZAFT)",
-        },
-      ],
-      trigger: {
-        event: "deploy",
-      },
-      text: "【deploy】",
-    },
-  ],
+  abilities: [],
+  text: "",
 };

@@ -1,6 +1,6 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+export const gundamHeavyarms: GundamitoUnitCard = {
   id: "GD01-034",
   implemented: false,
   missingTestCase: true,
@@ -11,23 +11,14 @@ export const card: GundamitoCard = {
   color: "green",
   set: "GD01",
   rarity: "uncommon",
+  imageUrl: "../images/cards/card/GD01-034.webp?250711",
+  imgAlt: "Gundam Heavyarms",
   type: "unit",
   zones: ["earth"],
   traits: [],
   linkRequirement: ["trowa barton"],
   ap: 3,
   hp: 4,
-  abilities: [
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Breach",
-          value: 3,
-        },
-      ],
-      text: "<Breach 3>",
-    },
-  ],
+  abilities: [],
+  text: "",
 };

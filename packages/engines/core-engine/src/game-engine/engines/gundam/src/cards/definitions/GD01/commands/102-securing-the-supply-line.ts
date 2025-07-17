@@ -1,6 +1,22 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoCommandCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoCommandCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "placeholder",
+        parameters: {},
+      },
+    ],
+    trigger: {
+      event: "main",
+    },
+    text: "【Main】",
+  },
+];
+
+export const securingTheSupplyLine: GundamitoCommandCard = {
   id: "GD01-102",
   implemented: false,
   missingTestCase: true,
@@ -11,20 +27,9 @@ export const card: GundamitoCard = {
   color: "blue",
   set: "GD01",
   rarity: "uncommon",
+  imageUrl: "../images/cards/card/GD01-102.webp?250711",
+  imgAlt: "Securing the Supply Line",
   type: "command",
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "placeholder",
-          parameters: {},
-        },
-      ],
-      trigger: {
-        event: "main",
-      },
-      text: "【Main】",
-    },
-  ],
+  text: "【Main】All friendly Units that are Lv.4 or lower recover 2 HP.",
+  abilities: abilities,
 };

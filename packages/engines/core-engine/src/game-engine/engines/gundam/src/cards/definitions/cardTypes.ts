@@ -24,7 +24,9 @@ interface GundamitoRawCard {
   name: string;
   color: CardColor;
   abilities?: Array<Ability>; // tirar
-  text?: string;
+  text?: string; // Original card text used to generate abilities
+  imageUrl?: string;
+  imgAlt?: string;
   set: GundamitoCardSet;
   rarity: CardRarity;
 }

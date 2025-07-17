@@ -1,6 +1,37 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoCommandCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoCommandCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "targeting",
+        amount: "2",
+        target: {
+          type: "unit",
+          value: 1,
+          filters: [
+            {
+              filter: "type",
+              value: "unit",
+            },
+          ],
+          zone: "battlefield",
+          isMultiple: false,
+        },
+        condition: "",
+        targetText: "friendly Units",
+        originalText: "Choose 2 friendly Units.",
+      },
+    ],
+    trigger: {
+      event: "action",
+    },
+    text: "【action】",
+  },
+];
+
+export const assaultOnTorringtonBase: GundamitoCommandCard = {
   id: "GD01-114",
   implemented: false,
   missingTestCase: true,
@@ -11,35 +42,9 @@ export const card: GundamitoCard = {
   color: "red",
   set: "GD01",
   rarity: "common",
+  imageUrl: "../images/cards/card/GD01-114.webp?250711",
+  imgAlt: "Assault on Torrington Base",
   type: "command",
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "targeting",
-          amount: "2",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: "",
-          targetText: "friendly Units",
-          originalText: "Choose 2 friendly Units.",
-        },
-      ],
-      trigger: {
-        event: "action",
-      },
-      text: "【action】",
-    },
-  ],
+  text: "【Action】Choose 2 friendly Units. They get AP+1 during this turn.",
+  abilities: abilities,
 };

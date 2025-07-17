@@ -1,6 +1,6 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+export const gouf: GundamitoUnitCard = {
   id: "GD01-036",
   implemented: false,
   missingTestCase: true,
@@ -11,6 +11,8 @@ export const card: GundamitoCard = {
   color: "green",
   set: "GD01",
   rarity: "common",
+  imageUrl: "../images/cards/card/GD01-036.webp?250711",
+  imgAlt: "Gouf",
   type: "unit",
   zones: ["earth"],
   traits: ["zeon"],
@@ -18,4 +20,5 @@ export const card: GundamitoCard = {
   ap: 3,
   hp: 2,
   abilities: [],
+  text: "",
 };

@@ -1,6 +1,37 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoCommandCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoCommandCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "targeting",
+        amount: "1",
+        target: {
+          type: "unit",
+          value: 1,
+          filters: [
+            {
+              filter: "type",
+              value: "unit",
+            },
+          ],
+          zone: "battlefield",
+          isMultiple: false,
+        },
+        condition: "",
+        targetText: "enemy Unit",
+        originalText: "Choose 1 enemy Unit.",
+      },
+    ],
+    trigger: {
+      event: "burst",
+    },
+    text: "【burst】",
+  },
+];
+
+export const navalBombardment: GundamitoCommandCard = {
   id: "GD01-120",
   implemented: false,
   missingTestCase: true,
@@ -11,73 +42,9 @@ export const card: GundamitoCard = {
   color: "white",
   set: "GD01",
   rarity: "common",
+  imageUrl: "../images/cards/card/GD01-120.webp?250711",
+  imgAlt: "Naval Bombardment",
   type: "command",
-  abilities: [
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Blocker",
-        },
-      ],
-      text: "<Blocker>",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "targeting",
-          amount: "1",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: "",
-          targetText: "enemy Unit",
-          originalText: "Choose 1 enemy Unit.",
-        },
-      ],
-      trigger: {
-        event: "burst",
-      },
-      text: "【burst】",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "targeting",
-          amount: "1",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: ".",
-          targetText: "friendly Unit",
-          originalText: "Choose 1 friendly Unit with .",
-        },
-      ],
-      trigger: {
-        event: "action",
-      },
-      text: "【action】",
-    },
-  ],
+  text: "【Burst】Choose 1 enemy Unit. It gets AP-3 during this turn.",
+  abilities: abilities,
 };

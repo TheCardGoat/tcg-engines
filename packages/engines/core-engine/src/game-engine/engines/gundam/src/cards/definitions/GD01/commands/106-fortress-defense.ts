@@ -1,6 +1,23 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoCommandCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoCommandCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "rule",
+        ruleText: "(Zeon",
+        originalText: "((Zeon)",
+      },
+    ],
+    trigger: {
+      event: "main",
+    },
+    text: "【main】",
+  },
+];
+
+export const fortressDefense: GundamitoCommandCard = {
   id: "GD01-106",
   implemented: false,
   missingTestCase: true,
@@ -11,21 +28,9 @@ export const card: GundamitoCard = {
   color: "green",
   set: "GD01",
   rarity: "rare",
+  imageUrl: "../images/cards/card/GD01-106.webp?250711",
+  imgAlt: "Fortress Defense",
   type: "command",
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "rule",
-          ruleText: "(Zeon",
-          originalText: "((Zeon)",
-        },
-      ],
-      trigger: {
-        event: "main",
-      },
-      text: "【main】",
-    },
-  ],
+  text: "【Main】Deploy 2 [Zaku Ⅱ]((Zeon)･AP1･HP1) Unit tokens.",
+  abilities: abilities,
 };

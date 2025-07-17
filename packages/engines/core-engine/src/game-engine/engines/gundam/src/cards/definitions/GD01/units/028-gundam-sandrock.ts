@@ -1,6 +1,23 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoUnitCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "rule",
+        ruleText: "Maganac Corps",
+        originalText: "(Maganac Corps)",
+      },
+    ],
+    trigger: {
+      event: "deploy",
+    },
+    text: "【deploy】",
+  },
+];
+
+export const gundamSandrock: GundamitoUnitCard = {
   id: "GD01-028",
   implemented: false,
   missingTestCase: true,
@@ -11,26 +28,14 @@ export const card: GundamitoCard = {
   color: "green",
   set: "GD01",
   rarity: "rare",
+  imageUrl: "../images/cards/card/GD01-028.webp?250711",
+  imgAlt: "Gundam Sandrock",
   type: "unit",
   zones: ["earth"],
   traits: [],
   linkRequirement: ["quatre raberba winner"],
   ap: 4,
   hp: 4,
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "rule",
-          ruleText: "Maganac Corps",
-          originalText: "(Maganac Corps)",
-        },
-      ],
-      trigger: {
-        event: "deploy",
-      },
-      text: "【deploy】",
-    },
-  ],
+  text: "【Deploy】You may deploy 1 (Maganac Corps) Unit card from your hand.",
+  abilities: abilities,
 };

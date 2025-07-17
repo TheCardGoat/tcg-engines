@@ -1,6 +1,22 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoCommandCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoCommandCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "placeholder",
+        parameters: {},
+      },
+    ],
+    trigger: {
+      event: "burst",
+    },
+    text: "【burst】",
+  },
+];
+
+export const firstContact: GundamitoCommandCard = {
   id: "GD01-107",
   implemented: false,
   missingTestCase: true,
@@ -11,20 +27,9 @@ export const card: GundamitoCard = {
   color: "green",
   set: "GD01",
   rarity: "uncommon",
+  imageUrl: "../images/cards/card/GD01-107.webp?250711",
+  imgAlt: "First Contact",
   type: "command",
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "placeholder",
-          parameters: {},
-        },
-      ],
-      trigger: {
-        event: "burst",
-      },
-      text: "【burst】",
-    },
-  ],
+  text: "【Burst】Place 1 EX Resource.",
+  abilities: abilities,
 };

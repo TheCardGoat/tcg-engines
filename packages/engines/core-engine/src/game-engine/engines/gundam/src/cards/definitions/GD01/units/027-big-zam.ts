@@ -1,6 +1,20 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoUnitCard["abilities"] = [
+  {
+    type: "continuous",
+    effects: [
+      {
+        type: "keyword",
+        keyword: "Breach",
+        value: 4,
+      },
+    ],
+    text: "<Breach 4>",
+  },
+];
+
+export const bigZam: GundamitoUnitCard = {
   id: "GD01-027",
   implemented: false,
   missingTestCase: true,
@@ -11,86 +25,14 @@ export const card: GundamitoCard = {
   color: "green",
   set: "GD01",
   rarity: "rare",
+  imageUrl: "../images/cards/card/GD01-027.webp?250711",
+  imgAlt: "Big Zam",
   type: "unit",
   zones: ["space", "earth"],
   traits: ["zeon"],
   linkRequirement: ["dozle zabi"],
   ap: 5,
   hp: 6,
-  abilities: [
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Breach",
-          value: 4,
-        },
-      ],
-      text: "<Breach 4>",
-    },
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Blocker",
-        },
-      ],
-      text: "<Blocker>",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "damage",
-          target: {
-            type: "unit",
-            value: "all",
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: true,
-          },
-          amount: 4,
-          preventable: true,
-        },
-        {
-          type: "damage",
-          target: {
-            type: "unit",
-            value: "all",
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: true,
-          },
-          amount: 4,
-          preventable: true,
-        },
-        {
-          type: "rule",
-          ruleText: "Zeon",
-          originalText: "(Zeon)",
-        },
-        {
-          type: "rule",
-          ruleText: "Neo Zeon",
-          originalText: "(Neo Zeon)",
-        },
-      ],
-      trigger: {
-        event: "deploy",
-      },
-      text: "【deploy】",
-    },
-  ],
+  text: "&lt;Breach 4&gt; (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+  abilities: abilities,
 };

@@ -1,6 +1,20 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoUnitCard["abilities"] = [
+  {
+    type: "continuous",
+    effects: [
+      {
+        type: "keyword",
+        keyword: "Repair",
+        value: 1,
+      },
+    ],
+    text: "<Repair 1>",
+  },
+];
+
+export const gundamDeathscythe: GundamitoUnitCard = {
   id: "GD01-033",
   implemented: false,
   missingTestCase: true,
@@ -11,23 +25,14 @@ export const card: GundamitoCard = {
   color: "green",
   set: "GD01",
   rarity: "uncommon",
+  imageUrl: "../images/cards/card/GD01-033.webp?250711",
+  imgAlt: "Gundam Deathscythe",
   type: "unit",
   zones: ["earth"],
   traits: [],
   linkRequirement: ["duo maxwell"],
   ap: 4,
   hp: 3,
-  abilities: [
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Repair",
-          value: 1,
-        },
-      ],
-      text: "<Repair 1>",
-    },
-  ],
+  text: "&lt;Repair 1&gt; (At the end of your turn, this Unit recovers the specified number of HP.)",
+  abilities: abilities,
 };

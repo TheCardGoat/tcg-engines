@@ -1,6 +1,34 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoPilotCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoPilotCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "move-to-hand",
+        target: {
+          type: "unit",
+          value: "self",
+          filters: [
+            {
+              filter: "type",
+              value: "unit",
+            },
+          ],
+          zone: "battlefield",
+        },
+        targetText: "this card",
+        originalText: "Add this card to your hand",
+      },
+    ],
+    trigger: {
+      event: "burst",
+    },
+    text: "【burst】",
+  },
+];
+
+export const guelJeturk: GundamitoPilotCard = {
   id: "GD01-097",
   implemented: false,
   missingTestCase: true,
@@ -11,35 +39,12 @@ export const card: GundamitoCard = {
   color: "white",
   set: "GD01",
   rarity: "uncommon",
+  imageUrl: "../images/cards/card/GD01-097.webp?250711",
+  imgAlt: "Guel Jeturk",
   type: "pilot",
   traits: ["academy"],
   apModifier: 1,
   hpModifier: 1,
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "move-to-hand",
-          target: {
-            type: "unit",
-            value: "self",
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-          },
-          targetText: "this card",
-          originalText: "Add this card to your hand",
-        },
-      ],
-      trigger: {
-        event: "burst",
-      },
-      text: "【burst】",
-    },
-  ],
+  text: "【Burst】Add this card to your hand.",
+  abilities: abilities,
 };

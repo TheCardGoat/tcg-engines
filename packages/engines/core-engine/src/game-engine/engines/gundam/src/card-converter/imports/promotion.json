@@ -1,0 +1,163 @@
+[
+  {
+    "id": "RP-001",
+    "code": "RP-001",
+    "rarity": "P",
+    "name": "Resource",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/RP-001.webp?250711",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/RP-001.webp?250711"
+    },
+    "level": "-",
+    "cost": "-",
+    "color": "-",
+    "cardType": "RESOURCE",
+    "effect": "(Rest a Resource when paying a cost.)<br>",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "ap": "-",
+    "hp": "-",
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta BANDAI TCG+ Store Trial Event",
+    "set": { "id": "promotion", "name": "Promotion" }
+  },
+  {
+    "id": "RP-004",
+    "code": "RP-004",
+    "rarity": "P",
+    "name": "Resource",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/RP-004.webp?250711",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/RP-004.webp?250711"
+    },
+    "level": "-",
+    "cost": "-",
+    "color": "-",
+    "cardType": "RESOURCE",
+    "effect": "(Rest a Resource when paying a cost.)<br>",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "ap": "-",
+    "hp": "-",
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Resource pack",
+    "set": { "id": "promotion", "name": "Promotion" }
+  },
+  {
+    "id": "EXBP-001",
+    "code": "EXBP-001",
+    "rarity": "P",
+    "name": "EX Base",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXBP-001.webp?250711",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXBP-001.webp?250711"
+    },
+    "level": "-",
+    "cost": "-",
+    "color": "-",
+    "cardType": "EX BASE",
+    "effect": "(At the start of the game, place 1 active EX Base as your shield area's base.)<br>",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "ap": "-",
+    "hp": "3",
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta Early Trial Event, other events",
+    "set": { "id": "promotion", "name": "Promotion" }
+  },
+  {
+    "id": "EXBP-002",
+    "code": "EXBP-002",
+    "rarity": "P",
+    "name": "EX Base",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXBP-002.webp?250711",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXBP-002.webp?250711"
+    },
+    "level": "-",
+    "cost": "-",
+    "color": "-",
+    "cardType": "EX BASE",
+    "effect": "(At the start of the game, place 1 active EX Base as your shield area's base.)<br>",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "ap": "-",
+    "hp": "3",
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Official Card Case Set 01",
+    "set": { "id": "promotion", "name": "Promotion" }
+  },
+  {
+    "id": "EXRP-001",
+    "code": "EXRP-001",
+    "rarity": "P",
+    "name": "EX Resource",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXRP-001.webp?250711",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXRP-001.webp?250711"
+    },
+    "level": "-",
+    "cost": "-",
+    "color": "-",
+    "cardType": "EX RESOURCE",
+    "effect": "(At the start of the game, the second-turn player places 1 EX Resource into their resource area.)<br>(Rest an EX Resource then exile it from the game when paying a cost.)<br>",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "ap": "-",
+    "hp": "-",
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "GAMA Expo 2025, other events",
+    "set": { "id": "promotion", "name": "Promotion" }
+  },
+  {
+    "id": "EXRP-002",
+    "code": "EXRP-002",
+    "rarity": "P",
+    "name": "EX Resource",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXRP-002.webp?250711",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXRP-002.webp?250711"
+    },
+    "level": "-",
+    "cost": "-",
+    "color": "-",
+    "cardType": "EX RESOURCE",
+    "effect": "(At the start of the game, the second-turn player places 1 active EX Resource into their resource area.)<br>(Rest an EX Resource then exile it from the game when paying a cost.)<br>",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "ap": "-",
+    "hp": "-",
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Official Card Case Set 01",
+    "set": { "id": "promotion", "name": "Promotion" }
+  },
+  {
+    "id": "RP-009",
+    "code": "RP-009",
+    "rarity": "P",
+    "name": "Resource",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/RP-009.webp?250711",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/RP-009.webp?250711"
+    },
+    "level": "-",
+    "cost": "-",
+    "color": "-",
+    "cardType": "RESOURCE",
+    "effect": "(Rest a Resource when paying a cost.)<br>",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "ap": "-",
+    "hp": "-",
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Gen Con 2025",
+    "set": { "id": "promotion", "name": "Promotion" }
+  }
+]

@@ -1,6 +1,22 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoUnitCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "placeholder",
+        parameters: {},
+      },
+    ],
+    trigger: {
+      event: "deploy",
+    },
+    text: "【deploy】",
+  },
+];
+
+export const dopp: GundamitoUnitCard = {
   id: "GD01-039",
   implemented: false,
   missingTestCase: true,
@@ -11,25 +27,14 @@ export const card: GundamitoCard = {
   color: "green",
   set: "GD01",
   rarity: "common",
+  imageUrl: "../images/cards/card/GD01-039.webp?250711",
+  imgAlt: "Dopp",
   type: "unit",
   zones: ["earth"],
   traits: ["zeon"],
   linkRequirement: ["-"],
   ap: 1,
   hp: 1,
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "placeholder",
-          parameters: {},
-        },
-      ],
-      trigger: {
-        event: "deploy",
-      },
-      text: "【deploy】",
-    },
-  ],
+  text: "【Deploy】Look at the top card of your deck. Return it to the top or bottom of your deck.",
+  abilities: abilities,
 };

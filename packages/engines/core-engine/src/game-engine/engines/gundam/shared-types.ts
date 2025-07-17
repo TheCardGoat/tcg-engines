@@ -82,4 +82,5 @@ export type GundamitoCardSet =
   | "ST05"
   | "ST06"
   | "GD01"
-  | "GD02";
+  | "GD02"
+  | "EXBP";

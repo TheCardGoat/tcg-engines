@@ -1,6 +1,6 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+export const unicornGundamDestroyMode: GundamitoUnitCard = {
   id: "GD01-002",
   implemented: false,
   missingTestCase: true,
@@ -11,50 +11,14 @@ export const card: GundamitoCard = {
   color: "blue",
   set: "GD01",
   rarity: "legendary",
+  imageUrl: "../images/cards/card/GD01-002.webp?250711",
+  imgAlt: "Unicorn Gundam (Destroy Mode)",
   type: "unit",
   zones: ["space", "earth"],
   traits: ["civilian"],
   linkRequirement: ["banagher links"],
   ap: 5,
   hp: 4,
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "targeting",
-          amount: "1",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: "",
-          targetText: "enemy Unit",
-          originalText: "Choose 1 enemy Unit.",
-        },
-        {
-          type: "rest",
-          target: {
-            type: "unit",
-            value: "opponent",
-            filters: [],
-          },
-          targetText: "it.",
-          originalText: "Rest it.",
-        },
-      ],
-      trigger: {
-        event: "attack",
-      },
-      text: "【attack】",
-    },
-  ],
+  abilities: [],
+  text: "When playing this card from your hand, you may destroy 1 of your Link Units with &quot;Unicorn Mode&quot; in its card name that is Lv.5. If you do, play this card as if it has 0 Lv. and cost.",
 };

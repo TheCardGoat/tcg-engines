@@ -1,6 +1,47 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoCommandCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoCommandCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "targeting",
+        amount: "1",
+        target: {
+          type: "unit",
+          value: 1,
+          filters: [
+            {
+              filter: "type",
+              value: "unit",
+            },
+          ],
+          zone: "battlefield",
+          isMultiple: false,
+        },
+        condition: "5 or less HP",
+        targetText: "enemy Unit",
+        originalText: "Choose 1 enemy Unit with 5 or less HP.",
+      },
+      {
+        type: "rest",
+        target: {
+          type: "unit",
+          value: "opponent",
+          filters: [],
+        },
+        targetText: "it.",
+        originalText: "Rest it.",
+      },
+    ],
+    trigger: {
+      event: "burst",
+    },
+    text: "【burst】",
+  },
+];
+
+export const interceptOrders: GundamitoCommandCard = {
   id: "GD01-099",
   implemented: false,
   missingTestCase: true,
@@ -11,83 +52,9 @@ export const card: GundamitoCard = {
   color: "blue",
   set: "GD01",
   rarity: "rare",
+  imageUrl: "../images/cards/card/GD01-099.webp?250711",
+  imgAlt: "Intercept Orders",
   type: "command",
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "targeting",
-          amount: "1",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: "5 or less HP",
-          targetText: "enemy Unit",
-          originalText: "Choose 1 enemy Unit with 5 or less HP.",
-        },
-        {
-          type: "rest",
-          target: {
-            type: "unit",
-            value: "opponent",
-            filters: [],
-          },
-          targetText: "it.",
-          originalText: "Rest it.",
-        },
-      ],
-      trigger: {
-        event: "burst",
-      },
-      text: "【burst】",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "targeting",
-          amount: "1",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: "3 or less HP",
-          targetText: "to 2 enemy Units",
-          originalText: "Choose 1 to 2 enemy Units with 3 or less HP.",
-        },
-        {
-          type: "rest",
-          target: {
-            type: "unit",
-            value: "opponent",
-            filters: [],
-          },
-          targetText: "them.",
-          originalText: "Rest them.",
-        },
-      ],
-      trigger: {
-        event: "action",
-      },
-      text: "【action】",
-    },
-  ],
+  text: "【Burst】Choose 1 enemy Unit with 5 or less HP. Rest it.",
+  abilities: abilities,
 };

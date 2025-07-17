@@ -1,6 +1,34 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoPilotCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoPilotCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "move-to-hand",
+        target: {
+          type: "unit",
+          value: "self",
+          filters: [
+            {
+              filter: "type",
+              value: "unit",
+            },
+          ],
+          zone: "battlefield",
+        },
+        targetText: "this card",
+        originalText: "Add this card to your hand",
+      },
+    ],
+    trigger: {
+      event: "burst",
+    },
+    text: "【burst】",
+  },
+];
+
+export const riddheMarcenas: GundamitoPilotCard = {
   id: "GD01-089",
   implemented: false,
   missingTestCase: true,
@@ -11,65 +39,12 @@ export const card: GundamitoCard = {
   color: "blue",
   set: "GD01",
   rarity: "common",
+  imageUrl: "../images/cards/card/GD01-089.webp?250711",
+  imgAlt: "Riddhe Marcenas",
   type: "pilot",
   traits: ["earth federation"],
   apModifier: 1,
   hpModifier: 1,
-  abilities: [
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Repair",
-        },
-      ],
-      text: "<Repair>",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "move-to-hand",
-          target: {
-            type: "unit",
-            value: "self",
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-          },
-          targetText: "this card",
-          originalText: "Add this card to your hand",
-        },
-        {
-          type: "attribute-boost",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          attribute: "AP",
-          amount: 1,
-          duration: "turn",
-          targetText: "While this Unit has , it",
-          originalText: "While this Unit has , it gets AP+1",
-        },
-      ],
-      trigger: {
-        event: "burst",
-      },
-      text: "【burst】",
-    },
-  ],
+  text: "【Burst】Add this card to your hand.",
+  abilities: abilities,
 };

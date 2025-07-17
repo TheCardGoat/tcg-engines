@@ -1,6 +1,6 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+export const gundamDeathscythe: GundamitoUnitCard = {
   id: "GD01-025",
   implemented: false,
   missingTestCase: true,
@@ -11,25 +11,14 @@ export const card: GundamitoCard = {
   color: "green",
   set: "GD01",
   rarity: "legendary",
+  imageUrl: "../images/cards/card/GD01-025.webp?250711",
+  imgAlt: "Gundam Deathscythe",
   type: "unit",
   zones: ["earth"],
   traits: [],
   linkRequirement: ["duo maxwell"],
   ap: 5,
   hp: 4,
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "placeholder",
-          parameters: {},
-        },
-      ],
-      trigger: {
-        event: "when-paired･(operation-meteor)-pilot",
-      },
-      text: "【When Paired･(Operation Meteor) Pilot】",
-    },
-  ],
+  abilities: [],
+  text: "",
 };

@@ -1,6 +1,6 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+export const byarlantCustom: GundamitoUnitCard = {
   id: "GD01-019",
   implemented: false,
   missingTestCase: true,
@@ -11,47 +11,14 @@ export const card: GundamitoCard = {
   color: "blue",
   set: "GD01",
   rarity: "uncommon",
+  imageUrl: "../images/cards/card/GD01-019.webp?250711",
+  imgAlt: "Byarlant Custom",
   type: "unit",
   zones: ["space", "earth"],
   traits: ["earth federation"],
   linkRequirement: ["-"],
   ap: 3,
   hp: 4,
-  abilities: [
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Blocker",
-        },
-      ],
-      text: "<Blocker>",
-    },
-    {
-      type: "resolution",
-      effects: [
-        {
-          type: "rest",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          targetText: "this Unit to change the attack target to it.",
-          originalText: "Rest this Unit to change the attack target to it.",
-        },
-      ],
-      text: "(Rest this Unit to change the attack target to it.",
-      dependentEffects: false,
-      resolveEffectsIndividually: false,
-    },
-  ],
+  abilities: [],
+  text: "",
 };

@@ -1,6 +1,33 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoUnitCard["abilities"] = [
+  {
+    type: "continuous",
+    effects: [
+      {
+        type: "keyword",
+        keyword: "Blocker",
+      },
+    ],
+    text: "<Blocker>",
+  },
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "rule",
+        ruleText: "(Triple Ship Alliance",
+        originalText: "((Triple Ship Alliance)",
+      },
+    ],
+    trigger: {
+      event: "deploy",
+    },
+    text: "【deploy】",
+  },
+];
+
+export const justiceGundam: GundamitoUnitCard = {
   id: "GD01-066",
   implemented: false,
   missingTestCase: true,
@@ -11,69 +38,14 @@ export const card: GundamitoCard = {
   color: "white",
   set: "GD01",
   rarity: "legendary",
+  imageUrl: "../images/cards/card/GD01-066.webp?250711",
+  imgAlt: "Justice Gundam",
   type: "unit",
   zones: ["space", "earth"],
   traits: [],
   linkRequirement: ["athrun zala"],
   ap: 5,
   hp: 5,
-  abilities: [
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Blocker",
-        },
-      ],
-      text: "<Blocker>",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "rule",
-          ruleText: "(Triple Ship Alliance",
-          originalText: "((Triple Ship Alliance)",
-        },
-      ],
-      trigger: {
-        event: "deploy",
-      },
-      text: "【deploy】",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "targeting",
-          amount: "1",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: "",
-          targetText: "of your (Triple Ship Alliance) Unit tokens",
-          originalText: "Choose 1 of your (Triple Ship Alliance) Unit tokens.",
-        },
-        {
-          type: "rule",
-          ruleText: "Triple Ship Alliance",
-          originalText: "(Triple Ship Alliance)",
-        },
-      ],
-      trigger: {
-        event: "attack",
-      },
-      text: "【attack】",
-    },
-  ],
+  text: "【Deploy】Deploy 1 [Fatum-00]((Triple Ship Alliance)･AP2･HP2･&lt;Blocker&gt;) Unit token.",
+  abilities: abilities,
 };

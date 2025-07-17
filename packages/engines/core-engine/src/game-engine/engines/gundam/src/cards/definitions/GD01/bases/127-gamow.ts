@@ -1,6 +1,22 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoBaseCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoBaseCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "placeholder",
+        parameters: {},
+      },
+    ],
+    trigger: {
+      event: "burst",
+    },
+    text: "【burst】",
+  },
+];
+
+export const gamow: GundamitoBaseCard = {
   id: "GD01-127",
   implemented: false,
   missingTestCase: true,
@@ -11,117 +27,13 @@ export const card: GundamitoCard = {
   color: "red",
   set: "GD01",
   rarity: "uncommon",
+  imageUrl: "../images/cards/card/GD01-127.webp?250711",
+  imgAlt: "Gamow",
   type: "base",
   zones: ["space"],
   traits: ["warship"],
-  abilities: [
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Breach",
-          value: 3,
-        },
-      ],
-      text: "<Breach 3>",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "placeholder",
-          parameters: {},
-        },
-      ],
-      trigger: {
-        event: "burst",
-      },
-      text: "【burst】",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "move-to-hand",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-              {
-                filter: "owner",
-                value: "self",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          targetText: "1 of your Shields",
-          originalText: "Add 1 of your Shields to your hand",
-        },
-      ],
-      trigger: {
-        event: "deploy",
-      },
-      text: "【deploy】",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "targeting",
-          amount: "1",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: "5 or more AP",
-          targetText: "friendly (ZAFT) Unit",
-          originalText: "Choose 1 friendly (ZAFT) Unit with 5 or more AP.",
-        },
-        {
-          type: "rest",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          targetText:
-            "this Base：Choose 1 friendly (ZAFT) Unit with 5 or more AP.",
-          originalText:
-            "Rest this Base：Choose 1 friendly (ZAFT) Unit with 5 or more AP.",
-        },
-        {
-          type: "rule",
-          ruleText: "ZAFT",
-          originalText: "(ZAFT)",
-        },
-      ],
-      trigger: {
-        event: "activate･action",
-      },
-      text: "【activate･action】",
-    },
-  ],
+  text: "【Burst】Deploy this card.",
   ap: 0,
   hp: 5,
+  abilities: abilities,
 };

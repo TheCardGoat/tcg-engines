@@ -1,6 +1,47 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoUnitCard["abilities"] = [
+  {
+    type: "continuous",
+    effects: [
+      {
+        type: "keyword",
+        keyword: "Blocker",
+      },
+    ],
+    text: "<Blocker>",
+  },
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "targeting",
+        amount: "1",
+        target: {
+          type: "unit",
+          value: 1,
+          filters: [
+            {
+              filter: "type",
+              value: "unit",
+            },
+          ],
+          zone: "battlefield",
+          isMultiple: false,
+        },
+        condition: ".",
+        targetText: "of your rested white Units",
+        originalText: "Choose 1 of your rested white Units with .",
+      },
+    ],
+    trigger: {
+      event: "once-per-turn",
+    },
+    text: "【once per turn】",
+  },
+];
+
+export const strikeRouge: GundamitoUnitCard = {
   id: "GD01-069",
   implemented: false,
   missingTestCase: true,
@@ -11,50 +52,14 @@ export const card: GundamitoCard = {
   color: "white",
   set: "GD01",
   rarity: "rare",
+  imageUrl: "../images/cards/card/GD01-069.webp?250711",
+  imgAlt: "Strike Rouge",
   type: "unit",
   zones: ["space", "earth"],
   traits: [],
   linkRequirement: ["(orb) trait"],
   ap: 3,
   hp: 2,
-  abilities: [
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Blocker",
-        },
-      ],
-      text: "<Blocker>",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "targeting",
-          amount: "1",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: ".",
-          targetText: "of your rested white Units",
-          originalText: "Choose 1 of your rested white Units with .",
-        },
-      ],
-      trigger: {
-        event: "once-per-turn",
-      },
-      text: "【once per turn】",
-    },
-  ],
+  text: "【Activate･Main】【Once per Turn】①：Choose 1 of your rested white Units with &lt;Blocker&gt;. Set it as active. It can&#039;t attack during this turn.",
+  abilities: abilities,
 };

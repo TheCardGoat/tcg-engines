@@ -1,6 +1,22 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoBaseCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoBaseCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "placeholder",
+        parameters: {},
+      },
+    ],
+    trigger: {
+      event: "burst",
+    },
+    text: "【burst】",
+  },
+];
+
+export const side7: GundamitoBaseCard = {
   id: "GD01-124",
   implemented: false,
   missingTestCase: true,
@@ -11,99 +27,13 @@ export const card: GundamitoCard = {
   color: "blue",
   set: "GD01",
   rarity: "common",
+  imageUrl: "../images/cards/card/GD01-124.webp?250711",
+  imgAlt: "Side 7",
   type: "base",
   zones: ["space"],
   traits: ["earth federation", "stronghold"],
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "placeholder",
-          parameters: {},
-        },
-      ],
-      trigger: {
-        event: "burst",
-      },
-      text: "【burst】",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "move-to-hand",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-              {
-                filter: "owner",
-                value: "self",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          targetText: "1 of your Shields",
-          originalText: "Add 1 of your Shields to your hand",
-        },
-      ],
-      trigger: {
-        event: "deploy",
-      },
-      text: "【deploy】",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "targeting",
-          amount: "1",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: "",
-          targetText: "friendly Unit",
-          originalText: "Choose 1 friendly Unit.",
-        },
-        {
-          type: "rest",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          targetText: "this Base：Choose 1 friendly Unit.",
-          originalText: "Rest this Base：Choose 1 friendly Unit.",
-        },
-      ],
-      trigger: {
-        event: "activate･main",
-      },
-      text: "【activate･main】",
-    },
-  ],
+  text: "【Burst】Deploy this card.",
   ap: 0,
   hp: 4,
+  abilities: abilities,
 };

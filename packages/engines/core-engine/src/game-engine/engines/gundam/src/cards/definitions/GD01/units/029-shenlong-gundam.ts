@@ -1,6 +1,20 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoUnitCard["abilities"] = [
+  {
+    type: "continuous",
+    effects: [
+      {
+        type: "keyword",
+        keyword: "Breach",
+        value: 4,
+      },
+    ],
+    text: "<Breach 4>",
+  },
+];
+
+export const shenlongGundam: GundamitoUnitCard = {
   id: "GD01-029",
   implemented: false,
   missingTestCase: true,
@@ -11,70 +25,14 @@ export const card: GundamitoCard = {
   color: "green",
   set: "GD01",
   rarity: "rare",
+  imageUrl: "../images/cards/card/GD01-029.webp?250711",
+  imgAlt: "Shenlong Gundam",
   type: "unit",
   zones: ["earth"],
   traits: [],
   linkRequirement: ["chang wufei"],
   ap: 4,
   hp: 4,
-  abilities: [
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Breach",
-          value: 4,
-        },
-      ],
-      text: "<Breach 4>",
-    },
-    {
-      type: "continuous",
-      effects: [
-        {
-          type: "keyword",
-          keyword: "Blocker",
-        },
-      ],
-      text: "<Blocker>",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "targeting",
-          amount: "1",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: "that is Lv",
-          targetText: "enemy Unit",
-          originalText: "Choose 1 enemy Unit with  that is Lv.",
-        },
-        {
-          type: "destroy",
-          target: {
-            type: "unit",
-            value: "opponent",
-            filters: [],
-          },
-          preventable: true,
-        },
-      ],
-      trigger: {
-        event: "attack",
-      },
-      text: "【attack】",
-    },
-  ],
+  text: "&lt;Breach 4&gt; (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+  abilities: abilities,
 };

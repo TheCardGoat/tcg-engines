@@ -1,6 +1,39 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoUnitCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "attribute-boost",
+        target: {
+          type: "unit",
+          value: 1,
+          filters: [
+            {
+              filter: "type",
+              value: "unit",
+            },
+          ],
+          zone: "battlefield",
+          isMultiple: false,
+        },
+        attribute: "AP",
+        amount: 2,
+        duration: "turn",
+        targetText: "If you are attacking the enemy player, this Unit",
+        originalText:
+          "If you are attacking the enemy player, this Unit gets AP+2",
+      },
+    ],
+    trigger: {
+      event: "attack",
+    },
+    text: "【attack】",
+  },
+];
+
+export const zeeZulu: GundamitoUnitCard = {
   id: "GD01-059",
   implemented: false,
   missingTestCase: true,
@@ -11,42 +44,14 @@ export const card: GundamitoCard = {
   color: "red",
   set: "GD01",
   rarity: "common",
+  imageUrl: "../images/cards/card/GD01-059.webp?250711",
+  imgAlt: "Zee Zulu",
   type: "unit",
   zones: ["earth"],
   traits: ["zeon"],
   linkRequirement: ["-"],
   ap: 2,
   hp: 2,
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "attribute-boost",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          attribute: "AP",
-          amount: 2,
-          duration: "turn",
-          targetText: "If you are attacking the enemy player, this Unit",
-          originalText:
-            "If you are attacking the enemy player, this Unit gets AP+2",
-        },
-      ],
-      trigger: {
-        event: "attack",
-      },
-      text: "【attack】",
-    },
-  ],
+  text: "【Attack】If you are attacking the enemy player, this Unit gets AP+2 during this battle.",
+  abilities: abilities,
 };

@@ -1,6 +1,22 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoCommandCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoCommandCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "draw",
+        amount: 1,
+      },
+    ],
+    trigger: {
+      event: "burst",
+    },
+    text: "【burst】",
+  },
+];
+
+export const signsOfARevolution: GundamitoCommandCard = {
   id: "GD01-104",
   implemented: false,
   missingTestCase: true,
@@ -11,68 +27,9 @@ export const card: GundamitoCard = {
   color: "blue",
   set: "GD01",
   rarity: "common",
+  imageUrl: "../images/cards/card/GD01-104.webp?250711",
+  imgAlt: "Signs of a Revolution",
   type: "command",
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "draw",
-          amount: 1,
-        },
-      ],
-      trigger: {
-        event: "burst",
-      },
-      text: "【burst】",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "targeting",
-          amount: "1",
-          target: {
-            type: "unit",
-            value: 1,
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-            isMultiple: false,
-          },
-          condition: "",
-          targetText: "rested enemy Unit",
-          originalText: "Choose 1 rested enemy Unit.",
-        },
-        {
-          type: "damage",
-          target: {
-            type: "unit",
-            value: "opponent",
-            filters: [],
-          },
-          amount: 2,
-          preventable: true,
-        },
-        {
-          type: "damage",
-          target: {
-            type: "unit",
-            value: "opponent",
-            filters: [],
-          },
-          amount: 2,
-          preventable: true,
-        },
-      ],
-      trigger: {
-        event: "main",
-      },
-      text: "【main】",
-    },
-  ],
+  text: "【Burst】Draw 1.",
+  abilities: abilities,
 };

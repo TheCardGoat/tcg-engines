@@ -1,6 +1,34 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoPilotCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+const abilities: GundamitoPilotCard["abilities"] = [
+  {
+    type: "triggered",
+    effects: [
+      {
+        type: "move-to-hand",
+        target: {
+          type: "unit",
+          value: "self",
+          filters: [
+            {
+              filter: "type",
+              value: "unit",
+            },
+          ],
+          zone: "battlefield",
+        },
+        targetText: "this card",
+        originalText: "Add this card to your hand",
+      },
+    ],
+    trigger: {
+      event: "burst",
+    },
+    text: "【burst】",
+  },
+];
+
+export const dearkaElthman: GundamitoPilotCard = {
   id: "GD01-095",
   implemented: false,
   missingTestCase: true,
@@ -11,53 +39,12 @@ export const card: GundamitoCard = {
   color: "red",
   set: "GD01",
   rarity: "common",
+  imageUrl: "../images/cards/card/GD01-095.webp?250711",
+  imgAlt: "Dearka Elthman",
   type: "pilot",
   traits: [],
   apModifier: 1,
   hpModifier: 1,
-  abilities: [
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "move-to-hand",
-          target: {
-            type: "unit",
-            value: "self",
-            filters: [
-              {
-                filter: "type",
-                value: "unit",
-              },
-            ],
-            zone: "battlefield",
-          },
-          targetText: "this card",
-          originalText: "Add this card to your hand",
-        },
-      ],
-      trigger: {
-        event: "burst",
-      },
-      text: "【burst】",
-    },
-    {
-      type: "triggered",
-      effects: [
-        {
-          type: "discard",
-          amount: 1,
-          originalText: "Discard 1.",
-        },
-        {
-          type: "draw",
-          amount: 1,
-        },
-      ],
-      trigger: {
-        event: "when-linked",
-      },
-      text: "【when linked】",
-    },
-  ],
+  text: "【Burst】Add this card to your hand.",
+  abilities: abilities,
 };
