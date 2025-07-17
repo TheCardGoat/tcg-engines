@@ -5,17 +5,17 @@ import type { LorcanaMove } from "./types";
 
 // **4.3.7. **Move a character to a location.
 
-// **4.3.7.1. **A player can move only their characters. A player can move characters only to their locations. A player can’t move opposing characters, and they can’t move their characters to opposing locations.
-// **4.3.7.2. **Moving a character to a location is a turn action. To move a character to a location, the active player fol ows the steps listed here in order.
+// **4.3.7.1. **A player can move only their characters. A player can move characters only to their locations. A player can't move opposing characters, and they can't move their characters to opposing locations.
+// **4.3.7.2. **Moving a character to a location is a turn action. To move a character to a location, the active player follows the steps listed here in order.
 // **4.3.7.3. **First, the player chooses one of their characters and one of their locations and declares that the character will move to that location.
-// **4.3.7.4. **Second, the player pays the chosen location’s move cost. Once the cost is paid, the character moves to the location.
+// **4.3.7.4. **Second, the player pays the chosen location's move cost. Once the cost is paid, the character moves to the location.
 // **4.3.7.5. **Third, any effects that would happen as a result of the character moving are added to the bag for resolution.
 // **4.3.7.6. **Once all effects have been resolved, the move is complete.
 
 export const moveCharacterToLocationMove: LorcanaMove = (
   { G, ctx, coreOps, gameOps, playerID },
+  locationInstanceId: string, // Fixed parameter order to match engine call
   characterInstanceId: string,
-  locationInstanceId: string,
 ) => {
   try {
     // Ensure we're in the main phase (this is a turn action)
@@ -54,7 +54,7 @@ export const moveCharacterToLocationMove: LorcanaMove = (
     const location = locationInstance;
 
     // Verify character is actually a character
-    if (!character.card.type?.includes("Character")) {
+    if (!character.card.type?.toLowerCase().includes("character")) {
       logger.error(`Card ${characterInstanceId} is not a character`);
       return createInvalidMove(
         "NOT_A_CHARACTER",
@@ -64,7 +64,7 @@ export const moveCharacterToLocationMove: LorcanaMove = (
     }
 
     // Verify location is actually a location
-    if (!location.card.type?.includes("Location")) {
+    if (!location.card.type?.toLowerCase().includes("location")) {
       logger.error(`Card ${locationInstanceId} is not a location`);
       return createInvalidMove(
         "NOT_A_LOCATION",
@@ -143,15 +143,46 @@ export const moveCharacterToLocationMove: LorcanaMove = (
       );
     }
 
-    // Pay the move cost (would need proper ink exerting system)
+    // Pay the move cost by marking ink cards as exerted
+    // Note: In full implementation, should track exerted vs ready ink cards
+    // For now, we simulate payment by marking ink as exerted
+    for (let i = 0; i < moveCost; i++) {
+      const inkCard = inkCards[i];
+      if (inkCard) {
+        // Mark ink card as exerted in game state metadata
+        if (!G.metas[inkCard.instanceId]) {
+          G.metas[inkCard.instanceId] = {};
+        }
+        G.metas[inkCard.instanceId].exerted = true;
+      }
+    }
+
     logger.info(`Player ${playerID} pays ${moveCost} ink to move character`);
 
-    // Move the character to the location (this would need proper location tracking)
+    // Track character-location relationship by setting character's location metadata
+    if (!G.metas[characterInstanceId]) {
+      G.metas[characterInstanceId] = {};
+    }
+    G.metas[characterInstanceId].location = locationInstanceId;
+
+    // Track characters at location by adding to location's characters array
+    if (!G.metas[locationInstanceId]) {
+      G.metas[locationInstanceId] = {};
+    }
+    const currentCharactersAtLocation =
+      G.metas[locationInstanceId].characters || [];
+    if (!currentCharactersAtLocation.includes(characterInstanceId)) {
+      G.metas[locationInstanceId].characters = [
+        ...currentCharactersAtLocation,
+        characterInstanceId,
+      ];
+    }
+
     logger.info(
       `Character ${characterInstanceId} moves to location ${locationInstanceId}`,
     );
 
-    // Add triggered effects to the bag
+    // Add triggered effects to the bag (rule 4.3.7.5)
     gameOps?.addTriggeredEffectsToTheBag("onMove", characterInstanceId);
 
     logger.info(

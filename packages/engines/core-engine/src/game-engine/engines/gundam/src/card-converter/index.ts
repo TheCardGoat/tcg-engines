@@ -20,8 +20,6 @@ export * from "./shared";
 export * from "./conversion-engine/interfaces";
 // File Organization
 export * from "./file-organization/interfaces";
-// Gap Analysis
-export * from "./gap-analysis/interfaces";
 
 // Validation System
 export * from "./validation/interfaces";
@@ -34,7 +32,6 @@ import type { GundamCard } from "../cards/definitions/improved-card-types";
 import type { ExternalCardData } from "../cards/import-converter";
 import type { ConversionEngine } from "./conversion-engine/interfaces";
 import type { FileOrganizer } from "./file-organization/interfaces";
-import type { GapAnalyzer } from "./gap-analysis/interfaces";
 import type {
   BatchProcessingOptions,
   ConversionResult,
@@ -49,14 +46,9 @@ import type { ValidationSystem } from "./validation/interfaces";
  * Main interface for the complete Gundam Card Converter system
  *
  * This interface coordinates all components of the conversion pipeline:
- * Gap Analysis → Enhanced Types → Conversion Engine → File Organization
+ * Enhanced Types → Conversion Engine → File Organization
  */
 export interface GundamCardConverter {
-  /**
-   * Gap analysis component for identifying type system improvements
-   */
-  readonly gapAnalyzer: GapAnalyzer;
-
   /**
    * Conversion engine for transforming import data to typed definitions
    */

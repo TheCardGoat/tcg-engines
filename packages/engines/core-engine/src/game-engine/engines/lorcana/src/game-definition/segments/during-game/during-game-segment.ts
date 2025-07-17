@@ -45,9 +45,7 @@ export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
               challenge: ({ G }) => {
                 return G;
               },
-              moveCharacter: ({ G }) => {
-                return G;
-              },
+              moveCharacter: lorcanaMoves.moveCharacterToLocation,
               activateAbility: ({ G }) => {
                 return G;
               },

@@ -210,7 +210,7 @@ export class LorcanaEngine extends GameEngine<
       },
       moveCharToLocation: (params: { location: string; character: string }) => {
         const { location, character } = params;
-        return this.processMove(currentPlayer, "moveCharToLocation", [
+        return this.processMove(currentPlayer, "moveCharacter", [
           location,
           character,
         ]);
