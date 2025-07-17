@@ -74,6 +74,7 @@ type Opts = {
   debug?: boolean;
   skipPreGame?: boolean;
   cardRepository?: LorcanaCardRepository;
+  testCards?: LorcanitoCard[];
 };
 
 export class LorcanaTestEngine {
@@ -112,12 +113,14 @@ export class LorcanaTestEngine {
     this.cards = initialCoreContext.cards;
     // Create card repository if not provided
     // For test engines, we need to create a repository that includes our test cards
+    const defaultTestCards = [testCharacterCard, cardWithoutInkwell];
+    const allTestCards = opts.testCards
+      ? [...defaultTestCards, ...opts.testCards]
+      : defaultTestCards;
+
     const repository =
       opts.cardRepository ||
-      createTestCardRepository(initialCoreContext.cards, [
-        testCharacterCard,
-        cardWithoutInkwell,
-      ]);
+      createTestCardRepository(initialCoreContext.cards, allTestCards);
 
     const seed = "seed-for-test"; // Use a fixed seed for reproducibility
 
@@ -214,7 +217,7 @@ export class LorcanaTestEngine {
     return availableMoves;
   }
 
-  async moveToLocation(params: {
+  moveToLocation(params: {
     location: LorcanaCardInstance | LorcanitoCard;
     character: LorcanaCardInstance | LorcanitoCard;
     skipAssertion?: boolean;

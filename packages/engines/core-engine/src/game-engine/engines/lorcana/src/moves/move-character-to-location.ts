@@ -3,18 +3,19 @@ import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import type { LorcanaMove } from "./types";
 
-// **4.3.7. Move a character to a location**
-// Player chooses one of their characters and locations, pays the location's move cost,
-// character moves to the location, and effects from moving are added to the bag.
+// **4.3.7. **Move a character to a location.
 
-interface MoveToLocationOptions {
-  locationInstanceId: string; // The location to move the character to
-}
+// **4.3.7.1. **A player can move only their characters. A player can move characters only to their locations. A player can’t move opposing characters, and they can’t move their characters to opposing locations.
+// **4.3.7.2. **Moving a character to a location is a turn action. To move a character to a location, the active player fol ows the steps listed here in order.
+// **4.3.7.3. **First, the player chooses one of their characters and one of their locations and declares that the character will move to that location.
+// **4.3.7.4. **Second, the player pays the chosen location’s move cost. Once the cost is paid, the character moves to the location.
+// **4.3.7.5. **Third, any effects that would happen as a result of the character moving are added to the bag for resolution.
+// **4.3.7.6. **Once all effects have been resolved, the move is complete.
 
 export const moveCharacterToLocationMove: LorcanaMove = (
   { G, ctx, coreOps, gameOps, playerID },
   characterInstanceId: string,
-  options: MoveToLocationOptions,
+  locationInstanceId: string,
 ) => {
   try {
     // Ensure we're in the main phase (this is a turn action)
@@ -38,17 +39,14 @@ export const moveCharacterToLocationMove: LorcanaMove = (
       );
     }
 
-    const locationInstance: LorcanaCardInstance = coreOps.getCardInstance(
-      options.locationInstanceId,
-    );
+    const locationInstance: LorcanaCardInstance =
+      coreOps.getCardInstance(locationInstanceId);
     if (!locationInstance) {
-      logger.error(
-        `Failed to get location instance ${options.locationInstanceId}`,
-      );
+      logger.error(`Failed to get location instance ${locationInstanceId}`);
       return createInvalidMove(
         "LOCATION_NOT_FOUND",
         "moves.moveCharacterToLocation.errors.locationNotFound",
-        { instanceId: options.locationInstanceId },
+        { instanceId: locationInstanceId },
       );
     }
 
@@ -67,12 +65,12 @@ export const moveCharacterToLocationMove: LorcanaMove = (
 
     // Verify location is actually a location
     if (!location.card.type?.includes("Location")) {
-      logger.error(`Card ${options.locationInstanceId} is not a location`);
+      logger.error(`Card ${locationInstanceId} is not a location`);
       return createInvalidMove(
         "NOT_A_LOCATION",
         "moves.moveCharacterToLocation.errors.notALocation",
         {
-          instanceId: options.locationInstanceId,
+          instanceId: locationInstanceId,
           cardType: location.card.type,
         },
       );
@@ -80,7 +78,7 @@ export const moveCharacterToLocationMove: LorcanaMove = (
 
     // Verify both character and location are controlled by the player
     const characterOwner = coreOps.getCardOwner(characterInstanceId);
-    const locationOwner = coreOps.getCardOwner(options.locationInstanceId);
+    const locationOwner = coreOps.getCardOwner(locationInstanceId);
 
     if (characterOwner !== playerID) {
       logger.error(
@@ -95,12 +93,12 @@ export const moveCharacterToLocationMove: LorcanaMove = (
 
     if (locationOwner !== playerID) {
       logger.error(
-        `Location ${options.locationInstanceId} is not controlled by player ${playerID}`,
+        `Location ${locationInstanceId} is not controlled by player ${playerID}`,
       );
       return createInvalidMove(
         "LOCATION_NOT_CONTROLLED",
         "moves.moveCharacterToLocation.errors.locationNotControlled",
-        { instanceId: options.locationInstanceId, playerId: playerID },
+        { instanceId: locationInstanceId, playerId: playerID },
       );
     }
 
@@ -116,14 +114,12 @@ export const moveCharacterToLocationMove: LorcanaMove = (
     }
 
     // Verify location is in play
-    if (
-      !playCards.find((card) => card.instanceId === options.locationInstanceId)
-    ) {
-      logger.error(`Location ${options.locationInstanceId} is not in play`);
+    if (!playCards.find((card) => card.instanceId === locationInstanceId)) {
+      logger.error(`Location ${locationInstanceId} is not in play`);
       return createInvalidMove(
         "LOCATION_NOT_IN_PLAY",
         "moves.moveCharacterToLocation.errors.locationNotInPlay",
-        { instanceId: options.locationInstanceId, playerId: playerID },
+        { instanceId: locationInstanceId, playerId: playerID },
       );
     }
 
@@ -152,14 +148,14 @@ export const moveCharacterToLocationMove: LorcanaMove = (
 
     // Move the character to the location (this would need proper location tracking)
     logger.info(
-      `Character ${characterInstanceId} moves to location ${options.locationInstanceId}`,
+      `Character ${characterInstanceId} moves to location ${locationInstanceId}`,
     );
 
     // Add triggered effects to the bag
     gameOps?.addTriggeredEffectsToTheBag("onMove", characterInstanceId);
 
     logger.info(
-      `Player ${playerID} moved character ${characterInstanceId} to location ${options.locationInstanceId} for ${moveCost} ink`,
+      `Player ${playerID} moved character ${characterInstanceId} to location ${locationInstanceId} for ${moveCost} ink`,
     );
 
     return G;
@@ -171,7 +167,7 @@ export const moveCharacterToLocationMove: LorcanaMove = (
       {
         error: String(error),
         characterInstanceId,
-        locationInstanceId: options?.locationInstanceId,
+        locationInstanceId,
         playerId: playerID,
       },
     );
