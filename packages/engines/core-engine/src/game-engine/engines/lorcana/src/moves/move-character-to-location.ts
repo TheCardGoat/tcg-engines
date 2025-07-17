@@ -27,7 +27,8 @@ export const moveCharacterToLocationMove: LorcanaMove = (
       );
     }
 
-    const characterInstance = coreOps.getCardInstance(characterInstanceId);
+    const characterInstance: LorcanaCardInstance =
+      coreOps.getCardInstance(characterInstanceId);
     if (!characterInstance) {
       logger.error(`Failed to get character instance ${characterInstanceId}`);
       return createInvalidMove(
@@ -37,7 +38,7 @@ export const moveCharacterToLocationMove: LorcanaMove = (
       );
     }
 
-    const locationInstance = coreOps.getCardInstance(
+    const locationInstance: LorcanaCardInstance = coreOps.getCardInstance(
       options.locationInstanceId,
     );
     if (!locationInstance) {
@@ -51,8 +52,8 @@ export const moveCharacterToLocationMove: LorcanaMove = (
       );
     }
 
-    const character = characterInstance as LorcanaCardInstance;
-    const location = locationInstance as LorcanaCardInstance;
+    const character = characterInstance;
+    const location = locationInstance;
 
     // Verify character is actually a character
     if (!character.card.type?.includes("Character")) {

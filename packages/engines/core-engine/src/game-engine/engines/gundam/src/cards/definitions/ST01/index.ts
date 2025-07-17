@@ -26,4 +26,3 @@ allCardsST01Cards.forEach((card) => {
 
 // Units
 export { card as ST01_1 } from "./units/1";
-export { card as ST01_1 } from "./units/001-";

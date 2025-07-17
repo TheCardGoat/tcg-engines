@@ -1,6 +1,7 @@
 import { CoreCardCtxProvider } from "~/game-engine/core-engine/card/core-card-ctx-provider";
 import { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
 import type { LorcanaEngine } from "../lorcana-engine";
+import type { LorcanaCardMeta } from "../lorcana-engine-types";
 import type { LorcanaCardDefinition } from "./lorcana-card-repository";
 
 export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition> {
@@ -19,7 +20,7 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
       ownerId,
       definition: card,
       contextProvider,
-      engine, // Pass engine to base class for WeakRef storage
+      engine,
     });
   }
 
@@ -66,5 +67,17 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
         gameState.ctx.currentPhase === "mainPhase"
       );
     }, "Cannot check if card can be played");
+  }
+
+  get meta(): LorcanaCardMeta {
+    return this.getLorcanaEngine()?.getCardMeta(this.instanceId) || {};
+  }
+
+  isAtLocation(location: LorcanaCardInstance): boolean {
+    return this.meta.location === location.instanceId;
+  }
+
+  containsCharacter(character: LorcanaCardInstance): boolean {
+    return this.meta.characters?.includes(character.instanceId);
   }
 }

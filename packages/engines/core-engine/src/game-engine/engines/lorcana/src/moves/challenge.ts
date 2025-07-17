@@ -54,8 +54,8 @@ export const challengeMove: LorcanaMove = (
       );
     }
 
-    const challenger = challengerInstance as LorcanaCardInstance;
-    const target = targetInstance as LorcanaCardInstance;
+    const challenger = challengerInstance;
+    const target = targetInstance;
 
     // Verify challenger is a character
     if (!challenger.card.type?.includes("Character")) {
@@ -141,8 +141,7 @@ export const challengeMove: LorcanaMove = (
       // If target doesn't have Bodyguard, check if there's a Bodyguard that must be challenged first
       const opponentPlayCards = coreOps.getCardsInZone("play", targetOwner!);
       const bodyguardCards = opponentPlayCards.filter((card) => {
-        const cardKeywords =
-          ((card as LorcanaCardInstance).card as any).keywords || [];
+        const cardKeywords = (card.card as any).keywords || [];
         return (
           cardKeywords.includes("Bodyguard") &&
           card.instanceId !== options.targetInstanceId

@@ -2,9 +2,21 @@ import type { LorcanitoCard } from "@lorcanito/lorcana-engine";
 
 export type LorcanaCardDefinition = LorcanitoCard;
 
+export type LorcanaCardMeta = {
+  exerted?: boolean | null;
+  playedThisTurn?: boolean | null;
+  damage?: number | null;
+  shifter?: string | null;
+  shifted?: string | null;
+  revealed?: boolean | null;
+  location?: string | null;
+  characters?: string[] | null;
+};
+
 export type LorcanaGameState = {
   effects: LayerItem[];
   bag: LayerItem[];
+  metas: Record<InstanceId, LorcanaCardMeta>;
   turnActions?: {
     putCardIntoInkwell?: boolean;
     // Add other turn-limited actions as needed

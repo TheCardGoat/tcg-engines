@@ -170,7 +170,7 @@ export class CoreOperation<
    * @returns The card instance if found and engine is available, otherwise null
    * @throws {Error} If the card instance is not found
    */
-  getCardInstance(instanceId: string) {
+  getCardInstance(instanceId: string): CardInstance {
     return safeExecute(`getCardInstance:${instanceId}`, () => {
       const cardInstance =
         this.engine.cardInstanceStore.getCardByInstanceId(instanceId);
@@ -179,7 +179,9 @@ export class CoreOperation<
         throw new Error(ErrorFormatters.notFound("Card instance", instanceId));
       }
 
-      return cardInstance;
+      // Safe cast: Game engines initialize card models with proper types during engine initialization
+      // The card instances in the store should already be of the correct CardInstance type
+      return cardInstance as CardInstance;
     });
   }
 
@@ -188,7 +190,7 @@ export class CoreOperation<
    * @param filter Filter criteria for cards
    * @returns Array of matching cards if engine is available, otherwise empty array
    */
-  queryCards(filter: any) {
+  queryCards(filter: CardFilter): CardInstance[] {
     return this.engine.queryCards(filter);
   }
 
@@ -198,7 +200,7 @@ export class CoreOperation<
    * @param playerId Optional player ID to filter by
    * @returns Array of cards in the zone if engine is available, otherwise empty array
    */
-  getCardsInZone(zoneName: string, playerId?: string) {
+  getCardsInZone(zoneName: string, playerId?: string): CardInstance[] {
     return this.engine.getCardsInZone(zoneName, playerId);
   }
 

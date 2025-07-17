@@ -13,6 +13,7 @@ export function createEmptyLorcanaGameState(
   return {
     effects: [],
     bag: [],
+    metas: {},
     turnActions: undefined, // Explicitly set to undefined to start fresh
   };
 }

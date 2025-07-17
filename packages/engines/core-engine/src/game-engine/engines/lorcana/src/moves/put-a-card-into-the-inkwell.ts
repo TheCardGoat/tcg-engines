@@ -39,9 +39,7 @@ export const putACardIntoTheInkwellMove: LorcanaMove = (
       );
     }
 
-    // Type assertion is safe here because LorcanaEngine.initializeCardModels() ensures
-    // all card instances are replaced with LorcanaCardInstance objects during engine initialization
-    const lorcanaCard = cardInstance as LorcanaCardInstance;
+    const lorcanaCard = cardInstance;
     if (!lorcanaCard.inkwell) {
       logger.error(`Card ${instanceId} does not have an inkwell symbol`);
       return createInvalidMove(

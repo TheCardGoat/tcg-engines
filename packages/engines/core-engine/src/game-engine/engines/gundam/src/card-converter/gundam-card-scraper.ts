@@ -41,7 +41,7 @@ interface ScrapedCardData {
 /**
  * Scrapes card data from the Gundam Card Game website
  */
-async function scrapeCardData(
+export async function scrapeCardData(
   cardNumber: string,
 ): Promise<ScrapedCardData | null> {
   const url = `https://www.gundam-gcg.com/en/cards/detail.php?detailSearch=${cardNumber}`;
@@ -196,7 +196,9 @@ function parseCardHTML(html: string): ScrapedCardData | null {
 /**
  * Converts scraped data to GundamitoCard
  */
-function convertToGundamitoCard(data: ScrapedCardData): GundamitoCard | null {
+export function convertToGundamitoCard(
+  data: ScrapedCardData,
+): GundamitoCard | null {
   try {
     // Parse basic info
     const cardType = convertCardType(data.type);

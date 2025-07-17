@@ -46,9 +46,7 @@ export const playCardMove: LorcanaMove = (
       );
     }
 
-    // Type assertion is safe here because LorcanaEngine.initializeCardModels() ensures
-    // all card instances are replaced with LorcanaCardInstance objects during engine initialization
-    const lorcanaCard = cardInstance as LorcanaCardInstance;
+    const lorcanaCard = cardInstance;
 
     // Verify card is in player's hand
     const handCards = coreOps.getCardsInZone("hand", playerID);
@@ -80,7 +78,7 @@ export const playCardMove: LorcanaMove = (
           );
         }
 
-        const lorcanaShiftTarget = shiftTarget as LorcanaCardInstance;
+        const lorcanaShiftTarget = shiftTarget;
 
         // Verify shift target has the same name
         if (lorcanaCard.card.name !== lorcanaShiftTarget.card.name) {

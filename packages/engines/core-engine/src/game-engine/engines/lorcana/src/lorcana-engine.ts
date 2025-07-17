@@ -11,6 +11,7 @@ import type { LorcanaCardRepository } from "./cards/lorcana-card-repository";
 import { LorcanaGame } from "./game-definition/lorcana-game-definition";
 import type {
   GameCards,
+  LorcanaCardMeta,
   LorcanaGameState,
   TriggerTiming,
   Zone,
@@ -207,6 +208,13 @@ export class LorcanaEngine extends GameEngine<
 
         return this.processMove(currentPlayer, "passTurn", []);
       },
+      moveCharToLocation: (params: { location: string; character: string }) => {
+        const { location, character } = params;
+        return this.processMove(currentPlayer, "moveCharToLocation", [
+          location,
+          character,
+        ]);
+      },
     };
   }
 
@@ -250,11 +258,14 @@ export class LorcanaEngine extends GameEngine<
     return this.getAllCards();
   }
 
-  /**
-   * Type-safe card filtering with Lorcana-specific properties
-   */
-  queryCardsByFilter(filter: LorcanaCardFilter) {
-    return super.queryCardsByFilter(filter);
+  getCardMeta(instanceId: string): LorcanaCardMeta {
+    return this.getGameState().G.metas[instanceId] || {};
+  }
+
+  queryCardsByFilter(filter: LorcanaCardFilter): LorcanaCardInstance[] {
+    const results = super.queryCardsByFilter(filter);
+    // Safe cast: initializeCardModels() ensures all card instances are LorcanaCardInstance
+    return results as LorcanaCardInstance[];
   }
 
   get core() {

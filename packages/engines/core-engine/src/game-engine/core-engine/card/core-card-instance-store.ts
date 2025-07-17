@@ -87,7 +87,7 @@ export class CoreCardInstanceStore<
     return Object.values(this.cardInstances);
   }
 
-  queryCards(filter: any) {
+  queryCards(filter: CardFilter): CardModel[] {
     return safeExecute("queryCards", () => {
       const engine = this.engineRef.deref();
       if (!engine) {
@@ -99,11 +99,16 @@ export class CoreCardInstanceStore<
           ),
         );
       }
-      return filterCoreCardInstances({
+
+      const results = filterCoreCardInstances({
         state: engine.getState(),
         store: this,
         filter,
       });
+
+      // Safe cast: Game engines initialize card models with proper types during engine initialization
+      // The card instances in the store should already be of the correct CardModel type
+      return results as CardModel[];
     });
   }
 

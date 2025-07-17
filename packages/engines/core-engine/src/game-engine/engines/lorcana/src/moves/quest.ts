@@ -36,9 +36,7 @@ export const questMove: LorcanaMove = (
       );
     }
 
-    // Type assertion is safe here because LorcanaEngine.initializeCardModels() ensures
-    // all card instances are replaced with LorcanaCardInstance objects during engine initialization
-    const lorcanaCard = cardInstance as LorcanaCardInstance;
+    const lorcanaCard = cardInstance;
 
     // Verify card is a character
     if (!lorcanaCard.card.type?.includes("Character")) {

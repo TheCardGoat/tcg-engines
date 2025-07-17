@@ -6,7 +6,6 @@ import type {
 } from "@lorcanito/lorcana-engine";
 import { allCardsById } from "@lorcanito/lorcana-engine";
 import type { CoreCardFilterDSL } from "~/game-engine/core-engine/card/core-card-filter";
-import type { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
 import { getCardZone } from "~/game-engine/core-engine/engine/zone-operation";
 
 import {
@@ -20,6 +19,7 @@ import {
   createShortAndUniqueIds,
 } from "~/game-engine/core-engine/utils/id-utils";
 import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
+import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import { LorcanaCardRepository } from "../cards/lorcana-card-repository";
 import { LorcanaEngine } from "../lorcana-engine";
 import type { LorcanaGameState, Zone } from "../lorcana-engine-types";
@@ -214,6 +214,33 @@ export class LorcanaTestEngine {
     return availableMoves;
   }
 
+  async moveToLocation(params: {
+    location: LorcanaCardInstance | LorcanitoCard;
+    character: LorcanaCardInstance | LorcanitoCard;
+    skipAssertion?: boolean;
+  }) {
+    const location = this.getCardModel(params.location);
+    const character = this.getCardModel(params.character);
+
+    const response = this.moves.moveCharToLocation({
+      location: location.instanceId,
+      character: character.instanceId,
+    });
+
+    if (!response.success) {
+      throw new Error(JSON.stringify(response));
+    }
+
+    this.wasMoveExecutedAndPropagated();
+
+    if (!params.skipAssertion) {
+      expect(character.isAtLocation(location)).toBe(true);
+      expect(location.containsCharacter(character)).toBe(true);
+    }
+
+    return { location, character };
+  }
+
   getZone(zone: Zones, playerId = "player_one"): string[] {
     return (
       getCardZone(this.playerOneEngine.getCtx(), zone, playerId)?.cards || []
@@ -278,7 +305,10 @@ export class LorcanaTestEngine {
     return this.cards;
   }
 
-  getCardModel(card: LorcanitoCard, _index?: number): CoreCardInstance {
+  getCardModel(
+    card: LorcanitoCard | LorcanaCardInstance,
+    _index?: number,
+  ): LorcanaCardInstance {
     const results = this.authoritativeEngine.queryCardsByFilter({
       publicId: card.id,
     });

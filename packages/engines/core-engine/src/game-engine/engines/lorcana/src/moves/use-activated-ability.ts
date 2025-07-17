@@ -41,7 +41,7 @@ export const useActivatedAbilityMove: LorcanaMove = (
       );
     }
 
-    const sourceCard = sourceInstance as LorcanaCardInstance;
+    const sourceCard = sourceInstance;
 
     // Verify source is controlled by the player
     const sourceOwner = coreOps.getCardOwner(sourceInstanceId);

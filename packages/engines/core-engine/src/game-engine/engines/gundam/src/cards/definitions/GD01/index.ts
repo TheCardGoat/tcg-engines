@@ -1,136 +1,24 @@
-// GD01 Card Index
+import type { GundamitoCard } from "../cardTypes";
+import { side7 } from "./bases/bases";
+import { theWitchAndTheBride } from "./commands/commands";
+import { banagherLinks } from "./pilots/pilots";
+import { strikeDaggerGATX105, strikeGundam } from "./units/units";
 
-// Bases
-export { card as GD01_123 } from "./bases/123-nahel-argama";
-export { card as GD01_124 } from "./bases/124-side-7";
-export { card as GD01_125 } from "./bases/125-zanzibar";
-export { card as GD01_126 } from "./bases/126-underground-desert-base";
-export { card as GD01_127 } from "./bases/127-gamow";
-export { card as GD01_128 } from "./bases/128-mining-asteroid-palau";
-export { card as GD01_129 } from "./bases/129-kusanagi";
-export { card as GD01_130 } from "./bases/130-13th-tactical-testing-sector";
-// Commands
-export { card as GD01_99 } from "./commands/099-intercept-orders";
-export { card as GD01_100 } from "./commands/100-a-show-of-resolve";
-export { card as GD01_101 } from "./commands/101-deep-devotion";
-export { card as GD01_102 } from "./commands/102-securing-the-supply-line";
-export { card as GD01_103 } from "./commands/103-the-stubborn-cog";
-export { card as GD01_104 } from "./commands/104-signs-of-a-revolution";
-export { card as GD01_105 } from "./commands/105-citizens-take-a-stand";
-export { card as GD01_106 } from "./commands/106-fortress-defense";
-export { card as GD01_107 } from "./commands/107-first-contact";
-export { card as GD01_108 } from "./commands/108-strategic-arms";
-export { card as GD01_109 } from "./commands/109-the-path-to-victory-or-defeat";
-export { card as GD01_110 } from "./commands/110-rasid-039-s-orders";
-export { card as GD01_111 } from "./commands/111-battle-of-aces";
-export { card as GD01_112 } from "./commands/112-extreme-hatred";
-export { card as GD01_113 } from "./commands/113-the-desert-tiger";
-export { card as GD01_114 } from "./commands/114-assault-on-torrington-base";
-export { card as GD01_115 } from "./commands/115-zeon-remnant-forces";
-export { card as GD01_116 } from "./commands/116-stealth-stratagem";
-export { card as GD01_117 } from "./commands/117-the-witch-and-the-bride";
-export { card as GD01_118 } from "./commands/118-overflowing-affection";
-export { card as GD01_119 } from "./commands/119-iron-fisted-discipline";
-export { card as GD01_120 } from "./commands/120-naval-bombardment";
-export { card as GD01_121 } from "./commands/121-midair-modifications";
-export { card as GD01_122 } from "./commands/122-covert-operative";
-// Pilots
-export { card as GD01_87 } from "./pilots/087-sayla-mass";
-export { card as GD01_88 } from "./pilots/088-banagher-links";
-export { card as GD01_89 } from "./pilots/089-riddhe-marcenas";
-export { card as GD01_90 } from "./pilots/090-duo-maxwell";
-export { card as GD01_91 } from "./pilots/091-chang-wufei";
-export { card as GD01_92 } from "./pilots/092-m-039-quve";
-export { card as GD01_93 } from "./pilots/093-marida-cruz";
-export { card as GD01_94 } from "./pilots/094-yzak-jule";
-export { card as GD01_95 } from "./pilots/095-dearka-elthman";
-export { card as GD01_96 } from "./pilots/096-cagalli-yula-athha";
-export { card as GD01_97 } from "./pilots/097-guel-jeturk";
-export { card as GD01_98 } from "./pilots/098-elan-ceres-enhanced-person-number-4";
-// Units
-export { card as GD01_1 } from "./units/001-gundam";
-export { card as GD01_2 } from "./units/002-unicorn-gundam-destroy-mode";
-export { card as GD01_3 } from "./units/003-unicorn-gundam-02-banshee-destroy-mode";
-export { card as GD01_4 } from "./units/004-guncannon";
-export { card as GD01_5 } from "./units/005-unicorn-gundam-unicorn-mode";
-export { card as GD01_6 } from "./units/006-delta-plus";
-export { card as GD01_7 } from "./units/007-noin-039-s-aries";
-export { card as GD01_8 } from "./units/008-guntank";
-export { card as GD01_9 } from "./units/009-g-fighter";
-export { card as GD01_10 } from "./units/010-unicorn-gundam-02-banshee-unicorn-mode";
-export { card as GD01_11 } from "./units/011-loto";
-export { card as GD01_12 } from "./units/012-zechs-039-leo";
-export { card as GD01_13 } from "./units/013-gundam";
-export { card as GD01_14 } from "./units/014-g-sky-easy";
-export { card as GD01_15 } from "./units/015-ball";
-export { card as GD01_16 } from "./units/016-jegan";
-export { card as GD01_17 } from "./units/017-stark-jegan";
-export { card as GD01_18 } from "./units/018-rezel";
-export { card as GD01_19 } from "./units/019-byarlant-custom";
-export { card as GD01_20 } from "./units/020-anksha";
-export { card as GD01_21 } from "./units/021-pisces";
-export { card as GD01_22 } from "./units/022-cancer";
-export { card as GD01_23 } from "./units/023-char-039-s-gelgoog";
-export { card as GD01_24 } from "./units/024-wing-gundam-zero";
-export { card as GD01_25 } from "./units/025-gundam-deathscythe";
-export { card as GD01_26 } from "./units/026-char-039-s-zaku";
-export { card as GD01_27 } from "./units/027-big-zam";
-export { card as GD01_28 } from "./units/028-gundam-sandrock";
-export { card as GD01_29 } from "./units/029-shenlong-gundam";
-export { card as GD01_30 } from "./units/030-rick-dom";
-export { card as GD01_31 } from "./units/031-gelgoog";
-export { card as GD01_32 } from "./units/032-gyan";
-export { card as GD01_33 } from "./units/033-gundam-deathscythe";
-export { card as GD01_34 } from "./units/034-gundam-heavyarms";
-export { card as GD01_35 } from "./units/035-zaku";
-export { card as GD01_36 } from "./units/036-gouf";
-export { card as GD01_37 } from "./units/037-gogg";
-export { card as GD01_38 } from "./units/038-adzam";
-export { card as GD01_39 } from "./units/039-dopp";
-export { card as GD01_40 } from "./units/040-wing-gundam";
-export { card as GD01_41 } from "./units/041-shenlong-gundam";
-export { card as GD01_42 } from "./units/042-duo-039-s-leo";
-export { card as GD01_43 } from "./units/043-rasid-039-s-maganac";
-export { card as GD01_44 } from "./units/044-kshatriya";
-export { card as GD01_45 } from "./units/045-duel-gundam-assault-shroud";
-export { card as GD01_46 } from "./units/046-buster-gundam";
-export { card as GD01_47 } from "./units/047-shamblo";
-export { card as GD01_48 } from "./units/048-zaku-i-sniper-type";
-export { card as GD01_49 } from "./units/049-blitz-gundam";
-export { card as GD01_50 } from "./units/050-lagowe";
-export { card as GD01_51 } from "./units/051-kshatriya";
-export { card as GD01_52 } from "./units/052-geara-zulu-guards-type";
-export { card as GD01_53 } from "./units/053-geara-doga-heavy-armed-type";
-export { card as GD01_54 } from "./units/054-duel-gundam";
-export { card as GD01_55 } from "./units/055-bucue";
-export { card as GD01_56 } from "./units/056-geara-doga-sleeves";
-export { card as GD01_57 } from "./units/057-dreissen-sleeves";
-export { card as GD01_58 } from "./units/058-galluss-k";
-export { card as GD01_59 } from "./units/059-zee-zulu";
-export { card as GD01_60 } from "./units/060-zaku-mariner";
-export { card as GD01_61 } from "./units/061-zuoot";
-export { card as GD01_62 } from "./units/062-goohn";
-export { card as GD01_63 } from "./units/063-zno";
-export { card as GD01_64 } from "./units/064-dinn";
-export { card as GD01_65 } from "./units/065-freedom-gundam";
-export { card as GD01_66 } from "./units/066-justice-gundam";
-export { card as GD01_67 } from "./units/067-gundam-aerial-rebuild";
-export { card as GD01_68 } from "./units/068-perfect-strike-gundam";
-export { card as GD01_69 } from "./units/069-strike-rouge";
-export { card as GD01_70 } from "./units/070-gundam-aerial";
-export { card as GD01_71 } from "./units/071-gundam-pharact";
-export { card as GD01_72 } from "./units/072-launcher-strike-gundam";
-export { card as GD01_73 } from "./units/073-sword-strike-gundam";
-export { card as GD01_74 } from "./units/074-chuchu-039-s-demi-trainer";
-export { card as GD01_75 } from "./units/075-darilbalde";
-export { card as GD01_76 } from "./units/076-michaelis";
-export { card as GD01_77 } from "./units/077-strike-gundam";
-export { card as GD01_78 } from "./units/078-mistral";
-export { card as GD01_79 } from "./units/079-skygrasper";
-export { card as GD01_80 } from "./units/080-cagalli-039-s-skygrasper";
-export { card as GD01_81 } from "./units/081-m1-astray";
-export { card as GD01_82 } from "./units/082-gundam-aerial-mirasoul-flight-unit";
-export { card as GD01_83 } from "./units/083-guel-039-s-dilanza";
-export { card as GD01_84 } from "./units/084-beguir-pente";
-export { card as GD01_85 } from "./units/085-demi-garrison";
-export { card as GD01_86 } from "./units/086-gundam-lfrith";
+export const allCardsGD01Cards: GundamitoCard[] = [
+  side7,
+  theWitchAndTheBride,
+  banagherLinks,
+  strikeGundam,
+  // Add more cards as they are implemented
+];
+
+export const allCardsGD01CardsById: Record<string, GundamitoCard> = {};
+allCardsGD01Cards.forEach((card) => {
+  allCardsGD01CardsById[card.id] = card;
+});
+
+// Re-export for convenience
+export { side7 } from "./bases/bases";
+export { theWitchAndTheBride } from "./commands/commands";
+export { banagherLinks } from "./pilots/pilots";
+export { strikeDaggerGATX105, strikeGundam } from "./units/units";

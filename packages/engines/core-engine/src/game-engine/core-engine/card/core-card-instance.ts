@@ -22,7 +22,7 @@ export class CoreCardInstance<T extends { id: string } = { id: string }> {
     ownerId: string;
     definition: T;
     contextProvider: CoreCardCtxProvider;
-    engine?: any; // Optional engine reference for game-specific cards
+    engine: any;
   }) {
     this.instanceId = instanceId;
     this.ownerId = ownerId;
@@ -37,6 +37,14 @@ export class CoreCardInstance<T extends { id: string } = { id: string }> {
 
   get publicId() {
     return this.card.id;
+  }
+
+  get id() {
+    return this.card.id;
+  }
+
+  get name() {
+    return "TODO: IMPLEMENT NAME";
   }
 
   get owner(): string | undefined {
