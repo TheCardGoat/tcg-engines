@@ -226,15 +226,16 @@ describe("Move: Move Character to Location", () => {
         .getCardsInZone("play", "player_one")
         .filter((card) => card.card.type.toLowerCase().includes("location"));
 
-      if (characters.length > 0 && locations.length > 0) {
-        await expect(async () => {
-          await tempEngine.moveToLocation({
-            character: characters[0],
-            location: locations[0],
-            skipAssertion: true,
-          });
-        }).rejects.toThrow();
-      }
+      expect(characters.length).toBeGreaterThan(0);
+      expect(locations.length).toBeGreaterThan(0);
+
+      expect(() => {
+        tempEngine.moveToLocation({
+          character: characters[0],
+          location: locations[0],
+          skipAssertion: true,
+        });
+      }).toThrow();
 
       tempEngine.dispose();
     });
@@ -381,15 +382,16 @@ describe("Move: Move Character to Location", () => {
         .getCardsInZone("play", "player_one")
         .filter((card) => card.card.type.toLowerCase().includes("location"));
 
-      if (handCharacters.length > 0 && playerLocations.length > 0) {
-        await expect(async () => {
-          await testEngine.moveToLocation({
-            character: handCharacters[0],
-            location: playerLocations[0],
-            skipAssertion: true,
-          });
-        }).rejects.toThrow();
-      }
+      expect(handCharacters.length).toBeGreaterThan(0);
+      expect(playerLocations.length).toBeGreaterThan(0);
+
+      expect(() => {
+        testEngine.moveToLocation({
+          character: handCharacters[0],
+          location: playerLocations[0],
+          skipAssertion: true,
+        });
+      }).toThrow();
     });
 
     it("should validate location is in play zone", async () => {
@@ -414,15 +416,16 @@ describe("Move: Move Character to Location", () => {
         .filter((card) => card.card.type.toLowerCase().includes("character"));
       const handLocations = tempEngine.getCardsInZone("hand", "player_one");
 
-      if (characters.length > 0 && handLocations.length > 0) {
-        await expect(async () => {
-          await tempEngine.moveToLocation({
-            character: characters[0],
-            location: handLocations[0], // Location not in play
-            skipAssertion: true,
-          });
-        }).rejects.toThrow();
-      }
+      expect(characters.length).toBeGreaterThan(0);
+      expect(handLocations.length).toBeGreaterThan(0);
+
+      expect(() => {
+        tempEngine.moveToLocation({
+          character: characters[0],
+          location: handLocations[0], // Location not in play
+          skipAssertion: true,
+        });
+      }).toThrow();
 
       tempEngine.dispose();
     });
