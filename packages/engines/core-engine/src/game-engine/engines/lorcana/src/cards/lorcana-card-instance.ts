@@ -1,14 +1,14 @@
 import { CoreCardCtxProvider } from "~/game-engine/core-engine/card/core-card-ctx-provider";
 import { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
-import type {
-  LorcanaCardFilter,
-  LorcanaEngine,
-  LorcanaPlayerState,
-} from "../lorcana-engine";
+import type { LorcanaEngine } from "../lorcana-engine";
 import type {
   LorcanaCardMeta,
   LorcanaGameState,
 } from "../lorcana-engine-types";
+import type {
+  LorcanaCardFilter,
+  LorcanaPlayerState,
+} from "../lorcana-generic-types";
 import type { LorcanaCardDefinition } from "./lorcana-card-repository";
 
 export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition> {

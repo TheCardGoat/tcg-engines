@@ -173,7 +173,7 @@ export class CoreEngine<
    * @param state - Current game state
    * @returns Function context for game operations
    */
-  private createFnContextFromState(
+  protected createFnContextFromState(
     state: CoreEngineState<GameState>,
   ): FnContext<
     GameState,
@@ -182,10 +182,7 @@ export class CoreEngine<
     CardFilter,
     CardInstance
   > {
-    const coreOperation = new CoreOperation({
-      state: state,
-      engine: this,
-    });
+    const coreOperation = this.createCoreOperationFromState(state);
 
     return {
       coreOps: coreOperation,
@@ -207,6 +204,28 @@ export class CoreEngine<
         _stateID: 0,
       }),
     };
+  }
+
+  /**
+   * Factory method for creating CoreOperation instances
+   * Can be overridden by subclasses to provide game-specific operations
+   *
+   * @param state - Current game state
+   * @returns CoreOperation instance for the game
+   */
+  protected createCoreOperationFromState(
+    state: CoreEngineState<GameState>,
+  ): CoreOperation<
+    GameState,
+    CardDefinition,
+    PlayerState,
+    CardFilter,
+    CardInstance
+  > {
+    return new CoreOperation({
+      state: state,
+      engine: this,
+    });
   }
 
   processMove(
