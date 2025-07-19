@@ -9,7 +9,7 @@ import type {
 export type { SegmentMap };
 
 import type { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
-import type { Move } from "~/game-engine/core-engine/move/move-types";
+import type { Move, MoveFn } from "~/game-engine/core-engine/move/move-types";
 import type { PlayerID } from "~/game-engine/core-engine/types/core-types";
 import type { CoreCardInstance } from "./card/core-card-instance";
 import type {
@@ -26,13 +26,8 @@ export type FlowPhaseType = string;
 export type FlowStepType = string;
 
 // Forward declaration to avoid circular dependency
-interface CoreEngineInterface {
-  readonly playerID: PlayerID | null;
-  processMove(playerID: string, moveType: string, args: unknown[]): unknown;
-  getState(): unknown;
-  subscribe(callback: (state: unknown) => void): () => void;
-}
-
+// Note: This interface is no longer used since gameOps was removed from FnContext
+// All game-specific operations are now handled through extended CoreOperation classes
 export interface FlowStep<G> {
   id: FlowStepType;
   name: string;
@@ -100,7 +95,7 @@ export interface GameDefinition<G = unknown> {
 }
 
 export interface MoveMap<G = unknown> {
-  [moveName: string]: Move<G>;
+  [moveName: string]: Move<G> | MoveFn<G>;
 }
 
 // "Public" state to be communicated to clients.
@@ -146,7 +141,6 @@ export type FnContext<
     CardFilter,
     CardInstance
   >;
-  gameOps: CoreEngineInterface; // Properly typed engine interface
   playerID?: PlayerID | null;
   readonly _getUpdatedState: () => CoreEngineState<G>;
 

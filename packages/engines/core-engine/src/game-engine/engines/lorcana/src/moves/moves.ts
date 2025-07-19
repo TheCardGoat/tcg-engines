@@ -3,7 +3,7 @@ import { alterHandMove } from "./alterHand";
 import { challengeMove } from "./challenge";
 import { chooseWhoGoesFirstMove } from "./chooseFirstPlayer";
 import { concedeMove } from "./concede";
-import { moveCharacterToLocationMove } from "./move-character-to-location";
+import { moveCharacter } from "./move-character-to-location";
 import { passTurnMove } from "./pass-turn";
 import { playCardMove } from "./play-card";
 import { putACardIntoTheInkwellMove } from "./put-a-card-into-the-inkwell";
@@ -20,11 +20,11 @@ export const lorcanaMoves = {
   playCard: playCardMove,
   quest: questMove,
   challenge: challengeMove,
-  moveCharacterToLocation: moveCharacterToLocationMove,
+  moveCharacterToLocation: moveCharacter,
   useActivatedAbility: useActivatedAbilityMove,
   manualMoves: {
     exertCard,
   },
-  // System Moves
+  // Testing/Debug Moves
   concede: concedeMove,
 };

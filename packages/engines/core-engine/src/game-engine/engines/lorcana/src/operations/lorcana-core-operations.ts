@@ -88,23 +88,6 @@ export class LorcanaCoreOperations extends CoreOperation<
   }
 
   /**
-   * Play a card from inkwell (Lorcana-specific mechanic)
-   */
-  playFromInkwell(cardId: string, playerId: string): void {
-    // Use the engine's built-in ink management
-    const inkCost = this.getInkCost(cardId);
-
-    if (this.lorcanaEngine.exertInkForCost(playerId, inkCost)) {
-      this.moveCard({
-        playerId,
-        instanceId: cardId,
-        from: "inkwell",
-        to: "play",
-      });
-    }
-  }
-
-  /**
    * Add card to inkwell (Lorcana-specific mechanic)
    */
   addToInkwell(cardId: string, playerId: string): void {
@@ -127,7 +110,6 @@ export class LorcanaCoreOperations extends CoreOperation<
    * Exert a card (Lorcana-specific state change)
    */
   exertCard(cardId: string): void {
-    // Update meta in the game state
     if (!this.state.G.metas[cardId]) {
       this.state.G.metas[cardId] = {};
     }
@@ -201,6 +183,155 @@ export class LorcanaCoreOperations extends CoreOperation<
 
     for (const inkCard of inkCards) {
       this.readyCard(inkCard.instanceId);
+    }
+  }
+
+  /**
+   * Make a character leave its current location (Lorcana-specific mechanic)
+   */
+  leaveLocation(char: LorcanaCardInstance): void {
+    const location = char.location;
+    if (!location) {
+      return;
+    }
+
+    // Update character metadata to remove location reference
+    if (this.state.G.metas[char.instanceId]) {
+      this.state.G.metas[char.instanceId].location = undefined;
+    }
+
+    // Update location metadata to remove character from characters array
+    if (this.state.G.metas[location.instanceId]?.characters) {
+      this.state.G.metas[location.instanceId].characters = this.state.G.metas[
+        location.instanceId
+      ].characters.filter((card) => card !== char.instanceId);
+    }
+  }
+
+  /**
+   * Make a character enter a location (Lorcana-specific mechanic)
+   */
+  enterLocation(
+    char: LorcanaCardInstance,
+    location: LorcanaCardInstance,
+  ): void {
+    const characterInstanceId = char.instanceId;
+    const locationInstanceId = location.instanceId;
+
+    // First leave current location if any
+    this.leaveLocation(char);
+
+    // Track character-location relationship by setting character's location metadata
+    if (!this.state.G.metas[characterInstanceId]) {
+      this.state.G.metas[characterInstanceId] = {};
+    }
+    this.state.G.metas[characterInstanceId].location = locationInstanceId;
+
+    // Track characters at location by adding to location's characters array
+    if (!this.state.G.metas[locationInstanceId]) {
+      this.state.G.metas[locationInstanceId] = {};
+    }
+    // Always initialize as array for locations
+    if (!Array.isArray(this.state.G.metas[locationInstanceId].characters)) {
+      this.state.G.metas[locationInstanceId].characters = [];
+    }
+    const currentCharactersAtLocation =
+      this.state.G.metas[locationInstanceId].characters;
+    if (!currentCharactersAtLocation.includes(characterInstanceId)) {
+      currentCharactersAtLocation.push(characterInstanceId);
+    }
+
+    // Add triggered effects to the bag (rule 4.3.7.5)
+    this.addTriggeredEffectsToTheBag("onMove", characterInstanceId);
+  }
+
+  /**
+   * Get the number of available (ready) ink cards for a player
+   * This is used for cost validation
+   */
+  getAvailableInk(playerId: string): number {
+    // Get only ready (non-exerted) ink cards for the player
+    const readyInkCards = this.getCardsInZone("inkwell", playerId).filter(
+      (card) => !this.state.G.metas[card.instanceId]?.exerted,
+    );
+
+    return readyInkCards.length;
+  }
+
+  /**
+   * Exert ink cards to pay for costs
+   * This is a Lorcana-specific mechanism for paying costs with ink
+   */
+  exertInkForCost(playerId: string, cost: number): boolean {
+    if (cost <= 0) {
+      return true;
+    }
+
+    // Get only ready (non-exerted) ink cards for the player
+    const readyInkCards = this.getCardsInZone("inkwell", playerId).filter(
+      (card) => !this.state.G.metas[card.instanceId]?.exerted,
+    );
+
+    if (readyInkCards.length < cost) {
+      return false;
+    }
+
+    for (let i = 0; i < cost; i++) {
+      const inkCard = readyInkCards[i];
+      if (inkCard) {
+        this.exertCard(inkCard.instanceId);
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Add triggered effects to the bag for processing
+   * This is a Lorcana-specific mechanism for handling card triggers
+   */
+  addTriggeredEffectsToTheBag(timing: string, cardInstanceId: string): void {
+    const card = this.getCardInstance(cardInstanceId);
+    if (!card) return;
+
+    const locationId = this.state.G.metas[cardInstanceId]?.location;
+
+    // Ensure triggerEvents is initialized
+    if (!this.state.G.triggerEvents) {
+      this.state.G.triggerEvents = [];
+    }
+
+    // Handle move-related triggers
+    if (timing === "onMove" && locationId) {
+      const location = this.getCardInstance(locationId);
+
+      if (location) {
+        // For the location
+        this.state.G.triggerEvents.push({
+          type: "locationTrigger",
+          timing,
+          locationId,
+          characterId: cardInstanceId,
+          timestamp: Date.now(),
+        });
+
+        // For the character
+        this.state.G.triggerEvents.push({
+          type: "characterTrigger",
+          timing,
+          locationId,
+          characterId: cardInstanceId,
+          timestamp: Date.now(),
+        });
+      }
+    } else if (timing === "onPutIntoInkwell") {
+      // Handle inkwell-related triggers
+      this.state.G.triggerEvents.push({
+        type: "inkwellTrigger",
+        timing,
+        characterId: cardInstanceId,
+        timestamp: Date.now(),
+      });
     }
   }
 }

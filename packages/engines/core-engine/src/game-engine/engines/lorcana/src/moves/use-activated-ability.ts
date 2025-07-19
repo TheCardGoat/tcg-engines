@@ -14,7 +14,7 @@ interface ActivatedAbilityOptions {
 }
 
 export const useActivatedAbilityMove: LorcanaMove = (
-  { G, ctx, coreOps, gameOps, playerID },
+  { G, ctx, coreOps, playerID },
   sourceInstanceId: string,
   options: ActivatedAbilityOptions,
 ) => {

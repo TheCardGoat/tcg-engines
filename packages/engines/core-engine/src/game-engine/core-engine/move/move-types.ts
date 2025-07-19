@@ -24,6 +24,28 @@ export interface InvalidMoveResult {
 }
 
 /**
+ * Function style move definition (for backward compatibility)
+ * This represents the previous function-based move API
+ */
+export type MoveFn<
+  G extends GameSpecificGameState = DefaultGameState,
+  CardDefinition extends GameSpecificCardDefinition = DefaultCardDefinition,
+  PlayerState extends GameSpecificPlayerState = DefaultPlayerState,
+  CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
+  CardInstance extends
+    CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
+> = (
+  context: FnContext<
+    G,
+    CardDefinition,
+    PlayerState,
+    CardFilter,
+    CardInstance
+  > & { playerID: PlayerID },
+  ...args: unknown[]
+) => undefined | G | InvalidMoveResult;
+
+/**
  * Game-specific constraint that can be checked for a move
  */
 export interface GameMoveConstraint<
@@ -82,32 +104,6 @@ export interface TargetSpec<
 }
 
 /**
- * Legacy function type for backward compatibility
- * This will be removed in Phase 2 when all moves are converted to EnumerableMove
- */
-export type MoveFn<
-  G extends GameSpecificGameState = DefaultGameState,
-  CardDefinition extends GameSpecificCardDefinition = DefaultCardDefinition,
-  PlayerState extends GameSpecificPlayerState = DefaultPlayerState,
-  CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
-  CardInstance extends
-    CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
-  GameEngine = unknown,
-> = (
-  context: FnContext<
-    G,
-    CardDefinition,
-    PlayerState,
-    CardFilter,
-    CardInstance
-  > & {
-    playerID: PlayerID;
-    gameOps: GameEngine;
-  },
-  ...args: unknown[]
-) => undefined | G | InvalidMoveResult;
-
-/**
  * Enumerable move object that provides execution, constraints, targets, and priority
  */
 export interface EnumerableMove<
@@ -117,7 +113,6 @@ export interface EnumerableMove<
   CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
   CardInstance extends
     CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
-  GameEngine = unknown,
 > {
   // Execute the move (core logic)
   readonly execute: (
@@ -129,7 +124,6 @@ export interface EnumerableMove<
       CardInstance
     > & {
       playerID: PlayerID;
-      gameOps: GameEngine;
     },
     ...args: unknown[]
   ) => undefined | G | InvalidMoveResult;
@@ -144,7 +138,6 @@ export interface EnumerableMove<
       CardInstance
     > & {
       playerID: PlayerID;
-      gameOps: GameEngine;
     },
   ) => GameMoveConstraint<typeof context>[];
 
@@ -158,7 +151,6 @@ export interface EnumerableMove<
       CardInstance
     > & {
       playerID: PlayerID;
-      gameOps: GameEngine;
     },
     ...args: unknown[]
   ) => TargetSpec<typeof context, CardFilter>[];
@@ -173,14 +165,12 @@ export interface EnumerableMove<
       CardInstance
     > & {
       playerID: PlayerID;
-      gameOps: GameEngine;
     },
   ) => number;
 }
 
 /**
- * Move type - temporarily supports both function and object moves
- * Will be restricted to only EnumerableMove in Phase 2
+ * Move type - now supports both EnumerableMove and legacy MoveFn
  */
 export type Move<
   G extends GameSpecificGameState = DefaultGameState,
@@ -189,38 +179,12 @@ export type Move<
   CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
   CardInstance extends
     CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
-  GameEngine = unknown,
 > =
-  | MoveFn<G, CardDefinition, PlayerState, CardFilter, CardInstance, GameEngine>
-  | EnumerableMove<
-      G,
-      CardDefinition,
-      PlayerState,
-      CardFilter,
-      CardInstance,
-      GameEngine
-    >;
+  | EnumerableMove<G, CardDefinition, PlayerState, CardFilter, CardInstance>
+  | MoveFn<G, CardDefinition, PlayerState, CardFilter, CardInstance>;
 
 /**
- * LongFormMove interface for backward compatibility
- */
-export interface LongFormMove<
-  G extends GameSpecificGameState,
-  CardDefinition extends GameSpecificCardDefinition,
-  PlayerState extends GameSpecificPlayerState,
-  CardFilter extends GameSpecificCardFilter,
-  CardInstance extends CoreCardInstance<CardDefinition>,
-> {
-  move: MoveFn<G, CardDefinition, PlayerState, CardFilter, CardInstance>;
-  redact?: boolean | ((context: { G: G; ctx: CoreCtx }) => boolean);
-  noLimit?: boolean;
-  client?: boolean;
-  undoable?: boolean | ((context: { G: G; ctx: CoreCtx }) => boolean);
-  ignoreStaleStateID?: boolean;
-}
-
-/**
- * Type guard to check if a move is an enumerable move
+ * Type guard to check if a move is an EnumerableMove
  */
 export function isEnumerableMove<
   G extends GameSpecificGameState = DefaultGameState,
@@ -229,87 +193,16 @@ export function isEnumerableMove<
   CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
   CardInstance extends
     CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
-  GameEngine = unknown,
 >(
-  move: Move<
-    G,
-    CardDefinition,
-    PlayerState,
-    CardFilter,
-    CardInstance,
-    GameEngine
-  >,
+  move: Move<G, CardDefinition, PlayerState, CardFilter, CardInstance>,
 ): move is EnumerableMove<
   G,
   CardDefinition,
   PlayerState,
   CardFilter,
-  CardInstance,
-  GameEngine
+  CardInstance
 > {
   return typeof move === "object" && move !== null && "execute" in move;
-}
-
-/**
- * Type guard to check if a move is a function move
- */
-export function isMoveFn<
-  G extends GameSpecificGameState = DefaultGameState,
-  CardDefinition extends GameSpecificCardDefinition = DefaultCardDefinition,
-  PlayerState extends GameSpecificPlayerState = DefaultPlayerState,
-  CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
-  CardInstance extends
-    CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
-  GameEngine = unknown,
->(
-  move: Move<
-    G,
-    CardDefinition,
-    PlayerState,
-    CardFilter,
-    CardInstance,
-    GameEngine
-  >,
-): move is MoveFn<
-  G,
-  CardDefinition,
-  PlayerState,
-  CardFilter,
-  CardInstance,
-  GameEngine
-> {
-  return typeof move === "function";
-}
-
-/**
- * Helper function to create an enumerable move
- */
-export function createEnumerableMove<
-  G extends GameSpecificGameState = DefaultGameState,
-  CardDefinition extends GameSpecificCardDefinition = DefaultCardDefinition,
-  PlayerState extends GameSpecificPlayerState = DefaultPlayerState,
-  CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
-  CardInstance extends
-    CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
-  GameEngine = unknown,
->(
-  move: EnumerableMove<
-    G,
-    CardDefinition,
-    PlayerState,
-    CardFilter,
-    CardInstance,
-    GameEngine
-  >,
-): EnumerableMove<
-  G,
-  CardDefinition,
-  PlayerState,
-  CardFilter,
-  CardInstance,
-  GameEngine
-> {
-  return move;
 }
 
 /**
@@ -350,24 +243,15 @@ export function adaptLegacyMove<
   CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
   CardInstance extends
     CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
-  GameEngine = unknown,
 >(
   legacyMoveFn: MoveFn<
     G,
     CardDefinition,
     PlayerState,
     CardFilter,
-    CardInstance,
-    GameEngine
+    CardInstance
   >,
-): EnumerableMove<
-  G,
-  CardDefinition,
-  PlayerState,
-  CardFilter,
-  CardInstance,
-  GameEngine
-> {
+): EnumerableMove<G, CardDefinition, PlayerState, CardFilter, CardInstance> {
   return {
     execute: legacyMoveFn,
   };
@@ -383,26 +267,82 @@ export function getExecuteFunction<
   CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
   CardInstance extends
     CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
-  GameEngine = unknown,
 >(
-  move: Move<
-    G,
-    CardDefinition,
-    PlayerState,
-    CardFilter,
-    CardInstance,
-    GameEngine
-  >,
-): MoveFn<
-  G,
-  CardDefinition,
-  PlayerState,
-  CardFilter,
-  CardInstance,
-  GameEngine
-> {
+  move: Move<G, CardDefinition, PlayerState, CardFilter, CardInstance>,
+): MoveFn<G, CardDefinition, PlayerState, CardFilter, CardInstance> {
   if (isEnumerableMove(move)) {
     return move.execute;
   }
   return move;
+}
+
+/**
+ * Type guard to check if a move is a function-style move (backward compatibility)
+ */
+export function isMoveFn<
+  G extends GameSpecificGameState = DefaultGameState,
+  CardDefinition extends GameSpecificCardDefinition = DefaultCardDefinition,
+  PlayerState extends GameSpecificPlayerState = DefaultPlayerState,
+  CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
+  CardInstance extends
+    CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
+>(
+  move:
+    | Move<G, CardDefinition, PlayerState, CardFilter, CardInstance>
+    | MoveFn<G, CardDefinition, PlayerState, CardFilter, CardInstance>,
+): move is MoveFn<G, CardDefinition, PlayerState, CardFilter, CardInstance> {
+  return typeof move === "function";
+}
+
+/**
+ * Helper function to create an EnumerableMove from a MoveFn or an object with configuration
+ */
+export function createEnumerableMove<
+  G extends GameSpecificGameState = DefaultGameState,
+  CardDefinition extends GameSpecificCardDefinition = DefaultCardDefinition,
+  PlayerState extends GameSpecificPlayerState = DefaultPlayerState,
+  CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
+  CardInstance extends
+    CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
+>(
+  moveFnOrConfig:
+    | MoveFn<G, CardDefinition, PlayerState, CardFilter, CardInstance>
+    | {
+        execute: MoveFn<
+          G,
+          CardDefinition,
+          PlayerState,
+          CardFilter,
+          CardInstance
+        >;
+        getConstraints?: EnumerableMove<
+          G,
+          CardDefinition,
+          PlayerState,
+          CardFilter,
+          CardInstance
+        >["getConstraints"];
+        getTargetSpecs?: EnumerableMove<
+          G,
+          CardDefinition,
+          PlayerState,
+          CardFilter,
+          CardInstance
+        >["getTargetSpecs"];
+        getPriority?: EnumerableMove<
+          G,
+          CardDefinition,
+          PlayerState,
+          CardFilter,
+          CardInstance
+        >["getPriority"];
+      },
+): EnumerableMove<G, CardDefinition, PlayerState, CardFilter, CardInstance> {
+  if (typeof moveFnOrConfig === "function") {
+    return {
+      execute: moveFnOrConfig,
+    };
+  }
+
+  return moveFnOrConfig;
 }

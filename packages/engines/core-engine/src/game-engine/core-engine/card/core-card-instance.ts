@@ -49,6 +49,10 @@ export class CoreCardInstance<T extends { id: string }> {
     return undefined;
   }
 
+  isEqual(other: CoreCardInstance<T>): boolean {
+    return this.instanceId === other.instanceId;
+  }
+
   // toJSON() {
   //   return {
   //     instanceId: this.instanceId,

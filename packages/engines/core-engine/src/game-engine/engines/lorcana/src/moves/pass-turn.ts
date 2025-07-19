@@ -7,13 +7,7 @@ import type { LorcanaMove } from "./types";
 // This creates the start of the End of Turn Phase (see 4.1.4).
 // **4.4.1.4.** The turn ends for the active player, and the next player begins their turn.
 
-export const passTurnMove: LorcanaMove = ({
-  G,
-  ctx,
-  coreOps,
-  gameOps,
-  playerID,
-}) => {
+export const passTurnMove: LorcanaMove = ({ G, ctx, coreOps, playerID }) => {
   try {
     // Ensure it's the active player's turn
     const currentTurnPlayer = getCurrentTurnPlayer(ctx);

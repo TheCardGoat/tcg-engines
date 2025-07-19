@@ -16,6 +16,7 @@ import pino, { type Logger } from "pino";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 const isTest = process.env.NODE_ENV === "test";
+const isLoggerEnabled = !process.env.AGENT;
 
 // https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#logseverity
 const _PinoLevelToSeverityLookup = {
@@ -64,15 +65,39 @@ if (isTest) {
   };
 }
 
-export const debuggers = {
-  transportMessages: true,
-  dispatchActions: true,
-  testEngine: true,
-  stateTransitions: true,
-  flowTransitions: true,
-  moves: true,
-  zoneOperations: true,
-} as const;
+if (!isLoggerEnabled) {
+  // @ts-expect-error
+  internalLogger = {
+    trace: () => {},
+    debug: () => {},
+    info: () => {},
+    warn: () => {},
+    error: () => {},
+    fatal: () => {},
+    silent: () => {},
+    level: "silent",
+  };
+}
+
+export const debuggers = isLoggerEnabled
+  ? ({
+      transportMessages: true,
+      dispatchActions: true,
+      testEngine: true,
+      stateTransitions: true,
+      flowTransitions: true,
+      moves: true,
+      zoneOperations: true,
+    } as const)
+  : ({
+      transportMessages: false,
+      dispatchActions: false,
+      testEngine: false,
+      stateTransitions: false,
+      flowTransitions: false,
+      moves: false,
+      zoneOperations: false,
+    } as const);
 
 export const logger: Logger & {
   group?: (...data: any[]) => void;

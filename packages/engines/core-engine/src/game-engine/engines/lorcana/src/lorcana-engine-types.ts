@@ -21,6 +21,13 @@ export type LorcanaGameState = {
     putCardIntoInkwell?: boolean;
     // Add other turn-limited actions as needed
   };
+  triggerEvents?: Array<{
+    type: string;
+    timing: string;
+    locationId?: string;
+    characterId?: string;
+    timestamp: number;
+  }>;
 };
 
 export type Zone = "deck" | "hand" | "play" | "inkwell" | "discard" | "bag";

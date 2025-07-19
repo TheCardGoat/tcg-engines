@@ -233,188 +233,44 @@ describe("Move: Move Character to Location", () => {
       tempEngine.dispose();
     });
 
-    it.skip("should allow move when sufficient ink is available", async () => {
+    it("should allow move when sufficient ink is available", async () => {
       // Create test engine with sufficient ink for expensive location
-      const tempEngine = new LorcanaTestEngine(
-        {
-          play: [testCharacterCard, expensiveLocationCard],
-          inkwell: [cardWithoutInkwell, cardWithoutInkwell, cardWithoutInkwell], // 3 ink available
-          deck: 5,
-        },
-        { deck: 5 },
-      );
+      const tempEngine = new LorcanaTestEngine({
+        play: [testCharacterCard, expensiveLocationCard],
+        inkwell: expensiveLocationCard.moveCost + 1,
+      });
 
-      tempEngine.changeActivePlayer("player_one");
+      const character = tempEngine.getCardModel(testCharacterCard);
+      const location = tempEngine.getCardModel(expensiveLocationCard);
 
-      const characters = tempEngine
-        .getCardsInZone("play", "player_one")
-        .filter((card) => card.type.toLowerCase().includes("character"));
-      const locations = tempEngine
-        .getCardsInZone("play", "player_one")
-        .filter((card) => card.type.toLowerCase().includes("location"));
+      tempEngine.moveToLocation({
+        character,
+        location: location,
+      });
 
-      if (characters.length > 0 && locations.length > 0) {
-        try {
-          const result = await tempEngine.moveToLocation({
-            character: characters[0],
-            location: locations[0],
-            skipAssertion: true,
-          });
-          expect(result).toBeDefined();
-        } catch (error) {
-          // Implementation may not be complete, test documents expected behavior
-          expect(error).toBeDefined();
-        }
-      }
+      expect(character.location?.isEqual(location)).toBeTrue();
+
+      expect(tempEngine.getTotalInk("player_one")).toBe(4);
+      expect(tempEngine.getAvailableInk("player_one")).toBe(1);
 
       tempEngine.dispose();
     });
   });
 
   describe.skip("**4.3.7.5** Triggered effects", () => {
-    it("should trigger effects when character moves to location", async () => {
-      const playerCharacters = testEngine
-        .getCardsInZone("play", "player_one")
-        .filter((card) => card.card.type.toLowerCase().includes("character"));
-      const playerLocations = testEngine
-        .getCardsInZone("play", "player_one")
-        .filter((card) => card.card.type.toLowerCase().includes("location"));
-
-      if (playerCharacters.length > 0 && playerLocations.length > 0) {
-        try {
-          await testEngine.moveToLocation({
-            character: playerCharacters[0],
-            location: playerLocations[0],
-            skipAssertion: true,
-          });
-          // Effects should be added to bag for resolution
-          // Test documents this requirement
-        } catch (error) {
-          // Implementation may trigger errors, test documents expected behavior
-          expect(error).toBeDefined();
-        }
-      }
-    });
+    it("should trigger effects when character moves to location", async () => {});
   });
 
-  describe.skip("**4.3.7.6** Move completion", () => {
-    it("should complete move after effects resolve", async () => {
-      const playerCharacters = testEngine
-        .getCardsInZone("play", "player_one")
-        .filter((card) => card.card.type.toLowerCase().includes("character"));
-      const playerLocations = testEngine
-        .getCardsInZone("play", "player_one")
-        .filter((card) => card.card.type.toLowerCase().includes("location"));
-
-      if (playerCharacters.length > 0 && playerLocations.length > 0) {
-        try {
-          const result = await testEngine.moveToLocation({
-            character: playerCharacters[0],
-            location: playerLocations[0],
-            skipAssertion: true,
-          });
-
-          // Move should be complete after all effects resolve
-          expect(result).toBeDefined();
-        } catch (error) {
-          // Implementation may not be complete, test documents expected behavior
-          expect(error).toBeDefined();
-        }
-      }
-    });
+  describe.skip("Gaining Lore From Location", () => {
+    it("On Start of Turn, it should get lore", async () => {});
+    it("On Start of Turn, if you win lore and pass 20 lore you win the game", async () => {});
   });
 
   describe.skip("Edge cases and validation", () => {
-    it("should handle free locations (move cost 0)", async () => {
-      const tempEngine = new LorcanaTestEngine(
-        {
-          play: [testCharacterCard, freeLocationCard], // Free location
-          inkwell: [], // No ink available
-          deck: 5,
-        },
-        { deck: 5 },
-      );
+    it("should handle free locations (move cost 0)", async () => {});
 
-      tempEngine.changeActivePlayer("player_one");
+    it("should validate character is in play zone", async () => {});
 
-      const characters = tempEngine
-        .getCardsInZone("play", "player_one")
-        .filter((card) => card.type.toLowerCase().includes("character"));
-      const locations = tempEngine
-        .getCardsInZone("play", "player_one")
-        .filter((card) => card.type.toLowerCase().includes("location"));
-
-      if (characters.length > 0 && locations.length > 0) {
-        try {
-          const result = await tempEngine.moveToLocation({
-            character: characters[0],
-            location: locations[0],
-            skipAssertion: true,
-          });
-          // Should succeed even with no ink since move cost is 0
-          expect(result).toBeDefined();
-        } catch (error) {
-          // Implementation may not be complete
-          expect(error).toBeDefined();
-        }
-      }
-
-      tempEngine.dispose();
-    });
-
-    it("should validate character is in play zone", async () => {
-      // Test that characters must be in play to be moved
-      const handCharacters = testEngine.getCardsInZone("hand", "player_one");
-      const playerLocations = testEngine
-        .getCardsInZone("play", "player_one")
-        .filter((card) => card.card.type.toLowerCase().includes("location"));
-
-      expect(handCharacters.length).toBeGreaterThan(0);
-      expect(playerLocations.length).toBeGreaterThan(0);
-
-      expect(() => {
-        testEngine.moveToLocation({
-          character: handCharacters[0],
-          location: playerLocations[0],
-          skipAssertion: true,
-        });
-      }).toThrow();
-    });
-
-    it("should validate location is in play zone", async () => {
-      // Create engine with location in hand instead of play
-      const tempEngine = new LorcanaTestEngine(
-        {
-          play: [testCharacterCard], // Character in play
-          hand: [testLocationCard], // Location in hand
-          inkwell: [cardWithoutInkwell],
-          deck: 5,
-        },
-        { deck: 5 },
-        {
-          testCards: [testLocationCard],
-        },
-      );
-
-      tempEngine.changeActivePlayer("player_one");
-
-      const characters = tempEngine
-        .getCardsInZone("play", "player_one")
-        .filter((card) => card.card.type.toLowerCase().includes("character"));
-      const handLocations = tempEngine.getCardsInZone("hand", "player_one");
-
-      expect(characters.length).toBeGreaterThan(0);
-      expect(handLocations.length).toBeGreaterThan(0);
-
-      expect(() => {
-        tempEngine.moveToLocation({
-          character: characters[0],
-          location: handLocations[0], // Location not in play
-          skipAssertion: true,
-        });
-      }).toThrow();
-
-      tempEngine.dispose();
-    });
+    it("should validate location is in play zone", async () => {});
   });
 });

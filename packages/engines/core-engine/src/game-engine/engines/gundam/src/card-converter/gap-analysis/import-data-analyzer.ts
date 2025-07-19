@@ -3,6 +3,7 @@
  */
 
 import { readFile } from "node:fs/promises";
+import { logger } from "~/shared/logger";
 import type { ExternalCardData } from "../../cards/import-converter";
 import type { FieldUsageInfo, ImportDataAnalysis } from "../shared/types";
 import type { ImportDataAnalyzer as IImportDataAnalyzer } from "./interfaces";
@@ -21,7 +22,7 @@ export class ImportDataAnalyzer implements IImportDataAnalyzer {
         const cards = JSON.parse(fileContent) as ExternalCardData[];
         allCards.push(...cards);
       } catch (error) {
-        console.warn(`Failed to read import file ${filePath}:`, error);
+        // logger.warn(`Failed to read import file ${filePath}:`, error);
       }
     }
 

@@ -2,6 +2,7 @@ import { ResultHelpers } from "~/game-engine/core-engine";
 import type { CardRepository } from "~/game-engine/core-engine/card/card-repository-factory";
 import type { CoreEngineOpts } from "~/game-engine/core-engine/engine/core-engine";
 import { getCardZone } from "~/game-engine/core-engine/engine/zone-operation";
+import type { CoreEngineState } from "~/game-engine/core-engine/game-configuration";
 import { GameEngine } from "~/game-engine/core-engine/game-engine";
 
 import { logger } from "~/game-engine/core-engine/utils/logger";
@@ -33,7 +34,7 @@ interface LorcanaEngineOpts
       LorcanaCardFilter,
       LorcanaCardInstance
     >,
-    "game" | "repository" | "matchID" | "playerID"
+    "game" | "repository" | "matchID" | "playerID" | "coreOperationClass"
   > {
   cardRepository?: LorcanaCardRepository;
   gameId: string;
@@ -155,6 +156,166 @@ export class LorcanaEngine extends GameEngine<
   }
 
   /**
+   * Apply Lorcana-specific filtering to cards that have already passed core filtering
+   */
+  private applyLorcanaSpecificFilters(
+    cards: LorcanaCardInstance[],
+    filter: LorcanaCardFilter,
+  ): LorcanaCardInstance[] {
+    // IMPORTANT: Always get the most recent game state to ensure we have latest metadata
+    // This ensures consistency between CoreOps and card filtering
+    const gameState = this.getGameState();
+
+    return cards.filter((card) => {
+      // Always get fresh metadata from the current state
+      const meta = gameState.G.metas[card.instanceId] || {};
+
+      // Filter by exerted status
+      if (filter.exerted !== undefined) {
+        const isExerted = !!meta.exerted;
+        if (filter.exerted !== isExerted) {
+          return false;
+        }
+      }
+
+      // Filter by damaged status
+      if (filter.damaged !== undefined) {
+        const isDamaged = (meta.damage || 0) > 0;
+        if (filter.damaged !== isDamaged) {
+          return false;
+        }
+      }
+
+      // Filter by banished status
+      if (filter.banished !== undefined) {
+        // Cards are banished if they're in the discard zone
+        const zone = this.getCardZone(card.instanceId);
+        const isBanished = zone === "discard";
+        if (filter.banished !== isBanished) {
+          return false;
+        }
+      }
+
+      // Filter by cost
+      if (filter.cost) {
+        const cardCost = card.card.cost || 0;
+        if (filter.cost.exact !== undefined && cardCost !== filter.cost.exact) {
+          return false;
+        }
+        if (filter.cost.min !== undefined && cardCost < filter.cost.min) {
+          return false;
+        }
+        if (filter.cost.max !== undefined && cardCost > filter.cost.max) {
+          return false;
+        }
+      }
+
+      // Filter by strength
+      if (filter.strength) {
+        const cardStrength = card.card.strength || 0;
+        if (
+          filter.strength.exact !== undefined &&
+          cardStrength !== filter.strength.exact
+        ) {
+          return false;
+        }
+        if (
+          filter.strength.min !== undefined &&
+          cardStrength < filter.strength.min
+        ) {
+          return false;
+        }
+        if (
+          filter.strength.max !== undefined &&
+          cardStrength > filter.strength.max
+        ) {
+          return false;
+        }
+      }
+
+      // Filter by willpower
+      if (filter.willpower) {
+        const cardWillpower = card.card.willpower || 0;
+        if (
+          filter.willpower.exact !== undefined &&
+          cardWillpower !== filter.willpower.exact
+        ) {
+          return false;
+        }
+        if (
+          filter.willpower.min !== undefined &&
+          cardWillpower < filter.willpower.min
+        ) {
+          return false;
+        }
+        if (
+          filter.willpower.max !== undefined &&
+          cardWillpower > filter.willpower.max
+        ) {
+          return false;
+        }
+      }
+
+      // Filter by lore
+      if (filter.lore) {
+        const cardLore = card.card.lore || 0;
+        if (filter.lore.exact !== undefined && cardLore !== filter.lore.exact) {
+          return false;
+        }
+        if (filter.lore.min !== undefined && cardLore < filter.lore.min) {
+          return false;
+        }
+        if (filter.lore.max !== undefined && cardLore > filter.lore.max) {
+          return false;
+        }
+      }
+
+      // Filter by inkable status
+      if (filter.inkable !== undefined) {
+        const isInkable = !!card.card.inkwell;
+        if (filter.inkable !== isInkable) {
+          return false;
+        }
+      }
+
+      // Filter by card type
+      if (filter.cardType) {
+        const cardTypes = card.card.type?.toLowerCase() || "";
+        if (!cardTypes.includes(filter.cardType.toLowerCase())) {
+          return false;
+        }
+      }
+
+      // Filter by move cost
+      if (filter.moveCost) {
+        const cardMoveCost = (card.card as any).moveCost || 0;
+        if (
+          filter.moveCost.exact !== undefined &&
+          cardMoveCost !== filter.moveCost.exact
+        ) {
+          return false;
+        }
+        if (
+          filter.moveCost.min !== undefined &&
+          cardMoveCost < filter.moveCost.min
+        ) {
+          return false;
+        }
+        if (
+          filter.moveCost.max !== undefined &&
+          cardMoveCost > filter.moveCost.max
+        ) {
+          return false;
+        }
+      }
+
+      // Additional filters can be added here as needed
+
+      return true;
+    });
+  }
+
+  /**
    * Exert ink cards to pay for costs
    * This is a Lorcana-specific mechanism for paying costs with ink
    */
@@ -166,7 +327,7 @@ export class LorcanaEngine extends GameEngine<
       return true;
     }
 
-    // Get only ready (non-exerted) ink cards for the player
+    // Use the card filter approach with Lorcana-specific filtering
     const filter: LorcanaCardFilter = {
       zone: "inkwell",
       owner: playerId,
@@ -195,14 +356,17 @@ export class LorcanaEngine extends GameEngine<
   }
 
   exertCard({ card, exerted }: { card: string; exerted: boolean }) {
-    // Get the current game state to access metadata
+    // Always get the current game state to ensure we're modifying the same reference
+    // that the card filtering system will use
     const gameState = this.getGameState();
 
     // Mark ink card as exerted in game state metadata
-    if (!gameState.G.metas[card]) {
+    if (gameState.G.metas[card]) {
+      // Make sure we're modifying the existing object, not creating a new reference
+      gameState.G.metas[card].exerted = exerted;
+    } else {
       gameState.G.metas[card] = { exerted };
     }
-    gameState.G.metas[card].exerted = exerted;
 
     logger.debug(`Exerted card ${card} set to ${exerted}`);
   }
@@ -212,14 +376,45 @@ export class LorcanaEngine extends GameEngine<
    * This is used for cost validation
    */
   getAvailableInk(playerId: string): number {
-    // Get only ready (non-exerted) ink cards for the player
-    const readyInkCards = this.cardInstanceStore.queryCards({
+    // Use the card filter approach with Lorcana-specific filtering
+    // This should work now that we've properly implemented the filter
+    const filter: LorcanaCardFilter = {
       zone: "inkwell",
       owner: playerId,
       exerted: false,
-    } as LorcanaCardFilter);
+    };
+    const readyInkCards = this.cardInstanceStore.queryCards(filter);
+
+    // Add debug logging to verify
+    const gameState = this.getGameState();
+    const allInkCards = this.getCardsInZone("inkwell", playerId);
+    const directFilterCount = allInkCards.filter(
+      (card) => !gameState.G.metas[card.instanceId]?.exerted,
+    ).length;
+
+    // If there's a mismatch, log it
+    if (readyInkCards.length !== directFilterCount) {
+      logger.warn(
+        `[getAvailableInk] Filter mismatch: filter found ${readyInkCards.length} but direct check found ${directFilterCount} ready ink cards`,
+      );
+      // Use the direct filter as a fallback
+      return directFilterCount;
+    }
 
     return readyInkCards.length;
+  }
+
+  /**
+   * Returns the total number of cards in the player's inkwell
+   */
+  getTotalInk(playerId: string): number {
+    // Count all cards in the player's inkwell zone
+    const filter: LorcanaCardFilter = {
+      zone: "inkwell",
+      owner: playerId,
+    };
+    const allInkCards = this.cardInstanceStore.queryCards(filter);
+    return allInkCards.length;
   }
 
   /**
@@ -313,57 +508,29 @@ export class LorcanaEngine extends GameEngine<
     };
   }
 
+  /**
+   * Override the createCoreOperationFromState method to return a properly typed LorcanaCoreOperations
+   * This eliminates the need for type casting when using this method
+   */
+  protected override createCoreOperationFromState(
+    state: CoreEngineState<LorcanaGameState>,
+  ): LorcanaCoreOperations {
+    // The parent method will create a CoreOperation using the coreOperationClass we provided (LorcanaCoreOperations)
+    // We can safely return it with the correct type because we know it's LorcanaCoreOperations
+    return super.createCoreOperationFromState(state) as LorcanaCoreOperations;
+  }
+
   leaveLocation(char: LorcanaCardInstance) {
-    const G = this.getGameState().G;
-
-    const location = char.location;
-    if (!location) {
-      return;
-    }
-
-    logger.info(
-      `Leaving location: ${location.fullName} ${location.instanceId} for character: ${char.fullName} ${char.instanceId}`,
-    );
-
-    G.metas[char.instanceId].location = undefined;
-    G.metas[location.instanceId].characters = G.metas[
-      location.instanceId
-    ].characters.filter((card) => card !== char.instanceId);
+    const lorcanaOps = this.createCoreOperationFromState(this.getGameState());
+    lorcanaOps.leaveLocation(char);
   }
 
   enterLocation(char: LorcanaCardInstance, location: LorcanaCardInstance) {
-    const G = this.getGameState().G;
-
-    const characterInstanceId = char.instanceId;
-    const locationInstanceId = location.instanceId;
-
-    this.leaveLocation(char);
-
-    // Track character-location relationship by setting character's location metadata
-    if (!G.metas[characterInstanceId]) {
-      G.metas[characterInstanceId] = {};
-    }
-    G.metas[characterInstanceId].location = locationInstanceId;
-
-    // Track characters at location by adding to location's characters array
-    if (!G.metas[locationInstanceId]) {
-      G.metas[locationInstanceId] = {};
-    }
-    // Always initialize as array for locations
-    if (!Array.isArray(G.metas[locationInstanceId].characters)) {
-      G.metas[locationInstanceId].characters = [];
-    }
-    const currentCharactersAtLocation = G.metas[locationInstanceId].characters;
-    if (!currentCharactersAtLocation.includes(characterInstanceId)) {
-      currentCharactersAtLocation.push(characterInstanceId);
-    }
-
-    logger.info(
-      `Character ${characterInstanceId} moves to location ${locationInstanceId}`,
-    );
+    const lorcanaOps = this.createCoreOperationFromState(this.getGameState());
+    lorcanaOps.enterLocation(char, location);
 
     // Add triggered effects to the bag (rule 4.3.7.5)
-    this?.addTriggeredEffectsToTheBag("onMove", characterInstanceId);
+    lorcanaOps.addTriggeredEffectsToTheBag("onMove", char.instanceId);
   }
 
   getCardZone(instanceId: string): Zone | undefined {
@@ -411,9 +578,39 @@ export class LorcanaEngine extends GameEngine<
   }
 
   queryCardsByFilter(filter: LorcanaCardFilter): LorcanaCardInstance[] {
-    const results = super.queryCardsByFilter(filter);
-    // Safe cast: initializeCardModels() ensures all card instances are LorcanaCardInstance
-    return results as LorcanaCardInstance[];
+    // Special handling for exerted filter to ensure it's properly synchronized
+    // This is the most direct fix that ensures metadata changes are seen by card filtering
+    if (filter.exerted !== undefined) {
+      // First get all cards that match the basic criteria (zone, owner, etc.)
+      const baseFilter = { ...filter };
+      delete baseFilter.exerted; // Remove exerted to get all matching cards
+
+      // Apply base filtering
+      const baseResults = super.queryCardsByFilter(baseFilter);
+
+      // Convert to LorcanaCardInstance for type safety
+      const lorcanaCards = baseResults as LorcanaCardInstance[];
+
+      // Get the latest game state for fresh metadata
+      const gameState = this.getGameState();
+
+      // Manually filter by exerted status
+      return lorcanaCards.filter((card) => {
+        const meta = gameState.G.metas[card.instanceId] || {};
+        const isExerted = !!meta.exerted;
+        return filter.exerted === isExerted;
+      });
+    }
+
+    // For all other filters, use the standard approach
+    // First apply core filtering (zone, owner, publicId, instanceId)
+    const baseResults = super.queryCardsByFilter(filter);
+
+    // Convert to LorcanaCardInstance for type safety
+    const lorcanaCards = baseResults as LorcanaCardInstance[];
+
+    // Apply Lorcana-specific filtering
+    return this.applyLorcanaSpecificFilters(lorcanaCards, filter);
   }
 
   get core() {

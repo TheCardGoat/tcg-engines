@@ -1,7 +1,7 @@
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { logger } from "~/game-engine/core-engine/utils/logger";
-import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import type { LorcanaMove } from "./types";
+import { toLorcanaCoreOps } from "./types";
 
 // **4.3.5. Quest**
 // **4.3.5.1.** The player declares that a character they control is questing.
@@ -11,7 +11,7 @@ import type { LorcanaMove } from "./types";
 // **4.3.5.5.** Effects that would occur as a result of this character questing are added to the bag.
 
 export const questMove: LorcanaMove = (
-  { G, ctx, coreOps, gameOps, playerID },
+  { G, ctx, coreOps, playerID },
   instanceId: string,
 ) => {
   try {
@@ -94,19 +94,20 @@ export const questMove: LorcanaMove = (
       );
     }
 
-    // Exert the character (would need proper character state management)
-    // For now, we note that the character should be exerted
-    logger.info(`Exerting character ${instanceId} for questing`);
+    // Add lore to the player's total
+    logger.info(`Player ${playerID} gains ${loreValue} lore from questing`);
 
-    // Award lore to the player
-    // Note: This would need proper player state management
-    // For now, we just log the lore gain
-    logger.info(
-      `Player ${playerID} gains ${loreValue} lore from questing with ${lorcanaCard.card.name}`,
-    );
+    // Get the lore field from player state and update it
+    const playerLoreKey = `${playerID}_lore`;
+    G[playerLoreKey] = (G[playerLoreKey] || 0) + loreValue;
 
-    // Add triggered effects to the bag (rule 4.3.5.5)
-    gameOps?.addTriggeredEffectsToTheBag("onQuest", instanceId);
+    // Exert the card
+    // Note: This would need proper exerted state tracking
+    logger.info(`Exerting card ${instanceId} after quest`);
+
+    // Add triggered effects to the bag (rule 4.3.5.4)
+    const lorcanaOps = toLorcanaCoreOps(coreOps);
+    lorcanaOps.addTriggeredEffectsToTheBag("onQuest", instanceId);
 
     logger.info(
       `Player ${playerID} quested with character ${instanceId} (${lorcanaCard.card.name}) for ${loreValue} lore`,

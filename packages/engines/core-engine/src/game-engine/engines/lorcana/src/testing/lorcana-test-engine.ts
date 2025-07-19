@@ -545,6 +545,20 @@ export class LorcanaTestEngine {
 
     return response;
   }
+
+  /**
+   * Returns the total number of cards in the player's inkwell
+   */
+  getTotalInk(playerId: string): number {
+    return this.authoritativeEngine.getTotalInk(playerId);
+  }
+
+  /**
+   * Returns the number of ink currently available to spend
+   */
+  getAvailableInk(playerId: string): number {
+    return this.authoritativeEngine.getAvailableInk(playerId);
+  }
 }
 
 export function createLorcanaEngineMocks(

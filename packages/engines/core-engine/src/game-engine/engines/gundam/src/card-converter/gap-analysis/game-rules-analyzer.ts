@@ -29,7 +29,6 @@ export class GameRulesAnalyzer implements IGameRulesAnalyzer {
         missingImplementations,
       };
     } catch (error) {
-      console.warn(`Failed to read rules file ${rulesFile}:`, error);
       return {
         timingKeywords: [],
         keywordEffects: [],

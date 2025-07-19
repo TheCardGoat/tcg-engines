@@ -1,7 +1,7 @@
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { logger } from "~/game-engine/core-engine/utils/logger";
-import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import type { LorcanaMove } from "./types";
+import { toLorcanaCoreOps } from "./types";
 
 // **4.3.6. Challenge**
 // **4.3.6.1.** The player declares that a character they control is challenging.
@@ -19,11 +19,15 @@ interface ChallengeOptions {
 }
 
 export const challengeMove: LorcanaMove = (
-  { G, ctx, coreOps, gameOps, playerID },
+  { G, ctx, coreOps, playerID },
   challengerInstanceId: string,
   options: ChallengeOptions,
 ) => {
   try {
+    logger.info(
+      `Player ${playerID} attempting to challenge with ${challengerInstanceId} targeting ${options.targetInstanceId}`,
+    );
+
     // Ensure we're in the main phase (this is a turn action)
     if (ctx.currentPhase !== "mainPhase") {
       logger.error(`Cannot challenge during ${ctx.currentPhase} phase`);
@@ -177,8 +181,10 @@ export const challengeMove: LorcanaMove = (
     // Apply "while challenging" effects
     // Note: This would need to be implemented based on specific card abilities
 
-    // Add triggered abilities to the bag
-    gameOps?.addTriggeredEffectsToTheBag("onChallenge", challengerInstanceId);
+    const lorcanaOps = toLorcanaCoreOps(coreOps);
+
+    // Add triggered effects to the bag (rule 4.3.6.5)
+    lorcanaOps.addTriggeredEffectsToTheBag("onChallenge", challengerInstanceId);
 
     // Deal damage simultaneously
     if (challengerStrength > 0) {
@@ -200,13 +206,13 @@ export const challengeMove: LorcanaMove = (
     if (targetStrength >= challengerWillpower && challengerWillpower > 0) {
       logger.info(`Challenger ${challengerInstanceId} is banished`);
       // Add banishment trigger to bag
-      gameOps?.addTriggeredEffectsToTheBag("onBanish", challengerInstanceId);
+      lorcanaOps.addTriggeredEffectsToTheBag("onBanish", challengerInstanceId);
     }
 
     if (challengerStrength >= targetWillpower && targetWillpower > 0) {
       logger.info(`Target ${options.targetInstanceId} is banished`);
       // Add banishment trigger to bag
-      gameOps?.addTriggeredEffectsToTheBag(
+      lorcanaOps.addTriggeredEffectsToTheBag(
         "onBanish",
         options.targetInstanceId,
       );

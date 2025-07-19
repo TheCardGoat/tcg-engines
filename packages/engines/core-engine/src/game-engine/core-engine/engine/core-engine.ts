@@ -230,7 +230,6 @@ export class CoreEngine<
 
     return {
       coreOps: coreOperation,
-      gameOps: this,
       playerID: this.playerID || "unknown", // Make required, provide fallback
 
       // Computed getters that always reflect current state from coreOps

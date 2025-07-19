@@ -36,6 +36,10 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
     });
   }
 
+  get moveCost(): number {
+    return this.card.moveCost || 0;
+  }
+
   get inkwell(): boolean {
     return this.card.inkwell;
   }
@@ -89,6 +93,10 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
     }
 
     return undefined;
+  }
+
+  isEqual(other: LorcanaCardInstance): boolean {
+    return this.instanceId === other.instanceId;
   }
 
   containsCharacter(character: LorcanaCardInstance): boolean {

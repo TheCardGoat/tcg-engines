@@ -1,6 +1,7 @@
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
+import type { LorcanaCoreOperations } from "../operations/lorcana-core-operations";
 import type { LorcanaMove } from "./types";
 
 // **4.3.4. Play a card**
@@ -19,11 +20,13 @@ interface PlayCardOptions {
 }
 
 export const playCardMove: LorcanaMove = (
-  { G, ctx, coreOps, gameOps, playerID },
+  { G, ctx, coreOps, playerID },
   instanceId: string,
   options?: PlayCardOptions,
 ) => {
   try {
+    const lorcanaOps = coreOps as LorcanaCoreOperations;
+
     // Ensure we're in the main phase (this is a turn action)
     if (ctx.currentPhase !== "mainPhase") {
       logger.error(`Cannot play card during ${ctx.currentPhase} phase`);
@@ -100,10 +103,10 @@ export const playCardMove: LorcanaMove = (
       }
     }
 
-    // Check if player has enough ink to pay the cost
-    const availableInk = gameOps?.getAvailableInk(playerID) || 0;
+    // Check if player has enough ink to play the card using game operations
+    const availableInk = lorcanaOps.getAvailableInk(playerID);
     if (availableInk < totalCost) {
-      logger.error(
+      logger.warn(
         `Player ${playerID} does not have enough ink to play card. Required: ${totalCost}, Available: ${availableInk}`,
       );
       return createInvalidMove(
@@ -117,12 +120,10 @@ export const playCardMove: LorcanaMove = (
       );
     }
 
-    // Pay the cost using game operations
-    const paymentSuccessful = gameOps?.exertInkForCost(playerID, totalCost);
+    // Pay the ink cost using game operations
+    const paymentSuccessful = lorcanaOps.exertInkForCost(playerID, totalCost);
     if (!paymentSuccessful) {
-      logger.error(
-        `Player ${playerID} failed to pay ${totalCost} ink to play card`,
-      );
+      logger.warn(`Player ${playerID} failed to pay ${totalCost} ink`);
       return createInvalidMove(
         "PAYMENT_FAILED",
         "moves.playCard.errors.paymentFailed",
@@ -182,8 +183,8 @@ export const playCardMove: LorcanaMove = (
       // This should be handled by the card instance state
     }
 
-    // Add triggered effects to the bag (rule 4.3.4.6)
-    gameOps?.addTriggeredEffectsToTheBag("onPlay", instanceId);
+    // Add triggered effects to the bag (rule 8.7)
+    lorcanaOps.addTriggeredEffectsToTheBag("onPlay", instanceId);
 
     // For actions, resolve their effects immediately
     if (lorcanaCard.card.type.includes("Action")) {

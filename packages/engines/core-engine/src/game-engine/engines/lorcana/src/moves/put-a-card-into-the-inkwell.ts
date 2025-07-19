@@ -1,7 +1,7 @@
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { logger } from "~/game-engine/core-engine/utils/logger";
-import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import type { LorcanaMove } from "./types";
+import { toLorcanaCoreOps } from "./types";
 
 // **4.3.3. **   Put a card into the inkwell. This turn action is limited to once per turn.
 // **4.3.3.1. ** The player declares they're putting a card into their inkwell, then chooses and reveals a card from their hand with the inkwell symbol. All players verify that the inkwell symbol is present.
@@ -10,7 +10,7 @@ import type { LorcanaMove } from "./types";
 
 // TODO: Somehow prevent the player from putting a card into the inkwell when they should be resolving a layer
 export const putACardIntoTheInkwellMove: LorcanaMove = (
-  { G, ctx, coreOps, gameOps, playerID },
+  { G, ctx, coreOps, playerID },
   instanceId: string,
 ) => {
   try {
@@ -61,7 +61,23 @@ export const putACardIntoTheInkwellMove: LorcanaMove = (
       );
     }
 
+    // Verify the card is in the player's hand
+    const cardZone = coreOps.getCardZone(instanceId);
+    const cardOwner = coreOps.getCardOwner(instanceId);
+
+    if (cardZone !== "hand" || cardOwner !== playerID) {
+      logger.error(
+        `Card ${instanceId} is not in ${playerID}'s hand (zone: ${cardZone}, owner: ${cardOwner})`,
+      );
+      return createInvalidMove(
+        "CARD_NOT_IN_HAND",
+        "moves.putCardIntoInkwell.errors.cardNotInHand",
+        { instanceId, playerId: playerID, cardZone, cardOwner },
+      );
+    }
+
     // Move card from hand to inkwell zone with validation
+    logger.info(`Moving card ${instanceId} to ${playerID}'s inkwell`);
     const moveResult = coreOps.moveCard({
       playerId: playerID,
       instanceId,
@@ -86,9 +102,9 @@ export const putACardIntoTheInkwellMove: LorcanaMove = (
         putCardIntoInkwell: true,
       };
 
-      // Handle Lorcana-specific triggered effects (rule 4.3.3.3)
-      // We ignore bag implementation for now as requested
-      gameOps?.addTriggeredEffectsToTheBag("onPutIntoInkwell", instanceId);
+      // Add triggered effects to the bag for card in inkwell event
+      const lorcanaOps = toLorcanaCoreOps(coreOps);
+      lorcanaOps.addTriggeredEffectsToTheBag("onPutIntoInkwell", instanceId);
 
       logger.info(`Player ${playerID} put card ${instanceId} into the inkwell`);
     } catch (error) {
