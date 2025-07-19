@@ -39,7 +39,7 @@ export class CoreOperation<
     CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
 > {
   state: CoreEngineState<G>;
-  private engine: CoreEngine<
+  protected engine: CoreEngine<
     G,
     CardDefinition,
     PlayerState,

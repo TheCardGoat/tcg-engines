@@ -61,6 +61,36 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
     return this.meta.location === location.instanceId;
   }
 
+  get name() {
+    return this.card.name;
+  }
+
+  get fullName() {
+    if (this.card.title) {
+      return `${this.card.name} - ${this.card.title}`;
+    }
+
+    return this.name;
+  }
+
+  get location(): LorcanaCardInstance | undefined {
+    const locationId = this.meta.location;
+
+    if (!locationId) {
+      return undefined;
+    }
+
+    const cardInstance = this.contextProvider.getCardInstance(locationId);
+
+    // The engine ensures all instances are properly typed after initialization
+    // This check validates that we have the expected LorcanaCardInstance
+    if (cardInstance instanceof LorcanaCardInstance) {
+      return cardInstance;
+    }
+
+    return undefined;
+  }
+
   containsCharacter(character: LorcanaCardInstance): boolean {
     return (
       Array.isArray(this.meta.characters) &&

@@ -71,16 +71,6 @@ describe("Move: Move Character to Location", () => {
       {
         play: [testOpponentCharacterCard, freeOpponentLocationCard],
       },
-      {
-        testCards: [
-          testCharacterCard,
-          testLocationCard,
-          expensiveLocationCard,
-          freeLocationCard,
-          testOpponentCharacterCard,
-          freeOpponentLocationCard,
-        ],
-      },
     );
 
     // Verify we're in the main game phase
@@ -96,60 +86,60 @@ describe("Move: Move Character to Location", () => {
     testEngine.dispose();
   });
 
-  // describe("Basic functionality", () => {
-  //   it("should have moveToLocation method defined", () => {
-  //     expect(testEngine.moveToLocation).toBeDefined();
-  //     expect(typeof testEngine.moveToLocation).toBe("function");
-  //   });
-  // });
-  //
-  // describe("**4.3.7.1** Ownership validation - Player can move only their characters to their locations", () => {
-  //   it("should allow moving own character to own location", () => {
-  //     const character = testEngine.getCardModel(testCharacterCard);
-  //     const location = testEngine.getCardModel(testLocationCard);
-  //
-  //     expect(character.isAtLocation(location)).toBeFalsy();
-  //     expect(location.containsCharacter(character)).toBeFalsy();
-  //
-  //     testEngine.moveToLocation({
-  //       character,
-  //       location,
-  //     });
-  //
-  //     expect(character.isAtLocation(location)).toBeTrue();
-  //     expect(location.containsCharacter(character)).toBeTrue();
-  //   });
-  //
-  //   it("should prevent moving opponent's character", async () => {
-  //     const character = testEngine.getCardModel(testOpponentCharacterCard);
-  //     const location = testEngine.getCardModel(testLocationCard);
-  //
-  //     const { result } = testEngine.moveToLocation({
-  //       character,
-  //       location,
-  //       doNotThrow: true,
-  //     });
-  //
-  //     expect(result.success).toBeFalsy();
-  //     expect(character.isAtLocation(location)).toBeFalsy();
-  //     expect(location.containsCharacter(character)).toBeFalsy();
-  //   });
-  //
-  //   it("should prevent moving character to opponent's location", async () => {
-  //     const character = testEngine.getCardModel(testCharacterCard);
-  //     const location = testEngine.getCardModel(freeOpponentLocationCard);
-  //
-  //     const { result } = testEngine.moveToLocation({
-  //       character,
-  //       location,
-  //       doNotThrow: true,
-  //     });
-  //
-  //     expect(result.success).toBeFalsy();
-  //     expect(character.isAtLocation(location)).toBeFalsy();
-  //     expect(location.containsCharacter(character)).toBeFalsy();
-  //   });
-  // });
+  describe("Basic functionality", () => {
+    it("should have moveToLocation method defined", () => {
+      expect(testEngine.moveToLocation).toBeDefined();
+      expect(typeof testEngine.moveToLocation).toBe("function");
+    });
+  });
+
+  describe("**4.3.7.1** Ownership validation - Player can move only their characters to their locations", () => {
+    it("should allow moving own character to own location", () => {
+      const character = testEngine.getCardModel(testCharacterCard);
+      const location = testEngine.getCardModel(testLocationCard);
+
+      expect(character.isAtLocation(location)).toBeFalsy();
+      expect(location.containsCharacter(character)).toBeFalsy();
+
+      testEngine.moveToLocation({
+        character,
+        location,
+      });
+
+      expect(character.isAtLocation(location)).toBeTrue();
+      expect(location.containsCharacter(character)).toBeTrue();
+    });
+
+    it("should prevent moving opponent's character", async () => {
+      const character = testEngine.getCardModel(testOpponentCharacterCard);
+      const location = testEngine.getCardModel(testLocationCard);
+
+      const { result } = testEngine.moveToLocation({
+        character,
+        location,
+        doNotThrow: true,
+      });
+
+      expect(result.success).toBeFalsy();
+      expect(character.isAtLocation(location)).toBeFalsy();
+      expect(location.containsCharacter(character)).toBeFalsy();
+    });
+
+    it("should prevent moving character to opponent's location", async () => {
+      const character = testEngine.getCardModel(testCharacterCard);
+      const location = testEngine.getCardModel(freeOpponentLocationCard);
+
+      const { result } = testEngine.moveToLocation({
+        character,
+        location,
+        doNotThrow: true,
+      });
+
+      expect(result.success).toBeFalsy();
+      expect(character.isAtLocation(location)).toBeFalsy();
+      expect(location.containsCharacter(character)).toBeFalsy();
+    });
+  });
 
   describe("**4.3.7.3** Character and location selection", () => {
     it("should also move exerted characters", async () => {
@@ -168,7 +158,28 @@ describe("Move: Move Character to Location", () => {
       expect(location.containsCharacter(character)).toBeTrue();
     });
 
-    it.skip("should be able to move multiple times during one turn", async () => {
+    it("should prevent moving to the same location twice", async () => {
+      const character = testEngine.getCardModel(testCharacterCard);
+      const location = testEngine.getCardModel(testLocationCard);
+
+      testEngine.moveToLocation({
+        character,
+        location,
+      });
+
+      expect(character.isAtLocation(location)).toBeTrue();
+      expect(location.containsCharacter(character)).toBeTrue();
+
+      const { result } = testEngine.moveToLocation({
+        character,
+        location,
+        doNotThrow: true,
+      });
+
+      expect(result.success).toBeFalse();
+    });
+
+    it("should be able to move multiple times during one turn", async () => {
       const character = testEngine.getCardModel(testCharacterCard);
       const location = testEngine.getCardModel(testLocationCard);
       const anotherLocation = testEngine.getCardModel(expensiveLocationCard);
@@ -193,45 +204,36 @@ describe("Move: Move Character to Location", () => {
     });
   });
 
-  describe.skip("**4.3.7.4** Move cost payment", () => {
+  describe("**4.3.7.4** Move cost payment", () => {
     it("should require sufficient ink to pay move cost", async () => {
       // Create test engine with expensive location and insufficient ink
       const tempEngine = new LorcanaTestEngine(
         {
           play: [testCharacterCard, expensiveLocationCard], // Expensive location (cost 3)
-          inkwell: [cardWithoutInkwell], // Only 1 ink available
+          inkwell: expensiveLocationCard.moveCost - 1,
           deck: 5,
         },
-        { deck: 5 },
-        {
-          testCards: [expensiveLocationCard],
-        },
+        undefined,
       );
 
       tempEngine.changeActivePlayer("player_one");
 
-      const characters = tempEngine
-        .getCardsInZone("play", "player_one")
-        .filter((card) => card.card.type.toLowerCase().includes("character"));
-      const locations = tempEngine
-        .getCardsInZone("play", "player_one")
-        .filter((card) => card.card.type.toLowerCase().includes("location"));
+      const character = tempEngine.getCardModel(testCharacterCard);
+      const location = tempEngine.getCardModel(expensiveLocationCard);
 
-      expect(characters.length).toBeGreaterThan(0);
-      expect(locations.length).toBeGreaterThan(0);
+      const { result } = tempEngine.moveToLocation({
+        character,
+        location: location,
+        doNotThrow: true,
+      });
 
-      expect(() => {
-        tempEngine.moveToLocation({
-          character: characters[0],
-          location: locations[0],
-          skipAssertion: true,
-        });
-      }).toThrow();
+      expect(result.success).toBeFalse();
+      expect(JSON.stringify(result)).toContain("INSUFFICIENT_INK");
 
       tempEngine.dispose();
     });
 
-    it("should allow move when sufficient ink is available", async () => {
+    it.skip("should allow move when sufficient ink is available", async () => {
       // Create test engine with sufficient ink for expensive location
       const tempEngine = new LorcanaTestEngine(
         {
@@ -240,19 +242,16 @@ describe("Move: Move Character to Location", () => {
           deck: 5,
         },
         { deck: 5 },
-        {
-          testCards: [expensiveLocationCard],
-        },
       );
 
       tempEngine.changeActivePlayer("player_one");
 
       const characters = tempEngine
         .getCardsInZone("play", "player_one")
-        .filter((card) => card.card.type.toLowerCase().includes("character"));
+        .filter((card) => card.type.toLowerCase().includes("character"));
       const locations = tempEngine
         .getCardsInZone("play", "player_one")
-        .filter((card) => card.card.type.toLowerCase().includes("location"));
+        .filter((card) => card.type.toLowerCase().includes("location"));
 
       if (characters.length > 0 && locations.length > 0) {
         try {
@@ -334,19 +333,16 @@ describe("Move: Move Character to Location", () => {
           deck: 5,
         },
         { deck: 5 },
-        {
-          testCards: [freeLocationCard],
-        },
       );
 
       tempEngine.changeActivePlayer("player_one");
 
       const characters = tempEngine
         .getCardsInZone("play", "player_one")
-        .filter((card) => card.card.type.toLowerCase().includes("character"));
+        .filter((card) => card.type.toLowerCase().includes("character"));
       const locations = tempEngine
         .getCardsInZone("play", "player_one")
-        .filter((card) => card.card.type.toLowerCase().includes("location"));
+        .filter((card) => card.type.toLowerCase().includes("location"));
 
       if (characters.length > 0 && locations.length > 0) {
         try {

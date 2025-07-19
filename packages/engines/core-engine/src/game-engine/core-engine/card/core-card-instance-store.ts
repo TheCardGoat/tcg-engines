@@ -78,8 +78,17 @@ export class CoreCardInstanceStore<
     }
   }
 
-  getCardByInstanceId(id: string): CoreCardInstance<CardDefinition> | null {
-    return this.cardInstances[id];
+  getCardByInstanceId(id: string): CardModel | undefined {
+    // This method assumes the engine has properly initialized card models
+    // The engine is responsible for replacing base instances with typed ones
+    return this.cardInstances[id] as CardModel | undefined;
+  }
+
+  /**
+   * Replace a card instance with a new one (used during initialization)
+   */
+  replaceCardInstance(instanceId: string, cardInstance: CardModel): void {
+    this.cardInstances[instanceId] = cardInstance;
   }
 
   getAllCards() {
@@ -112,6 +121,13 @@ export class CoreCardInstanceStore<
   }
 
   /**
+   * Get all card instances as record for direct access
+   */
+  getCardInstances(): Record<InstanceId, CoreCardInstance<CardDefinition>> {
+    return this.cardInstances;
+  }
+
+  /**
    * Check if the underlying engine is still available
    * Useful for debugging and error handling
    */
@@ -141,13 +157,5 @@ export class CoreCardInstanceStore<
       }
     }
     return undefined;
-  }
-
-  /**
-   * Gets access to all card instances as a dictionary
-   * @returns Record of card instances indexed by instance ID
-   */
-  getCardInstances(): Record<string, CoreCardInstance<CardDefinition>> {
-    return this.cardInstances;
   }
 }

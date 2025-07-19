@@ -18,5 +18,3 @@ export type LorcanaMove = Move<
   LorcanaCardInstance,
   LorcanaEngine
 >;
-
-export type ValidMoves = keyof typeof import("./moves").lorcanaMoves;

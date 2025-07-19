@@ -73,6 +73,23 @@ export class CoreCardCtxProvider<
     });
   }
 
+  getCardInstance(instanceId: string): CardModel | undefined {
+    return safeExecute("getCardInstance", () => {
+      const engine = this.engineRef.deref();
+      if (!engine) {
+        throw new Error(
+          ErrorFormatters.state(
+            "Engine",
+            "context",
+            "Engine has been garbage collected - CoreCardCtxProvider cannot access context",
+          ),
+        );
+      }
+
+      return engine.getCardByInstanceId(instanceId);
+    });
+  }
+
   /**
    * Check if the underlying engine is still available
    * Useful for debugging and error handling

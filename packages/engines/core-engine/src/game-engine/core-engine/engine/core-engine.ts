@@ -58,6 +58,22 @@ export interface CoreEngineOpts<
   debug?: boolean;
   seed?: string;
   repository: CardRepository<CardDefinition>;
+  coreOperationClass?: new (opts: {
+    state: CoreEngineState<GameState>;
+    engine: CoreEngine<
+      GameState,
+      CardDefinition,
+      PlayerState,
+      CardFilter,
+      CardModel
+    >;
+  }) => CoreOperation<
+    GameState,
+    CardDefinition,
+    PlayerState,
+    CardFilter,
+    CardModel
+  >;
 }
 
 export type ClientState<
@@ -85,7 +101,31 @@ export class CoreEngine<
   private flowManager: FlowManager<GameState>;
 
   // Generic storage for player cards and card models
-  public cardInstanceStore: CoreCardInstanceStore<CardDefinition>;
+  public cardInstanceStore: CoreCardInstanceStore<
+    CardDefinition,
+    GameState,
+    PlayerState,
+    CardFilter,
+    CardInstance
+  >;
+
+  // Factory for creating game-specific CoreOperation instances
+  private readonly coreOperationClass: new (opts: {
+    state: CoreEngineState<GameState>;
+    engine: CoreEngine<
+      GameState,
+      CardDefinition,
+      PlayerState,
+      CardFilter,
+      CardInstance
+    >;
+  }) => CoreOperation<
+    GameState,
+    CardDefinition,
+    PlayerState,
+    CardFilter,
+    CardInstance
+  >;
 
   private authoritativeEngine?: CoreEngine<
     GameState,
@@ -115,6 +155,7 @@ export class CoreEngine<
     seed,
     repository,
     initialCoreCtx,
+    coreOperationClass,
   }: CoreEngineOpts<
     GameState,
     CardDefinition,
@@ -126,6 +167,9 @@ export class CoreEngine<
     this.matchID = matchID || "default-match";
     this.gameID = "default-game";
     this.debug = debug;
+
+    // Store the core operation class factory (default to CoreOperation)
+    this.coreOperationClass = coreOperationClass || CoreOperation;
 
     // Initialize card instance store early so it's available to other components
     this.cardInstanceStore = new CoreCardInstanceStore({
@@ -208,7 +252,7 @@ export class CoreEngine<
 
   /**
    * Factory method for creating CoreOperation instances
-   * Can be overridden by subclasses to provide game-specific operations
+   * Uses the provided coreOperationClass or defaults to CoreOperation
    *
    * @param state - Current game state
    * @returns CoreOperation instance for the game
@@ -222,7 +266,7 @@ export class CoreEngine<
     CardFilter,
     CardInstance
   > {
-    return new CoreOperation({
+    return new this.coreOperationClass({
       state: state,
       engine: this,
     });
@@ -565,6 +609,10 @@ export class CoreEngine<
    */
   getCardOwner(instanceId: string): string | undefined {
     return this.cardInstanceStore.getCardOwner(instanceId);
+  }
+
+  getCardByInstanceId(instanceId: string): CardInstance | undefined {
+    return this.cardInstanceStore.getCardByInstanceId(instanceId);
   }
 
   /**

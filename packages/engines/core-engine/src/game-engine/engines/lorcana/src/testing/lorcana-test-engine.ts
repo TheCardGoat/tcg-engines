@@ -19,7 +19,7 @@ import {
 } from "~/game-engine/core-engine/utils/id-utils";
 import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
 import { mockCharacterCard } from "~/game-engine/engines/lorcana/src/testing/mockCards";
-import { LorcanaCardInstance } from "../cards/lorcana-card-instance";
+import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import { LorcanaCardRepository } from "../cards/lorcana-card-repository";
 import { type LorcanaCardFilter, LorcanaEngine } from "../lorcana-engine";
 import type { LorcanaGameState, Zone } from "../lorcana-engine-types";
@@ -74,6 +74,48 @@ export class LorcanaTestEngine {
 
   activePlayerEngine = "player_one";
 
+  private collectCardsFromStates(
+    playerState: TestInitialState,
+    opponentState: TestInitialState,
+  ): LorcanitoCard[] {
+    const cards: LorcanitoCard[] = [];
+    const cardSet = new Set<string>(); // To avoid duplicates
+
+    // Define zones that can contain cards
+    const zones: (keyof TestInitialState)[] = [
+      "deck",
+      "hand",
+      "play",
+      "inkwell",
+      "discard",
+      "bag",
+    ];
+
+    // Extract cards from both player states
+    for (const state of [playerState, opponentState]) {
+      for (const zone of zones) {
+        const zoneValue = state[zone];
+        if (Array.isArray(zoneValue)) {
+          // If it's an array of cards, add them
+          for (const card of zoneValue) {
+            if (
+              card &&
+              typeof card === "object" &&
+              "id" in card &&
+              !cardSet.has(card.id)
+            ) {
+              cards.push(card);
+              cardSet.add(card.id);
+            }
+          }
+        }
+        // If it's a number, we don't need to do anything as it will use default test cards
+      }
+    }
+
+    return cards;
+  }
+
   constructor(
     playerState: TestInitialState = {},
     opponentState: TestInitialState = {},
@@ -90,6 +132,12 @@ export class LorcanaTestEngine {
       opponentState.deck = 10;
     }
 
+    // Auto-collect cards from player states
+    const autoCollectedCards = this.collectCardsFromStates(
+      playerState,
+      opponentState,
+    );
+
     const { initialCoreContext, game } = createLorcanaEngineMocks(
       playerState,
       opponentState,
@@ -100,8 +148,8 @@ export class LorcanaTestEngine {
     // For test engines, we need to create a repository that includes our test cards
     const defaultTestCards = [testCharacterCard, cardWithoutInkwell];
     const allTestCards = opts.testCards
-      ? [...defaultTestCards, ...opts.testCards]
-      : defaultTestCards;
+      ? [...defaultTestCards, ...autoCollectedCards, ...opts.testCards]
+      : [...defaultTestCards, ...autoCollectedCards];
 
     const repository =
       opts.cardRepository ||
@@ -398,19 +446,8 @@ export class LorcanaTestEngine {
       owner,
     };
 
-    // Map CoreCardInstance<LorcanaCardDefinition> to LorcanaCardInstance
-    return this.authoritativeEngine.cardInstanceStore
-      .queryCards(filter)
-      .map((card) =>
-        card instanceof LorcanaCardInstance
-          ? card
-          : new LorcanaCardInstance(
-              this.authoritativeEngine,
-              card.card,
-              card.instanceId,
-              card.ownerId,
-            ),
-      );
+    // The engine's queryCards should already return properly typed LorcanaCardInstance objects
+    return this.authoritativeEngine.cardInstanceStore.queryCards(filter);
   }
 
   // Moves

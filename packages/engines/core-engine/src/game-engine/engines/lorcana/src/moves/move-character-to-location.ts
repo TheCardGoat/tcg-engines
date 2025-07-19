@@ -123,6 +123,22 @@ export const moveCharacterToLocationMove: LorcanaMove = (
       );
     }
 
+    // Verify if character is already at the location
+    if (character.isAtLocation(location)) {
+      logger.error(
+        `Character ${characterInstanceId} is already at location ${locationInstanceId}`,
+      );
+      return createInvalidMove(
+        "ALREADY_AT_LOCATION",
+        "moves.moveCharacterToLocation.errors.alreadyAtLocation",
+        {
+          characterInstanceId,
+          locationInstanceId,
+          playerId: playerID,
+        },
+      );
+    }
+
     // Get the move cost of the location
     const moveCost = (location.card as any).moveCost || 0;
 
@@ -159,31 +175,7 @@ export const moveCharacterToLocationMove: LorcanaMove = (
 
     logger.info(`Player ${playerID} pays ${moveCost} ink to move character`);
 
-    // Track character-location relationship by setting character's location metadata
-    if (!G.metas[characterInstanceId]) {
-      G.metas[characterInstanceId] = {};
-    }
-    G.metas[characterInstanceId].location = locationInstanceId;
-
-    // Track characters at location by adding to location's characters array
-    if (!G.metas[locationInstanceId]) {
-      G.metas[locationInstanceId] = {};
-    }
-    // Always initialize as array for locations
-    if (!Array.isArray(G.metas[locationInstanceId].characters)) {
-      G.metas[locationInstanceId].characters = [];
-    }
-    const currentCharactersAtLocation = G.metas[locationInstanceId].characters;
-    if (!currentCharactersAtLocation.includes(characterInstanceId)) {
-      currentCharactersAtLocation.push(characterInstanceId);
-    }
-
-    logger.info(
-      `Character ${characterInstanceId} moves to location ${locationInstanceId}`,
-    );
-
-    // Add triggered effects to the bag (rule 4.3.7.5)
-    gameOps?.addTriggeredEffectsToTheBag("onMove", characterInstanceId);
+    gameOps.enterLocation(character, location);
 
     logger.info(
       `Player ${playerID} moved character ${characterInstanceId} to location ${locationInstanceId} for ${moveCost} ink`,

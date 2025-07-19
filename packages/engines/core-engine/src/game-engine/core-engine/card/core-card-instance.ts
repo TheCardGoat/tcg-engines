@@ -31,10 +31,6 @@ export class CoreCardInstance<T extends { id: string }> {
     return this.card.id;
   }
 
-  get name() {
-    return "TODO: IMPLEMENT NAME";
-  }
-
   get owner(): string | undefined {
     return this.ownerId;
   }

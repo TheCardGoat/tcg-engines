@@ -1,16 +1,14 @@
 import { ResultHelpers } from "~/game-engine/core-engine";
 import type { CardRepository } from "~/game-engine/core-engine/card/card-repository-factory";
-
+import type { CoreEngineOpts } from "~/game-engine/core-engine/engine/core-engine";
 import { getCardZone } from "~/game-engine/core-engine/engine/zone-operation";
 import { GameEngine } from "~/game-engine/core-engine/game-engine";
-import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 
 import { logger } from "~/game-engine/core-engine/utils/logger";
 import { LorcanaCardInstance } from "./cards/lorcana-card-instance";
 import type { LorcanaCardRepository } from "./cards/lorcana-card-repository";
 import { LorcanaGame } from "./game-definition/lorcana-game-definition";
 import type {
-  GameCards,
   LorcanaCardMeta,
   LorcanaGameState,
   TriggerTiming,
@@ -21,9 +19,26 @@ import type {
   LorcanaCardFilter,
   LorcanaPlayerState,
 } from "./lorcana-generic-types";
+import { LorcanaCoreOperations } from "./operations/lorcana-core-operations";
 
 // Re-export types for external usage
 export type { LorcanaCardDefinition, LorcanaCardFilter, LorcanaPlayerState };
+
+interface LorcanaEngineOpts
+  extends Omit<
+    CoreEngineOpts<
+      LorcanaGameState,
+      LorcanaCardDefinition,
+      LorcanaPlayerState,
+      LorcanaCardFilter,
+      LorcanaCardInstance
+    >,
+    "game" | "repository" | "matchID" | "playerID"
+  > {
+  cardRepository?: LorcanaCardRepository;
+  gameId: string;
+  playerId?: string;
+}
 
 export class LorcanaEngine extends GameEngine<
   LorcanaGameState,
@@ -45,17 +60,7 @@ export class LorcanaEngine extends GameEngine<
     seed,
     players,
     debug,
-  }: {
-    initialState: LorcanaGameState;
-    initialCoreCtx?: CoreCtx;
-    cards: GameCards;
-    cardRepository?: LorcanaCardRepository;
-    gameId: string;
-    playerId?: string;
-    debug?: boolean;
-    seed?: string;
-    players: string[];
-  }) {
+  }: LorcanaEngineOpts) {
     super({
       game: LorcanaGame,
       seed,
@@ -68,6 +73,7 @@ export class LorcanaEngine extends GameEngine<
       debug,
       repository:
         cardRepository || ({} as CardRepository<LorcanaCardDefinition>),
+      coreOperationClass: LorcanaCoreOperations,
     });
 
     if (cardRepository) {
@@ -79,8 +85,6 @@ export class LorcanaEngine extends GameEngine<
    * Initializes card models with Lorcana-specific functionality
    */
   protected override initializeCardModels(): void {
-    const contextProvider =
-      this.cardInstanceStore.getAllCards()[0]?.contextProvider;
     const cardInstances = this.cardInstanceStore.getCardInstances();
 
     // Replace each CoreCardInstance with a LorcanaCardInstance
@@ -89,12 +93,14 @@ export class LorcanaEngine extends GameEngine<
         const playerId = this.cardInstanceStore.getCardOwner(instanceId) || "";
         const definition = instance.card as LorcanaCardDefinition;
 
-        cardInstances[instanceId] = new LorcanaCardInstance(
+        const lorcanaInstance = new LorcanaCardInstance(
           this,
           definition,
           instanceId,
           playerId,
         );
+
+        this.cardInstanceStore.replaceCardInstance(instanceId, lorcanaInstance);
       }
     }
   }
@@ -305,6 +311,59 @@ export class LorcanaEngine extends GameEngine<
         ]);
       },
     };
+  }
+
+  leaveLocation(char: LorcanaCardInstance) {
+    const G = this.getGameState().G;
+
+    const location = char.location;
+    if (!location) {
+      return;
+    }
+
+    logger.info(
+      `Leaving location: ${location.fullName} ${location.instanceId} for character: ${char.fullName} ${char.instanceId}`,
+    );
+
+    G.metas[char.instanceId].location = undefined;
+    G.metas[location.instanceId].characters = G.metas[
+      location.instanceId
+    ].characters.filter((card) => card !== char.instanceId);
+  }
+
+  enterLocation(char: LorcanaCardInstance, location: LorcanaCardInstance) {
+    const G = this.getGameState().G;
+
+    const characterInstanceId = char.instanceId;
+    const locationInstanceId = location.instanceId;
+
+    this.leaveLocation(char);
+
+    // Track character-location relationship by setting character's location metadata
+    if (!G.metas[characterInstanceId]) {
+      G.metas[characterInstanceId] = {};
+    }
+    G.metas[characterInstanceId].location = locationInstanceId;
+
+    // Track characters at location by adding to location's characters array
+    if (!G.metas[locationInstanceId]) {
+      G.metas[locationInstanceId] = {};
+    }
+    // Always initialize as array for locations
+    if (!Array.isArray(G.metas[locationInstanceId].characters)) {
+      G.metas[locationInstanceId].characters = [];
+    }
+    const currentCharactersAtLocation = G.metas[locationInstanceId].characters;
+    if (!currentCharactersAtLocation.includes(characterInstanceId)) {
+      currentCharactersAtLocation.push(characterInstanceId);
+    }
+
+    logger.info(
+      `Character ${characterInstanceId} moves to location ${locationInstanceId}`,
+    );
+
+    // Add triggered effects to the bag (rule 4.3.7.5)
+    this?.addTriggeredEffectsToTheBag("onMove", characterInstanceId);
   }
 
   getCardZone(instanceId: string): Zone | undefined {
