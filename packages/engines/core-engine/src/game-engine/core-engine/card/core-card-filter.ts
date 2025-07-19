@@ -24,6 +24,7 @@ export type CoreCardFilterDSL<
  * @deprecated Use filterCoreCardInstances from card-filtering.ts instead
  */
 export function getCardsByFilter<
+  CardDef extends { id: string },
   T extends GameSpecificCardFilter = BaseCoreCardFilter,
 >({
   state,
@@ -31,9 +32,9 @@ export function getCardsByFilter<
   filter,
 }: {
   state: CoreEngineState;
-  store: CoreCardInstanceStore;
+  store: CoreCardInstanceStore<CardDef>;
   filter: CoreCardFilterDSL<T>;
-}): CoreCardInstance[] {
+}): CoreCardInstance<CardDef>[] {
   return filterCoreCardInstances({ state, store, filter });
 }
 

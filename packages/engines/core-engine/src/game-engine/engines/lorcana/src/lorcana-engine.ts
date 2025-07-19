@@ -160,15 +160,14 @@ export class LorcanaEngine extends GameEngine<
       return true;
     }
 
-    // Get the current game state to access metadata
-    const gameState = this.getGameState();
-
     // Get only ready (non-exerted) ink cards for the player
-    const readyInkCards = this.cardInstanceStore.queryCards({
+    const filter: LorcanaCardFilter = {
       zone: "inkwell",
       owner: playerId,
       exerted: false,
-    } as LorcanaCardFilter);
+    };
+
+    const readyInkCards = this.cardInstanceStore.queryCards(filter);
 
     if (readyInkCards.length < cost) {
       logger.warn(
@@ -181,18 +180,25 @@ export class LorcanaEngine extends GameEngine<
     for (let i = 0; i < cost; i++) {
       const inkCard = readyInkCards[i];
       if (inkCard) {
-        // Mark ink card as exerted in game state metadata
-        if (!gameState.G.metas[inkCard.instanceId]) {
-          gameState.G.metas[inkCard.instanceId] = {};
-        }
-        gameState.G.metas[inkCard.instanceId].exerted = true;
-
-        logger.debug(`Exerted ink card ${inkCard.instanceId}`);
+        this.exertCard({ card: inkCard.instanceId, exerted: true });
       }
     }
 
     logger.info(`Player ${playerId} successfully paid ${cost} ink`);
     return true;
+  }
+
+  exertCard({ card, exerted }: { card: string; exerted: boolean }) {
+    // Get the current game state to access metadata
+    const gameState = this.getGameState();
+
+    // Mark ink card as exerted in game state metadata
+    if (!gameState.G.metas[card]) {
+      gameState.G.metas[card] = { exerted };
+    }
+    gameState.G.metas[card].exerted = exerted;
+
+    logger.debug(`Exerted card ${card} set to ${exerted}`);
   }
 
   /**
@@ -228,7 +234,28 @@ export class LorcanaEngine extends GameEngine<
   get moves() {
     const currentPlayer = this.playerID;
 
+    // These are the moves available to players to manipulate the game state at will.
+    // They are not part of the game rules, but rather allow players to perform actions that correct the game state if needed.
+    const manualMoves = {
+      moveCard: (params: { card: string; to: string }) => {
+        return this.processMove(currentPlayer, "manualMoves-moveCard", [
+          params,
+        ]);
+      },
+      updateLore: (params: { player: string; lore: string }) => {
+        return this.processMove(currentPlayer, "manualMoves-updateLore", [
+          params,
+        ]);
+      },
+      exertCard: (params: { card: string; exerted: boolean }) => {
+        return this.processMove(currentPlayer, "manualMoves-exertCard", [
+          params,
+        ]);
+      },
+    };
+
     return {
+      manualMoves,
       chooseWhoGoesFirstMove: (playerId: string) => {
         // The move function expects (state, playerId) - playerId is passed as first arg to processMove
         // and then again as the first element of args array, so the move gets (state, playerId)

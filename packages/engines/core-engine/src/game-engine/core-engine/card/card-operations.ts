@@ -6,7 +6,9 @@ import type { GameCard, GameContext } from "./game-card";
 /**
  * Common interface for card operations regardless of abstraction pattern
  */
-export interface CardOperations {
+export interface CardOperations<
+  CardDef extends { id: string } = { id: string },
+> {
   /**
    * Move a card from one zone to another
    */
@@ -40,8 +42,11 @@ export interface CardOperations {
  * @param errorMessage Error message if operation fails
  * @returns Result of the operation
  */
-export function withCoreCardOperation<T = any>(
-  card: CoreCardInstance,
+export function withCoreCardOperation<
+  T = any,
+  CardDef extends { id: string } = { id: string },
+>(
+  card: CoreCardInstance<CardDef>,
   operation: (engine: any) => T,
   errorMessage = "Failed to perform card operation",
 ): T {
@@ -76,20 +81,21 @@ export function withGameCardOperation<
 }
 
 /**
+/**
  * Move a card to a zone using either pattern
  * @param card Card to move (CoreCardInstance or GameCard)
  * @param targetZone Zone to move the card to
  * @param contextOrEngine Context (for GameCard) or engine (for CoreCardInstance)
  */
-export function moveCardToZone(
-  card: CoreCardInstance | GameCard,
+export function moveCardToZone<CardDef extends { id: string } = { id: string }>(
+  card: CoreCardInstance<CardDef> | GameCard,
   targetZone: string,
   contextOrEngine: any,
 ): void {
   // Check if card is a GameCard (has no engineRef)
   if ((card as any).engineRef) {
     // CoreCardInstance pattern
-    const coreCard = card as CoreCardInstance;
+    const coreCard = card as CoreCardInstance<{ id: string }>;
 
     withCoreCardOperation(
       coreCard,
@@ -116,19 +122,22 @@ export function moveCardToZone(
 }
 
 /**
+/**
  * Get the zone of a card using either pattern
  * @param card Card to get zone for (CoreCardInstance or GameCard)
  * @param contextOrEngine Context (for GameCard) or engine (for CoreCardInstance)
  * @returns Zone name or undefined if not found
  */
-export function getCardZoneUnified(
-  card: CoreCardInstance | GameCard,
+export function getCardZoneUnified<
+  CardDef extends { id: string } = { id: string },
+>(
+  card: CoreCardInstance<CardDef> | GameCard,
   contextOrEngine?: any,
 ): string | undefined {
   // Check if card is a GameCard (has no engineRef)
   if ((card as any).engineRef) {
     // CoreCardInstance pattern - use the card's own zone getter
-    return (card as CoreCardInstance).zone;
+    return (card as CoreCardInstance<{ id: string }>).zone;
   }
   // GameCard pattern
   const gameCard = card as GameCard;

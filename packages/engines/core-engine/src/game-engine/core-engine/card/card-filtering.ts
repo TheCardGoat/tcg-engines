@@ -25,6 +25,7 @@ export type CardFilterDSL<
  * @returns Array of matching CoreCardInstance objects
  */
 export function filterCoreCardInstances<
+  CardDef extends { id: string },
   T extends GameSpecificCardFilter = BaseCoreCardFilter,
 >({
   state,
@@ -32,12 +33,12 @@ export function filterCoreCardInstances<
   filter,
 }: {
   state: CoreEngineState;
-  store: CoreCardInstanceStore;
+  store: CoreCardInstanceStore<CardDef>;
   filter: CardFilterDSL<T>;
-}): CoreCardInstance[] {
+}): CoreCardInstance<CardDef>[] {
   const { zone, owner, publicId, instanceId } = filter;
   const cards = store.getAllCards();
-  const result: CoreCardInstance[] = cards.filter((card) => {
+  const result: CoreCardInstance<CardDef>[] = cards.filter((card) => {
     if (publicId && card.publicId !== publicId) {
       return false;
     }

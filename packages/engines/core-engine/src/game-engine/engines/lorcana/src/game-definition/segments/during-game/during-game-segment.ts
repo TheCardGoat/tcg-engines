@@ -10,6 +10,10 @@ export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
   },
 
   turn: {
+    moves: {
+      "manualMoves-exertCard": lorcanaMoves.manualMoves.exertCard,
+    },
+
     phases: {
       beginningPhase: {
         start: true,

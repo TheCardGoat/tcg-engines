@@ -169,13 +169,13 @@ export const moveCharacterToLocationMove: LorcanaMove = (
     if (!G.metas[locationInstanceId]) {
       G.metas[locationInstanceId] = {};
     }
-    const currentCharactersAtLocation =
-      G.metas[locationInstanceId].characters || [];
+    // Always initialize as array for locations
+    if (!Array.isArray(G.metas[locationInstanceId].characters)) {
+      G.metas[locationInstanceId].characters = [];
+    }
+    const currentCharactersAtLocation = G.metas[locationInstanceId].characters;
     if (!currentCharactersAtLocation.includes(characterInstanceId)) {
-      G.metas[locationInstanceId].characters = [
-        ...currentCharactersAtLocation,
-        characterInstanceId,
-      ];
+      currentCharactersAtLocation.push(characterInstanceId);
     }
 
     logger.info(

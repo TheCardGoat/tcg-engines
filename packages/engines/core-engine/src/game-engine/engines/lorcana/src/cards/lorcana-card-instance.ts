@@ -1,7 +1,14 @@
 import { CoreCardCtxProvider } from "~/game-engine/core-engine/card/core-card-ctx-provider";
 import { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
-import type { LorcanaEngine } from "../lorcana-engine";
-import type { LorcanaCardMeta } from "../lorcana-engine-types";
+import type {
+  LorcanaCardFilter,
+  LorcanaEngine,
+  LorcanaPlayerState,
+} from "../lorcana-engine";
+import type {
+  LorcanaCardMeta,
+  LorcanaGameState,
+} from "../lorcana-engine-types";
 import type { LorcanaCardDefinition } from "./lorcana-card-repository";
 
 export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition> {
@@ -11,8 +18,14 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
     instanceId: string,
     ownerId: string,
   ) {
-    const contextProvider = new CoreCardCtxProvider({
-      engine: engine as any, // Type assertion needed due to generic complexity
+    const contextProvider = new CoreCardCtxProvider<
+      LorcanaGameState,
+      LorcanaCardDefinition,
+      LorcanaPlayerState,
+      LorcanaCardFilter,
+      LorcanaCardInstance
+    >({
+      engine: engine,
     });
 
     super({
@@ -20,7 +33,6 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
       ownerId,
       definition: card,
       contextProvider,
-      engine,
     });
   }
 
@@ -28,49 +40,21 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
     return this.card.inkwell;
   }
 
-  /**
-   * Get typed Lorcana engine reference
-   * Uses base class WeakRef functionality
-   */
-  getLorcanaEngine(): LorcanaEngine | undefined {
-    return this.getEngine<LorcanaEngine>();
-  }
-
-  /**
-   * Lorcana-specific functionality that requires engine access
-   * Uses base class withEngine method for safe access
-   */
-  getLorcanaSpecificData(): any {
-    return this.withEngine<LorcanaEngine>(
-      (engine) => ({
-        // Add Lorcana-specific engine operations here when needed
-        gameState: engine.getGameState(),
-        availableInk: engine.getZonesCardCount(this.ownerId).inkwell,
-        // Example Lorcana-specific methods
-      }),
-      "Cannot access Lorcana-specific data",
-    );
-  }
-
-  /**
-   * Example of Lorcana-specific card behavior using engine
-   */
   canBePlayed(): boolean {
-    return this.withEngine<LorcanaEngine>((engine) => {
-      const gameState = engine.getGameState();
-      const availableInk = engine.getZonesCardCount(this.ownerId).inkwell;
-
-      // Basic play validation - can be extended
-      return (
-        this.zone === "hand" &&
-        availableInk >= (this.card as any).cost &&
-        gameState.ctx.currentPhase === "mainPhase"
-      );
-    }, "Cannot check if card can be played");
+    return true;
   }
 
   get meta(): LorcanaCardMeta {
-    return this.getLorcanaEngine()?.getCardMeta(this.instanceId) || {};
+    const G = this.contextProvider.getG() as LorcanaGameState;
+    return G.metas?.[this.instanceId] || {};
+  }
+
+  get type(): LorcanaCardDefinition["type"] {
+    return this.card.type;
+  }
+
+  get isExerted(): boolean {
+    return !!this.meta.exerted;
   }
 
   isAtLocation(location: LorcanaCardInstance): boolean {
@@ -78,6 +62,9 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
   }
 
   containsCharacter(character: LorcanaCardInstance): boolean {
-    return this.meta.characters?.includes(character.instanceId);
+    return (
+      Array.isArray(this.meta.characters) &&
+      this.meta.characters.includes(character.instanceId)
+    );
   }
 }

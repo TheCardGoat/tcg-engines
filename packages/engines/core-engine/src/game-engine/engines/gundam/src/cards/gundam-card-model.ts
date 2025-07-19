@@ -4,6 +4,7 @@ import type { GundamEngine } from "~/game-engine/engines/gundam/src/gundam-engin
 import type { GundamitoCard } from "./definitions/cardTypes";
 
 export class GundamModel extends CoreCardInstance<GundamitoCard> {
+  engine: GundamEngine;
   constructor({
     engine,
     card,
@@ -25,66 +26,41 @@ export class GundamModel extends CoreCardInstance<GundamitoCard> {
       ownerId,
       definition: card,
       contextProvider,
-      engine, // Pass engine to base class for WeakRef storage
     });
+    // Optionally store engine reference if needed for GundamModel
+    this.engine = engine;
   }
 
-  /**
-   * Get typed Gundam engine reference
-   * Uses base class WeakRef functionality
-   */
   getGundamEngine(): GundamEngine | undefined {
-    return this.getEngine<GundamEngine>();
+    return this.engine;
   }
 
-  /**
-   * Gundam-specific functionality that requires engine access
-   * Uses base class withEngine method for safe access
-   */
   getGundamSpecificData(): any {
-    return this.withEngine<GundamEngine>(
-      (engine) => ({
-        // Add Gundam-specific engine operations here when needed
-        gameState: engine.getGameState(),
-        availableHaro: engine.getZonesCardCount(this.ownerId).resourceArea,
-        // Example Gundam-specific methods
-      }),
-      "Cannot access Gundam-specific data",
+    // Add Gundam-specific engine operations here when needed
+    return {};
+  }
+
+  canBePlayed(): boolean {
+    if (!this.engine) return false;
+    const gameState = this.engine.getGameState();
+    const availableHaro = this.engine.getZonesCardCount(
+      this.ownerId,
+    ).resourceArea;
+    return (
+      this.zone === "hand" &&
+      availableHaro >= (this.card as any).cost &&
+      gameState.ctx.currentPhase === "mainPhase"
     );
   }
 
-  /**
-   * Example of Gundam-specific card behavior using engine
-   */
-  canBePlayed(): boolean {
-    return this.withEngine<GundamEngine>((engine) => {
-      const gameState = engine.getGameState();
-      const availableHaro = engine.getZonesCardCount(this.ownerId).resourceArea;
-
-      // Basic play validation - can be extended with Gundam-specific rules
-      return (
-        this.zone === "hand" &&
-        availableHaro >= (this.card as any).cost &&
-        gameState.ctx.currentPhase === "mainPhase"
-      );
-    }, "Cannot check if card can be played");
-  }
-
-  /**
-   * Gundam-specific attachment logic
-   */
   canAttachTo(targetCardId: string): boolean {
-    return this.withEngine<GundamEngine>((engine) => {
-      const targetCard =
-        engine.cardInstanceStore.getCardByInstanceId(targetCardId);
-      if (!targetCard) return false;
-
-      // Example attachment logic - can be extended with Gundam-specific rules
-      const isPilot = (this.card as any).cardType === "pilot";
-      const targetIsUnit = (targetCard.card as any).cardType === "unit";
-
-      return isPilot && targetIsUnit && targetCard.zone === "play";
-    }, "Cannot check attachment compatibility");
+    if (!this.engine) return false;
+    const targetCard =
+      this.engine.cardInstanceStore.getCardByInstanceId(targetCardId);
+    if (!targetCard) return false;
+    const isPilot = (this.card as any).cardType === "pilot";
+    const targetIsUnit = (targetCard.card as any).cardType === "unit";
+    return isPilot && targetIsUnit && targetCard.zone === "play";
   }
 
   // Additional Gundam-specific methods can be added here

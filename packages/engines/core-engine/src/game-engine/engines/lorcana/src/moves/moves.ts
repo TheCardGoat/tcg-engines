@@ -1,3 +1,4 @@
+import { exertCard } from "~/game-engine/engines/lorcana/src/moves/manualMoves";
 import { alterHandMove } from "./alterHand";
 import { challengeMove } from "./challenge";
 import { chooseWhoGoesFirstMove } from "./chooseFirstPlayer";
@@ -9,7 +10,6 @@ import { putACardIntoTheInkwellMove } from "./put-a-card-into-the-inkwell";
 import { questMove } from "./quest";
 import { useActivatedAbilityMove } from "./use-activated-ability";
 
-// Consolidated Lorcana move registry
 export const lorcanaMoves = {
   // Game Setup Moves
   chooseWhoGoesFirstMove,
@@ -22,6 +22,9 @@ export const lorcanaMoves = {
   challenge: challengeMove,
   moveCharacterToLocation: moveCharacterToLocationMove,
   useActivatedAbility: useActivatedAbilityMove,
+  manualMoves: {
+    exertCard,
+  },
   // System Moves
   concede: concedeMove,
 };

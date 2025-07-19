@@ -72,14 +72,13 @@ export class CoreCardInstanceStore<
               ownerId: player,
               definition: cardDefinition,
               contextProvider,
-              engine,
             });
         }
       }
     }
   }
 
-  getCardByInstanceId(id: string): CoreCardInstance | null {
+  getCardByInstanceId(id: string): CoreCardInstance<CardDefinition> | null {
     return this.cardInstances[id];
   }
 

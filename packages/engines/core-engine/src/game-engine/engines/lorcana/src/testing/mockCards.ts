@@ -1,0 +1,47 @@
+import type {
+  LorcanitoCard,
+  LorcanitoCharacterCard,
+  LorcanitoLocationCard,
+} from "@lorcanito/lorcana-engine";
+
+export const mockCharacterCard: LorcanitoCharacterCard = {
+  id: "MUST_BE_UNIQUE_ID_CHAR",
+  name: "Test Card",
+  title: "Character",
+  characteristics: [],
+  text: "",
+  type: "character",
+  abilities: [],
+  flavour: "",
+  inkwell: true,
+  colors: ["amber"],
+  cost: 1,
+  strength: 1,
+  willpower: 1,
+  lore: 1,
+  illustrator: "",
+  number: 0,
+  set: "TFC",
+  rarity: "common",
+};
+
+export const mockLocationCard: LorcanitoLocationCard = {
+  id: "MUST_BE_UNIQUE_ID_LOC",
+  name: "Test Location",
+  title: "Basic Location",
+  characteristics: [],
+  text: "",
+  type: "location",
+  abilities: [],
+  flavour: "",
+  inkwell: true,
+  colors: ["amber"],
+  cost: 2,
+  willpower: 4,
+  moveCost: 1,
+  lore: 0,
+  illustrator: "",
+  number: 0,
+  set: "TFC",
+  rarity: "common",
+};

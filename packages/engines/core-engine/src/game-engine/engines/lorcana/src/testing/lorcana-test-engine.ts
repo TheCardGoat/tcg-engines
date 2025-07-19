@@ -5,7 +5,6 @@ import type {
   Zones,
 } from "@lorcanito/lorcana-engine";
 import { allCardsById } from "@lorcanito/lorcana-engine";
-import type { CoreCardFilterDSL } from "~/game-engine/core-engine/card/core-card-filter";
 import { getCardZone } from "~/game-engine/core-engine/engine/zone-operation";
 
 import {
@@ -19,9 +18,10 @@ import {
   createShortAndUniqueIds,
 } from "~/game-engine/core-engine/utils/id-utils";
 import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
-import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
+import { mockCharacterCard } from "~/game-engine/engines/lorcana/src/testing/mockCards";
+import { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import { LorcanaCardRepository } from "../cards/lorcana-card-repository";
-import { LorcanaEngine } from "../lorcana-engine";
+import { type LorcanaCardFilter, LorcanaEngine } from "../lorcana-engine";
 import type { LorcanaGameState, Zone } from "../lorcana-engine-types";
 import { createEmptyLorcanaGameState } from "../utils/createEmptyLorcanaGameState";
 
@@ -30,32 +30,17 @@ function createTestCardRepository(
   dictionary: Record<string, Record<string, string>>,
   testCards: LorcanitoCard[],
 ): LorcanaCardRepository {
-  testCards.forEach((card) => {
-    (allCardsById as any)[card.id] = card;
-  });
+  for (const card of testCards) {
+    allCardsById[card.id] = card;
+  }
 
   return new LorcanaCardRepository(dictionary);
 }
 
 export const testCharacterCard: LorcanitoCharacterCard = {
+  ...mockCharacterCard,
   id: "999999999999",
   name: "Test Card",
-  title: "Character",
-  characteristics: [],
-  text: "",
-  type: "character",
-  abilities: [],
-  flavour: "",
-  inkwell: true,
-  colors: ["amber"],
-  cost: 1,
-  strength: 1,
-  willpower: 1,
-  lore: 1,
-  illustrator: "",
-  number: 0,
-  set: "TFC",
-  rarity: "common",
 };
 
 // Test card without inkwell symbol
@@ -217,10 +202,24 @@ export class LorcanaTestEngine {
     return availableMoves;
   }
 
+  exertCard(params: { card: LorcanaCardInstance | LorcanitoCard }) {
+    const card = this.getCardModel(params.card);
+
+    const response = this.moves.manualMoves.exertCard({
+      card: card.instanceId,
+      exerted: true,
+    });
+
+    this.wasMoveExecutedAndPropagated();
+
+    return { card, result: response };
+  }
+
   moveToLocation(params: {
     location: LorcanaCardInstance | LorcanitoCard;
     character: LorcanaCardInstance | LorcanitoCard;
     skipAssertion?: boolean;
+    doNotThrow?: boolean; // If true, do not throw on failure
   }) {
     const location = this.getCardModel(params.location);
     const character = this.getCardModel(params.character);
@@ -230,18 +229,18 @@ export class LorcanaTestEngine {
       character: character.instanceId,
     });
 
-    if (!response.success) {
+    if (!(response.success || params.doNotThrow)) {
       throw new Error(JSON.stringify(response));
     }
 
     this.wasMoveExecutedAndPropagated();
 
-    if (!params.skipAssertion) {
+    if (!(params.skipAssertion || params.doNotThrow)) {
       expect(character.isAtLocation(location)).toBe(true);
       expect(location.containsCharacter(character)).toBe(true);
     }
 
-    return { location, character };
+    return { location, character, result: response };
   }
 
   getZone(zone: Zones, playerId = "player_one"): string[] {
@@ -310,7 +309,7 @@ export class LorcanaTestEngine {
 
   getCardModel(
     card: LorcanitoCard | LorcanaCardInstance,
-    _index?: number,
+    index?: number,
   ): LorcanaCardInstance {
     const results = this.authoritativeEngine.queryCardsByFilter({
       publicId: card.id,
@@ -318,6 +317,10 @@ export class LorcanaTestEngine {
 
     if (results.length === 0) {
       throw new Error(`Unable to find card: ${card.id} (${card.name})`);
+    }
+
+    if (typeof index === "undefined" && results.length > 1) {
+      throw new Error(`Multiple cards found for ${card.id} (${card.name}).`);
     }
 
     return results[0];
@@ -389,21 +392,25 @@ export class LorcanaTestEngine {
   /**
    * Get all cards in a specific zone using the new CardManager
    */
-  getCardsInZone(zone: string, owner?: string) {
-    if (owner) {
-      const filter: CoreCardFilterDSL = {
-        zone,
-        owner,
-      };
-
-      return this.authoritativeEngine.cardInstanceStore.queryCards(filter);
-    }
-
-    const filter: CoreCardFilterDSL = {
+  getCardsInZone(zone: string, owner?: string): LorcanaCardInstance[] {
+    const filter: LorcanaCardFilter = {
       zone,
       owner,
     };
-    return this.authoritativeEngine.cardInstanceStore.queryCards(filter);
+
+    // Map CoreCardInstance<LorcanaCardDefinition> to LorcanaCardInstance
+    return this.authoritativeEngine.cardInstanceStore
+      .queryCards(filter)
+      .map((card) =>
+        card instanceof LorcanaCardInstance
+          ? card
+          : new LorcanaCardInstance(
+              this.authoritativeEngine,
+              card.card,
+              card.instanceId,
+              card.ownerId,
+            ),
+      );
   }
 
   // Moves

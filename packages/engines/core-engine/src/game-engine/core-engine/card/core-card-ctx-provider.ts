@@ -42,7 +42,7 @@ export class CoreCardCtxProvider<
   }
 
   getCtx() {
-    return safeExecute("getCardContext", () => {
+    return safeExecute("getGameCtx", () => {
       const engine = this.engineRef.deref();
       if (!engine) {
         throw new Error(
@@ -54,6 +54,22 @@ export class CoreCardCtxProvider<
         );
       }
       return engine.getGameState().ctx;
+    });
+  }
+
+  getG() {
+    return safeExecute("getGameState", () => {
+      const engine = this.engineRef.deref();
+      if (!engine) {
+        throw new Error(
+          ErrorFormatters.state(
+            "Engine",
+            "context",
+            "Engine has been garbage collected - CoreCardCtxProvider cannot access context",
+          ),
+        );
+      }
+      return engine.getGameState().G;
     });
   }
 
