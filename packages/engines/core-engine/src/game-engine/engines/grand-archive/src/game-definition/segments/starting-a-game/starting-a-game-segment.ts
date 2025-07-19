@@ -14,6 +14,8 @@ export const startingAGameSegment: SegmentConfig<GrandArchiveGameState> = {
   next: "duringGame",
 
   onBegin: ({ G, coreOps }) => {
+    const ctx = coreOps.getCtx();
+
     logger.info("==== STARTING GRAND ARCHIVE GAME ====");
 
     // Initialize the segment
@@ -53,7 +55,9 @@ export const startingAGameSegment: SegmentConfig<GrandArchiveGameState> = {
     return ctx.otp !== undefined && !ctx.pendingMulligan;
   },
 
-  onEnd: ({ G, ctx, coreOps }) => {
+  onEnd: ({ G, coreOps }) => {
+    const ctx = coreOps.getCtx();
+
     logger.info("Starting a Game segment complete");
 
     // Set the first player as both turn and priority player
@@ -105,6 +109,8 @@ export const startingAGameSegment: SegmentConfig<GrandArchiveGameState> = {
         },
 
         onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           logger.info("Phase: Choose Champions");
 
           // Each player needs to select their starting champion
@@ -123,7 +129,9 @@ export const startingAGameSegment: SegmentConfig<GrandArchiveGameState> = {
       mulligan: {
         endIf: ({ ctx }) => !ctx.pendingMulligan,
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           logger.info("Phase: Mulligan");
 
           // Set up mulligan for all players

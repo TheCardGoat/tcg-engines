@@ -1,8 +1,8 @@
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
-import type { LorcanaCoreOperations } from "../operations/lorcana-core-operations";
 import type { LorcanaMove } from "./types";
+import { toLorcanaCoreOps } from "./types";
 
 // **4.3.7. **Move a character to a location.
 
@@ -15,13 +15,15 @@ import type { LorcanaMove } from "./types";
 
 export const moveCharacter: LorcanaMove = {
   execute: (
-    { G, ctx, coreOps, playerID },
+    { G, coreOps, playerID },
     locationInstanceId: string,
     characterInstanceId: string,
   ) => {
     try {
       // We know this will be LorcanaCoreOperations because we set it in LorcanaEngine constructor
-      const lorcanaOps = coreOps as LorcanaCoreOperations;
+      const lorcanaOps = toLorcanaCoreOps(coreOps);
+      // Use getCtx instead of directly accessing ctx
+      const ctx = lorcanaOps.getCtx();
 
       logger.info(
         `Player ${playerID} attempting to move character ${characterInstanceId} to location ${locationInstanceId}`,

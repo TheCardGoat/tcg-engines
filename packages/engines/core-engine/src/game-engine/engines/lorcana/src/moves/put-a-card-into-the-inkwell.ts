@@ -10,10 +10,14 @@ import { toLorcanaCoreOps } from "./types";
 
 // TODO: Somehow prevent the player from putting a card into the inkwell when they should be resolving a layer
 export const putACardIntoTheInkwellMove: LorcanaMove = (
-  { G, ctx, coreOps, playerID },
+  { G, coreOps, playerID },
   instanceId: string,
 ) => {
   try {
+    const lorcanaOps = toLorcanaCoreOps(coreOps);
+    // Use getCtx instead of directly accessing ctx
+    const ctx = lorcanaOps.getCtx();
+
     // Ensure we're in the main phase (this is a turn action)
     if (ctx.currentPhase !== "mainPhase") {
       logger.error(
@@ -26,7 +30,7 @@ export const putACardIntoTheInkwellMove: LorcanaMove = (
       );
     }
 
-    const cardInstance = coreOps.getCardInstance(instanceId);
+    const cardInstance = lorcanaOps.getCardInstance(instanceId);
     if (!cardInstance) {
       logger.error(
         `Failed to get card instance ${instanceId} or engine not available`,
@@ -62,8 +66,8 @@ export const putACardIntoTheInkwellMove: LorcanaMove = (
     }
 
     // Verify the card is in the player's hand
-    const cardZone = coreOps.getCardZone(instanceId);
-    const cardOwner = coreOps.getCardOwner(instanceId);
+    const cardZone = lorcanaOps.getCardZone(instanceId);
+    const cardOwner = lorcanaOps.getCardOwner(instanceId);
 
     if (cardZone !== "hand" || cardOwner !== playerID) {
       logger.error(
@@ -78,7 +82,7 @@ export const putACardIntoTheInkwellMove: LorcanaMove = (
 
     // Move card from hand to inkwell zone with validation
     logger.info(`Moving card ${instanceId} to ${playerID}'s inkwell`);
-    const moveResult = coreOps.moveCard({
+    const moveResult = lorcanaOps.moveCard({
       playerId: playerID,
       instanceId,
       to: "inkwell",
@@ -103,7 +107,6 @@ export const putACardIntoTheInkwellMove: LorcanaMove = (
       };
 
       // Add triggered effects to the bag for card in inkwell event
-      const lorcanaOps = toLorcanaCoreOps(coreOps);
       lorcanaOps.addTriggeredEffectsToTheBag("onPutIntoInkwell", instanceId);
 
       logger.info(`Player ${playerID} put card ${instanceId} into the inkwell`);

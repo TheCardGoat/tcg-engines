@@ -236,6 +236,9 @@ export class CoreEngine<
       get G() {
         return coreOperation.state.G;
       },
+      // Although ctx is deprecated in favor of coreOps.getCtx(),
+      // we maintain this getter for backward compatibility.
+      // Both approaches ensure access to the latest context.
       get ctx() {
         return coreOperation.state.ctx;
       },

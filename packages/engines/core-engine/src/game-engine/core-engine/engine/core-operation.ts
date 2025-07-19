@@ -8,11 +8,16 @@ import {
   type ZoneOperationError,
 } from "~/game-engine/core-engine/engine/zone-operation";
 import type { CoreEngineState } from "~/game-engine/core-engine/game-configuration";
+import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import {
   getCurrentPriorityPlayer,
   setPriorityPlayer,
   setTurnPlayer,
 } from "~/game-engine/core-engine/state/context";
+import {
+  createContextWithPriorityPlayer,
+  createContextWithTurnPlayer,
+} from "~/game-engine/core-engine/utils/context-factory";
 import {
   ErrorFormatters,
   safeExecute,
@@ -64,6 +69,15 @@ export class CoreOperation<
   }) {
     this.state = state;
     this.engine = engine;
+  }
+
+  /**
+   * Get the current context
+   * @returns The current context object
+   */
+  getCtx(): CoreCtx<unknown> {
+    // TODO: CoreCtx should be generic, it's should return the proper type
+    return this.state.ctx;
   }
 
   /**
@@ -149,6 +163,29 @@ export class CoreOperation<
         attempts++;
       }
     }
+  }
+
+  passTurn() {
+    this.incrementTurnCount();
+
+    const ctx = this.state.ctx;
+    const totalPlayers = ctx.playerOrder.length;
+    // Advance turn player position
+    const nextTurnPlayerPos = ((ctx.turnPlayerPos ?? 0) + 1) % totalPlayers;
+    const nextTurnPlayerId = ctx.playerOrder[nextTurnPlayerPos];
+
+    // Advance priority player position
+    const nextPriorityPlayerPos = nextTurnPlayerPos;
+    const nextPriorityPlayerId = nextTurnPlayerId;
+
+    // Set new turn player and priority player using non-deprecated methods
+    this.state.ctx = createContextWithTurnPlayer(ctx, nextTurnPlayerId);
+    this.state.ctx = createContextWithPriorityPlayer(
+      this.state.ctx,
+      nextPriorityPlayerId,
+    );
+    this.state.ctx.turnPlayerPos = nextTurnPlayerPos;
+    this.state.ctx.priorityPlayerPos = nextPriorityPlayerPos;
   }
 
   getZone(zoneId: string, playerId?: string) {

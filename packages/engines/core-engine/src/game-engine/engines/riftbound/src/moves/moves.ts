@@ -19,9 +19,12 @@ export type RiftboundMove = Move<RiftboundGameState>;
  */
 
 export const chooseDomainIdentity = (
-  { G, ctx, playerID, coreOps },
+  { G, playerID, coreOps },
   domains: string[],
 ) => {
+  const ctx = coreOps.getCtx();
+  const player = ctx.players[playerID];
+
   if (!playerID) {
     logger.warn("chooseDomainIdentity: No player ID provided");
     return createInvalidMove(
@@ -52,7 +55,6 @@ export const chooseDomainIdentity = (
   }
 
   // Use CoreOperation to manipulate player state
-  const player = ctx.players[playerID];
   if (!player) {
     logger.warn(`chooseDomainIdentity: Player ${playerID} not found`);
     return createInvalidMove(
@@ -72,9 +74,11 @@ export const chooseDomainIdentity = (
 };
 
 export const chooseFirstPlayer: RiftboundMove = (
-  { G, ctx, playerID, coreOps },
+  { G, playerID, coreOps },
   params: { playerId: string },
 ) => {
+  const ctx = coreOps.getCtx();
+
   if (!playerID) {
     logger.warn("chooseFirstPlayer: No player ID provided");
     return createInvalidMove(
@@ -105,9 +109,11 @@ export const chooseFirstPlayer: RiftboundMove = (
 };
 
 export const mulligan: RiftboundMove = (
-  { G, ctx, playerID, coreOps },
+  { G, playerID, coreOps },
   cardsToMulligan: string[],
 ) => {
+  const ctx = coreOps.getCtx();
+
   if (!playerID) {
     logger.warn("mulligan: No player ID provided");
     return createInvalidMove(
@@ -174,9 +180,11 @@ export const mulligan: RiftboundMove = (
  */
 
 export const channelRunes: RiftboundMove = (
-  { G, ctx, playerID, coreOps },
+  { G, playerID, coreOps },
   count: number,
 ) => {
+  const ctx = coreOps.getCtx();
+
   if (!playerID) {
     logger.warn("channelRunes: No player ID provided");
     return createInvalidMove(
@@ -185,7 +193,7 @@ export const channelRunes: RiftboundMove = (
     );
   }
 
-  const currentPlayer = getCurrentTurnPlayer(ctx);
+  const currentPlayer = getCurrentTurnPlayer(coreOps.getCtx());
   if (currentPlayer !== playerID) {
     logger.warn(
       `channelRunes: Player ${playerID} is not the current turn player`,
@@ -218,10 +226,12 @@ export const channelRunes: RiftboundMove = (
  */
 
 export const playCard: RiftboundMove = (
-  { G, ctx, playerID, coreOps },
+  { G, playerID, coreOps },
   cardInstanceId: string,
   targetInstanceId?: string,
 ) => {
+  const ctx = coreOps.getCtx();
+
   return createInvalidMove(
     "NOT_IMPLEMENTED",
     "moves.playCard.errors.notImplemented",
@@ -234,9 +244,11 @@ export const playCard: RiftboundMove = (
  */
 
 export const declareCombat: RiftboundMove = (
-  { G, ctx, playerID, coreOps },
+  { G, playerID, coreOps },
   attackers: string[],
 ) => {
+  const ctx = coreOps.getCtx();
+
   if (!playerID) {
     logger.warn("declareCombat: No player ID provided");
     return createInvalidMove(
@@ -245,7 +257,7 @@ export const declareCombat: RiftboundMove = (
     );
   }
 
-  const currentTurnPlayer = getCurrentTurnPlayer(ctx);
+  const currentTurnPlayer = getCurrentTurnPlayer(coreOps.getCtx());
   if (currentTurnPlayer !== playerID) {
     logger.warn(
       `declareCombat: Player ${playerID} is not the current turn player`,
@@ -269,9 +281,11 @@ export const declareCombat: RiftboundMove = (
  */
 
 export const drawCard: RiftboundMove = (
-  { G, ctx, playerID, coreOps },
+  { G, playerID, coreOps },
   params?: { count?: number },
 ) => {
+  const ctx = coreOps.getCtx();
+
   if (!playerID) {
     logger.warn("drawCard: No player ID provided");
     return createInvalidMove(
@@ -312,9 +326,11 @@ export const drawCard: RiftboundMove = (
 };
 
 export const discardCard: RiftboundMove = (
-  { G, ctx, playerID, coreOps },
+  { G, playerID, coreOps },
   cardInstanceId: string,
 ) => {
+  const ctx = coreOps.getCtx();
+
   if (!playerID) {
     logger.warn("discardCard: No player ID provided");
     return createInvalidMove(
@@ -345,13 +361,15 @@ export const discardCard: RiftboundMove = (
   return G;
 };
 
-export const endTurn: RiftboundMove = ({ G, ctx, playerID, coreOps }) => {
+export const endTurn: RiftboundMove = ({ G, playerID, coreOps }) => {
+  const ctx = coreOps.getCtx();
+
   if (!playerID) {
     logger.warn("endTurn: No player ID provided");
     return createInvalidMove("NO_PLAYER_ID", "moves.endTurn.errors.noPlayerId");
   }
 
-  const currentTurnPlayer = getCurrentTurnPlayer(ctx);
+  const currentTurnPlayer = getCurrentTurnPlayer(coreOps.getCtx());
   if (currentTurnPlayer !== playerID) {
     logger.warn(`endTurn: Player ${playerID} is not the current turn player`);
     return createInvalidMove(
@@ -372,7 +390,9 @@ export const endTurn: RiftboundMove = ({ G, ctx, playerID, coreOps }) => {
   return G;
 };
 
-export const passPriority: RiftboundMove = ({ G, ctx, playerID, coreOps }) => {
+export const passPriority: RiftboundMove = ({ G, playerID, coreOps }) => {
+  const ctx = coreOps.getCtx();
+
   if (!playerID) {
     logger.warn("passPriority: No player ID provided");
     return createInvalidMove(
@@ -381,7 +401,7 @@ export const passPriority: RiftboundMove = ({ G, ctx, playerID, coreOps }) => {
     );
   }
 
-  const currentPriorityPlayer = getCurrentPriorityPlayer(ctx);
+  const currentPriorityPlayer = getCurrentPriorityPlayer(coreOps.getCtx());
   if (currentPriorityPlayer !== playerID) {
     logger.warn(`passPriority: Player ${playerID} does not have priority`);
     return createInvalidMove(
@@ -401,7 +421,9 @@ export const passPriority: RiftboundMove = ({ G, ctx, playerID, coreOps }) => {
   return G;
 };
 
-export const concede: RiftboundMove = ({ G, ctx, playerID, coreOps }) => {
+export const concede: RiftboundMove = ({ G, playerID, coreOps }) => {
+  const ctx = coreOps.getCtx();
+
   if (!playerID) {
     logger.warn("concede: No player ID provided");
     return createInvalidMove("NO_PLAYER_ID", "moves.concede.errors.noPlayerId");

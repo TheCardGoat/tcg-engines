@@ -11,9 +11,12 @@ import type { OnePieceGameState } from "../one-piece-engine-types";
  * - Then, shuffle your deck
  */
 export const mulligan: Move<OnePieceGameState> = (
-  { G, ctx, coreOps, playerID },
+  { G, coreOps, playerID },
   redraw: boolean,
 ) => {
+  // Use getCtx if needed instead of directly accessing ctx
+  // const ctx = coreOps.getCtx();
+
   if (redraw) {
     // Return entire hand to bottom of deck
     const handZone = coreOps.getZone("hand", playerID);

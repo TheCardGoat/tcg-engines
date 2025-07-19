@@ -3,6 +3,7 @@ import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import type { LorcanaCoreOperations } from "../operations/lorcana-core-operations";
 import type { LorcanaMove } from "./types";
+import { toLorcanaCoreOps } from "./types";
 
 // **4.3.4. Play a card**
 // **4.3.4.1.** The player announces which card from their hand they want to play, then reveals that card.
@@ -20,12 +21,14 @@ interface PlayCardOptions {
 }
 
 export const playCardMove: LorcanaMove = (
-  { G, ctx, coreOps, playerID },
+  { G, coreOps, playerID },
   instanceId: string,
   options?: PlayCardOptions,
 ) => {
   try {
-    const lorcanaOps = coreOps as LorcanaCoreOperations;
+    const lorcanaOps = toLorcanaCoreOps(coreOps);
+    // Use getCtx instead of directly accessing ctx
+    const ctx = lorcanaOps.getCtx();
 
     // Ensure we're in the main phase (this is a turn action)
     if (ctx.currentPhase !== "mainPhase") {
@@ -37,7 +40,7 @@ export const playCardMove: LorcanaMove = (
       );
     }
 
-    const cardInstance = coreOps.getCardInstance(instanceId);
+    const cardInstance = lorcanaOps.getCardInstance(instanceId);
     if (!cardInstance) {
       logger.error(
         `Failed to get card instance ${instanceId} or engine not available`,
@@ -52,7 +55,7 @@ export const playCardMove: LorcanaMove = (
     const lorcanaCard = cardInstance;
 
     // Verify card is in player's hand
-    const handCards = coreOps.getCardsInZone("hand", playerID);
+    const handCards = lorcanaOps.getCardsInZone("hand", playerID);
     if (!handCards.find((card) => card.instanceId === instanceId)) {
       logger.error(`Card ${instanceId} is not in player ${playerID}'s hand`);
       return createInvalidMove(
@@ -70,7 +73,7 @@ export const playCardMove: LorcanaMove = (
     if (options?.alternativeCost) {
       if (options.alternativeCost.type === "shift") {
         // For shift, verify the target character exists and is valid
-        const shiftTarget = coreOps.getCardInstance(
+        const shiftTarget = lorcanaOps.getCardInstance(
           options.alternativeCost.targetInstanceId,
         );
         if (!shiftTarget) {
@@ -141,7 +144,7 @@ export const playCardMove: LorcanaMove = (
 
     // Handle Shift - if shifting, banish the target character first
     if (options?.alternativeCost?.type === "shift") {
-      const banishResult = coreOps.moveCard({
+      const banishResult = lorcanaOps.moveCard({
         playerId: playerID,
         instanceId: options.alternativeCost.targetInstanceId,
         to: "discard",
@@ -159,7 +162,7 @@ export const playCardMove: LorcanaMove = (
     }
 
     // Move card to appropriate zone
-    const moveResult = coreOps.moveCard({
+    const moveResult = lorcanaOps.moveCard({
       playerId: playerID,
       instanceId,
       to: targetZone,

@@ -19,13 +19,17 @@ export const startingAGameSegment: SegmentConfig<LorcanaGameState> = {
   start: true,
   next: "duringGame",
 
-  onBegin: ({ G, ctx, coreOps }) => {
+  onBegin: ({ G, coreOps }) => {
+    const ctx = coreOps.getCtx();
+
     coreOps.setPendingMulligan(coreOps.getPlayers());
 
     return G;
   },
 
-  onEnd: ({ G, ctx, coreOps }) => {
+  onEnd: ({ G, coreOps }) => {
+    const ctx = coreOps.getCtx();
+
     // When the starting game segment ends, set both priority and turn player to the chosen first player
     if (ctx.otp) {
       coreOps.setPriorityPlayer(ctx.otp);
@@ -66,7 +70,9 @@ export const startingAGameSegment: SegmentConfig<LorcanaGameState> = {
           return playersWhoAltered >= totalPlayers;
         },
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           // Set priority to the chosen first player when the alterHand phase begins
           // According to rule 3.1.6: "players may alter their hands, beginning with the starting player"
           if (ctx.otp) {

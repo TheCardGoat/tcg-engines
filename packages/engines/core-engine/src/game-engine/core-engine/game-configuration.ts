@@ -146,6 +146,7 @@ export type FnContext<
 
   // Convenient getters (computed properties) - always reflect current state
   readonly G: G;
+  // NOTE: ctx is deprecated - use coreOps.getCtx() instead to ensure you always have the latest context
   readonly ctx: CoreCtx;
 };
 

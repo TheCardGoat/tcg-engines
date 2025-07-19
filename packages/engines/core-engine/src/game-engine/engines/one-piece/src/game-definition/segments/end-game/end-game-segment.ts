@@ -15,7 +15,7 @@ import type { OnePieceGameState } from "~/game-engine/engines/one-piece/src/one-
 export const endGameSegment: SegmentConfig<OnePieceGameState> = {
   next: undefined, // Terminal segment
 
-  onBegin: ({ G, ctx, coreOps }) => {
+  onBegin: ({ G, coreOps }) => {
     return G;
   },
 
@@ -31,7 +31,7 @@ export const endGameSegment: SegmentConfig<OnePieceGameState> = {
       gameOver: {
         start: true,
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
           logger.info("Game Over - Final state reached");
           return G;
         },

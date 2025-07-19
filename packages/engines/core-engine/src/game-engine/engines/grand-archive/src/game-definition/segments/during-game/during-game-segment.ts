@@ -21,7 +21,9 @@ export const duringGameSegment: SegmentConfig<GrandArchiveGameState> = {
     };
   },
 
-  endIf: ({ G, ctx, coreOps }) => {
+  endIf: ({ G, coreOps }) => {
+    const ctx = coreOps.getCtx();
+
     // Game ends when a player wins or loses
     for (const playerId of ctx.playerOrder) {
       const player = ctx.players[playerId];
@@ -89,7 +91,9 @@ export const duringGameSegment: SegmentConfig<GrandArchiveGameState> = {
         start: true,
         next: "materializePhase",
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           const currentPlayer = ctx.playerOrder[ctx.turnPlayerPos];
           logger.info(`${currentPlayer}: Wake Up Phase`);
 
@@ -146,7 +150,9 @@ export const duringGameSegment: SegmentConfig<GrandArchiveGameState> = {
       recollectionPhase: {
         next: "drawPhase",
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           const currentPlayer = ctx.playerOrder[ctx.turnPlayerPos];
           logger.info(`${currentPlayer}: Recollection Phase`);
 
@@ -189,7 +195,9 @@ export const duringGameSegment: SegmentConfig<GrandArchiveGameState> = {
       drawPhase: {
         next: "mainPhase",
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           const currentPlayer = ctx.playerOrder[ctx.turnPlayerPos];
           logger.info(`${currentPlayer}: Draw Phase`);
 
@@ -218,7 +226,9 @@ export const duringGameSegment: SegmentConfig<GrandArchiveGameState> = {
       mainPhase: {
         next: "endPhase",
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           const currentPlayer = ctx.playerOrder[ctx.turnPlayerPos];
           logger.info(`${currentPlayer}: Main Phase`);
 
@@ -251,7 +261,9 @@ export const duringGameSegment: SegmentConfig<GrandArchiveGameState> = {
 
       // Phase 6: End Phase
       endPhase: {
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           const currentPlayer = ctx.playerOrder[ctx.turnPlayerPos];
           logger.info(`${currentPlayer}: End Phase`);
 

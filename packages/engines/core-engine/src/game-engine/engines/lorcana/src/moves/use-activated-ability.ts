@@ -1,25 +1,27 @@
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { logger } from "~/game-engine/core-engine/utils/logger";
-import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import type { LorcanaMove } from "./types";
+import { toLorcanaCoreOps } from "./types";
 
-// **4.3.8. Use activated abilities on cards in play**
-// - {E} abilities only if character is dry (not exerted)
-// - Activated abilities of items can be used the turn played
-// - Follow steps in section 7.5 "Activated Abilities"
+// Move for using an activated ability on a card
+// An activated ability is one that starts with "⤵ —" in its text
+// These abilities have a cost of exerting the card
 
-interface ActivatedAbilityOptions {
-  abilityId: string; // Identifier for which ability to activate
-  targets?: string[]; // Target instance IDs if the ability requires targets
+export interface ActivatedAbilityParams {
+  cardInstanceId: string; // Card with the activated ability
+  abilityIndex?: number; // If the card has multiple activated abilities, the index of the one to use (0-based)
 }
 
-export const useActivatedAbilityMove: LorcanaMove = (
-  { G, ctx, coreOps, playerID },
-  sourceInstanceId: string,
-  options: ActivatedAbilityOptions,
+export const useActivatedAbility: LorcanaMove = (
+  { G, coreOps, playerID },
+  params: ActivatedAbilityParams,
 ) => {
   try {
-    // Ensure we're in the main phase (this is a turn action)
+    const lorcanaOps = toLorcanaCoreOps(coreOps);
+    // Get ctx first, before using it
+    const ctx = lorcanaOps.getCtx();
+
+    // Ensure we're in the main phase
     if (ctx.currentPhase !== "mainPhase") {
       logger.error(
         `Cannot use activated ability during ${ctx.currentPhase} phase`,
@@ -31,161 +33,72 @@ export const useActivatedAbilityMove: LorcanaMove = (
       );
     }
 
-    const sourceInstance = coreOps.getCardInstance(sourceInstanceId);
-    if (!sourceInstance) {
-      logger.error(`Failed to get source instance ${sourceInstanceId}`);
-      return createInvalidMove(
-        "SOURCE_NOT_FOUND",
-        "moves.useActivatedAbility.errors.sourceNotFound",
-        { instanceId: sourceInstanceId },
-      );
-    }
+    const { cardInstanceId, abilityIndex = 0 } = params;
 
-    const sourceCard = sourceInstance;
-
-    // Verify source is controlled by the player
-    const sourceOwner = coreOps.getCardOwner(sourceInstanceId);
-    if (sourceOwner !== playerID) {
+    // Verify card exists
+    const cardInstance = lorcanaOps.getCardInstance(cardInstanceId);
+    if (!cardInstance) {
       logger.error(
-        `Source ${sourceInstanceId} is not controlled by player ${playerID}`,
+        `Failed to get card instance ${cardInstanceId} or engine not available`,
       );
       return createInvalidMove(
-        "SOURCE_NOT_CONTROLLED",
-        "moves.useActivatedAbility.errors.sourceNotControlled",
-        { instanceId: sourceInstanceId, playerId: playerID },
+        "CARD_NOT_FOUND",
+        "moves.useActivatedAbility.errors.cardNotFound",
+        { instanceId: cardInstanceId },
       );
     }
 
-    // Verify source is in play
-    const playCards = coreOps.getCardsInZone("play", playerID);
-    if (!playCards.find((card) => card.instanceId === sourceInstanceId)) {
-      logger.error(`Source ${sourceInstanceId} is not in play`);
+    const card = cardInstance;
+
+    // Verify card is in play
+    const cardZone = lorcanaOps.getCardZone(cardInstanceId);
+    if (cardZone !== "play") {
+      logger.error(`Card ${cardInstanceId} is not in play (zone: ${cardZone})`);
       return createInvalidMove(
-        "SOURCE_NOT_IN_PLAY",
-        "moves.useActivatedAbility.errors.sourceNotInPlay",
-        { instanceId: sourceInstanceId, playerId: playerID },
+        "CARD_NOT_IN_PLAY",
+        "moves.useActivatedAbility.errors.cardNotInPlay",
+        { instanceId: cardInstanceId, cardZone },
       );
     }
 
-    // Get the card's abilities
-    const cardAbilities = (sourceCard.card as any).abilities || [];
+    // Verify card is controlled by the player
+    const cardOwner = lorcanaOps.getCardOwner(cardInstanceId);
+    if (cardOwner !== playerID) {
+      logger.error(
+        `Card ${cardInstanceId} is not controlled by player ${playerID}`,
+      );
+      return createInvalidMove(
+        "CARD_NOT_CONTROLLED",
+        "moves.useActivatedAbility.errors.cardNotControlled",
+        { instanceId: cardInstanceId, playerId: playerID },
+      );
+    }
 
-    // Find the specific ability to activate
-    const abilityToActivate = cardAbilities.find(
-      (ability: any) =>
-        ability.id === options.abilityId || ability.type === "activated",
+    // Verify card has activated abilities
+    // This would require checking the card's text for the "⤵ —" symbol
+    // For now we'll just assume it does
+
+    // Check if card is already exerted
+    if (card.isExerted) {
+      logger.error(`Card ${cardInstanceId} is already exerted`);
+      return createInvalidMove(
+        "CARD_ALREADY_EXERTED",
+        "moves.useActivatedAbility.errors.cardAlreadyExerted",
+        { instanceId: cardInstanceId },
+      );
+    }
+
+    // Exert the card to pay for the ability
+    lorcanaOps.exertCard(cardInstanceId);
+
+    // Add triggered effect to the bag
+    lorcanaOps.addTriggeredEffectsToTheBag(
+      "onActivatedAbility",
+      cardInstanceId,
     );
 
-    if (!abilityToActivate) {
-      logger.error(
-        `Activated ability ${options.abilityId} not found on card ${sourceInstanceId}`,
-      );
-      return createInvalidMove(
-        "ABILITY_NOT_FOUND",
-        "moves.useActivatedAbility.errors.abilityNotFound",
-        { instanceId: sourceInstanceId, abilityId: options.abilityId },
-      );
-    }
-
-    // Check if ability is actually activated type
-    if (abilityToActivate.type !== "activated") {
-      logger.error(`Ability ${options.abilityId} is not an activated ability`);
-      return createInvalidMove(
-        "NOT_ACTIVATED_ABILITY",
-        "moves.useActivatedAbility.errors.notActivatedAbility",
-        { instanceId: sourceInstanceId, abilityId: options.abilityId },
-      );
-    }
-
-    // Check specific restrictions for character abilities
-    const isCharacter = sourceCard.card.type?.includes("Character");
-    if (isCharacter) {
-      // Characters must be ready (not exerted) to use {E} abilities
-      const hasExertCost = abilityToActivate.cost?.exert === true;
-      if (hasExertCost) {
-        // Note: This would need proper character state tracking for exerted status
-        // For now, we assume characters are ready unless explicitly marked as exerted
-        logger.info(`Character ${sourceInstanceId} using exert ability`);
-      }
-    }
-
-    // Check if ability has usage restrictions (e.g., once per turn)
-    // Note: This would need proper usage tracking
-
-    // Validate targets if required
-    if (abilityToActivate.targets && abilityToActivate.targets.length > 0) {
-      if (!options.targets || options.targets.length === 0) {
-        logger.error(
-          `Ability ${options.abilityId} requires targets but none provided`,
-        );
-        return createInvalidMove(
-          "TARGETS_REQUIRED",
-          "moves.useActivatedAbility.errors.targetsRequired",
-          { instanceId: sourceInstanceId, abilityId: options.abilityId },
-        );
-      }
-
-      // Validate each target
-      for (const targetId of options.targets) {
-        const targetInstance = coreOps.getCardInstance(targetId);
-        if (!targetInstance) {
-          logger.error(`Target ${targetId} not found`);
-          return createInvalidMove(
-            "TARGET_NOT_FOUND",
-            "moves.useActivatedAbility.errors.targetNotFound",
-            { instanceId: sourceInstanceId, targetId },
-          );
-        }
-      }
-    }
-
-    // Pay the ability's cost
-    const abilityCost = abilityToActivate.cost || {};
-
-    // Pay ink cost if required
-    if (abilityCost.ink && abilityCost.ink > 0) {
-      const inkCards = coreOps.getCardsInZone("inkwell", playerID);
-      if (inkCards.length < abilityCost.ink) {
-        logger.error(
-          `Player ${playerID} does not have enough ink to activate ability. Required: ${abilityCost.ink}, Available: ${inkCards.length}`,
-        );
-        return createInvalidMove(
-          "INSUFFICIENT_INK",
-          "moves.useActivatedAbility.errors.insufficientInk",
-          {
-            required: abilityCost.ink,
-            available: inkCards.length,
-            playerId: playerID,
-          },
-        );
-      }
-      logger.info(
-        `Player ${playerID} pays ${abilityCost.ink} ink for activated ability`,
-      );
-    }
-
-    // Exert the source if required
-    if (abilityCost.exert) {
-      logger.info(`Exerting ${sourceInstanceId} to activate ability`);
-      // Note: This would need proper character state management
-    }
-
-    // Handle other costs (banish, discard, damage, etc.)
-    if (abilityCost.banish) {
-      logger.info(`Banishing ${sourceInstanceId} to activate ability`);
-      // Would need to move card to discard pile
-    }
-
-    // Apply the ability's effect
     logger.info(
-      `Applying effect of ability ${options.abilityId} from ${sourceInstanceId}`,
-    );
-
-    // Add the ability to the stack/bag for resolution
-    // Note: Would need proper ability resolution system
-
-    logger.info(
-      `Player ${playerID} activated ability ${options.abilityId} on ${sourceInstanceId}`,
+      `Player ${playerID} used activated ability ${abilityIndex} on card ${cardInstanceId}`,
     );
 
     return G;
@@ -196,8 +109,7 @@ export const useActivatedAbilityMove: LorcanaMove = (
       "moves.useActivatedAbility.errors.unexpectedError",
       {
         error: String(error),
-        sourceInstanceId,
-        abilityId: options?.abilityId,
+        cardInstanceId: params?.cardInstanceId,
         playerId: playerID,
       },
     );

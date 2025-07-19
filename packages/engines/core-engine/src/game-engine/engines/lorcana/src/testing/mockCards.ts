@@ -39,7 +39,7 @@ export const mockLocationCard: LorcanitoLocationCard = {
   cost: 2,
   willpower: 4,
   moveCost: 1,
-  lore: 0,
+  lore: 1,
   illustrator: "",
   number: 0,
   set: "TFC",

@@ -19,11 +19,15 @@ interface ChallengeOptions {
 }
 
 export const challengeMove: LorcanaMove = (
-  { G, ctx, coreOps, playerID },
+  { G, coreOps, playerID },
   challengerInstanceId: string,
   options: ChallengeOptions,
 ) => {
   try {
+    const lorcanaOps = toLorcanaCoreOps(coreOps);
+    // Use getCtx instead of directly accessing ctx
+    const ctx = lorcanaOps.getCtx();
+
     logger.info(
       `Player ${playerID} attempting to challenge with ${challengerInstanceId} targeting ${options.targetInstanceId}`,
     );
@@ -38,7 +42,7 @@ export const challengeMove: LorcanaMove = (
       );
     }
 
-    const challengerInstance = coreOps.getCardInstance(challengerInstanceId);
+    const challengerInstance = lorcanaOps.getCardInstance(challengerInstanceId);
     if (!challengerInstance) {
       logger.error(`Failed to get challenger instance ${challengerInstanceId}`);
       return createInvalidMove(
@@ -48,7 +52,7 @@ export const challengeMove: LorcanaMove = (
       );
     }
 
-    const targetInstance = coreOps.getCardInstance(options.targetInstanceId);
+    const targetInstance = lorcanaOps.getCardInstance(options.targetInstanceId);
     if (!targetInstance) {
       logger.error(`Failed to get target instance ${options.targetInstanceId}`);
       return createInvalidMove(
@@ -72,7 +76,7 @@ export const challengeMove: LorcanaMove = (
     }
 
     // Verify challenger is in player's play zone
-    const playerPlayCards = coreOps.getCardsInZone("play", playerID);
+    const playerPlayCards = lorcanaOps.getCardsInZone("play", playerID);
     if (
       !playerPlayCards.find((card) => card.instanceId === challengerInstanceId)
     ) {
@@ -109,7 +113,7 @@ export const challengeMove: LorcanaMove = (
     }
 
     // Verify target is controlled by opponent
-    const targetOwner = coreOps.getCardOwner(options.targetInstanceId);
+    const targetOwner = lorcanaOps.getCardOwner(options.targetInstanceId);
     if (targetOwner === playerID) {
       logger.error(`Cannot challenge own card ${options.targetInstanceId}`);
       return createInvalidMove(
@@ -143,7 +147,7 @@ export const challengeMove: LorcanaMove = (
     // Check for Bodyguard restriction
     if (isTargetCharacter && !targetKeywords.includes("Bodyguard")) {
       // If target doesn't have Bodyguard, check if there's a Bodyguard that must be challenged first
-      const opponentPlayCards = coreOps.getCardsInZone("play", targetOwner!);
+      const opponentPlayCards = lorcanaOps.getCardsInZone("play", targetOwner!);
       const bodyguardCards = opponentPlayCards.filter((card) => {
         const cardKeywords = (card.card as any).keywords || [];
         return (
@@ -180,8 +184,6 @@ export const challengeMove: LorcanaMove = (
 
     // Apply "while challenging" effects
     // Note: This would need to be implemented based on specific card abilities
-
-    const lorcanaOps = toLorcanaCoreOps(coreOps);
 
     // Add triggered effects to the bag (rule 4.3.6.5)
     lorcanaOps.addTriggeredEffectsToTheBag("onChallenge", challengerInstanceId);

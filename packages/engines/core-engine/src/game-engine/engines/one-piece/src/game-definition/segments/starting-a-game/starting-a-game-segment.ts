@@ -19,6 +19,8 @@ export const startingAGameSegment: SegmentConfig<OnePieceGameState> = {
   next: "duringGame",
 
   onBegin: ({ G, coreOps }) => {
+    const ctx = coreOps.getCtx();
+
     coreOps.setPendingMulligan(coreOps.getPlayers());
     logger.info("==== STARTING ONE PIECE GAME ====");
 
@@ -43,7 +45,9 @@ export const startingAGameSegment: SegmentConfig<OnePieceGameState> = {
     );
   },
 
-  onEnd: ({ G, ctx, coreOps }) => {
+  onEnd: ({ G, coreOps }) => {
+    const ctx = coreOps.getCtx();
+
     if (ctx.otp) {
       coreOps.setPriorityPlayer(ctx.otp);
       coreOps.setTurnPlayer(ctx.otp);
@@ -126,7 +130,9 @@ export const startingAGameSegment: SegmentConfig<OnePieceGameState> = {
           return !ctx.pendingMulligan || ctx.pendingMulligan.size === 0;
         },
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           coreOps.setPriorityPlayer(ctx.otp);
           coreOps.setTurnPlayer(ctx.otp);
           coreOps.setPendingMulligan(coreOps.getPlayers());
@@ -157,7 +163,9 @@ export const startingAGameSegment: SegmentConfig<OnePieceGameState> = {
           return G;
         },
 
-        onEnd: ({ G, ctx, coreOps }) => {
+        onEnd: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           if (ctx.otp) {
             coreOps.setPriorityPlayer(ctx.otp);
             coreOps.setTurnPlayer(ctx.otp);

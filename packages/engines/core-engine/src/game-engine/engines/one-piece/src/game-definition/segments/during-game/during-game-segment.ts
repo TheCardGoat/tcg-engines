@@ -32,7 +32,8 @@ export const duringGameSegment: SegmentConfig<OnePieceGameState> = {
   },
 
   turn: {
-    onBegin: ({ G, ctx, coreOps }) => {
+    onBegin: ({ G, coreOps }) => {
+      const ctx = coreOps.getCtx();
       const currentPlayer = getCurrentTurnPlayer(ctx);
       if (!currentPlayer) return G;
 
@@ -49,7 +50,7 @@ export const duringGameSegment: SegmentConfig<OnePieceGameState> = {
       return G;
     },
 
-    onEnd: ({ G, ctx, coreOps }) => {
+    onEnd: ({ G, coreOps }) => {
       return G;
     },
 
@@ -58,7 +59,8 @@ export const duringGameSegment: SegmentConfig<OnePieceGameState> = {
         start: true,
         next: "drawPhase",
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
           const currentPlayer = getCurrentTurnPlayer(ctx);
           if (!currentPlayer) return G;
 
@@ -81,7 +83,8 @@ export const duringGameSegment: SegmentConfig<OnePieceGameState> = {
       drawPhase: {
         next: "donPhase",
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
           const currentPlayer = getCurrentTurnPlayer(ctx);
           if (!currentPlayer) return G;
 
@@ -112,7 +115,8 @@ export const duringGameSegment: SegmentConfig<OnePieceGameState> = {
       donPhase: {
         next: "mainPhase",
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
           const currentPlayer = getCurrentTurnPlayer(ctx);
           if (!currentPlayer) return G;
 
@@ -135,7 +139,8 @@ export const duringGameSegment: SegmentConfig<OnePieceGameState> = {
       mainPhase: {
         next: "endPhase",
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
           const currentPlayer = getCurrentTurnPlayer(ctx);
           if (!currentPlayer) return G;
 
@@ -178,7 +183,12 @@ export const duringGameSegment: SegmentConfig<OnePieceGameState> = {
       },
 
       endPhase: {
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+          const currentPlayer = getCurrentTurnPlayer(ctx);
+          if (!currentPlayer) return G;
+
+          logger.info(`${currentPlayer} - End Phase`);
           return G;
         },
 

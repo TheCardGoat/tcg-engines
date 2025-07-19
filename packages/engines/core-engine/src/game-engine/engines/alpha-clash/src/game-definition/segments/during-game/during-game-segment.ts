@@ -43,7 +43,9 @@ export const duringGameSegment: SegmentConfig<AlphaClashGameState> = {
         start: true,
         next: "expansion",
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           const currentPlayer = ctx.playerOrder[ctx.turnPlayerPos];
           logger.info(`=== START OF TURN: ${currentPlayer} ===`);
 
@@ -69,7 +71,9 @@ export const duringGameSegment: SegmentConfig<AlphaClashGameState> = {
       expansion: {
         next: "primary",
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           const currentPlayer = ctx.playerOrder[ctx.turnPlayerPos];
           logger.info(`=== EXPANSION PHASE: ${currentPlayer} ===`);
 
@@ -176,6 +180,8 @@ export const duringGameSegment: SegmentConfig<AlphaClashGameState> = {
         },
 
         onEnd: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           // Clean up clash state
           const updatedState: AlphaClashGameState = {
             ...G,
@@ -201,7 +207,9 @@ export const duringGameSegment: SegmentConfig<AlphaClashGameState> = {
 
       // End of Turn Phase
       endOfTurn: {
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           const currentPlayer = ctx.playerOrder[ctx.turnPlayerPos];
           logger.info(`=== END OF TURN: ${currentPlayer} ===`);
 
@@ -219,7 +227,9 @@ export const duringGameSegment: SegmentConfig<AlphaClashGameState> = {
 
         endIf: () => true, // Always end turn
 
-        onEnd: ({ G, ctx, coreOps }) => {
+        onEnd: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           // Move to next player's turn - this is handled automatically by the framework
           logger.info(`Turn ${ctx.numTurns} complete, moving to next player`);
           return G;

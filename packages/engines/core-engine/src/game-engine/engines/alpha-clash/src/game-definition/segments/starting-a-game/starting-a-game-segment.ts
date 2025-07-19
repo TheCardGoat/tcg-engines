@@ -17,6 +17,8 @@ export const startingAGameSegment: SegmentConfig<AlphaClashGameState> = {
   next: "duringGame",
 
   onBegin: ({ G, coreOps }) => {
+    const ctx = coreOps.getCtx();
+
     logger.info("==== STARTING ALPHA CLASH GAME ====");
 
     // Initialize game state
@@ -83,7 +85,9 @@ export const startingAGameSegment: SegmentConfig<AlphaClashGameState> = {
     );
   },
 
-  onEnd: ({ G, ctx, coreOps }) => {
+  onEnd: ({ G, coreOps }) => {
+    const ctx = coreOps.getCtx();
+
     logger.info("Starting game segment complete");
 
     // Set up for main game
@@ -119,7 +123,9 @@ export const startingAGameSegment: SegmentConfig<AlphaClashGameState> = {
         endIf: ({ ctx }) =>
           !ctx.pendingMulligan || ctx.pendingMulligan.size === 0,
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           logger.info(
             "Mulligan phase - players may mulligan their opening hands",
           );

@@ -22,6 +22,8 @@ export const startingAGameSegment: SegmentConfig<GundamGameState> = {
   next: "duringGame",
 
   onBegin: ({ G, coreOps }) => {
+    const ctx = coreOps.getCtx();
+
     coreOps.setPendingMulligan(coreOps.getPlayers());
 
     for (const player of coreOps.getPlayers()) {
@@ -43,7 +45,9 @@ export const startingAGameSegment: SegmentConfig<GundamGameState> = {
     );
   },
 
-  onEnd: ({ G, ctx, coreOps }) => {
+  onEnd: ({ G, coreOps }) => {
+    const ctx = coreOps.getCtx();
+
     if (ctx.otp) {
       coreOps.setPriorityPlayer(ctx.otp);
       coreOps.setTurnPlayer(ctx.otp);
@@ -130,7 +134,9 @@ export const startingAGameSegment: SegmentConfig<GundamGameState> = {
           return !ctx.pendingMulligan || ctx.pendingMulligan.size === 0;
         },
 
-        onBegin: ({ G, ctx, coreOps }) => {
+        onBegin: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           coreOps.setPriorityPlayer(ctx.otp);
           coreOps.setTurnPlayer(ctx.otp);
           coreOps.setPendingMulligan(coreOps.getPlayers());
@@ -161,7 +167,9 @@ export const startingAGameSegment: SegmentConfig<GundamGameState> = {
           return G;
         },
 
-        onEnd: ({ G, ctx, coreOps }) => {
+        onEnd: ({ G, coreOps }) => {
+          const ctx = coreOps.getCtx();
+
           if (ctx.otp) {
             coreOps.setPriorityPlayer(ctx.otp);
             coreOps.setTurnPlayer(ctx.otp);

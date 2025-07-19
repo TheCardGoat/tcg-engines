@@ -7,9 +7,12 @@ import type { OnePieceGameState } from "../one-piece-engine-types";
  * During DON!! Phase, place up to 2 DON!! cards from DON!! deck to cost area
  */
 export const placeDon: Move<OnePieceGameState> = (
-  { G, ctx, coreOps, playerID },
+  { G, coreOps, playerID },
   count: number,
 ) => {
+  // Use getCtx if needed instead of directly accessing ctx
+  // const ctx = coreOps.getCtx();
+
   // Validate count (max 2 per turn)
   if (count < 1 || count > 2) {
     return G; // Invalid move

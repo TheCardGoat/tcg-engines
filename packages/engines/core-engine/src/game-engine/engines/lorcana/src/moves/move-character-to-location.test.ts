@@ -27,6 +27,7 @@ const testLocationCard: LorcanitoLocationCard = {
   id: "test-location-basic",
   name: "Test Location",
   moveCost: 1, // Cost to move a character to this location
+  lore: 1,
 };
 
 const expensiveLocationCard: LorcanitoLocationCard = {
@@ -35,7 +36,7 @@ const expensiveLocationCard: LorcanitoLocationCard = {
   name: "Expensive Location",
   cost: 3,
   moveCost: 3, // High cost to move characters here
-  lore: 1,
+  lore: 2,
 };
 
 const freeLocationCard: LorcanitoLocationCard = {
@@ -45,7 +46,7 @@ const freeLocationCard: LorcanitoLocationCard = {
   title: "Zero Move Cost",
   cost: 1,
   moveCost: 0, // Free to move characters here
-  lore: 2,
+  lore: 0,
 };
 
 const freeOpponentLocationCard: LorcanitoLocationCard = {
@@ -262,7 +263,32 @@ describe("Move: Move Character to Location", () => {
   });
 
   describe.skip("Gaining Lore From Location", () => {
-    it("On Start of Turn, it should get lore", async () => {});
+    it("On Start of Turn, it should get lore", () => {
+      const testEngine = new LorcanaTestEngine({
+        play: [expensiveLocationCard, freeLocationCard, testLocationCard], // Expensive location (cost 3)
+      });
+
+      testEngine.changeActivePlayer("player_one");
+      testEngine.passTurn();
+
+      expect(testEngine.getTurnPlayer()).toEqual("player_two");
+      expect(testEngine.getPriorityPlayers()).toContain("player_two");
+
+      expect(testEngine.getPlayerLore("player_one")).toBe(0);
+      expect(testEngine.getPlayerLore("player_two")).toBe(0);
+
+      testEngine.changeActivePlayer("player_two");
+      testEngine.passTurn();
+      expect(testEngine.getTurnPlayer()).toEqual("player_one");
+
+      expect(testEngine.getPlayerLore("player_one")).toBe(
+        expensiveLocationCard.lore +
+          freeLocationCard.lore +
+          testLocationCard.lore,
+      );
+      expect(testEngine.getPlayerLore("player_two")).toBe(0);
+    });
+
     it("On Start of Turn, if you win lore and pass 20 lore you win the game", async () => {});
   });
 
