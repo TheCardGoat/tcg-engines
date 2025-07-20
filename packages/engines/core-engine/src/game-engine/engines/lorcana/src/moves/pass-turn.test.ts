@@ -30,15 +30,26 @@ describe("Move: Pass Turn", () => {
   it("should successfully pass turn during main phase", () => {
     // Verify initial state
     expect(testEngine.getGamePhase()).toBe("mainPhase");
+    expect(testEngine.getNumTurns()).toBe(1);
+    expect(testEngine.getNumMoves()).toBe(1);
+    expect(testEngine.getNumTurnMoves()).toBe(0);
+
+    const p1Response = testEngine.passTurn();
+    expect(p1Response.success).toBe(true);
+
+    expect(testEngine.getTurnPlayer()).toBe("player_two");
+    expect(testEngine.getNumTurns()).toBe(2);
+    expect(testEngine.getNumMoves()).toBe(2);
+    expect(testEngine.getNumTurnMoves()).toBe(0);
+
+    testEngine.changeActivePlayer("player_two");
+    const p2Response = testEngine.passTurn();
+    expect(p2Response.success).toBe(true);
+
     expect(testEngine.getTurnPlayer()).toBe("player_one");
-
-    // Pass turn
-    const response = testEngine.passTurn();
-    expect(response.success).toBe(true);
-
-    // Verify turn actions were cleared
-    const gameState = testEngine.authoritativeEngine.getGameState();
-    expect(gameState.G.turnActions).toBe(undefined);
+    expect(testEngine.getNumTurns()).toBe(3);
+    expect(testEngine.getNumMoves()).toBe(3);
+    expect(testEngine.getNumTurnMoves()).toBe(0);
   });
 
   it("should clear turn actions when passing turn", () => {

@@ -507,7 +507,10 @@ export class FlowManager<G> implements FlowInterface<G> {
       currentState = this.handleSegmentPhaseInitialization(currentState);
     }
 
-    return currentState;
+    return {
+      ...currentState,
+      ctx: { ...currentState.ctx, numMoves: (ctx.numMoves || 0) + 1 },
+    };
   }
 
   /**

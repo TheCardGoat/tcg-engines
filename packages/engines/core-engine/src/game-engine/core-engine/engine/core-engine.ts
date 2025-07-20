@@ -484,6 +484,10 @@ export class CoreEngine<
     return this.getCtx().numMoves;
   }
 
+  getNumTurnMoves() {
+    return this.getCtx().numTurnMoves;
+  }
+
   /** Get current game segment (startingAGame, duringGame, etc.) */
   getGameSegment() {
     return this.getCtx().currentSegment;

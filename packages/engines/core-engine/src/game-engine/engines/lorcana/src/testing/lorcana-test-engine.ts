@@ -387,6 +387,10 @@ export class LorcanaTestEngine {
     return this.authoritativeEngine.getNumMoves();
   }
 
+  getNumTurnMoves() {
+    return this.authoritativeEngine.getNumTurnMoves();
+  }
+
   getGameSegment() {
     // Always read game segment from the authoritative engine to ensure consistency
     return this.authoritativeEngine.getGameSegment();
