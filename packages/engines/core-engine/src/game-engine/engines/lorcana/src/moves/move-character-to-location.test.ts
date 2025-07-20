@@ -262,7 +262,7 @@ describe("Move: Move Character to Location", () => {
     it("should trigger effects when character moves to location", async () => {});
   });
 
-  describe.skip("Gaining Lore From Location", () => {
+  describe("Gaining Lore From Location", () => {
     it("On Start of Turn, it should get lore", () => {
       const testEngine = new LorcanaTestEngine({
         play: [expensiveLocationCard, freeLocationCard, testLocationCard], // Expensive location (cost 3)

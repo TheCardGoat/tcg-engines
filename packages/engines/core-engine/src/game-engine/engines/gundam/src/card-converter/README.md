@@ -45,7 +45,7 @@ import { scrapeAndCreateGundamitoCard } from "./gundam-card-scraper";
 
 const card = await scrapeAndCreateGundamitoCard("ST01-006");
 if (card) {
-  console.log("Card scraped successfully:", card);
+  logger.log("Card scraped successfully:", card);
 }
 ```
 

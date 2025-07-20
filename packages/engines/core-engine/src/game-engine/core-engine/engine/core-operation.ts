@@ -326,4 +326,160 @@ export class CoreOperation<
       priorityPlayer: getCurrentPriorityPlayer(this.state.ctx),
     });
   }
+
+  /**
+   * Beginning Phase: Ready Step
+   * Called automatically by flow manager during the ready step.
+   */
+  beginReadyStep() {
+    // Stub: Implement ready logic here (e.g., ready all cards in play and inkwell)
+  }
+
+  /**
+   * Beginning Phase: Set Step
+   * Called automatically by flow manager during the set step.
+   */
+  beginSetStep() {
+    // Stub: Implement set logic here (e.g., gain lore from locations, undry characters)
+  }
+
+  /**
+   * Beginning Phase: Draw Step
+   * Called automatically by flow manager during the draw step.
+   */
+  beginDrawStep() {
+    // Stub: Implement draw logic here (e.g., draw a card unless first turn)
+  }
+
+  // Additional beginning phase methods following Task 2.1 specification
+
+  /**
+   * Ready all cards for a player (inkwell and play zones)
+   */
+  readyAllCards(playerId: string): void {
+    // TODO: Implement ready all cards logic
+    logger.debug(`Ready all cards for player ${playerId}`);
+  }
+
+  /**
+   * Clear drying state for characters
+   */
+  clearDryingState(playerId: string): void {
+    // TODO: Implement clear drying state logic
+    logger.debug(`Clear drying state for player ${playerId}`);
+  }
+
+  /**
+   * Gain lore from locations in play
+   */
+  gainLoreFromLocations(playerId: string): void {
+    // Minimal implementation for flow testing - in production this would
+    // iterate through locations in play and sum their lore values
+    try {
+      // Get all locations in play for this player
+      const playCards = this.getCardsInZone("play", playerId);
+      let totalLore = 0;
+
+      logger.debug(
+        `gainLoreFromLocations: Checking ${playCards.length} cards in play for player ${playerId}`,
+      );
+
+      for (const card of playCards) {
+        logger.debug(
+          `Card: ${card ? (card as any).card?.name || (card as any).card?.id || "unnamed" : "null"}, lore: ${(card as any)?.card?.lore}`,
+        );
+        logger.debug("Full card structure:", JSON.stringify(card, null, 2));
+
+        // Check if this is a location card with lore (card.card.lore)
+        if (
+          card &&
+          (card as any).card &&
+          typeof (card as any).card.lore === "number"
+        ) {
+          totalLore += (card as any).card.lore;
+          logger.debug(
+            `Added ${(card as any).card.lore} lore from card ${(card as any).card.name || (card as any).card.id}`,
+          );
+        }
+      }
+
+      if (totalLore > 0) {
+        // Add lore to player (initialize if not set)
+        if (!this.state.ctx.players[playerId]) {
+          this.state.ctx.players[playerId] = {
+            id: playerId,
+            name: playerId,
+            turnHistory: [],
+          };
+        }
+        if (!this.state.ctx.players[playerId].lore) {
+          this.state.ctx.players[playerId].lore = 0;
+        }
+        this.state.ctx.players[playerId].lore += totalLore;
+
+        logger.debug(
+          `Player ${playerId} gained ${totalLore} lore from locations (total: ${this.state.ctx.players[playerId].lore})`,
+        );
+      } else {
+        logger.debug(
+          `No lore gained for player ${playerId} - no locations with lore in play`,
+        );
+      }
+    } catch (error) {
+      logger.error(
+        `Error in gainLoreFromLocations for player ${playerId}: ${error}`,
+      );
+    }
+  }
+
+  /**
+   * Process turn start triggers and add to bag
+   */
+  processTurnStartTriggers(): void {
+    // TODO: Implement process turn start triggers logic
+    logger.debug("Process turn start triggers");
+  }
+
+  /**
+   * Process turn start effects that apply during turn
+   */
+  processTurnStartEffects(): void {
+    // TODO: Implement process turn start effects logic
+    logger.debug("Process turn start effects");
+  }
+
+  /**
+   * Draw a card for a player
+   */
+  drawCard(playerId: string): void {
+    // TODO: Implement draw card logic
+    logger.debug(`Draw card for player ${playerId}`);
+  }
+
+  /**
+   * Check if this is the first turn of the game
+   */
+  isFirstTurn(): boolean {
+    // TODO: Implement first turn detection
+    return this.state.ctx.numTurns === 1;
+  }
+
+  /**
+   * Process end of turn effects
+   */
+  processEndOfTurnEffects(): void {
+    // TODO: Implement end of turn effects logic
+    logger.debug("Process end of turn effects");
+  }
+
+  /**
+   * Get the current turn player
+   */
+  getCurrentTurnPlayer(): string {
+    const ctx = this.state.ctx;
+    if (ctx?.turnPlayerPos !== undefined) {
+      return ctx.playerOrder[ctx.turnPlayerPos];
+    }
+    return ctx?.playerOrder[0] || "";
+  }
 }

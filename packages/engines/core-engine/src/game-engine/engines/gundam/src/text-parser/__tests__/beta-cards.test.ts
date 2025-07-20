@@ -49,11 +49,11 @@ describe("Beta Card Text Parser Tests", () => {
 
   // Test cards by type
   describe("Card Types", () => {
-    CARD_TYPES.forEach((type) => {
+    for (const type of CARD_TYPES) {
       test(`${type} cards`, () => {
         testCardsByType(cards, type, 1);
       });
-    });
+    }
   });
 
   // Error handling test - ensure all beta cards can be parsed

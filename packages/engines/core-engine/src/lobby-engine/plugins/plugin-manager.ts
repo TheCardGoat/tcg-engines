@@ -1,4 +1,4 @@
-import { logger } from "../../shared/logger";
+import { logger } from "~/game-engine/core-engine/utils";
 import type { CombinedLobbyState } from "../lobby-engine-types";
 import type { Plugin, PluginAPI, PluginManagerOptions } from "./types";
 import { CoreEvents } from "./types";

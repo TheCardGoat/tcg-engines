@@ -1,4 +1,5 @@
 import { describe, expect, test } from "@jest/globals";
+import { logger } from "../../../../../../shared/logger";
 import betaCards from "../../cards/imports/beta.json";
 import gd01Cards from "../../cards/imports/gd01.json";
 import promotionCards from "../../cards/imports/promotion.json";
@@ -60,7 +61,7 @@ describe("All Card Sets Text Parser Tests", () => {
 
   // Test a random sample of cards from each set
   describe("Sample Cards From Each Set", () => {
-    Object.entries(cardSets).forEach(([setName, cards]) => {
+    for (const [setName, cards] of Object.entries(cardSets)) {
       test(`${setName} card sample`, () => {
         // Filter out cards without effects and token/resource cards
         const cardsWithEffects = cards.filter(
@@ -74,7 +75,7 @@ describe("All Card Sets Text Parser Tests", () => {
         // Limit to a small sample for performance
         const sampleSize = Math.min(5, cardsWithEffects.length);
         if (sampleSize === 0) {
-          console.log(`No cards with effects found in ${setName}`);
+          logger.log(`No cards with effects found in ${setName}`);
           return;
         }
 
@@ -90,7 +91,7 @@ describe("All Card Sets Text Parser Tests", () => {
           }
         }
 
-        console.log(
+        logger.log(
           `Testing ${sampleCards.length} random cards from ${setName}`,
         );
 
@@ -98,7 +99,7 @@ describe("All Card Sets Text Parser Tests", () => {
         let successCount = 0;
         let failCount = 0;
 
-        sampleCards.forEach((card) => {
+        for (const card of sampleCards) {
           const cleanedText = cleanCardText(card.effect || "");
           try {
             const result = parseGundamText(cleanedText);
@@ -106,22 +107,22 @@ describe("All Card Sets Text Parser Tests", () => {
               successCount++;
             } else {
               failCount++;
-              console.log(
+              logger.log(
                 `Failed to parse ${card.code} (${card.name}): ${result.errors.join(", ")}`,
               );
             }
           } catch (error) {
             failCount++;
-            console.log(
+            logger.log(
               `Error parsing ${card.code} (${card.name}): ${error.message}`,
             );
           }
-        });
+        }
 
         expect(failCount).toBe(0);
         expect(successCount).toBe(sampleCards.length);
       });
-    });
+    }
   });
 
   // Test different ability types across all sets
@@ -133,7 +134,7 @@ describe("All Card Sets Text Parser Tests", () => {
     ): Array<{ setName: string; card: GundamCard }> {
       const results: Array<{ setName: string; card: GundamCard }> = [];
 
-      Object.entries(cardSets).forEach(([setName, cards]) => {
+      for (const [setName, cards] of Object.entries(cardSets)) {
         const matches = cards.filter(
           (card) => card.effect && pattern.test(card.effect),
         );
@@ -144,7 +145,7 @@ describe("All Card Sets Text Parser Tests", () => {
             card: matches[0],
           });
         }
-      });
+      }
 
       return results.slice(0, limit);
     }
@@ -160,40 +161,40 @@ describe("All Card Sets Text Parser Tests", () => {
       { name: "Drawing cards", pattern: /[Dd]raw \d/ },
     ];
 
-    abilityPatterns.forEach(({ name, pattern }) => {
+    for (const { name, pattern } of abilityPatterns) {
       test(`${name} ability across sets`, () => {
         const matches = getCardsWithPattern(pattern);
-        console.log(`Found ${matches.length} cards with ${name} across sets`);
+        logger.log(`Found ${matches.length} cards with ${name} across sets`);
 
-        matches.forEach(({ setName, card }) => {
+        for (const { setName, card } of matches) {
           const cleanedText = cleanCardText(card.effect || "");
           try {
             const result = parseGundamText(cleanedText);
             expect(result.errors).toHaveLength(0);
             expect(result.abilities.length).toBeGreaterThan(0);
-            console.log(`Successfully parsed ${setName} card: ${card.code}`);
+            logger.log(`Successfully parsed ${setName} card: ${card.code}`);
           } catch (error) {
-            console.log(
+            logger.log(
               `Error parsing ${setName} card ${card.code}: ${error.message}`,
             );
             // Re-throw to fail the test
             throw error;
           }
-        });
+        }
       });
-    });
+    }
   });
 
   // Test cross-set compatibility for card types
   describe("Card Types Across Sets", () => {
     const cardTypes = ["UNIT", "PILOT", "COMMAND", "BASE"];
 
-    cardTypes.forEach((type) => {
+    for (const type of cardTypes) {
       test(`${type} cards across sets`, () => {
         // Collect one card of this type from each set
         const typeSamples: Array<{ setName: string; card: GundamCard }> = [];
 
-        Object.entries(cardSets).forEach(([setName, cards]) => {
+        for (const [setName, cards] of Object.entries(cardSets)) {
           const cardsOfType = cards.filter(
             (card) =>
               card.cardType === type && card.effect && card.effect !== "-",
@@ -205,19 +206,19 @@ describe("All Card Sets Text Parser Tests", () => {
               card: cardsOfType[0],
             });
           }
-        });
+        }
 
-        console.log(`Testing ${typeSamples.length} ${type} cards across sets`);
+        logger.log(`Testing ${typeSamples.length} ${type} cards across sets`);
 
-        typeSamples.forEach(({ setName, card }) => {
+        for (const { setName, card } of typeSamples) {
           const cleanedText = cleanCardText(card.effect || "");
           const result = parseGundamText(cleanedText);
 
           expect(result.errors).toHaveLength(0);
           expect(result.abilities.length).toBeGreaterThan(0);
-        });
+        }
       });
-    });
+    }
   });
 
   // Statistics about the test coverage
@@ -229,7 +230,7 @@ describe("All Card Sets Text Parser Tests", () => {
     };
 
     // Collect statistics
-    Object.entries(cardSets).forEach(([setName, cards]) => {
+    for (const [setName, cards] of Object.entries(cardSets)) {
       stats.totalCards += cards.length;
 
       const cardsWithEffects = cards.filter(
@@ -245,18 +246,18 @@ describe("All Card Sets Text Parser Tests", () => {
         total: cards.length,
         withEffects: cardsWithEffects.length,
       };
-    });
+    }
 
-    console.log("Card Data Statistics:");
-    console.log(`Total cards: ${stats.totalCards}`);
-    console.log(`Cards with effects: ${stats.cardsWithEffects}`);
-    console.log("Set breakdowns:");
+    logger.log("Card Data Statistics:");
+    logger.log(`Total cards: ${stats.totalCards}`);
+    logger.log(`Cards with effects: ${stats.cardsWithEffects}`);
+    logger.log("Set breakdowns:");
 
-    Object.entries(stats.setStats).forEach(([setName, setStats]) => {
-      console.log(
+    for (const [setName, setStats] of Object.entries(stats.setStats)) {
+      logger.log(
         `- ${setName}: ${setStats.withEffects}/${setStats.total} cards with effects`,
       );
-    });
+    }
 
     // This is just an informational test that always passes
     expect(true).toBe(true);

@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from "fs/promises";
 import { dirname, join } from "path";
+import { logger } from "~/game-engine/core-engine/utils";
 import type {
   CardColor,
   CardRarity,
@@ -54,7 +55,7 @@ export async function scrapeCardData(
 
     // Check if we were redirected to the homepage or a different URL
     if (response.url !== url) {
-      console.log(
+      logger.log(
         `Card ${cardNumber} redirected from ${url} to ${response.url}`,
       );
 
@@ -65,7 +66,7 @@ export async function scrapeCardData(
         response.url.endsWith("/en") ||
         !response.url.includes("detail.php")
       ) {
-        console.log(
+        logger.log(
           `Card ${cardNumber} appears to not exist (redirected to homepage)`,
         );
         return null;
@@ -75,7 +76,7 @@ export async function scrapeCardData(
     const html = await response.text();
     return parseCardHTML(html);
   } catch (error) {
-    console.error(`Error scraping card ${cardNumber}:`, error);
+    logger.error(`Error scraping card ${cardNumber}:`, error);
     return null;
   }
 }
@@ -105,7 +106,7 @@ function isValidCardPage(html: string): boolean {
     hasCardNumber && hasCardName && hasDataBoxes && !isHomepage && !isLogoOnly;
 
   if (!isValid) {
-    console.log("Invalid card page detected:", {
+    logger.log("Invalid card page detected:", {
       hasCardNumber,
       hasCardName,
       hasDataBoxes,
@@ -188,7 +189,7 @@ function parseCardHTML(html: string): ScrapedCardData | null {
       imageUrl,
     };
   } catch (error) {
-    console.error("Error parsing HTML:", error);
+    logger.error("Error parsing HTML:", error);
     return null;
   }
 }
@@ -325,12 +326,12 @@ export function convertToGundamitoCard(
       }
 
       default: {
-        console.warn(`Unknown card type: ${data.type}`);
+        logger.warn(`Unknown card type: ${data.type}`);
         return null;
       }
     }
   } catch (error) {
-    console.error("Error converting to GundamitoCard:", error);
+    logger.error("Error converting to GundamitoCard:", error);
     return null;
   }
 }
@@ -352,7 +353,7 @@ function convertCardType(type: string): GundamitoCardType {
     case "resource":
       return "resource";
     default:
-      console.warn(`Unknown card type: ${type}, defaulting to unit`);
+      logger.warn(`Unknown card type: ${type}, defaulting to unit`);
       return "unit";
   }
 }
@@ -369,7 +370,7 @@ function convertColor(color: string): CardColor {
     case "red":
       return "red";
     default:
-      console.warn(`Unknown color: ${color}, defaulting to blue`);
+      logger.warn(`Unknown color: ${color}, defaulting to blue`);
       return "blue";
   }
 }
@@ -393,7 +394,7 @@ function convertRarity(rarity: string): CardRarity {
     case "legendary":
       return "legendary";
     default:
-      console.warn(`Unknown rarity: ${rarity}, defaulting to common`);
+      logger.warn(`Unknown rarity: ${rarity}, defaulting to common`);
       return "common";
   }
 }
@@ -422,7 +423,7 @@ function extractCardSet(cardNumber: string): GundamitoCardSet {
     case "EXBP":
       return "EXBP";
     default:
-      console.warn(`Unknown set: ${setCode}, defaulting to ST01`);
+      logger.warn(`Unknown set: ${setCode}, defaulting to ST01`);
       return "ST01";
   }
 }
@@ -436,7 +437,7 @@ function generateCardId(cardNumber: string, cardName: string): string {
   // Extract set and number from cardNumber (e.g., "ST01-006" -> "ST01" and "006")
   const match = cardNumber.match(/^([A-Z0-9]+)-(\d+)$/);
   if (!match) {
-    console.warn(`Invalid card number format: ${cardNumber}`);
+    logger.warn(`Invalid card number format: ${cardNumber}`);
     return cardNumber; // fallback to original
   }
 
@@ -459,24 +460,24 @@ function parseAbilitiesFromText(effectText: string): any[] {
       .replace(/<\/br>/g, " ")
       .trim();
 
-    console.log(`Parsing abilities from text: "${cleanText}"`);
+    logger.log(`Parsing abilities from text: "${cleanText}"`);
 
     const result = parseGundamText(cleanText, { debug: false });
 
     if (result.abilities && result.abilities.length > 0) {
-      console.log(`Generated ${result.abilities.length} abilities`);
+      logger.log(`Generated ${result.abilities.length} abilities`);
       if (result.warnings.length > 0) {
-        console.log(`Warnings: ${result.warnings.join(", ")}`);
+        logger.log(`Warnings: ${result.warnings.join(", ")}`);
       }
       if (result.errors.length > 0) {
-        console.log(`Errors: ${result.errors.join(", ")}`);
+        logger.log(`Errors: ${result.errors.join(", ")}`);
       }
       return result.abilities;
     }
 
     return [];
   } catch (error) {
-    console.warn(`Error parsing abilities from text "${effectText}":`, error);
+    logger.warn(`Error parsing abilities from text "${effectText}":`, error);
     return [];
   }
 }
@@ -545,10 +546,10 @@ function parseTraits(traitText: string): Traits[] {
 
   // Log unknown traits to help with discovery
   if (unknownTraits.length > 0) {
-    console.warn(
+    logger.warn(
       `🔍 Unknown traits found in "${traitText}": [${unknownTraits.join(", ")}]`,
     );
-    console.warn(
+    logger.warn(
       "   Consider adding these to the Traits type and traitMappings",
     );
   }
@@ -579,25 +580,25 @@ function parsePilotInfo(effectText: string): string | null {
 export async function scrapeAndCreateGundamitoCard(
   cardNumber: string,
 ): Promise<GundamitoCard | null> {
-  console.log(`Scraping card: ${cardNumber}`);
+  logger.log(`Scraping card: ${cardNumber}`);
 
   const scrapedData = await scrapeCardData(cardNumber);
   if (!scrapedData) {
-    console.error(`Failed to scrape data for card: ${cardNumber}`);
+    logger.error(`Failed to scrape data for card: ${cardNumber}`);
     return null;
   }
 
-  console.log("Scraped data:", scrapedData);
+  logger.log("Scraped data:", scrapedData);
 
   const gundamitoCard = convertToGundamitoCard(scrapedData);
   if (!gundamitoCard) {
-    console.error(
+    logger.error(
       `Failed to convert scraped data to GundamitoCard for: ${cardNumber}`,
     );
     return null;
   }
 
-  console.log(
+  logger.log(
     "Generated GundamitoCard:",
     JSON.stringify(gundamitoCard, null, 2),
   );
@@ -611,8 +612,8 @@ export async function scrapeAndCreateGundamitoCard(
 export async function scrapeAllCardsInSet(
   setCode: string,
 ): Promise<GundamitoCard[]> {
-  console.log(`🔍 Scraping all cards in set: ${setCode}`);
-  console.log("=".repeat(50));
+  logger.log(`🔍 Scraping all cards in set: ${setCode}`);
+  logger.log("=".repeat(50));
 
   const cards: GundamitoCard[] = [];
   const discoveredTraits = new Set<string>();
@@ -622,14 +623,14 @@ export async function scrapeAllCardsInSet(
 
   while (consecutiveFailures < maxConsecutiveFailures) {
     const cardNumber = `${setCode}-${currentNumber.toString().padStart(3, "0")}`;
-    console.log(`\n🔍 Attempting to scrape: ${cardNumber}`);
+    logger.log(`\n🔍 Attempting to scrape: ${cardNumber}`);
 
     try {
       const card = await scrapeAndCreateGundamitoCard(cardNumber);
       if (card) {
         cards.push(card);
         consecutiveFailures = 0; // Reset failure counter
-        console.log(`✅ Successfully scraped: ${cardNumber} - ${card.name}`);
+        logger.log(`✅ Successfully scraped: ${cardNumber} - ${card.name}`);
 
         // Collect traits for discovery report
         if ("traits" in card && Array.isArray(card.traits)) {
@@ -637,13 +638,13 @@ export async function scrapeAllCardsInSet(
         }
       } else {
         consecutiveFailures++;
-        console.log(
+        logger.log(
           `❌ Failed to scrape: ${cardNumber} (${consecutiveFailures}/${maxConsecutiveFailures})`,
         );
       }
     } catch (error) {
       consecutiveFailures++;
-      console.log(
+      logger.log(
         `❌ Error scraping ${cardNumber}: ${error} (${consecutiveFailures}/${maxConsecutiveFailures})`,
       );
     }
@@ -654,14 +655,14 @@ export async function scrapeAllCardsInSet(
     await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
-  console.log(`\n📊 Scraping complete for set ${setCode}`);
-  console.log(`✅ Successfully scraped ${cards.length} cards`);
-  console.log(
+  logger.log(`\n📊 Scraping complete for set ${setCode}`);
+  logger.log(`✅ Successfully scraped ${cards.length} cards`);
+  logger.log(
     `📋 Cards found: ${cards.map((c) => `${c.name} (${c.type})`).join(", ")}`,
   );
 
   if (discoveredTraits.size > 0) {
-    console.log(
+    logger.log(
       `\n🔍 Traits discovered in ${setCode}: [${Array.from(discoveredTraits).sort().join(", ")}]`,
     );
   }
@@ -796,9 +797,9 @@ export async function saveCardToFile(card: GundamitoCard): Promise<void> {
     // Write file
     await writeFile(filePath, content, "utf-8");
 
-    console.log(`💾 Saved card to: ${filePath}`);
+    logger.log(`💾 Saved card to: ${filePath}`);
   } catch (error) {
-    console.error(`❌ Error saving card ${card.id}:`, error);
+    logger.error(`❌ Error saving card ${card.id}:`, error);
     throw error;
   }
 }
@@ -810,23 +811,23 @@ export async function scrapeAndSaveAllCardsInSet(
   setCode: string,
   saveToFiles = true,
 ): Promise<GundamitoCard[]> {
-  console.log(`🔍 Scraping and saving all cards in set: ${setCode}`);
-  console.log("=".repeat(50));
+  logger.log(`🔍 Scraping and saving all cards in set: ${setCode}`);
+  logger.log("=".repeat(50));
 
   const cards = await scrapeAllCardsInSet(setCode);
 
   if (saveToFiles && cards.length > 0) {
-    console.log(`\n💾 Saving ${cards.length} cards to files...`);
+    logger.log(`\n💾 Saving ${cards.length} cards to files...`);
 
     for (const card of cards) {
       try {
         await saveCardToFile(card);
       } catch (error) {
-        console.error(`❌ Failed to save card ${card.id}:`, error);
+        logger.error(`❌ Failed to save card ${card.id}:`, error);
       }
     }
 
-    console.log(
+    logger.log(
       `✅ Successfully saved ${cards.length} cards to definition files!`,
     );
   }
@@ -856,16 +857,16 @@ export function analyzeTraitUsage(cards: GundamitoCard[]): void {
   });
 
   if (traitCount.size > 0) {
-    console.log("\n📊 Trait Usage Analysis");
-    console.log("=".repeat(40));
+    logger.log("\n📊 Trait Usage Analysis");
+    logger.log("=".repeat(40));
 
     Array.from(traitCount.entries())
       .sort(([, a], [, b]) => b - a)
       .forEach(([trait, count]) => {
-        console.log(`• ${trait}: ${count} card${count > 1 ? "s" : ""}`);
+        logger.log(`• ${trait}: ${count} card${count > 1 ? "s" : ""}`);
         if (count <= 3) {
           // Show examples for rare traits
-          console.log(
+          logger.log(
             `  Examples: ${cardsByTrait.get(trait)!.slice(0, 3).join(", ")}`,
           );
         }

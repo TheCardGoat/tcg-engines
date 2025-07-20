@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
+import { logger } from "../../../shared/logger";
 import { TestCoreEngine } from "./test-core-engine";
 
 describe("Core Engine", () => {
@@ -64,8 +65,8 @@ describe("Core Engine", () => {
     expect(updatedState.G.coreOpsModified).toBe(true);
 
     // This test validates state sharing between G and coreOps
-    console.log("State sharing test results:");
-    console.log(
+    logger.log("State sharing test results:");
+    logger.log(
       "- CoreOps could see G changes:",
       updatedState.G.coreOpsModified,
     );
@@ -90,7 +91,7 @@ describe("Core Engine", () => {
       coreOpsModified: updatedState.G.coreOpsModified,
     };
 
-    console.log(
+    logger.log(
       "Current state sharing behavior:",
       JSON.stringify(stateReport, null, 2),
     );
@@ -98,7 +99,7 @@ describe("Core Engine", () => {
     // This test serves as documentation of the current behavior
     // When the issue is fixed, these assertions should be updated accordingly
     if (!updatedState.G.coreOpsModified) {
-      console.warn(
+      logger.warn(
         "State sharing issue detected: coreOps cannot see G modifications",
       );
     }
@@ -118,9 +119,9 @@ describe("Core Engine", () => {
 
     const updatedState = authoritativeEngine.getGameState();
 
-    console.log("=== ORIGINAL ISSUE TEST RESULTS ===");
-    console.log("G.testValue:", updatedState.G.testValue);
-    console.log(
+    logger.log("=== ORIGINAL ISSUE TEST RESULTS ===");
+    logger.log("G.testValue:", updatedState.G.testValue);
+    logger.log(
       "CoreOps can work with G state:",
       updatedState.G.coreOpsModified,
     );
@@ -135,8 +136,8 @@ describe("Core Engine", () => {
 
     // Get initial turn count
     const initialTurnCount = authoritativeEngine.getTurnCount();
-    console.log("=== CONTEXT SHARING TEST ===");
-    console.log("Initial turn count:", initialTurnCount);
+    logger.log("=== CONTEXT SHARING TEST ===");
+    logger.log("Initial turn count:", initialTurnCount);
 
     // Execute context sharing test move
     const moveResult = playerOneEngine.processMove(
@@ -146,27 +147,27 @@ describe("Core Engine", () => {
     );
 
     if (!moveResult.success) {
-      console.error("Move failed:", moveResult.error);
-      console.error("This indicates a context sharing issue!");
+      logger.error("Move failed:", moveResult.error);
+      logger.error("This indicates a context sharing issue!");
     }
 
     expect(moveResult.success).toBe(true);
 
     const finalTurnCount = authoritativeEngine.getTurnCount();
-    console.log("Final turn count:", finalTurnCount);
-    console.log("Expected turn count:", initialTurnCount + 1); // Should be +1 (one increment from coreOps)
+    logger.log("Final turn count:", finalTurnCount);
+    logger.log("Expected turn count:", initialTurnCount + 1); // Should be +1 (one increment from coreOps)
 
     // The turn count should have been incremented once by coreOps
     expect(finalTurnCount).toBe(initialTurnCount + 1);
 
-    console.log(
+    logger.log(
       "✅ Context sharing test passed - coreOps can modify shared state!",
     );
   });
 
   it("should synchronize metadata changes between CoreOps and card filters", () => {
     const { authoritativeEngine, playerOneEngine } = testEngine;
-    console.log("=== METADATA SHARING TEST ===");
+    logger.log("=== METADATA SHARING TEST ===");
 
     // Execute a move that sets metadata through CoreOps and then
     // immediately tries to query that same metadata through card filtering
@@ -186,16 +187,16 @@ describe("Core Engine", () => {
     expect(updatedState.G.metadataShared).toBe(true);
     expect(updatedState.G.filteredCardsCount).toBe(0);
 
-    console.log("Metadata shared:", updatedState.G.metadataShared);
-    console.log("Cards that passed filter:", updatedState.G.filteredCardsCount);
-    console.log("Expected count:", 0);
+    logger.log("Metadata shared:", updatedState.G.metadataShared);
+    logger.log("Cards that passed filter:", updatedState.G.filteredCardsCount);
+    logger.log("Expected count:", 0);
 
     if (updatedState.G.filteredCardsCount > 0) {
-      console.error(
+      logger.error(
         "❌ Metadata sharing test FAILED - Card filter can't see CoreOps changes!",
       );
     } else {
-      console.log(
+      logger.log(
         "✅ Metadata sharing test passed - Card filter can see CoreOps changes!",
       );
     }
@@ -203,7 +204,7 @@ describe("Core Engine", () => {
 
   it("should identify how the card filtering system works with metadata", () => {
     const { authoritativeEngine, playerOneEngine } = testEngine;
-    console.log("=== CARD FILTER METADATA TEST ===");
+    logger.log("=== CARD FILTER METADATA TEST ===");
 
     // Execute the test move that creates test cards with metadata
     const moveResult = playerOneEngine.processMove(
@@ -216,20 +217,17 @@ describe("Core Engine", () => {
 
     const updatedState = authoritativeEngine.getGameState();
 
-    console.log("Test 1 (Direct access to metadata):", {
+    logger.log("Test 1 (Direct access to metadata):", {
       exertedCardFound: updatedState.G.test1Direct,
       nonExertedCardFound: updatedState.G.test1NonExerted,
       noMetaCardBehavior: updatedState.G.test1NoMeta,
     });
 
-    console.log("Test 2 (Metadata change immediately visible):", {
+    logger.log("Test 2 (Metadata change immediately visible):", {
       changeDetected: updatedState.G.test2AfterChange,
     });
 
-    console.log(
-      "Final conclusion:",
-      updatedState.G.metadataResults?.conclusion,
-    );
+    logger.log("Final conclusion:", updatedState.G.metadataResults?.conclusion);
 
     // Verify direct metadata access
     expect(updatedState.G.test1Direct).toBe(true); // Should find exerted card

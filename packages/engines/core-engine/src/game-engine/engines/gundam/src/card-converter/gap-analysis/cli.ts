@@ -4,12 +4,13 @@
  * CLI tool for running gap analysis on Gundam card data
  */
 
+import { logger } from "~/shared/logger";
 import { GapAnalyzer } from "./gap-analyzer";
 
 async function main() {
   const analyzer = new GapAnalyzer();
 
-  console.log("🔍 Starting Gundam Card Gap Analysis...\n");
+  logger.log("🔍 Starting Gundam Card Gap Analysis...\n");
 
   try {
     // Define file paths
@@ -34,96 +35,92 @@ async function main() {
     );
 
     // Display results
-    console.log("📊 Gap Analysis Results");
-    console.log("========================\n");
+    logger.log("📊 Gap Analysis Results");
+    logger.log("========================\n");
 
-    console.log("📥 Import Data Analysis:");
-    console.log(
-      `  • Total cards analyzed: ${report.importAnalysis.totalCards}`,
-    );
-    console.log(
+    logger.log("📥 Import Data Analysis:");
+    logger.log(`  • Total cards analyzed: ${report.importAnalysis.totalCards}`);
+    logger.log(
       `  • Unique fields found: ${Object.keys(report.importAnalysis.fieldUsage).length}`,
     );
-    console.log(
+    logger.log(
       `  • Card types: ${Object.keys(report.importAnalysis.cardTypeDistribution).join(", ")}`,
     );
-    console.log(
+    logger.log(
       `  • Sets: ${Object.keys(report.importAnalysis.setDistribution).join(", ")}\n`,
     );
 
-    console.log("🔧 Type System Analysis:");
-    console.log(
+    logger.log("🔧 Type System Analysis:");
+    logger.log(
       `  • Defined types found: ${report.typeAnalysis.definedTypes.length}`,
     );
-    console.log(
+    logger.log(
       `  • Missing fields identified: ${report.typeAnalysis.missingFields.length}`,
     );
-    console.log(
+    logger.log(
       `  • Incomplete types: ${report.typeAnalysis.incompleteTypes.length}\n`,
     );
 
-    console.log("📋 Game Rules Analysis:");
-    console.log(
+    logger.log("📋 Game Rules Analysis:");
+    logger.log(
       `  • Timing keywords: ${report.rulesAnalysis.timingKeywords.length}`,
     );
-    console.log(
+    logger.log(
       `  • Keyword effects: ${report.rulesAnalysis.keywordEffects.length}`,
     );
-    console.log(
+    logger.log(
       `  • Game mechanics: ${report.rulesAnalysis.gameMechanics.length}`,
     );
-    console.log(
+    logger.log(
       `  • Missing implementations: ${report.rulesAnalysis.missingImplementations.length}\n`,
     );
 
-    console.log("🚨 Identified Gaps:");
-    console.log(`  • Missing fields: ${report.gaps.missingFields.length}`);
-    console.log(
-      `  • Missing abilities: ${report.gaps.missingAbilities.length}`,
-    );
-    console.log(`  • Missing effects: ${report.gaps.missingEffects.length}`);
-    console.log(
+    logger.log("🚨 Identified Gaps:");
+    logger.log(`  • Missing fields: ${report.gaps.missingFields.length}`);
+    logger.log(`  • Missing abilities: ${report.gaps.missingAbilities.length}`);
+    logger.log(`  • Missing effects: ${report.gaps.missingEffects.length}`);
+    logger.log(
       `  • Type improvements needed: ${report.gaps.typeImprovements.length}\n`,
     );
 
-    console.log(`⚡ Overall Priority: ${report.priority.toUpperCase()}\n`);
+    logger.log(`⚡ Overall Priority: ${report.priority.toUpperCase()}\n`);
 
-    console.log("💡 Top Recommendations:");
+    logger.log("💡 Top Recommendations:");
     report.recommendations.slice(0, 5).forEach((rec, index) => {
-      console.log(`  ${index + 1}. ${rec}`);
+      logger.log(`  ${index + 1}. ${rec}`);
     });
 
     if (report.recommendations.length > 5) {
-      console.log(
+      logger.log(
         `  ... and ${report.recommendations.length - 5} more recommendations\n`,
       );
     }
 
     // Show some detailed examples
-    console.log("\n📋 Critical Missing Fields:");
+    logger.log("\n📋 Critical Missing Fields:");
     const criticalFields = report.gaps.missingFields
       .filter((f) => f.impact === "critical")
       .slice(0, 5);
 
-    criticalFields.forEach((field) => {
-      console.log(
+    for (const field of criticalFields) {
+      logger.log(
         `  • ${field.fieldName} (used in ${field.usage.percentage}% of cards)`,
       );
-    });
+    }
 
-    console.log("\n🎯 High-Frequency Timing Keywords:");
+    logger.log("\n🎯 High-Frequency Timing Keywords:");
     report.rulesAnalysis.timingKeywords.slice(0, 8).forEach((keyword) => {
-      console.log(`  • 【${keyword}】`);
+      logger.log(`  • 【${keyword}】`);
     });
 
-    console.log("\n✨ Keyword Effects Found:");
-    report.rulesAnalysis.keywordEffects.forEach((effect) => {
-      console.log(`  • <${effect}>`);
-    });
+    logger.log("\n✨ Keyword Effects Found:");
+    for (const effect of report.rulesAnalysis.keywordEffects) {
+      logger.log(`  • <${effect}>`);
+    }
 
-    console.log("\n✅ Gap analysis completed successfully!");
+    logger.log("\n✅ Gap analysis completed successfully!");
   } catch (error) {
-    console.error("❌ Error during gap analysis:", error);
+    logger.error("❌ Error during gap analysis:", error);
     process.exit(1);
   }
 }

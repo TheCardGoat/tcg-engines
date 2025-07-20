@@ -3,7 +3,7 @@ import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { LorcanaMove } from "./types";
 import { toLorcanaCoreOps } from "./types";
 
-export const quest: LorcanaMove = (
+export const questMove: LorcanaMove = (
   { G, coreOps, playerID },
   characterInstanceId: string,
 ) => {

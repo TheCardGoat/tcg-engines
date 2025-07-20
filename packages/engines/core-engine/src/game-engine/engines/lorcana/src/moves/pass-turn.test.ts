@@ -115,18 +115,17 @@ describe("Move: Pass Turn", () => {
     expect(finalState.G.bag).toEqual(initialState.G.bag);
   });
 
-  it("should work multiple times in same turn before other actions", () => {
-    // First pass - should work
-    const response1 = testEngine.passTurn();
-    expect(response1.success).toBe(true);
+  it("should advance turn to next player when pass turn is called", () => {
+    const initialTurnPlayer = testEngine.getTurnPlayer();
+    expect(initialTurnPlayer).toBe("player_one");
 
-    // Second pass - should work (player can change their mind)
-    const response2 = testEngine.passTurn();
-    expect(response2.success).toBe(true);
+    // Pass turn should work and advance turn to next player
+    const response = testEngine.passTurn();
+    expect(response.success).toBe(true);
 
-    // Game state should remain consistent
-    const gameState = testEngine.authoritativeEngine.getGameState();
-    expect(gameState.G.turnActions).toBe(undefined);
+    // Turn should have advanced to next player
+    const newTurnPlayer = testEngine.getTurnPlayer();
+    expect(newTurnPlayer).toBe("player_two");
   });
 
   it("should be available as a move in main phase", () => {

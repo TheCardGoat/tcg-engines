@@ -1,17 +1,14 @@
 // Main parser for generating Gundam card abilities from text
 
+import { logger } from "~/game-engine/core-engine/utils";
 import { buildAbilitiesFromClauses } from "./ability-builder";
 import {
   extractEffectsFromText,
-  extractKeywordEffects,
-  getAvailableEffectTypes,
-  getPatternsForEffectType,
   hasKeywordEffects,
   normalizeKeywords,
 } from "./patterns";
 import { parseTargetFromText } from "./target-mapper";
 import type {
-  GundamEffectTarget,
   GundamParseResult,
   GundamParserConfig,
   ParsedClause,
@@ -509,14 +506,14 @@ export function parseGundamText(
 
   try {
     if (config.debug) {
-      console.log(`[Gundam Parser] Parsing text: "${text}"`);
+      logger.log(`[Gundam Parser] Parsing text: "${text}"`);
     }
 
     // Analyze text structure
     const textStructure = analyzeTextStructure(text);
 
     if (config.debug) {
-      console.log("[Gundam Parser] Text structure:", textStructure);
+      logger.log("[Gundam Parser] Text structure:", textStructure);
     }
 
     // Parse clauses to get structured data
@@ -524,7 +521,7 @@ export function parseGundamText(
     result.clauses = parsedClauses;
 
     if (config.debug) {
-      console.log(`[Gundam Parser] Parsed ${parsedClauses.length} clauses`);
+      logger.log(`[Gundam Parser] Parsed ${parsedClauses.length} clauses`);
     }
 
     // Look for special markers that indicate timing triggers (define this early for later use)
@@ -644,7 +641,7 @@ export function parseGundamText(
     }
 
     if (config.debug) {
-      console.log(
+      logger.log(
         `[Gundam Parser] Generated ${result.abilities.length} abilities`,
       );
     }
@@ -658,7 +655,7 @@ export function parseGundamText(
     result.errors.push(`Parsing failed: ${errorMessage}`);
 
     if (config.debug) {
-      console.error("[Gundam Parser] Error during parsing:", error);
+      logger.error("[Gundam Parser] Error during parsing:", error);
     }
   }
 

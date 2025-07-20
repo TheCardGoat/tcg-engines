@@ -1,4 +1,5 @@
 import type { GameCards } from "~/game-engine/core-engine/types";
+import { logger } from "~/shared/logger";
 
 // CoreCardDefinition interface now in core-card-instance-store.ts
 interface CoreCardDefinition {
@@ -47,7 +48,7 @@ export function createCardRepository<TCard extends CoreCardDefinition>(
         } as TCard;
       } else {
         // Optionally warn about missing cards instead of failing
-        console.warn(
+        logger.warn(
           `${errorPrefix}: Card definition not found for publicId: ${publicId}`,
         );
       }

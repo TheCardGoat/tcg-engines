@@ -1,4 +1,4 @@
-import { logger } from "../../../shared/logger";
+import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { Zone } from "../engine/zone-operation";
 import {
   EntityNotFoundError,

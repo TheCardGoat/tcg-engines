@@ -61,12 +61,12 @@ if (isTest) {
     error: console.error,
     silent: console.log,
     fatal: console.error,
+    log: console.log,
     level: "debug",
   };
 }
 
 if (!isLoggerEnabled) {
-  // @ts-expect-error
   internalLogger = {
     trace: () => {},
     debug: () => {},
@@ -75,6 +75,8 @@ if (!isLoggerEnabled) {
     error: () => {},
     fatal: () => {},
     silent: () => {},
+    // @ts-expect-error TODO: find a better way to disable pino
+    log: () => {},
     level: "silent",
   };
 }
@@ -102,7 +104,10 @@ export const debuggers = isLoggerEnabled
 export const logger: Logger & {
   group?: (...data: any[]) => void;
   groupEnd?: (...data: any[]) => void;
+  log?: (...data: any[]) => void;
 } = internalLogger;
+
+export type EngineLogger = typeof logger;
 
 export class LogCollector {
   private entries: LogEntry[] = [];

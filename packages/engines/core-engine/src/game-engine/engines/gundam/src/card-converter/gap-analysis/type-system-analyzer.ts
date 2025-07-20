@@ -3,6 +3,7 @@
  */
 
 import { readFile } from "node:fs/promises";
+import { logger } from "~/shared/logger";
 import type {
   ImportDataAnalysis,
   TypeImprovement,
@@ -26,7 +27,7 @@ export class TypeSystemAnalyzer implements ITypeSystemAnalyzer {
         recommendations: [],
       };
     } catch (error) {
-      console.warn(`Failed to read types file ${typesFile}:`, error);
+      logger.warn(`Failed to read types file ${typesFile}:`, error);
       return {
         definedTypes: [],
         missingFields: [],
@@ -70,7 +71,7 @@ export class TypeSystemAnalyzer implements ITypeSystemAnalyzer {
         types.push(match[1]);
       }
     } catch (error) {
-      console.warn("Error parsing TypeScript source:", error);
+      logger.warn("Error parsing TypeScript source:", error);
     }
 
     return [...new Set(types)]; // Remove duplicates

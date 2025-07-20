@@ -1,6 +1,9 @@
 import { batch, Store } from "@tanstack/store";
+import {
+  type EngineLogger,
+  logger as engineLogger,
+} from "~/game-engine/core-engine/utils";
 import { generateUniqueId } from "../game-engine/core-engine/utils/id-utils";
-import { logger as defaultLogger, type EngineLogger } from "../shared/logger";
 import { LightweightEventBus } from "./event-bus";
 import type {
   CombinedLobbyState,
@@ -37,7 +40,7 @@ export function createLobbyEngine<
 >(
   options: LobbyOptions<State, Context>,
 ): LobbyEngine<State, Context, BroadcastMessage, ReceiveMessage> {
-  let logger: EngineLogger = defaultLogger;
+  let logger: EngineLogger = engineLogger;
   let adapter:
     | SideEffectsAdapter<State, Context, BroadcastMessage, ReceiveMessage>
     | undefined = options?.sideEffectsAdapter;

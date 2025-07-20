@@ -7,7 +7,7 @@ import { moveCharacter } from "./move-character-to-location";
 import { passTurnMove } from "./pass-turn";
 import { playCardMove } from "./play-card";
 import { putACardIntoTheInkwellMove } from "./put-a-card-into-the-inkwell";
-import { quest } from "./quest";
+import { questMove } from "./quest";
 import { useActivatedAbility } from "./use-activated-ability";
 
 export const lorcanaMoves = {
@@ -18,7 +18,7 @@ export const lorcanaMoves = {
   passTurn: passTurnMove,
   putACardIntoTheInkwell: putACardIntoTheInkwellMove,
   playCard: playCardMove,
-  quest: quest,
+  quest: questMove,
   challenge: challengeMove,
   moveCharacterToLocation: moveCharacter,
   useActivatedAbility: useActivatedAbility,

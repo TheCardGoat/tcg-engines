@@ -1,4 +1,5 @@
 import { expect } from "bun:test";
+import { logger } from "../../../../../../shared/logger";
 import { parseGundamText } from "../index";
 
 // Common interface for card objects
@@ -94,23 +95,23 @@ export function testCardsWithPattern(
     .filter((card) => card.effect && pattern.test(card.effect))
     .slice(0, limit);
 
-  console.log(`Found ${matchingCards.length} cards with ${patternName}`);
+  logger.log(`Found ${matchingCards.length} cards with ${patternName}`);
 
   // Debug: Show the actual card text for matching cards
   if (matchingCards.length > 0) {
-    console.log(
+    logger.log(
       `Example card with ${patternName}:`,
       matchingCards[0].code,
       cleanCardText(matchingCards[0].effect || ""),
     );
   }
 
-  matchingCards.forEach((card) => {
+  for (const card of matchingCards) {
     const cleanedText = cleanCardText(card.effect || "");
     const result = parseGundamText(cleanedText);
 
     // Debug: Show parsed results for troubleshooting
-    console.log(`${card.code} - ${patternName} parsing:`, {
+    logger.log(`${card.code} - ${patternName} parsing:`, {
       text: cleanedText,
       hasAbilities: result.abilities.length > 0,
       clauses: result.clauses.map((c) => c.type),
@@ -120,7 +121,7 @@ export function testCardsWithPattern(
 
     expect(result.abilities.length).toBeGreaterThan(0);
     expect(result.errors).toHaveLength(0);
-  });
+  }
 }
 
 /**
@@ -138,11 +139,11 @@ export function testCardsByType(
     )
     .slice(0, limit);
 
-  console.log(`Testing ${typeCards.length} ${cardType} cards`);
+  logger.log(`Testing ${typeCards.length} ${cardType} cards`);
 
   // Debug: Show example card info
   if (typeCards.length > 0) {
-    console.log(
+    logger.log(
       `Example ${cardType} card:`,
       typeCards[0].code,
       cleanCardText(typeCards[0].effect || ""),
@@ -154,7 +155,7 @@ export function testCardsByType(
     const result = parseGundamText(cleanedText);
 
     // Debug: Show parsed results for troubleshooting
-    console.log(`${card.code} - ${cardType} parsing:`, {
+    logger.log(`${card.code} - ${cardType} parsing:`, {
       text: cleanedText,
       hasAbilities: result.abilities.length > 0,
       clauses: result.clauses.map((c) => c.type),
@@ -182,7 +183,7 @@ export function runErrorCheck(
     Math.min(sampleSize, cardsWithEffects.length),
   );
 
-  console.log(`Error checking ${sampleCards.length} ${setName} cards`);
+  logger.log(`Error checking ${sampleCards.length} ${setName} cards`);
 
   let successCount = 0;
   let failCount = 0;
@@ -195,19 +196,19 @@ export function runErrorCheck(
         successCount++;
       } else {
         failCount++;
-        console.log(
+        logger.log(
           `Failed to parse ${card.code} (${card.name}): ${result.errors.join(", ")}`,
         );
       }
     } catch (error) {
       failCount++;
-      console.log(
+      logger.log(
         `Error parsing ${card.code} (${card.name}): ${(error as Error).message}`,
       );
     }
   });
 
-  console.log(
+  logger.log(
     `Successfully parsed ${successCount}/${sampleCards.length} ${setName} cards`,
   );
 
@@ -276,15 +277,13 @@ export function testKeywordPatterns(
   setName: string,
   patterns: Record<string, RegExp> = KEYWORD_PATTERNS,
 ): void {
-  Object.entries(patterns).forEach(([name, pattern]) => {
+  for (const [name, pattern] of Object.entries(patterns)) {
     const matchingCards = cards.filter(
       (card) => card.effect && pattern.test(card.effect),
     );
 
     if (matchingCards.length > 0) {
-      console.log(
-        `Found ${matchingCards.length} ${setName} cards with ${name}`,
-      );
+      logger.log(`Found ${matchingCards.length} ${setName} cards with ${name}`);
 
       // Test the first matching card
       const card = matchingCards[0];
@@ -294,9 +293,9 @@ export function testKeywordPatterns(
       expect(result.abilities.length).toBeGreaterThan(0);
       expect(result.errors).toHaveLength(0);
     } else {
-      console.log(`No ${setName} cards with ${name} found`);
+      logger.log(`No ${setName} cards with ${name} found`);
     }
-  });
+  }
 }
 
 /**
@@ -307,18 +306,18 @@ export function testTriggerPatterns(
   setName: string,
   patterns: Record<string, RegExp> = TRIGGER_PATTERNS,
 ): void {
-  Object.entries(patterns).forEach(([name, pattern]) => {
+  for (const [name, pattern] of Object.entries(patterns)) {
     const matchingCards = cards.filter(
       (card) => card.effect && pattern.test(card.effect),
     );
 
     if (matchingCards.length > 0) {
-      console.log(
+      logger.log(
         `Found ${matchingCards.length} ${setName} cards with ${name} trigger`,
       );
 
       // Debug: Show example card with trigger
-      console.log(
+      logger.log(
         `Example ${name} trigger:`,
         matchingCards[0].code,
         cleanCardText(matchingCards[0].effect || ""),
@@ -330,7 +329,7 @@ export function testTriggerPatterns(
       const result = parseGundamText(cleanedText);
 
       // Debug: Show detailed parser results
-      console.log(`${name} trigger parsing result:`, {
+      logger.log(`${name} trigger parsing result:`, {
         text: cleanedText,
         hasAbilities: result.abilities.length > 0,
         abilities: result.abilities.map((a) => ({
@@ -349,7 +348,7 @@ export function testTriggerPatterns(
       expect(result.abilities.length).toBeGreaterThan(0);
       expect(result.errors).toHaveLength(0);
     } else {
-      console.log(`No ${setName} cards with ${name} trigger found`);
+      logger.log(`No ${setName} cards with ${name} trigger found`);
     }
-  });
+  }
 }

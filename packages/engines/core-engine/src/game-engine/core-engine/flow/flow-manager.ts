@@ -1,4 +1,7 @@
-import type { PhaseConfig } from "~/game-engine/core-engine/game/structure/phase";
+import type {
+  PhaseConfig,
+  StepConfig,
+} from "~/game-engine/core-engine/game/structure/phase";
 import type {
   SegmentConfig,
   SegmentMap,
@@ -367,6 +370,61 @@ export class FlowManager<G> implements FlowInterface<G> {
   }
 
   /**
+   * Handles step ending and advancing to the next step if needed.
+   */
+  private handleStepTransition(
+    state: CoreEngineState<G>,
+    fnContext: FnContext<G>,
+  ): CoreEngineState<G> {
+    let currentState = { ...state };
+    const { ctx } = currentState;
+    if (!ctx.currentStep) {
+      return currentState;
+    }
+
+    const shouldEndStep = this.shouldEndStep(currentState, fnContext);
+    if (shouldEndStep) {
+      if (debuggers.flowTransitions) {
+        logger.debug(
+          `FlowManager: Step ${ctx.currentStep} should end, advancing...`,
+        );
+      }
+
+      const nextStep = this.getNextStep(currentState, fnContext);
+      if (nextStep && nextStep !== ctx.currentStep) {
+        // Apply step onBegin hook before changing step
+        const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
+        const phaseConfig = segmentConfig?.turn?.phases?.[ctx.currentPhase];
+        const stepConfig = phaseConfig?.steps?.[nextStep];
+        const result = this.executeHook(stepConfig?.onBegin, fnContext);
+
+        if (result !== undefined) {
+          currentState = fnContext._getUpdatedState();
+        }
+
+        currentState = {
+          ...currentState,
+          ctx: {
+            ...currentState.ctx,
+            currentStep: nextStep,
+          },
+        };
+      } else {
+        // If no next step, reset step (phase will advance)
+        currentState = {
+          ...currentState,
+          ctx: {
+            ...currentState.ctx,
+            currentStep: null,
+          },
+        };
+      }
+    }
+
+    return currentState;
+  }
+
+  /**
    * Handles initializing the starting phase and step for a segment if there is a segment but no phase.
    */
   private handleSegmentPhaseInitialization(
@@ -413,7 +471,7 @@ export class FlowManager<G> implements FlowInterface<G> {
   }
 
   /**
-   * Process flow transitions including segments and phases
+   * Process flow transitions including segments, phases, and steps
    * This handles both segment-based transitions (pre-game) and phase-based transitions (gameplay)
    */
   processFlowTransitions(
@@ -439,12 +497,13 @@ export class FlowManager<G> implements FlowInterface<G> {
           `FlowManager: Processing transitions, iteration ${11 - maxIterations}`,
         );
         logger.debug(
-          `Current segment: ${ctx.currentSegment}, phase: ${ctx.currentPhase}`,
+          `Current segment: ${ctx.currentSegment}, phase: ${ctx.currentPhase}, step: ${ctx.currentStep}`,
         );
       }
 
       currentState = this.handleSegmentTransition(currentState, fnContext);
       currentState = this.handlePhaseTransition(currentState, fnContext);
+      currentState = this.handleStepTransition(currentState, fnContext);
       currentState = this.handleSegmentPhaseInitialization(currentState);
     }
 
@@ -497,23 +556,51 @@ export class FlowManager<G> implements FlowInterface<G> {
   }
 
   /**
-   * Get the next segment in the game flow
+   * Check if the current step should end based on its endIf condition
    */
-  private getNextSegment(
+  private shouldEndStep(
+    state: CoreEngineState<G>,
+    fnContext: FnContext<G>,
+  ): boolean {
+    const { ctx } = state;
+    if (!(ctx.currentSegment && ctx.currentPhase && ctx.currentStep)) {
+      return false;
+    }
+    const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
+    const phaseConfig = segmentConfig?.turn?.phases?.[ctx.currentPhase];
+    const stepConfig = phaseConfig?.steps?.[ctx.currentStep];
+    if (!stepConfig?.endIf) {
+      return false;
+    }
+    return !!this.executeHook(stepConfig.endIf, fnContext);
+  }
+
+  /**
+   * Get the next step in the current phase
+   */
+  private getNextStep(
     state: CoreEngineState<G>,
     fnContext: FnContext<G>,
   ): string | null {
     const { ctx } = state;
-    if (!ctx.currentSegment) return null;
-
-    const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
-    if (!segmentConfig?.next) return null;
-
-    if (typeof segmentConfig.next === "function") {
-      return segmentConfig.next(fnContext) ?? null;
+    if (!(ctx.currentSegment && ctx.currentPhase && ctx.currentStep)) {
+      return null;
     }
 
-    return segmentConfig.next;
+    const stepConfig = this.getStepConfig(
+      ctx.currentSegment,
+      ctx.currentPhase,
+      ctx.currentStep,
+    );
+    if (!stepConfig?.next) {
+      return null;
+    }
+
+    if (typeof stepConfig.next === "function") {
+      return stepConfig.next(fnContext) ?? null;
+    }
+
+    return stepConfig.next;
   }
 
   /**
@@ -532,5 +619,37 @@ export class FlowManager<G> implements FlowInterface<G> {
   ): PhaseConfig<G> | undefined {
     const segmentConfig = this.getSegmentConfig(segmentName);
     return segmentConfig?.turn?.phases?.[phaseName];
+  }
+
+  /**
+   * Get step configuration from phase configuration
+   */
+  private getStepConfig(
+    segmentName: string,
+    phaseName: string,
+    stepName: string,
+  ): StepConfig<G> | undefined {
+    const phaseConfig = this.getPhaseConfig(segmentName, phaseName);
+    return phaseConfig?.steps?.[stepName];
+  }
+
+  /**
+   * Get the next segment in the game flow
+   */
+  private getNextSegment(
+    state: CoreEngineState<G>,
+    fnContext: FnContext<G>,
+  ): string | null {
+    const { ctx } = state;
+    if (!ctx.currentSegment) return null;
+
+    const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
+    if (!segmentConfig?.next) return null;
+
+    if (typeof segmentConfig.next === "function") {
+      return segmentConfig.next(fnContext) ?? null;
+    }
+
+    return segmentConfig.next;
   }
 }
