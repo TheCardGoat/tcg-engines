@@ -3,10 +3,7 @@ import type {
   LorcanitoCharacterCard,
   LorcanitoLocationCard,
 } from "@lorcanito/lorcana-engine";
-import {
-  cardWithoutInkwell,
-  LorcanaTestEngine,
-} from "../testing/lorcana-test-engine";
+import { LorcanaTestEngine } from "../testing/lorcana-test-engine";
 import { mockCharacterCard, mockLocationCard } from "../testing/mockCards";
 
 const testCharacterCard: LorcanitoCharacterCard = {

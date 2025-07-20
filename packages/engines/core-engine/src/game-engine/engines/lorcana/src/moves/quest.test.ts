@@ -14,6 +14,7 @@ describe("Move: Quest", () => {
         G: { effects: [], bag: [] },
         ctx: { currentPhase: "wrongPhase" },
         coreOps: {
+          getCtx: () => ({ currentPhase: "wrongPhase" }),
           getCardInstance: () => null,
           getCardsInZone: () => [],
         },
@@ -36,6 +37,7 @@ describe("Move: Quest", () => {
         G: { effects: [], bag: [] },
         ctx: { currentPhase: "mainPhase" },
         coreOps: {
+          getCtx: () => ({ currentPhase: "mainPhase" }),
           getCardInstance: () => null,
           getCardsInZone: () => [],
         },
@@ -46,9 +48,13 @@ describe("Move: Quest", () => {
       const result = questMove(mockContext as any, "non-existent-id");
 
       expect(result).toEqual(
-        createInvalidMove("CARD_NOT_FOUND", "moves.quest.errors.cardNotFound", {
-          instanceId: "non-existent-id",
-        }),
+        createInvalidMove(
+          "CHARACTER_NOT_FOUND",
+          "moves.quest.errors.characterNotFound",
+          {
+            instanceId: "non-existent-id",
+          },
+        ),
       );
     });
   });

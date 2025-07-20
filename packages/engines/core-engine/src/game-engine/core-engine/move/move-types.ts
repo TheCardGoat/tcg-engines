@@ -24,6 +24,7 @@ export interface InvalidMoveResult {
 }
 
 /**
+ * @deprecated use EnumerableMove instead
  * Function style move definition (for backward compatibility)
  * This represents the previous function-based move API
  */
