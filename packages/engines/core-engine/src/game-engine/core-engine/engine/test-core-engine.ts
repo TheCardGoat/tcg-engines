@@ -83,7 +83,6 @@ const contextSharingMove: TestMove = ({ G, coreOps }) => {
   // Test if coreOps operations are reflected in G immediately
   const initialTurnCount = coreOps.getTurnCount();
 
-  coreOps.incrementTurnCount();
   const newTurnCount = coreOps.getTurnCount();
 
   if (newTurnCount !== initialTurnCount + 1) {

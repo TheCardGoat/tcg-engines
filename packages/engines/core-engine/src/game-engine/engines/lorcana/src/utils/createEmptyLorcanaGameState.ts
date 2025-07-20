@@ -15,5 +15,6 @@ export function createEmptyLorcanaGameState(
     bag: [],
     metas: {},
     turnActions: undefined, // Explicitly set to undefined to start fresh
+    passTurnRequested: false, // Initialize to prevent undefined issues
   };
 }

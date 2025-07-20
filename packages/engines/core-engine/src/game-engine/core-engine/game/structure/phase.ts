@@ -15,6 +15,7 @@ export interface PhaseMap<G = unknown> {
  */
 export interface PhaseConfig<G = unknown> {
   start?: boolean;
+  end?: boolean;
   next?: ((context: FnContext<G>) => string | undefined) | string;
 
   onBegin?: (context: FnContext<G>) => undefined | G;
@@ -23,7 +24,6 @@ export interface PhaseConfig<G = unknown> {
 
   moves?: MoveMap<G>;
   steps?: Record<string, StepConfig<G>>;
-  allowAnyPlayerToAct?: boolean;
 }
 
 /**
@@ -31,6 +31,7 @@ export interface PhaseConfig<G = unknown> {
  */
 export interface StepConfig<G = unknown> {
   start?: boolean;
+  end?: boolean;
   next?: ((context: FnContext<G>) => string | undefined) | string;
 
   onBegin?: (context: FnContext<G>) => undefined | G;

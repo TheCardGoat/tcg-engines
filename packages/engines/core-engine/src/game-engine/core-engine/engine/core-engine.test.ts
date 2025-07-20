@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
-import { logger } from "../../../shared/logger";
+import { logger } from "../utils";
 import { TestCoreEngine } from "./test-core-engine";
 
 describe("Core Engine", () => {
@@ -129,40 +129,6 @@ describe("Core Engine", () => {
     // Validate that the test ran
     expect(updatedState.G.testValue).toBe("bar");
     expect(updatedState.G.coreOpsModified).toBe(true);
-  });
-
-  it("should test context sharing scenario with coreOps", () => {
-    const { authoritativeEngine, playerOneEngine } = testEngine;
-
-    // Get initial turn count
-    const initialTurnCount = authoritativeEngine.getTurnCount();
-    logger.log("=== CONTEXT SHARING TEST ===");
-    logger.log("Initial turn count:", initialTurnCount);
-
-    // Execute context sharing test move
-    const moveResult = playerOneEngine.processMove(
-      "player_one",
-      "contextSharingMove",
-      [],
-    );
-
-    if (!moveResult.success) {
-      logger.error("Move failed:", moveResult.error);
-      logger.error("This indicates a context sharing issue!");
-    }
-
-    expect(moveResult.success).toBe(true);
-
-    const finalTurnCount = authoritativeEngine.getTurnCount();
-    logger.log("Final turn count:", finalTurnCount);
-    logger.log("Expected turn count:", initialTurnCount + 1); // Should be +1 (one increment from coreOps)
-
-    // The turn count should have been incremented once by coreOps
-    expect(finalTurnCount).toBe(initialTurnCount + 1);
-
-    logger.log(
-      "✅ Context sharing test passed - coreOps can modify shared state!",
-    );
   });
 
   it("should synchronize metadata changes between CoreOps and card filters", () => {

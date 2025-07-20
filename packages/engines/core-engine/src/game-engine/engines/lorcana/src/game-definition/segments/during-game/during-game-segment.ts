@@ -1,4 +1,5 @@
 import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
+import { logger } from "~/game-engine/core-engine/utils";
 import type { LorcanaGameState } from "~/game-engine/engines/lorcana/src/lorcana-engine-types";
 import { lorcanaMoves } from "~/game-engine/engines/lorcana/src/moves/moves";
 
@@ -19,42 +20,45 @@ export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
         start: true,
         next: "mainPhase",
 
-        endIf: ({ ctx }) => {
-          // End when we've completed all steps (ready -> set -> draw)
-          // After the draw step completes, currentStep becomes null
-          return ctx.currentStep === null;
-        },
+        // No endIf condition - let steps control the flow naturally
+        // When drawStep completes with next: null, the phase will end automatically
 
         steps: {
-          ready: {
+          readyStep: {
             start: true,
-            next: "set",
+            next: "setStep",
 
             onBegin: ({ coreOps, G }) => {
               const currentPlayer = coreOps.getCurrentTurnPlayer();
               coreOps.readyAllCards(currentPlayer);
               coreOps.processTurnStartEffects();
+
+              logger.log(">>>>>>>>> Ready Phase");
+
               return G;
             },
 
             endIf: () => true, // Auto-advance
           },
 
-          set: {
-            next: "draw",
+          setStep: {
+            next: "drawStep",
 
             onBegin: ({ coreOps, G }) => {
               const currentPlayer = coreOps.getCurrentTurnPlayer();
               coreOps.clearDryingState(currentPlayer);
               coreOps.gainLoreFromLocations(currentPlayer);
               coreOps.processTurnStartTriggers();
+
+              logger.log(">>>>>>>>> Set Phase");
+
               return G;
             },
 
             endIf: () => true, // Auto-advance
           },
 
-          draw: {
+          drawStep: {
             next: null, // End of beginning phase
 
             onBegin: ({ coreOps, G }) => {
@@ -62,6 +66,9 @@ export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
               if (!coreOps.isFirstTurn()) {
                 coreOps.drawCard(currentPlayer);
               }
+
+              logger.log(">>>>>>>>> DRAW Phase");
+
               return G;
             },
 
@@ -72,6 +79,17 @@ export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
 
       mainPhase: {
         next: "endOfTurnPhase",
+
+        endIf: ({ G, ctx }) => {
+          // Only end mainPhase due to passTurn in duringGame segment
+          // This prevents affecting starting game phases
+          if (ctx.currentSegment !== "duringGame") {
+            return false; // Never auto-end in starting game
+          }
+          // End mainPhase when passTurn flag is set
+          // This flag is set by the passTurn move to trigger phase transition
+          return G.passTurnRequested === true;
+        },
 
         steps: {
           idle: {
@@ -109,16 +127,21 @@ export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
       },
 
       endOfTurnPhase: {
-        next: "beginningPhase", // Loop back for next turn
+        next: "beginningPhase",
 
         onBegin: ({ coreOps, G }) => {
           coreOps.processEndOfTurnEffects();
-          // Turn player was already advanced by the passTurn move
+
+          // Clear the passTurn flag since we've transitioned out of mainPhase
+          G.passTurnRequested = false;
+
+          logger.log(">>>>>>>>> End of Turn Phase");
+          logger.log("Proceeding to beginning phase");
 
           return G;
         },
 
-        endIf: () => true, // Auto-advance to next turn
+        endIf: () => true,
       },
     },
   },

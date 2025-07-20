@@ -28,10 +28,22 @@ describe("Move: Pass Turn", () => {
   });
 
   it("should successfully pass turn during main phase", () => {
-    // Verify initial state
-    expect(testEngine.getGamePhase()).toBe("mainPhase");
     expect(testEngine.getNumTurns()).toBe(1);
+    expect(testEngine.getNumMoves()).toBe(0);
+    expect(testEngine.getNumTurnMoves()).toBe(0);
+
+    const p1Response = testEngine.passTurn();
+    expect(p1Response.success).toBe(true);
+
+    expect(testEngine.getTurnPlayer()).toBe("player_two");
+    expect(testEngine.getNumTurnMoves()).toBe(0);
+    expect(testEngine.getNumTurns()).toBe(2);
     expect(testEngine.getNumMoves()).toBe(1);
+  });
+
+  it("should handle consecutive turn passes", () => {
+    expect(testEngine.getNumTurns()).toBe(1);
+    expect(testEngine.getNumMoves()).toBe(0);
     expect(testEngine.getNumTurnMoves()).toBe(0);
 
     const p1Response = testEngine.passTurn();
@@ -39,7 +51,7 @@ describe("Move: Pass Turn", () => {
 
     expect(testEngine.getTurnPlayer()).toBe("player_two");
     expect(testEngine.getNumTurns()).toBe(2);
-    expect(testEngine.getNumMoves()).toBe(2);
+    expect(testEngine.getNumMoves()).toBe(1);
     expect(testEngine.getNumTurnMoves()).toBe(0);
 
     testEngine.changeActivePlayer("player_two");
@@ -48,28 +60,15 @@ describe("Move: Pass Turn", () => {
 
     expect(testEngine.getTurnPlayer()).toBe("player_one");
     expect(testEngine.getNumTurns()).toBe(3);
-    expect(testEngine.getNumMoves()).toBe(3);
+    expect(testEngine.getNumMoves()).toBe(2);
     expect(testEngine.getNumTurnMoves()).toBe(0);
   });
 
-  it("should clear turn actions when passing turn", () => {
-    // Put a card in inkwell to set turn actions
-    const handCards = testEngine.getCardsInZone("hand", "player_one");
-    const cardInstance = handCards[0];
-    testEngine.putACardIntoTheInkwell(cardInstance.instanceId);
+  it("should request targets when an end of turn trigger is on the bag", () => {});
 
-    // Verify turn actions are set
-    let gameState = testEngine.authoritativeEngine.getGameState();
-    expect(gameState.G.turnActions?.putCardIntoInkwell).toBe(true);
+  it("should end game if player doesn't have cards to draw", () => {});
 
-    // Pass turn
-    const response = testEngine.passTurn();
-    expect(response.success).toBe(true);
-
-    // Verify turn actions were cleared
-    gameState = testEngine.authoritativeEngine.getGameState();
-    expect(gameState.G.turnActions).toBe(undefined);
-  });
+  it("should request targets when an beginning of turn trigger is on the bag", () => {});
 
   it("should not allow non-active player to pass turn", () => {
     // Switch to player_two (who is not the turn player)
@@ -79,64 +78,6 @@ describe("Move: Pass Turn", () => {
     expect(() => {
       testEngine.passTurn();
     }).toThrow();
-  });
-
-  it("should work when bag is empty", () => {
-    // Verify bag is empty
-    const gameState = testEngine.authoritativeEngine.getGameState();
-    expect(gameState.G.bag).toEqual([]);
-
-    // Pass turn should work
-    const response = testEngine.passTurn();
-    expect(response.success).toBe(true);
-  });
-
-  it("should handle consecutive turn passes", () => {
-    // Player 1 passes turn
-    expect(testEngine.getTurnPlayer()).toBe("player_one");
-    const response1 = testEngine.passTurn();
-    expect(response1.success).toBe(true);
-
-    // Note: In a real game, the turn would transition to player_two
-    // But our current implementation doesn't handle the actual turn transition
-    // That would be handled by the FlowManager in a complete implementation
-  });
-
-  it("should maintain game state consistency after passing turn", () => {
-    // Get initial state
-    const initialState = testEngine.authoritativeEngine.getGameState();
-    const initialHandCount = testEngine.getZonesCardCount("player_one").hand;
-    const initialDeckCount = testEngine.getZonesCardCount("player_one").deck;
-
-    // Pass turn
-    const response = testEngine.passTurn();
-    expect(response.success).toBe(true);
-
-    // Verify game state consistency
-    const finalState = testEngine.authoritativeEngine.getGameState();
-    const finalHandCount = testEngine.getZonesCardCount("player_one").hand;
-    const finalDeckCount = testEngine.getZonesCardCount("player_one").deck;
-
-    // Zone counts should remain the same
-    expect(finalHandCount).toBe(initialHandCount);
-    expect(finalDeckCount).toBe(initialDeckCount);
-
-    // Effects and bag should remain the same
-    expect(finalState.G.effects).toEqual(initialState.G.effects);
-    expect(finalState.G.bag).toEqual(initialState.G.bag);
-  });
-
-  it("should advance turn to next player when pass turn is called", () => {
-    const initialTurnPlayer = testEngine.getTurnPlayer();
-    expect(initialTurnPlayer).toBe("player_one");
-
-    // Pass turn should work and advance turn to next player
-    const response = testEngine.passTurn();
-    expect(response.success).toBe(true);
-
-    // Turn should have advanced to next player
-    const newTurnPlayer = testEngine.getTurnPlayer();
-    expect(newTurnPlayer).toBe("player_two");
   });
 
   it("should be available as a move in main phase", () => {

@@ -341,6 +341,8 @@ export class CoreEngine<
           updatedFnContext,
         );
 
+        finalState.ctx.numMoves = (finalState.ctx.numMoves || 0) + 1;
+
         this.gameStateStore.updateState({
           newState: finalState,
         });

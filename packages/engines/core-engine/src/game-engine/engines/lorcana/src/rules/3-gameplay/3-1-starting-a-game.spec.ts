@@ -17,6 +17,7 @@ describe("**3.1. Starting a Game**", () => {
   });
 
   it("Happy Path", () => {
+    expect(testEngine.getNumTurns()).toEqual(1);
     expect(testEngine.getGameSegment()).toBe("startingAGame");
     expect(testEngine.getGamePhase()).toBe("chooseFirstPlayer");
     expect(testEngine.getPriorityPlayers()).toEqual(["player_one"]);
@@ -30,6 +31,7 @@ describe("**3.1. Starting a Game**", () => {
     ]);
 
     testEngine.chooseWhoGoesFirst("player_one");
+    expect(testEngine.getNumMoves()).toEqual(1);
 
     expect(testEngine.getGamePhase()).toBe("alterHand");
     expect(testEngine.getPriorityPlayers()).toEqual(["player_one"]);
@@ -49,6 +51,7 @@ describe("**3.1. Starting a Game**", () => {
 
     // Player one alters their hand (choosing no cards to alter)
     testEngine.alterHand([]);
+    expect(testEngine.getNumMoves()).toEqual(2);
 
     expect(testEngine.getGamePhase()).toBe("alterHand");
     // In Disney Lorcana, only one player can alter their hand at a time.
@@ -70,10 +73,15 @@ describe("**3.1. Starting a Game**", () => {
     // Player two alters their hand (choosing no cards to alter)
     testEngine.alterHand([]);
 
+    // After transitioning between segments, move count should not reset
+    expect(testEngine.getNumMoves()).toEqual(3);
+
+    // After transitioning between segments, turn count should not reset
+    expect(testEngine.getNumTurns()).toEqual(2);
+
     // After both players have altered their hands, the game segment should change to "duringGame"
     expect(testEngine.getGameSegment()).toBe("duringGame");
     expect(testEngine.getPriorityPlayers()).toEqual(["player_one"]);
     expect(testEngine.getTurnPlayer()).toEqual("player_one");
-    expect(testEngine.getNumTurns()).toEqual(1);
   });
 });

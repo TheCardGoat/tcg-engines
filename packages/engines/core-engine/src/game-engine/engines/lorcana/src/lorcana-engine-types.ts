@@ -28,6 +28,7 @@ export type LorcanaGameState = {
     characterId?: string;
     timestamp: number;
   }>;
+  passTurnRequested?: boolean; // Flag to trigger mainPhase end
 };
 
 export type Zone = "deck" | "hand" | "play" | "inkwell" | "discard" | "bag";

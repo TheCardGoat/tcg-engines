@@ -44,9 +44,8 @@ export const passTurnMove: LorcanaMove = {
       // Turn actions like putCardIntoInkwell are limited to once per turn
       G.turnActions = undefined;
 
-      // The actual turn transition will be handled by the flow manager
-      // when it detects that the main phase should end
-      // We don't directly change the turn player here - that's the flow manager's job
+      // Set flag to trigger mainPhase end and phase transition
+      G.passTurnRequested = true;
 
       // Add any "end of turn" effects to the bag (rule 4.4.1.1)
       // This is a placeholder - in a full implementation, we would:

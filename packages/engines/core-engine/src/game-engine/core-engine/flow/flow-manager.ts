@@ -44,7 +44,7 @@ export class FlowManager<G> implements FlowInterface<G> {
     cards: GameCards,
     players?: string[],
   ) {
-    this.config = gameDefinition.flow;
+    this.config = gameDefinition.flow || { turns: { phases: [] } };
     this.gameDefinition = gameDefinition;
 
     // Initialize move maps and flow data (previously Flow function logic)
@@ -149,6 +149,10 @@ export class FlowManager<G> implements FlowInterface<G> {
   }
 
   getPhaseById(phaseId: FlowPhaseType): FlowPhase<G> | null {
+    // If no flow configuration, return null (segments-only mode)
+    if (!this.config?.turns?.phases) {
+      return null;
+    }
     return (
       this.config.turns.phases.find((phase) => phase.id === phaseId) || null
     );
@@ -165,11 +169,19 @@ export class FlowManager<G> implements FlowInterface<G> {
       const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
       if (segmentConfig?.turn?.phases) {
         const phaseConfig = segmentConfig.turn.phases[ctx.currentPhase];
-        let nextPhase = phaseConfig?.next ?? null;
+        let nextPhase: string | null = null;
+        const nextConfig = phaseConfig?.next;
 
         // If next is a function, call it to get the actual next phase name
-        if (typeof nextPhase === "function") {
-          nextPhase = nextPhase(fnContext);
+        if (typeof nextConfig === "function") {
+          try {
+            nextPhase = nextConfig(fnContext) ?? null;
+          } catch (error) {
+            logger.error(`FlowManager: Error in phase next function: ${error}`);
+            nextPhase = null;
+          }
+        } else if (typeof nextConfig === "string") {
+          nextPhase = nextConfig;
         }
 
         if (nextPhase) {
@@ -179,6 +191,11 @@ export class FlowManager<G> implements FlowInterface<G> {
     }
 
     // Fallback to flow configuration phases (for turn-based gameplay)
+    // If no flow configuration, return null (segments-only mode)
+    if (!this.config?.turns?.phases) {
+      return null;
+    }
+
     const currentPhase = this.getCurrentPhase(state);
     const phases = this.config.turns.phases;
 
@@ -203,19 +220,6 @@ export class FlowManager<G> implements FlowInterface<G> {
   // ===== PRIORITY MANAGEMENT =====
 
   canPlayerAct(state: CoreEngineState<G>, playerID: string): boolean {
-    const { ctx } = state;
-
-    // First check segment-based phases (for pre-game setup)
-    if (ctx.currentSegment && ctx.currentPhase) {
-      const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
-      if (segmentConfig?.turn?.phases) {
-        const phaseConfig = segmentConfig.turn.phases[ctx.currentPhase];
-        if (phaseConfig?.allowAnyPlayerToAct) {
-          return true;
-        }
-      }
-    }
-
     // Otherwise, check normal priority system
     return hasPriorityPlayer(state.ctx, playerID);
   }
@@ -225,10 +229,20 @@ export class FlowManager<G> implements FlowInterface<G> {
     ctx: FnContext<G>,
   ): R | undefined {
     if (typeof hook !== "function" || !ctx) {
+      logger.debug(
+        `FlowManager: executeHook - hook is ${typeof hook}, ctx is ${!!ctx}`,
+      );
       return undefined;
     }
 
-    return hook(ctx);
+    logger.debug(
+      `FlowManager: executeHook - calling hook with G=${!!ctx.G}, coreOps=${!!ctx.coreOps}`,
+    );
+    const result = hook(ctx);
+    logger.debug(
+      `FlowManager: executeHook - hook returned ${result !== undefined ? "defined result" : "undefined"}`,
+    );
+    return result;
   }
 
   /**
@@ -313,6 +327,24 @@ export class FlowManager<G> implements FlowInterface<G> {
             currentStep: startingStep, // Set starting step for new phase
           },
         };
+
+        // CRITICAL FIX: Call onBegin hook for the new segment
+        const updatedFnContext = {
+          ...fnContext,
+          ctx: currentState.ctx,
+          G: currentState.G,
+        };
+
+        const onBegin = this.executeHook(
+          newSegmentConfig?.onBegin,
+          updatedFnContext,
+        );
+        if (onBegin !== undefined) {
+          currentState = {
+            ...currentState,
+            G: onBegin,
+          };
+        }
       }
     }
 
@@ -332,6 +364,9 @@ export class FlowManager<G> implements FlowInterface<G> {
       return currentState;
     }
 
+    logger.debug(
+      `FlowManager: handlePhaseTransition - checking if phase ${ctx.currentPhase} should end (step: ${ctx.currentStep})`,
+    );
     const shouldEndPhase = this.shouldEndPhase(currentState, fnContext);
 
     if (shouldEndPhase) {
@@ -344,6 +379,10 @@ export class FlowManager<G> implements FlowInterface<G> {
       const nextPhase = this.getNextPhase(currentState, fnContext);
 
       if (nextPhase && nextPhase !== ctx.currentPhase) {
+        logger.debug(
+          `FlowManager: Advancing from phase ${ctx.currentPhase} to ${nextPhase}`,
+        );
+
         // Apply phase onBegin hook before changing phase
         const phaseConfig = this.getPhaseConfig(ctx.currentSegment, nextPhase);
 
@@ -359,11 +398,21 @@ export class FlowManager<G> implements FlowInterface<G> {
             ...currentState.ctx,
             currentPhase: nextPhase,
             currentSegment: state.ctx.currentSegment,
-            currentTurn: state.ctx.currentTurn,
             currentStep: null, // Reset step when changing phase
+            // Reset per-turn move counters when transitioning back to mainPhase
+            // Note: numTurns increment is handled in phase transition, not here
+            ...(nextPhase === "mainPhase" && ctx.currentPhase !== "mainPhase"
+              ? { numTurnMoves: 0 }
+              : {}),
           },
         };
+      } else {
+        logger.debug(
+          `FlowManager: Phase ${ctx.currentPhase} should end but no next phase found or same phase`,
+        );
       }
+    } else {
+      logger.debug(`FlowManager: Phase ${ctx.currentPhase} should NOT end`);
     }
 
     return currentState;
@@ -379,28 +428,25 @@ export class FlowManager<G> implements FlowInterface<G> {
     let currentState = { ...state };
     const { ctx } = currentState;
     if (!ctx.currentStep) {
+      logger.debug(
+        `FlowManager: No current step in phase ${ctx.currentPhase}, checking if we should initialize a starting step`,
+      );
       return currentState;
     }
 
     const shouldEndStep = this.shouldEndStep(currentState, fnContext);
+    logger.debug(
+      `FlowManager: Step ${ctx.currentStep} should end: ${shouldEndStep}`,
+    );
+
     if (shouldEndStep) {
-      if (debuggers.flowTransitions) {
-        logger.debug(
-          `FlowManager: Step ${ctx.currentStep} should end, advancing...`,
-        );
-      }
+      logger.debug(
+        `FlowManager: Step ${ctx.currentStep} should end, advancing...`,
+      );
 
       const nextStep = this.getNextStep(currentState, fnContext);
       if (nextStep && nextStep !== ctx.currentStep) {
-        // Apply step onBegin hook before changing step
-        const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
-        const phaseConfig = segmentConfig?.turn?.phases?.[ctx.currentPhase];
-        const stepConfig = phaseConfig?.steps?.[nextStep];
-        const result = this.executeHook(stepConfig?.onBegin, fnContext);
-
-        if (result !== undefined) {
-          currentState = fnContext._getUpdatedState();
-        }
+        logger.debug(`FlowManager: Advancing to step ${nextStep}`);
 
         currentState = {
           ...currentState,
@@ -409,8 +455,53 @@ export class FlowManager<G> implements FlowInterface<G> {
             currentStep: nextStep,
           },
         };
+
+        // Apply step onBegin hook AFTER changing step so ctx is updated
+        const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
+        const phaseConfig = segmentConfig?.turn?.phases?.[ctx.currentPhase];
+        const stepConfig = phaseConfig?.steps?.[nextStep];
+
+        logger.debug(
+          `FlowManager: Executing onBegin hook for step ${nextStep}`,
+        );
+
+        // Create updated fnContext with new step
+        const updatedFnContext = {
+          ...fnContext,
+          ctx: currentState.ctx,
+        };
+
+        try {
+          const result = this.executeHook(
+            stepConfig?.onBegin,
+            updatedFnContext,
+          );
+
+          if (result !== undefined) {
+            logger.debug(
+              `FlowManager: Step ${nextStep} onBegin hook returned result, updating G`,
+            );
+            currentState = {
+              ...currentState,
+              G: result,
+            };
+          } else {
+            logger.debug(
+              `FlowManager: Step ${nextStep} onBegin hook returned undefined`,
+            );
+          }
+        } catch (error) {
+          logger.error(
+            `FlowManager: Error executing onBegin hook for step ${nextStep}: ${error}`,
+          );
+        }
       } else {
-        // If no next step, reset step (phase will advance)
+        logger.debug(
+          "FlowManager: No next step found - all steps complete, triggering phase transition",
+        );
+
+        // When no next step exists, all steps are complete
+        // Set currentStep to null and check if phase should end
         currentState = {
           ...currentState,
           ctx: {
@@ -418,6 +509,73 @@ export class FlowManager<G> implements FlowInterface<G> {
             currentStep: null,
           },
         };
+
+        // Immediately check if the phase should end after step completion
+        const updatedFnContext = {
+          ...fnContext,
+          ctx: currentState.ctx,
+        };
+
+        const shouldEndPhase = this.shouldEndPhase(
+          currentState,
+          updatedFnContext,
+        );
+        const phaseConfig = this.getPhaseConfig(
+          ctx.currentSegment,
+          ctx.currentPhase,
+        );
+
+        // If phase has a next, it should end after step completion
+        if (phaseConfig?.next) {
+          logger.debug(
+            `FlowManager: Phase ${ctx.currentPhase} should end after step completion`,
+          );
+
+          const nextPhase = this.getNextPhase(currentState, updatedFnContext);
+          if (nextPhase && nextPhase !== ctx.currentPhase) {
+            logger.debug(
+              `FlowManager: Immediately transitioning from ${ctx.currentPhase} to ${nextPhase}`,
+            );
+
+            // Apply phase onBegin hook for next phase
+            const nextPhaseConfig = this.getPhaseConfig(
+              ctx.currentSegment,
+              nextPhase,
+            );
+            const onBeginResult = this.executeHook(
+              nextPhaseConfig?.onBegin,
+              updatedFnContext,
+            );
+
+            if (onBeginResult !== undefined) {
+              currentState = {
+                ...currentState,
+                G: onBeginResult,
+              };
+            }
+
+            currentState = {
+              ...currentState,
+              ctx: {
+                ...currentState.ctx,
+                currentPhase: nextPhase,
+                currentStep: null,
+                // Reset numMoves when completing a turn cycle back to mainPhase
+                // Only increment numTurns when completing a full turn cycle from beginningPhase
+                ...(nextPhase === "mainPhase" &&
+                ctx.currentPhase === "beginningPhase"
+                  ? {
+                      numTurnMoves: 0,
+                      numTurns: (currentState.ctx.numTurns || 0) + 1,
+                    }
+                  : nextPhase === "mainPhase" &&
+                      ctx.currentPhase !== "mainPhase"
+                    ? { numTurnMoves: 0 }
+                    : {}),
+              },
+            };
+          }
+        }
       }
     }
 
@@ -429,9 +587,98 @@ export class FlowManager<G> implements FlowInterface<G> {
    */
   private handleSegmentPhaseInitialization(
     state: CoreEngineState<G>,
+    fnContext: FnContext<G>,
   ): CoreEngineState<G> {
     let currentState = { ...state };
     const { ctx } = currentState;
+
+    // Handle case where we have a phase but no step (e.g., after phase transition or step completion)
+    if (ctx.currentSegment && ctx.currentPhase && !ctx.currentStep) {
+      logger.debug(
+        `FlowManager: Phase ${ctx.currentPhase} has no step, checking for starting step`,
+      );
+      const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
+      const phaseConfig = segmentConfig?.turn?.phases?.[ctx.currentPhase];
+
+      if (phaseConfig?.steps) {
+        // Check if phase should end instead of reinitializing steps
+        // Evaluate the actual next value and endIf condition
+        let nextPhase = null;
+        if (typeof phaseConfig.next === "function") {
+          try {
+            nextPhase = phaseConfig.next(fnContext);
+          } catch (error) {
+            logger.error(`FlowManager: Error in phase next function: ${error}`);
+          }
+        } else {
+          nextPhase = phaseConfig.next;
+        }
+
+        let shouldExplicitlyEnd = false;
+        if (phaseConfig.endIf) {
+          try {
+            shouldExplicitlyEnd = !!this.executeHook(
+              phaseConfig.endIf,
+              fnContext,
+            );
+          } catch (error) {
+            logger.error(
+              `FlowManager: Error in phase endIf function: ${error}`,
+            );
+          }
+        }
+
+        // Phase should stay complete (null step) if:
+        // 1. No next phase to transition to, AND
+        // 2. Phase doesn't explicitly want to continue (endIf returns false/undefined)
+        const shouldPhaseEnd = !(nextPhase || shouldExplicitlyEnd);
+
+        if (shouldPhaseEnd) {
+          logger.debug(
+            `FlowManager: Phase ${ctx.currentPhase} has no next phase and doesn't want to continue - keeping currentStep as null (phase complete)`,
+          );
+          return currentState;
+        }
+
+        // Allow step initialization only for phases that should continue
+        const startingStep = this.findStartingStep(phaseConfig.steps);
+        if (startingStep) {
+          logger.debug(
+            `FlowManager: Initializing starting step ${startingStep} for phase ${ctx.currentPhase}`,
+          );
+
+          currentState = {
+            ...currentState,
+            ctx: {
+              ...currentState.ctx,
+              currentStep: startingStep,
+            },
+          };
+
+          // Execute the onBegin hook for the starting step
+          const stepConfig = phaseConfig.steps[startingStep];
+          if (stepConfig?.onBegin) {
+            // Create updated fnContext with new step
+            const updatedFnContext = {
+              ...fnContext,
+              ctx: currentState.ctx,
+            };
+
+            const result = this.executeHook(
+              stepConfig.onBegin,
+              updatedFnContext,
+            );
+            if (result !== undefined) {
+              currentState = {
+                ...currentState,
+                G: result,
+              };
+            }
+          }
+        }
+      }
+    }
+
     if (!(ctx.currentSegment && !ctx.currentPhase)) {
       return currentState;
     }
@@ -443,11 +690,9 @@ export class FlowManager<G> implements FlowInterface<G> {
       const startingPhase = this.findStartingPhase(phases);
 
       if (startingPhase) {
-        if (debuggers.flowTransitions) {
-          logger.debug(
-            `FlowManager: Initializing starting phase ${startingPhase} for segment ${ctx.currentSegment}`,
-          );
-        }
+        logger.debug(
+          `FlowManager: Initializing starting phase ${startingPhase} for segment ${ctx.currentSegment}`,
+        );
 
         // Find starting step for the phase
         let startingStep = null;
@@ -483,12 +728,19 @@ export class FlowManager<G> implements FlowInterface<G> {
       G: fnContext.G,
       ctx: fnContext.ctx,
     };
-    const { ctx } = currentState;
 
     let hasTransitions = true;
     let maxIterations = 10; // Prevent infinite loops
 
     while (hasTransitions && maxIterations > 0) {
+      const { ctx } = currentState; // Get updated context each iteration
+
+      const prevState = JSON.stringify({
+        segment: currentState.ctx.currentSegment,
+        phase: currentState.ctx.currentPhase,
+        step: currentState.ctx.currentStep,
+      });
+
       hasTransitions = false;
       maxIterations--;
 
@@ -502,15 +754,59 @@ export class FlowManager<G> implements FlowInterface<G> {
       }
 
       currentState = this.handleSegmentTransition(currentState, fnContext);
-      currentState = this.handlePhaseTransition(currentState, fnContext);
-      currentState = this.handleStepTransition(currentState, fnContext);
-      currentState = this.handleSegmentPhaseInitialization(currentState);
+
+      // Update fnContext to reflect segment changes
+      const updatedFnContext = {
+        ...fnContext,
+        ctx: currentState.ctx,
+        G: currentState.G,
+      };
+
+      // CRITICAL CHANGE: Handle step transitions BEFORE phase transitions
+      // This ensures step completion can trigger phase advancement in the same iteration
+      currentState = this.handleStepTransition(currentState, updatedFnContext);
+
+      // Update fnContext again to reflect step changes
+      const updatedFnContext2 = {
+        ...fnContext,
+        ctx: currentState.ctx,
+        G: currentState.G,
+      };
+
+      currentState = this.handlePhaseTransition(
+        currentState,
+        updatedFnContext2,
+      );
+
+      // Update fnContext one more time to reflect phase changes
+      const updatedFnContext3 = {
+        ...fnContext,
+        ctx: currentState.ctx,
+        G: currentState.G,
+      };
+
+      currentState = this.handleSegmentPhaseInitialization(
+        currentState,
+        updatedFnContext3,
+      );
+
+      const newState = JSON.stringify({
+        segment: currentState.ctx.currentSegment,
+        phase: currentState.ctx.currentPhase,
+        step: currentState.ctx.currentStep,
+      });
+
+      if (prevState !== newState) {
+        hasTransitions = true;
+        logger.debug(
+          `FlowManager: State changed from ${prevState} to ${newState}, continuing transitions`,
+        );
+      } else {
+        logger.debug("FlowManager: No state change, stopping transitions");
+      }
     }
 
-    return {
-      ...currentState,
-      ctx: { ...currentState.ctx, numMoves: (ctx.numMoves || 0) + 1 },
-    };
+    return currentState;
   }
 
   /**
@@ -551,11 +847,24 @@ export class FlowManager<G> implements FlowInterface<G> {
     }
 
     const phaseConfig = segmentConfig.turn.phases[ctx.currentPhase];
-    if (!phaseConfig?.endIf) {
-      return false;
+
+    // First check explicit endIf condition
+    if (phaseConfig?.endIf) {
+      const explicitEnd = this.executeHook(phaseConfig.endIf, fnContext);
+      if (explicitEnd) {
+        return true;
+      }
+      // If explicit endIf returns false, don't override with step completion logic
+      if (explicitEnd === false) {
+        return false;
+      }
+      // If explicitEnd is undefined/null, continue to check step completion
     }
 
-    return !!this.executeHook(phaseConfig.endIf, fnContext);
+    // Phase should only auto-end based on explicit endIf conditions
+    // Step completion handling is done at the step transition level
+
+    return false;
   }
 
   /**
@@ -650,9 +959,78 @@ export class FlowManager<G> implements FlowInterface<G> {
     if (!segmentConfig?.next) return null;
 
     if (typeof segmentConfig.next === "function") {
-      return segmentConfig.next(fnContext) ?? null;
+      try {
+        return segmentConfig.next(fnContext) ?? null;
+      } catch (error) {
+        logger.error(`FlowManager: Error in segment next function: ${error}`);
+        return null;
+      }
     }
 
     return segmentConfig.next;
+  }
+
+  /**
+   * Check if a phase should end after all its steps are complete.
+   * This prevents infinite loops by detecting step completion.
+   */
+  private shouldEndPhaseAfterStepCompletion(
+    state: CoreEngineState<G>,
+    fnContext: FnContext<G>,
+  ): boolean {
+    const { ctx } = state;
+    if (!(ctx.currentSegment && ctx.currentPhase)) {
+      return false;
+    }
+
+    const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
+    const phaseConfig = segmentConfig?.turn?.phases?.[ctx.currentPhase];
+
+    // If phase has steps, check if we just completed the last step
+    if (phaseConfig?.steps && ctx.currentStep) {
+      // We're here because getNextStep returned null for currentStep
+      // This means all steps are complete, so phase should end
+      logger.debug(
+        `FlowManager: Phase ${ctx.currentPhase} has steps and current step ${ctx.currentStep} has no next - steps complete`,
+      );
+
+      // Check if phase has an explicit endIf that might override step completion
+      if (phaseConfig.endIf) {
+        // Create updated fnContext with current state
+        const updatedFnContext = {
+          ...fnContext,
+          ctx: state.ctx,
+        };
+        const explicitEnd = this.executeHook(
+          phaseConfig.endIf,
+          updatedFnContext,
+        );
+        logger.debug(
+          `FlowManager: Phase ${ctx.currentPhase} explicit endIf returned: ${explicitEnd}`,
+        );
+        // If explicit endIf returns true, definitely end. If false/undefined, still end because steps are complete
+        return explicitEnd !== false;
+      }
+
+      // No explicit endIf, and steps are complete, so end the phase
+      return true;
+    }
+
+    // Phase has no steps or no current step - check explicit endIf only
+    if (phaseConfig?.endIf) {
+      // Create updated fnContext with current state
+      const updatedFnContext = {
+        ...fnContext,
+        ctx: state.ctx,
+      };
+      const explicitEnd = this.executeHook(phaseConfig.endIf, updatedFnContext);
+      logger.debug(
+        `FlowManager: Phase ${ctx.currentPhase} explicit endIf returned: ${explicitEnd}`,
+      );
+      return !!explicitEnd;
+    }
+
+    // Default: don't end phase
+    return false;
   }
 }

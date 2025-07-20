@@ -10,8 +10,18 @@ export const chooseFirstPlayer: GundamMove = (
   { G, coreOps },
   targetPlayerId: string,
 ) => {
+  console.log(
+    `chooseFirstPlayer: Called with targetPlayerId=${targetPlayerId}`,
+  );
+  console.log("chooseFirstPlayer: coreOps available:", !!coreOps);
+  console.log(
+    "chooseFirstPlayer: setOTP method available:",
+    typeof coreOps?.setOTP,
+  );
+
   // Set one-time player (the player who goes first)
   coreOps.setOTP(targetPlayerId);
+  console.log("chooseFirstPlayer: After setOTP, otp is:", coreOps.getCtx().otp);
 
   // Set the priority player to the chosen first player
   coreOps.setPriorityPlayer(targetPlayerId);
@@ -21,5 +31,6 @@ export const chooseFirstPlayer: GundamMove = (
 
   coreOps.setPendingMulligan(coreOps.getPlayers());
 
+  console.log("chooseFirstPlayer: Move completed successfully");
   return G;
 };

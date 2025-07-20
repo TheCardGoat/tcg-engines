@@ -16,7 +16,7 @@ import pino, { type Logger } from "pino";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 const isTest = process.env.NODE_ENV === "test";
-const isLoggerEnabled = !process.env.AGENT;
+const isLoggerEnabled = process.env.AGENT !== "1";
 
 // https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#logseverity
 const _PinoLevelToSeverityLookup = {

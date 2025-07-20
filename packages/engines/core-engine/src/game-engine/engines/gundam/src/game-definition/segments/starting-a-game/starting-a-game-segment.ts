@@ -117,7 +117,6 @@ export const startingAGameSegment: SegmentConfig<GundamGameState> = {
       chooseFirstPlayer: {
         start: true,
         next: "redrawHand",
-        allowAnyPlayerToAct: true, // Allow either player to choose who goes first (5-2-1-4)
 
         endIf: ({ ctx }) => {
           return ctx.otp !== undefined;

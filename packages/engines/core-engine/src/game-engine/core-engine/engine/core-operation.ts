@@ -90,7 +90,9 @@ export class CoreOperation<
   }
 
   setOTP(playerId: string) {
+    logger.log(`CoreOperation.setOTP: Setting otp to ${playerId}`);
     this.state.ctx.otp = playerId;
+    logger.log(`CoreOperation.setOTP: otp is now ${this.state.ctx.otp}`);
   }
 
   setPendingMulligan(playerIds?: string[]) {
@@ -166,8 +168,7 @@ export class CoreOperation<
   }
 
   passTurn() {
-    this.incrementTurnCount();
-
+    // Note: numTurns is now incremented by FlowManager when turn cycle completes
     const ctx = this.state.ctx;
     const totalPlayers = ctx.playerOrder.length;
     // Advance turn player position
@@ -328,32 +329,6 @@ export class CoreOperation<
   }
 
   /**
-   * Beginning Phase: Ready Step
-   * Called automatically by flow manager during the ready step.
-   */
-  beginReadyStep() {
-    // Stub: Implement ready logic here (e.g., ready all cards in play and inkwell)
-  }
-
-  /**
-   * Beginning Phase: Set Step
-   * Called automatically by flow manager during the set step.
-   */
-  beginSetStep() {
-    // Stub: Implement set logic here (e.g., gain lore from locations, undry characters)
-  }
-
-  /**
-   * Beginning Phase: Draw Step
-   * Called automatically by flow manager during the draw step.
-   */
-  beginDrawStep() {
-    // Stub: Implement draw logic here (e.g., draw a card unless first turn)
-  }
-
-  // Additional beginning phase methods following Task 2.1 specification
-
-  /**
    * Ready all cards for a player (inkwell and play zones)
    */
   readyAllCards(playerId: string): void {
@@ -482,4 +457,10 @@ export class CoreOperation<
     }
     return ctx?.playerOrder[0] || "";
   }
+
+  endPhase(phaseName: string): void {}
+
+  endStep(stepName: string): void {}
+
+  endSegment(segmentName: string): void {}
 }

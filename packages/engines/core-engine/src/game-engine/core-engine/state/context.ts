@@ -36,16 +36,37 @@ export interface CoreCtx<TurnHistory = unknown> {
   pendingMulligan?: Set<PlayerId>;
   pendingChampionSelection?: Set<PlayerId>;
 
-  gameOver?: unknown;
+  /**
+   * Indicates whether the game is over. Once true, no further moves can be executed.
+   */
+  gameOver?: boolean;
   winner?: PlayerID;
+
+  /**
+   * If true, disables the rule engine and allows manual board state correction.
+   * Used for fixing evaluation bugs or player corrections.
+   */
   manualMode?: boolean;
 
+  /**
+   * Counter for the number of turns that have passed.
+   * A turn is incremented when both players have played in a segment.
+   * Starts at 0 and does not reset when transitioning segments.
+   */
   numTurns: number;
-  numMoves?: number;
+
+  /**
+   * Counter for the total number of successful moves executed in the game.
+   */
+  numMoves: number;
+
+  /**
+   * Counter for the number of moves executed during the current turn.
+   * Resets whenever either the turnPlayer or the turn changes.
+   */
   numTurnMoves: number;
 
   currentSegment?: string;
-  currentTurn?: string;
   currentPhase?: string;
   currentStep?: string;
 
