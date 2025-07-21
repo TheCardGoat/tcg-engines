@@ -1,10 +1,67 @@
+import type {
+  PhaseConfig,
+  StepConfig,
+} from "~/game-engine/core-engine/game/structure/phase";
 import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
+import type { TurnConfig } from "~/game-engine/core-engine/game/structure/turn";
+import type { MoveMap } from "~/game-engine/core-engine/game-configuration";
 import type { LorcanaGameState } from "~/game-engine/engines/lorcana/src/lorcana-engine-types";
 import { lorcanaMoves } from "~/game-engine/engines/lorcana/src/moves/moves";
+import type { LorcanaFnContext } from "~/game-engine/engines/lorcana/src/moves/types";
 import type { LorcanaCoreOperations } from "~/game-engine/engines/lorcana/src/operations/lorcana-core-operations";
 import { logger } from "~/shared/logger";
 
-export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
+// Lorcana-specific segment config that properly types coreOps
+interface LorcanaSegmentConfig {
+  start?: boolean;
+  end?: boolean;
+  next?: ((context: LorcanaFnContext) => string | undefined) | string;
+
+  onBegin?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
+  onEnd?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
+  endIf?: (context: LorcanaFnContext) => boolean | undefined;
+
+  turn: LorcanaTurnConfig;
+}
+
+// Lorcana-specific turn config
+interface LorcanaTurnConfig {
+  onBegin?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
+  onEnd?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
+  endIf?: (context: LorcanaFnContext) => boolean | undefined;
+
+  moves?: MoveMap<LorcanaGameState>;
+  phases?: Record<string, LorcanaPhaseConfig>;
+}
+
+// Lorcana-specific phase config
+interface LorcanaPhaseConfig {
+  start?: boolean;
+  end?: boolean;
+  next?: ((context: LorcanaFnContext) => string | undefined) | string;
+
+  onBegin?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
+  onEnd?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
+  endIf?: (context: LorcanaFnContext) => boolean | undefined;
+
+  moves?: MoveMap<LorcanaGameState>;
+  steps?: Record<string, LorcanaStepConfig>;
+}
+
+// Lorcana-specific step config
+interface LorcanaStepConfig {
+  start?: boolean;
+  end?: boolean;
+  next?: ((context: LorcanaFnContext) => string | undefined) | string;
+
+  onBegin?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
+  onEnd?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
+  endIf?: (context: LorcanaFnContext) => boolean | undefined | { next: string };
+
+  moves?: MoveMap<LorcanaGameState>;
+}
+
+export const duringGameSegment: LorcanaSegmentConfig = {
   next: "endGame",
 
   endIf: () => {
@@ -35,7 +92,7 @@ export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
               coreOps.processTurnStartEffects();
 
               logger.log(">>>>>>>>> Ready Phase");
-              (coreOps as LorcanaCoreOperations).gameStateCheck();
+              coreOps.gameStateCheck();
 
               return G;
             },
@@ -53,7 +110,7 @@ export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
               coreOps.processTurnStartTriggers();
 
               logger.log(">>>>>>>>> Set Phase");
-              (coreOps as LorcanaCoreOperations).gameStateCheck();
+              coreOps.gameStateCheck();
 
               return G;
             },
@@ -71,7 +128,7 @@ export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
               }
 
               logger.log(">>>>>>>>> DRAW Phase");
-              (coreOps as LorcanaCoreOperations).gameStateCheck();
+              coreOps.gameStateCheck();
 
               return G;
             },
