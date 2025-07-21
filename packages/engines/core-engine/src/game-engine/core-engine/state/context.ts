@@ -71,6 +71,12 @@ export interface CoreCtx<TurnHistory = unknown> {
   currentPhase?: string;
   currentStep?: string;
 
+  /**
+   * Deferred phase transition requested by moves.
+   * Processed by FlowManager after move completion to avoid conflicts.
+   */
+  deferredPhaseTransition?: string;
+
   cards: GameCards;
   cardZones?: Record<string, Zone>;
 

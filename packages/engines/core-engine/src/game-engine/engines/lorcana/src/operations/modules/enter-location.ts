@@ -38,4 +38,8 @@ export function enterLocation(
 
   // Add triggered effects to the bag (rule 4.3.7.5)
   this.addTriggeredEffectsToTheBag("onMove", characterInstanceId);
+
+  // Note: Rule 4.3.7.6 states "Once all effects have been resolved, the move is complete"
+  // However, effects should be resolved through the normal bag resolution process
+  // rather than automatically here, to maintain consistency with other game mechanics
 }

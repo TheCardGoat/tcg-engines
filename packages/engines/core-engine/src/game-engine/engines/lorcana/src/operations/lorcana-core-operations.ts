@@ -20,7 +20,7 @@ import {
   questWithCharacter as questWithCharacterImpl,
   readyAllCharacters as readyAllCharactersImpl,
   readyAllInk as readyAllInkImpl,
-  resolveBag as resolveBagImpl,
+  resolveBagTrigger as resolveBagTriggerImpl,
 } from "./modules";
 
 /**
@@ -171,7 +171,7 @@ export class LorcanaCoreOperations extends CoreOperation<
     addTriggeredEffectsToTheBagImpl.call(this, { timing, cardInstanceId });
   }
 
-  resolveBagTrigger(id: string) {
-    resolveBagImpl.call(this, id);
+  resolveBagTrigger(id: string): void {
+    resolveBagTriggerImpl.call(this, id);
   }
 }

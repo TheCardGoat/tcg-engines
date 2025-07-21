@@ -191,6 +191,14 @@ export const moveCharacter: LorcanaMove = {
       // Use LorcanaCoreOperations to enter location
       lorcanaOps.enterLocation(character, location);
 
+      // Auto-resolve any triggered effects from moving to location (rule 4.3.7.6)
+      // This ensures immediate effect resolution for movement triggers
+      while (G.bag && G.bag.length > 0) {
+        const triggerId = G.bag[0].id;
+        logger.debug("Auto Resolving");
+        lorcanaOps.resolveBagTrigger(triggerId);
+      }
+
       logger.info(
         `Player ${playerID} moved character ${characterInstanceId} to location ${locationInstanceId} for ${moveCost} ink`,
       );

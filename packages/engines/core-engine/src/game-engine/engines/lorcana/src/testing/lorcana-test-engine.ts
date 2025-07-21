@@ -206,10 +206,6 @@ export class LorcanaTestEngine {
 
   dispose() {}
 
-  resolveBag() {
-    // TODO: IMPLEMENT BAG RESOLUTION
-  }
-
   get bag() {
     // Return the bag from the authoritative engine
     return this.authoritativeEngine.bag;
@@ -257,6 +253,14 @@ export class LorcanaTestEngine {
     }
 
     return availableMoves;
+  }
+
+  resolveBag() {
+    const response = this.moves.resolveBag();
+
+    this.wasMoveExecutedAndPropagated();
+
+    return { result: response };
   }
 
   exertCard(params: { card: LorcanaCardInstance | LorcanitoCard }) {

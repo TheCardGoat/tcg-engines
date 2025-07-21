@@ -1,8 +1,4 @@
 import { createId } from "~/game-engine/core-engine/utils/id-utils";
-import type {
-  EffectDefinition,
-  TriggeredEffect,
-} from "../../lorcana-engine-types";
 import type { LorcanaCoreOperations } from "../lorcana-core-operations";
 
 /**
@@ -20,139 +16,190 @@ export function addTriggeredEffectsToTheBag(
           | "onChallenge"
           | "onBanish"
           | "onDamage"
-          | "onMove";
+          | "onMove"
+          | "onActivatedAbility";
         cardInstanceId: string;
       }
     | {
         timing: "startOfTurn" | "endOfTurn";
-        cardInstanceId: string;
+        cardInstanceId?: undefined;
       },
 ): void {
   const { timing, cardInstanceId } = opts;
-  const card =
-    timing !== "startOfTurn" && timing !== "endOfTurn"
-      ? this.getCardInstance(cardInstanceId)
-      : undefined;
 
-  if (!card && timing !== "startOfTurn" && timing !== "endOfTurn") {
+  // Initialize the bag if needed
+  if (!this.state.G.bag) {
+    this.state.G.bag = [];
+  }
+  const cardsInPlay = this.lorcanaEngine.queryCardsInPlay();
+  const cardsWithTriggered = cardsInPlay.filter((card) =>
+    card.hasTriggerFor(timing),
+  );
+
+  // Handle end-of-turn and start-of-turn triggers by scanning all cards in play
+  if (timing === "endOfTurn" || timing === "startOfTurn") {
+    for (const cardInstance of cardsWithTriggered) {
+      // Check if this card has triggered abilities for this timing
+      // Check for end-of-turn triggers in various formats
+      // Create a LayerItem for the bag
+      const layerItem = {
+        id: createId(),
+        sourceCardId: cardInstance.instanceId,
+        controllerId: cardInstance.owner,
+        ability: {
+          id: createId(),
+          type: "triggered" as const,
+          text: `${timing} trigger`,
+          effect: {
+            type: "gainLore",
+            parameters: { amount: 1 },
+          },
+          timing: timing as any,
+        },
+        targets: [], // Will be resolved when the effect is processed
+        timestamp: Date.now(),
+        optional: false,
+      };
+
+      this.state.G.bag.push(layerItem);
+    }
+
     return;
   }
 
-  // Initialize the triggered effects bag if needed
-  if (!this.state.G.triggeredEffectsBag) {
-    this.state.G.triggeredEffectsBag = [];
+  // Handle specific card triggers (for other timings like onMove, onPlay, etc.)
+  if (!cardInstanceId) {
+    return;
   }
 
-  // Initialize triggerEvents for backward compatibility
-  if (!this.state.G.triggerEvents) {
-    this.state.G.triggerEvents = [];
+  const card = this.getCardInstance(cardInstanceId);
+  if (!card) {
+    return;
   }
 
   // Handle move-related triggers
-  if (timing === "onMove") {
-    const locationId = this.state.G.metas[cardInstanceId]?.location;
+  switch (timing) {
+    case "onMove": {
+      console.log(`DEBUG: Handling onMove trigger for card ${cardInstanceId}`);
 
-    if (locationId) {
-      const location = this.getCardInstance(locationId);
-      if (location) {
-        // Check if the location has any triggered abilities for this timing
-        checkAndAddTriggeredAbilities(
-          this,
-          location,
-          timing,
-          "characterMovesToThisLocation",
-          cardInstanceId,
-        );
+      const locationId = this.state.G.metas[cardInstanceId]?.location;
+      console.log(`DEBUG: Location ID found: ${locationId}`);
 
-        // Check if the character has any triggered abilities for moving
-        checkAndAddTriggeredAbilities(
-          this,
-          card,
-          timing,
-          "thisCharacterMoves",
-          cardInstanceId,
-        );
+      if (locationId) {
+        const location = this.getCardInstance(locationId);
+        if (location) {
+          console.log("DEBUG: Location card:", {
+            name: location.card.name,
+            abilities: location.card.abilities,
+          });
 
-        // Add tracking events for backward compatibility
-        this.state.G.triggerEvents.push({
-          type: "locationTrigger",
-          timing,
-          locationId,
-          characterId: cardInstanceId,
-          timestamp: Date.now(),
-        });
+          // Check if the location has any triggered abilities for this timing
+          checkAndAddTriggeredAbilities.call(
+            this,
+            location,
+            timing,
+            "characterMovesToThisLocation",
+            cardInstanceId,
+          );
 
-        this.state.G.triggerEvents.push({
-          type: "characterTrigger",
-          timing,
-          locationId,
-          characterId: cardInstanceId,
-          timestamp: Date.now(),
-        });
+          // Check if the character has any triggered abilities for moving
+          console.log("DEBUG: Character card:", {
+            name: card.card.name,
+            abilities: card.card.abilities,
+          });
+
+          checkAndAddTriggeredAbilities.call(
+            this,
+            card,
+            timing,
+            "thisCharacterMoves",
+            cardInstanceId,
+          );
+        }
       }
+      break;
     }
-  } else if (timing === "onPutIntoInkwell") {
-    // Check if the card has any triggered abilities for inkwell
-    checkAndAddTriggeredAbilities(
-      this,
-      card,
-      timing,
-      "thisCardPutIntoInkwell",
-      cardInstanceId,
-    );
-
-    // Handle inkwell-related triggers
-    this.state.G.triggerEvents.push({
-      type: "inkwellTrigger",
-      timing,
-      characterId: cardInstanceId,
-      timestamp: Date.now(),
-    });
+    case "onPutIntoInkwell": // Check if the card has any triggered abilities for inkwell
+      checkAndAddTriggeredAbilities.call(
+        this,
+        card,
+        timing,
+        "thisCardPutIntoInkwell",
+        cardInstanceId,
+      );
+      break;
+    case "onActivatedAbility": // Check if the card has any triggered abilities for activated abilities
+      checkAndAddTriggeredAbilities.call(
+        this,
+        card,
+        timing,
+        "thisCardActivatesAbility",
+        cardInstanceId,
+      );
+      break;
+    case "onBanish": {
+    }
   }
-
-  // Process any triggered effects that were added to the bag
-  resolveTriggeredEffects.call(this);
 }
 
 /**
  * Check a card for triggered abilities and add them to the bag if they match
  */
 function checkAndAddTriggeredAbilities(
-  coreOps: LorcanaCoreOperations,
+  this: LorcanaCoreOperations,
   cardInstance: any,
   timing: string,
   condition: string,
   triggeringCardId: string,
 ): void {
+  console.log("DEBUG: checkAndAddTriggeredAbilities called with:", {
+    cardName: cardInstance.card.name,
+    timing,
+    condition,
+    triggeringCardId,
+    hasAbilities: !!cardInstance.card.abilities,
+    abilitiesCount: cardInstance.card.abilities?.length || 0,
+  });
+
   if (!cardInstance.card.abilities) return;
 
   for (const ability of cardInstance.card.abilities) {
+    console.log("DEBUG: Checking ability:", {
+      type: ability.type,
+      triggerOn: ability.trigger?.on,
+      condition,
+      timing,
+    });
+
     // Handle our simplified format for testing
     if (
       ability.type === "triggered" &&
       ability.trigger === timing &&
       ability.condition === condition
     ) {
-      const controller = coreOps.getCardOwner(cardInstance.instanceId);
+      const controller = this.getCardOwner(cardInstance.instanceId);
       if (!controller) continue;
 
-      const effect: EffectDefinition = {
-        type: ability.effect,
-        value: ability.value,
-        targetType: ability.targetType || "controller",
-        condition: ability.condition,
-      };
-
-      const triggeredEffect: TriggeredEffect = {
+      const layerItem = {
         id: createId(),
-        sourceInstanceId: cardInstance.instanceId,
-        effect,
-        controller,
-        optional: ability.optional,
+        sourceCardId: cardInstance.instanceId,
+        controllerId: controller,
+        ability: {
+          id: createId(),
+          type: "triggered" as const,
+          text: `${timing} ${condition}`,
+          effect: {
+            type: ability.effect || "gainLore",
+            parameters: { amount: ability.value || 1 },
+          },
+          timing: timing as any,
+        },
+        targets: [], // Will be resolved when the effect is processed
         timestamp: Date.now(),
+        optional: ability.optional,
       };
 
-      coreOps.state.G.triggeredEffectsBag!.push(triggeredEffect);
+      this.state.G.bag.push(layerItem);
     }
     // Handle the actual Lorcana card format
     else if (
@@ -161,90 +208,59 @@ function checkAndAddTriggeredAbilities(
       timing === "onMove" &&
       condition === "thisCharacterMoves"
     ) {
-      const controller = coreOps.getCardOwner(cardInstance.instanceId);
+      console.log(
+        "DEBUG: MATCHED static-triggered ability for character move!",
+      );
+
+      const controller = this.getCardOwner(cardInstance.instanceId);
       if (!controller) continue;
+
+      console.log(`DEBUG: Controller found: ${controller}`);
 
       // Process the layer effects
       if (ability.layer?.effects) {
+        console.log(
+          `DEBUG: Processing ${ability.layer.effects.length} layer effects`,
+        );
+
         for (const layerEffect of ability.layer.effects) {
+          console.log("DEBUG: Processing layer effect:", layerEffect);
+
           if (layerEffect.type === "lore") {
-            const effect: EffectDefinition = {
-              type: "gainLore",
-              value: layerEffect.amount,
-              targetType: "controller",
-            };
+            console.log(
+              `DEBUG: Adding lore effect to bag: +${layerEffect.amount} lore`,
+            );
 
-            const triggeredEffect: TriggeredEffect = {
+            const layerItem = {
               id: createId(),
-              sourceInstanceId: cardInstance.instanceId,
-              effect,
-              controller,
-              optional: ability.layer.optional,
+              sourceCardId: cardInstance.instanceId,
+              controllerId: controller,
+              ability: {
+                id: createId(),
+                type: "triggered" as const,
+                text: "Character moves to location",
+                effect: {
+                  type: "gainLore",
+                  parameters: { amount: layerEffect.amount },
+                },
+                timing: timing as any,
+              },
+              targets: [],
               timestamp: Date.now(),
+              optional: ability.layer.optional,
             };
 
-            coreOps.state.G.triggeredEffectsBag!.push(triggeredEffect);
+            this.state.G.bag.push(layerItem);
+            console.log(
+              `DEBUG: Added trigger to bag. Bag length now: ${this.state.G.bag.length}`,
+            );
           }
         }
+      } else {
+        console.log("DEBUG: No layer effects found on ability");
       }
+    } else {
+      console.log("DEBUG: Ability did not match any conditions");
     }
-  }
-}
-
-/**
- * Resolve all triggered effects in the bag
- */
-function resolveTriggeredEffects(this: LorcanaCoreOperations): void {
-  if (
-    !this.state.G.triggeredEffectsBag ||
-    this.state.G.triggeredEffectsBag.length === 0
-  ) {
-    return;
-  }
-
-  // Process effects in timestamp order (FIFO)
-  const effectsToResolve = [...this.state.G.triggeredEffectsBag];
-  this.state.G.triggeredEffectsBag = [];
-
-  for (const triggeredEffect of effectsToResolve) {
-    resolveTriggeredEffect.call(this, triggeredEffect);
-  }
-}
-
-/**
- * Resolve a single triggered effect
- */
-function resolveTriggeredEffect(
-  this: LorcanaCoreOperations,
-  triggeredEffect: TriggeredEffect,
-): void {
-  const { effect, controller } = triggeredEffect;
-
-  switch (effect.type) {
-    case "gainLore":
-      if (effect.value && this.state.ctx.players[controller]) {
-        this.state.ctx.players[controller].lore =
-          (this.state.ctx.players[controller].lore || 0) + effect.value;
-      }
-      break;
-
-    case "drawCard":
-      // TODO: Implement draw card effect
-      break;
-
-    case "dealDamage":
-      // TODO: Implement deal damage effect
-      break;
-
-    case "exertCard":
-      // TODO: Implement exert card effect
-      break;
-
-    case "readyCard":
-      // TODO: Implement ready card effect
-      break;
-
-    default:
-      console.warn(`Unknown effect type: ${effect.type}`);
   }
 }

@@ -8,6 +8,7 @@ import type {
 import type {
   LorcanaCardFilter,
   LorcanaPlayerState,
+  TriggerTiming,
 } from "../lorcana-generic-types";
 import type { LorcanaCardDefinition } from "./lorcana-card-repository";
 
@@ -42,6 +43,20 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
 
   get inkwell(): boolean {
     return this.card.inkwell;
+  }
+
+  get owner(): string {
+    return this.ownerId;
+  }
+
+  hasTriggerFor(timing: TriggerTiming) {
+    if (timing === "endOfTurn" && this.card.abilities) {
+      return this.card.abilities?.some((ability) =>
+        hasEndOfTurnTrigger(ability, timing),
+      );
+    }
+
+    return false;
   }
 
   canBePlayed(): boolean {
@@ -105,4 +120,36 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
       this.meta.characters.includes(character.instanceId)
     );
   }
+}
+
+/**
+ * Check if an ability has an end-of-turn trigger
+ * This handles various formats that end-of-turn abilities might be defined in
+ */
+function hasEndOfTurnTrigger(ability: any, timing: string): boolean {
+  if (!ability) return false;
+
+  // Check various common formats for end-of-turn triggers
+  return (
+    // Format 1: Simple trigger property
+    ability.trigger === timing ||
+    (ability.trigger === "endOfTurn" && timing === "endOfTurn") ||
+    (ability.trigger === "startOfTurn" && timing === "startOfTurn") ||
+    // Format 2: Nested trigger object
+    (ability.trigger?.on === "end-of-turn" && timing === "endOfTurn") ||
+    (ability.trigger?.on === "start-of-turn" && timing === "startOfTurn") ||
+    // Format 3: Text-based detection (common in card games)
+    (typeof ability.text === "string" &&
+      timing === "endOfTurn" &&
+      (ability.text.toLowerCase().includes("at the end of") ||
+        ability.text.toLowerCase().includes("end of turn"))) ||
+    (typeof ability.text === "string" &&
+      timing === "startOfTurn" &&
+      (ability.text.toLowerCase().includes("at the start of") ||
+        ability.text.toLowerCase().includes("beginning of turn"))) ||
+    // Format 4: Lorcana-specific triggered ability format
+    (ability.type === "triggered" && ability.trigger === timing) ||
+    // Format 5: timing property
+    ability.timing === timing
+  );
 }

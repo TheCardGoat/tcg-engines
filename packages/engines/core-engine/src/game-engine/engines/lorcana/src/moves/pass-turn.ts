@@ -11,7 +11,7 @@ import { toLorcanaCoreOps } from "./types";
 export const passTurnMove: LorcanaMove = {
   execute: ({ G, coreOps, playerID }) => {
     try {
-      const lorcanaOps = toLorcanaCoreOps(coreOps);
+      const lorcanaOps = coreOps;
       const ctx = lorcanaOps.getCtx();
 
       const currentTurnPlayer = getCurrentTurnPlayer(ctx);

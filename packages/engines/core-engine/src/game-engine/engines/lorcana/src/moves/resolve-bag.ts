@@ -1,4 +1,5 @@
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
+import { logger } from "~/shared/logger";
 import type { LorcanaMove } from "./types";
 
 /**
@@ -21,6 +22,8 @@ export const resolveBag: LorcanaMove = ({ G, coreOps }, triggerId: string) => {
       { triggerId },
     );
   }
+
+  logger.debug("Resolving trigger from bag", { trigger });
 
   // coreOps is now properly typed as LorcanaCoreOperations, no casting needed!
   coreOps.resolveBagTrigger(trigger.id);

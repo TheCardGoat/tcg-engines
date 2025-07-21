@@ -434,12 +434,14 @@ export class CoreOperation<
   }
 
   endPhase(phaseName?: string): void {
+    // Instead of immediately transitioning, set a flag for the flow manager to process
+    // This avoids conflicts with the automatic flow processing that happens after moves
     if (phaseName) {
-      // Transition to specific phase
-      this.engine.transitionToPhase(phaseName);
+      // Request transition to specific phase
+      this.state.ctx.deferredPhaseTransition = phaseName;
     } else {
-      // End current phase and advance to next
-      this.engine.endCurrentPhase();
+      // Request to end current phase and advance to next
+      this.state.ctx.deferredPhaseTransition = "ADVANCE_TO_NEXT";
     }
   }
 

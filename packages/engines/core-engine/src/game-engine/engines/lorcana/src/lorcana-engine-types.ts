@@ -13,23 +13,6 @@ export type LorcanaCardMeta = {
   characters?: string[] | null;
 };
 
-// Triggered effect definitions
-export type TriggeredEffect = {
-  id: string;
-  sourceInstanceId: string;
-  effect: EffectDefinition;
-  controller: string;
-  optional: boolean;
-  timestamp: number;
-};
-
-export type EffectDefinition = {
-  type: "gainLore" | "drawCard" | "dealDamage" | "exertCard" | "readyCard";
-  value?: number;
-  targetType?: "self" | "controller" | "opponent" | "choosenTarget";
-  condition?: string;
-};
-
 export type LorcanaGameState = {
   effects: LayerItem[];
   bag: LayerItem[];
@@ -45,8 +28,6 @@ export type LorcanaGameState = {
     characterId?: string;
     timestamp: number;
   }>;
-  // The bag of triggered effects waiting to be resolved
-  triggeredEffectsBag?: TriggeredEffect[];
   passTurnRequested?: boolean; // Flag to trigger mainPhase end
 };
 

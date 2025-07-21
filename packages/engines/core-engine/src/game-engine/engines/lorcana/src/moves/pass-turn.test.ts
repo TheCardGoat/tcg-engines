@@ -118,7 +118,7 @@ describe("Move: Pass Turn", () => {
       expect(testEngine.bag).toHaveLength(0);
     });
 
-    it.skip("At the end of your turn", () => {
+    it("At the end of your turn", () => {
       const testEngine = new LorcanaTestEngine(
         {
           deck: 5,
@@ -139,11 +139,11 @@ describe("Move: Pass Turn", () => {
       testEngine.changeActivePlayer("player_one");
       testEngine.resolveBag();
 
-      // TUrn should end after resolving the bag
+      // Turn should end after resolving the bag
       expect(testEngine.getNumTurns()).toBe(2);
       expect(testEngine.bag).toHaveLength(0);
     });
 
-    it("should not allow passing turn if abilities are pending", () => {});
+    it.skip("should not allow passing turn if abilities are pending", () => {});
   });
 });

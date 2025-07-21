@@ -10,4 +10,4 @@ export { leaveLocation } from "./leave-location";
 export { questWithCharacter } from "./quest-with-character";
 export { readyAllCharacters } from "./ready-all-characters";
 export { readyAllInk } from "./ready-all-ink";
-export { resolveBag } from "./resolve-bag";
+export { resolveBagTrigger } from "./resolve-bag-trigger";

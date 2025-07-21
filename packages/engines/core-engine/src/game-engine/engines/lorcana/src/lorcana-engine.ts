@@ -457,6 +457,16 @@ export class LorcanaEngine extends GameEngine<
 
     return {
       manualMoves,
+      resolveBag: () => {
+        if (!currentPlayer) {
+          logger.warn("No current player found for resolveBag move.");
+          return ResultHelpers.error(
+            "No current player found for resolveBag move.",
+          );
+        }
+
+        return this.processMove(currentPlayer, "resolveBag", []);
+      },
       chooseWhoGoesFirstMove: (playerId: string) => {
         // The move function expects (state, playerId) - playerId is passed as first arg to processMove
         // and then again as the first element of args array, so the move gets (state, playerId)
@@ -575,6 +585,14 @@ export class LorcanaEngine extends GameEngine<
 
   queryAllCards() {
     return this.getAllCards();
+  }
+
+  queryCardsInPlay(): LorcanaCardInstance[] {
+    const filter: LorcanaCardFilter = {
+      zone: "play",
+    };
+
+    return this.cardInstanceStore.queryCards(filter);
   }
 
   getCardMeta(instanceId: string): LorcanaCardMeta {

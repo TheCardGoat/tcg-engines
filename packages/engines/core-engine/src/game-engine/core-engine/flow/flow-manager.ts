@@ -915,6 +915,60 @@ export class FlowManager<G> implements FlowInterface<G> {
   }
 
   /**
+   * Process any deferred phase transitions requested by moves
+   * This allows moves to request phase transitions without immediate conflicts
+   */
+  private processDeferredPhaseTransitions(
+    state: CoreEngineState<G>,
+    fnContext: FnContext<G>,
+  ): CoreEngineState<G> {
+    let currentState = { ...state };
+    const { ctx } = currentState;
+
+    if (!ctx.deferredPhaseTransition) {
+      return currentState;
+    }
+
+    const deferredTransition = ctx.deferredPhaseTransition;
+
+    // Clear the deferred transition flag
+    currentState = {
+      ...currentState,
+      ctx: {
+        ...currentState.ctx,
+        deferredPhaseTransition: undefined,
+      },
+    };
+
+    const updatedFnContext = {
+      ...fnContext,
+      ctx: currentState.ctx,
+      G: currentState.G,
+    };
+
+    if (deferredTransition === "ADVANCE_TO_NEXT") {
+      // End current phase and advance to next
+      const nextPhase = this.getNextPhase(currentState, updatedFnContext);
+      if (nextPhase && nextPhase !== ctx.currentPhase) {
+        currentState = this.transitionToPhase(
+          nextPhase,
+          currentState,
+          updatedFnContext,
+        );
+      }
+    } else {
+      // Transition to specific phase
+      currentState = this.transitionToPhase(
+        deferredTransition,
+        currentState,
+        updatedFnContext,
+      );
+    }
+
+    return currentState;
+  }
+
+  /**
    * Process flow transitions including segments, phases, and steps
    * This handles both segment-based transitions (pre-game) and phase-based transitions (gameplay)
    */
@@ -927,6 +981,12 @@ export class FlowManager<G> implements FlowInterface<G> {
       G: fnContext.G,
       ctx: fnContext.ctx,
     };
+
+    // Process any deferred phase transitions first
+    currentState = this.processDeferredPhaseTransitions(
+      currentState,
+      fnContext,
+    );
 
     let hasTransitions = true;
     let maxIterations = 10; // Prevent infinite loops

@@ -175,61 +175,9 @@ export type TriggerTiming =
   | "onQuest"
   | "onChallenge"
   | "onBanish"
+  | "onPutIntoInkwell"
+  | "onActivatedAbility"
   | "onDamage"
   | "onMove"
   | "startOfTurn"
   | "endOfTurn";
-
-/**
- * Type validation helpers for runtime type checking
- */
-export const isLorcanaCardFilter = (
-  filter: any,
-): filter is LorcanaCardFilter => {
-  if (!filter || typeof filter !== "object") return false;
-
-  // Check if it has any Lorcana-specific properties
-  const lorcanaProperties = [
-    "cost",
-    "ink",
-    "inkable",
-    "strength",
-    "willpower",
-    "lore",
-    "exerted",
-    "damaged",
-    "banished",
-    "cardType",
-    "hasKeyword",
-    "abilities",
-    "canQuest",
-    "canChallenge",
-    "canSing",
-    "canBePlayed",
-    "moveCost",
-    "canTarget",
-    "attachedTo",
-    "playedThisTurn",
-    "questedThisTurn",
-    "challengedThisTurn",
-    "set",
-    "rarity",
-    "nameContains",
-    "textContains",
-  ];
-
-  return lorcanaProperties.some((prop) => filter[prop] !== undefined);
-};
-
-export const isLorcanaPlayerState = (
-  state: any,
-): state is LorcanaPlayerState => {
-  if (!state || typeof state !== "object") return false;
-
-  return (
-    typeof state.id === "string" &&
-    typeof state.name === "string" &&
-    typeof state.lore === "number" &&
-    typeof state.ink === "number"
-  );
-};
