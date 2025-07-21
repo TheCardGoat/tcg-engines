@@ -24,6 +24,11 @@ export const startingAGameSegment: SegmentConfig<GundamGameState> = {
   onBegin: ({ G, coreOps }) => {
     const ctx = coreOps.getCtx();
 
+    // Set initial priority to player_one for the chooseFirstPlayer phase
+    // Both players can make the move to choose who goes first, but we need someone to have priority initially
+    coreOps.setPriorityPlayer(coreOps.getPlayers()[0]);
+    coreOps.setTurnPlayer(coreOps.getPlayers()[0]);
+
     coreOps.setPendingMulligan(coreOps.getPlayers());
 
     for (const player of coreOps.getPlayers()) {

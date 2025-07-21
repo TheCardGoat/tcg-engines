@@ -75,12 +75,13 @@ export class AlphaClashEngine extends GameEngine<
    * Get available moves for the engine
    */
   get moves() {
+    const currentPlayer = this.playerID;
+
     return {
       chooseFirstPlayer: (playerId: string) => {
-        return this.processMove(playerId, "chooseFirstPlayer", [playerId]);
+        return this.processMove(currentPlayer, "chooseFirstPlayer", [playerId]);
       },
       mulligan: (cardsToMulligan: string[]) => {
-        const currentPlayer = this.playerID;
         if (!currentPlayer) {
           logger.warn("No current player found for mulligan move.");
           return {

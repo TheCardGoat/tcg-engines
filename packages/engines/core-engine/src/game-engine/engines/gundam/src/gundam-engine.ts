@@ -140,22 +140,20 @@ export class GundamEngine extends GameEngine<
    * - Used during setup phase after initial draw
    */
   get moves() {
+    const currentPlayer = this.getCurrentPlayer();
+
     return {
       chooseFirstPlayer: (playerId: string) => {
-        return this.processMove(playerId, "chooseFirstPlayer", [playerId]);
+        return this.processMove(currentPlayer, "chooseFirstPlayer", [playerId]);
       },
       alterHand: (cardsToAlter: string[]) => {
-        const currentPlayer = this.getCurrentPlayer();
-        if (!currentPlayer) return false;
         return this.processMove(currentPlayer, "alterHand", [cardsToAlter]);
       },
       redrawHand: (shouldRedraw: boolean) => {
-        const currentPlayer = this.getCurrentPlayer();
-        if (!currentPlayer) return false;
         return this.processMove(currentPlayer, "redrawHand", [shouldRedraw]);
       },
       concede: (playerId: string) => {
-        return this.processMove(playerId, "concede", [playerId]);
+        return this.processMove(currentPlayer, "concede", [playerId]);
       },
     };
   }

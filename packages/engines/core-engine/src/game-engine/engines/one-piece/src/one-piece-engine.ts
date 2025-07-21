@@ -239,14 +239,15 @@ export class OnePieceEngine {
    * - Returns move result with success/failure status
    */
   get moves() {
+    const currentPlayer = this.client.getCurrentPlayer();
+
     return {
       chooseFirstPlayer: (playerId: string) => {
-        return this.client.processMove(playerId, "chooseFirstPlayer", [
+        return this.client.processMove(currentPlayer, "chooseFirstPlayer", [
           playerId,
         ]);
       },
       mulligan: (redraw: boolean) => {
-        const currentPlayer = this.client.getCurrentPlayer();
         if (!currentPlayer) return false;
         return this.client.processMove(currentPlayer, "mulligan", [redraw]);
       },

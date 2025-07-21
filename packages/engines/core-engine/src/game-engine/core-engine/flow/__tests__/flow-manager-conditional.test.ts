@@ -573,4 +573,154 @@ describe("FlowManager - Conditional Transitions", () => {
       expect(result.ctx).toBeDefined();
     });
   });
+
+  describe("Priority Management", () => {
+    it("should validate canPlayerAct correctly based on priority player", () => {
+      const gameDefinition = {
+        segments: {
+          testSegment: {
+            start: true,
+            next: undefined,
+            turn: {
+              phases: {
+                testPhase: {
+                  start: true,
+                  next: undefined,
+                  endIf: createSpyEndIf("testPhase", false),
+                },
+              },
+            },
+          },
+        },
+        flow: { turns: { phases: [] } },
+      };
+
+      flowManager = new FlowManager(gameDefinition, {});
+
+      const initialState = MockGameStates.initial();
+      // Set priority player to player1
+      initialState.ctx.priorityPlayerPos = 0;
+      initialState.ctx.playerOrder = ["player1", "player2"];
+
+      // Test canPlayerAct
+      expect(flowManager.canPlayerAct(initialState, "player1")).toBe(true);
+      expect(flowManager.canPlayerAct(initialState, "player2")).toBe(false);
+
+      // Change priority to player2
+      initialState.ctx.priorityPlayerPos = 1;
+      expect(flowManager.canPlayerAct(initialState, "player1")).toBe(false);
+      expect(flowManager.canPlayerAct(initialState, "player2")).toBe(true);
+    });
+
+    it("should handle invalid priority player positions gracefully", () => {
+      const gameDefinition = {
+        segments: {
+          testSegment: {
+            start: true,
+            next: undefined,
+            turn: {
+              phases: {
+                testPhase: {
+                  start: true,
+                  next: undefined,
+                  endIf: createSpyEndIf("testPhase", false),
+                },
+              },
+            },
+          },
+        },
+        flow: { turns: { phases: [] } },
+      };
+
+      flowManager = new FlowManager(gameDefinition, {});
+
+      const initialState = MockGameStates.initial();
+      initialState.ctx.playerOrder = ["player1", "player2"];
+
+      // Test with invalid priority positions
+      initialState.ctx.priorityPlayerPos = -1;
+      expect(flowManager.canPlayerAct(initialState, "player1")).toBe(false);
+      expect(flowManager.canPlayerAct(initialState, "player2")).toBe(false);
+
+      initialState.ctx.priorityPlayerPos = 5; // Out of bounds
+      expect(flowManager.canPlayerAct(initialState, "player1")).toBe(false);
+      expect(flowManager.canPlayerAct(initialState, "player2")).toBe(false);
+    });
+
+    it("should handle priority changes during flow transitions", () => {
+      const gameDefinition = {
+        segments: {
+          testSegment: {
+            start: true,
+            next: undefined,
+            turn: {
+              phases: {
+                phase1: {
+                  start: true,
+                  next: "phase2",
+                  endIf: createSpyEndIf("phase1", true),
+                },
+                phase2: {
+                  next: undefined,
+                  onBegin: (ctx: any) => {
+                    // Change priority when entering phase2
+                    ctx.ctx.priorityPlayerPos = 1;
+                    return ctx.G;
+                  },
+                  endIf: createSpyEndIf("phase2", false),
+                },
+              },
+            },
+          },
+        },
+        flow: { turns: { phases: [] } },
+      };
+
+      flowManager = new FlowManager(gameDefinition, {});
+
+      const initialState = MockGameStates.initial();
+      initialState.ctx.currentSegment = "testSegment";
+      initialState.ctx.currentPhase = "phase1";
+      initialState.ctx.priorityPlayerPos = 0;
+      initialState.ctx.playerOrder = ["player1", "player2"];
+
+      // Initially player1 has priority
+      expect(flowManager.canPlayerAct(initialState, "player1")).toBe(true);
+      expect(flowManager.canPlayerAct(initialState, "player2")).toBe(false);
+
+      const fnContext = createMockFnContext(initialState);
+      const result = flowManager.processFlowTransitions(
+        initialState,
+        fnContext,
+      );
+
+      // After transition, priority should have changed to player2
+      expect(result.ctx.currentPhase).toBe("phase2");
+      expect(flowManager.canPlayerAct(result, "player1")).toBe(false);
+      expect(flowManager.canPlayerAct(result, "player2")).toBe(true);
+    });
+
+    it("should work with priority windows in combat scenarios", () => {
+      const gameDefinition = MockConfigurations.combatPhaseFlow(mockHooks);
+      flowManager = new FlowManager(gameDefinition, {});
+
+      const initialState = MockGameStates.initial();
+      initialState.ctx.currentSegment = "duringGame";
+      initialState.ctx.currentPhase = "combatPhase";
+      initialState.ctx.currentStep = "priorityWindow";
+      initialState.ctx.priorityPlayerPos = 0;
+      initialState.ctx.playerOrder = ["player1", "player2"];
+      initialState.G.combatInitiated = true;
+      initialState.G.allPlayersPassed = false;
+
+      // In priority window, current priority player should be able to act
+      expect(flowManager.canPlayerAct(initialState, "player1")).toBe(true);
+      expect(flowManager.canPlayerAct(initialState, "player2")).toBe(false);
+
+      // Change priority
+      initialState.ctx.priorityPlayerPos = 1;
+      expect(flowManager.canPlayerAct(initialState, "player1")).toBe(false);
+      expect(flowManager.canPlayerAct(initialState, "player2")).toBe(true);
+    });
+  });
 });

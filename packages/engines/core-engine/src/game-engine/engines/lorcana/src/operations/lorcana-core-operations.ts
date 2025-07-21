@@ -87,6 +87,10 @@ export class LorcanaCoreOperations extends CoreOperation<
     this.exertCard(characterId);
   }
 
+  gameStateCheck(): void {
+    const playerIds = Object.keys(this.state.ctx.players);
+  }
+
   /**
    * Add card to inkwell (Lorcana-specific mechanic)
    */

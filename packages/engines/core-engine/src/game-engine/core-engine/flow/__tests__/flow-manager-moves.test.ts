@@ -83,7 +83,7 @@ describe("FlowManager - Move System Integration", () => {
             start: true,
             next: undefined,
             turn: {
-              // Segment-level moves
+              // Segment-level moves (turn moves)
               moves: {
                 segmentMove: mockMoves.segmentMove,
                 passTurn: mockMoves.passTurn,
@@ -174,9 +174,13 @@ describe("FlowManager - Move System Integration", () => {
       const initialState = MockGameStates.initial();
       const fnContext = createMockFnContext(initialState);
 
-      // Phase moves should be available with qualified names
-      expect(flowManager.moveMap["testPhase.phaseMove"]).toBeTruthy();
-      expect(flowManager.moveMap["testPhase.phaseSpecific"]).toBeTruthy();
+      // Phase moves should be available with qualified names (segment.phase.move)
+      expect(
+        flowManager.moveMap["testSegment.testPhase.phaseMove"],
+      ).toBeTruthy();
+      expect(
+        flowManager.moveMap["testSegment.testPhase.phaseSpecific"],
+      ).toBeTruthy();
 
       // And also with simple names
       expect(flowManager.moveMap["phaseMove"]).toBeTruthy();
@@ -237,11 +241,19 @@ describe("FlowManager - Move System Integration", () => {
       const initialState = MockGameStates.initial();
       const fnContext = createMockFnContext(initialState);
 
-      // Step moves should be available with full qualified names
-      expect(flowManager.moveMap["testPhase.step1.step1Move"]).toBeTruthy();
-      expect(flowManager.moveMap["testPhase.step1.step1Specific"]).toBeTruthy();
-      expect(flowManager.moveMap["testPhase.step2.step2Move"]).toBeTruthy();
-      expect(flowManager.moveMap["testPhase.step2.step2Specific"]).toBeTruthy();
+      // Step moves should be available with full qualified names (segment.phase.step.move)
+      expect(
+        flowManager.moveMap["testSegment.testPhase.step1.step1Move"],
+      ).toBeTruthy();
+      expect(
+        flowManager.moveMap["testSegment.testPhase.step1.step1Specific"],
+      ).toBeTruthy();
+      expect(
+        flowManager.moveMap["testSegment.testPhase.step2.step2Move"],
+      ).toBeTruthy();
+      expect(
+        flowManager.moveMap["testSegment.testPhase.step2.step2Specific"],
+      ).toBeTruthy();
 
       // And also with simple names
       expect(flowManager.moveMap["step1Move"]).toBeTruthy();
@@ -307,9 +319,11 @@ describe("FlowManager - Move System Integration", () => {
       // All conflicting moves should be stored with qualified names
       expect(flowManager.moveMap["conflictMove"]).toBeTruthy(); // This would be the last one processed
       expect(flowManager.moveMap["testSegment.conflictMove"]).toBeTruthy();
-      expect(flowManager.moveMap["testPhase.conflictMove"]).toBeTruthy();
       expect(
-        flowManager.moveMap["testPhase.testStep.conflictMove"],
+        flowManager.moveMap["testSegment.testPhase.conflictMove"],
+      ).toBeTruthy();
+      expect(
+        flowManager.moveMap["testSegment.testPhase.testStep.conflictMove"],
       ).toBeTruthy();
 
       // The simple name should resolve to one of them (implementation dependent)
@@ -554,7 +568,7 @@ describe("FlowManager - Move System Integration", () => {
         flowManager.getMove({} as any, "segment1.segment1Move", "player1"),
       ).toBeTruthy();
       expect(
-        flowManager.getMove({} as any, "phase1.phase1Move", "player1"),
+        flowManager.getMove({} as any, "segment1.phase1.phase1Move", "player1"),
       ).toBeTruthy();
     });
   });

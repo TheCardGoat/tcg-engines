@@ -38,8 +38,9 @@ export interface CoreCtx<TurnHistory = unknown> {
 
   /**
    * Indicates whether the game is over. Once true, no further moves can be executed.
+   * Can be boolean or an object containing game over details.
    */
-  gameOver?: boolean;
+  gameOver?: boolean | object;
   winner?: PlayerID;
 
   /**

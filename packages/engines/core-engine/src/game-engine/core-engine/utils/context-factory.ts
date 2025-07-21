@@ -279,7 +279,7 @@ export function createContextWithGameOver(
 
     return {
       ...ctx,
-      gameOver: gameOverData ?? true,
+      gameOver: (gameOverData ?? true) as boolean | object,
       winner,
       playerOrder: [...ctx.playerOrder],
       cards: { ...ctx.cards },
@@ -330,6 +330,7 @@ export function createTestContext(overrides: Partial<CoreCtx> = {}): CoreCtx {
     turnPlayerPos: 0,
     priorityPlayerPos: 0,
     numTurns: 1,
+    numMoves: 0,
     numTurnMoves: 0,
     moveHistory: [],
     players: defaultPlayers,
