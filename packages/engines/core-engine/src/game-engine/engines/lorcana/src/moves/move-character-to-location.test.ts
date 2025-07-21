@@ -304,9 +304,9 @@ describe("Move: Move Character to Location", () => {
       expect(testEngine.getTurnPlayer()).toEqual("player_one");
 
       expect(testEngine.getPlayerLore("player_one")).toBe(
-        expensiveLocationCard.lore +
-          freeLocationCard.lore +
-          testLocationCard.lore,
+        (expensiveLocationCard.lore || 0) +
+          (freeLocationCard.lore || 0) +
+          (testLocationCard.lore || 0),
       );
       expect(testEngine.getPlayerLore("player_two")).toBe(0);
     });
