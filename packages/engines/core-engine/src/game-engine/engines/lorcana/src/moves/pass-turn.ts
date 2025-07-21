@@ -12,10 +12,8 @@ export const passTurnMove: LorcanaMove = {
   execute: ({ G, coreOps, playerID }) => {
     try {
       const lorcanaOps = toLorcanaCoreOps(coreOps);
-      // Use getCtx instead of directly accessing ctx
       const ctx = lorcanaOps.getCtx();
 
-      // Ensure it's the active player's turn
       const currentTurnPlayer = getCurrentTurnPlayer(ctx);
       if (currentTurnPlayer !== playerID && ctx.otp !== playerID) {
         logger.error(`Player ${playerID} cannot pass turn - not their turn`);
@@ -44,21 +42,10 @@ export const passTurnMove: LorcanaMove = {
       // Turn actions like putCardIntoInkwell are limited to once per turn
       G.turnActions = undefined;
 
-      // Set flag to trigger mainPhase end and phase transition
-      G.passTurnRequested = true;
-
-      // Add any "end of turn" effects to the bag (rule 4.4.1.1)
-      // This is a placeholder - in a full implementation, we would:
-      // 1. Check for cards/effects that trigger "at the end of the turn"
-      // 2. Add them to the bag for resolution
-      // 3. Let the flow manager handle the actual turn transition
-      // For now, we just log that the turn is ending - the actual triggered effects
-      // would need to be implemented per-card basis
-      logger.debug(
-        `End of turn effects would be processed for player ${playerID}`,
-      );
-
-      coreOps.passTurn();
+      // Delegate to FlowManager to handle turn transition
+      // This will transition to endOfTurnPhase which will add endOfTurn effects to bag
+      // and eventually transition to next player's beginningPhase
+      coreOps.endPhase("endOfTurnPhase");
 
       return G;
     } catch (error) {

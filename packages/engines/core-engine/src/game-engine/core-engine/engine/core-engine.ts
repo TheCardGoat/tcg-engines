@@ -384,6 +384,35 @@ export class CoreEngine<
     }
   }
 
+  // Flow management delegation methods
+  transitionToPhase(phaseName: string): void {
+    const currentState = this.getGameState();
+    const fnContext = this.createFnContextFromState(currentState);
+    const newState = this.flowManager.transitionToPhase(
+      phaseName,
+      currentState,
+      fnContext,
+    );
+    this.updateState(newState);
+    this.notifySubscribers();
+  }
+
+  endCurrentPhase(): void {
+    const currentState = this.getGameState();
+    const fnContext = this.createFnContextFromState(currentState);
+    const newState = this.flowManager.endCurrentPhase(currentState, fnContext);
+    this.updateState(newState);
+    this.notifySubscribers();
+  }
+
+  endCurrentTurn(): void {
+    const currentState = this.getGameState();
+    const fnContext = this.createFnContextFromState(currentState);
+    const newState = this.flowManager.endCurrentTurn(currentState, fnContext);
+    this.updateState(newState);
+    this.notifySubscribers();
+  }
+
   // Authoritative engine pattern methods
   setAuthoritativeEngine(
     authEngine: CoreEngine<

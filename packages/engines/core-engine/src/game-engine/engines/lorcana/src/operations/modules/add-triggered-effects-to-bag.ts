@@ -11,11 +11,32 @@ import type { LorcanaCoreOperations } from "../lorcana-core-operations";
  */
 export function addTriggeredEffectsToTheBag(
   this: LorcanaCoreOperations,
-  timing: string,
-  cardInstanceId: string,
+  opts:
+    | {
+        timing:
+          | "onPlay"
+          | "onQuest"
+          | "onPutIntoInkwell"
+          | "onChallenge"
+          | "onBanish"
+          | "onDamage"
+          | "onMove";
+        cardInstanceId: string;
+      }
+    | {
+        timing: "startOfTurn" | "endOfTurn";
+        cardInstanceId: string;
+      },
 ): void {
-  const card = this.getCardInstance(cardInstanceId);
-  if (!card) return;
+  const { timing, cardInstanceId } = opts;
+  const card =
+    timing !== "startOfTurn" && timing !== "endOfTurn"
+      ? this.getCardInstance(cardInstanceId)
+      : undefined;
+
+  if (!card && timing !== "startOfTurn" && timing !== "endOfTurn") {
+    return;
+  }
 
   // Initialize the triggered effects bag if needed
   if (!this.state.G.triggeredEffectsBag) {

@@ -46,7 +46,6 @@ export function gameStateCheck(this: LorcanaCoreOperations): void {
     // 1.9.1.1. Check for win condition: If a player has 20 or more lore, that player wins
     for (const playerId of playerIds) {
       const playerState = this.state.ctx.players[playerId];
-      console.log({ playerId, lore: playerState?.lore });
       if (playerState && "lore" in playerState && playerState.lore >= 20) {
         logger.debug(`Player ${playerId} wins with lore ${playerState.lore}`);
 

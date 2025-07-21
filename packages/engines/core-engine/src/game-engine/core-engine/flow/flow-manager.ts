@@ -519,12 +519,51 @@ export class FlowManager<G> implements FlowInterface<G> {
           timestamp: Date.now(),
         });
 
+        // Check if this is a turn completion: end phase transitioning to starting phase
+        const isCurrentPhaseEnd = this.isEndPhase(
+          ctx.currentSegment!,
+          ctx.currentPhase,
+        );
+        const isNextPhaseStart = this.isStartingPhase(
+          ctx.currentSegment!,
+          nextPhase,
+        );
+        const shouldCompleteTurn = isCurrentPhaseEnd && isNextPhaseStart;
+
+        if (shouldCompleteTurn) {
+          // PLAYER LOG: Turn completion
+          this.logPlayerEvent(
+            `Turn completed: ${ctx.currentPhase} → ${nextPhase}`,
+            {
+              completingPlayer: ctx.playerOrder[ctx.turnPlayerPos || 0],
+              turnNumber: ctx.numTurns,
+            },
+          );
+
+          // Advance to next player and increment turn counter
+          currentState = this.advanceToNextPlayer(currentState);
+        }
+
         // Apply phase onBegin hook before changing phase
         const phaseConfig = this.getPhaseConfig(ctx.currentSegment, nextPhase);
-        const result = this.executeHook(phaseConfig?.onBegin, fnContext);
+        const updatedFnContext = {
+          ...fnContext,
+          ctx: currentState.ctx,
+          G: currentState.G,
+        };
+
+        // Update CoreOperation state so getCurrentTurnPlayer() returns correct value
+        if (updatedFnContext.coreOps && "state" in updatedFnContext.coreOps) {
+          updatedFnContext.coreOps.state.ctx = currentState.ctx;
+        }
+
+        const result = this.executeHook(phaseConfig?.onBegin, updatedFnContext);
 
         if (result !== undefined) {
-          currentState = fnContext._getUpdatedState();
+          currentState = {
+            ...currentState,
+            G: result,
+          };
         }
 
         currentState = {
@@ -534,10 +573,13 @@ export class FlowManager<G> implements FlowInterface<G> {
             currentPhase: nextPhase,
             currentSegment: state.ctx.currentSegment,
             currentStep: null,
-            // Reset per-turn move counters when transitioning back to mainPhase
-            ...(nextPhase === "mainPhase" && ctx.currentPhase !== "mainPhase"
-              ? { numTurnMoves: 0 }
-              : {}),
+            // Turn moves are already reset by advanceToNextPlayer if turn completed
+            // Otherwise reset for specific phase transitions
+            ...(shouldCompleteTurn
+              ? {} // Already handled by advanceToNextPlayer
+              : nextPhase === "mainPhase" && ctx.currentPhase !== "mainPhase"
+                ? { numTurnMoves: 0 }
+                : {}),
           },
         };
       }
@@ -603,6 +645,11 @@ export class FlowManager<G> implements FlowInterface<G> {
           ...fnContext,
           ctx: currentState.ctx,
         };
+
+        // Update CoreOperation state so getCurrentTurnPlayer() returns correct value
+        if (updatedFnContext.coreOps && "state" in updatedFnContext.coreOps) {
+          updatedFnContext.coreOps.state.ctx = currentState.ctx;
+        }
 
         try {
           const result = this.executeHook(
@@ -694,17 +741,11 @@ export class FlowManager<G> implements FlowInterface<G> {
                 ...currentState.ctx,
                 currentPhase: nextPhase,
                 currentStep: null,
-                // Reset numMoves when completing a turn cycle back to mainPhase
+                // Reset move counters for phase transitions (turn completion is handled by end: true logic)
                 ...(nextPhase === "mainPhase" &&
-                ctx.currentPhase === "beginningPhase"
-                  ? {
-                      numTurnMoves: 0,
-                      numTurns: (currentState.ctx.numTurns || 0) + 1,
-                    }
-                  : nextPhase === "mainPhase" &&
-                      ctx.currentPhase !== "mainPhase"
-                    ? { numTurnMoves: 0 }
-                    : {}),
+                ctx.currentPhase !== "mainPhase"
+                  ? { numTurnMoves: 0 }
+                  : {}),
               },
             };
           }
@@ -803,6 +844,14 @@ export class FlowManager<G> implements FlowInterface<G> {
               ...fnContext,
               ctx: currentState.ctx,
             };
+
+            // Update CoreOperation state so getCurrentTurnPlayer() returns correct value
+            if (
+              updatedFnContext.coreOps &&
+              "state" in updatedFnContext.coreOps
+            ) {
+              updatedFnContext.coreOps.state.ctx = currentState.ctx;
+            }
 
             const result = this.executeHook(
               stepConfig.onBegin,
@@ -1198,5 +1247,222 @@ export class FlowManager<G> implements FlowInterface<G> {
   public clearTelemetry(): void {
     this.flowEvents = [];
     this.decisionEvents = [];
+  }
+
+  /**
+   * Transition to a specific phase within the current segment
+   * @param phaseName The target phase name
+   * @param state Current game state
+   * @param fnContext Function context for hooks
+   * @returns Updated game state
+   */
+  public transitionToPhase(
+    phaseName: string,
+    state: CoreEngineState<G>,
+    fnContext: FnContext<G>,
+  ): CoreEngineState<G> {
+    const { ctx } = state;
+
+    if (!ctx.currentSegment) {
+      logger.error(
+        "FlowManager: Cannot transition to phase without active segment",
+      );
+      return state;
+    }
+
+    const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
+    if (!segmentConfig?.turn?.phases?.[phaseName]) {
+      logger.error(
+        `FlowManager: Phase ${phaseName} not found in segment ${ctx.currentSegment}`,
+      );
+      return state;
+    }
+
+    // PLAYER LOG: Manual phase transition
+    this.logPlayerEvent(
+      `Phase transition: ${ctx.currentPhase} → ${phaseName}`,
+      {
+        reason: "Manual transition requested",
+        segment: ctx.currentSegment,
+      },
+    );
+
+    // Record transition event
+    this.recordTransitionEvent({
+      type: "phase_transition",
+      from: {
+        segment: ctx.currentSegment,
+        phase: ctx.currentPhase,
+        step: ctx.currentStep,
+      },
+      to: { segment: ctx.currentSegment, phase: phaseName, step: null },
+      reason: "Manual phase transition",
+      timestamp: Date.now(),
+    });
+
+    let currentState = {
+      ...state,
+      ctx: {
+        ...state.ctx,
+        currentPhase: phaseName,
+        currentStep: null,
+      },
+    };
+
+    // Execute onBegin hook for the new phase
+    const phaseConfig = segmentConfig.turn.phases[phaseName];
+    const updatedFnContext = {
+      ...fnContext,
+      ctx: currentState.ctx,
+      G: currentState.G,
+    };
+
+    const onBeginResult = this.executeHook(
+      phaseConfig?.onBegin,
+      updatedFnContext,
+    );
+    if (onBeginResult !== undefined) {
+      currentState = {
+        ...currentState,
+        G: onBeginResult,
+      };
+    }
+
+    // Process any automatic transitions that result from this change
+    const finalState = this.processFlowTransitions(currentState, {
+      ...updatedFnContext,
+      G: currentState.G,
+    });
+
+    return finalState;
+  }
+
+  /**
+   * End the current phase and advance to the next phase
+   * @param state Current game state
+   * @param fnContext Function context for hooks
+   * @returns Updated game state
+   */
+  public endCurrentPhase(
+    state: CoreEngineState<G>,
+    fnContext: FnContext<G>,
+  ): CoreEngineState<G> {
+    const { ctx } = state;
+
+    if (!ctx.currentPhase) {
+      logger.error("FlowManager: No current phase to end");
+      return state;
+    }
+
+    const nextPhase = this.getNextPhase(state, fnContext);
+    if (!nextPhase) {
+      logger.error("FlowManager: No next phase defined for current phase");
+      return state;
+    }
+
+    return this.transitionToPhase(nextPhase, state, fnContext);
+  }
+
+  /**
+   * End the current turn and advance to the next player's turn
+   * @param state Current game state
+   * @param fnContext Function context for hooks
+   * @returns Updated game state
+   */
+  public endCurrentTurn(
+    state: CoreEngineState<G>,
+    fnContext: FnContext<G>,
+  ): CoreEngineState<G> {
+    const { ctx } = state;
+
+    if (!ctx.currentSegment) {
+      logger.error("FlowManager: Cannot end turn without active segment");
+      return state;
+    }
+
+    const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
+    if (!segmentConfig?.turn?.phases) {
+      logger.error("FlowManager: No phases defined for current segment");
+      return state;
+    }
+
+    // Find a phase marked with end: true to transition to
+    const phases = segmentConfig.turn.phases;
+    let endPhase: string | null = null;
+
+    for (const phaseName in phases) {
+      if (phases[phaseName].end === true) {
+        endPhase = phaseName;
+        break;
+      }
+    }
+
+    if (!endPhase) {
+      logger.error("FlowManager: No end phase found for turn completion");
+      return state;
+    }
+
+    // PLAYER LOG: Turn ending
+    this.logPlayerEvent(`Turn ending: transitioning to ${endPhase}`, {
+      currentPlayer: ctx.playerOrder[ctx.turnPlayerPos || 0],
+      turnNumber: ctx.numTurns,
+    });
+
+    return this.transitionToPhase(endPhase, state, fnContext);
+  }
+
+  /**
+   * Check if a phase is marked as an end phase (end: true)
+   * @param segmentName The segment containing the phase
+   * @param phaseName The phase to check
+   * @returns True if the phase is marked as an end phase
+   */
+  private isEndPhase(segmentName: string, phaseName: string): boolean {
+    const phaseConfig = this.getPhaseConfig(segmentName, phaseName);
+    return phaseConfig?.end === true;
+  }
+
+  /**
+   * Check if a phase is marked as a starting phase (start: true)
+   * @param segmentName The segment containing the phase
+   * @param phaseName The phase to check
+   * @returns True if the phase is marked as a starting phase
+   */
+  private isStartingPhase(segmentName: string, phaseName: string): boolean {
+    const phaseConfig = this.getPhaseConfig(segmentName, phaseName);
+    return phaseConfig?.start === true;
+  }
+
+  /**
+   * Advance to the next player and reset turn-specific counters
+   * @param state Current game state
+   * @returns Updated game state
+   */
+  private advanceToNextPlayer(state: CoreEngineState<G>): CoreEngineState<G> {
+    const { ctx } = state;
+    const totalPlayers = ctx.playerOrder.length;
+
+    // Advance turn player position
+    const nextTurnPlayerPos = ((ctx.turnPlayerPos ?? 0) + 1) % totalPlayers;
+    const nextTurnPlayerId = ctx.playerOrder[nextTurnPlayerPos];
+
+    // PLAYER LOG: Player turn advancement
+    this.logPlayerEvent(
+      `Turn advanced: ${ctx.playerOrder[ctx.turnPlayerPos || 0]} → ${nextTurnPlayerId}`,
+      {
+        turnNumber: (ctx.numTurns || 0) + 1,
+      },
+    );
+
+    return {
+      ...state,
+      ctx: {
+        ...ctx,
+        turnPlayerPos: nextTurnPlayerPos,
+        priorityPlayerPos: nextTurnPlayerPos, // Priority follows turn player
+        numTurns: (ctx.numTurns || 0) + 1,
+        numTurnMoves: 0, // Reset turn move counter
+      },
+    };
   }
 }

@@ -206,6 +206,15 @@ export class LorcanaTestEngine {
 
   dispose() {}
 
+  resolveBag() {
+    // TODO: IMPLEMENT BAG RESOLUTION
+  }
+
+  get bag() {
+    // Return the bag from the authoritative engine
+    return this.authoritativeEngine.bag;
+  }
+
   // Return possible moves for the engine owner
   potentialMoves() {
     const state = this.authoritativeEngine.getGameState();

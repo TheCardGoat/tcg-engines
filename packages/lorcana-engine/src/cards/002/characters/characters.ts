@@ -2173,7 +2173,6 @@ export const daisyDuckSecretAgent: LorcanitoCharacterCard = {
 };
 export const donaldDuckPerfectGentleman: LorcanitoCharacterCard = {
   id: "pgk",
-
   name: "Donald Duck",
   title: "Perfect Gentleman",
   characteristics: ["floodborn", "ally"],

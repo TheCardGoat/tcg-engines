@@ -103,6 +103,7 @@ export type TriggerTiming =
   | "onBanish"
   | "onDamage"
   | "onMove"
+  | "onActivatedAbility"
   | "startOfTurn"
   | "endOfTurn";
 

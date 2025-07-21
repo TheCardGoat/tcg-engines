@@ -1,7 +1,7 @@
 import { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import type { LorcanaEngine } from "../lorcana-engine";
-import type { LorcanaGameState } from "../lorcana-engine-types";
+import type { LorcanaGameState, TriggerTiming } from "../lorcana-engine-types";
 import type {
   LorcanaCardDefinition,
   LorcanaCardFilter,
@@ -163,7 +163,12 @@ export class LorcanaCoreOperations extends CoreOperation<
    * Add triggered effects to the bag for processing
    * This is a Lorcana-specific mechanism for handling card triggers
    */
-  addTriggeredEffectsToTheBag(timing: string, cardInstanceId: string): void {
-    addTriggeredEffectsToTheBagImpl.call(this, timing, cardInstanceId);
+  addTriggeredEffectsToTheBag(
+    timing: TriggerTiming,
+    cardInstanceId?: string,
+  ): void {
+    addTriggeredEffectsToTheBagImpl.call(this, { timing, cardInstanceId });
   }
+
+  resolveBagTrigger(id: string) {}
 }

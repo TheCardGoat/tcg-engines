@@ -266,8 +266,8 @@ describe("Move: Move Character to Location", () => {
     });
   });
 
-  describe.only("**4.3.7.5** Triggered effects", () => {
-    it.only("should trigger effects when character moves to location", () => {
+  describe("**4.3.7.5** Triggered effects", () => {
+    it("should trigger effects when character moves to location", () => {
       const testEngine = new LorcanaTestEngine({
         inkwell: hiddenCoveTranquilHaven.moveCost * 2,
         play: [hiddenCoveTranquilHaven, taffytaMuttonfudgeSourSpeedster],
@@ -331,11 +331,55 @@ describe("Move: Move Character to Location", () => {
     });
   });
 
-  describe.skip("Edge cases and validation", () => {
-    it("should handle free locations (move cost 0)", async () => {});
+  describe("Edge cases and validation", () => {
+    it("should handle free locations (move cost 0)", async () => {
+      const testEngine = new LorcanaTestEngine({
+        inkwell: 0,
+        play: [freeLocationCard, testCharacterCard],
+      });
 
-    it("should validate character is in play zone", async () => {});
+      const { character, location } = testEngine.moveToLocation({
+        location: freeLocationCard,
+        character: testCharacterCard,
+      });
 
-    it("should validate location is in play zone", async () => {});
+      expect(character.isAtLocation(location)).toBe(true);
+    });
+
+    it("should validate character is in play zone", async () => {
+      const testEngine = new LorcanaTestEngine({
+        inkwell: 0,
+        play: [freeLocationCard],
+        hand: [testCharacterCard],
+      });
+
+      const { character, location, result } = testEngine.moveToLocation({
+        location: freeLocationCard,
+        character: testCharacterCard,
+        doNotThrow: true,
+      });
+
+      expect(character.isAtLocation(location)).toBeFalsy();
+      expect(location.containsCharacter(character)).toBeFalsy();
+      expect(result.success).toBeFalsy();
+    });
+
+    it("should validate location is in play zone", async () => {
+      const testEngine = new LorcanaTestEngine({
+        inkwell: 0,
+        play: [testCharacterCard],
+        hand: [freeLocationCard],
+      });
+
+      const { character, location, result } = testEngine.moveToLocation({
+        location: freeLocationCard,
+        character: testCharacterCard,
+        doNotThrow: true,
+      });
+
+      expect(character.isAtLocation(location)).toBeFalsy();
+      expect(location.containsCharacter(character)).toBeFalsy();
+      expect(result.success).toBeFalsy();
+    });
   });
 });

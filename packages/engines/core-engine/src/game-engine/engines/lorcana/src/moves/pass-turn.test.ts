@@ -1,4 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
+import { donaldDuckPerfectGentleman } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+import { goofyGroundbreakingChef } from "@lorcanito/lorcana-engine/cards/008/characters/characters";
 import {
   LorcanaTestEngine,
   testCharacterCard,
@@ -85,5 +87,63 @@ describe("Move: Pass Turn", () => {
     const moves = testEngine.activeEngine.moves;
     expect(moves.passTurn).toBeDefined();
     expect(typeof moves.passTurn).toBe("function");
+  });
+
+  describe("Triggered Effects on passing turn", () => {
+    it.skip("At the start of your turn", () => {
+      const testEngine = new LorcanaTestEngine(
+        {
+          deck: 5,
+        },
+        {
+          deck: 5,
+          play: [donaldDuckPerfectGentleman],
+        },
+      );
+      expect(testEngine.getNumTurns()).toBe(1);
+      testEngine.passTurn();
+      expect(testEngine.getNumTurns()).toBe(2);
+
+      // For now we're adding two items, but in the future we'd like to have only one item. Given that there's just one ability with two targets
+      expect(testEngine.bag).toHaveLength(2);
+
+      // Turn player should be able to resolve the bag first
+      testEngine.changeActivePlayer("player_two");
+      testEngine.resolveBag();
+      expect(testEngine.bag).toHaveLength(1);
+
+      // Only once the turn player resolves the bag, the other player can resolve it
+      testEngine.changeActivePlayer("player_one");
+      testEngine.resolveBag();
+      expect(testEngine.bag).toHaveLength(0);
+    });
+
+    it.skip("At the end of your turn", () => {
+      const testEngine = new LorcanaTestEngine(
+        {
+          deck: 5,
+          play: [goofyGroundbreakingChef],
+        },
+        {
+          deck: 5,
+        },
+      );
+
+      expect(testEngine.getNumTurns()).toBe(1);
+      testEngine.passTurn();
+      // At the end of the turn, Goofy Groundbreaking Chef should trigger before turn ends
+      expect(testEngine.getNumTurns()).toBe(1);
+
+      expect(testEngine.bag).toHaveLength(1);
+
+      testEngine.changeActivePlayer("player_one");
+      testEngine.resolveBag();
+
+      // TUrn should end after resolving the bag
+      expect(testEngine.getNumTurns()).toBe(2);
+      expect(testEngine.bag).toHaveLength(0);
+    });
+
+    it("should not allow passing turn if abilities are pending", () => {});
   });
 });

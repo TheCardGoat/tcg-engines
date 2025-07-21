@@ -1,65 +1,6 @@
-import type {
-  PhaseConfig,
-  StepConfig,
-} from "~/game-engine/core-engine/game/structure/phase";
-import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
-import type { TurnConfig } from "~/game-engine/core-engine/game/structure/turn";
-import type { MoveMap } from "~/game-engine/core-engine/game-configuration";
-import type { LorcanaGameState } from "~/game-engine/engines/lorcana/src/lorcana-engine-types";
+import type { LorcanaSegmentConfig } from "~/game-engine/engines/lorcana/src/game-definition/segments/types";
 import { lorcanaMoves } from "~/game-engine/engines/lorcana/src/moves/moves";
-import type { LorcanaFnContext } from "~/game-engine/engines/lorcana/src/moves/types";
-import type { LorcanaCoreOperations } from "~/game-engine/engines/lorcana/src/operations/lorcana-core-operations";
 import { logger } from "~/shared/logger";
-
-// Lorcana-specific segment config that properly types coreOps
-interface LorcanaSegmentConfig {
-  start?: boolean;
-  end?: boolean;
-  next?: ((context: LorcanaFnContext) => string | undefined) | string;
-
-  onBegin?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
-  onEnd?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
-  endIf?: (context: LorcanaFnContext) => boolean | undefined;
-
-  turn: LorcanaTurnConfig;
-}
-
-// Lorcana-specific turn config
-interface LorcanaTurnConfig {
-  onBegin?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
-  onEnd?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
-  endIf?: (context: LorcanaFnContext) => boolean | undefined;
-
-  moves?: MoveMap<LorcanaGameState>;
-  phases?: Record<string, LorcanaPhaseConfig>;
-}
-
-// Lorcana-specific phase config
-interface LorcanaPhaseConfig {
-  start?: boolean;
-  end?: boolean;
-  next?: ((context: LorcanaFnContext) => string | undefined) | string;
-
-  onBegin?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
-  onEnd?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
-  endIf?: (context: LorcanaFnContext) => boolean | undefined;
-
-  moves?: MoveMap<LorcanaGameState>;
-  steps?: Record<string, LorcanaStepConfig>;
-}
-
-// Lorcana-specific step config
-interface LorcanaStepConfig {
-  start?: boolean;
-  end?: boolean;
-  next?: ((context: LorcanaFnContext) => string | undefined) | string;
-
-  onBegin?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
-  onEnd?: (context: LorcanaFnContext) => undefined | LorcanaGameState;
-  endIf?: (context: LorcanaFnContext) => boolean | undefined | { next: string };
-
-  moves?: MoveMap<LorcanaGameState>;
-}
 
 export const duringGameSegment: LorcanaSegmentConfig = {
   next: "endGame",
@@ -71,6 +12,7 @@ export const duringGameSegment: LorcanaSegmentConfig = {
   turn: {
     moves: {
       "manualMoves-exertCard": lorcanaMoves.manualMoves.exertCard,
+      resolveBag: lorcanaMoves.resolveBag,
     },
 
     phases: {
@@ -141,16 +83,8 @@ export const duringGameSegment: LorcanaSegmentConfig = {
       mainPhase: {
         next: "endOfTurnPhase",
 
-        endIf: ({ G, ctx }) => {
-          // Only end mainPhase due to passTurn in duringGame segment
-          // This prevents affecting starting game phases
-          if (ctx.currentSegment !== "duringGame") {
-            return false; // Never auto-end in starting game
-          }
-          // End mainPhase when passTurn flag is set
-          // This flag is set by the passTurn move to trigger phase transition
-          return G.passTurnRequested === true;
-        },
+        // MainPhase doesn't auto-end - transitions are handled by moves calling FlowManager
+        // endIf: undefined means the phase continues until explicitly ended
 
         steps: {
           idle: {
@@ -176,9 +110,7 @@ export const duringGameSegment: LorcanaSegmentConfig = {
           },
           bag: {
             moves: {
-              resolveBag: ({ G }) => {
-                return G;
-              },
+              resolveBag: lorcanaMoves.resolveBag,
             },
           },
           challenge: {
@@ -189,20 +121,19 @@ export const duringGameSegment: LorcanaSegmentConfig = {
 
       endOfTurnPhase: {
         next: "beginningPhase",
+        end: true,
+
+        moves: {
+          resolveBag: lorcanaMoves.resolveBag,
+        },
 
         onBegin: ({ coreOps, G }) => {
-          coreOps.processEndOfTurnEffects();
-
-          // Clear the passTurn flag since we've transitioned out of mainPhase
-          G.passTurnRequested = false;
-
-          logger.log(">>>>>>>>> End of Turn Phase");
-          logger.log("Proceeding to beginning phase");
+          coreOps.addTriggeredEffectsToTheBag("endOfTurn");
 
           return G;
         },
 
-        endIf: () => true,
+        endIf: ({ G }) => G.bag.length === 0,
       },
     },
   },

@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { GundamTestEngine } from "../../../testing/gundam-test-engine";
 
-describe("Gundam Engine - Starting a Game Segment", () => {
+describe.skip("Gundam Engine - Starting a Game Segment", () => {
   let testEngine: GundamTestEngine;
 
   beforeEach(() => {

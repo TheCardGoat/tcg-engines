@@ -168,25 +168,8 @@ export class CoreOperation<
   }
 
   passTurn() {
-    // Note: numTurns is now incremented by FlowManager when turn cycle completes
-    const ctx = this.state.ctx;
-    const totalPlayers = ctx.playerOrder.length;
-    // Advance turn player position
-    const nextTurnPlayerPos = ((ctx.turnPlayerPos ?? 0) + 1) % totalPlayers;
-    const nextTurnPlayerId = ctx.playerOrder[nextTurnPlayerPos];
-
-    // Advance priority player position
-    const nextPriorityPlayerPos = nextTurnPlayerPos;
-    const nextPriorityPlayerId = nextTurnPlayerId;
-
-    // Set new turn player and priority player using non-deprecated methods
-    this.state.ctx = createContextWithTurnPlayer(ctx, nextTurnPlayerId);
-    this.state.ctx = createContextWithPriorityPlayer(
-      this.state.ctx,
-      nextPriorityPlayerId,
-    );
-    this.state.ctx.turnPlayerPos = nextTurnPlayerPos;
-    this.state.ctx.priorityPlayerPos = nextPriorityPlayerPos;
+    // THIS SHOULD HAVE BEEN END mainPhase
+    // THIS IS NOT A CORE OPERATION. Passing a turn is a move and can only be done as move
   }
 
   getZone(zoneId: string, playerId?: string) {
@@ -440,14 +423,6 @@ export class CoreOperation<
   }
 
   /**
-   * Process end of turn effects
-   */
-  processEndOfTurnEffects(): void {
-    // TODO: Implement end of turn effects logic
-    logger.debug("Process end of turn effects");
-  }
-
-  /**
    * Get the current turn player
    */
   getCurrentTurnPlayer(): string {
@@ -458,9 +433,23 @@ export class CoreOperation<
     return ctx?.playerOrder[0] || "";
   }
 
-  endPhase(phaseName: string): void {}
+  endPhase(phaseName?: string): void {
+    if (phaseName) {
+      // Transition to specific phase
+      this.engine.transitionToPhase(phaseName);
+    } else {
+      // End current phase and advance to next
+      this.engine.endCurrentPhase();
+    }
+  }
 
-  endStep(stepName: string): void {}
+  endStep(stepName: string): void {
+    // TODO: Implement step-specific transitions when needed
+    logger.debug(`EndStep called for ${stepName} - not yet implemented`);
+  }
 
-  endSegment(segmentName: string): void {}
+  endSegment(segmentName: string): void {
+    // TODO: Implement segment-specific transitions when needed
+    logger.debug(`EndSegment called for ${segmentName} - not yet implemented`);
+  }
 }

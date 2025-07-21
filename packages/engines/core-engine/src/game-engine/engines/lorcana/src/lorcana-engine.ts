@@ -508,6 +508,10 @@ export class LorcanaEngine extends GameEngine<
     };
   }
 
+  get bag() {
+    return this.getState().G.bag;
+  }
+
   /**
    * Override the createCoreOperationFromState method to return a properly typed LorcanaCoreOperations
    * This eliminates the need for type casting when using this method

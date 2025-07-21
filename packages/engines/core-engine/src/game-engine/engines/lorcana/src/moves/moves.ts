@@ -1,4 +1,5 @@
 import { exertCard } from "~/game-engine/engines/lorcana/src/moves/manualMoves";
+import { resolveBag } from "~/game-engine/engines/lorcana/src/moves/resolve-bag";
 import { alterHandMove } from "./alterHand";
 import { challengeMove } from "./challenge";
 import { chooseWhoGoesFirstMove } from "./chooseFirstPlayer";
@@ -22,6 +23,7 @@ export const lorcanaMoves = {
   challenge: challengeMove,
   moveCharacterToLocation: moveCharacter,
   useActivatedAbility: useActivatedAbility,
+  resolveBag: resolveBag,
   manualMoves: {
     exertCard,
   },

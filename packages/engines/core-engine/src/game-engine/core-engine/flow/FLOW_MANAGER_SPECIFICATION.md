@@ -103,6 +103,7 @@ turn: {
 
 **Key Properties**:
 - `start`: Boolean indicating if this is the starting phase of a turn
+- `end`: Boolean indicating if this is the final phase of a turn (triggers turn completion)
 - `next`: Which phase follows (string, function, or null)
 - `endIf`: Condition to advance to next phase (function)
 - `onBegin`: Called when phase starts (function)
@@ -221,7 +222,9 @@ The Flow Manager automatically processes transitions when conditions are met:
    - If `next: "segmentName"` → transition to that segment (starts with player 0)
    - If `next: null` or undefined → set `currentSegment = null` (game waits for manual intervention)
 
-4. **Turn Completion**: When all phases in a turn complete → advance to next player's turn
+4. **Turn Completion**: When a phase marked with `end: true` transitions to a phase marked with `start: true`
+   - Triggers turn completion: advance to next player and increment turn counter
+   - Reset turn-specific counters (numTurnMoves = 0)
    - New turn starts in the phase marked with `start: true`
    - If no phase has `start: true` → no active phase (currentPhase = null)
 
@@ -493,6 +496,44 @@ segments: {
 }
 ```
 
+### Example 4: Turn Completion Pattern (Lorcana)
+
+```typescript
+segments: {
+  duringGame: {
+    turn: {
+      phases: {
+        beginningPhase: {
+          start: true,
+          next: "mainPhase",
+          steps: {
+            readyStep: { start: true, next: "setStep", endIf: () => true },
+            setStep: { next: "drawStep", endIf: () => true },
+            drawStep: { next: null, endIf: () => true }
+          }
+        },
+        mainPhase: {
+          next: "endOfTurnPhase",
+          // No endIf - phase continues until move triggers transition
+          moves: {
+            passTurn: moves.passTurn, // Calls coreOps.endPhase("endOfTurnPhase")
+            playCard: moves.playCard
+          }
+        },
+        endOfTurnPhase: {
+          end: true,           // Marks this as final phase of turn
+          next: "beginningPhase", // Transition triggers turn completion
+          endIf: ({ G }) => G.bag.length === 0,
+          onBegin: ({ coreOps }) => {
+            coreOps.addTriggeredEffectsToTheBag("endOfTurn");
+          }
+        }
+      }
+    }
+  }
+}
+```
+
 ## Best Practices
 
 ### 1. Segment Design
@@ -530,6 +571,31 @@ segments: {
 - **Provide defaults**: Always have fallback behavior for undefined transitions
 - **Validate state**: Check that required properties exist before using them
 - **Log transitions**: Use debug logging to track flow progression during development
+
+### 7. Turn Management Pattern
+
+- **Use FlowManager for transitions**: Always use `coreOps.endPhase()` or `coreOps.passTurn()` instead of direct state manipulation
+- **Mark end phases**: Use `end: true` on the final phase of each turn
+- **Let automatic transitions handle turn advancement**: Don't manually increment turn counters or change players
+- **Example move pattern**:
+  ```typescript
+  export const passTurnMove: Move = {
+    execute: ({ coreOps, G }) => {
+      // Validate move conditions (bag empty, etc.)
+      if (G.bag.length > 0) {
+        return createInvalidMove("ABILITIES_PENDING", "...");
+      }
+      
+      // Add any end-of-turn effects
+      coreOps.addTriggeredEffectsToTheBag("endOfTurn");
+      
+      // Let FlowManager handle the transition
+      coreOps.endPhase("endOfTurnPhase");
+      
+      return G;
+    }
+  };
+  ```
 
 ## Common Patterns
 
@@ -636,6 +702,26 @@ flowManager.jumpTo({
   phase?: string, 
   step?: string
 }): void
+```
+
+### Flow Transition Methods
+
+These methods are available through CoreEngine and CoreOperation for moves to trigger transitions:
+
+```typescript
+// Transition to a specific phase within current segment
+coreOps.endPhase(phaseName: string): void
+
+// End current phase and advance to next phase automatically
+coreOps.endPhase(): void
+
+// End current turn (finds end phase and triggers turn completion)
+coreOps.passTurn(): void
+
+// Via CoreEngine directly
+engine.transitionToPhase(phaseName: string): void
+engine.endCurrentPhase(): void
+engine.endCurrentTurn(): void
 ```
 
 **Use Cases**:
