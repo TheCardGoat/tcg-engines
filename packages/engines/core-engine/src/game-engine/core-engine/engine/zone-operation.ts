@@ -120,9 +120,15 @@ export function isZoneOperationError(
 
 export function getCardZone(
   ctx: CoreCtx,
-  zoneId: string,
+  zoneId: string | string[],
   playerId?: string,
 ): Zone | undefined {
+  if (Array.isArray(zoneId)) {
+    return Object.values(ctx.cardZones).find((cardZone) =>
+      zoneId.includes(cardZone.id),
+    );
+  }
+
   return (
     ctx.cardZones[zoneId] ||
     Object.values(ctx.cardZones).find(

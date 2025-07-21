@@ -110,7 +110,6 @@ export type LorcanaCardFilter = ExtendCardFilter<{
 
   // Relationship filtering
   canTarget?: string; // instanceId of potential target
-  attachedTo?: string; // instanceId of card this is attached to
 
   // Turn/timing filtering
   playedThisTurn?: boolean;
@@ -119,13 +118,6 @@ export type LorcanaCardFilter = ExtendCardFilter<{
 
   // Collection filtering
   set?: string;
-  rarity?:
-    | "common"
-    | "uncommon"
-    | "rare"
-    | "super_rare"
-    | "legendary"
-    | "enchanted";
 
   // Text search
   nameContains?: string;

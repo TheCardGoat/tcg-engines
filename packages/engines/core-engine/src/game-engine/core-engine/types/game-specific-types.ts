@@ -22,10 +22,11 @@ export interface BasePlayerState {
 }
 
 export interface BaseCoreCardFilter {
-  zone?: string;
+  zone?: string | string[];
   owner?: string;
   publicId?: string;
   instanceId?: string;
+  type?: string | string[];
 }
 
 // biome-ignore lint/complexity/noBannedTypes: this is not an actual type, it's a placeholder
