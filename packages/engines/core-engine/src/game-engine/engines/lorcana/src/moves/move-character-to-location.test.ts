@@ -3,6 +3,8 @@ import type {
   LorcanitoCharacterCard,
   LorcanitoLocationCard,
 } from "@lorcanito/lorcana-engine";
+import { hiddenCoveTranquilHaven } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
+import { taffytaMuttonfudgeSourSpeedster } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
 import { LorcanaTestEngine } from "../testing/lorcana-test-engine";
 import { mockCharacterCard, mockLocationCard } from "../testing/mockCards";
 
@@ -264,8 +266,22 @@ describe("Move: Move Character to Location", () => {
     });
   });
 
-  describe.skip("**4.3.7.5** Triggered effects", () => {
-    it("should trigger effects when character moves to location", async () => {});
+  describe.only("**4.3.7.5** Triggered effects", () => {
+    it.only("should trigger effects when character moves to location", () => {
+      const testEngine = new LorcanaTestEngine({
+        inkwell: hiddenCoveTranquilHaven.moveCost * 2,
+        play: [hiddenCoveTranquilHaven, taffytaMuttonfudgeSourSpeedster],
+      });
+
+      expect(testEngine.getLoreForPlayer("player_one")).toBe(0);
+
+      testEngine.moveToLocation({
+        location: hiddenCoveTranquilHaven,
+        character: taffytaMuttonfudgeSourSpeedster,
+      });
+
+      expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
+    });
   });
 
   describe("Gaining Lore From Location", () => {

@@ -379,6 +379,10 @@ export class LorcanaTestEngine {
     return ctx.players[player]?.lore || 0;
   }
 
+  getLoreForPlayer(player?: string) {
+    return this.getPlayerLore(player);
+  }
+
   getNumTurns() {
     return this.authoritativeEngine.getNumTurns();
   }
