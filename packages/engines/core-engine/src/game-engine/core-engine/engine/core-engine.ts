@@ -580,7 +580,11 @@ export class CoreEngine<
   }
 
   isGameOver(): boolean {
-    return this.gameStateStore.getState().ctx.gameOver !== undefined;
+    return !!this.gameStateStore.getState().ctx.gameOver;
+  }
+
+  getWinner(): PlayerID | undefined {
+    return this.gameStateStore.getState().ctx.winner;
   }
 
   hasPlayerMulliganed(playerID: PlayerID): boolean {

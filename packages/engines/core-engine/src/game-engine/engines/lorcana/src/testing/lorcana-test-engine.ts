@@ -550,6 +550,14 @@ export class LorcanaTestEngine {
     return response;
   }
 
+  isGameOver() {
+    return this.authoritativeEngine.isGameOver();
+  }
+
+  getWinner() {
+    return this.authoritativeEngine.getWinner();
+  }
+
   /**
    * Returns the total number of cards in the player's inkwell
    */

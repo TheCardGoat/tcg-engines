@@ -1,7 +1,8 @@
 import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
-import { logger } from "~/game-engine/core-engine/utils";
 import type { LorcanaGameState } from "~/game-engine/engines/lorcana/src/lorcana-engine-types";
 import { lorcanaMoves } from "~/game-engine/engines/lorcana/src/moves/moves";
+import type { LorcanaCoreOperations } from "~/game-engine/engines/lorcana/src/operations/lorcana-core-operations";
+import { logger } from "~/shared/logger";
 
 export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
   next: "endGame",
@@ -34,6 +35,7 @@ export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
               coreOps.processTurnStartEffects();
 
               logger.log(">>>>>>>>> Ready Phase");
+              (coreOps as LorcanaCoreOperations).gameStateCheck();
 
               return G;
             },
@@ -51,6 +53,7 @@ export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
               coreOps.processTurnStartTriggers();
 
               logger.log(">>>>>>>>> Set Phase");
+              (coreOps as LorcanaCoreOperations).gameStateCheck();
 
               return G;
             },
@@ -68,6 +71,7 @@ export const duringGameSegment: SegmentConfig<LorcanaGameState> = {
               }
 
               logger.log(">>>>>>>>> DRAW Phase");
+              (coreOps as LorcanaCoreOperations).gameStateCheck();
 
               return G;
             },

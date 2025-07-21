@@ -46,6 +46,15 @@ const freeLocationCard: LorcanitoLocationCard = {
   lore: 0,
 };
 
+const twentyLoreLocationCard: LorcanitoLocationCard = {
+  ...mockLocationCard,
+  id: "test-location-twenty-lore",
+  name: "Twenty Lore Location",
+  cost: 1,
+  moveCost: 0, // Free to move characters here
+  lore: 20, // High lore gain for testing
+};
+
 const freeOpponentLocationCard: LorcanitoLocationCard = {
   ...mockLocationCard,
   id: "test-location-free-opponent",
@@ -286,7 +295,24 @@ describe("Move: Move Character to Location", () => {
       expect(testEngine.getPlayerLore("player_two")).toBe(0);
     });
 
-    it("On Start of Turn, if you win lore and pass 20 lore you win the game", async () => {});
+    it("On Start of Turn, if you win lore and pass 20 lore you win the game", async () => {
+      const testEngine = new LorcanaTestEngine({
+        play: [twentyLoreLocationCard],
+      });
+
+      testEngine.changeActivePlayer("player_one");
+      testEngine.passTurn();
+
+      testEngine.changeActivePlayer("player_two");
+      testEngine.passTurn();
+
+      expect(testEngine.getPlayerLore("player_one")).toBe(
+        twentyLoreLocationCard.lore,
+      );
+
+      expect(testEngine.isGameOver()).toBeTrue();
+      expect(testEngine.getWinner()).toBe("player_one");
+    });
   });
 
   describe.skip("Edge cases and validation", () => {
