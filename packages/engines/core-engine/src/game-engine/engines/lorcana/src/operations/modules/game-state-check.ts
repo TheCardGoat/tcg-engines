@@ -3,7 +3,7 @@ import { logger } from "~/shared/logger";
 import type {
   LorcanaCardFilter,
   LorcanaPlayerState,
-} from "../../lorcana-generic-types";
+} from "../../lorcana-engine-types";
 import type { LorcanaCoreOperations } from "../lorcana-core-operations";
 
 // **1.9. Game State Check**

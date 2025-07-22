@@ -409,7 +409,7 @@ export class CoreOperation<
   /**
    * Draw a card for a player
    */
-  drawCard(playerId: string): void {
+  drawCard(playerId: string, amount: number): void {
     // TODO: Implement draw card logic
     logger.debug(`Draw card for player ${playerId}`);
   }

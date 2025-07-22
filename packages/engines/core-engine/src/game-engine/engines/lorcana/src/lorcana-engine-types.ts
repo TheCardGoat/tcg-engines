@@ -1,6 +1,59 @@
-import type { LorcanitoCard } from "@lorcanito/lorcana-engine";
+/**
+ * # Lorcana TCG Type Definitions
+ *
+ * This module defines all game-specific types for Lorcana TCG, including
+ * both legacy direct type definitions and new CoreEngine-extended types.
+ */
 
+import type { LorcanitoCard } from "@lorcanito/lorcana-engine";
+import type {
+  ExtendCardDefinition,
+  ExtendCardFilter,
+  ExtendGameState,
+  ExtendPlayerState,
+} from "~/game-engine/core-engine/types/game-specific-types";
+import type { LayerItem } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+
+// =============================================================================
+// PLAYER STATE TYPES
+// =============================================================================
+
+/**
+ * Lorcana-specific player state extending the base player state
+ */
+export type LorcanaPlayerState = ExtendPlayerState<{
+  lore: number;
+  ink: number;
+  questProgress: Record<string, number>;
+  turnHistory?: PlayerTurnHistory[];
+}>;
+
+export interface PlayerTurnHistory {
+  turnNumber: number;
+  playedCards: string[];
+  inkwell: string[];
+  challenged: string[];
+  quested: string[];
+}
+
+// =============================================================================
+// CARD TYPES
+// =============================================================================
+
+/**
+ * Legacy card definition type - kept for backward compatibility
+ */
 export type LorcanaCardDefinition = LorcanitoCard;
+
+/**
+ * Enhanced card definition extending the base card definition
+ */
+export type LorcanaCardDefinitionExtended = ExtendCardDefinition<
+  LorcanitoCard & {
+    inkwell?: boolean;
+    name: string;
+  }
+>;
 
 export type LorcanaCardMeta = {
   exerted?: boolean | null;
@@ -13,6 +66,88 @@ export type LorcanaCardMeta = {
   characters?: string[] | null;
 };
 
+/**
+ * Lorcana-specific card filter extending the base card filter
+ */
+export type LorcanaCardFilter = ExtendCardFilter<{
+  // Cost filtering
+  cost?: {
+    min?: number;
+    max?: number;
+    exact?: number;
+  };
+
+  // Ink filtering
+  ink?: string[]; // Array of ink colors
+  inkable?: boolean; // Can be used as ink
+
+  // Character-specific filtering
+  strength?: {
+    min?: number;
+    max?: number;
+    exact?: number;
+  };
+
+  willpower?: {
+    min?: number;
+    max?: number;
+    exact?: number;
+  };
+
+  lore?: {
+    min?: number;
+    max?: number;
+    exact?: number;
+  };
+
+  // Card state filtering
+  exerted?: boolean;
+  damaged?: boolean;
+  banished?: boolean;
+
+  // Card type filtering
+  cardType?: "character" | "action" | "item" | "location";
+
+  // Keyword filtering
+  hasKeyword?: string[];
+  abilities?: string[]; // Filter by ability text/type
+
+  // Game state filtering
+  canQuest?: boolean;
+  canChallenge?: boolean;
+  canSing?: boolean;
+  canBePlayed?: boolean;
+
+  // Location-specific
+  moveCost?: {
+    min?: number;
+    max?: number;
+    exact?: number;
+  };
+
+  // Relationship filtering
+  canTarget?: string; // instanceId of potential target
+
+  // Turn/timing filtering
+  playedThisTurn?: boolean;
+  questedThisTurn?: boolean;
+  challengedThisTurn?: boolean;
+
+  // Collection filtering
+  set?: string;
+
+  // Text search
+  nameContains?: string;
+  textContains?: string;
+}>;
+
+// =============================================================================
+// GAME STATE TYPES
+// =============================================================================
+
+/**
+ * Main Lorcana game state with all game-specific properties
+ */
 export type LorcanaGameState = {
   effects: LayerItem[];
   bag: LayerItem[];
@@ -31,160 +166,43 @@ export type LorcanaGameState = {
   passTurnRequested?: boolean; // Flag to trigger mainPhase end
 };
 
-export type Zone = "deck" | "hand" | "play" | "inkwell" | "discard" | "bag";
+/**
+ * Extended game state using CoreEngine's extension pattern
+ */
+export type LorcanaGameStateExtended = ExtendGameState<{
+  effects: LayerItem[];
+  bag: LayerItem[];
+  metas: Record<InstanceId, LorcanaCardMeta>;
+  turnActions?: {
+    putCardIntoInkwell?: boolean;
+  };
+  triggerEvents?: Array<{
+    type: string;
+    timing: string;
+    locationId?: string;
+    characterId?: string;
+    timestamp: number;
+  }>;
+  passTurnRequested?: boolean;
+}>;
 
-export type LayerItem = {
-  id: string;
-  sourceCardId: string;
-  controllerId: string;
-  ability: Ability;
-  targets: Target[];
-  timestamp: number;
-  optional: boolean;
-};
+// =============================================================================
+// GAME MECHANICS TYPES
+// =============================================================================
 
-export type Ability = {
-  id: string;
-  type: "activated" | "triggered" | "static" | "keyword";
-  text: string;
-  cost?: AbilityCost;
-  effect: Effect;
-  timing?: TriggerTiming;
-};
+export type LorcanaZone =
+  | "deck"
+  | "hand"
+  | "play"
+  | "inkwell"
+  | "discard"
+  | "bag";
 
-export type Duration =
-  | { type: "endOfTurn" }
-  | { type: "untilLeaves" }
-  | { type: "turns"; count: number }
-  | { type: "permanent" };
+// =============================================================================
+// UTILITY TYPES
+// =============================================================================
 
-export type AbilityCost = {
-  exert?: boolean;
-  ink?: number;
-  banish?: boolean;
-  discard?: number;
-  damage?: number;
-};
-
-export type Effect = {
-  type: string;
-  parameters: Record<string, any>;
-};
-
-export type Target = {
-  type: "card" | "player";
-  id: string;
-};
-
-export type TriggerTiming =
-  | "onPlay"
-  | "onQuest"
-  | "onPutIntoInkwell"
-  | "onChallenge"
-  | "onBanish"
-  | "onDamage"
-  | "onMove"
-  | "onActivatedAbility"
-  | "startOfTurn"
-  | "endOfTurn";
-
-export type ActionType =
-  | "playCard"
-  | "inkCard"
-  | "quest"
-  | "challenge"
-  | "activateAbility"
-  | "move"
-  | "sing"
-  | "pass"
-  | "concede"
-  | "turnStart"
-  | "turnEnd"
-  | "phaseStep"
-  | "phaseTransition"
-  | "draw";
 export type PlayerId = string;
 export type InstanceId = string;
-
-// Ovie's implementation
-// export type CardDefinition = {
-//   id: string;
-//   name: string;
-//   version: string;
-//   collector_number: string;
-//   set: string;
-//   cost: number;
-//   inkwell: boolean;
-//   ink: InkType | null;
-//   inks: InkType[] | null;
-//   type: CardType[];
-//   classifications: CardClassification[];
-//   text: string;
-//   keywords: string[];
-//   moveCost?: number;
-//   strength?: number;
-//   willpower?: number;
-//   lore?: number;
-//   abilities?: AbilityDefinition[];
-// };
-// export type CardInstance = {
-//   definitionId: string;
-//   instanceId: string;
-//   status: CardStatus;
-//   damage: number;
-//   owner: string;
-//   controller?: string;
-//   locationId: string;
-//   attachedCards?: CardInstance[];
-//   modifiers: Modifier[];
-//   originalCharacter?: CardInstance;
-//   isWet: boolean;
-//   playedIndex?: number;
-// };
-// type AbilityTarget = {
-//   type: "Card" | "Player";
-//   zone?: Zone;
-//   controller?: "Self" | "Opponent" | "Any";
-//   count?: number | DynamicValue;
-//   filter?: Filter;
-//   text?: string;
-//   targetAll?: boolean;
-// };
-// export type Filter = {
-//   type?: CardType[];
-//   zone?: Zone;
-//   classifications?: CardClassification[];
-//   controller?: "Self" | "Opponent" | "Any";
-//   damage?: number;
-//   damaged?: boolean;
-//   exerted?: boolean;
-//   excludeSelf?: boolean;
-//   stat?: {
-//     type: "Strength" | "Willpower" | "Lore";
-//     minimum?: number;
-//     maximum?: number;
-//   };
-//   location?: "Source" | "Destination";
-//   challenge?: "attacker" | "defender" | "both";
-//   cost?: {
-//     minimum?: number;
-//     maximum?: number;
-//   };
-// };
-// export type CardInstance = {
-//   definitionId: string;
-//   instanceId: string;
-//   status: CardStatus;
-//   damage: number;
-//   owner: string;
-//   controller?: string;
-//   locationId: string;
-//   attachedCards?: CardInstance[];
-//   modifiers: Modifier[];
-//   originalCharacter?: CardInstance;
-//   isWet: boolean;
-//   playedIndex?: number;
-// };
-
 export type PublicId = string;
 export type GameCards = Record<PlayerId, Record<InstanceId, PublicId>>;

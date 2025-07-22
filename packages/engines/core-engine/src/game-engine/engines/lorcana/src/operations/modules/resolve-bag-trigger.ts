@@ -1,4 +1,5 @@
-import type { LorcanaCoreOperations } from "../lorcana-core-operations";
+import { resolveTrigger } from "~/game-engine/engines/lorcana/src/abilities/trigger-resolver";
+import type { LorcanaCoreOperations } from "~/game-engine/engines/lorcana/src/operations/lorcana-core-operations";
 
 /**
  * Resolve a specific trigger from the bag and execute its effects
@@ -7,7 +8,7 @@ export function resolveBagTrigger(
   this: LorcanaCoreOperations,
   id: string,
 ): void {
-  if (!this.state.G.bag) {
+  if (!this.state.G.bag || this.state.G.bag.length === 0) {
     return;
   }
 
@@ -32,17 +33,35 @@ export function resolveBagTrigger(
             playerState.lore = 0;
           }
           playerState.lore += amount;
-          console.log(
-            `DEBUG: Player ${trigger.controllerId} gains ${amount} lore from triggered effect (total: ${playerState.lore})`,
-          );
+        }
+        break;
+      }
+      case "draw": {
+        const amount = trigger.ability.effect.parameters?.amount || 1;
+        const target = trigger.ability.effect.parameters?.target;
+
+        // Determine which player should draw the card
+        let targetPlayerId = trigger.controllerId;
+        if (target?.value === "opponent") {
+          // Find the opponent of the controller
+          const allPlayers = Object.keys(this.state.ctx.players);
+          targetPlayerId =
+            allPlayers.find((p) => p !== trigger.controllerId) ||
+            trigger.controllerId;
+        } else if (target?.value === "self") {
+          targetPlayerId = trigger.controllerId;
+        }
+
+        // Draw the card(s) using the core operations
+        for (let i = 0; i < amount; i++) {
+          this.drawCard(targetPlayerId, 1);
         }
         break;
       }
       // Add other effect types as needed
       default:
-        console.log(
-          `DEBUG: Unhandled trigger effect type: ${trigger.ability.effect.type}`,
-        );
+        // Silently ignore unhandled effect types in production
+        break;
     }
   }
 

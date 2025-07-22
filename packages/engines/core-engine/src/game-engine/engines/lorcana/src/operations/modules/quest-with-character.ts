@@ -1,4 +1,4 @@
-import type { LorcanaPlayerState } from "../../lorcana-generic-types";
+import type { LorcanaPlayerState } from "../../lorcana-engine-types";
 import type { LorcanaCoreOperations } from "../lorcana-core-operations";
 
 /**

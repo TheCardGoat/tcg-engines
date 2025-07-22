@@ -6,20 +6,18 @@ import type { CoreEngineState } from "~/game-engine/core-engine/game-configurati
 import { GameEngine } from "~/game-engine/core-engine/game-engine";
 
 import { logger } from "~/game-engine/core-engine/utils/logger";
+import type { TriggerTiming } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import { LorcanaCardInstance } from "./cards/lorcana-card-instance";
 import type { LorcanaCardRepository } from "./cards/lorcana-card-repository";
 import { LorcanaGame } from "./game-definition/lorcana-game-definition";
 import type {
-  LorcanaCardMeta,
-  LorcanaGameState,
-  TriggerTiming,
-  Zone,
-} from "./lorcana-engine-types";
-import type {
   LorcanaCardDefinition,
   LorcanaCardFilter,
+  LorcanaCardMeta,
+  LorcanaGameState,
   LorcanaPlayerState,
-} from "./lorcana-generic-types";
+  LorcanaZone,
+} from "./lorcana-engine-types";
 import { LorcanaCoreOperations } from "./operations/lorcana-core-operations";
 
 // Re-export types for external usage
@@ -547,16 +545,16 @@ export class LorcanaEngine extends GameEngine<
     lorcanaOps.addTriggeredEffectsToTheBag("onMove", char.instanceId);
   }
 
-  getCardZone(instanceId: string): Zone | undefined {
+  getCardZone(instanceId: string): LorcanaZone | undefined {
     const zone = super.getCardZone(instanceId);
-    return zone as Zone | undefined;
+    return zone as LorcanaZone | undefined;
   }
 
-  getZonesCardCount(player?: string): Record<Zone, number> {
+  getZonesCardCount(player?: string): Record<LorcanaZone, number> {
     const ctx = this.getCtx();
     const playerId = player || "player_one";
 
-    const count: Record<Zone, number> = {
+    const count: Record<LorcanaZone, number> = {
       deck: 0,
       hand: 0,
       play: 0,
@@ -566,7 +564,14 @@ export class LorcanaEngine extends GameEngine<
     };
 
     // Get zone counts from ctx.cardZones using the same pattern as getZone()
-    const zones: Zone[] = ["deck", "hand", "play", "bag", "inkwell", "discard"];
+    const zones: LorcanaZone[] = [
+      "deck",
+      "hand",
+      "play",
+      "bag",
+      "inkwell",
+      "discard",
+    ];
     for (const zone of zones) {
       const cardZone = getCardZone(ctx, zone, playerId);
       count[zone] = cardZone?.cards?.length || 0;

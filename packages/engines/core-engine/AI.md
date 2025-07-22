@@ -4,61 +4,51 @@ type: "guidelines"
 updated: "2025-06-25"
 version: "1.0.0"
 audience: "llm"
-dependencies: ["test-framework", "typescript", "bun"]
 related_files: ["IMPLEMENTATION-LOGS.md", "ARCHITECTURE.md"]
 status: "current"
 ---
 
-# AI.md
-
-## Quick Reference
-
-### Core Rules
-1.  **TDD is non-negotiable** - No production code without failing tests.
-2.  **Update IMPLEMENTATION-LOGS.md** before/after each task.
-3.  **Use `bun run check`** after each task completion.
-4.  **Use logger instead of console.log**.
-
-### Key Principles
-- Test behavior, not implementation.
-- Immutable data patterns.
-- TypeScript strict mode.
-- Real objects over mocking.
-- Small, pure functions.
-
 ## Must Follow Rules
-- Update IMPLEMENTATION-LOGS.md before/after each task with progress, decisions, and learnings.
-- Use test-driven development (TDD) - tests are specifications.
-- Avoid mocking/stubbing - use real objects.
-- Run `bun run check` after each task - fix issues before proceeding.
-- Follow core engine tenets.
-- Use logger instead of console.log.
+- You can't take a task as finished if `bun run check` fails, all checks must pass and you can't skip any of them.
+- You can't commit unless `bun run check` passes, and you can't skip any of the checks. Additionaly, any new codee must be covered by tests, which explains the expected behavior. Test expected behavior, not implementation details.
+- Update IMPLEMENTATION-LOGS.md before/after each task with progress, decisions, and learnings
+- Follow architecture/design patterns in /docs/**/*.md files
+- Use test-driven development (TDD) - tests are specifications
+- Avoid mocking/stubbing - use real objects
+- Run `bun run check` after each task - fix issues before proceeding
+- Use documentation from engines/** folder first (LLM-RULES.md, RULES.md, GLOSSARY.md)
+- Follow core engine tenets
+- DO not use console.log, Use logger.log instead of console.log. All all respective methods (warn, error, etc..)
 - use IMPLEMENTATION-LOGS.md for task progress, decisions, and learnings. Share a summary of your progress at the end of each task.
 
 ## Core Architecture
 
 Modular TCG engine with three main components:
 
-1.  **Lobby Engine** (`/src/lobby-engine/`) - Game lobbies, connections, event-driven with LightweightEventBus.
-2.  **Game Engine** (`/src/game-engine/`) - Core rules, immutable state, phase/turn-based, plugin architecture.
-3.  **Game Implementations** (`/engines/`) - Specific TCG rules (Lorcana, Grand Archive, etc.).
+1. **Lobby Engine** (`/src/lobby-engine/`) - Game lobbies, connections, event-driven with LightweightEventBus
+2. **Game Engine** (`/src/game-engine/`) - Core rules, immutable state, phase/turn-based,  architecture
 
 ### State & Architecture
-- Immutable state with delta synchronization.
-- Server-authoritative with client optimistic updates.
-- Action flow: Client → Optimistic → Server → Validate → Broadcast deltas.
+- Immutable state with delta synchronization
+- Server-authoritative with client optimistic updates
+- Action flow: Client → Optimistic → Server → Validate → Broadcast deltas
+
+### Documentation
+- **RULES.md**: Complete reference with examples
+- **LLM-RULES.md**: Concise structure for rule engine
+- **Glossary.md**: Term definitions
 
 ## Core Tenets
 
-1.  **Immutable State** - State changes create new objects.
-2.  **Replayable & Delta-Driven** - Games replay from initial state + actions.
-3.  **Server-Authoritative** - Server holds definitive state.
-4.  **Deterministic Logic** - Same inputs = same outputs.
-5.  **Agnostic Core** - Engine unaware of specific game rules.
-6.  **Clear APIs** - Well-defined action/query interfaces.
-7.  **Separation of Concerns** - Logic/rules/UI/services separated.
-8.  **Comprehensive Logging** - Structured, configurable telemetry.
-9.  **Localized Communication** - Player text ready for i18n.
+1. **Immutable State** - State changes create new objects
+2. **Replayable & Delta-Driven** - Games replay from initial state + actions
+3. **Server-Authoritative** - Server holds definitive state
+4. **Deterministic Logic** - Same inputs = same outputs
+5. **Agnostic Core** - Engine unaware of specific game rules
+6. **Clear APIs** - Well-defined action/query interfaces
+7. **Separation of Concerns** - Logic/rules/UI/services separated
+8. **Comprehensive Logging** - Structured, configurable telemetry
+9. **Localized Communication** - Player text ready for i18n
 
 # Development Guidelines
 
@@ -67,27 +57,27 @@ Modular TCG engine with three main components:
 **TEST-DRIVEN DEVELOPMENT IS NON-NEGOTIABLE.** Every line of production code must be written in response to a failing test.
 
 **Key Principles:**
-- Write tests first (TDD).
-- Test behavior, not implementation.
-- No `any` types or type assertions.
-- Immutable data only.
-- Small, pure functions.
-- TypeScript strict mode.
-- Use real schemas/types in tests.
+- Write tests first (TDD)
+- Test behavior, not implementation
+- No `any` types or type assertions
+- Immutable data only
+- Small, pure functions
+- TypeScript strict mode
+- Use real schemas/types in tests
 
-**Tools:** TypeScript (strict), Jest/Vitest + React Testing Library, immutable patterns.
+**Tools:** TypeScript (strict), Jest/Vitest + React Testing Library, immutable patterns
 
 ## Testing Principles
 
 ### Behavior-Driven Testing
-- Test behavior through public API (black box).
-- No 1:1 test-to-implementation mapping.
-- 100% coverage via business behavior, not implementation details.
-- Tests document expected behavior.
+- Test behavior through public API (black box)
+- No 1:1 test-to-implementation mapping
+- 100% coverage via business behavior, not implementation details
+- Tests document expected behavior
 
 ### Tools
 - bun test
-- TypeScript strict mode for test code too.
+- TypeScript strict mode for test code too
 
 ### Test Data Pattern
 
@@ -102,22 +92,22 @@ const getMockPayment = (overrides?: Partial<Payment>): Payment => ({
 });
 ```
 
-Principles: Complete objects with defaults, `Partial<T>` overrides, compose for complex objects.
+Principles: Complete objects with defaults, `Partial<T>` overrides, compose for complex objects
 
 ## TypeScript Guidelines
 
 ### Strict Mode
-- Full strict mode enabled (no `any`, no type assertions, no `@ts-ignore`).
-- Rules apply to test code too.
+- Full strict mode enabled (no `any`, no type assertions, no `@ts-ignore`)
+- Rules apply to test code too
 
 ### Type Definitions
-- Prefer `type` over `interface`.
-- Leverage utility types (`Pick`, `Omit`, `Partial`, `Required`).
+- Prefer `type` over `interface`
+- Leverage utility types (`Pick`, `Omit`, `Partial`, `Required`)
 - Create branded types for domain safety:
 ```typescript
 type UserId = string & { readonly brand: unique symbol };
 ```
-- Schema-first with Zod/Standard Schema compliant libraries.
+- Schema-first with Zod/Standard Schema compliant libraries
 
 ### Schema-First Development
 
@@ -138,19 +128,19 @@ type User = z.infer<typeof UserSchema>;
 ## Code Style
 
 ### Functional Programming
-- No data mutation - immutable structures.
-- Pure functions, composition over complexity.
-- Array methods (`map`, `filter`, `reduce`) over loops.
-- Avoid heavy FP abstractions unless clear benefit.
-- Use Result types for complex error handling.
+- No data mutation - immutable structures
+- Pure functions, composition over complexity
+- Array methods (`map`, `filter`, `reduce`) over loops
+- Avoid heavy FP abstractions unless clear benefit
+- Use Result types for complex error handling
 
 ### Structure & Naming
-- Early returns, avoid deep nesting (max 2 levels).
-- Small, focused functions.
-- Functions: `camelCase` verbs.
-- Types: `PascalCase`.
-- Constants: `UPPER_SNAKE_CASE`.
-- Files: `kebab-case.ts`.
+- Early returns, avoid deep nesting (max 2 levels)
+- Small, focused functions
+- Functions: `camelCase` verbs
+- Types: `PascalCase`
+- Constants: `UPPER_SNAKE_CASE`
+- Files: `kebab-case.ts`
 
 ### Self-Documenting Code
 No comments - use clear naming and structure. Extract complex logic to well-named functions.
@@ -193,16 +183,16 @@ const users = items.map(item => item.user);
 ### TDD Process - MANDATORY
 
 **Red-Green-Refactor:**
-1.  **Red**: Write failing test first - NO PRODUCTION CODE without failing test.
-2.  **Green**: Write MINIMUM code to pass.
-3.  **Refactor**: Assess improvements, clean up if valuable.
+1. **Red**: Write failing test first - NO PRODUCTION CODE without failing test
+2. **Green**: Write MINIMUM code to pass
+3. **Refactor**: Assess improvements, clean up if valuable
 
 **Violations to Avoid:**
-- Production code without failing test.
-- Multiple tests before making first pass.
-- More code than needed for current test.
-- Skipping refactor assessment.
-- Adding untested functionality.
+- Production code without failing test
+- Multiple tests before making first pass
+- More code than needed for current test
+- Skipping refactor assessment
+- Adding untested functionality
 
 #### TDD Example
 
@@ -234,18 +224,18 @@ it("applies free shipping over £50", () => {
 Assess refactoring after every green - but only refactor if it adds clear value.
 
 #### When to Refactor
-- Names could be clearer.
-- Structure could be simpler.
-- True duplication of knowledge (not just similar code).
-- Patterns emerge across features.
+- Names could be clearer
+- Structure could be simpler
+- True duplication of knowledge (not just similar code)
+- Patterns emerge across features
 
 **Remember**: Not all code needs refactoring. Don't change for change's sake.
 
 #### Refactoring Guidelines
 
-1.  **Commit before refactoring** - safe rollback point.
-2.  **Abstract by semantic meaning, not structure** - duplicate code is cheaper than wrong abstraction.
-3.  **Questions before abstracting:**
+1. **Commit before refactoring** - safe rollback point
+2. **Abstract by semantic meaning, not structure** - duplicate code is cheaper than wrong abstraction
+3. **Questions before abstracting:**
     - Same concept or just similar structure?
     - Would business rule changes affect both?
     - Based on what code IS or what it MEANS?
@@ -270,11 +260,11 @@ const calculateShippingCost = (total: number) =>
 
 ### Refactoring Rules
 
-1.  **Never break external APIs** - only change internals.
-2.  **Verify after refactoring:**
-    - All tests pass without modification.
-    - Linting and type checking pass.
-    - Commit refactoring separately.
+1. **Never break external APIs** - only change internals
+2. **Verify after refactoring:**
+    - All tests pass without modification
+    - Linting and type checking pass
+    - Commit refactoring separately
 
 ```bash
 bun run check
@@ -282,43 +272,43 @@ git commit -m "refactor: extract helpers"
 ```
 
 #### Refactoring Checklist
-- [ ] Actually improves code.
-- [ ] Tests pass without modification.
-- [ ] Static analysis passes.
-- [ ] No new public APIs.
-- [ ] More readable.
-- [ ] Removed knowledge duplication (not code similarity).
-- [ ] No speculative abstractions.
-- [ ] Committed separately.
+- [ ] Actually improves code
+- [ ] Tests pass without modification
+- [ ] Static analysis passes
+- [ ] No new public APIs
+- [ ] More readable
+- [ ] Removed knowledge duplication (not code similarity)
+- [ ] No speculative abstractions
+- [ ] Committed separately
 
 ### Commit & PR Standards
 
-**Commits:** Complete working changes, conventional format (`feat:`, `fix:`, `refactor:`), include tests with features.
+**Commits:** Complete working changes, conventional format (`feat:`, `fix:`, `refactor:`), include tests with features
 
-**PRs:** All tests/linting pass, small increments, single focus, describe behavior changes.
+**PRs:** All tests/linting pass, small increments, single focus, describe behavior changes
 
-## Working with Gemini
+## Working with Claude
 
 ### Expectations
-1.  **ALWAYS FOLLOW TDD** - No production code without failing test.
-2.  Think deeply, understand full context.
-3.  Ask clarifying questions.
-4.  Think from first principles.
-5.  Assess refactoring after every green.
-6.  Keep docs current.
+1. **ALWAYS FOLLOW TDD** - No production code without failing test
+2. Think deeply, understand full context
+3. Ask clarifying questions
+4. Think from first principles
+5. Assess refactoring after every green
+6. Keep docs current
 
 ### Code Changes
-- Start with failing test - no exceptions.
-- Assess refactoring after green.
-- Verify tests/analysis pass, then commit.
-- Respect existing patterns.
-- Small, incremental changes.
-- Meet TypeScript strict requirements.
+- Start with failing test - no exceptions
+- Assess refactoring after green
+- Verify tests/analysis pass, then commit
+- Respect existing patterns
+- Small, incremental changes
+- Meet TypeScript strict requirements
 
 ### Communication
-- Explain trade-offs and design decisions.
-- Flag deviations with justification.
-- Ask for clarification when unsure.
+- Explain trade-offs and design decisions
+- Flag deviations with justification
+- Ask for clarification when unsure
 
 ## Example Patterns
 
@@ -403,5 +393,3 @@ if (!user?.isActive || !user.hasPermission) return;
 // ✅ Composed small functions
 const processOrder = pipe(validateOrder, calculatePricing, applyDiscounts, submitOrder);
 ```
-
-

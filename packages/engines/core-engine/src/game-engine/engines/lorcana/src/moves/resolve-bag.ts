@@ -13,8 +13,8 @@ export const resolveBag: LorcanaMove = ({ G, coreOps }, triggerId: string) => {
     return createInvalidMove("BAG_EMPTY", "moves.resolveBag.errors.emptyBag");
   }
 
+  // Default behaviour is to resolve the first trigger in the bag
   const trigger = triggerId ? G.bag.find((t) => t.id === triggerId) : G.bag[0];
-
   if (!trigger) {
     return createInvalidMove(
       "TRIGGER_NOT_FOUND",
@@ -25,7 +25,6 @@ export const resolveBag: LorcanaMove = ({ G, coreOps }, triggerId: string) => {
 
   logger.debug("Resolving trigger from bag", { trigger });
 
-  // coreOps is now properly typed as LorcanaCoreOperations, no casting needed!
   coreOps.resolveBagTrigger(trigger.id);
 
   return G;

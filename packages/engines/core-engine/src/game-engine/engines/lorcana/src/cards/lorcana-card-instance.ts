@@ -1,15 +1,13 @@
 import { CoreCardCtxProvider } from "~/game-engine/core-engine/card/core-card-ctx-provider";
 import { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
+import type { TriggerTiming } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import type { LorcanaEngine } from "../lorcana-engine";
 import type {
+  LorcanaCardFilter,
   LorcanaCardMeta,
   LorcanaGameState,
-} from "../lorcana-engine-types";
-import type {
-  LorcanaCardFilter,
   LorcanaPlayerState,
-  TriggerTiming,
-} from "../lorcana-generic-types";
+} from "../lorcana-engine-types";
 import type { LorcanaCardDefinition } from "./lorcana-card-repository";
 
 export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition> {
@@ -50,9 +48,17 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
   }
 
   hasTriggerFor(timing: TriggerTiming) {
-    if (timing === "endOfTurn" && this.card.abilities) {
-      return this.card.abilities?.some((ability) =>
+    if (!this.card.abilities) return false;
+
+    if (timing === "endOfTurn") {
+      return this.card.abilities.some((ability) =>
         hasEndOfTurnTrigger(ability, timing),
+      );
+    }
+
+    if (timing === "startOfTurn") {
+      return this.card.abilities.some((ability) =>
+        hasStartOfTurnTrigger(ability, timing),
       );
     }
 
@@ -138,6 +144,9 @@ function hasEndOfTurnTrigger(ability: any, timing: string): boolean {
     // Format 2: Nested trigger object
     (ability.trigger?.on === "end-of-turn" && timing === "endOfTurn") ||
     (ability.trigger?.on === "start-of-turn" && timing === "startOfTurn") ||
+    // Format 2b: Handle start_turn format (consolidate to startOfTurn)
+    (ability.trigger?.on === "start_turn" && timing === "startOfTurn") ||
+    (ability.trigger?.on === "end_turn" && timing === "endOfTurn") ||
     // Format 3: Text-based detection (common in card games)
     (typeof ability.text === "string" &&
       timing === "endOfTurn" &&
@@ -152,4 +161,12 @@ function hasEndOfTurnTrigger(ability: any, timing: string): boolean {
     // Format 5: timing property
     ability.timing === timing
   );
+}
+
+/**
+ * Check if an ability has a start-of-turn trigger
+ * Reuses the same logic as hasEndOfTurnTrigger since it handles both formats
+ */
+function hasStartOfTurnTrigger(ability: any, timing: string): boolean {
+  return hasEndOfTurnTrigger(ability, timing);
 }

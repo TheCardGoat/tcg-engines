@@ -8,12 +8,12 @@ import type {
 import type { PlayerID } from "~/game-engine/core-engine/types/core-types";
 
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
-import type { LorcanaGameState } from "../lorcana-engine-types";
 import type {
   LorcanaCardDefinition,
   LorcanaCardFilter,
+  LorcanaGameState,
   LorcanaPlayerState,
-} from "../lorcana-generic-types";
+} from "../lorcana-engine-types";
 import type { LorcanaCoreOperations } from "../operations/lorcana-core-operations";
 
 // Typed FnContext with LorcanaCoreOperations for moves

@@ -1,12 +1,14 @@
 import { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
+import { logger } from "~/game-engine/core-engine/utils";
+import type { TriggerTiming } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import type { LorcanaEngine } from "../lorcana-engine";
-import type { LorcanaGameState, TriggerTiming } from "../lorcana-engine-types";
 import type {
   LorcanaCardDefinition,
   LorcanaCardFilter,
+  LorcanaGameState,
   LorcanaPlayerState,
-} from "../lorcana-generic-types";
+} from "../lorcana-engine-types";
 import {
   addTriggeredEffectsToTheBag as addTriggeredEffectsToTheBagImpl,
   canCharacterChallenge as canCharacterChallengeImpl,
@@ -173,5 +175,27 @@ export class LorcanaCoreOperations extends CoreOperation<
 
   resolveBagTrigger(id: string): void {
     resolveBagTriggerImpl.call(this, id);
+  }
+
+  /**
+   * Process turn start triggers and add to bag (Lorcana-specific implementation)
+   * Override the base implementation to call our trigger system
+   */
+  processTurnStartTriggers(): void {
+    // Call the Lorcana-specific trigger system
+    this.addTriggeredEffectsToTheBag("startOfTurn");
+  }
+
+  addLoreToPlayer(playerId: string, lore: number): void {
+    if (this.state.ctx.players[playerId]) {
+      const playerState = this.state.ctx.players[playerId] as any;
+      if (!playerState.lore) {
+        playerState.lore = 0;
+      }
+      playerState.lore += lore;
+      logger.log(
+        `DEBUG: Player ${playerId} gains ${lore} lore from triggered effect (total: ${playerState.lore})`,
+      );
+    }
   }
 }

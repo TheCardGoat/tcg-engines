@@ -66,7 +66,7 @@ export const duringGameSegment: LorcanaSegmentConfig = {
             onBegin: ({ coreOps, G }) => {
               const currentPlayer = coreOps.getCurrentTurnPlayer();
               if (!coreOps.isFirstTurn()) {
-                coreOps.drawCard(currentPlayer);
+                coreOps.drawCard(currentPlayer, 1);
               }
 
               logger.log(">>>>>>>>> DRAW Phase");

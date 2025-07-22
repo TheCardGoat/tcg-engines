@@ -22,7 +22,7 @@ import { mockCharacterCard } from "~/game-engine/engines/lorcana/src/testing/moc
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import { LorcanaCardRepository } from "../cards/lorcana-card-repository";
 import { type LorcanaCardFilter, LorcanaEngine } from "../lorcana-engine";
-import type { LorcanaGameState, Zone } from "../lorcana-engine-types";
+import type { LorcanaGameState, LorcanaZone } from "../lorcana-engine-types";
 import { createEmptyLorcanaGameState } from "../utils/createEmptyLorcanaGameState";
 
 // Creates a test card repository that includes both official cards and test cards
@@ -52,7 +52,7 @@ export const cardWithoutInkwell: LorcanitoCharacterCard = {
 };
 
 export type TestInitialState = Partial<
-  Record<Zone, LorcanitoCard[] | number>
+  Record<LorcanaZone, LorcanitoCard[] | number>
 > & { lore?: number };
 
 type Opts = {
@@ -347,7 +347,7 @@ export class LorcanaTestEngine {
   }
 
   assertThatZonesContain(
-    zones: Partial<Record<Zone, number>>,
+    zones: Partial<Record<LorcanaZone, number>>,
     playerId?: string,
   ) {
     expect(this.getZonesCardCount(playerId)).toEqual(
@@ -715,7 +715,7 @@ function updateInitialState(
   };
 
   for (const zone of Object.keys(zones)) {
-    const zoneKey = zone as Zone;
+    const zoneKey = zone as LorcanaZone;
     const value = state[zoneKey];
     const zoneCards: LorcanitoCard[] =
       typeof value === "number"

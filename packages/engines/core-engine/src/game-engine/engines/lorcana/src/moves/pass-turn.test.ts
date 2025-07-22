@@ -89,8 +89,8 @@ describe("Move: Pass Turn", () => {
     expect(typeof moves.passTurn).toBe("function");
   });
 
-  describe("Triggered Effects on passing turn", () => {
-    it.skip("At the start of your turn", () => {
+  describe.only("Triggered Effects on passing turn", () => {
+    it("At the start of your turn", () => {
       const testEngine = new LorcanaTestEngine(
         {
           deck: 5,
@@ -107,13 +107,14 @@ describe("Move: Pass Turn", () => {
       // For now we're adding two items, but in the future we'd like to have only one item. Given that there's just one ability with two targets
       expect(testEngine.bag).toHaveLength(2);
 
-      // Turn player should be able to resolve the bag first
+      // According to Lorcana rules 8.7.4-8.7.5, the trigger controller (player_two, who owns Donald Duck)
+      // resolves all of their triggers first. Since both triggers are controlled by player_two,
+      // only player_two should be able to resolve both triggers.
       testEngine.changeActivePlayer("player_two");
       testEngine.resolveBag();
       expect(testEngine.bag).toHaveLength(1);
 
-      // Only once the turn player resolves the bag, the other player can resolve it
-      testEngine.changeActivePlayer("player_one");
+      // player_two resolves their second trigger
       testEngine.resolveBag();
       expect(testEngine.bag).toHaveLength(0);
     });
