@@ -3,19 +3,131 @@ import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { LorcanaMove } from "./types";
 import { toLorcanaCoreOps } from "./types";
 
-// **4.3.6. Challenge**
-// **4.3.6.1.** The player declares that a character they control is challenging.
-// **4.3.6.2.** Choose an exerted opposing character or location to challenge.
-// **4.3.6.3.** Check for challenge restrictions.
-// **4.3.6.4.** Exert the challenging character.
-// **4.3.6.5.** Apply "while challenging" effects.
-// **4.3.6.6.** Add triggered abilities to the bag.
-// **4.3.6.7.** Deal damage equal to Strength simultaneously.
-// **4.3.6.8.** Add banishment triggers to bag if needed.
-// **4.3.6.9.** End "while challenging" effects.
+// **4.3.6. Challenge - Implementation based on Lorcana Comprehensive Rules**
+//
+// Challenge Flow (from Rules 4.3.6.5-4.3.6.18):
+// 1. **Declare challenger**: Player announces challenging character (must be dry, ready, able to challenge)
+// 2. **Choose target**: Select exerted opposing character OR any opposing location to challenge
+// 3. **Check restrictions**: Verify no restrictions prevent the challenge (Evasive, Bodyguard, etc.)
+// 4. **Exert challenger**: The challenging character becomes exerted
+// 5. **Challenge occurs**: Both characters are now "in a challenge"
+// 6. **Apply "while challenging" effects**: Temporary effects like Challenger keyword
+// 7. **Add triggers to bag**: Effects that trigger from challenge starting
+// 8. **Deal damage simultaneously**: Each character deals damage equal to their Strength to the other
+// 9. **Apply damage modifications**: Handle Resist keyword, etc.
+// 10. **Check for banishment**: Characters with damage >= Willpower are banished
+// 11. **Add banishment triggers**: Effects that trigger from banishment in challenge
+// 12. **End "while challenging" effects**: Clean up temporary effects
+//
+// Key Rules:
+// - Only characters can challenge (4.3.6.1)
+// - Can challenge exerted characters OR locations (4.3.6.7, 4.3.6.19-4.3.6.23)
+// - Locations don't have Strength and don't deal damage back (4.3.6.22)
+// - Evasive characters can only be challenged by Evasive characters (10.4.1)
+// - Bodyguard characters must be challenged before non-Bodyguard (10.2.3)
+// - Challenger keyword gives +N Strength while challenging (10.3.1)
+// - Resist keyword reduces damage taken by N (10.6.1)
 
 interface ChallengeOptions {
   targetInstanceId: string; // The character or location being challenged
+}
+
+interface ChallengeRestriction {
+  blocked: boolean;
+  reason?: string;
+  errorCode?: string;
+  errorMessage?: string;
+  context?: any;
+}
+
+/**
+ * Check for effects that prevent or restrict challenges
+ * Returns restriction info if challenge should be blocked
+ */
+function checkChallengeRestrictions(
+  lorcanaOps: any,
+  challengerInstanceId: string,
+  targetInstanceId: string,
+  playerId: string,
+): ChallengeRestriction {
+  const challenger = lorcanaOps.getCardInstance(challengerInstanceId);
+  const target = lorcanaOps.getCardInstance(targetInstanceId);
+
+  if (!(challenger && target)) {
+    return {
+      blocked: true,
+      reason: "Card not found",
+      errorCode: "CARD_NOT_FOUND",
+      errorMessage: "moves.challenge.errors.cardNotFound",
+      context: { challengerInstanceId, targetInstanceId },
+    };
+  }
+
+  const challengerKeywords = (challenger.card as any).keywords || [];
+  const targetKeywords = (target.card as any).keywords || [];
+
+  // Check for "can't challenge" effects on challenger
+  // Some cards have text like "This character can't challenge"
+  if (hasRestriction(challengerKeywords, "CantChallenge")) {
+    return {
+      blocked: true,
+      reason: "Challenger has 'can't challenge' restriction",
+      errorCode: "CHALLENGER_CANT_CHALLENGE",
+      errorMessage: "moves.challenge.errors.challengerCantChallenge",
+      context: { challengerInstanceId },
+    };
+  }
+
+  // Check for "can't be challenged" effects on target
+  // Some cards have text like "This character can't be challenged"
+  if (hasRestriction(targetKeywords, "CantBeChallenged")) {
+    return {
+      blocked: true,
+      reason: "Target has 'can't be challenged' restriction",
+      errorCode: "TARGET_CANT_BE_CHALLENGED",
+      errorMessage: "moves.challenge.errors.targetCantBeChallenged",
+      context: { targetInstanceId },
+    };
+  }
+
+  // Check for Ward keyword - prevents being chosen by opponent's effects
+  // While Ward typically applies to spells/abilities, some interpretations include challenges
+  if (targetKeywords.includes("Ward")) {
+    const targetOwner = lorcanaOps.getCardOwner(targetInstanceId);
+    if (targetOwner !== playerId) {
+      return {
+        blocked: true,
+        reason: "Target has Ward and is controlled by opponent",
+        errorCode: "TARGET_HAS_WARD",
+        errorMessage: "moves.challenge.errors.targetHasWard",
+        context: { targetInstanceId },
+      };
+    }
+  }
+
+  // Check for Reckless keyword restrictions
+  // Reckless characters can't quest and must challenge if able
+  const hasReckless = challengerKeywords.some((k: string) =>
+    k.includes("Reckless"),
+  );
+  if (hasReckless) {
+    // Reckless characters get a preference bonus for challenging (handled elsewhere)
+    // But they don't get blocked from challenging - they're encouraged to challenge
+  }
+
+  // No restrictions found
+  return { blocked: false };
+}
+
+/**
+ * Helper function to check if a card has a specific restriction keyword
+ */
+function hasRestriction(keywords: string[], restriction: string): boolean {
+  return keywords.some(
+    (keyword) =>
+      keyword.includes(restriction) ||
+      keyword.toLowerCase().includes(restriction.toLowerCase()),
+  );
 }
 
 export const challengeMove: LorcanaMove = (
@@ -105,10 +217,19 @@ export const challengeMove: LorcanaMove = (
       );
     }
 
-    // If target is a character, it must be exerted
+    // If target is a character, it must be exerted (Rule 4.3.6.7)
     if (isTargetCharacter) {
-      // Note: This would need proper character state tracking for exerted status
-      // For now, we assume the validation passes
+      const targetCharacter = target;
+      if (!targetCharacter.isExerted) {
+        logger.error(
+          `Cannot challenge ready character ${options.targetInstanceId} - target must be exerted`,
+        );
+        return createInvalidMove(
+          "TARGET_NOT_EXERTED",
+          "moves.challenge.errors.targetNotExerted",
+          { instanceId: options.targetInstanceId },
+        );
+      }
       logger.info(`Challenging exerted character ${options.targetInstanceId}`);
     }
 
@@ -170,58 +291,122 @@ export const challengeMove: LorcanaMove = (
     }
 
     // Check if challenger can challenge (must be ready/not exerted)
-    // Note: This would need proper character state tracking
-    // For now, we assume the challenger is ready
+    // Exception: Rush characters can challenge when they're played this turn
+    const challengerMeta = lorcanaOps.state.G.metas[challengerInstanceId] || {};
+    const hasRush = challengerKeywords.some((k: string) => k.includes("Rush"));
+    const wasPlayedThisTurn = challengerMeta.playedThisTurn === true;
 
-    // Get strength values for damage calculation
-    const challengerStrength = (challenger.card as any).strength || 0;
+    const canChallengeNormally =
+      lorcanaOps.canCharacterChallenge(challengerInstanceId);
+    const canChallengeWithRush = hasRush && wasPlayedThisTurn;
+
+    if (!(canChallengeNormally || canChallengeWithRush)) {
+      const reason =
+        hasRush && wasPlayedThisTurn
+          ? "Character with Rush played this turn but still can't challenge"
+          : "Character is exerted or unable to challenge";
+
+      logger.error(
+        `Character ${challengerInstanceId} cannot challenge: ${reason}`,
+      );
+      return createInvalidMove(
+        "CHALLENGER_CANNOT_CHALLENGE",
+        "moves.challenge.errors.challengerCannotChallenge",
+        {
+          instanceId: challengerInstanceId,
+          reason,
+        },
+      );
+    }
+
+    // Check for challenge restrictions on the challenger
+    const challengeRestrictions = checkChallengeRestrictions(
+      lorcanaOps,
+      challengerInstanceId,
+      options.targetInstanceId,
+      playerID,
+    );
+
+    if (challengeRestrictions.blocked) {
+      logger.error(`Challenge blocked: ${challengeRestrictions.reason}`);
+      return createInvalidMove(
+        challengeRestrictions.errorCode,
+        challengeRestrictions.errorMessage,
+        challengeRestrictions.context,
+      );
+    }
+
+    // Calculate base strength values
+    let challengerStrength = (challenger.card as any).strength || 0;
     const targetStrength = isTargetLocation
       ? 0
       : (target.card as any).strength || 0;
 
-    // Exert the challenging character
+    // Apply Challenger keyword bonus (while challenging)
+    const challengerKeywordsArray = challengerKeywords as string[];
+    const challengerBonus = challengerKeywordsArray
+      .filter((k) => k.startsWith("Challenger"))
+      .reduce((bonus, keyword) => {
+        const match = keyword.match(/Challenger\s*\+?(\d+)/);
+        return bonus + (match ? Number.parseInt(match[1]) : 1);
+      }, 0);
+
+    challengerStrength += challengerBonus;
+
+    // Exert the challenging character (Rule 4.3.6.9)
     logger.info(`Exerting challenger ${challengerInstanceId}`);
+    lorcanaOps.exertCard(challengerInstanceId);
 
     // Apply "while challenging" effects
-    // Note: This would need to be implemented based on specific card abilities
+    logger.info("Applying 'while challenging' effects");
+    // TODO: Implement dynamic effect system for temporary modifiers
 
-    // Add triggered effects to the bag (rule 4.3.6.5)
-    lorcanaOps.addTriggeredEffectsToTheBag("onChallenge", challengerInstanceId);
+    // Add triggered effects to the bag (rule 4.3.6.6)
+    logger.info("Adding challenge triggers to the bag");
+    // TODO: Implement proper triggered ability system
+    // This should handle abilities like "Whenever this character challenges..."
 
-    // Deal damage simultaneously
-    if (challengerStrength > 0) {
-      logger.info(`Challenger deals ${challengerStrength} damage to target`);
-      // Note: This would need proper damage tracking system
-    }
+    // Deal damage simultaneously (rule 4.3.6.13)
+    logger.info(
+      `Challenge damage step: Challenger (${challengerStrength}) vs Target (${targetStrength})`,
+    );
 
-    if (targetStrength > 0 && isTargetCharacter) {
-      logger.info(`Target deals ${targetStrength} damage to challenger`);
-      // Note: This would need proper damage tracking system
-    }
+    const challengerDamageToTake = targetStrength;
+    let targetDamageToTake = challengerStrength;
 
-    // Check for banishment (when damage >= willpower)
-    const challengerWillpower = (challenger.card as any).willpower || 0;
-    const targetWillpower = isTargetLocation
-      ? (target.card as any).willpower || 0
-      : (target.card as any).willpower || 0;
+    // Apply Resist keyword (damage reduction)
+    const targetKeywordsArray = targetKeywords as string[];
+    const targetResist = targetKeywordsArray
+      .filter((k) => k.startsWith("Resist"))
+      .reduce((resist, keyword) => {
+        const match = keyword.match(/Resist\s*\+?(\d+)/);
+        return resist + (match ? Number.parseInt(match[1]) : 1);
+      }, 0);
 
-    if (targetStrength >= challengerWillpower && challengerWillpower > 0) {
-      logger.info(`Challenger ${challengerInstanceId} is banished`);
-      // Add banishment trigger to bag
-      lorcanaOps.addTriggeredEffectsToTheBag("onBanish", challengerInstanceId);
-    }
+    targetDamageToTake = Math.max(0, targetDamageToTake - targetResist);
 
-    if (challengerStrength >= targetWillpower && targetWillpower > 0) {
-      logger.info(`Target ${options.targetInstanceId} is banished`);
-      // Add banishment trigger to bag
-      lorcanaOps.addTriggeredEffectsToTheBag(
-        "onBanish",
-        options.targetInstanceId,
+    // Apply damage counters (Rule 4.3.6.16)
+    if (targetDamageToTake > 0) {
+      logger.info(
+        `Challenger deals ${targetDamageToTake} damage to target (after Resist: ${targetResist})`,
       );
+      lorcanaOps.applyDamage(options.targetInstanceId, targetDamageToTake);
     }
 
-    // End "while challenging" effects
-    // Note: This would clean up temporary effects
+    if (challengerDamageToTake > 0 && isTargetCharacter) {
+      logger.info(
+        `Target deals ${challengerDamageToTake} damage to challenger`,
+      );
+      lorcanaOps.applyDamage(challengerInstanceId, challengerDamageToTake);
+    }
+
+    // Game state check will automatically handle banishment (Rule 1.9.1.3)
+    // Characters/locations with damage >= willpower are banished
+    lorcanaOps.gameStateCheck();
+
+    // End "while challenging" effects (rule 4.3.6.18)
+    logger.info("Ending 'while challenging' effects");
+    // TODO: Clean up temporary effects and modifiers
 
     logger.info(
       `Player ${playerID} challenged ${options.targetInstanceId} with ${challengerInstanceId}`,

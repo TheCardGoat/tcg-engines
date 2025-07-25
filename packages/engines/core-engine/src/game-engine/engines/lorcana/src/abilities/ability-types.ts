@@ -9,7 +9,6 @@ export type LayerItem = {
   controllerId: string;
   ability: Ability;
   targets: Target[];
-  timestamp: number;
   optional: boolean;
 };
 

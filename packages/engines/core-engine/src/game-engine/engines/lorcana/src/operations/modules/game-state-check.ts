@@ -65,42 +65,60 @@ export function gameStateCheck(this: LorcanaCoreOperations): void {
     //   // For now, we skip this check as the property doesn't exist in LorcanaPlayerState yet
     // }
 
-    // TODO: IMPLEMENT LATER, SKIP FOR NOW
     // 1.9.1.3. Check for banishment: Characters/locations with damage >= willpower
-    // Query characters and locations separately since we need both types
-    // const characterFilter: LorcanaCardFilter = {
-    //   zone: "play",
-    //   cardType: "character",
-    // };
-    // const locationFilter: LorcanaCardFilter = {
-    //   zone: "play",
-    //   cardType: "location",
-    // };
-    //
-    // const characters = this.queryCards(characterFilter);
-    // const locations = this.queryCards(locationFilter);
-    // const allCards = [...characters, ...locations];
+    // Rule: If a character or location has damage equal to or greater than its Willpower {W},
+    // that character or location is banished.
+    const allPlayCards = this.getCardsInZone("play");
+    const cardsToBanish: string[] = [];
 
-    // for (const card of allCards) {
-    //   const damage = this.state.G.metas[card.instanceId]?.damage || 0;
-    //   const willpower = card.card.willpower || 0;
-    //
-    //   if (damage >= willpower && willpower > 0) {
-    //     logger.debug(
-    //       `Banishment: ${card.instanceId} has damage ${damage} >= willpower ${willpower}`,
-    //     );
-    //     // Character or location is banished
-    //     const ownerId = this.getCardOwner(card.instanceId);
-    //     if (ownerId) {
-    //       this.moveCard({
-    //         playerId: ownerId,
-    //         instanceId: card.instanceId,
-    //         to: "discard",
-    //       });
-    //       hasRequiredActions = true;
-    //     }
-    //   }
-    // }
+    // First, identify all cards that should be banished
+    for (const card of allPlayCards) {
+      const damage = this.state.G.metas[card.instanceId]?.damage || 0;
+      const willpower = (card.card as any).willpower || 0;
+      const cardType = card.card.type;
+
+      // Only check cards that have willpower (characters and locations)
+      // Rule 1.9.1.3 applies to characters and locations with willpower > 0
+      if (damage >= willpower && willpower > 0) {
+        const cardTypeStr = Array.isArray(cardType) ? cardType[0] : cardType;
+        logger.debug(
+          `Banishment check: ${cardTypeStr} ${card.instanceId} has damage ${damage} >= willpower ${willpower}`,
+        );
+        cardsToBanish.push(card.instanceId);
+      }
+    }
+
+    // Then banish all identified cards simultaneously (Rule 1.9.5)
+    if (cardsToBanish.length > 0) {
+      logger.info(
+        `Banishing ${cardsToBanish.length} cards due to damage >= willpower`,
+      );
+
+      for (const cardId of cardsToBanish) {
+        const ownerId = this.getCardOwner(cardId);
+        if (ownerId) {
+          // Move card to discard (banishment)
+          this.moveCard({
+            playerId: ownerId,
+            instanceId: cardId,
+            to: "discard",
+          });
+
+          // Clear damage when card leaves play (Rule 9.4.1)
+          // "When a card with damage leaves play, when game states are checked
+          // all damage counters on it cease to exist."
+          if (this.state.G.metas[cardId]) {
+            this.state.G.metas[cardId].damage = 0;
+          }
+
+          // TODO: Add banishment triggered effects to bag
+          // Effects like "When this character is banished" should trigger here
+          // This will be implemented when the triggered effect system is ready
+
+          hasRequiredActions = true;
+        }
+      }
+    }
   }
 
   // Log a warning if we hit the loop limit

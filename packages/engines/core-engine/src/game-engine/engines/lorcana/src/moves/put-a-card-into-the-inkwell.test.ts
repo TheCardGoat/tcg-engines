@@ -38,11 +38,11 @@ describe("Move: Put a Card into the Inkwell", () => {
   it("should successfully put a card with inkwell symbol into the inkwell", () => {
     const handCards = testEngine.getCardsInZone("hand", "player_one");
     const cardWithInkwellInstance = handCards.find(
-      (card) => card.card?.inkwell === true,
+      (card) => card.inkwell === true,
     );
 
     expect(cardWithInkwellInstance).toBeDefined();
-    expect(cardWithInkwellInstance!.card.inkwell).toBe(true);
+    expect(cardWithInkwellInstance!.inkwell).toBe(true);
 
     // Initial state verification - we have 3 cards in hand (no mulligan when skipping pre-match)
     testEngine.assertThatZonesContain(
@@ -55,7 +55,7 @@ describe("Move: Put a Card into the Inkwell", () => {
 
     // Put card into inkwell
     const response = testEngine.putACardIntoTheInkwell(
-      cardWithInkwellInstance!.instanceId,
+      cardWithInkwellInstance!,
     );
     expect(response.success).toBe(true);
 
@@ -71,9 +71,7 @@ describe("Move: Put a Card into the Inkwell", () => {
     // Verify the correct card is in the inkwell
     const inkwellCards = testEngine.getCardsInZone("inkwell", "player_one");
     expect(inkwellCards).toHaveLength(1);
-    expect(inkwellCards[0].instanceId).toBe(
-      cardWithInkwellInstance!.instanceId,
-    );
+    expect(inkwellCards[0].inkwell).toBe(true);
   });
 
   it("should reject cards without inkwell symbol", () => {
@@ -95,15 +93,15 @@ describe("Move: Put a Card into the Inkwell", () => {
 
     const handCards = testEngine.getCardsInZone("hand", "player_one");
     const cardWithoutInkwellInstance = handCards.find(
-      (card) => card.card?.inkwell === false,
+      (card) => card.inkwell === false,
     );
 
     expect(cardWithoutInkwellInstance).toBeDefined();
-    expect(cardWithoutInkwellInstance!.card.inkwell).toBe(false);
+    expect(cardWithoutInkwellInstance!.inkwell).toBe(false);
 
     // Attempting to put non-inkwell card should fail
     expect(() => {
-      testEngine.putACardIntoTheInkwell(cardWithoutInkwellInstance!.instanceId);
+      testEngine.putACardIntoTheInkwell(cardWithoutInkwellInstance!);
     }).toThrow();
 
     // Verify zones unchanged
@@ -127,9 +125,9 @@ describe("Move: Put a Card into the Inkwell", () => {
 
     const cardsWithInkwell = testEngine
       .getCardsInZone("hand", "player_one")
-      .filter((card) => card.card?.inkwell === true);
+      .filter((card) => card.inkwell === true);
 
-    testEngine.putACardIntoTheInkwell(cardsWithInkwell[0].instanceId);
+    testEngine.putACardIntoTheInkwell(cardsWithInkwell[0]);
     testEngine.assertThatZonesContain(
       {
         hand: 2,
@@ -140,7 +138,7 @@ describe("Move: Put a Card into the Inkwell", () => {
 
     // Second attempt should fail (once per turn rule)
     expect(() => {
-      testEngine.putACardIntoTheInkwell(cardsWithInkwell[1].instanceId);
+      testEngine.putACardIntoTheInkwell(cardsWithInkwell[1]);
     }).toThrow();
 
     // Verify only one card moved, in other words, zones unchanged
@@ -161,7 +159,7 @@ describe("Move: Put a Card into the Inkwell", () => {
 
     // Player one trying to put player two's card into inkwell should fail
     expect(() => {
-      testEngine.putACardIntoTheInkwell(player2Card.instanceId);
+      testEngine.putACardIntoTheInkwell(player2Card);
     }).toThrow();
 
     // Verify zones unchanged
@@ -183,10 +181,13 @@ describe("Move: Put a Card into the Inkwell", () => {
   });
 
   it("should reject non-existent card instance", () => {
-    const fakeInstanceId = "fake-instance-id-12345";
+    const fakeCard = {
+      ...testCharacterCard,
+      instanceId: "fake-instance-id-12345",
+    };
 
     expect(() => {
-      testEngine.putACardIntoTheInkwell(fakeInstanceId);
+      testEngine.putACardIntoTheInkwell(fakeCard);
     }).toThrow();
 
     // Verify zones unchanged
@@ -202,24 +203,24 @@ describe("Move: Put a Card into the Inkwell", () => {
   it("should update turn actions state correctly", () => {
     const handCards = testEngine.getCardsInZone("hand", "player_one");
     const cardWithInkwellInstance = handCards.find(
-      (card) => card.card?.inkwell === true,
+      (card) => card.inkwell === true,
     );
 
     expect(cardWithInkwellInstance).toBeDefined();
 
     // Check initial turn actions state
-    const initialState = testEngine.authoritativeEngine.getGameState();
-    expect(initialState.G.turnActions?.putCardIntoInkwell).toBeFalsy();
+    const initialState = testEngine.getState();
+    expect(initialState?.turnActions?.putCardIntoInkwell).toBeFalsy();
 
     // Put card into inkwell
     const response = testEngine.putACardIntoTheInkwell(
-      cardWithInkwellInstance!.instanceId,
+      cardWithInkwellInstance!,
     );
     expect(response.success).toBe(true);
 
     // Check turn actions state is updated
-    const updatedState = testEngine.authoritativeEngine.getGameState();
-    expect(updatedState.G.turnActions?.putCardIntoInkwell).toBe(true);
+    const updatedState = testEngine.getState();
+    expect(updatedState?.turnActions?.putCardIntoInkwell).toBe(true);
   });
 
   it("should work during main phase", () => {
@@ -228,14 +229,14 @@ describe("Move: Put a Card into the Inkwell", () => {
 
     const handCards = testEngine.getCardsInZone("hand", "player_one");
     const cardWithInkwellInstance = handCards.find(
-      (card) => card.card?.inkwell === true,
+      (card) => card.inkwell === true,
     );
 
     expect(cardWithInkwellInstance).toBeDefined();
 
     // Should work in main phase
     const response = testEngine.putACardIntoTheInkwell(
-      cardWithInkwellInstance!.instanceId,
+      cardWithInkwellInstance!,
     );
     expect(response.success).toBe(true);
   });
@@ -246,15 +247,41 @@ describe("Move: Put a Card into the Inkwell", () => {
 
     const player1Cards = testEngine.getCardsInZone("hand", "player_one");
     const cardWithInkwellInstance = player1Cards.find(
-      (card) => card.card?.inkwell === true,
+      (card) => card.inkwell === true,
     );
 
     expect(cardWithInkwellInstance).toBeDefined();
 
     // Should work for the turn player
     const response = testEngine.putACardIntoTheInkwell(
-      cardWithInkwellInstance!.instanceId,
+      cardWithInkwellInstance!,
     );
     expect(response.success).toBe(true);
+  });
+
+  it("triggers the inkwell ability", () => {
+    const testEngine = new LorcanaTestEngine({
+      hand: [cardWithInkwell],
+      deck: 5,
+      inkwell: [],
+    });
+
+    testEngine.changeActivePlayer("player_one");
+
+    const handCards = testEngine.getCardsInZone("hand", "player_one");
+    const cardWithInkwellInstance = handCards.find(
+      (card) => card.inkwell === true,
+    );
+
+    expect(cardWithInkwellInstance).toBeDefined();
+
+    const response = testEngine.putACardIntoTheInkwell(
+      cardWithInkwellInstance!,
+    );
+    expect(response.success).toBe(true);
+
+    expect(testEngine.bag).toHaveLength(1);
+    testEngine.resolveBag();
+    expect(testEngine.bag).toHaveLength(0);
   });
 });

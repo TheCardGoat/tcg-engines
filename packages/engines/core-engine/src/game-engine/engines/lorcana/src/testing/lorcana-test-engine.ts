@@ -537,12 +537,15 @@ export class LorcanaTestEngine {
     return response;
   }
 
-  putACardIntoTheInkwell(instanceId: string) {
-    const response = this.moves.putACardIntoTheInkwell(instanceId);
+  putACardIntoTheInkwell(card: LorcanaCardInstance | LorcanitoCard) {
+    // If it's already a LorcanaCardInstance, use it directly
+    // Otherwise, use getCardModel to find it
+    const model = "instanceId" in card ? card : this.getCardModel(card);
+    const response = this.moves.putACardIntoTheInkwell(model.instanceId);
 
     if (!response.success) {
       logger.error(
-        `Failed to put card ${instanceId} into the inkwell: ${JSON.stringify("error" in response ? response.error : response)}`,
+        `Failed to put card ${model.instanceId} into the inkwell: ${JSON.stringify("error" in response ? response.error : response)}`,
       );
       throw new Error(JSON.stringify(response));
     }

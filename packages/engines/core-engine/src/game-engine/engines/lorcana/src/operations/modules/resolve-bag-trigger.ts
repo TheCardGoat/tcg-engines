@@ -58,6 +58,12 @@ export function resolveBagTrigger(
         }
         break;
       }
+      case "basicInkwellTrigger": {
+        // This is a minimal implementation for inkwell triggers
+        // Just log that the trigger was resolved - no actual effect for now
+        // This will be expanded when we implement the full bag system
+        break;
+      }
       // Add other effect types as needed
       default:
         // Silently ignore unhandled effect types in production
