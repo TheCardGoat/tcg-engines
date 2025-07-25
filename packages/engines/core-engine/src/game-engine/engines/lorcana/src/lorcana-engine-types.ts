@@ -133,9 +133,6 @@ export type LorcanaCardFilter = ExtendCardFilter<{
   questedThisTurn?: boolean;
   challengedThisTurn?: boolean;
 
-  // Collection filtering
-  set?: string;
-
   // Text search
   nameContains?: string;
   textContains?: string;

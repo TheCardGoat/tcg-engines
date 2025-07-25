@@ -63,13 +63,15 @@ export function addTriggeredEffectsToTheBag(
                     id: createId(),
                     type: "triggered" as const,
                     text: abilityAny.text || `${timing} trigger`,
-                    effect: {
-                      type: layerEffect.type === "draw" ? "draw" : "gainLore",
-                      parameters: {
-                        amount: layerEffect.amount || 1,
-                        target: layerEffect.target,
+                    effects: [
+                      {
+                        type: layerEffect.type === "draw" ? "draw" : "gainLore",
+                        parameters: {
+                          amount: layerEffect.amount || 1,
+                          target: layerEffect.target,
+                        },
                       },
-                    },
+                    ],
                     timing: timing as any,
                   },
                   targets: [], // Will be resolved when the effect is processed
@@ -98,12 +100,14 @@ export function addTriggeredEffectsToTheBag(
                   id: createId(),
                   type: "triggered" as const,
                   text: abilityAny.text || `${timing} trigger`,
-                  effect: {
-                    type: "multiEffect",
-                    parameters: {
-                      effects: abilityAny.layer.effects,
+                  effects: [
+                    {
+                      type: "multiEffect",
+                      parameters: {
+                        effects: abilityAny.layer.effects,
+                      },
                     },
-                  },
+                  ],
                   timing: timing as any,
                 },
                 targets: [],
@@ -172,10 +176,12 @@ export function addTriggeredEffectsToTheBag(
             id: createId(),
             type: "triggered" as const,
             text: "Card put into inkwell",
-            effect: {
-              type: "basicInkwellTrigger",
-              parameters: {},
-            },
+            effects: [
+              {
+                type: "basicInkwellTrigger",
+                parameters: {},
+              },
+            ],
             timing: timing as any,
           },
           targets: [],
@@ -241,10 +247,12 @@ function checkAndAddTriggeredAbilities(
           id: createId(),
           type: "triggered" as const,
           text: `${timing} ${condition}`,
-          effect: {
-            type: "gainLore",
-            parameters: { amount: 1 },
-          },
+          effects: [
+            {
+              type: "gainLore",
+              parameters: { amount: 1 },
+            },
+          ],
           timing: timing as any,
         },
         targets: [], // Will be resolved when the effect is processed
@@ -292,15 +300,17 @@ function checkAndAddTriggeredAbilities(
                 id: createId(),
                 type: "triggered" as const,
                 text: "Character moves to location",
-                effect: {
-                  type: "gainLore",
-                  parameters: {
-                    amount:
-                      typeof layerEffect.amount === "number"
-                        ? layerEffect.amount
-                        : 1,
+                effects: [
+                  {
+                    type: "gainLore",
+                    parameters: {
+                      amount:
+                        typeof layerEffect.amount === "number"
+                          ? layerEffect.amount
+                          : 1,
+                    },
                   },
-                },
+                ],
                 timing: timing as any,
               },
               targets: [],

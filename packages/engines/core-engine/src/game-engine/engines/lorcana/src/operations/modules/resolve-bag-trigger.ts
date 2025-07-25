@@ -20,54 +20,57 @@ export function resolveBagTrigger(
 
   const trigger = this.state.G.bag[triggerIndex];
 
-  // Execute the trigger's effect before removing it
-  if (trigger.ability?.effect) {
-    switch (trigger.ability.effect.type) {
-      case "gainLore": {
-        const amount = trigger.ability.effect.parameters?.amount || 1;
-        if (this.state.ctx.players[trigger.controllerId]) {
-          const playerState = this.state.ctx.players[
-            trigger.controllerId
-          ] as any;
-          if (!playerState.lore) {
-            playerState.lore = 0;
+  // Execute the trigger's effects before removing it
+  if (trigger.ability?.effects && trigger.ability.effects.length > 0) {
+    // Process each effect in the ability
+    for (const effect of trigger.ability.effects) {
+      switch (effect.type) {
+        case "gainLore": {
+          const amount = effect.parameters?.amount || 1;
+          if (this.state.ctx.players[trigger.controllerId]) {
+            const playerState = this.state.ctx.players[
+              trigger.controllerId
+            ] as any;
+            if (!playerState.lore) {
+              playerState.lore = 0;
+            }
+            playerState.lore += amount;
           }
-          playerState.lore += amount;
+          break;
         }
-        break;
-      }
-      case "draw": {
-        const amount = trigger.ability.effect.parameters?.amount || 1;
-        const target = trigger.ability.effect.parameters?.target;
+        case "draw": {
+          const amount = effect.parameters?.amount || 1;
+          const target = effect.parameters?.target;
 
-        // Determine which player should draw the card
-        let targetPlayerId = trigger.controllerId;
-        if (target?.value === "opponent") {
-          // Find the opponent of the controller
-          const allPlayers = Object.keys(this.state.ctx.players);
-          targetPlayerId =
-            allPlayers.find((p) => p !== trigger.controllerId) ||
-            trigger.controllerId;
-        } else if (target?.value === "self") {
-          targetPlayerId = trigger.controllerId;
-        }
+          // Determine which player should draw the card
+          let targetPlayerId = trigger.controllerId;
+          if (target?.value === "opponent") {
+            // Find the opponent of the controller
+            const allPlayers = Object.keys(this.state.ctx.players);
+            targetPlayerId =
+              allPlayers.find((p) => p !== trigger.controllerId) ||
+              trigger.controllerId;
+          } else if (target?.value === "self") {
+            targetPlayerId = trigger.controllerId;
+          }
 
-        // Draw the card(s) using the core operations
-        for (let i = 0; i < amount; i++) {
-          this.drawCard(targetPlayerId, 1);
+          // Draw the card(s) using the core operations
+          for (let i = 0; i < amount; i++) {
+            this.drawCard(targetPlayerId, 1);
+          }
+          break;
         }
-        break;
+        case "basicInkwellTrigger": {
+          // This is a minimal implementation for inkwell triggers
+          // Just log that the trigger was resolved - no actual effect for now
+          // This will be expanded when we implement the full bag system
+          break;
+        }
+        // Add other effect types as needed
+        default:
+          // Silently ignore unhandled effect types in production
+          break;
       }
-      case "basicInkwellTrigger": {
-        // This is a minimal implementation for inkwell triggers
-        // Just log that the trigger was resolved - no actual effect for now
-        // This will be expanded when we implement the full bag system
-        break;
-      }
-      // Add other effect types as needed
-      default:
-        // Silently ignore unhandled effect types in production
-        break;
     }
   }
 
