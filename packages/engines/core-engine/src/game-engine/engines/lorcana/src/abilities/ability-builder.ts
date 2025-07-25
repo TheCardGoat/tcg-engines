@@ -36,7 +36,6 @@ export class AbilityBuilder {
     if (!parsedAbility.abilityType) return null;
 
     return {
-      id: uuid(),
       type: parsedAbility.abilityType,
       text: parsedAbility.text,
       name,

@@ -29,7 +29,6 @@ export type AbilityType =
   | "replacement";
 
 export type Ability = {
-  id: string;
   type: AbilityType;
   text: string;
   name?: string;
