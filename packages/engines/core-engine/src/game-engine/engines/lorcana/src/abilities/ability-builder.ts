@@ -5,7 +5,6 @@ import type { LorcanaZone } from "../lorcana-engine-types";
 import type {
   Ability,
   AbilityCondition,
-  AbilityCost,
   AbilityTarget,
   AbilityType,
   Classification,
@@ -14,6 +13,7 @@ import type {
   EffectType,
   Keyword,
   KeywordAbility,
+  LorcanaAbilityCost,
   ShiftAbility,
   Target,
   TriggerTiming,
@@ -177,8 +177,9 @@ export class AbilityBuilder {
     // Check for location targets
     if (text.includes("chosen location")) {
       targets.push({
-        type: "location",
+        type: "card",
         zone: "play" as LorcanaZone,
+        filter: { cardType: "location" },
       });
     }
 
@@ -236,8 +237,8 @@ export class AbilityBuilder {
    * @param text The ability text to analyze
    * @returns AbilityCost object
    */
-  static extractCost(text: string): AbilityCost {
-    const cost: AbilityCost = {};
+  static extractCost(text: string): LorcanaAbilityCost {
+    const cost: LorcanaAbilityCost = {};
 
     // Split the text to isolate the cost section for activated abilities
     const parts = text.split(/[-–—]/); // Handle different dash characters

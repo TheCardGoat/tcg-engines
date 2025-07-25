@@ -33,7 +33,7 @@ export type Ability = {
   text: string;
   name?: string;
   targets?: AbilityTarget[]; // When an ability has no targets, targets must the taken from effects. When an ability has targets, the same targets must be applied to all the effects.
-  cost?: AbilityCost;
+  cost?: LorcanaAbilityCost;
   effects: Effect[];
   timing?: TriggerTiming;
   keyword?: KeywordAbility; // For keyword abilities
@@ -106,8 +106,8 @@ export type DynamicValue = {
   multiplier?: number;
 };
 
-export type AbilityTarget = {
-  type: "card" | "player" | "location";
+interface BaseTarget {
+  type: "card" | "player";
   zone?: LorcanaZone;
   controller?: "self" | "opponent" | "any" | "target";
   count?: number | DynamicValue;
@@ -123,9 +123,22 @@ export type AbilityTarget = {
   maxStrength?: number; // For "chosen character with 2 {S} or less"
   excludeSelf?: boolean; // For "chosen another character"
   value?: string; // For target specification like "self", "opponent", etc.
-};
+}
 
-export type AbilityCost = {
+export interface PlayerTarget extends BaseTarget {
+  type: "player";
+  controller?: "self" | "opponent" | "any"; // Player targets can be self or opponent
+}
+
+export interface CardTarget extends BaseTarget {
+  type: "card";
+  zone?: LorcanaZone; // Zone can be specified for card targets
+  controller?: "self" | "opponent" | "any" | "target"; // Can target cards controlled by self, opponent, or any player
+}
+
+export type AbilityTarget = PlayerTarget | CardTarget;
+
+export type LorcanaAbilityCost = {
   exert?: boolean | { target?: string; count?: number }; // For exerting self or other cards
   ink?: number;
   banish?:
@@ -263,7 +276,7 @@ export type EffectParameters = {
   value?: number | DynamicValue;
   condition?: EffectCondition;
   source?: string; // Card ID or ability ID
-  amount?: number; // Added amount parameter
+  amount?: number | DynamicValue; // Added amount parameter
 
   // Specific parameters
   keyword?: Keyword;
@@ -382,7 +395,7 @@ export type ScryDestination = {
 
 export type ShiftAbility = {
   type: "standard" | "classification" | "universal" | "custom";
-  cost: AbilityCost;
+  cost: LorcanaAbilityCost;
   value?: number | DynamicValue; // For cost reduction calculations
   targetName?: string; // For standard Shift
   targetClassification?: Classification | Classification[]; // For classification Shift

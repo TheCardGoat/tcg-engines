@@ -719,7 +719,7 @@ This process fol ows a series of steps. If any part of the playing a card proces
 
 **6.2.5. ** *Version* – A card’s version differentiates cards with the same name. A character’s or location’s name and version together constitute its full name. \(See \#3 in the diagram under 6.2, “Parts of a Card.”\) **6.2.6. ** *Classifications* – Categories that identify some characteristics of the card and may be referenced in card rules. \(See \#4 in the diagram under 6.2, “Parts of a Card.”\)
 
-***Example:** Hades – King of Olympus has an ability that references cards with the Vil ain classification. It reads, “This character* *gets \+1 *\{L\} * for each other Villain character you have in play.” *
+***Example:** Hades – King of Olympus has an ability that references cards with the Villain classification. It reads, “This character* *gets \+1 *\{L\} * for each other Villain character you have in play.” *
 
 14
 

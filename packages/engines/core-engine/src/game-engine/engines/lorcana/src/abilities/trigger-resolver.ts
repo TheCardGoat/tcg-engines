@@ -16,12 +16,16 @@ export function resolveTrigger(
     switch (effect.type) {
       case "gainLore": {
         const playerId = trigger.controllerId;
-        const amount = effect.parameters?.amount || 1;
+        const amountParam = effect.parameters?.amount || 1;
+        // Handle both number and DynamicValue types
+        const amount = typeof amountParam === "object" ? 1 : amountParam;
         this.addLoreToPlayer(playerId, amount);
         break;
       }
       case "draw": {
-        const amount = effect.parameters?.amount || 1;
+        const amountParam = effect.parameters?.amount || 1;
+        // Handle both number and DynamicValue types
+        const amount = typeof amountParam === "object" ? 1 : amountParam;
         const target = effect.parameters?.target;
         // Determine which player should draw the card
         let targetPlayerId = trigger.controllerId;

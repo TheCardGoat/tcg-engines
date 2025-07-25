@@ -1,7 +1,7 @@
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { logger } from "~/game-engine/core-engine/utils/logger";
 import { AbilityBuilder } from "../abilities/ability-builder";
-import type { AbilityCost } from "../abilities/ability-types";
+import type { LorcanaAbilityCost } from "../abilities/ability-types";
 import { detectAbilityType } from "../examples/ability-type-mapping";
 import type { LorcanaMove } from "./types";
 import { toLorcanaCoreOps } from "./types";
@@ -228,7 +228,7 @@ function extractActivatedAbilities(cardInstance: any): string[] {
  * @param abilityCost The parsed ability cost
  * @returns Total ink cost (other costs are handled separately)
  */
-function calculateTotalAbilityCost(abilityCost: AbilityCost): number {
+function calculateTotalAbilityCost(abilityCost: LorcanaAbilityCost): number {
   // For now, only return ink cost. Other costs (like exert, banish) are handled separately
   return abilityCost.ink || 0;
 }
@@ -245,7 +245,7 @@ function validateCanPayAbilityCost(
   lorcanaOps: any,
   playerID: string,
   cardInstanceId: string,
-  abilityCost: AbilityCost,
+  abilityCost: LorcanaAbilityCost,
 ): { valid: boolean; reason?: string; errorType?: string } {
   // Check exert cost
   if (abilityCost.exert) {
@@ -302,7 +302,7 @@ function payAbilityCost(
   lorcanaOps: any,
   playerID: string,
   cardInstanceId: string,
-  abilityCost: AbilityCost,
+  abilityCost: LorcanaAbilityCost,
 ): { success: boolean; reason?: string } {
   try {
     // Pay exert cost

@@ -59,7 +59,8 @@ export function resolveBagTrigger(
           }
 
           // Draw the card(s) using the core operations
-          for (let i = 0; i < amount; i++) {
+          const amountValue = typeof amount === "object" ? 1 : amount;
+          for (let i = 0; i < amountValue; i++) {
             this.drawCard(targetPlayerId, 1);
           }
           break;
