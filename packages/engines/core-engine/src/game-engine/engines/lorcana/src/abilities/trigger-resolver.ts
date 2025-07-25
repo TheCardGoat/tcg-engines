@@ -26,18 +26,22 @@ export function resolveTrigger(
         // Determine which player should draw the card
         let targetPlayerId = trigger.controllerId;
 
-        if (target?.value === "opponent") {
+        if (target && !Array.isArray(target) && target.value === "opponent") {
           // Find the opponent of the controller
           const allPlayers = Object.keys(this.state.ctx.players);
           targetPlayerId =
             allPlayers.find((p) => p !== trigger.controllerId) ||
             trigger.controllerId;
-        } else if (target?.value === "self") {
+        } else if (
+          target &&
+          !Array.isArray(target) &&
+          target.value === "self"
+        ) {
           targetPlayerId = trigger.controllerId;
         }
 
         logger.log(
-          `DEBUG: Player ${targetPlayerId} draws ${amount} card(s) from triggered effect (target: ${target?.value})`,
+          `DEBUG: Player ${targetPlayerId} draws ${amount} card(s) from triggered effect (target: ${target && !Array.isArray(target) ? target.value : "default"})`,
         );
 
         this.drawCard(targetPlayerId, amount);

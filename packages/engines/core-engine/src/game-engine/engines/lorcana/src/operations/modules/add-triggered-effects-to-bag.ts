@@ -65,10 +65,10 @@ export function addTriggeredEffectsToTheBag(
                     text: abilityAny.text || `${timing} trigger`,
                     effects: [
                       {
-                        type: layerEffect.type === "draw" ? "draw" : "gainLore",
+                        type: "draw" as const,
                         parameters: {
-                          amount: layerEffect.amount || 1,
-                          target: layerEffect.target,
+                          amount: abilityAny.amount || 1,
+                          target: abilityAny.target || null,
                         },
                       },
                     ],
@@ -102,7 +102,7 @@ export function addTriggeredEffectsToTheBag(
                   text: abilityAny.text || `${timing} trigger`,
                   effects: [
                     {
-                      type: "multiEffect",
+                      type: "multiEffect" as const,
                       parameters: {
                         effects: abilityAny.layer.effects,
                       },
@@ -178,7 +178,7 @@ export function addTriggeredEffectsToTheBag(
             text: "Card put into inkwell",
             effects: [
               {
-                type: "basicInkwellTrigger",
+                type: "basicInkwellTrigger" as const,
                 parameters: {},
               },
             ],
@@ -249,7 +249,7 @@ function checkAndAddTriggeredAbilities(
           text: `${timing} ${condition}`,
           effects: [
             {
-              type: "gainLore",
+              type: "gainLore" as const,
               parameters: { amount: 1 },
             },
           ],
@@ -302,7 +302,7 @@ function checkAndAddTriggeredAbilities(
                 text: "Character moves to location",
                 effects: [
                   {
-                    type: "gainLore",
+                    type: "gainLore" as const,
                     parameters: {
                       amount:
                         typeof layerEffect.amount === "number"

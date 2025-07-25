@@ -9,6 +9,7 @@ export type LayerItem = {
   controllerId: string;
   ability: Ability;
   optional: boolean;
+  targets?: AbilityTarget[]; // Added targets as optional
 };
 
 // **1.6. Types of Abilities**
@@ -31,11 +32,67 @@ export type Ability = {
   id: string;
   type: AbilityType;
   text: string;
+  name?: string;
   targets?: AbilityTarget[]; // When an ability has no targets, targets must the taken from effects. When an ability has targets, the same targets must be applied to all the effects.
   cost?: AbilityCost;
   effects: Effect[];
   timing?: TriggerTiming;
+  keyword?: KeywordAbility; // For keyword abilities
+  condition?: AbilityCondition; // For triggered abilities condition check
+  optional?: boolean; // For "may" effects
+  shift?: ShiftAbility; // Add Shift ability details
+  classification?: Classification[]; // Character classifications
 };
+
+export type KeywordAbility = {
+  type: Keyword;
+  value?: number; // For stacking keywords like Challenger +2, Resist +1
+};
+
+export type AbilityCondition = {
+  type: ConditionType;
+  value?: number | string;
+  cardName?: string;
+  classification?: Classification | Classification[];
+  zone?: LorcanaZone;
+  keyword?: Keyword;
+  comparison?: ComparisonOperator;
+  requiresShift?: boolean; // For "if you used Shift to play them"
+  cardType?: "character" | "item" | "location" | "action" | "song";
+  stat?: "strength" | "willpower" | "lore";
+};
+
+export type ConditionType =
+  | "onEnterPlay"
+  | "onQuest"
+  | "onBanish"
+  | "onChallenge"
+  | "onDamage"
+  | "onPlayAction"
+  | "onPlaySong"
+  | "onPlayCharacter"
+  | "onExert"
+  | "onDraw"
+  | "cardInPlay"
+  | "noDamage"
+  | "hasDamage"
+  | "minCharactersInPlay"
+  | "opponentHasExertedCharacter"
+  | "damageThisTurn"
+  | "activePlayerOnly" // During your turn
+  | "opponentTurn" // During opponent's turn
+  | "statComparison" // Compare card stats
+  | "lastDiscardedCardMatches" // Check properties of last discarded card
+  | "usedShift" // If character was played using Shift
+  | "cardTypeMatches" // Check card type
+  | "zoneHasCards" // Check if zone has cards
+  | "moreLoreCheck" // Check if you have more lore than opponent
+  | "moreCostCheck" // Check if a card has higher cost
+  | "moreCardsInHand" // Check if you have more cards in hand
+  | "moreCardsInPlay" // Check if you have more cards in play
+  | "cardNamed" // Check if a specific card is in play
+  | "atLocation" // Check if card is at a location
+  | "sameClassification"; // Check if card has same classification
 
 export type AbilityDuration =
   | { type: "endOfTurn" }
@@ -51,56 +108,259 @@ export type DynamicValue = {
 };
 
 export type AbilityTarget = {
-  type: "card" | "player";
+  type: "card" | "player" | "location";
   zone?: LorcanaZone;
-  controller?: "self" | "opponent" | "any";
+  controller?: "self" | "opponent" | "any" | "target";
   count?: number | DynamicValue;
   filter?: LorcanaCardFilter;
   targetAll?: boolean;
+  damaged?: boolean; // For "chosen damaged character"
+  ready?: boolean; // For "chosen ready character"
+  exerted?: boolean; // For "chosen exerted character"
+  withKeyword?: Keyword; // For "chosen character with [keyword]"
+  withClassification?: string; // For "chosen [classification] character"
+  withName?: string; // For "chosen character named X"
+  minStrength?: number; // For "chosen character with 3 {S} or more"
+  maxStrength?: number; // For "chosen character with 2 {S} or less"
+  excludeSelf?: boolean; // For "chosen another character"
+  value?: string; // For target specification like "self", "opponent", etc.
 };
 
 export type AbilityCost = {
-  exert?: boolean;
+  exert?: boolean | { target?: string; count?: number }; // For exerting self or other cards
   ink?: number;
-  banish?: boolean;
-  discard?: number;
-  damage?: number;
+  banish?:
+    | boolean
+    | { target?: string; type?: "self" | "item" | "character"; count?: number }; // For banishing self or other cards
+  discard?:
+    | number
+    | {
+        type?: "any" | "character" | "item" | "action" | "song";
+        count?: number;
+      };
+  damage?: number | { target?: string; count?: number };
+  putIntoInkwell?:
+    | boolean
+    | { count?: number; facedown?: boolean; exerted?: boolean };
+  returnToHand?: boolean | { target?: string; count?: number };
+  payLife?: number;
+  chooseNotToDraw?: boolean;
 };
 
 export type Effect = {
-  type: string;
-  parameters: Record<string, any>;
+  type: EffectType;
+  parameters: EffectParameters;
+  duration?: AbilityDuration;
+  optional?: boolean;
 };
+
+export type EffectType =
+  // Card state modification effects
+  | "addKeyword"
+  | "removeKeyword"
+  | "modifyStat"
+  | "dealDamage"
+  | "removeDamage"
+  | "moveDamage"
+  | "preventDamage"
+  | "exert"
+  | "ready"
+  | "preventReady"
+  | "challengeRestriction"
+  | "questRestriction"
+  | "wardEffect"
+  | "cantBeTargeted"
+  | "cantBeChosen"
+  | "cantChallenge"
+  | "cantQuest"
+  | "grantActivatedAbility"
+  | "grantTriggeredAbility"
+  | "copyAbility"
+  | "resetState"
+
+  // Zone movement effects
+  | "banish"
+  | "return" // Return to hand
+  | "moveToLocation"
+  | "moveToZone"
+  | "putIntoInkwell"
+  | "revealFromInkwell"
+  | "search"
+  | "reveal"
+  | "lookAt"
+  | "shuffle"
+
+  // Card flow effects
+  | "draw"
+  | "discard"
+  | "mill" // Put cards from deck to discard
+  | "scry" // Look at top cards and rearrange
+  | "topOrBottom"
+  | "playCard"
+  | "playSong"
+  | "playCharacter"
+  | "playItem"
+  | "playLocation"
+  | "costReduction"
+  | "countAsHigherCost" // For Singer ability
+
+  // Game state effects
+  | "gainLore"
+  | "loseLore"
+  | "skipDrawStep"
+  | "skipQuestPhase"
+  | "skipChallengePhase"
+  | "preventActions"
+  | "preventItemPlay"
+  | "preventLocationPlay"
+  | "preventCharacterPlay"
+
+  // Conditional effects
+  | "ifThenElse"
+  | "chooseOne"
+  | "chooseMultiple"
+  | "optional"
+  | "repeatForEach"
+  | "applyToAll"
+  | "preventEffect"
+  | "replaceEffect" // Replacement effects
+  | "counter" // Counters an ability
+
+  // Composite effects
+  | "multiEffect" // Container for multiple effects
+  | "basicInkwellTrigger" // Special trigger for inkwell actions
+
+  // Targeting effects
+  | "chooseTarget"
+  | "mustTargetBodyguard"
+  | "mustBeTargetedFirst"
+  | "cantTargetWithEvasive"
+  | "targetController"
+  | "changeTarget"
+
+  // Player choice effects
+  | "chooseCardFromHand"
+  | "chooseCardFromPlay"
+  | "chooseCardFromDiscard"
+  | "chooseCardFromDeck"
+  | "chooseCardFromInkwell"
+  | "gainOption" // Gain a choice of effects
+
+  // Stack manipulation
+  | "countCardsBelowCharacter" // For shifted cards
+  | "copyCharacterBeneath"
+
+  // Utility
+  | "adjustDynamicValue"
+  | "trackGameEvent"
+  | "clearTrackedEvents"
+  | "stackEffects"
+  | "triggerBag"
+  | "resolveTriggeredAbility";
+
+export type EffectParameters = {
+  // Shared parameters
+  target?: Target | Target[];
+  value?: number | DynamicValue;
+  condition?: EffectCondition;
+  source?: string; // Card ID or ability ID
+  amount?: number; // Added amount parameter
+
+  // Specific parameters
+  keyword?: Keyword;
+  keywordValue?: number;
+  stat?: "strength" | "willpower" | "lore";
+  zoneTo?: LorcanaZone;
+  zoneFrom?: LorcanaZone;
+  cardType?: "character" | "item" | "location" | "action" | "song";
+  exerted?: boolean;
+  placement?: "top" | "bottom" | "random";
+  costReduction?: number;
+  includeSelf?: boolean;
+  ignoreRestrictions?: boolean;
+  requiresShift?: boolean;
+  payInk?: number;
+  effects?: any[]; // For multiEffect
+  [key: string]: any; // For any additional parameters
+};
+
+export type EffectCondition = {
+  type:
+    | "hasKeyword"
+    | "hasDamage"
+    | "hasCardInPlay"
+    | "hasCardsInHand"
+    | "hasZoneCount"
+    | "statComparison"
+    | "playerHasMoreLore";
+  keyword?: Keyword;
+  cardName?: string;
+  classification?: string;
+  minCount?: number;
+  maxCount?: number;
+  zone?: LorcanaZone;
+  stat?: "strength" | "willpower" | "lore";
+  comparison?:
+    | "greaterThan"
+    | "lessThan"
+    | "equalTo"
+    | "greaterThanOrEqual"
+    | "lessThanOrEqual";
+  comparisonValue?: number;
+};
+
+export type Keyword =
+  | "Bodyguard"
+  | "Challenger"
+  | "Evasive"
+  | "Reckless"
+  | "Resist"
+  | "Rush"
+  | "Shift"
+  | "Singer"
+  | "Support"
+  | "Vanish"
+  | "Ward";
 
 export type Target = AbilityTarget;
 
 export type TriggerTiming =
-  | "onPlay"
-  | "onQuest"
-  | "onPutIntoInkwell"
-  | "onChallenge"
-  | "onBanish"
-  | "onDamage"
-  | "onMove"
-  | "onActivatedAbility"
-  | "startOfTurn"
-  | "endOfTurn";
-// | "OnPlay"
-// | "OnLeavePlay"
-// | "OnBanish"
-// | "OnQuest"
-// | "OnDamage"
-// | "OnRemoveDamage"
-// | "OnExert"
-// | "OnReady"
-// | "OnInk"
-// | "OnDraw"
-// | "OnDiscard"
-// | "OnChallenge"
-// | "WhileChallenging"
-// | "WhileChallenged"
-// | "OnTurnStart"
-// | "OnTurnEnd"
+  | "onPlay" // When you play this character
+  | "onPlayCharacter" // Whenever you play a character
+  | "onPlayItem" // Whenever you play an item
+  | "onPlayAction" // Whenever you play an action
+  | "onPlaySong" // Whenever you play a song
+  | "onQuest" // Whenever this character quests
+  | "onCharacterQuests" // Whenever a character quests
+  | "onPutIntoInkwell" // Whenever a card is put into your inkwell
+  | "onChallenge" // When/whenever this character challenges
+  | "onChallenged" // When/whenever this character is challenged
+  | "onCharacterChallenges" // Whenever a character challenges
+  | "onBanish" // When this character is banished
+  | "onBanishInChallenge" // When this character is banished in a challenge
+  | "onOtherBanished" // Whenever one of your other characters is banished
+  | "onDamage" // When this character is damaged
+  | "onDealDamage" // When this character deals damage
+  | "onDamageRemoved" // Whenever damage is removed
+  | "onMove" // When this character moves
+  | "onReady" // Whenever you ready this character
+  | "onExert" // Whenever you exert this character
+  | "onActivatedAbility" // Whenever a player activates an ability
+  | "onCardDrawn" // Whenever you draw a card
+  | "onDiscard" // Whenever you discard a card
+  | "onOpponentDiscard" // Whenever an opponent discards a card
+  | "startOfTurn" // At the start of your turn
+  | "endOfTurn" // At the end of your turn
+  | "whenLeaves" // When this character leaves play
+  | "onMoveToLocation" // When this character moves to a location
+  | "whileAtLocation" // While this character is at a location
+  | "whileExerted" // While this character is exerted
+  | "whileHasDamage" // While this character has damage
+  | "whileNoDamage" // While this character has no damage
+  | "whileCharacterInPlay" // While you have a character in play
+  | "whileChallenging" // While this character is challenging
+  | "whileChallenged" // While this character is being challenged
+  | "onShift"; // When you play a Floodborn character using Shift
 
 export type ScryConfig = {
   lookAt: number;
@@ -120,3 +380,54 @@ export type ScryDestination = {
   max?: number;
   min?: number;
 };
+
+export type ShiftAbility = {
+  type: "standard" | "classification" | "universal" | "custom";
+  cost: AbilityCost;
+  value?: number | DynamicValue; // For cost reduction calculations
+  targetName?: string; // For standard Shift
+  targetClassification?: Classification | Classification[]; // For classification Shift
+  countsAsNames?: string[]; // For "counts as being named both X and Y"
+  effects?: ShiftEffect[]; // For "if you used Shift to play them" effects
+};
+
+export type ShiftEffect = {
+  type: EffectType;
+  parameters: EffectParameters;
+  condition: "onShift"; // Always true if the character was played using Shift
+};
+
+export type Classification =
+  | "Ally"
+  | "Broom"
+  | "Captain"
+  | "Dragon"
+  | "Fairy"
+  | "Floodborn"
+  | "Hero"
+  | "Hyena"
+  | "Illusion"
+  | "Inventor"
+  | "King"
+  | "Knight"
+  | "Madrigal"
+  | "Musketeer"
+  | "Pirate"
+  | "Prince"
+  | "Princess"
+  | "Puppy"
+  | "Queen"
+  | "Racer"
+  | "Robot"
+  | "Seven Dwarfs"
+  | "Sorcerer"
+  | "Titan"
+  | "Villain";
+
+export type ComparisonOperator =
+  | "greaterThan"
+  | "lessThan"
+  | "equalTo"
+  | "greaterThanOrEqual"
+  | "lessThanOrEqual"
+  | "notEqualTo";
