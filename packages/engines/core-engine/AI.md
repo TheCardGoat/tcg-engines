@@ -9,6 +9,7 @@ status: "current"
 ---
 
 ## Must Follow Rules
+- For every task, you must ask for confirmation before starting. Ask clarifications before starting.
 - You can't take a task as finished if `bun run check` fails, all checks must pass and you can't skip any of them.
 - You can't commit unless `bun run check` passes, and you can't skip any of the checks. Additionaly, any new codee must be covered by tests, which explains the expected behavior. Test expected behavior, not implementation details.
 - Update IMPLEMENTATION-LOGS.md before/after each task with progress, decisions, and learnings
@@ -26,10 +27,10 @@ status: "current"
 Modular TCG engine with three main components:
 
 1. **Lobby Engine** (`/src/lobby-engine/`) - Game lobbies, connections, event-driven with LightweightEventBus
-2. **Game Engine** (`/src/game-engine/`) - Core rules, immutable state, phase/turn-based,  architecture
+2. **Game Engine** (`/src/game-engine/`) - Core rules, mutable state, phase/turn-based,  architecture
 
 ### State & Architecture
-- Immutable state with delta synchronization
+- mutable state with delta synchronization
 - Server-authoritative with client optimistic updates
 - Action flow: Client → Optimistic → Server → Validate → Broadcast deltas
 
@@ -40,7 +41,7 @@ Modular TCG engine with three main components:
 
 ## Core Tenets
 
-1. **Immutable State** - State changes create new objects
+1. **Mutable State** - State changes are directly mutated
 2. **Replayable & Delta-Driven** - Games replay from initial state + actions
 3. **Server-Authoritative** - Server holds definitive state
 4. **Deterministic Logic** - Same inputs = same outputs
@@ -65,7 +66,7 @@ Modular TCG engine with three main components:
 - TypeScript strict mode
 - Use real schemas/types in tests
 
-**Tools:** TypeScript (strict), Jest/Vitest + React Testing Library, immutable patterns
+**Tools:** TypeScript (strict), Bun test
 
 ## Testing Principles
 
@@ -244,7 +245,7 @@ Assess refactoring after every green - but only refactor if it adds clear value.
 
 ### Understanding DRY
 
-DRY = Don't repeat **knowledge**, not similar-looking code.
+DRY = Don't repeat **knowledge**, you can repeat similar-looking code.
 
 ```typescript
 // NOT DRY violation - different business knowledge
@@ -287,15 +288,15 @@ git commit -m "refactor: extract helpers"
 
 **PRs:** All tests/linting pass, small increments, single focus, describe behavior changes
 
-## Working with Claude
 
 ### Expectations
 1. **ALWAYS FOLLOW TDD** - No production code without failing test
 2. Think deeply, understand full context
-3. Ask clarifying questions
+3. Always Ask clarifying questions
 4. Think from first principles
 5. Assess refactoring after every green
 6. Keep docs current
+7. Ensure checks are passing
 
 ### Code Changes
 - Start with failing test - no exceptions
@@ -309,6 +310,7 @@ git commit -m "refactor: extract helpers"
 - Explain trade-offs and design decisions
 - Flag deviations with justification
 - Ask for clarification when unsure
+- Always ask for clarification on prompts, this ensures you are not missing any information and that you are not making incorrect assumptions.
 
 ## Example Patterns
 
@@ -344,52 +346,4 @@ describe("PaymentProcessor", () => {
 });
 
 // Avoid - testing implementation details
-```
-
-### 100% Coverage Through Business Behavior
-
-Validation code gets full coverage without direct testing:
-
-```typescript
-// Test business behavior, not validation functions directly
-describe("Payment processing", () => {
-  it("rejects negative amounts", () => {
-    const payment = getMockPayment({ amount: -100 });
-    expect(processPayment(payment).success).toBe(false);
-  });
-  
-  it("processes valid payments", () => {
-    const payment = getMockPayment({ amount: 100 });
-    expect(processPayment(payment).success).toBe(true);
-  });
-});
-// Validation functions get 100% coverage through business behavior tests
-```
-
-## Anti-patterns to Avoid
-
-```typescript
-// ❌ Mutation
-const addItem = (items, newItem) => {
-  items.push(newItem); // Mutates!
-  return items;
-};
-
-// ✅ Immutable
-const addItem = (items, newItem) => [...items, newItem];
-
-// ❌ Nested conditionals
-if (user) {
-  if (user.isActive) {
-    if (user.hasPermission) { /* ... */ }
-  }
-}
-
-// ✅ Early returns
-if (!user?.isActive || !user.hasPermission) return;
-// do something
-
-// ❌ Large functions
-// ✅ Composed small functions
-const processOrder = pipe(validateOrder, calculatePricing, applyDiscounts, submitOrder);
 ```
