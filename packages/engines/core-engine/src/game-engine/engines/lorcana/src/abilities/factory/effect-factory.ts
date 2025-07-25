@@ -1,401 +1,260 @@
-import type {
-  LorcanaCardFilter,
-  LorcanaZone,
-} from "../../lorcana-engine-types";
-import type {
-  AbilityTarget,
-  Effect,
-  EffectParameters,
-  EffectType,
-  Keyword,
-} from "../ability-types";
+import type { Effect } from "../ability-types";
 
 /**
- * Effect Factory - Template-based approach for creating common effects
- * Pre-defines templates for frequent patterns in Lorcana card text
+ * EffectBuilder - Implements the Builder pattern for creating effects
+ * Allows step-by-step construction of complex effects with method chaining
  */
-export class EffectFactory {
+export class EffectBuilder {
+  private effect: Partial<Effect> = {};
+
+  // === CORE BUILDER METHODS ===
+
   /**
-   * Create a damage dealing effect
+   * Set the effect type
    */
-  static dealDamage(
-    amount: number,
-    target?: AbilityTarget,
-    optional = false,
-  ): Effect {
-    return {
-      type: "dealDamage",
-      parameters: {
-        amount,
-        target,
-      },
-      optional,
-    };
+  setType(type: Effect["type"]): EffectBuilder {
+    this.effect.type = type;
+    return this;
   }
 
   /**
-   * Create a card draw effect
+   * Set the effect parameters
    */
-  static draw(
-    amount: number,
-    target?: AbilityTarget,
-    optional = false,
-  ): Effect {
-    return {
-      type: "draw",
-      parameters: {
-        amount,
-        target,
-      },
-      optional,
-    };
+  setParameters(parameters: any): EffectBuilder {
+    this.effect.parameters = parameters;
+    return this;
   }
 
   /**
-   * Create a lore gain effect
+   * Set if the effect is optional
    */
-  static gainLore(amount: number, optional = false): Effect {
-    return {
-      type: "gainLore",
-      parameters: {
-        amount,
-      },
-      optional,
-    };
+  setOptional(optional: boolean): EffectBuilder {
+    this.effect.optional = optional;
+    return this;
   }
 
   /**
-   * Create a stat modification effect
+   * Set the effect duration
    */
-  static modifyStat(
-    stat: "strength" | "willpower" | "lore",
-    value: number,
-    target?: AbilityTarget,
-    duration?: Effect["duration"],
-    optional = false,
-  ): Effect {
-    return {
-      type: "modifyStat",
-      parameters: {
-        stat,
-        value,
-        target,
-      },
-      duration,
-      optional,
-    };
+  setDuration(duration: Effect["duration"]): EffectBuilder {
+    this.effect.duration = duration;
+    return this;
   }
 
   /**
-   * Create a keyword granting effect
+   * Build the final effect
    */
-  static addKeyword(
-    keyword: Keyword,
-    keywordValue?: number,
-    target?: AbilityTarget,
-    duration?: Effect["duration"],
-    optional = false,
-  ): Effect {
+  build(): Effect {
+    if (!this.effect.type) {
+      throw new Error("Effect type is required");
+    }
+
     return {
-      type: "addKeyword",
-      parameters: {
-        keyword,
-        keywordValue,
-        target,
-      },
-      duration,
-      optional,
-    };
+      type: this.effect.type,
+      parameters: this.effect.parameters || {},
+      optional:
+        this.effect.optional !== undefined ? this.effect.optional : false,
+      ...(this.effect.duration && { duration: this.effect.duration }),
+    } as Effect;
+  }
+
+  /**
+   * Reset the builder to create a new effect
+   */
+  reset(): EffectBuilder {
+    this.effect = {};
+    return this;
+  }
+
+  // === STATIC FACTORY METHODS ===
+
+  /**
+   * Create a new builder instance
+   */
+  static create(): EffectBuilder {
+    return new EffectBuilder();
+  }
+
+  // === COMMON EFFECT BUILDERS ===
+
+  /**
+   * Create a gain lore effect
+   */
+  static gainLore(amount: number): Effect {
+    return new EffectBuilder()
+      .setType("gainLore")
+      .setParameters({ amount })
+      .setOptional(false)
+      .build();
+  }
+
+  /**
+   * Create a draw cards effect
+   */
+  static draw(amount: number): Effect {
+    return new EffectBuilder()
+      .setType("draw")
+      .setParameters({ amount })
+      .setOptional(false)
+      .build();
+  }
+
+  /**
+   * Create a deal damage effect
+   */
+  static dealDamage(amount: number): Effect {
+    return new EffectBuilder()
+      .setType("dealDamage")
+      .setParameters({ amount })
+      .setOptional(false)
+      .build();
+  }
+
+  /**
+   * Create a modify stat effect
+   */
+  static modifyStat(stat: string, value: number): Effect {
+    return new EffectBuilder()
+      .setType("modifyStat")
+      .setParameters({ stat, value })
+      .setOptional(false)
+      .build();
+  }
+
+  /**
+   * Create a prevent damage effect
+   */
+  static preventDamage(amount: number): Effect {
+    return new EffectBuilder()
+      .setType("preventDamage")
+      .setParameters({ amount })
+      .setOptional(false)
+      .build();
   }
 
   /**
    * Create a banish effect
    */
-  static banish(target?: AbilityTarget, optional = false): Effect {
-    return {
-      type: "banish",
-      parameters: {
-        target,
-      },
-      optional,
-    };
-  }
-
-  /**
-   * Create an exert effect
-   */
-  static exert(target?: AbilityTarget, optional = false): Effect {
-    return {
-      type: "exert",
-      parameters: {
-        target,
-      },
-      optional,
-    };
+  static banish(): Effect {
+    return new EffectBuilder()
+      .setType("banish")
+      .setParameters({})
+      .setOptional(false)
+      .build();
   }
 
   /**
    * Create a ready effect
    */
-  static ready(target?: AbilityTarget, optional = false): Effect {
-    return {
-      type: "ready",
-      parameters: {
-        target,
-      },
-      optional,
-    };
+  static ready(): Effect {
+    return new EffectBuilder()
+      .setType("ready")
+      .setParameters({})
+      .setOptional(false)
+      .build();
   }
 
   /**
-   * Create a damage removal effect
+   * Create an exert effect
    */
-  static removeDamage(
-    amount: number,
-    target?: AbilityTarget,
-    optional = false,
-  ): Effect {
-    return {
-      type: "removeDamage",
-      parameters: {
-        amount,
-        target,
-      },
-      optional,
-    };
-  }
-
-  /**
-   * Create a search effect
-   */
-  static search(
-    zoneTo: LorcanaZone,
-    zoneFrom: LorcanaZone,
-    filter?: LorcanaCardFilter,
-    amount = 1,
-    optional = false,
-  ): Effect {
-    return {
-      type: "search",
-      parameters: {
-        zoneTo,
-        zoneFrom,
-        cardType: filter?.cardType,
-        amount,
-      },
-      optional,
-    };
-  }
-
-  /**
-   * Create a move to zone effect (return to hand, etc.)
-   */
-  static moveToZone(
-    zoneTo: LorcanaZone,
-    target?: AbilityTarget,
-    optional = false,
-  ): Effect {
-    return {
-      type: "moveToZone",
-      parameters: {
-        zoneTo,
-        target,
-      },
-      optional,
-    };
-  }
-
-  /**
-   * Create a discard effect
-   */
-  static discard(
-    amount: number,
-    target?: AbilityTarget,
-    optional = false,
-  ): Effect {
-    return {
-      type: "discard",
-      parameters: {
-        amount,
-        target,
-      },
-      optional,
-    };
-  }
-
-  /**
-   * Create an if-then-else conditional effect
-   */
-  static conditional(
-    conditionType: string,
-    trueEffect: Effect,
-    falseEffect?: Effect,
-  ): Effect {
-    return {
-      type: "ifThenElse",
-      parameters: {
-        condition: { type: conditionType } as any,
-        effects: falseEffect ? [trueEffect, falseEffect] : [trueEffect],
-      },
-    };
-  }
-
-  /**
-   * Create a choice effect (choose one of multiple options)
-   */
-  static chooseOne(effects: Effect[]): Effect {
-    return {
-      type: "chooseOne",
-      parameters: {
-        effects,
-      },
-    };
+  static exert(): Effect {
+    return new EffectBuilder()
+      .setType("exert")
+      .setParameters({})
+      .setOptional(false)
+      .build();
   }
 
   /**
    * Create a multi-effect container
    */
   static multiEffect(effects: Effect[]): Effect {
-    return {
-      type: "multiEffect",
-      parameters: {
-        effects,
-      },
-    };
+    return new EffectBuilder()
+      .setType("multiEffect")
+      .setParameters({ effects })
+      .setOptional(false)
+      .build();
   }
 
   /**
-   * Template: "When you play this character, gain X lore"
+   * Create a remove damage effect
    */
-  static templateOnPlayGainLore(amount: number): Effect {
-    return EffectFactory.gainLore(amount);
+  static removeDamage(amount: number): Effect {
+    return new EffectBuilder()
+      .setType("removeDamage")
+      .setParameters({ amount })
+      .setOptional(false)
+      .build();
+  }
+
+  // === BUILDER METHODS WITH FLUENT INTERFACE ===
+
+  /**
+   * Create a gain lore effect builder
+   */
+  static gainLoreBuilder(amount: number): EffectBuilder {
+    return new EffectBuilder()
+      .setType("gainLore")
+      .setParameters({ amount })
+      .setOptional(false);
   }
 
   /**
-   * Template: "Deal X damage to chosen character"
+   * Create a draw cards effect builder
    */
-  static templateDealDamageToChosen(amount: number): Effect {
-    return EffectFactory.dealDamage(amount, {
-      type: "card",
-      zone: "play",
-      filter: { cardType: "character" },
-    });
+  static drawBuilder(amount: number): EffectBuilder {
+    return new EffectBuilder()
+      .setType("draw")
+      .setParameters({ amount })
+      .setOptional(false);
   }
 
   /**
-   * Template: "Draw a card"
+   * Create a deal damage effect builder
    */
-  static templateDrawCard(): Effect {
-    return EffectFactory.draw(1);
+  static dealDamageBuilder(amount: number): EffectBuilder {
+    return new EffectBuilder()
+      .setType("dealDamage")
+      .setParameters({ amount })
+      .setOptional(false);
   }
 
   /**
-   * Template: "Chosen character gets +X {S} this turn"
+   * Create a modify stat effect builder
    */
-  static templateBoostStrengthThisTurn(amount: number): Effect {
-    return EffectFactory.modifyStat(
-      "strength",
-      amount,
-      {
-        type: "card",
-        zone: "play",
-        filter: { cardType: "character" },
-      },
-      { type: "endOfTurn" },
-    );
+  static modifyStatBuilder(stat: string, value: number): EffectBuilder {
+    return new EffectBuilder()
+      .setType("modifyStat")
+      .setParameters({ stat, value })
+      .setOptional(false);
+  }
+
+  // === CONDITIONAL EFFECTS ===
+
+  /**
+   * Create an optional effect
+   */
+  static optional(effect: Effect): Effect {
+    return { ...effect, optional: true };
   }
 
   /**
-   * Template: "Chosen character gains [Keyword] until start of next turn"
+   * Create a temporary effect (until end of turn)
    */
-  static templateGrantKeywordUntilNextTurn(
-    keyword: Keyword,
-    keywordValue?: number,
-  ): Effect {
-    return EffectFactory.addKeyword(
-      keyword,
-      keywordValue,
-      {
-        type: "card",
-        zone: "play",
-        filter: { cardType: "character" },
-      },
-      { type: "turns", count: 1 },
-    );
+  static temporary(effect: Effect): Effect {
+    return { ...effect, duration: { type: "endOfTurn" } };
   }
 
   /**
-   * Template: "Remove up to X damage from chosen character"
+   * Create a permanent effect
    */
-  static templateRemoveDamageFromChosen(amount: number): Effect {
-    return EffectFactory.removeDamage(amount, {
-      type: "card",
-      zone: "play",
-      filter: { cardType: "character" },
-    });
-  }
-
-  /**
-   * Template: "Return chosen character to their player's hand"
-   */
-  static templateReturnToHand(): Effect {
-    return EffectFactory.moveToZone("hand", {
-      type: "card",
-      zone: "play",
-      filter: { cardType: "character" },
-    });
-  }
-
-  /**
-   * Template: "Each opponent loses X lore"
-   */
-  static templateOpponentsLoseLore(amount: number): Effect {
-    return {
-      type: "loseLore",
-      parameters: {
-        amount,
-        target: {
-          type: "player",
-          value: "opponent",
-        },
-      },
-    };
-  }
-
-  /**
-   * Create effects from a template pattern string
-   * This method maps common card text patterns to effect templates
-   */
-  static fromPattern(pattern: string, ...args: any[]): Effect | null {
-    const templates: Record<string, (...args: any[]) => Effect> = {
-      gain_lore: (amount: number) =>
-        EffectFactory.templateOnPlayGainLore(amount),
-      deal_damage: (amount: number) =>
-        EffectFactory.templateDealDamageToChosen(amount),
-      draw_card: () => EffectFactory.templateDrawCard(),
-      boost_strength: (amount: number) =>
-        EffectFactory.templateBoostStrengthThisTurn(amount),
-      grant_keyword: (keyword: Keyword, value?: number) =>
-        EffectFactory.templateGrantKeywordUntilNextTurn(keyword, value),
-      remove_damage: (amount: number) =>
-        EffectFactory.templateRemoveDamageFromChosen(amount),
-      return_to_hand: () => EffectFactory.templateReturnToHand(),
-      opponents_lose_lore: (amount: number) =>
-        EffectFactory.templateOpponentsLoseLore(amount),
-    };
-
-    const template = templates[pattern];
-    return template ? template(...args) : null;
-  }
-
-  /**
-   * Batch create effects from multiple patterns
-   */
-  static fromPatterns(
-    patterns: Array<{ pattern: string; args: any[] }>,
-  ): Effect[] {
-    return patterns
-      .map(({ pattern, args }) => EffectFactory.fromPattern(pattern, ...args))
-      .filter((effect): effect is Effect => effect !== null);
+  static permanent(effect: Effect): Effect {
+    return { ...effect, duration: { type: "permanent" } };
   }
 }
+
+/**
+ * EffectFactory - A factory class that wraps EffectBuilder
+ * Provides a consistent API for creating effects
+ */
+export const EffectFactory = EffectBuilder;

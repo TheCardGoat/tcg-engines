@@ -13,10 +13,19 @@ import { toLorcanaCoreOps } from "./types";
 // **4.3.4.5.** The card enters the appropriate zone. Characters, items, and locations enter play. Actions resolve their effect and go to the discard pile.
 // **4.3.4.6.** Effects that would occur as a result of this card being played are added to the bag.
 
-interface PlayCardOptions {
+// **6.3.3. **Songs
+//
+// **6.3.3.1. ** *Songs* are actions that have a special rule in addition to the normal rules for actions \(see 6.3.3.3\).
+// **6.3.3.2. **A song is defined as having “Action” and “Song” on the card’s classification line.
+// **6.3.3.3. **All songs allow the player to pay an alternate cost instead of their ink cost to play them. Being a song means “Instead of paying the ink cost of this card, you can \{E\} one of your characters in play with ink cost N or greater to play this card for free.” This is called *singing* the song.
+// **6.3.3.4. **Some songs also have the keyword **Sing Together**, which functions similarly to the special rule. \(See 10.10, “Sing Together.”\)
+// **6.3.3.5. **The standard reminder text for a song is *“\(A character with cost N or more can *\{E\} * to sing this song for free.\)” *
+// **6.3.4. **Any effect that’s triggered because of an action being played is placed in the bag and will resolve after the effects of the action are ful y resolved.
+
+export interface PlayCardOptions {
   alternativeCost?: {
-    type: "shift";
-    targetInstanceId: string; // For shift, the character to shift onto
+    type: "shift" | "sing" | "sing-together";
+    targetInstanceId: string[]; // For shift, the character to shift onto
   };
 }
 
@@ -74,7 +83,7 @@ export const playCardMove: LorcanaMove = (
       if (options.alternativeCost.type === "shift") {
         // For shift, verify the target character exists and is valid
         const shiftTarget = lorcanaOps.getCardInstance(
-          options.alternativeCost.targetInstanceId,
+          options.alternativeCost.targetInstanceId[0],
         );
         if (!shiftTarget) {
           return createInvalidMove(
@@ -138,7 +147,7 @@ export const playCardMove: LorcanaMove = (
     }
 
     // Determine target zone based on card type
-    if (lorcanaCard.card.type.includes("Action")) {
+    if (lorcanaCard.type === "action") {
       targetZone = "discard"; // Actions go to discard after resolving
     }
 
@@ -146,7 +155,7 @@ export const playCardMove: LorcanaMove = (
     if (options?.alternativeCost?.type === "shift") {
       const banishResult = lorcanaOps.moveCard({
         playerId: playerID,
-        instanceId: options.alternativeCost.targetInstanceId,
+        instanceId: options.alternativeCost.targetInstanceId[0],
         to: "discard",
         from: "play",
       });

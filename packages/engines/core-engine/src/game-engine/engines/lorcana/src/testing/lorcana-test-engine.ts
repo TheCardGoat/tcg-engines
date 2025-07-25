@@ -537,6 +537,48 @@ export class LorcanaTestEngine {
     return response;
   }
 
+  playCard(card: LorcanitoCard | LorcanaCardInstance) {
+    const model = this.getCardModel(card);
+
+    // If opts is not provided, use an empty object
+    const response = this.moves.playCard({ card: model.instanceId });
+
+    if (!response.success) {
+      logger.error(
+        `Failed to play card ${model.instanceId}: ${JSON.stringify(response)}`,
+      );
+      throw new Error(JSON.stringify(response));
+    }
+
+    this.wasMoveExecutedAndPropagated();
+
+    return { card: model, result: response };
+  }
+
+  singSong(opts: {
+    song: LorcanitoCard | LorcanaCardInstance;
+    singer: LorcanitoCard | LorcanaCardInstance;
+  }) {
+    const song = this.getCardModel(opts.song);
+    const singer = this.getCardModel(opts.singer);
+
+    const response = this.moves.sing({
+      song: song.instanceId,
+      singer: singer.instanceId,
+    });
+
+    if (!response.success) {
+      logger.error(
+        `Failed to sing song ${song.instanceId} with singer ${singer.instanceId}: ${JSON.stringify(response)}`,
+      );
+      throw new Error(JSON.stringify(response));
+    }
+
+    this.wasMoveExecutedAndPropagated();
+
+    return { song, singer, result: response };
+  }
+
   putACardIntoTheInkwell(card: LorcanaCardInstance | LorcanitoCard) {
     // If it's already a LorcanaCardInstance, use it directly
     // Otherwise, use getCardModel to find it
@@ -588,7 +630,7 @@ export class LorcanaTestEngine {
   /**
    * Returns the number of ink currently available to spend
    */
-  getAvailableInk(playerId: string): number {
+  getAvailableInk(playerId = "player_one"): number {
     return this.authoritativeEngine.getAvailableInk(playerId);
   }
 }

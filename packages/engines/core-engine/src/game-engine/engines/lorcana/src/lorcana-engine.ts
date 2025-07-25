@@ -7,6 +7,7 @@ import { GameEngine } from "~/game-engine/core-engine/game-engine";
 
 import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { TriggerTiming } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import type { PlayCardOptions } from "~/game-engine/engines/lorcana/src/moves/play-card";
 import { LorcanaCardInstance } from "./cards/lorcana-card-instance";
 import type { LorcanaCardRepository } from "./cards/lorcana-card-repository";
 import { LorcanaGame } from "./game-definition/lorcana-game-definition";
@@ -453,8 +454,16 @@ export class LorcanaEngine extends GameEngine<
       },
     };
 
+    const playCard = (params: { card: string; opts?: PlayCardOptions }) => {
+      return this.processMove(currentPlayer, "playCard", [
+        params.card,
+        params.opts,
+      ]);
+    };
+
     return {
       manualMoves,
+      playCard,
       resolveBag: () => {
         if (!currentPlayer) {
           logger.warn("No current player found for resolveBag move.");
@@ -481,6 +490,17 @@ export class LorcanaEngine extends GameEngine<
         }
 
         return this.processMove(currentPlayer, "alterHand", cardsToAlter);
+      },
+      sing: (params: { singer: string; song: string }) => {
+        return playCard({
+          card: params.song,
+          opts: {
+            alternativeCost: {
+              type: "sing",
+              targetInstanceId: [params.singer],
+            },
+          },
+        });
       },
       putACardIntoTheInkwell: (instanceId: string) => {
         if (!currentPlayer) {

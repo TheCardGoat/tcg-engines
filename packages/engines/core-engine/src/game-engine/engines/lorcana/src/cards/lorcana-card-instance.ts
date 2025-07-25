@@ -7,6 +7,7 @@ import type {
   LorcanaCardMeta,
   LorcanaGameState,
   LorcanaPlayerState,
+  LorcanaZone,
 } from "../lorcana-engine-types";
 import type { LorcanaCardDefinition } from "./lorcana-card-repository";
 
@@ -41,6 +42,10 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
 
   get inkwell(): boolean {
     return this.card.inkwell;
+  }
+
+  get zone(): LorcanaZone {
+    return super.zone as LorcanaZone;
   }
 
   get owner(): string {

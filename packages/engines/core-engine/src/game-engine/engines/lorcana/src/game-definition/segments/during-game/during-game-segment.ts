@@ -93,9 +93,7 @@ export const duringGameSegment: LorcanaSegmentConfig = {
             moves: {
               putACardIntoTheInkwell: lorcanaMoves.putACardIntoTheInkwell,
               passTurn: lorcanaMoves.passTurn,
-              playCard: ({ G }) => {
-                return G;
-              },
+              playCard: lorcanaMoves.playCard,
               quest: ({ G }) => {
                 return G;
               },

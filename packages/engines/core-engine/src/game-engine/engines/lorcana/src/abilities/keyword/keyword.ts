@@ -14,6 +14,7 @@ export * from "./wardAbility";
 
 export type LorcanaKeywords =
   | "singer"
+  | "voiceless"
   | "shift"
   | "challenger"
   | "sing-together"
@@ -23,7 +24,6 @@ export type LorcanaKeywords =
   | "evasive"
   | "resist"
   | "support"
-  | "voiceless"
   | "ward"
   | "vanish";
 

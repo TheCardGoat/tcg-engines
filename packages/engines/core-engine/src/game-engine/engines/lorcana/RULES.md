@@ -771,9 +771,7 @@ This process fol ows a series of steps. If any part of the playing a card proces
 
 **6.3.3.2. **A song is defined as having “Action” and “Song” on the card’s classification line. 
 
-**6.3.3.3. **All songs al ow the player to pay an alternate cost instead of their ink cost to play them. Being a song means 
-
-“Instead of paying the ink cost of this card, you can \{E\} one of your characters in play with ink cost N or greater to play this card for free.” This is cal ed *singing* the song. 
+**6.3.3.3. **All songs allow the player to pay an alternate cost instead of their ink cost to play them. Being a song means “Instead of paying the ink cost of this card, you can \{E\} one of your characters in play with ink cost N or greater to play this card for free.” This is called *singing* the song. 
 
 **6.3.3.4. **Some songs also have the keyword **Sing Together**, which functions similarly to the special rule. \(See 10.10, “Sing Together.”\)
 

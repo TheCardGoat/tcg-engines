@@ -2,7 +2,6 @@ import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { getCurrentTurnPlayer } from "~/game-engine/core-engine/state/context";
 import { logger } from "~/game-engine/core-engine/utils/logger";
 import type { LorcanaMove } from "./types";
-import { toLorcanaCoreOps } from "./types";
 
 // **4.4.1.** To end a turn, there must be no abilities currently waiting to resolve. The active player declares the end of their turn.
 // This creates the start of the End of Turn Phase (see 4.1.4).

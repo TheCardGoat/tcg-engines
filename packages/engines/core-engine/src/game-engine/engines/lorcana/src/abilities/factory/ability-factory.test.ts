@@ -34,12 +34,12 @@ describe("AbilityFactory", () => {
     });
 
     test("should create a keyword ability", () => {
-      const ability = AbilityFactory.keyword("Bodyguard");
+      const ability = AbilityFactory.keyword("bodyguard");
 
       expect(ability).toEqual({
         type: "keyword",
-        text: "Bodyguard",
-        keyword: { type: "Bodyguard" },
+        text: "bodyguard",
+        keyword: { type: "bodyguard" },
         effects: [],
       });
     });
@@ -126,7 +126,7 @@ describe("AbilityFactory", () => {
 
       expect(abilities).toHaveLength(1);
       expect(abilities[0].type).toBe("keyword");
-      expect(abilities[0].keyword?.type).toBe("Evasive");
+      expect(abilities[0].keyword?.type).toBe("evasive");
     });
 
     test("should parse a keyword with value", () => {
@@ -134,8 +134,50 @@ describe("AbilityFactory", () => {
 
       expect(abilities).toHaveLength(1);
       expect(abilities[0].type).toBe("keyword");
-      expect(abilities[0].keyword?.type).toBe("Challenger");
+      expect(abilities[0].keyword?.type).toBe("challenger");
       expect(abilities[0].keyword?.value).toBe(2);
+    });
+
+    // Test all simple keywords
+    test("should parse all simple keywords", () => {
+      const simpleKeywords: Array<{ text: string; expected: string }> = [
+        { text: "Bodyguard", expected: "bodyguard" },
+        { text: "Evasive", expected: "evasive" },
+        { text: "Rush", expected: "rush" },
+        { text: "Ward", expected: "ward" },
+        { text: "Vanish", expected: "vanish" },
+        { text: "Support", expected: "support" },
+        { text: "Reckless", expected: "reckless" },
+        { text: "Voiceless", expected: "voiceless" },
+      ];
+
+      for (const { text, expected } of simpleKeywords) {
+        const abilities = AbilityFactory.fromCardText(text);
+        expect(abilities).toHaveLength(1);
+        expect(abilities[0].type).toBe("keyword");
+        expect(abilities[0].keyword?.type).toBe(expected);
+        expect(abilities[0].keyword?.value).toBeUndefined();
+      }
+    });
+
+    // Test all keywords with values
+    test("should parse all keywords with values", () => {
+      const keywordsWithValues = [
+        { text: "Challenger +3", type: "challenger", value: 3 },
+        { text: "Resist +2", type: "resist", value: 2 },
+        { text: "Singer 5", type: "singer", value: 5 },
+        { text: "Shift 4", type: "shift", value: 4 },
+        { text: "Sing Together 8", type: "sing-together", value: 8 },
+        { text: "Sing-Together 10", type: "sing-together", value: 10 },
+      ];
+
+      for (const { text, type, value } of keywordsWithValues) {
+        const abilities = AbilityFactory.fromCardText(text);
+        expect(abilities).toHaveLength(1);
+        expect(abilities[0].type).toBe("keyword");
+        expect(abilities[0].keyword?.type).toBe(type);
+        expect(abilities[0].keyword?.value).toBe(value);
+      }
     });
 
     test("should parse a triggered ability from card text", () => {
@@ -181,6 +223,17 @@ describe("AbilityFactory", () => {
       expect(abilities).toHaveLength(2);
       expect(abilities[0].type).toBe("keyword");
       expect(abilities[1].type).toBe("triggered");
+    });
+
+    // Test case insensitive keyword parsing
+    test("should parse keywords case insensitively", () => {
+      const abilities1 = AbilityFactory.fromCardText("BODYGUARD");
+      const abilities2 = AbilityFactory.fromCardText("bodyguard");
+      const abilities3 = AbilityFactory.fromCardText("Bodyguard");
+
+      expect(abilities1[0].keyword?.type).toBe("bodyguard");
+      expect(abilities2[0].keyword?.type).toBe("bodyguard");
+      expect(abilities3[0].keyword?.type).toBe("bodyguard");
     });
   });
 
@@ -260,9 +313,9 @@ describe("AbilityFactory", () => {
 
       expect(ability.type).toBe("keyword");
       expect(ability.text).toBe(
-        "Shift 2 (You may pay 2 {I} to play this on top of one of your characters named Mickey Mouse.)",
+        "shift 2 (You may pay 2 {I} to play this on top of one of your characters named Mickey Mouse.)",
       );
-      expect(ability.keyword).toEqual({ type: "Shift", value: 2 });
+      expect(ability.keyword).toEqual({ type: "shift", value: 2 });
       expect(ability.shift).toBeDefined();
       expect(ability.shift?.targetName).toBe("Mickey Mouse");
     });

@@ -322,17 +322,19 @@ export type EffectCondition = {
 };
 
 export type Keyword =
-  | "Bodyguard"
-  | "Challenger"
-  | "Evasive"
-  | "Reckless"
-  | "Resist"
-  | "Rush"
-  | "Shift"
-  | "Singer"
-  | "Support"
-  | "Vanish"
-  | "Ward";
+  | "bodyguard"
+  | "challenger"
+  | "evasive"
+  | "reckless"
+  | "resist"
+  | "rush"
+  | "shift"
+  | "singer"
+  | "sing-together"
+  | "support"
+  | "vanish"
+  | "voiceless"
+  | "ward";
 
 export type Target = AbilityTarget;
 
