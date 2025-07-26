@@ -14,6 +14,7 @@ import { LorcanaGame } from "./game-definition/lorcana-game-definition";
 import type {
   LorcanaCardDefinition,
   LorcanaCardFilter,
+  LorcanaCardFilterExtended,
   LorcanaCardMeta,
   LorcanaGameState,
   LorcanaPlayerState,
@@ -45,6 +46,7 @@ export class LorcanaEngine extends GameEngine<
   LorcanaCardDefinition,
   LorcanaPlayerState,
   LorcanaCardFilter,
+  LorcanaCardMeta,
   LorcanaCardInstance
 > {
   // Store the repository locally for access in card model initialization
@@ -73,7 +75,7 @@ export class LorcanaEngine extends GameEngine<
       debug,
       repository:
         cardRepository || ({} as CardRepository<LorcanaCardDefinition>),
-      coreOperationClass: LorcanaCoreOperations,
+      coreOperationClass: LorcanaCoreOperations as any,
     });
 
     if (cardRepository) {
@@ -166,8 +168,9 @@ export class LorcanaEngine extends GameEngine<
     const gameState = this.getGameState();
 
     return cards.filter((card) => {
-      // Always get fresh metadata from the current state
-      const meta = gameState.G.metas[card.instanceId] || {};
+      // Always get fresh metadata from the current context
+      const ctx = this.getCtx();
+      const meta = ctx.cardMetas?.[card.instanceId] || {};
 
       // Filter by exerted status
       if (filter.exerted !== undefined) {
@@ -280,8 +283,20 @@ export class LorcanaEngine extends GameEngine<
       // Filter by card type
       if (filter.cardType) {
         const cardTypes = card.card.type?.toLowerCase() || "";
-        if (!cardTypes.includes(filter.cardType.toLowerCase())) {
-          return false;
+        if (Array.isArray(filter.cardType)) {
+          // Handle array of card types (from builder)
+          if (
+            !filter.cardType.some((type) =>
+              cardTypes.includes(type.toLowerCase()),
+            )
+          ) {
+            return false;
+          }
+        } else {
+          // Handle single card type (legacy filter)
+          if (!cardTypes.includes(filter.cardType.toLowerCase())) {
+            return false;
+          }
         }
       }
 
@@ -355,16 +370,20 @@ export class LorcanaEngine extends GameEngine<
   }
 
   exertCard({ card, exerted }: { card: string; exerted: boolean }) {
-    // Always get the current game state to ensure we're modifying the same reference
+    // Always get the current context to ensure we're modifying the same reference
     // that the card filtering system will use
-    const gameState = this.getGameState();
+    const ctx = this.getCtx();
 
-    // Mark ink card as exerted in game state metadata
-    if (gameState.G.metas[card]) {
+    // Mark ink card as exerted in context metadata
+    if (!ctx.cardMetas) {
+      ctx.cardMetas = {};
+    }
+
+    if (ctx.cardMetas[card]) {
       // Make sure we're modifying the existing object, not creating a new reference
-      gameState.G.metas[card].exerted = exerted;
+      ctx.cardMetas[card].exerted = exerted;
     } else {
-      gameState.G.metas[card] = { exerted };
+      ctx.cardMetas[card] = { exerted };
     }
 
     logger.debug(`Exerted card ${card} set to ${exerted}`);
@@ -386,9 +405,10 @@ export class LorcanaEngine extends GameEngine<
 
     // Add debug logging to verify
     const gameState = this.getGameState();
+    const ctx = this.getCtx();
     const allInkCards = this.getCardsInZone("inkwell", playerId);
     const directFilterCount = allInkCards.filter(
-      (card) => !gameState.G.metas[card.instanceId]?.exerted,
+      (card) => !ctx.cardMetas?.[card.instanceId]?.exerted,
     ).length;
 
     // If there's a mismatch, log it
@@ -546,10 +566,8 @@ export class LorcanaEngine extends GameEngine<
    */
   protected override createCoreOperationFromState(
     state: CoreEngineState<LorcanaGameState>,
-  ): LorcanaCoreOperations {
-    // The parent method will create a CoreOperation using the coreOperationClass we provided (LorcanaCoreOperations)
-    // We can safely return it with the correct type because we know it's LorcanaCoreOperations
-    return super.createCoreOperationFromState(state) as LorcanaCoreOperations;
+  ): any {
+    return super.createCoreOperationFromState(state) as any;
   }
 
   leaveLocation(char: LorcanaCardInstance) {
@@ -617,19 +635,29 @@ export class LorcanaEngine extends GameEngine<
       zone: "play",
     };
 
-    return this.cardInstanceStore.queryCards(filter);
+    return this.cardInstanceStore.queryCards(filter) as LorcanaCardInstance[];
   }
 
   getCardMeta(instanceId: string): LorcanaCardMeta {
-    return this.getGameState().G.metas[instanceId] || {};
+    const ctx = this.getCtx();
+    return ctx.cardMetas?.[instanceId] || {};
   }
 
-  queryCardsByFilter(filter: LorcanaCardFilter): LorcanaCardInstance[] {
+  queryCardsByFilter(
+    filter: LorcanaCardFilter | LorcanaCardFilterExtended,
+  ): LorcanaCardInstance[] {
+    // Handle extended filters from the builder
+    if (this.isExtendedFilter(filter)) {
+      return this.queryCardsByExtendedFilter(filter);
+    }
+
+    // Handle legacy filters
+    const legacyFilter = filter as LorcanaCardFilter;
+
     // Special handling for exerted filter to ensure it's properly synchronized
-    // This is the most direct fix that ensures metadata changes are seen by card filtering
-    if (filter.exerted !== undefined) {
+    if (legacyFilter.exerted !== undefined) {
       // First get all cards that match the basic criteria (zone, owner, etc.)
-      const baseFilter = { ...filter };
+      const baseFilter = { ...legacyFilter };
       delete baseFilter.exerted; // Remove exerted to get all matching cards
 
       // Apply base filtering
@@ -638,26 +666,374 @@ export class LorcanaEngine extends GameEngine<
       // Convert to LorcanaCardInstance for type safety
       const lorcanaCards = baseResults as LorcanaCardInstance[];
 
-      // Get the latest game state for fresh metadata
-      const gameState = this.getGameState();
+      // Get the latest context for fresh metadata
+      const ctx = this.getCtx();
 
       // Manually filter by exerted status
       return lorcanaCards.filter((card) => {
-        const meta = gameState.G.metas[card.instanceId] || {};
+        const meta = ctx.cardMetas?.[card.instanceId] || {};
         const isExerted = !!meta.exerted;
-        return filter.exerted === isExerted;
+        return legacyFilter.exerted === isExerted;
       });
     }
 
     // For all other filters, use the standard approach
     // First apply core filtering (zone, owner, publicId, instanceId)
-    const baseResults = super.queryCardsByFilter(filter);
+    const baseResults = super.queryCardsByFilter(legacyFilter);
 
     // Convert to LorcanaCardInstance for type safety
     const lorcanaCards = baseResults as LorcanaCardInstance[];
 
     // Apply Lorcana-specific filtering
-    return this.applyLorcanaSpecificFilters(lorcanaCards, filter);
+    return this.applyLorcanaSpecificFilters(lorcanaCards, legacyFilter);
+  }
+
+  /**
+   * Type guard to check if filter is the extended builder type
+   */
+  private isExtendedFilter(
+    filter: LorcanaCardFilter | LorcanaCardFilterExtended,
+  ): filter is LorcanaCardFilterExtended {
+    // If it's an empty object {}, treat it as an extended filter
+    // This handles the case where LorcanaCardFilterBuilder().build() returns {}
+    if (Object.keys(filter).length === 0) {
+      return true;
+    }
+
+    // Extended filters have properties that legacy filters don't have
+    const extendedFilter = filter as LorcanaCardFilterExtended;
+    return !!(
+      extendedFilter.and ||
+      extendedFilter.or ||
+      extendedFilter.not ||
+      extendedFilter.name ||
+      extendedFilter.title ||
+      extendedFilter.text ||
+      extendedFilter.ready ||
+      extendedFilter.dry ||
+      extendedFilter.atLocation ||
+      extendedFilter.hasCardUnder ||
+      extendedFilter.canSingTogether ||
+      extendedFilter.canShift ||
+      extendedFilter.source ||
+      extendedFilter.location ||
+      extendedFilter.usedInkwellThisTurn ||
+      extendedFilter.wasChallenged ||
+      extendedFilter.challengeRole ||
+      extendedFilter.singRole ||
+      extendedFilter.topDeck ||
+      extendedFilter.namedCard ||
+      extendedFilter.negate ||
+      extendedFilter.ignoreBonuses ||
+      // Check if zone is an array (multi-zone filtering)
+      Array.isArray(extendedFilter.zone)
+    );
+  }
+
+  /**
+   * Query cards using the extended filter from the builder
+   */
+  private queryCardsByExtendedFilter(
+    filter: LorcanaCardFilterExtended,
+  ): LorcanaCardInstance[] {
+    // Start with all cards or apply basic zone/owner filtering
+    let baseCards: LorcanaCardInstance[] = [];
+
+    // Convert zone filter to legacy format for base filtering
+    if (filter.zone) {
+      const zones = Array.isArray(filter.zone) ? filter.zone : [filter.zone];
+      baseCards = zones.flatMap((zone) => {
+        const legacyFilter: LorcanaCardFilter = { zone };
+        if (filter.owner === "self" || filter.owner === "opponent") {
+          legacyFilter.owner = filter.owner;
+        }
+        return super.queryCardsByFilter(legacyFilter) as LorcanaCardInstance[];
+      });
+    } else {
+      // Get all cards from all game zones (not from repository)
+      const allZones: LorcanaZone[] = [
+        "deck",
+        "hand",
+        "play",
+        "inkwell",
+        "discard",
+        "bag",
+      ];
+      baseCards = allZones.flatMap((zone) => {
+        const legacyFilter: LorcanaCardFilter = { zone };
+        if (filter.owner === "self" || filter.owner === "opponent") {
+          legacyFilter.owner = filter.owner;
+        }
+        return super.queryCardsByFilter(legacyFilter) as LorcanaCardInstance[];
+      });
+    }
+
+    // Remove duplicates (in case a card matched multiple zones)
+    const uniqueCards = Array.from(
+      new Map(baseCards.map((card) => [card.instanceId, card])).values(),
+    );
+
+    // Apply all extended filters
+    return this.applyExtendedFilters(uniqueCards, filter);
+  }
+
+  /**
+   * Apply extended filter logic to cards
+   */
+  private applyExtendedFilters(
+    cards: LorcanaCardInstance[],
+    filter: LorcanaCardFilterExtended,
+  ): LorcanaCardInstance[] {
+    let filteredCards = [...cards];
+
+    // Handle logical operators first
+    if (filter.and) {
+      // All AND conditions must be true
+      for (const andFilter of filter.and) {
+        const matchingCards = this.queryCardsByFilter(andFilter);
+        filteredCards = filteredCards.filter((card) =>
+          matchingCards.some((match) => match.instanceId === card.instanceId),
+        );
+      }
+    }
+
+    if (filter.or) {
+      // At least one OR condition must be true
+      const orResults = filter.or.flatMap((orFilter) =>
+        this.queryCardsByFilter(orFilter),
+      );
+      const orInstanceIds = new Set(orResults.map((card) => card.instanceId));
+      filteredCards = filteredCards.filter((card) =>
+        orInstanceIds.has(card.instanceId),
+      );
+    }
+
+    if (filter.not) {
+      // NOT condition must be false
+      const notResults = this.queryCardsByFilter(filter.not);
+      const notInstanceIds = new Set(notResults.map((card) => card.instanceId));
+      filteredCards = filteredCards.filter(
+        (card) => !notInstanceIds.has(card.instanceId),
+      );
+    }
+
+    // Get fresh game state for metadata checks
+    const gameState = this.getGameState();
+
+    // Apply individual filters
+    filteredCards = filteredCards.filter((card) => {
+      const ctx = this.getCtx();
+      const meta = ctx.cardMetas?.[card.instanceId] || {};
+
+      // Basic attribute filters
+      if (
+        filter.cost &&
+        !this.matchesNumericRange(card.card.cost || 0, filter.cost)
+      ) {
+        return false;
+      }
+
+      if (
+        filter.strength &&
+        !this.matchesNumericRange(card.card.strength || 0, filter.strength)
+      ) {
+        return false;
+      }
+
+      if (
+        filter.willpower &&
+        !this.matchesNumericRange(card.card.willpower || 0, filter.willpower)
+      ) {
+        return false;
+      }
+
+      if (
+        filter.lore &&
+        !this.matchesNumericRange(card.card.lore || 0, filter.lore)
+      ) {
+        return false;
+      }
+
+      if (
+        filter.moveCost &&
+        !this.matchesNumericRange(
+          (card.card as any).moveCost || 0,
+          filter.moveCost,
+        )
+      ) {
+        return false;
+      }
+
+      // String attribute filters
+      if (
+        filter.name &&
+        !this.matchesStringComparison(card.card.name || "", filter.name)
+      ) {
+        return false;
+      }
+
+      if (
+        filter.title &&
+        !this.matchesStringComparison(card.card.title || "", filter.title)
+      ) {
+        return false;
+      }
+
+      if (
+        filter.text &&
+        !this.matchesStringComparison(card.card.text || "", filter.text)
+      ) {
+        return false;
+      }
+
+      // Card type filter
+      if (filter.cardType && !filter.cardType.includes(card.card.type as any)) {
+        return false;
+      }
+
+      // Ink filters
+      if (filter.ink && filter.ink.length > 0) {
+        const cardColors = card.card.colors || [];
+        if (!filter.ink.some((color) => cardColors.includes(color as any))) {
+          return false;
+        }
+      }
+
+      if (
+        filter.inkable !== undefined &&
+        !!card.card.inkwell !== filter.inkable
+      ) {
+        return false;
+      }
+
+      // Keyword and ability filters
+      if (filter.hasKeyword && filter.hasKeyword.length > 0) {
+        // Extract keywords from card abilities - this needs proper implementation
+        // For now, skip this filter to avoid type errors
+        // TODO: Implement proper keyword extraction from abilities
+      }
+
+      if (filter.hasAbility && filter.hasAbility.length > 0) {
+        // This would need proper ability text parsing - for now just check if abilities exist
+        const hasAnyAbility =
+          card.card.abilities && card.card.abilities.length > 0;
+        if (!hasAnyAbility) {
+          return false;
+        }
+      }
+
+      // State filters
+      if (filter.exerted !== undefined && !!meta.exerted !== filter.exerted) {
+        return false;
+      }
+
+      if (filter.ready !== undefined && !!meta.exerted === filter.ready) {
+        return false; // ready is opposite of exerted
+      }
+
+      if (filter.damaged !== undefined) {
+        if (typeof filter.damaged === "boolean") {
+          const isDamaged = (meta.damage || 0) > 0;
+          if (filter.damaged !== isDamaged) {
+            return false;
+          }
+        } else {
+          // NumericComparison for damage amount
+          if (
+            !this.matchesNumericComparison(meta.damage || 0, filter.damaged)
+          ) {
+            return false;
+          }
+        }
+      }
+
+      // Instance ID filters
+      if (filter.instanceId) {
+        const targetIds = Array.isArray(filter.instanceId)
+          ? filter.instanceId
+          : [filter.instanceId];
+        if (!targetIds.includes(card.instanceId)) {
+          return false;
+        }
+      }
+
+      if (filter.publicId) {
+        const targetIds = Array.isArray(filter.publicId)
+          ? filter.publicId
+          : [filter.publicId];
+        if (!targetIds.includes(card.card.id)) {
+          return false;
+        }
+      }
+
+      // Additional extended filters can be added here as needed
+
+      return true;
+    });
+
+    return filteredCards;
+  }
+
+  private matchesNumericRange(
+    value: number,
+    range: { min?: number; max?: number; exact?: number },
+  ): boolean {
+    if (range.exact !== undefined) {
+      return value === range.exact;
+    }
+    if (range.min !== undefined && value < range.min) {
+      return false;
+    }
+    if (range.max !== undefined && value > range.max) {
+      return false;
+    }
+    return true;
+  }
+
+  private matchesStringComparison(
+    value: string,
+    comparison: { operator: string; value: string | string[] },
+  ): boolean {
+    const targets = Array.isArray(comparison.value)
+      ? comparison.value
+      : [comparison.value];
+
+    switch (comparison.operator) {
+      case "eq":
+        return targets.includes(value);
+      case "contains":
+        return targets.some((target) => value.includes(target));
+      case "startsWith":
+        return targets.some((target) => value.startsWith(target));
+      case "endsWith":
+        return targets.some((target) => value.endsWith(target));
+      case "ne":
+        return !targets.includes(value);
+      default:
+        return false;
+    }
+  }
+
+  private matchesNumericComparison(
+    value: number,
+    comparison: { operator: string; value: number },
+  ): boolean {
+    switch (comparison.operator) {
+      case "eq":
+        return value === comparison.value;
+      case "gt":
+        return value > comparison.value;
+      case "gte":
+        return value >= comparison.value;
+      case "lt":
+        return value < comparison.value;
+      case "lte":
+        return value <= comparison.value;
+      case "ne":
+        return value !== comparison.value;
+      default:
+        return false;
+    }
   }
 
   get core() {

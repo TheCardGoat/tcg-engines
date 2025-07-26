@@ -25,10 +25,12 @@ import type { PlayerID } from "~/game-engine/core-engine/types/core-types";
 import type {
   BaseCoreCardFilter,
   DefaultCardDefinition,
+  DefaultCardMeta,
   DefaultGameState,
   DefaultPlayerState,
   GameSpecificCardDefinition,
   GameSpecificCardFilter,
+  GameSpecificCardMeta,
   GameSpecificGameState,
   GameSpecificPlayerState,
 } from "~/game-engine/core-engine/types/game-specific-types";
@@ -44,6 +46,7 @@ export interface CoreEngineOpts<
   CardDefinition extends GameSpecificCardDefinition = DefaultCardDefinition,
   PlayerState extends GameSpecificPlayerState = DefaultPlayerState,
   CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
+  CardMeta extends GameSpecificCardMeta = DefaultCardMeta,
   CardModel extends
     CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
 > {
@@ -65,6 +68,7 @@ export interface CoreEngineOpts<
       CardDefinition,
       PlayerState,
       CardFilter,
+      CardMeta,
       CardModel
     >;
   }) => CoreOperation<
@@ -72,6 +76,7 @@ export interface CoreEngineOpts<
     CardDefinition,
     PlayerState,
     CardFilter,
+    CardMeta,
     CardModel
   >;
 }
@@ -90,6 +95,7 @@ export class CoreEngine<
   CardDefinition extends GameSpecificCardDefinition = DefaultCardDefinition,
   PlayerState extends GameSpecificPlayerState = DefaultPlayerState,
   CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
+  CardMeta extends GameSpecificCardMeta = DefaultCardMeta,
   CardInstance extends
     CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
 > {
@@ -117,6 +123,7 @@ export class CoreEngine<
       CardDefinition,
       PlayerState,
       CardFilter,
+      CardMeta,
       CardInstance
     >;
   }) => CoreOperation<
@@ -124,6 +131,7 @@ export class CoreEngine<
     CardDefinition,
     PlayerState,
     CardFilter,
+    CardMeta,
     CardInstance
   >;
 
@@ -132,11 +140,19 @@ export class CoreEngine<
     CardDefinition,
     PlayerState,
     CardFilter,
+    CardMeta,
     CardInstance
   >;
   private clientEngines: Record<
     PlayerID,
-    CoreEngine<GameState, CardDefinition, PlayerState, CardFilter, CardInstance>
+    CoreEngine<
+      GameState,
+      CardDefinition,
+      PlayerState,
+      CardFilter,
+      CardMeta,
+      CardInstance
+    >
   > = {};
   private isAuthoritative = false;
 
@@ -169,7 +185,7 @@ export class CoreEngine<
     this.debug = debug;
 
     // Store the core operation class factory (default to CoreOperation)
-    this.coreOperationClass = coreOperationClass || CoreOperation;
+    this.coreOperationClass = coreOperationClass || (CoreOperation as any);
 
     // Initialize card instance store early so it's available to other components
     this.cardInstanceStore = new CoreCardInstanceStore({
@@ -420,6 +436,7 @@ export class CoreEngine<
       CardDefinition,
       PlayerState,
       CardFilter,
+      CardMeta,
       CardInstance
     >,
   ): void {
@@ -436,6 +453,7 @@ export class CoreEngine<
       CardDefinition,
       PlayerState,
       CardFilter,
+      CardMeta,
       CardInstance
     >,
   ): void {

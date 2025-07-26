@@ -5,7 +5,10 @@ import type {
   Zones,
 } from "@lorcanito/lorcana-engine";
 import { allCardsById } from "@lorcanito/lorcana-engine";
-import { getCardZone } from "~/game-engine/core-engine/engine/zone-operation";
+import {
+  getCardZone,
+  getCardZoneByInstanceId,
+} from "~/game-engine/core-engine/engine/zone-operation";
 
 import {
   type CoreCtx,
@@ -22,7 +25,11 @@ import { mockCharacterCard } from "~/game-engine/engines/lorcana/src/testing/moc
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import { LorcanaCardRepository } from "../cards/lorcana-card-repository";
 import { type LorcanaCardFilter, LorcanaEngine } from "../lorcana-engine";
-import type { LorcanaGameState, LorcanaZone } from "../lorcana-engine-types";
+import type {
+  LorcanaCardFilterExtended,
+  LorcanaGameState,
+  LorcanaZone,
+} from "../lorcana-engine-types";
 import { createEmptyLorcanaGameState } from "../utils/createEmptyLorcanaGameState";
 
 // Creates a test card repository that includes both official cards and test cards
@@ -206,6 +213,13 @@ export class LorcanaTestEngine {
 
   dispose() {}
 
+  // Delegate queryCardsByFilter to the authoritative engine
+  queryCardsByFilter(
+    filter: LorcanaCardFilter | LorcanaCardFilterExtended,
+  ): LorcanaCardInstance[] {
+    return this.authoritativeEngine.queryCardsByFilter(filter);
+  }
+
   get bag() {
     // Return the bag from the authoritative engine
     return this.authoritativeEngine.bag;
@@ -308,6 +322,11 @@ export class LorcanaTestEngine {
     return (
       getCardZone(this.playerOneEngine.getCtx(), zone, playerId)?.cards || []
     );
+  }
+
+  getCardZone(instanceId: string): string | undefined {
+    const ctx = this.authoritativeEngine.getCtx();
+    return getCardZoneByInstanceId(ctx, instanceId)?.name;
   }
 
   getCardsByZone(zone: Zones, playerId = "player_one") {

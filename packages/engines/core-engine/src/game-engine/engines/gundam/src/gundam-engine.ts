@@ -13,10 +13,32 @@ import type {
 import type {
   GundamCardDefinition,
   GundamCardFilter,
+  GundamCardMeta,
   GundamPlayerState,
 } from "./gundam-generic-types";
+import { GundamCoreOperations } from "./operations/gundam-core-operations";
 
-export type { GundamCardDefinition, GundamCardFilter, GundamPlayerState };
+export type {
+  GundamCardDefinition,
+  GundamCardFilter,
+  GundamCardMeta,
+  GundamPlayerState,
+};
+
+/**
+ * Options interface for GundamEngine constructor
+ */
+export interface GundamEngineOpts {
+  initialState: GundamGameState;
+  initialCoreCtx?: CoreCtx;
+  cards: GameCards;
+  cardRepository?: GundamCardRepository;
+  gameId: string;
+  playerId?: string;
+  debug?: boolean;
+  seed?: string;
+  players: string[];
+}
 
 /**
  * GundamEngine Class
@@ -27,10 +49,12 @@ export class GundamEngine extends GameEngine<
   GundamCardDefinition,
   GundamPlayerState,
   GundamCardFilter,
+  GundamCardMeta,
   GundamModel
 > {
   // Store the repository locally for access in card model initialization
   protected cardRepository?: GundamCardRepository;
+
   /**
    * Constructor for GundamEngine
    */
@@ -44,17 +68,7 @@ export class GundamEngine extends GameEngine<
     seed,
     players,
     debug,
-  }: {
-    initialState: GundamGameState;
-    initialCoreCtx?: CoreCtx;
-    cards: GameCards;
-    cardRepository?: GundamCardRepository;
-    gameId: string;
-    playerId?: string;
-    debug?: boolean;
-    seed?: string;
-    players: string[];
-  }) {
+  }: GundamEngineOpts) {
     super({
       game: GundamGame,
       seed,
@@ -67,6 +81,7 @@ export class GundamEngine extends GameEngine<
       debug,
       repository:
         cardRepository || ({} as CardRepository<GundamCardDefinition>),
+      coreOperationClass: GundamCoreOperations,
     });
 
     if (cardRepository) {

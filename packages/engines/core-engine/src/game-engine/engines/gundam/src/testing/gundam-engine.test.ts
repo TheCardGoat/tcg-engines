@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { GundamTestEngine } from "./gundam-test-engine.ts";
+import { GundamTestEngine } from "./gundam-test-engine";
 
 describe("Gundam Engine", () => {
   it("Should properly initialize the engine's board state", () => {

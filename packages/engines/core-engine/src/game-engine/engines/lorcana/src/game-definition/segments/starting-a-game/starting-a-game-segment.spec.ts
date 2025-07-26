@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { LorcanaTestEngine } from "../../../testing/lorcana-test-engine.ts";
+import { LorcanaTestEngine } from "../../../testing/lorcana-test-engine";
 
 describe("3.1. Starting a Game", () => {
   test("Starting a Game, choosing first player and altering both hand should move the game to the 'during game' segment", () => {

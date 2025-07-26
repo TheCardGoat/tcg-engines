@@ -25,6 +25,7 @@ describe("Context Factory Utilities", () => {
       turnPlayerPos: 0,
       priorityPlayerPos: 0,
       numTurns: 1,
+      numMoves: 0,
       numTurnMoves: 0,
       moveHistory: [],
       players: {

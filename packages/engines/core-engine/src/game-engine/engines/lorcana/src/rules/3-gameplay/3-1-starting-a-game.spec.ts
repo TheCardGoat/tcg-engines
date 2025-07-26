@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "../../testing/lorcana-test-engine.ts";
+import { LorcanaTestEngine } from "../../testing/lorcana-test-engine";
 
 describe("**3.1. Starting a Game**", () => {
   let testEngine: LorcanaTestEngine;

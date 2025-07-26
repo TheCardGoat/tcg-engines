@@ -6,6 +6,7 @@ import type { LorcanaEngine } from "../lorcana-engine";
 import type {
   LorcanaCardDefinition,
   LorcanaCardFilter,
+  LorcanaCardMeta,
   LorcanaGameState,
   LorcanaPlayerState,
 } from "../lorcana-engine-types";
@@ -34,6 +35,7 @@ export class LorcanaCoreOperations extends CoreOperation<
   LorcanaCardDefinition,
   LorcanaPlayerState,
   LorcanaCardFilter,
+  LorcanaCardMeta,
   LorcanaCardInstance
 > {
   /**
@@ -86,19 +88,14 @@ export class LorcanaCoreOperations extends CoreOperation<
    * Exert a card (Lorcana-specific state change)
    */
   exertCard(cardId: string): void {
-    if (!this.state.G.metas[cardId]) {
-      this.state.G.metas[cardId] = {};
-    }
-    this.state.G.metas[cardId].exerted = true;
+    this.updateCardMeta(cardId, "exerted", true);
   }
 
   /**
    * Ready a card (Lorcana-specific state change)
    */
   readyCard(cardId: string): void {
-    if (this.state.G.metas[cardId]) {
-      this.state.G.metas[cardId].exerted = false;
-    }
+    this.updateCardMeta(cardId, "exerted", false);
   }
 
   /**
@@ -108,17 +105,12 @@ export class LorcanaCoreOperations extends CoreOperation<
   applyDamage(cardId: string, damage: number): void {
     if (damage <= 0) return; // No damage to apply
 
-    // Initialize metadata if it doesn't exist
-    if (!this.state.G.metas[cardId]) {
-      this.state.G.metas[cardId] = {};
-    }
-
     // Add damage to existing damage (damage accumulates)
-    const currentDamage = this.state.G.metas[cardId].damage || 0;
-    this.state.G.metas[cardId].damage = currentDamage + damage;
+    const currentDamage = this.getCardMeta(cardId).damage || 0;
+    this.updateCardMeta(cardId, "damage", currentDamage + damage);
 
     logger.debug(
-      `Applied ${damage} damage to ${cardId}, total damage: ${this.state.G.metas[cardId].damage}`,
+      `Applied ${damage} damage to ${cardId}, total damage: ${this.getCardMeta(cardId).damage}`,
     );
   }
 
@@ -126,20 +118,20 @@ export class LorcanaCoreOperations extends CoreOperation<
    * Get the current damage on a card
    */
   getDamage(cardId: string): number {
-    return this.state.G.metas[cardId]?.damage || 0;
+    return this.getCardMeta(cardId).damage || 0;
   }
 
   /**
    * Remove damage from a card (for healing effects)
    */
   removeDamage(cardId: string, amount: number): void {
-    if (!this.state.G.metas[cardId] || amount <= 0) return;
+    if (amount <= 0) return;
 
-    const currentDamage = this.state.G.metas[cardId].damage || 0;
-    this.state.G.metas[cardId].damage = Math.max(0, currentDamage - amount);
+    const currentDamage = this.getCardMeta(cardId).damage || 0;
+    this.updateCardMeta(cardId, "damage", Math.max(0, currentDamage - amount));
 
     logger.debug(
-      `Removed ${amount} damage from ${cardId}, remaining damage: ${this.state.G.metas[cardId].damage}`,
+      `Removed ${amount} damage from ${cardId}, remaining damage: ${this.getCardMeta(cardId).damage}`,
     );
   }
 

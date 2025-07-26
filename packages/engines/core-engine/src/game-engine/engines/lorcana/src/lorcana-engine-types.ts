@@ -9,19 +9,20 @@ import type { LorcanitoCard } from "@lorcanito/lorcana-engine";
 import type {
   ExtendCardDefinition,
   ExtendCardFilter,
+  ExtendCardMeta,
   ExtendGameState,
   ExtendPlayerState,
 } from "~/game-engine/core-engine/types/game-specific-types";
 import type { LayerItem } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 
-// Re-export builder types for convenience
+// Re-export builder types and class for convenience
 export type {
-  LorcanaCardFilterBuilder,
   LorcanaCardFilterExtended,
   NumericComparison,
   NumericRange,
   StringComparison,
 } from "./lorcana-card-filter-builder";
+export { LorcanaCardFilterBuilder } from "./lorcana-card-filter-builder";
 
 // =============================================================================
 // PLAYER STATE TYPES
@@ -64,7 +65,10 @@ export type LorcanaCardDefinitionExtended = ExtendCardDefinition<
   }
 >;
 
-export type LorcanaCardMeta = {
+/**
+ * Lorcana-specific card metadata extending the base card metadata
+ */
+export type LorcanaCardMeta = ExtendCardMeta<{
   exerted?: boolean | null;
   playedThisTurn?: boolean | null;
   damage?: number | null;
@@ -73,7 +77,7 @@ export type LorcanaCardMeta = {
   revealed?: boolean | null;
   location?: string | null;
   characters?: string[] | null;
-};
+}>;
 
 /**
  * Lorcana-specific card filter extending the base card filter
@@ -153,11 +157,11 @@ export type LorcanaCardFilter = ExtendCardFilter<{
 
 /**
  * Main Lorcana game state with all game-specific properties
+ * Note: Card metadata is now stored in ctx.cardMetas instead of G.metas
  */
 export type LorcanaGameState = {
   effects: LayerItem[];
   bag: LayerItem[];
-  metas: Record<InstanceId, LorcanaCardMeta>;
   turnActions?: {
     putCardIntoInkwell?: boolean;
     // Add other turn-limited actions as needed
@@ -174,11 +178,11 @@ export type LorcanaGameState = {
 
 /**
  * Extended game state using CoreEngine's extension pattern
+ * Note: Card metadata is now stored in ctx.cardMetas instead of G.metas
  */
 export type LorcanaGameStateExtended = ExtendGameState<{
   effects: LayerItem[];
   bag: LayerItem[];
-  metas: Record<InstanceId, LorcanaCardMeta>;
   turnActions?: {
     putCardIntoInkwell?: boolean;
   };

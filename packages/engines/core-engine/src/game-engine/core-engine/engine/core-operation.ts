@@ -14,6 +14,17 @@ import {
   setPriorityPlayer,
   setTurnPlayer,
 } from "~/game-engine/core-engine/state/context";
+import type {
+  BaseCoreCardFilter,
+  DefaultCardDefinition,
+  DefaultCardMeta,
+  DefaultPlayerState,
+  GameSpecificCardDefinition,
+  GameSpecificCardFilter,
+  GameSpecificCardMeta,
+  GameSpecificGameState,
+  GameSpecificPlayerState,
+} from "~/game-engine/core-engine/types/game-specific-types";
 import {
   createContextWithPriorityPlayer,
   createContextWithTurnPlayer,
@@ -23,15 +34,6 @@ import {
   safeExecute,
 } from "~/game-engine/core-engine/utils/error-utils";
 import { getValidatedZone } from "~/game-engine/core-engine/utils/validation";
-import type {
-  BaseCoreCardFilter,
-  DefaultCardDefinition,
-  DefaultPlayerState,
-  GameSpecificCardDefinition,
-  GameSpecificCardFilter,
-  GameSpecificGameState,
-  GameSpecificPlayerState,
-} from "~/game-engine/engines/grand-archive/grand-archive-engine-types";
 import { logger } from "~/shared/logger";
 import type { CoreCardInstance } from "../card/core-card-instance";
 
@@ -40,6 +42,7 @@ export class CoreOperation<
   CardDefinition extends GameSpecificCardDefinition = DefaultCardDefinition,
   PlayerState extends GameSpecificPlayerState = DefaultPlayerState,
   CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
+  CardMeta extends GameSpecificCardMeta = DefaultCardMeta,
   CardInstance extends
     CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
 > {
@@ -49,6 +52,7 @@ export class CoreOperation<
     CardDefinition,
     PlayerState,
     CardFilter,
+    CardMeta,
     CardInstance
   >;
 
@@ -64,6 +68,7 @@ export class CoreOperation<
       CardDefinition,
       PlayerState,
       CardFilter,
+      CardMeta,
       CardInstance
     >;
   }) {
@@ -71,12 +76,149 @@ export class CoreOperation<
     this.engine = engine;
   }
 
+  // =============================================================================
+  // CARD METADATA OPERATIONS
+  // =============================================================================
+
+  /**
+   * Get card metadata by instance ID
+   * @param instanceId The instance ID of the card
+   * @returns The card metadata object or empty object if not found
+   */
+  getCardMeta(instanceId: string): CardMeta {
+    return this.state.ctx.cardMetas[instanceId] || ({} as CardMeta);
+  }
+
+  /**
+   * Set card metadata (replaces existing metadata)
+   * @param instanceId The instance ID of the card
+   * @param meta The metadata object to set
+   */
+  setCardMeta(instanceId: string, meta: Partial<CardMeta>): void {
+    if (!this.state.ctx.cardMetas[instanceId]) {
+      this.state.ctx.cardMetas[instanceId] = {} as CardMeta;
+    }
+    // Merge the provided metadata with existing metadata
+    Object.assign(this.state.ctx.cardMetas[instanceId], meta);
+    logger.debug(`Set card meta for ${instanceId}:`, meta);
+  }
+
+  /**
+   * Update a specific field in card metadata
+   * @param instanceId The instance ID of the card
+   * @param field The metadata field to update
+   * @param value The new value for the field
+   */
+  updateCardMeta<K extends keyof CardMeta>(
+    instanceId: string,
+    field: K,
+    value: CardMeta[K],
+  ): void {
+    if (!this.state.ctx.cardMetas[instanceId]) {
+      this.state.ctx.cardMetas[instanceId] = {} as CardMeta;
+    }
+    this.state.ctx.cardMetas[instanceId][field] = value;
+    logger.debug(
+      `Updated card meta field ${String(field)} for ${instanceId}:`,
+      value,
+    );
+  }
+
+  /**
+   * Remove all metadata for a card
+   * @param instanceId The instance ID of the card
+   */
+  removeCardMeta(instanceId: string): void {
+    delete this.state.ctx.cardMetas[instanceId];
+    logger.debug(`Removed card meta for ${instanceId}`);
+  }
+
+  /**
+   * Clear a specific metadata field for a card
+   * @param instanceId The instance ID of the card
+   * @param field The metadata field to clear
+   */
+  clearCardMetaField<K extends keyof CardMeta>(
+    instanceId: string,
+    field: K,
+  ): void {
+    if (this.state.ctx.cardMetas[instanceId]) {
+      delete this.state.ctx.cardMetas[instanceId][field];
+      logger.debug(
+        `Cleared card meta field ${String(field)} for ${instanceId}`,
+      );
+    }
+  }
+
+  /**
+   * Set metadata for multiple cards at once
+   * @param metas Record of instanceId to metadata mappings
+   */
+  setCardMetas(metas: Record<string, CardMeta>): void {
+    for (const [instanceId, meta] of Object.entries(metas)) {
+      this.setCardMeta(instanceId, meta);
+    }
+  }
+
+  /**
+   * Get all card metadata
+   * @returns Record of all card metadata
+   */
+  getCardMetas(): Record<string, CardMeta> {
+    return this.state.ctx.cardMetas;
+  }
+
+  /**
+   * Clear all card metadata
+   */
+  clearAllCardMetas(): void {
+    this.state.ctx.cardMetas = {};
+    logger.debug("Cleared all card metadata");
+  }
+
+  /**
+   * Get cards that have a specific metadata field value
+   * @param field The metadata field to check
+   * @param value The value to match
+   * @returns Array of instance IDs that match the criteria
+   */
+  getCardsWithMeta<K extends keyof CardMeta>(
+    field: K,
+    value: CardMeta[K],
+  ): string[] {
+    const matchingCards: string[] = [];
+    for (const [instanceId, meta] of Object.entries(this.state.ctx.cardMetas)) {
+      if (meta[field] === value) {
+        matchingCards.push(instanceId);
+      }
+    }
+    return matchingCards;
+  }
+
+  /**
+   * Query cards by metadata using a predicate function
+   * @param predicate Function that returns true for matching metadata
+   * @returns Array of instance IDs that match the predicate
+   */
+  queryCardsByMeta(predicate: (meta: CardMeta) => boolean): string[] {
+    const matchingCards: string[] = [];
+    for (const [instanceId, meta] of Object.entries(this.state.ctx.cardMetas)) {
+      if (predicate(meta)) {
+        matchingCards.push(instanceId);
+      }
+    }
+    return matchingCards;
+  }
+
+  // =============================================================================
+  // EXISTING OPERATIONS (Updated context access)
+  // =============================================================================
+
   /**
    * Get the current context
    * @returns The current context object
    */
-  getCtx(): CoreCtx<unknown> {
-    // TODO: CoreCtx should be generic, it's should return the proper type
+  getCtx(): CoreCtx<unknown, CardMeta> {
     return this.state.ctx;
   }
 

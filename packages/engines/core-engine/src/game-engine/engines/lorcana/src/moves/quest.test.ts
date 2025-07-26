@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { questMove } from "./quest";
 

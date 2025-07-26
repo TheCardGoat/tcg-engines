@@ -137,7 +137,8 @@ export function addTriggeredEffectsToTheBag(
   // Handle specific timing-based triggers
   switch (timing) {
     case "onMove": {
-      const locationId = this.state.G.metas[cardInstanceId]?.location;
+      const cardMeta = this.getCardMeta(cardInstanceId);
+      const locationId = cardMeta.location;
 
       if (locationId) {
         const location = this.getCardInstance(locationId);

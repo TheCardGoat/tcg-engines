@@ -14,14 +14,21 @@ export function leaveLocation(
   }
 
   // Update character metadata to remove location reference
-  if (this.state.G.metas[char.instanceId]) {
-    this.state.G.metas[char.instanceId].location = undefined;
-  }
+  const characterMeta = this.getCardMeta(char.instanceId);
+  this.setCardMeta(char.instanceId, {
+    ...characterMeta,
+    location: undefined,
+  });
 
   // Update location metadata to remove character from characters array
-  if (this.state.G.metas[location.instanceId]?.characters) {
-    this.state.G.metas[location.instanceId].characters = this.state.G.metas[
-      location.instanceId
-    ].characters.filter((card) => card !== char.instanceId);
+  const locationMeta = this.getCardMeta(location.instanceId);
+  if (Array.isArray(locationMeta.characters)) {
+    const updatedCharacters = locationMeta.characters.filter(
+      (cardId) => cardId !== char.instanceId,
+    );
+    this.setCardMeta(location.instanceId, {
+      ...locationMeta,
+      characters: updatedCharacters,
+    });
   }
 }

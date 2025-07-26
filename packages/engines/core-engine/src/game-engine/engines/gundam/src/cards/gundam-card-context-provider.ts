@@ -1,15 +1,18 @@
 import { CardNotFoundError } from "~/game-engine/core-engine/errors/domain-errors";
 import type { GundamEngine } from "~/game-engine/engines/gundam/src/gundam-engine";
+import type { GundamCardMeta } from "~/game-engine/engines/gundam/src/gundam-generic-types";
 
 /**
- * LorcanaEngine implementation of CardContextProvider
- * Provides fresh card state from the Lorcana engine's game state
+ * GundamEngine implementation of CardContextProvider
+ * Provides fresh card state from the Gundam engine's game state
+ * Now integrated with the core metadata system
  */
 export class GundamCardContextProvider {
   constructor(private engine: GundamEngine) {}
 
   /**
    * Get fresh card state by instance ID
+   * Now integrates with the core metadata system
    */
   getCardState(instanceId: string) {
     const engineState = this.engine.getState();
@@ -32,17 +35,42 @@ export class GundamCardContextProvider {
     // Get public ID from the engine's card mapping
     const publicId = this.getPublicIdForInstance(instanceId);
 
-    // Get modifiers from the game state
-    const modifiers = this.getCardModifiers(instanceId, engineState);
+    // Get metadata from the core metadata system
+    const meta = this.getCardMeta(instanceId);
 
     return {
       instanceId,
       publicId,
       owner,
       zone,
-      modifiers,
-      counters: this.getCardCounters(instanceId, engineState),
-      statusEffects: this.getCardStatusEffects(instanceId, engineState),
+      modifiers: meta.modifiers,
+      counters: meta.counters,
+      statusEffects: meta.statusEffects,
+      metadata: meta.metadata || {},
+    };
+  }
+
+  /**
+   * Get card metadata using the core metadata system
+   */
+  private getCardMeta(instanceId: string): GundamCardMeta {
+    const ctx = this.engine.getState()?.ctx;
+    if (!ctx?.cardMetas) {
+      return this.getDefaultMeta();
+    }
+
+    const meta = ctx.cardMetas[instanceId] as GundamCardMeta;
+    return meta || this.getDefaultMeta();
+  }
+
+  /**
+   * Get default metadata structure for Gundam cards
+   */
+  private getDefaultMeta(): GundamCardMeta {
+    return {
+      modifiers: [],
+      counters: {},
+      statusEffects: new Set<string>(),
       metadata: {},
     };
   }
@@ -105,36 +133,5 @@ export class GundamCardContextProvider {
 
     // Fallback to instance ID if no mapping found
     return instanceId;
-  }
-
-  /**
-   * Get modifiers for a card from the Gundam game state
-   */
-  private getCardModifiers(instanceId: string, state: any): any[] {
-    return [];
-  }
-
-  /**
-   * Get counters for a card from the Gundam game state
-   */
-  private getCardCounters(
-    _instanceId: string,
-    _state: any,
-  ): Record<string, number> {
-    return {};
-  }
-
-  /**
-   * Get status effects for a card from the Gundam game state
-   */
-  private getCardStatusEffects(_instanceId: string, _state: any): Set<string> {
-    // In Lorcana, status effects might be stored as part of card state
-    // This would need to be implemented based on the actual Lorcana state structure
-    const statusEffects = new Set<string>();
-
-    // Check if card is exerted, dried, etc.
-    // This would need to be implemented based on the actual Lorcana card state structure
-
-    return statusEffects;
   }
 }

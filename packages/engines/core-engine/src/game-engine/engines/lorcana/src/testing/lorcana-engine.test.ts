@@ -9,7 +9,7 @@ import {
   minnieMouseBelovedPrincess,
 } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
 import { abuBoldHelmsman } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
-import { LorcanaTestEngine } from "./lorcana-test-engine.ts";
+import { LorcanaTestEngine } from "./lorcana-test-engine";
 
 describe("Lorcana Engine", () => {
   it("Should properly initialize the engine's board state", () => {

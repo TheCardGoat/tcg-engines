@@ -82,8 +82,8 @@ export class LorcanaCardInstance extends CoreCardInstance<
   }
 
   get meta(): LorcanaCardMeta {
-    const G = this.contextProvider.getG() as LorcanaGameState;
-    return G.metas?.[this.instanceId] || {};
+    const ctx = this.contextProvider.getCtx();
+    return (ctx.cardMetas?.[this.instanceId] as LorcanaCardMeta) || {};
   }
 
   get type(): LorcanaCardDefinition["type"] {

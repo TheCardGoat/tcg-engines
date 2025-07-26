@@ -3,6 +3,7 @@ import type {
   PlayerID,
   PlayerId,
 } from "~/game-engine/core-engine/types/core-types";
+import type { BaseCardMeta } from "~/game-engine/core-engine/types/game-specific-types";
 import { logger } from "~/game-engine/core-engine/utils/logger";
 import {
   validateContextStructure,
@@ -23,7 +24,7 @@ export type PlayerState<PlayerTurnHistory = unknown> = {
   turnHistory?: PlayerTurnHistory[];
 };
 
-export interface CoreCtx<TurnHistory = unknown> {
+export interface CoreCtx<TurnHistory = unknown, CardMeta = BaseCardMeta> {
   playerOrder: Array<PlayerID>;
   turnPlayerPos: number;
   priorityPlayerPos: number;
@@ -79,6 +80,12 @@ export interface CoreCtx<TurnHistory = unknown> {
 
   cards: GameCards;
   cardZones?: Record<string, Zone>;
+
+  /**
+   * Card metadata storage for dynamic, mutable card properties
+   * This replaces game-specific metadata patterns with a unified approach
+   */
+  cardMetas: Record<string, CardMeta>;
 
   moveHistory: GameMoveHistoryEntry[];
 

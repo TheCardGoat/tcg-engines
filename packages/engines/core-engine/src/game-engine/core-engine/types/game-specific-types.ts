@@ -32,17 +32,25 @@ export interface BaseCoreCardFilter {
 // biome-ignore lint/complexity/noBannedTypes: this is not an actual type, it's a placeholder
 export type BaseGameState = {};
 
+/**
+ * Base card metadata type that all games can extend
+ * This stores dynamic, mutable properties of card instances
+ */
+export type BaseCardMeta = Record<string, any>;
+
 // Generic type constraints for type-safe extensions
 export type GameSpecificPlayerState = BasePlayerState;
 export type GameSpecificCardFilter = BaseCoreCardFilter;
 export type GameSpecificGameState = BaseGameState;
 export type GameSpecificCardDefinition = CoreCardDefinition;
+export type GameSpecificCardMeta = BaseCardMeta;
 
 // Utility types for game developers
 export type ExtendPlayerState<T> = BasePlayerState & T;
 export type ExtendCardFilter<T> = BaseCoreCardFilter & T;
 export type ExtendGameState<T> = BaseGameState & T;
 export type ExtendCardDefinition<T> = CoreCardDefinition & T;
+export type ExtendCardMeta<T> = BaseCardMeta & T;
 
 /**
  * Type helper to ensure game-specific types meet the required constraints
@@ -52,11 +60,13 @@ export type ValidateGameTypes<
   CardDefinition extends GameSpecificCardDefinition,
   PlayerState extends GameSpecificPlayerState,
   CardFilter extends GameSpecificCardFilter,
+  CardMeta extends GameSpecificCardMeta = BaseCardMeta,
 > = {
   gameState: GameState;
   cardDefinition: CardDefinition;
   playerState: PlayerState;
   cardFilter: CardFilter;
+  cardMeta: CardMeta;
 };
 
 /**
@@ -66,3 +76,4 @@ export type DefaultPlayerState = BasePlayerState;
 export type DefaultCardFilter = BaseCoreCardFilter;
 export type DefaultGameState = BaseGameState;
 export type DefaultCardDefinition = CoreCardDefinition;
+export type DefaultCardMeta = BaseCardMeta;

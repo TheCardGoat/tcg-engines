@@ -1,3 +1,4 @@
+import { describe, expect, test } from "bun:test";
 import { CoreOperation } from "../../engine/core-operation";
 import type { CoreEngineState, FnContext } from "../../game-configuration";
 import { createContext } from "../../utils/context-factory";

@@ -8,6 +8,7 @@
 import type {
   ExtendCardDefinition,
   ExtendCardFilter,
+  ExtendCardMeta,
   ExtendGameState,
   ExtendPlayerState,
 } from "~/game-engine/core-engine/types/game-specific-types";
@@ -56,6 +57,45 @@ export type GundamGameState = ExtendGameState<{
  * Gundam-specific card definition extending the base card definition
  */
 export type GundamCardDefinition = ExtendCardDefinition<GundamitoCard>;
+
+/**
+ * Gundam-specific card metadata extending the base card metadata
+ */
+export type GundamCardMeta = ExtendCardMeta<{
+  // Modifier effects applied to the card
+  modifiers: Array<{
+    source: string;
+    effect: string;
+    duration?: string;
+  }>;
+
+  // Counter values on the card
+  counters: Record<string, number>;
+
+  // Status effects applied to the card
+  statusEffects: Set<string>;
+
+  // Card state flags
+  isExerted?: boolean;
+  isPaired?: boolean;
+  pairedWith?: string; // instanceId of paired card
+
+  // Turn-based tracking
+  playedThisTurn?: boolean;
+  activatedThisTurn?: boolean;
+  attackedThisTurn?: boolean;
+
+  // Combat-related metadata
+  damage?: number;
+  combatRole?: "attacker" | "defender" | "blocker";
+
+  // Resource-specific metadata
+  resourcesGenerated?: number;
+  isResourceExerted?: boolean;
+
+  // Additional game-specific metadata
+  metadata?: Record<string, any>;
+}>;
 
 /**
  * Gundam-specific card filter extending the base card filter

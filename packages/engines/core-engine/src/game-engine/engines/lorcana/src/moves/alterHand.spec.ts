@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "../testing/lorcana-test-engine.ts";
+import { LorcanaTestEngine } from "../testing/lorcana-test-engine";
 
 describe("Move: Altering hands", () => {
   let testEngine: LorcanaTestEngine;

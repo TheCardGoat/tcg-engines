@@ -17,24 +17,26 @@ export function enterLocation(
   leaveLocation.call(this, char);
 
   // Track character-location relationship by setting character's location metadata
-  if (!this.state.G.metas[characterInstanceId]) {
-    this.state.G.metas[characterInstanceId] = {};
-  }
-  this.state.G.metas[characterInstanceId].location = locationInstanceId;
+  const characterMeta = this.getCardMeta(characterInstanceId);
+  this.setCardMeta(characterInstanceId, {
+    ...characterMeta,
+    location: locationInstanceId,
+  });
 
   // Track characters at location by adding to location's characters array
-  if (!this.state.G.metas[locationInstanceId]) {
-    this.state.G.metas[locationInstanceId] = {};
-  }
-  // Always initialize as array for locations
-  if (!Array.isArray(this.state.G.metas[locationInstanceId].characters)) {
-    this.state.G.metas[locationInstanceId].characters = [];
-  }
-  const currentCharactersAtLocation =
-    this.state.G.metas[locationInstanceId].characters;
+  const locationMeta = this.getCardMeta(locationInstanceId);
+  const currentCharactersAtLocation = Array.isArray(locationMeta.characters)
+    ? locationMeta.characters
+    : [];
+
   if (!currentCharactersAtLocation.includes(characterInstanceId)) {
     currentCharactersAtLocation.push(characterInstanceId);
   }
+
+  this.setCardMeta(locationInstanceId, {
+    ...locationMeta,
+    characters: currentCharactersAtLocation,
+  });
 
   // Rule 4.3.7.5: Add any effects that would happen as a result of the character moving to the bag
   this.addTriggeredEffectsToTheBag("onMove", characterInstanceId);

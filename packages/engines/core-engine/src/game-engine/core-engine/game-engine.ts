@@ -4,10 +4,12 @@ import { CoreEngine } from "./engine/core-engine";
 import type {
   BaseCoreCardFilter,
   DefaultCardDefinition,
+  DefaultCardMeta,
   DefaultGameState,
   DefaultPlayerState,
   GameSpecificCardDefinition,
   GameSpecificCardFilter,
+  GameSpecificCardMeta,
   GameSpecificGameState,
   GameSpecificPlayerState,
 } from "./types/game-specific-types";
@@ -22,6 +24,7 @@ export abstract class GameEngine<
   CardDefinition extends GameSpecificCardDefinition = DefaultCardDefinition,
   PlayerState extends GameSpecificPlayerState = DefaultPlayerState,
   CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
+  CardMeta extends GameSpecificCardMeta = DefaultCardMeta,
   CardModel extends
     CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
 > extends CoreEngine<
@@ -29,5 +32,6 @@ export abstract class GameEngine<
   CardDefinition,
   PlayerState,
   CardFilter,
+  CardMeta,
   CardModel
 > {}

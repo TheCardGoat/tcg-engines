@@ -86,6 +86,7 @@ export function createContext<TurnHistory = unknown>(
       currentStep: initialStep,
       cards,
       cardZones,
+      cardMetas: {}, // Initialize empty card metadata storage
       players,
       moveHistory: [],
       seed,
@@ -336,6 +337,7 @@ export function createTestContext(overrides: Partial<CoreCtx> = {}): CoreCtx {
     players: defaultPlayers,
     cards: defaultCards,
     cardZones: defaultZones,
+    cardMetas: {}, // Initialize empty card metadata storage
   };
 
   return {
