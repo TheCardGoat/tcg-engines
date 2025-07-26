@@ -238,8 +238,7 @@ describe("FlowManager - Segment Transitions", () => {
       const initialState = MockGameStates.initial();
       initialState.ctx.currentSegment = "setup";
       initialState.ctx.currentPhase = "setupPhase";
-      initialState.ctx.currentPlayer = "player2";
-      initialState.ctx.playOrderPos = 1;
+      initialState.ctx.turnPlayerPos = 1; // Player 2 (position 1 in playerOrder)
 
       const fnContext = createMockFnContext(initialState);
       const result = flowManager.processFlowTransitions(

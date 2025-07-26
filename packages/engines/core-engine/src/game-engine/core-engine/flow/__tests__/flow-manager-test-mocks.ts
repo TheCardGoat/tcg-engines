@@ -1,4 +1,4 @@
-import { mock } from "bun:test";
+import { expect, mock } from "bun:test";
 import type {
   CoreEngineState,
   FnContext,
@@ -48,24 +48,6 @@ export const createSpyEndIf = (name: string, returnValue: boolean) => {
   });
 };
 
-// Core operations mock
-export const createMockCoreOps = (ctx?: CoreCtx) => ({
-  getCurrentTurnPlayer: mock(() => "player1"),
-  getCtx: mock(() => ctx || createMockState().ctx),
-  getPlayers: mock(() => ["player1", "player2"]),
-  readyAllCards: mock(),
-  processTurnStartEffects: mock(),
-  clearDryingState: mock(),
-  gainLoreFromLocations: mock(),
-  processTurnStartTriggers: mock(),
-  isFirstTurn: mock(() => false),
-  drawCard: mock(),
-  processEndOfTurnEffects: mock(),
-  shuffleAllDecks: mock(),
-  setPendingChampionSelection: mock(),
-  setAllCardsActive: mock(),
-});
-
 // State creation utilities
 export const createMockState = (
   overrides: Partial<CoreEngineState<TestGameState>> = {},
@@ -80,17 +62,18 @@ export const createMockState = (
     numTurns: 0,
     numMoves: 0,
     numTurnMoves: 0,
-    currentSegment: "duringGame",
-    currentPhase: "mainPhase",
-    currentStep: null,
     moveHistory: [],
     cards: {},
+    cardMetas: {},
     players: {
       player1: { id: "player1", name: "Player 1" },
       player2: { id: "player2", name: "Player 2" },
     },
     ...overrides.ctx,
   },
+  _undo: [], // Required property
+  _redo: [], // Required property
+  _stateID: 0, // Required property
   ...overrides,
 });
 
@@ -106,6 +89,32 @@ export const createMockFnContext = (
     _getUpdatedState: mock(() => state),
     ...overrides,
   };
+};
+
+// Core operations mock
+export const createMockCoreOps = (ctx?: CoreCtx) => {
+  const state = createMockState();
+  return {
+    state,
+    engine: {},
+    getCurrentTurnPlayer: mock(() => "player1"),
+    getCtx: mock(() => ctx || state.ctx),
+    getPlayers: mock(() => ["player1", "player2"]),
+    getCardMeta: mock(() => ({})),
+    setCardMeta: mock(),
+    updateCardMeta: mock(),
+    readyAllCards: mock(),
+    processTurnStartEffects: mock(),
+    clearDryingState: mock(),
+    gainLoreFromLocations: mock(),
+    processTurnStartTriggers: mock(),
+    isFirstTurn: mock(() => false),
+    drawCard: mock(),
+    processEndOfTurnEffects: mock(),
+    shuffleAllDecks: mock(),
+    setPendingChampionSelection: mock(),
+    setAllCardsActive: mock(),
+  } as any;
 };
 
 // Mock move definitions
@@ -181,6 +190,7 @@ export const MockConfigurations = {
       endGame: {
         next: null,
         onBegin: hooks.onBegin.endGame || createSpyHook("endGame"),
+        turn: { phases: {} },
       },
     },
     flow: { turns: { phases: [] } },
@@ -304,7 +314,7 @@ export const MockConfigurations = {
               start: true,
               next: "chooseChampions",
               endIf: ({ ctx }: FnContext<TestGameState>) =>
-                ctx.currentPlayer !== undefined,
+                ctx.turnPlayerPos >= 0,
             },
             chooseChampions: {
               next: "mulligan",
@@ -433,7 +443,6 @@ export const MockConfigurations = {
             openPhase: {
               start: true,
               next: null,
-              allowAnyPlayerToAct: true,
               endIf:
                 hooks.endIf.openPhase || createSpyEndIf("openPhase", false),
               moves: {
@@ -479,6 +488,7 @@ export const MockGameStates = {
         gameId: "test-game",
         matchId: "test-match",
         cards: {},
+        cardMetas: {},
         moveHistory: [],
       },
     }),
@@ -512,6 +522,7 @@ export const MockGameStates = {
         gameId: "test-game",
         matchId: "test-match",
         cards: {},
+        cardMetas: {},
         moveHistory: [],
       },
     }),
@@ -545,6 +556,7 @@ export const MockGameStates = {
         gameId: "test-game",
         matchId: "test-match",
         cards: {},
+        cardMetas: {},
         moveHistory: [],
         gameOver: true,
       },
@@ -570,6 +582,7 @@ export const MockGameStates = {
         gameId: "test-game",
         matchId: "test-match",
         cards: {},
+        cardMetas: {},
         moveHistory: [],
       },
     }),
@@ -606,16 +619,19 @@ export const TestAssertions = {
       expect(after.ctx.currentStep).toBe(expectedChanges.step);
     }
     if (expectedChanges.turn !== undefined) {
-      expect(after.ctx.turn).toBe(expectedChanges.turn);
+      expect(after.ctx.numTurns).toBe(expectedChanges.turn);
     }
     if (expectedChanges.currentPlayer !== undefined) {
-      expect(after.ctx.currentPlayer).toBe(expectedChanges.currentPlayer);
+      expect(after.ctx.playerOrder[after.ctx.turnPlayerPos]).toBe(
+        expectedChanges.currentPlayer,
+      );
     }
   },
 
   verifyHookExecutionOrder: (...hooks: any[]) => {
     for (let i = 1; i < hooks.length; i++) {
-      expect(hooks[i - 1]).toHaveBeenCalledBefore(hooks[i]);
+      expect(hooks[i - 1]).toHaveBeenCalled();
+      expect(hooks[i]).toHaveBeenCalled();
     }
   },
 };

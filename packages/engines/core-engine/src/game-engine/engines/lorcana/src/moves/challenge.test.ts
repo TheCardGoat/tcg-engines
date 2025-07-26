@@ -1,12 +1,31 @@
 import { describe, expect, it } from "bun:test";
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { challengeMove } from "./challenge";
+import type { LorcanaEnumerableMove, LorcanaMoveFn } from "./types";
+
+// Helper function to handle either MoveFn or EnumerableMove
+function executeMove(
+  move: LorcanaMoveFn | LorcanaEnumerableMove,
+  context: any,
+  ...args: any[]
+) {
+  if (typeof move === "function") {
+    return move(context, ...args);
+  }
+  if (move.execute) {
+    return move.execute(context, ...args);
+  }
+  throw new Error("Invalid move type");
+}
 
 describe("Move: Challenge", () => {
   describe("Basic validation", () => {
     it("should be defined", () => {
       expect(challengeMove).toBeDefined();
-      expect(typeof challengeMove).toBe("function");
+      expect(
+        typeof challengeMove === "function" ||
+          typeof (challengeMove as any).execute === "function",
+      ).toBe(true);
     });
 
     it("should return invalid move for wrong phase", () => {
@@ -17,7 +36,9 @@ describe("Move: Challenge", () => {
           getCtx: () => ({ currentPhase: "wrongPhase" }),
           getCardInstance: () => null,
           getCardsInZone: () => [],
-          getCardOwner: () => "player_one",
+          getCardOwner: (id: string) =>
+            id === "challenger-id" ? "player_one" : "player_two",
+          getCardZone: () => "play",
           canCharacterChallenge: () => true,
           addTriggeredEffectsToTheBag: () => {},
           exertCard: () => {},
@@ -26,7 +47,7 @@ describe("Move: Challenge", () => {
         playerID: "player_one",
       };
 
-      const result = challengeMove(mockContext as any, "challenger-id", {
+      const result = executeMove(challengeMove, mockContext, "challenger-id", {
         targetInstanceId: "target-id",
       });
 
@@ -43,14 +64,26 @@ describe("Move: Challenge", () => {
     it("should reject exerted challenger", () => {
       const mockChallenger = {
         instanceId: "challenger-id",
-        card: { type: ["Character"], strength: 3, willpower: 2 },
+        card: {
+          type: ["Character"],
+          strength: 3,
+          willpower: 2,
+          abilities: [],
+        },
         isExerted: true, // Challenger is exerted
+        meta: {},
       };
 
       const mockTarget = {
         instanceId: "target-id",
-        card: { type: ["Character"], strength: 2, willpower: 3 },
+        card: {
+          type: ["Character"],
+          strength: 2,
+          willpower: 3,
+          abilities: [],
+        },
         isExerted: true, // Target is exerted (required)
+        meta: {},
       };
 
       const mockContext = {
@@ -65,17 +98,20 @@ describe("Move: Challenge", () => {
                 ? mockTarget
                 : null,
           getCardsInZone: () => [mockChallenger],
-          getCardOwner: () => "player_two",
+          getCardOwner: (id: string) =>
+            id === "challenger-id" ? "player_one" : "player_two",
+          getCardZone: () => "play",
           canCharacterChallenge: () => false, // Cannot challenge because exerted
           addTriggeredEffectsToTheBag: () => {},
           exertCard: () => {},
-          state: { G: { metas: {} } }, // Mock state for keyword access
+          applyDamage: () => {},
+          gameStateCheck: () => {},
         },
         gameOps: null,
         playerID: "player_one",
       };
 
-      const result = challengeMove(mockContext as any, "challenger-id", {
+      const result = executeMove(challengeMove, mockContext, "challenger-id", {
         targetInstanceId: "target-id",
       });
 
@@ -94,14 +130,26 @@ describe("Move: Challenge", () => {
     it("should allow ready challenger to challenge", () => {
       const mockChallenger = {
         instanceId: "challenger-id",
-        card: { type: ["Character"], strength: 3, willpower: 2, keywords: [] },
+        card: {
+          type: ["Character"],
+          strength: 3,
+          willpower: 2,
+          abilities: [],
+        },
         isExerted: false, // Challenger is ready
+        meta: {},
       };
 
       const mockTarget = {
         instanceId: "target-id",
-        card: { type: ["Character"], strength: 2, willpower: 3, keywords: [] },
+        card: {
+          type: ["Character"],
+          strength: 2,
+          willpower: 3,
+          abilities: [],
+        },
         isExerted: true, // Target is exerted (required)
+        meta: {},
       };
 
       const mockContext = {
@@ -116,19 +164,20 @@ describe("Move: Challenge", () => {
                 ? mockTarget
                 : null,
           getCardsInZone: () => [mockChallenger],
-          getCardOwner: () => "player_two",
+          getCardOwner: (id: string) =>
+            id === "challenger-id" ? "player_one" : "player_two",
+          getCardZone: () => "play",
           canCharacterChallenge: () => true, // Can challenge because ready
           addTriggeredEffectsToTheBag: () => {},
           exertCard: () => {},
           applyDamage: () => {}, // Mock damage application
           gameStateCheck: () => {}, // Mock game state check
-          state: { G: { metas: {} } }, // Mock state for keyword access
         },
         gameOps: null,
         playerID: "player_one",
       };
 
-      const result = challengeMove(mockContext as any, "challenger-id", {
+      const result = executeMove(challengeMove, mockContext, "challenger-id", {
         targetInstanceId: "target-id",
       });
 
@@ -141,14 +190,26 @@ describe("Move: Challenge", () => {
     it("should reject ready character target (must be exerted)", () => {
       const mockChallenger = {
         instanceId: "challenger-id",
-        card: { type: ["Character"], strength: 3, willpower: 2, keywords: [] },
+        card: {
+          type: ["Character"],
+          strength: 3,
+          willpower: 2,
+          abilities: [],
+        },
         isExerted: false, // Ready challenger
+        meta: {},
       };
 
       const mockTarget = {
         instanceId: "target-id",
-        card: { type: ["Character"], strength: 2, willpower: 3 },
+        card: {
+          type: ["Character"],
+          strength: 2,
+          willpower: 3,
+          abilities: [],
+        },
         isExerted: false, // Target is ready (NOT allowed for challenge)
+        meta: {},
       };
 
       const mockContext = {
@@ -163,17 +224,18 @@ describe("Move: Challenge", () => {
                 ? mockTarget
                 : null,
           getCardsInZone: () => [mockChallenger],
-          getCardOwner: () => "player_two",
+          getCardOwner: (id: string) =>
+            id === "challenger-id" ? "player_one" : "player_two",
+          getCardZone: () => "play",
           canCharacterChallenge: () => true,
           addTriggeredEffectsToTheBag: () => {},
           exertCard: () => {},
-          state: { G: { metas: {} } }, // Mock state for keyword access
         },
         gameOps: null,
         playerID: "player_one",
       };
 
-      const result = challengeMove(mockContext as any, "challenger-id", {
+      const result = executeMove(challengeMove, mockContext, "challenger-id", {
         targetInstanceId: "target-id",
       });
 
@@ -191,14 +253,26 @@ describe("Move: Challenge", () => {
     it("should allow challenging exerted character", () => {
       const mockChallenger = {
         instanceId: "challenger-id",
-        card: { type: ["Character"], strength: 3, willpower: 2, keywords: [] },
+        card: {
+          type: ["Character"],
+          strength: 3,
+          willpower: 2,
+          abilities: [],
+        },
         isExerted: false, // Ready challenger
+        meta: {},
       };
 
       const mockTarget = {
         instanceId: "target-id",
-        card: { type: ["Character"], strength: 2, willpower: 3 },
+        card: {
+          type: ["Character"],
+          strength: 2,
+          willpower: 3,
+          abilities: [],
+        },
         isExerted: true, // Target is exerted (allowed)
+        meta: {},
       };
 
       const mockContext = {
@@ -213,19 +287,20 @@ describe("Move: Challenge", () => {
                 ? mockTarget
                 : null,
           getCardsInZone: () => [mockChallenger],
-          getCardOwner: () => "player_two",
+          getCardOwner: (id: string) =>
+            id === "challenger-id" ? "player_one" : "player_two",
+          getCardZone: () => "play",
           canCharacterChallenge: () => true,
           addTriggeredEffectsToTheBag: () => {},
           exertCard: () => {},
           applyDamage: () => {}, // Mock damage application
           gameStateCheck: () => {}, // Mock game state check
-          state: { G: { metas: {} } }, // Mock state for keyword access
         },
         gameOps: null,
         playerID: "player_one",
       };
 
-      const result = challengeMove(mockContext as any, "challenger-id", {
+      const result = executeMove(challengeMove, mockContext, "challenger-id", {
         targetInstanceId: "target-id",
       });
 
@@ -236,13 +311,24 @@ describe("Move: Challenge", () => {
     it("should allow challenging location (any ready state)", () => {
       const mockChallenger = {
         instanceId: "challenger-id",
-        card: { type: ["Character"], strength: 3, willpower: 2, keywords: [] },
+        card: {
+          type: ["Character"],
+          strength: 3,
+          willpower: 2,
+          abilities: [],
+        },
         isExerted: false, // Ready challenger
+        meta: {},
       };
 
       const mockLocation = {
         instanceId: "location-id",
-        card: { type: ["Location"], willpower: 5 }, // Locations don't have isExerted
+        card: {
+          type: ["Location"],
+          willpower: 5,
+          abilities: [],
+        }, // Locations don't have isExerted
+        meta: {},
       };
 
       const mockContext = {
@@ -257,19 +343,20 @@ describe("Move: Challenge", () => {
                 ? mockLocation
                 : null,
           getCardsInZone: () => [mockChallenger],
-          getCardOwner: () => "player_two",
+          getCardOwner: (id: string) =>
+            id === "challenger-id" ? "player_one" : "player_two",
+          getCardZone: () => "play",
           canCharacterChallenge: () => true,
           addTriggeredEffectsToTheBag: () => {},
           exertCard: () => {},
           applyDamage: () => {}, // Mock damage application
           gameStateCheck: () => {}, // Mock game state check
-          state: { G: { metas: {} } }, // Mock state for keyword access
         },
         gameOps: null,
         playerID: "player_one",
       };
 
-      const result = challengeMove(mockContext as any, "challenger-id", {
+      const result = executeMove(challengeMove, mockContext, "challenger-id", {
         targetInstanceId: "location-id",
       });
 
@@ -282,14 +369,26 @@ describe("Move: Challenge", () => {
     it("should exert the challenging character", () => {
       const mockChallenger = {
         instanceId: "challenger-id",
-        card: { type: ["Character"], strength: 3, willpower: 2, keywords: [] },
+        card: {
+          type: ["Character"],
+          strength: 3,
+          willpower: 2,
+          abilities: [],
+        },
         isExerted: false,
+        meta: {},
       };
 
       const mockTarget = {
         instanceId: "target-id",
-        card: { type: ["Character"], strength: 2, willpower: 3 },
+        card: {
+          type: ["Character"],
+          strength: 2,
+          willpower: 3,
+          abilities: [],
+        },
         isExerted: true,
+        meta: {},
       };
 
       let exertedCharacter = "";
@@ -305,19 +404,22 @@ describe("Move: Challenge", () => {
                 ? mockTarget
                 : null,
           getCardsInZone: () => [mockChallenger],
-          getCardOwner: () => "player_two",
+          getCardOwner: (id: string) =>
+            id === "challenger-id" ? "player_one" : "player_two",
+          getCardZone: () => "play",
           canCharacterChallenge: () => true,
           addTriggeredEffectsToTheBag: () => {},
           exertCard: (id: string) => {
             exertedCharacter = id;
           },
-          state: { G: { metas: {} } }, // Mock state for keyword access
+          applyDamage: () => {}, // Mock damage application
+          gameStateCheck: () => {}, // Mock game state check
         },
         gameOps: null,
         playerID: "player_one",
       };
 
-      challengeMove(mockContext as any, "challenger-id", {
+      executeMove(challengeMove, mockContext, "challenger-id", {
         targetInstanceId: "target-id",
       });
 

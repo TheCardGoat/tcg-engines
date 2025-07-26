@@ -206,7 +206,7 @@ describe("Error Utilities", () => {
 
       const context = getErrorContext(error);
       expect(context.cause).toBeDefined();
-      expect(context.cause?.message).toBe("cause error");
+      expect((context.cause as Error)?.message).toBe("cause error");
     });
   });
 
@@ -214,7 +214,9 @@ describe("Error Utilities", () => {
     it("should create success results", () => {
       const result = createSuccessResult("data");
       expect(result.success).toBe(true);
-      expect(result.data).toBe("data");
+      if (result.success) {
+        expect(result.data).toBe("data");
+      }
     });
 
     it("should create error results", () => {
@@ -222,39 +224,54 @@ describe("Error Utilities", () => {
       const result = createErrorResult(error, "findCard");
 
       expect(result.success).toBe(false);
-      expect(result.error.type).toBe("CARD_NOT_FOUND");
-      expect(result.error.message).toContain("card123");
-      expect(result.error.details.operation).toBe("findCard");
+      if (!result.success) {
+        expect(result.error.type).toBe("CARD_NOT_FOUND");
+        expect(result.error.message).toContain("card123");
+        expect(result.error.details.operation).toBe("findCard");
+      }
     });
 
     it("should execute operations and return success results", () => {
       const result = executeOperation("test", () => "success");
       expect(result.success).toBe(true);
-      expect(result.data).toBe("success");
+      if (result.success) {
+        expect(result.data).toBe("success");
+      }
     });
 
     it("should execute operations and return error results", () => {
-      const result = executeOperation("test", () => {
+      const result = executeOperation<string>("test", () => {
         throw new CardNotFoundError("card123");
       });
 
       expect(result.success).toBe(false);
-      expect(result.error.type).toBe("CARD_NOT_FOUND");
+      if (!result.success) {
+        // Type assertion needed due to TypeScript's inability to narrow union types with exceptions
+        expect((result as any).error.type).toBe("CARD_NOT_FOUND");
+      }
     });
 
     it("should execute async operations and return success results", async () => {
-      const result = await executeOperationAsync("test", async () => "success");
+      const result = await executeOperationAsync<string>(
+        "test",
+        async () => "success",
+      );
       expect(result.success).toBe(true);
-      expect(result.data).toBe("success");
+      if (result.success) {
+        expect(result.data).toBe("success");
+      }
     });
 
     it("should execute async operations and return error results", async () => {
-      const result = await executeOperationAsync("test", async () => {
+      const result = await executeOperationAsync<string>("test", async () => {
         throw new CardNotFoundError("card123");
       });
 
       expect(result.success).toBe(false);
-      expect(result.error.type).toBe("CARD_NOT_FOUND");
+      if (!result.success) {
+        // Type assertion needed due to TypeScript's inability to narrow union types with exceptions
+        expect((result as any).error.type).toBe("CARD_NOT_FOUND");
+      }
     });
   });
 });

@@ -1,20 +1,20 @@
 // We're migrating to the new type definition
-import type { LorcanaAbility } from "~/game-engine/engines/lorcana/src/abilities/new-abilities.ts";
 
+import type { LorcanaTriggerTiming as TriggerTiming } from "~/game-engine/engines/lorcana/src/abilities/triggered/triggered-ability";
 // Deprecated
 import type {
-  Ability,
+  LorcanaAbility as Ability,
   AbilityCondition,
   AbilityTarget,
-  AbilityType,
+  LorcanaAbilityType as AbilityType,
   Effect,
-  Keyword,
-  KeywordAbility,
+  LorcanaAbility,
   LorcanaAbilityCost,
-  TriggerTiming,
+  LorcanaBaseAbility,
 } from "../ability-types";
 import type {
-  LorcanaKeywordAbility,
+  LorcanaKeywords as Keyword,
+  LorcanaKeywordAbility as KeywordAbility,
   LorcanaKeywords,
 } from "../keyword/keyword";
 
@@ -23,7 +23,7 @@ import type {
  * Allows step-by-step construction of complex abilities with method chaining
  */
 export class AbilityBuilder {
-  private ability: Partial<Ability> = {
+  private ability: any = {
     effects: [],
   };
 
@@ -99,7 +99,7 @@ export class AbilityBuilder {
   /**
    * Set the keyword (for keyword abilities)
    */
-  setKeyword(keyword: KeywordAbility | LorcanaKeywordAbility): AbilityBuilder {
+  setKeyword(keyword: KeywordAbility | any): AbilityBuilder {
     // Convert from LorcanaKeywordAbility to KeywordAbility if needed
     if ("keyword" in keyword) {
       // It's a LorcanaKeywordAbility
@@ -225,8 +225,9 @@ export class AbilityBuilder {
     text?: string,
   ): AbilityBuilder {
     const keywordText = text || keyword;
-    const keywordAbility: KeywordAbility = {
-      type: keyword as unknown as Keyword,
+    const keywordAbility = {
+      type: "keyword" as const,
+      keyword: keyword,
       ...(value !== undefined && { value }),
     };
 
@@ -698,17 +699,6 @@ export class AbilityBuilder {
   static shift(value: number, targetName: string): Ability {
     const text = `Shift ${value} (You may pay ${value} {I} to play this on top of one of your characters named ${targetName}.)`;
 
-    const ability = AbilityBuilder.keyword("shift", value, text).build();
-
-    // Add shift-specific properties
-    return {
-      ...ability,
-      shift: {
-        type: "standard",
-        cost: { ink: value },
-        value,
-        targetName,
-      },
-    };
+    return AbilityBuilder.keyword("shift", value, text).build();
   }
 }

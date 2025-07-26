@@ -1,4 +1,4 @@
-import { AbilityBuilder } from "../abilities/ability-builder";
+import { AbilityBuilder } from "../abilities/builder/ability-builder";
 
 /**
  * This file demonstrates how to use the AbilityBuilder to parse card text into structured ability objects
@@ -31,63 +31,63 @@ export function demonstrateAbilityParsing(): void {
   console.log("=== ABILITY PARSING DEMONSTRATION ===");
 
   console.log("\n1. Activated Ability Example:");
-  const activatedAbility = AbilityBuilder.buildAbility(
+  const activatedAbility = AbilityBuilder.fromText(
     exampleCardTexts.activatedAbility,
-  );
+  )[0];
   console.log(JSON.stringify(activatedAbility, null, 2));
 
   console.log("\n2. Triggered Ability Example:");
-  const triggeredAbility = AbilityBuilder.buildAbility(
+  const triggeredAbility = AbilityBuilder.fromText(
     exampleCardTexts.triggeredAbility,
-  );
+  )[0];
   console.log(JSON.stringify(triggeredAbility, null, 2));
 
   console.log("\n3. Static Ability Example:");
-  const staticAbility = AbilityBuilder.buildAbility(
+  const staticAbility = AbilityBuilder.fromText(
     exampleCardTexts.staticAbility,
-  );
+  )[0];
   console.log(JSON.stringify(staticAbility, null, 2));
 
   console.log("\n4. Keyword Ability Example:");
-  const keywordAbility = AbilityBuilder.buildAbility(
+  const keywordAbility = AbilityBuilder.fromText(
     exampleCardTexts.keywordAbility,
-  );
+  )[0];
   console.log(JSON.stringify(keywordAbility, null, 2));
 
   console.log("\n5. Complex Ability with Optional Effect:");
-  const complexAbility = AbilityBuilder.buildAbility(
+  const complexAbility = AbilityBuilder.fromText(
     exampleCardTexts.complexAbility,
-  );
+  )[0];
   console.log(JSON.stringify(complexAbility, null, 2));
 
   console.log("\n6. Damage Dealing Ability:");
-  const damageAbility = AbilityBuilder.buildAbility(
+  const damageAbility = AbilityBuilder.fromText(
     exampleCardTexts.damageAbility,
-  );
+  )[0];
   console.log(JSON.stringify(damageAbility, null, 2));
 
   console.log("\n7. Ability with Cost:");
-  const banishAbility = AbilityBuilder.buildAbility(
+  const banishAbility = AbilityBuilder.fromText(
     exampleCardTexts.banishAbility,
-  );
+  )[0];
   console.log(JSON.stringify(banishAbility, null, 2));
 
   console.log("\n8. Conditional Ability:");
-  const conditionalAbility = AbilityBuilder.buildAbility(
+  const conditionalAbility = AbilityBuilder.fromText(
     exampleCardTexts.conditionalAbility,
-  );
+  )[0];
   console.log(JSON.stringify(conditionalAbility, null, 2));
 
   console.log("\n9. Multiple Effects Ability:");
-  const multipleEffects = AbilityBuilder.buildAbility(
+  const multipleEffects = AbilityBuilder.fromText(
     exampleCardTexts.multipleEffects,
-  );
+  )[0];
   console.log(JSON.stringify(multipleEffects, null, 2));
 
   console.log("\n10. Keyword Grant Ability:");
-  const keywordGrant = AbilityBuilder.buildAbility(
+  const keywordGrant = AbilityBuilder.fromText(
     exampleCardTexts.keywordGrant,
-  );
+  )[0];
   console.log(JSON.stringify(keywordGrant, null, 2));
 }
 

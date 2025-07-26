@@ -1,9 +1,9 @@
 import { CoreCardCtxProvider } from "~/game-engine/core-engine/card/core-card-ctx-provider";
 import { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
 import type { GundamEngine } from "~/game-engine/engines/gundam/src/gundam-engine";
-import type { GundamitoCard } from "./definitions/cardTypes";
+import type { GundamCardDefinition } from "../gundam-generic-types";
 
-export class GundamModel extends CoreCardInstance<GundamitoCard> {
+export class GundamModel extends CoreCardInstance<GundamCardDefinition> {
   engine: GundamEngine;
   constructor({
     engine,
@@ -12,7 +12,7 @@ export class GundamModel extends CoreCardInstance<GundamitoCard> {
     ownerId,
   }: {
     engine: GundamEngine;
-    card: GundamitoCard;
+    card: GundamCardDefinition;
     instanceId: string;
     ownerId: string;
   }) {

@@ -2,10 +2,12 @@ import type { CoreEngine } from "~/game-engine/core-engine";
 import type {
   BaseCoreCardFilter,
   DefaultCardDefinition,
+  DefaultCardMeta,
   DefaultGameState,
   DefaultPlayerState,
   GameSpecificCardDefinition,
   GameSpecificCardFilter,
+  GameSpecificCardMeta,
   GameSpecificGameState,
   GameSpecificPlayerState,
 } from "~/game-engine/core-engine/types/game-specific-types";
@@ -20,11 +22,19 @@ export class CoreCardCtxProvider<
   CardDefinition extends GameSpecificCardDefinition = DefaultCardDefinition,
   PlayerState extends GameSpecificPlayerState = DefaultPlayerState,
   CardFilter extends GameSpecificCardFilter = BaseCoreCardFilter,
+  CardMeta extends GameSpecificCardMeta = DefaultCardMeta,
   CardModel extends
     CoreCardInstance<CardDefinition> = CoreCardInstance<CardDefinition>,
 > {
   private engineRef: WeakRef<
-    CoreEngine<GameState, CardDefinition, PlayerState, CardFilter, CardModel>
+    CoreEngine<
+      GameState,
+      CardDefinition,
+      PlayerState,
+      CardFilter,
+      CardMeta,
+      CardModel
+    >
   >;
 
   constructor({
@@ -35,6 +45,7 @@ export class CoreCardCtxProvider<
       CardDefinition,
       PlayerState,
       CardFilter,
+      CardMeta,
       CardModel
     >;
   }) {

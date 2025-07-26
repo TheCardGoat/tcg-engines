@@ -1,12 +1,27 @@
 import { describe, expect, it } from "bun:test";
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { questMove } from "./quest";
+import type { LorcanaEnumerableMove, LorcanaMoveFn } from "./types";
+
+// Helper function to handle either MoveFn or EnumerableMove
+function executeMove(
+  move: LorcanaMoveFn | LorcanaEnumerableMove,
+  context: any,
+  ...args: any[]
+) {
+  if (typeof move === "function") {
+    return move(context, ...args);
+  }
+  if (move.execute) {
+    return move.execute(context, ...args);
+  }
+  throw new Error("Invalid move type");
+}
 
 describe("Move: Quest", () => {
   describe("Basic validation", () => {
     it("should be defined", () => {
       expect(questMove).toBeDefined();
-      expect(typeof questMove).toBe("function");
     });
 
     it("should return invalid move for wrong phase", () => {
@@ -17,12 +32,13 @@ describe("Move: Quest", () => {
           getCtx: () => ({ currentPhase: "wrongPhase" }),
           getCardInstance: () => null,
           getCardsInZone: () => [],
+          getCardOwner: () => "player_one",
         },
         gameOps: null,
         playerID: "player_one",
       };
 
-      const result = questMove(mockContext as any, "test-instance-id");
+      const result = executeMove(questMove, mockContext, "test-instance-id");
 
       expect(result).toEqual(
         createInvalidMove("WRONG_PHASE", "moves.quest.errors.wrongPhase", {
@@ -38,22 +54,21 @@ describe("Move: Quest", () => {
         ctx: { currentPhase: "mainPhase" },
         coreOps: {
           getCtx: () => ({ currentPhase: "mainPhase" }),
-          getCardInstance: () => null,
+          getCardInstance: () => null, // Card doesn't exist
           getCardsInZone: () => [],
+          getCardOwner: () => "player_one",
         },
         gameOps: null,
         playerID: "player_one",
       };
 
-      const result = questMove(mockContext as any, "non-existent-id");
+      const result = executeMove(questMove, mockContext, "non-existent-id");
 
       expect(result).toEqual(
         createInvalidMove(
           "CHARACTER_NOT_FOUND",
           "moves.quest.errors.characterNotFound",
-          {
-            instanceId: "non-existent-id",
-          },
+          { instanceId: "non-existent-id" },
         ),
       );
     });

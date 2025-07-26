@@ -73,7 +73,8 @@ export function gameStateCheck(this: LorcanaCoreOperations): void {
 
     // First, identify all cards that should be banished
     for (const card of allPlayCards) {
-      const damage = this.state.G.metas[card.instanceId]?.damage || 0;
+      const cardMeta = this.getCardMeta(card.instanceId);
+      const damage = cardMeta?.damage || 0;
       const willpower = (card.card as any).willpower || 0;
       const cardType = card.card.type;
 
@@ -107,9 +108,7 @@ export function gameStateCheck(this: LorcanaCoreOperations): void {
           // Clear damage when card leaves play (Rule 9.4.1)
           // "When a card with damage leaves play, when game states are checked
           // all damage counters on it cease to exist."
-          if (this.state.G.metas[cardId]) {
-            this.state.G.metas[cardId].damage = 0;
-          }
+          this.updateCardMeta(cardId, { damage: 0 });
 
           // TODO: Add banishment triggered effects to bag
           // Effects like "When this character is banished" should trigger here

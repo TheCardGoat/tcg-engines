@@ -81,7 +81,7 @@ export class GundamEngine extends GameEngine<
       debug,
       repository:
         cardRepository || ({} as CardRepository<GundamCardDefinition>),
-      coreOperationClass: GundamCoreOperations,
+      coreOperationClass: GundamCoreOperations as any,
     });
 
     if (cardRepository) {

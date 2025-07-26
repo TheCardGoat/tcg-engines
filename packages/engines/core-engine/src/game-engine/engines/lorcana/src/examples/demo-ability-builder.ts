@@ -6,7 +6,7 @@
  */
 
 import chalk from "chalk";
-import { AbilityBuilder } from "../abilities/ability-builder";
+import { AbilityBuilder } from "../abilities/builder/ability-builder";
 import { demonstrateAbilityParsing } from "./ability-type-examples";
 
 // Run the basic ability parsing demonstration
@@ -54,7 +54,7 @@ for (const [index, card] of realCardExamples.entries()) {
   console.log(chalk.cyan(`\n${index + 1}. ${card.name} - ${card.ability}:`));
   console.log(chalk.yellow(`Text: "${card.text}"`));
 
-  const ability = AbilityBuilder.buildAbility(card.text, card.ability);
+  const ability = AbilityBuilder.fromText(card.text)[0];
 
   console.log(chalk.green("Parsed ability:"));
   console.log(JSON.stringify(ability, null, 2));

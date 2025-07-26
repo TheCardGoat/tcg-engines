@@ -50,23 +50,32 @@ describe("FlowManager - Turn Transitions", () => {
     };
   });
 
-  const createMockCoreOps = (ctx: CoreCtx) => ({
-    getCurrentTurnPlayer: mock(() => "player1"),
-    getCtx: mock(() => ctx),
-    readyAllCards: mock(),
-    processTurnStartEffects: mock(),
-    clearDryingState: mock(),
-    gainLoreFromLocations: mock(),
-    processTurnStartTriggers: mock(),
-    isFirstTurn: mock(() => false),
-    drawCard: mock(),
-    processEndOfTurnEffects: mock(),
-  });
+  const createMockCoreOps = (ctx: CoreCtx) =>
+    ({
+      state: createMockState(),
+      engine: {},
+      getCurrentTurnPlayer: mock(() => "player1"),
+      getCtx: mock(() => ctx),
+      getCardMeta: mock(() => ({})),
+      setCardMeta: mock(),
+      updateCardMeta: mock(),
+      readyAllCards: mock(),
+      processTurnStartEffects: mock(),
+      clearDryingState: mock(),
+      gainLoreFromLocations: mock(),
+      processTurnStartTriggers: mock(),
+      isFirstTurn: mock(() => false),
+      drawCard: mock(),
+      processEndOfTurnEffects: mock(),
+    }) as any;
 
   const createMockState = (
     overrides: Partial<CoreEngineState<MockGameState>> = {},
   ): CoreEngineState<MockGameState> => ({
     G: { testData: "test", playerCount: 2 },
+    _undo: [],
+    _redo: [],
+    _stateID: 0,
     ctx: {
       currentSegment: "duringGame",
       currentPhase: "mainPhase",
@@ -81,16 +90,12 @@ describe("FlowManager - Turn Transitions", () => {
       gameId: "test-game",
       matchId: "test-match",
       cards: {},
+      cardMetas: {},
       moveHistory: [],
       players: {
         player1: { id: "player1", name: "Player 1" },
         player2: { id: "player2", name: "Player 2" },
       },
-      _prevStateID: 0,
-      _random: undefined,
-      _redo: [],
-      _undo: [],
-      plugins: {},
     },
     ...overrides,
   });

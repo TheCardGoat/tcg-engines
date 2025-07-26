@@ -1,6 +1,9 @@
-import type { LorcanaKeywordAbility } from "./keyword";
+import type {
+  LorcanaBaseKeywordAbility,
+  LorcanaKeywordAbility,
+} from "./keyword";
 
-export interface WardAbility extends LorcanaKeywordAbility {
+export interface WardAbility extends LorcanaBaseKeywordAbility {
   keyword: "ward";
   type: "keyword";
 }
@@ -12,7 +15,8 @@ export interface WardAbility extends LorcanaKeywordAbility {
 export const wardAbility: WardAbility = {
   type: "keyword",
   keyword: "ward",
-  text: "_(Opponents can't choose this character except to challenge.)_",
+  text: "**Ward** _(Opponents can't choose this character except to challenge.)_",
+  effects: [], // Keyword abilities have empty effects by default
 };
 
 export const isWardAbility = (

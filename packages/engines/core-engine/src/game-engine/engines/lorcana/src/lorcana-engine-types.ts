@@ -13,7 +13,10 @@ import type {
   ExtendGameState,
   ExtendPlayerState,
 } from "~/game-engine/core-engine/types/game-specific-types";
-import type { LayerItem } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import type {
+  LayerItem,
+  LorcanaAbility,
+} from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 
 // Re-export builder types and class for convenience
 export type {
@@ -21,8 +24,8 @@ export type {
   NumericComparison,
   NumericRange,
   StringComparison,
-} from "./lorcana-card-filter-builder";
-export { LorcanaCardFilterBuilder } from "./lorcana-card-filter-builder";
+} from "./cards/lorcana-card-filter-builder";
+export { LorcanaCardFilterBuilder } from "./cards/lorcana-card-filter-builder";
 
 // =============================================================================
 // PLAYER STATE TYPES
@@ -50,10 +53,10 @@ export interface PlayerTurnHistory {
 // CARD TYPES
 // =============================================================================
 
-/**
- * Legacy card definition type - kept for backward compatibility
- */
-export type LorcanaCardDefinition = LorcanitoCard;
+// TODO: Remove this once we have redefined card abilities
+export type LorcanaCardDefinition = LorcanitoCard & {
+  abilities?: LorcanaAbility[];
+};
 
 /**
  * Enhanced card definition extending the base card definition

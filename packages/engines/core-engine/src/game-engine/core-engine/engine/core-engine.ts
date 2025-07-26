@@ -187,11 +187,10 @@ export class CoreEngine<
     // Store the core operation class factory (default to CoreOperation)
     this.coreOperationClass = coreOperationClass || (CoreOperation as any);
 
-    // Initialize card instance store early so it's available to other components
-    this.cardInstanceStore = new CoreCardInstanceStore({
+    // Initialize card instance store using dependency injection pattern
+    this.cardInstanceStore = this.createCardInstanceStore({
       repository,
-      engine: this,
-      playerCardsIds: cards,
+      cards,
     });
     this.initializeCardModels();
 
@@ -282,6 +281,7 @@ export class CoreEngine<
     CardDefinition,
     PlayerState,
     CardFilter,
+    CardMeta,
     CardInstance
   > {
     return new this.coreOperationClass({
@@ -751,6 +751,32 @@ export class CoreEngine<
   getTurnCount(): number {
     const currentState = this.getGameState();
     return currentState.ctx.numTurns || 0;
+  }
+
+  private createCardInstanceStore({
+    repository,
+    cards,
+  }: {
+    repository: CardRepository<CardDefinition>;
+    cards: GameCards;
+  }): CoreCardInstanceStore<
+    CardDefinition,
+    GameState,
+    PlayerState,
+    CardFilter,
+    CardInstance
+  > {
+    return new CoreCardInstanceStore<
+      CardDefinition,
+      GameState,
+      PlayerState,
+      CardFilter,
+      CardInstance
+    >({
+      repository,
+      engine: this,
+      playerCardsIds: cards,
+    });
   }
 }
 

@@ -10,7 +10,7 @@ export function getAvailableInk(
 ): number {
   // Get only ready (non-exerted) ink cards for the player
   const readyInkCards = this.getCardsInZone("inkwell", playerId).filter(
-    (card) => !this.state.G.metas[card.instanceId]?.exerted,
+    (card) => !this.getCardMeta(card.instanceId)?.exerted,
   );
 
   return readyInkCards.length;

@@ -1,3 +1,4 @@
+import type { Effect } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import { resolveTrigger } from "~/game-engine/engines/lorcana/src/abilities/trigger-resolver";
 import type { LorcanaCoreOperations } from "~/game-engine/engines/lorcana/src/operations/lorcana-core-operations";
 
@@ -23,7 +24,7 @@ export function resolveBagTrigger(
   // Execute the trigger's effects before removing it
   if (trigger.ability?.effects && trigger.ability.effects.length > 0) {
     // Process each effect in the ability
-    for (const effect of trigger.ability.effects) {
+    for (const effect of trigger.ability.effects as Effect[]) {
       switch (effect.type) {
         case "gainLore": {
           const amount = effect.parameters?.amount || 1;

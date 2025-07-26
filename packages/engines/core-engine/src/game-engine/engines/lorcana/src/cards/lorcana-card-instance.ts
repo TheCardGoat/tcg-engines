@@ -1,7 +1,14 @@
 import { CoreCardCtxProvider } from "~/game-engine/core-engine/card/core-card-ctx-provider";
 import { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
-import type { TriggerTiming } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
-import type { LorcanaAbility } from "~/game-engine/engines/lorcana/src/abilities/new-abilities.ts";
+import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
+import type {
+  LorcanaAbility,
+  TriggerTiming,
+} from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import {
+  isActivatedAbility,
+  type LorcanaActivatedAbility,
+} from "~/game-engine/engines/lorcana/src/abilities/activated/activated";
 import type { LorcanaEngine } from "../lorcana-engine";
 import type {
   LorcanaCardFilter,
@@ -14,7 +21,7 @@ import type { LorcanaCardDefinition } from "./lorcana-card-repository";
 
 export class LorcanaCardInstance extends CoreCardInstance<
   // TODO: Remove this once we have redefined card abilities
-  LorcanaCardDefinition & { abilities: LorcanaAbility[] }
+  LorcanaCardDefinition & { abilities?: LorcanaAbility[] }
 > {
   constructor(
     engine: LorcanaEngine,
@@ -29,7 +36,13 @@ export class LorcanaCardInstance extends CoreCardInstance<
       LorcanaCardFilter,
       LorcanaCardInstance
     >({
-      engine: engine,
+      engine: engine as unknown as CoreEngine<
+        LorcanaGameState,
+        LorcanaCardDefinition,
+        LorcanaPlayerState,
+        LorcanaCardFilter,
+        LorcanaCardInstance
+      >,
     });
 
     super({
@@ -37,7 +50,7 @@ export class LorcanaCardInstance extends CoreCardInstance<
       ownerId,
       // TODO: Remove this once we have redefined card abilities
       definition: card as LorcanaCardDefinition & {
-        abilities: LorcanaAbility[];
+        abilities?: LorcanaAbility[];
       },
       contextProvider,
     });
@@ -100,6 +113,14 @@ export class LorcanaCardInstance extends CoreCardInstance<
 
   get name() {
     return this.card.name;
+  }
+
+  getAbilities(): LorcanaAbility[] {
+    return this.card.abilities;
+  }
+
+  getActivatedAbilities(): LorcanaActivatedAbility[] {
+    return this.getAbilities().filter(isActivatedAbility);
   }
 
   get fullName() {

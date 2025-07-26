@@ -55,6 +55,7 @@ describe("Validation Utilities", () => {
         card3: "def3",
       },
     },
+    cardMetas: {}, // Add card metadata storage
     cardZones: {
       zone1: {
         id: "zone1",

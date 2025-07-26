@@ -39,3 +39,59 @@
 // **7.4.7.2. ** *Delayed Triggered Abilities –* Triggered abilities created to resolve at a specific moment later in the game. This moment is specified in the condition of the delayed triggered ability. The ability exists outside of the bag until that condition is met. When the condition is met, the delayed triggered ability is added to the bag for resolution.
 
 // ***Example:** Candy Drift is an action that reads, “Draw a card. Chosen character of yours gets \+5 *\{S\} * this turn. At the* *end of your turn, banish them.” When the action resolves, it generates a delayed triggered ability: “At the end of your* *turn, banish them.” The triggered ability exists outside of the bag until the step of the End of Turn where end-of-turn* *triggers occur. At that point, the triggered ability is added to the bag and resolves. *
+
+import type {
+  AbilityCondition,
+  LorcanaAbility,
+  LorcanaAbilityCost,
+  LorcanaBaseAbility,
+} from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+
+export interface LorcanaTriggeredAbility extends LorcanaBaseAbility {
+  type: "triggered";
+  costs: LorcanaAbilityCost;
+  timing: LorcanaTriggerTiming;
+  secondaryCondition?: AbilityCondition;
+}
+
+export const isTriggeredAbility = (
+  ability?: LorcanaAbility,
+): ability is LorcanaTriggeredAbility => ability?.type === "activated";
+
+export type LorcanaTriggerTiming =
+  | "onPlay" // When you play this character
+  | "onPlayCharacter" // Whenever you play a character
+  | "onPlayItem" // Whenever you play an item
+  | "onPlayAction" // Whenever you play an action
+  | "onPlaySong" // Whenever you play a song
+  | "onQuest" // Whenever this character quests
+  | "onCharacterQuests" // Whenever a character quests
+  | "onPutIntoInkwell" // Whenever a card is put into your inkwell
+  | "onChallenge" // When/whenever this character challenges
+  | "onChallenged" // When/whenever this character is challenged
+  | "onCharacterChallenges" // Whenever a character challenges
+  | "onBanish" // When this character is banished
+  | "onBanishInChallenge" // When this character is banished in a challenge
+  | "onOtherBanished" // Whenever one of your other characters is banished
+  | "onDamage" // When this character is damaged
+  | "onDealDamage" // When this character deals damage
+  | "onDamageRemoved" // Whenever damage is removed
+  | "onMove" // When this character moves
+  | "onReady" // Whenever you ready this character
+  | "onExert" // Whenever you exert this character
+  | "onActivatedAbility" // Whenever a player activates an ability
+  | "onCardDrawn" // Whenever you draw a card
+  | "onDiscard" // Whenever you discard a card
+  | "onOpponentDiscard" // Whenever an opponent discards a card
+  | "startOfTurn" // At the start of your turn
+  | "endOfTurn" // At the end of your turn
+  | "whenLeaves" // When this character leaves play
+  | "onMoveToLocation" // When this character moves to a location
+  | "whileAtLocation" // While this character is at a location
+  | "whileExerted" // While this character is exerted
+  | "whileHasDamage" // While this character has damage
+  | "whileNoDamage" // While this character has no damage
+  | "whileCharacterInPlay" // While you have a character in play
+  | "whileChallenging" // While this character is challenging
+  | "whileChallenged" // While this character is being challenged
+  | "onShift"; // When you play a Floodborn character using Shift

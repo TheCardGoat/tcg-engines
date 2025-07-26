@@ -1,6 +1,9 @@
-import type { LorcanaKeywordAbility } from "./keyword";
+import type {
+  LorcanaBaseKeywordAbility,
+  LorcanaKeywordAbility,
+} from "./keyword";
 
-export interface RushAbility extends LorcanaKeywordAbility {
+export interface RushAbility extends LorcanaBaseKeywordAbility {
   keyword: "rush";
   type: "keyword";
 }
@@ -11,7 +14,8 @@ export interface RushAbility extends LorcanaKeywordAbility {
 export const rushAbility: RushAbility = {
   keyword: "rush",
   type: "keyword",
-  text: "_(This character can challenge the turn they're played.)_",
+  text: "**Rush** _(This character can challenge the turn they're played.)_",
+  effects: [], // Keyword abilities have empty effects by default
 };
 
 export const isRushAbility = (

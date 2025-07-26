@@ -209,10 +209,10 @@ describe("Riftbound Engine", () => {
       const p2State = testEngine.playerTwoEngine.getState();
 
       // All engines should have the same game state
-      expect(p1State.turn).toBe(authState.turn);
-      expect(p2State.turn).toBe(authState.turn);
-      expect(p1State.gamePhase).toBe(authState.gamePhase);
-      expect(p2State.gamePhase).toBe(authState.gamePhase);
+      expect(p1State.ctx.numTurns).toBe(authState.ctx.numTurns);
+      expect(p2State.ctx.numTurns).toBe(authState.ctx.numTurns);
+      expect(p1State.ctx.currentPhase).toBe(authState.ctx.currentPhase);
+      expect(p2State.ctx.currentPhase).toBe(authState.ctx.currentPhase);
     });
   });
 });

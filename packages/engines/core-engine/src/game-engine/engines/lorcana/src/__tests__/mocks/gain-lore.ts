@@ -30,25 +30,25 @@ const gainLoreEffect = {
   optional: false,
 };
 
-const gainOneLoreAbility: Ability = {
-  type: "triggered",
-  text: "When you play this character, gain 1 lore",
-  name: "GainOneLore",
-  effects: [gainOneLoreEffect],
-  timing: "onPlay",
-  condition: { type: "onEnterPlay" },
-  optional: false,
-};
+// const gainOneLoreAbility: Ability = {
+//   type: "triggered",
+//   text: "When you play this character, gain 1 lore",
+//   name: "GainOneLore",
+//   effects: [gainOneLoreEffect],
+//   timing: "onPlay",
+//   condition: { type: "onEnterPlay" },
+//   optional: false,
+// };
 
-const gainTwoLoreAbility: Ability = {
-  type: "triggered",
-  text: "When you play this character, gain 2 lore",
-  name: "GainTwoLore",
-  effects: [gainTwoLoreEffect],
-  timing: "onPlay",
-  condition: { type: "onEnterPlay" },
-  optional: false,
-};
+// const gainTwoLoreAbility: Ability = {
+//   type: "triggered",
+//   text: "When you play this character, gain 2 lore",
+//   name: "GainTwoLore",
+//   effects: [gainTwoLoreEffect],
+//   timing: "onPlay",
+//   condition: { type: "onEnterPlay" },
+//   optional: false,
+// };
 
 export const createMockGainLoreCard = (
   cardInstanceId: string,
@@ -65,7 +65,7 @@ export const createMockGainLoreCard = (
     lore: amount, // Lore value matches the gain amount
     cardType: "character",
     inkwell: false,
-    abilities: [amount === 1 ? gainOneLoreAbility : gainTwoLoreAbility],
+    abilities: [],
   };
 
   return mockCard;
@@ -81,5 +81,5 @@ export const mockGainLoreCard: any = {
   willpower: 1,
   lore: 1,
   inkwell: false,
-  abilities: [gainOneLoreAbility],
+  abilities: [],
 };

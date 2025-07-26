@@ -88,14 +88,14 @@ export class LorcanaCoreOperations extends CoreOperation<
    * Exert a card (Lorcana-specific state change)
    */
   exertCard(cardId: string): void {
-    this.updateCardMeta(cardId, "exerted", true);
+    this.updateCardMeta(cardId, { exerted: true });
   }
 
   /**
    * Ready a card (Lorcana-specific state change)
    */
   readyCard(cardId: string): void {
-    this.updateCardMeta(cardId, "exerted", false);
+    this.updateCardMeta(cardId, { exerted: false });
   }
 
   /**
@@ -107,7 +107,7 @@ export class LorcanaCoreOperations extends CoreOperation<
 
     // Add damage to existing damage (damage accumulates)
     const currentDamage = this.getCardMeta(cardId).damage || 0;
-    this.updateCardMeta(cardId, "damage", currentDamage + damage);
+    this.updateCardMeta(cardId, { damage: currentDamage + damage });
 
     logger.debug(
       `Applied ${damage} damage to ${cardId}, total damage: ${this.getCardMeta(cardId).damage}`,
@@ -128,7 +128,9 @@ export class LorcanaCoreOperations extends CoreOperation<
     if (amount <= 0) return;
 
     const currentDamage = this.getCardMeta(cardId).damage || 0;
-    this.updateCardMeta(cardId, "damage", Math.max(0, currentDamage - amount));
+    this.updateCardMeta(cardId, {
+      damage: Math.max(0, currentDamage - amount),
+    });
 
     logger.debug(
       `Removed ${amount} damage from ${cardId}, remaining damage: ${this.getCardMeta(cardId).damage}`,

@@ -15,3 +15,18 @@
 // **7.6.5. **Some static effects apply outside of the Play zone. These specify the aspect and time they apply to.
 
 // ***Example:** An effect that reads “For each character card in your discard, you pay 1 *\{I\} * less to play this character” would apply* *outside of play. *
+
+import type {
+  LorcanaAbility,
+  LorcanaAbilityCost,
+  LorcanaBaseAbility,
+} from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+
+export interface LorcanaStaticAbility extends LorcanaBaseAbility {
+  type: "static";
+  costs: LorcanaAbilityCost;
+}
+
+export const isStaticAbility = (
+  ability?: LorcanaAbility,
+): ability is LorcanaStaticAbility => ability?.type === "static";

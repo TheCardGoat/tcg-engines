@@ -1,6 +1,9 @@
-import type { LorcanaKeywordAbility } from "./keyword";
+import type {
+  LorcanaBaseKeywordAbility,
+  LorcanaKeywordAbility,
+} from "./keyword";
 
-export interface EvasiveAbility extends LorcanaKeywordAbility {
+export interface EvasiveAbility extends LorcanaBaseKeywordAbility {
   keyword: "evasive";
   type: "keyword";
 }
@@ -11,7 +14,8 @@ export interface EvasiveAbility extends LorcanaKeywordAbility {
 export const evasiveAbility: EvasiveAbility = {
   keyword: "evasive",
   type: "keyword",
-  text: "_(Only characters with Evasive can challenge this character.)_",
+  text: "**Evasive** _(Only characters with evasive can challenge this character.)_",
+  effects: [], // Keyword abilities have empty effects by default
 };
 
 export const isEvasiveAbility = (

@@ -4,7 +4,9 @@ import type { CoreCtx } from "~/game-engine/core-engine/state/context";
 import type { SegmentMap } from "./game/structure/segment";
 import type {
   BaseCoreCardFilter,
+  DefaultCardMeta,
   DefaultPlayerState,
+  GameSpecificCardMeta,
 } from "./types/game-specific-types";
 export type { SegmentMap };
 
@@ -139,6 +141,7 @@ export type FnContext<
     CardDefinition,
     PlayerState,
     CardFilter,
+    DefaultCardMeta,
     CardInstance
   >;
   playerID?: PlayerID | null;

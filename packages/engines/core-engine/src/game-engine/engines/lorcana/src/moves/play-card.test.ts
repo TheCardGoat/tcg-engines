@@ -9,10 +9,7 @@ import { fangRiverCity } from "@lorcanito/lorcana-engine/cards/003/locations/loc
 import { unconventionalTool } from "@lorcanito/lorcana-engine/cards/007";
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { playCardMove } from "~/game-engine/engines/lorcana/src/moves/play-card";
-import type {
-  LorcanaEnumerableMove,
-  LorcanaMoveFn,
-} from "~/game-engine/engines/lorcana/src/moves/types";
+import type { LorcanaEnumerableMove } from "~/game-engine/engines/lorcana/src/moves/types";
 import { LorcanaTestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 import {
   mockActionCard,

@@ -15,3 +15,18 @@
 // **7.5.3.3. **Once the total cost is paid, the ability is activated. The active player resolves the effect immediately.
 
 // **7.5.4. **If an effect would trigger as a result of any of the steps to using an activated ability, that effect waits to resolve until the ability is ful y resolved.
+
+import type {
+  LorcanaAbility,
+  LorcanaAbilityCost,
+  LorcanaBaseAbility,
+} from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+
+export interface LorcanaActivatedAbility extends LorcanaBaseAbility {
+  type: "activated";
+  costs: LorcanaAbilityCost;
+}
+
+export const isActivatedAbility = (
+  ability?: LorcanaAbility,
+): ability is LorcanaActivatedAbility => ability?.type === "activated";

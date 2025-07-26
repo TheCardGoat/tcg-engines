@@ -15,6 +15,7 @@ import {
   setTurnPlayer,
 } from "~/game-engine/core-engine/state/context";
 import type {
+  BaseCardMeta,
   BaseCoreCardFilter,
   DefaultCardDefinition,
   DefaultCardMeta,
@@ -85,8 +86,9 @@ export class CoreOperation<
    * @param instanceId The instance ID of the card
    * @returns The card metadata object or empty object if not found
    */
-  getCardMeta(instanceId: string): CardMeta {
-    return this.state.ctx.cardMetas[instanceId] || ({} as CardMeta);
+  getCardMeta(instanceId: string): Partial<CardMeta> {
+    const meta = this.state.ctx.cardMetas[instanceId];
+    return meta ? (meta as CardMeta) : ({} as Partial<CardMeta>);
   }
 
   /**
@@ -94,13 +96,24 @@ export class CoreOperation<
    * @param instanceId The instance ID of the card
    * @param meta The metadata object to set
    */
-  setCardMeta(instanceId: string, meta: Partial<CardMeta>): void {
+  setCardMeta(instanceId: string, meta: CardMeta): void {
+    // Replace existing metadata entirely
+    this.state.ctx.cardMetas[instanceId] = meta as BaseCardMeta;
+    logger.debug(`Set card meta for ${instanceId}:`, meta);
+  }
+
+  /**
+   * Update card metadata by merging with existing metadata
+   * @param instanceId The instance ID of the card
+   * @param meta The partial metadata object to merge
+   */
+  updateCardMeta(instanceId: string, meta: Partial<CardMeta>): void {
     if (!this.state.ctx.cardMetas[instanceId]) {
-      this.state.ctx.cardMetas[instanceId] = {} as CardMeta;
+      this.state.ctx.cardMetas[instanceId] = {} as BaseCardMeta;
     }
     // Merge the provided metadata with existing metadata
     Object.assign(this.state.ctx.cardMetas[instanceId], meta);
-    logger.debug(`Set card meta for ${instanceId}:`, meta);
+    logger.debug(`Updated card meta for ${instanceId}:`, meta);
   }
 
   /**
@@ -108,16 +121,18 @@ export class CoreOperation<
    * @param instanceId The instance ID of the card
    * @param field The metadata field to update
    * @param value The new value for the field
+   * @deprecated Use updateCardMeta with a partial object instead
    */
-  updateCardMeta<K extends keyof CardMeta>(
+  updateCardMetaField<K extends keyof CardMeta>(
     instanceId: string,
     field: K,
     value: CardMeta[K],
   ): void {
     if (!this.state.ctx.cardMetas[instanceId]) {
-      this.state.ctx.cardMetas[instanceId] = {} as CardMeta;
+      this.state.ctx.cardMetas[instanceId] = {} as BaseCardMeta;
     }
-    this.state.ctx.cardMetas[instanceId][field] = value;
+    // Safe to use type assertion here as we're ensuring type safety with the generic K
+    (this.state.ctx.cardMetas[instanceId] as any)[field] = value;
     logger.debug(
       `Updated card meta field ${String(field)} for ${instanceId}:`,
       value,
@@ -143,7 +158,8 @@ export class CoreOperation<
     field: K,
   ): void {
     if (this.state.ctx.cardMetas[instanceId]) {
-      delete this.state.ctx.cardMetas[instanceId][field];
+      // Safe to use type assertion here as we're ensuring type safety with the generic K
+      delete (this.state.ctx.cardMetas[instanceId] as any)[field];
       logger.debug(
         `Cleared card meta field ${String(field)} for ${instanceId}`,
       );
@@ -164,8 +180,8 @@ export class CoreOperation<
    * Get all card metadata
    * @returns Record of all card metadata
    */
-  getCardMetas(): Record<string, CardMeta> {
-    return this.state.ctx.cardMetas;
+  getCardMetas(): Record<string, Partial<CardMeta>> {
+    return this.state.ctx.cardMetas as Record<string, Partial<CardMeta>>;
   }
 
   /**
@@ -188,7 +204,7 @@ export class CoreOperation<
   ): string[] {
     const matchingCards: string[] = [];
     for (const [instanceId, meta] of Object.entries(this.state.ctx.cardMetas)) {
-      if (meta[field] === value) {
+      if ((meta as any)[field] === value) {
         matchingCards.push(instanceId);
       }
     }
@@ -200,10 +216,10 @@ export class CoreOperation<
    * @param predicate Function that returns true for matching metadata
    * @returns Array of instance IDs that match the predicate
    */
-  queryCardsByMeta(predicate: (meta: CardMeta) => boolean): string[] {
+  queryCardsByMeta(predicate: (meta: Partial<CardMeta>) => boolean): string[] {
     const matchingCards: string[] = [];
     for (const [instanceId, meta] of Object.entries(this.state.ctx.cardMetas)) {
-      if (predicate(meta)) {
+      if (predicate(meta as Partial<CardMeta>)) {
         matchingCards.push(instanceId);
       }
     }
@@ -218,7 +234,7 @@ export class CoreOperation<
    * Get the current context
    * @returns The current context object
    */
-  getCtx(): CoreCtx<unknown, CardMeta> {
+  getCtx(): CoreCtx<unknown, BaseCardMeta> {
     return this.state.ctx;
   }
 

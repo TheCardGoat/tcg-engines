@@ -9,14 +9,14 @@ import type {
   LorcanitoCharacterCard,
   LorcanitoLocationCard,
 } from "@lorcanito/lorcana-engine";
-import { AbilityBuilder } from "~/game-engine/engines/lorcana/src/abilities/factory/ability-builder";
+import { AbilityBuilder } from "~/game-engine/engines/lorcana/src/abilities/builder/ability-builder";
 import {
   mockActionCard,
   mockCharacterCard,
   mockLocationCard,
 } from "~/game-engine/engines/lorcana/src/testing/mockCards";
+import { LorcanaCardFilterBuilder } from "../cards/lorcana-card-filter-builder";
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
-import { LorcanaCardFilterBuilder } from "../lorcana-card-filter-builder";
 import { LorcanaTestEngine } from "../testing/lorcana-test-engine";
 
 const value = 5;

@@ -1,4 +1,7 @@
-import type { LayerItem } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import type {
+  Effect,
+  LayerItem,
+} from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import type { LorcanaCoreOperations } from "~/game-engine/engines/lorcana/src/operations/lorcana-core-operations";
 import { logger } from "~/shared/logger";
 
@@ -12,7 +15,7 @@ export function resolveTrigger(
   }
 
   // Process each effect in the ability
-  for (const effect of trigger.ability.effects) {
+  for (const effect of trigger.ability.effects as Effect[]) {
     switch (effect.type) {
       case "gainLore": {
         const playerId = trigger.controllerId;

@@ -1,36 +1,30 @@
-import type { GameDefinition } from "~/game-engine/core-engine/game-configuration";
-import { duringGameSegment } from "~/game-engine/engines/lorcana/src/game-definition/segments/during-game/during-game-segment";
-import { endGameSegment } from "~/game-engine/engines/lorcana/src/game-definition/segments/end-game/end-game";
-import { startingAGameSegment } from "~/game-engine/engines/lorcana/src/game-definition/segments/starting-a-game/starting-a-game-segment";
+import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
+import type { MoveFn } from "~/game-engine/core-engine/move/move-types";
 import type { LorcanaGameState } from "../lorcana-engine-types";
 import { lorcanaMoves } from "../moves/moves";
+import { duringGameSegment } from "./segments/during-game/during-game-segment";
+import { endGameSegment } from "./segments/end-game/end-game";
+import { startingAGameSegment } from "./segments/starting-a-game/starting-a-game-segment";
 
-export const LorcanaGame: GameDefinition<LorcanaGameState> = {
-  name: "lorcana",
-  numPlayers: 2,
+export const lorcanaGameDefinition = {
+  name: "Lorcana",
+  minPlayers: 2,
+  maxPlayers: 2,
 
-  deltaState: false,
-  disableUndo: true,
-
-  endIf: () => {
-    return false;
-  },
-
-  onEnd: ({ G }) => {
-    return G;
-  },
-
-  playerView: ({ G }) => {
-    return G;
+  setup: () => {
+    return {}; // Initial state - will be populated by startingAGame segment
   },
 
   moves: {
-    concede: lorcanaMoves.concede,
+    concede: lorcanaMoves.concede as MoveFn<LorcanaGameState>,
   },
 
   segments: {
     startingAGame: startingAGameSegment,
     endGame: endGameSegment,
-    duringGame: duringGameSegment,
+    duringGame: duringGameSegment as SegmentConfig<LorcanaGameState>,
   },
 };
+
+// Maintain backward compatibility
+export const LorcanaGame = lorcanaGameDefinition;

@@ -1,6 +1,9 @@
-import type { LorcanaKeywordAbility } from "./keyword";
+import type {
+  LorcanaBaseKeywordAbility,
+  LorcanaKeywordAbility,
+} from "./keyword";
 
-export interface RecklessAbility extends LorcanaKeywordAbility {
+export interface RecklessAbility extends LorcanaBaseKeywordAbility {
   keyword: "reckless";
   type: "keyword";
 }
@@ -14,7 +17,8 @@ export interface RecklessAbility extends LorcanaKeywordAbility {
 export const recklessAbility: RecklessAbility = {
   keyword: "reckless",
   type: "keyword",
-  text: "_(This character can't quest and must challenge each turn if able.)_",
+  text: "**Reckless** _(This character can't quest and must challenge if able.)_",
+  effects: [], // Keyword abilities have empty effects by default
 };
 
 export const isRecklessAbility = (

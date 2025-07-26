@@ -73,13 +73,13 @@ export function addTriggeredEffectsToTheBag(
                       },
                     ],
                     timing: timing as any,
-                  },
+                  } as any,
                   targets: [], // Will be resolved when the effect is processed
                   timestamp: Date.now(),
                   optional: abilityAny.optional,
                 };
 
-                this.state.G.bag.push(layerItem);
+                this.state.G.bag.push(layerItem as any);
               }
             }
           }
@@ -109,7 +109,7 @@ export function addTriggeredEffectsToTheBag(
                     },
                   ],
                   timing: timing as any,
-                },
+                } as any,
                 targets: [],
                 timestamp: Date.now(),
                 optional: abilityAny.optional,
@@ -183,6 +183,7 @@ export function addTriggeredEffectsToTheBag(
                 parameters: {},
               },
             ],
+            costs: {},
             timing: timing as any,
           },
           targets: [],
@@ -254,6 +255,7 @@ function checkAndAddTriggeredAbilities(
               parameters: { amount: 1 },
             },
           ],
+          costs: {},
           timing: timing as any,
         },
         targets: [], // Will be resolved when the effect is processed
@@ -312,6 +314,7 @@ function checkAndAddTriggeredAbilities(
                     },
                   },
                 ],
+                costs: {},
                 timing: timing as any,
               },
               targets: [],

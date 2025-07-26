@@ -2,18 +2,27 @@ import { allCardsById, type LorcanitoCard } from "@lorcanito/lorcana-engine";
 import { CardRepository } from "~/game-engine/core-engine/card/card-repository-factory";
 import type { GameCards } from "~/game-engine/core-engine/types";
 
-export type LorcanaCardDefinition = LorcanitoCard & { id: string };
+import type { LorcanaAbility } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 
-/**
- * Streamlined Lorcana card repository using factory approach
- * Eliminates 95% of the boilerplate from the inheritance approach
- */
+export type LorcanaCardDefinition = LorcanitoCard & {
+  id: string;
+  abilities?: LorcanaAbility[];
+};
+
 export class LorcanaCardRepository extends CardRepository<LorcanaCardDefinition> {
   constructor(dictionary: GameCards) {
-    super(dictionary, allCardsById as Record<string, LorcanitoCard>, {
-      validateDuplicates: true,
-      errorPrefix: "LorcanaCardRepository",
-    });
+    // TODO: Remove this once we have redefined card abilities
+    super(
+      dictionary,
+      allCardsById as Record<
+        string,
+        LorcanitoCard & { id: string; abilities?: LorcanaAbility[] }
+      >,
+      {
+        validateDuplicates: true,
+        errorPrefix: "LorcanaCardRepository",
+      },
+    );
   }
 
   /**

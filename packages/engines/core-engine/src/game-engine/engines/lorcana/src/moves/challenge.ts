@@ -1,5 +1,6 @@
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { logger } from "~/game-engine/core-engine/utils/logger";
+import type { LorcanaCoreOperations } from "../operations/lorcana-core-operations";
 import type { LorcanaMove } from "./types";
 import { toLorcanaCoreOps } from "./types";
 
@@ -34,100 +35,80 @@ interface ChallengeOptions {
 
 interface ChallengeRestriction {
   blocked: boolean;
-  reason?: string;
-  errorCode?: string;
-  errorMessage?: string;
-  context?: any;
+  errorCode: string;
+  errorMessage: string;
+  reason: string;
+  context: Record<string, unknown>;
 }
 
-/**
- * Check for effects that prevent or restrict challenges
- * Returns restriction info if challenge should be blocked
- */
 function checkChallengeRestrictions(
   lorcanaOps: any,
   challengerInstanceId: string,
   targetInstanceId: string,
   playerId: string,
 ): ChallengeRestriction {
+  // Default to no restriction
+  const noRestriction: ChallengeRestriction = {
+    blocked: false,
+    errorCode: "",
+    errorMessage: "",
+    reason: "",
+    context: {},
+  };
+
   const challenger = lorcanaOps.getCardInstance(challengerInstanceId);
   const target = lorcanaOps.getCardInstance(targetInstanceId);
 
-  if (!(challenger && target)) {
+  // Check that challenger and target are from different players
+  const challengerOwner = lorcanaOps.getCardOwner(challengerInstanceId);
+  const targetOwner = lorcanaOps.getCardOwner(targetInstanceId);
+
+  if (challengerOwner === targetOwner) {
     return {
       blocked: true,
-      reason: "Card not found",
-      errorCode: "CARD_NOT_FOUND",
-      errorMessage: "moves.challenge.errors.cardNotFound",
-      context: { challengerInstanceId, targetInstanceId },
+      errorCode: "SAME_PLAYER",
+      errorMessage: "moves.challenge.errors.samePlayer",
+      reason: "Cannot challenge your own cards",
+      context: { challengerOwner, targetOwner },
     };
   }
 
-  const challengerKeywords = (challenger.card as any).keywords || [];
-  const targetKeywords = (target.card as any).keywords || [];
+  // Check for Evasive keyword (Rule 10.4.1)
+  // A character with Evasive can only be challenged by a character with Evasive
+  const hasKeyword = (card: any, keywordToCheck: string): boolean => {
+    if (!(card.card.abilities && Array.isArray(card.card.abilities))) {
+      return false;
+    }
 
-  // Check for "can't challenge" effects on challenger
-  // Some cards have text like "This character can't challenge"
-  if (hasRestriction(challengerKeywords, "CantChallenge")) {
+    return card.card.abilities.some(
+      (ability: any) =>
+        ability.type === "keyword" &&
+        ability.keyword?.toLowerCase() === keywordToCheck.toLowerCase(),
+    );
+  };
+
+  const targetHasEvasive = hasKeyword(target, "evasive");
+  const challengerHasEvasive = hasKeyword(challenger, "evasive");
+
+  if (
+    target.card.type?.includes("Character") &&
+    targetHasEvasive &&
+    !challengerHasEvasive
+  ) {
     return {
       blocked: true,
-      reason: "Challenger has 'can't challenge' restriction",
-      errorCode: "CHALLENGER_CANT_CHALLENGE",
-      errorMessage: "moves.challenge.errors.challengerCantChallenge",
-      context: { challengerInstanceId },
-    };
-  }
-
-  // Check for "can't be challenged" effects on target
-  // Some cards have text like "This character can't be challenged"
-  if (hasRestriction(targetKeywords, "CantBeChallenged")) {
-    return {
-      blocked: true,
-      reason: "Target has 'can't be challenged' restriction",
-      errorCode: "TARGET_CANT_BE_CHALLENGED",
-      errorMessage: "moves.challenge.errors.targetCantBeChallenged",
+      errorCode: "TARGET_EVASIVE",
+      errorMessage: "moves.challenge.errors.targetEvasive",
+      reason: "Evasive characters can only be challenged by Evasive characters",
       context: { targetInstanceId },
     };
   }
 
-  // Check for Ward keyword - prevents being chosen by opponent's effects
-  // While Ward typically applies to spells/abilities, some interpretations include challenges
-  if (targetKeywords.includes("Ward")) {
-    const targetOwner = lorcanaOps.getCardOwner(targetInstanceId);
-    if (targetOwner !== playerId) {
-      return {
-        blocked: true,
-        reason: "Target has Ward and is controlled by opponent",
-        errorCode: "TARGET_HAS_WARD",
-        errorMessage: "moves.challenge.errors.targetHasWard",
-        context: { targetInstanceId },
-      };
-    }
-  }
+  // TODO: Check for Bodyguard restriction (Rule 10.2.3)
+  // If opponent has any ready Bodyguard character, other characters can't be challenged
 
-  // Check for Reckless keyword restrictions
-  // Reckless characters can't quest and must challenge if able
-  const hasReckless = challengerKeywords.some((k: string) =>
-    k.includes("Reckless"),
-  );
-  if (hasReckless) {
-    // Reckless characters get a preference bonus for challenging (handled elsewhere)
-    // But they don't get blocked from challenging - they're encouraged to challenge
-  }
-
-  // No restrictions found
-  return { blocked: false };
-}
-
-/**
- * Helper function to check if a card has a specific restriction keyword
- */
-function hasRestriction(keywords: string[], restriction: string): boolean {
-  return keywords.some(
-    (keyword) =>
-      keyword.includes(restriction) ||
-      keyword.toLowerCase().includes(restriction.toLowerCase()),
-  );
+  // No restriction applies
+  return noRestriction;
 }
 
 export const challengeMove: LorcanaMove = (
@@ -136,7 +117,11 @@ export const challengeMove: LorcanaMove = (
   options: ChallengeOptions,
 ) => {
   try {
-    const lorcanaOps = toLorcanaCoreOps(coreOps);
+    // Use explicit type assertion to ensure proper typing
+    const lorcanaOps = toLorcanaCoreOps(
+      coreOps,
+    ) as unknown as LorcanaCoreOperations;
+
     // Use getCtx instead of directly accessing ctx
     const ctx = lorcanaOps.getCtx();
 
@@ -187,114 +172,74 @@ export const challengeMove: LorcanaMove = (
       );
     }
 
-    // Verify challenger is in player's play zone
-    const playerPlayCards = lorcanaOps.getCardsInZone("play", playerID);
-    if (
-      !playerPlayCards.find((card) => card.instanceId === challengerInstanceId)
-    ) {
-      logger.error(
-        `Challenger ${challengerInstanceId} is not in player ${playerID}'s play zone`,
-      );
-      return createInvalidMove(
-        "CHALLENGER_NOT_IN_PLAY",
-        "moves.challenge.errors.challengerNotInPlay",
-        { instanceId: challengerInstanceId, playerId: playerID },
-      );
-    }
-
-    // Verify target is either an exerted character or a location
-    const isTargetCharacter = target.card.type?.includes("Character");
+    // Verify target is a character or location
     const isTargetLocation = target.card.type?.includes("Location");
+    const isTargetCharacter = target.card.type?.includes("Character");
 
     if (!(isTargetCharacter || isTargetLocation)) {
       logger.error(
-        `Target ${options.targetInstanceId} is neither a character nor a location`,
+        `Target ${options.targetInstanceId} is not a character or location`,
       );
       return createInvalidMove(
-        "INVALID_TARGET_TYPE",
-        "moves.challenge.errors.invalidTargetType",
-        { instanceId: options.targetInstanceId, cardType: target.card.type },
-      );
-    }
-
-    // If target is a character, it must be exerted (Rule 4.3.6.7)
-    if (isTargetCharacter) {
-      const targetCharacter = target;
-      if (!targetCharacter.isExerted) {
-        logger.error(
-          `Cannot challenge ready character ${options.targetInstanceId} - target must be exerted`,
-        );
-        return createInvalidMove(
-          "TARGET_NOT_EXERTED",
-          "moves.challenge.errors.targetNotExerted",
-          { instanceId: options.targetInstanceId },
-        );
-      }
-      logger.info(`Challenging exerted character ${options.targetInstanceId}`);
-    }
-
-    // Verify target is controlled by opponent
-    const targetOwner = lorcanaOps.getCardOwner(options.targetInstanceId);
-    if (targetOwner === playerID) {
-      logger.error(`Cannot challenge own card ${options.targetInstanceId}`);
-      return createInvalidMove(
-        "CANNOT_CHALLENGE_OWN_CARD",
-        "moves.challenge.errors.cannotChallengeOwnCard",
-        { instanceId: options.targetInstanceId, playerId: playerID },
-      );
-    }
-
-    // Check for Evasive restriction
-    const targetKeywords = (target.card as any).keywords || [];
-    const challengerKeywords = (challenger.card as any).keywords || [];
-
-    if (
-      targetKeywords.includes("Evasive") &&
-      !challengerKeywords.includes("Evasive")
-    ) {
-      logger.error(
-        `Cannot challenge Evasive character ${options.targetInstanceId} without Evasive challenger`,
-      );
-      return createInvalidMove(
-        "TARGET_EVASIVE",
-        "moves.challenge.errors.targetEvasive",
+        "TARGET_NOT_CHARACTER_OR_LOCATION",
+        "moves.challenge.errors.targetNotCharacterOrLocation",
         {
-          challengerInstanceId,
-          targetInstanceId: options.targetInstanceId,
+          instanceId: options.targetInstanceId,
+          cardType: target.card.type,
         },
       );
     }
 
-    // Check for Bodyguard restriction
-    if (isTargetCharacter && !targetKeywords.includes("Bodyguard")) {
-      // If target doesn't have Bodyguard, check if there's a Bodyguard that must be challenged first
-      const opponentPlayCards = lorcanaOps.getCardsInZone("play", targetOwner!);
-      const bodyguardCards = opponentPlayCards.filter((card) => {
-        const cardKeywords = (card.card as any).keywords || [];
-        return (
-          cardKeywords.includes("Bodyguard") &&
-          card.instanceId !== options.targetInstanceId
-        );
-      });
+    // Verify both challenger and target are in play zone
+    const challengerZone = lorcanaOps.getCardZone(challengerInstanceId);
+    const targetZone = lorcanaOps.getCardZone(options.targetInstanceId);
 
-      if (bodyguardCards.length > 0) {
-        logger.error("Must challenge Bodyguard character first");
-        return createInvalidMove(
-          "MUST_CHALLENGE_BODYGUARD",
-          "moves.challenge.errors.mustChallengeBodyguard",
-          {
-            targetInstanceId: options.targetInstanceId,
-            bodyguardCards: bodyguardCards.map((c) => c.instanceId),
-          },
-        );
-      }
+    if (challengerZone !== "play") {
+      logger.error(`Challenger ${challengerInstanceId} is not in play zone`);
+      return createInvalidMove(
+        "CHALLENGER_NOT_IN_PLAY",
+        "moves.challenge.errors.challengerNotInPlay",
+        { instanceId: challengerInstanceId, zone: challengerZone },
+      );
     }
 
-    // Check if challenger can challenge (must be ready/not exerted)
-    // Exception: Rush characters can challenge when they're played this turn
-    const challengerMeta = lorcanaOps.state.G.metas[challengerInstanceId] || {};
-    const hasRush = challengerKeywords.some((k: string) => k.includes("Rush"));
-    const wasPlayedThisTurn = challengerMeta.playedThisTurn === true;
+    if (targetZone !== "play") {
+      logger.error(`Target ${options.targetInstanceId} is not in play zone`);
+      return createInvalidMove(
+        "TARGET_NOT_IN_PLAY",
+        "moves.challenge.errors.targetNotInPlay",
+        { instanceId: options.targetInstanceId, zone: targetZone },
+      );
+    }
+
+    // Check if the target character is exerted (only exerted characters can be challenged - Rule 4.3.6.7)
+    // Locations can be challenged regardless of their exerted status (Rule 4.3.6.19)
+    if (isTargetCharacter && !target.isExerted) {
+      logger.error(
+        `Target character ${options.targetInstanceId} must be exerted to be challenged`,
+      );
+      return createInvalidMove(
+        "TARGET_NOT_EXERTED",
+        "moves.challenge.errors.targetNotExerted",
+        { instanceId: options.targetInstanceId },
+      );
+    }
+
+    // Extract abilities for checking keywords instead of accessing keywords directly
+    const hasKeyword = (card: any, keywordToCheck: string): boolean => {
+      if (!(card.card.abilities && Array.isArray(card.card.abilities))) {
+        return false;
+      }
+
+      return card.card.abilities.some(
+        (ability: any) =>
+          ability.type === "keyword" &&
+          ability.keyword?.toLowerCase() === keywordToCheck.toLowerCase(),
+      );
+    };
+
+    const hasRush = hasKeyword(challenger, "rush");
+    const wasPlayedThisTurn = challenger.meta.playedThisTurn === true;
 
     const canChallengeNormally =
       lorcanaOps.canCharacterChallenge(challengerInstanceId);
@@ -337,20 +282,30 @@ export const challengeMove: LorcanaMove = (
     }
 
     // Calculate base strength values
-    let challengerStrength = (challenger.card as any).strength || 0;
-    const targetStrength = isTargetLocation
-      ? 0
-      : (target.card as any).strength || 0;
+    let challengerStrength = challenger.card.strength || 0;
+    const targetStrength = isTargetLocation ? 0 : target.card.strength || 0;
 
     // Apply Challenger keyword bonus (while challenging)
-    const challengerKeywordsArray = challengerKeywords as string[];
-    const challengerBonus = challengerKeywordsArray
-      .filter((k) => k.startsWith("Challenger"))
-      .reduce((bonus, keyword) => {
-        const match = keyword.match(/Challenger\s*\+?(\d+)/);
-        return bonus + (match ? Number.parseInt(match[1]) : 1);
-      }, 0);
+    // Check for Challenger ability and extract the bonus value
+    const getChallengerBonus = (card: any): number => {
+      if (!(card.card.abilities && Array.isArray(card.card.abilities))) {
+        return 0;
+      }
 
+      return card.card.abilities.reduce((bonus: number, ability: any) => {
+        if (
+          ability.type === "keyword" &&
+          ability.keyword?.startsWith("challenger")
+        ) {
+          // Extract the numeric value from challenger ability
+          const match = ability.keyword.match(/challenger\+?(\d+)/i);
+          return bonus + (match ? Number.parseInt(match[1]) : 1);
+        }
+        return bonus;
+      }, 0);
+    };
+
+    const challengerBonus = getChallengerBonus(challenger);
     challengerStrength += challengerBonus;
 
     // Exert the challenging character (Rule 4.3.6.9)
@@ -375,14 +330,26 @@ export const challengeMove: LorcanaMove = (
     let targetDamageToTake = challengerStrength;
 
     // Apply Resist keyword (damage reduction)
-    const targetKeywordsArray = targetKeywords as string[];
-    const targetResist = targetKeywordsArray
-      .filter((k) => k.startsWith("Resist"))
-      .reduce((resist, keyword) => {
-        const match = keyword.match(/Resist\s*\+?(\d+)/);
-        return resist + (match ? Number.parseInt(match[1]) : 1);
-      }, 0);
+    // Check for Resist ability and extract the reduction value
+    const getResistReduction = (card: any): number => {
+      if (!(card.card.abilities && Array.isArray(card.card.abilities))) {
+        return 0;
+      }
 
+      return card.card.abilities.reduce((reduction: number, ability: any) => {
+        if (
+          ability.type === "keyword" &&
+          ability.keyword?.startsWith("resist")
+        ) {
+          // Extract the numeric value from resist ability
+          const match = ability.keyword.match(/resist\+?(\d+)/i);
+          return reduction + (match ? Number.parseInt(match[1]) : 1);
+        }
+        return reduction;
+      }, 0);
+    };
+
+    const targetResist = getResistReduction(target);
     targetDamageToTake = Math.max(0, targetDamageToTake - targetResist);
 
     // Apply damage counters (Rule 4.3.6.16)

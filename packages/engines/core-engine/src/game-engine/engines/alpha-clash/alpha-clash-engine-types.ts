@@ -9,8 +9,10 @@
  */
 
 import type {
+  BaseCardMeta,
   ExtendCardDefinition,
   ExtendCardFilter,
+  ExtendCardMeta,
   ExtendGameState,
   ExtendPlayerState,
 } from "~/game-engine/core-engine/types/game-specific-types";
@@ -32,6 +34,46 @@ import type {
 
 // Import card type - this should not create circular dependency now
 import type { AlphaClashCard } from "./src/cards/definitions/cardTypes";
+
+/**
+ * Card metadata for Alpha Clash
+ * This extends the BaseCardMeta from core-engine
+ */
+export type AlphaClashCardMeta = ExtendCardMeta<{
+  // Card status (ready, engaged, face-up, face-down)
+  status?: AlphaClashCardStatus;
+
+  // Damage and damage type
+  damage?: number;
+  damageType?: AlphaClashDamageType;
+
+  // Counters on the card
+  counters?: Record<string, number>;
+
+  // Attachment relationships
+  attachments?: string[]; // Instance IDs of attached cards
+  attachedTo?: string; // Instance ID of card this is attached to
+
+  // Modifiers (buffs/debuffs)
+  modifiers?: Array<{
+    source: string;
+    effect: string;
+    duration?: string;
+  }>;
+
+  // Turn tracking
+  playedThisTurn?: boolean;
+  activatedThisTurn?: boolean;
+  attackedThisTurn?: boolean;
+
+  // Other game state flags
+  canAttack?: boolean;
+  canObstruct?: boolean;
+  isSelected?: boolean;
+
+  // For clashgrounds
+  isActive?: boolean;
+}>;
 
 // Re-export shared types for backward compatibility
 export type {

@@ -10,7 +10,7 @@ import {
   type NumericComparison,
   type NumericRange,
   type StringComparison,
-} from "../lorcana-card-filter-builder";
+} from "../cards/lorcana-card-filter-builder";
 
 describe("LorcanaCardFilterBuilder", () => {
   let builder: LorcanaCardFilterBuilder;

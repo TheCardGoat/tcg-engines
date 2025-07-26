@@ -1,17 +1,18 @@
-import type { LorcanaKeywordAbility } from "./keyword";
+import type {
+  LorcanaBaseKeywordAbility,
+  LorcanaKeywordAbility,
+} from "./keyword";
 
-export interface SupportAbility extends LorcanaKeywordAbility {
+export interface SupportAbility extends LorcanaBaseKeywordAbility {
   keyword: "support";
   type: "keyword";
 }
 
-// 10.11.Support
-// 10.11.1. The Support keyword represents a triggered ability. Support means "Whenever this character quests, you may add this character's {S} to another chosen character's {S} this turn."
-// 10.11.2. The standard reminder text for Support is "(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)"
 export const supportAbility: SupportAbility = {
   keyword: "support",
   type: "keyword",
-  text: "_(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_",
+  text: "**Support** _(Whenever this character quests, you may add their ◆ to another chosen character's ◆ this turn.)_",
+  effects: [], // Keyword abilities have empty effects by default
 };
 
 export const isSupportAbility = (

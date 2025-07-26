@@ -1,8 +1,8 @@
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { logger } from "~/game-engine/core-engine/utils/logger";
-import { AbilityBuilder } from "../abilities/ability-builder";
+import type { LorcanaActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities/activated/activated";
+import type { LorcanaCardInstance } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-instance";
 import type { LorcanaAbilityCost } from "../abilities/ability-types";
-import { detectAbilityType } from "../examples/ability-type-mapping";
 import type { LorcanaMove } from "./types";
 import { toLorcanaCoreOps } from "./types";
 
@@ -97,13 +97,8 @@ export const useActivatedAbility: LorcanaMove = (
       );
     }
 
-    // Select the specific ability to use
-    let selectedAbility: string;
-    if (abilityText) {
-      selectedAbility = abilityText;
-    } else if (abilityIndex < activatedAbilities.length) {
-      selectedAbility = activatedAbilities[abilityIndex];
-    } else {
+    const selectedAbility = activatedAbilities[abilityIndex];
+    if (!selectedAbility) {
       logger.error(
         `Invalid ability index ${abilityIndex} for card ${cardInstanceId}. Available abilities: ${activatedAbilities.length}`,
       );
@@ -118,19 +113,15 @@ export const useActivatedAbility: LorcanaMove = (
       );
     }
 
-    // Extract cost from the selected ability
-    const abilityCost = AbilityBuilder.extractCost(selectedAbility);
-
     // **7.5.3.2.** Second, the player follows the steps described in 4.3.4.4 through 4.3.4.6 (cost determination and payment)
     // **4.3.4.4.** Determine the total cost (no alternate costs for abilities currently)
-    const totalCost = calculateTotalAbilityCost(abilityCost);
 
     // **4.3.4.5.** Check if player can pay the total cost
     const canPayCost = validateCanPayAbilityCost(
       lorcanaOps,
       playerID,
       cardInstanceId,
-      abilityCost,
+      selectedAbility.costs,
     );
     if (!canPayCost.valid) {
       logger.error(
@@ -152,7 +143,7 @@ export const useActivatedAbility: LorcanaMove = (
       lorcanaOps,
       playerID,
       cardInstanceId,
-      abilityCost,
+      selectedAbility.costs,
     );
     if (!paymentResult.success) {
       logger.error(`Failed to pay ability cost: ${paymentResult.reason}`);
@@ -201,36 +192,10 @@ export const useActivatedAbility: LorcanaMove = (
  * @param cardInstance The card instance to analyze
  * @returns Array of activated ability texts
  */
-function extractActivatedAbilities(cardInstance: any): string[] {
-  const abilities: string[] = [];
-  const cardText =
-    cardInstance.card.text || cardInstance.card.abilities?.join(" ") || "";
-
-  if (!cardText) return abilities;
-
-  // Split card text into individual abilities (separated by periods or newlines)
-  const abilityTexts = cardText
-    .split(/[.\n]/)
-    .map((text: string) => text.trim())
-    .filter((text: string) => text.length > 0);
-
-  for (const abilityText of abilityTexts) {
-    if (detectAbilityType(abilityText) === "activated") {
-      abilities.push(abilityText);
-    }
-  }
-
-  return abilities;
-}
-
-/**
- * Calculates the total cost of an activated ability
- * @param abilityCost The parsed ability cost
- * @returns Total ink cost (other costs are handled separately)
- */
-function calculateTotalAbilityCost(abilityCost: LorcanaAbilityCost): number {
-  // For now, only return ink cost. Other costs (like exert, banish) are handled separately
-  return abilityCost.ink || 0;
+function extractActivatedAbilities(
+  cardInstance: LorcanaCardInstance,
+): LorcanaActivatedAbility[] {
+  return cardInstance.getActivatedAbilities();
 }
 
 /**

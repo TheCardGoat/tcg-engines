@@ -46,6 +46,7 @@ describe("Context Factory Utilities", () => {
           card2: "def2",
         },
       },
+      cardMetas: {}, // Add missing cardMetas property
       cardZones: {
         zone1: {
           id: "zone1",

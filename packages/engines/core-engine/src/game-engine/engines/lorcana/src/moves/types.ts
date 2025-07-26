@@ -78,13 +78,8 @@ export type LorcanaMove = LorcanaMoveFn | LorcanaEnumerableMove;
  * @deprecated Use the properly typed LorcanaMove instead which provides correctly typed coreOps
  */
 export function toLorcanaCoreOps(
-  coreOps: CoreOperation<
-    LorcanaGameState,
-    LorcanaCardDefinition,
-    LorcanaPlayerState,
-    LorcanaCardFilter,
-    LorcanaCardInstance
-  >,
+  coreOps: CoreOperation<any, any, any, any, any, any>, // Accept any CoreOperation types to avoid type mismatch
 ): LorcanaCoreOperations {
-  return coreOps as LorcanaCoreOperations;
+  // Using unknown as an intermediary to safely cast between incompatible types
+  return coreOps as unknown as LorcanaCoreOperations;
 }

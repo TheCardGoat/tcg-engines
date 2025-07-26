@@ -14,11 +14,13 @@ import { logger } from "~/game-engine/core-engine/utils/logger";
 import type {
   AlphaClashCardDefinition,
   AlphaClashCardFilter,
+  AlphaClashCardMeta,
   AlphaClashGameState,
   AlphaClashPlayerState,
 } from "./alpha-clash-engine-types";
 import { AlphaClashCardRepository } from "./src/cards/alpha-clash-card-repository";
 import { alphaClashGameDefinition } from "./src/game-definition/alpha-clash-game-definition";
+import { AlphaClashCoreOperations } from "./src/operations/alpha-clash-core-operations";
 
 // Define card instance type for Alpha Clash
 type AlphaClashCardInstance = CoreCardInstance<AlphaClashCardDefinition>;
@@ -39,9 +41,11 @@ export class AlphaClashEngine extends GameEngine<
   AlphaClashCardDefinition,
   AlphaClashPlayerState,
   AlphaClashCardFilter,
+  AlphaClashCardMeta,
   AlphaClashCardInstance
 > {
   private cardRepository: AlphaClashCardRepository;
+  private _coreOps: AlphaClashCoreOperations;
 
   constructor(config: AlphaClashEngineConfig) {
     // Initialize card repository
@@ -63,12 +67,25 @@ export class AlphaClashEngine extends GameEngine<
 
     this.cardRepository = cardRepository;
 
+    // Initialize core operations
+    this._coreOps = new AlphaClashCoreOperations({
+      state: this.getState(),
+      engine: this,
+    });
+
     logger.info(`AlphaClashEngine initialized for game ${config.gameId}`);
     if (config.playerId) {
       logger.info(`Engine perspective: ${config.playerId}`);
     } else {
       logger.info("Engine perspective: Authoritative");
     }
+  }
+
+  /**
+   * Access Alpha Clash core operations
+   */
+  get coreOps(): AlphaClashCoreOperations {
+    return this._coreOps;
   }
 
   /**

@@ -6,7 +6,7 @@
  * and type-safe interface.
  */
 
-import type { LorcanaZone } from "./lorcana-engine-types";
+import type { LorcanaZone } from "../lorcana-engine-types";
 
 // =============================================================================
 // FILTER BUILDER TYPES
@@ -548,6 +548,7 @@ export class LorcanaCardFilterBuilder {
 
   and(...builders: LorcanaCardFilterBuilder[]): this;
   and(...filters: LorcanaCardFilterExtended[]): this;
+  and(...args: (LorcanaCardFilterBuilder | LorcanaCardFilterExtended)[]): this;
   and(...args: (LorcanaCardFilterBuilder | LorcanaCardFilterExtended)[]): this {
     const filters = args.map((arg) =>
       arg instanceof LorcanaCardFilterBuilder ? arg.build() : arg,
@@ -558,6 +559,7 @@ export class LorcanaCardFilterBuilder {
 
   or(...builders: LorcanaCardFilterBuilder[]): this;
   or(...filters: LorcanaCardFilterExtended[]): this;
+  or(...args: (LorcanaCardFilterBuilder | LorcanaCardFilterExtended)[]): this;
   or(...args: (LorcanaCardFilterBuilder | LorcanaCardFilterExtended)[]): this {
     const filters = args.map((arg) =>
       arg instanceof LorcanaCardFilterBuilder ? arg.build() : arg,
