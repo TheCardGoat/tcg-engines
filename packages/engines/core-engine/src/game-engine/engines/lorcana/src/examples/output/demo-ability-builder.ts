@@ -6,7 +6,7 @@
  */
 
 import chalk from "chalk";
-import { AbilityBuilder } from "../abilities/builder/ability-builder";
+import { AbilityBuilder } from "../../abilities/builder/ability-builder";
 import { demonstrateAbilityParsing } from "./ability-type-examples";
 
 // Run the basic ability parsing demonstration
