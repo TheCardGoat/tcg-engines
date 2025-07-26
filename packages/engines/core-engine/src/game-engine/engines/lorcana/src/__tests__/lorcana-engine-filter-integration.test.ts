@@ -14,7 +14,7 @@ import {
   mockActionCard,
   mockCharacterCard,
   mockLocationCard,
-} from "~/game-engine/engines/lorcana/src/testing/mockCards.ts";
+} from "~/game-engine/engines/lorcana/src/testing/mockCards";
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import { LorcanaCardFilterBuilder } from "../lorcana-card-filter-builder";
 import { LorcanaTestEngine } from "../testing/lorcana-test-engine";
@@ -36,7 +36,9 @@ describe("LorcanaEngine Filter Integration", () => {
     lore: 1,
     type: "character",
     inkwell: true,
-    abilities: [],
+    abilities: AbilityBuilder.fromText(
+      "**Rush** _This character can quest the turn they're played._",
+    ),
   };
 
   const mockHighCostCharacter: LorcanitoCharacterCard = {
@@ -51,7 +53,7 @@ describe("LorcanaEngine Filter Integration", () => {
     type: "character",
     inkwell: false,
     abilities: AbilityBuilder.fromText(
-      `**Singer** ${value} _(This character counts as cost ${value} to sing songs.)_`,
+      `**Singer** ${value} _(This character counts as cost ${value} to sing songs.)_ **Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_`,
     ),
   };
 
@@ -63,7 +65,6 @@ describe("LorcanaEngine Filter Integration", () => {
     type: "action",
     inkwell: true,
     abilities: [],
-    keywords: [],
   };
 
   const mockLocation: LorcanitoLocationCard = {
@@ -310,14 +311,21 @@ describe("LorcanaEngine Filter Integration", () => {
       const result = testEngine.queryCardsByFilter(filter);
 
       expect(result).toHaveLength(2); // Both Mickey cards
-      expect(result.every((card) => card.card.keywords?.includes("rush"))).toBe(
-        true,
-      );
+      expect(
+        result.every((card) => {
+          return card.card.abilities.some(
+            (ability: any) =>
+              (ability.text && ability.text.toLowerCase().includes("rush")) ||
+              (ability.keyword &&
+                ability.keyword.toLowerCase().includes("rush")),
+          );
+        }),
+      ).toBe(true);
     });
 
     it("should filter by ability", () => {
       const filter = new LorcanaCardFilterBuilder()
-        .hasAbility("Singer 4")
+        .hasAbility("Singer 5")
         .build();
 
       const result = testEngine.queryCardsByFilter(filter);
@@ -335,11 +343,26 @@ describe("LorcanaEngine Filter Integration", () => {
 
       // Should find cards that have ANY of the specified keywords
       expect(result).toHaveLength(3); // Mickey (rush) + Beast (bodyguard)
-      expect(result.some((card) => card.card.keywords?.includes("rush"))).toBe(
-        true,
-      );
       expect(
-        result.some((card) => card.card.keywords?.includes("bodyguard")),
+        result.some((card) => {
+          return card.card.abilities.some(
+            (ability: any) =>
+              (ability.text && ability.text.toLowerCase().includes("rush")) ||
+              (ability.keyword &&
+                ability.keyword.toLowerCase().includes("rush")),
+          );
+        }),
+      ).toBe(true);
+      expect(
+        result.some((card) => {
+          return card.card.abilities.some(
+            (ability: any) =>
+              (ability.text &&
+                ability.text.toLowerCase().includes("bodyguard")) ||
+              (ability.keyword &&
+                ability.keyword.toLowerCase().includes("bodyguard")),
+          );
+        }),
       ).toBe(true);
     });
   });

@@ -277,17 +277,17 @@ export class LorcanaTestEngine {
     return { result: response };
   }
 
-  exertCard(params: { card: LorcanaCardInstance | LorcanitoCard }) {
-    const card = this.getCardModel(params.card);
-
-    const response = this.moves.manualMoves.exertCard({
-      card: card.instanceId,
-      exerted: true,
+  exertCard(params: { card: string; exerted: boolean }) {
+    // Directly call the engine's exertCard method instead of going through moves
+    this.authoritativeEngine.exertCard({
+      card: params.card,
+      exerted: params.exerted,
     });
 
+    // Propagate state changes
     this.wasMoveExecutedAndPropagated();
 
-    return { card, result: response };
+    return { result: true };
   }
 
   moveToLocation(params: {

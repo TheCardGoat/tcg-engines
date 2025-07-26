@@ -725,6 +725,8 @@ export class LorcanaEngine extends GameEngine<
       extendedFilter.namedCard ||
       extendedFilter.negate ||
       extendedFilter.ignoreBonuses ||
+      extendedFilter.hasKeyword ||
+      extendedFilter.hasAbility ||
       // Check if zone is an array (multi-zone filtering)
       Array.isArray(extendedFilter.zone)
     );
@@ -908,16 +910,80 @@ export class LorcanaEngine extends GameEngine<
 
       // Keyword and ability filters
       if (filter.hasKeyword && filter.hasKeyword.length > 0) {
-        // Extract keywords from card abilities - this needs proper implementation
-        // For now, skip this filter to avoid type errors
-        // TODO: Implement proper keyword extraction from abilities
+        const cardKeywords: string[] = [];
+
+        // Extract keywords from card abilities
+        if (card.card.abilities && Array.isArray(card.card.abilities)) {
+          for (const ability of card.card.abilities) {
+            if (ability && typeof ability === "object") {
+              // Check for keyword abilities (LorcanaKeywordAbility structure)
+              if (
+                ability.type === "keyword" &&
+                ability.keyword &&
+                typeof ability.keyword === "string"
+              ) {
+                cardKeywords.push(ability.keyword.toLowerCase());
+              }
+              // Also check in the ability text for keywords
+              else if (ability.text && typeof ability.text === "string") {
+                // Extract keywords from text patterns like "**Rush**", "**Singer**", etc.
+                const keywordMatches = ability.text.match(/\*\*([^*]+)\*\*/g);
+                if (keywordMatches) {
+                  keywordMatches.forEach((match) => {
+                    const keyword = match.replace(/\*\*/g, "").trim();
+                    // Handle keywords with values like "Singer 5"
+                    const keywordName = keyword.split(" ")[0].toLowerCase();
+                    cardKeywords.push(keywordName);
+                  });
+                }
+              }
+            }
+          }
+        }
+
+        // Check if any of the required keywords match
+        const hasRequiredKeyword = filter.hasKeyword.some((requiredKeyword) =>
+          cardKeywords.some(
+            (cardKeyword) =>
+              cardKeyword.includes(requiredKeyword.toLowerCase()) ||
+              requiredKeyword.toLowerCase().includes(cardKeyword),
+          ),
+        );
+
+        if (!hasRequiredKeyword) {
+          return false;
+        }
       }
 
       if (filter.hasAbility && filter.hasAbility.length > 0) {
-        // This would need proper ability text parsing - for now just check if abilities exist
-        const hasAnyAbility =
-          card.card.abilities && card.card.abilities.length > 0;
-        if (!hasAnyAbility) {
+        const cardAbilityTexts: string[] = [];
+
+        // Extract ability texts from card abilities
+        if (card.card.abilities && Array.isArray(card.card.abilities)) {
+          for (const ability of card.card.abilities) {
+            if (ability && typeof ability === "object" && ability.text) {
+              cardAbilityTexts.push(ability.text.toLowerCase());
+            }
+          }
+        }
+
+        // Check if any of the required abilities match
+        const hasRequiredAbility = filter.hasAbility.some((requiredAbility) =>
+          cardAbilityTexts.some((abilityText) => {
+            // Remove formatting characters and normalize spaces for better matching
+            const normalizedText = abilityText
+              .replace(/\*\*/g, "")
+              .replace(/\s+/g, " ")
+              .trim();
+            const normalizedRequired = requiredAbility
+              .toLowerCase()
+              .replace(/\s+/g, " ")
+              .trim();
+            return normalizedText.includes(normalizedRequired);
+          }),
+        );
+
+        if (!hasRequiredAbility) {
           return false;
         }
       }

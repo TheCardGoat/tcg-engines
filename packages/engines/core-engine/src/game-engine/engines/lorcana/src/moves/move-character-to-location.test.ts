@@ -155,7 +155,7 @@ describe("Move: Move Character to Location", () => {
       const character = testEngine.getCardModel(testCharacterCard);
       const location = testEngine.getCardModel(testLocationCard);
 
-      testEngine.exertCard({ card: character });
+      testEngine.exertCard({ card: character.instanceId, exerted: true });
       expect(character.isExerted).toBeTrue();
 
       testEngine.moveToLocation({
