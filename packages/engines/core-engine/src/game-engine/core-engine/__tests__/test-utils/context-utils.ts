@@ -23,7 +23,12 @@ export function createTestContextWithCards(
 
   // Add cards to players
   Object.entries(cards).forEach(([playerId, playerCards]) => {
-    ctx.cards[playerId] = playerCards;
+    // Convert the card objects to match the expected type of Record<string, string>
+    const convertedCards: Record<string, string> = {};
+    Object.entries(playerCards).forEach(([instanceId, card]) => {
+      convertedCards[instanceId] = card.definition;
+    });
+    ctx.cards[playerId] = convertedCards;
   });
 
   // Create zones with cards

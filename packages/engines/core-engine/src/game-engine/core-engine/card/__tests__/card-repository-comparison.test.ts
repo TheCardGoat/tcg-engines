@@ -4,6 +4,9 @@ import { CardRepository } from "../card-repository-factory";
 // Define CoreCardDefinition locally for test
 interface CoreCardDefinition {
   id: string;
+  name?: string;
+  cost?: number;
+  type?: string;
 }
 
 // Mock card definitions for testing
@@ -11,7 +14,7 @@ const mockCardLookup = {
   CARD_001: { id: "CARD_001", name: "Test Card 1", cost: 1, type: "character" },
   CARD_002: { id: "CARD_002", name: "Test Card 2", cost: 2, type: "action" },
   CARD_003: { id: "CARD_003", name: "Test Card 3", cost: 3, type: "item" },
-} as Record<string, CoreCardDefinition & { cost: number; type: string }>;
+} as Record<string, CoreCardDefinition>;
 
 const mockDictionary = {
   player_one: {

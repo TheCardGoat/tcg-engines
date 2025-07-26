@@ -14,6 +14,15 @@ import type {
 } from "~/game-engine/core-engine/types/game-specific-types";
 import type { LayerItem } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 
+// Re-export builder types for convenience
+export type {
+  LorcanaCardFilterBuilder,
+  LorcanaCardFilterExtended,
+  NumericComparison,
+  NumericRange,
+  StringComparison,
+} from "./lorcana-card-filter-builder";
+
 // =============================================================================
 // PLAYER STATE TYPES
 // =============================================================================

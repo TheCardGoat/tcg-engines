@@ -9,6 +9,7 @@ import { passTurnMove } from "./pass-turn";
 import { playCardMove } from "./play-card";
 import { putACardIntoTheInkwellMove } from "./put-a-card-into-the-inkwell";
 import { questMove } from "./quest";
+import { singMove } from "./sing";
 import { useActivatedAbility } from "./use-activated-ability";
 
 export const lorcanaMoves = {
@@ -21,6 +22,7 @@ export const lorcanaMoves = {
   playCard: playCardMove,
   quest: questMove,
   challenge: challengeMove,
+  sing: singMove,
   moveCharacterToLocation: moveCharacter,
   useActivatedAbility: useActivatedAbility,
   resolveBag: resolveBag,

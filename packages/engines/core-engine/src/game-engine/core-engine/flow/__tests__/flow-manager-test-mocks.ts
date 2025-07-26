@@ -72,26 +72,23 @@ export const createMockState = (
 ): CoreEngineState<TestGameState> => ({
   G: { testData: "test", playerCount: 2, ...overrides.G },
   ctx: {
+    gameId: "test-game",
+    matchId: "test-match",
+    playerOrder: ["player1", "player2"],
+    turnPlayerPos: 0,
+    priorityPlayerPos: 0,
+    numTurns: 0,
+    numMoves: 0,
+    numTurnMoves: 0,
     currentSegment: "duringGame",
     currentPhase: "mainPhase",
     currentStep: null,
-
-    numMoves: 0,
-    turn: 0,
-    currentPlayer: "player1",
-    gameover: undefined,
-    playOrder: ["player1", "player2"],
-    playOrderPos: 0,
-    phase: "mainPhase",
-    activePlayers: null,
-    _activePlayersNumMoves: {},
-    _activePlayersOnce: {},
-    _nextStateID: 0,
-    _prevStateID: 0,
-    _random: undefined,
-    _redo: [],
-    _undo: [],
-    plugins: {},
+    moveHistory: [],
+    cards: {},
+    players: {
+      player1: { id: "player1", name: "Player 1" },
+      player2: { id: "player2", name: "Player 2" },
+    },
     ...overrides.ctx,
   },
   ...overrides,
@@ -461,14 +458,29 @@ export const MockGameStates = {
         currentPhase: "setupPhase",
         currentStep: null,
         numMoves: 0,
-        turn: 0,
-        currentPlayer: "player1",
-        playOrder:
+        numTurns: 0,
+        numTurnMoves: 0,
+        playerOrder:
           playerCount === 2
             ? ["player1", "player2"]
             : ["player1", "player2", "player3", "player4"],
-        playOrderPos: 0,
-      } as Partial<CoreCtx>,
+        turnPlayerPos: 0,
+        priorityPlayerPos: 0,
+        players: {
+          player1: { id: "player1", name: "Player 1" },
+          player2: { id: "player2", name: "Player 2" },
+          ...(playerCount > 2 && {
+            player3: { id: "player3", name: "Player 3" },
+          }),
+          ...(playerCount > 3 && {
+            player4: { id: "player4", name: "Player 4" },
+          }),
+        },
+        gameId: "test-game",
+        matchId: "test-match",
+        cards: {},
+        moveHistory: [],
+      },
     }),
 
   midGame: (playerCount = 2): CoreEngineState<TestGameState> =>
@@ -479,14 +491,29 @@ export const MockGameStates = {
         currentPhase: "mainPhase",
         currentStep: null,
         numMoves: 10,
-        turn: 5,
-        currentPlayer: "player2",
-        playOrder:
+        numTurns: 5,
+        numTurnMoves: 2,
+        playerOrder:
           playerCount === 2
             ? ["player1", "player2"]
             : ["player1", "player2", "player3", "player4"],
-        playOrderPos: 1,
-      } as Partial<CoreCtx>,
+        turnPlayerPos: 1,
+        priorityPlayerPos: 1,
+        players: {
+          player1: { id: "player1", name: "Player 1" },
+          player2: { id: "player2", name: "Player 2" },
+          ...(playerCount > 2 && {
+            player3: { id: "player3", name: "Player 3" },
+          }),
+          ...(playerCount > 3 && {
+            player4: { id: "player4", name: "Player 4" },
+          }),
+        },
+        gameId: "test-game",
+        matchId: "test-match",
+        cards: {},
+        moveHistory: [],
+      },
     }),
 
   endGame: (playerCount = 2): CoreEngineState<TestGameState> =>
@@ -497,14 +524,30 @@ export const MockGameStates = {
         currentPhase: null,
         currentStep: null,
         numMoves: 50,
-        turn: 25,
-        currentPlayer: "player1",
-        playOrder:
+        numTurns: 25,
+        numTurnMoves: 0,
+        playerOrder:
           playerCount === 2
             ? ["player1", "player2"]
             : ["player1", "player2", "player3", "player4"],
-        playOrderPos: 0,
-      } as Partial<CoreCtx>,
+        turnPlayerPos: 0,
+        priorityPlayerPos: 0,
+        players: {
+          player1: { id: "player1", name: "Player 1" },
+          player2: { id: "player2", name: "Player 2" },
+          ...(playerCount > 2 && {
+            player3: { id: "player3", name: "Player 3" },
+          }),
+          ...(playerCount > 3 && {
+            player4: { id: "player4", name: "Player 4" },
+          }),
+        },
+        gameId: "test-game",
+        matchId: "test-match",
+        cards: {},
+        moveHistory: [],
+        gameOver: true,
+      },
     }),
 
   withSteps: (): CoreEngineState<TestGameState> =>
@@ -515,11 +558,20 @@ export const MockGameStates = {
         currentPhase: "expansion",
         currentStep: "readyStep",
         numMoves: 1,
-        turn: 0,
-        currentPlayer: "player1",
-        playOrder: ["player1", "player2"],
-        playOrderPos: 0,
-      } as Partial<CoreCtx>,
+        numTurns: 0,
+        numTurnMoves: 1,
+        playerOrder: ["player1", "player2"],
+        turnPlayerPos: 0,
+        priorityPlayerPos: 0,
+        players: {
+          player1: { id: "player1", name: "Player 1" },
+          player2: { id: "player2", name: "Player 2" },
+        },
+        gameId: "test-game",
+        matchId: "test-match",
+        cards: {},
+        moveHistory: [],
+      },
     }),
 };
 

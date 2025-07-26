@@ -1,12 +1,45 @@
 import { describe, expect, it } from "bun:test";
+import type {
+  LorcanitoActionCard,
+  LorcanitoCharacterCard,
+} from "@lorcanito/lorcana-engine";
 import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
 import { bePrepared } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
 import { fangRiverCity } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
 import { unconventionalTool } from "@lorcanito/lorcana-engine/cards/007";
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { playCardMove } from "~/game-engine/engines/lorcana/src/moves/play-card";
-import type { LorcanaMoveFn } from "~/game-engine/engines/lorcana/src/moves/types";
+import type {
+  LorcanaEnumerableMove,
+  LorcanaMoveFn,
+} from "~/game-engine/engines/lorcana/src/moves/types";
 import { LorcanaTestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import {
+  mockActionCard,
+  mockCharacterCard,
+} from "~/game-engine/engines/lorcana/src/testing/mockCards";
+
+const mockCharacter: LorcanitoCharacterCard = {
+  ...mockCharacterCard,
+  id: "mock-weak-character",
+  name: "Mock Weak Character",
+  cost: 1, // Not enough to play the song directly
+};
+
+const mockSingerCharacter: LorcanitoCharacterCard = {
+  ...mockCharacterCard,
+  id: "mock-singer-character",
+  name: "Mock Singer Character",
+  cost: 2, // Enough to play the song directly
+};
+
+const mockSongCard: LorcanitoActionCard = {
+  ...mockActionCard,
+  id: "mock-song-card",
+  name: "Mock Song",
+  cost: 2,
+  characteristics: ["song"],
+};
 
 describe("Move: Play Card", () => {
   describe("Basic validation", () => {
@@ -93,7 +126,7 @@ describe("Move: Play Card", () => {
         playerID: "player_one",
       };
 
-      const result = (playCardMove as LorcanaMoveFn)(
+      const result = (playCardMove as LorcanaEnumerableMove).execute(
         mockContext as any,
         "test-card-id",
       );
@@ -110,5 +143,38 @@ describe("Move: Play Card", () => {
         ),
       );
     });
+  });
+
+  it("Sings a Song Card", () => {
+    const testEngine = new LorcanaTestEngine({
+      play: [mockSingerCharacter],
+      hand: [mockSongCard],
+    });
+
+    const { singer, song } = testEngine.singSong({
+      song: mockSongCard,
+      singer: mockSingerCharacter,
+    });
+
+    expect(singer.zone).toEqual("play");
+    expect(singer.isExerted).toEqual(true);
+    expect(song.zone).toEqual("discard");
+  });
+
+  it("Does not Sing a Song Card, if character doesn't have enough cost", () => {
+    const testEngine = new LorcanaTestEngine({
+      play: [mockCharacter], // Use the weak character that can't sing the song
+      hand: [mockSongCard],
+    });
+
+    const { singer, song, result } = testEngine.singSong({
+      song: mockSongCard,
+      singer: mockCharacter,
+    });
+
+    expect(result.success).toBeFalsy();
+    expect(singer.zone).toEqual("play");
+    expect(singer.isExerted).toEqual(false);
+    expect(song.zone).toEqual("hand");
   });
 });

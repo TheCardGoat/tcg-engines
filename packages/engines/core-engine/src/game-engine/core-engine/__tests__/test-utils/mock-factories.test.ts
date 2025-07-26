@@ -58,16 +58,31 @@ describe("Mock Factory Functions", () => {
     });
 
     it("should create a mock game card", () => {
-      const card = createMockGameCard("card1", "player1", "CARD_001", {
-        strength: 5,
-        health: 10,
-      });
+      type TestCardDefinition = {
+        id: string;
+        name?: string;
+        strength: number;
+        health: number;
+      };
+
+      const card = createMockGameCard<TestCardDefinition>(
+        "card1",
+        "player1",
+        "CARD_001",
+        {
+          definition: {
+            id: "CARD_001",
+            strength: 5,
+            health: 10,
+          },
+        },
+      );
 
       expect(card.instanceId).toBe("card1");
       expect(card.ownerId).toBe("player1");
       expect(card.publicId).toBe("CARD_001");
-      expect(card.strength).toBe(5);
-      expect(card.health).toBe(10);
+      expect(card.definition.strength).toBe(5);
+      expect(card.definition.health).toBe(10);
     });
   });
 

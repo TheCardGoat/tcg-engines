@@ -571,7 +571,8 @@ export class LorcanaTestEngine {
       logger.error(
         `Failed to sing song ${song.instanceId} with singer ${singer.instanceId}: ${JSON.stringify(response)}`,
       );
-      throw new Error(JSON.stringify(response));
+      // For testing purposes, return the failed result instead of throwing
+      return { song, singer, result: response };
     }
 
     this.wasMoveExecutedAndPropagated();

@@ -38,35 +38,61 @@ export function createMockPlayer(
 /**
  * Creates a mock card instance with standard properties
  */
-export function createMockCardInstance(
+export function createMockCardInstance<
+  T extends { id: string } = { id: string },
+>(
   instanceId: InstanceId,
   ownerId: PlayerID,
   publicId: PublicId,
   properties: Record<string, any> = {},
-): CoreCardInstance {
+): CoreCardInstance<T> {
   return {
     instanceId,
     ownerId,
     publicId,
     ...properties,
-  } as CoreCardInstance;
+  } as CoreCardInstance<T>;
 }
 
 /**
  * Creates a mock game card with standard properties
  */
-export function createMockGameCard(
+export function createMockGameCard<
+  T extends { id: string; name?: string } = { id: string; name?: string },
+>(
   instanceId: InstanceId,
   ownerId: PlayerID,
   publicId: PublicId,
   properties: Record<string, any> = {},
-): GameCard {
-  return {
+): GameCard<T> {
+  // Create a base definition with the required id property
+  const baseDefinition = {
+    id: publicId,
+    name: `Card ${publicId}`,
+  };
+
+  // Merge the properties to create the full definition
+  const definition = {
+    ...baseDefinition,
+    ...(properties as object),
+  } as unknown as T;
+
+  const gameCard = {
     instanceId,
     ownerId,
     publicId,
+    definition,
+    // Add required methods from GameCard
+    canBePlayed: () => true,
+    getPlayCost: () => 0,
+    getZone: () => "",
+    moveTo: () => ({}),
+    canBeTargeted: () => true,
+    toString: () => `${publicId} (${instanceId})`,
     ...properties,
-  } as GameCard;
+  } as unknown as GameCard<T>;
+
+  return gameCard;
 }
 
 /**

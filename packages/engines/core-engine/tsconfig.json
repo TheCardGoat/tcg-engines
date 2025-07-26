@@ -1,15 +1,6 @@
 {
   "include": ["src/**/*"],
-  "exclude": [
-    "node_modules",
-    "src/game-engine/boardgame.io/**",
-    "**/*.test.ts",
-    "**/*.test.tsx",
-    "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "**/__tests__/**",
-    "**/__mocks__/**"
-  ],
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
@@ -22,6 +13,7 @@
     "strict": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
     "paths": {
       "~/*": ["./src/*"],
       "@/*": ["./src/*"],

@@ -1,6 +1,7 @@
 import { CoreCardCtxProvider } from "~/game-engine/core-engine/card/core-card-ctx-provider";
 import { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
 import type { TriggerTiming } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import type { LorcanaAbility } from "~/game-engine/engines/lorcana/src/abilities/new-abilities.ts";
 import type { LorcanaEngine } from "../lorcana-engine";
 import type {
   LorcanaCardFilter,
@@ -11,7 +12,10 @@ import type {
 } from "../lorcana-engine-types";
 import type { LorcanaCardDefinition } from "./lorcana-card-repository";
 
-export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition> {
+export class LorcanaCardInstance extends CoreCardInstance<
+  // TODO: Remove this once we have redefined card abilities
+  LorcanaCardDefinition & { abilities: LorcanaAbility[] }
+> {
   constructor(
     engine: LorcanaEngine,
     card: LorcanaCardDefinition,
@@ -31,7 +35,10 @@ export class LorcanaCardInstance extends CoreCardInstance<LorcanaCardDefinition>
     super({
       instanceId,
       ownerId,
-      definition: card,
+      // TODO: Remove this once we have redefined card abilities
+      definition: card as LorcanaCardDefinition & {
+        abilities: LorcanaAbility[];
+      },
       contextProvider,
     });
   }
