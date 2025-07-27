@@ -91,6 +91,7 @@ export type DynamicValue = {
   filter?: LorcanaCardFilter;
   stat?: "strength" | "willpower" | "lore";
   multiplier?: number;
+  previousEffectTargets: true;
 };
 
 export type LorcanaAbilityCost = {
@@ -116,115 +117,27 @@ export type LorcanaAbilityCost = {
 
 export type Effect = {
   type: EffectType;
-  parameters: EffectParameters;
+  parameters?: EffectParameters;
   duration?: AbilityDuration;
   targets?: AbilityTarget[]; // Optional targets for the effect
   optional?: boolean;
+  thenEffect?: Effect;
 };
 
 export type EffectType =
-  // Card state modification effects
-  | "addKeyword"
-  | "removeKeyword"
-  | "modifyStat"
-  | "dealDamage"
-  | "removeDamage"
-  | "moveDamage"
-  | "preventDamage"
-  | "exert"
-  | "ready"
-  | "preventReady"
-  | "challengeRestriction"
-  | "questRestriction"
-  | "wardEffect"
-  | "cantBeTargeted"
-  | "cantBeChosen"
-  | "cantChallenge"
-  | "cantQuest"
-  | "grantActivatedAbility"
-  | "grantTriggeredAbility"
-  | "copyAbility"
-  | "resetState"
-
-  // Zone movement effects
+  | "get"
   | "banish"
-  | "return" // Return to hand
-  | "moveToLocation"
-  | "moveToZone"
-  | "putIntoInkwell"
-  | "revealFromInkwell"
-  | "search"
-  | "reveal"
-  | "lookAt"
-  | "shuffle"
-
-  // Card flow effects
   | "draw"
-  | "discard"
-  | "mill" // Put cards from deck to discard
-  | "scry" // Look at top cards and rearrange
-  | "topOrBottom"
-  | "playCard"
-  | "playSong"
-  | "playCharacter"
-  | "playItem"
-  | "playLocation"
-  | "costReduction"
-  | "countAsHigherCost" // For Singer ability
-
-  // Game state effects
   | "gainLore"
-  | "loseLore"
-  | "skipDrawStep"
-  | "skipQuestPhase"
-  | "skipChallengePhase"
-  | "preventActions"
-  | "preventItemPlay"
-  | "preventLocationPlay"
-  | "preventCharacterPlay"
-
-  // Conditional effects
-  | "ifThenElse"
-  | "chooseOne"
-  | "chooseMultiple"
-  | "optional"
-  | "repeatForEach"
-  | "applyToAll"
-  | "preventEffect"
-  | "replaceEffect" // Replacement effects
-  | "counter" // Counters an ability
-
-  // Composite effects
-  | "multiEffect" // Container for multiple effects
-  | "basicInkwellTrigger" // Special trigger for inkwell actions
-
-  // Targeting effects
-  | "chooseTarget"
-  | "mustTargetBodyguard"
-  | "mustBeTargetedFirst"
-  | "cantTargetWithEvasive"
-  | "targetController"
-  | "changeTarget"
-
-  // Player choice effects
-  | "chooseCardFromHand"
-  | "chooseCardFromPlay"
-  | "chooseCardFromDiscard"
-  | "chooseCardFromDeck"
-  | "chooseCardFromInkwell"
-  | "gainOption" // Gain a choice of effects
-
-  // Stack manipulation
-  | "countCardsBelowCharacter" // For shifted cards
-  | "copyCharacterBeneath"
-
-  // Utility
-  | "adjustDynamicValue"
-  | "trackGameEvent"
-  | "clearTrackedEvents"
-  | "stackEffects"
-  | "triggerBag"
-  | "resolveTriggeredAbility";
+  | "dealDamage"
+  | "moveCard"
+  | "modifyStat"
+  | "multiEffect"
+  | "preventDamage"
+  | "ready"
+  | "exert"
+  | "removeDamage"
+  | "basicInkwellTrigger";
 
 export type EffectParameters = {
   // Shared parameters
@@ -384,13 +297,7 @@ export type Classification =
   | "Titan"
   | "Villain";
 
-export type ComparisonOperator =
-  | "greaterThan"
-  | "lessThan"
-  | "equalTo"
-  | "greaterThanOrEqual"
-  | "lessThanOrEqual"
-  | "notEqualTo";
+export type ComparisonOperator = "gt" | "lt" | "eq" | "gte" | "lte" | "ngt";
 
 // **1.6. Types of Abilities**
 

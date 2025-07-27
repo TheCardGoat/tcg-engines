@@ -1,4 +1,4 @@
-import { AbilityBuilder } from "../abilities/builder/ability-builder";
+import { AbilityBuilder } from "../../abilities/builder/ability-builder";
 
 /**
  * This file demonstrates how to use the AbilityBuilder to parse card text into structured ability objects

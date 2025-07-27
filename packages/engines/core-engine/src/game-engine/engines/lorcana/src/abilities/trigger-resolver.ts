@@ -2,6 +2,7 @@ import type {
   Effect,
   LayerItem,
 } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import type { PlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaCoreOperations } from "~/game-engine/engines/lorcana/src/operations/lorcana-core-operations";
 import { logger } from "~/shared/logger";
 
@@ -33,22 +34,21 @@ export function resolveTrigger(
         // Determine which player should draw the card
         let targetPlayerId = trigger.controllerId;
 
-        if (target && !Array.isArray(target) && target.value === "opponent") {
-          // Find the opponent of the controller
-          const allPlayers = Object.keys(this.state.ctx.players);
-          targetPlayerId =
-            allPlayers.find((p) => p !== trigger.controllerId) ||
-            trigger.controllerId;
-        } else if (
-          target &&
-          !Array.isArray(target) &&
-          target.value === "self"
-        ) {
-          targetPlayerId = trigger.controllerId;
+        if (target && !Array.isArray(target) && target.type === "player") {
+          const playerTarget = target as PlayerTarget;
+          if (playerTarget.value === "opponent") {
+            // Find the opponent of the controller
+            const allPlayers = Object.keys(this.state.ctx.players);
+            targetPlayerId =
+              allPlayers.find((p) => p !== trigger.controllerId) ||
+              trigger.controllerId;
+          } else if (playerTarget.value === "self") {
+            targetPlayerId = trigger.controllerId;
+          }
         }
 
         logger.log(
-          `DEBUG: Player ${targetPlayerId} draws ${amount} card(s) from triggered effect (target: ${target && !Array.isArray(target) ? target.value : "default"})`,
+          `DEBUG: Player ${targetPlayerId} draws ${amount} card(s) from triggered effect (target: ${target && !Array.isArray(target) && target.type === "player" ? (target as PlayerTarget).value : "default"})`,
         );
 
         this.drawCard(targetPlayerId, amount);
