@@ -2,6 +2,7 @@ import type { LorcanaActivatedAbility } from "~/game-engine/engines/lorcana/src/
 import type { LorcanaKeywordAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/keyword";
 import type { LorcanaReplacementAbility } from "~/game-engine/engines/lorcana/src/abilities/replacement/replacement";
 import type { LorcanaStaticAbility } from "~/game-engine/engines/lorcana/src/abilities/static/static";
+import type { AbilityTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
 import type { LorcanaTriggeredAbility } from "~/game-engine/engines/lorcana/src/abilities/triggered/triggered-ability";
 import type {
   LorcanaCardFilter,
@@ -80,6 +81,7 @@ export type ConditionType =
 
 export type AbilityDuration =
   | { type: "endOfTurn" }
+  | { type: "untilStartOfNextTurn" }
   | { type: "untilLeaves" }
   | { type: "turns"; count: number }
   | { type: "permanent" };
@@ -90,38 +92,6 @@ export type DynamicValue = {
   stat?: "strength" | "willpower" | "lore";
   multiplier?: number;
 };
-
-interface BaseTarget {
-  type: "card" | "player";
-  zone?: LorcanaZone;
-  controller?: "self" | "opponent" | "any" | "target";
-  count?: number | DynamicValue;
-  filter?: LorcanaCardFilter;
-  targetAll?: boolean;
-  damaged?: boolean; // For "chosen damaged character"
-  ready?: boolean; // For "chosen ready character"
-  exerted?: boolean; // For "chosen exerted character"
-  withKeyword?: Keyword; // For "chosen character with [keyword]"
-  withClassification?: string; // For "chosen [classification] character"
-  withName?: string; // For "chosen character named X"
-  minStrength?: number; // For "chosen character with 3 {S} or more"
-  maxStrength?: number; // For "chosen character with 2 {S} or less"
-  excludeSelf?: boolean; // For "chosen another character"
-  value?: string; // For target specification like "self", "opponent", etc.
-}
-
-export interface PlayerTarget extends BaseTarget {
-  type: "player";
-  controller?: "self" | "opponent" | "any"; // Player targets can be self or opponent
-}
-
-export interface CardTarget extends BaseTarget {
-  type: "card";
-  zone?: LorcanaZone; // Zone can be specified for card targets
-  controller?: "self" | "opponent" | "any" | "target"; // Can target cards controlled by self, opponent, or any player
-}
-
-export type AbilityTarget = PlayerTarget | CardTarget;
 
 export type LorcanaAbilityCost = {
   exert?: boolean | { target?: string; count?: number }; // For exerting self or other cards
@@ -148,6 +118,7 @@ export type Effect = {
   type: EffectType;
   parameters: EffectParameters;
   duration?: AbilityDuration;
+  targets?: AbilityTarget[]; // Optional targets for the effect
   optional?: boolean;
 };
 
@@ -446,6 +417,7 @@ export interface LorcanaBaseAbility {
   effects: LorcanaEffect[];
   condition?: AbilityCondition;
   optional?: boolean;
+  targets?: AbilityTarget[]; // Optional targets for the ability
 }
 
 export type LorcanaAbility =

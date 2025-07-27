@@ -1,11 +1,11 @@
 // We're migrating to the new type definition
 
+import type { AbilityTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
 import type { LorcanaTriggerTiming as TriggerTiming } from "~/game-engine/engines/lorcana/src/abilities/triggered/triggered-ability";
 // Deprecated
 import type {
   LorcanaAbility as Ability,
   AbilityCondition,
-  AbilityTarget,
   LorcanaAbilityType as AbilityType,
   Effect,
   LorcanaAbility,
@@ -117,8 +117,8 @@ export class AbilityBuilder {
   /**
    * Set targets
    */
-  setTargets(targets: AbilityTarget[]): AbilityBuilder {
-    this.ability.targets = targets;
+  setTargets(targets: AbilityTarget[] | AbilityTarget): AbilityBuilder {
+    this.ability.targets = Array.isArray(targets) ? targets : [targets];
     return this;
   }
 

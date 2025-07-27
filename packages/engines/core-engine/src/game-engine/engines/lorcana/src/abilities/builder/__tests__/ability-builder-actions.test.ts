@@ -1,4 +1,7 @@
-import { beforeEach, describe, expect, it, test } from "bun:test";
+import { expect, test } from "bun:test";
+import { UNTIL_START_OF_YOUR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { getEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { allOpposingCharactersTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaAbility } from "../../ability-types";
 import { AbilityBuilder } from "../ability-builder";
 
@@ -7,20 +10,95 @@ export const actionTexts: Array<
 > = [
   [
     "All opposing characters get -2 {S} until the start of your next turn.",
-    [],
+    [
+      {
+        type: "static",
+        text: "All opposing characters get -2 {S} until the start of your next turn.",
+        targets: [allOpposingCharactersTarget],
+        effects: [
+          getEffect({
+            attribute: "strength",
+            value: -2,
+            duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+          }),
+        ],
+      },
+    ],
     true,
   ],
-  ["Banish all characters.", [], true],
+  [
+    "Banish all characters.",
+    [
+      {
+        type: "static",
+        text: "Banish all characters.",
+        targets: [],
+        effects: [],
+      },
+    ],
+    true,
+  ],
   ["Banish all items.", [], true],
   [
     "Banish any number of your items, then draw a card for each item banished this way.",
-    [],
+    [
+      {
+        type: "static",
+        text: "Banish any number of your items, then draw a card for each item banished this way.",
+        targets: [],
+        effects: [],
+      },
+    ],
     true,
   ],
-  ["Banish chosen character of yours to banish chosen character.", [], true],
-  ["Banish chosen character who was challenged this turn.", [], true],
-  ["Banish chosen character with 2 {S} or less.", [], true],
-  ["Banish chosen character with 5 {S} or more.", [], true],
+  [
+    "Banish chosen character of yours to banish chosen character.",
+    [
+      {
+        type: "static",
+        text: "Banish chosen character of yours to banish chosen character.",
+        targets: [],
+        effects: [],
+      },
+    ],
+    true,
+  ],
+  [
+    "Banish chosen character who was challenged this turn.",
+    [
+      {
+        type: "static",
+        text: "Banish chosen character who was challenged this turn.",
+        targets: [],
+        effects: [],
+      },
+    ],
+    true,
+  ],
+  [
+    "Banish chosen character with 2 {S} or less.",
+    [
+      {
+        type: "static",
+        text: "Banish chosen character with 2 {S} or less.",
+        targets: [],
+        effects: [],
+      },
+    ],
+    true,
+  ],
+  [
+    "Banish chosen character with 5 {S} or more.",
+    [
+      {
+        type: "static",
+        text: "Banish chosen character with 5 {S} or more.",
+        targets: [],
+        effects: [],
+      },
+    ],
+    true,
+  ],
   [
     "Banish chosen character, then return an item card from your discard to your hand.",
     [],
