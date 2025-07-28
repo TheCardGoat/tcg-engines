@@ -10,7 +10,9 @@ import type {
   ChallengeOverrideEffect,
   ConditionalTargetEffect,
   DealDamageEffect,
+  DiscardEffect,
   DrawEffect,
+  ExertCardEffect,
   GainLoreEffect,
   GainsAbilityEffect,
   GetEffect,
@@ -221,21 +223,39 @@ export function moveCardEffect({
   };
 }
 
+export function exertCardEffect({
+  targets,
+  followedBy,
+}: {
+  targets?: CardTarget[] | CardTarget;
+  followedBy?: LorcanaEffect;
+}): ExertCardEffect {
+  return {
+    type: "exertCard",
+    targets: Array.isArray(targets) ? targets : [targets],
+    followedBy,
+  };
+}
+
 export function returnCardEffect({
   to,
   from,
   targets,
+  followedBy,
 }: {
   to: LorcanaZone;
   from?: LorcanaZone;
   targets?: CardTarget[] | CardTarget;
+  followedBy?: LorcanaEffect;
 }): MoveCardEffect {
   return moveCardEffect({
     targets: targets,
     zoneTo: to,
     zoneFrom: from,
+    followedBy,
   });
 }
+
 export function putCardEffect({
   to,
   from,
@@ -261,27 +281,26 @@ export function putCardEffect({
 export function discardCardEffect({
   value,
   targets,
+  random,
 }: {
   value: number | DynamicValue;
   targets?: PlayerTarget | PlayerTarget[];
-}): MoveCardEffect {
-  // Default to self if no targets provided
-  const playerTargets = targets
+  random?: boolean;
+}): DiscardEffect {
+  const playerTargets: PlayerTarget[] | undefined = targets
     ? Array.isArray(targets)
       ? targets
       : [targets]
-    : [{ type: "player", scope: "self" }];
-  // For each player, create a CardTarget for their hand
-  const cardTargets = playerTargets.map((pt) => ({
-    ...chosenCardFromHandTarget,
-    owner: pt,
-    count: value,
-  }));
-  return moveCardEffect({
-    targets: cardTargets,
-    zoneTo: "discard",
-    zoneFrom: "hand",
-  });
+    : undefined;
+
+  return {
+    type: "discard",
+    targets: playerTargets,
+    parameters: {
+      value,
+      random,
+    },
+  };
 }
 
 export function drawThenDiscardEffect(params: {

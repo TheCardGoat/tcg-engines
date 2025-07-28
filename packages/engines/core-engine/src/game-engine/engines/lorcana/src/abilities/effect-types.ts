@@ -122,6 +122,10 @@ export interface MoveCardEffect extends BaseCardEffect {
   };
 }
 
+export interface ExertCardEffect extends BaseCardEffect {
+  type: "exertCard";
+}
+
 // Player-targeting effects (effects that can only target players)
 export interface DrawEffect extends BasePlayerEffect {
   type: "draw";
@@ -193,6 +197,14 @@ export interface DrawThenDiscardEffect extends BaseCardEffect {
   discard: number | DynamicValue;
 }
 
+export interface DiscardEffect extends BasePlayerEffect {
+  type: "discard";
+  parameters: {
+    value: number | DynamicValue;
+    random?: boolean;
+  };
+}
+
 export interface ConditionalTargetEffect extends BaseCardEffect {
   type: "conditionalTarget";
   parameters: {
@@ -206,11 +218,18 @@ export interface ConditionalTargetEffect extends BaseCardEffect {
   };
 }
 
-type PlayerEffect = ScryEffect | DrawEffect | GainLoreEffect | LoseLoreEffect;
+type PlayerEffect =
+  | ScryEffect
+  | DrawEffect
+  | GainLoreEffect
+  | LoseLoreEffect
+  | DiscardEffect
+  | DrawThenDiscardEffect;
 
 type CardEffect =
   | GetEffect
   | BanishEffect
+  | ExertCardEffect
   | DealDamageEffect
   | ConditionalTargetEffect
   | MoveCardEffect
@@ -220,7 +239,6 @@ type CardEffect =
   | ReadyEffect
   | GainsAbilityEffect
   | RestrictEffect
-  | DrawThenDiscardEffect
   | ExertEffect
   | RemoveDamageEffect
   | BasicInkwellTriggerEffect;

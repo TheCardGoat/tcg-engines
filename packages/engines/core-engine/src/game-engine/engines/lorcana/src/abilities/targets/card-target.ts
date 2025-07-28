@@ -29,6 +29,7 @@ export interface CardTarget extends BaseTarget {
   min?: number;
   max?: number;
   count?: number | DynamicValue;
+  random?: boolean; // For "random character"
 }
 
 export const allCharactersTarget: CardTarget = {
@@ -169,6 +170,13 @@ export const chosenItemOrLocationTarget: CardTarget = {
   type: "card",
   zone: "play",
   cardType: ["item", "location"],
+  count: 1,
+};
+
+export const chosenLocationTarget: CardTarget = {
+  type: "card",
+  zone: "play",
+  cardType: "location",
   count: 1,
 };
 
