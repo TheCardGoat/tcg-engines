@@ -73,6 +73,11 @@ export const chosenCharacterOfYoursTarget: CardTarget = {
   owner: "self",
 };
 
+export const chosenDamagedCharacterTarget: CardTarget = {
+  ...chosenCharacterTarget,
+  damaged: true,
+};
+
 export const chosenItemTarget: CardTarget = {
   type: "card",
   zone: "play",
@@ -83,6 +88,13 @@ export const chosenItemTarget: CardTarget = {
 export const chosenItemFromDiscardTarget: CardTarget = {
   ...chosenItemTarget,
   zone: "discard",
+};
+
+export const chosenCharacterOrLocationTarget: CardTarget = {
+  type: "card",
+  zone: "play",
+  cardType: "character", // TODO: This should support character OR location
+  count: 1,
 };
 
 export function chosenCharacterWithTarget({

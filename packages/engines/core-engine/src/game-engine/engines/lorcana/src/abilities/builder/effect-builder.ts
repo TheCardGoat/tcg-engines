@@ -1,4 +1,4 @@
-import type { Effect } from "../ability-types";
+import type { Effect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 
 /**
  * EffectBuilder - Implements the Builder pattern for creating effects

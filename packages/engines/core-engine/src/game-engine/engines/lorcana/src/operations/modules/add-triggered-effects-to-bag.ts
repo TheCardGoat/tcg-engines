@@ -68,7 +68,10 @@ export function addTriggeredEffectsToTheBag(
                         type: "draw" as const,
                         parameters: {
                           amount: abilityAny.amount || 1,
-                          target: abilityAny.target || null,
+                          target: abilityAny.target || {
+                            type: "player",
+                            value: "self",
+                          },
                         },
                       },
                     ],
@@ -252,7 +255,10 @@ function checkAndAddTriggeredAbilities(
           effects: [
             {
               type: "gainLore" as const,
-              parameters: { amount: 1 },
+              parameters: {
+                amount: 1,
+                target: { type: "player", value: "self" },
+              },
             },
           ],
           costs: {},
@@ -311,6 +317,7 @@ function checkAndAddTriggeredAbilities(
                         typeof layerEffect.amount === "number"
                           ? layerEffect.amount
                           : 1,
+                      target: { type: "player", value: "self" },
                     },
                   },
                 ],

@@ -2,9 +2,11 @@ import { expect, test } from "bun:test";
 import { UNTIL_START_OF_YOUR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
   banishEffect,
+  dealDamageEffect,
   drawCardEffect,
   gainLoreEffect,
   getEffect,
+  loseLoreEffect,
   returnCardEffect,
 } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
 import {
@@ -13,9 +15,11 @@ import {
   allOpposingCharactersTarget,
   anyNumberOfYourItems,
   chosenCharacterOfYoursTarget,
+  chosenCharacterOrLocationTarget,
   chosenCharacterTarget,
   chosenCharacterWhoHasChallengedTarget,
   chosenCharacterWithTarget,
+  chosenDamagedCharacterTarget,
   chosenItemFromDiscardTarget,
   chosenItemTarget,
 } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
@@ -207,8 +211,8 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Banish chosen damaged character.",
-        targets: [],
-        effects: [],
+        targets: [chosenDamagedCharacterTarget],
+        effects: [banishEffect()],
       },
     ],
     true,
@@ -262,8 +266,8 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Banish chosen item.",
-        targets: [],
-        effects: [],
+        targets: [chosenItemTarget],
+        effects: [banishEffect()],
       },
     ],
     true,
@@ -958,8 +962,8 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Deal 2 damage to chosen character.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterTarget],
+        effects: [dealDamageEffect({ amount: 2 })],
       },
     ],
     true,
@@ -970,8 +974,8 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Deal 2 damage to chosen damaged character.",
-        targets: [],
-        effects: [],
+        targets: [chosenDamagedCharacterTarget],
+        effects: [dealDamageEffect({ amount: 2 })],
       },
     ],
     true,
@@ -994,8 +998,8 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Deal 3 damage to the chosen character.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterTarget],
+        effects: [dealDamageEffect({ amount: 3 })],
       },
     ],
     true,
@@ -1006,8 +1010,8 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Deal 5 damage to chosen character or location.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterOrLocationTarget],
+        effects: [dealDamageEffect({ amount: 5 })],
       },
     ],
     true,
@@ -1054,8 +1058,8 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Draw 2 cards.",
-        targets: [],
-        effects: [],
+        targets: [selfPlayerTarget],
+        effects: [drawCardEffect({ amount: 2 })],
       },
     ],
     true,
@@ -1078,8 +1082,8 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Draw 3 cards.",
-        targets: [],
-        effects: [],
+        targets: [selfPlayerTarget],
+        effects: [drawCardEffect({ amount: 3 })],
       },
     ],
     true,
@@ -1462,8 +1466,8 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Gain 2 lore.",
-        targets: [],
-        effects: [],
+        targets: [selfPlayerTarget],
+        effects: [gainLoreEffect({ amount: 2 })],
       },
     ],
     true,
@@ -1510,8 +1514,25 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Look at the top 2 cards of your deck. Put one into your hand and the other into your inkwell facedown and exerted.",
-        targets: [],
-        effects: [],
+        effects: [
+          {
+            type: "scry",
+            parameters: {
+              lookAt: 2,
+              destinations: [
+                {
+                  zone: "hand",
+                  count: 1,
+                },
+                {
+                  zone: "inkwell",
+                  count: 1,
+                  exerted: true,
+                },
+              ],
+            },
+          },
+        ],
       },
     ],
     true,
@@ -1522,8 +1543,24 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.",
-        targets: [],
-        effects: [],
+        effects: [
+          {
+            type: "scry",
+            parameters: {
+              lookAt: 2,
+              destinations: [
+                {
+                  zone: "hand",
+                  count: 1,
+                },
+                {
+                  zone: "bottom",
+                  count: 1,
+                },
+              ],
+            },
+          },
+        ],
       },
     ],
     true,
@@ -1534,8 +1571,22 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Look at the top 3 cards of your deck. Put them back on the top of your deck in any order.",
-        targets: [],
-        effects: [],
+        effects: [
+          {
+            type: "scry",
+            parameters: {
+              lookAt: 3,
+              destinations: [
+                {
+                  zone: "top",
+                  count: 3,
+                  remainder: true,
+                  order: "any",
+                },
+              ],
+            },
+          },
+        ],
       },
     ],
     true,
@@ -1546,8 +1597,33 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Look at the top 3 cards of your deck. You may reveal a character, item, or location card with cost 6 or less and play it for free. Put the rest on the bottom of your deck in any order.",
-        targets: [],
-        effects: [],
+        effects: [
+          {
+            type: "scry",
+            parameters: {
+              lookAt: 3,
+              destinations: [
+                {
+                  zone: "play",
+                  count: 1,
+                  reveal: true,
+                  filter: {
+                    type: "card",
+                    cardType: ["character", "item", "location"],
+                    cost: {
+                      max: 6,
+                    },
+                  },
+                },
+                {
+                  zone: "bottom",
+                  remainder: true,
+                  order: "any",
+                },
+              ],
+            },
+          },
+        ],
       },
     ],
     true,
@@ -1594,8 +1670,26 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Look at the top 5 cards of your deck. Put one into your hand and the rest on the bottom of your deck in any order.",
-        targets: [],
-        effects: [],
+        effects: [
+          {
+            type: "scry",
+            parameters: {
+              lookAt: 5,
+              destinations: [
+                {
+                  zone: "hand",
+                  count: 1,
+                },
+                {
+                  zone: "deck",
+                  remainder: true,
+                  location: "bottom",
+                  order: "any",
+                },
+              ],
+            },
+          },
+        ],
       },
     ],
     true,
@@ -1606,8 +1700,40 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Look at the top 5 cards of your deck. You may reveal up to 1 Madrigal character card and up to 1 song card and put them into your hand. Put the rest on the top of your deck in any order.",
-        targets: [],
-        effects: [],
+        effects: [
+          {
+            type: "scry",
+            parameters: {
+              lookAt: 5,
+              destinations: [
+                {
+                  zone: "hand",
+                  min: 0,
+                  max: 1,
+                  filter: {
+                    type: ["character"],
+                    classifications: ["madrigal"],
+                  },
+                },
+                {
+                  zone: "hand",
+                  min: 0,
+                  max: 1,
+                  filter: {
+                    type: ["song"],
+                  },
+                },
+                {
+                  zone: "deck",
+                  location: "top",
+                  remainder: true,
+                  shuffle: false,
+                  order: "any",
+                },
+              ],
+            },
+          },
+        ],
       },
     ],
     true,
@@ -1894,8 +2020,8 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Ready chosen character.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterTarget],
+        effects: [{ type: "ready" }],
       },
     ],
     true,

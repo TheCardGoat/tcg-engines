@@ -14,3 +14,9 @@ export const targetOwnerTarget: PlayerTarget = {
   type: "player",
   value: "owner",
 };
+
+export const allOpponentsTarget: PlayerTarget = {
+  type: "player",
+  value: "opponent",
+  targetAll: true,
+};

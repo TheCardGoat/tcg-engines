@@ -1,26 +1,36 @@
 import type {
-  Ability,
-  AbilityDuration,
   Effect,
-} from "../../abilities/ability-types";
+  GainLoreEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect-types";
+import type { PlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
+import type { Ability, AbilityDuration } from "../../abilities/ability-types";
 
-// Simple mock ability that gains lore for a player
-const gainOneLoreEffect: Effect = {
+// Self player target for gaining lore
+const selfPlayerTarget: PlayerTarget = {
+  type: "player",
+  value: "self",
+};
+
+// Simple mock ability that gains lore for a player - using new strongly typed effects
+const gainOneLoreEffect: GainLoreEffect = {
   type: "gainLore",
   parameters: {
     amount: 1,
+    target: selfPlayerTarget,
   },
   optional: false,
 };
 
-const gainTwoLoreEffect: Effect = {
+const gainTwoLoreEffect: GainLoreEffect = {
   type: "gainLore",
   parameters: {
     amount: 2,
+    target: selfPlayerTarget,
   },
   optional: false,
 };
 
+// Legacy effect structure - should be removed after full migration
 const gainLoreEffect = {
   type: "lore",
   parameters: {
@@ -83,3 +93,6 @@ export const mockGainLoreCard: any = {
   inkwell: false,
   abilities: [],
 };
+
+// Export the strongly typed effects for use in tests
+export { gainOneLoreEffect, gainTwoLoreEffect };

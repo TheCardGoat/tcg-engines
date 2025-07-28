@@ -1,8 +1,5 @@
-import type {
-  Classification,
-  Effect,
-  LorcanaAbilityCost,
-} from "../ability-types";
+import type { Effect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
+import type { Classification, LorcanaAbilityCost } from "../ability-types";
 import type {
   LorcanaBaseKeywordAbility,
   LorcanaKeywordAbility,

@@ -7,3 +7,6 @@ export interface BaseTarget {
 }
 
 export type AbilityTarget = PlayerTarget | CardTarget;
+
+// Re-export the individual target types
+export type { CardTarget, PlayerTarget };

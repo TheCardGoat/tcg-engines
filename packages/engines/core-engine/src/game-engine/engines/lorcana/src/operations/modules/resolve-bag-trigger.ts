@@ -1,4 +1,4 @@
-import type { Effect } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import type { Effect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { PlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import { resolveTrigger } from "~/game-engine/engines/lorcana/src/abilities/trigger-resolver";
 import type { LorcanaCoreOperations } from "~/game-engine/engines/lorcana/src/operations/lorcana-core-operations";

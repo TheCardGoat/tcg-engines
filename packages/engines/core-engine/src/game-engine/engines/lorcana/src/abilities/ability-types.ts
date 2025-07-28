@@ -115,81 +115,6 @@ export type LorcanaAbilityCost = {
   chooseNotToDraw?: boolean;
 };
 
-export type Effect = {
-  type: EffectType;
-  parameters?: EffectParameters;
-  duration?: AbilityDuration;
-  targets?: AbilityTarget[]; // Optional targets for the effect
-  optional?: boolean;
-  thenEffect?: Effect;
-};
-
-export type EffectType =
-  | "get"
-  | "banish"
-  | "draw"
-  | "gainLore"
-  | "dealDamage"
-  | "moveCard"
-  | "modifyStat"
-  | "multiEffect"
-  | "preventDamage"
-  | "ready"
-  | "exert"
-  | "removeDamage"
-  | "basicInkwellTrigger";
-
-export type EffectParameters = {
-  // Shared parameters
-  target?: Target | Target[];
-  value?: number | DynamicValue;
-  condition?: EffectCondition;
-  source?: string; // Card ID or ability ID
-  amount?: number | DynamicValue; // Added amount parameter
-
-  // Specific parameters
-  keyword?: Keyword;
-  keywordValue?: number;
-  stat?: "strength" | "willpower" | "lore";
-  zoneTo?: LorcanaZone;
-  zoneFrom?: LorcanaZone;
-  cardType?: "character" | "item" | "location" | "action" | "song";
-  exerted?: boolean;
-  placement?: "top" | "bottom" | "random";
-  costReduction?: number;
-  includeSelf?: boolean;
-  ignoreRestrictions?: boolean;
-  requiresShift?: boolean;
-  payInk?: number;
-  effects?: any[]; // For multiEffect
-  [key: string]: any; // For any additional parameters
-};
-
-export type EffectCondition = {
-  type:
-    | "hasKeyword"
-    | "hasDamage"
-    | "hasCardInPlay"
-    | "hasCardsInHand"
-    | "hasZoneCount"
-    | "statComparison"
-    | "playerHasMoreLore";
-  keyword?: Keyword;
-  cardName?: string;
-  classification?: string;
-  minCount?: number;
-  maxCount?: number;
-  zone?: LorcanaZone;
-  stat?: "strength" | "willpower" | "lore";
-  comparison?:
-    | "greaterThan"
-    | "lessThan"
-    | "equalTo"
-    | "greaterThanOrEqual"
-    | "lessThanOrEqual";
-  comparisonValue?: number;
-};
-
 export type Keyword =
   | "bodyguard"
   | "challenger"
@@ -244,31 +169,6 @@ export type TriggerTiming =
   | "whileChallenging" // While this character is challenging
   | "whileChallenged" // While this character is being challenged
   | "onShift"; // When you play a Floodborn character using Shift
-
-export type ScryConfig = {
-  lookAt: number;
-  destinations: ScryDestination[];
-};
-
-export type ScryDestination = {
-  zone: LorcanaZone;
-  value?: number;
-  location?: "Top" | "Bottom";
-  shuffle?: boolean;
-  remainder?: boolean;
-  exerted?: boolean;
-  order?: "playerChoice" | "random";
-  filter?: LorcanaCardFilter;
-  reveal?: boolean;
-  max?: number;
-  min?: number;
-};
-
-export type ShiftEffect = {
-  type: EffectType;
-  parameters: EffectParameters;
-  condition: "onShift"; // Always true if the character was played using Shift
-};
 
 export type Classification =
   | "Ally"

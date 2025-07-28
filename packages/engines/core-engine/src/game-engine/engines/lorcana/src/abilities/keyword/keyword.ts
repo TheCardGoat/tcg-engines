@@ -1,3 +1,4 @@
+import type { Effect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { BodyGuardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import type { ChallengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
 import type { EvasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
@@ -11,7 +12,7 @@ import type { SupportAbility } from "~/game-engine/engines/lorcana/src/abilities
 import type { VanishAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/vanishAbility";
 import type { VoicelessAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/voicelessAbility";
 import type { WardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
-import type { Effect, LorcanaBaseAbility } from "../ability-types";
+import type { LorcanaBaseAbility } from "../ability-types";
 
 export * from "./bodyguardAbility";
 export * from "./challengerAbility";

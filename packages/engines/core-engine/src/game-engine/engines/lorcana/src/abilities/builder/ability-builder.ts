@@ -1,13 +1,17 @@
 // We're migrating to the new type definition
 
-import type { AbilityTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
+import type { Effect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
+import type {
+  AbilityTarget,
+  CardTarget,
+  PlayerTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
 import type { LorcanaTriggerTiming as TriggerTiming } from "~/game-engine/engines/lorcana/src/abilities/triggered/triggered-ability";
 // Deprecated
 import type {
   LorcanaAbility as Ability,
   AbilityCondition,
   LorcanaAbilityType as AbilityType,
-  Effect,
   LorcanaAbility,
   LorcanaAbilityCost,
   LorcanaBaseAbility,
@@ -496,12 +500,23 @@ export class AbilityBuilder {
   private static parseSimpleEffects(effectText: string): Effect[] {
     const effects: Effect[] = [];
 
+    // Default targets
+    const selfPlayerTarget: PlayerTarget = { type: "player", value: "self" };
+    const chosenCharacterTarget: CardTarget = {
+      type: "card",
+      cardType: "character",
+      count: 1,
+    };
+
     // Gain lore
     const loreMatch = effectText.match(AbilityBuilder.PATTERNS.GAIN_LORE);
     if (loreMatch) {
       effects.push({
         type: "gainLore",
-        parameters: { amount: Number.parseInt(loreMatch[1], 10) },
+        parameters: {
+          amount: Number.parseInt(loreMatch[1], 10),
+          target: selfPlayerTarget,
+        },
         optional: false,
       });
     }
@@ -512,7 +527,10 @@ export class AbilityBuilder {
       const amount = drawMatch[1] ? Number.parseInt(drawMatch[1], 10) : 1;
       effects.push({
         type: "draw",
-        parameters: { amount },
+        parameters: {
+          amount,
+          target: selfPlayerTarget,
+        },
         optional: false,
       });
     }
@@ -522,7 +540,10 @@ export class AbilityBuilder {
     if (damageMatch) {
       effects.push({
         type: "dealDamage",
-        parameters: { amount: Number.parseInt(damageMatch[1], 10) },
+        parameters: {
+          amount: Number.parseInt(damageMatch[1], 10),
+          target: chosenCharacterTarget,
+        },
         optional: false,
       });
     }
@@ -537,7 +558,11 @@ export class AbilityBuilder {
 
       effects.push({
         type: "modifyStat",
-        parameters: { stat, value },
+        parameters: {
+          stat,
+          value,
+          target: chosenCharacterTarget,
+        },
         duration: effectText.includes("this turn")
           ? { type: "endOfTurn" }
           : undefined,
