@@ -188,7 +188,7 @@ export interface ChallengeOverrideEffect extends BaseCardEffect {
 
 export interface RestrictEffect extends BaseCardEffect {
   type: "restrict";
-  restriction: "quest";
+  restriction: "quest" | "ready" | "challengeable" | "challenge";
 }
 
 export interface DrawThenDiscardEffect extends BaseCardEffect {
@@ -218,13 +218,24 @@ export interface ConditionalTargetEffect extends BaseCardEffect {
   };
 }
 
+export interface CostReductionEffect extends BasePlayerEffect {
+  type: "costReduction";
+  parameters: {
+    value: number | DynamicValue;
+    cardType?: "character" | "item" | "location" | "action" | "song";
+    filter?: LorcanaCardFilter;
+    count?: number; // Number of cards this applies to
+  };
+}
+
 type PlayerEffect =
   | ScryEffect
   | DrawEffect
   | GainLoreEffect
   | LoseLoreEffect
   | DiscardEffect
-  | DrawThenDiscardEffect;
+  | DrawThenDiscardEffect
+  | CostReductionEffect;
 
 type CardEffect =
   | GetEffect

@@ -9,6 +9,7 @@ import type {
   BanishEffect,
   ChallengeOverrideEffect,
   ConditionalTargetEffect,
+  CostReductionEffect,
   DealDamageEffect,
   DiscardEffect,
   DrawEffect,
@@ -153,7 +154,7 @@ export function readyEffect(params: { targets: CardTarget[] }): LorcanaEffect {
 
 export function restrictEffect(params: {
   targets: CardTarget[];
-  restriction: "quest";
+  restriction: "quest" | "ready" | "challengeable" | "challenge";
   duration: AbilityDuration;
 }): LorcanaEffect {
   return {
@@ -196,6 +197,130 @@ export function removeDamageEffect({
     type: "removeDamage",
     targets: Array.isArray(targets) ? targets : [targets],
     parameters: { value },
+    followedBy,
+  };
+}
+
+export function putDamageEffect({
+  targets,
+  value,
+  followedBy,
+}: {
+  targets?: CardTarget | CardTarget[];
+  value?: number | DynamicValue;
+  followedBy?: LorcanaEffect;
+}): DealDamageEffect {
+  return {
+    type: "dealDamage",
+    targets: Array.isArray(targets) ? targets : [targets],
+    parameters: {
+      value: value || 1,
+    },
+    followedBy: followedBy,
+  };
+}
+
+export function moveDamageEffect({
+  fromTargets,
+  toTargets,
+  value,
+  followedBy,
+}: {
+  fromTargets: CardTarget | CardTarget[];
+  toTargets: CardTarget | CardTarget[];
+  value?: number | DynamicValue;
+  followedBy?: LorcanaEffect;
+}): LorcanaEffect[] {
+  const damageValue = value || 1;
+  return [
+    removeDamageEffect({
+      targets: fromTargets,
+      value: damageValue,
+    }),
+    putDamageEffect({
+      targets: toTargets,
+      value: damageValue,
+      followedBy,
+    }),
+  ];
+}
+
+export function millEffect({
+  value,
+  owner,
+  followedBy,
+}: {
+  value: number | DynamicValue;
+  owner?: "self" | "opponent";
+  followedBy?: LorcanaEffect;
+}): MoveCardEffect {
+  return moveCardEffect({
+    targets: [
+      {
+        type: "card",
+        zone: "deck",
+        count: typeof value === "number" ? value : 1,
+        owner: owner || "self",
+      },
+    ],
+    zoneTo: "discard",
+    zoneFrom: "deck",
+    placement: "top",
+    followedBy,
+  });
+}
+
+export function discardHandEffect({
+  targets,
+  followedBy,
+}: {
+  targets?: PlayerTarget | PlayerTarget[];
+  followedBy?: LorcanaEffect;
+} = {}): LorcanaEffect[] {
+  return [
+    moveCardEffect({
+      targets: [
+        {
+          type: "card",
+          zone: "hand",
+          count: -1, // All cards in hand
+          owner: "self",
+        },
+      ],
+      zoneTo: "discard",
+      zoneFrom: "hand",
+      followedBy,
+    }),
+  ];
+}
+
+export function costReductionEffect({
+  targets,
+  value,
+  cardType,
+  count,
+  filter,
+  duration,
+  followedBy,
+}: {
+  targets?: PlayerTarget | PlayerTarget[];
+  value: number | DynamicValue;
+  cardType?: "character" | "item" | "location" | "action" | "song";
+  count?: number;
+  filter?: any;
+  duration?: AbilityDuration;
+  followedBy?: LorcanaEffect;
+}): CostReductionEffect {
+  return {
+    type: "costReduction",
+    targets: Array.isArray(targets) ? targets : [targets],
+    parameters: {
+      value,
+      cardType,
+      count,
+      filter,
+    },
+    duration,
     followedBy,
   };
 }

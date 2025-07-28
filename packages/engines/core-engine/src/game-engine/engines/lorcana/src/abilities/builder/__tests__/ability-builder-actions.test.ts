@@ -9,8 +9,10 @@ import {
   banishEffect,
   challengeOverrideEffect,
   conditionalTargetEffect,
+  costReductionEffect,
   dealDamageEffect,
   discardCardEffect,
+  discardHandEffect,
   drawCardEffect,
   drawThenDiscardEffect,
   exertCardEffect,
@@ -18,10 +20,14 @@ import {
   gainsAbilityEffect,
   getEffect,
   loseLoreEffect,
+  millEffect,
   modalEffect,
+  moveDamageEffect,
   putCardEffect,
+  putDamageEffect,
   readyAndRestrictQuestEffect,
   removeDamageEffect,
+  restrictEffect,
   returnCardEffect,
 } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
 import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
@@ -58,10 +64,12 @@ import {
   chosenItemOrLocationTarget,
   chosenItemTarget,
   chosenLocationTarget,
+  opponentsDamagedCharactersFilter,
   upToTarget,
   yourCharactersInPlayFilter,
   yourCharactersTarget,
   yourCharacterWithKeywordTarget,
+  yourExertedCharactersFilter,
 } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import {
   chosenPlayerTarget,
@@ -1179,8 +1187,14 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Chosen exerted character can't ready at the start of their next turn.",
-        targets: [],
-        effects: [],
+        targets: [chosenExertedCharacterTarget],
+        effects: [
+          restrictEffect({
+            targets: [chosenExertedCharacterTarget],
+            restriction: "ready",
+            duration: DURING_THEIR_NEXT_TURN,
+          }),
+        ],
       },
     ],
     true,
@@ -1246,9 +1260,14 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Chosen character of yours can't be challenged until the start of your next turn.",
-        targets: [],
-        effects: [],
-        // TODO: Skipping implementation - unsure about "can't be challenged" restriction type
+        targets: [chosenCharacterOfYoursTarget],
+        effects: [
+          restrictEffect({
+            targets: [chosenCharacterOfYoursTarget],
+            restriction: "challengeable",
+            duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+          }),
+        ],
       },
     ],
     true,
@@ -1271,8 +1290,19 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Count the number of characters you have in play. Chosen character loses {S} equal to that number until the start of your next turn.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterTarget],
+        effects: [
+          getEffect({
+            targets: [chosenCharacterTarget],
+            attribute: "strength",
+            value: {
+              type: "count",
+              filter: yourCharactersInPlayFilter,
+              multiplier: -1,
+            } as DynamicValue,
+            duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+          }),
+        ],
       },
     ],
     true,
@@ -1283,8 +1313,19 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Count the number of characters you have in play. You pay that amount of {I} less for the next character you play this turn.",
-        targets: [],
-        effects: [],
+        targets: [selfPlayerTarget],
+        effects: [
+          costReductionEffect({
+            targets: [selfPlayerTarget],
+            value: {
+              type: "count",
+              filter: yourCharactersInPlayFilter,
+            } as DynamicValue,
+            cardType: "character",
+            count: 1,
+            duration: THIS_TURN,
+          }),
+        ],
       },
     ],
     true,
@@ -1295,8 +1336,16 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Deal 1 damage to chosen character for each exerted character you have in play.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterTarget],
+        effects: [
+          dealDamageEffect({
+            targets: [chosenCharacterTarget],
+            value: {
+              type: "count",
+              filter: yourExertedCharactersFilter,
+            } as DynamicValue,
+          }),
+        ],
       },
     ],
     true,
@@ -1527,9 +1576,16 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Deal damage to chosen character equal to the number of characters you have in play.",
-        targets: [],
-        effects: [],
-        // TODO: Skipping implementation - requires dynamic damage value based on character count
+        targets: [chosenCharacterTarget],
+        effects: [
+          dealDamageEffect({
+            targets: [chosenCharacterTarget],
+            value: {
+              type: "count",
+              filter: yourCharactersInPlayFilter,
+            } as DynamicValue,
+          }),
+        ],
       },
     ],
     true,
@@ -1860,9 +1916,13 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Each opponent puts the top 2 cards of their deck into their discard.",
-        targets: [],
-        effects: [],
-        // TODO: Skipping implementation - requires mill/deck to discard effect
+        targets: [eachOpponentTarget],
+        effects: [
+          millEffect({
+            value: 2,
+            owner: "opponent",
+          }),
+        ],
       },
     ],
     true,
@@ -1934,8 +1994,12 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Each player discards their hand and draws 7 cards.",
-        targets: [],
-        effects: [],
+        effects: [
+          ...discardHandEffect(),
+          drawCardEffect({ targets: [selfPlayerTarget], value: 7 }),
+          ...discardHandEffect(), // For opponent
+          drawCardEffect({ targets: [eachOpponentTarget], value: 7 }),
+        ],
       },
     ],
     true,
@@ -2109,9 +2173,16 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Gain 1 lore for each damaged character opponents have in play.",
-        targets: [],
-        effects: [],
-        // TODO: Skipping implementation - requires counting damaged characters
+        targets: [selfPlayerTarget],
+        effects: [
+          gainLoreEffect({
+            targets: [selfPlayerTarget],
+            value: {
+              type: "count",
+              filter: opponentsDamagedCharactersFilter,
+            } as DynamicValue,
+          }),
+        ],
       },
     ],
     true,
@@ -2475,8 +2546,21 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Move 1 damage counter from chosen character to chosen opposing character. Draw a card.",
-        targets: [],
-        effects: [],
+        effects: [
+          ...moveDamageEffect({
+            fromTargets: [chosenCharacterTarget],
+            toTargets: [
+              {
+                type: "card",
+                cardType: "character",
+                owner: "opponent",
+                count: 1,
+              },
+            ],
+            value: 1,
+          }),
+          drawCardEffect({ targets: [selfPlayerTarget] }),
+        ],
       },
     ],
     true,
@@ -2487,8 +2571,20 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Move 1 damage counter from chosen character to chosen opposing character.",
-        targets: [],
-        effects: [],
+        effects: [
+          ...moveDamageEffect({
+            fromTargets: [chosenCharacterTarget],
+            toTargets: [
+              {
+                type: "card",
+                cardType: "character",
+                owner: "opponent",
+                count: 1,
+              },
+            ],
+            value: 1,
+          }),
+        ],
       },
     ],
     true,
@@ -2535,8 +2631,21 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "\nChosen opposing character can't quest during their next turn. Draw a card.",
-        targets: [],
-        effects: [],
+        effects: [
+          restrictEffect({
+            targets: [
+              {
+                type: "card",
+                cardType: "character",
+                owner: "opponent",
+                count: 1,
+              },
+            ],
+            restriction: "quest",
+            duration: DURING_THEIR_NEXT_TURN,
+          }),
+          drawCardEffect({ targets: [selfPlayerTarget] }),
+        ],
       },
     ],
     true,
@@ -2571,8 +2680,13 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Put 1 damage counter on chosen character.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterTarget],
+        effects: [
+          putDamageEffect({
+            targets: [chosenCharacterTarget],
+            value: 1,
+          }),
+        ],
       },
     ],
     true,
@@ -3367,78 +3481,6 @@ export const actionTexts: Array<
     true,
   ],
   [
-    "Sing Together 6\nRemove up to 3 damage from any number of chosen characters. All opposing characters get -3 {S} this turn.",
-    [
-      {
-        type: "static",
-        text: "Sing Together 6\nRemove up to 3 damage from any number of chosen characters. All opposing characters get -3 {S} this turn.",
-        targets: [],
-        effects: [],
-      },
-    ],
-    true,
-  ],
-  [
-    "Sing Together 7\nChoose any number of players. They discard their hands and draw 3 cards each.",
-    [
-      {
-        type: "static",
-        text: "Sing Together 7\nChoose any number of players. They discard their hands and draw 3 cards each.",
-        targets: [],
-        effects: [],
-      },
-    ],
-    true,
-  ],
-  [
-    "Sing Together 8\nReady all your characters. For the rest of this turn, they take no damage from challenges and can't quest.",
-    [
-      {
-        type: "static",
-        text: "Sing Together 8\nReady all your characters. For the rest of this turn, they take no damage from challenges and can't quest.",
-        targets: [],
-        effects: [],
-      },
-    ],
-    true,
-  ],
-  [
-    "Sing Together 8\nReturn up to 2 chosen characters with 3 {S} or less each to their player's hand.",
-    [
-      {
-        type: "static",
-        text: "Sing Together 8\nReturn up to 2 chosen characters with 3 {S} or less each to their player's hand.",
-        targets: [],
-        effects: [],
-      },
-    ],
-    true,
-  ],
-  [
-    "Sing Together 9 (Any number of your or your teammates' characters with total cost 9 or more may {E} to sing this song for free.)\nReturn up to 3 character cards from your discard to your hand. You pay 2 {I} less for the next character you play this turn.",
-    [
-      {
-        type: "static",
-        text: "Sing Together 9 (Any number of your or your teammates' characters with total cost 9 or more may {E} to sing this song for free.)\nReturn up to 3 character cards from your discard to your hand. You pay 2 {I} less for the next character you play this turn.",
-        targets: [],
-        effects: [],
-      },
-    ],
-    true,
-  ],
-  [
-    "Sing Together 9\nFor each character that sang this song, draw a card and gain 1 lore.",
-    [
-      {
-        type: "static",
-        text: "Sing Together 9\nFor each character that sang this song, draw a card and gain 1 lore.",
-        targets: [],
-        effects: [],
-      },
-    ],
-    true,
-  ],
-  [
     "This turn, you may put an additional card from your hand into your inkwell facedown. Draw a card.",
     [
       {
@@ -3750,6 +3792,84 @@ export const actionTexts: Array<
         text: "Chosen player draws 5 cards.",
         targets: [chosenPlayerTarget],
         effects: [drawCardEffect({ value: 5 })],
+      },
+    ],
+    true,
+  ],
+  [
+    "Sing Together 6\nRemove up to 3 damage from any number of chosen characters. All opposing characters get -3 {S} this turn.",
+    [
+      singerTogetherAbility(6),
+      {
+        type: "static",
+        text: "Remove up to 3 damage from any number of chosen characters. All opposing characters get -3 {S} this turn.",
+        targets: [],
+        effects: [],
+      },
+    ],
+    true,
+  ],
+  [
+    "Sing Together 7\nChoose any number of players. They discard their hands and draw 3 cards each.",
+    [
+      singerTogetherAbility(7),
+      {
+        type: "static",
+        text: "Choose any number of players. They discard their hands and draw 3 cards each.",
+        targets: [],
+        effects: [],
+      },
+    ],
+    true,
+  ],
+  [
+    "Sing Together 8\nReady all your characters. For the rest of this turn, they take no damage from challenges and can't quest.",
+    [
+      singerTogetherAbility(8),
+      {
+        type: "static",
+        text: "Ready all your characters. For the rest of this turn, they take no damage from challenges and can't quest.",
+        targets: [],
+        effects: [],
+      },
+    ],
+    true,
+  ],
+  [
+    "Sing Together 8\nReturn up to 2 chosen characters with 3 {S} or less each to their player's hand.",
+    [
+      singerTogetherAbility(8),
+      {
+        type: "static",
+        text: "Return up to 2 chosen characters with 3 {S} or less each to their player's hand.",
+        targets: [],
+        effects: [],
+      },
+    ],
+    true,
+  ],
+  [
+    "Sing Together 9 (Any number of your or your teammates' characters with total cost 9 or more may {E} to sing this song for free.)\nReturn up to 3 character cards from your discard to your hand. You pay 2 {I} less for the next character you play this turn.",
+    [
+      singerTogetherAbility(9),
+      {
+        type: "static",
+        text: "Return up to 3 character cards from your discard to your hand. You pay 2 {I} less for the next character you play this turn.",
+        targets: [],
+        effects: [],
+      },
+    ],
+    true,
+  ],
+  [
+    "Sing Together 9\nFor each character that sang this song, draw a card and gain 1 lore.",
+    [
+      singerTogetherAbility(9),
+      {
+        type: "static",
+        text: "For each character that sang this song, draw a card and gain 1 lore.",
+        targets: [],
+        effects: [],
       },
     ],
     true,

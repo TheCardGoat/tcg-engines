@@ -263,3 +263,17 @@ export const yourCharactersInPlayFilter: LorcanaCardFilter = {
   owner: "self",
   zone: "play",
 };
+
+export const yourExertedCharactersFilter: LorcanaCardFilter = {
+  cardType: "character",
+  owner: "self",
+  zone: "play",
+  exerted: true,
+};
+
+export const opponentsDamagedCharactersFilter: LorcanaCardFilter = {
+  cardType: "character",
+  owner: "opponent",
+  zone: "play",
+  damaged: true,
+};
