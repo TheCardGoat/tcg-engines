@@ -99,6 +99,11 @@ export const chosenDamagedCharacterTarget: CardTarget = {
   damaged: true,
 };
 
+export const chosenExertedCharacterTarget: CardTarget = {
+  ...chosenCharacterTarget,
+  exerted: true,
+};
+
 export const chosenItemTarget: CardTarget = {
   type: "card",
   zone: "play",
@@ -125,10 +130,45 @@ export const chosenCharacterFromDiscardTarget: CardTarget = {
   count: 1,
 };
 
+export const chosenCharacterWithCost2OrLessFromDiscardTarget: CardTarget = {
+  type: "card",
+  cardType: "character",
+  zone: "discard",
+  filter: {
+    cost: { max: 2 },
+  },
+  count: 1,
+};
+
+export const chosenCharacterOrItemWithCost2OrLessTarget: CardTarget = {
+  type: "card",
+  cardType: ["character", "item"],
+  filter: {
+    cost: { max: 2 },
+  },
+  count: 1,
+};
+
+export const chosenCharacterItemOrLocationWithCost2OrLessTarget: CardTarget = {
+  type: "card",
+  cardType: ["character", "item", "location"],
+  filter: {
+    cost: { max: 2 },
+  },
+  count: 1,
+};
+
 export const chosenCharacterOrLocationTarget: CardTarget = {
   type: "card",
   zone: "play",
   cardType: ["character", "location"],
+  count: 1,
+};
+
+export const chosenItemOrLocationTarget: CardTarget = {
+  type: "card",
+  zone: "play",
+  cardType: ["item", "location"],
   count: 1,
 };
 
@@ -198,6 +238,15 @@ export function chosenCharacterWithLessStrengthThanPreviousTarget(): CardTarget 
     count: 1,
     // TODO: Need to implement dynamic comparison to previous target's strength
     // This should filter for characters with less strength than the previously banished character
+  };
+}
+
+export function cardNamedTarget({ name }: { name: string }): CardTarget {
+  return {
+    type: "card",
+    zone: "play",
+    withName: name,
+    count: 1,
   };
 }
 

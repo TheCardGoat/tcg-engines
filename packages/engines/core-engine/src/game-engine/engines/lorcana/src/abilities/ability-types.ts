@@ -264,6 +264,7 @@ export interface LorcanaBaseAbility {
   condition?: AbilityCondition;
   optional?: boolean;
   targets?: AbilityTarget[]; // Optional targets for the ability
+  responder?: "self" | "opponent"; // Who resolves the ability, who chooses targets, etc. This also changes how we resolve conditions/filters/etc in this context self refers to the responder, and opponent refers to the responder's opponent
 }
 
 export type LorcanaAbility =

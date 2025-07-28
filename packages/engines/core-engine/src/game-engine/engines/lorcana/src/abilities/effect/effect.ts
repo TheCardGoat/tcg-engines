@@ -236,6 +236,27 @@ export function returnCardEffect({
     zoneFrom: from,
   });
 }
+export function putCardEffect({
+  to,
+  from,
+  targets,
+  position,
+  followedBy,
+}: {
+  to: LorcanaZone;
+  from?: LorcanaZone;
+  targets?: CardTarget[] | CardTarget;
+  position?: "top" | "bottom";
+  followedBy?: LorcanaEffect;
+}): MoveCardEffect {
+  return moveCardEffect({
+    targets: targets,
+    zoneTo: to,
+    zoneFrom: from,
+    placement: position,
+    followedBy,
+  });
+}
 
 export function discardCardEffect({
   value,

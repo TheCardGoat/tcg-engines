@@ -18,6 +18,8 @@ import {
   getEffect,
   loseLoreEffect,
   modalEffect,
+  putCardEffect,
+  readyAndRestrictQuestEffect,
   removeDamageEffect,
   returnCardEffect,
 } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
@@ -37,16 +39,22 @@ import {
   allOpposingCharactersTarget,
   anyNumberOfChosenCharacters,
   anyNumberOfYourItems,
+  cardNamedTarget,
   chosenActionFromDiscardTarget,
   chosenCharacterFromDiscardTarget,
+  chosenCharacterItemOrLocationWithCost2OrLessTarget,
   chosenCharacterOfYoursTarget,
+  chosenCharacterOrItemWithCost2OrLessTarget,
   chosenCharacterOrLocationTarget,
   chosenCharacterTarget,
   chosenCharacterWhoHasChallengedTarget,
+  chosenCharacterWithCost2OrLessFromDiscardTarget,
   chosenCharacterWithLessStrengthThanPreviousTarget,
   chosenCharacterWithTarget,
   chosenDamagedCharacterTarget,
+  chosenExertedCharacterTarget,
   chosenItemFromDiscardTarget,
+  chosenItemOrLocationTarget,
   chosenItemTarget,
   upToTarget,
   yourCharactersInPlayFilter,
@@ -326,9 +334,7 @@ export const actionTexts: Array<
         text: "Banish chosen location or item.",
         effects: [
           banishEffect({
-            targets: [
-              { type: "card", cardType: ["location", "item"], count: 1 },
-            ],
+            targets: [chosenItemOrLocationTarget],
           }),
         ],
       },
@@ -394,7 +400,7 @@ export const actionTexts: Array<
                       type: "card",
                       cardType: "character",
                       owner: "opponent",
-                      withKeyword: undefined,
+                      withKeyword: undefined, // TODO: this is wrong, we need a way to specify "without keyword"
                     },
                   ],
                   value: 1,
@@ -499,7 +505,18 @@ export const actionTexts: Array<
             {
               text: "Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.",
               effects: [
-                // TODO: Implement as two effects if/when supported: (1) move 'Pull the Lever!' from discard to bottom of deck, (2) move chosen character to bottom of owner's deck
+                putCardEffect({
+                  to: "deck",
+                  from: "discard",
+                  position: "bottom",
+                  targets: [cardNamedTarget({ name: "Pull the Lever!" })],
+                  followedBy: putCardEffect({
+                    to: "deck",
+                    from: "play",
+                    position: "bottom",
+                    targets: [chosenCharacterTarget],
+                  }),
+                }),
               ],
             },
           ]),
@@ -576,32 +593,12 @@ export const actionTexts: Array<
             },
             {
               text: "Ready chosen Robot character. They can't quest for the rest of this turn.",
-              effects: [
-                {
-                  type: "ready",
-                  targets: [
-                    {
-                      type: "card",
-                      cardType: "character",
-                      withClassification: "robot",
-                      count: 1,
-                    },
-                  ],
-                },
-                {
-                  type: "restrict",
-                  restriction: "quest",
-                  duration: FOR_THE_REST_OF_THIS_TURN,
-                  targets: [
-                    {
-                      type: "card",
-                      cardType: "character",
-                      withClassification: "robot",
-                      count: 1,
-                    },
-                  ],
-                },
-              ],
+              effects: readyAndRestrictQuestEffect({
+                type: "card",
+                cardType: "character",
+                withClassification: "robot",
+                count: 1,
+              }),
             },
           ]),
         ],
@@ -672,19 +669,22 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Chosen character gains **Challenger** +3 and When this character is banished in a challenge, return this card to your hand this turn. _(They get +3 {S} while challenging.)_",
-        targets: [],
-        effects: [],
-        // TODO: Skipping implementation - requires complex triggered ability for "when banished in challenge" condition
+        targets: [chosenCharacterTarget],
+        effects: [
+          gainsAbilityEffect({ ability: challengerAbility(3) }),
+          // TODO: Skipping implementation - requires complex triggered ability for "when banished in challenge" condition
+          gainsAbilityEffect({ ability: challengerAbility(0) }),
+        ],
       },
     ],
     true,
   ],
   [
-    "Chosen character gains **Challenger** +3 this turn. _(They get +3 {S} while challenging.)_",
+    "Chosen character gains **Challenger** +3 this turn.",
     [
       {
         type: "static",
-        text: "Chosen character gains **Challenger** +3 this turn. _(They get +3 {S} while challenging.)_",
+        text: "Chosen character gains **Challenger** +3 this turn.",
         targets: [chosenCharacterTarget],
         effects: [
           gainsAbilityEffect({
@@ -731,11 +731,11 @@ export const actionTexts: Array<
     true,
   ],
   [
-    "Chosen character gains **Resist** +1 and **Evasive** this turn. _(Damage dealt to them is reduced by 1. They can challenge characters with Evasive.)_",
+    "Chosen character gains **Resist** +1 and **Evasive** this turn.",
     [
       {
         type: "static",
-        text: "Chosen character gains **Resist** +1 and **Evasive** this turn. _(Damage dealt to them is reduced by 1. They can challenge characters with Evasive.)_",
+        text: "Chosen character gains **Resist** +1 and **Evasive** this turn.",
         targets: [chosenCharacterTarget],
         effects: [
           gainsAbilityEffect({
@@ -746,21 +746,17 @@ export const actionTexts: Array<
             ability: evasiveAbility,
             duration: FOR_THE_REST_OF_THIS_TURN,
           }),
-          challengeOverrideEffect({
-            canChallenge: "evasive",
-            duration: FOR_THE_REST_OF_THIS_TURN,
-          }),
         ],
       },
     ],
     true,
   ],
   [
-    "Chosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn. _(Damage dealt to them is reduced by 2.)_",
+    "Chosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn.",
     [
       {
         type: "static",
-        text: "Chosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn. _(Damage dealt to them is reduced by 2.)_",
+        text: "Chosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn.",
         targets: [chosenCharacterTarget],
         effects: [
           gainsAbilityEffect({
@@ -783,11 +779,11 @@ export const actionTexts: Array<
     true,
   ],
   [
-    "Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
+    "Chosen character gains **Rush** this turn.",
     [
       {
         type: "static",
-        text: "Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
+        text: "Chosen character gains **Rush** this turn.",
         targets: [chosenCharacterTarget],
         effects: [gainsAbilityEffect({ ability: rushAbility })],
       },
@@ -1459,8 +1455,8 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Deal 2 damage to each opposing character.",
-        targets: [],
-        effects: [],
+        targets: [allOpposingCharactersTarget],
+        effects: [dealDamageEffect({ value: 2 })],
       },
     ],
     true,
@@ -1612,6 +1608,7 @@ export const actionTexts: Array<
         text: "Draw a card. Chosen character of yours gets +5 {S} this turn. At the end of your turn, banish them.",
         targets: [],
         effects: [],
+        // TODO: Skipping implementation - requires end-of-turn trigger to banish
       },
     ],
     true,
@@ -1624,6 +1621,7 @@ export const actionTexts: Array<
         text: "Draw a card. Shuffle up to 3 cards from your opponent's discard into your opponent's deck.",
         targets: [],
         effects: [],
+        // TODO: Skipping implementation - requires discard pile manipulation
       },
     ],
     true,
@@ -1634,8 +1632,19 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Each opponent chooses and banishes one of their characters.",
-        targets: [],
-        effects: [],
+        responder: "opponent",
+        effects: [
+          banishEffect({
+            targets: [
+              {
+                type: "card",
+                cardType: "character",
+                owner: "self",
+                count: 1,
+              },
+            ],
+          }),
+        ],
       },
     ],
     true,
@@ -1646,8 +1655,12 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Each opponent chooses and discards 2 cards.",
-        targets: [],
-        effects: [],
+        effects: [
+          discardCardEffect({
+            targets: [eachOpponentTarget],
+            value: 2,
+          }),
+        ],
       },
     ],
     true,
@@ -1658,8 +1671,12 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Each opponent chooses and discards a card.",
-        targets: [],
-        effects: [],
+        effects: [
+          discardCardEffect({
+            targets: [eachOpponentTarget],
+            value: 1,
+          }),
+        ],
       },
     ],
     true,
@@ -1684,8 +1701,30 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Each opponent chooses and exerts one of their characters. Those characters can't ready at the start of their next turn.",
-        targets: [],
-        effects: [],
+        responder: "opponent",
+        effects: [
+          {
+            type: "exert",
+            targets: [
+              {
+                type: "card",
+                cardType: "character",
+                owner: "self",
+                count: 1,
+              },
+            ],
+            followedBy: {
+              type: "restrict",
+              restriction: "ready",
+              duration: DURING_THEIR_NEXT_TURN,
+              targets: [
+                {
+                  type: "previousEffectTargets",
+                },
+              ],
+            },
+          },
+        ],
       },
     ],
     true,
@@ -1696,8 +1735,20 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Each opponent chooses one of their characters and deals 2 damage to them.",
-        targets: [],
-        effects: [],
+        responder: "opponent",
+        effects: [
+          dealDamageEffect({
+            targets: [
+              {
+                type: "card",
+                cardType: "character",
+                owner: "self",
+                count: 1,
+              },
+            ],
+            value: 2,
+          }),
+        ],
       },
     ],
     true,
@@ -1708,8 +1759,20 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Each opponent chooses one of their characters and deals 4 damage to them.",
-        targets: [],
-        effects: [],
+        responder: "opponent",
+        effects: [
+          dealDamageEffect({
+            targets: [
+              {
+                type: "card",
+                cardType: "character",
+                owner: "self",
+                count: 1,
+              },
+            ],
+            value: 4,
+          }),
+        ],
       },
     ],
     true,
@@ -1732,8 +1795,14 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Each opponent may chose and discard a card. For each opponent who doesn't, you gain 2 lore.",
-        targets: [],
-        effects: [],
+        responder: "opponent",
+        effects: [
+          // TODO: Requires new helper function for optional choice effects
+          // optionalChoiceEffect({
+          //   choice: discardCardEffect({ value: 1, targets: [selfPlayerTarget] }),
+          //   onDecline: gainLoreEffect({ value: 2, targets: [selfPlayerTarget] })
+          // })
+        ],
       },
     ],
     true,
@@ -1744,8 +1813,14 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Each opponent may choose and discard a card. For each opponent who doesn't, you draw a card.",
-        targets: [],
-        effects: [],
+        responder: "opponent",
+        effects: [
+          // TODO: Requires new helper function for optional choice effects
+          // optionalChoiceEffect({
+          //   choice: discardCardEffect({ value: 1, targets: [selfPlayerTarget] }),
+          //   onDecline: drawCardEffect({ value: 1, targets: [selfPlayerTarget] })
+          // })
+        ],
       },
     ],
     true,
@@ -1758,6 +1833,7 @@ export const actionTexts: Array<
         text: "Each opponent puts the top 2 cards of their deck into their discard.",
         targets: [],
         effects: [],
+        // TODO: Skipping implementation - requires mill/deck to discard effect
       },
     ],
     true,
@@ -1768,8 +1844,14 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Each opponent reveals their hand. Draw a card.",
-        targets: [],
-        effects: [],
+        effects: [
+          {
+            type: "reveal",
+            targets: [eachOpponentTarget],
+            zone: "hand",
+          },
+          drawCardEffect({ targets: [selfPlayerTarget] }),
+        ],
       },
     ],
     true,
@@ -1804,8 +1886,10 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Each player draws 3 cards.",
-        targets: [],
-        effects: [],
+        effects: [
+          drawCardEffect({ targets: [selfPlayerTarget], value: 3 }),
+          drawCardEffect({ targets: [eachOpponentTarget], value: 3 }),
+        ],
       },
     ],
     true,
@@ -1878,6 +1962,7 @@ export const actionTexts: Array<
         text: "Exert chosen character. Then, you may choose and discard a card. If you do, the exerted character can't ready at the start of their next turn.",
         targets: [],
         effects: [],
+        // TODO: Skipping implementation - requires conditional effects based on player choice
       },
     ],
     true,
@@ -1888,8 +1973,24 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Exert chosen opposing character. Then chosen character of yours gains **Challenger** +2 this turn. (They get +2 {S} while challenging.)",
-        targets: [],
-        effects: [],
+        effects: [
+          {
+            type: "exert",
+            targets: [
+              {
+                type: "card",
+                cardType: "character",
+                owner: "opponent",
+                count: 1,
+              },
+            ],
+          },
+          gainsAbilityEffect({
+            targets: [chosenCharacterOfYoursTarget],
+            ability: challengerAbility(2),
+            duration: FOR_THE_REST_OF_THIS_TURN,
+          }),
+        ],
       },
     ],
     true,
@@ -1900,8 +2001,19 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Exert chosen opposing character.",
-        targets: [],
-        effects: [],
+        targets: [
+          {
+            type: "card",
+            cardType: "character",
+            owner: "opponent",
+            count: 1,
+          },
+        ],
+        effects: [
+          {
+            type: "exert",
+          },
+        ],
       },
     ],
     true,
@@ -1914,6 +2026,7 @@ export const actionTexts: Array<
         text: "{E} one of your characters to deal damage equal to their {S} to chosen character.",
         targets: [],
         effects: [],
+        // TODO: Skipping implementation - requires dynamic damage based on character strength
       },
     ],
     true,
@@ -1938,6 +2051,7 @@ export const actionTexts: Array<
         text: "Gain 1 lore for each damaged character opponents have in play.",
         targets: [],
         effects: [],
+        // TODO: Skipping implementation - requires counting damaged characters
       },
     ],
     true,
@@ -1976,6 +2090,7 @@ export const actionTexts: Array<
         text: "Gain lore equal to the damage on chosen character, then banish them.",
         targets: [],
         effects: [],
+        // TODO: Skipping implementation - requires dynamic lore value based on character damage
       },
     ],
     true,
@@ -2420,8 +2535,13 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Put chosen character into their player's inkwell facedown and exerted.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterTarget],
+        effects: [
+          putCardEffect({
+            to: "inkwell",
+            from: "play",
+          }),
+        ],
       },
     ],
     true,
@@ -2432,8 +2552,13 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Put chosen character of yours into your inkwell facedown and exerted.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterOfYoursTarget],
+        effects: [
+          putCardEffect({
+            to: "inkwell",
+            from: "play",
+          }),
+        ],
       },
     ],
     true,
@@ -2444,8 +2569,13 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Put chosen exerted character into their player's inkwell facedown and exerted.",
-        targets: [],
-        effects: [],
+        targets: [chosenExertedCharacterTarget],
+        effects: [
+          putCardEffect({
+            to: "inkwell",
+            from: "play",
+          }),
+        ],
       },
     ],
     true,
@@ -2456,8 +2586,13 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Put chosen item or location into its player's inkwell facedown and exerted.",
-        targets: [],
-        effects: [],
+        targets: [chosenItemOrLocationTarget],
+        effects: [
+          putCardEffect({
+            to: "inkwell",
+            from: "play",
+          }),
+        ],
       },
     ],
     true,
@@ -2468,8 +2603,20 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Put the top card of your deck into your inkwell facedown and exerted.",
-        targets: [],
-        effects: [],
+        effects: [
+          putCardEffect({
+            to: "inkwell",
+            from: "deck",
+            position: "top",
+            targets: [
+              {
+                type: "card",
+                zone: "deck",
+                count: 1,
+              },
+            ],
+          }),
+        ],
       },
     ],
     true,
@@ -2739,8 +2886,13 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Remove up to 4 damage from chosen character. Draw a card.",
-        targets: [],
-        effects: [],
+        effects: [
+          removeDamageEffect({
+            targets: [chosenCharacterTarget],
+            value: upToValue(4),
+          }),
+          drawCardEffect({ targets: [selfPlayerTarget] }),
+        ],
       },
     ],
     true,
@@ -2769,8 +2921,17 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Return a character card from your discard to your hand. Then remove up to 2 damage from chosen character.",
-        targets: [],
-        effects: [],
+        effects: [
+          returnCardEffect({
+            to: "hand",
+            from: "discard",
+            targets: [chosenCharacterFromDiscardTarget],
+          }),
+          removeDamageEffect({
+            targets: [chosenCharacterTarget],
+            value: upToValue(2),
+          }),
+        ],
       },
     ],
     true,
@@ -2781,8 +2942,13 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Return a character card from your discard to your hand.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterFromDiscardTarget],
+        effects: [
+          returnCardEffect({
+            to: "hand",
+            from: "discard",
+          }),
+        ],
       },
     ],
     true,
@@ -2793,8 +2959,13 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "\nReturn a character card with cost 2 or less from your discard to your hand.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterWithCost2OrLessFromDiscardTarget],
+        effects: [
+          returnCardEffect({
+            to: "hand",
+            from: "discard",
+          }),
+        ],
       },
     ],
     true,
@@ -2805,8 +2976,12 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Return a character or item with cost 2 or less to their player's hand.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterOrItemWithCost2OrLessTarget],
+        effects: [
+          returnCardEffect({
+            to: "hand",
+          }),
+        ],
       },
     ],
     true,
@@ -2817,8 +2992,12 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Return a character, item or location with cost 2 or less to their player's hand.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterItemOrLocationWithCost2OrLessTarget],
+        effects: [
+          returnCardEffect({
+            to: "hand",
+          }),
+        ],
       },
     ],
     true,
@@ -2829,8 +3008,13 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Return an action card from your discard to your hand.",
-        targets: [],
-        effects: [],
+        targets: [chosenActionFromDiscardTarget],
+        effects: [
+          returnCardEffect({
+            from: "discard",
+            to: "hand",
+          }),
+        ],
       },
     ],
     true,
@@ -2841,8 +3025,13 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Return an item card from your discard to your hand.",
-        targets: [],
-        effects: [],
+        targets: [chosenItemTarget],
+        effects: [
+          returnCardEffect({
+            from: "discard",
+            to: "hand",
+          }),
+        ],
       },
     ],
     true,
@@ -2853,8 +3042,8 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Return chosen character of yours to your hand to play another character with the same cost or less for free.",
-        targets: [],
-        effects: [],
+        targets: [chosenCharacterOfYoursTarget],
+        effects: [], // TODO: Implement dynamic value relative to target character's cost
       },
     ],
     true,
