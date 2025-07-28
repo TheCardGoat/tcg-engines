@@ -1,4 +1,4 @@
-import type { Effect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
+import type { LorcanaEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { BodyGuardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import type { ChallengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
 import type { EvasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
@@ -48,7 +48,7 @@ export interface LorcanaBaseKeywordAbility extends LorcanaBaseAbility {
   keyword: LorcanaKeywords;
   text: string; // Required to match base Ability type
   name?: string;
-  effects: Effect[];
+  effects: LorcanaEffect[];
 }
 
 export type LorcanaKeywordAbility =

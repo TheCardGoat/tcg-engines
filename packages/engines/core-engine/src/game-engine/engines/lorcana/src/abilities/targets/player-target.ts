@@ -10,6 +10,8 @@ export const selfPlayerTarget: PlayerTarget = {
   value: "self",
 };
 
+export const youPlayerTarget: PlayerTarget = selfPlayerTarget;
+
 export const targetOwnerTarget: PlayerTarget = {
   type: "player",
   value: "owner",
@@ -19,4 +21,11 @@ export const allOpponentsTarget: PlayerTarget = {
   type: "player",
   value: "opponent",
   targetAll: true,
+};
+
+export const eachOpponentTarget: PlayerTarget = allOpponentsTarget;
+
+export const chosenPlayerTarget: PlayerTarget = {
+  type: "player",
+  value: "any",
 };

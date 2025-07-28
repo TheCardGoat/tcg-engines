@@ -1,4 +1,4 @@
-import type { Effect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
+import type { LorcanaEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { Classification, LorcanaAbilityCost } from "../ability-types";
 import type {
   LorcanaBaseKeywordAbility,
@@ -16,7 +16,7 @@ export interface BaseShiftAbility extends LorcanaBaseKeywordAbility {
   keyword: "shift";
   shiftType: "standard" | "classification" | "universal" | "custom";
   costs: LorcanaAbilityCost[];
-  effects: Effect[]; // For "if you used Shift to play them" effects
+  effects: LorcanaEffect[]; // For "if you used Shift to play them" effects
 }
 
 interface StandardShiftAbility extends BaseShiftAbility {

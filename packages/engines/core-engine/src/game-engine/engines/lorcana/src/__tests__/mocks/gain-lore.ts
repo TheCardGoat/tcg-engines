@@ -1,6 +1,6 @@
 import type {
-  Effect,
   GainLoreEffect,
+  LorcanaEffect,
 } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { PlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
 import type { Ability, AbilityDuration } from "../../abilities/ability-types";
@@ -15,7 +15,7 @@ const selfPlayerTarget: PlayerTarget = {
 const gainOneLoreEffect: GainLoreEffect = {
   type: "gainLore",
   parameters: {
-    amount: 1,
+    value: 1,
     target: selfPlayerTarget,
   },
   optional: false,
@@ -24,7 +24,7 @@ const gainOneLoreEffect: GainLoreEffect = {
 const gainTwoLoreEffect: GainLoreEffect = {
   type: "gainLore",
   parameters: {
-    amount: 2,
+    value: 2,
     target: selfPlayerTarget,
   },
   optional: false,
@@ -34,7 +34,7 @@ const gainTwoLoreEffect: GainLoreEffect = {
 const gainLoreEffect = {
   type: "lore",
   parameters: {
-    value: 3,
+    value: 3, // Updated from 'amount' to 'value'
   },
   duration: { type: "endOfTurn" } as AbilityDuration,
   optional: false,

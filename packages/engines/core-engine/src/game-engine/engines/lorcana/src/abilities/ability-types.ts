@@ -83,16 +83,55 @@ export type AbilityDuration =
   | { type: "endOfTurn" }
   | { type: "untilStartOfNextTurn" }
   | { type: "untilLeaves" }
+  | { type: "forTheRestOfThisTurn" }
+  | { type: "duringTheirNextTurn" }
   | { type: "turns"; count: number }
   | { type: "permanent" };
 
-export type DynamicValue = {
-  type: "count" | "targetDamage" | "lastEffectValue" | "sourceStat";
-  filter?: LorcanaCardFilter;
-  stat?: "strength" | "willpower" | "lore";
-  multiplier?: number;
-  previousEffectTargets: true;
+type UpToValue = {
+  type: "upTo";
+  min: number;
+  max: number;
 };
+
+export type DynamicValue =
+  | {
+      type: "count";
+      filter?: LorcanaCardFilter;
+      previousEffectTargets?: true;
+      multiplier?: number;
+    }
+  | {
+      type: "targetDamage";
+      multiplier?: number;
+    }
+  | {
+      type: "lastEffectValue";
+      multiplier?: number;
+    }
+  | {
+      type: "sourceStat";
+      stat: "strength" | "willpower" | "lore";
+      multiplier?: number;
+    }
+  | {
+      type: "previousTargetStat";
+      stat: "strength" | "willpower" | "lore";
+      multiplier?: number;
+    }
+  | {
+      type: "upTo";
+      min: number;
+      max: number;
+    };
+
+export function upToValue(value: number): UpToValue {
+  return {
+    type: "upTo",
+    min: 0,
+    max: value,
+  };
+}
 
 export type LorcanaAbilityCost = {
   exert?: boolean | { target?: string; count?: number }; // For exerting self or other cards
@@ -171,31 +210,31 @@ export type TriggerTiming =
   | "onShift"; // When you play a Floodborn character using Shift
 
 export type Classification =
-  | "Ally"
-  | "Broom"
-  | "Captain"
-  | "Dragon"
-  | "Fairy"
-  | "Floodborn"
-  | "Hero"
-  | "Hyena"
-  | "Illusion"
-  | "Inventor"
-  | "King"
-  | "Knight"
-  | "Madrigal"
-  | "Musketeer"
-  | "Pirate"
-  | "Prince"
-  | "Princess"
-  | "Puppy"
-  | "Queen"
-  | "Racer"
-  | "Robot"
-  | "Seven Dwarfs"
-  | "Sorcerer"
-  | "Titan"
-  | "Villain";
+  | "ally"
+  | "broom"
+  | "captain"
+  | "dragon"
+  | "fairy"
+  | "floodborn"
+  | "hero"
+  | "hyena"
+  | "illusion"
+  | "inventor"
+  | "king"
+  | "knight"
+  | "madrigal"
+  | "musketeer"
+  | "pirate"
+  | "prince"
+  | "princess"
+  | "puppy"
+  | "queen"
+  | "racer"
+  | "robot"
+  | "seven dwarfs"
+  | "sorcerer"
+  | "titan"
+  | "villain";
 
 export type ComparisonOperator = "gt" | "lt" | "eq" | "gte" | "lte" | "ngt";
 

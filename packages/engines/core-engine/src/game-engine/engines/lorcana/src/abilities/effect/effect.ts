@@ -1,339 +1,226 @@
 import type {
   AbilityDuration,
+  Classification,
   DynamicValue,
-  Keyword,
+  LorcanaAbility,
 } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import type {
   BanishEffect,
+  ChallengeOverrideEffect,
+  ConditionalTargetEffect,
   DealDamageEffect,
   DrawEffect,
-  Effect,
   GainLoreEffect,
+  GainsAbilityEffect,
   GetEffect,
+  LorcanaEffect,
   LoseLoreEffect,
+  ModalEffect,
   MoveCardEffect,
+  RemoveDamageEffect,
 } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
-import type {
-  AbilityTarget,
-  CardTarget,
-  PlayerTarget,
-} from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
+import { chosenCardFromHandTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { PlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
+import type { CardTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
 import type { LorcanaZone } from "~/game-engine/engines/lorcana/src/lorcana-engine-types";
 
-// Backwards-compatible overloads for existing tests and code
-/** @deprecated Use the new strongly typed version with proper targets */
 export function getEffect({
   attribute,
-  duration,
   value,
-}: {
-  attribute: "strength";
-  value: number;
-  duration?: AbilityDuration;
-}): Effect;
-
-// New strongly typed version
-export function getEffect({
-  keyword,
-  keywordValue,
-  target,
+  targets,
   duration,
 }: {
-  keyword: Keyword;
-  keywordValue?: number;
-  target: CardTarget;
+  attribute: "strength" | "willpower" | "lore";
+  value?: number | DynamicValue;
+  targets?: CardTarget | CardTarget[];
   duration?: AbilityDuration;
-}): GetEffect;
-
-// Implementation that handles both signatures
-export function getEffect(params: any): any {
-  // Legacy API with 'attribute'
-  if ("attribute" in params) {
-    return {
-      type: "get",
-      parameters: {
-        keyword: params.attribute as any, // Convert for backward compatibility
-        keywordValue: params.value,
-        target: createChosenCharacterTarget(), // Default target
-      },
-      duration: params.duration,
-    };
-  }
-
-  // New API with 'keyword' and 'target'
+}): GetEffect {
   return {
     type: "get",
+    duration,
+    targets: Array.isArray(targets) ? targets : [targets],
     parameters: {
-      keyword: params.keyword,
-      keywordValue: params.keywordValue,
-      target: params.target,
+      attribute,
+      value,
     },
-    duration: params.duration,
   };
 }
 
-/** @deprecated Use the new strongly typed version with proper targets */
-export function banishEffect(params?: {
-  targets?: AbilityTarget[];
-  thenEffect?: Effect;
-}): Effect;
+export function gainsAbilityEffect({
+  targets,
+  duration,
+  ability,
+}: {
+  ability: LorcanaAbility;
+  targets?: CardTarget | CardTarget[];
+  duration?: AbilityDuration;
+}): GainsAbilityEffect {
+  return {
+    type: "gainsAbility",
+    duration,
+    targets: Array.isArray(targets) ? targets : [targets],
+    parameters: {
+      ability,
+    },
+  };
+}
 
-// New strongly typed version
 export function banishEffect({
-  target,
-  ignoreRestrictions,
+  targets,
   followedBy,
 }: {
-  target: CardTarget;
-  ignoreRestrictions?: boolean;
-  followedBy?: Effect;
-}): BanishEffect;
-
-// Implementation that handles both signatures
-export function banishEffect(params: any = {}): any {
-  // Legacy API with 'targets' and 'thenEffect'
-  if ("targets" in params || "thenEffect" in params || !params.target) {
-    return {
-      type: "banish",
-      parameters: {
-        target: params.targets?.[0] || createChosenCharacterTarget(),
-        ignoreRestrictions: false,
-      },
-      followedBy: params.thenEffect,
-    };
-  }
-
-  // New API with 'target'
+  targets?: CardTarget | CardTarget[];
+  followedBy?: LorcanaEffect;
+} = {}): BanishEffect {
   return {
     type: "banish",
-    parameters: {
-      target: params.target,
-      ignoreRestrictions: params.ignoreRestrictions,
-    },
-    followedBy: params.followedBy,
+    targets: Array.isArray(targets) ? targets : [targets],
+    followedBy: followedBy,
   };
 }
 
-/** @deprecated Use the new strongly typed version with proper targets */
-export function drawCardEffect(params?: {
-  targets?: AbilityTarget[];
-  amount?: number | DynamicValue;
-}): Effect;
-
-// New strongly typed version
+// Implementation that handles both signatures
 export function drawCardEffect({
-  target,
-  amount,
+  targets,
+  value,
   followedBy,
 }: {
-  target: PlayerTarget;
-  amount?: number | DynamicValue;
-  followedBy?: Effect;
-}): DrawEffect;
-
-// Implementation that handles both signatures
-export function drawCardEffect(params: any = {}): any {
-  // Legacy API with 'targets'
-  if ("targets" in params || !params.target) {
-    return {
-      type: "draw",
-      parameters: {
-        amount: params.amount || 1,
-        target: params.targets?.[0] || createSelfPlayerTarget(),
-      },
-      followedBy: params.followedBy,
-    };
-  }
-
+  targets?: PlayerTarget | PlayerTarget[];
+  value?: number | DynamicValue;
+  followedBy?: LorcanaEffect;
+} = {}): DrawEffect {
   // New API with 'target'
   return {
     type: "draw",
     parameters: {
-      amount: params.amount || 1,
-      target: params.target,
+      value: value || 1,
     },
-    followedBy: params.followedBy,
+    targets: Array.isArray(targets) ? targets : [targets],
+    followedBy: followedBy,
   };
 }
 
-/** @deprecated Use the new strongly typed version with proper targets */
-export function gainLoreEffect(params?: {
-  targets?: AbilityTarget[];
-  amount?: number | DynamicValue;
-}): Effect;
-
-// New strongly typed version
+// Implementation that handles both signatures
 export function gainLoreEffect({
-  target,
-  amount,
+  targets,
+  value,
   followedBy,
 }: {
-  target: PlayerTarget;
-  amount?: number | DynamicValue;
-  followedBy?: Effect;
-}): GainLoreEffect;
-
-// Implementation that handles both signatures
-export function gainLoreEffect(params: any = {}): any {
-  // Legacy API with 'targets'
-  if ("targets" in params || !params.target) {
-    return {
-      type: "gainLore",
-      parameters: {
-        amount: params.amount || 1,
-        target: params.targets?.[0] || createSelfPlayerTarget(),
-      },
-      followedBy: params.followedBy,
-    };
-  }
-
-  // New API with 'target'
+  targets?: PlayerTarget | PlayerTarget[];
+  value?: number | DynamicValue;
+  followedBy?: LorcanaEffect;
+}): GainLoreEffect {
   return {
     type: "gainLore",
     parameters: {
-      amount: params.amount || 1,
-      target: params.target,
+      value: value || 1,
     },
-    followedBy: params.followedBy,
+    targets: Array.isArray(targets) ? targets : [targets],
+    followedBy: followedBy,
   };
 }
 
-/** @deprecated Use the new strongly typed version with proper targets */
-export function loseLoreEffect(params?: {
-  targets?: AbilityTarget[];
-  amount?: number | DynamicValue;
-}): Effect;
-
-// New strongly typed version
+// Implementation that handles both signatures
 export function loseLoreEffect({
-  target,
-  amount,
+  targets,
+  value,
   followedBy,
 }: {
-  target: PlayerTarget;
-  amount?: number | DynamicValue;
-  followedBy?: Effect;
-}): LoseLoreEffect;
-
-// Implementation that handles both signatures
-export function loseLoreEffect(params: any = {}): any {
-  // Legacy API with 'targets'
-  if ("targets" in params || !params.target) {
-    return {
-      type: "loseLore",
-      parameters: {
-        amount: params.amount || 1,
-        target: params.targets?.[0] || createSelfPlayerTarget(),
-      },
-      followedBy: params.followedBy,
-    };
-  }
-
+  targets: PlayerTarget | PlayerTarget[];
+  value?: number | DynamicValue;
+  followedBy?: LorcanaEffect;
+}): LoseLoreEffect {
   // New API with 'target'
   return {
     type: "loseLore",
     parameters: {
-      amount: params.amount || 1,
-      target: params.target,
+      value: value || 1,
     },
-    followedBy: params.followedBy,
+    targets: Array.isArray(targets) ? targets : [targets],
+    followedBy: followedBy,
   };
 }
 
-/** @deprecated Use the new strongly typed version with proper targets */
-export function dealDamageEffect(params?: {
-  targets?: AbilityTarget[];
-  amount?: number | DynamicValue;
-}): Effect;
+export function readyEffect(params: { targets: CardTarget[] }): LorcanaEffect {
+  return {
+    type: "ready",
+    ...params,
+  };
+}
 
-// New strongly typed version
-export function dealDamageEffect({
-  target,
-  amount,
-  source,
-  followedBy,
-}: {
-  target: CardTarget;
-  amount?: number | DynamicValue;
-  source?: string;
-  followedBy?: Effect;
-}): DealDamageEffect;
+export function restrictEffect(params: {
+  targets: CardTarget[];
+  restriction: "quest";
+  duration: AbilityDuration;
+}): LorcanaEffect {
+  return {
+    type: "restrict",
+    ...params,
+  };
+}
 
 // Implementation that handles both signatures
-export function dealDamageEffect(params: any = {}): any {
-  // Legacy API with 'targets'
-  if ("targets" in params || !params.target) {
-    return {
-      type: "dealDamage",
-      parameters: {
-        amount: params.amount || 1,
-        target: params.targets?.[0] || createChosenCharacterTarget(),
-        source: params.source,
-      },
-      followedBy: params.followedBy,
-    };
-  }
-
-  // New API with 'target'
+export function dealDamageEffect({
+  targets,
+  value,
+  followedBy,
+}: {
+  targets?: CardTarget | CardTarget[];
+  value: number | DynamicValue;
+  source?: string;
+  followedBy?: LorcanaEffect;
+}): DealDamageEffect {
   return {
     type: "dealDamage",
+    targets: Array.isArray(targets) ? targets : [targets],
     parameters: {
-      amount: params.amount || 1,
-      target: params.target,
-      source: params.source,
+      value: value || 1,
     },
-    followedBy: params.followedBy,
+    followedBy: followedBy,
+  };
+}
+
+export function removeDamageEffect({
+  targets,
+  value,
+  followedBy,
+}: {
+  targets?: CardTarget | CardTarget[];
+  value: number | DynamicValue;
+  followedBy?: LorcanaEffect;
+}): RemoveDamageEffect {
+  return {
+    type: "removeDamage",
+    targets: Array.isArray(targets) ? targets : [targets],
+    parameters: { value },
+    followedBy,
   };
 }
 
 export function moveCardEffect({
-  target,
+  targets,
   zoneTo,
   zoneFrom,
   placement,
   exerted,
   followedBy,
 }: {
-  target: CardTarget;
+  targets?: CardTarget[] | CardTarget;
   zoneTo: LorcanaZone;
   zoneFrom?: LorcanaZone;
   placement?: "top" | "bottom" | "random";
   exerted?: boolean;
-  followedBy?: Effect;
+  followedBy?: LorcanaEffect;
 }): MoveCardEffect {
   return {
     type: "moveCard",
-    parameters: { target, zoneTo, zoneFrom, placement, exerted: exerted },
+    targets: Array.isArray(targets) ? targets : [targets],
+    parameters: { zoneTo, zoneFrom, placement, exerted },
     followedBy,
   };
 }
 
-// Common target helpers for convenience
-export const createSelfPlayerTarget = (): PlayerTarget => ({
-  type: "player",
-  value: "self",
-});
-
-export const createOpponentPlayerTarget = (): PlayerTarget => ({
-  type: "player",
-  value: "opponent",
-});
-
-export const createChosenCharacterTarget = (): CardTarget => ({
-  type: "card",
-  cardType: "character",
-  count: 1,
-});
-
-export const createChosenDamagedCharacterTarget = (): CardTarget => ({
-  type: "card",
-  cardType: "character",
-  count: 1,
-  damaged: true,
-});
-
-// Deprecated - kept for backward compatibility during migration
-/** @deprecated Use the specific typed effect functions instead */
 export function returnCardEffect({
   to,
   from,
@@ -341,14 +228,112 @@ export function returnCardEffect({
 }: {
   to: LorcanaZone;
   from?: LorcanaZone;
-  targets?: AbilityTarget[];
-}): Effect {
-  // Convert to new system - assuming first target is a card target
-  const cardTarget =
-    (targets?.[0] as CardTarget) || createChosenCharacterTarget();
+  targets?: CardTarget[] | CardTarget;
+}): MoveCardEffect {
   return moveCardEffect({
-    target: cardTarget,
+    targets: targets,
     zoneTo: to,
     zoneFrom: from,
   });
+}
+
+export function discardCardEffect({
+  value,
+  targets,
+}: {
+  value: number | DynamicValue;
+  targets?: PlayerTarget | PlayerTarget[];
+}): MoveCardEffect {
+  // Default to self if no targets provided
+  const playerTargets = targets
+    ? Array.isArray(targets)
+      ? targets
+      : [targets]
+    : [{ type: "player", scope: "self" }];
+  // For each player, create a CardTarget for their hand
+  const cardTargets = playerTargets.map((pt) => ({
+    ...chosenCardFromHandTarget,
+    owner: pt,
+    count: value,
+  }));
+  return moveCardEffect({
+    targets: cardTargets,
+    zoneTo: "discard",
+    zoneFrom: "hand",
+  });
+}
+
+export function drawThenDiscardEffect(params: {
+  draw: number | DynamicValue;
+  discard: number | DynamicValue;
+}): LorcanaEffect[] {
+  return [
+    drawCardEffect({ value: params.draw }),
+    discardCardEffect({ value: params.discard }),
+  ];
+}
+
+export function readyAndRestrictQuestEffect(
+  targets: CardTarget | CardTarget[],
+) {
+  const arr = Array.isArray(targets) ? targets : [targets];
+  return [
+    readyEffect({ targets: arr }),
+    restrictEffect({
+      targets: arr,
+      restriction: "quest",
+      duration: FOR_THE_REST_OF_THIS_TURN,
+    }),
+  ];
+}
+
+// Modal effect helper
+export function modalEffect(
+  modes: Array<{ text: string; effects: LorcanaEffect[] }>,
+): ModalEffect {
+  return {
+    type: "modal",
+    parameters: {
+      modes,
+    },
+  };
+}
+
+export function challengeOverrideEffect(params: {
+  canChallenge: "evasive" | "ready" | "all";
+  duration?: AbilityDuration;
+}): ChallengeOverrideEffect {
+  return {
+    type: "challengeOverride",
+    parameters: {
+      canChallenge: params.canChallenge,
+      duration: params.duration,
+    },
+  };
+}
+
+export function conditionalTargetEffect(params: {
+  targetCondition: {
+    type: "hasClassification";
+    classification: Classification;
+  };
+  effect: LorcanaEffect;
+  elseEffect?: LorcanaEffect;
+  duration?: AbilityDuration;
+  targets?: CardTarget[];
+  optional?: boolean;
+  followedBy?: LorcanaEffect;
+}): ConditionalTargetEffect {
+  return {
+    type: "conditionalTarget",
+    parameters: {
+      targetCondition: params.targetCondition,
+      elseEffect: params.elseEffect,
+      effect: params.effect,
+      duration: params.duration,
+    },
+    targets: params.targets,
+    optional: params.optional,
+    followedBy: params.followedBy,
+  };
 }

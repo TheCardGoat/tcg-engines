@@ -12,7 +12,9 @@ import type {
 
 export interface CardTarget extends BaseTarget {
   type: "card";
-  cardType: LorcanaCardDefinition["type"];
+  cardType?:
+    | LorcanaCardDefinition["type"]
+    | Array<LorcanaCardDefinition["type"]>;
   zone?: LorcanaZone; // Zone can be specified for card targets
   owner?: "self" | "opponent" | "any" | "target";
   damaged?: boolean; // For "chosen damaged character"
@@ -36,6 +38,18 @@ export const allCharactersTarget: CardTarget = {
   targetAll: true,
 };
 
+export const yourCharactersTarget: CardTarget = {
+  ...allCharactersTarget,
+  owner: "self",
+};
+
+export const allBodyGuardCharactersTarget: CardTarget = {
+  type: "card",
+  zone: "play",
+  cardType: "character",
+  targetAll: true,
+};
+
 export const allItemsTarget: CardTarget = {
   type: "card",
   cardType: "item",
@@ -49,6 +63,13 @@ export const anyNumberOfYourItems: CardTarget = {
   zone: "play",
   min: 0,
   max: 1,
+};
+
+export const anyNumberOfChosenCharacters: CardTarget = {
+  type: "card",
+  cardType: "character",
+  zone: "play",
+  min: 0,
 };
 
 export const allOpposingCharactersTarget: CardTarget = {
@@ -90,31 +111,66 @@ export const chosenItemFromDiscardTarget: CardTarget = {
   zone: "discard",
 };
 
-export const chosenCharacterOrLocationTarget: CardTarget = {
+export const chosenActionFromDiscardTarget: CardTarget = {
   type: "card",
-  zone: "play",
-  cardType: "character", // TODO: This should support character OR location
+  cardType: "action",
+  zone: "discard",
   count: 1,
 };
 
+export const chosenCharacterFromDiscardTarget: CardTarget = {
+  type: "card",
+  cardType: "character",
+  zone: "discard",
+  count: 1,
+};
+
+export const chosenCharacterOrLocationTarget: CardTarget = {
+  type: "card",
+  zone: "play",
+  cardType: ["character", "location"],
+  count: 1,
+};
+
+export const chosenCardFromHandTarget: CardTarget = {
+  type: "card",
+  zone: "hand",
+  count: 1,
+};
+
+export function upToTarget({
+  target,
+  upTo,
+}: {
+  target: CardTarget;
+  upTo: number;
+}): CardTarget {
+  return {
+    ...target,
+    count: undefined,
+    min: 0,
+    max: upTo,
+  };
+}
+
 export function chosenCharacterWithTarget({
   attribute = "strength",
-  amount,
+  value,
   comparison,
 }: {
   attribute?: "strength";
-  comparison: ComparisonOperator;
-  amount: number;
+  comparison?: ComparisonOperator;
+  value: number;
 }): CardTarget {
   const filter: LorcanaCardFilter = {};
 
   if (attribute === "strength") {
     filter.strength =
       comparison === "gte"
-        ? { min: amount }
+        ? { min: value }
         : comparison === "lte"
-          ? { max: amount }
-          : { exact: amount };
+          ? { max: value }
+          : { exact: value };
   }
 
   return {
@@ -123,3 +179,30 @@ export function chosenCharacterWithTarget({
     filter,
   };
 }
+
+export function yourCharacterWithKeywordTarget(keyword: string): CardTarget {
+  return {
+    type: "card" as const,
+    cardType: "character",
+    owner: "self",
+    withKeyword: keyword as Keyword,
+    count: 1,
+  };
+}
+
+// TODO: This target needs dynamic filtering support to compare against previous effect target's strength
+export function chosenCharacterWithLessStrengthThanPreviousTarget(): CardTarget {
+  return {
+    type: "card" as const,
+    cardType: "character",
+    count: 1,
+    // TODO: Need to implement dynamic comparison to previous target's strength
+    // This should filter for characters with less strength than the previously banished character
+  };
+}
+
+export const yourCharactersInPlayFilter: LorcanaCardFilter = {
+  cardType: "character",
+  owner: "self",
+  zone: "play",
+};

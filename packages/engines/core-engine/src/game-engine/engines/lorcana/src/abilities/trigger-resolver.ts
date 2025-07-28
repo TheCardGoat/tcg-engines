@@ -1,5 +1,5 @@
 import type { LayerItem } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
-import type { Effect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
+import type { LorcanaEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { PlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaCoreOperations } from "~/game-engine/engines/lorcana/src/operations/lorcana-core-operations";
 import { logger } from "~/shared/logger";
@@ -14,20 +14,22 @@ export function resolveTrigger(
   }
 
   // Process each effect in the ability
-  for (const effect of trigger.ability.effects as Effect[]) {
+  for (const effect of trigger.ability.effects as LorcanaEffect[]) {
     switch (effect.type) {
       case "gainLore": {
         const playerId = trigger.controllerId;
-        const amountParam = effect.parameters?.amount || 1;
+        // Use value property, with fallback to 1 if not provided
+        const valueParam = effect.parameters?.value || 1;
         // Handle both number and DynamicValue types
-        const amount = typeof amountParam === "object" ? 1 : amountParam;
+        const amount = typeof valueParam === "object" ? 1 : valueParam;
         this.addLoreToPlayer(playerId, amount);
         break;
       }
       case "draw": {
-        const amountParam = effect.parameters?.amount || 1;
+        // Use value property, with fallback to 1 if not provided
+        const valueParam = effect.parameters?.value || 1;
         // Handle both number and DynamicValue types
-        const amount = typeof amountParam === "object" ? 1 : amountParam;
+        const amount = typeof valueParam === "object" ? 1 : valueParam;
         const target = effect.parameters?.target;
         // Determine which player should draw the card
         let targetPlayerId = trigger.controllerId;

@@ -268,17 +268,42 @@ describe("Move: Move Character to Location", () => {
 
   describe("**4.3.7.5** Triggered effects", () => {
     it("should trigger effects when character moves to location", () => {
+      const locationWithTrigger: LorcanitoLocationCard = {
+        ...mockLocationCard,
+        id: "location-with-trigger",
+        name: "Triggering Location",
+        moveCost: 1,
+        abilities: [
+          {
+            type: "static-triggered",
+            trigger: { on: "moves-to-a-location" },
+            layer: {
+              effects: [
+                {
+                  type: "lore",
+                  modifier: "add",
+                  amount: 2,
+                },
+              ],
+            },
+          },
+        ],
+      };
+
       const testEngine = new LorcanaTestEngine({
-        inkwell: hiddenCoveTranquilHaven.moveCost * 2,
-        play: [hiddenCoveTranquilHaven, taffytaMuttonfudgeSourSpeedster],
+        inkwell: locationWithTrigger.moveCost,
+        play: [locationWithTrigger, taffytaMuttonfudgeSourSpeedster],
       });
 
       expect(testEngine.getLoreForPlayer("player_one")).toBe(0);
 
       testEngine.moveToLocation({
-        location: hiddenCoveTranquilHaven,
+        location: locationWithTrigger,
         character: taffytaMuttonfudgeSourSpeedster,
       });
+
+      // After moving, effects should be in the bag. We need to resolve them.
+      testEngine.resolveBag();
 
       expect(testEngine.getLoreForPlayer("player_one")).toBe(2);
     });

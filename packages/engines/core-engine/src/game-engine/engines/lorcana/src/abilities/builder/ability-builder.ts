@@ -1,6 +1,6 @@
 // We're migrating to the new type definition
 
-import type { Effect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
+import type { LorcanaEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type {
   AbilityTarget,
   CardTarget,
@@ -60,7 +60,7 @@ export class AbilityBuilder {
   /**
    * Add an effect to the ability
    */
-  addEffect(effect: Effect): AbilityBuilder {
+  addEffect(effect: LorcanaEffect): AbilityBuilder {
     if (!this.ability.effects) {
       this.ability.effects = [];
     }
@@ -71,7 +71,7 @@ export class AbilityBuilder {
   /**
    * Set multiple effects at once
    */
-  setEffects(effects: Effect[]): AbilityBuilder {
+  setEffects(effects: LorcanaEffect[]): AbilityBuilder {
     this.ability.effects = [...effects];
     return this;
   }
@@ -497,8 +497,8 @@ export class AbilityBuilder {
     return null;
   }
 
-  private static parseSimpleEffects(effectText: string): Effect[] {
-    const effects: Effect[] = [];
+  private static parseSimpleEffects(effectText: string): LorcanaEffect[] {
+    const effects: LorcanaEffect[] = [];
 
     // Default targets
     const selfPlayerTarget: PlayerTarget = { type: "player", value: "self" };
@@ -514,7 +514,7 @@ export class AbilityBuilder {
       effects.push({
         type: "gainLore",
         parameters: {
-          amount: Number.parseInt(loreMatch[1], 10),
+          value: Number.parseInt(loreMatch[1], 10),
           target: selfPlayerTarget,
         },
         optional: false,
@@ -528,7 +528,7 @@ export class AbilityBuilder {
       effects.push({
         type: "draw",
         parameters: {
-          amount,
+          value: amount,
           target: selfPlayerTarget,
         },
         optional: false,
@@ -541,9 +541,9 @@ export class AbilityBuilder {
       effects.push({
         type: "dealDamage",
         parameters: {
-          amount: Number.parseInt(damageMatch[1], 10),
-          target: chosenCharacterTarget,
+          value: Number.parseInt(damageMatch[1], 10),
         },
+        targets: [chosenCharacterTarget],
         optional: false,
       });
     }
@@ -559,10 +559,10 @@ export class AbilityBuilder {
       effects.push({
         type: "modifyStat",
         parameters: {
-          stat,
+          attribute: stat,
           value,
-          target: chosenCharacterTarget,
         },
+        targets: [chosenCharacterTarget],
         duration: effectText.includes("this turn")
           ? { type: "endOfTurn" }
           : undefined,
@@ -633,7 +633,11 @@ export class AbilityBuilder {
   /**
    * Template: "When you play this character, [effect]"
    */
-  static onPlay(effectText: string, effects: Effect[], name?: string): Ability {
+  static onPlay(
+    effectText: string,
+    effects: LorcanaEffect[],
+    name?: string,
+  ): Ability {
     return AbilityBuilder.triggered(
       `When you play this character, ${effectText}`,
       "onPlay",
@@ -649,7 +653,7 @@ export class AbilityBuilder {
    */
   static onQuest(
     effectText: string,
-    effects: Effect[],
+    effects: LorcanaEffect[],
     name?: string,
   ): Ability {
     return AbilityBuilder.triggered(
@@ -667,7 +671,7 @@ export class AbilityBuilder {
    */
   static exertActivated(
     effectText: string,
-    effects: Effect[],
+    effects: LorcanaEffect[],
     inkCost = 0,
     name?: string,
   ): Ability {
@@ -689,7 +693,7 @@ export class AbilityBuilder {
   static whileCondition(
     conditionText: string,
     effectText: string,
-    effects: Effect[],
+    effects: LorcanaEffect[],
     condition: AbilityCondition,
     name?: string,
   ): Ability {
@@ -705,7 +709,7 @@ export class AbilityBuilder {
    */
   static onBanish(
     effectText: string,
-    effects: Effect[],
+    effects: LorcanaEffect[],
     name?: string,
   ): Ability {
     return AbilityBuilder.triggered(

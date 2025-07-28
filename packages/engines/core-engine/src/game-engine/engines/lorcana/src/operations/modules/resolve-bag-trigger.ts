@@ -1,4 +1,4 @@
-import type { Effect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
+import type { LorcanaEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { PlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import { resolveTrigger } from "~/game-engine/engines/lorcana/src/abilities/trigger-resolver";
 import type { LorcanaCoreOperations } from "~/game-engine/engines/lorcana/src/operations/lorcana-core-operations";
@@ -25,10 +25,12 @@ export function resolveBagTrigger(
   // Execute the trigger's effects before removing it
   if (trigger.ability?.effects && trigger.ability.effects.length > 0) {
     // Process each effect in the ability
-    for (const effect of trigger.ability.effects as Effect[]) {
+    for (const effect of trigger.ability.effects as LorcanaEffect[]) {
       switch (effect.type) {
         case "gainLore": {
-          const amount = effect.parameters?.amount || 1;
+          // Use value property, with fallback to 1 if not provided
+          const valueParam = effect.parameters?.value || 1;
+          const amount = typeof valueParam === "object" ? 1 : valueParam;
           if (this.state.ctx.players[trigger.controllerId]) {
             const playerState = this.state.ctx.players[
               trigger.controllerId
@@ -41,7 +43,8 @@ export function resolveBagTrigger(
           break;
         }
         case "draw": {
-          const amount = effect.parameters?.amount || 1;
+          // Use value property, with fallback to 1 if not provided
+          const valueParam = effect.parameters?.value || 1;
           const target = effect.parameters?.target;
 
           // Determine which player should draw the card
@@ -60,7 +63,7 @@ export function resolveBagTrigger(
           }
 
           // Draw the card(s) using the core operations
-          const amountValue = typeof amount === "object" ? 1 : amount;
+          const amountValue = typeof valueParam === "object" ? 1 : valueParam;
           for (let i = 0; i < amountValue; i++) {
             this.drawCard(targetPlayerId, 1);
           }
