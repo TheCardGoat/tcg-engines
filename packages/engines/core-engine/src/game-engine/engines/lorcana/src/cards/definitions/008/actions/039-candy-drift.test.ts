@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { mickeyMouseFoodFightDefender } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
-import { candyDrift } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import { candyDrift } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Candy Drift", () => {

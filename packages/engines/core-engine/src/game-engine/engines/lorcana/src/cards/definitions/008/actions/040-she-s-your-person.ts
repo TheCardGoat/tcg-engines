@@ -5,6 +5,8 @@ import type {
 } from "@lorcanito/lorcana-engine";
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 
+export type LorcanaActionCardDefinition = any;
+
 const eachOfYourCharactersWithBodyGuard: CardEffectTarget = {
   type: "card",
   value: "all",

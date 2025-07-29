@@ -1,10 +1,12 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   bibbidiBobbidiBoo,
   hypnotize,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
-import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hypnotize", () => {
   it("Each opponent chooses and discards a card. Draw a card.", () => {

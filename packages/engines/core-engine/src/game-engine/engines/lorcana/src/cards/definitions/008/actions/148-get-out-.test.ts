@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { shieldOfVirtue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
-import { getOut } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import { getOut } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Get Out!", () => {

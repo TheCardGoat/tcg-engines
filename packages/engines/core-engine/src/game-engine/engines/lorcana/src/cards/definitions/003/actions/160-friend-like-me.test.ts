@@ -1,5 +1,4 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   liloMakingAWish,
   mauiDemiGod,
@@ -11,7 +10,7 @@ import {
   cinderellaMelodyWeaver,
   rayaFierceProtector,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
-import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Friend Like Me", () => {
   it("_(A character with cost 5 or more can exert to sing this song for free.)_Each player puts the top 3 cards of their deck into their inkwell facedown and exerted.", async () => {

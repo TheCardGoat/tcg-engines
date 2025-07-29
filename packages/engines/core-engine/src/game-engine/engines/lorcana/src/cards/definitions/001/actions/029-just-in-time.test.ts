@@ -1,12 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { justInTime } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   captainColonelsLieutenant,
   simbaProtectiveCub,
   teKaTheBurningOne,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
-import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Just in Time", () => {
   describe("Costs <= 5", () => {

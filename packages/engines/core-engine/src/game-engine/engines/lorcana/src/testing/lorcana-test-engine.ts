@@ -653,6 +653,51 @@ export class LorcanaTestEngine {
   getAvailableInk(playerId = "player_one"): number {
     return this.authoritativeEngine.getAvailableInk(playerId);
   }
+
+  // === STUBS FOR TYPE CHECKING ===
+  /**
+   * Returns the first card in the given zone with the given id, or undefined if not found.
+   * This is a stub for type-checking; real logic should be implemented as needed.
+   */
+  getByZoneAndId(zone: string, id: string, playerId = "player_one") {
+    const cards = this.getCardsInZone(zone, playerId);
+    return cards.find((card) => card.publicId === id || card.id === id);
+  }
+
+  /**
+   * Stub for resolving the top of the stack. No-op for type-checking.
+   */
+  resolveTopOfStack(_opts?: any, _optional?: boolean) {
+    // No-op stub for type checking
+    return undefined;
+  }
+
+  /**
+   * Stub for resolving an optional ability. No-op for type-checking.
+   */
+  resolveOptionalAbility() {
+    // No-op stub for type checking
+    return undefined;
+  }
+
+  /**
+   * Stub for getting all cards in all zones. Returns an object with empty arrays for common zones.
+   */
+  getZonesCards(playerId = "player_one") {
+    // Return a structure with empty arrays for common zones
+    return {
+      deck: this.getCardsInZone("deck", playerId),
+      hand: this.getCardsInZone("hand", playerId),
+      play: this.getCardsInZone("play", playerId),
+      inkwell: this.getCardsInZone("inkwell", playerId),
+      discard: this.getCardsInZone("discard", playerId),
+    };
+  }
+
+  acceptOptionalLayer() {}
+  skipTopOfStack() {}
+
+  store: any;
 }
 
 export function createLorcanaEngineMocks(
@@ -813,5 +858,6 @@ function updateInitialState(
     initialCoreContext.players[playerId].lore = lore;
   }
 }
+
 export const TestStore = LorcanaTestEngine;
 export const TestEngine = LorcanaTestEngine;

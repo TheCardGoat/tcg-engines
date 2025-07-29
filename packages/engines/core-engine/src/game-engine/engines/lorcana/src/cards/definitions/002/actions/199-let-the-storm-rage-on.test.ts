@@ -1,11 +1,13 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { letTheStormRageOn } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import {
   goofyKnightForADay,
   princeJohnGreediestOfAll,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
-import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Let the Storm Rage On", () => {
   it("Deal 2 damage to chosen character. Draw a card.", () => {

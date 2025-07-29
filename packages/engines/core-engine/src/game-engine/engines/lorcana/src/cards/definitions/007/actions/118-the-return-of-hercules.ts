@@ -1,6 +1,8 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { theReturnOfHerculesAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
+export type LorcanaActionCardDefinition = any;
+
 export const theReturnOfHercules: LorcanaActionCardDefinition = {
   id: "zun",
   name: "The Return Of Hercules",

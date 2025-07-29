@@ -9,6 +9,8 @@ import {
   drawACard,
 } from "@lorcanito/lorcana-engine/effects/effects";
 
+export type LorcanaActionCardDefinition = any;
+
 const gainAbilityEffect: AbilityEffect = {
   type: "ability",
   ability: "custom",

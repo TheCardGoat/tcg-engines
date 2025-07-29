@@ -1,10 +1,10 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { fallingDownTheRabbitHole } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import {
   herculesHeroInTraining,
   pachaVillageLeader,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Falling Down the Rabbit Hole", () => {
   it("Each player chooses one of their characters and puts them into their inkwell facedown and exerted.", async () => {

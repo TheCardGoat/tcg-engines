@@ -1,8 +1,10 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
 import { glean } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
-import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Glean", () => {
   it("Targeting your own card", async () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { trialsAndTribulations } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import { trialsAndTribulations } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Trials And Tribulations", () => {

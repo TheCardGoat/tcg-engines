@@ -1,4 +1,4 @@
-import type { DiscardEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { drawThenDiscardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const ransack: LorcanaActionCardDefinition = {
@@ -9,30 +9,9 @@ export const ransack: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      resolveEffectsIndividually: true,
-      effects: [
-        {
-          type: "draw",
-          amount: 2,
-          target: {
-            type: "player",
-            value: "self",
-          },
-        },
-        {
-          type: "discard",
-          amount: 2,
-          target: {
-            type: "card",
-            value: 2,
-            filters: [
-              { filter: "owner", value: "self" },
-              { filter: "zone", value: "hand" },
-            ],
-          },
-        } as DiscardEffect,
-      ],
+      type: "static",
+      text: "Draw 2 cards, then choose and discard 2 cards.",
+      effects: drawThenDiscardEffect({ draw: 2, discard: 2 }),
     },
   ],
   flavour: "Who has time to read labels?",

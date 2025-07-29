@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import { theBareNecessities } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Bare Necessities", () => {
   it("Chosen opponent reveals their hand and discards a non-character card of your choice.", async () => {

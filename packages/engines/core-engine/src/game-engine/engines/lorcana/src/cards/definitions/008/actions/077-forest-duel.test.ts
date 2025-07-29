@@ -3,7 +3,7 @@ import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/defi
 import {
   deweyLovableShowoff,
   forestDuel,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Forest Duel", () => {

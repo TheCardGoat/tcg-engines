@@ -1,11 +1,11 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { oneLastHope } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import {
   faZhouMulansFather,
   flynnRiderFrenemy,
   goofySuperGoof,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("One Last Hope", () => {
   it("Chosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn.", async () => {

@@ -1,5 +1,4 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   brawl,
   weDontTalkAboutBruno,
@@ -11,7 +10,10 @@ import {
   herculesBelovedHero,
   sisuEmboldenedWarrior,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
-import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("We Don't Talk About Bruno", () => {
   it("should return  opponent chosen character to their player's hand and discard opponent card", () => {

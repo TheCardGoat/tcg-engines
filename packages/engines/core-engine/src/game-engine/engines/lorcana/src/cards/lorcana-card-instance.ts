@@ -107,6 +107,10 @@ export class LorcanaCardInstance extends CoreCardInstance<
     return !!this.meta.exerted;
   }
 
+  get exerted(): boolean {
+    return this.isExerted;
+  }
+
   isAtLocation(location: LorcanaCardInstance): boolean {
     return this.meta.location === location.instanceId;
   }
@@ -159,6 +163,11 @@ export class LorcanaCardInstance extends CoreCardInstance<
       this.meta.characters.includes(character.instanceId)
     );
   }
+
+  // STUB METHODS, while we migrate tests
+  playFromHand(): void {}
+  hasSingTogether = false;
+  ready = true;
 }
 
 /**

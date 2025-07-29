@@ -1,5 +1,4 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   mauiDemiGod,
   mauiHeroToAll,
@@ -7,6 +6,7 @@ import {
 import { itCallsMe } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
 import { moanaDeterminedExplorer } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { mauiHalfshark } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("It Calls Me", () => {
   it("Draw a card. Shuffle up to 3 cards from your opponent’s discard into your opponent’s deck.", async () => {

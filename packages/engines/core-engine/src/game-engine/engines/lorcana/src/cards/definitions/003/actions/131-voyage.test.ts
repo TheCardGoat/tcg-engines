@@ -1,12 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { voyage } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
 import {
   vanellopeVonSchweetzSugarRushChamp,
   vanellopeVonSchweetzSugarRushPrincess,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { sugarRushSpeedwayFinishLine } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
-import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Voyage", () => {
   describe("Move up to 2 characters of yours to the same location for free.", () => {

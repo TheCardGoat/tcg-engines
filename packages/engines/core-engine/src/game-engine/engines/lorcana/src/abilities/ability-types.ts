@@ -1,4 +1,5 @@
 import type { LorcanaActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities/activated/activated";
+import type { LorcanaEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { LorcanaKeywordAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/keyword";
 import type { LorcanaReplacementAbility } from "~/game-engine/engines/lorcana/src/abilities/replacement/replacement";
 import type { LorcanaStaticAbility } from "~/game-engine/engines/lorcana/src/abilities/static/static";
@@ -8,6 +9,8 @@ import type {
   LorcanaCardFilter,
   LorcanaZone,
 } from "~/game-engine/engines/lorcana/src/lorcana-engine-types";
+
+export type { LorcanaEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 
 export type LayerItem = {
   id: string;
@@ -342,7 +345,6 @@ export type LorcanaAbility =
 export type Ability = LorcanaAbility;
 
 export type LorcanaDynamicValue = unknown;
-export type LorcanaEffect = unknown;
 
 export type LorcanaAbilityDuration =
   | { type: "permanent" }

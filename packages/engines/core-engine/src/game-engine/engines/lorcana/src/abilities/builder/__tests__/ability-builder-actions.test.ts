@@ -44,6 +44,10 @@ import {
   revealEffect,
   searchDeckEffect,
 } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  putTheRestOnTheBottomOfYourDeckInAnyOrder,
+  youMayRevealACharacterCardAndPutItIntoYourHand,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/scry";
 import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
@@ -1643,7 +1647,7 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Draw 2 cards, then choose and discard 2 cards.",
-        effects: [drawThenDiscardEffect({ draw: 2, discard: 2 })],
+        effects: drawThenDiscardEffect({ draw: 2, discard: 2 }),
       },
     ],
     true,
@@ -1654,7 +1658,7 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Draw 2 cards, then choose and discard a card.",
-        effects: [drawThenDiscardEffect({ draw: 2, discard: 1 })],
+        effects: drawThenDiscardEffect({ draw: 2, discard: 1 }),
       },
     ],
     true,
@@ -2664,20 +2668,8 @@ export const actionTexts: Array<
             parameters: {
               lookAt: 4,
               destinations: [
-                {
-                  zone: "hand",
-                  count: 1,
-                  reveal: true,
-                  filter: {
-                    type: "card",
-                    cardType: ["character"],
-                  },
-                },
-                {
-                  zone: "deck",
-                  position: "bottom",
-                  remainder: true,
-                },
+                youMayRevealACharacterCardAndPutItIntoYourHand,
+                putTheRestOnTheBottomOfYourDeckInAnyOrder,
               ],
             },
           },

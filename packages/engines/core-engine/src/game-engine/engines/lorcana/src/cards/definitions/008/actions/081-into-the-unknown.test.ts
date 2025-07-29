@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { cinderellaBallroomSensation } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
-import { intoTheUnknown } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import { intoTheUnknown } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Into The Unknown", () => {

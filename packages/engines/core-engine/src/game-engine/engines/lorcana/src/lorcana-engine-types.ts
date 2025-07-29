@@ -105,7 +105,12 @@ export type LorcanaCardFilter = ExtendCardFilter<{
   banished?: boolean;
 
   // Card type filtering
-  cardType?: "character" | "action" | "item" | "location";
+  cardType?:
+    | "character"
+    | "action"
+    | "item"
+    | "location"
+    | ("character" | "action" | "item" | "location")[];
 
   // Keyword filtering
   hasKeyword?: string[];

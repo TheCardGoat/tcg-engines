@@ -5,7 +5,7 @@ import {
   deweyLovableShowoff,
   everybodysGotAWeakness,
   khanWarHorse,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Everybody's Got A Weakness", () => {

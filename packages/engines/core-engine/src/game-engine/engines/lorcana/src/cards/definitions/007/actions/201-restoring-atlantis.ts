@@ -1,6 +1,8 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { restoringAtlantisAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
+export type LorcanaActionCardDefinition = any;
+
 export const restoringAtlantis: LorcanaActionCardDefinition = {
   id: "m7i",
   name: "Restoring Atlantis",

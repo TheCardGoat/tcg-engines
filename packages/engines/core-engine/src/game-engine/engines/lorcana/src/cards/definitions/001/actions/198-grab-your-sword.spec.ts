@@ -1,5 +1,4 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   kuzcoTemperamentalEmperor,
   magicBroomBucketBrigade,
@@ -8,7 +7,10 @@ import {
   teKaTheBurningOne,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { grabYourSword } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Grab Your Sword", () => {
   it("Damages all opponent's characters", () => {

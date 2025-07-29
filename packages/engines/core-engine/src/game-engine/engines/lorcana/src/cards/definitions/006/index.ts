@@ -31,6 +31,27 @@ import {
   youCameBack,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/006/actions";
 
+export const microbots = { id: "microbots" };
+export const yokaiScientificSupervillain = {
+  id: "yokaiScientificSupervillain",
+};
+export const mauiHalfshark = { id: "mauiHalfshark" };
+export const jimHawkinsRiggerSpecialist = { id: "jimHawkinsRiggerSpecialist" };
+export const gadgetHackwrenchPerceptiveMouse = {
+  id: "gadgetHackwrenchPerceptiveMouse",
+};
+export const nickWildeCleverFox = { id: "nickWildeCleverFox" };
+export const mammaOdieLoneSage = { id: "mammaOdieLoneSage" };
+export const owlPirateLookout = { id: "owlPirateLookout" };
+export const goofyExpertShipwright = { id: "goofyExpertShipwright" };
+export const principeNaveenCarefreeExplorer = {
+  id: "principeNaveenCarefreeExplorer",
+};
+export const simbaHappygolucky = { id: "simbaHappygolucky" };
+export const sugarRushSpeedwayFinishLine = {
+  id: "sugarRushSpeedwayFinishLine",
+};
+
 export const all006Cards: LorcanaCardDefinition[] = [
   ambush,
   aVeryMerryUnbirthday,

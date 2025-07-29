@@ -1,6 +1,8 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { showMeMoreAbilities } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
+export type LorcanaActionCardDefinition = any;
+
 export const showMeMore: LorcanaActionCardDefinition = {
   id: "f8z",
   name: "Show Me More!",

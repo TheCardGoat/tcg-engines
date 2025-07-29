@@ -4,6 +4,8 @@ import {
   returnChosenCharacterWithCostLess,
 } from "@lorcanito/lorcana-engine/effects/effects";
 
+export type LorcanaActionCardDefinition = any;
+
 export const onlySoMuchRoom: LorcanaActionCardDefinition = {
   id: "o94",
   name: "Only So Much Room",

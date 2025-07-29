@@ -6,12 +6,12 @@ import type {
   Keyword,
   LorcanaAbility,
 } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import type { ScryEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/scry";
 import type {
   AbilityTarget,
   CardTarget,
   PlayerTarget,
 } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
-import { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import type {
   LorcanaCardFilter,
   LorcanaZone,
@@ -26,38 +26,13 @@ interface BaseEffect {
   condition?: EffectCondition;
 }
 
-interface BasePlayerEffect extends BaseEffect {
+export interface BasePlayerEffect extends BaseEffect {
   targets?: PlayerTarget[];
 }
 
 interface BaseCardEffect extends BaseEffect {
   targets?: CardTarget[];
 }
-
-// Scry Effect (existing specific implementation)
-export type ScryDestination = {
-  zone: LorcanaZone;
-  filter?: LorcanaCardFilter;
-  value?: number;
-  position?: "top" | "bottom";
-  shuffle?: boolean;
-  remainder?: boolean;
-  exerted?: boolean;
-  order?: "any" | "random";
-  reveal?: boolean;
-  max?: number;
-  min?: number;
-};
-
-export type ScryParameters = {
-  lookAt: number;
-  destinations: ScryDestination[];
-};
-
-export type ScryEffect = BasePlayerEffect & {
-  type: "scry";
-  parameters: ScryParameters;
-};
 
 // Card-targeting effects (effects that can only target cards)
 export interface GetEffect extends BaseCardEffect {
