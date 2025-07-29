@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const imStillHere: LorcanitoActionCard = {
+export const imStillHere: LorcanaActionCardDefinition = {
   id: "aht",
   missingTestCase: true,
   name: "I'm Still Here",

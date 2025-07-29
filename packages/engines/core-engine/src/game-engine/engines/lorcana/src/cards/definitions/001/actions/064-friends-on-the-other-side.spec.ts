@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { friendsOnTheOtherSide } from "@lorcanito/lorcana-engine/cards/001/songs/songs.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { friendsOnTheOtherSide } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Friends On The Other Side", () => {
   it("Draw 2 cards", () => {

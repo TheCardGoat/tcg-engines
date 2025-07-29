@@ -5,7 +5,7 @@ import {
   moveToLocation,
 } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const iWillFindMyWay: LorcanitoActionCard = {
+export const iWillFindMyWay: LorcanaActionCardDefinition = {
   id: "qdn",
   name: "I Will Find My Way",
   characteristics: ["action", "song"],

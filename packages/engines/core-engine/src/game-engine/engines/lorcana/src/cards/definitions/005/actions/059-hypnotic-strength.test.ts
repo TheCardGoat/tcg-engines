@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { liloJuniorCakeDecorator } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { hypnoticStrength } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import { liloJuniorCakeDecorator } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hypnotic Strength", () => {
   it("Draw a card. Chosen character gains **Challenger** +2 this turn. _(They get +2 {S} while challenging.)_", async () => {

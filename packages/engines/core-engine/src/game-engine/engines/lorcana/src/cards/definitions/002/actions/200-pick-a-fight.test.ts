@@ -1,12 +1,8 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { mauiDemiGod } from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { pickAFight } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
-import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { mauiDemiGod } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { pickAFight } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Pick a Fight", () => {
   it("Chosen character can challenge ready characters this turn.", () => {

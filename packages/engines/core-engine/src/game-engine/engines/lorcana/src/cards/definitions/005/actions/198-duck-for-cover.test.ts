@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { duckForCover } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 
 describe("Duck for Cover!", () => {

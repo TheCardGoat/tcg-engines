@@ -1,8 +1,8 @@
 import { chosenDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { DamageEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const stampede: LorcanitoActionCard = {
+export const stampede: LorcanaActionCardDefinition = {
   id: "eje",
   name: "Stampede",
   characteristics: ["action"],

@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { aladdinHeroicOutlaw } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-import { fryingPan } from "@lorcanito/lorcana-engine/cards/001/items/items";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+import { aladdinHeroicOutlaw } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { fryingPan } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
 import { hotPotato } from "~/game-engine/engines/lorcana/src/cards/definitions/006/actions";
 
 describe("Hot Potato", () => {

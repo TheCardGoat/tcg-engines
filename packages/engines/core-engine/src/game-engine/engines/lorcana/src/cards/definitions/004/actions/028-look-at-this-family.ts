@@ -2,7 +2,7 @@ import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const lookAtThisFamily: LorcanitoActionCard = {
+export const lookAtThisFamily: LorcanaActionCardDefinition = {
   id: "hgt",
   missingTestCase: true,
   name: "Look At This Family",

@@ -50,7 +50,7 @@ const walkThePlankAbility: ResolutionAbility = {
   ],
 };
 
-export const walkThePlank: LorcanitoActionCard = {
+export const walkThePlank: LorcanaActionCardDefinition = {
   id: "yl4",
   name: "Walk The Plank!",
   characteristics: ["action"],

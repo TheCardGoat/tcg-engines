@@ -1,12 +1,12 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import { discardACard } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const self = {
   type: "player" as const,
   value: "self" as const,
 };
 
-export const hypnotize: LorcanitoActionCard = {
+export const hypnotize: LorcanaActionCardDefinition = {
   id: "awj",
 
   name: "Hypnotize",

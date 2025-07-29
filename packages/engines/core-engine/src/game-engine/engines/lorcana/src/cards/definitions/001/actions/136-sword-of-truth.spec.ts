@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { teKaTheBurningOne } from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { swordOfTruth } from "@lorcanito/lorcana-engine/cards/001/items/items.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { teKaTheBurningOne } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { swordOfTruth } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Sword of Truth", () => {
   it("**FINAL ENCHANTMENT** Banish this item − Banish chosen Villain character.", () => {

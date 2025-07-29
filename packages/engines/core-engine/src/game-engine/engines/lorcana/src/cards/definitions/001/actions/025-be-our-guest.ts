@@ -1,7 +1,7 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { ScryEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const beOurGuest: LorcanitoActionCard = {
+export const beOurGuest: LorcanaActionCardDefinition = {
   id: "m6n",
   name: "Be Our Guest",
   characteristics: ["action", "song"],

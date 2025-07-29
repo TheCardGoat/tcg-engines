@@ -1,21 +1,17 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   liloMakingAWish,
   mauiDemiGod,
   stichtNewDog,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { friendLikeMe } from "@lorcanito/lorcana-engine/cards/003/actions/actions.ts";
-import { jimHawkinsSpaceTraveler } from "@lorcanito/lorcana-engine/cards/003/characters/characters.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { friendLikeMe } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import { jimHawkinsSpaceTraveler } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import {
   cinderellaMelodyWeaver,
   rayaFierceProtector,
-} from "@lorcanito/lorcana-engine/cards/004/characters/characters.ts";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Friend Like Me", () => {
   it("_(A character with cost 5 or more can exert to sing this song for free.)_Each player puts the top 3 cards of their deck into their inkwell facedown and exerted.", async () => {

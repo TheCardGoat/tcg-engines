@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { outOfOrderAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { outOfOrderAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const outOfOrder: LorcanitoActionCard = {
+export const outOfOrder: LorcanaActionCardDefinition = {
   id: "hvy",
   name: "Out Of Order",
   characteristics: ["action"],

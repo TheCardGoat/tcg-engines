@@ -1,13 +1,9 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { mickeyMouseMusketeer } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+import { mickeyMouseMusketeer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   mammaOdieLoneSage,
   sugarRushSpeedwayFinishLine,
-} from "@lorcanito/lorcana-engine/cards/006";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import {
   downInNewOrleans,
   khanWarHorse,
@@ -17,8 +13,8 @@ import {
   televisionSet,
   tianaNaturalTalent,
   walkThePlank,
-} from "@lorcanito/lorcana-engine/cards/008";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Down In New Orleans", () => {
   it("Look at the top 3 cards of your deck. You may reveal a character, item, or location card with cost 6 or less and play it for free. Put the rest on the bottom of your deck in any order.", async () => {

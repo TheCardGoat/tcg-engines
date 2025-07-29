@@ -1,15 +1,11 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { packTactics } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
+import { packTactics } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import {
   cinderellaBallroomSensation,
   eudoraAccomplishedSeamstress,
   gastonBaritoneBully,
-} from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Pack Tactics", () => {
   it("Gain 1 lore for each damaged character opponents have in play.", () => {

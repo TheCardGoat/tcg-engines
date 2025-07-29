@@ -5,7 +5,7 @@ import {
 } from "@lorcanito/lorcana-engine/abilities/targets";
 import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const onYourFeetNow: LorcanitoActionCard = {
+export const onYourFeetNow: LorcanaActionCardDefinition = {
   id: "wna",
   missingTestCase: true,
   name: "On Your Feet! Now!",

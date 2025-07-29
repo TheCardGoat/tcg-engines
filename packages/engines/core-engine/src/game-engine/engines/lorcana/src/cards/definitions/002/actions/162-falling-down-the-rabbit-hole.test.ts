@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { fallingDownTheRabbitHole } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { fallingDownTheRabbitHole } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import {
   herculesHeroInTraining,
   pachaVillageLeader,
-} from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 
 describe("Falling Down the Rabbit Hole", () => {
   it("Each player chooses one of their characters and puts them into their inkwell facedown and exerted.", async () => {

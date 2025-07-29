@@ -1,15 +1,11 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   gadgetHackwrenchPerceptiveMouse,
   nickWildeCleverFox,
   sailTheAzuriteSea,
   twinFire,
-} from "@lorcanito/lorcana-engine/cards/006";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Twin Fire", () => {
   it("Deal 2 damage to chosen character. Then, you may choose and discard a card to deal 2 damage to another chosen character.", async () => {

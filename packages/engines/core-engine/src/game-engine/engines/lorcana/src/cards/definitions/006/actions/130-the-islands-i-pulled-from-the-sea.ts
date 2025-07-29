@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const theIslandsIPulledFromTheSea: LorcanitoActionCard = {
+export const theIslandsIPulledFromTheSea: LorcanaActionCardDefinition = {
   id: "bnu",
   missingTestCase: true,
   name: "The Islands I Pulled From The Sea",

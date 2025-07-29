@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { showMeMore } from "@lorcanito/lorcana-engine/cards/007";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { showMeMore } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Show Me More!", () => {
   it("Each player draws 3 cards", async () => {

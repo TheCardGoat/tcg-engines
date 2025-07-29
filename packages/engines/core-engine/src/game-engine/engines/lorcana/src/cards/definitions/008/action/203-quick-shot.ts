@@ -3,7 +3,7 @@ import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import { resolveEffect } from "@lorcanito/lorcana-engine/store/resolvers/effectResolver";
 
-export const quickShot: LorcanitoActionCard = {
+export const quickShot: LorcanaActionCardDefinition = {
   id: "xuh",
   name: "Quick Shot",
   characteristics: ["action"],

@@ -1,7 +1,7 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { LoreEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const tangle: LorcanitoActionCard = {
+export const tangle: LorcanaActionCardDefinition = {
   id: "kni",
   name: "Tangle",
   characteristics: ["action"],

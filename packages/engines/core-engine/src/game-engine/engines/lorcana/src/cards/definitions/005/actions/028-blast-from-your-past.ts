@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const blastFromYourPast: LorcanitoActionCard = {
+export const blastFromYourPast: LorcanaActionCardDefinition = {
   id: "zt6",
   name: "Blast From Your Past",
   characteristics: ["action", "song"],

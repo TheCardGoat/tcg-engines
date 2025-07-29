@@ -1,7 +1,3 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   allIsFound,
@@ -9,8 +5,8 @@ import {
   showMeMore,
   theReturnOfHercules,
   waterHasMemory,
-} from "@lorcanito/lorcana-engine/cards/007";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Water Has Memory", () => {
   describe("Look at the top 4 cards of chosen player's deck. Put one on the top of their deck and the rest on the bottom of their deck in any order.", () => {

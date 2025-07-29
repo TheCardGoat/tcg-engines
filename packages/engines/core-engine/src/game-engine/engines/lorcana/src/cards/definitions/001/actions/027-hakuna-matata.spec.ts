@@ -1,15 +1,11 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   magicBroomBucketBrigade,
   moanaOfMotunui,
   teKaTheBurningOne,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hakuna Matata", () => {
   it("Heals all characters", () => {

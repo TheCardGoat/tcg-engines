@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const breakFree: LorcanitoActionCard = {
+export const breakFree: LorcanaActionCardDefinition = {
   id: "qdj",
   name: "Break Free",
   characteristics: ["action"],

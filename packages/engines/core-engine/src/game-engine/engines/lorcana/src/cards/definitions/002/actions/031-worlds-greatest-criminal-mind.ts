@@ -1,7 +1,7 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { BanishEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const worldsGreatestCriminalMind: LorcanitoActionCard = {
+export const worldsGreatestCriminalMind: LorcanaActionCardDefinition = {
   id: "c97",
 
   name: "World's Greatest Criminal Mind",

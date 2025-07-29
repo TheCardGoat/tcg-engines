@@ -1,12 +1,8 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { launch } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
-import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { launch } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Launch", () => {
   it("Banish chosen item of yours to deal 5 damage to chosen character.", () => {

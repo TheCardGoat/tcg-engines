@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const hideAway: LorcanitoActionCard = {
+export const hideAway: LorcanaActionCardDefinition = {
   id: "cyn",
   missingTestCase: true,
   name: "Hide Away",

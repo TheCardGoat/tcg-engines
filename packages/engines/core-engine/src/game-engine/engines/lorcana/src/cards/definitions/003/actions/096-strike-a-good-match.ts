@@ -4,7 +4,7 @@ import {
   drawXCards,
 } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const strikeAGoodMatch: LorcanitoActionCard = {
+export const strikeAGoodMatch: LorcanaActionCardDefinition = {
   id: "fd2",
   name: "Strike a Good Match",
   characteristics: ["action", "song"],

@@ -1,15 +1,11 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   belleBookworm,
   belleHiddenArcher,
-} from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { avalanche } from "@lorcanito/lorcana-engine/cards/004/actions/actions.ts";
-import { theLibraryAGiftForBelle } from "@lorcanito/lorcana-engine/cards/005/locations/locations.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { avalanche } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
+import { theLibraryAGiftForBelle } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Avalanche", () => {
   it("Deal 1 damage to each opposing character. You may banish chosen location.", () => {

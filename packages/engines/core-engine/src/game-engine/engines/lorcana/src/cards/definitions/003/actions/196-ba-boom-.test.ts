@@ -1,12 +1,8 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { baBoom } from "@lorcanito/lorcana-engine/cards/003/actions/actions.ts";
-import { mrSmeeBumblingMate } from "@lorcanito/lorcana-engine/cards/003/characters/characters.ts";
-import { agrabahMarketplace } from "@lorcanito/lorcana-engine/cards/003/locations/locations.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { baBoom } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { agrabahMarketplace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Ba-Boom!", () => {
   it("Deal 2 damage to chosen character.", () => {

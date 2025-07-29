@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const healingGlow: LorcanitoActionCard = {
+export const healingGlow: LorcanaActionCardDefinition = {
   id: "ta0",
   name: "Healing Glow",
   characteristics: ["action"],

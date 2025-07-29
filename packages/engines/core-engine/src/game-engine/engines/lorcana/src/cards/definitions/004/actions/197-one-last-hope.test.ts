@@ -1,15 +1,11 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { oneLastHope } from "@lorcanito/lorcana-engine/cards/004/actions/actions.ts";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { oneLastHope } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import {
   faZhouMulansFather,
   flynnRiderFrenemy,
   goofySuperGoof,
-} from "@lorcanito/lorcana-engine/cards/004/characters/characters.ts";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 
 describe("One Last Hope", () => {
   it("Chosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn.", async () => {

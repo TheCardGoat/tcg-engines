@@ -2,7 +2,7 @@ import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/target";
 import { allCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const safeAndSound: LorcanitoActionCard = {
+export const safeAndSound: LorcanaActionCardDefinition = {
   id: "ypf",
   name: "Safe And Sound",
   characteristics: ["action"],

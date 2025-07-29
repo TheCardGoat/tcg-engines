@@ -8,7 +8,7 @@ import {
   moveDamageEffect,
 } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const everybodysGotAWeakness: LorcanitoActionCard = {
+export const everybodysGotAWeakness: LorcanaActionCardDefinition = {
   id: "j44",
   name: "Everybody's Got A Weakness",
   characteristics: ["action"],

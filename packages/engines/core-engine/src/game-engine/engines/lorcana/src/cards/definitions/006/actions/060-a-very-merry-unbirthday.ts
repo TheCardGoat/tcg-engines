@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const aVeryMerryUnbirthday: LorcanitoActionCard = {
+export const aVeryMerryUnbirthday: LorcanaActionCardDefinition = {
   id: "pfv",
   missingTestCase: true,
   name: "A Very Merry Unbirthday",

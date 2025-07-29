@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { cinderellaBallroomSensation } from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { distract } from "@lorcanito/lorcana-engine/cards/003/actions/actions.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { cinderellaBallroomSensation } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { distract } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Distract", () => {
   it("Chosen character gets -2 {S} this turn. Draw a card.", () => {

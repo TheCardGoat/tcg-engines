@@ -1,7 +1,7 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import { youPayXLessToPlayNextCharThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const zeroToHero: LorcanitoActionCard = {
+export const zeroToHero: LorcanaActionCardDefinition = {
   id: "uyt",
 
   name: "Zero To Hero",

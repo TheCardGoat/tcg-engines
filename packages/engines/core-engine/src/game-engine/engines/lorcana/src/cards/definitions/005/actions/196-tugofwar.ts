@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const tugofwar: LorcanitoActionCard = {
+export const tugofwar: LorcanaActionCardDefinition = {
   id: "r3r",
   name: "Tug-of-War",
   characteristics: ["action"],

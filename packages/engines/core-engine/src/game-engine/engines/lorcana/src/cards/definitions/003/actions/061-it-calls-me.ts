@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const itCallsMe: LorcanitoActionCard = {
+export const itCallsMe: LorcanaActionCardDefinition = {
   id: "jqp",
   missingTestCase: true,
   name: "It Calls Me",

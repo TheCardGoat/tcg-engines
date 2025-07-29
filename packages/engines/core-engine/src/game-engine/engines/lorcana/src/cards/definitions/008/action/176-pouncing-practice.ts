@@ -4,7 +4,7 @@ import {
   chosenCharacterOfYours,
 } from "@lorcanito/lorcana-engine/abilities/target";
 
-export const pouncingPractice: LorcanitoActionCard = {
+export const pouncingPractice: LorcanaActionCardDefinition = {
   id: "bxz",
   name: "Pouncing Practice",
   characteristics: ["action"],

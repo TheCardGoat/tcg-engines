@@ -1,16 +1,12 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   dalmatianPuppyTailWagger,
   deweyLovableShowoff,
   everybodysGotAWeakness,
   khanWarHorse,
-} from "@lorcanito/lorcana-engine/cards/008/index";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Everybody's Got A Weakness", () => {
   it("Move 1 damage counter from each damaged character you have in play to chosen opposing character. Draw a card for each damage counter moved this way.", async () => {

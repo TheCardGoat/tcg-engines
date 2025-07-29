@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const hypnoticDeduction: LorcanitoActionCard = {
+export const hypnoticDeduction: LorcanaActionCardDefinition = {
   id: "z2p",
   name: "Hypnotic Deduction",
   characteristics: ["action"],

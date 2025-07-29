@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { iWontGiveIn } from "~/game-engine/engines/lorcana/src/cards/definitions/006/actions";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("I Won't Give In", () => {
   it.skip("(A character with cost 2 or more can {E} to sing this song for free.)", async () => {

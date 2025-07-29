@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const nightHowlerRage: LorcanitoActionCard = {
+export const nightHowlerRage: LorcanaActionCardDefinition = {
   id: "g2v",
   name: "Night Howler Rage",
   characteristics: ["action"],

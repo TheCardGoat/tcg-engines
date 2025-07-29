@@ -75,7 +75,7 @@ const weKnowTheWayAbility: ResolutionAbility = {
   effects: [shuffleFromDiscard],
 };
 
-export const weKnowTheWay: LorcanitoActionCard = {
+export const weKnowTheWay: LorcanaActionCardDefinition = {
   id: "tc8",
   name: "We Know The Way",
   characteristics: ["action", "song"],

@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { aPiratesLife } from "@lorcanito/lorcana-engine/cards/004/actions/actions.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { aPiratesLife } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("A Pirate's Life", () => {
   it("**Sing Together** 6 _(Any number of your of your teammates' characters with total cost 6 or more may {E} to sing this song for free.)_Each opponent loses 2 lore. You gain 2 lore.", () => {

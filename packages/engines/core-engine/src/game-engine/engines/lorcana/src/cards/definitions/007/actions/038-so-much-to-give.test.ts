@@ -1,12 +1,8 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { hiramFlavershamToymaker } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-import { soMuchToGive } from "@lorcanito/lorcana-engine/cards/007";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
+import { soMuchToGive } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("So Much To Give", () => {
   it("Draw a card. Chosen character gains Bodyguard until the start of your next turn. (An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {

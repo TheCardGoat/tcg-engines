@@ -1,12 +1,8 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { liloGalacticHero } from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { bounce } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
-import { cinderellaBallroomSensation } from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { liloGalacticHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { bounce } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
+import { cinderellaBallroomSensation } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Bounce", () => {
   it("Return chosen character of yours to your hand to return another chosen character to their player's hand.", () => {

@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   microbots,
   sailTheAzuriteSea,
   yokaiScientificSupervillain,
-} from "@lorcanito/lorcana-engine/cards/006";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Sail The Azurite Sea", () => {
   it("This turn, you may put an additional card from your hand into your inkwell facedown. Draw a card.", async () => {

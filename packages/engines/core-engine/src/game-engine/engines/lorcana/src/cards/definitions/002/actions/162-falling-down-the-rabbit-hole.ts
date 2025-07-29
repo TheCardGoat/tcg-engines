@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const chosenCharacterOfYour: CardEffectTarget = {
   type: "card",
@@ -11,7 +11,7 @@ const chosenCharacterOfYour: CardEffectTarget = {
   ],
 };
 
-export const fallingDownTheRabbitHole: LorcanitoActionCard = {
+export const fallingDownTheRabbitHole: LorcanaActionCardDefinition = {
   id: "j9g",
   name: "Falling Down the Rabbit Hole",
   characteristics: ["action"],

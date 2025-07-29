@@ -1,8 +1,8 @@
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const cutToTheChase: LorcanitoActionCard = {
+export const cutToTheChase: LorcanaActionCardDefinition = {
   id: "cei",
   name: "Cut to the Chase",
   characteristics: ["action"],

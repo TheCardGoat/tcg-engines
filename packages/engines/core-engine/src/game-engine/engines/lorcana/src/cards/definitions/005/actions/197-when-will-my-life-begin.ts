@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const whenWillMyLifeBegin: LorcanitoActionCard = {
+export const whenWillMyLifeBegin: LorcanaActionCardDefinition = {
   id: "a04",
   name: "When Will My Life Begin?",
   characteristics: ["action", "song"],

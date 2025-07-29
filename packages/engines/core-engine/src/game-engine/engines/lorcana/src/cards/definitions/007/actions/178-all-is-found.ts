@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { allIsFoundAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { allIsFoundAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const allIsFound: LorcanitoActionCard = {
+export const allIsFound: LorcanaActionCardDefinition = {
   id: "prl",
   name: "All Is Found",
   characteristics: ["song", "action"],

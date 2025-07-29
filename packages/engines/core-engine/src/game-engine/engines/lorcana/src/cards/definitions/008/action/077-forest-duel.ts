@@ -35,7 +35,7 @@ const gainsReturnToHand: AbilityEffect = {
   target: yourCharacters,
 };
 
-export const forestDuel: LorcanitoActionCard = {
+export const forestDuel: LorcanaActionCardDefinition = {
   id: "m3x",
   name: "Forest Duel",
   characteristics: ["action"],

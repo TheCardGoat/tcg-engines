@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const hotPotato: LorcanitoActionCard = {
+export const hotPotato: LorcanaActionCardDefinition = {
   id: "uzc",
   missingTestCase: true,
   name: "Hot Potato",

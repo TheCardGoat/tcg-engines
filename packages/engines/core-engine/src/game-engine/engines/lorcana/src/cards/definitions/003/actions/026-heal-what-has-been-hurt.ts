@@ -2,7 +2,7 @@ import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const healWhatHasBeenHurt: LorcanitoActionCard = {
+export const healWhatHasBeenHurt: LorcanaActionCardDefinition = {
   id: "ao1",
   name: "Heal What Has Been Hurt",
   characteristics: ["action", "song"],

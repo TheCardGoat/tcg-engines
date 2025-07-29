@@ -2,7 +2,7 @@ import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const digALittleDeeper: LorcanitoActionCard = {
+export const digALittleDeeper: LorcanaActionCardDefinition = {
   id: "vrj",
   missingTestCase: true,
   name: "Dig A Little Deeper",

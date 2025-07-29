@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { opponentRevealHand } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const theBareNecessities: LorcanitoActionCard = {
+export const theBareNecessities: LorcanaActionCardDefinition = {
   id: "vhx",
   missingTestCase: true,
   name: "The Bare Necessities",

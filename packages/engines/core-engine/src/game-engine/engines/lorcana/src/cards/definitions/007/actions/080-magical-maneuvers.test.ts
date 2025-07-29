@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   arielSpectacularSinger,
   mickeyBraveLittleTailor,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-import { magicalManeuvers } from "@lorcanito/lorcana-engine/cards/007";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { magicalManeuvers } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Magical Maneuvers", () => {
   it("Return chosen character of yours to your hand. Exert chosen character.", async () => {

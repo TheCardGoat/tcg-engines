@@ -4,7 +4,7 @@ import {
   eachOpposingCharacter,
 } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const avalanche: LorcanitoActionCard = {
+export const avalanche: LorcanaActionCardDefinition = {
   id: "znd",
   name: "Avalanche",
   characteristics: ["action"],

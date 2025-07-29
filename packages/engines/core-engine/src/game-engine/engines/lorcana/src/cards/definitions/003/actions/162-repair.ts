@@ -1,6 +1,6 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 
-export const repair: LorcanitoActionCard = {
+export const repair: LorcanaActionCardDefinition = {
   id: "wr7",
   missingTestCase: true,
   name: "Repair",

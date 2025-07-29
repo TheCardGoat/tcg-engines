@@ -1,13 +1,9 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   atlanteanCrystal,
   heWhoStealsAndRunsAway,
-} from "@lorcanito/lorcana-engine/cards/008";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("He Who Steals And Runs Away", () => {
   it("Banish chosen item. Draw a card.", async () => {

@@ -1,12 +1,8 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { benjaGuardianOfTheDragonGem } from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { iveGotADream } from "@lorcanito/lorcana-engine/cards/003/actions/actions.ts";
-import { prideLandsJungleOasis } from "@lorcanito/lorcana-engine/cards/005/locations/locations.ts";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine.ts";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { benjaGuardianOfTheDragonGem } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { iveGotADream } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import { prideLandsJungleOasis } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
 
 describe("I've Got a Dream", () => {
   it("Ready chosen character of yours at a location. They can't quest for the rest of this turn. Gain lore equal to that location {L}.", async () => {

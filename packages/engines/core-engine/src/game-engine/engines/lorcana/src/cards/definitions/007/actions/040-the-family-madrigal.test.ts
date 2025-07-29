@@ -1,30 +1,26 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   liloGalacticHero,
   mickeyBraveLittleTailor,
   mickeyMouseTrueFriend,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   agustinMadrigalClumsyDad,
   almaMadrigalFamilyMatriarch,
   mickeyMouseLeaderOfTheBand,
-} from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-import { heffalumpsAndWoozles } from "@lorcanito/lorcana-engine/cards/006";
-import {
-  theFamilyMadrigal,
-  thisIsMyFamily,
-} from "@lorcanito/lorcana-engine/cards/007";
-import { downInNewOrleans } from "@lorcanito/lorcana-engine/cards/008";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   dontLetTheFrostbiteBite,
   tryEverything,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import { heffalumpsAndWoozles } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
+import {
+  theFamilyMadrigal,
+  thisIsMyFamily,
+} from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import { hesATramp } from "~/game-engine/engines/lorcana/src/cards/definitions/007/actions";
+import { downInNewOrleans } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Family Madrigal", () => {
   describe("Look at the top 5 cards of your deck. You may reveal up to 1 Madrigal character card and up to 1 song card and put them into your hand.", () => {

@@ -3,9 +3,9 @@ import {
   haveNoCardsInYourHand,
 } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
 import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { CreateLayerBasedOnCondition } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const conditionalEffects: CreateLayerBasedOnCondition = {
   type: "create-layer-based-on-condition",
@@ -47,7 +47,7 @@ const conditionalEffects: CreateLayerBasedOnCondition = {
   ],
 };
 
-export const desperatePlan: LorcanitoActionCard = {
+export const desperatePlan: LorcanaActionCardDefinition = {
   id: "y5k",
   name: "Desperate Plan",
   characteristics: ["action"],

@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { undermine } from "@lorcanito/lorcana-engine/cards/008/index";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { undermine } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Undermine", () => {
   it.skip("Chosen opponent chooses and discards a card. Chosen character gets +2 {S} this turn.", async () => {

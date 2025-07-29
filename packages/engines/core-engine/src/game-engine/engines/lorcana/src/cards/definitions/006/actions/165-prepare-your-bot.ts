@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const prepareYourBot: LorcanitoActionCard = {
+export const prepareYourBot: LorcanaActionCardDefinition = {
   id: "ht1",
   missingTestCase: true,
   name: "Prepare Your Bot",

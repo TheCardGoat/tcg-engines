@@ -4,7 +4,7 @@ import type {
 } from "@lorcanito/lorcana-engine";
 import { chosenCharacterOrLocation } from "@lorcanito/lorcana-engine/abilities/target";
 
-export const andThenAlongCameZeus: LorcanitoActionCard = {
+export const andThenAlongCameZeus: LorcanaActionCardDefinition = {
   id: "k6i",
   name: "And Then Along Came Zeus",
   characteristics: ["action", "song"],

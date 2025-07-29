@@ -813,3 +813,5 @@ function updateInitialState(
     initialCoreContext.players[playerId].lore = lore;
   }
 }
+export const TestStore = LorcanaTestEngine;
+export const TestEngine = LorcanaTestEngine;

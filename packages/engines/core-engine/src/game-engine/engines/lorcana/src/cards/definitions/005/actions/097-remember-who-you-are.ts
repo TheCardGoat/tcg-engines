@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const rememberWhoYouAre: LorcanitoActionCard = {
+export const rememberWhoYouAre: LorcanaActionCardDefinition = {
   id: "jps",
   missingTestCase: true,
   name: "Remember Who You Are",

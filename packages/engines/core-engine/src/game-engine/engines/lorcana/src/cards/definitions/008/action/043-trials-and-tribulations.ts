@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const trialsAndTribulations: LorcanitoActionCard = {
+export const trialsAndTribulations: LorcanaActionCardDefinition = {
   id: "rky",
   missingTestCase: true,
   name: "Trials And Tribulations",

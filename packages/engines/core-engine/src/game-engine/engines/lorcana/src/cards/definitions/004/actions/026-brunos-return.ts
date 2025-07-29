@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const brunosReturn: LorcanitoActionCard = {
+export const brunosReturn: LorcanaActionCardDefinition = {
   id: "azx",
   name: "Bruno's Return",
   characteristics: ["action"],

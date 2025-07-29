@@ -1,13 +1,13 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { PlayerEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
 import type { LoreEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const self: PlayerEffectTarget = {
   type: "player",
   value: "self",
 };
 
-export const packTactics: LorcanitoActionCard = {
+export const packTactics: LorcanaActionCardDefinition = {
   id: "yp2",
 
   name: "Pack Tactics",

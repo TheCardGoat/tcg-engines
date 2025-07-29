@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
 import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const chosenCharacter: CardEffectTarget = {
   type: "card",
@@ -11,7 +11,7 @@ const chosenCharacter: CardEffectTarget = {
   ],
 };
 
-export const charge: LorcanitoActionCard = {
+export const charge: LorcanaActionCardDefinition = {
   id: "koq",
   name: "Charge!",
   characteristics: ["action"],

@@ -1,5 +1,5 @@
 import type { CardEffectTarget } from "@lorcanito/lorcana-engine";
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const chosenCharacter: CardEffectTarget = {
   type: "card",
@@ -10,7 +10,7 @@ const chosenCharacter: CardEffectTarget = {
   ],
 };
 
-export const motherKnowsBest: LorcanitoActionCard = {
+export const motherKnowsBest: LorcanaActionCardDefinition = {
   id: "rxk",
   name: "Mother Knows Best",
   characteristics: ["action", "song"],

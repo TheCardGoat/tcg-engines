@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { moveToLocation } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const voyage: LorcanitoActionCard = {
+export const voyage: LorcanaActionCardDefinition = {
   id: "y55",
   name: "Voyage",
   characteristics: ["action"],

@@ -5,7 +5,7 @@ import {
 } from "@lorcanito/lorcana-engine/abilities/targets";
 import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const bestowAGift: LorcanitoActionCard = {
+export const bestowAGift: LorcanaActionCardDefinition = {
   id: "v46",
   missingTestCase: true,
   name: "Bestow a Gift",

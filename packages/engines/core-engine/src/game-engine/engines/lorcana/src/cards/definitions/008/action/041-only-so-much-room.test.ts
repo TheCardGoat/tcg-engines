@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   principeNaveenCarefreeExplorer,
   simbaHappygolucky,
-} from "@lorcanito/lorcana-engine/cards/006";
-import { onlySoMuchRoom } from "@lorcanito/lorcana-engine/cards/008";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006";
+import { onlySoMuchRoom } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Only So Much Room", () => {
   it("Return chosen character with 2 {S} or less to their player's hand. Return a character card from your discard to your hand.", async () => {

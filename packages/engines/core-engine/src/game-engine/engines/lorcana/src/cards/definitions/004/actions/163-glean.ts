@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenItem } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const glean: LorcanitoActionCard = {
+export const glean: LorcanaActionCardDefinition = {
   id: "aqx",
   name: "Glean",
   characteristics: ["action"],

@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { withCostXorLess } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const poorUnfortunateSouls: LorcanitoActionCard = {
+export const poorUnfortunateSouls: LorcanaActionCardDefinition = {
   id: "d2i",
   missingTestCase: false,
   name: "Poor Unfortunate Souls",

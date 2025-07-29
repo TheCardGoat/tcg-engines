@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const thievery: LorcanitoActionCard = {
+export const thievery: LorcanaActionCardDefinition = {
   id: "nf0",
   missingTestCase: true,
   name: "Thievery",

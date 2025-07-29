@@ -1,20 +1,16 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+import { mickeyMouseTrueFriend } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   chiefBogoRespectedOfficer,
   panicUnderworldImp,
-} from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-import { jimHawkinsRiggerSpecialist } from "@lorcanito/lorcana-engine/cards/006";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { jimHawkinsRiggerSpecialist } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import {
   moanaAdventurerOfLandAndSea,
   theReturnOfHercules,
-} from "@lorcanito/lorcana-engine/cards/007";
-import { honeyLemonCostumedCatalyst } from "@lorcanito/lorcana-engine/cards/008";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import { honeyLemonCostumedCatalyst } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Return Of Hercules", () => {
   it("Each player may reveal a character card from their hand and play it for free", async () => {

@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { soMuchToGiveAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { soMuchToGiveAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const soMuchToGive: LorcanitoActionCard = {
+export const soMuchToGive: LorcanaActionCardDefinition = {
   id: "qi0",
   name: "So Much To Give",
   characteristics: ["song", "action"],

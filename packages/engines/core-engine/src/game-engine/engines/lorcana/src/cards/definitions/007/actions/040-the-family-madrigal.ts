@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { theFamilyMadrigalAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { theFamilyMadrigalAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const theFamilyMadrigal: LorcanitoActionCard = {
+export const theFamilyMadrigal: LorcanaActionCardDefinition = {
   id: "pol",
   name: "The Family Madrigal",
   characteristics: ["song", "action"],

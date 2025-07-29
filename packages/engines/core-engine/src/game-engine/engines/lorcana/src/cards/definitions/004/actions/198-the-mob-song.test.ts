@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   mickeyBraveLittleTailor,
   simbaProtectiveCub,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { theMobSong } from "@lorcanito/lorcana-engine/cards/004/actions/actions.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { theMobSong } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Mob Song", () => {
   it("**Sing Together** 10 _(Any number of your of your teammates' characters with total cost 10 or more may {E} to sing this song for free.)_Deal 3 damage to up to 3 chosen characters and/or locations.", () => {

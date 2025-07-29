@@ -2,7 +2,7 @@ import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { mayBanish } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const getOut: LorcanitoActionCard = {
+export const getOut: LorcanaActionCardDefinition = {
   id: "vaq",
   name: "Get Out!",
   characteristics: ["action"],

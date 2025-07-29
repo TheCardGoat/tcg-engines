@@ -1,13 +1,9 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   mickeyMouseGiantMouse,
   mostEveryonesMadHere,
-} from "@lorcanito/lorcana-engine/cards/008";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Most Everyone's Mad Here", () => {
   it("Gain lore equal to the damage on chosen character, then banish them.", async () => {

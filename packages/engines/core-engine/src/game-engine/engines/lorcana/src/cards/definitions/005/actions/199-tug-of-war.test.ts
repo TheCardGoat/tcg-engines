@@ -1,13 +1,9 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
+import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   mickeyBraveLittleTailor,
   simbaProtectiveCub,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { tugofwar } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 
 describe("Tug-of-War", () => {

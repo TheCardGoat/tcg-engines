@@ -1,15 +1,11 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   cruellaDeVilMiserableAsUsual,
   dukeOfWeselton,
   genieTheEverImpressive,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { NnPuppies } from "@lorcanito/lorcana-engine/cards/003/actions/actions.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { NnPuppies } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("99 Puppies", () => {
   it("Whenever one of your characters quests this turn, gain 1 lore.", () => {

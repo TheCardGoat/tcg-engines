@@ -1,6 +1,6 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 
-export const quickPatch: LorcanitoActionCard = {
+export const quickPatch: LorcanaActionCardDefinition = {
   id: "p6z",
   missingTestCase: true,
   name: "Quick Patch",

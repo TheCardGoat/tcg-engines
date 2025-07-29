@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const howFarIllGo: LorcanitoActionCard = {
+export const howFarIllGo: LorcanaActionCardDefinition = {
   id: "x7c",
   name: "How Far I'll Go",
   characteristics: ["action", "song"],

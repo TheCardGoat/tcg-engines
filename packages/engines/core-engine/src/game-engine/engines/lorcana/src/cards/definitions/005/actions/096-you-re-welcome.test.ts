@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { dingleHopper } from "@lorcanito/lorcana-engine/cards/001/items/items";
-import { forbiddenMountainMaleficentsCastle } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { forbiddenMountainMaleficentsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
 import { youreWelcome } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 
 describe("You're Welcome", () => {

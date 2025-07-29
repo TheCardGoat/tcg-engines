@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const chosenCharacter: CardEffectTarget = {
   type: "card",
@@ -10,7 +10,7 @@ const chosenCharacter: CardEffectTarget = {
   ],
 };
 
-export const strengthOfARagingFire: LorcanitoActionCard = {
+export const strengthOfARagingFire: LorcanaActionCardDefinition = {
   id: "x5y",
 
   name: "Strength of a Raging Fire",

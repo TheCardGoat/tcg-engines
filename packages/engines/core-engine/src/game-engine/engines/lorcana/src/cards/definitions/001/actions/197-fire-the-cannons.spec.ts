@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { fireTheCannons } from "@lorcanito/lorcana-engine/cards/001/actions/actions.ts";
-import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { fireTheCannons } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
+import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Fire The Cannons!", () => {
   it("Deal 2 damage to chosen character", () => {

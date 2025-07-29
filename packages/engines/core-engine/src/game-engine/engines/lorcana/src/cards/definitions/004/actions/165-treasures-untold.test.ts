@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   dingleHopper,
   shieldOfVirtue,
-} from "@lorcanito/lorcana-engine/cards/001/items/items.ts";
-import { treasuresUntold } from "@lorcanito/lorcana-engine/cards/004/actions/actions.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { treasuresUntold } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Treasures Untold", () => {
   it("_(A character with cost 6 or more can {E} to sing this song for free.)_Return up to 2 item cards from your discard into your hand.", () => {

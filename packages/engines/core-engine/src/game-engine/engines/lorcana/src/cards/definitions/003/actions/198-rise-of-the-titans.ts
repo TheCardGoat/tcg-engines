@@ -3,7 +3,7 @@ import type {
   LorcanitoActionCard,
 } from "@lorcanito/lorcana-engine";
 
-export const riseOfTheTitans: LorcanitoActionCard = {
+export const riseOfTheTitans: LorcanaActionCardDefinition = {
   id: "ukw",
   name: "Rise of the Titans",
   characteristics: ["action"],

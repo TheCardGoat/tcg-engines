@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const dontLetTheFrostbiteBite: LorcanitoActionCard = {
+export const dontLetTheFrostbiteBite: LorcanaActionCardDefinition = {
   id: "rdl",
   missingTestCase: true,
   name: "Don't Let the Frostbite Bite",

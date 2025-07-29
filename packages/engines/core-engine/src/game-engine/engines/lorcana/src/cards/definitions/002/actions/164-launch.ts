@@ -1,9 +1,9 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
 import type {
   BanishEffect,
   DamageEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const chosenItemOfYours: CardEffectTarget = {
   type: "card",
@@ -24,7 +24,7 @@ const chosenCharacter: CardEffectTarget = {
   ],
 };
 
-export const launch: LorcanitoActionCard = {
+export const launch: LorcanaActionCardDefinition = {
   id: "mu2",
 
   name: "Launch",

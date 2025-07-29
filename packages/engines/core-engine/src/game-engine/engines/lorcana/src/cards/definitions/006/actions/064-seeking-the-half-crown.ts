@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const seekingTheHalfCrown: LorcanitoActionCard = {
+export const seekingTheHalfCrown: LorcanaActionCardDefinition = {
   id: "fdo",
   missingTestCase: true,
   name: "Seeking The Half Crown",

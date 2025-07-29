@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const makeSomeMagic: LorcanitoActionCard = {
+export const makeSomeMagic: LorcanaActionCardDefinition = {
   id: "nle",
   missingTestCase: true,
   name: "Making Magic",

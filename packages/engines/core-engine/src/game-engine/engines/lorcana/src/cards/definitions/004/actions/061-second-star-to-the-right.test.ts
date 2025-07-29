@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { secondStarToTheRight } from "@lorcanito/lorcana-engine/cards/004/actions/actions.ts";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine.ts";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { secondStarToTheRight } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 
 describe("Second Star To The Right", () => {
   it("**Sing Together** 10 _(Any number of your of your teammates' characters with total cost 10 or more may {E} to sing this song for free.)_", async () => {

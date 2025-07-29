@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { wakeUpAliceAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { wakeUpAliceAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const wakeUpAlice: LorcanitoActionCard = {
+export const wakeUpAlice: LorcanaActionCardDefinition = {
   id: "a3c",
   name: "Wake Up, Alice!",
   characteristics: ["action"],

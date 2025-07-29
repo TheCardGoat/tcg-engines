@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-import { energyBlast } from "@lorcanito/lorcana-engine/cards/006";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { energyBlast } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Energy Blast", () => {
   it("Banish chosen character. Draw a card.", async () => {

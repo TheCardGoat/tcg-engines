@@ -10,6 +10,9 @@ export type LorcanaCardDefinition = LorcanitoCard & {
   abilities?: LorcanaAbility[];
 };
 
+export type LorcanaActionCardDefinition = LorcanaCardDefinition;
+export type LorcanaActionCharacterDefinition = LorcanaActionCardDefinition;
+
 export class LorcanaCardRepository extends CardRepository<LorcanaCardDefinition> {
   constructor(dictionary: GameCards) {
     // TODO: Remove this once we have redefined card abilities

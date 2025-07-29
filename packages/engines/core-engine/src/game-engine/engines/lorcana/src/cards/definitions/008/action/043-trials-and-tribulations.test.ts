@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { trialsAndTribulations } from "@lorcanito/lorcana-engine/cards/008/index";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { trialsAndTribulations } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Trials And Tribulations", () => {
   it.skip("(A character with cost 2 or more can {E} to sing this song for free.)", async () => {

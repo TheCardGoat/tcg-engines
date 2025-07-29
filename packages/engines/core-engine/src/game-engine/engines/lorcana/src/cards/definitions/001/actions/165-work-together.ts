@@ -1,7 +1,7 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import { chosenCharacterGainsSupport } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const workTogether: LorcanitoActionCard = {
+export const workTogether: LorcanaActionCardDefinition = {
   id: "cxh",
   name: "Work Together",
   characteristics: ["action"],

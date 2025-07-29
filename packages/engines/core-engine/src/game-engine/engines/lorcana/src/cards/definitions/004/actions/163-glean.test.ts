@@ -1,12 +1,8 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { pawpsicle } from "@lorcanito/lorcana-engine/cards/002/items/items.ts";
-import { glean } from "@lorcanito/lorcana-engine/cards/004/actions/actions.ts";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { glean } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Glean", () => {
   it("Targeting your own card", async () => {

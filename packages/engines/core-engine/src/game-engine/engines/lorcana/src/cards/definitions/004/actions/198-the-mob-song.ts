@@ -4,7 +4,7 @@ import type {
 } from "@lorcanito/lorcana-engine";
 import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 
-export const theMobSong: LorcanitoActionCard = {
+export const theMobSong: LorcanaActionCardDefinition = {
   id: "h6n",
   name: "The Mob Song",
   characteristics: ["action", "song"],

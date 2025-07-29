@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { improvise } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
-import { cinderellaBallroomSensation } from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { improvise } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
+import { cinderellaBallroomSensation } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Improvise", () => {
   it("Chosen character gets +1 {S} this turn. Draw a card.", () => {

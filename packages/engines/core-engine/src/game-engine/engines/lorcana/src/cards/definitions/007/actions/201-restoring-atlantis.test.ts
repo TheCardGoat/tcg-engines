@@ -1,15 +1,11 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   anastasiaBossyStepsister,
   elsaTrustedSister,
   mufasaRespectedKing,
   restoringAtlantis,
-} from "@lorcanito/lorcana-engine/cards/007";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Restoring Atlantis", () => {
   it("Your characters can't be challenged until the start of your next turn.", async () => {

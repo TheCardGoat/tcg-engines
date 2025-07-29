@@ -3,7 +3,7 @@ import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abili
 import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { youPayXLessToPlayNextCharThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const itMeansNoWorries: LorcanitoActionCard = {
+export const itMeansNoWorries: LorcanaActionCardDefinition = {
   id: "u6f",
   name: "It Means No Worries",
   characteristics: ["action", "song"],

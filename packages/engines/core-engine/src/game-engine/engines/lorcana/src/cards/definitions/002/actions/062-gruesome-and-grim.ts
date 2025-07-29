@@ -1,11 +1,11 @@
 import type { TriggeredAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 import { atTheEndOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
 import type {
   AbilityEffect,
   BanishEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const targetTriggerCard: CardEffectTarget = {
   type: "card",
@@ -22,7 +22,7 @@ const atEndOfTurnBanishItself: TriggeredAbility = atTheEndOfYourTurn({
   effects: [banishSelf],
 });
 
-export const gruesomeAndGrim: LorcanitoActionCard = {
+export const gruesomeAndGrim: LorcanaActionCardDefinition = {
   id: "zcv",
   name: "Gruesome And Grim",
   characteristics: ["action", "song"],

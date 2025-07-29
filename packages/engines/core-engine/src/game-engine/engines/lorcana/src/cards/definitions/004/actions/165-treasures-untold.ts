@@ -1,6 +1,6 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 
-export const treasuresUntold: LorcanitoActionCard = {
+export const treasuresUntold: LorcanaActionCardDefinition = {
   id: "pzn",
   name: "Treasures Untold",
   characteristics: ["action", "song"],

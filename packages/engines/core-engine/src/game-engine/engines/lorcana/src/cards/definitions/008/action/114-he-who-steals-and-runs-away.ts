@@ -2,7 +2,7 @@ import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenItem } from "@lorcanito/lorcana-engine/abilities/targets";
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const heWhoStealsAndRunsAway: LorcanitoActionCard = {
+export const heWhoStealsAndRunsAway: LorcanaActionCardDefinition = {
   id: "s8j",
   name: "He Who Steals And Runs Away",
   characteristics: ["action"],

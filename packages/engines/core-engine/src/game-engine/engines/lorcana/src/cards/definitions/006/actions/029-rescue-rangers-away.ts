@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const rescueRangersAway: LorcanitoActionCard = {
+export const rescueRangersAway: LorcanaActionCardDefinition = {
   id: "fhc",
   name: "Rescue Rangers Away!",
   characteristics: ["action"],

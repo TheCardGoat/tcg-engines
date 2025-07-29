@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { onYourFeetNow } from "@lorcanito/lorcana-engine/cards/003/actions/actions.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { onYourFeetNow } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("On Your Feet! Now!", () => {
   it.skip("Ready all your characters and deal 1 damage to each of them. They can't quest for the rest of this turn.", () => {

@@ -8,7 +8,7 @@ import {
   youGainLore,
 } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const iveGotADream: LorcanitoActionCard = {
+export const iveGotADream: LorcanaActionCardDefinition = {
   id: "ntx",
   name: "I've Got a Dream",
   characteristics: ["action", "song"],

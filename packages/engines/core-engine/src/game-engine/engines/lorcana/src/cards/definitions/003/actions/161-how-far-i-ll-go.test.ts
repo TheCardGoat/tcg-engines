@@ -1,16 +1,12 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   chiefTui,
   heiheiBoatSnack,
   moanaOfMotunui,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { shieldOfVirtue } from "@lorcanito/lorcana-engine/cards/001/items/items.ts";
-import { howFarIllGo } from "@lorcanito/lorcana-engine/cards/003/actions/actions.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { shieldOfVirtue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { howFarIllGo } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("How Far I'll Go", () => {
   it("Look at the top 2 cards of your deck. Put one into your hand and the other into your inkwell facedown and exerted.", () => {

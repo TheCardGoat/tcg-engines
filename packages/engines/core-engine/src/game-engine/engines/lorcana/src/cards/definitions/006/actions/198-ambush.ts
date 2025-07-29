@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const ambush: LorcanitoActionCard = {
+export const ambush: LorcanaActionCardDefinition = {
   id: "s1l",
   name: "Ambush!",
   characteristics: ["action"],

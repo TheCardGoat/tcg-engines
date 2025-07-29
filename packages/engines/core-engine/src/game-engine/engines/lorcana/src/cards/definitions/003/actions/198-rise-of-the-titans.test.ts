@@ -1,12 +1,8 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { riseOfTheTitans } from "@lorcanito/lorcana-engine/cards/003/actions/actions.ts";
-import { cleansingRainwater } from "@lorcanito/lorcana-engine/cards/003/items/items.ts";
-import { agrabahMarketplace } from "@lorcanito/lorcana-engine/cards/003/locations/locations.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { riseOfTheTitans } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import { agrabahMarketplace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Rise of the Titans", () => {
   it("Banish chosen item.", () => {

@@ -5,7 +5,7 @@ import {
   youGainLore,
 } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const mostEveryonesMadHere: LorcanitoActionCard = {
+export const mostEveryonesMadHere: LorcanaActionCardDefinition = {
   id: "isu",
   name: "Most Everyone's Mad Here",
   characteristics: ["action"],

@@ -29,7 +29,7 @@ function getEffects(value: "self" | "opponent" | "all"): Effect[] {
   ];
 }
 
-export const beyondTheHorizon: LorcanitoActionCard = {
+export const beyondTheHorizon: LorcanaActionCardDefinition = {
   id: "yv0",
   name: "Beyond The Horizon",
   characteristics: ["action", "song"],

@@ -26,7 +26,7 @@ const lightTheFuseAbility: ResolutionAbility = {
   ],
 };
 
-export const lightTheFuse: LorcanitoActionCard = {
+export const lightTheFuse: LorcanaActionCardDefinition = {
   id: "cep",
   name: "Light The Fuse",
   characteristics: ["action"],

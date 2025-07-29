@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { hotPotato } from "~/game-engine/engines/lorcana/src/cards/definitions/006/actions";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hot Potato", () => {
   it.skip("Choose one:", async () => {

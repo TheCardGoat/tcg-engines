@@ -1,7 +1,7 @@
 import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const developYourBrain: LorcanitoActionCard = {
+export const developYourBrain: LorcanaActionCardDefinition = {
   id: "yy9",
   name: "Develop Your Brain",
   characteristics: ["action"],

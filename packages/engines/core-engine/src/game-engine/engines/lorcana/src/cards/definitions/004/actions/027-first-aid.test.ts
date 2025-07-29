@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { firstAid } from "@lorcanito/lorcana-engine/cards/004/actions/actions.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { firstAid } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("First Aid", () => {
   it.skip("Remove up to 1 damage from each of your characters.", () => {

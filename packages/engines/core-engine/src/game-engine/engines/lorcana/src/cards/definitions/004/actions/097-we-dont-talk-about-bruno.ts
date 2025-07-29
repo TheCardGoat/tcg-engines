@@ -4,7 +4,7 @@ import {
   thisCharacter,
 } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const weDontTalkAboutBruno: LorcanitoActionCard = {
+export const weDontTalkAboutBruno: LorcanaActionCardDefinition = {
   id: "wwi",
   name: "We Don't Talk About Bruno",
   characteristics: ["action", "song"],

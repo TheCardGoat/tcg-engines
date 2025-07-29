@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const foodFight: LorcanitoActionCard = {
+export const foodFight: LorcanaActionCardDefinition = {
   id: "mwi",
   missingTestCase: true,
   name: "Food Fight!",

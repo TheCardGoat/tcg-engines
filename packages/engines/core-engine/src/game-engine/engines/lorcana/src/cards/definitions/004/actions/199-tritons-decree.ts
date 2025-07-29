@@ -1,6 +1,6 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 
-export const tritonsDecree: LorcanitoActionCard = {
+export const tritonsDecree: LorcanaActionCardDefinition = {
   id: "lu9",
   missingTestCase: true,
   name: "Triton's Decree",

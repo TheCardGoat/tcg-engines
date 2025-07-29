@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { imStuck } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
-import { cheshireCatAlwaysGrinning } from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { imStuck } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
+import { cheshireCatAlwaysGrinning } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("I'm Stuck!", () => {
   it("Chosen exerted character can't ready at the start of their next turn.", () => {

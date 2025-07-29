@@ -1,7 +1,7 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const viciousBetrayal: LorcanitoActionCard = {
+export const viciousBetrayal: LorcanaActionCardDefinition = {
   id: "e6i",
   name: "Vicious Betrayal",
   characteristics: ["action"],

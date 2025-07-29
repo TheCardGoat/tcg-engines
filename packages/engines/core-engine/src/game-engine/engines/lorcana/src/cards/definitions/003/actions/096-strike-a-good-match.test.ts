@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { mickeyBraveLittleTailor } from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   quickPatch,
   strikeAGoodMatch,
-} from "@lorcanito/lorcana-engine/cards/003/actions/actions.ts";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
 
 describe("Strike a Good Match", () => {
   it("Draw 2 cards, then choose and discard a card.", async () => {

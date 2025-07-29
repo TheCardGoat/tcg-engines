@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const friendsOnTheOtherSide: LorcanitoActionCard = {
+export const friendsOnTheOtherSide: LorcanaActionCardDefinition = {
   id: "rrg",
   name: "Friends On The Other Side",
   characteristics: ["action", "song"],

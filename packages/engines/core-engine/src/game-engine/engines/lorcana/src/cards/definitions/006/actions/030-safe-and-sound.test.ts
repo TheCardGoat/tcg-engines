@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { safeAndSound } from "~/game-engine/engines/lorcana/src/cards/definitions/006/actions";
-import { goonsMaleficent } from "../../001/characters/characters";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { goonsMaleficent } from "../../001/characters";
 import { thePhantomBlotShadowyFigure } from "../../007";
 
 describe("Safe And Sound", () => {

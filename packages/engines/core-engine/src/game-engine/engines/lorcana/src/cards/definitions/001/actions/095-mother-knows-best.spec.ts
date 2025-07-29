@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { moanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
+import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   letItGo,
   motherKnowsBest,
-} from "@lorcanito/lorcana-engine/cards/001/songs/songs.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mother Knows Best", () => {
   it("Your own card", () => {

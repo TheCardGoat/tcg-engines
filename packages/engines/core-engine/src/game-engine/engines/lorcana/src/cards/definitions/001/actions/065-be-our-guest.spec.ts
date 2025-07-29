@@ -1,23 +1,19 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
 import {
   chiefTui,
   heiheiBoatSnack,
   liloMakingAWish,
   moanaOfMotunui,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   beOurGuest,
   friendsOnTheOtherSide,
   oneJumpAhead,
   reflection,
-} from "@lorcanito/lorcana-engine/cards/001/songs/songs.ts";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
-import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Be Our Guest", () => {
   it("Look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order", async () => {

@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const chosenCharacterOfYour: CardEffectTarget = {
   type: "card",
@@ -20,7 +20,7 @@ const chosenCharacter: CardEffectTarget = {
   ],
 };
 
-export const teethAndAmbitions: LorcanitoActionCard = {
+export const teethAndAmbitions: LorcanaActionCardDefinition = {
   id: "dvr",
 
   name: "Teeth and Ambitions",

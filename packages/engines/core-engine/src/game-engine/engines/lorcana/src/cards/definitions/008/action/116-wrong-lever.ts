@@ -9,7 +9,7 @@ import {
 import type {
   CreateLayerBasedOnTarget,
   MoveCardEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes.ts";
+} from "@lorcanito/lorcana-engine/effects/effectTypes";
 
 const putChosenCharAtTheBottom: CreateLayerBasedOnTarget = {
   type: "create-layer-based-on-target",
@@ -51,7 +51,7 @@ const putAPullTheLeverFromDiscardToBottom: MoveCardEffect = {
   forEach: [putChosenCharAtTheBottom],
 };
 
-export const wrongLeverAction: LorcanitoActionCard = {
+export const wrongLeverAction: LorcanaActionCardDefinition = {
   id: "g9i",
   name: "Wrong Lever!",
   characteristics: ["action"],

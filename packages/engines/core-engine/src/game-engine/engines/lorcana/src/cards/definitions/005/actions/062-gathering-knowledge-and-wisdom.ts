@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const gatheringKnowledgeAndWisdom: LorcanitoActionCard = {
+export const gatheringKnowledgeAndWisdom: LorcanaActionCardDefinition = {
   id: "uuj",
   name: "Gathering Knowledge And Wisdom",
   characteristics: ["action"],

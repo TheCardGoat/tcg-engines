@@ -8,7 +8,7 @@ import {
   self,
 } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const NnPuppies: LorcanitoActionCard = {
+export const NnPuppies: LorcanaActionCardDefinition = {
   id: "cba",
   name: "99 Puppies",
   characteristics: ["action"],

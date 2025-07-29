@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const fireTheCannons: LorcanitoActionCard = {
+export const fireTheCannons: LorcanaActionCardDefinition = {
   id: "lhl",
   name: "Fire the Cannons!",
   characteristics: ["action"],

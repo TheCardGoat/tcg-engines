@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const befuddle: LorcanitoActionCard = {
+export const befuddle: LorcanaActionCardDefinition = {
   id: "teb",
   name: "Befuddle",
   characteristics: ["action"],

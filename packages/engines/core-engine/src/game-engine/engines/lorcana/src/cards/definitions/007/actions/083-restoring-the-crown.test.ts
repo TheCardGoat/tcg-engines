@@ -1,7 +1,3 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   edgarBalthazarAmbitiousButler,
@@ -10,8 +6,8 @@ import {
   restoringTheCrown,
   scroogeMcduckResourcefulMiser,
   yokaiIntellectualSchemer,
-} from "@lorcanito/lorcana-engine/cards/007";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Restoring The Crown", () => {
   it("Exert all opposing characters. Whenever one of your characters banishes another character in a challenge this turn, gain 2 lore.", async () => {

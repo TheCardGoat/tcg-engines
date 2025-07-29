@@ -39,7 +39,7 @@ const ability: ResolutionAbility = {
   effects: [...readyAndCantQuest(allYourCharacters), gainsDamageProtection],
 };
 
-export const nothingWeWontDo: LorcanitoActionCard = {
+export const nothingWeWontDo: LorcanaActionCardDefinition = {
   id: "pm2",
   name: "Nothing We Won't Do",
   characteristics: ["action", "song"],

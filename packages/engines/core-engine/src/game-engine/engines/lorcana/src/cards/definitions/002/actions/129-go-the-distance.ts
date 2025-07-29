@@ -1,13 +1,13 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 import type { PlayerEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const self: PlayerEffectTarget = {
   type: "player",
   value: "self",
 };
 
-export const goTheDistance: LorcanitoActionCard = {
+export const goTheDistance: LorcanaActionCardDefinition = {
   id: "k1y",
 
   name: "Go the Distance",

@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const duckForCover: LorcanitoActionCard = {
+export const duckForCover: LorcanaActionCardDefinition = {
   id: "jqo",
   name: "Duck for Cover!",
   characteristics: ["action"],

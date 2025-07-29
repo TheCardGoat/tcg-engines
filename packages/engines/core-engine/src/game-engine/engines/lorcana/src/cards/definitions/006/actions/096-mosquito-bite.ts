@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const mosquitoBite: LorcanitoActionCard = {
+export const mosquitoBite: LorcanaActionCardDefinition = {
   id: "zw6",
   name: "Mosquito Bite",
   characteristics: ["action"],

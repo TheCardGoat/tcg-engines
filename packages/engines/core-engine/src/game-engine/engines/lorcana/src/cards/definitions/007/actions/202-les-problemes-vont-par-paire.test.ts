@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   aladdinHeroicOutlaw,
   moanaOfMotunui,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-import { doubleTrouble } from "@lorcanito/lorcana-engine/cards/007/index";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { doubleTrouble } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Les Problemes Vont Par Paire", () => {
   it("Deal 1 damage to up to 2 chosen characters", async () => {

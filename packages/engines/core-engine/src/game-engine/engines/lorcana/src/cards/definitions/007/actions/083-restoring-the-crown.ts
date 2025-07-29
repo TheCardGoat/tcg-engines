@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { restoringTheCrownAbilities } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { restoringTheCrownAbilities } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const restoringTheCrown: LorcanitoActionCard = {
+export const restoringTheCrown: LorcanaActionCardDefinition = {
   id: "oyt",
   name: "Restoring The Crown",
   characteristics: ["action"],

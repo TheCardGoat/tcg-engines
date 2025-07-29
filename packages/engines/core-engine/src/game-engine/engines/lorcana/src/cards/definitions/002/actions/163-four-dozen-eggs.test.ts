@@ -1,12 +1,8 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { fourDozenEggs } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
-import { owlLogicalLecturer } from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { fourDozenEggs } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
+import { owlLogicalLecturer } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Four Dozen Eggs", () => {
   it("Your characters gain **Resist** +2 until the start of your next turn. _(Damage dealt to them is reduced by 2.)_", () => {

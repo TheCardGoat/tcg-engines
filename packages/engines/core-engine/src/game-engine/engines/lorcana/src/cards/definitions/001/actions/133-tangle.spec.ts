@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { tangle } from "@lorcanito/lorcana-engine/cards/001/actions/actions.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { tangle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Tangle", () => {
   it("Each opponent loses 1 lore.", () => {

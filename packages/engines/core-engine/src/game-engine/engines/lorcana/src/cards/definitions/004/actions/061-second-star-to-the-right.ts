@@ -3,7 +3,7 @@ import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abili
 import { chosenPlayer } from "@lorcanito/lorcana-engine/abilities/targets";
 import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const secondStarToTheRight: LorcanitoActionCard = {
+export const secondStarToTheRight: LorcanaActionCardDefinition = {
   id: "k7z",
   missingTestCase: true,
   name: "Second Star To The Right",

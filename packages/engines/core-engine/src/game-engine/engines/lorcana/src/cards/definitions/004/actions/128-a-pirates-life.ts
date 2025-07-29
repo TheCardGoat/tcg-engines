@@ -2,7 +2,7 @@ import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 import { opponent, self } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const aPiratesLife: LorcanitoActionCard = {
+export const aPiratesLife: LorcanaActionCardDefinition = {
   id: "u5v",
   name: "A Pirate's Life",
   characteristics: ["action", "song"],

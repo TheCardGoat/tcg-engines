@@ -1,18 +1,14 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   liloMakingAWish,
   mickeyMouseDetective,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   dalmatianPuppyTailWagger,
   fantasticalAndMagical,
   puaProtectivePig,
-} from "@lorcanito/lorcana-engine/cards/008";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Fantastical And Magical", () => {
   it("Sing Together 9 (Any number of your or your teammates' characters with total cost 9 or more may {E} to sing this song for free.)", async () => {

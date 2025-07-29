@@ -8,7 +8,7 @@ import {
   drawXCards,
 } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const ursulasTrickery: LorcanitoActionCard = {
+export const ursulasTrickery: LorcanaActionCardDefinition = {
   id: "fr4",
   missingTestCase: true,
   name: "Ursula's Trickery",

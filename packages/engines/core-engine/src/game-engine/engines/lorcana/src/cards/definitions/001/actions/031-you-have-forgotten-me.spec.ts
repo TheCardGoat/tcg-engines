@@ -1,16 +1,12 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { youHaveForgottenMe } from "@lorcanito/lorcana-engine/cards/001/actions/actions.ts";
+import { youHaveForgottenMe } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   aladdinHeroicOutlaw,
   heiheiBoatSnack,
   magicBroomBucketBrigade,
   mickeyMouseTrueFriend,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("You Have Forgotten Me", () => {
   it("discard 2 cards", () => {

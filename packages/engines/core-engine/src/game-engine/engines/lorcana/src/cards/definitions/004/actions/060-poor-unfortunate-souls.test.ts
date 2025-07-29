@@ -1,12 +1,8 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { simbaProtectiveCub } from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { shieldOfVirtue } from "@lorcanito/lorcana-engine/cards/001/items/items.ts";
-import { poorUnfortunateSouls } from "@lorcanito/lorcana-engine/cards/004/actions/actions.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { simbaProtectiveCub } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { shieldOfVirtue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { poorUnfortunateSouls } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Poor Unfortunate Souls", () => {
   it("_(A character with cost 2 or more can {E} to sing this song for free.)_Return a character, item or location with cost 2 or less to their player's hand.", () => {

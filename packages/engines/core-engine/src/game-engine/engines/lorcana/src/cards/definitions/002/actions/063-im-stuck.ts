@@ -1,7 +1,7 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import { exertedCharCantReadyNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const imStuck: LorcanitoActionCard = {
+export const imStuck: LorcanaActionCardDefinition = {
   id: "t6t",
 
   name: "I'm Stuck!",

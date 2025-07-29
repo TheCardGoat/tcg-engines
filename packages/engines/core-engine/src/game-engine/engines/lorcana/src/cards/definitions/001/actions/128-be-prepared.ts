@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const bePrepared: LorcanitoActionCard = {
+export const bePrepared: LorcanaActionCardDefinition = {
   id: "z06",
   name: "Be Prepared",
   characteristics: ["action", "song"],

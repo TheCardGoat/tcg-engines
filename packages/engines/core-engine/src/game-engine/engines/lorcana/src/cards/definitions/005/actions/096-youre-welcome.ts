@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const youreWelcome: LorcanitoActionCard = {
+export const youreWelcome: LorcanaActionCardDefinition = {
   id: "tri",
   name: "You're Welcome",
   characteristics: ["action", "song"],

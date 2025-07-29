@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   generalLiHeadOfTheImperialArmy,
   jumbaJookibaCriticalScientist,
   theyNeverComeBack,
-} from "@lorcanito/lorcana-engine/cards/008";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("They Never Come Back", () => {
   it("Up to 2 chosen characters can’t ready at the start of their next turn. Draw a card.", async () => {

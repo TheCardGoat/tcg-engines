@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const showTheWay: LorcanitoActionCard = {
+export const showTheWay: LorcanaActionCardDefinition = {
   id: "lfi",
   missingTestCase: true,
   name: "Lead The Way",

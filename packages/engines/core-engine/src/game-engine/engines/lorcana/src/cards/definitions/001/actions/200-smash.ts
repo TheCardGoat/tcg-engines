@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const smash: LorcanitoActionCard = {
+export const smash: LorcanaActionCardDefinition = {
   id: "ub4",
   name: "Smash",
   characteristics: ["action"],

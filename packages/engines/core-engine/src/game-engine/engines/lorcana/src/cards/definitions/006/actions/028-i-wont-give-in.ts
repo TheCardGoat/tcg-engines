@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const iWontGiveIn: LorcanitoActionCard = {
+export const iWontGiveIn: LorcanaActionCardDefinition = {
   id: "ke2",
   missingTestCase: true,
   name: "I Won't Give In",

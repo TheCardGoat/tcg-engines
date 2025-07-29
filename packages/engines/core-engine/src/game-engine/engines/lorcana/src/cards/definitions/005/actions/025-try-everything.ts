@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const tryEverything: LorcanitoActionCard = {
+export const tryEverything: LorcanaActionCardDefinition = {
   id: "vjj",
   missingTestCase: true,
   name: "Try Everything",

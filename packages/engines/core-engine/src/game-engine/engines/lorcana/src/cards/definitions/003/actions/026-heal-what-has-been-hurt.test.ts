@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { healWhatHasBeenHurt } from "@lorcanito/lorcana-engine/cards/003/actions/actions.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { healWhatHasBeenHurt } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Heal What Has Been Hurt", () => {
   it("_(A character with cost 3 or more can {E} to sing this song for free.)_ Remove up to 3 damage from chosen character. Draw a card.", () => {

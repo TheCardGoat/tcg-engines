@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { thisIsMyFamilyAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { thisIsMyFamilyAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const thisIsMyFamily: LorcanitoActionCard = {
+export const thisIsMyFamily: LorcanaActionCardDefinition = {
   id: "nk5",
   name: "This Is My Family",
   characteristics: ["action", "song"],

@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { restoringTheHeartAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { restoringTheHeartAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const restoringTheHeart: LorcanitoActionCard = {
+export const restoringTheHeart: LorcanaActionCardDefinition = {
   id: "gk9",
   name: "Restoring The Heart",
   characteristics: ["action"],

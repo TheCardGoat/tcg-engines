@@ -1,7 +1,3 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   beyondTheHorizon,
@@ -9,8 +5,8 @@ import {
   louisEndearingAlligator,
   madDogKarnagesFirstMate,
   napoleonCleverBloodhound,
-} from "@lorcanito/lorcana-engine/cards/008";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Beyond The Horizon", () => {
   it("Sing Together 7 (Any number of your or your teammates' characters with total cost 7 or more may {E} to sing this song for free.)", async () => {

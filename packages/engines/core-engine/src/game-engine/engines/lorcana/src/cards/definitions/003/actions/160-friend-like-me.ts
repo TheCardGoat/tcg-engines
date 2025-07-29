@@ -4,7 +4,7 @@ import {
   topCardOfYourDeck,
 } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const friendLikeMe: LorcanitoActionCard = {
+export const friendLikeMe: LorcanaActionCardDefinition = {
   id: "dje",
   name: "Friend Like Me",
   characteristics: ["action", "song"],

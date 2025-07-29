@@ -1,13 +1,9 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { peterPansShadowNotSewnOn } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-import { peteBornToCheat } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-import { petePastryChomper } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+import { peterPansShadowNotSewnOn } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { peteBornToCheat } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { blastFromYourPast } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import { petePastryChomper } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 
 describe("Blast From Your Past", () => {
   it("Name a card. Return all character cards with that name from your discard to your hand.", () => {

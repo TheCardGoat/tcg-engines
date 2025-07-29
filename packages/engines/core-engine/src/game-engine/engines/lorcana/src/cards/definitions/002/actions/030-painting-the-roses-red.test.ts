@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { paintingTheRosesRed } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
+import { paintingTheRosesRed } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import {
   dopeyAlwaysPlayful,
   eudoraAccomplishedSeamstress,
-} from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Painting the Roses Red", () => {
   describe("Up to 2 chosen characters get -1 {S} this turn. Draw a card.", () => {

@@ -1,17 +1,13 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
+import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+import { royalTantrum } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import {
   amberChromiconItem,
   halfHexwellCrown,
   healingDecanterItem,
   queensSensorCoreItem,
   retrosphere,
-} from "@lorcanito/lorcana-engine/cards/005/items/items";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
-import { royalTantrum } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
 
 describe("Royal Tantrum", () => {
   describe("Banish any number of your items, then draw a card for each item banished this way.", () => {

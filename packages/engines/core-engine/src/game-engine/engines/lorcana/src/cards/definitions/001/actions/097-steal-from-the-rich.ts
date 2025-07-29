@@ -1,9 +1,9 @@
 import type { Trigger } from "@lorcanito/lorcana-engine";
 import type { FloatingTriggeredAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { LoreEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const stealFromRich: LorcanitoActionCard = {
+export const stealFromRich: LorcanaActionCardDefinition = {
   id: "wje",
   name: "Steal from the Rich",
   characteristics: ["action"],

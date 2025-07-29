@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { teethAndAmbitions } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
+import { teethAndAmbitions } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import {
   donaldDuckNotAgain,
   goofyKnightForADay,
-} from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Teeth and Ambitions", () => {
   it("Deal 2 damage to chosen character of yours to deal 2 damage to another chosen character.", () => {

@@ -1,8 +1,8 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type {
   CardEffectTarget,
   PlayerEffectTarget,
 } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const chosenCharacter: CardEffectTarget = {
   type: "card",
@@ -22,7 +22,7 @@ const drawACard = {
   } as PlayerEffectTarget,
 };
 
-export const letTheStormRageOn: LorcanitoActionCard = {
+export const letTheStormRageOn: LorcanaActionCardDefinition = {
   id: "dlc",
   name: "Let the Storm Rage On",
   characteristics: ["action", "song"],

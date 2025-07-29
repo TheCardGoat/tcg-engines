@@ -1,13 +1,10 @@
-/**
- * @jest-environment node
- */
 import { describe, expect, it } from "bun:test";
-import { viciousBetrayal } from "@lorcanito/lorcana-engine/cards/001/actions/actions.ts";
+import { viciousBetrayal } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   moanaOfMotunui,
   teKaTheBurningOne,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Vicious Betrayal", () => {
   it("[Non Villain] Chosen character gets +2 {S} this turn.", () => {

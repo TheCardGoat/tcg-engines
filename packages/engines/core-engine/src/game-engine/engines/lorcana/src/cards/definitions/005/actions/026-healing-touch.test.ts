@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { healingTouch } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 
 describe("Healing Touch", () => {

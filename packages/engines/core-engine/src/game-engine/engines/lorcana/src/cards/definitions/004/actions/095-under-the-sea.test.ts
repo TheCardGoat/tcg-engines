@@ -1,18 +1,14 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   heiheiBoatSnack,
   minnieMouseBelovedPrincess,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { underTheSea } from "@lorcanito/lorcana-engine/cards/004/actions/actions.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { underTheSea } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import {
   agustinMadrigalClumsyDad,
   arielSingingMermaid,
-} from "@lorcanito/lorcana-engine/cards/004/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Under The Sea", () => {
   it("Put all opposing characters with 2 {S} or less on the bottom of their players' decks in any order.", () => {

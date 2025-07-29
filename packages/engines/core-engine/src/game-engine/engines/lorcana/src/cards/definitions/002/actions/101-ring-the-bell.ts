@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const chosenDamagedCharacter: CardEffectTarget = {
   type: "card",
@@ -15,7 +15,7 @@ const chosenDamagedCharacter: CardEffectTarget = {
   ],
 };
 
-export const ringTheBell: LorcanitoActionCard = {
+export const ringTheBell: LorcanaActionCardDefinition = {
   id: "bvn",
 
   name: "Ring The Bell",

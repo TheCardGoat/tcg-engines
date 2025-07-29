@@ -1,12 +1,8 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { andThenAlongCameZeus } from "@lorcanito/lorcana-engine/cards/003/actions/actions.ts";
-import { starkeyDeviousPirate } from "@lorcanito/lorcana-engine/cards/003/characters/characters.ts";
-import { forbiddenMountainMaleficentsCastle } from "@lorcanito/lorcana-engine/cards/003/locations/locations.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { andThenAlongCameZeus } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import { starkeyDeviousPirate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { forbiddenMountainMaleficentsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("And Then Along Came Zeus", () => {
   describe("_(A character with cost 4 or more can {E} to sing this song for free.)_Deal 5 damage to chosen character or location.", () => {});

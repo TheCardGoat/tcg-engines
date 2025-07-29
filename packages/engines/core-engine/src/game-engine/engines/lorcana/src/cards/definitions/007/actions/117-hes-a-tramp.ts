@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { hesATrampAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { hesATrampAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const hesATramp: LorcanitoActionCard = {
+export const hesATramp: LorcanaActionCardDefinition = {
   id: "s0z",
   name: "He's A Tramp",
   characteristics: ["action", "song"],

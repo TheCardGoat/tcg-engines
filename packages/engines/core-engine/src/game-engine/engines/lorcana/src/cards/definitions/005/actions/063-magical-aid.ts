@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const magicalAid: LorcanitoActionCard = {
+export const magicalAid: LorcanaActionCardDefinition = {
   id: "sx8",
   name: "Magical Aid",
   characteristics: ["action"],

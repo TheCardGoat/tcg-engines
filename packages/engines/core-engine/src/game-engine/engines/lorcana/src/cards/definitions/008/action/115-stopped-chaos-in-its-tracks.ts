@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 
-export const stoppedChaosInItsTracks: LorcanitoActionCard = {
+export const stoppedChaosInItsTracks: LorcanaActionCardDefinition = {
   id: "cm3",
   name: "Stopped Chaos In Its Tracks",
   characteristics: ["action", "song"],

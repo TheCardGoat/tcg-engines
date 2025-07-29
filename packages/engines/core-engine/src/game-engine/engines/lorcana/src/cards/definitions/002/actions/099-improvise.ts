@@ -1,4 +1,4 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const chosenCharacter = {
   type: "card" as const,
@@ -13,7 +13,7 @@ const self = {
   value: "self" as const,
 };
 
-export const improvise: LorcanitoActionCard = {
+export const improvise: LorcanaActionCardDefinition = {
   id: "m0h",
 
   name: "Improvise",

@@ -1,15 +1,11 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   mickeyBraveLittleTailor,
   mickeyMouseArtfulRogue,
   mickeyMouseTrueFriend,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { nothingToHide } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { nothingToHide } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Nothing to Hide", () => {
   it("Each opponent reveals their hand. Draw a card.", () => {

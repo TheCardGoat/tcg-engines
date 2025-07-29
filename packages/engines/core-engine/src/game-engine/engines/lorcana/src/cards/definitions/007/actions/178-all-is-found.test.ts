@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { arielSpectacularSinger } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+import { arielSpectacularSinger } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   allIsFound,
   scroogeMcduckResourcefulMiser,
-} from "@lorcanito/lorcana-engine/cards/007";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("All Is Found", () => {
   it("Put up to 2 cards from your discard into your inkwell, facedown and exerted", async () => {

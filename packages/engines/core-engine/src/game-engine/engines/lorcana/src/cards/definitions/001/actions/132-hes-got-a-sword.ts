@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const hesGotASword: LorcanitoActionCard = {
+export const hesGotASword: LorcanaActionCardDefinition = {
   id: "wmw",
   name: "He's Got a Sword!",
   characteristics: ["action"],

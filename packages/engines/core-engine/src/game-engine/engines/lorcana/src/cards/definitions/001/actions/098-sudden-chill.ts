@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const suddenChill: LorcanitoActionCard = {
+export const suddenChill: LorcanaActionCardDefinition = {
   id: "pz4",
   name: "Sudden Chill",
   characteristics: ["action", "song"],

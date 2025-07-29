@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { goofyExpertShipwright } from "@lorcanito/lorcana-engine/cards/006";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { goofyExpertShipwright } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { youCameBack } from "~/game-engine/engines/lorcana/src/cards/definitions/006/actions";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("You Came Back", () => {
   it("Ready chosen character.", async () => {

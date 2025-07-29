@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { brawl } from "@lorcanito/lorcana-engine/cards/004/actions/actions.ts";
-import { daisyDuckLovelyLady } from "@lorcanito/lorcana-engine/cards/004/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { brawl } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
+import { daisyDuckLovelyLady } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Brawl", () => {
   it("Banish chosen character with 2 {S} or less.", () => {

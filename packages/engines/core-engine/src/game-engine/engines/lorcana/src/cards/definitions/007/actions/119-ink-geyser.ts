@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { inkGeyserAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { inkGeyserAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const inkGeyser: LorcanitoActionCard = {
+export const inkGeyser: LorcanaActionCardDefinition = {
   id: "jvg",
   name: "Ink Geyser",
   characteristics: ["action"],

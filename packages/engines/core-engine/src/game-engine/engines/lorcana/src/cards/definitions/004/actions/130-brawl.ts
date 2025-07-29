@@ -1,6 +1,6 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 
-export const brawl: LorcanitoActionCard = {
+export const brawl: LorcanaActionCardDefinition = {
   id: "wsx",
   name: "Brawl",
   characteristics: ["action"],

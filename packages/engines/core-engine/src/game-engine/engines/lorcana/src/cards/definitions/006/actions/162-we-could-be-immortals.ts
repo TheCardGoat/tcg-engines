@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const weCouldBeImmortals: LorcanitoActionCard = {
+export const weCouldBeImmortals: LorcanaActionCardDefinition = {
   id: "nb5",
   name: "We Could Be Immortals",
   characteristics: ["action", "song"],

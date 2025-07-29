@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { cinderellaBallroomSensation } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-import { intoTheUnknown } from "@lorcanito/lorcana-engine/cards/008/index";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { cinderellaBallroomSensation } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { intoTheUnknown } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Into The Unknown", () => {
   it("(A character with cost 3 or more can {E} to sing this song for free.)", async () => {

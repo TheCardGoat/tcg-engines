@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const glimmerVsGlimmer: LorcanitoActionCard = {
+export const glimmerVsGlimmer: LorcanaActionCardDefinition = {
   id: "opx",
   missingTestCase: true,
   name: "Glimmer VS Glimmer",

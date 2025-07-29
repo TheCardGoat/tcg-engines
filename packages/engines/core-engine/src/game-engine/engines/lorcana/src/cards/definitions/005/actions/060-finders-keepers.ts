@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const findersKeepers: LorcanitoActionCard = {
+export const findersKeepers: LorcanaActionCardDefinition = {
   id: "ko3",
   missingTestCase: true,
   name: "Finders Keepers",

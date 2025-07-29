@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const everAsBefore: LorcanitoActionCard = {
+export const everAsBefore: LorcanaActionCardDefinition = {
   id: "nlq",
   missingTestCase: true,
   name: "Ever as Before",

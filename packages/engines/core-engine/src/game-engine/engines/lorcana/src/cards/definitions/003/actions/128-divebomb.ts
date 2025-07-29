@@ -1,6 +1,6 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 
-export const divebomb: LorcanitoActionCard = {
+export const divebomb: LorcanaActionCardDefinition = {
   id: "zm8",
   missingTestCase: true,
   name: "Divebomb",

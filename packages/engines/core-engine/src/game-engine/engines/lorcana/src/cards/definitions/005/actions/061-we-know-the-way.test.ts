@@ -1,17 +1,13 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   liloGalacticHero,
   liloMakingAWish,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-import { rapunzelAppreciativeArtist } from "@lorcanito/lorcana-engine/cards/004/characters/characters";
-import { liloJuniorCakeDecorator } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-import { liloEscapeArtist } from "@lorcanito/lorcana-engine/cards/006";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { rapunzelAppreciativeArtist } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { weKnowTheWay } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import { liloJuniorCakeDecorator } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
+import { liloEscapeArtist } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("We Know The Way", () => {
   describe("Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.", () => {

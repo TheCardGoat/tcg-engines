@@ -2,7 +2,7 @@ import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const theBossIsOnARoll: LorcanitoActionCard = {
+export const theBossIsOnARoll: LorcanaActionCardDefinition = {
   id: "lfb",
   missingTestCase: true,
   name: "The Boss Is on a Roll",

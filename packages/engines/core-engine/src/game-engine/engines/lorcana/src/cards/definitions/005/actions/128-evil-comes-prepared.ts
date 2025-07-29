@@ -33,7 +33,7 @@ const evilComesEffect: TargetConditionalEffect = {
   target: targetingVillain,
 };
 
-export const evilComesPrepared: LorcanitoActionCard = {
+export const evilComesPrepared: LorcanaActionCardDefinition = {
   id: "xc5",
   missingTestCase: true,
   name: "Evil Comes Prepared",

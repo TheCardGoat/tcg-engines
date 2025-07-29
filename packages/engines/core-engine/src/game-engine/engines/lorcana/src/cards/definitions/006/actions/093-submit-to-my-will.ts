@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const submitToMyWill: LorcanitoActionCard = {
+export const submitToMyWill: LorcanaActionCardDefinition = {
   id: "k46",
   missingTestCase: true,
   name: "Bend To My Will",

@@ -1,10 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { headsHeldHigh } from "@lorcanito/lorcana-engine/cards/008/index";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { headsHeldHigh } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Heads Held High", () => {
   it.skip("Sing Together 6 (Any number of your or your teammates' characters with total cost 6 or more may {E} sing this song for free.) ", async () => {

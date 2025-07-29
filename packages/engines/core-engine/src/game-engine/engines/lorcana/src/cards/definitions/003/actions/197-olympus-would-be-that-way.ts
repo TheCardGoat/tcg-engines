@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { yourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const olympusWouldBeThatWay: LorcanitoActionCard = {
+export const olympusWouldBeThatWay: LorcanaActionCardDefinition = {
   id: "w88",
   name: "Olympus Would Be That Way",
   characteristics: ["action"],

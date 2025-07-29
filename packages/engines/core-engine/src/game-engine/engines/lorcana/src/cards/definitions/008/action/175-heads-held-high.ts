@@ -2,7 +2,7 @@ import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 import { allOpposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const headsHeldHigh: LorcanitoActionCard = {
+export const headsHeldHigh: LorcanaActionCardDefinition = {
   id: "tfh",
   missingTestCase: true,
   name: "Heads Held High",

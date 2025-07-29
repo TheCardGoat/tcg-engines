@@ -3,7 +3,7 @@ import type {
   LorcanitoActionCard,
 } from "@lorcanito/lorcana-engine";
 
-export const baBoom: LorcanitoActionCard = {
+export const baBoom: LorcanaActionCardDefinition = {
   id: "oaj",
   name: "Ba-Boom!",
   characteristics: ["action"],

@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const whosWithMe: LorcanitoActionCard = {
+export const whosWithMe: LorcanaActionCardDefinition = {
   id: "hlq",
   missingTestCase: true,
   name: "Who's With Me?",

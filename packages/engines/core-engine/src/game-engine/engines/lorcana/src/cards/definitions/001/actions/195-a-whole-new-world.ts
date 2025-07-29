@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const aWholeNewWorld: LorcanitoActionCard = {
+export const aWholeNewWorld: LorcanaActionCardDefinition = {
   id: "u8m",
   name: "A Whole New World",
   characteristics: ["action", "song"],

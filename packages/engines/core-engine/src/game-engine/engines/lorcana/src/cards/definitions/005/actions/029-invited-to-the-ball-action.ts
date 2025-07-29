@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const invitedToTheBallAction: LorcanitoActionCard = {
+export const invitedToTheBallAction: LorcanaActionCardDefinition = {
   id: "lnv",
   missingTestCase: true,
   name: "Invited to the Ball",

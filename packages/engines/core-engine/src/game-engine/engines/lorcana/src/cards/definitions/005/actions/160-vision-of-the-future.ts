@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const visionOfTheFuture: LorcanitoActionCard = {
+export const visionOfTheFuture: LorcanaActionCardDefinition = {
   id: "aks",
   missingTestCase: true,
   name: "Vision of the Future",

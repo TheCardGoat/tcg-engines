@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { mickeyMouseMusketeer } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+import { mickeyMouseMusketeer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   mickeyMouseGiantMouse,
   shesYourPerson,
-} from "@lorcanito/lorcana-engine/cards/008";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("She's Your Person", () => {
   describe("Choose one:", () => {

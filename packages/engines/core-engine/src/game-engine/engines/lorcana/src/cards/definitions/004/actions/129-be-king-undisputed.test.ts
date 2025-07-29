@@ -1,12 +1,8 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { princeJohnGreediestOfAll } from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { beKingUndisputed } from "@lorcanito/lorcana-engine/cards/004/actions/actions.ts";
-import { magicBroomLivelySweeper } from "@lorcanito/lorcana-engine/cards/004/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { princeJohnGreediestOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { beKingUndisputed } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
+import { magicBroomLivelySweeper } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Be King Undisputed", () => {
   it("Each opponent chooses and banishes one of their characters.", () => {

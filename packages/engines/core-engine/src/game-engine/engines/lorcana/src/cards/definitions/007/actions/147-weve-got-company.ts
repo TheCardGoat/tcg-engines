@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { weveGotCompanyAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { weveGotCompanyAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const weveGotCompany: LorcanitoActionCard = {
+export const weveGotCompany: LorcanaActionCardDefinition = {
   id: "vhs",
   name: "We've Got Company!",
   characteristics: ["action"],

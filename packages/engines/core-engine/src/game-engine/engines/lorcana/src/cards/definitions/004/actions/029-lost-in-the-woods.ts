@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { allOpposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const lostInTheWoods: LorcanitoActionCard = {
+export const lostInTheWoods: LorcanaActionCardDefinition = {
   id: "p0f",
   name: "Lost in the Woods",
   characteristics: ["action", "song"],

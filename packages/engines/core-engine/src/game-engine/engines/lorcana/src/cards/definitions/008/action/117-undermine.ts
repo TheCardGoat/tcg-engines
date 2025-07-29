@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const undermine: LorcanitoActionCard = {
+export const undermine: LorcanaActionCardDefinition = {
   id: "hbl",
   missingTestCase: true,
   name: "Undermine",

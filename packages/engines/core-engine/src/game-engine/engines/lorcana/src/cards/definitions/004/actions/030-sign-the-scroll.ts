@@ -52,7 +52,7 @@ const abilitySignTheScroll: ResolutionAbility = {
   ],
 };
 
-export const signTheScroll: LorcanitoActionCard = {
+export const signTheScroll: LorcanaActionCardDefinition = {
   id: "x7p",
   missingTestCase: true,
   name: "Sign The Scroll",

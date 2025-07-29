@@ -17,7 +17,7 @@ const targetHero = {
   ],
 };
 
-export const oneLastHope: LorcanitoActionCard = {
+export const oneLastHope: LorcanaActionCardDefinition = {
   id: "b2r",
   name: "One Last Hope",
   characteristics: ["action", "song"],

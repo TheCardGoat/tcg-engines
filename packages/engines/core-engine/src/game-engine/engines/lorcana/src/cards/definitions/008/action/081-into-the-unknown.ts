@@ -2,7 +2,7 @@ import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenExertedCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { putTargetCardIntoTheirInkwell } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const intoTheUnknown: LorcanitoActionCard = {
+export const intoTheUnknown: LorcanaActionCardDefinition = {
   id: "rhd",
   name: "Into The Unknown",
   characteristics: ["action", "song"],

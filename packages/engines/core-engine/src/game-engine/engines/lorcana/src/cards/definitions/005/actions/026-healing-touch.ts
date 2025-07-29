@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const healingTouch: LorcanitoActionCard = {
+export const healingTouch: LorcanaActionCardDefinition = {
   id: "i7a",
   name: "Healing Touch",
   characteristics: ["action"],

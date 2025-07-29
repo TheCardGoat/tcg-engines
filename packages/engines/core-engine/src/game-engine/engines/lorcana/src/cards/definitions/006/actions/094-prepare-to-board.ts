@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const prepareToBoard: LorcanitoActionCard = {
+export const prepareToBoard: LorcanaActionCardDefinition = {
   id: "xwq",
   name: "Prepare To Board!",
   characteristics: ["action"],

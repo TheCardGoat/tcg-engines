@@ -1,7 +1,7 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const fanTheFlames: LorcanitoActionCard = {
+export const fanTheFlames: LorcanaActionCardDefinition = {
   id: "afx",
   name: "Fan The Flames",
   characteristics: ["action"],

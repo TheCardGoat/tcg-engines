@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { goonsMaleficent } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { goonsMaleficent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { findersKeepers } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Finders Keepers", () => {
   it("Draw 3 cards.", () => {

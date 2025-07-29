@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { exertedSelfCharCantReadyNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const ursulasPlan: LorcanitoActionCard = {
+export const ursulasPlan: LorcanaActionCardDefinition = {
   id: "qk9",
   missingTestCase: true,
   name: "Ursula's Plan",

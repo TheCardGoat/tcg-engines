@@ -1,9 +1,5 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { zeroToHero } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
+import { zeroToHero } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import {
   arthurTrainedSwordsman,
   cheshireCatAlwaysGrinning,
@@ -12,12 +8,12 @@ import {
   littleJohnLoyalFriend,
   rabbitReluctantHost,
   ratiganCriminalMastermind,
-} from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   fangCrossbow,
   pawpsicle,
-} from "@lorcanito/lorcana-engine/cards/002/items/items.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Zero To Hero", () => {
   describe("Count the number of characters you have in play. You pay that amount of {I} less for the next character you play this turn.", () => {

@@ -1,6 +1,6 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 
-export const touchedMyHeart: LorcanitoActionCard = {
+export const touchedMyHeart: LorcanaActionCardDefinition = {
   id: "ee8",
   name: "Has Set My Heaaaaaaart ...",
   characteristics: ["action", "song"],

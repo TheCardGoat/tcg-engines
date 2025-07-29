@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { dingleHopper } from "@lorcanito/lorcana-engine/cards/001/items/items.ts";
-import { oneJumpAhead } from "@lorcanito/lorcana-engine/cards/001/songs/songs.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { oneJumpAhead } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("One Jump Ahead", () => {
   it("Put the top card of your deck into your inkwell facedown and exerted.", () => {

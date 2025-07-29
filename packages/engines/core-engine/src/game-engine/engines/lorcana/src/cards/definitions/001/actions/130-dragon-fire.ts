@@ -1,8 +1,8 @@
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import { mayBanish } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const dragonFire: LorcanitoActionCard = {
+export const dragonFire: LorcanaActionCardDefinition = {
   id: "buy",
   name: "Dragon Fire",
   characteristics: ["action"],

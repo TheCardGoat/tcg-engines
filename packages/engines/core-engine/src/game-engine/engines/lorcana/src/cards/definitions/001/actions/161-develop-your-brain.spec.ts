@@ -1,17 +1,13 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { developYourBrain } from "@lorcanito/lorcana-engine/cards/001/actions/actions.ts";
+import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
+import { developYourBrain } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   chiefTui,
   heiheiBoatSnack,
   moanaOfMotunui,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { shieldOfVirtue } from "@lorcanito/lorcana-engine/cards/001/items/items.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
-import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { shieldOfVirtue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Develop Your Brain", () => {
   it("Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.", () => {

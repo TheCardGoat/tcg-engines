@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { theMostDiabolicalScheme } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
+import { theMostDiabolicalScheme } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import {
   gastonBaritoneBully,
   goofyKnightForADay,
-} from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Most Diabolical Scheme", () => {
   it("Banish chosen Villain of yours to banish chosen character.", () => {

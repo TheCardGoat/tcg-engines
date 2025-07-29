@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { waterHasMemoryAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { waterHasMemoryAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const waterHasMemory: LorcanitoActionCard = {
+export const waterHasMemory: LorcanaActionCardDefinition = {
   id: "boh",
   name: "Water Has Memory",
   characteristics: ["action"],

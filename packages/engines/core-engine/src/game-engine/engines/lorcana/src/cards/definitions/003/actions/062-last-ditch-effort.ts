@@ -4,7 +4,7 @@ import {
   chosenOpposingCharacter,
 } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const lastDitchEffort: LorcanitoActionCard = {
+export const lastDitchEffort: LorcanaActionCardDefinition = {
   id: "b2t",
   name: "Last-Ditch Effort",
   characteristics: ["action"],

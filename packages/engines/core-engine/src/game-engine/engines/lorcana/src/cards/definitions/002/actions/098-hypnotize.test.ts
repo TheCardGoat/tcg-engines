@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   bibbidiBobbidiBoo,
   hypnotize,
-} from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hypnotize", () => {
   it("Each opponent chooses and discards a card. Draw a card.", () => {

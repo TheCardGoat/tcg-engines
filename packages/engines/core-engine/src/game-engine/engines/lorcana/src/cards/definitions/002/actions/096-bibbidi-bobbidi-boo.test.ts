@@ -1,18 +1,14 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   donaldDuck,
   tamatoaDrabLittleCrab,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { bibbidiBobbidiBoo } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { bibbidiBobbidiBoo } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import {
   cheshireCatAlwaysGrinning,
   flynnRiderConfidentVagabond,
-} from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 const greenCost2 = cheshireCatAlwaysGrinning;
 const anotherGreenCost2 = tamatoaDrabLittleCrab;

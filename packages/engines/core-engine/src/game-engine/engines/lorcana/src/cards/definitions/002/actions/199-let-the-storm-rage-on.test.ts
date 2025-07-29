@@ -1,15 +1,11 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { letTheStormRageOn } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { letTheStormRageOn } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import {
   goofyKnightForADay,
   princeJohnGreediestOfAll,
-} from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Let the Storm Rage On", () => {
   it("Deal 2 damage to chosen character. Draw a card.", () => {

@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { fryingPan } from "@lorcanito/lorcana-engine/cards/001/items/items.ts";
-import { touchedMyHeart } from "@lorcanito/lorcana-engine/cards/003/actions/actions.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { fryingPan } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { touchedMyHeart } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Has Set My Heaaaaaaart ...", () => {
   it("Banish chosen item.", () => {

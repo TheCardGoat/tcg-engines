@@ -18,7 +18,7 @@ const singers: DynamicAmount = {
   ],
 };
 
-export const fantasticalAndMagical: LorcanitoActionCard = {
+export const fantasticalAndMagical: LorcanaActionCardDefinition = {
   id: "h9s",
   name: "Fantastical And Magical",
   characteristics: ["action", "song"],

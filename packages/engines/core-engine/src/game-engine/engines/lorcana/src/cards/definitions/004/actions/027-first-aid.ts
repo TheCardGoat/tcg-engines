@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { eachOfYourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const firstAid: LorcanitoActionCard = {
+export const firstAid: LorcanaActionCardDefinition = {
   id: "r1q",
   missingTestCase: true,
   name: "First Aid",

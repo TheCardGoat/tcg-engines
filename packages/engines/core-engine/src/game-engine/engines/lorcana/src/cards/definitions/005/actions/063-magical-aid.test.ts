@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-import { pinocchioOnTheRun } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { pinocchioOnTheRun } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { magicalAid } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 
 describe("Magical Aid", () => {

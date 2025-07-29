@@ -1,21 +1,17 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   brawl,
   weDontTalkAboutBruno,
-} from "@lorcanito/lorcana-engine/cards/004/actions/actions.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import {
   aladdinBraveRescuer,
   aladdinResoluteSwordsman,
   argesTheCyclops,
   herculesBelovedHero,
   sisuEmboldenedWarrior,
-} from "@lorcanito/lorcana-engine/cards/004/characters/characters.ts";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("We Don't Talk About Bruno", () => {
   it("should return  opponent chosen character to their player's hand and discard opponent card", () => {

@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacterGainsSupport } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const bosssOrders: LorcanitoActionCard = {
+export const bosssOrders: LorcanaActionCardDefinition = {
   id: "tqk",
   name: "Boss's Orders",
   characteristics: ["action"],

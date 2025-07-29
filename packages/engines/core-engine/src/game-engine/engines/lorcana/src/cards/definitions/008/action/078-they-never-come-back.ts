@@ -2,7 +2,7 @@ import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const theyNeverComeBack: LorcanitoActionCard = {
+export const theyNeverComeBack: LorcanaActionCardDefinition = {
   id: "dtw",
   name: "They Never Come Back",
   characteristics: ["action"],

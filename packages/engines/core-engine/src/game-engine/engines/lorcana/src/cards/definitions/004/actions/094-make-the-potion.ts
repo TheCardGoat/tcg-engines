@@ -8,7 +8,7 @@ import {
   dealDamageEffect,
 } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const makeThePotion: LorcanitoActionCard = {
+export const makeThePotion: LorcanaActionCardDefinition = {
   id: "vwt",
   missingTestCase: true,
   name: "Make the Potion",

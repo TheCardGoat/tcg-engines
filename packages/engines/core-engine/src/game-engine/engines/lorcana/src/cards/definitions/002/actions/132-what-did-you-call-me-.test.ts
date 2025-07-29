@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { whatDidYouCallMe } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
-import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { whatDidYouCallMe } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("What did you call me?", () => {
   it("[NON DAMAGED] Chosen damaged character gets +3 {S} this turn.", () => {

@@ -1,19 +1,15 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   liloMakingAWish,
   megaraPullingTheStrings,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   cogsworthGrandfatherClock,
   hiramFlavershamToymaker,
-} from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-import { tipoGrowingSon } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { heffalumpsAndWoozles } from "~/game-engine/engines/lorcana/src/cards/definitions/006/actions";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Heffalumps And Woozles", () => {
   it("(A character with cost 2 or more can {E} to sing this song for free.)", async () => {

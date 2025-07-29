@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 
-export const underTheSea: LorcanitoActionCard = {
+export const underTheSea: LorcanaActionCardDefinition = {
   id: "s4i",
   name: "Under The Sea",
   characteristics: ["action", "song"],

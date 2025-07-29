@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const heffalumpsAndWoozles: LorcanitoActionCard = {
+export const heffalumpsAndWoozles: LorcanaActionCardDefinition = {
   id: "kml",
   name: "Heffalumps And Woozles",
   characteristics: ["song", "action"],

@@ -1,13 +1,13 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import { opponentRevealHand } from "@lorcanito/lorcana-engine/effects/effects";
 import type { PlayerEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const self: PlayerEffectTarget = {
   type: "player",
   value: "self",
 };
 
-export const nothingToHide: LorcanitoActionCard = {
+export const nothingToHide: LorcanaActionCardDefinition = {
   id: "q9s",
 
   name: "Nothing to Hide",

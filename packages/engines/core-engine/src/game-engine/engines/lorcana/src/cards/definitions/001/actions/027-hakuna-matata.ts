@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const hakunaMatata: LorcanitoActionCard = {
+export const hakunaMatata: LorcanaActionCardDefinition = {
   id: "ege",
   name: "Hakuna Matata",
   characteristics: ["action", "song"],

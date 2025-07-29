@@ -2,7 +2,7 @@ import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const pullTheLever: LorcanitoActionCard = {
+export const pullTheLever: LorcanaActionCardDefinition = {
   id: "sp7",
   name: "Pull The Lever!",
   characteristics: ["action"],

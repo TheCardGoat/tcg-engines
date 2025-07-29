@@ -2,7 +2,7 @@ import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const distract: LorcanitoActionCard = {
+export const distract: LorcanaActionCardDefinition = {
   id: "hb0",
   name: "Distract",
   characteristics: ["action"],

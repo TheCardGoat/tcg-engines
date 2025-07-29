@@ -1,7 +1,7 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
 import type { DiscardEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ransack: LorcanitoActionCard = {
+export const ransack: LorcanaActionCardDefinition = {
   id: "cfx",
   name: "Ransack",
   characteristics: ["action"],

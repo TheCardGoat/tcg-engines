@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { magicalManeuversAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { magicalManeuversAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const magicalManeuvers: LorcanitoActionCard = {
+export const magicalManeuvers: LorcanaActionCardDefinition = {
   id: "y05",
   name: "Magical Maneuvers",
   characteristics: ["action"],

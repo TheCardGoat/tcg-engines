@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const bibbidiBobbidiBoo: LorcanitoActionCard = {
+export const bibbidiBobbidiBoo: LorcanaActionCardDefinition = {
   id: "waz",
 
   name: "Bibbidi Bobbidi Boo",

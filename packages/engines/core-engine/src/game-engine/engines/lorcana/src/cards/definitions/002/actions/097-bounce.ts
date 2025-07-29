@@ -1,4 +1,4 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const chosenCharacterOfYour = {
   type: "card" as const,
@@ -18,7 +18,7 @@ const chosenCharacter = {
   ],
 };
 
-export const bounce: LorcanitoActionCard = {
+export const bounce: LorcanaActionCardDefinition = {
   id: "fpf",
   name: "Bounce",
   characteristics: ["action"],

@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { doubleTroubleAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+import { doubleTroubleAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
 
-export const doubleTrouble: LorcanitoActionCard = {
+export const doubleTrouble: LorcanaActionCardDefinition = {
   id: "kxb",
   name: "Double Trouble",
   characteristics: ["action"],

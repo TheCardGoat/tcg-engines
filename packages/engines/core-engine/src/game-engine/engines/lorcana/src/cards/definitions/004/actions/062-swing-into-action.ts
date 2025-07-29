@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacterGainsRush } from "@lorcanito/lorcana-engine/effects/effects";
 
-export const swingIntoAction: LorcanitoActionCard = {
+export const swingIntoAction: LorcanaActionCardDefinition = {
   id: "bho",
   name: "Swing Into Action",
   characteristics: ["action"],

@@ -1,6 +1,6 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 
-export const iFindEmIFlattenEm: LorcanitoActionCard = {
+export const iFindEmIFlattenEm: LorcanaActionCardDefinition = {
   id: "h30",
   name: "I Find 'Em, I Flatten 'Em",
   characteristics: ["action", "song"],

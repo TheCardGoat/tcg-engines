@@ -1,12 +1,8 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { befuddle } from "@lorcanito/lorcana-engine/cards/001/actions/actions.ts";
-import { simbaProtectiveCub } from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { shieldOfVirtue } from "@lorcanito/lorcana-engine/cards/001/items/items.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+import { befuddle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
+import { simbaProtectiveCub } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { shieldOfVirtue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Befuddle", () => {
   it("Return an opponent character with cost 2.", () => {

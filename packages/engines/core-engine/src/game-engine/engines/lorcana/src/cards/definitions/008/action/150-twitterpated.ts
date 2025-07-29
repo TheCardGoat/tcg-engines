@@ -1,7 +1,7 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const twitterpated: LorcanitoActionCard = {
+export const twitterpated: LorcanaActionCardDefinition = {
   id: "aku",
   name: "Twitterpated",
   characteristics: ["action"],

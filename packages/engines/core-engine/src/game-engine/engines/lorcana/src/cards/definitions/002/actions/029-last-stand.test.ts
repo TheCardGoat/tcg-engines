@@ -1,15 +1,11 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   aladdinCorneredSwordman,
   liloGalacticHero,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { lastStand } from "@lorcanito/lorcana-engine/cards/002/actions/actions.ts";
-import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { lastStand } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Last Stand", () => {
   describe("Banish chosen character who was challenged this turn.", () => {

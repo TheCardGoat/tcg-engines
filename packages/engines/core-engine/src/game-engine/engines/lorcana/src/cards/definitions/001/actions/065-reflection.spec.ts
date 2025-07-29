@@ -1,17 +1,13 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
+import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
 import {
   chiefTui,
   heiheiBoatSnack,
   liloMakingAWish,
   moanaOfMotunui,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { reflection } from "@lorcanito/lorcana-engine/cards/001/songs/songs.ts";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore.ts";
-import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { reflection } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Reflection", () => {
   it("Look at the top 3 cards of your deck. Put them back on the top of your deck in any order.", () => {

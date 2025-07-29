@@ -36,7 +36,7 @@ const downInNewOrleansAbility: ResolutionAbility = {
   ],
 };
 
-export const downInNewOrleans: LorcanitoActionCard = {
+export const downInNewOrleans: LorcanaActionCardDefinition = {
   id: "py1",
   name: "Down In New Orleans",
   characteristics: ["action", "song"],

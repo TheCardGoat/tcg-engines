@@ -34,7 +34,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const unfortunateSituation: LorcanitoActionCard = {
+export const unfortunateSituation: LorcanaActionCardDefinition = {
   id: "wcu",
   missingTestCase: true,
   name: "Unfortunate Situation",

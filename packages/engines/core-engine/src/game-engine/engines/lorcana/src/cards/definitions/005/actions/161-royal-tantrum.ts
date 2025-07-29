@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const royalTantrum: LorcanitoActionCard = {
+export const royalTantrum: LorcanaActionCardDefinition = {
   id: "v3q",
   name: "Royal Tantrum",
   characteristics: ["action"],

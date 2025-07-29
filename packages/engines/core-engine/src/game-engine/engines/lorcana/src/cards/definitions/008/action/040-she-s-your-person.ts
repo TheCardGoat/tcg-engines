@@ -51,7 +51,7 @@ const shesYourPersonAbility: ResolutionAbility = {
   ],
 };
 
-export const shesYourPerson: LorcanitoActionCard = {
+export const shesYourPerson: LorcanaActionCardDefinition = {
   id: "u6y",
   name: "She's Your Person",
   characteristics: ["action"],

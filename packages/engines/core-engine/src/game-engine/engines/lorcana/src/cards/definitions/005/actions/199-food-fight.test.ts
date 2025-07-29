@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { taffytaMuttonfudgeRuthlessRival } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { foodFight } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import { taffytaMuttonfudgeRuthlessRival } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 
 describe("Food Fight!", () => {
   it("Your characters gain {E}, 1 {I} – Deal 1 damage to chosen character this turn.", () => {

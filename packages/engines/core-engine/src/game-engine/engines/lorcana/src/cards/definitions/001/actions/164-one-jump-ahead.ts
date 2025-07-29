@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const oneJumpAhead: LorcanitoActionCard = {
+export const oneJumpAhead: LorcanaActionCardDefinition = {
   id: "gf6",
   name: "One Jump Ahead",
   characteristics: ["action", "song"],

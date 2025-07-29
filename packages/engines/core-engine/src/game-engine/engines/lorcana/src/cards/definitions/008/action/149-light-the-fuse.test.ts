@@ -1,16 +1,12 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { goofyKnightForADay } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   generalLiHeadOfTheImperialArmy,
   jumbaJookibaCriticalScientist,
   khanWarHorse,
   lightTheFuse,
-} from "@lorcanito/lorcana-engine/cards/008";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Light The Fuse", () => {
   it("Deal 1 damage to chosen character for each exerted character you have in play.", async () => {

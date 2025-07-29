@@ -3,7 +3,7 @@ import type {
   LorcanitoActionCard,
 } from "@lorcanito/lorcana-engine";
 
-export const beKingUndisputed: LorcanitoActionCard = {
+export const beKingUndisputed: LorcanaActionCardDefinition = {
   id: "o8o",
   name: "Be King Undisputed",
   characteristics: ["action", "song"],

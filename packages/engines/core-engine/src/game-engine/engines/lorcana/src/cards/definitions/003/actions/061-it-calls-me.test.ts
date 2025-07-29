@@ -1,16 +1,12 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   mauiDemiGod,
   mauiHeroToAll,
-} from "@lorcanito/lorcana-engine/cards/001/characters/characters.ts";
-import { itCallsMe } from "@lorcanito/lorcana-engine/cards/003/actions/actions.ts";
-import { moanaDeterminedExplorer } from "@lorcanito/lorcana-engine/cards/005/characters/characters.ts";
-import { mauiHalfshark } from "@lorcanito/lorcana-engine/cards/006";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine.ts";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { itCallsMe } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import { moanaDeterminedExplorer } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
+import { mauiHalfshark } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 
 describe("It Calls Me", () => {
   it("Draw a card. Shuffle up to 3 cards from your opponent’s discard into your opponent’s deck.", async () => {

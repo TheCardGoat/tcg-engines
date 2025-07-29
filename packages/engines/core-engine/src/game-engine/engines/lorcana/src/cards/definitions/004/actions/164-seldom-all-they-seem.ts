@@ -1,6 +1,6 @@
 import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 
-export const seldomAllTheySeem: LorcanitoActionCard = {
+export const seldomAllTheySeem: LorcanaActionCardDefinition = {
   id: "esk",
   name: "Seldom All They Seem",
   characteristics: ["action", "song"],

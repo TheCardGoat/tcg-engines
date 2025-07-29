@@ -1,14 +1,10 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
 import {
   generalLiHeadOfTheImperialArmy,
   khanWarHorse,
   stoppedChaosInItsTracks,
-} from "@lorcanito/lorcana-engine/cards/008";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Stopped Chaos In Its Tracks", () => {
   it("Return up to 2 chosen characters with 3 {S} or less each to their player's hand.", async () => {

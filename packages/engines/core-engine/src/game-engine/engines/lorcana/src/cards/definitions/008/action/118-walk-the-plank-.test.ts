@@ -1,15 +1,11 @@
-/**
- * @jest-environment node
- */
-
 import { describe, expect, it } from "bun:test";
-import { mrSmee } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+import { mrSmee } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   billyBonesKeeperOfTheMap,
   genieCrampedInTheLamp,
-} from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-import { walkThePlank } from "@lorcanito/lorcana-engine/cards/008";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { walkThePlank } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Walk The Plank!", () => {
   it("Your Pirate characters gain '{E} – Banish chosen damaged character' this turn.", async () => {

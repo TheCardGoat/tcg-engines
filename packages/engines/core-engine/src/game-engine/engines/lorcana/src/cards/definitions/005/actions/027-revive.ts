@@ -48,7 +48,7 @@ import type {
   ShuffleEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 
-export const revive: LorcanitoActionCard = {
+export const revive: LorcanaActionCardDefinition = {
   id: "xie",
   missingTestCase: true,
   name: "Revive",

@@ -28,7 +28,7 @@ const dependentAbilities: ResolutionAbility = {
   dependentEffects: true,
 };
 
-export const candyDrift: LorcanitoActionCard = {
+export const candyDrift: LorcanaActionCardDefinition = {
   id: "sf4",
   name: "Candy Drift",
   characteristics: ["action"],
