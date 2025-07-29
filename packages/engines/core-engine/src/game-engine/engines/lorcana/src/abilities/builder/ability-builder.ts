@@ -761,6 +761,92 @@ export class AbilityBuilder {
       return AbilityBuilder.static(cleanText).setEffects(effects).build();
     }
 
+    // Gain Lore + Draw Card pattern: "Gain X lore. Draw a card."
+    const gainLoreDrawMatch = cleanText.match(
+      /^Gain (\d+) lore\. Draw a card\.$/,
+    );
+    if (gainLoreDrawMatch) {
+      const [, valueStr] = gainLoreDrawMatch;
+      const value = Number.parseInt(valueStr, 10);
+
+      // Import the required functions
+      const {
+        gainLoreEffect,
+        drawCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+
+      const effects = [
+        gainLoreEffect({ targets: [selfPlayerTarget], value }),
+        drawCardEffect({ targets: [selfPlayerTarget] }),
+      ];
+
+      return AbilityBuilder.static(cleanText).setEffects(effects).build();
+    }
+
+    // Each Player Draw pattern: "Each player draws X cards."
+    const eachPlayerDrawMatch = cleanText.match(
+      /^Each player draws (\d+) cards\.$/,
+    );
+    if (eachPlayerDrawMatch) {
+      const [, valueStr] = eachPlayerDrawMatch;
+      const value = Number.parseInt(valueStr, 10);
+
+      // Import the required functions
+      const {
+        drawCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+
+      // Create eachOpponentTarget since it's used in the test
+      const eachOpponentTarget = {
+        type: "player",
+        value: "opponent",
+        targetAll: true,
+      };
+
+      const effects = [
+        drawCardEffect({ targets: [selfPlayerTarget], value }),
+        drawCardEffect({ targets: [eachOpponentTarget], value }),
+      ];
+
+      return AbilityBuilder.static(cleanText).setEffects(effects).build();
+    }
+
+    // Each Opponent Loses Lore pattern: "Each opponent loses X lore."
+    const eachOpponentLoseLoreMatch = cleanText.match(
+      /^Each opponent loses (\d+) lore\.$/,
+    );
+    if (eachOpponentLoseLoreMatch) {
+      const [, valueStr] = eachOpponentLoseLoreMatch;
+      const value = Number.parseInt(valueStr, 10);
+
+      // Import the required functions
+      const {
+        loseLoreEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+
+      // Create eachOpponentTarget to match the test expectations
+      const eachOpponentTarget = {
+        type: "player" as const,
+        value: "opponent" as const,
+        targetAll: true,
+      };
+
+      const effects = [
+        loseLoreEffect({ targets: [eachOpponentTarget], value }),
+      ];
+
+      return AbilityBuilder.static(cleanText)
+        .setTargets([eachOpponentTarget])
+        .setEffects(effects)
+        .build();
+    }
+
     // Lore multi-effect pattern: "Chosen opponent loses X lore. Gain Y lore."
     const loreMultiMatch = cleanText.match(
       /^Chosen opponent loses (\d+) lore\. Gain (\d+) lore\.?$/i,

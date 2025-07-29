@@ -1964,7 +1964,7 @@ export const actionTexts: Array<
         effects: [loseLoreEffect({ targets: [eachOpponentTarget], value: 1 })],
       },
     ],
-    true,
+    false,
   ],
   [
     "Each opponent may chose and discard a card. For each opponent who doesn't, you gain 2 lore.",
@@ -2116,7 +2116,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Each player exerts all the cards in their inkwell. Then each player with more than 3 cards in their inkwell returns cards at random from their inkwell to their hand until they have 3 cards in their inkwell.",
@@ -2425,7 +2425,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Gain 2 lore.",
