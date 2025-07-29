@@ -14,6 +14,7 @@ import type {
   ExtendPlayerState,
 } from "~/game-engine/core-engine/types/game-specific-types";
 import type {
+  DynamicValue,
   LayerItem,
   LorcanaAbility,
 } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
@@ -88,9 +89,9 @@ export type LorcanaCardMeta = ExtendCardMeta<{
 export type LorcanaCardFilter = ExtendCardFilter<{
   // Cost filtering
   cost?: {
-    min?: number;
-    max?: number;
-    exact?: number;
+    min?: number | DynamicValue;
+    max?: number | DynamicValue;
+    exact?: number | DynamicValue;
   };
 
   // Ink filtering

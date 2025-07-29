@@ -16,13 +16,15 @@ export interface CardTarget extends BaseTarget {
     | LorcanaCardDefinition["type"]
     | Array<LorcanaCardDefinition["type"]>;
   zone?: LorcanaZone; // Zone can be specified for card targets
-  owner?: "self" | "opponent" | "any" | "target";
+  owner?: "self" | "opponent" | "any" | "target" | "source";
   damaged?: boolean; // For "chosen damaged character"
   ready?: boolean; // For "chosen ready character"
   exerted?: boolean; // For "chosen exerted character"
   withKeyword?: Keyword; // For "chosen character with [keyword]"
+  withoutKeyword?: Keyword; // For "chosen character without [keyword]"
   withClassification?: string; // For "chosen [classification] character"
   withName?: string; // For "chosen character named X"
+  withNamedCard?: boolean; // For targeting cards with the name from a previous nameCard effect
   excludeSelf?: boolean; // For "chosen another character"
   has?: "challenged";
   filter?: LorcanaCardFilter;
@@ -276,4 +278,18 @@ export const opponentsDamagedCharactersFilter: LorcanaCardFilter = {
   owner: "opponent",
   zone: "play",
   damaged: true,
+};
+
+export const yourDamagedCharactersFilter: LorcanaCardFilter = {
+  cardType: "character",
+  owner: "self",
+  zone: "play",
+  damaged: true,
+};
+
+// Target for "this card" - the source card that has the ability
+export const sourceCardTarget: CardTarget = {
+  type: "card",
+  owner: "source",
+  count: 1,
 };

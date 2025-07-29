@@ -8,8 +8,12 @@ import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abi
 import type {
   BanishEffect,
   ChallengeOverrideEffect,
+  ConditionalEffect,
+  ConditionalPlayerEffect,
   ConditionalTargetEffect,
+  ContextualEffect,
   CostReductionEffect,
+  DamageImmunityEffect,
   DealDamageEffect,
   DiscardEffect,
   DrawEffect,
@@ -17,16 +21,28 @@ import type {
   GainLoreEffect,
   GainsAbilityEffect,
   GetEffect,
+  InkwellManagementEffect,
   LorcanaEffect,
   LoseLoreEffect,
   ModalEffect,
   MoveCardEffect,
+  MoveToLocationEffect,
+  NameCardEffect,
+  OptionalChoiceEffect,
+  OptionalPlayEffect,
+  PlayCardEffect,
+  PlayerChoiceEffect,
   RemoveDamageEffect,
+  RevealEffect,
+  SearchDeckEffect,
 } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import { chosenCardFromHandTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { PlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { CardTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
-import type { LorcanaZone } from "~/game-engine/engines/lorcana/src/lorcana-engine-types";
+import type {
+  LorcanaCardFilter,
+  LorcanaZone,
+} from "~/game-engine/engines/lorcana/src/lorcana-engine-types";
 
 export function getEffect({
   attribute,
@@ -245,6 +261,41 @@ export function moveDamageEffect({
   ];
 }
 
+export function moveDamageFromEachEffect({
+  fromFilter,
+  toTargets,
+  value,
+  followedBy,
+}: {
+  fromFilter: any; // LorcanaCardFilter type
+  toTargets: CardTarget | CardTarget[];
+  value?: number | DynamicValue;
+  followedBy?: LorcanaEffect;
+}): LorcanaEffect[] {
+  const damageValue = value || 1;
+  return [
+    removeDamageEffect({
+      targets: [
+        {
+          type: "card",
+          filter: fromFilter,
+          count: -1, // All matching cards
+        },
+      ],
+      value: damageValue,
+    }),
+    putDamageEffect({
+      targets: toTargets,
+      value: {
+        type: "count",
+        filter: fromFilter,
+        multiplier: typeof damageValue === "number" ? damageValue : 1,
+      } as DynamicValue,
+      followedBy,
+    }),
+  ];
+}
+
 export function millEffect({
   value,
   owner,
@@ -325,12 +376,42 @@ export function costReductionEffect({
   };
 }
 
+export function playCardEffect({
+  targets,
+  from,
+  cost,
+  filter,
+  gainsAbilities,
+  followedBy,
+}: {
+  targets?: PlayerTarget | PlayerTarget[];
+  from?: LorcanaZone;
+  cost?: number | "free";
+  filter?: any;
+  gainsAbilities?: LorcanaAbility[];
+  followedBy?: LorcanaEffect;
+}): PlayCardEffect {
+  return {
+    type: "playCard",
+    targets: Array.isArray(targets) ? targets : [targets],
+    parameters: {
+      from,
+      cost,
+      filter,
+      gainsAbilities,
+    },
+    followedBy,
+  };
+}
+
 export function moveCardEffect({
   targets,
   zoneTo,
   zoneFrom,
   placement,
   exerted,
+  shuffle,
+  order,
   followedBy,
 }: {
   targets?: CardTarget[] | CardTarget;
@@ -338,12 +419,14 @@ export function moveCardEffect({
   zoneFrom?: LorcanaZone;
   placement?: "top" | "bottom" | "random";
   exerted?: boolean;
+  shuffle?: boolean;
+  order?: "any" | "random";
   followedBy?: LorcanaEffect;
 }): MoveCardEffect {
   return {
     type: "moveCard",
     targets: Array.isArray(targets) ? targets : [targets],
-    parameters: { zoneTo, zoneFrom, placement, exerted },
+    parameters: { zoneTo, zoneFrom, placement, exerted, shuffle, order },
     followedBy,
   };
 }
@@ -386,12 +469,16 @@ export function putCardEffect({
   from,
   targets,
   position,
+  shuffle,
+  order,
   followedBy,
 }: {
   to: LorcanaZone;
   from?: LorcanaZone;
   targets?: CardTarget[] | CardTarget;
   position?: "top" | "bottom";
+  shuffle?: boolean;
+  order?: "any" | "random";
   followedBy?: LorcanaEffect;
 }): MoveCardEffect {
   return moveCardEffect({
@@ -399,6 +486,8 @@ export function putCardEffect({
     zoneTo: to,
     zoneFrom: from,
     placement: position,
+    shuffle,
+    order,
     followedBy,
   });
 }
@@ -500,5 +589,357 @@ export function conditionalTargetEffect(params: {
     targets: params.targets,
     optional: params.optional,
     followedBy: params.followedBy,
+  };
+}
+
+export function optionalChoiceEffect({
+  choice,
+  onDecline,
+  responder = "self",
+  targets,
+}: {
+  choice: LorcanaEffect;
+  onDecline?: LorcanaEffect;
+  responder?: "self" | "opponent";
+  targets?: PlayerTarget | PlayerTarget[];
+}): OptionalChoiceEffect {
+  const playerTargets: PlayerTarget[] | undefined = targets
+    ? Array.isArray(targets)
+      ? targets
+      : [targets]
+    : undefined;
+
+  return {
+    type: "optionalChoice",
+    targets: playerTargets,
+    parameters: {
+      choice,
+      onDecline,
+      responder,
+    },
+  };
+}
+
+export function optionalPlayEffect({
+  targets,
+  from = "hand",
+  cost = "free",
+  filter,
+  gainsAbilities,
+  reveal = false,
+}: {
+  targets?: PlayerTarget | PlayerTarget[];
+  from?: LorcanaZone;
+  cost?: number | "free";
+  filter?: any;
+  gainsAbilities?: LorcanaAbility[];
+  reveal?: boolean;
+}): OptionalPlayEffect {
+  const playerTargets: PlayerTarget[] | undefined = targets
+    ? Array.isArray(targets)
+      ? targets
+      : [targets]
+    : undefined;
+
+  return {
+    type: "optionalPlay",
+    targets: playerTargets,
+    parameters: {
+      from,
+      cost,
+      filter,
+      gainsAbilities,
+      reveal,
+    },
+  };
+}
+
+export function nameCardEffect({
+  followedBy,
+  targets,
+}: {
+  followedBy: LorcanaEffect;
+  targets?: PlayerTarget | PlayerTarget[];
+}): NameCardEffect {
+  const playerTargets: PlayerTarget[] | undefined = targets
+    ? Array.isArray(targets)
+      ? targets
+      : [targets]
+    : undefined;
+
+  return {
+    type: "nameCard",
+    targets: playerTargets,
+    parameters: {
+      followedBy,
+    },
+  };
+}
+
+export function searchDeckEffect({
+  cardType,
+  filter,
+  reveal = false,
+  toZone,
+  shuffle = true,
+  optional = false,
+  targets,
+}: {
+  cardType?: "character" | "action" | "item" | "location";
+  filter?: LorcanaCardFilter;
+  reveal?: boolean;
+  toZone: LorcanaZone;
+  shuffle?: boolean;
+  optional?: boolean;
+  targets?: PlayerTarget | PlayerTarget[];
+}): SearchDeckEffect {
+  const playerTargets: PlayerTarget[] | undefined = targets
+    ? Array.isArray(targets)
+      ? targets
+      : [targets]
+    : undefined;
+
+  return {
+    type: "searchDeck",
+    targets: playerTargets,
+    parameters: {
+      cardType,
+      filter,
+      reveal,
+      toZone,
+      shuffle,
+      optional,
+    },
+  };
+}
+
+export function damageImmunityEffect({
+  targets,
+  sources = ["challenges"],
+  duration,
+}: {
+  targets?: CardTarget | CardTarget[];
+  sources?: ("challenges" | "abilities" | "spells" | "all")[];
+  duration?: AbilityDuration;
+}): DamageImmunityEffect {
+  const cardTargets: CardTarget[] | undefined = targets
+    ? Array.isArray(targets)
+      ? targets
+      : [targets]
+    : undefined;
+
+  return {
+    type: "damageImmunity",
+    targets: cardTargets,
+    duration,
+    parameters: {
+      sources,
+    },
+  };
+}
+
+export function moveToLocationEffect({
+  targets,
+  cost = 0,
+  sameLocation = false,
+  targetLocation,
+  optional = false,
+  duration,
+}: {
+  targets?: CardTarget | CardTarget[];
+  cost?: number;
+  sameLocation?: boolean;
+  targetLocation?: CardTarget;
+  optional?: boolean;
+  duration?: AbilityDuration;
+}): MoveToLocationEffect {
+  const cardTargets: CardTarget[] | undefined = targets
+    ? Array.isArray(targets)
+      ? targets
+      : [targets]
+    : undefined;
+
+  return {
+    type: "moveToLocation",
+    targets: cardTargets,
+    duration,
+    optional,
+    parameters: {
+      cost,
+      sameLocation,
+      targetLocation,
+    },
+  };
+}
+
+export function contextualEffect({
+  targets,
+  context,
+  effect,
+  duration,
+}: {
+  targets?: CardTarget | CardTarget[];
+  context: {
+    type: "whileChallenging";
+    cardType?: "character" | "location";
+  };
+  effect: LorcanaEffect;
+  duration?: AbilityDuration;
+}): ContextualEffect {
+  const cardTargets: CardTarget[] | undefined = targets
+    ? Array.isArray(targets)
+      ? targets
+      : [targets]
+    : undefined;
+
+  return {
+    type: "contextual",
+    targets: cardTargets,
+    duration,
+    parameters: {
+      context,
+      effect,
+    },
+  };
+}
+
+export function inkwellManagementEffect({
+  targets,
+  action,
+  condition,
+  targetSize,
+  count,
+}: {
+  targets?: PlayerTarget | PlayerTarget[];
+  action: "exertAll" | "returnRandom" | "conditionalReturn";
+  condition?: {
+    type: "sizeGreaterThan";
+    value: number;
+  };
+  targetSize?: number;
+  count?: number;
+}): InkwellManagementEffect {
+  const playerTargets: PlayerTarget[] | undefined = targets
+    ? Array.isArray(targets)
+      ? targets
+      : [targets]
+    : undefined;
+
+  return {
+    type: "inkwellManagement",
+    targets: playerTargets,
+    parameters: {
+      action,
+      condition,
+      targetSize,
+      count,
+    },
+  };
+}
+
+export function conditionalPlayerEffect({
+  targets,
+  condition,
+  effect,
+  elseEffect,
+}: {
+  targets?: PlayerTarget | PlayerTarget[];
+  condition: {
+    type: "hasCardsInHand" | "handSizeComparison";
+    maxCount?: number;
+    minCount?: number;
+    comparison?: "lessThan" | "greaterThan" | "equalTo";
+    compareWith?: "opponent" | "target";
+  };
+  effect: LorcanaEffect;
+  elseEffect?: LorcanaEffect;
+}): ConditionalPlayerEffect {
+  const playerTargets: PlayerTarget[] | undefined = targets
+    ? Array.isArray(targets)
+      ? targets
+      : [targets]
+    : undefined;
+
+  return {
+    type: "conditionalPlayer",
+    targets: playerTargets,
+    parameters: {
+      condition,
+      effect,
+      elseEffect,
+    },
+  };
+}
+
+export function revealEffect({
+  targets,
+  from,
+  count = 1,
+  position = "top",
+  thenEffect,
+}: {
+  targets?: PlayerTarget | PlayerTarget[];
+  from: LorcanaZone;
+  count?: number;
+  position?: "top" | "bottom" | "random";
+  thenEffect?: LorcanaEffect;
+}): RevealEffect {
+  const playerTargets: PlayerTarget[] | undefined = targets
+    ? Array.isArray(targets)
+      ? targets
+      : [targets]
+    : undefined;
+
+  return {
+    type: "reveal",
+    targets: playerTargets,
+    parameters: {
+      from,
+      count,
+      position,
+      thenEffect,
+    },
+  };
+}
+
+export function conditionalEffect({
+  condition,
+  ifTrue,
+  ifFalse,
+}: {
+  condition: {
+    type: "sameName" | "sameCardType" | "sameCost";
+    compareWith: "previousTarget" | "namedCard";
+  };
+  ifTrue: LorcanaEffect;
+  ifFalse?: LorcanaEffect;
+}): ConditionalEffect {
+  return {
+    type: "conditional",
+    parameters: {
+      condition,
+      ifTrue,
+      ifFalse,
+    },
+  };
+}
+
+export function playerChoiceEffect({
+  selection,
+  effect,
+}: {
+  selection: {
+    type: "anyNumber" | "exactly" | "upTo";
+    count?: number;
+    from: PlayerTarget[];
+  };
+  effect: LorcanaEffect;
+}): PlayerChoiceEffect {
+  return {
+    type: "playerChoice",
+    parameters: {
+      selection,
+      effect,
+    },
   };
 }

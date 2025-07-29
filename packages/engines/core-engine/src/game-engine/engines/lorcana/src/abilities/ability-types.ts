@@ -111,12 +111,29 @@ export type DynamicValue =
     }
   | {
       type: "sourceStat";
-      stat: "strength" | "willpower" | "lore";
+      stat: "strength" | "willpower" | "lore" | "cost";
       multiplier?: number;
     }
   | {
       type: "previousTargetStat";
-      stat: "strength" | "willpower" | "lore";
+      stat: "strength" | "willpower" | "lore" | "cost";
+      multiplier?: number;
+    }
+  | {
+      type: "handSizeDifference";
+      basePlayer: "self" | "opponent";
+      comparePlayer: "target" | "self" | "opponent";
+      multiplier?: number;
+    }
+  | {
+      type: "locationStat";
+      stat: "lore" | "willpower";
+      target: "chosen" | "current"; // Which location to reference
+      multiplier?: number;
+    }
+  | {
+      type: "singerCount";
+      source: "currentSong" | "previousSong"; // Which song's singers to count
       multiplier?: number;
     }
   | {
@@ -130,6 +147,54 @@ export function upToValue(value: number): UpToValue {
     type: "upTo",
     min: 0,
     max: value,
+  };
+}
+
+export function previousTargetStat(
+  stat: "strength" | "willpower" | "lore" | "cost",
+  multiplier?: number,
+): DynamicValue {
+  return {
+    type: "previousTargetStat",
+    stat,
+    multiplier,
+  };
+}
+
+export function handSizeDifference(
+  basePlayer: "self" | "opponent",
+  comparePlayer: "target" | "self" | "opponent",
+  multiplier?: number,
+): DynamicValue {
+  return {
+    type: "handSizeDifference",
+    basePlayer,
+    comparePlayer,
+    multiplier,
+  };
+}
+
+export function locationStat(
+  stat: "lore" | "willpower",
+  target: "chosen" | "current" = "chosen",
+  multiplier?: number,
+): DynamicValue {
+  return {
+    type: "locationStat",
+    stat,
+    target,
+    multiplier,
+  };
+}
+
+export function singerCount(
+  source: "currentSong" | "previousSong" = "currentSong",
+  multiplier?: number,
+): DynamicValue {
+  return {
+    type: "singerCount",
+    source,
+    multiplier,
   };
 }
 
