@@ -201,13 +201,25 @@ export class LorcanaEngine extends GameEngine<
       // Filter by cost
       if (filter.cost) {
         const cardCost = card.card.cost || 0;
-        if (filter.cost.exact !== undefined && cardCost !== filter.cost.exact) {
+        if (
+          filter.cost.exact !== undefined &&
+          typeof filter.cost.exact === "number" &&
+          cardCost !== filter.cost.exact
+        ) {
           return false;
         }
-        if (filter.cost.min !== undefined && cardCost < filter.cost.min) {
+        if (
+          filter.cost.min !== undefined &&
+          typeof filter.cost.min === "number" &&
+          cardCost < filter.cost.min
+        ) {
           return false;
         }
-        if (filter.cost.max !== undefined && cardCost > filter.cost.max) {
+        if (
+          filter.cost.max !== undefined &&
+          typeof filter.cost.max === "number" &&
+          cardCost > filter.cost.max
+        ) {
           return false;
         }
       }

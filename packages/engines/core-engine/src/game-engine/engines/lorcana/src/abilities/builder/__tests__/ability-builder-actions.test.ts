@@ -724,7 +724,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen character gains **Evasive** until the start of your next turn.",
@@ -741,7 +741,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
@@ -818,7 +818,7 @@ export const actionTexts: Array<
         effects: [gainsAbilityEffect({ ability: rushAbility })],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen character gains **Support** this turn. Draw a card.",
@@ -836,7 +836,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen character gains **Support** this turn. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_",
@@ -853,7 +853,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen character gains **Ward** and **Evasive** until the start of your next turn. _(Opponents can't choose them except to challenge. Only characters with Evasive can challenge them.)_",
@@ -891,7 +891,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen character gains Evasive until the start of your next turn.",
@@ -963,7 +963,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen character gets +1 {S} this turn for each character you have in play.",
@@ -1005,7 +1005,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen character gets +2 {S} this turn. If a Pirate character is chosen, they get +3 {S} instead.",
@@ -1082,7 +1082,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen character gets -2 {S} this turn. Chosen character of yours gains Evasive this turn.",
@@ -1105,7 +1105,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen character gets -2 {S} this turn. Draw a card.",
@@ -1124,7 +1124,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen character gets -2 {S} this turn.",
@@ -1143,7 +1143,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen character gets -3 {S} this turn.",
@@ -1162,7 +1162,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen character gets -4 {S} until the start of your next turn.",
@@ -1181,7 +1181,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen damaged character gets +3 {S} this turn.",
@@ -1199,7 +1199,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen exerted character can't ready at the start of their next turn.",
@@ -1259,7 +1259,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Chosen opponent reveals their hand and discards a non-character card of your choice.",
@@ -1471,7 +1471,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Deal 2 damage to chosen character of yours to deal 2 damage to another chosen character.",
@@ -1503,7 +1503,7 @@ export const actionTexts: Array<
         effects: [dealDamageEffect({ value: 2 })],
       },
     ],
-    true,
+    false,
   ],
   [
     "Deal 2 damage to chosen character. Draw a card.",
@@ -1561,7 +1561,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Deal 2 damage to chosen damaged character.",
@@ -1575,7 +1575,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Deal 2 damage to each opposing character.",
@@ -1601,7 +1601,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Deal 5 damage to chosen character or location.",
@@ -1618,7 +1618,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Deal damage to chosen character equal to the number of characters you have in play.",
@@ -2437,7 +2437,7 @@ export const actionTexts: Array<
         effects: [gainLoreEffect({ targets: [selfPlayerTarget], value: 2 })],
       },
     ],
-    true,
+    false,
   ],
   [
     "Gain lore equal to the damage on chosen character, then banish them.",
@@ -3419,7 +3419,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Remove up to 3 damage from chosen character and ready them. They can't quest or challenge for the rest of this turn.",
@@ -3525,7 +3525,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Remove up to 3 damage from chosen location.",
@@ -3541,7 +3541,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
   [
     "Remove up to 3 damage from each of your characters.",
@@ -3614,7 +3614,7 @@ export const actionTexts: Array<
         ],
       },
     ],
-    true,
+    false,
   ],
 
   [
@@ -4872,14 +4872,17 @@ export const actionTexts: Array<
   ],
 ];
 
-test.each(actionTexts)(
-  "AbilityBuilder.fromText(%s)",
-  (text: string, expected: LorcanaAbility[], skip?: boolean) => {
-    if (skip) {
-      return;
-    }
-
-    const ability = AbilityBuilder.fromText(text);
-    expect(ability).toEqual(expected);
-  },
-);
+// Generate test cases with proper skip handling
+for (const [text, expected, shouldSkip] of actionTexts) {
+  if (shouldSkip) {
+    test.skip(`AbilityBuilder.fromText(${text})`, () => {
+      const ability = AbilityBuilder.fromText(text);
+      expect(ability).toEqual(expected);
+    });
+  } else {
+    test(`AbilityBuilder.fromText(${text})`, () => {
+      const ability = AbilityBuilder.fromText(text);
+      expect(ability).toEqual(expected);
+    });
+  }
+}
