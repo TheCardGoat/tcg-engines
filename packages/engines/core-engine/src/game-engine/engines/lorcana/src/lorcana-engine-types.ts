@@ -5,9 +5,7 @@
  * both legacy direct type definitions and new CoreEngine-extended types.
  */
 
-import type { LorcanitoCard } from "@lorcanito/lorcana-engine";
 import type {
-  ExtendCardDefinition,
   ExtendCardFilter,
   ExtendCardMeta,
   ExtendGameState,
@@ -16,7 +14,6 @@ import type {
 import type {
   DynamicValue,
   LayerItem,
-  LorcanaAbility,
 } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 
 // Re-export builder types and class for convenience
@@ -53,21 +50,6 @@ export interface PlayerTurnHistory {
 // =============================================================================
 // CARD TYPES
 // =============================================================================
-
-// TODO: Remove this once we have redefined card abilities
-export type LorcanaCardDefinition = LorcanitoCard & {
-  abilities?: LorcanaAbility[];
-};
-
-/**
- * Enhanced card definition extending the base card definition
- */
-export type LorcanaCardDefinitionExtended = ExtendCardDefinition<
-  LorcanitoCard & {
-    inkwell?: boolean;
-    name: string;
-  }
->;
 
 /**
  * Lorcana-specific card metadata extending the base card metadata

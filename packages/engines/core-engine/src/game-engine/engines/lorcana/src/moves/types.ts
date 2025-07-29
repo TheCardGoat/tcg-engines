@@ -6,10 +6,9 @@ import type {
   MoveFn,
 } from "~/game-engine/core-engine/move/move-types";
 import type { PlayerID } from "~/game-engine/core-engine/types/core-types";
-
+import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import type {
-  LorcanaCardDefinition,
   LorcanaCardFilter,
   LorcanaGameState,
   LorcanaPlayerState,

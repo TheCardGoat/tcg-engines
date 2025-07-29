@@ -1,0 +1,63 @@
+import {
+  aPiratesLife,
+  avalanche,
+  beKingUndisputed,
+  brawl,
+  brunosReturn,
+  digALittleDeeper,
+  dodge,
+  firstAid,
+  glean,
+  iFindEmIFlattenEm,
+  lookAtThisFamily,
+  lostInTheWoods,
+  makeThePotion,
+  oneLastHope,
+  poorUnfortunateSouls,
+  secondStarToTheRight,
+  seldomAllTheySeem,
+  signTheScroll,
+  swingIntoAction,
+  theMobSong,
+  treasuresUntold,
+  tritonsDecree,
+  underTheSea,
+  ursulasPlan,
+  ursulasTrickery,
+  weDontTalkAboutBruno,
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
+import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
+
+export const allURRCards: LorcanaCardDefinition[] = [
+  aPiratesLife,
+  avalanche,
+  beKingUndisputed,
+  brawl,
+  brunosReturn,
+  digALittleDeeper,
+  dodge,
+  firstAid,
+  glean,
+  iFindEmIFlattenEm,
+  lookAtThisFamily,
+  lostInTheWoods,
+  makeThePotion,
+  oneLastHope,
+  poorUnfortunateSouls,
+  secondStarToTheRight,
+  seldomAllTheySeem,
+  signTheScroll,
+  swingIntoAction,
+  theMobSong,
+  treasuresUntold,
+  tritonsDecree,
+  underTheSea,
+  ursulasPlan,
+  ursulasTrickery,
+  weDontTalkAboutBruno,
+];
+
+export const allURRCardsById: Record<string, LorcanaCardDefinition> = {};
+for (const card of allURRCards) {
+  allURRCardsById[card.id] = card;
+}

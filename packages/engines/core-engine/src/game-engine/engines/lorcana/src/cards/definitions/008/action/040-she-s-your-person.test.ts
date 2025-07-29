@@ -1,0 +1,57 @@
+/**
+ * @jest-environment node
+ */
+
+import { describe, expect, it } from "bun:test";
+import { mickeyMouseMusketeer } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+import {
+  mickeyMouseGiantMouse,
+  shesYourPerson,
+} from "@lorcanito/lorcana-engine/cards/008";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+
+describe("She's Your Person", () => {
+  describe("Choose one:", () => {
+    it("- Remove up to 3 damage from chosen character.", async () => {
+      const testEngine = new TestEngine({
+        inkwell: shesYourPerson.cost,
+        play: [mickeyMouseGiantMouse],
+        hand: [shesYourPerson],
+      });
+
+      await testEngine.setCardDamage(mickeyMouseGiantMouse, 5);
+
+      await testEngine.playCard(
+        shesYourPerson,
+        {
+          mode: "1",
+        },
+        true,
+      );
+
+      await testEngine.resolveTopOfStack({
+        targets: [mickeyMouseGiantMouse],
+      });
+
+      expect(testEngine.getCardModel(mickeyMouseGiantMouse).damage).toEqual(2);
+    });
+
+    it("- Remove up to 3 damage from each of your characters with Bodyguard.", async () => {
+      const testEngine = new TestEngine({
+        inkwell: shesYourPerson.cost,
+        play: [mickeyMouseGiantMouse, mickeyMouseMusketeer],
+        hand: [shesYourPerson],
+      });
+
+      await testEngine.setCardDamage(mickeyMouseGiantMouse, 5);
+      await testEngine.setCardDamage(mickeyMouseMusketeer, 4);
+
+      await testEngine.playCard(shesYourPerson, {
+        mode: "2",
+      });
+
+      expect(testEngine.getCardModel(mickeyMouseGiantMouse).damage).toEqual(2);
+      expect(testEngine.getCardModel(mickeyMouseMusketeer).damage).toEqual(1);
+    });
+  });
+});

@@ -2,9 +2,8 @@ import { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
 import { logger } from "~/game-engine/core-engine/utils";
 import type { TriggerTiming } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
-import type { LorcanaEngine } from "../lorcana-engine";
+import type { LorcanaCardDefinition, LorcanaEngine } from "../lorcana-engine";
 import type {
-  LorcanaCardDefinition,
   LorcanaCardFilter,
   LorcanaCardMeta,
   LorcanaGameState,

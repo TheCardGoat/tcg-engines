@@ -4,8 +4,8 @@ import type {
   Keyword,
 } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import type { BaseTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
+import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import type {
-  LorcanaCardDefinition,
   LorcanaCardFilter,
   LorcanaZone,
 } from "~/game-engine/engines/lorcana/src/lorcana-engine-types";

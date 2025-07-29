@@ -11,8 +11,8 @@ import type {
   CardTarget,
   PlayerTarget,
 } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
+import { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import type {
-  LorcanaCardDefinition,
   LorcanaCardFilter,
   LorcanaZone,
 } from "~/game-engine/engines/lorcana/src/lorcana-engine-types";

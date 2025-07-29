@@ -4,6 +4,7 @@ import type { GameCards } from "~/game-engine/core-engine/types";
 
 import type { LorcanaAbility } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 
+// TODO: Remove this once we have redefined card abilities
 export type LorcanaCardDefinition = LorcanitoCard & {
   id: string;
   abilities?: LorcanaAbility[];
