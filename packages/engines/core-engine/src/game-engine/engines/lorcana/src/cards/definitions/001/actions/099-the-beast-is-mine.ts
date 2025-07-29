@@ -1,5 +1,7 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { DURING_THEIR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { gainsAbilityEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { recklessAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/recklessAbility";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theBeastIsMine: LorcanaActionCardDefinition = {
@@ -10,17 +12,14 @@ export const theBeastIsMine: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "The Beast is Mine!",
+      type: "static",
       text: "Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "ability",
-          ability: "reckless",
-          modifier: "add",
-          duration: "next_turn",
-          target: chosenCharacter,
-        } as AbilityEffect,
+        gainsAbilityEffect({
+          ability: recklessAbility,
+          duration: DURING_THEIR_NEXT_TURN,
+        }),
       ],
     },
   ],

@@ -146,7 +146,7 @@ export function loseLoreEffect({
   value,
   followedBy,
 }: {
-  targets: PlayerTarget | PlayerTarget[];
+  targets?: PlayerTarget | PlayerTarget[];
   value?: number | DynamicValue;
   followedBy?: LorcanaEffect;
 }): LoseLoreEffect {
@@ -327,22 +327,20 @@ export function discardHandEffect({
 }: {
   targets?: PlayerTarget | PlayerTarget[];
   followedBy?: LorcanaEffect;
-} = {}): LorcanaEffect[] {
-  return [
-    moveCardEffect({
-      targets: [
-        {
-          type: "card",
-          zone: "hand",
-          count: -1, // All cards in hand
-          owner: "self",
-        },
-      ],
-      zoneTo: "discard",
-      zoneFrom: "hand",
-      followedBy,
-    }),
-  ];
+} = {}): LorcanaEffect {
+  return moveCardEffect({
+    targets: [
+      {
+        type: "card",
+        zone: "hand",
+        count: -1, // All cards in hand
+        owner: "self",
+      },
+    ],
+    zoneTo: "discard",
+    zoneFrom: "hand",
+    followedBy,
+  });
 }
 
 export function costReductionEffect({

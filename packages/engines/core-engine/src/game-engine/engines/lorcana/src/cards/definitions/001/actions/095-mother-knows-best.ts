@@ -1,32 +1,23 @@
-import type { CardEffectTarget } from "@lorcanito/lorcana-engine";
+import { returnCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-const chosenCharacter: CardEffectTarget = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "type", value: "character" },
-    { filter: "zone", value: "play" },
-  ],
-};
 
 export const motherKnowsBest: LorcanaActionCardDefinition = {
   id: "rxk",
   name: "Mother Knows Best",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 3 or more can {E} to sing this\nsong for free.)_\nReturn chosen character to their player's hand.",
+  text: "Return chosen character to their player's hand.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Mother Knows Best",
+      type: "static",
       text: "Return chosen character to their player's hand.",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "move",
+        returnCardEffect({
           to: "hand",
-          target: chosenCharacter,
-        },
+          from: "play",
+        }),
       ],
     },
   ],

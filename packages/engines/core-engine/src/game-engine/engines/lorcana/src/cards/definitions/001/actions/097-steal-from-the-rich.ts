@@ -1,46 +1,13 @@
-import type { Trigger } from "@lorcanito/lorcana-engine";
-import type { FloatingTriggeredAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-import type { LoreEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const stealFromRich: LorcanaActionCardDefinition = {
   id: "wje",
+  notImplemented: true,
   name: "Steal from the Rich",
   characteristics: ["action"],
   text: "Whenever one of your characters quests this turn, each opponent loses 1 lore.",
   type: "action",
-  abilities: [
-    {
-      type: "floating-triggered",
-      duration: "turn",
-      trigger: {
-        on: "quest",
-        target: {
-          type: "card",
-          value: "all",
-          filters: [
-            { filter: "owner", value: "self" },
-            { filter: "zone", value: "play" },
-            { filter: "type", value: "character" },
-          ],
-        },
-      } as Trigger,
-      layer: {
-        type: "resolution",
-        effects: [
-          {
-            type: "lore",
-            amount: 1,
-            modifier: "subtract",
-            target: {
-              type: "player",
-              value: "opponent",
-            },
-          } as LoreEffect,
-        ],
-      },
-    } as FloatingTriggeredAbility,
-  ],
+  abilities: [],
   flavour:
     "Wonder how much ol' Prince John spent on all those fancy locks. \n−Little John",
   colors: ["emerald"],

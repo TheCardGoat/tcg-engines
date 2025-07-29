@@ -1,4 +1,11 @@
-import { chosenCharacterGainsSupport } from "@lorcanito/lorcana-engine/effects/effects";
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import {
+  drawCardEffect,
+  gainsAbilityEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const workTogether: LorcanaActionCardDefinition = {
@@ -9,10 +16,16 @@ export const workTogether: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Work Together",
-      text: "Chosen character gains **Support** this turn.",
-      effects: [chosenCharacterGainsSupport("turn")],
+      type: "static",
+      text: "Chosen character gains Support this turn. Draw a card.",
+      effects: [
+        gainsAbilityEffect({
+          targets: [chosenCharacterTarget],
+          ability: supportAbility,
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
+        drawCardEffect({ targets: [selfPlayerTarget] }),
+      ],
     },
   ],
   flavour:

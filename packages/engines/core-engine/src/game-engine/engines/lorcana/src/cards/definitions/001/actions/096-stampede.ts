@@ -1,5 +1,5 @@
-import { chosenDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-import type { DamageEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenDamagedCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const stampede: LorcanaActionCardDefinition = {
@@ -10,15 +10,11 @@ export const stampede: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Stampede",
+      type: "static",
       text: "Deal 2 damage to chosen damaged character.",
+      targets: [chosenDamagedCharacterTarget],
       effects: [
-        {
-          type: "damage",
-          amount: 2,
-          target: chosenDamagedCharacter,
-        } as DamageEffect,
+        dealDamageEffect({ targets: chosenDamagedCharacterTarget, value: 2 }),
       ],
     },
   ],

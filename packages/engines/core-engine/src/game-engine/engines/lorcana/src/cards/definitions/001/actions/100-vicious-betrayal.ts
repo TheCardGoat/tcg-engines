@@ -1,4 +1,9 @@
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import {
+  conditionalTargetEffect,
+  getEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const viciousBetrayal: LorcanaActionCardDefinition = {
@@ -9,56 +14,26 @@ export const viciousBetrayal: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Chosen character gets +2 {S} this turn. If a Villain character is chosen, they get +3 {S} instead.",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "target-conditional",
-          autoResolve: false,
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "play" },
-              { filter: "characteristics", value: ["villain"] },
-            ],
+        conditionalTargetEffect({
+          targetCondition: {
+            type: "hasClassification",
+            classification: "villain",
           },
-          effects: [
-            {
-              type: "attribute",
-              attribute: "strength",
-              amount: 3,
-              modifier: "add",
-              duration: "turn",
-              target: {
-                type: "card",
-                value: 1,
-                filters: [
-                  { filter: "type", value: "character" },
-                  { filter: "zone", value: "play" },
-                  { filter: "characteristics", value: ["villain"] },
-                ],
-              },
-            },
-          ],
-          fallback: [
-            {
-              type: "attribute",
-              attribute: "strength",
-              amount: 2,
-              modifier: "add",
-              duration: "turn",
-              target: {
-                type: "card",
-                value: 1,
-                filters: [
-                  { filter: "type", value: "character" },
-                  { filter: "zone", value: "play" },
-                ],
-              },
-            },
-          ],
-        } as TargetConditionalEffect,
+          effect: getEffect({
+            attribute: "strength",
+            value: 3,
+            duration: FOR_THE_REST_OF_THIS_TURN,
+          }),
+          elseEffect: getEffect({
+            attribute: "strength",
+            value: 2,
+            duration: FOR_THE_REST_OF_THIS_TURN,
+          }),
+        }),
       ],
     },
   ],

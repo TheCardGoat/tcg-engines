@@ -1,3 +1,4 @@
+import { putCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const oneJumpAhead: LorcanaActionCardDefinition = {
@@ -8,21 +9,21 @@ export const oneJumpAhead: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "One Jump Ahead",
+      type: "static",
       text: "Put the top card of your deck into your inkwell facedown and exerted.",
-      optional: false,
       effects: [
-        {
-          type: "move",
+        putCardEffect({
           to: "inkwell",
-          exerted: true,
-          target: {
-            type: "card",
-            value: 1,
-            filters: [{ filter: "top-deck", value: "self" }],
-          },
-        },
+          from: "deck",
+          position: "top",
+          targets: [
+            {
+              type: "card",
+              zone: "deck",
+              count: 1,
+            },
+          ],
+        }),
       ],
     },
   ],

@@ -1,4 +1,5 @@
-import type { LoreEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { loseLoreEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { eachOpponentTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const tangle: LorcanaActionCardDefinition = {
@@ -9,18 +10,10 @@ export const tangle: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      effects: [
-        {
-          type: "lore",
-          amount: 1,
-          modifier: "subtract",
-          target: {
-            type: "player",
-            value: "opponent",
-          },
-        } as LoreEffect,
-      ],
+      type: "static",
+      text: "Each opponent loses 1 lore.",
+      targets: [eachOpponentTarget],
+      effects: [loseLoreEffect({ value: 1 })],
     },
   ],
   flavour:

@@ -1,3 +1,5 @@
+import { returnCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenActionFromDiscardTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const doItAgain: LorcanaActionCardDefinition = {
@@ -8,23 +10,14 @@ export const doItAgain: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Do It Again!",
+      type: "static",
       text: "Return an action card from your discard to your hand.",
+      targets: [chosenActionFromDiscardTarget],
       effects: [
-        {
-          type: "move",
+        returnCardEffect({
           to: "hand",
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "owner", value: "self" },
-              { filter: "type", value: ["action"] },
-              { filter: "zone", value: "discard" },
-            ],
-          },
-        },
+          from: "discard",
+        }),
       ],
     },
   ],

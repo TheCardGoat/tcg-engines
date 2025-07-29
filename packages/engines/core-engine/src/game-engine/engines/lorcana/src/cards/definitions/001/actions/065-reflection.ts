@@ -4,27 +4,25 @@ export const reflection: LorcanaActionCardDefinition = {
   id: "brz",
   name: "Reflection",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 2 or more can {E} to sing this\nsong for free.)_\nLook at the top 3 cards of your deck. Put them back on the top of your deck in any order.",
+  text: "Look at the top 3 cards of your deck. Put them back on the top of your deck in any order.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Reflection",
+      type: "static",
       text: "Look at the top 3 cards of your deck. Put them back on the top of your deck in any order.",
       effects: [
         {
           type: "scry",
-          amount: 3,
-          mode: "top",
-          target: {
-            type: "player",
-            value: "self",
-          },
-          limits: {
-            top: 3,
-            bottom: 0,
-            hand: 0,
-            inkwell: 0,
+          parameters: {
+            lookAt: 3,
+            destinations: [
+              {
+                zone: "deck",
+                position: "top",
+                count: 3,
+                order: "any",
+              },
+            ],
           },
         },
       ],

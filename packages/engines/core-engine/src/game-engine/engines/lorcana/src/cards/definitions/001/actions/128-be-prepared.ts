@@ -1,3 +1,5 @@
+import { banishEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { allCharactersTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const bePrepared: LorcanaActionCardDefinition = {
@@ -8,22 +10,10 @@ export const bePrepared: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Be Prepared",
+      type: "static",
       text: "Banish all characters.",
-      effects: [
-        {
-          type: "banish",
-          target: {
-            type: "card",
-            value: "all",
-            filters: [
-              { filter: "zone", value: "play" },
-              { filter: "type", value: "character" },
-            ],
-          },
-        },
-      ],
+      targets: [allCharactersTarget],
+      effects: [banishEffect()],
     },
   ],
   flavour: "Out teeth and ambitions are bared!",

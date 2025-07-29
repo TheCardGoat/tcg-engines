@@ -2576,7 +2576,8 @@ export const actionTexts: Array<
               lookAt: 3,
               destinations: [
                 {
-                  zone: "top",
+                  zone: "deck",
+                  position: "top",
                   count: 3,
                   order: "any",
                 },

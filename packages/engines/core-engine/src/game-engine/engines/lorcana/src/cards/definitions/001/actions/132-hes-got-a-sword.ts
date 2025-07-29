@@ -1,3 +1,6 @@
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { getEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const hesGotASword: LorcanaActionCardDefinition = {
@@ -8,23 +11,15 @@ export const hesGotASword: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Chosen character gets +2 {S} this turn.",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "attribute",
+        getEffect({
           attribute: "strength",
-          amount: 2,
-          modifier: "add",
-          duration: "turn",
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "play" },
-            ],
-          },
-        },
+          value: 2,
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
       ],
     },
   ],

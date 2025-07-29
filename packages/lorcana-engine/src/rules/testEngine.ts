@@ -420,10 +420,10 @@ export class TestEngine {
       scry: Object.values(scry).some((value) => value) ? scry : undefined,
     };
 
-    Object.keys(convertedParams).forEach((key) => {
+    for (const key of Object.keys(convertedParams)) {
       // @ts-expect-error
       convertedParams[key] === undefined && delete convertedParams[key];
-    });
+    }
 
     this.engine.execute({
       type: "RESOLVE_LAYER",

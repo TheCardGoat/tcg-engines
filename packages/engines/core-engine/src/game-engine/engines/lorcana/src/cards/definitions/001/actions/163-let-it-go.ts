@@ -1,33 +1,23 @@
-import type { CardEffectTarget } from "@lorcanito/lorcana-engine";
+import { putCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-const chosenCharacter: CardEffectTarget = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "type", value: "character" },
-    { filter: "zone", value: "play" },
-  ],
-};
 
 export const letItGo: LorcanaActionCardDefinition = {
   id: "n1y",
   name: "Let It Go",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 5 or more can {E} to sing this song for free.)_\nPut chosen character into their player's inkwell facedown and exerted.",
+  text: "Put chosen character into their player's inkwell facedown and exerted.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Let It Go",
+      type: "static",
       text: "Put chosen character into their player's inkwell facedown and exerted.",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "move",
+        putCardEffect({
           to: "inkwell",
-          exerted: true,
-          target: chosenCharacter,
-        },
+          from: "play",
+        }),
       ],
     },
   ],

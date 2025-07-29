@@ -2,7 +2,7 @@ import type { BaseTarget } from "~/game-engine/engines/lorcana/src/abilities/tar
 
 export interface PlayerTarget extends BaseTarget {
   type: "player";
-  value?: "self" | "opponent" | "any" | "owner"; // Player targets can be self or opponent
+  value?: "self" | "opponent" | "any" | "owner" | "all"; // Player targets can be self or opponent
 }
 
 export const selfPlayerTarget: PlayerTarget = {
@@ -28,4 +28,10 @@ export const eachOpponentTarget: PlayerTarget = allOpponentsTarget;
 export const chosenPlayerTarget: PlayerTarget = {
   type: "player",
   value: "any",
+};
+
+export const eachPlayerTarget: PlayerTarget = {
+  type: "player",
+  value: "all",
+  targetAll: true,
 };

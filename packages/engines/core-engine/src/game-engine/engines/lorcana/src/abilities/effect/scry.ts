@@ -16,6 +16,7 @@ export type ScryDestination = {
   reveal?: boolean;
   max?: number;
   min?: number;
+  count?: number;
 };
 
 export type ScryParameters = {
@@ -41,4 +42,9 @@ export const putTheRestOnTheBottomOfYourDeckInAnyOrder: ScryDestination = {
   zone: "deck",
   position: "bottom",
   remainder: true,
+};
+
+export const putOneIntoYourHand: ScryDestination = {
+  zone: "hand",
+  count: 1,
 };

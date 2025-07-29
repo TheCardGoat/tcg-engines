@@ -1,4 +1,4 @@
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+import { putOneIntoYourHand } from "~/game-engine/engines/lorcana/src/abilities/effect/scry";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const developYourBrain: LorcanaActionCardDefinition = {
@@ -9,26 +9,22 @@ export const developYourBrain: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Develop Your Brain",
-      text: "Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.",
+      type: "static",
+      text: "Look at the top 2 cards of your deck. Put one into your hand and the other into your inkwell facedown and exerted.",
       effects: [
         {
           type: "scry",
-          amount: 2,
-          mode: "bottom",
-          shouldRevealTutored: false,
-          target: self,
-          limits: {
-            bottom: 1,
-            inkwell: 0,
-            hand: 1,
-            top: 0,
+          parameters: {
+            lookAt: 2,
+            destinations: [
+              putOneIntoYourHand,
+              {
+                zone: "inkwell",
+                count: 1,
+                exerted: true,
+              },
+            ],
           },
-          tutorFilters: [
-            { filter: "owner", value: "self" },
-            { filter: "zone", value: "deck" },
-          ],
         },
       ],
     },

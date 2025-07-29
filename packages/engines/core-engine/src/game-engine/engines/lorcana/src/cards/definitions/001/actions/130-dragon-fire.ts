@@ -1,5 +1,5 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { mayBanish } from "@lorcanito/lorcana-engine/effects/effects";
+import { banishEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const dragonFire: LorcanaActionCardDefinition = {
@@ -10,10 +10,10 @@ export const dragonFire: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Dragon Fire",
+      type: "static",
       text: "Banish chosen character.",
-      effects: [mayBanish(chosenCharacter)],
+      targets: [chosenCharacterTarget],
+      effects: [banishEffect()],
     },
   ],
   flavour: "Rare is the hero who can withstand a dragon's wrath.",
