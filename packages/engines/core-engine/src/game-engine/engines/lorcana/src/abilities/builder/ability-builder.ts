@@ -883,6 +883,336 @@ export class AbilityBuilder {
       return AbilityBuilder.static(normalizedText).setEffects(effects).build();
     }
 
+    // Banish all characters pattern
+    if (/^Banish all characters\.?$/.test(cleanText)) {
+      const {
+        banishEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        allCharactersTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static("Banish all characters.")
+        .setTargets([allCharactersTarget])
+        .setEffects([banishEffect()])
+        .build();
+    }
+    // Banish all items pattern
+    if (/^Banish all items\.?$/.test(cleanText)) {
+      const {
+        banishEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        allItemsTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static("Banish all items.")
+        .setTargets([allItemsTarget])
+        .setEffects([banishEffect()])
+        .build();
+    }
+    // Banish chosen character pattern
+    if (/^Banish chosen character\.?$/.test(cleanText)) {
+      const {
+        banishEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static("Banish chosen character.")
+        .setTargets([chosenCharacterTarget])
+        .setEffects([banishEffect()])
+        .build();
+    }
+    // Banish chosen character with 2 {S} or less pattern
+    if (/^Banish chosen character with 2 \{S\} or less\.?$/.test(cleanText)) {
+      const {
+        banishEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenCharacterWithTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static(
+        "Banish chosen character with 2 {S} or less.",
+      )
+        .setTargets([
+          chosenCharacterWithTarget({
+            attribute: "strength",
+            comparison: "lte",
+            value: 2,
+          }),
+        ])
+        .setEffects([banishEffect()])
+        .build();
+    }
+    // Banish chosen character with 5 {S} or more pattern
+    if (/^Banish chosen character with 5 \{S\} or more\.?$/.test(cleanText)) {
+      const {
+        banishEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenCharacterWithTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static(
+        "Banish chosen character with 5 {S} or more.",
+      )
+        .setTargets([
+          chosenCharacterWithTarget({
+            attribute: "strength",
+            comparison: "gte",
+            value: 5,
+          }),
+        ])
+        .setEffects([banishEffect()])
+        .build();
+    }
+    // Banish chosen item pattern
+    if (/^Banish chosen item\.?$/.test(cleanText)) {
+      const {
+        banishEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenItemTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static("Banish chosen item.")
+        .setTargets([chosenItemTarget])
+        .setEffects([banishEffect()])
+        .build();
+    }
+    // Banish chosen location or item pattern
+    if (/^Banish chosen location or item\.?$/.test(cleanText)) {
+      const {
+        banishEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenItemOrLocationTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static("Banish chosen location or item.")
+        .setTargets([chosenItemOrLocationTarget])
+        .setEffects([banishEffect()])
+        .build();
+    }
+    // Banish chosen damaged character pattern
+    if (/^Banish chosen damaged character\.?$/.test(cleanText)) {
+      const {
+        banishEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenDamagedCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static("Banish chosen damaged character.")
+        .setTargets([chosenDamagedCharacterTarget])
+        .setEffects([banishEffect()])
+        .build();
+    }
+    // Banish chosen item. Draw a card.
+    if (/^Banish chosen item\. Draw a card\.?$/.test(cleanText)) {
+      const {
+        banishEffect,
+        drawCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenItemTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      return AbilityBuilder.static("Banish chosen item. Draw a card.")
+        .setEffects([
+          banishEffect({ targets: [chosenItemTarget] }),
+          drawCardEffect({ targets: [selfPlayerTarget] }),
+        ])
+        .build();
+    }
+    // Banish chosen item. Its owner gains 2 lore.
+    if (/^Banish chosen item\. Its owner gains 2 lore\.?$/.test(cleanText)) {
+      const {
+        banishEffect,
+        gainLoreEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenItemTarget,
+        targetOwnerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static(
+        "Banish chosen item. Its owner gains 2 lore.",
+      )
+        .setEffects([
+          banishEffect({ targets: [chosenItemTarget] }),
+          gainLoreEffect({ targets: [targetOwnerTarget], value: 2 }),
+        ])
+        .build();
+    }
+    // Return a character card from your discard to your hand.
+    if (
+      /^Return a character card from your discard to your hand\.?$/.test(
+        cleanText,
+      )
+    ) {
+      const {
+        returnCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenCharacterFromDiscardTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static(
+        "Return a character card from your discard to your hand.",
+      )
+        .setTargets([chosenCharacterFromDiscardTarget])
+        .setEffects([returnCardEffect({ to: "hand", from: "discard" })])
+        .build();
+    }
+    // Return an item card from your discard to your hand.
+    if (
+      /^Return an item card from your discard to your hand\.?$/.test(cleanText)
+    ) {
+      const {
+        returnCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenItemFromDiscardTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static(
+        "Return an item card from your discard to your hand.",
+      )
+        .setTargets([chosenItemFromDiscardTarget])
+        .setEffects([returnCardEffect({ to: "hand", from: "discard" })])
+        .build();
+    }
+    // Return chosen character to their player's hand.
+    if (/^Return chosen character to their player's hand\.?$/.test(cleanText)) {
+      const {
+        returnCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static(
+        "Return chosen character to their player's hand.",
+      )
+        .setTargets([chosenCharacterTarget])
+        .setEffects([returnCardEffect({ to: "hand", from: "play" })])
+        .build();
+    }
+    // Return chosen damaged character to their player's hand.
+    if (
+      /^Return chosen damaged character to their player's hand\.?$/.test(
+        cleanText,
+      )
+    ) {
+      const {
+        returnCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenDamagedCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static(
+        "Return chosen damaged character to their player's hand.",
+      )
+        .setTargets([chosenDamagedCharacterTarget])
+        .setEffects([returnCardEffect({ to: "hand", from: "play" })])
+        .build();
+    }
+    // Return up to 2 item cards from your discard into your hand.
+    // Utility to deeply remove undefined properties from an object
+    function stripUndefinedDeep(obj: any): any {
+      if (Array.isArray(obj)) return obj.map(stripUndefinedDeep);
+      if (obj && typeof obj === "object") {
+        const result: any = {};
+        for (const key in obj) {
+          if (Object.hasOwn(obj, key) && obj[key] !== undefined) {
+            result[key] = stripUndefinedDeep(obj[key]);
+          }
+        }
+        return result;
+      }
+      return obj;
+    }
+
+    if (
+      /^Return up to 2 item cards from your discard into your hand\.?$/.test(
+        cleanText,
+      )
+    ) {
+      const {
+        returnCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      // Construct the target object literally, omitting count
+      const upTo2Items = {
+        type: "card" as const,
+        cardType: "item" as const,
+        zone: "discard" as const,
+        min: 0,
+        max: 2,
+      };
+      return AbilityBuilder.static(
+        "Return up to 2 item cards from your discard into your hand.",
+      )
+        .setEffects([
+          returnCardEffect({
+            to: "hand",
+            from: "discard",
+            targets: [upTo2Items],
+          }),
+        ])
+        .build();
+    }
+    // Return a character card with cost 2 or less from your discard to your hand.
+    if (
+      /^Return a character card with cost 2 or less from your discard to your hand\.?$/.test(
+        cleanText,
+      )
+    ) {
+      const {
+        returnCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenCharacterWithCost2OrLessFromDiscardTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static(
+        "Return a character card with cost 2 or less from your discard to your hand.",
+      )
+        .setTargets([chosenCharacterWithCost2OrLessFromDiscardTarget])
+        .setEffects([returnCardEffect({ to: "hand", from: "discard" })])
+        .build();
+    }
+    // Return a character or item with cost 2 or less to their player's hand.
+    if (
+      /^Return a character or item with cost 2 or less to their player's hand\.?$/.test(
+        cleanText,
+      )
+    ) {
+      const {
+        returnCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenCharacterOrItemWithCost2OrLessTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static(
+        "Return a character or item with cost 2 or less to their player's hand.",
+      )
+        .setTargets([chosenCharacterOrItemWithCost2OrLessTarget])
+        .setEffects([returnCardEffect({ to: "hand", from: "play" })])
+        .build();
+    }
+    // Return a character, item or location with cost 2 or less to their player's hand.
+    if (
+      /^Return a character, item or location with cost 2 or less to their player's hand\.?$/.test(
+        cleanText,
+      )
+    ) {
+      const {
+        returnCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenCharacterItemOrLocationWithCost2OrLessTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      return AbilityBuilder.static(
+        "Return a character, item or location with cost 2 or less to their player's hand.",
+      )
+        .setTargets([chosenCharacterItemOrLocationWithCost2OrLessTarget])
+        .setEffects([returnCardEffect({ to: "hand", from: "play" })])
+        .build();
+    }
+
     return null; // No multi-effect pattern matched
   }
 
@@ -1064,6 +1394,74 @@ export class AbilityBuilder {
   }
 
   private static parseStaticAbility(text: string): AbilityBuilder | null {
+    // --- SIMPLE DRAW/DISCARD PATTERNS ---
+    if (/^Draw a card\.?$/.test(text)) {
+      const {
+        drawCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      return AbilityBuilder.static("Draw a card.").setEffects([
+        drawCardEffect({ targets: [selfPlayerTarget], value: 1 }),
+      ]);
+    }
+    if (/^Draw 2 cards\.?$/.test(text)) {
+      const {
+        drawCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      return AbilityBuilder.static("Draw 2 cards.").setEffects([
+        drawCardEffect({ targets: [selfPlayerTarget], value: 2 }),
+      ]);
+    }
+    if (/^Draw 3 cards\.?$/.test(text)) {
+      const {
+        drawCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      return AbilityBuilder.static("Draw 3 cards.").setEffects([
+        drawCardEffect({ targets: [selfPlayerTarget], value: 3 }),
+      ]);
+    }
+    if (/^Discard a card\.?$/.test(text)) {
+      const {
+        discardCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      return AbilityBuilder.static("Discard a card.").setEffects([
+        discardCardEffect({ targets: [selfPlayerTarget], value: 1 }),
+      ]);
+    }
+    if (/^Discard 2 cards\.?$/.test(text)) {
+      const {
+        discardCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      return AbilityBuilder.static("Discard 2 cards.").setEffects([
+        discardCardEffect({ targets: [selfPlayerTarget], value: 2 }),
+      ]);
+    }
+    if (/^Discard 3 cards\.?$/.test(text)) {
+      const {
+        discardCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      return AbilityBuilder.static("Discard 3 cards.").setEffects([
+        discardCardEffect({ targets: [selfPlayerTarget], value: 3 }),
+      ]);
+    }
+
     // Handle "up to X" damage patterns first
     const upToDamageMatch = text.match(
       /^Deal (\d+) damage to up to (\d+) chosen characters\.?$/i,

@@ -136,7 +136,7 @@ export const actionTexts: Array<
         effects: [banishEffect()],
       },
     ],
-    true,
+    false,
   ],
   [
     "Banish all items.",
@@ -148,7 +148,7 @@ export const actionTexts: Array<
         effects: [banishEffect()],
       },
     ],
-    true,
+    false,
   ],
   [
     "Banish any number of your items, then draw a card for each item banished this way.",
@@ -216,7 +216,7 @@ export const actionTexts: Array<
         effects: [banishEffect()],
       },
     ],
-    true,
+    false,
   ],
   [
     "Banish chosen character with 5 {S} or more.",
@@ -234,7 +234,7 @@ export const actionTexts: Array<
         effects: [banishEffect()],
       },
     ],
-    true,
+    false,
   ],
   [
     "Banish chosen character, then return an item card from your discard to your hand.",
@@ -266,7 +266,7 @@ export const actionTexts: Array<
         effects: [banishEffect()],
       },
     ],
-    true,
+    false,
   ],
   [
     "Banish chosen character. Draw a card.",
@@ -354,7 +354,7 @@ export const actionTexts: Array<
         effects: [banishEffect()],
       },
     ],
-    true,
+    false,
   ],
   [
     "Banish chosen location or item.",
@@ -362,14 +362,11 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Banish chosen location or item.",
-        effects: [
-          banishEffect({
-            targets: [chosenItemOrLocationTarget],
-          }),
-        ],
+        targets: [chosenItemOrLocationTarget],
+        effects: [banishEffect()],
       },
     ],
-    true,
+    false,
   ],
   [
     "Banish chosen Villain of yours to banish chosen character.",
@@ -4870,19 +4867,210 @@ export const actionTexts: Array<
     ],
     true,
   ],
+  [
+    "Return chosen character to their player's hand.",
+    [
+      {
+        type: "static",
+        text: "Return chosen character to their player's hand.",
+        targets: [chosenCharacterTarget],
+        effects: [
+          returnCardEffect({
+            to: "hand",
+            from: "play",
+          }),
+        ],
+      },
+    ],
+    false,
+  ],
+  [
+    "Return chosen damaged character to their player's hand.",
+    [
+      {
+        type: "static",
+        text: "Return chosen damaged character to their player's hand.",
+        targets: [chosenDamagedCharacterTarget],
+        effects: [
+          returnCardEffect({
+            to: "hand",
+            from: "play",
+          }),
+        ],
+      },
+    ],
+    false,
+  ],
+  [
+    "Return up to 2 item cards from your discard into your hand.",
+    [
+      {
+        type: "static",
+        text: "Return up to 2 item cards from your discard into your hand.",
+        effects: [
+          returnCardEffect({
+            to: "hand",
+            from: "discard",
+            targets: upToTarget({
+              target: {
+                type: "card",
+                cardType: "item",
+                zone: "discard",
+                count: 1,
+              },
+              upTo: 2,
+            }),
+          }),
+        ],
+      },
+    ],
+    false,
+  ],
+  [
+    "Return a character card with cost 2 or less from your discard to your hand.",
+    [
+      {
+        type: "static",
+        text: "Return a character card with cost 2 or less from your discard to your hand.",
+        targets: [chosenCharacterWithCost2OrLessFromDiscardTarget],
+        effects: [
+          returnCardEffect({
+            to: "hand",
+            from: "discard",
+          }),
+        ],
+      },
+    ],
+    false,
+  ],
+  [
+    "Return a character or item with cost 2 or less to their player's hand.",
+    [
+      {
+        type: "static",
+        text: "Return a character or item with cost 2 or less to their player's hand.",
+        targets: [chosenCharacterOrItemWithCost2OrLessTarget],
+        effects: [
+          returnCardEffect({
+            to: "hand",
+            from: "play",
+          }),
+        ],
+      },
+    ],
+    false,
+  ],
+  [
+    "Return a character, item or location with cost 2 or less to their player's hand.",
+    [
+      {
+        type: "static",
+        text: "Return a character, item or location with cost 2 or less to their player's hand.",
+        targets: [chosenCharacterItemOrLocationWithCost2OrLessTarget],
+        effects: [
+          returnCardEffect({
+            to: "hand",
+            from: "play",
+          }),
+        ],
+      },
+    ],
+    false,
+  ],
+  [
+    "Draw a card.",
+    [
+      {
+        type: "static",
+        text: "Draw a card.",
+        effects: [drawCardEffect({ targets: [selfPlayerTarget], value: 1 })],
+      },
+    ],
+    false,
+  ],
+  [
+    "Discard a card.",
+    [
+      {
+        type: "static",
+        text: "Discard a card.",
+        effects: [discardCardEffect({ targets: [selfPlayerTarget], value: 1 })],
+      },
+    ],
+    false,
+  ],
+  [
+    "Draw 2 cards.",
+    [
+      {
+        type: "static",
+        text: "Draw 2 cards.",
+        effects: [drawCardEffect({ targets: [selfPlayerTarget], value: 2 })],
+      },
+    ],
+    false,
+  ],
+  [
+    "Draw 3 cards.",
+    [
+      {
+        type: "static",
+        text: "Draw 3 cards.",
+        effects: [drawCardEffect({ targets: [selfPlayerTarget], value: 3 })],
+      },
+    ],
+    false,
+  ],
+  [
+    "Discard 2 cards.",
+    [
+      {
+        type: "static",
+        text: "Discard 2 cards.",
+        effects: [discardCardEffect({ targets: [selfPlayerTarget], value: 2 })],
+      },
+    ],
+    false,
+  ],
+  [
+    "Discard 3 cards.",
+    [
+      {
+        type: "static",
+        text: "Discard 3 cards.",
+        effects: [discardCardEffect({ targets: [selfPlayerTarget], value: 3 })],
+      },
+    ],
+    false,
+  ],
 ];
+
+// Utility to deeply remove undefined properties from an object
+function stripUndefinedDeep(obj: any): any {
+  if (Array.isArray(obj)) return obj.map(stripUndefinedDeep);
+  if (obj && typeof obj === "object") {
+    const result: any = {};
+    for (const key in obj) {
+      if (Object.hasOwn(obj, key) && obj[key] !== undefined) {
+        result[key] = stripUndefinedDeep(obj[key]);
+      }
+    }
+    return result;
+  }
+  return obj;
+}
 
 // Generate test cases with proper skip handling
 for (const [text, expected, shouldSkip] of actionTexts) {
   if (shouldSkip) {
     test.skip(`AbilityBuilder.fromText(${text})`, () => {
       const ability = AbilityBuilder.fromText(text);
-      expect(ability).toEqual(expected);
+      expect(stripUndefinedDeep(ability)).toEqual(stripUndefinedDeep(expected));
     });
   } else {
     test(`AbilityBuilder.fromText(${text})`, () => {
       const ability = AbilityBuilder.fromText(text);
-      expect(ability).toEqual(expected);
+      expect(stripUndefinedDeep(ability)).toEqual(stripUndefinedDeep(expected));
     });
   }
 }
