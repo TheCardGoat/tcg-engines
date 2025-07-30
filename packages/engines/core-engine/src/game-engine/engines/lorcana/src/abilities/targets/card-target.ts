@@ -34,6 +34,13 @@ export interface CardTarget extends BaseTarget {
   random?: boolean; // For "random character"
 }
 
+export const characterCardFromHand: CardTarget = {
+  type: "card",
+  zone: "hand",
+  cardType: "character",
+  count: 1,
+};
+
 export const allCharactersTarget: CardTarget = {
   type: "card",
   zone: "play",
@@ -85,6 +92,15 @@ export const chosenCharacterTarget: CardTarget = {
   zone: "play",
   cardType: "character",
   count: 1,
+};
+
+export const chosenOpposingCharacterTarget: CardTarget = {
+  ...chosenCharacterTarget,
+  owner: "opponent",
+};
+
+export const anotherChosenCharacterTarget: CardTarget = {
+  ...chosenCharacterTarget,
 };
 
 export const chosenCharacterWhoHasChallengedTarget: CardTarget = {

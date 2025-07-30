@@ -1,3 +1,5 @@
+import { playCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { characterCardFromHand } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const justInTime: LorcanaActionCardDefinition = {
@@ -8,28 +10,10 @@ export const justInTime: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
       optional: true,
-      effects: [
-        {
-          type: "play",
-          forFree: true,
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "owner", value: "self" },
-              { filter: "zone", value: "hand" },
-              { filter: "type", value: "character" },
-              {
-                filter: "attribute",
-                value: "cost",
-                comparison: { operator: "lte", value: 5 },
-              },
-            ],
-          },
-        },
-      ],
+      targets: [characterCardFromHand],
+      effects: [playCardEffect({ cost: "free" })],
     },
   ],
   flavour:

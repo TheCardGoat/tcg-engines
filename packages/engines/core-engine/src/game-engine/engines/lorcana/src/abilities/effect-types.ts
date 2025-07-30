@@ -6,11 +6,10 @@ import type {
   Keyword,
   LorcanaAbility,
 } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
-import type { ScryEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/scry";
+import type { PlayerEffect } from "~/game-engine/engines/lorcana/src/abilities/player-effect";
 import type {
   AbilityTarget,
   CardTarget,
-  PlayerTarget,
 } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
 import type {
   LorcanaCardFilter,
@@ -18,16 +17,12 @@ import type {
 } from "~/game-engine/engines/lorcana/src/lorcana-engine-types";
 
 // Base effect properties shared by all effects
-interface BaseEffect {
+export interface BaseEffect {
   duration?: AbilityDuration;
   targets?: AbilityTarget[];
   optional?: boolean;
   followedBy?: LorcanaEffect; // Better name for effect chaining based on card text patterns
   condition?: EffectCondition;
-}
-
-export interface BasePlayerEffect extends BaseEffect {
-  targets?: PlayerTarget[];
 }
 
 interface BaseCardEffect extends BaseEffect {
@@ -131,30 +126,6 @@ export interface ExertCardEffect extends BaseCardEffect {
   type: "exertCard";
 }
 
-// Player-targeting effects (effects that can only target players)
-export interface DrawEffect extends BasePlayerEffect {
-  type: "draw";
-  parameters: {
-    value: number | DynamicValue;
-    target?: PlayerTarget;
-  };
-}
-
-export interface GainLoreEffect extends BasePlayerEffect {
-  type: "gainLore";
-  parameters: {
-    value: number | DynamicValue;
-    target?: PlayerTarget;
-  };
-}
-
-export interface LoseLoreEffect extends BasePlayerEffect {
-  type: "loseLore";
-  parameters: {
-    value: number | DynamicValue;
-  };
-}
-
 // Special effects
 export interface MultiEffect extends BaseEffect {
   type: "multiEffect";
@@ -183,56 +154,6 @@ export interface BasicInkwellTriggerEffect extends BaseEffect {
   };
 }
 
-export interface InkwellManagementEffect extends BasePlayerEffect {
-  type: "inkwellManagement";
-  parameters: {
-    action: "exertAll" | "returnRandom" | "conditionalReturn";
-    condition?: {
-      type: "sizeGreaterThan";
-      value: number;
-    };
-    targetSize?: number; // For returnRandom, return until this size
-    count?: number; // For returnRandom, specific number to return
-  };
-}
-
-export interface ConditionalPlayerEffect extends BasePlayerEffect {
-  type: "conditionalPlayer";
-  parameters: {
-    condition: {
-      type: "hasCardsInHand" | "handSizeComparison";
-      maxCount?: number; // For hasCardsInHand
-      minCount?: number; // For hasCardsInHand
-      comparison?: "lessThan" | "greaterThan" | "equalTo"; // For handSizeComparison
-      compareWith?: "opponent" | "target"; // For handSizeComparison
-    };
-    effect: LorcanaEffect;
-    elseEffect?: LorcanaEffect;
-  };
-}
-
-export interface RevealEffect extends BasePlayerEffect {
-  type: "reveal";
-  parameters: {
-    from: LorcanaZone;
-    count?: number;
-    position?: "top" | "bottom" | "random";
-    thenEffect?: LorcanaEffect; // What to do with revealed cards
-  };
-}
-
-export interface PlayerChoiceEffect extends BasePlayerEffect {
-  type: "playerChoice";
-  parameters: {
-    selection: {
-      type: "anyNumber" | "exactly" | "upTo";
-      count?: number; // For exactly/upTo
-      from: PlayerTarget[]; // Available players to choose from
-    };
-    effect: LorcanaEffect; // Effect to apply to chosen players
-  };
-}
-
 export interface ChallengeOverrideEffect extends BaseCardEffect {
   type: "challengeOverride";
   parameters: {
@@ -244,20 +165,6 @@ export interface ChallengeOverrideEffect extends BaseCardEffect {
 export interface RestrictEffect extends BaseCardEffect {
   type: "restrict";
   restriction: "quest" | "ready" | "challengeable" | "challenge";
-}
-
-export interface DrawThenDiscardEffect extends BaseCardEffect {
-  type: "drawThenDiscard";
-  draw: number | DynamicValue;
-  discard: number | DynamicValue;
-}
-
-export interface DiscardEffect extends BasePlayerEffect {
-  type: "discard";
-  parameters: {
-    value: number | DynamicValue;
-    random?: boolean;
-  };
 }
 
 // Multi-effects (can contain both card and player effects)
@@ -274,65 +181,6 @@ export interface ConditionalTargetEffect extends BaseCardEffect {
   };
 }
 
-export interface CostReductionEffect extends BasePlayerEffect {
-  type: "costReduction";
-  parameters: {
-    value: number | DynamicValue;
-    cardType?: "character" | "item" | "location" | "action" | "song";
-    filter?: LorcanaCardFilter;
-    count?: number; // Number of cards this applies to
-  };
-}
-
-export interface PlayCardEffect extends BasePlayerEffect {
-  type: "playCard";
-  parameters: {
-    from?: LorcanaZone;
-    cost?: number | "free";
-    filter?: LorcanaCardFilter;
-    gainsAbilities?: LorcanaAbility[];
-  };
-}
-
-export interface OptionalChoiceEffect extends BasePlayerEffect {
-  type: "optionalChoice";
-  parameters: {
-    choice: LorcanaEffect; // The effect that can be chosen
-    onDecline?: LorcanaEffect; // Effect that happens if choice is declined
-    responder?: "self" | "opponent"; // Who makes the choice
-  };
-}
-
-export interface OptionalPlayEffect extends BasePlayerEffect {
-  type: "optionalPlay";
-  parameters: {
-    from?: LorcanaZone;
-    cost?: number | "free";
-    filter?: LorcanaCardFilter;
-    gainsAbilities?: LorcanaAbility[];
-    reveal?: boolean; // Whether the card must be revealed when played
-  };
-}
-
-export interface NameCardEffect extends BasePlayerEffect {
-  type: "nameCard";
-  parameters: {
-    followedBy: LorcanaEffect; // Effect that uses the named card
-  };
-}
-
-export interface SearchDeckEffect extends BasePlayerEffect {
-  type: "searchDeck";
-  parameters: {
-    cardType?: "character" | "action" | "item" | "location";
-    filter?: LorcanaCardFilter;
-    reveal?: boolean;
-    toZone: LorcanaZone;
-    shuffle?: boolean;
-    optional?: boolean;
-  };
-}
-
 export interface ConditionalEffect extends BaseEffect {
   type: "conditional";
   parameters: {
@@ -345,23 +193,15 @@ export interface ConditionalEffect extends BaseEffect {
   };
 }
 
-type PlayerEffect =
-  | ScryEffect
-  | DrawEffect
-  | GainLoreEffect
-  | LoseLoreEffect
-  | DiscardEffect
-  | DrawThenDiscardEffect
-  | CostReductionEffect
-  | PlayCardEffect
-  | OptionalChoiceEffect
-  | OptionalPlayEffect
-  | NameCardEffect
-  | SearchDeckEffect
-  | RevealEffect
-  | InkwellManagementEffect
-  | ConditionalPlayerEffect
-  | PlayerChoiceEffect;
+export interface PlayCardEffect extends BaseCardEffect {
+  type: "playCard";
+  parameters: {
+    from?: LorcanaZone;
+    cost?: number | "free";
+    filter?: LorcanaCardFilter;
+    gainsAbilities?: LorcanaAbility[];
+  };
+}
 
 type CardEffect =
   | GetEffect
@@ -369,6 +209,7 @@ type CardEffect =
   | ExertCardEffect
   | DealDamageEffect
   | ConditionalTargetEffect
+  | PlayCardEffect
   | MoveCardEffect
   | ModifyStatEffect
   | ChallengeOverrideEffect

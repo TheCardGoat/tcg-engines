@@ -1,4 +1,4 @@
-import type { BasePlayerEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
+import type { BasePlayerEffect } from "~/game-engine/engines/lorcana/src/abilities/player-effect";
 import type {
   LorcanaCardFilter,
   LorcanaZone,

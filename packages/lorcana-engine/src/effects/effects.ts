@@ -1345,7 +1345,7 @@ export const youMayDrawThenChooseAndDiscard: ResolutionAbility = {
 };
 
 export const readyAndCantQuest = (
-  target: CardEffectTarget,
+  target: CardEffectTarget[],
   nonAccumulative = false,
 ): [ExertEffect, CardRestrictionEffect] => {
   return [

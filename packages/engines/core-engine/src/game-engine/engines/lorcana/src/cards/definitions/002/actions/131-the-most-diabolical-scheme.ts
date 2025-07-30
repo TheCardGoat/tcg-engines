@@ -1,50 +1,13 @@
-import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import { banishEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-const chosenVillainOfYours: CardEffectTarget = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "zone", value: "play" },
-    { filter: "type", value: "character" },
-    { filter: "owner", value: "self" },
-    { filter: "characteristics", value: ["villain"] },
-  ],
-};
-
-const chosenCharacter: CardEffectTarget = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "zone", value: "play" },
-    { filter: "type", value: "character" },
-  ],
-};
 
 export const theMostDiabolicalScheme: LorcanaActionCardDefinition = {
   id: "qad",
-
   name: "The Most Diabolical Scheme",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 3 or more can {E} to sing this song for free.)_\n\nBanish chosen Villain of yours to banish chosen character.",
+  text: "Banish chosen Villain of yours to banish chosen character.",
   type: "action",
-  abilities: [
-    {
-      type: "resolution",
-      dependentEffects: true,
-      resolveEffectsIndividually: true,
-      effects: [
-        {
-          type: "banish",
-          target: chosenCharacter,
-        },
-        {
-          type: "banish",
-          target: chosenVillainOfYours,
-        },
-      ],
-    },
-  ],
   flavour: "New comes the real tour de force \nTricky and wicked, of course",
   colors: ["ruby"],
   cost: 3,
@@ -52,4 +15,24 @@ export const theMostDiabolicalScheme: LorcanaActionCardDefinition = {
   number: 131,
   set: "ROF",
   rarity: "uncommon",
+  abilities: [
+    {
+      type: "static",
+      text: "Banish chosen Villain of yours to banish chosen character.",
+      effects: [
+        banishEffect({
+          targets: [
+            {
+              type: "card",
+              cardType: "character",
+              withClassification: "villain",
+              owner: "self",
+              count: 1,
+            },
+          ],
+          followedBy: banishEffect({ targets: [chosenCharacterTarget] }),
+        }),
+      ],
+    },
+  ],
 };

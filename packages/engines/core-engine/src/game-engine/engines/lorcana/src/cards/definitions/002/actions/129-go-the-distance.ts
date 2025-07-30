@@ -1,45 +1,18 @@
-import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
-import type { PlayerEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import {
+  drawCardEffect,
+  readyAndCantQuest,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenDamagedCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-const self: PlayerEffectTarget = {
-  type: "player",
-  value: "self",
-};
 
 export const goTheDistance: LorcanaActionCardDefinition = {
   id: "k1y",
-
   name: "Go the Distance",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\n\nReady chosen damaged character of yours. They can't quest for the rest of this turn. Draw a card.",
+  text: "Ready chosen damaged character of yours. They can't quest for the rest of this turn. Draw a card.",
   type: "action",
-  abilities: [
-    {
-      type: "resolution",
-      effects: [
-        ...readyAndCantQuest({
-          type: "card",
-          value: 1,
-          filters: [
-            { filter: "owner", value: "self" },
-            { filter: "type", value: "character" },
-            { filter: "zone", value: "play" },
-            {
-              filter: "status",
-              value: "damage",
-              comparison: { operator: "gte", value: 1 },
-            },
-          ],
-        }),
-        {
-          type: "draw",
-          amount: 1,
-          target: self,
-        },
-      ],
-    },
-  ],
   inkwell: true,
   colors: ["ruby"],
   cost: 2,
@@ -47,4 +20,17 @@ export const goTheDistance: LorcanaActionCardDefinition = {
   number: 129,
   set: "ROF",
   rarity: "common",
+  abilities: [
+    {
+      type: "static",
+      text: "Ready chosen damaged character of yours. They can't quest for the rest of this turn. Draw a card.",
+      effects: [
+        ...readyAndCantQuest({
+          targets: [chosenDamagedCharacterTarget],
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
+        drawCardEffect({ targets: [selfPlayerTarget] }),
+      ],
+    },
+  ],
 };

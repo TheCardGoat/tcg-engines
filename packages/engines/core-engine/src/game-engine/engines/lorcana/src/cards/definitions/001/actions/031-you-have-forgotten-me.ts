@@ -1,4 +1,5 @@
-import type { DiscardEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { discardCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const youHaveForgottenMe: LorcanaActionCardDefinition = {
@@ -7,29 +8,6 @@ export const youHaveForgottenMe: LorcanaActionCardDefinition = {
   characteristics: ["action"],
   text: "Each opponent chooses and discards 2 cards.",
   type: "action",
-  abilities: [
-    {
-      type: "resolution",
-      name: "You Have Forgotten Me",
-      text: "Each opponent chooses and discards two cards.",
-      optional: false,
-      responder: "opponent",
-      effects: [
-        {
-          type: "discard",
-          amount: 2,
-          target: {
-            type: "card",
-            value: 2,
-            filters: [
-              { filter: "zone", value: "hand" },
-              { filter: "owner", value: "self" },
-            ],
-          },
-        } as DiscardEffect,
-      ],
-    },
-  ],
   flavour: "You are more than what you have become. \n−Mufasa",
   inkwell: true,
   colors: ["amber"],
@@ -38,4 +16,12 @@ export const youHaveForgottenMe: LorcanaActionCardDefinition = {
   number: 31,
   set: "TFC",
   rarity: "uncommon",
+  abilities: [
+    {
+      type: "static",
+      responder: "opponent",
+      text: "Each opponent chooses and discards 2 cards.",
+      effects: [discardCardEffect({ targets: [selfPlayerTarget], value: 2 })],
+    },
+  ],
 };

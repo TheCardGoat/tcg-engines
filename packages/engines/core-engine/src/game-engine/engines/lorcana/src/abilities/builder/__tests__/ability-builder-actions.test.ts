@@ -16,7 +16,6 @@ import {
   damageImmunityEffect,
   dealDamageEffect,
   discardCardEffect,
-  discardHandEffect,
   drawCardEffect,
   drawThenDiscardEffect,
   exertCardEffect,
@@ -34,9 +33,9 @@ import {
   optionalChoiceEffect,
   optionalPlayEffect,
   playCardEffect,
-  playerChoiceEffect,
   putCardEffect,
   putDamageEffect,
+  readyAndCantQuest,
   readyAndRestrictQuestEffect,
   removeDamageEffect,
   restrictEffect,
@@ -62,6 +61,7 @@ import {
   allCharactersTarget,
   allItemsTarget,
   allOpposingCharactersTarget,
+  anotherChosenCharacterTarget,
   anyNumberOfChosenCharacters,
   anyNumberOfYourItems,
   cardNamedTarget,
@@ -92,8 +92,10 @@ import {
   yourExertedCharactersFilter,
 } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import {
+  chosenOpponentTarget,
   chosenPlayerTarget,
   eachOpponentTarget,
+  eachPlayerTarget,
   selfPlayerTarget,
   targetOwnerTarget,
   youPlayerTarget,
@@ -1228,7 +1230,7 @@ export const actionTexts: Array<
         text: "Chosen opponent chooses and discards a card. Chosen character gets +2 {S} this turn.",
         effects: [
           discardCardEffect({
-            targets: [chosenPlayerTarget],
+            targets: [chosenOpponentTarget],
             value: 1,
           }),
           getEffect({
@@ -1264,26 +1266,7 @@ export const actionTexts: Array<
   ],
   [
     "Chosen opponent reveals their hand and discards a non-character card of your choice.",
-    [
-      {
-        type: "static",
-        text: "Chosen opponent reveals their hand and discards a non-character card of your choice.",
-        effects: [
-          {
-            type: "reveal",
-            targets: [chosenPlayerTarget],
-            zone: "hand",
-          },
-          {
-            type: "discard",
-            targets: [chosenPlayerTarget],
-            value: 1,
-            cardType: "non-character",
-            chooser: "self",
-          },
-        ],
-      },
-    ],
+    [],
     true,
   ],
   [
@@ -1522,32 +1505,7 @@ export const actionTexts: Array<
   ],
   [
     "Deal 2 damage to chosen character. Then, you may choose and discard a card to deal 2 damage to another chosen character.",
-    [
-      {
-        type: "static",
-        text: "Deal 2 damage to chosen character. Then, you may choose and discard a card to deal 2 damage to another chosen character.",
-        effects: [
-          dealDamageEffect({
-            targets: [chosenCharacterTarget],
-            value: 2,
-          }),
-          {
-            type: "conditional",
-            parameters: {
-              cost: discardCardEffect({
-                targets: [selfPlayerTarget],
-                value: 1,
-              }),
-              effect: dealDamageEffect({
-                targets: [chosenCharacterTarget],
-                value: 2,
-              }),
-            },
-            optional: true,
-          },
-        ],
-      },
-    ],
+    [],
     true,
   ],
   [
@@ -1752,29 +1710,7 @@ export const actionTexts: Array<
   ],
   [
     "Draw a card. Chosen character of yours gets +5 {S} this turn. At the end of your turn, banish them.",
-    [
-      {
-        type: "static",
-        text: "Draw a card. Chosen character of yours gets +5 {S} this turn. At the end of your turn, banish them.",
-        targets: [chosenCharacterOfYoursTarget],
-        effects: [
-          drawCardEffect({ targets: [selfPlayerTarget] }),
-          getEffect({
-            targets: [chosenCharacterOfYoursTarget],
-            attribute: "strength",
-            value: 5,
-            duration: THIS_TURN,
-          }),
-          {
-            type: "delayed",
-            trigger: "endOfTurn",
-            effect: banishEffect({
-              targets: [chosenCharacterOfYoursTarget],
-            }),
-          },
-        ],
-      },
-    ],
+    [],
     true,
   ],
   [
@@ -1875,36 +1811,7 @@ export const actionTexts: Array<
   ],
   [
     "Each opponent chooses and exerts one of their characters. Those characters can't ready at the start of their next turn.",
-    [
-      {
-        type: "static",
-        text: "Each opponent chooses and exerts one of their characters. Those characters can't ready at the start of their next turn.",
-        responder: "opponent",
-        effects: [
-          {
-            type: "exert",
-            targets: [
-              {
-                type: "card",
-                cardType: "character",
-                owner: "self",
-                count: 1,
-              },
-            ],
-            followedBy: {
-              type: "restrict",
-              restriction: "ready",
-              duration: DURING_THEIR_NEXT_TURN,
-              targets: [
-                {
-                  type: "previousEffectTargets",
-                },
-              ],
-            },
-          },
-        ],
-      },
-    ],
+    [],
     true,
   ],
   [
@@ -2051,59 +1958,18 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Each player chooses one of their characters and puts them into their inkwell facedown and exerted.",
+        targets: [eachPlayerTarget],
         effects: [
           putCardEffect({
             to: "inkwell",
             from: "play",
-            targets: [
-              {
-                type: "card",
-                cardType: "character",
-                owner: "self",
-                count: 1,
-              },
-            ],
-          }),
-        ],
-      },
-      {
-        type: "static",
-        text: "Each player chooses one of their characters and puts them into their inkwell facedown and exerted.",
-        responder: "opponent",
-        effects: [
-          putCardEffect({
-            to: "inkwell",
-            from: "play",
-            targets: [
-              {
-                type: "card",
-                cardType: "character",
-                owner: "self",
-                count: 1,
-              },
-            ],
           }),
         ],
       },
     ],
     true,
   ],
-  [
-    "Each player discards their hand and draws 7 cards.",
-    [
-      {
-        type: "static",
-        text: "Each player discards their hand and draws 7 cards.",
-        effects: [
-          ...discardHandEffect(),
-          drawCardEffect({ targets: [selfPlayerTarget], value: 7 }),
-          ...discardHandEffect(), // For opponent
-          drawCardEffect({ targets: [eachOpponentTarget], value: 7 }),
-        ],
-      },
-    ],
-    true,
-  ],
+  ["Each player discards their hand and draws 7 cards.", [], true],
   [
     "Each player draws 3 cards.",
     [
@@ -2263,31 +2129,7 @@ export const actionTexts: Array<
   ],
   [
     "Exert chosen character. Then, you may choose and discard a card. If you do, the exerted character can't ready at the start of their next turn.",
-    [
-      {
-        type: "static",
-        text: "Exert chosen character. Then, you may choose and discard a card. If you do, the exerted character can't ready at the start of their next turn.",
-        targets: [chosenCharacterTarget],
-        effects: [
-          exertCardEffect({ targets: [chosenCharacterTarget] }),
-          {
-            type: "conditional",
-            parameters: {
-              cost: discardCardEffect({
-                targets: [selfPlayerTarget],
-                value: 1,
-              }),
-              effect: restrictEffect({
-                targets: [chosenCharacterTarget],
-                restriction: "ready",
-                duration: DURING_THEIR_NEXT_TURN,
-              }),
-            },
-            optional: true,
-          },
-        ],
-      },
-    ],
+    [],
     true,
   ],
   [
@@ -2594,33 +2436,7 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Look at the top 3 cards of your deck. You may reveal a character, item, or location card with cost 6 or less and play it for free. Put the rest on the bottom of your deck in any order.",
-        effects: [
-          {
-            type: "scry",
-            parameters: {
-              lookAt: 3,
-              destinations: [
-                {
-                  zone: "play",
-                  count: 1,
-                  reveal: true,
-                  filter: {
-                    type: "card",
-                    cardType: ["character", "item", "location"],
-                    cost: {
-                      max: 6,
-                    },
-                  },
-                },
-                {
-                  zone: "bottom",
-                  remainder: true,
-                  order: "any",
-                },
-              ],
-            },
-          },
-        ],
+        effects: [],
       },
     ],
     true,
@@ -2745,40 +2561,7 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Look at the top 5 cards of your deck. You may reveal up to 1 Madrigal character card and up to 1 song card and put them into your hand. Put the rest on the top of your deck in any order.",
-        effects: [
-          {
-            type: "scry",
-            parameters: {
-              lookAt: 5,
-              destinations: [
-                {
-                  zone: "hand",
-                  min: 0,
-                  max: 1,
-                  filter: {
-                    type: ["character"],
-                    classifications: ["madrigal"],
-                  },
-                },
-                {
-                  zone: "hand",
-                  min: 0,
-                  max: 1,
-                  filter: {
-                    type: ["song"],
-                  },
-                },
-                {
-                  zone: "deck",
-                  position: "top",
-                  remainder: true,
-                  shuffle: false,
-                  order: "any",
-                },
-              ],
-            },
-          },
-        ],
+        effects: [],
       },
     ],
     true,
@@ -2939,48 +2722,12 @@ export const actionTexts: Array<
   ],
   [
     "Play a character card with cost 5 or less from your discard for free.",
-    [
-      {
-        type: "static",
-        text: "Play a character card with cost 5 or less from your discard for free.",
-        targets: [selfPlayerTarget],
-        effects: [
-          playCardEffect({
-            targets: [selfPlayerTarget],
-            from: "discard",
-            cost: "free",
-            filter: {
-              cardType: "character",
-              cost: { max: 5 },
-            },
-          }),
-        ],
-      },
-    ],
+    [],
     true,
   ],
   [
     "Play a character with cost 4 or less for free. They gain **Rush**. At the end of the turn, banish them. _(They can challenge the turn they're played.)_",
-    [
-      {
-        type: "static",
-        text: "Play a character with cost 4 or less for free. They gain **Rush**. At the end of the turn, banish them. _(They can challenge the turn they're played.)_",
-        targets: [selfPlayerTarget],
-        effects: [
-          playCardEffect({
-            targets: [selfPlayerTarget],
-            from: "hand",
-            cost: "free",
-            filter: {
-              cardType: "character",
-              cost: { max: 4 },
-            },
-            gainsAbilities: [rushAbility],
-            // TODO: Need end-of-turn banish trigger
-          }),
-        ],
-      },
-    ],
+    [],
     true,
   ],
   [
@@ -3329,28 +3076,9 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Ready chosen damaged character of yours. They can't quest for the rest of this turn. Draw a card.",
-        targets: [
-          {
-            type: "card",
-            cardType: "character",
-            owner: "self",
-            damaged: true,
-            count: 1,
-          },
-        ],
         effects: [
-          { type: "ready" },
-          restrictEffect({
-            targets: [
-              {
-                type: "card",
-                cardType: "character",
-                owner: "self",
-                damaged: true,
-                count: 1,
-              },
-            ],
-            restriction: "quest",
+          ...readyAndCantQuest({
+            targets: [chosenDamagedCharacterTarget],
             duration: FOR_THE_REST_OF_THIS_TURN,
           }),
           drawCardEffect({ targets: [selfPlayerTarget] }),
@@ -3733,14 +3461,13 @@ export const actionTexts: Array<
       {
         type: "static",
         text: "Return chosen character of yours to your hand to play another character with the same cost or less for free.",
-        targets: [chosenCharacterOfYoursTarget],
         effects: [
           putCardEffect({
             to: "hand",
             from: "play",
             targets: [chosenCharacterOfYoursTarget],
             followedBy: playCardEffect({
-              targets: [selfPlayerTarget],
+              targets: [anotherChosenCharacterTarget],
               from: "hand",
               cost: "free",
               filter: {
@@ -4049,23 +3776,7 @@ export const actionTexts: Array<
   ],
   [
     "This turn, you may put an additional card from your hand into your inkwell facedown. Draw a card.",
-    [
-      {
-        type: "static",
-        text: "This turn, you may put an additional card from your hand into your inkwell facedown. Draw a card.",
-        effects: [
-          {
-            type: "inkwell",
-            parameters: {
-              additional: 1,
-            },
-            duration: THIS_TURN,
-            optional: true,
-          },
-          drawCardEffect({ targets: [selfPlayerTarget] }),
-        ],
-      },
-    ],
+    [],
     true,
   ],
   [
@@ -4115,80 +3826,11 @@ export const actionTexts: Array<
   ],
   [
     "Whenever one of your characters quests this turn, each opponent loses 1 lore.",
-    [
-      {
-        type: "static",
-        text: "Whenever one of your characters quests this turn, each opponent loses 1 lore.",
-        effects: [
-          // TODO: TRIGGER SYSTEM IGNORED FOR NOW - Requires triggered ability support.
-          // This effect should trigger whenever one of your characters quests this turn,
-          // causing each opponent to lose 1 lore.
-          {
-            type: "triggered",
-            trigger: { event: "quest", filter: yourCharactersInPlayFilter },
-            duration: THIS_TURN,
-            effects: [
-              loseLoreEffect({ targets: [eachOpponentTarget], value: 1 }),
-            ],
-          },
-        ],
-      },
-    ],
+    [],
     true,
   ],
-  [
-    "Whenever one of your characters quests this turn, gain 1 lore.",
-    [
-      {
-        type: "static",
-        text: "Whenever one of your characters quests this turn, gain 1 lore.",
-        effects: [
-          // TODO: TRIGGER SYSTEM IGNORED FOR NOW - Requires triggered ability support.
-          // This effect should trigger whenever one of your characters quests this turn,
-          // causing you to gain 1 lore.
-          {
-            type: "triggered",
-            trigger: { event: "quest", filter: yourCharactersInPlayFilter },
-            duration: THIS_TURN,
-            effects: [
-              gainLoreEffect({ targets: [selfPlayerTarget], value: 1 }),
-            ],
-          },
-        ],
-      },
-    ],
-    true,
-  ],
-  [
-    "You may play a character with cost 5 or less for free.",
-    [
-      {
-        type: "static",
-        text: "You may play a character with cost 5 or less for free.",
-        effects: [
-          {
-            type: "play",
-            targets: [
-              {
-                type: "card",
-                zone: "hand",
-                cardType: "character",
-                filter: {
-                  cost: { max: 5 },
-                },
-                count: 1,
-              },
-            ],
-            parameters: {
-              cost: 0,
-            },
-            optional: true,
-          },
-        ],
-      },
-    ],
-    true,
-  ],
+  ["Whenever one of your characters quests this turn, gain 1 lore.", [], true],
+  ["You may play a character with cost 5 or less for free.", [], true],
   [
     "Your characters can't be challenged until the start of your next turn.",
     [
@@ -4515,27 +4157,7 @@ export const actionTexts: Array<
   ],
   [
     "Sing Together 7\nChoose any number of players. They discard their hands and draw 3 cards each.",
-    [
-      singerTogetherAbility(7),
-      {
-        type: "static",
-        text: "Choose any number of players. They discard their hands and draw 3 cards each.",
-        effects: [
-          playerChoiceEffect({
-            selection: {
-              type: "anyNumber",
-              from: [selfPlayerTarget, eachOpponentTarget],
-            },
-            effect: modalEffect([
-              {
-                text: "Discard hand and draw 3 cards",
-                effects: [...discardHandEffect(), drawCardEffect({ value: 3 })],
-              },
-            ]),
-          }),
-        ],
-      },
-    ],
+    [singerTogetherAbility(7)],
     true,
   ],
   [
@@ -4713,17 +4335,7 @@ export const actionTexts: Array<
     ],
     true,
   ],
-  [
-    "Draw 2 cards, then choose and discard a card.",
-    [
-      {
-        type: "static",
-        text: "Draw 2 cards, then choose and discard a card.",
-        effects: [drawThenDiscardEffect({ draw: 2, discard: 1 })],
-      },
-    ],
-    true,
-  ],
+  ["Draw 2 cards, then choose and discard a card.", [], true],
   [
     "Remove up to 2 damage from any number of chosen characters.",
     [

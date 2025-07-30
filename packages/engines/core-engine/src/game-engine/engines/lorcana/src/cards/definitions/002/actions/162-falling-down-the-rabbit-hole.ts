@@ -1,15 +1,10 @@
-import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import {
+  createCardEffectsForTargetPlayer,
+  putCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterOfYoursTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { eachPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-const chosenCharacterOfYour: CardEffectTarget = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "zone", value: "play" },
-    { filter: "type", value: "character" },
-    { filter: "owner", value: "self" },
-  ],
-};
 
 export const fallingDownTheRabbitHole: LorcanaActionCardDefinition = {
   id: "j9g",
@@ -19,31 +14,20 @@ export const fallingDownTheRabbitHole: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Falling Down the Rabbit Hole",
+      type: "static",
       text: "Each player chooses one of their characters and puts them into their inkwell facedown and exerted.",
-      responder: "self",
+      targets: [eachPlayerTarget],
       effects: [
-        {
-          type: "move",
-          to: "inkwell",
-          exerted: true,
-          target: chosenCharacterOfYour,
-        },
-      ],
-    },
-    {
-      type: "resolution",
-      name: "Falling Down the Rabbit Hole",
-      text: "Each player chooses one of their characters and puts them into their inkwell facedown and exerted.",
-      responder: "opponent",
-      effects: [
-        {
-          type: "move",
-          to: "inkwell",
-          exerted: true,
-          target: chosenCharacterOfYour,
-        },
+        createCardEffectsForTargetPlayer({
+          effects: [
+            putCardEffect({
+              to: "inkwell",
+              from: "play",
+              exerted: true,
+              targets: [chosenCharacterOfYoursTarget],
+            }),
+          ],
+        }),
       ],
     },
   ],

@@ -1,47 +1,18 @@
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import {
+  drawCardEffect,
+  getEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-const chosenCharacter = {
-  type: "card" as const,
-  value: 1,
-  filters: [
-    { filter: "zone" as const, value: "play" as const },
-    { filter: "type" as const, value: "character" as const },
-  ],
-};
-const self = {
-  type: "player" as const,
-  value: "self" as const,
-};
 
 export const improvise: LorcanaActionCardDefinition = {
   id: "m0h",
-
   name: "Improvise",
   characteristics: ["action"],
   text: "Chosen character gets +1 {S} this turn. Draw a card.",
   type: "action",
-  abilities: [
-    {
-      type: "resolution",
-      text: "Chosen character gets +1 {S} this turn. Draw a card.",
-      resolveEffectsIndividually: true,
-      effects: [
-        {
-          type: "attribute",
-          attribute: "strength",
-          amount: 1,
-          modifier: "add",
-          duration: "turn",
-          target: chosenCharacter,
-        },
-        {
-          type: "draw",
-          amount: 1,
-          target: self,
-        },
-      ],
-    },
-  ],
   flavour: "Shan-Yu: It looks like you're out of ideas. \nMulan: Not quite!",
   inkwell: true,
   colors: ["emerald"],
@@ -50,4 +21,19 @@ export const improvise: LorcanaActionCardDefinition = {
   number: 99,
   set: "ROF",
   rarity: "common",
+  abilities: [
+    {
+      type: "static",
+      text: "Chosen character gets +1 {S} this turn. Draw a card.",
+      effects: [
+        getEffect({
+          attribute: "strength",
+          value: 1,
+          targets: chosenCharacterTarget,
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
+        drawCardEffect({ targets: [selfPlayerTarget], value: 1 }),
+      ],
+    },
+  ],
 };

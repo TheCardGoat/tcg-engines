@@ -1,3 +1,13 @@
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import {
+  gainsAbilityEffect,
+  getEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
+import {
+  chosenCharacterOfYoursTarget,
+  chosenCharacterTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const controlYourTemper: LorcanaActionCardDefinition = {
@@ -6,28 +16,6 @@ export const controlYourTemper: LorcanaActionCardDefinition = {
   characteristics: ["action"],
   text: "Chosen character gets -2 {S} this turn.",
   type: "action",
-  abilities: [
-    {
-      type: "resolution",
-      effects: [
-        {
-          type: "attribute",
-          attribute: "strength",
-          amount: 2,
-          modifier: "subtract",
-          duration: "turn",
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "play" },
-            ],
-          },
-        },
-      ],
-    },
-  ],
   inkwell: true,
   colors: ["amber"],
   cost: 1,
@@ -35,4 +23,23 @@ export const controlYourTemper: LorcanaActionCardDefinition = {
   number: 26,
   set: "TFC",
   rarity: "common",
+  abilities: [
+    {
+      type: "static",
+      text: "Chosen character gets -2 {S} this turn. Chosen character of yours gains Evasive this turn.",
+      effects: [
+        getEffect({
+          targets: [chosenCharacterTarget],
+          attribute: "strength",
+          value: -2,
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
+        gainsAbilityEffect({
+          targets: [chosenCharacterOfYoursTarget],
+          ability: evasiveAbility,
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
+      ],
+    },
+  ],
 };

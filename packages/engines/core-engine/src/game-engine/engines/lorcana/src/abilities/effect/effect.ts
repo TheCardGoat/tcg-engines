@@ -9,34 +9,38 @@ import type {
   BanishEffect,
   ChallengeOverrideEffect,
   ConditionalEffect,
-  ConditionalPlayerEffect,
   ConditionalTargetEffect,
   ContextualEffect,
-  CostReductionEffect,
   DamageImmunityEffect,
   DealDamageEffect,
-  DiscardEffect,
-  DrawEffect,
   ExertCardEffect,
-  GainLoreEffect,
   GainsAbilityEffect,
   GetEffect,
-  InkwellManagementEffect,
   LorcanaEffect,
-  LoseLoreEffect,
   ModalEffect,
   MoveCardEffect,
   MoveToLocationEffect,
+  PlayCardEffect,
+  ReadyEffect,
+  RemoveDamageEffect,
+  RestrictEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect-types";
+import type {
+  ConditionalPlayerEffect,
+  CostReductionEffect,
+  CreateCardEffectForTargetPlayer,
+  DiscardEffect,
+  DrawEffect,
+  GainLoreEffect,
+  InkwellManagementEffect,
+  LoseLoreEffect,
   NameCardEffect,
   OptionalChoiceEffect,
   OptionalPlayEffect,
-  PlayCardEffect,
   PlayerChoiceEffect,
-  RemoveDamageEffect,
   RevealEffect,
   SearchDeckEffect,
-} from "~/game-engine/engines/lorcana/src/abilities/effect-types";
-import { chosenCardFromHandTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+} from "~/game-engine/engines/lorcana/src/abilities/player-effect";
 import type { PlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { CardTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
 import type {
@@ -161,7 +165,7 @@ export function loseLoreEffect({
   };
 }
 
-export function readyEffect(params: { targets: CardTarget[] }): LorcanaEffect {
+export function readyEffect(params: { targets: CardTarget[] }): ReadyEffect {
   return {
     type: "ready",
     ...params,
@@ -172,11 +176,21 @@ export function restrictEffect(params: {
   targets: CardTarget[];
   restriction: "quest" | "ready" | "challengeable" | "challenge";
   duration: AbilityDuration;
-}): LorcanaEffect {
+}): RestrictEffect {
   return {
     type: "restrict",
     ...params,
   };
+}
+
+export function readyAndCantQuest(params: {
+  targets: CardTarget[];
+  duration: AbilityDuration;
+}): [ReadyEffect, RestrictEffect] {
+  return [
+    readyEffect(params),
+    restrictEffect({ ...params, restriction: "quest" }),
+  ];
 }
 
 // Implementation that handles both signatures
@@ -382,7 +396,7 @@ export function playCardEffect({
   gainsAbilities,
   followedBy,
 }: {
-  targets?: PlayerTarget | PlayerTarget[];
+  targets?: CardTarget | CardTarget[];
   from?: LorcanaZone;
   cost?: number | "free";
   filter?: any;
@@ -470,6 +484,7 @@ export function putCardEffect({
   shuffle,
   order,
   followedBy,
+  exerted,
 }: {
   to: LorcanaZone;
   from?: LorcanaZone;
@@ -478,6 +493,7 @@ export function putCardEffect({
   shuffle?: boolean;
   order?: "any" | "random";
   followedBy?: LorcanaEffect;
+  exerted?: boolean;
 }): MoveCardEffect {
   return moveCardEffect({
     targets: targets,
@@ -487,6 +503,7 @@ export function putCardEffect({
     shuffle,
     order,
     followedBy,
+    exerted,
   });
 }
 
@@ -938,6 +955,19 @@ export function playerChoiceEffect({
     parameters: {
       selection,
       effect,
+    },
+  };
+}
+
+export function createCardEffectsForTargetPlayer({
+  effects,
+}: {
+  effects: LorcanaEffect[];
+}): CreateCardEffectForTargetPlayer {
+  return {
+    type: "cardEffectForPlayer",
+    parameters: {
+      effects,
     },
   };
 }

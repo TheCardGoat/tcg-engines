@@ -1,4 +1,7 @@
-import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { UNTIL_START_OF_YOUR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { gainsAbilityEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
+import { yourCharactersTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const fourDozenEggs: LorcanaActionCardDefinition = {
@@ -6,31 +9,18 @@ export const fourDozenEggs: LorcanaActionCardDefinition = {
 
   name: "Four Dozen Eggs",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 4 or more can {E} to sing this\nsong for free.)_\n\nYour characters gain **Resist** +2 until the start of your next turn. _(Damage dealt to them is reduced by 2.)_",
+  text: "Your characters gain **Resist** +2 until the start of your next turn.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Four Dozen Eggs",
+      type: "static",
       text: "Your characters gain **Resist** +2 until the start of your next turn. _(Damage dealt to them is reduced by 2.)_",
+      targets: [yourCharactersTarget],
       effects: [
-        {
-          type: "ability",
-          ability: "resist",
-          amount: 2,
-          modifier: "add",
-          duration: "next_turn",
-          until: true,
-          target: {
-            type: "card",
-            value: "all",
-            filters: [
-              { filter: "zone", value: "play" },
-              { filter: "type", value: "character" },
-              { filter: "owner", value: "self" },
-            ],
-          },
-        } as AbilityEffect,
+        gainsAbilityEffect({
+          ability: resistAbility(2),
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
       ],
     },
   ],

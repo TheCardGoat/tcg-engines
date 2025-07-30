@@ -1,3 +1,4 @@
+import { chosenOpposingCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const freeze: LorcanaActionCardDefinition = {
@@ -6,28 +7,6 @@ export const freeze: LorcanaActionCardDefinition = {
   characteristics: ["action"],
   text: "Exert chosen opposing character.",
   type: "action",
-  abilities: [
-    {
-      type: "resolution",
-      name: "Freeze",
-      text: "Exert chosen opposing character.",
-      effects: [
-        {
-          type: "exert",
-          exert: true,
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "play" },
-              { filter: "owner", value: "opponent" },
-            ],
-          },
-        },
-      ],
-    },
-  ],
   flavour: "It's time for you to chill.",
   colors: ["amethyst"],
   cost: 2,
@@ -35,4 +14,16 @@ export const freeze: LorcanaActionCardDefinition = {
   number: 63,
   set: "TFC",
   rarity: "common",
+  abilities: [
+    {
+      type: "static",
+      text: "Exert chosen opposing character.",
+      targets: [chosenOpposingCharacterTarget],
+      effects: [
+        {
+          type: "exert",
+        },
+      ],
+    },
+  ],
 };

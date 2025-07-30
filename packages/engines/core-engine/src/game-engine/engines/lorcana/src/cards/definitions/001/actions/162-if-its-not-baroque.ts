@@ -1,3 +1,5 @@
+import { returnCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenItemTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const ifItsNotBaroque: LorcanaActionCardDefinition = {
@@ -6,26 +8,6 @@ export const ifItsNotBaroque: LorcanaActionCardDefinition = {
   characteristics: ["action"],
   text: "Return an item card from your discard to your hand.",
   type: "action",
-  abilities: [
-    {
-      type: "resolution",
-      effects: [
-        {
-          type: "move",
-          to: "hand",
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: "item" },
-              { filter: "owner", value: "self" },
-              { filter: "zone", value: "discard" },
-            ],
-          },
-        },
-      ],
-    },
-  ],
   flavour: ". . . Don't fix it.",
   colors: ["sapphire"],
   cost: 3,
@@ -33,4 +15,17 @@ export const ifItsNotBaroque: LorcanaActionCardDefinition = {
   number: 162,
   set: "TFC",
   rarity: "rare",
+  abilities: [
+    {
+      type: "static",
+      text: "Return an item card from your discard to your hand.",
+      targets: [chosenItemTarget],
+      effects: [
+        returnCardEffect({
+          from: "discard",
+          to: "hand",
+        }),
+      ],
+    },
+  ],
 };

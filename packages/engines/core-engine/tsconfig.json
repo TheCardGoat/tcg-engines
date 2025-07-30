@@ -1,6 +1,10 @@
 {
   "include": ["src/**/*"],
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules",
+    "src/game-engine/engines/lorcana/src/cards/definitions/**/*.test.ts",
+    "src/game-engine/engines/lorcana/src/cards/definitions/**/*.spec.ts"
+  ],
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",

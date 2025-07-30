@@ -1,45 +1,20 @@
-import type { PlayerEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
-import type { LoreEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { DynamicValue } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import { gainLoreEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { opponentsDamagedCharactersFilter } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-const self: PlayerEffectTarget = {
-  type: "player",
-  value: "self",
+const value: DynamicValue = {
+  type: "count",
+  filter: opponentsDamagedCharactersFilter,
 };
 
 export const packTactics: LorcanaActionCardDefinition = {
   id: "yp2",
-
   name: "Pack Tactics",
   characteristics: ["action"],
   text: "Gain 1 lore for each damaged character opponents have in play.",
   type: "action",
-  abilities: [
-    {
-      type: "resolution",
-      effects: [
-        {
-          type: "lore",
-          modifier: "add",
-          target: self,
-          amount: {
-            dynamic: true,
-            amount: 1,
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "play" },
-              { filter: "owner", value: "opponent" },
-              {
-                filter: "status",
-                value: "damage",
-                comparison: { operator: "gte", value: 1 },
-              },
-            ],
-          },
-        } as LoreEffect,
-      ],
-    },
-  ],
   flavour:
     "Pacha: You want to survive the jungle? Start thinking like you belong here. \nKuzco: No problem . . . Grrr, look at me, I'm a jaguar.",
   inkwell: true,
@@ -49,4 +24,16 @@ export const packTactics: LorcanaActionCardDefinition = {
   number: 100,
   set: "ROF",
   rarity: "rare",
+  abilities: [
+    {
+      type: "static",
+      text: "Gain 1 lore for each damaged character opponents have in play.",
+      targets: [selfPlayerTarget],
+      effects: [
+        gainLoreEffect({
+          value: value,
+        }),
+      ],
+    },
+  ],
 };

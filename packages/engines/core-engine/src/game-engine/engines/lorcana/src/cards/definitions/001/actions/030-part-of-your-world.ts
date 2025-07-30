@@ -1,30 +1,23 @@
+import { returnCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterFromDiscardTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const partOfYourWorld: LorcanaActionCardDefinition = {
   id: "ztz",
   name: "Part of Your World",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 3 or more can {E} to sing this song\rfor free.)_\n Return a character card from your discard to your hand.",
+  text: "Return a character card from your discard to your hand.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Part of Your World",
+      type: "static",
       text: "Return a character card from your discard to your hand.",
+      targets: [chosenCharacterFromDiscardTarget],
       effects: [
-        {
-          type: "move",
+        returnCardEffect({
           to: "hand",
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "owner", value: "self" },
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "discard" },
-            ],
-          },
-        },
+          from: "discard",
+        }),
       ],
     },
   ],

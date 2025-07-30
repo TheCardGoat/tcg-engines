@@ -1,7 +1,5 @@
-import type {
-  GainLoreEffect,
-  LorcanaEffect,
-} from "~/game-engine/engines/lorcana/src/abilities/effect-types";
+import type { LorcanaEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
+import type { GainLoreEffect } from "~/game-engine/engines/lorcana/src/abilities/player-effect";
 import type { PlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
 import type { Ability, AbilityDuration } from "../../abilities/ability-types";
 

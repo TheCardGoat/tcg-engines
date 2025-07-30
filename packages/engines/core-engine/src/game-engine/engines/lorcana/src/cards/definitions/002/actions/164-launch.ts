@@ -1,28 +1,12 @@
-import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
-import type {
-  BanishEffect,
-  DamageEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
+import {
+  banishEffect,
+  dealDamageEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  chosenCharacterTarget,
+  chosenItemTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-const chosenItemOfYours: CardEffectTarget = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "zone", value: "play" },
-    { filter: "type", value: "item" },
-    { filter: "owner", value: "self" },
-  ],
-};
-
-const chosenCharacter: CardEffectTarget = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "zone", value: "play" },
-    { filter: "type", value: "character" },
-  ],
-};
 
 export const launch: LorcanaActionCardDefinition = {
   id: "mu2",
@@ -33,21 +17,16 @@ export const launch: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
       text: "Banish chosen item of yours to deal 5 damage to chosen character.",
-      resolveEffectsIndividually: true,
-      dependentEffects: true,
-
       effects: [
-        {
-          type: "banish",
-          target: chosenItemOfYours,
-        } as BanishEffect,
-        {
-          type: "damage",
-          amount: 5,
-          target: chosenCharacter,
-        } as DamageEffect,
+        banishEffect({
+          targets: [chosenItemTarget],
+          followedBy: dealDamageEffect({
+            targets: [chosenCharacterTarget],
+            value: 5,
+          }),
+        }),
       ],
     },
   ],
