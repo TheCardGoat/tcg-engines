@@ -859,5 +859,5 @@ function updateInitialState(
   }
 }
 
-export const TestStore = LorcanaTestEngine;
-export const TestEngine = LorcanaTestEngine;
+export var TestStore = LorcanaTestEngine;
+export var TestEngine = LorcanaTestEngine;

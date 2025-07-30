@@ -1,15 +1,9 @@
-import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
-import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { gainsAbilityEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
+import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-const chosenCharacter: CardEffectTarget = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "zone", value: "play" },
-    { filter: "type", value: "character" },
-  ],
-};
 
 export const charge: LorcanaActionCardDefinition = {
   id: "koq",
@@ -17,31 +11,6 @@ export const charge: LorcanaActionCardDefinition = {
   characteristics: ["action"],
   text: "Chosen character gains **Challenger** +2 and **Resist** +2 this turn. _(They get +2 {S} while challenging. Damage dealt to them is reduced by 2.)_",
   type: "action",
-  abilities: [
-    {
-      type: "resolution",
-      name: "Charge",
-      text: "Chosen character gains **Challenger** +2 and **Resist** +2 this turn. _(They get +2 {S} while challenging. Damage dealt to them is reduced by 2.)_",
-      effects: [
-        {
-          type: "ability",
-          ability: "challenger",
-          amount: 2,
-          modifier: "add",
-          duration: "turn",
-          target: chosenCharacter,
-        } as AbilityEffect,
-        {
-          type: "ability",
-          ability: "resist",
-          amount: 2,
-          modifier: "add",
-          duration: "turn",
-          target: chosenCharacter,
-        } as AbilityEffect,
-      ],
-    },
-  ],
   flavour: "Sometimes subtlety is required. This is not one of those times.",
   inkwell: true,
   colors: ["steel"],
@@ -50,4 +19,21 @@ export const charge: LorcanaActionCardDefinition = {
   number: 198,
   set: "ROF",
   rarity: "common",
+  abilities: [
+    {
+      type: "static",
+      text: "Chosen character gains **Challenger** +2 and **Resist** +2 this turn.",
+      targets: [chosenCharacterTarget],
+      effects: [
+        gainsAbilityEffect({
+          ability: challengerAbility(2),
+          duration: THIS_TURN,
+        }),
+        gainsAbilityEffect({
+          ability: resistAbility(2),
+          duration: THIS_TURN,
+        }),
+      ],
+    },
+  ],
 };

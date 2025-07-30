@@ -1,14 +1,7 @@
-import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { challengeOverrideEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-const chosenCharacter: CardEffectTarget = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "zone", value: "play" },
-    { filter: "type", value: "character" },
-  ],
-};
 
 export const pickAFight: LorcanaActionCardDefinition = {
   id: "mmh",
@@ -19,18 +12,14 @@ export const pickAFight: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Pick a Fight",
+      type: "static",
       text: "Chosen character can challenge ready characters this turn.",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "ability",
-          ability: "challenge_ready_chars",
-          modifier: "add",
-          duration: "turn",
-          until: true,
-          target: chosenCharacter,
-        },
+        challengeOverrideEffect({
+          canChallenge: "ready",
+          duration: THIS_TURN,
+        }),
       ],
     },
   ],

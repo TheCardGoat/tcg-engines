@@ -1,11 +1,12 @@
-import { opponentRevealHand } from "@lorcanito/lorcana-engine/effects/effects";
-import type { PlayerEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import {
+  drawCardEffect,
+  revealEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  eachOpponentTarget,
+  selfPlayerTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-const self: PlayerEffectTarget = {
-  type: "player",
-  value: "self",
-};
 
 export const nothingToHide: LorcanaActionCardDefinition = {
   id: "q9s",
@@ -14,21 +15,6 @@ export const nothingToHide: LorcanaActionCardDefinition = {
   characteristics: ["action"],
   text: "Each opponent reveals their hand. Draw a card.",
   type: "action",
-  abilities: [
-    {
-      type: "resolution",
-      name: "Nothing to Hide",
-      text: "Each opponent reveals their hand. Draw a card.",
-      effects: [
-        {
-          type: "draw",
-          amount: 1,
-          target: self,
-        },
-        opponentRevealHand,
-      ],
-    },
-  ],
   flavour: "Helps you avoid unpleasant surprises.",
   inkwell: true,
   colors: ["sapphire"],
@@ -37,4 +23,17 @@ export const nothingToHide: LorcanaActionCardDefinition = {
   number: 165,
   set: "ROF",
   rarity: "common",
+  abilities: [
+    {
+      type: "static",
+      text: "Each opponent reveals their hand. Draw a card.",
+      effects: [
+        revealEffect({
+          targets: [eachOpponentTarget],
+          from: "hand",
+        }),
+        drawCardEffect({ targets: [selfPlayerTarget] }),
+      ],
+    },
+  ],
 };

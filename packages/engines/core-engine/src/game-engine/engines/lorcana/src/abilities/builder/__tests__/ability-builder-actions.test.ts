@@ -2035,11 +2035,10 @@ export const actionTexts: Array<
         type: "static",
         text: "Each opponent reveals their hand. Draw a card.",
         effects: [
-          {
-            type: "reveal",
+          revealEffect({
             targets: [eachOpponentTarget],
-            zone: "hand",
-          },
+            from: "hand",
+          }),
           drawCardEffect({ targets: [selfPlayerTarget] }),
         ],
       },

@@ -1,13 +1,14 @@
-import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import type { DynamicValue } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  chosenCharacterTarget,
+  yourCharactersInPlayFilter,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-const chosenCharacter: CardEffectTarget = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "zone", value: "play" },
-    { filter: "type", value: "character" },
-  ],
+const value: DynamicValue = {
+  type: "count",
+  filter: yourCharactersInPlayFilter,
 };
 
 export const strengthOfARagingFire: LorcanaActionCardDefinition = {
@@ -15,26 +16,17 @@ export const strengthOfARagingFire: LorcanaActionCardDefinition = {
 
   name: "Strength of a Raging Fire",
   characteristics: ["action", "song"],
-  text: "_A character with cost 3 or more can {E} to sing this song for free.)_\n\nDeal damage to chosen character equal to the number of characters you have in play.",
+  text: "Deal damage to chosen character equal to the number of characters you have in play.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Strength of a Raging Fire",
+      type: "static",
       text: "Deal damage to chosen character equal to the number of characters you have in play.",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "damage",
-          target: chosenCharacter,
-          amount: {
-            dynamic: true,
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "play" },
-              { filter: "owner", value: "self" },
-            ],
-          },
-        },
+        dealDamageEffect({
+          value: value,
+        }),
       ],
     },
   ],
