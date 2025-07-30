@@ -1,0 +1,129 @@
+---
+description: Enforce test-driven development with atomic steps and user verification at each stage
+globs: "**/*"
+alwaysApply: false
+---
+# Test-Driven Development Rule
+
+Enforce test-driven development practices with atomic steps and user verification.
+
+<rule>
+name: test_driven_development
+description: Ensure all code changes follow TDD principles with incremental verification
+filters:
+  # Apply to all feature requests
+  - type: content
+    pattern: "(?i)(add|create|implement|build|fix|change|update)"
+  # Apply to all code modifications
+  - type: event
+    pattern: "code_change"
+  # Apply to function/method additions
+  - type: content
+    pattern: "(?i)(function|method|class|component)"
+  # Auto-run tests on any src/ directory changes
+  - type: file_change
+    pattern: "src/**/*"
+
+actions:
+  - type: enforce
+    message: |
+      TEST-DRIVEN DEVELOPMENT PROTOCOL
+
+      MANDATORY TDD WORKFLOW:
+
+      1. **ALWAYS START WITH TESTS**:
+         - Plan and write tests BEFORE writing implementation code
+         - Create tests for every new feature, bug fix, or change
+         - Follow Red-Green-Refactor cycle
+
+      2. **ATOMIC TEST STEPS**:
+         - Write ONE test at a time
+         - Keep each test focused on a single behavior
+         - Do not write long test suites all at once
+         - Stop after each atomic test step
+
+      3. **USER VERIFICATION REQUIRED**:
+         - After writing each test, wait for user verification
+         - Let user review and approve test before proceeding
+         - Only continue to implementation after test approval
+         - User must confirm each step before moving forward
+
+      4. **COVERAGE REQUIREMENTS**:
+         - Aim for full or near-full test coverage
+         - Cover edge cases and error scenarios
+         - Test both positive and negative paths
+         - Document any untested code with clear reasoning
+
+      5. **FRAMEWORK DEPENDENCY**:
+         - Use testing frameworks specified by user
+         - Follow user's testing patterns and conventions
+         - Ask user to specify testing approach if unclear
+         - Adapt to existing test structure in codebase
+
+      6. **INCREMENTAL APPROACH**:
+         - Small, verifiable steps only
+         - No large code blocks without tests
+         - Each implementation should make tests pass
+         - Refactor only after tests are green
+
+      7. **CONTINUOUS TESTING**:
+         - Any change to src/ directory triggers all tests
+         - Must ensure all tests pass before proceeding
+         - Fix broken tests immediately
+         - No code changes without verified test coverage
+
+      WORKFLOW STEPS:
+      1. Understand requirement
+      2. Write failing test (Red)
+      3. STOP - Get user verification
+      4. Write minimal code to pass test (Green)
+      5. RUN ALL TESTS - Ensure nothing breaks
+      6. STOP - Get user verification
+      7. Refactor if needed (Refactor)
+      8. RUN ALL TESTS - Verify refactor didn't break anything
+      9. STOP - Get user verification
+      10. Repeat for next atomic feature
+
+      AUTO-TEST TRIGGER:
+      - Any file modification under src/ automatically runs: `pytest tests/ -v`
+      - Must address any test failures before continuing development
+      - Ensures continuous validation and early error detection
+
+examples:
+  - input: |
+      User: "Add a login function"
+      
+      # Correct TDD approach:
+      Step 1: "I'll write a test for login function first. Here's the failing test..."
+      [Wait for user approval]
+      Step 2: "Now I'll implement minimal code to make this test pass..."
+      [Wait for user approval]
+      Step 3: "Let's refactor and add the next test case..."
+    output: "Following TDD with atomic steps and user verification"
+
+  - input: |
+      User: "Fix the bug in calculation"
+      
+      # Correct TDD approach:
+      Step 1: "I'll write a test that reproduces the bug first..."
+      [Wait for user approval]
+      Step 2: "Now I'll fix the code to make the test pass..."
+    output: "Bug fix following TDD principles"
+
+  - input: |
+      User modifies: "src/calculator/math.py"
+      
+      # Auto-triggered response:
+      "File change detected in src/. Running all tests..."
+      "pytest tests/ -v"
+      "✅ All tests pass. Safe to continue development."
+      OR
+      "❌ 2 tests failed. Must fix before proceeding."
+    output: "Continuous testing ensures code quality"
+
+metadata:
+  priority: high
+  version: 1.0
+  enforcement: strict
+  dependencies: ["minimal-changes-policy"]
+</rule>
