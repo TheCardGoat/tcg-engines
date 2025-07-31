@@ -1,4 +1,3 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import {
   chosenOpposingCharacter,
   yourCharacters,
@@ -7,6 +6,7 @@ import {
   drawXCards,
   moveDamageEffect,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const everybodysGotAWeakness: LorcanaActionCardDefinition = {
   id: "j44",

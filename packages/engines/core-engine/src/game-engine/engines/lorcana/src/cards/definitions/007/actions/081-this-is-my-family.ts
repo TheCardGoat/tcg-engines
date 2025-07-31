@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { thisIsMyFamilyAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export type LorcanaActionCardDefinition = any;
 

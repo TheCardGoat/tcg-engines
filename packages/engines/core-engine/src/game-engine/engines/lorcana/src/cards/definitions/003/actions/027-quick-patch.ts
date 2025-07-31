@@ -1,31 +1,13 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const quickPatch: LorcanaActionCardDefinition = {
   id: "p6z",
-  missingTestCase: true,
+  notImplemented: true,
   name: "Quick Patch",
   characteristics: ["action"],
   text: "Remove up to 3 damage from chosen location.",
   type: "action",
-  abilities: [
-    {
-      type: "resolution",
-      effects: [
-        {
-          type: "heal",
-          amount: 3,
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: "location" },
-              { filter: "zone", value: "play" },
-            ],
-          },
-        },
-      ],
-    },
-  ],
+  abilities: [],
   flavour: "Good as new! Well, almost.",
   inkwell: true,
   colors: ["amber"],

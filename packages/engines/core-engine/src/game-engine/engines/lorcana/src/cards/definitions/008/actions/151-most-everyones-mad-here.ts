@@ -1,9 +1,9 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import {
   mayBanish,
   youGainLore,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const mostEveryonesMadHere: LorcanaActionCardDefinition = {
   id: "isu",

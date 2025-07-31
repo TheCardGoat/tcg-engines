@@ -1,7 +1,7 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 import { chosenPlayer } from "@lorcanito/lorcana-engine/abilities/targets";
 import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const secondStarToTheRight: LorcanaActionCardDefinition = {
   id: "k7z",

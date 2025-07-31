@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const howFarIllGo: LorcanaActionCardDefinition = {
   id: "x7c",

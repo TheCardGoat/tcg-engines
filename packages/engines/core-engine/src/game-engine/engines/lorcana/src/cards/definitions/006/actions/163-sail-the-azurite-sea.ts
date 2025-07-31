@@ -1,4 +1,3 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import {
   chosenCharacter,
   chosenCharacterOfYours,
@@ -33,6 +32,7 @@ import {
   youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const sailTheAzuriteSea: LorcanaActionCardDefinition = {
   id: "dwo",

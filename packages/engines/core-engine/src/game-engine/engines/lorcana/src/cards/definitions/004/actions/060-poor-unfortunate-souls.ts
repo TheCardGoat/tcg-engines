@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { withCostXorLess } from "@lorcanito/lorcana-engine/abilities/targets";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const poorUnfortunateSouls: LorcanaActionCardDefinition = {
   id: "d2i",

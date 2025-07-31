@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theBossIsOnARoll: LorcanaActionCardDefinition = {
   id: "lfb",

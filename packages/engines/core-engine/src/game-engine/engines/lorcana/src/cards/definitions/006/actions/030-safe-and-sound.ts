@@ -1,6 +1,6 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/target";
 import { allCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const safeAndSound: LorcanaActionCardDefinition = {
   id: "ypf",

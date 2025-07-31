@@ -1,4 +1,3 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import {
   chosenCharacter,
   opponent,
@@ -7,6 +6,7 @@ import {
   discardACard,
   drawXCards,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const ursulasTrickery: LorcanaActionCardDefinition = {
   id: "fr4",

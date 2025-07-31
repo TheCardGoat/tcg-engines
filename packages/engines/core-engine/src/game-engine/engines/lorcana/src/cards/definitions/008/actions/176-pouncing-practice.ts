@@ -1,8 +1,8 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import {
   chosenCharacter,
   chosenCharacterOfYours,
 } from "@lorcanito/lorcana-engine/abilities/target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const pouncingPractice: LorcanaActionCardDefinition = {
   id: "bxz",

@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { soMuchToGiveAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const soMuchToGive: LorcanaActionCardDefinition = {
   id: "qi0",

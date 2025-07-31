@@ -1,8 +1,8 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import {
   returnCharacterFromDiscardToHand,
   returnChosenCharacterWithCostLess,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export type LorcanaActionCardDefinition = any;
 

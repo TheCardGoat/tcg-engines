@@ -1,29 +1,13 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const healWhatHasBeenHurt: LorcanaActionCardDefinition = {
   id: "ao1",
+  notImplemented: true,
   name: "Heal What Has Been Hurt",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 3 or more can {E} to sing this song for free.)_\n \nRemove up to 3 damage from chosen character. Draw a card.",
+  text: "Remove up to 3 damage from chosen character. Draw a card.",
   type: "action",
-  abilities: [
-    {
-      type: "resolution",
-      name: "Heal What Has Been Hurt",
-      text: "Remove up to 3 damage from chosen character. Draw a card.",
-      resolveEffectsIndividually: true,
-      effects: [
-        {
-          type: "heal",
-          amount: 3,
-          target: chosenCharacter,
-        },
-        drawACard,
-      ],
-    },
-  ],
+  abilities: [],
   flavour: "Let your power shine \nMake the clock reverse . . .",
   inkwell: true,
   colors: ["amber"],

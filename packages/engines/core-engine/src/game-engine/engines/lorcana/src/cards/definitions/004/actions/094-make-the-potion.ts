@@ -1,4 +1,3 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import {
   chosenCharacter,
   chosenDamagedCharacter,
@@ -7,6 +6,7 @@ import {
   banishChosenItem,
   dealDamageEffect,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const makeThePotion: LorcanaActionCardDefinition = {
   id: "vwt",

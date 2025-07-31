@@ -1,9 +1,9 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
 import {
   getStrengthThisTurn,
   moveToLocation,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const iWillFindMyWay: LorcanaActionCardDefinition = {
   id: "qdn",

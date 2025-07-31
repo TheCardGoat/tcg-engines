@@ -1,7 +1,7 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import { resolveEffect } from "@lorcanito/lorcana-engine/store/resolvers/effectResolver";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const quickShot: LorcanaActionCardDefinition = {
   id: "xuh",

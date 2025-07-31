@@ -1,4 +1,4 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const seldomAllTheySeem: LorcanaActionCardDefinition = {
   id: "esk",

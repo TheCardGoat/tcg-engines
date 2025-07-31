@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { moveToLocation } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const voyage: LorcanaActionCardDefinition = {
   id: "y55",

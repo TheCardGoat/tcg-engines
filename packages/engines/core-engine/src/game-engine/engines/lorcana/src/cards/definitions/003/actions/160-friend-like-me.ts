@@ -1,8 +1,8 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import {
   topCardOfOpponentsDeck,
   topCardOfYourDeck,
 } from "@lorcanito/lorcana-engine/abilities/targets";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const friendLikeMe: LorcanaActionCardDefinition = {
   id: "dje",
