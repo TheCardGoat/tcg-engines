@@ -654,14 +654,28 @@ export class LorcanaTestEngine {
     return this.authoritativeEngine.getAvailableInk(playerId);
   }
 
-  // === STUBS FOR TYPE CHECKING ===
+  // === STUBS FOR LEGACY TESTS ===
+  mapToLegacyCardModel(card: LorcanaCardInstance | undefined) {
+    if (!card) {
+      throw new Error("Card not found, unable to map");
+    }
+
+    return {
+      ...card,
+      playFromHand: () => {
+        this.playCard(card);
+      },
+    };
+  }
   /**
    * Returns the first card in the given zone with the given id, or undefined if not found.
    * This is a stub for type-checking; real logic should be implemented as needed.
    */
   getByZoneAndId(zone: string, id: string, playerId = "player_one") {
     const cards = this.getCardsInZone(zone, playerId);
-    return cards.find((card) => card.publicId === id || card.id === id);
+    return this.mapToLegacyCardModel(
+      cards.find((card) => card.publicId === id || card.id === id),
+    );
   }
 
   /**
