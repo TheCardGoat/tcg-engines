@@ -1,5 +1,11 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { mayBanish } from "@lorcanito/lorcana-engine/effects/effects";
+import {
+  banishEffect,
+  returnCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  chosenCharacterTarget,
+  chosenItemFromDiscardTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const getOut: LorcanaActionCardDefinition = {
@@ -10,23 +16,17 @@ export const getOut: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      resolveEffectsIndividually: true,
+      type: "static",
+      text: "Banish chosen character, then return an item card from your discard to your hand.",
       effects: [
-        mayBanish(chosenCharacter),
-        {
-          type: "move",
-          to: "hand",
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: "item" },
-              { filter: "owner", value: "self" },
-              { filter: "zone", value: "discard" },
-            ],
-          },
-        },
+        banishEffect({
+          targets: [chosenCharacterTarget],
+          followedBy: returnCardEffect({
+            to: "hand",
+            from: "discard",
+            targets: [chosenItemFromDiscardTarget],
+          }),
+        }),
       ],
     },
   ],

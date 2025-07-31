@@ -1,6 +1,9 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
-import { resolveEffect } from "@lorcanito/lorcana-engine/store/resolvers/effectResolver";
+import {
+  dealDamageEffect,
+  drawCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const quickShot: LorcanaActionCardDefinition = {
@@ -11,17 +14,11 @@ export const quickShot: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Quick Shot",
+      type: "static",
       text: "Deal 1 damage to chosen character. Draw a card.",
-      resolveEffectsIndividually: true,
       effects: [
-        {
-          type: "damage",
-          amount: 1,
-          target: chosenCharacter,
-        },
-        drawACard,
+        dealDamageEffect({ targets: [chosenCharacterTarget], value: 1 }),
+        drawCardEffect({ targets: [selfPlayerTarget] }),
       ],
     },
   ],

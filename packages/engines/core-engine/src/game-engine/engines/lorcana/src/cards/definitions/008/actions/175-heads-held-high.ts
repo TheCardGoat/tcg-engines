@@ -1,5 +1,14 @@
-import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-import { allOpposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import {
+  getEffect,
+  removeDamageEffect,
+  upToValue,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { singerTogetherAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singTogetherAbility";
+import {
+  allOpposingCharactersTarget,
+  anyNumberOfChosenCharacters,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const headsHeldHigh: LorcanaActionCardDefinition = {
@@ -12,30 +21,19 @@ export const headsHeldHigh: LorcanaActionCardDefinition = {
   abilities: [
     singerTogetherAbility(6),
     {
-      type: "resolution",
+      type: "static",
+      text: "Remove up to 3 damage from any number of chosen characters. All opposing characters get -3 {S} this turn.",
       effects: [
-        {
-          type: "heal",
-          amount: 3,
-          target: {
-            type: "card",
-            value: "all",
-            filters: [
-              { filter: "zone", value: "play" },
-              { filter: "owner", value: "self" },
-              { filter: "type", value: "character" },
-            ],
-          },
-        },
-        {
-          type: "attribute",
+        removeDamageEffect({
+          targets: [anyNumberOfChosenCharacters],
+          value: upToValue(3),
+        }),
+        getEffect({
           attribute: "strength",
-          amount: 3,
-          modifier: "subtract",
-          duration: "next_turn",
-          until: true,
-          target: allOpposingCharacters,
-        },
+          value: -3,
+          targets: [allOpposingCharactersTarget],
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
       ],
     },
   ],

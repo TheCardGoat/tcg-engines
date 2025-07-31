@@ -1,30 +1,10 @@
-import type {
-  LorcanitoActionCard,
-  ResolutionAbility,
-} from "@lorcanito/lorcana-engine";
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-
-const lightTheFuseAbility: ResolutionAbility = {
-  type: "resolution",
-  effects: [
-    {
-      type: "damage",
-      amount: {
-        dynamic: true,
-        filters: [
-          { filter: "type", value: "character" },
-          { filter: "zone", value: "play" },
-          { filter: "owner", value: "self" },
-          {
-            filter: "status",
-            value: "exerted",
-          },
-        ],
-      },
-      target: chosenCharacter,
-    },
-  ],
-};
+import type { DynamicValue } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  chosenCharacterTarget,
+  yourExertedCharactersFilter,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const lightTheFuse: LorcanaActionCardDefinition = {
   id: "cep",
@@ -39,5 +19,20 @@ export const lightTheFuse: LorcanaActionCardDefinition = {
   number: 149,
   set: "008",
   rarity: "uncommon",
-  abilities: [lightTheFuseAbility],
+  abilities: [
+    {
+      type: "static",
+      text: "Deal 1 damage to chosen character for each exerted character you have in play.",
+      targets: [chosenCharacterTarget],
+      effects: [
+        dealDamageEffect({
+          targets: [chosenCharacterTarget],
+          value: {
+            type: "count",
+            filter: yourExertedCharactersFilter,
+          } as DynamicValue,
+        }),
+      ],
+    },
+  ],
 };

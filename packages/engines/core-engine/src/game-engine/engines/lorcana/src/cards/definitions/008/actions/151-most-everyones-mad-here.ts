@@ -1,8 +1,10 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+import type { DynamicValue } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import {
-  mayBanish,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
+  banishEffect,
+  gainLoreEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const mostEveryonesMadHere: LorcanaActionCardDefinition = {
@@ -20,22 +22,19 @@ export const mostEveryonesMadHere: LorcanaActionCardDefinition = {
   rarity: "rare",
   abilities: [
     {
-      type: "resolution",
-      dependentEffects: true,
+      type: "static",
+      text: "Gain lore equal to the damage on chosen character, then banish them.",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "create-layer-based-on-target",
-          target: chosenCharacter,
-          resolveAmountBeforeCreatingLayer: true,
-          effects: [
-            youGainLore({
-              dynamic: true,
-              target: { attribute: "damage" },
-            }),
-          ],
-        },
-
-        mayBanish(chosenCharacter),
+        gainLoreEffect({
+          targets: [selfPlayerTarget],
+          value: {
+            type: "targetDamage",
+          } as DynamicValue,
+          followedBy: banishEffect({
+            targets: [chosenCharacterTarget],
+          }),
+        }),
       ],
     },
   ],

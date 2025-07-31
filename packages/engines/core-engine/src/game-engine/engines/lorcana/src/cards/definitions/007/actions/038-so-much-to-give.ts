@@ -1,4 +1,11 @@
-import { soMuchToGiveAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
+import { UNTIL_START_OF_YOUR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import {
+  drawCardEffect,
+  gainsAbilityEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const soMuchToGive: LorcanaActionCardDefinition = {
@@ -7,7 +14,20 @@ export const soMuchToGive: LorcanaActionCardDefinition = {
   characteristics: ["song", "action"],
   text: "(A character with cost 2 or more can {E} to sing this song for free.)\nDraw a card. Chosen character gains Bodyguard until the start of your next turn.",
   type: "action",
-  abilities: [soMuchToGiveAbility],
+  abilities: [
+    {
+      type: "static",
+      text: "Draw a card. Chosen character gains Bodyguard until the start of your next turn.",
+      effects: [
+        drawCardEffect({ targets: [selfPlayerTarget] }),
+        gainsAbilityEffect({
+          targets: [chosenCharacterTarget],
+          ability: bodyguardAbility,
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
+      ],
+    },
+  ],
   inkwell: true,
   colors: ["amber"],
   cost: 2,

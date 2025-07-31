@@ -1,7 +1,13 @@
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-} from "@lorcanito/lorcana-engine/abilities/target";
+  gainsAbilityEffect,
+  getEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
+import {
+  chosenCharacterOfYoursTarget,
+  chosenCharacterTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const pouncingPractice: LorcanaActionCardDefinition = {
@@ -19,30 +25,20 @@ export const pouncingPractice: LorcanaActionCardDefinition = {
   rarity: "uncommon",
   abilities: [
     {
-      type: "resolution",
-      text: "Chosen character of yours gains Evasive this turn.",
+      type: "static",
+      text: "Chosen character gets -2 {S} this turn. Chosen character of yours gains Evasive this turn.",
       effects: [
-        {
-          type: "ability",
-          ability: "evasive",
-          duration: "turn",
-          modifier: "add",
-          target: chosenCharacterOfYours,
-        },
-      ],
-    },
-    {
-      type: "resolution",
-      text: "Chosen character gets -2 {S} this turn.",
-      effects: [
-        {
-          type: "attribute",
+        getEffect({
+          targets: [chosenCharacterTarget],
           attribute: "strength",
-          amount: 2,
-          modifier: "subtract",
-          duration: "turn",
-          target: chosenCharacter,
-        },
+          value: -2,
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
+        gainsAbilityEffect({
+          targets: [chosenCharacterOfYoursTarget],
+          ability: evasiveAbility,
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
       ],
     },
   ],
