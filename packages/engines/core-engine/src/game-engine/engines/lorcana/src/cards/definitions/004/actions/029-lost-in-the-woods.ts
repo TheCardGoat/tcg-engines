@@ -1,25 +1,25 @@
-import { allOpposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+import { UNTIL_START_OF_YOUR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { getEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { allOpposingCharactersTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const lostInTheWoods: LorcanaActionCardDefinition = {
   id: "p0f",
   name: "Lost in the Woods",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 4 or more can {E} to sing this song for free.)_\n\n\nAll opposing characters get -2 {S} until the start of your next turn.",
+  text: "All opposing characters get -2 {S} until the start of your next turn.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "All opposing characters get -2 {S} until the start of your next turn.",
+      targets: [allOpposingCharactersTarget],
       effects: [
-        {
-          type: "attribute",
+        getEffect({
           attribute: "strength",
-          amount: 2,
-          modifier: "subtract",
-          duration: "next_turn",
-          until: true,
-          target: allOpposingCharacters,
-        },
+          value: -2,
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
       ],
     },
   ],

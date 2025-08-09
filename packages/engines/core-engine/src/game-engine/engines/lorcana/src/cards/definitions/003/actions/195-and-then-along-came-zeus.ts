@@ -1,26 +1,23 @@
-import type {
-  DamageEffect,
-  LorcanitoActionCard,
-} from "@lorcanito/lorcana-engine";
-import { chosenCharacterOrLocation } from "@lorcanito/lorcana-engine/abilities/target";
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterOrLocationTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const andThenAlongCameZeus: LorcanaActionCardDefinition = {
   id: "k6i",
   name: "And Then Along Came Zeus",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 4 or more can {E} to sing this song for free.)_\n\nDeal 5 damage to chosen character or location.",
+  text: "Deal 5 damage to chosen character or location.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "And Then Along Came Zeus",
+      type: "static",
       text: "Deal 5 damage to chosen character or location.",
+      targets: [chosenCharacterOrLocationTarget],
       effects: [
-        {
-          type: "damage",
-          amount: 5,
-          target: chosenCharacterOrLocation,
-        } as DamageEffect,
+        dealDamageEffect({
+          targets: chosenCharacterOrLocationTarget,
+          value: 5,
+        }),
       ],
     },
   ],

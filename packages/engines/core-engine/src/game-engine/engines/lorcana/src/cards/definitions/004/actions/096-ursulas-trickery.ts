@@ -1,11 +1,12 @@
 import {
-  chosenCharacter,
-  opponent,
-} from "@lorcanito/lorcana-engine/abilities/targets";
+  discardCardEffect,
+  drawCardEffect,
+  optionalChoiceEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
 import {
-  discardACard,
-  drawXCards,
-} from "@lorcanito/lorcana-engine/effects/effects";
+  eachOpponentTarget,
+  selfPlayerTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const ursulasTrickery: LorcanaActionCardDefinition = {
@@ -17,28 +18,19 @@ export const ursulasTrickery: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Each opponent may choose and discard a card. For each opponent who doesn't, you draw a card.",
       responder: "opponent",
       effects: [
-        {
-          type: "modal",
-          // TODO: Get rid of target
-          target: chosenCharacter,
-          modes: [
-            {
-              id: "1",
-              text: "Discard a Card.",
-              responder: "opponent",
-              effects: [discardACard],
-            },
-            {
-              id: "2",
-              text: "Opponent Draws a Card.",
-              responder: "opponent",
-              effects: [drawXCards(1, opponent)],
-            },
-          ],
-        },
+        optionalChoiceEffect({
+          choice: discardCardEffect({ value: 1 }),
+          onDecline: drawCardEffect({
+            targets: [selfPlayerTarget],
+            value: 1,
+          }),
+          responder: "opponent",
+          targets: [eachOpponentTarget],
+        }),
       ],
     },
   ],

@@ -1,3 +1,5 @@
+import { banishEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterWithTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const brawl: LorcanaActionCardDefinition = {
@@ -8,27 +10,16 @@ export const brawl: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Brawl",
+      type: "static",
       text: "Banish chosen character with 2 {S} or less.",
-      effects: [
-        {
-          type: "banish",
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "zone", value: "play" },
-              { filter: "type", value: "character" },
-              {
-                filter: "attribute",
-                value: "strength",
-                comparison: { operator: "lte", value: 2 },
-              },
-            ],
-          },
-        },
+      targets: [
+        chosenCharacterWithTarget({
+          attribute: "strength",
+          comparison: "lte",
+          value: 2,
+        }),
       ],
+      effects: [banishEffect()],
     },
   ],
   flavour:

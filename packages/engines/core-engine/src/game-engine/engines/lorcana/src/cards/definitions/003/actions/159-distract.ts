@@ -1,5 +1,10 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import {
+  drawCardEffect,
+  getEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const distract: LorcanaActionCardDefinition = {
@@ -10,21 +15,16 @@ export const distract: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Distract",
+      type: "static",
       text: "Chosen character gets -2 {S} this turn. Draw a card.",
-      resolveEffectsIndividually: true,
       effects: [
-        {
-          type: "attribute",
+        getEffect({
+          targets: [chosenCharacterTarget],
           attribute: "strength",
-          amount: 2,
-          modifier: "subtract",
-          duration: "turn",
-          until: true,
-          target: chosenCharacter,
-        },
-        drawACard,
+          value: -2,
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
+        drawCardEffect({ targets: [selfPlayerTarget] }),
       ],
     },
   ],

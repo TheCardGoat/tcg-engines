@@ -1,7 +1,7 @@
-import {
-  chosenCharacterOfYours,
-  chosenOpposingCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { gainsAbilityEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
+import { chosenCharacterOfYoursTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const lastDitchEffort: LorcanaActionCardDefinition = {
@@ -12,23 +12,25 @@ export const lastDitchEffort: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      resolveEffectsIndividually: true,
+      type: "static",
+      text: "Exert chosen opposing character. Then chosen character of yours gains **Challenger** +2 this turn. (They get +2 {S} while challenging.)",
       effects: [
         {
           type: "exert",
-          exert: true,
-          target: chosenOpposingCharacter,
+          targets: [
+            {
+              type: "card",
+              cardType: "character",
+              owner: "opponent",
+              count: 1,
+            },
+          ],
         },
-        {
-          type: "ability",
-          ability: "challenger",
-          amount: 2,
-          modifier: "add",
-          duration: "turn",
-          until: true,
-          target: chosenCharacterOfYours,
-        },
+        gainsAbilityEffect({
+          targets: [chosenCharacterOfYoursTarget],
+          ability: challengerAbility(2),
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
       ],
     },
   ],

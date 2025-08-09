@@ -1,30 +1,31 @@
+import { returnCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { upToTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const treasuresUntold: LorcanaActionCardDefinition = {
   id: "pzn",
   name: "Treasures Untold",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 6 or more can {E} to sing this song for free.)_\n\n\nReturn up to 2 item cards from your discard into your hand.",
+  text: "Return up to 2 item cards from your discard into your hand.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
       text: "Return up to 2 item cards from your discard into your hand.",
       effects: [
-        {
-          type: "move",
+        returnCardEffect({
           to: "hand",
-          target: {
-            type: "card",
-            value: 2,
-            upTo: true,
-            filters: [
-              { filter: "type", value: "item" },
-              { filter: "zone", value: "discard" },
-              { filter: "owner", value: "self" },
-            ],
-          },
-        },
+          from: "discard",
+          targets: upToTarget({
+            target: {
+              type: "card",
+              cardType: "item",
+              zone: "discard",
+              count: 1,
+            },
+            upTo: 2,
+          }),
+        }),
       ],
     },
   ],

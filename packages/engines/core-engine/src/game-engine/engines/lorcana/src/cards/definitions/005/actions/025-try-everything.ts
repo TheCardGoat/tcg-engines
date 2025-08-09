@@ -1,71 +1,40 @@
-import type {
-  CardEffectTarget,
-  LorcanitoActionCard,
-  ResolutionAbility,
-  TargetCardEffect,
-} from "@lorcanito/lorcana-engine";
-import { foodFightAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+import { upToValue } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
-  chosenCharacter,
-  chosenCharacterItemOrLocation,
-  opposingCharactersWithEvasive,
-  opposingCharactersWithoutEvasive,
-} from "@lorcanito/lorcana-engine/abilities/target";
-import {
-  allYourCharacters,
-  anyCard,
-  anyNumberOfChosenCharacters,
-  chosenCharacterOfYours,
-  self,
-  targetCard,
-  thisCard,
-  thisCharacter,
-  topCardOfYourDeck,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { wheneverChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-import {
-  banishChosenCharacterOfYours,
-  banishChosenOpposingCharacter,
-  choseCharacterGainsReckless,
-  chosenCharacterCantChallengeDuringNextTurn,
-  chosenCharacterGainsEvasive,
-  chosenCharacterGainsRecklessDuringNextTurn,
-  chosenCharacterGainsResist,
-  chosenCharacterGainsRush,
-  chosenCharacterOfYoursGainsChallengerX,
-  chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
-  dealDamageEffect,
-  drawACard,
-  drawCardsUntilYouHaveSameNumberOfCardsAsOpponent,
-  drawXCards,
-  putCardFromYourHandOnTheTopOfYourDeck,
-  readyAndCantQuest,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type {
-  RevealTopCardEffect,
-  ShuffleEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
+  removeDamageEffect,
+  restrictEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const tryEverything: LorcanaActionCardDefinition = {
   id: "vjj",
   missingTestCase: true,
   name: "Try Everything",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 4 or more can {E} to sing this song for free.)_\n<br>Remove up to 3 damage from chosen character and ready them. They can’t quest or challenge for the rest of this turn.",
+  text: "_(A character with cost 4 or more can {E} to sing this song for free.)_\n<br>Remove up to 3 damage from chosen character and ready them. They can't quest or challenge for the rest of this turn.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      text: "Remove up to 3 damage from chosen character and ready them. They can’t quest or challenge for the rest of this turn.",
+      type: "static",
+      text: "Remove up to 3 damage from chosen character and ready them. They can't quest or challenge for the rest of this turn.",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "heal",
-          amount: 3,
-          target: chosenCharacter,
-        },
-        ...readyAndCantQuest(chosenCharacter),
+        removeDamageEffect({
+          targets: [chosenCharacterTarget],
+          value: upToValue(3),
+        }),
+        { type: "ready", targets: [chosenCharacterTarget] },
+        restrictEffect({
+          targets: [chosenCharacterTarget],
+          restriction: "quest",
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
+        restrictEffect({
+          targets: [chosenCharacterTarget],
+          restriction: "challenge",
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
       ],
     },
   ],

@@ -1,7 +1,6 @@
-import type {
-  DamageEffect,
-  LorcanitoActionCard,
-} from "@lorcanito/lorcana-engine";
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterOrLocationTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const baBoom: LorcanaActionCardDefinition = {
   id: "oaj",
@@ -11,22 +10,14 @@ export const baBoom: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Ba-Boom!",
+      type: "static",
       text: "Deal 2 damage to chosen character or location.",
+      targets: [chosenCharacterOrLocationTarget],
       effects: [
-        {
-          type: "damage",
-          amount: 2,
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: ["location", "character"] },
-              { filter: "zone", value: "play" },
-            ],
-          },
-        } as DamageEffect,
+        dealDamageEffect({
+          targets: chosenCharacterOrLocationTarget,
+          value: 2,
+        }),
       ],
     },
   ],

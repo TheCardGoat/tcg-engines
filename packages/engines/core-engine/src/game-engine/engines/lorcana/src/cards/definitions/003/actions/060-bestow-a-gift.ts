@@ -1,8 +1,9 @@
 import {
-  chosenCharacter,
-  chosenOpposingCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+  drawCardEffect,
+  moveDamageEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const bestowAGift: LorcanaActionCardDefinition = {
@@ -14,13 +15,22 @@ export const bestowAGift: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Move 1 damage counter from chosen character to chosen opposing character. Draw a card.",
       effects: [
-        moveDamageEffect({
-          amount: 1,
-          from: chosenCharacter,
-          to: chosenOpposingCharacter,
+        ...moveDamageEffect({
+          fromTargets: [chosenCharacterTarget],
+          toTargets: [
+            {
+              type: "card",
+              cardType: "character",
+              owner: "opponent",
+              count: 1,
+            },
+          ],
+          value: 1,
         }),
+        drawCardEffect({ targets: [selfPlayerTarget] }),
       ],
     },
   ],

@@ -38,7 +38,7 @@ export const weCouldBeImmortals: LorcanaActionCardDefinition = {
   id: "nb5",
   name: "We Could Be Immortals",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 4 or more can {E} to sing this song for free.)_\n\nYour Inventor characters gain **Resist** +6 this turn. Then, put this card into your inkwell facedown and exerted. _(Damage dealt to them is reduced by 6.)_",
+  text: "Your Inventor characters gain **Resist** +6 this turn. Then, put this card into your inkwell facedown and exerted. _(Damage dealt to them is reduced by 6.)_",
   type: "action",
   abilities: [
     {

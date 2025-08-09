@@ -1,11 +1,12 @@
 import {
-  chosenCharacter,
-  chosenDamagedCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import {
-  banishChosenItem,
+  banishEffect,
   dealDamageEffect,
-} from "@lorcanito/lorcana-engine/effects/effects";
+  modalEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  chosenDamagedCharacterTarget,
+  chosenItemTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const makeThePotion: LorcanaActionCardDefinition = {
@@ -17,25 +18,24 @@ export const makeThePotion: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
       text: "Choose one:\n· Banish chosen item.\n· Deal 2 damage to chosen damaged character.",
       effects: [
-        {
-          type: "modal",
-          target: chosenCharacter,
-          modes: [
-            {
-              id: "1",
-              text: "Banish chosen item",
-              effects: [banishChosenItem],
-            },
-            {
-              id: "2",
-              text: "Deal 2 damage to chosen damaged character",
-              effects: [dealDamageEffect(2, chosenDamagedCharacter)],
-            },
-          ],
-        },
+        modalEffect([
+          {
+            text: "Banish chosen item.",
+            effects: [banishEffect({ targets: [chosenItemTarget] })],
+          },
+          {
+            text: "Deal 2 damage to chosen damaged character.",
+            effects: [
+              dealDamageEffect({
+                targets: [chosenDamagedCharacterTarget],
+                value: 2,
+              }),
+            ],
+          },
+        ]),
       ],
     },
   ],

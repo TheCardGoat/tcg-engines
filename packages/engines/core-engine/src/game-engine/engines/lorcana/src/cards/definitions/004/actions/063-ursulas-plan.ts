@@ -10,10 +10,9 @@ export const ursulasPlan: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
       text: "Each opponent chooses and exerts one of their characters. Those characters can't ready at the start of their next turn.",
-      responder: "opponent",
-      effects: [exertedSelfCharCantReadyNextTurn],
+      effects: [],
     },
   ],
   flavour:

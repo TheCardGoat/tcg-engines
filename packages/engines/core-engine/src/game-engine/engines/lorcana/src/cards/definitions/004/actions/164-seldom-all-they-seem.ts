@@ -1,30 +1,26 @@
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { getEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const seldomAllTheySeem: LorcanaActionCardDefinition = {
   id: "esk",
   name: "Seldom All They Seem",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\n\nChosen character gets -3 {S} this turn.",
+  text: "Chosen character gets -3 {S} this turn.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Chosen character gets -3 {S} this turn.",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "attribute",
+        getEffect({
           attribute: "strength",
-          amount: 3,
-          modifier: "subtract",
-          duration: "turn",
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "play" },
-            ],
-          },
-        },
+          value: -3,
+          targets: chosenCharacterTarget,
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
       ],
     },
   ],

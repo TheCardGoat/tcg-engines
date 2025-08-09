@@ -1,7 +1,8 @@
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
 import {
-  chosenLocation,
-  eachOpposingCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
+  allOpposingCharactersTarget,
+  chosenLocationTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const avalanche: LorcanaActionCardDefinition = {
@@ -12,22 +13,17 @@ export const avalanche: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Deal 1 damage to each opposing character. You may banish chosen location.",
       effects: [
-        {
-          type: "damage",
-          amount: 1,
-          target: eachOpposingCharacter,
-        },
-      ],
-    },
-    {
-      type: "resolution",
-      optional: true,
-      effects: [
+        dealDamageEffect({
+          targets: [allOpposingCharactersTarget],
+          value: 1,
+        }),
         {
           type: "banish",
-          target: chosenLocation,
+          targets: [chosenLocationTarget],
+          optional: true,
         },
       ],
     },

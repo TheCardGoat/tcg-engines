@@ -1,3 +1,5 @@
+import { upToValue } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import { removeDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const repair: LorcanaActionCardDefinition = {
@@ -9,21 +11,20 @@ export const repair: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      effects: [
+      type: "static",
+      text: "Remove up to 3 damage from one of your locations or characters.",
+      targets: [
         {
-          type: "heal",
-          amount: 3,
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: ["location", "character"] },
-              { filter: "zone", value: "play" },
-              { filter: "owner", value: "self" },
-            ],
-          },
+          type: "card",
+          cardType: ["location", "character"],
+          owner: "self",
+          count: 1,
         },
+      ],
+      effects: [
+        removeDamageEffect({
+          value: upToValue(3),
+        }),
       ],
     },
   ],

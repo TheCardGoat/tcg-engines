@@ -1,5 +1,5 @@
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { gainLoreEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theBossIsOnARoll: LorcanaActionCardDefinition = {
@@ -7,27 +7,33 @@ export const theBossIsOnARoll: LorcanaActionCardDefinition = {
   missingTestCase: true,
   name: "The Boss Is on a Roll",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 3 or more can {E} to sing this song for free.)_\n\n\nLook at the top 5 cards of your deck. Put any number of them on the top or the bottom of your deck in any order. Gain 1 lore.",
+  text: "Look at the top 5 cards of your deck. Put any number of them on the top or the bottom of your deck in any order. Gain 1 lore.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Look at the top 5 cards of your deck. Put any number of them on the top or the bottom of your deck in any order. Gain 1 lore.",
-      resolveEffectsIndividually: true,
+      type: "static",
+      text: "Look at the top 5 cards of your deck. Put any number of them on the top or the bottom of your deck in any order. Gain 1 lore.",
       effects: [
-        youGainLore(1),
         {
           type: "scry",
-          amount: 5,
-          mode: "both",
-          target: self,
-          limits: {
-            bottom: 5,
-            inkwell: 0,
-            hand: 0,
-            top: 5,
+          parameters: {
+            lookAt: 5,
+            destinations: [
+              {
+                zone: "deck",
+                position: "top",
+                min: 0,
+                max: 5,
+              },
+              {
+                zone: "deck",
+                position: "bottom",
+                remainder: true,
+              },
+            ],
           },
         },
+        gainLoreEffect({ targets: [selfPlayerTarget] }),
       ],
     },
   ],
