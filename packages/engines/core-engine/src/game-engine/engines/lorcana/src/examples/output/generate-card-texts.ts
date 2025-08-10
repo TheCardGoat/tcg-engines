@@ -1,6 +1,6 @@
-import { allCards } from "@lorcanito/lorcana-engine";
 import { writeFileSync } from "fs";
 import { join } from "path";
+import { allCards } from "~/game-engine/engines/lorcana/src/cards/definitions/cards";
 
 // Define card types
 type CardType = "action" | "character" | "location" | "item";
@@ -14,14 +14,14 @@ const cardTextsByType: Record<CardType, string[]> = {
 };
 
 // Process all cards
-Object.values(allCards).forEach((card) => {
+for (const card of Object.values(allCards)) {
   if (card.type && card.text && cardTextsByType[card.type as CardType]) {
     cardTextsByType[card.type as CardType].push(card.text);
   }
-});
+}
 
 // Generate files for each card type
-Object.entries(cardTextsByType).forEach(([cardType, texts]) => {
+for (const [cardType, texts] of Object.entries(cardTextsByType)) {
   const filename = `${cardType}-texts.ts`;
   const filepath = join(__dirname, filename);
 
@@ -35,6 +35,6 @@ export default ${cardType}Texts;
   console.log(
     `Generated ${filename} with ${texts.length} ${cardType} card texts`,
   );
-});
+}
 
 console.log("All card text files generated successfully!");

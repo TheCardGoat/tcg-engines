@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { breakFree } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Break Free", () => {
   it("Deal 1 damage to chosen character of yours. They gain **Rush** and get +1 {S} this turn. _(They can challenge the turn they're played.)_", () => {

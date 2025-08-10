@@ -1,27 +1,27 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
+import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+import { taffytaMuttonfudgeSourSpeedster } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import type {
-  LorcanitoCharacterCard,
-  LorcanitoLocationCard,
-} from "@lorcanito/lorcana-engine";
-import { hiddenCoveTranquilHaven } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
-import { taffytaMuttonfudgeSourSpeedster } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+  LorcanaCharacterCardDefinition,
+  LorcanaLocationCardDefinition,
+} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import { LorcanaTestEngine } from "../testing/lorcana-test-engine";
 import { mockCharacterCard, mockLocationCard } from "../testing/mockCards";
 
-const testCharacterCard: LorcanitoCharacterCard = {
+const testCharacterCard: LorcanaCharacterCardDefinition = {
   ...mockCharacterCard,
   id: "test-character-basic",
   name: "Test Character",
 };
 
-const testOpponentCharacterCard: LorcanitoCharacterCard = {
+const testOpponentCharacterCard: LorcanaCharacterCardDefinition = {
   ...mockCharacterCard,
   id: "test-character-opponent",
   name: "Test Character (Opponent)",
 };
 
 // Test location cards for testing move functionality
-const testLocationCard: LorcanitoLocationCard = {
+const testLocationCard: LorcanaLocationCardDefinition = {
   ...mockLocationCard,
   id: "test-location-basic",
   name: "Test Location",
@@ -29,7 +29,7 @@ const testLocationCard: LorcanitoLocationCard = {
   lore: 1,
 };
 
-const expensiveLocationCard: LorcanitoLocationCard = {
+const expensiveLocationCard: LorcanaLocationCardDefinition = {
   ...mockLocationCard,
   id: "test-location-expensive",
   name: "Expensive Location",
@@ -38,7 +38,7 @@ const expensiveLocationCard: LorcanitoLocationCard = {
   lore: 2,
 };
 
-const freeLocationCard: LorcanitoLocationCard = {
+const freeLocationCard: LorcanaLocationCardDefinition = {
   ...mockLocationCard,
   id: "test-location-free",
   name: "Free Location",
@@ -48,7 +48,7 @@ const freeLocationCard: LorcanitoLocationCard = {
   lore: 0,
 };
 
-const twentyLoreLocationCard: LorcanitoLocationCard = {
+const twentyLoreLocationCard: LorcanaLocationCardDefinition = {
   ...mockLocationCard,
   id: "test-location-twenty-lore",
   name: "Twenty Lore Location",
@@ -57,7 +57,7 @@ const twentyLoreLocationCard: LorcanitoLocationCard = {
   lore: 20, // High lore gain for testing
 };
 
-const freeOpponentLocationCard: LorcanitoLocationCard = {
+const freeOpponentLocationCard: LorcanaLocationCardDefinition = {
   ...mockLocationCard,
   id: "test-location-free-opponent",
   name: "Free Location (Opponent)",

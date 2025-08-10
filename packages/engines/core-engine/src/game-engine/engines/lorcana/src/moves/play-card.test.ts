@@ -1,13 +1,13 @@
 import { describe, expect, it } from "bun:test";
-import type {
-  LorcanitoActionCard,
-  LorcanitoCharacterCard,
-} from "@lorcanito/lorcana-engine";
-import { liloMakingAWish } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-import { bePrepared } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-import { fangRiverCity } from "@lorcanito/lorcana-engine/cards/003/locations/locations";
-import { unconventionalTool } from "@lorcanito/lorcana-engine/cards/007";
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
+import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { bePrepared } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { fangRiverCity } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { unconventionalTool } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import type {
+  LorcanaActionCardDefinition,
+  LorcanaCharacterCardDefinition,
+} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import { playCardMove } from "~/game-engine/engines/lorcana/src/moves/play-card";
 import type { LorcanaEnumerableMove } from "~/game-engine/engines/lorcana/src/moves/types";
 import { LorcanaTestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
@@ -16,21 +16,21 @@ import {
   mockCharacterCard,
 } from "~/game-engine/engines/lorcana/src/testing/mockCards";
 
-const mockCharacter: LorcanitoCharacterCard = {
+const mockCharacter: LorcanaCharacterCardDefinition = {
   ...mockCharacterCard,
   id: "mock-weak-character",
   name: "Mock Weak Character",
   cost: 1, // Not enough to play the song directly
 };
 
-const mockSingerCharacter: LorcanitoCharacterCard = {
+const mockSingerCharacter: LorcanaCharacterCardDefinition = {
   ...mockCharacterCard,
   id: "mock-singer-character",
   name: "Mock Singer Character",
   cost: 2, // Enough to play the song directly
 };
 
-const mockSongCard: LorcanitoActionCard = {
+const mockSongCard: LorcanaActionCardDefinition = {
   ...mockActionCard,
   id: "mock-song-card",
   name: "Mock Song",

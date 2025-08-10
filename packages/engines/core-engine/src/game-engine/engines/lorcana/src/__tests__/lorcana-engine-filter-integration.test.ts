@@ -4,19 +4,19 @@
  */
 
 import { beforeEach, describe, expect, it } from "bun:test";
-import type {
-  LorcanitoActionCard,
-  LorcanitoCharacterCard,
-  LorcanitoLocationCard,
-} from "@lorcanito/lorcana-engine";
+
 import { AbilityBuilder } from "~/game-engine/engines/lorcana/src/abilities/builder/ability-builder";
+import type {
+  LorcanaActionCardDefinition,
+  LorcanaCharacterCardDefinition,
+  LorcanaLocationCardDefinition,
+} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import {
   mockActionCard,
   mockCharacterCard,
   mockLocationCard,
 } from "~/game-engine/engines/lorcana/src/testing/mockCards";
 import { LorcanaCardFilterBuilder } from "../cards/lorcana-card-filter-builder";
-import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import { LorcanaTestEngine } from "../testing/lorcana-test-engine";
 
 const value = 5;
@@ -25,7 +25,7 @@ describe("LorcanaEngine Filter Integration", () => {
   let testEngine: LorcanaTestEngine;
 
   // Mock card definitions for testing
-  const mockLowCostCharacter: LorcanitoCharacterCard = {
+  const mockLowCostCharacter: LorcanaCharacterCardDefinition = {
     ...mockCharacterCard,
     id: "low-cost-char",
     name: "Mickey Mouse",
@@ -41,7 +41,7 @@ describe("LorcanaEngine Filter Integration", () => {
     ),
   };
 
-  const mockHighCostCharacter: LorcanitoCharacterCard = {
+  const mockHighCostCharacter: LorcanaCharacterCardDefinition = {
     ...mockCharacterCard,
     id: "high-cost-char",
     name: "Beast",
@@ -57,7 +57,7 @@ describe("LorcanaEngine Filter Integration", () => {
     ),
   };
 
-  const mockAction: LorcanitoActionCard = {
+  const mockAction: LorcanaActionCardDefinition = {
     ...mockActionCard,
     id: "test-action",
     name: "Be Prepared",
@@ -67,7 +67,7 @@ describe("LorcanaEngine Filter Integration", () => {
     abilities: [],
   };
 
-  const mockLocation: LorcanitoLocationCard = {
+  const mockLocation: LorcanaLocationCardDefinition = {
     ...mockLocationCard,
     id: "test-location",
     name: "Beast's Castle",

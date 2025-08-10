@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { glimmerVsGlimmer } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Glimmer VS Glimmer", () => {
   it.skip("Banish chosen character of yours to banish chosen character.", () => {

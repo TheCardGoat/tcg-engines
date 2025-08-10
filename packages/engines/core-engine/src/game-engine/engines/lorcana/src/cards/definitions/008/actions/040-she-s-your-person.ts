@@ -1,57 +1,13 @@
-import type {
-  CardEffectTarget,
-  LorcanitoActionCard,
-  ResolutionAbility,
-} from "@lorcanito/lorcana-engine";
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-
-export type LorcanaActionCardDefinition = any;
-
-const eachOfYourCharactersWithBodyGuard: CardEffectTarget = {
-  type: "card",
-  value: "all",
-  filters: [
-    { filter: "owner", value: "self" },
-    { filter: "zone", value: "play" },
-    { filter: "type", value: "character" },
-    { filter: "ability", value: "bodyguard" },
-  ],
-};
-
-const shesYourPersonAbility: ResolutionAbility = {
-  type: "resolution",
-  effects: [
-    {
-      type: "modal",
-      // TODO: Get rid of target
-      target: chosenCharacter,
-      modes: [
-        {
-          id: "1",
-          text: "Remove up to 3 damage from chosen character.",
-          effects: [
-            {
-              type: "heal",
-              amount: 3,
-              target: chosenCharacter,
-            },
-          ],
-        },
-        {
-          id: "2",
-          text: "Remove up to 3 damage from each of your characters with Bodyguard.",
-          effects: [
-            {
-              type: "heal",
-              amount: 3,
-              target: eachOfYourCharactersWithBodyGuard,
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
+import { upToValue } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import {
+  modalEffect,
+  removeDamageEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  allBodyGuardCharactersTarget,
+  chosenCharacterTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const shesYourPerson: LorcanaActionCardDefinition = {
   id: "u6y",
@@ -66,5 +22,32 @@ export const shesYourPerson: LorcanaActionCardDefinition = {
   number: 40,
   set: "008",
   rarity: "uncommon",
-  abilities: [shesYourPersonAbility],
+  abilities: [
+    {
+      type: "static",
+      text: "Choose one:\n• Remove up to 3 damage from chosen character.\n• Remove up to 3 damage from each of your characters with Bodyguard.",
+      effects: [
+        modalEffect([
+          {
+            text: "Remove up to 3 damage from chosen character.",
+            effects: [
+              removeDamageEffect({
+                targets: [chosenCharacterTarget],
+                value: upToValue(3),
+              }),
+            ],
+          },
+          {
+            text: "Remove up to 3 damage from each of your characters with Bodyguard.",
+            effects: [
+              removeDamageEffect({
+                targets: [allBodyGuardCharactersTarget],
+                value: upToValue(3),
+              }),
+            ],
+          },
+        ]),
+      ],
+    },
+  ],
 };

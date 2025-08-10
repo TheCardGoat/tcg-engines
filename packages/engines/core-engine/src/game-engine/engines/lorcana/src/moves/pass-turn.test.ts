@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
-import { donaldDuckPerfectGentleman } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-import { goofyGroundbreakingChef } from "@lorcanito/lorcana-engine/cards/008/characters/characters";
+import { donaldDuckPerfectGentleman } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { goofyGroundbreakingChef } from "~/game-engine/engines/lorcana/src/cards/definitions/008/characters/characters";
 import {
   LorcanaTestEngine,
   testCharacterCard,

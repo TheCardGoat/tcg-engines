@@ -46,6 +46,14 @@ interface LorcanitoBaseCard {
   cardCopyLimit?: number | "no-limit";
 }
 
+// 6.5. Locations
+// 6.5.1. Locations are a type of card that can be in play. A location is a location while in the Play zone; in all other zones it’s a location card.
+// 6.5.2. Classification – A location is defined as having Location on the card’s classification line. Locations are the only card type that is printed in landscape (i.e., with the longer sides on the top and bottom). (See #2 on the diagram under 6.5.)
+// 6.5.3. Cost – A location’s cost is in a different place on the card than the cost of other card types, but it works the same way. (See #1 on the diagram under 6.5.)
+// 6.5.4. Move Cost – A location has a move cost. This is the amount of ink needed to move a character to this location. (See #3 on the diagram under 6.5.)
+// 6.5.5. Willpower – Damage on a location is persistent, which means it accumulates over the course of the game. If a location has damage equal to or higher than its Willpower {W}, it’s banished as a required action. Note that locations don’t have a Strength {S} characteristic and don’t deal damage. (See #4 on the diagram under 6.5.)
+// 6.5.6. Lore Value – A location may have a Lore value {L}, which is how much lore its player gains at the start of their turn during the Set step. (See #6 on the diagram under 6.5.)
+// 6.5.7. Abilities – If a location has an ability, that ability can be used during the turn the location is played. (See #5 on the diagram under 6.5.)
 export interface LorcanitoLocationCard extends LorcanitoBaseCard {
   type: "location";
   title: string;
@@ -55,14 +63,6 @@ export interface LorcanitoLocationCard extends LorcanitoBaseCard {
   strength?: never;
 }
 
-// 6.5. Locations
-// 6.5.1. Locations are a type of card that can be in play. A location is a location while in the Play zone; in all other zones it’s a location card.
-// 6.5.2. Classification – A location is defined as having Location on the card’s classification line. Locations are the only card type that is printed in landscape (i.e., with the longer sides on the top and bottom). (See #2 on the diagram under 6.5.)
-// 6.5.3. Cost – A location’s cost is in a different place on the card than the cost of other card types, but it works the same way. (See #1 on the diagram under 6.5.)
-// 6.5.4. Move Cost – A location has a move cost. This is the amount of ink needed to move a character to this location. (See #3 on the diagram under 6.5.)
-// 6.5.5. Willpower – Damage on a location is persistent, which means it accumulates over the course of the game. If a location has damage equal to or higher than its Willpower {W}, it’s banished as a required action. Note that locations don’t have a Strength {S} characteristic and don’t deal damage. (See #4 on the diagram under 6.5.)
-// 6.5.6. Lore Value – A location may have a Lore value {L}, which is how much lore its player gains at the start of their turn during the Set step. (See #6 on the diagram under 6.5.)
-// 6.5.7. Abilities – If a location has an ability, that ability can be used during the turn the location is played. (See #5 on the diagram under 6.5.)
 export interface LorcanitoCharacterCard extends LorcanitoBaseCard {
   type: "character";
   title: string;

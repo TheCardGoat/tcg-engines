@@ -1,5 +1,4 @@
 import { describe, expect, it } from "bun:test";
-import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
 import { developYourBrain } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   chiefTui,
@@ -25,7 +24,7 @@ describe("Develop Your Brain", () => {
 
     cardUnderTest.playFromHand();
 
-    const bottom: CardModel[] = [first];
+    const bottom = [first];
 
     testStore.resolveTopOfStack({ scry: { bottom, hand: [second] } });
 

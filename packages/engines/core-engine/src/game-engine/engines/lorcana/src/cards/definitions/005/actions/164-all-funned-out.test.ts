@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { allFunnedOut } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("All Funned Out", () => {
   it.skip("Put chosen character of yours into your inkwell facedown and exerted.", () => {

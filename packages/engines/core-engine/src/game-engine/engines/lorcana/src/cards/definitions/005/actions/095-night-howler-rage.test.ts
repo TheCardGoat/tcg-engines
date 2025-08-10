@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { nightHowlerRage } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Night Howler Rage", () => {
   it("Draw a card. Chosen character gains **Reckless** during their next turn._(They can't quest and must challenge if able.)_", () => {

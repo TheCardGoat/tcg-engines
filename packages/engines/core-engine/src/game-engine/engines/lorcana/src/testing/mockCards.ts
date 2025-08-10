@@ -1,10 +1,10 @@
 import type {
-  LorcanitoActionCard,
-  LorcanitoCharacterCard,
-  LorcanitoLocationCard,
-} from "@lorcanito/lorcana-engine";
+  LorcanaActionCardDefinition,
+  LorcanaCharacterCardDefinition,
+  LorcanaLocationCardDefinition,
+} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mockCharacterCard: LorcanitoCharacterCard = {
+export const mockCharacterCard: LorcanaCharacterCardDefinition = {
   id: "MUST_BE_UNIQUE_ID_CHAR",
   name: "Test Card",
   title: "Character",
@@ -25,7 +25,7 @@ export const mockCharacterCard: LorcanitoCharacterCard = {
   rarity: "common",
 };
 
-export const mockLocationCard: LorcanitoLocationCard = {
+export const mockLocationCard: LorcanaLocationCardDefinition = {
   id: "MUST_BE_UNIQUE_ID_LOC",
   name: "Test Location",
   title: "Basic Location",
@@ -46,7 +46,7 @@ export const mockLocationCard: LorcanitoLocationCard = {
   rarity: "common",
 };
 
-export const mockActionCard: LorcanitoActionCard = {
+export const mockActionCard: LorcanaActionCardDefinition = {
   id: "MUST_BE_UNIQUE_ID_ACTION",
   name: "Test Action",
   characteristics: [],

@@ -1,15 +1,9 @@
 import { expect } from "bun:test";
-import type {
-  LorcanitoCard,
-  LorcanitoCharacterCard,
-  Zones,
-} from "@lorcanito/lorcana-engine";
-import { allCardsById } from "@lorcanito/lorcana-engine";
+import type { Zones } from "@lorcanito/shared";
 import {
   getCardZone,
   getCardZoneByInstanceId,
 } from "~/game-engine/core-engine/engine/zone-operation";
-
 import {
   type CoreCtx,
   createCtx,
@@ -21,9 +15,14 @@ import {
   createShortAndUniqueIds,
 } from "~/game-engine/core-engine/utils/id-utils";
 import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
+import { allCardsById } from "~/game-engine/engines/lorcana/src/cards/definitions/cards";
 import { mockCharacterCard } from "~/game-engine/engines/lorcana/src/testing/mockCards";
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
-import { LorcanaCardRepository } from "../cards/lorcana-card-repository";
+import {
+  type LorcanaCardDefinition,
+  LorcanaCardRepository,
+  type LorcanaCharacterCardDefinition,
+} from "../cards/lorcana-card-repository";
 import { type LorcanaCardFilter, LorcanaEngine } from "../lorcana-engine";
 import type {
   LorcanaCardFilterExtended,
@@ -35,7 +34,7 @@ import { createEmptyLorcanaGameState } from "../utils/createEmptyLorcanaGameStat
 // Creates a test card repository that includes both official cards and test cards
 function createTestCardRepository(
   dictionary: Record<string, Record<string, string>>,
-  testCards: LorcanitoCard[],
+  testCards: LorcanaCardDefinition[],
 ): LorcanaCardRepository {
   for (const card of testCards) {
     allCardsById[card.id] = card;
@@ -44,14 +43,14 @@ function createTestCardRepository(
   return new LorcanaCardRepository(dictionary);
 }
 
-export const testCharacterCard: LorcanitoCharacterCard = {
+export const testCharacterCard: LorcanaCharacterCardDefinition = {
   ...mockCharacterCard,
   id: "999999999999",
   name: "Test Card",
 };
 
 // Test card without inkwell symbol
-export const cardWithoutInkwell: LorcanitoCharacterCard = {
+export const cardWithoutInkwell: LorcanaCharacterCardDefinition = {
   ...testCharacterCard,
   id: "test-without-inkwell",
   name: "Test Card Without Inkwell",
@@ -59,14 +58,14 @@ export const cardWithoutInkwell: LorcanitoCharacterCard = {
 };
 
 export type TestInitialState = Partial<
-  Record<LorcanaZone, LorcanitoCard[] | number>
+  Record<LorcanaZone, LorcanaCardDefinition[] | number>
 > & { lore?: number };
 
 type Opts = {
   debug?: boolean;
   skipPreGame?: boolean;
   cardRepository?: LorcanaCardRepository;
-  testCards?: LorcanitoCard[];
+  testCards?: LorcanaCardDefinition[];
 };
 
 export class LorcanaTestEngine {
@@ -84,8 +83,8 @@ export class LorcanaTestEngine {
   private collectCardsFromStates(
     playerState: TestInitialState,
     opponentState: TestInitialState,
-  ): LorcanitoCard[] {
-    const cards: LorcanitoCard[] = [];
+  ): LorcanaCardDefinition[] {
+    const cards: LorcanaCardDefinition[] = [];
     const cardSet = new Set<string>(); // To avoid duplicates
 
     // Define zones that can contain cards
@@ -291,8 +290,8 @@ export class LorcanaTestEngine {
   }
 
   moveToLocation(params: {
-    location: LorcanaCardInstance | LorcanitoCard;
-    character: LorcanaCardInstance | LorcanitoCard;
+    location: LorcanaCardInstance | LorcanaCardDefinition;
+    character: LorcanaCardInstance | LorcanaCardDefinition;
     skipAssertion?: boolean;
     doNotThrow?: boolean; // If true, do not throw on failure
   }) {
@@ -388,7 +387,7 @@ export class LorcanaTestEngine {
   }
 
   getCardModel(
-    card: LorcanitoCard | LorcanaCardInstance,
+    card: LorcanaCardDefinition | LorcanaCardInstance,
     index?: number,
   ): LorcanaCardInstance {
     const results = this.authoritativeEngine.queryCardsByFilter({
@@ -556,7 +555,7 @@ export class LorcanaTestEngine {
     return response;
   }
 
-  playCard(card: LorcanitoCard | LorcanaCardInstance) {
+  playCard(card: LorcanaCardDefinition | LorcanaCardInstance) {
     const model = this.getCardModel(card);
 
     // If opts is not provided, use an empty object
@@ -575,8 +574,8 @@ export class LorcanaTestEngine {
   }
 
   singSong(opts: {
-    song: LorcanitoCard | LorcanaCardInstance;
-    singer: LorcanitoCard | LorcanaCardInstance;
+    song: LorcanaCardDefinition | LorcanaCardInstance;
+    singer: LorcanaCardDefinition | LorcanaCardInstance;
   }) {
     const song = this.getCardModel(opts.song);
     const singer = this.getCardModel(opts.singer);
@@ -599,7 +598,7 @@ export class LorcanaTestEngine {
     return { song, singer, result: response };
   }
 
-  putACardIntoTheInkwell(card: LorcanaCardInstance | LorcanitoCard) {
+  putACardIntoTheInkwell(card: LorcanaCardInstance | LorcanaCardDefinition) {
     // If it's already a LorcanaCardInstance, use it directly
     // Otherwise, use getCardModel to find it
     const model = "instanceId" in card ? card : this.getCardModel(card);
@@ -841,10 +840,10 @@ function updateInitialState(
   for (const zone of Object.keys(zones)) {
     const zoneKey = zone as LorcanaZone;
     const value = state[zoneKey];
-    const zoneCards: LorcanitoCard[] =
+    const zoneCards: LorcanaCardDefinition[] =
       typeof value === "number"
         ? range(value).map(() => testCharacterCard)
-        : (value as LorcanitoCard[]);
+        : (value as LorcanaCardDefinition[]);
 
     if (zoneCards) {
       for (const card of zoneCards.filter(Boolean)) {

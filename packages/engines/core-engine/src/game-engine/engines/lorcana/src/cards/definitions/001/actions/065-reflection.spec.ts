@@ -1,5 +1,4 @@
 import { describe, expect, it } from "bun:test";
-import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
 import {
   chiefTui,
   heiheiBoatSnack,
@@ -24,7 +23,7 @@ describe("Reflection", () => {
 
     cardUnderTest.playFromHand();
 
-    const top: CardModel[] = [two, one, three];
+    const top = [two, one, three];
 
     testStore.resolveTopOfStack({ scry: { top } });
 

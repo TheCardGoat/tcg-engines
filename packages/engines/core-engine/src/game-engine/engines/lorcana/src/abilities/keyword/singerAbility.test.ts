@@ -1,15 +1,11 @@
 import { describe, expect, it } from "bun:test";
-import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-import { hakunaMatata } from "@lorcanito/lorcana-engine/cards/001/songs/songs";
-import type { LorcanaAbility } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import { singerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singerAbility";
+import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
+import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import { mockCharacterCard } from "~/game-engine/engines/lorcana/src/testing/mockCards";
 import { LorcanaTestEngine } from "../../testing/lorcana-test-engine";
 
-// TODO: Remove this once we have redefined card abilities
-const mockSingerCharacter: LorcanitoCharacterCard & {
-  abilities?: LorcanaAbility[];
-} = {
+const mockSingerCharacter: LorcanaCharacterCardDefinition = {
   ...mockCharacterCard,
   id: "mock-singer-character",
   name: "Mock Singer Character",
