@@ -1,4 +1,7 @@
 import { createId } from "~/game-engine/core-engine/utils/id-utils";
+import type { LayerItem } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import { gainLoreEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaCoreOperations } from "../lorcana-core-operations";
 
 /**
@@ -244,32 +247,14 @@ function checkAndAddTriggeredAbilities(
       const controller = this.getCardOwner(cardInstance.instanceId);
       if (!controller) continue;
 
-      const layerItem = {
+      const layerItem: LayerItem = {
         id: createId(),
         sourceCardId: cardInstance.instanceId,
         controllerId: controller,
         ability: {
-          id: createId(),
-          type: "triggered" as const,
-          text: `${timing} ${condition}`,
-          effects: [
-            {
-              type: "gainLore" as const,
-              parameters: {
-                amount: 1,
-                target: { type: "player", value: "self" },
-              },
-            },
-          ],
-          costs: {},
-          timing: timing as any,
+          type: "static",
+          effects: [gainLoreEffect({ targets: [selfPlayerTarget], value: 1 })],
         },
-        targets: [], // Will be resolved when the effect is processed
-        timestamp: Date.now(),
-        optional:
-          "optional" in ability && typeof ability.optional === "boolean"
-            ? ability.optional
-            : false,
       };
 
       this.state.G.bag.push(layerItem);
@@ -301,35 +286,17 @@ function checkAndAddTriggeredAbilities(
       ) {
         for (const layerEffect of ability.layer.effects) {
           if (layerEffect.type === "lore" && layerEffect.modifier === "add") {
-            const layerItem = {
+            const layerItem: LayerItem = {
               id: createId(),
               sourceCardId: cardInstance.instanceId,
               controllerId: controller,
               ability: {
-                id: createId(),
-                type: "triggered" as const,
-                text: "Character moves to location",
+                type: "static" as const,
+                text: "",
                 effects: [
-                  {
-                    type: "gainLore" as const,
-                    parameters: {
-                      amount:
-                        typeof layerEffect.amount === "number"
-                          ? layerEffect.amount
-                          : 1,
-                      target: { type: "player", value: "self" },
-                    },
-                  },
+                  gainLoreEffect({ targets: [selfPlayerTarget], value: 1 }),
                 ],
-                costs: {},
-                timing: timing as any,
               },
-              targets: [],
-              timestamp: Date.now(),
-              optional:
-                "optional" in ability && typeof ability.optional === "boolean"
-                  ? ability.optional
-                  : false,
             };
 
             this.state.G.bag.push(layerItem);

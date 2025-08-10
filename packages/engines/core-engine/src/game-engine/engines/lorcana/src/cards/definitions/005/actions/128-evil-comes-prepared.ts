@@ -1,50 +1,43 @@
-import type {
-  CardEffectTarget,
-  LorcanitoActionCard,
-  TargetConditionalEffect,
-} from "@lorcanito/lorcana-engine";
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import {
-  readyAndCantQuest,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
-
-const targetingVillain: CardEffectTarget = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "type", value: "character" },
-    { filter: "zone", value: "play" },
-    {
-      filter: "characteristics",
-      value: ["villain"],
-    },
-  ],
-};
-
-const evilComesEffect: TargetConditionalEffect = {
-  type: "target-conditional",
-  effects: [...readyAndCantQuest(targetingVillain), youGainLore(1)],
-  fallback: [...readyAndCantQuest(chosenCharacter)],
-  // TODO: Re implement conditional target
-  target: targetingVillain,
-};
+  conditionalTargetEffect,
+  gainLoreEffect,
+  restrictEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterOfYoursTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const evilComesPrepared: LorcanaActionCardDefinition = {
   id: "xc5",
   missingTestCase: true,
   name: "Evil Comes Prepared",
   characteristics: ["action"],
-  text: "Ready chosen character of yours. They can’t quest for the rest of this turn. If a Villain character is chosen, gain 1 lore.",
+  text: "Ready chosen character of yours. They can't quest for the rest of this turn. If a Villain character is chosen, gain 1 lore.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      text: "Ready chosen character of yours. They can’t quest for the rest of this turn. If a Villain character is chosen, gain 1 lore.",
-      effects: [evilComesEffect],
+      type: "static",
+      text: "Ready chosen character of yours. They can't quest for the rest of this turn. If a Villain character is chosen, gain 1 lore.",
+      targets: [chosenCharacterOfYoursTarget],
+      effects: [
+        { type: "ready", targets: [chosenCharacterOfYoursTarget] },
+        restrictEffect({
+          targets: [chosenCharacterOfYoursTarget],
+          restriction: "quest",
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
+        conditionalTargetEffect({
+          targetCondition: {
+            type: "hasClassification",
+            classification: "villain",
+          },
+          effect: gainLoreEffect({
+            targets: [selfPlayerTarget],
+            value: 1,
+          }),
+        }),
+      ],
     },
   ],
   inkwell: true,

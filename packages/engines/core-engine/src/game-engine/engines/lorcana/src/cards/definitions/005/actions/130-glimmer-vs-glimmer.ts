@@ -1,52 +1,9 @@
-import type {
-  CardEffectTarget,
-  LorcanitoActionCard,
-  ResolutionAbility,
-  TargetCardEffect,
-} from "@lorcanito/lorcana-engine";
-import { foodFightAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+import { banishEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
 import {
-  chosenCharacter,
-  chosenCharacterItemOrLocation,
-  opposingCharactersWithEvasive,
-  opposingCharactersWithoutEvasive,
-} from "@lorcanito/lorcana-engine/abilities/target";
-import {
-  allYourCharacters,
-  anyCard,
-  anyNumberOfChosenCharacters,
-  chosenCharacterOfYours,
-  self,
-  targetCard,
-  thisCard,
-  thisCharacter,
-  topCardOfYourDeck,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { wheneverChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-import {
-  banishChosenCharacterOfYours,
-  banishChosenOpposingCharacter,
-  choseCharacterGainsReckless,
-  chosenCharacterCantChallengeDuringNextTurn,
-  chosenCharacterGainsEvasive,
-  chosenCharacterGainsRecklessDuringNextTurn,
-  chosenCharacterGainsResist,
-  chosenCharacterGainsRush,
-  chosenCharacterOfYoursGainsChallengerX,
-  chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
-  dealDamageEffect,
-  drawACard,
-  drawCardsUntilYouHaveSameNumberOfCardsAsOpponent,
-  drawXCards,
-  putCardFromYourHandOnTheTopOfYourDeck,
-  readyAndCantQuest,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type {
-  RevealTopCardEffect,
-  ShuffleEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
+  chosenCharacterOfYoursTarget,
+  chosenCharacterTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const glimmerVsGlimmer: LorcanaActionCardDefinition = {
   id: "opx",
@@ -57,10 +14,14 @@ export const glimmerVsGlimmer: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      dependentEffects: true,
-      resolveEffectsIndividually: true,
-      effects: [banishChosenOpposingCharacter, banishChosenCharacterOfYours],
+      type: "static",
+      text: "Banish chosen character of yours to banish chosen character.",
+      effects: [
+        banishEffect({
+          targets: [chosenCharacterOfYoursTarget],
+          followedBy: banishEffect({ targets: [chosenCharacterTarget] }),
+        }),
+      ],
     },
   ],
   flavour:

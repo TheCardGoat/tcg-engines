@@ -1,52 +1,8 @@
-import type {
-  CardEffectTarget,
-  LorcanitoActionCard,
-  ResolutionAbility,
-  TargetCardEffect,
-} from "@lorcanito/lorcana-engine";
-import { foodFightAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-import {
-  chosenCharacter,
-  chosenCharacterItemOrLocation,
-  opposingCharactersWithEvasive,
-  opposingCharactersWithoutEvasive,
-} from "@lorcanito/lorcana-engine/abilities/target";
-import {
-  allYourCharacters,
-  anyCard,
-  anyNumberOfChosenCharacters,
-  chosenCharacterOfYours,
-  self,
-  targetCard,
-  thisCard,
-  thisCharacter,
-  topCardOfYourDeck,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { wheneverChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-import {
-  banishChosenCharacterOfYours,
-  banishChosenOpposingCharacter,
-  choseCharacterGainsReckless,
-  chosenCharacterCantChallengeDuringNextTurn,
-  chosenCharacterGainsEvasive,
-  chosenCharacterGainsRecklessDuringNextTurn,
-  chosenCharacterGainsResist,
-  chosenCharacterGainsRush,
-  chosenCharacterOfYoursGainsChallengerX,
-  chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
-  dealDamageEffect,
-  drawACard,
-  drawCardsUntilYouHaveSameNumberOfCardsAsOpponent,
-  drawXCards,
-  putCardFromYourHandOnTheTopOfYourDeck,
-  readyAndCantQuest,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type {
-  RevealTopCardEffect,
-  ShuffleEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { gainsAbilityEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const magicalAid: LorcanaActionCardDefinition = {
   id: "sx8",
@@ -56,12 +12,16 @@ export const magicalAid: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Magical Aid",
+      type: "static",
       text: "Chosen character gains **Challenger** +3 and When this character is banished in a challenge, return this card to your hand this turn. _(They get +3 {S} while challenging.)_",
+      targets: [chosenCharacterTarget],
       effects: [
-        chosenCharacterOfYoursGainsChallengerX(3),
-        chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
+        gainsAbilityEffect({
+          ability: challengerAbility(3),
+          duration: THIS_TURN,
+        }),
+        // TODO: Skipping implementation - requires complex triggered ability for "when banished in challenge" condition
+        gainsAbilityEffect({ ability: challengerAbility(0) }),
       ],
     },
   ],

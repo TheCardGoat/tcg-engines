@@ -1,52 +1,11 @@
-import type {
-  CardEffectTarget,
-  LorcanitoActionCard,
-  ResolutionAbility,
-  TargetCardEffect,
-} from "@lorcanito/lorcana-engine";
-import { foodFightAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+import type { DynamicValue } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import {
-  chosenCharacter,
-  chosenCharacterItemOrLocation,
-  opposingCharactersWithEvasive,
-  opposingCharactersWithoutEvasive,
-} from "@lorcanito/lorcana-engine/abilities/target";
-import {
-  allYourCharacters,
-  anyCard,
-  anyNumberOfChosenCharacters,
-  chosenCharacterOfYours,
-  self,
-  targetCard,
-  thisCard,
-  thisCharacter,
-  topCardOfYourDeck,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { wheneverChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-import {
-  banishChosenCharacterOfYours,
-  banishChosenOpposingCharacter,
-  choseCharacterGainsReckless,
-  chosenCharacterCantChallengeDuringNextTurn,
-  chosenCharacterGainsEvasive,
-  chosenCharacterGainsRecklessDuringNextTurn,
-  chosenCharacterGainsResist,
-  chosenCharacterGainsRush,
-  chosenCharacterOfYoursGainsChallengerX,
-  chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
-  dealDamageEffect,
-  drawACard,
-  drawCardsUntilYouHaveSameNumberOfCardsAsOpponent,
-  drawXCards,
-  putCardFromYourHandOnTheTopOfYourDeck,
-  readyAndCantQuest,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type {
-  RevealTopCardEffect,
-  ShuffleEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
+  banishEffect,
+  drawCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { anyNumberOfYourItems } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const royalTantrum: LorcanaActionCardDefinition = {
   id: "v3q",
@@ -56,22 +15,19 @@ export const royalTantrum: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Banish any number of your items, then draw a card for each item banished this way.",
       effects: [
-        {
-          type: "banish",
-          forEach: [drawACard],
-          target: {
-            type: "card",
-            value: 99,
-            upTo: true,
-            filters: [
-              { filter: "owner", value: "self" },
-              { filter: "type", value: "item" },
-              { filter: "zone", value: "play" },
-            ],
-          },
-        },
+        banishEffect({
+          targets: [anyNumberOfYourItems],
+          followedBy: drawCardEffect({
+            targets: [selfPlayerTarget],
+            value: {
+              type: "count",
+              previousEffectTargets: true,
+            } as DynamicValue,
+          }),
+        }),
       ],
     },
   ],

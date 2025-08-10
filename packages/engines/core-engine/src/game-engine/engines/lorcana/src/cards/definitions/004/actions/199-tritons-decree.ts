@@ -1,3 +1,4 @@
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const tritonsDecree: LorcanaActionCardDefinition = {
@@ -9,23 +10,21 @@ export const tritonsDecree: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
       text: "Each opponent chooses one of their characters and deals 2 damage to them.",
       responder: "opponent",
       effects: [
-        {
-          type: "damage",
-          amount: 2,
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "play" },
-              { filter: "owner", value: "self" },
-            ],
-          },
-        },
+        dealDamageEffect({
+          targets: [
+            {
+              type: "card",
+              cardType: "character",
+              owner: "self",
+              count: 1,
+            },
+          ],
+          value: 2,
+        }),
       ],
     },
   ],

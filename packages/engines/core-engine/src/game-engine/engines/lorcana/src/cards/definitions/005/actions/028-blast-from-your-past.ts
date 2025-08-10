@@ -1,52 +1,9 @@
-import type {
-  CardEffectTarget,
-  LorcanitoActionCard,
-  ResolutionAbility,
-  TargetCardEffect,
-} from "@lorcanito/lorcana-engine";
-import { foodFightAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 import {
-  chosenCharacter,
-  chosenCharacterItemOrLocation,
-  opposingCharactersWithEvasive,
-  opposingCharactersWithoutEvasive,
-} from "@lorcanito/lorcana-engine/abilities/target";
-import {
-  allYourCharacters,
-  anyCard,
-  anyNumberOfChosenCharacters,
-  chosenCharacterOfYours,
-  self,
-  targetCard,
-  thisCard,
-  thisCharacter,
-  topCardOfYourDeck,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { wheneverChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-import {
-  banishChosenCharacterOfYours,
-  banishChosenOpposingCharacter,
-  choseCharacterGainsReckless,
-  chosenCharacterCantChallengeDuringNextTurn,
-  chosenCharacterGainsEvasive,
-  chosenCharacterGainsRecklessDuringNextTurn,
-  chosenCharacterGainsResist,
-  chosenCharacterGainsRush,
-  chosenCharacterOfYoursGainsChallengerX,
-  chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
-  dealDamageEffect,
-  drawACard,
-  drawCardsUntilYouHaveSameNumberOfCardsAsOpponent,
-  drawXCards,
-  putCardFromYourHandOnTheTopOfYourDeck,
-  readyAndCantQuest,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type {
-  RevealTopCardEffect,
-  ShuffleEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
+  nameCardEffect,
+  putCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const blastFromYourPast: LorcanaActionCardDefinition = {
   id: "zt6",
@@ -56,25 +13,26 @@ export const blastFromYourPast: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      nameACard: true,
+      type: "static",
+      text: "Name a card. Return all character cards with that name from your discard to your hand.",
       effects: [
-        {
-          type: "move",
-          to: "hand",
-          target: {
-            type: "card",
-            value: "all",
-            filters: [
-              { filter: "zone", value: "discard" },
-              { filter: "type", value: "character" },
-              { filter: "owner", value: "self" },
+        nameCardEffect({
+          targets: [selfPlayerTarget],
+          followedBy: putCardEffect({
+            to: "hand",
+            from: "discard",
+            targets: [
               {
-                filter: "name-a-card",
+                type: "card",
+                zone: "discard",
+                owner: "self",
+                cardType: "character",
+                withNamedCard: true,
+                count: -1, // All matching cards
               },
             ],
-          },
-        },
+          }),
+        }),
       ],
     },
   ],

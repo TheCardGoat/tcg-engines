@@ -1,78 +1,38 @@
-import type {
-  CardEffectTarget,
-  LorcanitoActionCard,
-  ResolutionAbility,
-  TargetCardEffect,
-} from "@lorcanito/lorcana-engine";
-import { foodFightAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
-  chosenCharacter,
-  chosenCharacterItemOrLocation,
-  opposingCharactersWithEvasive,
-  opposingCharactersWithoutEvasive,
-} from "@lorcanito/lorcana-engine/abilities/target";
-import {
-  allYourCharacters,
-  anyCard,
-  anyNumberOfChosenCharacters,
-  chosenCharacterOfYours,
-  self,
-  targetCard,
-  thisCard,
-  thisCharacter,
-  topCardOfYourDeck,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { wheneverChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-import {
-  banishChosenCharacterOfYours,
-  banishChosenOpposingCharacter,
-  choseCharacterGainsReckless,
-  chosenCharacterCantChallengeDuringNextTurn,
-  chosenCharacterGainsEvasive,
-  chosenCharacterGainsRecklessDuringNextTurn,
-  chosenCharacterGainsResist,
-  chosenCharacterGainsRush,
-  chosenCharacterOfYoursGainsChallengerX,
-  chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
   dealDamageEffect,
-  drawACard,
-  drawCardsUntilYouHaveSameNumberOfCardsAsOpponent,
-  drawXCards,
-  putCardFromYourHandOnTheTopOfYourDeck,
-  readyAndCantQuest,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type {
-  RevealTopCardEffect,
-  ShuffleEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
+  gainsAbilityEffect,
+  getEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/rushAbility";
+import { chosenCharacterOfYoursTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const breakFree: LorcanaActionCardDefinition = {
   id: "qdj",
   name: "Break Free",
   characteristics: ["action"],
-  text: "Deal 1 damage to chosen character of yours. They gain **Rush** and get +1 {S} this turn. _(They can challenge the turn they’re played.)_",
+  text: "Deal 1 damage to chosen character of yours. They gain **Rush** and get +1 {S} this turn. _(They can challenge the turn they're played.)_",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      text: "Deal 1 damage to chosen character of yours. They gain **Rush** and get +1 {S} this turn. _(They can challenge the turn they’re played.)_",
+      type: "static",
+      text: "Deal 1 damage to chosen character of yours. They gain **Rush** and get +1 {S} this turn. _(They can challenge the turn they're played.)_",
+      targets: [chosenCharacterOfYoursTarget],
       effects: [
-        {
-          type: "damage",
-          amount: 1,
-          target: chosenCharacterOfYours,
-        },
-        {
-          type: "attribute",
+        dealDamageEffect({
+          targets: [chosenCharacterOfYoursTarget],
+          value: 1,
+        }),
+        gainsAbilityEffect({
+          ability: rushAbility,
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
+        getEffect({
           attribute: "strength",
-          amount: 1,
-          modifier: "add",
-          duration: "turn",
-          target: chosenCharacterOfYours,
-        },
-        chosenCharacterGainsRush,
+          value: 1,
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
       ],
     },
   ],
