@@ -1,37 +1,9 @@
 import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
+  drawCardEffect,
   moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const makeSomeMagic: LorcanaActionCardDefinition = {
@@ -43,16 +15,22 @@ export const makeSomeMagic: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-
-      resolveEffectsIndividually: true,
+      type: "static",
+      text: "Move 1 damage counter from chosen character to chosen opposing character. Draw a card.",
       effects: [
-        moveDamageEffect({
-          amount: 1,
-          from: chosenCharacter,
-          to: chosenOpposingCharacter,
+        ...moveDamageEffect({
+          fromTargets: [chosenCharacterTarget],
+          toTargets: [
+            {
+              type: "card",
+              cardType: "character",
+              owner: "opponent",
+              count: 1,
+            },
+          ],
+          value: 1,
         }),
-        drawACard,
+        drawCardEffect({ targets: [selfPlayerTarget] }),
       ],
     },
   ],

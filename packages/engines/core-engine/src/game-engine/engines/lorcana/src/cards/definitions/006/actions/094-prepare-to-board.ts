@@ -1,37 +1,9 @@
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
-  moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+  conditionalTargetEffect,
+  getEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const prepareToBoard: LorcanaActionCardDefinition = {
@@ -42,56 +14,26 @@ export const prepareToBoard: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Chosen character gets +2 {S} this turn. If a Pirate character is chosen, they get +3 {S} instead.",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "target-conditional",
-          autoResolve: false,
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "play" },
-              { filter: "characteristics", value: ["pirate"] },
-            ],
+        conditionalTargetEffect({
+          targetCondition: {
+            type: "hasClassification",
+            classification: "pirate",
           },
-          effects: [
-            {
-              type: "attribute",
-              attribute: "strength",
-              amount: 3,
-              modifier: "add",
-              duration: "turn",
-              target: {
-                type: "card",
-                value: 1,
-                filters: [
-                  { filter: "type", value: "character" },
-                  { filter: "zone", value: "play" },
-                  { filter: "characteristics", value: ["pirate"] },
-                ],
-              },
-            },
-          ],
-          fallback: [
-            {
-              type: "attribute",
-              attribute: "strength",
-              amount: 2,
-              modifier: "add",
-              duration: "turn",
-              target: {
-                type: "card",
-                value: 1,
-                filters: [
-                  { filter: "type", value: "character" },
-                  { filter: "zone", value: "play" },
-                ],
-              },
-            },
-          ],
-        } as TargetConditionalEffect,
+          effect: getEffect({
+            attribute: "strength",
+            value: 3,
+            duration: FOR_THE_REST_OF_THIS_TURN,
+          }),
+          elseEffect: getEffect({
+            attribute: "strength",
+            value: 2,
+            duration: FOR_THE_REST_OF_THIS_TURN,
+          }),
+        }),
       ],
     },
   ],

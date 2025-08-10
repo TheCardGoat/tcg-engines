@@ -1,37 +1,4 @@
-import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
-  moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const youCameBack: LorcanaActionCardDefinition = {
@@ -42,8 +9,10 @@ export const youCameBack: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      effects: [readyChosenCharacter],
+      type: "static",
+      text: "Ready chosen character.",
+      targets: [chosenCharacterTarget],
+      effects: [{ type: "ready" }],
     },
   ],
   inkwell: false,

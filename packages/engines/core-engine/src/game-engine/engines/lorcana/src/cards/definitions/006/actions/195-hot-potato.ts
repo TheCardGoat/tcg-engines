@@ -1,37 +1,12 @@
 import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
+  banishEffect,
   dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
-  moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+  modalEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  chosenCharacterTarget,
+  chosenItemTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const hotPotato: LorcanaActionCardDefinition = {
@@ -43,25 +18,24 @@ export const hotPotato: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Choose one:\n\n· Deal 2 damage to chosen character.\n\n· Banish chosen item.",
       effects: [
-        {
-          type: "modal",
-          // TODO: Get rid of target
-          target: chosenCharacter,
-          modes: [
-            {
-              id: "1",
-              text: "Deal 2 damage to chosen character.",
-              effects: [dealDamageEffect(2, chosenCharacter)],
-            },
-            {
-              id: "2",
-              text: "Banish chosen item.",
-              effects: [banishChosenItem],
-            },
-          ],
-        },
+        modalEffect([
+          {
+            text: "Deal 2 damage to chosen character.",
+            effects: [
+              dealDamageEffect({
+                targets: [chosenCharacterTarget],
+                value: 2,
+              }),
+            ],
+          },
+          {
+            text: "Banish chosen item.",
+            effects: [banishEffect({ targets: [chosenItemTarget] })],
+          },
+        ]),
       ],
     },
   ],
@@ -69,7 +43,6 @@ export const hotPotato: LorcanaActionCardDefinition = {
   inkwell: true,
   colors: ["steel"],
   cost: 3,
-
   illustrator: "Nicolas Ky",
   number: 195,
   set: "006",

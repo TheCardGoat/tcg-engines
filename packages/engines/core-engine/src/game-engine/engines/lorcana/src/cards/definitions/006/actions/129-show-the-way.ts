@@ -1,37 +1,6 @@
-import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
-  moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { getEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { yourCharactersTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const showTheWay: LorcanaActionCardDefinition = {
@@ -43,17 +12,15 @@ export const showTheWay: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Your characters get +2 {S} this turn.",
+      targets: [yourCharactersTarget],
       effects: [
-        {
-          type: "attribute",
+        getEffect({
           attribute: "strength",
-          amount: 2,
-          modifier: "add",
-          duration: "turn",
-          target: yourCharacters,
-          until: true,
-        },
+          value: 2,
+          duration: THIS_TURN,
+        }),
       ],
     },
   ],

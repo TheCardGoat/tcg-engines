@@ -627,10 +627,12 @@ export const actionTexts: Array<
             {
               text: "Ready chosen Robot character. They can't quest for the rest of this turn.",
               effects: readyAndRestrictQuestEffect({
-                type: "card",
-                cardType: "character",
-                withClassification: "robot",
-                count: 1,
+                targets: {
+                  type: "card",
+                  cardType: "character",
+                  withClassification: "robot",
+                  count: 1,
+                },
               }),
             },
           ]),
@@ -2129,7 +2131,27 @@ export const actionTexts: Array<
   ],
   [
     "Exert chosen character. Then, you may choose and discard a card. If you do, the exerted character can't ready at the start of their next turn.",
-    [],
+    [
+      {
+        type: "static",
+        text: "Exert chosen character. Then, you may choose and discard a card. If you do, the exerted character can't ready at the start of their next turn.",
+        effects: [
+          exertCardEffect({
+            targets: [chosenCharacterTarget],
+          }),
+          discardCardEffect({
+            targets: [selfPlayerTarget],
+            value: 1,
+            optional: true,
+            followedBy: restrictEffect({
+              targets: [chosenExertedCharacterTarget],
+              restriction: "ready",
+              duration: DURING_THEIR_NEXT_TURN,
+            }),
+          }),
+        ],
+      },
+    ],
     true,
   ],
   [

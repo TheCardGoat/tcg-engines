@@ -1,37 +1,5 @@
-import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
-  moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const twinFire: LorcanaActionCardDefinition = {
@@ -42,18 +10,10 @@ export const twinFire: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Twin Fire",
-      text: "Then, you may choose and discard a card to deal 2 damage to another chosen character",
-      optional: true,
-      resolveEffectsIndividually: true,
-      effects: [discardACard, dealDamageEffect(2, chosenCharacter)],
-    },
-    {
-      type: "resolution",
-      name: "Twin Fire",
+      type: "static",
       text: "Deal 2 damage to chosen character.",
-      effects: [dealDamageEffect(2, chosenCharacter)],
+      targets: [chosenCharacterTarget],
+      effects: [dealDamageEffect({ value: 2 })],
     },
   ],
   inkwell: false,

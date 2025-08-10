@@ -1,8 +1,8 @@
-import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { upToValue } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
   getEffect,
   removeDamageEffect,
-  upToValue,
 } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
 import { singerTogetherAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singTogetherAbility";
 import {
@@ -29,10 +29,10 @@ export const headsHeldHigh: LorcanaActionCardDefinition = {
           value: upToValue(3),
         }),
         getEffect({
+          targets: [allOpposingCharactersTarget],
           attribute: "strength",
           value: -3,
-          targets: [allOpposingCharactersTarget],
-          duration: FOR_THE_REST_OF_THIS_TURN,
+          duration: THIS_TURN,
         }),
       ],
     },

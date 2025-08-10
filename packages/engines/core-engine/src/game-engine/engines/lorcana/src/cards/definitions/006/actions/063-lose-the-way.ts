@@ -1,37 +1,14 @@
+import { DURING_THEIR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+  discardCardEffect,
+  exertCardEffect,
+  restrictEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
 import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
-  moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+  chosenCharacterTarget,
+  chosenExertedCharacterTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const loseTheWay: LorcanaActionCardDefinition = {
@@ -49,32 +26,22 @@ export const loseTheWay: LorcanaActionCardDefinition = {
   rarity: "uncommon",
   abilities: [
     {
-      type: "resolution",
-      name: "Lose The Way",
+      type: "static",
       text: "Exert chosen character. Then, you may choose and discard a card. If you do, the exerted character can't ready at the start of their next turn.",
       effects: [
-        {
-          ...exertChosenCharacter,
-          afterEffect: [
-            {
-              type: "create-layer-based-on-target",
-              target: thisCharacter,
-              replaceEffectTarget: true,
-              resolveEffectsIndividually: true,
-              optional: true,
-              effects: [
-                {
-                  type: "restriction",
-                  restriction: "ready-at-start-of-turn",
-                  duration: "next_turn",
-                  until: true,
-                  target: sourceTarget,
-                },
-                discardACard,
-              ],
-            },
-          ],
-        },
+        exertCardEffect({
+          targets: [chosenCharacterTarget],
+        }),
+        discardCardEffect({
+          targets: [selfPlayerTarget],
+          value: 1,
+          optional: true,
+          followedBy: restrictEffect({
+            targets: [chosenExertedCharacterTarget],
+            restriction: "ready",
+            duration: DURING_THEIR_NEXT_TURN,
+          }),
+        }),
       ],
     },
   ],

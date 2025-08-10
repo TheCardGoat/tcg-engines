@@ -92,13 +92,16 @@ export function gainsAbilityEffect({
 export function banishEffect({
   targets,
   followedBy,
+  optional,
 }: {
   targets?: CardTarget | CardTarget[];
   followedBy?: LorcanaEffect;
+  optional?: boolean;
 } = {}): BanishEffect {
   return {
     type: "banish",
     targets: Array.isArray(targets) ? targets : [targets],
+    optional,
     followedBy: followedBy,
   };
 }
@@ -511,10 +514,14 @@ export function discardCardEffect({
   value,
   targets,
   random,
+  optional,
+  followedBy,
 }: {
   value: number | DynamicValue;
   targets?: PlayerTarget | PlayerTarget[];
   random?: boolean;
+  optional?: boolean;
+  followedBy?: LorcanaEffect;
 }): DiscardEffect {
   const playerTargets: PlayerTarget[] | undefined = targets
     ? Array.isArray(targets)
@@ -525,6 +532,8 @@ export function discardCardEffect({
   return {
     type: "discard",
     targets: playerTargets,
+    optional,
+    followedBy,
     parameters: {
       value,
       random,
@@ -542,9 +551,13 @@ export function drawThenDiscardEffect(params: {
   ];
 }
 
-export function readyAndRestrictQuestEffect(
-  targets: CardTarget | CardTarget[],
-) {
+export function readyAndRestrictQuestEffect({
+  targets,
+  duration,
+}: {
+  targets?: CardTarget | CardTarget[];
+  duration?: AbilityDuration;
+}): LorcanaEffect[] {
   const arr = Array.isArray(targets) ? targets : [targets];
   return [
     readyEffect({ targets: arr }),

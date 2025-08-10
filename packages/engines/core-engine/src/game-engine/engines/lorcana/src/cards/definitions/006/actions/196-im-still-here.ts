@@ -1,37 +1,11 @@
+import { UNTIL_START_OF_YOUR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
-  moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+  drawCardEffect,
+  gainsAbilityEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const imStillHere: LorcanaActionCardDefinition = {
@@ -39,23 +13,22 @@ export const imStillHere: LorcanaActionCardDefinition = {
   missingTestCase: true,
   name: "I'm Still Here",
   characteristics: ["song", "action"],
-  text: "(A character with cost 3 or more can {E} to sing this song for free.)\nChosen character gains Resist +2 until the start of your next turn. Draw a card. (Damage dealt to them is reduced by 2.)",
+  text: "Chosen character gains Resist +2 until the start of your next turn. Draw a card.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Chosen character gains Resist +2 until the start of your next turn. Draw a card. (Damage dealt to them is reduced by 2.)",
       resolveEffectsIndividually: true,
       effects: [
-        {
-          type: "ability",
-          ability: "resist",
-          modifier: "add",
-          amount: 2,
-          until: true,
-          duration: "next_turn",
-          target: chosenCharacter,
-        },
-        drawACard,
+        gainsAbilityEffect({
+          ability: resistAbility(2),
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+          targets: [chosenCharacterTarget],
+        }),
+        drawCardEffect({
+          targets: [selfPlayerTarget],
+        }),
       ],
     },
   ],

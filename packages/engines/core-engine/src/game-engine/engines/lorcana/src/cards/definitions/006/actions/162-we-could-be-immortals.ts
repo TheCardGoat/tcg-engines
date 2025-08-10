@@ -1,78 +1,48 @@
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
-  moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+  gainsAbilityEffect,
+  putCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
+import { sourceCardTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const weCouldBeImmortals: LorcanaActionCardDefinition = {
   id: "nb5",
   name: "We Could Be Immortals",
   characteristics: ["action", "song"],
-  text: "Your Inventor characters gain **Resist** +6 this turn. Then, put this card into your inkwell facedown and exerted. _(Damage dealt to them is reduced by 6.)_",
+  text: "Your Inventor characters gain **Resist** +6 this turn. Then, put this card into your inkwell facedown and exerted.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "We Could Be Immortals",
+      type: "static",
       text: "Your Inventor characters gain **Resist** +6 this turn. Then, put this card into your inkwell facedown and exerted. _(Damage dealt to them is reduced by 6.)_",
+      targets: [
+        {
+          type: "card",
+          cardType: "character",
+          owner: "self",
+          withClassification: "inventor",
+        },
+      ],
       effects: [
-        {
-          type: "ability",
-          ability: "resist",
-          amount: 6,
-          modifier: "add",
-          duration: "turn",
-          target: {
-            type: "card",
-            value: "all",
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "play" },
-              { filter: "owner", value: "self" },
-              { filter: "characteristics", value: ["inventor"] },
-            ],
-          },
-        },
-        {
-          type: "move",
+        gainsAbilityEffect({
+          targets: [
+            {
+              type: "card",
+              cardType: "character",
+              owner: "self",
+              withClassification: "inventor",
+            },
+          ],
+          ability: resistAbility(6),
+          duration: THIS_TURN,
+        }),
+        putCardEffect({
           to: "inkwell",
-          exerted: true,
-          target: {
-            type: "card",
-            value: 1,
-            filters: [{ filter: "source", value: "self" }],
-          },
-        },
+          from: "play",
+          targets: [sourceCardTarget],
+        }),
       ],
     },
   ],

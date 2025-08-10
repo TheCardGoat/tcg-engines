@@ -1,37 +1,8 @@
 import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
-  moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+  modalEffect,
+  readyAndRestrictQuestEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenItemTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const prepareYourBot: LorcanaActionCardDefinition = {
@@ -43,33 +14,26 @@ export const prepareYourBot: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Choose one:\n* Ready chosen item.\n* Ready chosen Robot character. They can't quest for the rest of this turn.",
       effects: [
-        {
-          type: "modal",
-          // TODO: Get rid of target
-          target: chosenCharacter,
-          modes: [
-            {
-              id: "1",
-              text: "Ready chosen item.",
-              effects: [readyChosenItem],
-            },
-            {
-              id: "2",
-              text: "Ready chosen Robot character. They can't quest for the rest of this turn.",
-              effects: readyAndCantQuest({
+        modalEffect([
+          {
+            text: "Ready chosen item.",
+            effects: [{ type: "ready", targets: [chosenItemTarget] }],
+          },
+          {
+            text: "Ready chosen Robot character. They can't quest for the rest of this turn.",
+            effects: readyAndRestrictQuestEffect({
+              targets: {
                 type: "card",
-                value: 1,
-                filters: [
-                  { filter: "type", value: "character" },
-                  { filter: "zone", value: "play" },
-                  { filter: "characteristics", value: ["robot"] },
-                ],
-              }),
-            },
-          ],
-        },
+                cardType: "character",
+                withClassification: "robot",
+                count: 1,
+              },
+            }),
+          },
+        ]),
       ],
     },
   ],
