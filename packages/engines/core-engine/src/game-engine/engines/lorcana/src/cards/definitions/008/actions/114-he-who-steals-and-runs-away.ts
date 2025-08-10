@@ -1,5 +1,9 @@
-import { chosenItem } from "@lorcanito/lorcana-engine/abilities/targets";
-import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+import {
+  banishEffect,
+  drawCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenItemTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const heWhoStealsAndRunsAway: LorcanaActionCardDefinition = {
@@ -10,14 +14,12 @@ export const heWhoStealsAndRunsAway: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      resolveEffectsIndividually: true,
+      type: "static",
+      text: "Banish chosen item. Draw a card.",
+      targets: [chosenItemTarget],
       effects: [
-        {
-          type: "banish",
-          target: chosenItem,
-        },
-        drawACard,
+        banishEffect(),
+        drawCardEffect({ targets: [selfPlayerTarget] }),
       ],
     },
   ],

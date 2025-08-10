@@ -1,54 +1,10 @@
-import type {
-  LorcanitoActionCard,
-  ResolutionAbility,
-} from "@lorcanito/lorcana-engine";
-import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-
-const walkThePlankGainedAbility: ActivatedAbility = {
-  type: "activated",
-  costs: [{ type: "exert" }],
-  effects: [
-    {
-      type: "banish",
-      target: {
-        type: "card",
-        value: 1,
-        filters: [
-          { filter: "type", value: "character" },
-          { filter: "zone", value: "play" },
-          {
-            filter: "status",
-            value: "damage",
-            comparison: { operator: "gte", value: 1 },
-          },
-        ],
-      },
-    },
-  ],
-};
-
-const walkThePlankAbility: ResolutionAbility = {
-  type: "resolution",
-  effects: [
-    {
-      type: "ability",
-      ability: "custom",
-      duration: "turn",
-      modifier: "add",
-      customAbility: walkThePlankGainedAbility,
-      target: {
-        type: "card",
-        value: "all",
-        filters: [
-          { filter: "type", value: "character" },
-          { filter: "zone", value: "play" },
-          { filter: "owner", value: "self" },
-          { filter: "characteristics", value: ["pirate"] },
-        ],
-      },
-    },
-  ],
-};
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import {
+  banishEffect,
+  gainsAbilityEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenDamagedCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const walkThePlank: LorcanaActionCardDefinition = {
   id: "yl4",
@@ -63,5 +19,30 @@ export const walkThePlank: LorcanaActionCardDefinition = {
   number: 118,
   set: "008",
   rarity: "uncommon",
-  abilities: [walkThePlankAbility],
+  abilities: [
+    {
+      type: "static",
+      text: 'Your Pirate characters gain "{E} – Banish chosen damaged character" this turn.',
+      targets: [
+        {
+          type: "card",
+          cardType: "character",
+          owner: "self",
+          withClassification: "pirate",
+        },
+      ],
+      effects: [
+        gainsAbilityEffect({
+          ability: {
+            type: "activated",
+            costs: { exert: true },
+            effects: [
+              banishEffect({ targets: [chosenDamagedCharacterTarget] }),
+            ],
+          },
+          duration: THIS_TURN,
+        }),
+      ],
+    },
+  ],
 };

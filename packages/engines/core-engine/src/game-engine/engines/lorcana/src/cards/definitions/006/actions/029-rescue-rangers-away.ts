@@ -1,37 +1,10 @@
+import type { DynamicValue } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import { UNTIL_START_OF_YOUR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { getEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
 import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
-  moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+  chosenCharacterTarget,
+  yourCharactersInPlayFilter,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const rescueRangersAway: LorcanaActionCardDefinition = {
@@ -42,33 +15,26 @@ export const rescueRangersAway: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Rescue Rangers Away!",
+      type: "static",
       text: "Count the number of characters you have in play. Chosen character loses {S} equal to that number until the start of your next turn.",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "attribute",
+        getEffect({
+          targets: [chosenCharacterTarget],
           attribute: "strength",
-          amount: {
-            dynamic: true,
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "play" },
-              { filter: "owner", value: "self" },
-            ],
-          },
-          modifier: "subtract",
-          duration: "next_turn",
-          until: true,
-          target: chosenCharacter,
-        },
+          value: {
+            type: "count",
+            filter: yourCharactersInPlayFilter,
+            multiplier: -1,
+          } as DynamicValue,
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
       ],
     },
   ],
   inkwell: true,
   colors: ["amber"],
   cost: 2,
-
   illustrator: "Mariana Moreno",
   number: 29,
   set: "006",

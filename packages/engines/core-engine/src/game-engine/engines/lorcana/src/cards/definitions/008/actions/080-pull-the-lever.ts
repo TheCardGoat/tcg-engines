@@ -1,5 +1,12 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
+import {
+  discardCardEffect,
+  drawCardEffect,
+  modalEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  eachOpponentTarget,
+  selfPlayerTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const pullTheLever: LorcanaActionCardDefinition = {
@@ -17,39 +24,23 @@ export const pullTheLever: LorcanaActionCardDefinition = {
   rarity: "uncommon",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Choose one:\n- Draw 2 cards.\n- Each opponent chooses and discards a card.",
       effects: [
-        {
-          type: "modal",
-          // TODO: Get rid of target
-          target: chosenCharacter,
-          modes: [
-            {
-              id: "1",
-              text: "Draw 2 cards.",
-              effects: [drawXCards(2)],
-            },
-            {
-              id: "2",
-              text: "Each opponent chooses and discards a card.",
-              responder: "opponent",
-              effects: [
-                {
-                  type: "discard",
-                  amount: 1,
-                  target: {
-                    type: "card",
-                    value: 1,
-                    filters: [
-                      { filter: "zone", value: "hand" },
-                      { filter: "owner", value: "self" },
-                    ],
-                  },
-                },
-              ],
-            },
-          ],
-        },
+        modalEffect([
+          {
+            text: "Draw 2 cards.",
+            effects: [
+              drawCardEffect({ targets: [selfPlayerTarget], value: 2 }),
+            ],
+          },
+          {
+            text: "Each opponent chooses and discards a card.",
+            effects: [
+              discardCardEffect({ value: 1, targets: [eachOpponentTarget] }),
+            ],
+          },
+        ]),
       ],
     },
   ],

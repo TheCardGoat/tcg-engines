@@ -1,4 +1,9 @@
-import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+import { returnCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { singerTogetherAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singTogetherAbility";
+import {
+  chosenCharacterWithTarget,
+  upToTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const stoppedChaosInItsTracks: LorcanaActionCardDefinition = {
@@ -17,26 +22,21 @@ export const stoppedChaosInItsTracks: LorcanaActionCardDefinition = {
   abilities: [
     singerTogetherAbility(8),
     {
-      type: "resolution",
+      type: "static",
+      text: "Return up to 2 chosen characters with 3 {S} or less each to their player's hand.",
       effects: [
-        {
-          type: "move",
+        returnCardEffect({
           to: "hand",
-          target: {
-            type: "card",
-            value: 2,
-            upTo: true,
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "play" },
-              {
-                filter: "attribute",
-                value: "strength",
-                comparison: { operator: "lte", value: 3 },
-              },
-            ],
-          },
-        },
+          from: "play",
+          targets: upToTarget({
+            target: chosenCharacterWithTarget({
+              attribute: "strength",
+              comparison: "lte",
+              value: 3,
+            }),
+            upTo: 2,
+          }),
+        }),
       ],
     },
   ],

@@ -1,11 +1,9 @@
 import {
-  chosenOpposingCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import {
-  drawXCards,
-  moveDamageEffect,
-} from "@lorcanito/lorcana-engine/effects/effects";
+  drawCardEffect,
+  moveDamageFromEachEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { yourDamagedCharactersFilter } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const everybodysGotAWeakness: LorcanaActionCardDefinition = {
@@ -16,21 +14,27 @@ export const everybodysGotAWeakness: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Move 1 damage counter from each damaged character you have in play to chosen opposing character. Draw a card for each damage counter moved this way.",
       effects: [
-        moveDamageEffect({
-          amount: 1,
-          from: yourCharacters,
-          to: chosenOpposingCharacter,
-        }),
-        drawXCards({
-          dynamic: true,
-          filters: [
-            { filter: "type", value: "character" },
-            { filter: "zone", value: "play" },
-            { filter: "owner", value: "self" },
-            { filter: "status", value: "damaged" },
+        ...moveDamageFromEachEffect({
+          fromFilter: yourDamagedCharactersFilter,
+          toTargets: [
+            {
+              type: "card",
+              cardType: "character",
+              owner: "opponent",
+              count: 1,
+            },
           ],
+          value: 1,
+          followedBy: drawCardEffect({
+            targets: [selfPlayerTarget],
+            value: {
+              type: "count",
+              filter: yourDamagedCharactersFilter,
+            },
+          }),
         }),
       ],
     },
