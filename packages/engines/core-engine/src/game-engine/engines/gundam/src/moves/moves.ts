@@ -1,7 +1,6 @@
 import type { GundamGameState } from "../gundam-engine-types";
 import { chooseFirstPlayer } from "./chooseFirstPlayer";
 import { concede } from "./concede";
-import { drawCardMove } from "./drawCard";
 import { playResourceMove } from "./playResource";
 import { redrawHandMove } from "./redrawHand";
 
@@ -19,7 +18,8 @@ export const gundamMoves = {
   activateCards: ({ G }: { G: GundamGameState }) => G,
 
   // Draw Phase moves
-  drawCard: drawCardMove,
+  // this should be a core operation, but we keep it here for clarity
+  drawCard: ({ G }: { G: GundamGameState }) => G,
 
   // Resource Phase moves
   playResource: playResourceMove,
