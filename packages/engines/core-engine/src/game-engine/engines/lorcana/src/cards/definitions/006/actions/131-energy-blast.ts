@@ -16,7 +16,6 @@ export const energyBlast: LorcanaActionCardDefinition = {
     {
       type: "static",
       text: "Banish chosen character. Draw a card.",
-      resolveEffectsIndividually: true,
       effects: [
         banishEffect({
           targets: [chosenCharacterTarget],

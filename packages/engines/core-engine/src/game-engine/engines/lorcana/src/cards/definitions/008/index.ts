@@ -1,6 +1,8 @@
 import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export * from "./actions";
+export * from "./characters";
+export * from "./items";
 
 import {
   beyondTheHorizon,

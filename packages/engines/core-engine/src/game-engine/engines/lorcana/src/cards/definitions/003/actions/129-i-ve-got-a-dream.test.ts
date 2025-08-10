@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { benjaGuardianOfTheDragonGem } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { iveGotADream } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
-import { prideLandsJungleOasis } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import { prideLandsJungleOasis } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations";
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("I've Got a Dream", () => {

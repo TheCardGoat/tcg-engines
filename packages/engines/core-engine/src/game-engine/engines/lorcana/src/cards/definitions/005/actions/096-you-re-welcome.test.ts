@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
-import { forbiddenMountainMaleficentsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { forbiddenMountainMaleficentsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import { youreWelcome } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 

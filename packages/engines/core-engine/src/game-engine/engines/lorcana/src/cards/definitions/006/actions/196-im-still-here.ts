@@ -19,7 +19,6 @@ export const imStillHere: LorcanaActionCardDefinition = {
     {
       type: "static",
       text: "Chosen character gains Resist +2 until the start of your next turn. Draw a card. (Damage dealt to them is reduced by 2.)",
-      resolveEffectsIndividually: true,
       effects: [
         gainsAbilityEffect({
           ability: resistAbility(2),

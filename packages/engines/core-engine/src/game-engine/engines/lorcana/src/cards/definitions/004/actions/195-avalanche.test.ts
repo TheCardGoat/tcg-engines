@@ -4,7 +4,7 @@ import {
   belleHiddenArcher,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { avalanche } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
-import { theLibraryAGiftForBelle } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import { theLibraryAGiftForBelle } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Avalanche", () => {

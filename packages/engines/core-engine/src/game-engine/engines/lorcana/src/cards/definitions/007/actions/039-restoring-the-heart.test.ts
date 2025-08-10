@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { arielSpectacularSinger } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
-import { theQueensCastleMirrorChamber } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { theQueensCastleMirrorChamber } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { restoringTheHeart } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";

@@ -17,7 +17,6 @@ export const heffalumpsAndWoozles: LorcanaActionCardDefinition = {
     {
       type: "static",
       text: "Chosen opposing character can't quest during their next turn. Draw a card.",
-      resolveEffectsIndividually: true,
       effects: [
         restrictEffect({
           restriction: "quest",

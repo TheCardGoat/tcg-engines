@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
-import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { bePrepared } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { fangRiverCity } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { fangRiverCity } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import { unconventionalTool } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import type {
   LorcanaActionCardDefinition,
@@ -42,15 +42,15 @@ describe("Move: Play Card", () => {
   describe("Basic validation", () => {
     it("Play Character", () => {
       const testEngine = new LorcanaTestEngine({
-        inkwell: liloMakingAWish.cost,
-        hand: [liloMakingAWish],
+        inkwell: mickeyBraveLittleTailor.cost,
+        hand: [mickeyBraveLittleTailor],
       });
-      const cardUnderTest = testEngine.getCardModel(liloMakingAWish);
+      const cardUnderTest = testEngine.getCardModel(mickeyBraveLittleTailor);
 
       expect(cardUnderTest.zone).toEqual("hand");
       expect(testEngine.getAvailableInk()).toEqual(1);
 
-      testEngine.playCard(liloMakingAWish);
+      testEngine.playCard(mickeyBraveLittleTailor);
 
       expect(cardUnderTest.zone).toEqual("play");
       expect(testEngine.getAvailableInk()).toEqual(0);

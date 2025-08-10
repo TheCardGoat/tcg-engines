@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { baBoom } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
 import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
-import { agrabahMarketplace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { agrabahMarketplace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Ba-Boom!", () => {
