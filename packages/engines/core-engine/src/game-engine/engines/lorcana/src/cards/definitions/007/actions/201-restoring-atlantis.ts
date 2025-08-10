@@ -1,7 +1,6 @@
-import { restoringAtlantisAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
+import { UNTIL_START_OF_YOUR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { yourCharactersTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-export type LorcanaActionCardDefinition = any;
 
 export const restoringAtlantis: LorcanaActionCardDefinition = {
   id: "m7i",
@@ -9,7 +8,20 @@ export const restoringAtlantis: LorcanaActionCardDefinition = {
   characteristics: ["action"],
   text: "Your characters can't be challenged until the start of your next turn.",
   type: "action",
-  abilities: [restoringAtlantisAbility],
+  abilities: [
+    {
+      type: "static",
+      text: "Your characters can't be challenged until the start of your next turn.",
+      targets: [yourCharactersTarget],
+      effects: [
+        {
+          type: "restrict",
+          restriction: "challengeable",
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        },
+      ],
+    },
+  ],
   inkwell: false,
   colors: ["steel"],
   cost: 5,

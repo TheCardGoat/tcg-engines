@@ -1,22 +1,11 @@
-import type {
-  DynamicAmount,
-  LorcanitoActionCard,
-} from "@lorcanito/lorcana-engine";
-import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+import { singerCount } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import {
-  drawXCards,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
-
-const singers: DynamicAmount = {
-  dynamic: true,
-  filters: [
-    {
-      filter: "sing",
-      value: "singer",
-    },
-  ],
-};
+  drawCardEffect,
+  gainLoreEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { singerTogetherAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singTogetherAbility";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const fantasticalAndMagical: LorcanaActionCardDefinition = {
   id: "h9s",
@@ -27,16 +16,25 @@ export const fantasticalAndMagical: LorcanaActionCardDefinition = {
   abilities: [
     singerTogetherAbility(9),
     {
-      type: "resolution",
-      resolveAmountBeforeCreatingLayer: true,
-      effects: [youGainLore(singers), drawXCards(singers)],
+      type: "static",
+      text: "For each character that sang this song, draw a card and gain 1 lore.",
+      effects: [
+        drawCardEffect({
+          targets: [selfPlayerTarget],
+          value: singerCount("currentSong"),
+        }),
+        gainLoreEffect({
+          targets: [selfPlayerTarget],
+          value: singerCount("currentSong"),
+        }),
+      ],
     },
   ],
-  inkwell: false,
+  inkwell: true,
   colors: ["amethyst"],
   cost: 9,
-  illustrator: "Natalia Trykowska",
+  illustrator: "Matthew Robert Davies",
   number: 79,
   set: "008",
-  rarity: "rare",
+  rarity: "super_rare",
 };

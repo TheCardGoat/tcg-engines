@@ -1,15 +1,35 @@
-import { hesATrampAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { getEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  chosenCharacterTarget,
+  yourCharactersInPlayFilter,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-export type LorcanaActionCardDefinition = any;
 
 export const hesATramp: LorcanaActionCardDefinition = {
   id: "s0z",
   name: "He's A Tramp",
   characteristics: ["action", "song"],
-  text: "(A character with cost 1 or more can {E} to sing this song for free.)\nChosen character gets +1 {S} this turn for each character you have in play.",
+  text: "Chosen character gets +1 {S} this turn for each character you have in play.",
   type: "action",
-  abilities: [hesATrampAbility],
+  abilities: [
+    {
+      type: "static",
+      text: "Chosen character gets +1 {S} this turn for each character you have in play.",
+      targets: [chosenCharacterTarget],
+      effects: [
+        getEffect({
+          attribute: "strength",
+          value: {
+            type: "count",
+            filter: yourCharactersInPlayFilter,
+          },
+          targets: chosenCharacterTarget,
+          duration: THIS_TURN,
+        }),
+      ],
+    },
+  ],
   inkwell: true,
   colors: ["emerald"],
   cost: 1,

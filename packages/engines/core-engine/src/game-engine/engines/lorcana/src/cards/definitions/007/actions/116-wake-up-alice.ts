@@ -1,7 +1,6 @@
-import { wakeUpAliceAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
+import { returnCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenDamagedCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-export type LorcanaActionCardDefinition = any;
 
 export const wakeUpAlice: LorcanaActionCardDefinition = {
   id: "a3c",
@@ -9,7 +8,19 @@ export const wakeUpAlice: LorcanaActionCardDefinition = {
   characteristics: ["action"],
   text: "Return chosen damaged character to their player's hand.",
   type: "action",
-  abilities: [wakeUpAliceAbility],
+  abilities: [
+    {
+      type: "static",
+      text: "Return chosen damaged character to their player's hand.",
+      targets: [chosenDamagedCharacterTarget],
+      effects: [
+        returnCardEffect({
+          to: "hand",
+          from: "play",
+        }),
+      ],
+    },
+  ],
   inkwell: true,
   colors: ["emerald"],
   cost: 1,

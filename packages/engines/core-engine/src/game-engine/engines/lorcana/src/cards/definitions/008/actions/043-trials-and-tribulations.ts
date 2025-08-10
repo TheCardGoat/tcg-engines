@@ -1,4 +1,6 @@
-import { chosenCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
+import { UNTIL_START_OF_YOUR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { getEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const trialsAndTribulations: LorcanaActionCardDefinition = {
@@ -10,8 +12,17 @@ export const trialsAndTribulations: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      effects: [chosenCharacterGetsStrength(-4, "next_turn")],
+      type: "static",
+      text: "Chosen character gets -4 {S} until the start of your next turn.",
+      targets: [chosenCharacterTarget],
+      effects: [
+        getEffect({
+          attribute: "strength",
+          value: -4,
+          targets: chosenCharacterTarget,
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
+      ],
     },
   ],
   inkwell: true,

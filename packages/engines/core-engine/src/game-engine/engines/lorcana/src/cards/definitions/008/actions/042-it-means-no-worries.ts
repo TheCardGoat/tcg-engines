@@ -1,6 +1,11 @@
-import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-import { youPayXLessToPlayNextCharThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import {
+  costReductionEffect,
+  returnCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { singerTogetherAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singTogetherAbility";
+import { upToTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const itMeansNoWorries: LorcanaActionCardDefinition = {
@@ -19,27 +24,30 @@ export const itMeansNoWorries: LorcanaActionCardDefinition = {
   abilities: [
     singerTogetherAbility(9),
     {
-      type: "resolution",
+      type: "static",
+      text: "Return up to 3 character cards from your discard to your hand. You pay 2 {I} less for the next character you play this turn.",
       effects: [
-        {
-          type: "move",
+        returnCardEffect({
           to: "hand",
-          target: {
-            type: "card",
-            value: 3,
-            upTo: true,
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "discard" },
-              { filter: "owner", value: "self" },
-            ],
-          },
-        },
+          from: "discard",
+          targets: upToTarget({
+            target: {
+              type: "card",
+              cardType: "character",
+              zone: "discard",
+              count: 1,
+            },
+            upTo: 3,
+          }),
+        }),
+        costReductionEffect({
+          targets: [selfPlayerTarget],
+          value: 2,
+          cardType: "character",
+          count: 1,
+          duration: THIS_TURN,
+        }),
       ],
-    },
-    {
-      type: "resolution",
-      effects: [youPayXLessToPlayNextCharThisTurn(2)],
     },
   ],
 };

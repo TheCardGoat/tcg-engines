@@ -1,7 +1,8 @@
-import { weveGotCompanyAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { gainsAbilityEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { recklessAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/recklessAbility";
+import { yourCharactersTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-export type LorcanaActionCardDefinition = any;
 
 export const weveGotCompany: LorcanaActionCardDefinition = {
   id: "vhs",
@@ -9,7 +10,20 @@ export const weveGotCompany: LorcanaActionCardDefinition = {
   characteristics: ["action"],
   text: "Ready all your characters. They gain Reckless this turn. (They can't quest and must challenge if able.)",
   type: "action",
-  abilities: [weveGotCompanyAbility],
+  abilities: [
+    {
+      type: "static",
+      text: "Ready all your characters. They gain Reckless this turn. (They can't quest and must challenge if able.)",
+      targets: [yourCharactersTarget],
+      effects: [
+        { type: "ready" },
+        gainsAbilityEffect({
+          ability: recklessAbility,
+          duration: THIS_TURN,
+        }),
+      ],
+    },
+  ],
   inkwell: false,
   colors: ["ruby"],
   cost: 3,
