@@ -48,6 +48,47 @@ export function parseGrant(text: string) {
       ]);
   }
 
+  // Combined grant: Resist +1 and Evasive this turn
+  if (
+    /^Chosen character gains \*\*Resist\*\* \+(\d+) and \*\*Evasive\*\* this turn\.?$/i.test(
+      text,
+    )
+  ) {
+    const amount = Number.parseInt(text.match(/\+(\d+)/)![1], 10);
+    const {
+      gainsAbilityEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      chosenCharacterTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+    const {
+      THIS_TURN,
+    } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+    const {
+      resistAbility,
+    } = require("~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility");
+    const {
+      evasiveAbility,
+    } = require("~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility");
+
+    const normalized = text
+      .replace(/\*\*Resist\*\*/g, "Resist")
+      .replace(/\*\*Evasive\*\*/g, "Evasive");
+    const normalizedText = normalized.endsWith(".")
+      ? normalized
+      : normalized + ".";
+
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([chosenCharacterTarget])
+      .setEffects([
+        gainsAbilityEffect({
+          ability: resistAbility(amount),
+          duration: THIS_TURN,
+        }),
+        gainsAbilityEffect({ ability: evasiveAbility, duration: THIS_TURN }),
+      ]);
+  }
+
   // Markdown ability granting "until the start of your next turn"
   const abilityGrantUntilMatch = text.match(
     /^Chosen character gains \*\*([A-Za-z]+)\*\* until the start of your next turn\.?$/i,

@@ -1,6 +1,7 @@
 import { parseMultiEffectPatterns as legacySupport } from "../multiEffect";
 import { parseBanishThenDraw } from "./banishDraw";
 import { parseDamageThenDraw } from "./damageDraw";
+import { parseDrawThenDiscard } from "./drawThenDiscard";
 import { parseHealThenDraw } from "./healDraw";
 import { parseLoreCombo } from "./loreCombo";
 import { parseLoreThenDraw } from "./loreDraw";
@@ -19,6 +20,7 @@ export function parseMulti(text: string) {
     parseStatThenAbility(text) ||
     parseLoreThenDraw(text) ||
     parseReadyAllThenRestrict(text) ||
+    parseDrawThenDiscard(text) ||
     null
   );
 }

@@ -16,6 +16,36 @@ export function parseReturnPut(text: string) {
       .setEffects([returnCardEffect({ to: "hand", from: "play" })]);
   }
 
+  // Return a character card from your discard to your hand.
+  if (
+    /^Return a character card from your discard to your hand\.?$/i.test(text)
+  ) {
+    const {
+      returnCardEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      chosenCharacterFromDiscardTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([chosenCharacterFromDiscardTarget])
+      .setEffects([returnCardEffect({ to: "hand", from: "discard" })]);
+  }
+
+  // Return an item card from your discard to your hand.
+  if (/^Return an item card from your discard to your hand\.?$/i.test(text)) {
+    const {
+      returnCardEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      chosenItemFromDiscardTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([chosenItemFromDiscardTarget])
+      .setEffects([returnCardEffect({ to: "hand", from: "discard" })]);
+  }
+
   // Return chosen damaged character to their player's hand.
   if (
     /^Return chosen damaged character to their player's hand\.?$/i.test(text)
@@ -26,7 +56,7 @@ export function parseReturnPut(text: string) {
     const {
       returnCardEffect,
     } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
-    const normalizedText = text.endsWith(".") ? text : text + ".";
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
     return AbilityBuilder.static(normalizedText)
       .setTargets([chosenDamagedCharacterTarget])
       .setEffects([returnCardEffect({ to: "hand", from: "play" })]);
@@ -48,7 +78,7 @@ export function parseReturnPut(text: string) {
       min: 0,
       max: 2,
     };
-    const normalizedText = text.endsWith(".") ? text : text + ".";
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
     return AbilityBuilder.static(normalizedText).setEffects([
       returnCardEffect({ to: "hand", from: "discard", targets: [upTo2Items] }),
     ]);
@@ -66,7 +96,7 @@ export function parseReturnPut(text: string) {
     const {
       chosenCharacterWithCost2OrLessFromDiscardTarget,
     } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
-    const normalizedText = text.endsWith(".") ? text : text + ".";
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
     return AbilityBuilder.static(normalizedText)
       .setTargets([chosenCharacterWithCost2OrLessFromDiscardTarget])
       .setEffects([returnCardEffect({ to: "hand", from: "discard" })]);
@@ -84,7 +114,7 @@ export function parseReturnPut(text: string) {
     const {
       chosenCharacterOrItemWithCost2OrLessTarget,
     } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
-    const normalizedText = text.endsWith(".") ? text : text + ".";
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
     return AbilityBuilder.static(normalizedText)
       .setTargets([chosenCharacterOrItemWithCost2OrLessTarget])
       .setEffects([returnCardEffect({ to: "hand", from: "play" })]);
@@ -102,7 +132,7 @@ export function parseReturnPut(text: string) {
     const {
       chosenCharacterItemOrLocationWithCost2OrLessTarget,
     } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
-    const normalizedText = text.endsWith(".") ? text : text + ".";
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
     return AbilityBuilder.static(normalizedText)
       .setTargets([chosenCharacterItemOrLocationWithCost2OrLessTarget])
       .setEffects([returnCardEffect({ to: "hand", from: "play" })]);
