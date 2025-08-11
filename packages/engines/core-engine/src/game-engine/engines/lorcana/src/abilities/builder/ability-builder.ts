@@ -135,6 +135,14 @@ export class AbilityBuilder {
   }
 
   /**
+   * Set the responder for choices (e.g., opponent)
+   */
+  setResponder(responder: "opponent" | "self" | "all" | "any"): AbilityBuilder {
+    this.ability.responder = responder as any;
+    return this;
+  }
+
+  /**
    * Build the final ability
    */
   build(): LorcanaAbility {
@@ -173,6 +181,7 @@ export class AbilityBuilder {
       ...(this.ability.optional !== undefined && {
         optional: this.ability.optional,
       }),
+      ...(this.ability.responder && { responder: this.ability.responder }),
     } as LorcanaAbility;
   }
 
@@ -505,67 +514,29 @@ export class AbilityBuilder {
     const cleanText = text.trim();
     if (!cleanText) return null;
 
-    // Handle complex multi-effect patterns first before other parsing
-    const supportDrawMatch = cleanText.includes(
-      "gains **Support** this turn. Draw a card",
+    // Handle complex multi-effect patterns first before other parsing (delegated to parser)
+    const multi = require("./parsers/multiEffect").parseMultiEffectPatterns(
+      cleanText,
     );
-    if (supportDrawMatch) {
-      // Import the required functions
-      const {
-        gainsAbilityEffect,
-        drawCardEffect,
-      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
-      const {
-        chosenCharacterTarget,
-      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
-      const {
-        selfPlayerTarget,
-      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
-      const {
-        FOR_THE_REST_OF_THIS_TURN,
-      } = require("~/game-engine/engines/lorcana/src/abilities/duration");
-      const {
-        supportAbility,
-      } = require("~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility");
-
-      const effects = [
-        gainsAbilityEffect({
-          targets: [chosenCharacterTarget],
-          ability: supportAbility,
-          duration: FOR_THE_REST_OF_THIS_TURN,
-        }),
-        drawCardEffect({ targets: [selfPlayerTarget] }),
-      ];
-
-      // Keep the original text but ensure proper punctuation
-      let normalizedText = cleanText;
-      if (!normalizedText.endsWith(".")) {
-        normalizedText += ".";
-      }
-
-      // Strip ** markdown from Support to match test expectations
-      normalizedText = normalizedText.replace(/\*\*Support\*\*/g, "Support");
-
-      return AbilityBuilder.static(normalizedText).setEffects(effects).build();
-    }
+    if (multi) return multi;
 
     // Try parsing in order of specificity
     let builder: AbilityBuilder | null = null;
 
     // 1. Try keywords first (most specific)
-    builder = AbilityBuilder.parseKeyword(cleanText);
+    builder = require("./parsers/keywords").parseKeyword(cleanText);
     if (builder) return builder.build();
 
     // 2. Try triggered abilities
-    builder = AbilityBuilder.parseTriggeredAbility(cleanText);
+    builder = require("./parsers/triggered").parseTriggeredAbility(cleanText);
     if (builder) return builder.build();
 
     // 3. Try activated abilities
-    builder = AbilityBuilder.parseActivatedAbility(cleanText);
+    builder = require("./parsers/activated").parseActivatedAbility(cleanText);
     if (builder) return builder.build();
 
-    // 4. Try static abilities
-    builder = AbilityBuilder.parseStaticAbility(cleanText);
+    // 4. Try static abilities (delegated)
+    builder = require("./parsers/static").parseStaticAbility(cleanText);
     if (builder) return builder.build();
 
     // 5. Create generic ability as fallback
@@ -658,6 +629,60 @@ export class AbilityBuilder {
       return AbilityBuilder.static(normalizedText)
         .setTargets([chosenCharacterTarget])
         .setEffects(effects)
+        .build();
+    }
+
+    // Deal N damage to chosen character. Draw a card.
+    const damageThenDraw = cleanText.match(
+      /^Deal (\d+) damage to chosen character\. Draw a card\.$/,
+    );
+    if (damageThenDraw) {
+      const amount = Number.parseInt(damageThenDraw[1], 10);
+      const {
+        dealDamageEffect,
+        drawCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+
+      return AbilityBuilder.static(cleanText)
+        .setEffects([
+          dealDamageEffect({ targets: chosenCharacterTarget, value: amount }),
+          drawCardEffect({ targets: [selfPlayerTarget] }),
+        ])
+        .build();
+    }
+
+    // Remove up to N damage from chosen character. Draw a card.
+    const removeThenDraw = cleanText.match(
+      /^Remove up to (\d+) damage from chosen character\. Draw a card\.$/,
+    );
+    if (removeThenDraw) {
+      const amount = Number.parseInt(removeThenDraw[1], 10);
+      const {
+        removeDamageEffect,
+        drawCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        upToValue,
+      } = require("~/game-engine/engines/lorcana/src/abilities/ability-types");
+      const {
+        chosenCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+
+      return AbilityBuilder.static(cleanText)
+        .setTargets([chosenCharacterTarget])
+        .setEffects([
+          removeDamageEffect({ value: upToValue(amount) }),
+          drawCardEffect({ targets: [selfPlayerTarget] }),
+        ])
         .build();
     }
 
@@ -759,6 +784,55 @@ export class AbilityBuilder {
       ];
 
       return AbilityBuilder.static(cleanText).setEffects(effects).build();
+    }
+
+    // Exert chosen opposing character.
+    if (/^Exert chosen opposing character\.?$/.test(cleanText)) {
+      const {
+        chosenOpposingCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        exertCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const normalizedText = cleanText.endsWith(".")
+        ? cleanText
+        : cleanText + ".";
+      return AbilityBuilder.static(normalizedText)
+        .setTargets([chosenOpposingCharacterTarget])
+        .setEffects([
+          exertCardEffect({ targets: [chosenOpposingCharacterTarget] }),
+        ])
+        .build();
+    }
+
+    // Ready chosen character.
+    if (/^Ready chosen character\.?$/.test(cleanText)) {
+      const {
+        chosenCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const normalizedText = cleanText.endsWith(".")
+        ? cleanText
+        : cleanText + ".";
+      return AbilityBuilder.static(normalizedText)
+        .setTargets([chosenCharacterTarget])
+        .setEffects([{ type: "ready", targets: [chosenCharacterTarget] }])
+        .build();
+    }
+
+    // Return chosen character to their player's hand.
+    if (/^Return chosen character to their player's hand\.?$/.test(cleanText)) {
+      const {
+        chosenCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        returnCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      return AbilityBuilder.static(
+        "Return chosen character to their player's hand.",
+      )
+        .setTargets([chosenCharacterTarget])
+        .setEffects([returnCardEffect({ to: "hand", from: "play" })])
+        .build();
     }
 
     // Gain Lore + Draw Card pattern: "Gain X lore. Draw a card."
@@ -1022,6 +1096,26 @@ export class AbilityBuilder {
         ])
         .build();
     }
+    // Banish chosen character. Draw a card.
+    if (/^Banish chosen character\. Draw a card\.?$/.test(cleanText)) {
+      const {
+        banishEffect,
+        drawCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+
+      return AbilityBuilder.static("Banish chosen character. Draw a card.")
+        .setEffects([
+          banishEffect({ targets: [chosenCharacterTarget] }),
+          drawCardEffect({ targets: [selfPlayerTarget] }),
+        ])
+        .build();
+    }
     // Banish chosen item. Its owner gains 2 lore.
     if (/^Banish chosen item\. Its owner gains 2 lore\.?$/.test(cleanText)) {
       const {
@@ -1248,37 +1342,7 @@ export class AbilityBuilder {
   };
 
   private static splitIntoAbilities(text: string): string[] {
-    // First check if this is a simple keyword
-    const simpleKeywords = [
-      "Bodyguard",
-      "Evasive",
-      "Rush",
-      "Ward",
-      "Vanish",
-      "Support",
-      "Reckless",
-      "Voiceless",
-    ];
-    if (simpleKeywords.includes(text.trim())) {
-      return [text.trim()];
-    }
-
-    // Split on common separators like newlines or periods followed by spaces
-    const parts = text.split(/\n+|\.\s+/);
-
-    // Clean up each part and filter out empty ones
-    return (
-      parts
-        .map((part) => part.trim())
-        .filter((part) => part.length > 0)
-        // Add back periods for non-keyword abilities
-        .map((part) => {
-          const isKeyword =
-            simpleKeywords.includes(part) ||
-            /^(Challenger|Resist|Singer|Shift)\s*\+?(\d+)$/.test(part);
-          return isKeyword ? part : part.endsWith(".") ? part : part + ".";
-        })
-    );
+    return require("./parsers/util").splitIntoAbilities(text);
   }
 
   private static parseKeyword(text: string): AbilityBuilder | null {
@@ -1547,6 +1611,25 @@ export class AbilityBuilder {
         .setEffects(effects);
     }
 
+    // Deal N damage to each opposing character.
+    const damageEachOpposing = text.match(
+      /^Deal (\d+) damage to each opposing character\.?$/i,
+    );
+    if (damageEachOpposing) {
+      const amount = Number.parseInt(damageEachOpposing[1], 10);
+      const {
+        dealDamageEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        allOpposingCharactersTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText)
+        .setTargets([allOpposingCharactersTarget])
+        .setEffects([dealDamageEffect({ value: amount })]);
+    }
+
     // Handle multi-effect lore patterns (before simple lore gain patterns)
     const loreMultiMatch = text.match(
       /^Chosen opponent loses (\d+) lore\. Gain (\d+) lore\.?$/i,
@@ -1757,6 +1840,172 @@ export class AbilityBuilder {
         .setEffects(effects);
     }
 
+    // Each opponent chooses and discards N cards.
+    const eachOppDisc = text.match(
+      /^Each opponent chooses and discards (\d+) cards?\.?$/i,
+    );
+    if (eachOppDisc) {
+      const value = Number.parseInt(eachOppDisc[1], 10);
+      const {
+        discardCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        eachOpponentTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText).setEffects([
+        discardCardEffect({ targets: [eachOpponentTarget], value }),
+      ]);
+    }
+
+    // Chosen opponent chooses and discards a card. Chosen character gets +2 {S} this turn.
+    if (
+      /^Chosen opponent chooses and discards a card\. Chosen character gets \+2 \{S\} this turn\.?$/i.test(
+        text,
+      )
+    ) {
+      const {
+        discardCardEffect,
+        getEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenOpponentTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      const {
+        chosenCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        THIS_TURN,
+      } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText).setEffects([
+        discardCardEffect({ targets: [chosenOpponentTarget], value: 1 }),
+        getEffect({
+          targets: [chosenCharacterTarget],
+          attribute: "strength",
+          value: 2,
+          duration: THIS_TURN,
+        }),
+      ]);
+    }
+
+    // Chosen character of yours can't be challenged until the start of your next turn.
+    if (
+      /^Chosen character of yours can't be challenged until the start of your next turn\.?$/i.test(
+        text,
+      )
+    ) {
+      const {
+        restrictEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenCharacterOfYoursTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        UNTIL_START_OF_YOUR_NEXT_TURN,
+      } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText)
+        .setTargets([chosenCharacterOfYoursTarget])
+        .setEffects([
+          restrictEffect({
+            targets: [chosenCharacterOfYoursTarget],
+            restriction: "challengeable",
+            duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+          }),
+        ]);
+    }
+
+    // Each opponent reveals their hand. Draw a card.
+    if (/^Each opponent reveals their hand\. Draw a card\.?$/i.test(text)) {
+      const {
+        revealEffect,
+        drawCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        eachOpponentTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText).setEffects([
+        revealEffect({ targets: [eachOpponentTarget], from: "hand" }),
+        drawCardEffect({ targets: [selfPlayerTarget] }),
+      ]);
+    }
+
+    // Each opponent chooses and discards a card. Draw a card.
+    if (
+      /^Each opponent chooses and discards a card\. Draw a card\.?$/i.test(text)
+    ) {
+      const {
+        discardCardEffect,
+        drawCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        eachOpponentTarget,
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText).setEffects([
+        discardCardEffect({ targets: [eachOpponentTarget], value: 1 }),
+        drawCardEffect({ targets: [selfPlayerTarget] }),
+      ]);
+    }
+
+    // Each opponent puts the top 2 cards of their deck into their discard.
+    if (
+      /^Each opponent puts the top 2 cards of their deck into their discard\.?$/i.test(
+        text,
+      )
+    ) {
+      const {
+        millEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText).setEffects([
+        millEffect({ value: 2, owner: "opponent" }),
+      ]);
+    }
+
+    // You may play a character with cost 5 or less for free.
+    if (
+      /^You may play a character with cost 5 or less for free\.?$/i.test(text)
+    ) {
+      const {
+        optionalPlayEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText).setEffects([
+        optionalPlayEffect({
+          targets: [selfPlayerTarget],
+          from: "hand",
+          cost: "free",
+          filter: { cardType: "character", cost: { max: 5 } },
+        }),
+      ]);
+    }
+
+    // Put 1 damage counter on chosen character.
+    if (/^Put 1 damage counter on chosen character\.?$/i.test(text)) {
+      const {
+        putDamageEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText)
+        .setTargets([chosenCharacterTarget])
+        .setEffects([
+          putDamageEffect({ targets: [chosenCharacterTarget], value: 1 }),
+        ]);
+    }
+
     // Handle simple ability granting patterns
     const abilityGrantMatch = text.match(
       /^Chosen character gains \*\*([A-Za-z]+)\*\*(?: \+(\d+))? this turn\.?$/i,
@@ -1810,6 +2059,256 @@ export class AbilityBuilder {
       return AbilityBuilder.static(normalizedText)
         .setTargets([chosenCharacterTarget])
         .setEffects(effects);
+    }
+
+    // All opposing characters get -2 {S} until the start of your next turn.
+    if (
+      /^All opposing characters get -2 \{S\} until the start of your next turn\.?$/i.test(
+        text,
+      )
+    ) {
+      const {
+        getEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        allOpposingCharactersTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        UNTIL_START_OF_YOUR_NEXT_TURN,
+      } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText)
+        .setTargets([allOpposingCharactersTarget])
+        .setEffects([
+          getEffect({
+            attribute: "strength",
+            value: -2,
+            duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+          }),
+        ]);
+    }
+
+    // Chosen character can challenge ready characters this turn.
+    if (
+      /^Chosen character can challenge ready characters this turn\.?$/i.test(
+        text,
+      )
+    ) {
+      const {
+        challengeOverrideEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        THIS_TURN,
+      } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+      const {
+        chosenCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText)
+        .setTargets([chosenCharacterTarget])
+        .setEffects([
+          challengeOverrideEffect({
+            canChallenge: "ready",
+            duration: THIS_TURN,
+          }),
+        ]);
+    }
+
+    // Chosen exerted character can't ready at the start of their next turn.
+    if (
+      /^Chosen exerted character can't ready at the start of their next turn\.?$/i.test(
+        text,
+      )
+    ) {
+      const {
+        restrictEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        DURING_THEIR_NEXT_TURN,
+      } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+      const {
+        chosenExertedCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText)
+        .setTargets([chosenExertedCharacterTarget])
+        .setEffects([
+          restrictEffect({
+            targets: [chosenExertedCharacterTarget],
+            restriction: "ready",
+            duration: DURING_THEIR_NEXT_TURN,
+          }),
+        ]);
+    }
+
+    // Chosen opposing character can't quest during their next turn. Draw a card.
+    if (
+      /^Chosen opposing character can't quest during their next turn\. Draw a card\.?$/i.test(
+        text,
+      )
+    ) {
+      const {
+        restrictEffect,
+        drawCardEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        DURING_THEIR_NEXT_TURN,
+      } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+      const {
+        chosenOpposingCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        selfPlayerTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText).setEffects([
+        restrictEffect({
+          targets: [chosenOpposingCharacterTarget],
+          restriction: "quest",
+          duration: DURING_THEIR_NEXT_TURN,
+        }),
+        drawCardEffect({ targets: [selfPlayerTarget] }),
+      ]);
+    }
+
+    // Deal 1 damage to each opposing character. You may banish chosen location.
+    if (
+      /^Deal 1 damage to each opposing character\. You may banish chosen location\.?$/i.test(
+        text,
+      )
+    ) {
+      const {
+        dealDamageEffect,
+        banishEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        allOpposingCharactersTarget,
+        chosenLocationTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText).setEffects([
+        dealDamageEffect({ targets: [allOpposingCharactersTarget], value: 1 }),
+        banishEffect({ targets: [chosenLocationTarget], optional: true }),
+      ]);
+    }
+
+    // Ready all your characters. They can't quest for the rest of this turn.
+    if (
+      /^Ready all your characters\. They can't quest for the rest of this turn\.?$/i.test(
+        text,
+      )
+    ) {
+      const {
+        restrictEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        yourCharactersTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        FOR_THE_REST_OF_THIS_TURN,
+      } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText)
+        .setTargets([yourCharactersTarget])
+        .setEffects([
+          { type: "ready", targets: [yourCharactersTarget] },
+          restrictEffect({
+            targets: [yourCharactersTarget],
+            restriction: "quest",
+            duration: FOR_THE_REST_OF_THIS_TURN,
+          }),
+        ]);
+    }
+
+    // Ready all your characters. For the rest of this turn, they take no damage from challenges and can't quest.
+    if (
+      /^Ready all your characters\. For the rest of this turn, they take no damage from challenges and can't quest\.?$/i.test(
+        text,
+      )
+    ) {
+      const {
+        damageImmunityEffect,
+        restrictEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        yourCharactersTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        FOR_THE_REST_OF_THIS_TURN,
+      } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText)
+        .setTargets([yourCharactersTarget])
+        .setEffects([
+          { type: "ready", targets: [yourCharactersTarget] },
+          restrictEffect({
+            targets: [yourCharactersTarget],
+            restriction: "quest",
+            duration: FOR_THE_REST_OF_THIS_TURN,
+          }),
+          damageImmunityEffect({
+            targets: [yourCharactersTarget],
+            sources: ["challenges"],
+            duration: FOR_THE_REST_OF_THIS_TURN,
+          }),
+        ]);
+    }
+
+    // Ready all your characters and deal 1 damage to each of them. They can't quest for the rest of this turn.
+    if (
+      /^Ready all your characters and deal 1 damage to each of them\. They can't quest for the rest of this turn\.?$/i.test(
+        text,
+      )
+    ) {
+      const {
+        dealDamageEffect,
+        restrictEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        yourCharactersTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        FOR_THE_REST_OF_THIS_TURN,
+      } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText)
+        .setTargets([yourCharactersTarget])
+        .setEffects([
+          { type: "ready", targets: [yourCharactersTarget] },
+          dealDamageEffect({ targets: [yourCharactersTarget], value: 1 }),
+          restrictEffect({
+            targets: [yourCharactersTarget],
+            restriction: "quest",
+            duration: FOR_THE_REST_OF_THIS_TURN,
+          }),
+        ]);
+    }
+
+    // Ready chosen character. They can't quest for the rest of this turn.
+    if (
+      /^Ready chosen character\. They can't quest for the rest of this turn\.?$/i.test(
+        text,
+      )
+    ) {
+      const {
+        restrictEffect,
+      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+      const {
+        chosenCharacterTarget,
+      } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+      const {
+        FOR_THE_REST_OF_THIS_TURN,
+      } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+      const normalizedText = text.endsWith(".") ? text : text + ".";
+      return AbilityBuilder.static(normalizedText)
+        .setTargets([chosenCharacterTarget])
+        .setEffects([
+          { type: "ready", targets: [chosenCharacterTarget] },
+          restrictEffect({
+            restriction: "quest",
+            duration: FOR_THE_REST_OF_THIS_TURN,
+          }),
+        ]);
     }
 
     // Handle ability granting patterns with "until the start of your next turn"
@@ -1885,6 +2384,11 @@ export class AbilityBuilder {
           bodyguardAbility,
         } = require("~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility");
         ability = bodyguardAbility;
+      } else if (abilityName === "evasive") {
+        const {
+          evasiveAbility,
+        } = require("~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility");
+        ability = evasiveAbility;
       } else {
         return null; // Unsupported ability
       }
