@@ -12,6 +12,17 @@ export function parseMoveReady(text: string) {
       .setEffects([{ type: "ready", targets: [chosenCharacterTarget] }]);
   }
 
+  // Ready all your characters.
+  if (/^Ready all your characters\.?$/i.test(text)) {
+    const {
+      yourCharactersTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([yourCharactersTarget])
+      .setEffects([{ type: "ready", targets: [yourCharactersTarget] }]);
+  }
+
   // Ready chosen character. They can't quest for the rest of this turn.
   if (
     /^Ready chosen character\. They can't quest for the rest of this turn\.?$/i.test(

@@ -52,7 +52,7 @@ export function parseDrawDiscard(text: string) {
       value: "opponent" as const,
       targetAll: true,
     };
-    const normalizedText = text.endsWith(".") ? text : text + ".";
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
     return AbilityBuilder.static(normalizedText).setEffects([
       drawCardEffect({ targets: [selfPlayerTarget], value }),
       drawCardEffect({ targets: [eachOpponentTarget], value }),
@@ -94,5 +94,47 @@ export function parseDrawDiscard(text: string) {
       discardCardEffect({ targets: [selfPlayerTarget], value: 3 }),
     ]);
   }
+  // Each opponent chooses and discards N cards.
+  const eachOppDisc = text.match(
+    /^Each opponent chooses and discards (\d+) cards?\.?$/i,
+  );
+  if (eachOppDisc) {
+    const value = Number.parseInt(eachOppDisc[1], 10);
+    const {
+      discardCardEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const eachOpponentTarget = {
+      type: "player" as const,
+      value: "opponent" as const,
+      targetAll: true,
+    };
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
+    return AbilityBuilder.static(normalizedText).setEffects([
+      discardCardEffect({ targets: [eachOpponentTarget], value }),
+    ]);
+  }
+
+  // Each opponent reveals their hand. Draw a card.
+  if (/^Each opponent reveals their hand\. Draw a card\.?$/i.test(text)) {
+    const {
+      revealEffect,
+      drawCardEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      selfPlayerTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+    const eachOpponentTarget = {
+      type: "player" as const,
+      value: "opponent" as const,
+      targetAll: true,
+    };
+    return AbilityBuilder.static(
+      "Each opponent reveals their hand. Draw a card.",
+    ).setEffects([
+      revealEffect({ targets: [eachOpponentTarget], from: "hand" }),
+      drawCardEffect({ targets: [selfPlayerTarget] }),
+    ]);
+  }
+
   return null;
 }

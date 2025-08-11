@@ -22,6 +22,36 @@ export function parseRestrict(text: string) {
       ]);
   }
 
+  // Chosen character can't challenge during their next turn. Draw a card.
+  if (
+    /^Chosen character can't challenge during their next turn\. Draw a card\.?$/i.test(
+      text,
+    )
+  ) {
+    const {
+      restrictEffect,
+      drawCardEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      DURING_THEIR_NEXT_TURN,
+    } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+    const {
+      chosenCharacterTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+    const {
+      selfPlayerTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
+    return AbilityBuilder.static(normalizedText).setEffects([
+      restrictEffect({
+        targets: [chosenCharacterTarget],
+        restriction: "challenge",
+        duration: DURING_THEIR_NEXT_TURN,
+      }),
+      drawCardEffect({ targets: [selfPlayerTarget] }),
+    ]);
+  }
+
   // Chosen exerted character can't ready at the start of their next turn.
   if (
     /^Chosen exerted character can't ready at the start of their next turn\.?$/i.test(
