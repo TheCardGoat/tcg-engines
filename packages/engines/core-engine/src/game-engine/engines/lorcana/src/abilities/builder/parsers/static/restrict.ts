@@ -38,18 +38,17 @@ export function parseRestrict(text: string) {
     const {
       chosenCharacterTarget,
     } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
-    const {
-      selfPlayerTarget,
-    } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
     const normalizedText = text.endsWith(".") ? text : `${text}.`;
-    return AbilityBuilder.static(normalizedText).setEffects([
-      restrictEffect({
-        targets: [chosenCharacterTarget],
-        restriction: "challenge",
-        duration: DURING_THEIR_NEXT_TURN,
-      }),
-      drawCardEffect({ targets: [selfPlayerTarget] }),
-    ]);
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([chosenCharacterTarget])
+      .setEffects([
+        restrictEffect({
+          targets: [chosenCharacterTarget],
+          restriction: "challenge",
+          duration: DURING_THEIR_NEXT_TURN,
+        }),
+        drawCardEffect({}),
+      ]);
   }
 
   // Chosen exerted character can't ready at the start of their next turn.

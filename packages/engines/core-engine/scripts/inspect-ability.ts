@@ -18,6 +18,9 @@ const inputs = [
   "All opposing characters get -2 {S} until the start of your next turn.",
   "Banish chosen item. Draw a card.",
   "Draw 2 cards, then choose and discard a card.",
+  "Deal 2 damage to each opposing character.",
+  "Deal damage to chosen character equal to the number of characters you have in play.",
+  "Chosen character can't challenge during their next turn. Draw a card.",
 ];
 
 for (const t of inputs) {

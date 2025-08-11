@@ -6,6 +6,7 @@ import { parseHealThenDraw } from "./healDraw";
 import { parseLoreCombo } from "./loreCombo";
 import { parseLoreThenDraw } from "./loreDraw";
 import { parseReadyAllThenRestrict } from "./readyRestrict";
+import { parseRestrictThenDraw } from "./restrictDraw";
 import { parseStatThenAbility } from "./statAbility";
 import { parseStatThenDraw } from "./statDraw";
 
@@ -21,6 +22,7 @@ export function parseMulti(text: string) {
     parseLoreThenDraw(text) ||
     parseReadyAllThenRestrict(text) ||
     parseDrawThenDiscard(text) ||
+    parseRestrictThenDraw(text) ||
     null
   );
 }

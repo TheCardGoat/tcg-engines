@@ -53,9 +53,23 @@ export function parseDrawDiscard(text: string) {
       targetAll: true,
     };
     const normalizedText = text.endsWith(".") ? text : `${text}.`;
+    // expected test: two separate effects without ability-level targets
     return AbilityBuilder.static(normalizedText).setEffects([
       drawCardEffect({ targets: [selfPlayerTarget], value }),
       drawCardEffect({ targets: [eachOpponentTarget], value }),
+    ]);
+  }
+
+  // Draw 2 cards.
+  if (/^Draw 2 cards\.?$/i.test(text)) {
+    const {
+      drawCardEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      selfPlayerTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+    return AbilityBuilder.static("Draw 2 cards.").setEffects([
+      drawCardEffect({ targets: [selfPlayerTarget], value: 2 }),
     ]);
   }
   // Discard a card.

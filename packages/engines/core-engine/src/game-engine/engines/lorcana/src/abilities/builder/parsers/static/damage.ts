@@ -74,10 +74,53 @@ export function parseDamage(text: string) {
     const normalizedText = text.endsWith(".") ? text : text + ".";
     return AbilityBuilder.static(normalizedText)
       .setTargets([allOpposingCharactersTarget])
+      .setEffects([dealDamageEffect({ value: amount })]);
+  }
+
+  // Deal damage to chosen character equal to the number of characters you have in play.
+  if (
+    /^Deal damage to chosen character equal to the number of characters you have in play\.?$/i.test(
+      text,
+    )
+  ) {
+    const {
+      dealDamageEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      chosenCharacterTarget,
+      yourCharactersInPlayFilter,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([chosenCharacterTarget])
       .setEffects([
         dealDamageEffect({
-          targets: [allOpposingCharactersTarget],
-          value: amount,
+          targets: [chosenCharacterTarget],
+          value: { type: "count", filter: yourCharactersInPlayFilter },
+        }),
+      ]);
+  }
+
+  // Deal 1 damage to chosen character for each exerted character you have in play.
+  if (
+    /^Deal 1 damage to chosen character for each exerted character you have in play\.?$/i.test(
+      text,
+    )
+  ) {
+    const {
+      dealDamageEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      chosenCharacterTarget,
+      yourExertedCharactersFilter,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([chosenCharacterTarget])
+      .setEffects([
+        dealDamageEffect({
+          targets: [chosenCharacterTarget],
+          value: { type: "count", filter: yourExertedCharactersFilter },
         }),
       ]);
   }

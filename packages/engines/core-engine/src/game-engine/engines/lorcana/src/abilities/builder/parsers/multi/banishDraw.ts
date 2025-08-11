@@ -15,11 +15,20 @@ export function parseBanishThenDraw(text: string) {
     selfPlayerTarget,
   } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
   const isItem = /item/i.test(text);
-  const target = isItem ? chosenItemTarget : chosenCharacterTarget;
-  const normalizedText = text.endsWith(".") ? text : text + ".";
+  const normalizedText = text.endsWith(".") ? text : `${text}.`;
+
+  if (isItem) {
+    // Expected: ability-level target for item, effects without explicit targets
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([chosenItemTarget])
+      .setEffects([banishEffect(), drawCardEffect()])
+      .build();
+  }
+
+  // Character case: effects carry explicit targets
   return AbilityBuilder.static(normalizedText)
     .setEffects([
-      banishEffect({ targets: [target] }),
+      banishEffect({ targets: [chosenCharacterTarget] }),
       drawCardEffect({ targets: [selfPlayerTarget] }),
     ])
     .build();

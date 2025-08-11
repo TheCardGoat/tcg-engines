@@ -37,7 +37,7 @@ export function parseGrant(text: string) {
     }
 
     const duration = abilityName === "rush" ? undefined : THIS_TURN;
-    const normalizedText = text.endsWith(".") ? text : text + ".";
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
     return AbilityBuilder.static(normalizedText)
       .setTargets([chosenCharacterTarget])
       .setEffects([
@@ -54,7 +54,8 @@ export function parseGrant(text: string) {
       text,
     )
   ) {
-    const amount = Number.parseInt(text.match(/\+(\d+)/)![1], 10);
+    const match = text.match(/\+(\d+)/);
+    const amount = match ? Number.parseInt(match[1], 10) : 1;
     const {
       gainsAbilityEffect,
     } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
@@ -62,7 +63,7 @@ export function parseGrant(text: string) {
       chosenCharacterTarget,
     } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
     const {
-      THIS_TURN,
+      FOR_THE_REST_OF_THIS_TURN,
     } = require("~/game-engine/engines/lorcana/src/abilities/duration");
     const {
       resistAbility,
@@ -76,16 +77,19 @@ export function parseGrant(text: string) {
       .replace(/\*\*Evasive\*\*/g, "Evasive");
     const normalizedText = normalized.endsWith(".")
       ? normalized
-      : normalized + ".";
+      : `${normalized}.`;
 
     return AbilityBuilder.static(normalizedText)
       .setTargets([chosenCharacterTarget])
       .setEffects([
         gainsAbilityEffect({
           ability: resistAbility(amount),
-          duration: THIS_TURN,
+          duration: FOR_THE_REST_OF_THIS_TURN,
         }),
-        gainsAbilityEffect({ ability: evasiveAbility, duration: THIS_TURN }),
+        gainsAbilityEffect({
+          ability: evasiveAbility,
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
       ]);
   }
 
@@ -158,7 +162,7 @@ export function parseGrant(text: string) {
       return null;
     }
 
-    const normalizedText = text.endsWith(".") ? text : text + ".";
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
     return AbilityBuilder.static(normalizedText)
       .setTargets([chosenCharacterTarget])
       .setEffects([

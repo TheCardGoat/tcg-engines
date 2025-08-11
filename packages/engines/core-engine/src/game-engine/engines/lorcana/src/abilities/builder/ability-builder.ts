@@ -168,21 +168,25 @@ export class AbilityBuilder {
       throw new Error("At least one effect is required");
     }
 
-    return {
+    // Emit keys in a stable order that matches most spec fixtures:
+    // type, text, targets, effects, then the rest
+    const result: any = {
       type: this.ability.type,
       text: this.ability.text,
-      effects: this.ability.effects,
-      ...(this.ability.name && { name: this.ability.name }),
-      ...(this.ability.timing && { timing: this.ability.timing }),
-      ...(this.ability.cost && { cost: this.ability.cost }),
-      ...(this.ability.condition && { condition: this.ability.condition }),
-      ...(this.ability.keyword && { keyword: this.ability.keyword }),
-      ...(this.ability.targets && { targets: this.ability.targets }),
-      ...(this.ability.optional !== undefined && {
-        optional: this.ability.optional,
-      }),
-      ...(this.ability.responder && { responder: this.ability.responder }),
-    } as LorcanaAbility;
+    };
+    if (this.ability.targets) {
+      result.targets = this.ability.targets;
+    }
+    result.effects = this.ability.effects;
+    if (this.ability.name) result.name = this.ability.name;
+    if (this.ability.timing) result.timing = this.ability.timing;
+    if (this.ability.cost) result.cost = this.ability.cost;
+    if (this.ability.condition) result.condition = this.ability.condition;
+    if (this.ability.keyword) result.keyword = this.ability.keyword;
+    if (this.ability.optional !== undefined)
+      result.optional = this.ability.optional;
+    if (this.ability.responder) result.responder = this.ability.responder;
+    return result as LorcanaAbility;
   }
 
   /**
