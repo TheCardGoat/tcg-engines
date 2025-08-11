@@ -54,7 +54,7 @@ export function parseStats(text: string) {
       effects = [getEffect({ attribute, value, duration: durationConstant })];
     }
 
-    const normalizedText = text.endsWith(".") ? text : text + ".";
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
     return AbilityBuilder.static(normalizedText)
       .setTargets([chosenCharacterTarget])
       .setEffects(effects);
@@ -88,7 +88,7 @@ export function parseStats(text: string) {
     const effects = [
       getEffect({ attribute, value, duration: durationConstant }),
     ];
-    const normalizedText = text.endsWith(".") ? text : text + ".";
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
     return AbilityBuilder.static(normalizedText)
       .setTargets([chosenDamagedCharacterTarget])
       .setEffects(effects);
@@ -109,7 +109,7 @@ export function parseStats(text: string) {
     const {
       UNTIL_START_OF_YOUR_NEXT_TURN,
     } = require("~/game-engine/engines/lorcana/src/abilities/duration");
-    const normalizedText = text.endsWith(".") ? text : text + ".";
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
     return AbilityBuilder.static(normalizedText)
       .setTargets([allOpposingCharactersTarget])
       .setEffects([
@@ -117,6 +117,74 @@ export function parseStats(text: string) {
           attribute: "strength",
           value: -2,
           duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
+      ]);
+  }
+
+  // Chosen character gets +1 {S} this turn for each character you have in play.
+  if (
+    /^Chosen character gets \+1 \{S\} this turn for each character you have in play\.?$/i.test(
+      text,
+    )
+  ) {
+    const {
+      getEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      chosenCharacterTarget,
+      yourCharactersInPlayFilter,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+    const {
+      THIS_TURN,
+    } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([chosenCharacterTarget])
+      .setEffects([
+        getEffect({
+          attribute: "strength",
+          value: { type: "count", filter: yourCharactersInPlayFilter },
+          targets: chosenCharacterTarget,
+          duration: THIS_TURN,
+        }),
+      ]);
+  }
+
+  // Chosen character gets +2 {S} this turn. If a Pirate/Villain character is chosen, they get +3 {S} instead.
+  const pirateVillainMatch = text.match(
+    /^Chosen character gets \+2 \{S\} this turn\. If a (Pirate|Villain) character is chosen, they get \+3 \{S\} instead\.$/i,
+  );
+  if (pirateVillainMatch) {
+    const classification = pirateVillainMatch[1].toLowerCase();
+    const {
+      getEffect,
+      conditionalTargetEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      chosenCharacterTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+    const {
+      FOR_THE_REST_OF_THIS_TURN,
+    } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([chosenCharacterTarget])
+      .setEffects([
+        conditionalTargetEffect({
+          targetCondition: {
+            type: "hasClassification",
+            classification,
+          },
+          effect: getEffect({
+            attribute: "strength",
+            value: 3,
+            duration: FOR_THE_REST_OF_THIS_TURN,
+          }),
+          elseEffect: getEffect({
+            attribute: "strength",
+            value: 2,
+            duration: FOR_THE_REST_OF_THIS_TURN,
+          }),
         }),
       ]);
   }

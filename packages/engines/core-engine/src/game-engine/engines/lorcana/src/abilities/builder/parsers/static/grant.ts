@@ -129,6 +129,78 @@ export function parseGrant(text: string) {
       ]);
   }
 
+  // Reckless during their next turn
+  if (
+    /^Chosen character gains \*\*Reckless\*\* during their next turn\.(?:.*)$/i.test(
+      text,
+    )
+  ) {
+    const {
+      gainsAbilityEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      chosenCharacterTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+    const {
+      DURING_THEIR_NEXT_TURN,
+    } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+    const {
+      recklessAbility,
+    } = require("~/game-engine/engines/lorcana/src/abilities/keyword/recklessAbility");
+
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([chosenCharacterTarget])
+      .setEffects([
+        gainsAbilityEffect({
+          ability: recklessAbility,
+          duration: DURING_THEIR_NEXT_TURN,
+        }),
+      ]);
+  }
+
+  // Resist +2 until next turn; if Hero, may challenge ready characters (same duration as fixtures)
+  if (
+    /^Chosen character gains \*\*Resist\*\* \+2 until the start of your next turn\. If a Hero character is chosen, they may also challenge ready characters this turn\.$/i.test(
+      text,
+    )
+  ) {
+    const {
+      gainsAbilityEffect,
+      challengeOverrideEffect,
+      conditionalTargetEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      chosenCharacterTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+    const {
+      UNTIL_START_OF_YOUR_NEXT_TURN,
+    } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+    const {
+      resistAbility,
+    } = require("~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility");
+
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([chosenCharacterTarget])
+      .setEffects([
+        gainsAbilityEffect({
+          ability: resistAbility(2),
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
+        conditionalTargetEffect({
+          targetCondition: {
+            type: "hasClassification",
+            classification: "hero",
+          },
+          effect: challengeOverrideEffect({
+            canChallenge: "ready",
+            duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+          }),
+        }),
+      ]);
+  }
+
   // Markdown ability granting "until the start of your next turn"
   const abilityGrantUntilMatch = text.match(
     /^Chosen character gains \*\*([A-Za-z]+)\*\* until the start of your next turn\.?$/i,

@@ -34,10 +34,11 @@ export function parseRestrictThenDraw(text: string) {
   const normalizedText = text.endsWith(".") ? text : `${text}.`;
   return AbilityBuilder.static(normalizedText)
     .setEffects([
+      // Order keys to match fixture: type, restriction, duration, targets
       restrictEffect({
-        targets: [target],
         restriction,
         duration: DURING_THEIR_NEXT_TURN,
+        targets: [target],
       }),
       drawCardEffect({ targets: [selfPlayerTarget] }),
     ])
