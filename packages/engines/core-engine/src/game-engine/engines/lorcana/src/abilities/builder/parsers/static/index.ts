@@ -1,3 +1,4 @@
+import { parseBanish } from "./banish";
 import { parseDamage } from "./damage";
 import { parseDrawDiscard } from "./drawDiscard";
 import { parseGrant } from "./grant";
@@ -19,6 +20,7 @@ export function parseStaticAbility(text: string) {
     parseHeal(text) ||
     parseGrant(text) ||
     parseLore(text) ||
+    parseBanish(text) ||
     null
   );
 }

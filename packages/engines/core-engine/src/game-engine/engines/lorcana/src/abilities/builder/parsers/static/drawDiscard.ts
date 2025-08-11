@@ -37,6 +37,27 @@ export function parseDrawDiscard(text: string) {
       drawCardEffect({ targets: [selfPlayerTarget], value: 3 }),
     ]);
   }
+  // Each player draws N cards.
+  const eachPlayerDrawMatch = text.match(/^Each player draws (\d+) cards\.?$/i);
+  if (eachPlayerDrawMatch) {
+    const value = Number.parseInt(eachPlayerDrawMatch[1], 10);
+    const {
+      drawCardEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      selfPlayerTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
+    const eachOpponentTarget = {
+      type: "player" as const,
+      value: "opponent" as const,
+      targetAll: true,
+    };
+    const normalizedText = text.endsWith(".") ? text : text + ".";
+    return AbilityBuilder.static(normalizedText).setEffects([
+      drawCardEffect({ targets: [selfPlayerTarget], value }),
+      drawCardEffect({ targets: [eachOpponentTarget], value }),
+    ]);
+  }
   // Discard a card.
   if (/^Discard a card\.?$/i.test(text)) {
     const {

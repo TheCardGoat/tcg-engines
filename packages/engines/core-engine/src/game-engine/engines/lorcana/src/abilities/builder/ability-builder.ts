@@ -278,7 +278,7 @@ export class AbilityBuilder {
 
     for (const text of abilitiesText) {
       // Handle multi-effect patterns BEFORE splitting into individual abilities
-      const multiEffectAbility = AbilityBuilder.parseMultiEffectPatterns(
+      const multiEffectAbility = require("./parsers/multi").parseMulti(
         text.trim(),
       );
       if (multiEffectAbility) {
@@ -515,9 +515,7 @@ export class AbilityBuilder {
     if (!cleanText) return null;
 
     // Handle complex multi-effect patterns first before other parsing (delegated to parser)
-    const multi = require("./parsers/multiEffect").parseMultiEffectPatterns(
-      cleanText,
-    );
+    const multi = require("./parsers/multi").parseMulti(cleanText);
     if (multi) return multi;
 
     // Try parsing in order of specificity
@@ -1630,33 +1628,7 @@ export class AbilityBuilder {
         .setEffects([dealDamageEffect({ value: amount })]);
     }
 
-    // Handle multi-effect lore patterns (before simple lore gain patterns)
-    const loreMultiMatch = text.match(
-      /^Chosen opponent loses (\d+) lore\. Gain (\d+) lore\.?$/i,
-    );
-    if (loreMultiMatch) {
-      const loseAmount = Number.parseInt(loreMultiMatch[1], 10);
-      const gainAmount = Number.parseInt(loreMultiMatch[2], 10);
-
-      // Import the required functions
-      const {
-        loseLoreEffect,
-        gainLoreEffect,
-      } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
-      const {
-        selfPlayerTarget,
-      } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
-
-      const effects = [
-        loseLoreEffect({ targets: [undefined], value: loseAmount }),
-        gainLoreEffect({ targets: [selfPlayerTarget], value: gainAmount }),
-      ];
-
-      // Ensure the text has a period to match the expected format
-      const normalizedText = text.endsWith(".") ? text : text + ".";
-
-      return AbilityBuilder.static(normalizedText).setEffects(effects);
-    }
+    // Handle multi-effect lore patterns moved to multi parser
 
     // Handle simple lore gain patterns
     const gainLoreMatch = text.match(/^Gain (\d+) lore\.?$/i);
