@@ -1,26 +1,16 @@
+import type { LayerItem } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import type { LorcanaEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { PlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
-import { resolveTrigger } from "~/game-engine/engines/lorcana/src/abilities/trigger-resolver";
 import type { LorcanaCoreOperations } from "~/game-engine/engines/lorcana/src/operations/lorcana-core-operations";
 
 /**
  * Resolve a specific trigger from the bag and execute its effects
  */
-export function resolveBagTrigger(
+export function resolveLayerItem(
   this: LorcanaCoreOperations,
-  id: string,
+  layer: LayerItem,
 ): void {
-  if (!this.state.G.bag || this.state.G.bag.length === 0) {
-    return;
-  }
-
-  // Find the specific trigger
-  const triggerIndex = this.state.G.bag.findIndex((item) => item.id === id);
-  if (triggerIndex === -1) {
-    return;
-  }
-
-  const trigger = this.state.G.bag[triggerIndex];
+  const trigger = layer;
 
   // Execute the trigger's effects before removing it
   if (trigger.ability?.effects && trigger.ability.effects.length > 0) {
@@ -82,7 +72,4 @@ export function resolveBagTrigger(
       }
     }
   }
-
-  // Remove the trigger from the bag after executing
-  this.state.G.bag.splice(triggerIndex, 1);
 }

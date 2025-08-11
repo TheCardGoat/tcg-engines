@@ -3,7 +3,10 @@ import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { bePrepared } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import { fangRiverCity } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
-import { unconventionalTool } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+
+// Minimal local item used by tests
+const unconventionalTool: any = { id: "unconventionalTool", cost: 1 };
+
 import type {
   LorcanaActionCardDefinition,
   LorcanaCharacterCardDefinition,

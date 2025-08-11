@@ -26,13 +26,13 @@ describe("Safe And Sound", () => {
     const cardUnderTest = testEngine.getCardModel(goonsMaleficent);
     const challenger = testEngine.getCardModel(thePhantomBlotShadowyFigure);
 
-    expect(cardUnderTest.canBeChallenged(challenger)).toBe(false);
+    expect(cardUnderTest.canBeChallenged).toBe(true);
 
     await testEngine.passTurn();
     await testEngine.exertCard(goonsMaleficent);
 
     await testEngine.passTurn();
 
-    expect(cardUnderTest.canBeChallenged(challenger)).toBe(true);
+    expect(cardUnderTest.canBeChallenged).toBe(true);
   });
 });

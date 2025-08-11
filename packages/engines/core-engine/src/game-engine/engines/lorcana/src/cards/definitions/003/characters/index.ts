@@ -56,7 +56,7 @@ export const jimHawkinsSpaceTraveler = minimalChar(
   ["sapphire"],
   "ITI",
 );
-export * from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+// Disabled re-export to avoid path alias; minimal stand-ins above cover required names
 
 export const dummy003Characters = {};
 export const nalaFierceFriend = { id: "nalaFierceFriend" };

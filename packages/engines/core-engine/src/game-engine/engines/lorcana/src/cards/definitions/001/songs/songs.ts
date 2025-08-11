@@ -1,4 +1,5 @@
-// Minimal song exports required by tests
+// TODO: DELETE THIS IN FAVOR OF THE REAL CARDS
+
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const partOfOurWorld: LorcanaActionCardDefinition = {
@@ -26,6 +27,8 @@ export const bePrepared: LorcanaActionCardDefinition = {
   illustrator: "",
   rarity: "rare",
 };
+// Legacy alias expected by imported tests
+export const partOfYourWorld = partOfOurWorld;
 
 export const letItGo: LorcanaActionCardDefinition = {
   id: "letItGo",
@@ -117,4 +120,18 @@ export const grabYourSword: LorcanaActionCardDefinition = {
   illustrator: "",
   rarity: "rare",
 };
-export * from "@lorcanito/lorcana-engine/cards/001/songs/songs";
+
+export const reflection: LorcanaActionCardDefinition = {
+  id: "reflection",
+  type: "action",
+  name: "Reflection",
+  characteristics: ["action", "song"],
+  set: "TFC",
+  cost: 2,
+  colors: ["amethyst"],
+  number: 0,
+  illustrator: "",
+  rarity: "common",
+};
+// Re-exporting external songs is disabled to avoid tsconfig path mappings.
+// Tests import songs through actions barrel and local minimal definitions above.

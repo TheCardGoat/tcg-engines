@@ -251,3 +251,45 @@ export const peterPansShadowNotSewnOn = minimalChar(
   2,
   1,
 );
+
+// Additional 002 characters referenced by tests
+export const theQueenRegalMonarch = minimalChar(
+  "theQueenRegalMonarch",
+  "The Queen",
+  "Regal Monarch",
+  ["amethyst"],
+  4,
+  3,
+  3,
+  2,
+);
+export const belleBookworm = minimalChar(
+  "belleBookworm",
+  "Belle",
+  "Bookworm",
+  ["sapphire"],
+  2,
+  1,
+  2,
+  1,
+);
+export const belleHiddenArcher = minimalChar(
+  "belleHiddenArcher",
+  "Belle",
+  "Hidden Archer",
+  ["emerald"],
+  3,
+  2,
+  3,
+  2,
+);
+export const benjaGuardianOfTheDragonGem = minimalChar(
+  "benjaGuardianOfTheDragonGem",
+  "Benja",
+  "Guardian of the Dragon Gem",
+  ["emerald"],
+  3,
+  2,
+  3,
+  2,
+);

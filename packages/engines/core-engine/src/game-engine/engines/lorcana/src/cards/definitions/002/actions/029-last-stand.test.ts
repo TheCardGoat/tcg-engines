@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
-import {
-  aladdinCorneredSwordman,
-  liloGalacticHero,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { liloGalacticHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+
+const aladdinCorneredSwordman = { id: "aladdinCorneredSwordman" } as any;
+
 import { lastStand } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";

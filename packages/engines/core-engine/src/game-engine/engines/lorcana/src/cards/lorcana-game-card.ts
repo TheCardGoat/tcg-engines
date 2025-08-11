@@ -2,6 +2,7 @@ import {
   GameCard,
   type GameContext,
 } from "~/game-engine/core-engine/card/game-card";
+import type { LorcanaAbility } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 /**
@@ -40,6 +41,7 @@ export interface LorcanaCardFilter {
 /**
  * Lorcana-specific card implementation with rich game logic
  * Uses context injection for performance while providing type-safe access
+ * This class should not have any method that performs an action or change game state.
  */
 export class LorcanaCard extends GameCard<LorcanaCardDefinition> {
   // Type-safe access to Lorcana-specific properties
@@ -94,6 +96,10 @@ export class LorcanaCard extends GameCard<LorcanaCardDefinition> {
 
   isLocation(): boolean {
     return this.type === "location";
+  }
+
+  get abilities(): LorcanaAbility[] {
+    return this.definition.abilities || [];
   }
 
   // Context-dependent state checks

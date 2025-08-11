@@ -26,7 +26,7 @@ describe("Ambush!", () => {
 
     await testEngine.resolveTopOfStack({ targets: [mammaOdieLoneSage] });
     expect(testEngine.getCardModel(mammaOdieLoneSage).damage).toBe(
-      owlPirateLookout.strength,
+      testEngine.getCardModel(owlPirateLookout).strength,
     );
   });
 });

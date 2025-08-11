@@ -84,3 +84,45 @@ export const vanellopeVonSchweetzSugarRushPrincess = minimalChar(
   3,
   2,
 );
+
+// Additional 005 characters referenced by tests
+export const moanaDeterminedExplorer = minimalChar(
+  "moanaDeterminedExplorer",
+  "Moana",
+  "Determined Explorer",
+  ["amber"],
+  3,
+  2,
+  3,
+  2,
+);
+export const petePastryChomper = minimalChar(
+  "petePastryChomper",
+  "Pete",
+  "Pastry Chomper",
+  ["ruby"],
+  2,
+  2,
+  2,
+  1,
+);
+export const liloJuniorCakeDecorator = minimalChar(
+  "liloJuniorCakeDecorator",
+  "Lilo",
+  "Junior Cake Decorator",
+  ["amber"],
+  2,
+  1,
+  2,
+  1,
+);
+export const taffytaMuttonfudgeRuthlessRival = minimalChar(
+  "taffytaMuttonfudgeRuthlessRival",
+  "Taffyta Muttonfudge",
+  "Ruthless Rival",
+  ["ruby"],
+  3,
+  2,
+  2,
+  1,
+);

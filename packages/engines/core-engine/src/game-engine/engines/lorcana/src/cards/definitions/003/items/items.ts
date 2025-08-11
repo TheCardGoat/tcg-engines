@@ -30,10 +30,4 @@ export const cleansingRainwater = minimalItem(
   "cleansingRainwater",
   "Cleansing Rainwater",
 );
-export const fishboneQuill = minimalItem(
-  "fishboneQuill",
-  "Fishbone Quill",
-  "TFC",
-  ["amethyst"],
-  1,
-);
+// Note: fishboneQuill belongs to set 001 and is exported from 001/items/items.ts

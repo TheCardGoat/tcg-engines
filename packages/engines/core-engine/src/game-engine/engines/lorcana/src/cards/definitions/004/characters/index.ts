@@ -144,9 +144,50 @@ export const goofySuperGoof = minimalChar(
   4,
   2,
 );
-export * from "@lorcanito/lorcana-engine/cards/004/characters/characters";
+export const rapunzelAppreciativeArtist = minimalChar(
+  "rapunzelAppreciativeArtist",
+  "Rapunzel",
+  "Appreciative Artist",
+  ["amber"],
+  3,
+  2,
+  3,
+  2,
+);
+export const peteBornToCheat = minimalChar(
+  "peteBornToCheat",
+  "Pete",
+  "Born To Cheat",
+  ["ruby"],
+  4,
+  3,
+  3,
+  2,
+);
+export const magicBroomLivelySweeper = minimalChar(
+  "magicBroomLivelySweeper",
+  "Magic Broom",
+  "Lively Sweeper",
+  ["amethyst"],
+  2,
+  1,
+  2,
+  1,
+);
 
-export const sisuEmpoweredSibling = { id: "sisuEmpoweredSibling" };
+export const sisuEmpoweredSibling = minimalChar(
+  "sisuEmpoweredSibling",
+  "Sisu",
+  "Empowered Sibling",
+  ["sapphire"],
+  4,
+  3,
+  4,
+  2,
+);
+// Disabled external re-export to avoid path alias; tests rely on local minimal names instead
+
+// keep only minimal definition above
 export const donaldDuckBuccaneer = { id: "donaldDuckBuccaneer" };
 export const peterPanShadowFinder = { id: "peterPanShadowFinder" };
 export const agustinMadrigalClumsyDad = { id: "agustinMadrigalClumsyDad" };

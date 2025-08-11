@@ -1121,7 +1121,7 @@ This process doesn’t use the bag \(see 8.7, “Bag”\).
 
 **8.7.3. **Whenever a triggered ability’s condition is met, the ability is added to the bag by the player who played the card with the triggered ability. If multiple triggered abilities happen at the same time, they’re added to the bag simultaneously by the respective players. 
 
-**8.7.4. **Then the active player chooses and resolves any one of their triggered abilities and ful y resolves it. If the resolution of an ability causes another ability to trigger, the new triggered ability is added to the bag once the current ability is finished resolving. 
+**8.7.4. **Then the active player chooses and resolves any one of their triggered abilities and fully resolves it. If the resolution of an ability causes another ability to trigger, the new triggered ability is added to the bag once the current ability is finished resolving. 
 
 25
 

@@ -223,3 +223,145 @@ export const mickeyMouseMusketeer = minimalChar(
   4,
   2,
 );
+
+// Additional characters referenced by tests
+export const chiefTui = minimalChar(
+  "chiefTui",
+  "Chief Tui",
+  " ",
+  ["amber"],
+  3,
+  2,
+  3,
+  2,
+);
+export const heiheiBoatSnack = minimalChar(
+  "heiheiBoatSnack",
+  "Heihei",
+  "Boat Snack",
+  ["amber"],
+  1,
+  1,
+  2,
+  1,
+);
+export const captainColonelsLieutenant = minimalChar(
+  "captainColonelsLieutenant",
+  "Captain",
+  "Colonel's Lieutenant",
+  ["steel"],
+  2,
+  2,
+  2,
+  1,
+);
+export const kuzcoTemperamentalEmperor = minimalChar(
+  "kuzcoTemperamentalEmperor",
+  "Kuzco",
+  "Temperamental Emperor",
+  ["emerald"],
+  4,
+  3,
+  3,
+  2,
+);
+export const mauiDemiGod = minimalChar(
+  "mauiDemiGod",
+  "Maui",
+  "Demi-God",
+  ["ruby"],
+  5,
+  4,
+  4,
+  2,
+);
+export const mauiHeroToAll = minimalChar(
+  "mauiHeroToAll",
+  "Maui",
+  "Hero to All",
+  ["ruby"],
+  4,
+  4,
+  3,
+  2,
+);
+export const stichtNewDog = minimalChar(
+  "stichtNewDog",
+  "Stitch",
+  "New Dog",
+  ["amethyst"],
+  2,
+  2,
+  2,
+  1,
+);
+export const tiggerWonderfulThing = minimalChar(
+  "tiggerWonderfulThing",
+  "Tigger",
+  "Wonderful Thing",
+  ["amber"],
+  3,
+  3,
+  3,
+  2,
+);
+export const arielOnHumanLegs = minimalChar(
+  "arielOnHumanLegs",
+  "Ariel",
+  "On Human Legs",
+  ["amethyst"],
+  3,
+  2,
+  2,
+  2,
+);
+export const mickeyMouseDetective = minimalChar(
+  "mickeyMouseDetective",
+  "Mickey Mouse",
+  "Detective",
+  ["emerald"],
+  3,
+  2,
+  3,
+  2,
+);
+export const minnieMouseBelovedPrincess = minimalChar(
+  "minnieMouseBelovedPrincess",
+  "Minnie Mouse",
+  "Beloved Princess",
+  ["amethyst"],
+  2,
+  2,
+  2,
+  1,
+);
+export const megaraPullingTheStrings = minimalChar(
+  "megaraPullingTheStrings",
+  "Megara",
+  "Pulling the Strings",
+  ["amethyst"],
+  4,
+  3,
+  3,
+  2,
+);
+export const maleficentMonstrousDragon = minimalChar(
+  "maleficentMonstrousDragon",
+  "Maleficent",
+  "Monstrous Dragon",
+  ["ruby"],
+  7,
+  6,
+  6,
+  3,
+);
+export const liloGalacticHero = minimalChar(
+  "liloGalacticHero",
+  "Lilo",
+  "Galactic Hero",
+  ["amber"],
+  4,
+  3,
+  3,
+  2,
+);

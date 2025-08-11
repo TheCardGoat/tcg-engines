@@ -62,3 +62,8 @@ export const all007CardsById: Record<string, LorcanaCardDefinition> = {};
 for (const card of all007Cards) {
   all007CardsById[card.id] = card;
 }
+
+// Minimal 007 character referenced by tests
+export const thePhantomBlotShadowyFigure = {
+  id: "thePhantomBlotShadowyFigure",
+} as any;

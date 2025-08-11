@@ -1,5 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { donaldDuckStruttingHisStuff } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+
+const donaldDuckStruttingHisStuff = {
+  id: "donaldDuckStruttingHisStuff",
+} as any;
+
 import { weCouldBeImmortals } from "~/game-engine/engines/lorcana/src/cards/definitions/006/actions";
 import {
   TestEngine,

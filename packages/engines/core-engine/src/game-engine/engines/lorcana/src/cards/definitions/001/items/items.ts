@@ -38,3 +38,29 @@ export const shieldOfVirtue: LorcanaItemCardDefinition = {
   illustrator: "",
   rarity: "uncommon",
 };
+
+export const swordOfTruth: LorcanaItemCardDefinition = {
+  id: "swordOfTruth",
+  type: "item",
+  name: "Sword of Truth",
+  characteristics: ["item"],
+  set: "TFC",
+  cost: 4,
+  colors: ["ruby"],
+  number: 0,
+  illustrator: "",
+  rarity: "rare",
+};
+
+export const fishboneQuill: LorcanaItemCardDefinition = {
+  id: "fishboneQuill",
+  type: "item",
+  name: "Fishbone Quill",
+  characteristics: ["item"],
+  set: "TFC",
+  cost: 1,
+  colors: ["amethyst"],
+  number: 0,
+  illustrator: "",
+  rarity: "common",
+};

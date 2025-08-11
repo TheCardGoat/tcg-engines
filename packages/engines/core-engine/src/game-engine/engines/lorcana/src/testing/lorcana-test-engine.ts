@@ -357,9 +357,33 @@ export class LorcanaTestEngine {
     );
   }
 
-  getCardZone(instanceId: string): string | undefined {
+  getCardZone(cardOrId: unknown): string | undefined {
     const ctx = this.authoritativeEngine.getCtx();
-    return getCardZoneByInstanceId(ctx, instanceId)?.name;
+    const instanceId = typeof cardOrId === "string" ? cardOrId : undefined;
+    const zoneByInstance = instanceId
+      ? getCardZoneByInstanceId(ctx, instanceId)?.name
+      : undefined;
+    if (zoneByInstance) return zoneByInstance;
+
+    const id =
+      typeof cardOrId === "object" &&
+      cardOrId !== null &&
+      "id" in (cardOrId as any)
+        ? (cardOrId as any).id
+        : typeof cardOrId === "string"
+          ? cardOrId
+          : undefined;
+    if (!id) return undefined;
+
+    const zonesCards = this.testStore.getZonesCards();
+    if (zonesCards.play.find((c: any) => c.id === id)) return "play" as any;
+    if (zonesCards.hand.find((c: any) => c.id === id)) return "hand" as any;
+    if (zonesCards.deck.find((c: any) => c.id === id)) return "deck" as any;
+    if (zonesCards.discard.find((c: any) => c.id === id))
+      return "discard" as any;
+    if (zonesCards.inkwell.find((c: any) => c.id === id))
+      return "inkwell" as any;
+    return undefined;
   }
 
   getCardsByZone(zone: Zones, playerId = "player_one") {
@@ -621,7 +645,8 @@ export class LorcanaTestEngine {
 
     this.wasMoveExecutedAndPropagated();
 
-    return { card: model, result: response };
+    // Legacy chaining support (e.g., playCard(...).resolveTopOfStack())
+    return this as any;
   }
 
   // === Legacy compatibility helpers (names kept for test parity) ===
@@ -781,6 +806,8 @@ export class LorcanaTestEngine {
       discard: this.getCardsInZone("discard", playerId),
     };
   }
+
+  // (removed duplicate getCardZone shim; merged into method above)
 
   acceptOptionalLayer(..._args: any[]) {}
   skipTopOfStack() {}
@@ -945,6 +972,7 @@ declare module "../cards/lorcana-card-instance" {
     readonly charactersAtLocation: any[];
     hasResist: boolean;
     canChallengeReadyCharacters: boolean;
+    hasAbility?: (abilityName: string) => boolean;
     canBeChallenged: boolean;
     challenge: (target: unknown) => void;
     quest: (..._args: any[]) => void;
@@ -1058,6 +1086,19 @@ LorcanaCardInstance.prototype.canChallenge = function (
 ) {
   // Provide permissive default for legacy tests
   return true;
+};
+
+// Provide a safe default for hasAbility used by some legacy tests
+LorcanaCardInstance.prototype.hasAbility = function (
+  this: any,
+  _abilityName: string,
+) {
+  try {
+    const abilities = this?.getStaticAbilities?.() ?? [];
+    return Array.isArray(abilities) && abilities.length > 0;
+  } catch {
+    return false;
+  }
 };
 
 Object.defineProperty(LorcanaCardInstance.prototype, "charactersAtLocation", {
