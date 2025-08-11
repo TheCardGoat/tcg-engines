@@ -21,6 +21,10 @@ const inputs = [
   "Deal 2 damage to each opposing character.",
   "Deal damage to chosen character equal to the number of characters you have in play.",
   "Chosen character can't challenge during their next turn. Draw a card.",
+  "Banish chosen item. Its owner gains 2 lore.",
+  "Chosen character gains **Ward** and **Evasive** until the start of your next turn. _(Opponents can't choose them except to challenge. Only characters with Evasive can challenge them.)_",
+  "Chosen character gains Resist +2 until the start of your next turn. Draw a card. (Damage dealt to them is reduced by 2.)",
+  "Chosen character gains Evasive until the start of your next turn.",
 ];
 
 for (const t of inputs) {

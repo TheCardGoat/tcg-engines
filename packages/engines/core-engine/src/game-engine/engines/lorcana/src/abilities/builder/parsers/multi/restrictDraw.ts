@@ -21,18 +21,14 @@ export function parseRestrictThenDraw(text: string) {
   } = require("~/game-engine/engines/lorcana/src/abilities/duration");
   const {
     chosenCharacterTarget,
+    chosenOpposingCharacterTarget,
   } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
   const {
     selfPlayerTarget,
   } = require("~/game-engine/engines/lorcana/src/abilities/targets/player-target");
 
   const target = isOpposing
-    ? ({
-        type: "card",
-        cardType: "character",
-        owner: "opponent",
-        count: 1,
-      } as const)
+    ? chosenOpposingCharacterTarget
     : chosenCharacterTarget;
 
   const normalizedText = text.endsWith(".") ? text : `${text}.`;

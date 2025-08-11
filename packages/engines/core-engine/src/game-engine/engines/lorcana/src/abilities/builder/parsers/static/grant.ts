@@ -72,12 +72,7 @@ export function parseGrant(text: string) {
       evasiveAbility,
     } = require("~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility");
 
-    const normalized = text
-      .replace(/\*\*Resist\*\*/g, "Resist")
-      .replace(/\*\*Evasive\*\*/g, "Evasive");
-    const normalizedText = normalized.endsWith(".")
-      ? normalized
-      : `${normalized}.`;
+    const normalizedText = text.endsWith(".") ? text : `${text}.`;
 
     return AbilityBuilder.static(normalizedText)
       .setTargets([chosenCharacterTarget])
@@ -89,6 +84,47 @@ export function parseGrant(text: string) {
         gainsAbilityEffect({
           ability: evasiveAbility,
           duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
+      ]);
+  }
+
+  // Combined grant: Ward and Evasive until the start of your next turn (with optional reminder text)
+  if (
+    /^Chosen character gains \*\*Ward\*\* and \*\*Evasive\*\* until the start of your next turn\.(?:.*)$/i.test(
+      text,
+    )
+  ) {
+    const {
+      gainsAbilityEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      chosenCharacterTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+    const {
+      UNTIL_START_OF_YOUR_NEXT_TURN,
+    } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+    const {
+      wardAbility,
+    } = require("~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility");
+    const {
+      evasiveAbility,
+    } = require("~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility");
+
+    // Strip markdown for Ward/Evasive per fixture, retain any reminder text
+    const normalizedText = text
+      .replace(/\*\*Ward\*\*/g, "Ward")
+      .replace(/\*\*Evasive\*\*/g, "Evasive");
+
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([chosenCharacterTarget])
+      .setEffects([
+        gainsAbilityEffect({
+          ability: wardAbility,
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
+        gainsAbilityEffect({
+          ability: evasiveAbility,
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
         }),
       ]);
   }
@@ -113,6 +149,8 @@ export function parseGrant(text: string) {
       evasive:
         require("~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility")
           .evasiveAbility,
+      ward: require("~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility")
+        .wardAbility,
     };
     const ability = abilityMap[abilityName];
     if (!ability) return null;
@@ -126,6 +164,46 @@ export function parseGrant(text: string) {
       .setEffects([
         gainsAbilityEffect({
           ability,
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
+      ]);
+  }
+
+  // Combined grant: Ward and Evasive until the start of your next turn
+  if (
+    /^Chosen character gains \*\*Ward\*\* and \*\*Evasive\*\* until the start of your next turn\./i.test(
+      text,
+    )
+  ) {
+    const {
+      gainsAbilityEffect,
+    } = require("~/game-engine/engines/lorcana/src/abilities/effect/effect");
+    const {
+      chosenCharacterTarget,
+    } = require("~/game-engine/engines/lorcana/src/abilities/targets/card-target");
+    const {
+      UNTIL_START_OF_YOUR_NEXT_TURN,
+    } = require("~/game-engine/engines/lorcana/src/abilities/duration");
+    const {
+      wardAbility,
+    } = require("~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility");
+    const {
+      evasiveAbility,
+    } = require("~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility");
+
+    // Normalize markdown in text per fixtures (remove **)
+    let normalizedText = text.replace(/\*\*(Ward|Evasive)\*\*/g, "$1");
+    if (!normalizedText.endsWith(".")) normalizedText += ".";
+
+    return AbilityBuilder.static(normalizedText)
+      .setTargets([chosenCharacterTarget])
+      .setEffects([
+        gainsAbilityEffect({
+          ability: wardAbility,
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
+        gainsAbilityEffect({
+          ability: evasiveAbility,
           duration: UNTIL_START_OF_YOUR_NEXT_TURN,
         }),
       ]);

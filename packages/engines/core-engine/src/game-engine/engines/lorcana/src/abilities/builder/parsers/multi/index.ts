@@ -1,7 +1,10 @@
 import { parseMultiEffectPatterns as legacySupport } from "../multiEffect";
 import { parseBanishThenDraw } from "./banishDraw";
+import { parseBanishOwnerGainsLore } from "./banishOwnerLore";
 import { parseDamageThenDraw } from "./damageDraw";
 import { parseDrawThenDiscard } from "./drawThenDiscard";
+import { parseWardAndEvasiveUntilNextTurn } from "./grantCombined";
+import { parseResistUntilNextThenDraw } from "./grantDraw";
 import { parseHealThenDraw } from "./healDraw";
 import { parseLoreCombo } from "./loreCombo";
 import { parseLoreThenDraw } from "./loreDraw";
@@ -23,6 +26,9 @@ export function parseMulti(text: string) {
     parseReadyAllThenRestrict(text) ||
     parseDrawThenDiscard(text) ||
     parseRestrictThenDraw(text) ||
+    parseResistUntilNextThenDraw(text) ||
+    parseBanishOwnerGainsLore(text) ||
+    parseWardAndEvasiveUntilNextTurn(text) ||
     null
   );
 }
