@@ -7,6 +7,7 @@ import { parseDrawThenDiscard } from "./drawThenDiscard";
 import { parseChallengerAndResistThisTurn } from "./grantChallengerResist";
 import { parseWardAndEvasiveUntilNextTurn } from "./grantCombined";
 import { parseResistUntilNextThenDraw } from "./grantDraw";
+import { parseSupportThisTurnThenDraw } from "./grantSupportDraw";
 import { parseHealThenDraw } from "./healDraw";
 import { parseLoreCombo } from "./loreCombo";
 import { parseLoreThenDraw } from "./loreDraw";
@@ -26,6 +27,7 @@ export function parseMulti(text: string) {
     parseLoreCombo(text) ||
     parseStatThenAbility(text) ||
     parseLoreThenDraw(text) ||
+    parseSupportThisTurnThenDraw(text) ||
     parseReadyAllThenRestrict(text) ||
     parseDrawThenDiscard(text) ||
     parseOpponentDiscardThenBuff(text) ||
