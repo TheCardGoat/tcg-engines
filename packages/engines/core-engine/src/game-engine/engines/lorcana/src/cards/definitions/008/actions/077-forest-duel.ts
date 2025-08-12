@@ -1,39 +1,8 @@
-import type {
-  AbilityEffect,
-  LorcanitoActionCard,
-} from "@lorcanito/lorcana-engine";
-import { yourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-
-const gainsChallenger: AbilityEffect = {
-  type: "ability",
-  ability: "challenger",
-  amount: 2,
-  modifier: "add",
-  duration: "turn",
-  target: yourCharacters,
-};
-
-const gainsReturnToHand: AbilityEffect = {
-  type: "ability",
-  ability: "custom",
-  modifier: "add",
-  duration: "turn",
-  customAbility: whenThisCharacterBanishedInAChallenge({
-    effects: [
-      {
-        type: "move",
-        to: "hand",
-        target: {
-          type: "card",
-          value: "all",
-          filters: [{ filter: "source", value: "self" }],
-        },
-      },
-    ],
-  }),
-  target: yourCharacters,
-};
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { gainsAbilityEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
+import { yourCharactersTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const forestDuel: LorcanaActionCardDefinition = {
   id: "m3x",
@@ -43,8 +12,17 @@ export const forestDuel: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      effects: [gainsChallenger, gainsReturnToHand],
+      type: "static",
+      text: "Your characters gain Challenger +2 and 'When this character is banished in a challenge, return this card to your hand' this turn.",
+      targets: [yourCharactersTarget],
+      effects: [
+        gainsAbilityEffect({
+          targets: [yourCharactersTarget],
+          ability: challengerAbility(2),
+          duration: THIS_TURN,
+        }),
+        // TODO: Requires triggered ability system for "when banished in challenge" condition
+      ],
     },
   ],
   inkwell: true,

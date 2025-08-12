@@ -1,57 +1,39 @@
-import type {
-  LorcanitoActionCard,
-  TargetConditionalEffect,
-} from "@lorcanito/lorcana-engine";
-import { chosenCharacterGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
-
-const targetHero = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "type", value: "character" },
-    { filter: "zone", value: "play" },
-    {
-      filter: "characteristics",
-      value: ["hero"],
-    },
-  ],
-};
+import { UNTIL_START_OF_YOUR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import {
+  challengeOverrideEffect,
+  conditionalTargetEffect,
+  gainsAbilityEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const oneLastHope: LorcanaActionCardDefinition = {
   id: "b2r",
   name: "One Last Hope",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 3 or more can {E} to sing this song for free.)_\n\n\nChosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn. _(Damage dealt to them is reduced by 2.)_",
+  text: "Chosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn. _(Damage dealt to them is reduced by 2.)_",
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Chosen character gains **Resist** +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn.",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "target-conditional",
-          effects: [
-            {
-              type: "ability",
-              ability: "challenge_ready_chars",
-              modifier: "add",
-              duration: "turn",
-              until: true,
-              target: targetHero,
-            },
-            {
-              type: "ability",
-              ability: "resist",
-              amount: 2,
-              modifier: "add",
-              duration: "next_turn",
-              until: true,
-              target: targetHero,
-            },
-          ],
-          fallback: [chosenCharacterGainsResist(2)],
-          // TODO: Re implement conditional target
-          target: targetHero,
-        } as TargetConditionalEffect,
+        gainsAbilityEffect({
+          ability: resistAbility(2),
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
+        conditionalTargetEffect({
+          targetCondition: {
+            type: "hasClassification",
+            classification: "hero",
+          },
+          effect: challengeOverrideEffect({
+            canChallenge: "ready",
+            duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+          }),
+        }),
       ],
     },
   ],

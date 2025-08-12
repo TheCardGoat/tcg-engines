@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { foodFight } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import { taffytaMuttonfudgeRuthlessRival } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Food Fight!", () => {
   it("Your characters gain {E}, 1 {I} – Deal 1 damage to chosen character this turn.", () => {

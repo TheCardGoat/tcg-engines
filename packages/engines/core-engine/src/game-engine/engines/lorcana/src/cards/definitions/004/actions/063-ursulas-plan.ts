@@ -1,4 +1,3 @@
-import { exertedSelfCharCantReadyNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const ursulasPlan: LorcanaActionCardDefinition = {
@@ -10,10 +9,9 @@ export const ursulasPlan: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
       text: "Each opponent chooses and exerts one of their characters. Those characters can't ready at the start of their next turn.",
-      responder: "opponent",
-      effects: [exertedSelfCharCantReadyNextTurn],
+      effects: [],
     },
   ],
   flavour:

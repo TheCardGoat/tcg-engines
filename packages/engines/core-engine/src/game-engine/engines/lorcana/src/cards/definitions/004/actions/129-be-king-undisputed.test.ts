@@ -24,7 +24,8 @@ describe("Be King Undisputed", () => {
     );
 
     cardUnderTest.playFromHand();
-    testStore.changePlayer().resolveTopOfStack({ targets: [target] });
+    testStore.changePlayer("player_two");
+    testStore.resolveTopOfStack({ targets: [target] });
 
     expect(target.zone).toBe("discard");
   });
@@ -48,7 +49,8 @@ describe("Be King Undisputed", () => {
     );
 
     cardUnderTest.playFromHand();
-    testStore.changePlayer().resolveTopOfStack({ targets: [target] });
+    testStore.changePlayer("player_two");
+    testStore.resolveTopOfStack({ targets: [target] });
 
     expect(target.zone).toBe("discard");
   });

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { healingTouch } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Healing Touch", () => {
   it("Remove up to 4 damage from chosen character. Draw a card.", () => {

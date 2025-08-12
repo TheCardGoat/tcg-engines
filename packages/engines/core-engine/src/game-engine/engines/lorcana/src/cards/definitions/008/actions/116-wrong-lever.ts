@@ -1,55 +1,13 @@
-import type {
-  CardEffectTarget,
-  LorcanitoActionCard,
-} from "@lorcanito/lorcana-engine";
 import {
-  chosenCharacter,
-  thisCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import type {
-  CreateLayerBasedOnTarget,
-  MoveCardEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
-
-const putChosenCharAtTheBottom: CreateLayerBasedOnTarget = {
-  type: "create-layer-based-on-target",
-  // TODO: get rid of target
-  target: thisCharacter,
-  responder: "self",
-  effects: [
-    {
-      type: "move",
-      to: "deck",
-      bottom: true,
-      shouldRevealMoved: true,
-      target: chosenCharacter,
-    },
-  ],
-};
-
-const pullTheLeverFromDiscard: CardEffectTarget = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "zone", value: "discard" },
-    { filter: "owner", value: "self" },
-    {
-      filter: "publicId",
-      // value: pullTheLever.id,
-      value: "sp7",
-    },
-  ],
-};
-
-const putAPullTheLeverFromDiscardToBottom: MoveCardEffect = {
-  type: "move",
-  to: "deck",
-  bottom: true,
-  amount: 1,
-  shouldRevealMoved: true,
-  target: pullTheLeverFromDiscard,
-  forEach: [putChosenCharAtTheBottom],
-};
+  modalEffect,
+  putCardEffect,
+  returnCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  cardNamedTarget,
+  chosenCharacterTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const wrongLeverAction: LorcanaActionCardDefinition = {
   id: "g9i",
@@ -57,6 +15,42 @@ export const wrongLeverAction: LorcanaActionCardDefinition = {
   characteristics: ["action"],
   text: "Choose one:\n- Return chosen character to their player's hand.\n- Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.",
   type: "action",
+  abilities: [
+    {
+      type: "static",
+      text: "Choose one:\n- Return chosen character to their player's hand.\n- Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.",
+      effects: [
+        modalEffect([
+          {
+            text: "Return chosen character to their player's hand.",
+            effects: [
+              returnCardEffect({
+                to: "hand",
+                targets: [chosenCharacterTarget],
+              }),
+            ],
+          },
+          {
+            text: "Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.",
+            effects: [
+              putCardEffect({
+                to: "deck",
+                from: "discard",
+                position: "bottom",
+                targets: [cardNamedTarget({ name: "Pull the Lever!" })],
+                followedBy: putCardEffect({
+                  to: "deck",
+                  from: "play",
+                  position: "bottom",
+                  targets: [chosenCharacterTarget],
+                }),
+              }),
+            ],
+          },
+        ]),
+      ],
+    },
+  ],
   inkwell: true,
   colors: ["emerald"],
   cost: 3,
@@ -64,28 +58,4 @@ export const wrongLeverAction: LorcanaActionCardDefinition = {
   number: 116,
   set: "008",
   rarity: "rare",
-  abilities: [
-    {
-      type: "resolution",
-      effects: [
-        {
-          type: "modal",
-          // TODO: Get rid of target
-          target: chosenCharacter,
-          modes: [
-            {
-              id: "1",
-              text: "Return chosen character to their player's hand.",
-              effects: [{ type: "move", to: "hand", target: chosenCharacter }],
-            },
-            {
-              id: "2",
-              text: "Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.",
-              effects: [putAPullTheLeverFromDiscardToBottom],
-            },
-          ],
-        },
-      ],
-    },
-  ],
 };

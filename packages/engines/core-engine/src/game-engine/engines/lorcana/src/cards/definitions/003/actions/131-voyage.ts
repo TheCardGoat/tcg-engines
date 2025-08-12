@@ -1,4 +1,8 @@
-import { moveToLocation } from "@lorcanito/lorcana-engine/effects/effects";
+import { moveToLocationEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  upToTarget,
+  yourCharactersTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const voyage: LorcanaActionCardDefinition = {
@@ -9,17 +13,16 @@ export const voyage: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Move up to 2 characters of yours to the same location for free.",
       effects: [
-        moveToLocation({
-          type: "card",
-          value: 2,
-          upTo: true,
-          filters: [
-            { filter: "type", value: "character" },
-            { filter: "zone", value: "play" },
-            { filter: "owner", value: "self" },
-          ],
+        moveToLocationEffect({
+          targets: upToTarget({
+            target: yourCharactersTarget,
+            upTo: 2,
+          }),
+          cost: 0,
+          sameLocation: true,
         }),
       ],
     },

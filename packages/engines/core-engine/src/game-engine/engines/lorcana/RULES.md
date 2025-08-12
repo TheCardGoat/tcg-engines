@@ -887,7 +887,7 @@ This process fol ows a series of steps. If any part of the playing a card proces
 
 **7.2. Action Cards**
 
-**7.2.1. **Playing an action may trigger other abilities. In this case, the active player resolves the action immediately, and once that action has been ful y resolved, players may resolve the triggered abilities as described in section 8.7, “Bag.” 
+**7.2.1. **Playing an action may trigger other abilities. In this case, the active player resolves the action immediately, and once that action has been fully resolved, players may resolve the triggered abilities as described in section 8.7, “Bag.” 
 
 **7.3. Keywords**
 
@@ -945,17 +945,15 @@ This process fol ows a series of steps. If any part of the playing a card proces
 
 **7.5. Activated Abilities**
 
-**7.5.1. **Activated abilities are abilities that a player chooses to use. They are normal y written as \[Cost\] — \[Effect\]. 
+**7.5.1. **Activated abilities are abilities that a player chooses to use. They are normally written as \[Cost\] — \[Effect\]. 
 
-**7.5.2. **While there are no effects waiting to resolve and a character isn’t questing or in a chal enge, the active player may use an activated ability. 
+**7.5.2. **While there are no effects waiting to resolve and a character isn’t questing or in a challenge, the active player may use an activated ability. 
 
-**7.5.3. **To use an activated ability, the active player fol ows these steps in order. If any part of this process can’t be performed, it’s il egal to use the ability. These steps apply to all activated abilities. Only the active player can use activated abilities. 
+**7.5.3. **To use an activated ability, the active player follows these steps in order. If any part of this process can’t be performed, it’s illegal to use the ability. These steps apply to all activated abilities. Only the active player can use activated abilities. 
 
 **7.5.3.1. **First, the active player announces the ability they intend to use. 
 
-**7.5.3.2. **Second, the player fol ows the steps described in 4.3.4.4 through 4.3.4.6, replacing any instance of the word “card” 
-
-with the word “ability.” 
+**7.5.3.2. **Second, the player follows the steps described in 4.3.4.4 through 4.3.4.6, replacing any instance of the word “card” with the word “ability.” 
 
 **7.5.3.3. **Once the total cost is paid, the ability is activated. The active player resolves the effect immediately. 
 
@@ -1123,7 +1121,7 @@ This process doesn’t use the bag \(see 8.7, “Bag”\).
 
 **8.7.3. **Whenever a triggered ability’s condition is met, the ability is added to the bag by the player who played the card with the triggered ability. If multiple triggered abilities happen at the same time, they’re added to the bag simultaneously by the respective players. 
 
-**8.7.4. **Then the active player chooses and resolves any one of their triggered abilities and ful y resolves it. If the resolution of an ability causes another ability to trigger, the new triggered ability is added to the bag once the current ability is finished resolving. 
+**8.7.4. **Then the active player chooses and resolves any one of their triggered abilities and fully resolves it. If the resolution of an ability causes another ability to trigger, the new triggered ability is added to the bag once the current ability is finished resolving. 
 
 25
 

@@ -25,7 +25,8 @@ export const resolveBag: LorcanaMove = ({ G, coreOps }, triggerId: string) => {
 
   logger.debug("Resolving trigger from bag", { trigger });
 
-  coreOps.resolveBagTrigger(trigger.id);
+  coreOps.resolveLayer(trigger);
+  coreOps.removeLayer(trigger, "trigger");
 
   return G;
 };

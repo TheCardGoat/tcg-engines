@@ -62,7 +62,9 @@ export function getEffect({
   return {
     type: "get",
     duration,
-    targets: Array.isArray(targets) ? targets : [targets],
+    ...(targets !== undefined
+      ? { targets: Array.isArray(targets) ? targets : [targets] }
+      : {}),
     parameters: {
       attribute,
       value,
@@ -82,7 +84,9 @@ export function gainsAbilityEffect({
   return {
     type: "gainsAbility",
     duration,
-    targets: Array.isArray(targets) ? targets : [targets],
+    ...(targets !== undefined
+      ? { targets: Array.isArray(targets) ? targets : [targets] }
+      : {}),
     parameters: {
       ability,
     },
@@ -92,13 +96,18 @@ export function gainsAbilityEffect({
 export function banishEffect({
   targets,
   followedBy,
+  optional,
 }: {
   targets?: CardTarget | CardTarget[];
   followedBy?: LorcanaEffect;
+  optional?: boolean;
 } = {}): BanishEffect {
   return {
     type: "banish",
-    targets: Array.isArray(targets) ? targets : [targets],
+    ...(targets !== undefined
+      ? { targets: Array.isArray(targets) ? targets : [targets] }
+      : {}),
+    optional,
     followedBy: followedBy,
   };
 }
@@ -119,7 +128,9 @@ export function drawCardEffect({
     parameters: {
       value: value || 1,
     },
-    targets: Array.isArray(targets) ? targets : [targets],
+    ...(targets !== undefined
+      ? { targets: Array.isArray(targets) ? targets : [targets] }
+      : {}),
     followedBy: followedBy,
   };
 }
@@ -139,7 +150,9 @@ export function gainLoreEffect({
     parameters: {
       value: value || 1,
     },
-    targets: Array.isArray(targets) ? targets : [targets],
+    ...(targets !== undefined
+      ? { targets: Array.isArray(targets) ? targets : [targets] }
+      : {}),
     followedBy: followedBy,
   };
 }
@@ -160,7 +173,9 @@ export function loseLoreEffect({
     parameters: {
       value: value || 1,
     },
-    targets: Array.isArray(targets) ? targets : [targets],
+    ...(targets !== undefined
+      ? { targets: Array.isArray(targets) ? targets : [targets] }
+      : {}),
     followedBy: followedBy,
   };
 }
@@ -206,7 +221,9 @@ export function dealDamageEffect({
 }): DealDamageEffect {
   return {
     type: "dealDamage",
-    targets: Array.isArray(targets) ? targets : [targets],
+    ...(targets !== undefined
+      ? { targets: Array.isArray(targets) ? targets : [targets] }
+      : {}),
     parameters: {
       value: value || 1,
     },
@@ -225,7 +242,9 @@ export function removeDamageEffect({
 }): RemoveDamageEffect {
   return {
     type: "removeDamage",
-    targets: Array.isArray(targets) ? targets : [targets],
+    ...(targets !== undefined
+      ? { targets: Array.isArray(targets) ? targets : [targets] }
+      : {}),
     parameters: { value },
     followedBy,
   };
@@ -242,7 +261,9 @@ export function putDamageEffect({
 }): DealDamageEffect {
   return {
     type: "dealDamage",
-    targets: Array.isArray(targets) ? targets : [targets],
+    ...(targets !== undefined
+      ? { targets: Array.isArray(targets) ? targets : [targets] }
+      : {}),
     parameters: {
       value: value || 1,
     },
@@ -376,7 +397,9 @@ export function costReductionEffect({
 }): CostReductionEffect {
   return {
     type: "costReduction",
-    targets: Array.isArray(targets) ? targets : [targets],
+    ...(targets !== undefined
+      ? { targets: Array.isArray(targets) ? targets : [targets] }
+      : {}),
     parameters: {
       value,
       cardType,
@@ -405,7 +428,9 @@ export function playCardEffect({
 }): PlayCardEffect {
   return {
     type: "playCard",
-    targets: Array.isArray(targets) ? targets : [targets],
+    ...(targets !== undefined
+      ? { targets: Array.isArray(targets) ? targets : [targets] }
+      : {}),
     parameters: {
       from,
       cost,
@@ -437,7 +462,9 @@ export function moveCardEffect({
 }): MoveCardEffect {
   return {
     type: "moveCard",
-    targets: Array.isArray(targets) ? targets : [targets],
+    ...(targets !== undefined
+      ? { targets: Array.isArray(targets) ? targets : [targets] }
+      : {}),
     parameters: { zoneTo, zoneFrom, placement, exerted, shuffle, order },
     followedBy,
   };
@@ -452,7 +479,9 @@ export function exertCardEffect({
 }): ExertCardEffect {
   return {
     type: "exertCard",
-    targets: Array.isArray(targets) ? targets : [targets],
+    ...(targets !== undefined
+      ? { targets: Array.isArray(targets) ? targets : [targets] }
+      : {}),
     followedBy,
   };
 }
@@ -511,10 +540,14 @@ export function discardCardEffect({
   value,
   targets,
   random,
+  optional,
+  followedBy,
 }: {
   value: number | DynamicValue;
   targets?: PlayerTarget | PlayerTarget[];
   random?: boolean;
+  optional?: boolean;
+  followedBy?: LorcanaEffect;
 }): DiscardEffect {
   const playerTargets: PlayerTarget[] | undefined = targets
     ? Array.isArray(targets)
@@ -525,6 +558,8 @@ export function discardCardEffect({
   return {
     type: "discard",
     targets: playerTargets,
+    optional,
+    followedBy,
     parameters: {
       value,
       random,
@@ -542,9 +577,13 @@ export function drawThenDiscardEffect(params: {
   ];
 }
 
-export function readyAndRestrictQuestEffect(
-  targets: CardTarget | CardTarget[],
-) {
+export function readyAndRestrictQuestEffect({
+  targets,
+  duration,
+}: {
+  targets?: CardTarget | CardTarget[];
+  duration?: AbilityDuration;
+}): LorcanaEffect[] {
   const arr = Array.isArray(targets) ? targets : [targets];
   return [
     readyEffect({ targets: arr }),

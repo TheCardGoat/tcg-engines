@@ -1,4 +1,8 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+import { UNTIL_START_OF_YOUR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { gainsAbilityEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
+import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
+import { chosenCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const dodge: LorcanaActionCardDefinition = {
@@ -9,24 +13,18 @@ export const dodge: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Chosen character gains Ward and Evasive until the start of your next turn. _(Opponents can't choose them except to challenge. Only characters with Evasive can challenge them.)_",
+      targets: [chosenCharacterTarget],
       effects: [
-        {
-          type: "ability",
-          ability: "ward",
-          duration: "next_turn",
-          modifier: "add",
-          until: true,
-          target: chosenCharacter,
-        },
-        {
-          type: "ability",
-          ability: "evasive",
-          duration: "next_turn",
-          modifier: "add",
-          until: true,
-          target: chosenCharacter,
-        },
+        gainsAbilityEffect({
+          ability: wardAbility,
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
+        gainsAbilityEffect({
+          ability: evasiveAbility,
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
       ],
     },
   ],

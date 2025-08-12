@@ -1,52 +1,32 @@
+import { DURING_THEIR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
-  moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+  drawCardEffect,
+  restrictEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenOpposingCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const heffalumpsAndWoozles: LorcanaActionCardDefinition = {
   id: "kml",
   name: "Heffalumps And Woozles",
   characteristics: ["song", "action"],
-  text: "(A character with cost 2 or more can {E} to sing this song for free.)\nChosen opposing character can't quest during their next turn. Draw a card.",
+  text: "Chosen opposing character can't quest during their next turn. Draw a card.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Heffalumps And Woozles",
+      type: "static",
       text: "Chosen opposing character can't quest during their next turn. Draw a card.",
-      resolveEffectsIndividually: true,
-      effects: [drawACard, chosenOpposingCharacterCantQuestNextTurn],
+      effects: [
+        restrictEffect({
+          restriction: "quest",
+          duration: DURING_THEIR_NEXT_TURN,
+          targets: [chosenOpposingCharacterTarget],
+        }),
+        drawCardEffect({
+          targets: [selfPlayerTarget],
+        }),
+      ],
     },
   ],
   inkwell: true,

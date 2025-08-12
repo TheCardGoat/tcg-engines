@@ -1,37 +1,10 @@
+import type { DynamicValue } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
-  moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+  costReductionEffect,
+  drawCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const seekingTheHalfCrown: LorcanaActionCardDefinition = {
@@ -42,20 +15,27 @@ export const seekingTheHalfCrown: LorcanaActionCardDefinition = {
   text: "For each Sorcerer character you have in play, you pay 1 {I} less to play this action.\nDraw 2 cards.",
   type: "action",
   abilities: [
-    whenYouPlayThisForEachYouPayLess({
-      amount: {
-        dynamic: true,
-        filters: [
-          { filter: "owner", value: "self" },
-          { filter: "type", value: "character" },
-          { filter: "zone", value: "play" },
-          { filter: "characteristics", value: ["sorcerer"] },
-        ],
-      },
-    }),
     {
-      type: "resolution",
-      effects: [drawXCards(2)],
+      type: "static",
+      text: "For each Sorcerer character you have in play, you pay 1 {I} less to play this action.\nDraw 2 cards.",
+      effects: [
+        costReductionEffect({
+          targets: [selfPlayerTarget],
+          value: {
+            type: "count",
+            filter: {
+              type: "card",
+              cardType: "character",
+              owner: "self",
+              withClassification: "sorcerer",
+            },
+          } as DynamicValue,
+          cardType: "action",
+          count: 1,
+          duration: THIS_TURN,
+        }),
+        drawCardEffect({ targets: [selfPlayerTarget], value: 2 }),
+      ],
     },
   ],
   inkwell: false,

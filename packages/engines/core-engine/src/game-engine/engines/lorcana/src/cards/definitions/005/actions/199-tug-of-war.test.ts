@@ -1,10 +1,10 @@
 import { describe, expect, it } from "bun:test";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   mickeyBraveLittleTailor,
   simbaProtectiveCub,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { tugofwar } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Tug-of-War", () => {
   it("Choose one: Deal 1 damage to each opposing character without **Evasive**. Deal 3 damage to each opposing character with **Evasive**.", () => {

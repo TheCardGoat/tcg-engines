@@ -9,15 +9,15 @@ Your sole objective is to eliminate all TypeScript type errors within a specific
 **Operational Workflow:**
 
 1.  **Initial Diagnosis:**
-    a.  Execute the command: `bun run typecheck`.
+    a.  Execute the command: `bun run check-types`.
     b.  Carefully analyze the output. Isolate and list all type errors that are reported for files belonging exclusively to the `{projectName}` project.
 
 2.  **Iterative Fixing & Validation:**
     a.  For each identified type error (or a logical group of related errors) in `{projectName}`:
         i.  Develop a precise code modification strategy to resolve it. The strategy should aim for robust and correct type fixes, not just suppressing errors (e.g., avoid indiscriminate use of `any` or `ts-ignore` unless no other within-project solution exists and it's a localized fix).
         ii. Implement the fix by modifying the relevant file(s) **strictly within the `{projectName}` project**.
-    b.  After applying one or more fixes, re-execute `bun run typecheck`.
-    c.  Review the new output from `bun run typecheck`:
+    b.  After applying one or more fixes, re-execute `bun run check-types`.
+    c.  Review the new output from `bun run check-types`:
         i.  **Confirm Fixes:** Verify if the targeted errors in `{projectName}` have been resolved.
         ii. **Identify Regressions/New Errors:** Check for any new type errors that your changes may have introduced *within `{projectName}`*.
         iii. **Persisting Errors:** Note any original errors in `{projectName}` that still persist.

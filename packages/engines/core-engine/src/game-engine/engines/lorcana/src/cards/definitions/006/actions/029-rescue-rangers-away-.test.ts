@@ -1,5 +1,4 @@
 import { describe, expect, it } from "bun:test";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   arielOnHumanLegs,
   liloMakingAWish,
@@ -7,7 +6,10 @@ import {
   stichtNewDog,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { rescueRangersAway } from "~/game-engine/engines/lorcana/src/cards/definitions/006/actions";
-import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Rescue Rangers Away!", () => {
   it("Count the number of characters you have in play. Chosen character loses {S} equal to that number until the start of your next turn.", async () => {

@@ -1,4 +1,9 @@
-import { yourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import {
+  contextualEffect,
+  getEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { yourCharactersTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const olympusWouldBeThatWay: LorcanaActionCardDefinition = {
@@ -9,16 +14,23 @@ export const olympusWouldBeThatWay: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Your characters get +3 {S} this turn while challenging a location.",
+      targets: [yourCharactersTarget],
       effects: [
-        {
-          type: "ability",
-          ability: "challenger",
-          amount: 3,
-          modifier: "add",
-          duration: "turn",
-          target: yourCharacters,
-        },
+        contextualEffect({
+          targets: [yourCharactersTarget],
+          context: {
+            type: "whileChallenging",
+            cardType: "location",
+          },
+          effect: getEffect({
+            targets: [yourCharactersTarget],
+            attribute: "strength",
+            value: 3,
+            duration: THIS_TURN,
+          }),
+        }),
       ],
     },
   ],

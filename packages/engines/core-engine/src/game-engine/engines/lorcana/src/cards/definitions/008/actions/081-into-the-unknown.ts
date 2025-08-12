@@ -1,5 +1,5 @@
-import { chosenExertedCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { putTargetCardIntoTheirInkwell } from "@lorcanito/lorcana-engine/effects/effects";
+import { putCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenExertedCharacterTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const intoTheUnknown: LorcanaActionCardDefinition = {
@@ -10,11 +10,13 @@ export const intoTheUnknown: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Put chosen exerted character into their player's inkwell facedown and exerted.",
+      targets: [chosenExertedCharacterTarget],
       effects: [
-        putTargetCardIntoTheirInkwell({
-          target: chosenExertedCharacter,
-          exerted: true,
+        putCardEffect({
+          to: "inkwell",
+          from: "play",
         }),
       ],
     },

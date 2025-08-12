@@ -1,56 +1,13 @@
-import type {
-  LorcanitoActionCard,
-  ResolutionAbility,
-} from "@lorcanito/lorcana-engine";
 import {
-  chosenCharacter,
-  opponent,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-
-const abilitySignTheScroll: ResolutionAbility = {
-  type: "resolution",
-  text: "Each opponent may chose and discard a card. For each opponent who doesn't, you gain 2 lore.",
-  responder: "opponent",
-  effects: [
-    {
-      type: "modal",
-      // TODO: Get rid of target
-      target: chosenCharacter,
-      modes: [
-        {
-          id: "1",
-          text: "Discard a card",
-          effects: [
-            {
-              type: "discard",
-              amount: 1,
-              target: {
-                type: "card",
-                value: 1,
-                filters: [
-                  { filter: "zone", value: "hand" },
-                  { filter: "owner", value: "self" },
-                ],
-              },
-            },
-          ],
-        },
-        {
-          id: "2",
-          text: "Opponent Gain 2 Lore",
-          effects: [
-            {
-              type: "lore",
-              amount: 2,
-              modifier: "add",
-              target: opponent,
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
+  discardCardEffect,
+  gainLoreEffect,
+  optionalChoiceEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  eachOpponentTarget,
+  selfPlayerTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const signTheScroll: LorcanaActionCardDefinition = {
   id: "x7p",
@@ -59,7 +16,24 @@ export const signTheScroll: LorcanaActionCardDefinition = {
   characteristics: ["action"],
   text: "Each opponent may chose and discard a card. For each opponent who doesn't, you gain 2 lore.",
   type: "action",
-  abilities: [abilitySignTheScroll],
+  abilities: [
+    {
+      type: "static",
+      text: "Each opponent may chose and discard a card. For each opponent who doesn't, you gain 2 lore.",
+      responder: "opponent",
+      effects: [
+        optionalChoiceEffect({
+          choice: discardCardEffect({ value: 1 }),
+          onDecline: gainLoreEffect({
+            targets: [selfPlayerTarget],
+            value: 2,
+          }),
+          responder: "opponent",
+          targets: [eachOpponentTarget],
+        }),
+      ],
+    },
+  ],
   colors: ["amber"],
   cost: 3,
   illustrator: "Mariana Moreno Ayala",

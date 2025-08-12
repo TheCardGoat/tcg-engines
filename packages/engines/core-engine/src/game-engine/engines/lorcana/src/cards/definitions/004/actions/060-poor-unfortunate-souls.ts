@@ -1,4 +1,5 @@
-import { withCostXorLess } from "@lorcanito/lorcana-engine/abilities/targets";
+import { returnCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterItemOrLocationWithCost2OrLessTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const poorUnfortunateSouls: LorcanaActionCardDefinition = {
@@ -6,25 +7,17 @@ export const poorUnfortunateSouls: LorcanaActionCardDefinition = {
   missingTestCase: false,
   name: "Poor Unfortunate Souls",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\n\n\nReturn a character, item or location with cost 2 or less to their player's hand.",
+  text: "Return a character, item or location with cost 2 or less to their player's hand.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Return a character, item or location with cost 2 or less to their player's hand.",
+      targets: [chosenCharacterItemOrLocationWithCost2OrLessTarget],
       effects: [
-        {
-          type: "move",
+        returnCardEffect({
           to: "hand",
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: ["character", "location", "item"] },
-              { filter: "zone", value: "play" },
-              withCostXorLess(2),
-            ],
-          },
-        },
+        }),
       ],
     },
   ],

@@ -627,10 +627,12 @@ export const actionTexts: Array<
             {
               text: "Ready chosen Robot character. They can't quest for the rest of this turn.",
               effects: readyAndRestrictQuestEffect({
-                type: "card",
-                cardType: "character",
-                withClassification: "robot",
-                count: 1,
+                targets: {
+                  type: "card",
+                  cardType: "character",
+                  withClassification: "robot",
+                  count: 1,
+                },
               }),
             },
           ]),
@@ -2129,7 +2131,27 @@ export const actionTexts: Array<
   ],
   [
     "Exert chosen character. Then, you may choose and discard a card. If you do, the exerted character can't ready at the start of their next turn.",
-    [],
+    [
+      {
+        type: "static",
+        text: "Exert chosen character. Then, you may choose and discard a card. If you do, the exerted character can't ready at the start of their next turn.",
+        effects: [
+          exertCardEffect({
+            targets: [chosenCharacterTarget],
+          }),
+          discardCardEffect({
+            targets: [selfPlayerTarget],
+            value: 1,
+            optional: true,
+            followedBy: restrictEffect({
+              targets: [chosenExertedCharacterTarget],
+              restriction: "ready",
+              duration: DURING_THEIR_NEXT_TURN,
+            }),
+          }),
+        ],
+      },
+    ],
     true,
   ],
   [
@@ -4664,17 +4686,29 @@ function stripUndefinedDeep(obj: any): any {
   return obj;
 }
 
+// Normalize objects for comparison: replace functions with their names to allow structural checks
+function normalizeForCompare(value: any): any {
+  if (typeof value === "function") return `__fn:${value.name || "anonymous"}`;
+  if (Array.isArray(value)) return value.map(normalizeForCompare);
+  if (value && typeof value === "object") {
+    const out: any = {};
+    for (const k of Object.keys(value)) out[k] = normalizeForCompare(value[k]);
+    return out;
+  }
+  return value;
+}
+
 // Generate test cases with proper skip handling
 for (const [text, expected, shouldSkip] of actionTexts) {
-  if (shouldSkip) {
-    test.skip(`AbilityBuilder.fromText(${text})`, () => {
-      const ability = AbilityBuilder.fromText(text);
-      expect(stripUndefinedDeep(ability)).toEqual(stripUndefinedDeep(expected));
-    });
-  } else {
-    test(`AbilityBuilder.fromText(${text})`, () => {
-      const ability = AbilityBuilder.fromText(text);
-      expect(stripUndefinedDeep(ability)).toEqual(stripUndefinedDeep(expected));
-    });
-  }
+  const title = `AbilityBuilder.fromText(${text})`;
+  const actual = AbilityBuilder.fromText(text);
+  const passable =
+    JSON.stringify(normalizeForCompare(stripUndefinedDeep(actual))) ===
+    JSON.stringify(normalizeForCompare(stripUndefinedDeep(expected)));
+
+  const runner = shouldSkip && !passable ? test.skip : test;
+  runner(title, () => {
+    const ability = AbilityBuilder.fromText(text);
+    expect(stripUndefinedDeep(ability)).toEqual(stripUndefinedDeep(expected));
+  });
 }

@@ -1,17 +1,16 @@
 import { describe, expect, it } from "bun:test";
-import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
+import {
+  beOurGuest,
+  friendsOnTheOtherSide,
+  oneJumpAhead,
+  reflection,
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   chiefTui,
   heiheiBoatSnack,
   liloMakingAWish,
   moanaOfMotunui,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
-import {
-  beOurGuest,
-  friendsOnTheOtherSide,
-  oneJumpAhead,
-  reflection,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import {
   TestEngine,
   TestStore,
@@ -55,7 +54,7 @@ describe("Be Our Guest", () => {
 
     cardUnderTest.playFromHand();
 
-    const bottom: CardModel[] = [one, three];
+    const bottom: any[] = [one, three];
 
     testStore.resolveTopOfStack({ scry: { bottom, hand: [two] } });
 

@@ -17,8 +17,6 @@ export type LayerItem = {
   sourceCardId: string;
   controllerId: string;
   ability: Ability;
-  optional: boolean;
-  targets?: AbilityTarget[]; // Added targets as optional
 };
 
 // **1.6. Types of Abilities**

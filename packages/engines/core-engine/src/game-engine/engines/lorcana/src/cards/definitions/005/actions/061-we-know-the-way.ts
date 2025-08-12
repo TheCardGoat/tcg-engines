@@ -1,87 +1,62 @@
-import type {
-  CardEffectTarget,
-  LorcanitoActionCard,
-  ResolutionAbility,
-} from "@lorcanito/lorcana-engine";
 import {
-  thisCharacter,
-  topCardOfYourDeck,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import type {
-  RevealTopCardEffect,
-  ShuffleEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
-
-const targetWithSameName: CardEffectTarget = {
-  type: "card",
-  value: 1,
-  filters: [
-    { filter: "owner", value: "self" },
-    {
-      filter: "top-deck",
-      value: "self",
-    },
-    {
-      filter: "attribute",
-      value: "name",
-      comparison: { operator: "eq", value: "target" },
-    },
-  ],
-};
-
-const revealTopCardAndPlay: RevealTopCardEffect = {
-  type: "reveal-top-card",
-  target: targetWithSameName,
-  useParentsTarget: true,
-  asOptionalLayer: true,
-  onTargetMatchEffects: [
-    {
-      type: "play",
-      forFree: true,
-      target: targetWithSameName,
-    },
-  ],
-  onTargetMatchFailureEffects: [
-    {
-      type: "move",
-      to: "hand",
-      target: topCardOfYourDeck,
-    },
-  ],
-};
-
-const shuffleFromDiscard: ShuffleEffect = {
-  type: "shuffle",
-  target: {
-    type: "card",
-    value: 1,
-    filters: [
-      { filter: "owner", value: "self" },
-      { filter: "zone", value: "discard" },
-    ],
-  },
-  afterEffect: [
-    {
-      type: "create-layer-based-on-target",
-      target: thisCharacter,
-      effects: [revealTopCardAndPlay],
-    },
-  ],
-};
-
-const weKnowTheWayAbility: ResolutionAbility = {
-  type: "resolution",
-  text: "Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.",
-  effects: [shuffleFromDiscard],
-};
+  conditionalEffect,
+  optionalPlayEffect,
+  putCardEffect,
+  revealEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const weKnowTheWay: LorcanaActionCardDefinition = {
   id: "tc8",
   name: "We Know The Way",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 3 or more can  {E} to sing this song for free.)_ Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.",
+  text: "Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.",
   type: "action",
-  abilities: [weKnowTheWayAbility],
+  abilities: [
+    {
+      type: "static",
+      text: "Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.",
+      targets: [
+        {
+          type: "card",
+          zone: "discard",
+          owner: "self",
+          count: 1,
+        },
+      ],
+      effects: [
+        putCardEffect({
+          to: "deck",
+          from: "discard",
+          shuffle: true,
+        }),
+        revealEffect({
+          targets: [selfPlayerTarget],
+          from: "deck",
+          count: 1,
+          position: "top",
+          thenEffect: conditionalEffect({
+            condition: {
+              type: "sameName",
+              compareWith: "previousTarget",
+            },
+            ifTrue: optionalPlayEffect({
+              targets: [selfPlayerTarget],
+              from: "deck",
+              cost: "free",
+              filter: { zone: "deck", position: "top" },
+            }),
+            ifFalse: putCardEffect({
+              to: "hand",
+              from: "deck",
+              position: "top",
+            }),
+          }),
+        }),
+      ],
+    },
+  ],
   inkwell: true,
   colors: ["amethyst"],
   cost: 3,

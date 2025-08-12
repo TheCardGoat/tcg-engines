@@ -1,27 +1,31 @@
+import {
+  banishEffect,
+  dealDamageEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  chosenCharacterTarget,
+  chosenItemTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const touchedMyHeart: LorcanaActionCardDefinition = {
   id: "ee8",
   name: "Has Set My Heaaaaaaart ...",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\n\n\nBanish chosen item.",
+  text: "Banish chosen item.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Banish chosen item.",
+      type: "static",
+      text: "Banish chosen item of yours to deal 5 damage to chosen character.",
       effects: [
-        {
-          type: "banish",
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: ["item"] },
-              { filter: "zone", value: "play" },
-            ],
-          },
-        },
+        banishEffect({
+          targets: [chosenItemTarget],
+          followedBy: dealDamageEffect({
+            targets: [chosenCharacterTarget],
+            value: 5,
+          }),
+        }),
       ],
     },
   ],

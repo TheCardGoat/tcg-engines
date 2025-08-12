@@ -1,6 +1,92 @@
-export const forbiddenMountainMaleficentsCastle = {
-  id: "forbiddenMountainMaleficentsCastle",
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
+
+export const fangRiverCity: LorcanaLocationCardDefinition = {
+  id: "fangRiverCity",
+  type: "location",
+  name: "Fang",
+  title: "River City",
+  characteristics: ["location"],
+  inkwell: true,
+  colors: ["sapphire"],
+  cost: 2,
+  willpower: 6,
+  lore: 1,
+  moveCost: 1,
+  illustrator: "",
+  number: 0,
+  set: "ITI",
+  rarity: "common",
 };
-export const theQueensCastleMirrorChamber = {
+
+export const agrabahMarketplace: LorcanaLocationCardDefinition = {
+  id: "agrabahMarketplace",
+  type: "location",
+  name: "Agrabah",
+  title: "Marketplace",
+  characteristics: ["location"],
+  inkwell: true,
+  colors: ["amber"],
+  cost: 1,
+  willpower: 4,
+  lore: 1,
+  moveCost: 1,
+  illustrator: "",
+  number: 0,
+  set: "ITI",
+  rarity: "common",
+};
+
+export const prideLandsJungleOasis: LorcanaLocationCardDefinition = {
+  id: "prideLandsJungleOasis",
+  type: "location",
+  name: "Pride Lands",
+  title: "Jungle Oasis",
+  characteristics: ["location"],
+  inkwell: true,
+  colors: ["amber"],
+  cost: 2,
+  willpower: 7,
+  lore: 1,
+  moveCost: 2,
+  illustrator: "",
+  number: 0,
+  set: "SSK",
+  rarity: "rare",
+};
+
+export const theQueensCastleMirrorChamber: LorcanaLocationCardDefinition = {
   id: "theQueensCastleMirrorChamber",
+  type: "location",
+  name: "The Queen's Castle",
+  title: "Mirror Chamber",
+  characteristics: ["location"],
+  inkwell: true,
+  colors: ["sapphire"],
+  cost: 3,
+  willpower: 8,
+  lore: 1,
+  moveCost: 2,
+  illustrator: "",
+  number: 0,
+  set: "ITI",
+  rarity: "uncommon",
 };
+
+export const forbiddenMountainMaleficentsCastle: LorcanaLocationCardDefinition =
+  {
+    id: "forbiddenMountainMaleficentsCastle",
+    type: "location",
+    name: "Forbidden Mountain",
+    title: "Maleficent's Castle",
+    characteristics: ["location"],
+    inkwell: true,
+    colors: ["amethyst"],
+    cost: 2,
+    willpower: 6,
+    lore: 1,
+    moveCost: 1,
+    illustrator: "",
+    number: 0,
+    set: "ITI",
+    rarity: "common",
+  };

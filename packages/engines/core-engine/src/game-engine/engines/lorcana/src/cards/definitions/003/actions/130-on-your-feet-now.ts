@@ -1,8 +1,9 @@
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
-  allYourCharacters,
-  eachOfYourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+  dealDamageEffect,
+  restrictEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { yourCharactersTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const onYourFeetNow: LorcanaActionCardDefinition = {
@@ -14,15 +15,20 @@ export const onYourFeetNow: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
       text: "Ready all your characters and deal 1 damage to each of them. They can't quest for the rest of this turn.",
+      targets: [yourCharactersTarget],
       effects: [
-        ...readyAndCantQuest(allYourCharacters),
-        {
-          type: "damage",
-          amount: 1,
-          target: eachOfYourCharacters,
-        },
+        { type: "ready", targets: [yourCharactersTarget] },
+        dealDamageEffect({
+          targets: [yourCharactersTarget],
+          value: 1,
+        }),
+        restrictEffect({
+          targets: [yourCharactersTarget],
+          restriction: "quest",
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
       ],
     },
   ],

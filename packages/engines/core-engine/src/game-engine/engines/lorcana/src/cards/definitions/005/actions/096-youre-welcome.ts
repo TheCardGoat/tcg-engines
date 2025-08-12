@@ -1,52 +1,9 @@
-import type {
-  CardEffectTarget,
-  LorcanitoActionCard,
-  ResolutionAbility,
-  TargetCardEffect,
-} from "@lorcanito/lorcana-engine";
-import { foodFightAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 import {
-  chosenCharacter,
-  chosenCharacterItemOrLocation,
-  opposingCharactersWithEvasive,
-  opposingCharactersWithoutEvasive,
-} from "@lorcanito/lorcana-engine/abilities/target";
-import {
-  allYourCharacters,
-  anyCard,
-  anyNumberOfChosenCharacters,
-  chosenCharacterOfYours,
-  self,
-  targetCard,
-  thisCard,
-  thisCharacter,
-  topCardOfYourDeck,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { wheneverChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-import {
-  banishChosenCharacterOfYours,
-  banishChosenOpposingCharacter,
-  choseCharacterGainsReckless,
-  chosenCharacterCantChallengeDuringNextTurn,
-  chosenCharacterGainsEvasive,
-  chosenCharacterGainsRecklessDuringNextTurn,
-  chosenCharacterGainsResist,
-  chosenCharacterGainsRush,
-  chosenCharacterOfYoursGainsChallengerX,
-  chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
-  dealDamageEffect,
-  drawACard,
-  drawCardsUntilYouHaveSameNumberOfCardsAsOpponent,
-  drawXCards,
-  putCardFromYourHandOnTheTopOfYourDeck,
-  readyAndCantQuest,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type {
-  RevealTopCardEffect,
-  ShuffleEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
+  drawCardEffect,
+  putCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { targetOwnerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const youreWelcome: LorcanaActionCardDefinition = {
   id: "tri",
@@ -56,25 +13,34 @@ export const youreWelcome: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      name: "Shuffle chosen character, item, or location into their player's deck. That player draws 2 cards.",
-      type: "resolution",
-      dependentEffects: true,
-      resolveEffectsIndividually: true,
-      effects: [
+      type: "static",
+      text: "Shuffle chosen character, item, or location into their player's deck. That player draws 2 cards.",
+      targets: [
         {
-          // TODO: REVISIT THIS, this is hacky
-          type: "from-target-card-to-target-player",
-          player: "card-owner",
-          target: chosenCharacterItemOrLocation,
-          effects: [
-            drawXCards(2),
+          type: "card",
+          cardType: ["character", "item", "location"],
+          zone: "play",
+          count: 1,
+        },
+      ],
+      effects: [
+        putCardEffect({
+          to: "deck",
+          from: "play",
+          targets: [
             {
-              type: "shuffle",
-              target: chosenCharacterItemOrLocation,
+              type: "card",
+              cardType: ["character", "item", "location"],
+              zone: "play",
+              count: 1,
             },
           ],
-          // TODO: Fix this
-        } as unknown as TargetCardEffect,
+          shuffle: true,
+          followedBy: drawCardEffect({
+            targets: [targetOwnerTarget],
+            value: 2,
+          }),
+        }),
       ],
     },
   ],

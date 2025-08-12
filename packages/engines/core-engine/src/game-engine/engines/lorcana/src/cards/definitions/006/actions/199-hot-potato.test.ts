@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { aladdinHeroicOutlaw } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { fryingPan } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
 import { hotPotato } from "~/game-engine/engines/lorcana/src/cards/definitions/006/actions";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hot Potato", () => {
   it("Deal 2 damage to chosen character", () => {

@@ -32,12 +32,12 @@ describe("Vision of the Future", () => {
     await testEngine.resolveTopOfStack({
       scry: {
         bottom: [
-          hiramFlavershamToymaker,
-          pawpsicle,
-          iceBlock,
-          sisuEmpoweredSibling,
+          hiramFlavershamToymaker.id,
+          pawpsicle.id,
+          iceBlock.id,
+          sisuEmpoweredSibling.id,
         ],
-        hand: [mauiHeroToAll],
+        hand: [mauiHeroToAll.id],
       },
     });
 

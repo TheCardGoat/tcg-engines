@@ -1,36 +1,34 @@
+import { locationStat } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import { FOR_THE_REST_OF_THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
-  allYourCharacters,
-  chosenCharacterOfYoursAtLocation,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import {
-  readyAndCantQuest,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
+  gainLoreEffect,
+  restrictEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterOfYoursTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { youPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const iveGotADream: LorcanaActionCardDefinition = {
   id: "ntx",
   name: "I've Got a Dream",
   characteristics: ["action", "song"],
-  text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\n\nReady chosen character of yours at a location. They can't quest for the rest of this turn. Gain lore equal to that location {L}.",
+  text: "Ready chosen character of yours at a location. They can't quest for the rest of this turn. Gain lore equal to that location {L}.",
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Ready chosen character of yours at a location. They can't quest for the rest of this turn. Gain lore equal to that location {L}.",
       effects: [
-        ...readyAndCantQuest(chosenCharacterOfYoursAtLocation),
-        {
-          type: "create-layer-based-on-target",
-          resolveAmountBeforeCreatingLayer: true,
-          effects: [
-            youGainLore({
-              dynamic: true,
-              targetLocation: { attribute: "lore" },
-            }),
-          ],
-          // TODO: Get rid of target
-          target: allYourCharacters,
-        },
+        { type: "ready", targets: [chosenCharacterOfYoursTarget] },
+        restrictEffect({
+          targets: [chosenCharacterOfYoursTarget],
+          restriction: "quest",
+          duration: FOR_THE_REST_OF_THIS_TURN,
+        }),
+        gainLoreEffect({
+          targets: [youPlayerTarget],
+          value: locationStat("lore", "current"),
+        }),
       ],
     },
   ],

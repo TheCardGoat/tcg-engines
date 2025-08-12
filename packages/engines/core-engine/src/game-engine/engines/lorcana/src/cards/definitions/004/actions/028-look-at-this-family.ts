@@ -1,5 +1,4 @@
-import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+import { singerTogetherAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singTogetherAbility";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const lookAtThisFamily: LorcanaActionCardDefinition = {
@@ -12,26 +11,31 @@ export const lookAtThisFamily: LorcanaActionCardDefinition = {
   abilities: [
     singerTogetherAbility(7),
     {
-      type: "resolution",
+      type: "static",
+      text: "Look at the top 5 cards of your deck. You may reveal up to 2 character cards and put them into your hand. Put the rest on the bottom of your deck in any order.",
       effects: [
         {
           type: "scry",
-          amount: 5,
-          mode: "bottom",
-          shouldRevealTutored: true,
-          target: self,
-          limits: {
-            bottom: 5,
-            inkwell: 0,
-            hand: 2,
-            top: 0,
-            discard: 0,
+          parameters: {
+            lookAt: 5,
+            destinations: [
+              {
+                zone: "hand",
+                min: 0,
+                max: 2,
+                reveal: true,
+                filter: {
+                  type: ["character"],
+                },
+              },
+              {
+                zone: "deck",
+                position: "bottom",
+                remainder: true,
+                order: "any",
+              },
+            ],
           },
-          tutorFilters: [
-            { filter: "owner", value: "self" },
-            { filter: "zone", value: "deck" },
-            { filter: "type", value: "character" },
-          ],
         },
       ],
     },

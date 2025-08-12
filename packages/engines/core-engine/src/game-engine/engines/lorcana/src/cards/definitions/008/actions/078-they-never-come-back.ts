@@ -1,5 +1,13 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+import { DURING_THEIR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import {
+  drawCardEffect,
+  restrictEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  chosenCharacterTarget,
+  upToTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theyNeverComeBack: LorcanaActionCardDefinition = {
@@ -10,29 +18,28 @@ export const theyNeverComeBack: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      resolveEffectsIndividually: true,
+      type: "static",
+      text: "Up to 2 chosen characters can't ready at the start of their next turn. Draw a card.",
       effects: [
-        {
-          type: "restriction",
-          restriction: "ready-at-start-of-turn",
-          duration: "next_turn",
-          target: {
-            type: "card",
-            value: 2,
-            upTo: true,
-            filters: chosenCharacter.filters,
-          },
-        },
-        drawACard,
+        restrictEffect({
+          targets: [
+            upToTarget({
+              target: chosenCharacterTarget,
+              upTo: 2,
+            }),
+          ],
+          restriction: "ready",
+          duration: DURING_THEIR_NEXT_TURN,
+        }),
+        drawCardEffect({ targets: [selfPlayerTarget] }),
       ],
     },
   ],
   inkwell: true,
   colors: ["amethyst"],
   cost: 3,
-  illustrator: "Saulo Nate",
+  illustrator: "Javier Salas",
   number: 78,
   set: "008",
-  rarity: "uncommon",
+  rarity: "common",
 };

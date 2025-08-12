@@ -1,5 +1,4 @@
 import { describe, expect, it } from "bun:test";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { royalTantrum } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import {
   amberChromiconItem,
@@ -8,6 +7,7 @@ import {
   queensSensorCoreItem,
   retrosphere,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Royal Tantrum", () => {
   describe("Banish any number of your items, then draw a card for each item banished this way.", () => {

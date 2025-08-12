@@ -1,4 +1,5 @@
-import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+import { putCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { singerTogetherAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singTogetherAbility";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const underTheSea: LorcanaActionCardDefinition = {
@@ -10,27 +11,38 @@ export const underTheSea: LorcanaActionCardDefinition = {
   abilities: [
     singerTogetherAbility(8),
     {
-      type: "resolution",
-      effects: [
+      type: "static",
+      text: "Put all opposing characters with 2 {S} or less on the bottom of their players' decks in any order.",
+      targets: [
         {
-          type: "move",
-          to: "deck",
-          bottom: true,
-          target: {
-            type: "card",
-            value: "all",
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "play" },
-              { filter: "owner", value: "opponent" },
-              {
-                filter: "attribute",
-                value: "strength",
-                comparison: { operator: "lte", value: 2 },
-              },
-            ],
+          type: "card",
+          cardType: "character",
+          owner: "opponent",
+          zone: "play",
+          count: -1, // All opposing characters with 2 strength or less
+          filter: {
+            strength: { max: 2 },
           },
         },
+      ],
+      effects: [
+        putCardEffect({
+          to: "deck",
+          from: "play",
+          position: "bottom",
+          targets: [
+            {
+              type: "card",
+              cardType: "character",
+              owner: "opponent",
+              zone: "play",
+              count: -1,
+              filter: {
+                strength: { max: 2 },
+              },
+            },
+          ],
+        }),
       ],
     },
   ],

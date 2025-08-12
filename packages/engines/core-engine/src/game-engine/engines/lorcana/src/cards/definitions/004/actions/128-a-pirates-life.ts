@@ -1,5 +1,12 @@
-import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-import { opponent, self } from "@lorcanito/lorcana-engine/abilities/targets";
+import {
+  gainLoreEffect,
+  loseLoreEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { singerTogetherAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singTogetherAbility";
+import {
+  eachOpponentTarget,
+  youPlayerTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const aPiratesLife: LorcanaActionCardDefinition = {
@@ -11,20 +18,11 @@ export const aPiratesLife: LorcanaActionCardDefinition = {
   abilities: [
     singerTogetherAbility(6),
     {
-      type: "resolution",
+      type: "static",
+      text: "Each opponent loses 2 lore. You gain 2 lore.",
       effects: [
-        {
-          type: "lore",
-          modifier: "subtract",
-          amount: 2,
-          target: opponent,
-        },
-        {
-          type: "lore",
-          modifier: "add",
-          amount: 2,
-          target: self,
-        },
+        loseLoreEffect({ value: 2, targets: [eachOpponentTarget] }),
+        gainLoreEffect({ value: 2, targets: [youPlayerTarget] }),
       ],
     },
   ],

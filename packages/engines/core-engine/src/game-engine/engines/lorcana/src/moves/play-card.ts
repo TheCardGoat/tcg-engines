@@ -1,7 +1,7 @@
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { logger } from "~/game-engine/core-engine/utils/logger";
-import type { LorcanaEnumerableMove, LorcanaMove } from "./types";
-import { toLorcanaCoreOps } from "./types";
+import type { LorcanaCoreOperations } from "~/game-engine/engines/lorcana/src/operations/lorcana-core-operations";
+import type { LorcanaEnumerableMove } from "./types";
 
 // **4.3.4. Play a card**
 // **4.3.4.1.** The player announces which card from their hand they want to play, then reveals that card.
@@ -34,7 +34,7 @@ export const playCardMove: LorcanaEnumerableMove = {
     options?: PlayCardOptions,
   ) => {
     try {
-      const lorcanaOps = toLorcanaCoreOps(coreOps);
+      const lorcanaOps: LorcanaCoreOperations = coreOps;
       // Use getCtx instead of directly accessing ctx
       const ctx = lorcanaOps.getCtx();
 
@@ -268,21 +268,23 @@ export const playCardMove: LorcanaEnumerableMove = {
         );
       }
 
-      // Handle card-specific effects based on type
-      if (lorcanaCard.card.type.includes("Character")) {
-        // Characters enter play "wet" (cannot act immediately unless they have Rush)
-        // This should be handled by the card instance state
+      if (lorcanaCard.type === "character") {
+        coreOps.setCardMeta(lorcanaCard.instanceId, { playedThisTurn: true });
       }
-
-      // Add triggered effects to the bag (rule 8.7)
-      lorcanaOps.addTriggeredEffectsToTheBag("onPlay", instanceId);
 
       // For actions, resolve their effects immediately
-      if (lorcanaCard.card.type.includes("Action")) {
-        // Action effects would be resolved here
-        // This would need to be implemented based on the specific action
-        // Note: Actions resolve immediately rather than adding triggered effects
+      if (lorcanaCard.type === "action") {
+        // Wrap definition into a temporary LorcanaCard-like object for ability extraction
+        const temp =
+          new (require("~/game-engine/engines/lorcana/src/cards/lorcana-game-card").LorcanaCard)(
+            lorcanaCard.instanceId,
+            playerID,
+            lorcanaCard.card,
+          );
+        coreOps.addAbilitiesToResolve(temp as any);
       }
+
+      lorcanaOps.addTriggeredEffectsToTheBag("onPlay", instanceId);
 
       logger.info(
         `Player ${playerID} played card ${instanceId} for ${totalCost} ink${

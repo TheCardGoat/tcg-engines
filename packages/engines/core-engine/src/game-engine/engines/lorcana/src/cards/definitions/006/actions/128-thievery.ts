@@ -1,37 +1,11 @@
 import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenCharacterOrLocation,
-  chosenOpposingCharacter,
-  self,
-  sourceTarget,
-  thisCharacter,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+  gainLoreEffect,
+  loseLoreEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
 import {
-  banishChosenItem,
-  chosenCharacterGainsSupport,
-  chosenOpposingCharacterCantQuestNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardAllCardsInOpponentsHand,
-  drawACard,
-  drawXCards,
-  exertChosenCharacter,
-  mayBanish,
-  millOpponentXCards,
-  moveDamageEffect,
-  opponentLoseLore,
-  putDamageEffect,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyChosenItem,
-  returnChosenCharacterWithCostLess,
-  youGainLore,
-  youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { TargetConditionalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+  chosenOpponentTarget,
+  selfPlayerTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const thievery: LorcanaActionCardDefinition = {
@@ -43,10 +17,18 @@ export const thievery: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Thievery",
+      type: "static",
       text: "Chosen opponent loses 1 lore. Gain 1 lore.",
-      effects: [opponentLoseLore(1), youGainLore(1)],
+      effects: [
+        loseLoreEffect({
+          value: 1,
+          targets: [chosenOpponentTarget],
+        }),
+        gainLoreEffect({
+          value: 1,
+          targets: [selfPlayerTarget],
+        }),
+      ],
     },
   ],
   inkwell: true,

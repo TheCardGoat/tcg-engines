@@ -1,7 +1,6 @@
-import type {
-  BanishEffect,
-  LorcanitoActionCard,
-} from "@lorcanito/lorcana-engine";
+import { banishEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenItemOrLocationTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const riseOfTheTitans: LorcanaActionCardDefinition = {
   id: "ukw",
@@ -11,22 +10,10 @@ export const riseOfTheTitans: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Rise of the Titans",
+      type: "static",
       text: "Banish chosen location or item.",
-      effects: [
-        {
-          type: "banish",
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: ["location", "item"] },
-              { filter: "zone", value: "play" },
-            ],
-          },
-        } as BanishEffect,
-      ],
+      targets: [chosenItemOrLocationTarget],
+      effects: [banishEffect()],
     },
   ],
   flavour: "Oh, we're in trouble, big trouble! \n–Hermes",

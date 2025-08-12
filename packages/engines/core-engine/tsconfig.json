@@ -1,10 +1,6 @@
 {
   "include": ["src/**/*"],
-  "exclude": [
-    "node_modules",
-    "src/game-engine/engines/lorcana/src/cards/definitions/**/*.test.ts",
-    "src/game-engine/engines/lorcana/src/cards/definitions/**/*.spec.ts"
-  ],
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
@@ -21,8 +17,6 @@
     "paths": {
       "~/*": ["./src/*"],
       "@/*": ["./src/*"],
-      "@lorcanito/lorcana-engine": ["../../lorcana-engine/src/index.ts"],
-      "@lorcanito/lorcana-engine/*": ["../../lorcana-engine/src/*"],
       "@lorcanito/shared": ["../../shared/src"],
       "@lorcanito/shared/*": ["../../shared/src/*"]
     }

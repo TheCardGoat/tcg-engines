@@ -1,27 +1,25 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import type {
-  LorcanitoCharacterCard,
-  LorcanitoLocationCard,
-} from "@lorcanito/lorcana-engine";
-import { hiddenCoveTranquilHaven } from "@lorcanito/lorcana-engine/cards/004/locations/locations";
-import { taffytaMuttonfudgeSourSpeedster } from "@lorcanito/lorcana-engine/cards/005/characters/characters";
+  LorcanaCharacterCardDefinition,
+  LorcanaLocationCardDefinition,
+} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import { LorcanaTestEngine } from "../testing/lorcana-test-engine";
 import { mockCharacterCard, mockLocationCard } from "../testing/mockCards";
 
-const testCharacterCard: LorcanitoCharacterCard = {
+const testCharacterCard: LorcanaCharacterCardDefinition = {
   ...mockCharacterCard,
   id: "test-character-basic",
   name: "Test Character",
 };
 
-const testOpponentCharacterCard: LorcanitoCharacterCard = {
+const testOpponentCharacterCard: LorcanaCharacterCardDefinition = {
   ...mockCharacterCard,
   id: "test-character-opponent",
   name: "Test Character (Opponent)",
 };
 
 // Test location cards for testing move functionality
-const testLocationCard: LorcanitoLocationCard = {
+const testLocationCard: LorcanaLocationCardDefinition = {
   ...mockLocationCard,
   id: "test-location-basic",
   name: "Test Location",
@@ -29,7 +27,7 @@ const testLocationCard: LorcanitoLocationCard = {
   lore: 1,
 };
 
-const expensiveLocationCard: LorcanitoLocationCard = {
+const expensiveLocationCard: LorcanaLocationCardDefinition = {
   ...mockLocationCard,
   id: "test-location-expensive",
   name: "Expensive Location",
@@ -38,7 +36,7 @@ const expensiveLocationCard: LorcanitoLocationCard = {
   lore: 2,
 };
 
-const freeLocationCard: LorcanitoLocationCard = {
+const freeLocationCard: LorcanaLocationCardDefinition = {
   ...mockLocationCard,
   id: "test-location-free",
   name: "Free Location",
@@ -48,7 +46,7 @@ const freeLocationCard: LorcanitoLocationCard = {
   lore: 0,
 };
 
-const twentyLoreLocationCard: LorcanitoLocationCard = {
+const twentyLoreLocationCard: LorcanaLocationCardDefinition = {
   ...mockLocationCard,
   id: "test-location-twenty-lore",
   name: "Twenty Lore Location",
@@ -57,7 +55,7 @@ const twentyLoreLocationCard: LorcanitoLocationCard = {
   lore: 20, // High lore gain for testing
 };
 
-const freeOpponentLocationCard: LorcanitoLocationCard = {
+const freeOpponentLocationCard: LorcanaLocationCardDefinition = {
   ...mockLocationCard,
   id: "test-location-free-opponent",
   name: "Free Location (Opponent)",
@@ -268,38 +266,31 @@ describe("Move: Move Character to Location", () => {
 
   describe("**4.3.7.5** Triggered effects", () => {
     it("should trigger effects when character moves to location", () => {
-      const locationWithTrigger: LorcanitoLocationCard = {
+      const locationWithTrigger: LorcanaLocationCardDefinition = {
         ...mockLocationCard,
         id: "location-with-trigger",
         name: "Triggering Location",
         moveCost: 1,
         abilities: [
           {
-            type: "static-triggered",
-            trigger: { on: "moves-to-a-location" },
-            layer: {
-              effects: [
-                {
-                  type: "lore",
-                  modifier: "add",
-                  amount: 2,
-                },
-              ],
-            },
+            type: "triggered",
+            timing: "onMoveToLocation",
+            costs: { exert: false },
+            effects: [{ type: "gainLore", parameters: { value: 2 } }],
           },
         ],
       };
 
       const testEngine = new LorcanaTestEngine({
         inkwell: locationWithTrigger.moveCost,
-        play: [locationWithTrigger, taffytaMuttonfudgeSourSpeedster],
+        play: [locationWithTrigger, testCharacterCard],
       });
 
       expect(testEngine.getLoreForPlayer("player_one")).toBe(0);
 
       testEngine.moveToLocation({
         location: locationWithTrigger,
-        character: taffytaMuttonfudgeSourSpeedster,
+        character: testCharacterCard,
       });
 
       // After moving, effects should be in the bag. We need to resolve them.

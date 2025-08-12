@@ -1,6 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
-import { donaldDuckPerfectGentleman } from "@lorcanito/lorcana-engine/cards/002/characters/characters";
-import { goofyGroundbreakingChef } from "@lorcanito/lorcana-engine/cards/008/characters/characters";
+// Use local minimal characters if needed later; not required for basic pass-turn tests
 import {
   LorcanaTestEngine,
   testCharacterCard,
@@ -97,7 +96,7 @@ describe("Move: Pass Turn", () => {
         },
         {
           deck: 5,
-          play: [donaldDuckPerfectGentleman],
+          play: [testCharacterCard],
         },
       );
       expect(testEngine.getNumTurns()).toBe(1);
@@ -107,7 +106,7 @@ describe("Move: Pass Turn", () => {
       // For now we're adding two items, but in the future we'd like to have only one item. Given that there's just one ability with two targets
       expect(testEngine.bag).toHaveLength(2);
 
-      // According to Lorcana rules 8.7.4-8.7.5, the trigger controller (player_two, who owns Donald Duck)
+      // According to Lorcana rules 8.7.4-8.7.5, the trigger controller (player_two)
       // resolves all of their triggers first. Since both triggers are controlled by player_two,
       // only player_two should be able to resolve both triggers.
       testEngine.changeActivePlayer("player_two");
@@ -123,7 +122,7 @@ describe("Move: Pass Turn", () => {
       const testEngine = new LorcanaTestEngine(
         {
           deck: 5,
-          play: [goofyGroundbreakingChef],
+          play: [testCharacterCard],
         },
         {
           deck: 5,

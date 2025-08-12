@@ -1,52 +1,8 @@
-import type {
-  CardEffectTarget,
-  LorcanitoActionCard,
-  ResolutionAbility,
-  TargetCardEffect,
-} from "@lorcanito/lorcana-engine";
-import { foodFightAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 import {
-  chosenCharacter,
-  chosenCharacterItemOrLocation,
-  opposingCharactersWithEvasive,
-  opposingCharactersWithoutEvasive,
-} from "@lorcanito/lorcana-engine/abilities/target";
-import {
-  allYourCharacters,
-  anyCard,
-  anyNumberOfChosenCharacters,
-  chosenCharacterOfYours,
-  self,
-  targetCard,
-  thisCard,
-  thisCharacter,
-  topCardOfYourDeck,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { wheneverChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-import {
-  banishChosenCharacterOfYours,
-  banishChosenOpposingCharacter,
-  choseCharacterGainsReckless,
-  chosenCharacterCantChallengeDuringNextTurn,
-  chosenCharacterGainsEvasive,
-  chosenCharacterGainsRecklessDuringNextTurn,
-  chosenCharacterGainsResist,
-  chosenCharacterGainsRush,
-  chosenCharacterOfYoursGainsChallengerX,
-  chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
   dealDamageEffect,
-  drawACard,
-  drawCardsUntilYouHaveSameNumberOfCardsAsOpponent,
-  drawXCards,
-  putCardFromYourHandOnTheTopOfYourDeck,
-  readyAndCantQuest,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type {
-  RevealTopCardEffect,
-  ShuffleEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
+  modalEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const tugofwar: LorcanaActionCardDefinition = {
   id: "r3r",
@@ -56,25 +12,43 @@ export const tugofwar: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Choose one:\n• Deal 1 damage to each opposing character without **Evasive**.\n• Deal 3 damage to each opposing character with **Evasive**.",
       effects: [
-        {
-          type: "modal",
-          // TODO: Get rid of target
-          target: chosenCharacter,
-          modes: [
-            {
-              id: "1",
-              text: "Deal 1 damage to each opposing character without **Evasive**.",
-              effects: [dealDamageEffect(1, opposingCharactersWithoutEvasive)],
-            },
-            {
-              id: "2",
-              text: "Deal 3 damage to each opposing character with **Evasive**.",
-              effects: [dealDamageEffect(3, opposingCharactersWithEvasive)],
-            },
-          ],
-        },
+        modalEffect([
+          {
+            text: "Deal 1 damage to each opposing character without Evasive.",
+            effects: [
+              dealDamageEffect({
+                targets: [
+                  {
+                    type: "card",
+                    cardType: "character",
+                    owner: "opponent",
+                    withoutKeyword: "evasive",
+                  },
+                ],
+                value: 1,
+              }),
+            ],
+          },
+          {
+            text: "Deal 3 damage to each opposing character with Evasive.",
+            effects: [
+              dealDamageEffect({
+                targets: [
+                  {
+                    type: "card",
+                    cardType: "character",
+                    owner: "opponent",
+                    withKeyword: "evasive",
+                  },
+                ],
+                value: 3,
+              }),
+            ],
+          },
+        ]),
       ],
     },
   ],

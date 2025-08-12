@@ -1,6 +1,14 @@
 import { CoreOperation } from "~/game-engine/core-engine/engine/core-operation";
 import { logger } from "~/game-engine/core-engine/utils";
-import type { TriggerTiming } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import {
+  Ability,
+  type LayerItem,
+  type LorcanaAbility,
+  type TriggerTiming,
+} from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import { shouldAutoResolveLayer } from "~/game-engine/engines/lorcana/src/abilities/should-auto-resolve-layer";
+import type { LorcanaCard } from "~/game-engine/engines/lorcana/src/cards/lorcana-game-card";
+import { addAbilitiesToResolve } from "~/game-engine/engines/lorcana/src/operations/modules/add-abilities-to-resolve";
 import type { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import type { LorcanaCardDefinition, LorcanaEngine } from "../lorcana-engine";
 import type {
@@ -22,7 +30,7 @@ import {
   questWithCharacter as questWithCharacterImpl,
   readyAllCharacters as readyAllCharactersImpl,
   readyAllInk as readyAllInkImpl,
-  resolveBagTrigger as resolveBagTriggerImpl,
+  resolveLayerItem as resolveBagTriggerImpl,
 } from "./modules";
 
 /**
@@ -208,8 +216,51 @@ export class LorcanaCoreOperations extends CoreOperation<
     addTriggeredEffectsToTheBagImpl.call(this, { timing, cardInstanceId });
   }
 
-  resolveBagTrigger(id: string): void {
-    resolveBagTriggerImpl.call(this, id);
+  addAbilitiesToResolve(source: LorcanaCard) {
+    if (!source) {
+      logger.error("Cannot add abilities to resolve: source is undefined");
+      return;
+    }
+
+    addAbilitiesToResolve.call(this, source);
+  }
+
+  resolveLayer(layer?: LayerItem): void {
+    if (!layer) {
+      logger.error("Cannot resolve layer: layer is undefined");
+      return;
+    }
+
+    resolveBagTriggerImpl.call(this, layer);
+  }
+
+  removeLayer(layer: LayerItem, type: "trigger" | "non-trigger"): void {
+    if (!layer) {
+      logger.error("Cannot remove layer: layer is undefined");
+      return;
+    }
+
+    if (type === "trigger") {
+      // Remove from the bag if it's a trigger layer
+      const index = this.state.G.bag.findIndex((l) => l.id === layer.id);
+      if (index !== -1) {
+        this.state.G.bag.splice(index, 1);
+        logger.debug(`Removed trigger layer ${layer.id} from the bag`);
+      } else {
+        logger.warn(`Trigger layer ${layer.id} not found in the bag`);
+      }
+    }
+
+    if (type === "non-trigger") {
+      // Remove from effects if it's a non-trigger layer
+      const index = this.state.G.effects.findIndex((l) => l.id === layer.id);
+      if (index !== -1) {
+        this.state.G.effects.splice(index, 1);
+        logger.debug(`Removed non-trigger layer ${layer.id} from effects`);
+      } else {
+        logger.warn(`Non-trigger layer ${layer.id} not found in effects`);
+      }
+    }
   }
 
   /**
@@ -231,6 +282,31 @@ export class LorcanaCoreOperations extends CoreOperation<
       logger.log(
         `DEBUG: Player ${playerId} gains ${lore} lore from triggered effect (total: ${playerState.lore})`,
       );
+    }
+  }
+
+  canAddAbilityToResolve(ability: LorcanaAbility, source: LorcanaCard) {
+    // Check conditions for adding abilities
+
+    // check if there's valid targets for the abilities
+
+    return true;
+  }
+
+  addAbilityToResolve(ability: LorcanaAbility, source: LorcanaCard) {
+    const responder = "";
+    const layerItem: LayerItem = {
+      id: `${this.state.G.effects.length}_${responder}_${source.instanceId}_${source.publicId}`,
+      sourceCardId: source.instanceId,
+      controllerId: responder,
+      ability: ability,
+    };
+    this.state.G.effects.push(layerItem);
+
+    if (shouldAutoResolveLayer(layerItem)) {
+      // If the layer should auto-resolve, we can resolve it immediately
+      this.resolveLayer(layerItem);
+      this.removeLayer(layerItem, "non-trigger");
     }
   }
 }

@@ -194,9 +194,10 @@ export const moveCharacter: LorcanaMove = {
       // Auto-resolve any triggered effects from moving to location (rule 4.3.7.6)
       // This ensures immediate effect resolution for movement triggers
       while (G.bag && G.bag.length > 0) {
-        const triggerId = G.bag[0].id;
+        const layer = G.bag[0];
         logger.debug("Auto Resolving");
-        lorcanaOps.resolveBagTrigger(triggerId);
+        lorcanaOps.resolveLayer(layer);
+        lorcanaOps.removeLayer(layer, "trigger");
       }
 
       logger.info(

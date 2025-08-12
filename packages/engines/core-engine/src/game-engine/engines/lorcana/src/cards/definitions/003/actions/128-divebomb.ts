@@ -1,3 +1,8 @@
+import { banishEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  chosenCharacterWithLessStrengthThanPreviousTarget,
+  yourCharacterWithKeywordTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const divebomb: LorcanaActionCardDefinition = {
@@ -9,10 +14,16 @@ export const divebomb: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Banish one of your characters with **Reckless** to banish chosen character with less {S} than that character.",
+      type: "static",
       text: "Banish one of your characters with **Reckless** to banish chosen character with less {S} than that character.",
-      effects: [],
+      effects: [
+        banishEffect({
+          targets: [yourCharacterWithKeywordTarget("reckless")],
+          followedBy: banishEffect({
+            targets: [chosenCharacterWithLessStrengthThanPreviousTarget()],
+          }),
+        }),
+      ],
     },
   ],
   inkwell: true,

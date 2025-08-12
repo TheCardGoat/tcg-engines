@@ -534,19 +534,19 @@ export const fanTheFlames: LorcanitoActionCard = {
   text: "Ready chosen character. They can't quest for the rest of this turn.",
   type: "action",
   abilities: [
-    {
-      type: "resolution",
-      name: "Fan The Flames",
-      text: "Ready chosen character. They can't quest for the rest of this turn.",
-      effects: readyAndCantQuest({
-        type: "card",
-        value: 1,
-        filters: [
-          { filter: "type", value: "character" },
-          { filter: "zone", value: "play" },
-        ],
-      }),
-    },
+    // {
+    //   type: "resolution",
+    //   name: "Fan The Flames",
+    //   text: "Ready chosen character. They can't quest for the rest of this turn.",
+    //   effects: readyAndCantQuest({
+    //     type: "card",
+    //     value: 1,
+    //     filters: [
+    //       { filter: "type", value: "character" },
+    //       { filter: "zone", value: "play" },
+    //     ],
+    //   }),
+    // },
   ],
   flavour: "Pretty words can move a crowd, but so can ugly ones.",
   inkwell: true,

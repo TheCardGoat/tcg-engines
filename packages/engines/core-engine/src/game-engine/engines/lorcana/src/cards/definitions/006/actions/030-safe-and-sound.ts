@@ -1,5 +1,6 @@
-import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/target";
-import { allCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+import { UNTIL_START_OF_YOUR_NEXT_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
+import { restrictEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterOfYoursTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const safeAndSound: LorcanaActionCardDefinition = {
@@ -10,29 +11,15 @@ export const safeAndSound: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Safe And Sound",
+      type: "static",
       text: "Chosen character of yours can't be challenged until the start of your next turn.",
+      targets: [chosenCharacterOfYoursTarget],
       effects: [
-        {
-          type: "ability",
-          ability: "custom",
-          modifier: "add",
-          duration: "next_turn",
-          until: true,
-          target: chosenCharacterOfYours,
-          customAbility: {
-            type: "static",
-            ability: "effects",
-            effects: [
-              {
-                type: "protection",
-                from: "challenge",
-                target: allCharacters,
-              },
-            ],
-          },
-        },
+        restrictEffect({
+          targets: [chosenCharacterOfYoursTarget],
+          restriction: "challengeable",
+          duration: UNTIL_START_OF_YOUR_NEXT_TURN,
+        }),
       ],
     },
   ],

@@ -4,10 +4,10 @@ import {
   minnieMouseBelovedPrincess,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { underTheSea } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
-import {
-  agustinMadrigalClumsyDad,
-  arielSingingMermaid,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { agustinMadrigalClumsyDad } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+
+const arielSingingMermaid = { id: "arielSingingMermaid", strength: 3 } as any;
+
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Under The Sea", () => {

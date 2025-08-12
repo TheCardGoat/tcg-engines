@@ -1,4 +1,9 @@
-import { chosenItem } from "@lorcanito/lorcana-engine/abilities/targets";
+import {
+  banishEffect,
+  gainLoreEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenItemTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { targetOwnerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const glean: LorcanaActionCardDefinition = {
@@ -9,20 +14,16 @@ export const glean: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Glean",
+      type: "static",
       text: "Banish chosen item. Its owner gains 2 lore.",
       effects: [
-        {
-          type: "banish",
-          target: chosenItem,
-        },
-        {
-          type: "lore",
-          amount: 2,
-          modifier: "add",
-          target: { type: "player", value: "target_owner" },
-        },
+        banishEffect({
+          targets: [chosenItemTarget],
+          followedBy: gainLoreEffect({
+            targets: [targetOwnerTarget],
+            value: 2,
+          }),
+        }),
       ],
     },
   ],

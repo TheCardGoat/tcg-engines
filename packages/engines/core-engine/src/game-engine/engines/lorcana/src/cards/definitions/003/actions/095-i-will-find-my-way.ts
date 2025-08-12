@@ -1,8 +1,9 @@
-import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
+import { THIS_TURN } from "~/game-engine/engines/lorcana/src/abilities/duration";
 import {
-  getStrengthThisTurn,
-  moveToLocation,
-} from "@lorcanito/lorcana-engine/effects/effects";
+  getEffect,
+  moveToLocationEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { chosenCharacterOfYoursTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const iWillFindMyWay: LorcanaActionCardDefinition = {
@@ -13,10 +14,21 @@ export const iWillFindMyWay: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
+      text: "Chosen character of yours gets +2 {S} this turn. They may move to a location for free.",
+      targets: [chosenCharacterOfYoursTarget],
       effects: [
-        getStrengthThisTurn(2, chosenCharacterOfYours),
-        moveToLocation(chosenCharacterOfYours),
+        getEffect({
+          targets: [chosenCharacterOfYoursTarget],
+          attribute: "strength",
+          value: 2,
+          duration: THIS_TURN,
+        }),
+        moveToLocationEffect({
+          targets: [chosenCharacterOfYoursTarget],
+          cost: 0,
+          optional: true,
+        }),
       ],
     },
   ],

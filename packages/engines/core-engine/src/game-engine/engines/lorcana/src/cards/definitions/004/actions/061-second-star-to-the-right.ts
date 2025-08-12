@@ -1,6 +1,6 @@
-import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-import { chosenPlayer } from "@lorcanito/lorcana-engine/abilities/targets";
-import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
+import { drawCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { singerTogetherAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singTogetherAbility";
+import { chosenPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const secondStarToTheRight: LorcanaActionCardDefinition = {
@@ -13,8 +13,10 @@ export const secondStarToTheRight: LorcanaActionCardDefinition = {
   abilities: [
     singerTogetherAbility(10),
     {
-      type: "resolution",
-      effects: [drawXCards(5, chosenPlayer)],
+      type: "static",
+      text: "Chosen player draws 5 cards.",
+      targets: [chosenPlayerTarget],
+      effects: [drawCardEffect({ value: 5 })],
     },
   ],
   flavour: "Lead us to the land we dream of",

@@ -1,8 +1,10 @@
-import type {
-  DamageEffect,
-  LorcanitoActionCard,
-} from "@lorcanito/lorcana-engine";
-import { singerTogetherAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { singerTogetherAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singTogetherAbility";
+import {
+  chosenCharacterOrLocationTarget,
+  upToTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theMobSong: LorcanaActionCardDefinition = {
   id: "h6n",
@@ -13,21 +15,16 @@ export const theMobSong: LorcanaActionCardDefinition = {
   abilities: [
     singerTogetherAbility(10),
     {
-      type: "resolution",
+      type: "static",
+      text: "Deal 3 damage to up to 3 chosen characters and/or locations.",
       effects: [
-        {
-          type: "damage",
-          amount: 3,
-          target: {
-            type: "card",
-            value: 3,
-            upTo: true,
-            filters: [
-              { filter: "zone", value: "play" },
-              { filter: "type", value: ["character", "location"] },
-            ],
-          },
-        } as DamageEffect,
+        dealDamageEffect({
+          value: 3,
+          targets: upToTarget({
+            target: chosenCharacterOrLocationTarget,
+            upTo: 3,
+          }),
+        }),
       ],
     },
   ],

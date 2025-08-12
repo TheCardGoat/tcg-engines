@@ -1,4 +1,9 @@
-import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+import {
+  drawCardEffect,
+  putCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { upToTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const itCallsMe: LorcanaActionCardDefinition = {
@@ -10,24 +15,24 @@ export const itCallsMe: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      name: "Draw a card. Shuffle up to 3 cards from your opponent's discard into your opponent's deck.",
-      resolveEffectsIndividually: true,
+      type: "static",
+      text: "Draw a card. Shuffle up to 3 cards from your opponent's discard into your opponent's deck.",
       effects: [
-        drawACard,
-        {
-          type: "shuffle",
-          amount: 3,
-          target: {
-            type: "card",
-            value: 3,
-            upTo: true,
-            filters: [
-              { filter: "zone", value: "discard" },
-              { filter: "owner", value: "opponent" },
-            ],
-          },
-        },
+        drawCardEffect({ targets: [selfPlayerTarget] }),
+        putCardEffect({
+          to: "deck",
+          from: "discard",
+          targets: upToTarget({
+            target: {
+              type: "card",
+              zone: "discard",
+              owner: "opponent",
+              count: 1,
+            },
+            upTo: 3,
+          }),
+          shuffle: true,
+        }),
       ],
     },
   ],

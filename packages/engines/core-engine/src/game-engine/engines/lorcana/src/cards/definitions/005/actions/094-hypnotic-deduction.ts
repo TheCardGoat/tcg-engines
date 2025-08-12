@@ -1,52 +1,9 @@
-import type {
-  CardEffectTarget,
-  LorcanitoActionCard,
-  ResolutionAbility,
-  TargetCardEffect,
-} from "@lorcanito/lorcana-engine";
-import { foodFightAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
 import {
-  chosenCharacter,
-  chosenCharacterItemOrLocation,
-  opposingCharactersWithEvasive,
-  opposingCharactersWithoutEvasive,
-} from "@lorcanito/lorcana-engine/abilities/target";
-import {
-  allYourCharacters,
-  anyCard,
-  anyNumberOfChosenCharacters,
-  chosenCharacterOfYours,
-  self,
-  targetCard,
-  thisCard,
-  thisCharacter,
-  topCardOfYourDeck,
-  yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { wheneverChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-import {
-  banishChosenCharacterOfYours,
-  banishChosenOpposingCharacter,
-  choseCharacterGainsReckless,
-  chosenCharacterCantChallengeDuringNextTurn,
-  chosenCharacterGainsEvasive,
-  chosenCharacterGainsRecklessDuringNextTurn,
-  chosenCharacterGainsResist,
-  chosenCharacterGainsRush,
-  chosenCharacterOfYoursGainsChallengerX,
-  chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
-  dealDamageEffect,
-  drawACard,
-  drawCardsUntilYouHaveSameNumberOfCardsAsOpponent,
-  drawXCards,
-  putCardFromYourHandOnTheTopOfYourDeck,
-  readyAndCantQuest,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type {
-  RevealTopCardEffect,
-  ShuffleEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
+  drawCardEffect,
+  putCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { selfPlayerTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/player-target";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const hypnoticDeduction: LorcanaActionCardDefinition = {
   id: "z2p",
@@ -56,13 +13,24 @@ export const hypnoticDeduction: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      name: "Draw 3 cards, then put 2 cards from your hand on the top of your deck in any order.",
-      type: "resolution",
-      resolveEffectsIndividually: true,
+      type: "static",
+      text: "Draw 3 cards, then put 2 cards from your hand on the top of your deck in any order.",
       effects: [
-        drawXCards(3),
-        putCardFromYourHandOnTheTopOfYourDeck,
-        putCardFromYourHandOnTheTopOfYourDeck,
+        drawCardEffect({ targets: [selfPlayerTarget], value: 3 }),
+        putCardEffect({
+          to: "deck",
+          from: "hand",
+          position: "top",
+          targets: [
+            {
+              type: "card",
+              zone: "hand",
+              owner: "self",
+              count: 2,
+            },
+          ],
+          order: "any",
+        }),
       ],
     },
   ],

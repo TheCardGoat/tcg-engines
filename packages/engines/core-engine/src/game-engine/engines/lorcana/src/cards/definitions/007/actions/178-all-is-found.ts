@@ -1,7 +1,6 @@
-import { allIsFoundAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
+import { putCardEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { upToTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-export type LorcanaActionCardDefinition = any;
 
 export const allIsFound: LorcanaActionCardDefinition = {
   id: "prl",
@@ -9,7 +8,26 @@ export const allIsFound: LorcanaActionCardDefinition = {
   characteristics: ["song", "action"],
   text: "Put up to 2 cards from your discard into your inkwell, facedown and exerted.",
   type: "action",
-  abilities: [allIsFoundAbility],
+  abilities: [
+    {
+      type: "static",
+      text: "Put up to 2 cards from your discard into your inkwell, facedown and exerted.",
+      effects: [
+        putCardEffect({
+          to: "inkwell",
+          from: "discard",
+          targets: upToTarget({
+            target: {
+              type: "card",
+              zone: "discard",
+              count: 1,
+            },
+            upTo: 2,
+          }),
+        }),
+      ],
+    },
+  ],
   inkwell: true,
   colors: ["sapphire"],
   cost: 5,

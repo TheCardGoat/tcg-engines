@@ -1,4 +1,12 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+import { upToValue } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import {
+  removeDamageEffect,
+  returnCardEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import {
+  chosenCharacterFromDiscardTarget,
+  chosenCharacterTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const brunosReturn: LorcanaActionCardDefinition = {
@@ -9,28 +17,18 @@ export const brunosReturn: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
-      text: "Return a character card from your discard to your hand.",
-      resolveEffectsIndividually: true,
+      type: "static",
+      text: "Return a character card from your discard to your hand. Then remove up to 2 damage from chosen character.",
       effects: [
-        {
-          type: "move",
+        returnCardEffect({
           to: "hand",
-          target: {
-            type: "card",
-            value: 1,
-            filters: [
-              { filter: "type", value: "character" },
-              { filter: "zone", value: "discard" },
-              { filter: "owner", value: "self" },
-            ],
-          },
-        },
-        {
-          type: "heal",
-          amount: 2,
-          target: chosenCharacter,
-        },
+          from: "discard",
+          targets: [chosenCharacterFromDiscardTarget],
+        }),
+        removeDamageEffect({
+          targets: [chosenCharacterTarget],
+          value: upToValue(2),
+        }),
       ],
     },
   ],

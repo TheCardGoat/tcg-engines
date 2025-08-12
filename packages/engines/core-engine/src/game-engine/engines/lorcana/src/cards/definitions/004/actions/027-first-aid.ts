@@ -1,4 +1,6 @@
-import { eachOfYourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+import { upToValue } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
+import { removeDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/effect";
+import { yourCharactersTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/card-target";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const firstAid: LorcanaActionCardDefinition = {
@@ -10,14 +12,13 @@ export const firstAid: LorcanaActionCardDefinition = {
   type: "action",
   abilities: [
     {
-      type: "resolution",
+      type: "static",
       text: "Remove up to 1 damage from each of your characters.",
+      targets: [yourCharactersTarget],
       effects: [
-        {
-          type: "heal",
-          amount: 1,
-          target: eachOfYourCharacters,
-        },
+        removeDamageEffect({
+          value: upToValue(1),
+        }),
       ],
     },
   ],
