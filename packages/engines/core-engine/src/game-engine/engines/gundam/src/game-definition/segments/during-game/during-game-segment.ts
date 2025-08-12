@@ -1,10 +1,8 @@
 import { getCurrentTurnPlayer } from "~/game-engine/core-engine";
-import type { SegmentConfig } from "~/game-engine/core-engine/game/structure/segment";
-import type { GundamGameState } from "~/game-engine/engines/gundam/src/gundam-engine-types";
+import type { GundamSegmentConfig } from "~/game-engine/engines/gundam/src/game-definition/segments/types";
 import { gundamMoves } from "~/game-engine/engines/gundam/src/moves/moves";
-import type { GundamCoreOperations } from "~/game-engine/engines/gundam/src/operations/gundam-core-operations";
 
-export const duringGameSegment: SegmentConfig<GundamGameState> = {
+export const duringGameSegment: GundamSegmentConfig = {
   next: "endGame",
 
   endIf: ({ G }) => {
@@ -32,7 +30,7 @@ export const duringGameSegment: SegmentConfig<GundamGameState> = {
         onBegin: ({ G, coreOps }) => {
           const ctx = coreOps.getCtx();
           const currentTurnPlayer = getCurrentTurnPlayer(ctx);
-          (coreOps as GundamCoreOperations).drawCard(currentTurnPlayer);
+          coreOps.drawCard(currentTurnPlayer);
           return G;
         },
       },
