@@ -1,3 +1,4 @@
+import { endMainPhaseMove } from "~/game-engine/engines/gundam/src/moves/endMainPhase";
 import type { GundamGameState } from "../gundam-engine-types";
 import { chooseFirstPlayer } from "./chooseFirstPlayer";
 import { concede } from "./concede";
@@ -31,7 +32,7 @@ export const gundamMoves = {
   playCommand: ({ G }: { G: GundamGameState }) => G,
   activateMain: ({ G }: { G: GundamGameState }) => G,
   attackWithUnit: ({ G }: { G: GundamGameState }) => G,
-  endMainPhase: ({ G }: { G: GundamGameState }) => G,
+  endMainPhase: endMainPhaseMove,
 
   // End Phase moves
   activateAction: ({ G }: { G: GundamGameState }) => G,
