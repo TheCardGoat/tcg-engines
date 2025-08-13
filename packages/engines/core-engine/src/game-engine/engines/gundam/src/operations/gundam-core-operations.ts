@@ -39,6 +39,45 @@ export class GundamCoreOperations extends CoreOperation<
     this.updateCardMeta(cardId, { isExerted: false });
   }
 
+  readyAllCards(playerId: string): void {
+    const cards = this.getCardsInZone("battleArea", playerId).concat(
+      this.getCardsInZone("resourceArea", playerId).concat(
+        this.getCardsInZone("baseSection", playerId),
+      ),
+    );
+
+    for (const card of cards) {
+      this.readyCard(card.instanceId);
+    }
+
+    logger.debug(`Ready all cards for player ${playerId}`);
+  }
+
+  addResourceToResourceArea(playerId: string): void {
+    const resourceDeck = this.getCardsInZone("resourceDeck", playerId);
+    if (!resourceDeck.length) {
+      logger.error("No resource card available to add to resource area");
+      return;
+    }
+    const topCardInResourceDeck = resourceDeck[0];
+    if (!topCardInResourceDeck) {
+      logger.error("No resource card found in resource area");
+      return;
+    }
+
+    this.moveCard({
+      playerId,
+      from: "resourceDeck",
+      to: "resourceArea",
+      instanceId: topCardInResourceDeck.instanceId,
+      destination: "end",
+    });
+
+    logger.debug(
+      `Added resource card ${topCardInResourceDeck.instanceId} to player ${playerId}'s resource area`,
+    );
+  }
+
   /**
    * Pair a pilot with a unit
    */
