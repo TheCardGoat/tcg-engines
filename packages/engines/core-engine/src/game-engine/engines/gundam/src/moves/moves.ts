@@ -1,3 +1,5 @@
+import { deployBaseMove } from "~/game-engine/engines/gundam/src/moves/deployBaseMove";
+import { deployUnitMove } from "~/game-engine/engines/gundam/src/moves/deployUnitMove";
 import { endMainPhaseMove } from "~/game-engine/engines/gundam/src/moves/endMainPhase";
 import type { GundamGameState } from "../gundam-engine-types";
 import { chooseFirstPlayer } from "./chooseFirstPlayer";
@@ -26,8 +28,8 @@ export const gundamMoves = {
   playResource: playResourceMove,
 
   // Main Phase moves
-  deployUnit: ({ G }: { G: GundamGameState }) => G,
-  deployBase: ({ G }: { G: GundamGameState }) => G,
+  deployUnit: deployUnitMove,
+  deployBase: deployBaseMove,
   pairPilot: ({ G }: { G: GundamGameState }) => G,
   playCommand: ({ G }: { G: GundamGameState }) => G,
   activateMain: ({ G }: { G: GundamGameState }) => G,

@@ -79,6 +79,72 @@ export class GundamCoreOperations extends CoreOperation<
   }
 
   /**
+   * Play a card from the player's hand
+   * 7-5-2-2. When playing a card from the hand, follow the steps listed below.
+   * 7-5-2-2-1. Reveal the card you wish to play from your hand.
+   * 7-5-2-2-2. Confirm you have a sufficient number of Resources to fulfill its Lv. condition.
+   * 7-5-2-2-3. Choose the number of Resources necessary to pay its cost and rest them.
+   * 7-5-2-2-4. Play the card. (See 3. Card Types)
+   */
+  playCardFromHand(
+    playerId: string,
+    cardInstanceId: string,
+    destinationZone: "battleArea" | "resourceArea" | "baseSection",
+  ): void {
+    // 7-5-2-2-1. Reveal the card you wish to play from your hand.
+    const hand = this.getCardsInZone("hand", playerId);
+    const cardToPlay = hand.find((card) => card.instanceId === cardInstanceId);
+    if (!cardToPlay) {
+      logger.error(`Card ${cardInstanceId} not found in hand`);
+      return;
+    }
+
+    // 7-5-2-2-2. Confirm you have a sufficient number of Resources to fulfill its Lv. condition.
+    if (!cardToPlay.hasEnoughLevel()) {
+      logger.error(
+        `Not enough resources to play card ${cardInstanceId} for player ${playerId}`,
+      );
+      return;
+    }
+
+    // 7-5-2-2-3. Choose the number of Resources necessary to pay its cost and rest them.
+    const availableResources = this.getCardsInZone(
+      "resourceArea",
+      playerId,
+    ).filter(
+      (gundamModel) => !this.getCardMeta(gundamModel.instanceId).isExerted,
+    );
+    const requiredResources = this.getCardMeta(cardInstanceId).cost || 0;
+    if (availableResources.length < requiredResources) {
+      logger.error(
+        `Not enough available resources to play card ${cardInstanceId} for player ${playerId}`,
+      );
+      return;
+    }
+
+    // Exert the required resources
+    for (let i = 0; i < requiredResources; i++) {
+      const resourceCard = availableResources[i];
+      this.exertCard(resourceCard.instanceId);
+      logger.debug(
+        `Exerted resource card ${resourceCard.instanceId} for player ${playerId}`,
+      );
+    }
+
+    this.moveCard({
+      playerId,
+      from: "hand",
+      to: destinationZone,
+      instanceId: cardInstanceId,
+      destination: "end",
+    });
+
+    logger.debug(
+      `Played card ${cardInstanceId} from hand to ${destinationZone} for player ${playerId}`,
+    );
+  }
+
+  /**
    * Pair a pilot with a unit
    */
   pairPilotWithUnit(pilotId: string, unitId: string): void {
@@ -86,6 +152,11 @@ export class GundamCoreOperations extends CoreOperation<
     this.updateCardMeta(unitId, { isPaired: true, pairedWith: pilotId });
     logger.debug(`Paired pilot ${pilotId} with unit ${unitId}`);
   }
+
+  /**
+   * Pair a pilot with a unit
+   */
+  deployUnit(cardInstanceId: string): void {}
 
   /**
    * Unpair a card from its paired card

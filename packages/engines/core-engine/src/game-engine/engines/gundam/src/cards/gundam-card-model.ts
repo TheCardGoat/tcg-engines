@@ -40,17 +40,12 @@ export class GundamModel extends CoreCardInstance<GundamCardDefinition> {
     return {};
   }
 
-  canBePlayed(): boolean {
+  hasEnoughLevel(): boolean {
     if (!this.engine) return false;
-    const gameState = this.engine.getGameState();
-    const availableHaro = this.engine.getZonesCardCount(
+    const currentLevel = this.engine.getZonesCardCount(
       this.ownerId,
     ).resourceArea;
-    return (
-      this.zone === "hand" &&
-      availableHaro >= (this.card as any).cost &&
-      gameState.ctx.currentPhase === "mainPhase"
-    );
+    return currentLevel >= (this.card as any).level;
   }
 
   canAttachTo(targetCardId: string): boolean {

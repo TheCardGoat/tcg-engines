@@ -23,8 +23,7 @@ export const duringGameSegment: GundamSegmentConfig = {
               // 7-2-3. Active Step
               // 7-2-3-1. The active player sets to active all rested cards placed in their battle area, resource area, and base section.
               // 7-2-3-2. All cards are set to active simultaneously during the active step, and in no particular order.
-              const ctx = coreOps.getCtx();
-              const currentTurnPlayer = getCurrentTurnPlayer(ctx);
+              const currentTurnPlayer = coreOps.getCurrentTurnPlayer();
               coreOps.readyAllCards(currentTurnPlayer);
               return G;
             },
