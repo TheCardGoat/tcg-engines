@@ -39,7 +39,8 @@ describe("Beyond The Horizon", () => {
       },
     );
 
-    await testEngine.playCard(beyondTheHorizon, { mode: "1" });
+    await testEngine.playCard(beyondTheHorizon);
+    await testEngine.resolveTopOfStack({ mode: "1" });
 
     expect(testEngine.getZonesCardCount("player_one")).toEqual(
       expect.objectContaining({
@@ -77,7 +78,8 @@ describe("Beyond The Horizon", () => {
       },
     );
 
-    await testEngine.playCard(beyondTheHorizon, { mode: "2" });
+    await testEngine.playCard(beyondTheHorizon);
+    await testEngine.resolveTopOfStack({ mode: "2" });
 
     expect(testEngine.getZonesCardCount("player_one")).toEqual(
       expect.objectContaining({
@@ -115,7 +117,8 @@ describe("Beyond The Horizon", () => {
       },
     );
 
-    await testEngine.playCard(beyondTheHorizon, { mode: "3" });
+    await testEngine.playCard(beyondTheHorizon);
+    await testEngine.resolveTopOfStack({ mode: "3" });
 
     expect(testEngine.getZonesCardCount("player_one")).toEqual(
       expect.objectContaining({
