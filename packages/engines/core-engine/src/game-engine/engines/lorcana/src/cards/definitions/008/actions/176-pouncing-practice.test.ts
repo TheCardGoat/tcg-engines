@@ -19,15 +19,15 @@ describe("Pouncing Practice", () => {
       },
     );
 
-    await testEngine.playCard(
-      pouncingPractice,
-      { targets: [khanWarHorse] },
-      true,
-    );
+    await testEngine.playCard(pouncingPractice);
+
+    // First effect: reduce strength of chosen character
+    await testEngine.resolveTopOfStack({ targets: [khanWarHorse] });
     expect(testEngine.getCardModel(khanWarHorse).strength).toBe(
       khanWarHorse.strength - 2,
     );
 
+    // Second effect: grant Evasive to your character
     await testEngine.resolveTopOfStack({
       targets: [jumbaJookibaCriticalScientist],
     });

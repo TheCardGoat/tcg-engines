@@ -26,7 +26,7 @@ export const pouncingPractice: LorcanaActionCardDefinition = {
   abilities: [
     {
       type: "static",
-      text: "Chosen character gets -2 {S} this turn. Chosen character of yours gains Evasive this turn.",
+      text: "Chosen character gets -2 {S} this turn.",
       effects: [
         getEffect({
           targets: [chosenCharacterTarget],
@@ -34,6 +34,12 @@ export const pouncingPractice: LorcanaActionCardDefinition = {
           value: -2,
           duration: FOR_THE_REST_OF_THIS_TURN,
         }),
+      ],
+    },
+    {
+      type: "static",
+      text: "Chosen character of yours gains Evasive this turn.",
+      effects: [
         gainsAbilityEffect({
           targets: [chosenCharacterOfYoursTarget],
           ability: evasiveAbility,
