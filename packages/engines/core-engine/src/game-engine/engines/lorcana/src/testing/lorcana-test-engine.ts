@@ -778,11 +778,49 @@ export class LorcanaTestEngine {
   }
 
   /**
-   * Stub for resolving the top of the stack. No-op for type-checking.
+   * Resolve the top ability on the effects stack with optional target selection.
+   * This is used for action cards and other effects that require targets.
+   *
+   * @param opts - Optional parameters including targetId for selecting targets
+   * @returns this for chaining
    */
-  resolveTopOfStack(_opts?: any, _optional?: boolean) {
-    // No-op stub for type checking
-    return this as any;
+  resolveTopOfStack(opts?: { targetId?: string; targets?: any[] }) {
+    const state = this.authoritativeEngine.getStore().state;
+    const effects = state.G.effects;
+
+    if (effects.length === 0) {
+      logger.warn("No effects on stack to resolve");
+      return this;
+    }
+
+    // Get the top effect (last in array)
+    const topEffect = effects[effects.length - 1];
+
+    // If targetId is provided, store it in the layer for the resolver to use
+    if (opts?.targetId) {
+      // Store selected targets in the layer
+      (topEffect as any).selectedTargets = [opts.targetId];
+    } else if (opts?.targets) {
+      // Support array of targets
+      (topEffect as any).selectedTargets = opts.targets.map((t: any) =>
+        typeof t === "string" ? t : t.instanceId,
+      );
+    }
+
+    // Resolve the layer by creating a proper LorcanaCoreOperations instance
+    const {
+      LorcanaCoreOperations,
+    } = require("~/game-engine/engines/lorcana/src/operations/lorcana-core-operations");
+    const engine = this.authoritativeEngine;
+
+    const ops = new LorcanaCoreOperations({ state, engine });
+    ops.resolveLayer(topEffect);
+    ops.removeLayer(topEffect, "non-trigger");
+
+    // Propagate state changes
+    this.wasMoveExecutedAndPropagated();
+
+    return this;
   }
 
   /**
@@ -936,14 +974,7 @@ LorcanaTestEngine.prototype.getCard = function (
   return this.getCardModel(card as any, index);
 };
 
-// Additional legacy stack helpers to accept any args
-LorcanaTestEngine.prototype.resolveTopOfStack = async function (
-  this: LorcanaTestEngine,
-  _opts?: any,
-  _optional?: boolean,
-) {
-  // No-op stub for legacy tests
-};
+// REMOVED: resolveTopOfStack stub - now implemented in class above (lines 787-829)
 
 LorcanaTestEngine.prototype.acceptOptionalLayer = async function (
   this: LorcanaTestEngine,
@@ -1014,11 +1045,7 @@ Object.defineProperty(LorcanaCardInstance.prototype, "damage", {
   },
 });
 
-Object.defineProperty(LorcanaCardInstance.prototype, "strength", {
-  get(this: LorcanaCardInstance) {
-    return (this.card as any).strength || 0;
-  },
-});
+// REMOVED: strength getter - now defined in LorcanaCardInstance class itself with modifier support
 
 Object.defineProperty(LorcanaCardInstance.prototype, "cost", {
   get(this: LorcanaCardInstance) {

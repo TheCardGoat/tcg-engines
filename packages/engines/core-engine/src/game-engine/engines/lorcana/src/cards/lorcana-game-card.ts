@@ -70,11 +70,15 @@ export class LorcanaCard extends GameCard<LorcanaCardDefinition> {
   }
 
   get strength(): number {
-    return (this.definition as any).strength || 0;
+    const baseStrength = (this.definition as any).strength || 0;
+    const modifier = this.meta?.modifiers?.strength || 0;
+    return baseStrength + modifier;
   }
 
   get willpower(): number {
-    return (this.definition as any).willpower || 0;
+    const baseWillpower = (this.definition as any).willpower || 0;
+    const modifier = this.meta?.modifiers?.willpower || 0;
+    return baseWillpower + modifier;
   }
 
   // Lorcana-specific type checks
