@@ -109,15 +109,39 @@ export class LorcanaCoreOperations extends CoreOperation<
    * Apply damage to a character or location (Lorcana-specific damage system)
    * Damage accumulates on the card until it's banished or healed
    */
-  applyDamage(cardId: string, damage: number): void {
+  applyDamage(
+    cardId: string,
+    damage: number,
+    source?: "challenges" | "abilities" | "spells" | "all",
+  ): void {
     if (damage <= 0) return; // No damage to apply
 
+    // Check for damage immunity
+    const meta = this.getCardMeta(cardId);
+    if (meta.damageImmunities && Array.isArray(meta.damageImmunities)) {
+      const hasImmunity = meta.damageImmunities.some((immunity: any) => {
+        if (!immunity.sources || immunity.sources.length === 0) {
+          return true; // Immunity with no sources means immune to all
+        }
+        return (
+          immunity.sources.includes(source) || immunity.sources.includes("all")
+        );
+      });
+
+      if (hasImmunity) {
+        logger.debug(
+          `${cardId} is immune to damage from ${source || "unknown source"}`,
+        );
+        return; // Don't apply damage if immune
+      }
+    }
+
     // Add damage to existing damage (damage accumulates)
-    const currentDamage = this.getCardMeta(cardId).damage || 0;
+    const currentDamage = meta.damage || 0;
     this.updateCardMeta(cardId, { damage: currentDamage + damage });
 
     logger.debug(
-      `Applied ${damage} damage to ${cardId}, total damage: ${this.getCardMeta(cardId).damage}`,
+      `Applied ${damage} damage to ${cardId} from ${source || "unknown source"}, total damage: ${this.getCardMeta(cardId).damage}`,
     );
   }
 
