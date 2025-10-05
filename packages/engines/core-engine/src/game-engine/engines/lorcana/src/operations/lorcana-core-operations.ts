@@ -288,6 +288,18 @@ export class LorcanaCoreOperations extends CoreOperation<
   canAddAbilityToResolve(ability: LorcanaAbility, source: LorcanaCard) {
     // Check conditions for adding abilities
 
+    // Skip singer abilities - they should only be added when the card is sung, not played
+    if (
+      ability.type === "keyword" &&
+      ((ability as any).keyword === "sing-together" ||
+        (ability as any).keyword === "sing")
+    ) {
+      logger.debug(
+        `Skipping singer ability for ${source.name} (should only execute when sung)`,
+      );
+      return false;
+    }
+
     // check if there's valid targets for the abilities
 
     return true;

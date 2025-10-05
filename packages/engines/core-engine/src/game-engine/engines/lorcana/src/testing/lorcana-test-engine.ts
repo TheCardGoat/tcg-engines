@@ -1266,7 +1266,7 @@ Object.defineProperty(LorcanaCardInstance.prototype, "hasQuestRestriction", {
     // Check meta for dynamic restrictions
     const meta = this.meta;
     if (meta?.restrictions && Array.isArray(meta.restrictions)) {
-      return meta.restrictions.some((r: any) => r.restriction === "quest");
+      return meta.restrictions.some((r: any) => r.type === "quest");
     }
 
     return false;
