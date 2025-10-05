@@ -7,7 +7,7 @@ import {
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Forest Duel", () => {
-  it("Your characters gain Challenger +2 and \"When this character is banished in a challenge, return this card to your hand\" this turn. (They get +2 {S} while challenging.)", async () => {
+  it('Your characters gain Challenger +2 and "When this character is banished in a challenge, return this card to your hand" this turn. (They get +2 {S} while challenging.)', async () => {
     const testEngine = new TestEngine(
       {
         inkwell: forestDuel.cost,

@@ -1065,9 +1065,10 @@ LorcanaTestEngine.prototype.singSongTogether = async function (
 };
 
 Object.defineProperty(LorcanaTestEngine.prototype, "stackLayers", {
-  get() {
-    // Empty stack for legacy tests that only need shape
-    return [] as any[];
+  get(this: LorcanaTestEngine) {
+    // Return the actual effects stack from the authoritative engine
+    const state = this.authoritativeEngine.getGameState();
+    return state?.G.effects || [];
   },
 });
 

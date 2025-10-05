@@ -37,35 +37,13 @@ describe("Wrong Lever!", () => {
       },
     );
 
-    // Verify pullTheLever is actually in discard before we start
-    console.log("pullTheLever definition:", {
-      id: pullTheLever.id,
-      name: pullTheLever.name,
-      type: pullTheLever.type,
-    });
-
-    const discardCards = testEngine.getZone("player_one", "discard");
-    console.log(
-      "Cards in discard at start:",
-      discardCards.map((c: any) => c.card?.name || c.name),
-    );
-    console.log("Discard card count:", discardCards.length);
-
-    // Try to get the card model
-    try {
-      const model = testEngine.getCardModel(pullTheLever);
-      console.log("Found pullTheLever model:", {
-        zone: model.zone,
-        instanceId: model.instanceId,
-      });
-    } catch (e: any) {
-      console.log("Error getting pullTheLever model:", e.message);
-    }
+    // Verify pullTheLever is in discard before playing the action
+    const pullLeverModel = testEngine.getCardModel(pullTheLever);
+    expect(pullLeverModel.zone).toBe("discard");
 
     await testEngine.playCard(wrongLeverAction);
 
     await testEngine.resolveTopOfStack({ mode: "2" });
-    await testEngine.resolveTopOfStack({ targets: [pullTheLever] });
     expect(testEngine.getCardModel(pullTheLever).zone).toBe("deck");
     expect(testEngine.stackLayers).toHaveLength(1);
 

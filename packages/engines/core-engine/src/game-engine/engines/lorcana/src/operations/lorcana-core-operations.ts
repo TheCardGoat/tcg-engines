@@ -369,6 +369,25 @@ export class LorcanaCoreOperations extends CoreOperation<
         );
       }
 
+      // Filter by card name if specified
+      if (cardTarget.withName) {
+        logger.debug(
+          `resolveTargets: Filtering by withName: ${cardTarget.withName}`,
+        );
+        filteredCards = filteredCards.filter((card: any) => {
+          const cardName =
+            card?.name || card?.definition?.name || card?.card?.name;
+          const matches = cardName === cardTarget.withName;
+          logger.debug(
+            `Name filter check: cardName="${cardName}", targetName="${cardTarget.withName}", matches=${matches}`,
+          );
+          return matches;
+        });
+        logger.debug(
+          `resolveTargets: After name filtering: ${filteredCards.length} cards`,
+        );
+      }
+
       // For now, take the first N cards based on count (or all if targetAll)
       if (cardTarget.targetAll) {
         targets.push(...filteredCards);
