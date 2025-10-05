@@ -123,7 +123,10 @@ export function resolveLayerItem(
                   logger.debug(
                     `Auto-resolving targets for followedBy banish. targetDefs count: ${targetDefs.length}`,
                   );
-                  targetCards = this.resolveTargets(targetDefs, sourceCard);
+                  targetCards = this.resolveTargets(
+                    targetDefs,
+                    sourceCard as any,
+                  );
                 }
 
                 logger.debug(
@@ -168,20 +171,38 @@ export function resolveLayerItem(
         case "draw": {
           // Use value property, with fallback to 1 if not provided
           const valueParam = effect.parameters?.value || 1;
-          const target = effect.parameters?.target;
 
-          // Determine which player should draw the card
-          let targetPlayerId = trigger.controllerId;
-          if (target && !Array.isArray(target) && target.type === "player") {
-            const playerTarget = target as PlayerTarget;
-            if (playerTarget.value === "opponent") {
-              // Find the opponent of the controller
-              const allPlayers = Object.keys(this.state.ctx.players);
-              targetPlayerId =
-                allPlayers.find((p) => p !== trigger.controllerId) ||
-                trigger.controllerId;
-            } else if (playerTarget.value === "self") {
-              targetPlayerId = trigger.controllerId;
+          // Check both effect.targets and effect.parameters.target
+          const targets =
+            effect.targets ||
+            (effect.parameters?.target ? [effect.parameters.target] : []);
+
+          // Determine which players should draw cards
+          const targetPlayerIds: string[] = [];
+
+          if (targets.length === 0) {
+            // Default to controller if no targets specified
+            targetPlayerIds.push(trigger.controllerId);
+          } else {
+            for (const target of targets) {
+              if (target.type === "player") {
+                const playerTarget = target as PlayerTarget;
+                if (
+                  playerTarget.value === "opponent" ||
+                  (playerTarget.value as any) === "eachOpponent"
+                ) {
+                  // Find all opponents of the controller
+                  const allPlayers = Object.keys(this.state.ctx.players);
+                  const opponents = allPlayers.filter(
+                    (p) => p !== trigger.controllerId,
+                  );
+                  targetPlayerIds.push(...opponents);
+                } else if (playerTarget.value === "self") {
+                  targetPlayerIds.push(trigger.controllerId);
+                } else if (playerTarget.value === "all") {
+                  targetPlayerIds.push(...Object.keys(this.state.ctx.players));
+                }
+              }
             }
           }
 
@@ -203,8 +224,11 @@ export function resolveLayerItem(
             }
           }
 
-          for (let i = 0; i < amountValue; i++) {
-            this.drawCard(targetPlayerId, 1);
+          // Draw for each target player
+          for (const playerId of targetPlayerIds) {
+            for (let i = 0; i < amountValue; i++) {
+              this.drawCard(playerId, 1);
+            }
           }
           break;
         }
@@ -224,7 +248,7 @@ export function resolveLayerItem(
                   targetPlayerIds.push(trigger.controllerId);
                 } else if (
                   target.value === "opponent" ||
-                  target.value === "eachOpponent"
+                  (target.value as any) === "eachOpponent"
                 ) {
                   // Find opponent(s)
                   const allPlayers = Object.keys(this.state.ctx.players);
@@ -232,7 +256,10 @@ export function resolveLayerItem(
                     (p) => p !== trigger.controllerId,
                   );
                   targetPlayerIds.push(...opponents);
-                } else if (target.value === "each" || target.value === "all") {
+                } else if (
+                  (target.value as any) === "each" ||
+                  target.value === "all"
+                ) {
                   // All players
                   targetPlayerIds.push(...Object.keys(this.state.ctx.players));
                 }
@@ -318,7 +345,7 @@ export function resolveLayerItem(
             logger.debug(
               `Auto-resolving targets for restrict. targetDefs count: ${targetDefs.length}`,
             );
-            targetCards = this.resolveTargets(targetDefs, sourceCard);
+            targetCards = this.resolveTargets(targetDefs, sourceCard as any);
           }
 
           logger.debug(
@@ -349,7 +376,7 @@ export function resolveLayerItem(
             cardMeta.restrictions.push({
               type: restriction,
               duration,
-              appliedTurn: this.state.G.turnCount || 0,
+              appliedTurn: (this.state.G as any).turnCount || 0,
               appliedBy: sourceCard?.instanceId,
             });
 
@@ -408,7 +435,7 @@ export function resolveLayerItem(
               cardType,
               remainingCount: count,
               duration,
-              appliedTurn: this.state.G.turnCount || 0,
+              appliedTurn: (this.state.G as any).turnCount || 0,
             });
 
             logger.debug(
@@ -431,12 +458,40 @@ export function resolveLayerItem(
           // Stat modification effect (e.g., +5 strength this turn)
           const attribute = effect.parameters?.attribute;
           const valueParam = effect.parameters?.value || 0;
-          const value = typeof valueParam === "object" ? 0 : valueParam;
+          let value = typeof valueParam === "object" ? 0 : valueParam;
           const duration = effect.duration;
 
           if (!attribute) {
             logger.warn("Get effect missing attribute parameter");
             break;
+          }
+
+          // Handle dynamic values for get
+          if (typeof valueParam === "object" && valueParam.type === "count") {
+            // Count cards matching the filter
+            const filter = valueParam.filter;
+            if (filter) {
+              // Convert filter to target format for resolveTargets
+              const countTarget = {
+                type: "card" as const,
+                ...filter,
+                targetAll: true, // We want to count all matching cards
+              };
+              const matchingCards = this.resolveTargets(
+                [countTarget],
+                sourceCard,
+              );
+              value = matchingCards.length;
+              logger.debug(
+                `Resolved dynamic count value for get: ${value} cards match filter`,
+                {
+                  filter,
+                  matchingCardNames: matchingCards.map(
+                    (c) => c?.name || "unknown",
+                  ),
+                },
+              );
+            }
           }
 
           // Get target cards - either from selectedTargets (manual selection) or auto-resolve
@@ -460,7 +515,7 @@ export function resolveLayerItem(
             logger.debug(
               `About to resolve targets. targetDefs count: ${targetDefs.length}`,
             );
-            targetCards = this.resolveTargets(targetDefs, sourceCard);
+            targetCards = this.resolveTargets(targetDefs, sourceCard as any);
           }
 
           logger.debug(
@@ -508,7 +563,7 @@ export function resolveLayerItem(
                 attribute,
                 value,
                 duration,
-                appliedTurn: this.state.G.turnCount || 0,
+                appliedTurn: (this.state.G as any).turnCount || 0,
                 appliedBy: sourceCard?.instanceId,
               });
             }
@@ -571,7 +626,10 @@ export function resolveLayerItem(
                     .filter(Boolean);
                 } else {
                   const targetDefs = modeEffect.targets || [];
-                  targetCards = this.resolveTargets(targetDefs, sourceCard);
+                  targetCards = this.resolveTargets(
+                    targetDefs,
+                    sourceCard as any,
+                  );
                 }
 
                 logger.debug(
@@ -617,7 +675,7 @@ export function resolveLayerItem(
                         targetPlayerIds.push(trigger.controllerId);
                       } else if (
                         target.value === "opponent" ||
-                        target.value === "eachOpponent"
+                        (target.value as any) === "eachOpponent"
                       ) {
                         const allPlayers = Object.keys(this.state.ctx.players);
                         const opponents = allPlayers.filter(
@@ -625,7 +683,7 @@ export function resolveLayerItem(
                         );
                         targetPlayerIds.push(...opponents);
                       } else if (
-                        target.value === "each" ||
+                        (target.value as any) === "each" ||
                         target.value === "all"
                       ) {
                         targetPlayerIds.push(
@@ -696,7 +754,7 @@ export function resolveLayerItem(
                         targetPlayerIds.push(trigger.controllerId);
                       } else if (
                         playerTarget.value === "opponent" ||
-                        playerTarget.value === "eachOpponent"
+                        (playerTarget.value as any) === "eachOpponent"
                       ) {
                         const allPlayers = Object.keys(this.state.ctx.players);
                         const opponents = allPlayers.filter(
@@ -704,7 +762,7 @@ export function resolveLayerItem(
                         );
                         targetPlayerIds.push(...opponents);
                       } else if (
-                        playerTarget.value === "each" ||
+                        (playerTarget.value as any) === "each" ||
                         playerTarget.value === "all"
                       ) {
                         targetPlayerIds.push(
@@ -749,12 +807,12 @@ export function resolveLayerItem(
                 // Move card effect within modal (e.g., "Return chosen character to hand", "Put card to bottom of deck")
                 const toZone =
                   modeEffect.parameters?.zoneTo ||
-                  modeEffect.parameters?.to ||
+                  (modeEffect.parameters as any)?.to ||
                   "hand";
                 const fromZone =
                   modeEffect.parameters?.zoneFrom ||
-                  modeEffect.parameters?.from;
-                const position = modeEffect.parameters?.position; // "top" or "bottom" for deck
+                  (modeEffect.parameters as any)?.from;
+                const position = (modeEffect.parameters as any)?.position; // "top" or "bottom" for deck
 
                 // Get target cards
                 let targetCards: any[] = [];
@@ -780,7 +838,10 @@ export function resolveLayerItem(
                   logger.debug(
                     `Auto-resolving targets for moveCard (modal). targetDefs count: ${targetDefs.length}, fromZone: ${fromZone}`,
                   );
-                  targetCards = this.resolveTargets(targetDefs, sourceCard);
+                  targetCards = this.resolveTargets(
+                    targetDefs,
+                    sourceCard as any,
+                  );
                 }
 
                 // Check if any targets were found
@@ -964,7 +1025,7 @@ export function resolveLayerItem(
             logger.debug(
               `Auto-resolving targets for removeDamage. targetDefs count: ${targetDefs.length}, shouldAutoResolve: ${shouldAutoResolve}`,
             );
-            targetCards = this.resolveTargets(targetDefs, sourceCard);
+            targetCards = this.resolveTargets(targetDefs, sourceCard as any);
           }
 
           logger.debug(
@@ -1002,9 +1063,12 @@ export function resolveLayerItem(
         case "moveCard": {
           // Move card effect (e.g., "Return chosen character to their player's hand")
           const toZone =
-            effect.parameters?.zoneTo || effect.parameters?.to || "hand";
+            effect.parameters?.zoneTo ||
+            (effect.parameters as any)?.to ||
+            "hand";
           const fromZone =
-            effect.parameters?.zoneFrom || effect.parameters?.from;
+            effect.parameters?.zoneFrom || (effect.parameters as any)?.from;
+          const exerted = effect.parameters?.exerted;
 
           // Get target cards
           let targetCards: any[] = [];
@@ -1024,13 +1088,14 @@ export function resolveLayerItem(
             logger.debug(
               `Auto-resolving targets for moveCard. targetDefs count: ${targetDefs.length}`,
             );
-            targetCards = this.resolveTargets(targetDefs, sourceCard);
+            targetCards = this.resolveTargets(targetDefs, sourceCard as any);
           }
 
           logger.debug(
             `Moving ${targetCards.length} card(s) from ${fromZone || "any zone"} to ${toZone}`,
             {
               targetCardNames: targetCards.map((c) => c?.name || "unknown"),
+              exerted,
             },
           );
 
@@ -1046,9 +1111,16 @@ export function resolveLayerItem(
               to: toZone,
             });
 
+            // Set exerted state if specified
+            if (exerted !== undefined) {
+              this.setCardMeta(targetCard.instanceId, { exerted });
+              logger.debug(`Set exerted=${exerted} for ${targetCard.name}`);
+            }
+
             logger.debug(`Moved ${targetCard.name} to ${ownerId}-${toZone}`, {
               from: currentZone,
               to: `${ownerId}-${toZone}`,
+              exerted,
             });
           }
 
@@ -1057,8 +1129,34 @@ export function resolveLayerItem(
             logger.debug(
               `Processing followedBy effect after moveCard: ${effect.followedBy.type}`,
             );
-            // Process the followedBy effect inline (recursive call to handle the next effect)
             const followedByEffect = effect.followedBy;
+
+            // Check if followedBy effect requires manual targeting
+            const followedByTargets = followedByEffect.targets || [];
+            const requiresTargeting = followedByTargets.some(
+              (t: any) =>
+                (t.count === undefined || t.count > 0) && t.type === "card",
+            );
+
+            if (requiresTargeting) {
+              // Push followedBy effect as a new layer for manual targeting
+              logger.debug(
+                "followedBy effect requires targeting, creating new layer",
+              );
+              this.addAbilitiesToResolve({
+                instanceId: sourceCard?.instanceId || "",
+                name: sourceCard?.name || "Unknown",
+                abilities: [
+                  {
+                    type: "static",
+                    effects: [followedByEffect],
+                  },
+                ],
+              } as any);
+              break; // Exit the moveCard case
+            }
+
+            // Process the followedBy effect inline if no targeting required
             switch (followedByEffect.type) {
               case "moveCard": {
                 // Another moveCard effect (e.g., "return item from discard to hand")
@@ -1161,11 +1259,11 @@ export function resolveLayerItem(
             logger.debug(
               `Auto-resolving targets for gainsAbility. targetDefs count: ${targetDefs.length}`,
             );
-            targetCards = this.resolveTargets(targetDefs, sourceCard);
+            targetCards = this.resolveTargets(targetDefs, sourceCard as any);
           }
 
           logger.debug(
-            `Granting ability "${ability.keyword || ability.text?.substring(0, 20)}..." to ${targetCards.length} cards`,
+            `Granting ability "${(ability as any).keyword || ability.text?.substring(0, 20)}..." to ${targetCards.length} cards`,
             {
               duration: duration?.type,
               targetCardNames: targetCards.map((c) => c?.name || "unknown"),
@@ -1191,12 +1289,12 @@ export function resolveLayerItem(
             cardMeta.grantedAbilities.push({
               ability,
               duration,
-              appliedTurn: this.state.G.turnCount || 0,
+              appliedTurn: (this.state.G as any).turnCount || 0,
               appliedBy: sourceCard?.instanceId,
             });
 
             logger.debug(`Granted ability to ${targetCard.name}`, {
-              ability: ability.keyword || "custom ability",
+              ability: (ability as any).keyword || "custom ability",
               duration: duration?.type,
             });
           }
@@ -1224,7 +1322,7 @@ export function resolveLayerItem(
             logger.debug(
               `Auto-resolving targets for banish. targetDefs count: ${targetDefs.length}`,
             );
-            targetCards = this.resolveTargets(targetDefs, sourceCard);
+            targetCards = this.resolveTargets(targetDefs, sourceCard as any);
           }
 
           logger.debug(`Banishing ${targetCards.length} cards`, {
@@ -1350,7 +1448,7 @@ export function resolveLayerItem(
             logger.debug(
               `Auto-resolving targets for ready. targetDefs count: ${targetDefs.length}`,
             );
-            targetCards = this.resolveTargets(targetDefs, sourceCard);
+            targetCards = this.resolveTargets(targetDefs, sourceCard as any);
           }
 
           logger.debug(`Readying ${targetCards.length} cards`, {
@@ -1366,6 +1464,42 @@ export function resolveLayerItem(
                 instanceId: targetCard.instanceId,
               });
             }
+          }
+          break;
+        }
+        case "exertCard": {
+          // Exert card effect (e.g., "Exert chosen character")
+          // Get target cards - either from selectedTargets (manual selection) or auto-resolve
+          let targetCards: any[] = [];
+
+          if ((trigger as any).selectedTargets) {
+            const selectedIds = (trigger as any).selectedTargets;
+            logger.debug(
+              `Using manually selected targets for exertCard: ${selectedIds.join(", ")}`,
+            );
+            targetCards = selectedIds
+              .map((id: string) =>
+                this.engine.cardInstanceStore.getCardByInstanceId(id),
+              )
+              .filter(Boolean);
+          } else {
+            const targetDefs = effect.targets || trigger.ability?.targets || [];
+            logger.debug(
+              `Auto-resolving targets for exertCard. targetDefs count: ${targetDefs.length}`,
+            );
+            targetCards = this.resolveTargets(targetDefs, sourceCard as any);
+          }
+
+          logger.debug(`Exerting ${targetCards.length} cards`, {
+            targetCardNames: targetCards.map((c) => c?.name || "unknown"),
+          });
+
+          // Exert each target card
+          for (const targetCard of targetCards) {
+            this.setCardMeta(targetCard.instanceId, { exerted: true });
+            logger.debug(`Exerted ${targetCard.name}`, {
+              instanceId: targetCard.instanceId,
+            });
           }
           break;
         }
@@ -1392,7 +1526,7 @@ export function resolveLayerItem(
             logger.debug(
               `Auto-resolving targets for damageImmunity. targetDefs count: ${targetDefs.length}`,
             );
-            targetCards = this.resolveTargets(targetDefs, sourceCard);
+            targetCards = this.resolveTargets(targetDefs, sourceCard as any);
           }
 
           logger.debug(
@@ -1423,7 +1557,7 @@ export function resolveLayerItem(
             cardMeta.damageImmunities.push({
               sources,
               duration,
-              appliedTurn: this.state.G.turnCount || 0,
+              appliedTurn: (this.state.G as any).turnCount || 0,
               appliedBy: sourceCard?.instanceId,
             });
 
@@ -1485,7 +1619,7 @@ export function resolveLayerItem(
             logger.debug(
               `Auto-resolving targets for dealDamage. targetDefs count: ${targetDefs.length}`,
             );
-            targetCards = this.resolveTargets(targetDefs, sourceCard);
+            targetCards = this.resolveTargets(targetDefs, sourceCard as any);
           }
 
           logger.debug(
@@ -1550,7 +1684,7 @@ export function resolveLayerItem(
                 for (const playerTarget of drawTargets) {
                   const playerId =
                     playerTarget.player === "opponent"
-                      ? this.engine.getOpponentId(
+                      ? (this.engine as any).getOpponentId(
                           sourceCard?.ownerId || trigger.controllerId,
                         )
                       : playerTarget.player === "self"
@@ -1584,7 +1718,11 @@ export function resolveLayerItem(
             break;
           }
 
-          const playerId = sourceCard?.ownerId || trigger.controllerId;
+          // Determine target player - use targetPlayer if provided (for cards like Water Has Memory),
+          // otherwise default to the card's owner/controller
+          const targetPlayer = (trigger as any).targetPlayer;
+          const playerId =
+            targetPlayer || sourceCard?.ownerId || trigger.controllerId;
           const deckZone = this.getZone("deck", playerId);
 
           if (!(deckZone && deckZone.cards) || deckZone.cards.length === 0) {
@@ -1597,6 +1735,163 @@ export function resolveLayerItem(
             scryParams,
           });
 
+          // Validate scryParams against destination constraints
+          // If any card is invalid, reject the entire scry operation
+          for (const [zone, cardInstanceIds] of Object.entries(scryParams)) {
+            if (
+              !Array.isArray(cardInstanceIds) ||
+              cardInstanceIds.length === 0
+            ) {
+              continue;
+            }
+
+            // Map "top"/"bottom" to "deck" with position "top"/"bottom" for validation
+            const normalizedZone =
+              zone === "top" || zone === "bottom" ? "deck" : zone;
+            // Track the position from the zone name for matching
+            const zonePosition =
+              zone === "top" ? "top" : zone === "bottom" ? "bottom" : undefined;
+
+            // Find ALL destinations for this zone
+            // If zone was "top" or "bottom", match both zone and position
+            const zoneDestinations = (destinations || []).filter((d) => {
+              if (d.zone !== normalizedZone) return false;
+              // If we have a specific position from the zone name, match it
+              if (zonePosition && d.position !== zonePosition) return false;
+              return true;
+            });
+
+            if (zoneDestinations.length === 0) {
+              continue;
+            }
+
+            // Track cards matched to each destination for max constraint validation
+            const cardsPerDestination = new Map<any, string[]>();
+
+            // For each card, check if it matches at least one destination
+            for (const cardInstanceId of cardInstanceIds as string[]) {
+              const card =
+                this.engine.cardInstanceStore.getCardByInstanceId(
+                  cardInstanceId,
+                );
+
+              if (!card) {
+                logger.warn(
+                  `Card ${cardInstanceId} not found for scry validation`,
+                );
+                return; // Invalid move - reject
+              }
+
+              // Check if card matches any of the destinations for this zone
+              let matchingDestination: any = null;
+
+              for (const destination of zoneDestinations) {
+                // If destination has no filter and no max constraint, or is a remainder, it matches everything
+                if (
+                  !destination.filter &&
+                  (destination.remainder || destination.max === undefined)
+                ) {
+                  matchingDestination = destination;
+                  break;
+                }
+
+                // Check filter constraints if present
+                if (destination.filter) {
+                  let matchesFilter = true;
+
+                  // Check cardType filter
+                  if (
+                    destination.filter.cardType &&
+                    card.card.type !== destination.filter.cardType
+                  ) {
+                    matchesFilter = false;
+                  }
+
+                  // Check withCharacteristics filter
+                  if (
+                    matchesFilter &&
+                    destination.filter.withCharacteristics &&
+                    Array.isArray(destination.filter.withCharacteristics)
+                  ) {
+                    const hasAllCharacteristics =
+                      destination.filter.withCharacteristics.every(
+                        (char: string) =>
+                          card.card.characteristics?.includes(char),
+                      );
+                    if (!hasAllCharacteristics) {
+                      matchesFilter = false;
+                    }
+                  }
+
+                  // Check withSubtypes filter (check both card.subtypes and card.name for madrigal)
+                  if (
+                    matchesFilter &&
+                    destination.filter.withSubtypes &&
+                    Array.isArray(destination.filter.withSubtypes)
+                  ) {
+                    const hasAllSubtypes =
+                      destination.filter.withSubtypes.every(
+                        (subtype: string) => {
+                          const subtypeLower = subtype.toLowerCase();
+                          return (
+                            card.card.subtypes?.some(
+                              (s) => s.toLowerCase() === subtypeLower,
+                            ) ||
+                            card.card.versions?.some((v: any) =>
+                              v.subtypes?.some(
+                                (s: string) => s.toLowerCase() === subtypeLower,
+                              ),
+                            ) ||
+                            card.card.name.toLowerCase().includes(subtypeLower)
+                          );
+                        },
+                      );
+                    if (!hasAllSubtypes) {
+                      matchesFilter = false;
+                    }
+                  }
+
+                  if (matchesFilter) {
+                    matchingDestination = destination;
+                    break;
+                  }
+                }
+              }
+
+              if (!matchingDestination) {
+                logger.warn(
+                  `Scry validation failed: ${card.name} doesn't match any destination for zone ${normalizedZone}`,
+                );
+                return; // Invalid move - reject
+              }
+
+              // Track this card for max constraint validation
+              if (!cardsPerDestination.has(matchingDestination)) {
+                cardsPerDestination.set(matchingDestination, []);
+              }
+              const destinationCards =
+                cardsPerDestination.get(matchingDestination);
+              if (destinationCards) {
+                destinationCards.push(cardInstanceId);
+              }
+            }
+
+            // Validate max constraints for each destination
+            for (const [
+              destination,
+              matchedCards,
+            ] of cardsPerDestination.entries()) {
+              if (destination.max !== undefined && !destination.remainder) {
+                if (matchedCards.length > destination.max) {
+                  logger.warn(
+                    `Scry validation failed: ${matchedCards.length} cards selected for destination with max ${destination.max}`,
+                  );
+                  return; // Invalid move - reject
+                }
+              }
+            }
+          }
+
           // Process each zone in scryParams
           for (const [zone, cardInstanceIds] of Object.entries(scryParams)) {
             if (
@@ -1606,10 +1901,21 @@ export function resolveLayerItem(
               continue;
             }
 
+            // Map "top"/"bottom" to "deck" for processing
+            const normalizedZone =
+              zone === "top" || zone === "bottom" ? "deck" : zone;
+            // Track the position from the zone name for matching
+            const zonePosition =
+              zone === "top" ? "top" : zone === "bottom" ? "bottom" : undefined;
+
             // Find the matching destination from the effect definition
-            const destination = (destinations || []).find(
-              (d) => d.zone === zone,
-            );
+            // If zone was "top" or "bottom", match both zone and position
+            const destination = (destinations || []).find((d) => {
+              if (d.zone !== normalizedZone) return false;
+              // If we have a specific position from the zone name, match it
+              if (zonePosition && d.position !== zonePosition) return false;
+              return true;
+            });
             const { position, exerted, reveal } = destination || {};
 
             logger.debug(
@@ -1628,7 +1934,7 @@ export function resolveLayerItem(
               }
 
               // Special handling for "play" destination - play the card for free
-              if (zone === "play") {
+              if (normalizedZone === "play") {
                 logger.debug(`Playing card ${card.name} for free via scry`);
 
                 // Move to play zone
@@ -1656,17 +1962,159 @@ export function resolveLayerItem(
                 }
               } else {
                 // Move card to destination zone
+                // Map position ("top" | "bottom") to destination parameter ("start" | "end")
+                const destinationParam: "start" | "end" =
+                  position === "top"
+                    ? "start"
+                    : position === "bottom"
+                      ? "end"
+                      : "end";
+
                 this.moveCard({
                   playerId: playerId,
                   instanceId: card.instanceId,
-                  to: zone,
-                  position: position,
+                  to: normalizedZone,
+                  from: "deck",
+                  destination: destinationParam,
                 });
 
                 logger.debug(
-                  `Moved ${card.name} to ${zone}${position ? ` at ${position}` : ""}`,
+                  `Moved ${card.name} to ${normalizedZone}${position ? ` at ${position}` : ""}`,
                 );
               }
+            }
+          }
+
+          break;
+        }
+        case "inkwellManagement": {
+          // Inkwell management effect (exert all, conditional return, etc.)
+          const action = effect.parameters?.action;
+          const condition = effect.parameters?.condition;
+          const targetSize = effect.parameters?.targetSize;
+
+          // Get target players from effect.targets
+          const targets = effect.targets || [];
+          const targetPlayerIds: string[] = [];
+
+          for (const target of targets) {
+            if (target.type === "player") {
+              const playerTarget = target as PlayerTarget;
+              if (
+                playerTarget.value === "opponent" ||
+                (playerTarget.value as any) === "eachOpponent"
+              ) {
+                const allPlayers = Object.keys(this.state.ctx.players);
+                const opponents = allPlayers.filter(
+                  (p) => p !== trigger.controllerId,
+                );
+                targetPlayerIds.push(...opponents);
+              } else if (playerTarget.value === "self") {
+                targetPlayerIds.push(trigger.controllerId);
+              } else if (playerTarget.value === "all") {
+                targetPlayerIds.push(...Object.keys(this.state.ctx.players));
+              }
+            }
+          }
+
+          // Process each target player
+          for (const playerId of targetPlayerIds) {
+            const inkwellZone = this.getZone("inkwell", playerId);
+
+            if (!(inkwellZone && inkwellZone.cards)) {
+              logger.warn(`No inkwell zone found for player ${playerId}`);
+              continue;
+            }
+
+            switch (action) {
+              case "exertAll": {
+                // Exert all cards in inkwell
+                for (const cardInstanceId of inkwellZone.cards) {
+                  this.setCardMeta(cardInstanceId, { exerted: true });
+                }
+                logger.debug(
+                  `Exerted all ${inkwellZone.cards.length} cards in ${playerId}'s inkwell`,
+                );
+                break;
+              }
+
+              case "conditionalReturn": {
+                // Return cards if condition is met
+                if (!(condition && targetSize)) {
+                  logger.warn(
+                    "conditionalReturn requires condition and targetSize",
+                  );
+                  break;
+                }
+
+                const currentSize = inkwellZone.cards.length;
+
+                // Check condition
+                let conditionMet = false;
+                if (condition.type === "sizeGreaterThan") {
+                  conditionMet = currentSize > (condition.value || 0);
+                } else if (condition.type === "sizeLessThan") {
+                  conditionMet = currentSize < (condition.value || 0);
+                } else if (condition.type === "sizeEquals") {
+                  conditionMet = currentSize === (condition.value || 0);
+                }
+
+                if (!conditionMet) {
+                  logger.debug(
+                    `Condition not met for ${playerId}, inkwell size: ${currentSize}`,
+                  );
+                  break;
+                }
+
+                // Return cards until we reach target size
+                const cardsToReturn = currentSize - targetSize;
+                if (cardsToReturn <= 0) {
+                  break;
+                }
+
+                logger.debug(
+                  `Returning ${cardsToReturn} cards from ${playerId}'s inkwell to hand`,
+                );
+
+                // Get random cards to return
+                const cardsToMove = [...inkwellZone.cards]
+                  .sort(() => Math.random() - 0.5)
+                  .slice(0, cardsToReturn);
+
+                for (const cardInstanceId of cardsToMove) {
+                  this.moveCard({
+                    playerId,
+                    instanceId: cardInstanceId,
+                    from: "inkwell",
+                    to: "hand",
+                  });
+                }
+                break;
+              }
+
+              case "returnRandom": {
+                // Return random number of cards
+                const count = effect.parameters?.count || 1;
+                const cardsToMove = [...inkwellZone.cards]
+                  .sort(() => Math.random() - 0.5)
+                  .slice(0, count);
+
+                for (const cardInstanceId of cardsToMove) {
+                  this.moveCard({
+                    playerId,
+                    instanceId: cardInstanceId,
+                    from: "inkwell",
+                    to: "hand",
+                  });
+                }
+                logger.debug(
+                  `Returned ${cardsToMove.length} random cards from ${playerId}'s inkwell`,
+                );
+                break;
+              }
+
+              default:
+                logger.warn(`Unknown inkwellManagement action: ${action}`);
             }
           }
 
@@ -1707,7 +2155,7 @@ export function resolveLayerItem(
               const comparison = condition.comparison || "equalTo";
 
               const playerId = sourceCard?.ownerId || trigger.controllerId;
-              const opponentId = this.engine.getOpponentId(playerId);
+              const opponentId = (this.engine as any).getOpponentId(playerId);
 
               const playerHandSize =
                 this.getZone("hand", playerId)?.cards?.length || 0;
@@ -1784,7 +2232,7 @@ export function resolveLayerItem(
                   for (const playerTarget of drawTargets) {
                     const playerId =
                       playerTarget.player === "opponent"
-                        ? this.engine.getOpponentId(
+                        ? (this.engine as any).getOpponentId(
                             sourceCard?.ownerId || trigger.controllerId,
                           )
                         : playerTarget.player === "self"

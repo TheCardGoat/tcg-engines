@@ -190,21 +190,47 @@ function moveCardBetweenZones({
     return ctx;
   }
 
-  const newFromCards = fromZone.cards.filter((id) => id !== cardToMove);
-  const newToCards = [...toZone.cards];
-  if (destination === "start") {
-    newToCards.unshift(cardToMove);
+  // Handle same-zone moves (repositioning within a zone)
+  const isSameZone = fromZone.id === toZone.id;
+
+  let newFromCards: string[];
+  let newToCards: string[];
+
+  if (isSameZone) {
+    // For same-zone moves, first remove the card, then add it at the new position
+    const withoutCard = fromZone.cards.filter((id) => id !== cardToMove);
+    if (destination === "start") {
+      newToCards = [cardToMove, ...withoutCard];
+    } else {
+      newToCards = [...withoutCard, cardToMove];
+    }
+    // newFromCards isn't used for same-zone moves, but set it for the sanity check
+    newFromCards = [];
   } else {
-    newToCards.push(cardToMove);
+    // Different zones - normal move
+    newFromCards = fromZone.cards.filter((id) => id !== cardToMove);
+    newToCards = [...toZone.cards];
+    if (destination === "start") {
+      newToCards.unshift(cardToMove);
+    } else {
+      newToCards.push(cardToMove);
+    }
   }
 
   // Sanity check: Card counts should not change during a move
-  if (
-    newFromCards.length + newToCards.length !==
-    fromZone.cards.length + toZone.cards.length
-  ) {
+  const expectedTotal = isSameZone
+    ? fromZone.cards.length // Same zone: count stays the same
+    : fromZone.cards.length + toZone.cards.length; // Different zones: sum stays the same
+  const actualTotal = isSameZone
+    ? newToCards.length // Same zone: only one array
+    : newFromCards.length + newToCards.length; // Different zones: sum of both arrays
+
+  if (actualTotal !== expectedTotal) {
     logger.error(
-      `Card count mismatch after move: fromZone=${fromZone.cards.length}, toZone=${toZone.cards.length}, movedCard=${cardToMove}`,
+      `Card count mismatch after move: fromZone=${fromZone.cards.length}, toZone=${toZone.cards.length}, movedCard=${cardToMove}, isSameZone=${isSameZone}`,
+    );
+    logger.error(
+      `Detailed counts: newFromCards=${newFromCards.length}, newToCards=${newToCards.length}, actualTotal=${actualTotal}, expectedTotal=${expectedTotal}`,
     );
     return ctx;
   }
@@ -215,6 +241,21 @@ function moveCardBetweenZones({
     );
   }
 
+  // Update context with new zone states
+  if (isSameZone) {
+    // Same zone: only update one zone
+    return {
+      ...ctx,
+      cardZones: {
+        ...ctx.cardZones,
+        [toZone.id]: {
+          ...toZone,
+          cards: newToCards,
+        },
+      },
+    };
+  }
+  // Different zones: update both zones
   return {
     ...ctx,
     cardZones: {
