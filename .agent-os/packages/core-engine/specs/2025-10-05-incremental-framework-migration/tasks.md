@@ -7,57 +7,40 @@ These are the tasks to be completed for the spec detailed in @.agent-os/packages
 
 ## Tasks
 
-### Phase 1: Preparation and Setup
+- [ ] 1. Phase 1: Identify and Copy Missing Dependency Cards
+  - [ ] 1.1 Scan all 007 action test files to extract imported character/item cards
+  - [ ] 1.2 Create comprehensive list of all dependency cards with their set numbers
+  - [ ] 1.3 Check which dependency cards already exist in new project
+  - [ ] 1.4 Create missing cards list (in old project but not in new project)
+  - [ ] 1.5 For each missing card, locate in old project and copy full definition with abilities
+  - [ ] 1.6 Migrate each dependency card to new format (update types, imports, abilities)
+  - [ ] 1.7 Place cards in correct set folders and export from index files
+  - [ ] 1.8 Verify all dependency cards compile and type-check correctly
 
-- [ ] Review all 27 action card test files to understand scope
-- [ ] Verify what cards are being importedd and not present in the new project, copy the entire card definition from the old project to the new project.
-- [ ] Document current framework capabilities baseline
-- [ ] Create tracking sheet for card migration progress
+- [ ] 2. Phase 2: Make 007 Action Card Tests Pass (Card-by-Card)
+  - [ ] 2.1 Create list of all 007 action tests and identify which are currently failing
+  - [ ] 2.2 Select first failing test in numerical order
+  - [ ] 2.3 Run test to identify specific framework gaps from error messages
+  - [ ] 2.4 For each missing framework feature, write failing test first (TDD Red)
+  - [ ] 2.5 Implement minimum code to pass test (TDD Green)
+  - [ ] 2.6 Refactor implementation for quality while keeping tests green
+  - [ ] 2.7 Verify the 007 action card test now passes
+  - [ ] 2.8 Repeat steps 2.2-2.7 for each failing test until all pass
 
-### Phase 2: Migration Execution (Per Card - 27 iterations)
+- [ ] 3. Final Validation and Quality Assurance
+  - [ ] 3.1 Run complete 007 action test suite to verify all tests pass
+  - [ ] 3.2 Verify type checking passes for all migrated dependency cards
+  - [ ] 3.3 Verify type checking passes for all framework code
+  - [ ] 3.4 Run linter on all changed files and fix any issues
+  - [ ] 3.5 Use code-reviewer subagent to review all dependency card migrations
+  - [ ] 3.6 Use code-reviewer subagent to review all framework implementations
+  - [ ] 3.7 Verify no minimal stubs were created (all cards have full definitions)
+  - [ ] 3.8 Document any patterns discovered for future set migrations
 
-For each of the 27 action cards, complete:
+## Key Principles
 
-- [ ] Select next action card test file
-- [ ] Analyze test imports for character/item dependencies
-- [ ] Check if required card stubs exist in new project
-- [ ] Add stubs to appropriate set files (002, 008, etc.)
-- [ ] Run test to identify framework gaps
-- [ ] Implement framework features test-first (Red-Green-Refactor)
-- [ ] Verify test passes with all assertions satisfied
-- [ ] Confirm card stubs are minimal (no complex abilities)
-- [ ] Document any new patterns or framework features
-- [ ] Request human confirmation before next card
-
-### Phase 3: Framework Features (Test-Driven)
-
-Implement framework features as required by tests:
-
-- [ ] Identify missing game mechanics from test failures
-- [ ] Implement game state management features (if needed)
-- [ ] Add card effect system capabilities (if needed)
-- [ ] Implement turn/phase mechanics (if needed)
-- [ ] Add player action handling (if needed)
-- [ ] Implement zone management improvements (if needed)
-- [ ] Add combat/challenge mechanics (if needed)
-- [ ] Implement ability triggering system (if needed)
-
-**Note:** Do not implement framework features speculatively. Only add what tests require.
-
-### Phase 4: Validation and Documentation
-
-- [ ] Verify all 27 action card tests pass
-- [ ] Review all created card stubs for consistency
-- [ ] Audit framework features to ensure all are test-driven
-- [ ] Remove any unused or speculative code
-- [ ] Document migration patterns for future use
-- [ ] Create guide for applying pattern to remaining sets
-- [ ] Prepare summary of framework features added
-
-### Phase 5: Handoff and Next Steps
-
-- [ ] Create migration pattern documentation
-- [ ] Identify remaining sets to migrate
-- [ ] Estimate effort for remaining migrations
-- [ ] Document lessons learned
-- [ ] Prepare recommendations for future migrations
+- Follow TDD strictly for framework features
+- Copy full card definitions with abilities (no stubs)
+- Production-ready code only
+- Autonomous execution (no human checkpoints unless stuck)
+- Focus: ONLY set 007 actions and their dependencies
