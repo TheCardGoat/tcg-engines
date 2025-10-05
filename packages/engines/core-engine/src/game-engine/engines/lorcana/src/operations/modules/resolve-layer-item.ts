@@ -67,6 +67,128 @@ export function resolveLayerItem(
           }
           break;
         }
+        case "restrict": {
+          // Restrict effect (e.g., "can't ready at the start of their next turn")
+          const restriction = effect.parameters?.restriction;
+          const duration = effect.duration;
+
+          // Get target cards
+          let targetCards: any[] = [];
+
+          if ((trigger as any).selectedTargets) {
+            const selectedIds = (trigger as any).selectedTargets;
+            logger.debug(
+              `Using manually selected targets for restrict: ${selectedIds.join(", ")}`,
+            );
+            targetCards = selectedIds
+              .map((id: string) =>
+                this.engine.cardInstanceStore.getCardByInstanceId(id),
+              )
+              .filter(Boolean);
+          } else {
+            const targetDefs = effect.targets || trigger.ability?.targets || [];
+            logger.debug(
+              `Auto-resolving targets for restrict. targetDefs count: ${targetDefs.length}`,
+            );
+            targetCards = this.resolveTargets(targetDefs, sourceCard);
+          }
+
+          logger.debug(
+            `Applying ${restriction} restriction to ${targetCards.length} cards`,
+            {
+              restriction,
+              duration: duration?.type,
+              targetCardNames: targetCards.map((c) => c?.name || "unknown"),
+            },
+          );
+
+          // Apply restriction to each target
+          for (const targetCard of targetCards) {
+            if (!this.state.ctx.cardMetas[targetCard.instanceId]) {
+              this.state.ctx.cardMetas[targetCard.instanceId] = {} as any;
+            }
+
+            const cardMeta = this.state.ctx.cardMetas[
+              targetCard.instanceId
+            ] as any;
+
+            // Initialize restrictions if they don't exist
+            if (!cardMeta.restrictions) {
+              cardMeta.restrictions = [];
+            }
+
+            // Add the restriction
+            cardMeta.restrictions.push({
+              type: restriction,
+              duration,
+              appliedTurn: this.state.G.turnCount || 0,
+              appliedBy: sourceCard?.instanceId,
+            });
+
+            logger.debug(
+              `Applied ${restriction} restriction to ${targetCard.name}`,
+              {
+                restriction,
+                duration: duration?.type,
+              },
+            );
+          }
+          break;
+        }
+        case "costReduction": {
+          // Cost reduction effect (e.g., "You pay 2 {I} less for the next character you play this turn")
+          const value = effect.parameters?.value || 0;
+          const cardType = effect.parameters?.cardType;
+          const count = effect.parameters?.count || 1;
+          const duration = effect.duration;
+
+          // Get target players
+          let targetPlayerIds: string[] = [trigger.controllerId]; // Default to controller
+
+          if (effect.targets && effect.targets.length > 0) {
+            targetPlayerIds = effect.targets
+              .map((target: PlayerTarget) => {
+                if (target.type === "player") {
+                  if (target.value === "self") {
+                    return trigger.controllerId;
+                  } else if (target.value === "opponent") {
+                    const allPlayers = Object.keys(this.state.ctx.players);
+                    return allPlayers.find((p) => p !== trigger.controllerId) || trigger.controllerId;
+                  }
+                }
+                return null;
+              })
+              .filter(Boolean) as string[];
+          }
+
+          // Apply cost reduction to each target player
+          for (const playerId of targetPlayerIds) {
+            const playerState = this.state.ctx.players[playerId] as any;
+
+            // Initialize cost reduction tracking if it doesn't exist
+            if (!playerState.costReductions) {
+              playerState.costReductions = [];
+            }
+
+            // Add the cost reduction
+            playerState.costReductions.push({
+              value,
+              cardType,
+              remainingCount: count,
+              duration,
+              appliedTurn: this.state.G.turnCount || 0,
+            });
+
+            logger.debug(
+              `Applied cost reduction of ${value} for ${count} ${cardType}(s) to player ${playerId}`,
+              {
+                duration: duration?.type,
+                remainingReductions: playerState.costReductions.length,
+              },
+            );
+          }
+          break;
+        }
         case "basicInkwellTrigger": {
           // This is a minimal implementation for inkwell triggers
           // Just log that the trigger was resolved - no actual effect for now

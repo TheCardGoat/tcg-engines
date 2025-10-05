@@ -373,8 +373,15 @@ export class LorcanaCoreOperations extends CoreOperation<
       if (cardTarget.targetAll) {
         targets.push(...filteredCards);
       } else {
-        const count = cardTarget.count || 1;
-        targets.push(...filteredCards.slice(0, count));
+        // Handle "up to" targeting - if max is specified, take up to max cards
+        // Otherwise use count (defaulting to 1)
+        const maxCount = cardTarget.max;
+        if (maxCount !== undefined) {
+          targets.push(...filteredCards.slice(0, maxCount));
+        } else {
+          const count = cardTarget.count || 1;
+          targets.push(...filteredCards.slice(0, count));
+        }
       }
     }
 

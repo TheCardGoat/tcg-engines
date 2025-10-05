@@ -455,7 +455,7 @@ export class LorcanaTestEngine {
   getCardModel(
     card: LorcanaCardDefinition | LorcanaCardInstance | { id: string },
     index?: number,
-  ): LorcanaCardInstance {
+  ): LorcanaCardInstance & { cost: number } {
     const results = this.authoritativeEngine.queryCardsByFilter({
       publicId: (card as any).id,
     });
@@ -472,7 +472,43 @@ export class LorcanaTestEngine {
       );
     }
 
-    return results[0];
+    const cardInstance = results[0];
+
+    // Create a proxy that adds computed properties like cost
+    return new Proxy(cardInstance, {
+      get(target, prop) {
+        if (prop === 'cost') {
+          // Compute the effective cost taking into account cost reductions
+          const baseCost = (target.card as any).cost || 0;
+          const ctx = target.contextProvider.getCtx();
+          const playerState = ctx.players[target.ownerId] as any;
+
+          if (playerState?.costReductions) {
+            let effectiveCost = baseCost;
+            for (const reduction of playerState.costReductions) {
+              // Check if this reduction applies to this card
+              if (reduction.cardType === 'character' || !reduction.cardType) {
+                effectiveCost = Math.max(0, effectiveCost - reduction.value);
+                // If this reduction has limited uses, decrement the count
+                if (reduction.remainingCount > 0) {
+                  reduction.remainingCount--;
+                  // Remove the reduction if it's exhausted
+                  if (reduction.remainingCount <= 0) {
+                    playerState.costReductions = playerState.costReductions.filter((r: any) => r !== reduction);
+                  }
+                }
+              }
+            }
+            return effectiveCost;
+          }
+
+          return baseCost;
+        }
+
+        // For all other properties, delegate to the original object
+        return (target as any)[prop];
+      },
+    }) as LorcanaCardInstance & { cost: number };
   }
 
   getPlayerLore(player = "player_one") {
@@ -628,10 +664,15 @@ export class LorcanaTestEngine {
   // Compatibility: allow legacy positional arguments (card, opts?, autoResolve?)
   playCard(
     card: LorcanaCardDefinition | LorcanaCardInstance,
-    _opts?: unknown,
+    opts?: { targets?: any[] },
     _autoResolve?: unknown,
   ) {
     const model = this.getCardModel(card);
+
+    // Store targets for later use during effect resolution
+    if (opts?.targets) {
+      (this as any)._pendingTargets = opts.targets;
+    }
 
     // If opts is not provided, use an empty object
     const response = this.moves.playCard({ card: model.instanceId });

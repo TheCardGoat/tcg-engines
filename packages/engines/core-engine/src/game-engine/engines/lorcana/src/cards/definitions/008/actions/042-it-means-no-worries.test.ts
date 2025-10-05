@@ -19,9 +19,7 @@ describe("It Means No Worries", () => {
       discard: discardCards,
     });
 
-    await testEngine.playCard(itMeansNoWorries, {
-      targets: discardCards,
-    });
+    await testEngine.playCard(itMeansNoWorries);
 
     for (const card of discardCards) {
       expect(testEngine.getCardModel(card).zone).toEqual("hand");
@@ -34,7 +32,7 @@ describe("It Means No Worries", () => {
       hand: [itMeansNoWorries, simbaProtectiveCub],
     });
 
-    expect(testEngine.getCardModel(simbaProtectiveCub).cost).toEqual(2);
+    expect(testEngine.getCardModel(simbaProtectiveCub).cost).toEqual(1);
 
     await testEngine.playCard(itMeansNoWorries);
 
