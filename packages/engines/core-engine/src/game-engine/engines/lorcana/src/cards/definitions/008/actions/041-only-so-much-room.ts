@@ -14,7 +14,7 @@ export const onlySoMuchRoom: LorcanaActionCardDefinition = {
   abilities: [
     {
       type: "static",
-      text: "Return chosen character with 2 {S} or less to their player's hand. Return a character card from your discard to your hand.",
+      text: "Return chosen character with 2 {S} or less to their player's hand.",
       effects: [
         returnCardEffect({
           targets: [
@@ -27,6 +27,12 @@ export const onlySoMuchRoom: LorcanaActionCardDefinition = {
           to: "hand",
           from: "play",
         }),
+      ],
+    },
+    {
+      type: "static",
+      text: "Return a character card from your discard to your hand.",
+      effects: [
         returnCardEffect({
           targets: [chosenCharacterFromDiscardTarget],
           to: "hand",

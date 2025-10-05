@@ -26,7 +26,7 @@ export function shouldAutoResolveLayer(layer: LayerItem) {
     }
   }
 
-  // Check effects for optional targets
+  // Check effects for optional targets or manual targeting requirements
   const effects = (ability as any).effects;
   if (effects && Array.isArray(effects)) {
     for (const effect of effects) {
@@ -41,9 +41,18 @@ export function shouldAutoResolveLayer(layer: LayerItem) {
       const effectTargets = effect.targets;
       if (effectTargets && Array.isArray(effectTargets)) {
         for (const target of effectTargets) {
+          // Target requires manual selection if:
+          // 1. It's marked as optional
+          // 2. It requires a specific count (count === 1 or count > 0)
           if (target.optional === true) {
             logger.log(
               "shouldAutoResolveLayer: found optional target in effect, NOT auto-resolving",
+            );
+            return false;
+          }
+          if (target.count !== undefined && target.count > 0) {
+            logger.log(
+              "shouldAutoResolveLayer: found target with specific count requirement, NOT auto-resolving",
             );
             return false;
           }
@@ -53,7 +62,7 @@ export function shouldAutoResolveLayer(layer: LayerItem) {
   }
 
   logger.log(
-    "shouldAutoResolveLayer: no optional targets found, auto-resolving",
+    "shouldAutoResolveLayer: no manual targeting required, auto-resolving",
   );
   return true;
 }

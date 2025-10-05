@@ -22,15 +22,15 @@
   - [x] 2.7 Run test and verify it passes for this card
   - [x] 2.8 Request human confirmation before proceeding
 
-- [ ] 3. Migrate Card: 041-only-so-much-room
-  - [ ] 3.1 Analyze current test to identify API compatibility issues
-  - [ ] 3.2 Analyze card definition format compliance with new spec
-  - [ ] 3.3 Update test to use new TestEngine APIs if needed
-  - [ ] 3.4 Update card definition to new format and implement abilities array
-  - [ ] 3.5 Implement any missing framework effect handlers
-  - [ ] 3.6 Remove notImplemented and missingTestCase flags
-  - [ ] 3.7 Run test and verify it passes for this card
-  - [ ] 3.8 Request human confirmation before proceeding
+- [x] 3. Migrate Card: 041-only-so-much-room
+  - [x] 3.1 Analyze current test to identify API compatibility issues
+  - [x] 3.2 Analyze card definition format compliance with new spec
+  - [x] 3.3 Update test to use new TestEngine APIs if needed
+  - [x] 3.4 Update card definition to new format and implement abilities array (split into two separate abilities)
+  - [x] 3.5 Implement any missing framework effect handlers (moveCard/returnCard)
+  - [x] 3.6 Remove notImplemented and missingTestCase flags
+  - [x] 3.7 Run test and verify it passes for this card
+  - [x] 3.8 Request human confirmation before proceeding
 
 - [ ] 4. Migrate Card: 042-it-means-no-worries
   - [ ] 4.1 Analyze current test to identify API compatibility issues

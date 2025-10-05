@@ -788,6 +788,9 @@ export class LorcanaTestEngine {
     const state = this.authoritativeEngine.getStore().state;
     const effects = state.G.effects;
 
+    logger.log(`resolveTopOfStack called with opts:`, opts);
+    logger.log(`Current stack has ${effects.length} effects`);
+
     if (effects.length === 0) {
       logger.warn("No effects on stack to resolve");
       return this;
@@ -795,21 +798,40 @@ export class LorcanaTestEngine {
 
     // Get the top effect (last in array)
     const topEffect = effects[effects.length - 1];
+    logger.log(`Top effect:`, {
+      id: topEffect.id,
+      sourceCardId: topEffect.sourceCardId,
+      abilityType: topEffect.ability?.type,
+      effectCount: topEffect.ability?.effects?.length,
+    });
 
     // If mode is provided, store it in the layer for modal effect resolution
     if (opts?.mode) {
       (topEffect as any).selectedMode = opts.mode;
+      logger.log(`Set selectedMode to: ${opts.mode}`);
     }
 
     // If targetId is provided, store it in the layer for the resolver to use
     if (opts?.targetId) {
       // Store selected targets in the layer
       (topEffect as any).selectedTargets = [opts.targetId];
+      logger.log(`Set selectedTargets (single): ${opts.targetId}`);
     } else if (opts?.targets) {
-      // Support array of targets
-      (topEffect as any).selectedTargets = opts.targets.map((t: any) =>
-        typeof t === "string" ? t : t.instanceId,
-      );
+      // Support array of targets - convert card definitions to instance IDs
+      const targetIds = opts.targets.map((t: any) => {
+        if (typeof t === "string") {
+          return t;
+        }
+        // If it has instanceId, use it
+        if (t.instanceId) {
+          return t.instanceId;
+        }
+        // Otherwise, it's a card definition - find the instance
+        const instance = this.getCardModel(t);
+        return instance.instanceId;
+      });
+      (topEffect as any).selectedTargets = targetIds;
+      logger.log(`Set selectedTargets (array): ${targetIds.join(", ")}`);
     }
 
     // Resolve the layer by creating a proper LorcanaCoreOperations instance
@@ -819,12 +841,15 @@ export class LorcanaTestEngine {
     const engine = this.authoritativeEngine;
 
     const ops = new LorcanaCoreOperations({ state, engine });
+    logger.log(`Calling resolveLayer...`);
     ops.resolveLayer(topEffect);
+    logger.log(`Calling removeLayer...`);
     ops.removeLayer(topEffect, "non-trigger");
 
     // Propagate state changes
     this.wasMoveExecutedAndPropagated();
 
+    logger.log(`resolveTopOfStack complete. Stack now has ${state.G.effects.length} effects`);
     return this;
   }
 

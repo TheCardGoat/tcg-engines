@@ -17,7 +17,6 @@
       "name": "@lorcanito/core-engine",
       "version": "1.0.0",
       "dependencies": {
-        "@lorcanito/lorcana-engine": "workspace:*",
         "@lorcanito/typescript-config": "workspace:*",
         "@tanstack/store": "0.7.0",
         "flatted": "^3.2.1",

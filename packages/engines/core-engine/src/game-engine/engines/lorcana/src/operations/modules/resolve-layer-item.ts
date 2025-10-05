@@ -320,6 +320,58 @@ export function resolveLayerItem(
           }
           break;
         }
+        case "moveCard": {
+          // Move card effect (e.g., "Return chosen character to their player's hand")
+          const toZone = effect.parameters?.zoneTo || effect.parameters?.to || "hand";
+          const fromZone = effect.parameters?.zoneFrom || effect.parameters?.from;
+
+          // Get target cards
+          let targetCards: any[] = [];
+
+          if ((trigger as any).selectedTargets) {
+            const selectedIds = (trigger as any).selectedTargets;
+            logger.debug(
+              `Using manually selected targets for moveCard: ${selectedIds.join(", ")}`,
+            );
+            targetCards = selectedIds
+              .map((id: string) =>
+                this.engine.cardInstanceStore.getCardByInstanceId(id),
+              )
+              .filter(Boolean);
+          } else {
+            const targetDefs = effect.targets || trigger.ability?.targets || [];
+            logger.debug(
+              `Auto-resolving targets for moveCard. targetDefs count: ${targetDefs.length}`,
+            );
+            targetCards = this.resolveTargets(targetDefs, sourceCard);
+          }
+
+          logger.debug(
+            `Moving ${targetCards.length} card(s) from ${fromZone || "any zone"} to ${toZone}`,
+            {
+              targetCardNames: targetCards.map((c) => c?.name || "unknown"),
+            },
+          );
+
+          // Move each target card
+          for (const targetCard of targetCards) {
+            const currentZone = targetCard.zone;
+            const ownerId = targetCard.ownerId;
+
+            // Move the card to the destination zone
+            this.moveCard({
+              playerId: ownerId,
+              instanceId: targetCard.instanceId,
+              to: toZone,
+            });
+
+            logger.debug(`Moved ${targetCard.name} to ${ownerId}-${toZone}`, {
+              from: currentZone,
+              to: `${ownerId}-${toZone}`,
+            });
+          }
+          break;
+        }
         // Add other effect types as needed
         default:
           // Silently ignore unhandled effect types in production
