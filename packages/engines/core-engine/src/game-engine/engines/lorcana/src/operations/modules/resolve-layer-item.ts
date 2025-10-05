@@ -579,6 +579,68 @@ export function resolveLayerItem(
               to: `${ownerId}-${toZone}`,
             });
           }
+
+          // Process followedBy effect if present
+          if (effect.followedBy) {
+            logger.debug(`Processing followedBy effect after moveCard: ${effect.followedBy.type}`);
+            // Process the followedBy effect inline (recursive call to handle the next effect)
+            const followedByEffect = effect.followedBy;
+            switch (followedByEffect.type) {
+              case "moveCard": {
+                // Another moveCard effect (e.g., "return item from discard to hand")
+                const followedByToZone = followedByEffect.parameters?.zoneTo || followedByEffect.parameters?.to || "hand";
+                const followedByFromZone = followedByEffect.parameters?.zoneFrom || followedByEffect.parameters?.from;
+
+                // Get target cards for followedBy
+                let followedByTargetCards: any[] = [];
+
+                if ((trigger as any).selectedFollowedByTargets) {
+                  const selectedIds = (trigger as any).selectedFollowedByTargets;
+                  logger.debug(
+                    `Using manually selected followedBy targets: ${selectedIds.join(", ")}`,
+                  );
+                  followedByTargetCards = selectedIds
+                    .map((id: string) =>
+                      this.engine.cardInstanceStore.getCardByInstanceId(id),
+                    )
+                    .filter(Boolean);
+                } else {
+                  const targetDefs = followedByEffect.targets || [];
+                  logger.debug(
+                    `Auto-resolving targets for followedBy moveCard. targetDefs count: ${targetDefs.length}`,
+                  );
+                  followedByTargetCards = this.resolveTargets(targetDefs, sourceCard);
+                }
+
+                logger.debug(
+                  `Moving ${followedByTargetCards.length} card(s) from ${followedByFromZone || "any zone"} to ${followedByToZone} (followedBy)`,
+                  {
+                    targetCardNames: followedByTargetCards.map((c) => c?.name || "unknown"),
+                  },
+                );
+
+                // Move each followedBy target card
+                for (const followedByCard of followedByTargetCards) {
+                  const currentZone = followedByCard.zone;
+                  const ownerId = followedByCard.ownerId;
+
+                  this.moveCard({
+                    playerId: ownerId,
+                    instanceId: followedByCard.instanceId,
+                    to: followedByToZone,
+                  });
+
+                  logger.debug(`Moved ${followedByCard.name} to ${ownerId}-${followedByToZone} (followedBy)`, {
+                    from: currentZone,
+                    to: `${ownerId}-${followedByToZone}`,
+                  });
+                }
+                break;
+              }
+              default:
+                logger.warn(`Unhandled followedBy effect type after moveCard: ${followedByEffect.type}`);
+            }
+          }
           break;
         }
         case "gainsAbility": {
@@ -701,6 +763,68 @@ export function resolveLayerItem(
               from: currentZone,
               to: `${ownerId}-discard`,
             });
+          }
+
+          // Process followedBy effect if present
+          if (effect.followedBy) {
+            logger.debug(`Processing followedBy effect after banish: ${effect.followedBy.type}`);
+            // Process the followedBy effect inline
+            const followedByEffect = effect.followedBy;
+            switch (followedByEffect.type) {
+              case "moveCard": {
+                // Move card effect (e.g., "return item from discard to hand")
+                const followedByToZone = followedByEffect.parameters?.zoneTo || followedByEffect.parameters?.to || "hand";
+                const followedByFromZone = followedByEffect.parameters?.zoneFrom || followedByEffect.parameters?.from;
+
+                // Get target cards for followedBy
+                let followedByTargetCards: any[] = [];
+
+                if ((trigger as any).selectedFollowedByTargets) {
+                  const selectedIds = (trigger as any).selectedFollowedByTargets;
+                  logger.debug(
+                    `Using manually selected followedBy targets: ${selectedIds.join(", ")}`,
+                  );
+                  followedByTargetCards = selectedIds
+                    .map((id: string) =>
+                      this.engine.cardInstanceStore.getCardByInstanceId(id),
+                    )
+                    .filter(Boolean);
+                } else {
+                  const targetDefs = followedByEffect.targets || [];
+                  logger.debug(
+                    `Auto-resolving targets for followedBy moveCard. targetDefs count: ${targetDefs.length}`,
+                  );
+                  followedByTargetCards = this.resolveTargets(targetDefs, sourceCard);
+                }
+
+                logger.debug(
+                  `Moving ${followedByTargetCards.length} card(s) from ${followedByFromZone || "any zone"} to ${followedByToZone} (followedBy)`,
+                  {
+                    targetCardNames: followedByTargetCards.map((c) => c?.name || "unknown"),
+                  },
+                );
+
+                // Move each followedBy target card
+                for (const followedByCard of followedByTargetCards) {
+                  const currentZone = followedByCard.zone;
+                  const ownerId = followedByCard.ownerId;
+
+                  this.moveCard({
+                    playerId: ownerId,
+                    instanceId: followedByCard.instanceId,
+                    to: followedByToZone,
+                  });
+
+                  logger.debug(`Moved ${followedByCard.name} to ${ownerId}-${followedByToZone} (followedBy)`, {
+                    from: currentZone,
+                    to: `${ownerId}-${followedByToZone}`,
+                  });
+                }
+                break;
+              }
+              default:
+                logger.warn(`Unhandled followedBy effect type after banish: ${followedByEffect.type}`);
+            }
           }
           break;
         }
