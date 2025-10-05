@@ -346,14 +346,28 @@ export function createEffectFromParsed(
     }
 
     case "move": {
-      if (!parsedEffect.target) {
-        throw new Error("Move effect requires target");
-      }
       const to = parsedEffect.parameters.to as "hand" | "discard" | "play" | "deck";
-      return createMoveCardEffect(
-        parsedEffect.target as CardEffectTarget,
-        to,
-      );
+
+      // If target is already resolved, use it
+      if (parsedEffect.target) {
+        return createMoveCardEffect(
+          parsedEffect.target as CardEffectTarget,
+          to,
+        );
+      }
+
+      // Otherwise, construct a target from parsed information
+      // For now, create a basic target - this would need more sophisticated logic
+      const target: CardEffectTarget = {
+        type: "card",
+        value: 1,
+        filters: [
+          { filter: "zone", value: to === "hand" ? "discard" : "play" }, // From zone
+          { filter: "owner", value: "self" },
+        ],
+      };
+
+      return createMoveCardEffect(target, to);
     }
 
     case "modal": {
@@ -363,16 +377,31 @@ export function createEffectFromParsed(
     }
 
     case "move-damage": {
-      if (!(parsedEffect.amount && parsedEffect.target)) {
-        throw new Error("Move damage effect requires amount and target");
+      if (!parsedEffect.amount) {
+        throw new Error("Move damage effect requires amount");
       }
-      // For move-damage, we need both from and to targets
-      // This is a simplified implementation
-      return createMoveDamageEffect(
-        parsedEffect.amount,
-        parsedEffect.target as CardEffectTarget,
-        parsedEffect.target as CardEffectTarget, // This should be the 'to' target
-      );
+
+      // For move-damage, we need to construct both from and to targets
+      // This is a simplified implementation - in practice, we'd need better target parsing
+      const fromTarget: CardEffectTarget = {
+        type: "card",
+        value: 1,
+        filters: [
+          { filter: "zone", value: "play" },
+          { filter: "owner", value: "any" }, // Could be self or opponent
+        ],
+      };
+
+      const toTarget: CardEffectTarget = {
+        type: "card",
+        value: 1,
+        filters: [
+          { filter: "zone", value: "play" },
+          { filter: "owner", value: "opponent" }, // Usually moves to opponent
+        ],
+      };
+
+      return createMoveDamageEffect(parsedEffect.amount, fromTarget, toTarget);
     }
 
     default:

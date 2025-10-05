@@ -267,16 +267,27 @@ export const EFFECT_PATTERNS: Record<string, EffectPattern[]> = {
   // Move damage effects patterns
   "move-damage": [
     {
-      pattern: /\bmove\s+(\d+)\s+damage\s+counter\s+from\s+(.+?)\s+to\s+(.+)/i,
+      pattern: /\bmove\s+(?:up\s+to\s+)?(\d+|a)\s+damage\s+(?:counter)?(?:s)?\s+from\s+(.+?)\s+to\s+(.+)/i,
       type: "move-damage",
-      extractor: (match: RegExpMatchArray): ParsedEffect => ({
-        type: "move-damage",
-        amount: Number.parseInt(match[1] || "1", 10),
-        parameters: {
-          fromText: match[2]?.trim() || "",
-          toText: match[3]?.trim() || "",
-        },
-      }),
+      extractor: (match: RegExpMatchArray): ParsedEffect => {
+        const amountText = match[1]?.toLowerCase() || "1";
+        let amount: number | DynamicAmount;
+
+        if (amountText === "a" || amountText === "1") {
+          amount = 1;
+        } else {
+          amount = Number.parseInt(amountText, 10);
+        }
+
+        return {
+          type: "move-damage",
+          amount,
+          parameters: {
+            fromText: match[2]?.trim() || "",
+            toText: match[3]?.trim() || "",
+          },
+        };
+      },
     },
   ],
 

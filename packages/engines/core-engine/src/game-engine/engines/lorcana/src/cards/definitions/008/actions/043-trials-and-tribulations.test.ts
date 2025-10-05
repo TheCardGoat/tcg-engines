@@ -39,8 +39,7 @@ describe("Trials And Tribulations", () => {
     await testEngine.playCard(trialsAndTribulations);
 
     // Resolve the stack with target selection
-    const targetCard = testEngine.getCardModel(testCharacter);
-    testEngine.resolveTopOfStack({ targetId: targetCard.instanceId });
+    await testEngine.resolveTopOfStack({ targets: [testCharacter] });
 
     // Verify strength decreased by 4 (5 - 4 = 1)
     expect(testEngine.getCardModel(testCharacter).strength).toBe(1);
