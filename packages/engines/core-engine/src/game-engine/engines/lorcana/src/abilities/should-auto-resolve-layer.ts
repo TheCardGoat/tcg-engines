@@ -38,6 +38,32 @@ export function shouldAutoResolveLayer(layer: LayerItem) {
         return false;
       }
 
+      // Check for scry effects - they require player to choose card destinations
+      if (effect.type === "scry") {
+        logger.log(
+          "shouldAutoResolveLayer: found scry effect, NOT auto-resolving",
+        );
+        return false;
+      }
+
+      // Check for conditional effects that MIGHT require targeting
+      // We can't evaluate the condition here, so we must be conservative
+      // and NOT auto-resolve if ANY branch might need targeting
+      if (effect.type === "conditionalPlayer") {
+        const elseEffect = effect.parameters?.elseEffect;
+        if (Array.isArray(elseEffect)) {
+          const hasDiscardEffect = elseEffect.some(
+            (e: any) => e.type === "discard",
+          );
+          if (hasDiscardEffect) {
+            logger.log(
+              "shouldAutoResolveLayer: found conditionalPlayer with discard in elseEffect, NOT auto-resolving",
+            );
+            return false;
+          }
+        }
+      }
+
       const effectTargets = effect.targets;
       if (effectTargets && Array.isArray(effectTargets)) {
         for (const target of effectTargets) {

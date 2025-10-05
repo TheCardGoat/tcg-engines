@@ -667,7 +667,7 @@ export class LorcanaTestEngine {
   // Compatibility: allow legacy positional arguments (card, opts?, autoResolve?)
   playCard(
     card: LorcanaCardDefinition | LorcanaCardInstance,
-    opts?: { targets?: any[] },
+    opts?: { targets?: any[]; scry?: any },
     _autoResolve?: unknown,
   ) {
     const model = this.getCardModel(card);
@@ -675,6 +675,24 @@ export class LorcanaTestEngine {
     // Store targets for later use during effect resolution
     if (opts?.targets) {
       (this as any)._pendingTargets = opts.targets;
+    }
+
+    // Store scry parameters for later use during effect resolution
+    let scryParams: any = null;
+    if (opts?.scry) {
+      // Convert scry parameters from card definitions to instance IDs
+      scryParams = {};
+      for (const [zone, cards] of Object.entries(opts.scry)) {
+        if (Array.isArray(cards)) {
+          scryParams[zone] = cards.map((card: any) => {
+            if (typeof card === "string") {
+              return card;
+            }
+            const instance = this.getCardModel(card);
+            return instance.instanceId;
+          });
+        }
+      }
     }
 
     // If opts is not provided, use an empty object
@@ -685,6 +703,28 @@ export class LorcanaTestEngine {
         `Failed to play card ${model.instanceId}: ${JSON.stringify(response)}`,
       );
       throw new Error(JSON.stringify(response));
+    }
+
+    // If scry params were provided, inject them into the top layer and resolve it
+    if (scryParams) {
+      const state = this.authoritativeEngine.getStore().state;
+      const effects = state.G.effects;
+      if (effects.length > 0) {
+        const topEffect = effects[effects.length - 1];
+        (topEffect as any).scryParams = scryParams;
+        logger.log("Injected scryParams into top layer:", scryParams);
+
+        // Auto-resolve the layer since scry params were provided
+        const {
+          LorcanaCoreOperations,
+        } = require("~/game-engine/engines/lorcana/src/operations/lorcana-core-operations");
+        const engine = this.authoritativeEngine;
+        const ops = new LorcanaCoreOperations({ state, engine });
+
+        logger.log("Auto-resolving layer with scryParams...");
+        ops.resolveLayer(topEffect);
+        ops.removeLayer(topEffect, "non-trigger");
+      }
     }
 
     this.wasMoveExecutedAndPropagated();
@@ -1074,10 +1114,78 @@ Object.defineProperty(LorcanaTestEngine.prototype, "stackLayers", {
 
 LorcanaTestEngine.prototype.resolveStackLayer = async function (
   this: LorcanaTestEngine,
-  _opts?: any,
+  opts?: {
+    layerId?: string;
+    scry?: any;
+    targets?: any[];
+    mode?: string;
+    skip?: boolean;
+  },
   _optional?: boolean,
 ) {
-  // No-op stub for legacy tests
+  const state = this.authoritativeEngine.getStore().state;
+  const effects = state.G.effects;
+
+  // Find the layer by ID
+  let targetLayer = effects[effects.length - 1]; // Default to top
+  if (opts?.layerId) {
+    const found = effects.find((e) => e.id === opts.layerId);
+    if (!found) {
+      logger.warn(`Layer ${opts.layerId} not found`);
+      return;
+    }
+    targetLayer = found;
+  }
+
+  // Inject scry params if provided
+  if (opts?.scry) {
+    // Convert scry parameters from card definitions to instance IDs
+    const scryParams: any = {};
+    for (const [zone, cards] of Object.entries(opts.scry)) {
+      if (Array.isArray(cards)) {
+        scryParams[zone] = cards.map((card: any) => {
+          if (typeof card === "string") {
+            return card;
+          }
+          const instance = this.getCardModel(card);
+          return instance.instanceId;
+        });
+      }
+    }
+    (targetLayer as any).scryParams = scryParams;
+    logger.log(`Injected scryParams into layer ${targetLayer.id}:`, scryParams);
+  }
+
+  // Inject targets if provided
+  if (opts?.targets) {
+    const targetIds = opts.targets.map((t: any) => {
+      if (typeof t === "string") return t;
+      if (t.instanceId) return t.instanceId;
+      return this.getCardModel(t).instanceId;
+    });
+    (targetLayer as any).selectedTargets = targetIds;
+    logger.log(`Injected targets into layer ${targetLayer.id}:`, targetIds);
+  }
+
+  // Inject mode if provided
+  if (opts?.mode) {
+    (targetLayer as any).selectedMode = opts.mode;
+    logger.log(`Injected mode into layer ${targetLayer.id}:`, opts.mode);
+  }
+
+  // Resolve the layer
+  const {
+    LorcanaCoreOperations,
+  } = require("~/game-engine/engines/lorcana/src/operations/lorcana-core-operations");
+  const engine = this.authoritativeEngine;
+  const ops = new LorcanaCoreOperations({ state, engine });
+
+  logger.log(`Resolving layer ${targetLayer.id}...`);
+  ops.resolveLayer(targetLayer);
+  logger.log(`Removing layer ${targetLayer.id}...`);
+  ops.removeLayer(targetLayer, "non-trigger");
+
+  this.wasMoveExecutedAndPropagated();
 };
 
 LorcanaTestEngine.prototype.getLayerIdForPlayer = function (

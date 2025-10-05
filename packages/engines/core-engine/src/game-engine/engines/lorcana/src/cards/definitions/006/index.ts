@@ -41,7 +41,41 @@ export const gadgetHackwrenchPerceptiveMouse = {
   id: "gadgetHackwrenchPerceptiveMouse",
 };
 export const nickWildeCleverFox = { id: "nickWildeCleverFox" };
-export const mammaOdieLoneSage = { id: "mammaOdieLoneSage" };
+export const mammaOdieLoneSage: LorcanitoCharacterCard = {
+  id: "dhe",
+  missingTestCase: true,
+  notImplemented: true, // wheneverYouPlayASong ability not yet implemented
+  name: "Mama Odie",
+  title: "Solitary Sage",
+  characteristics: ["storyborn", "ally", "sorcerer"],
+  text: "I HAVE TO DO EVERYTHING AROUND HERE Whenever you play a song, you may move up to 2 damage counters from chosen character to chosen opposing character.",
+  type: "character",
+  abilities: [
+    // TODO: Implement wheneverYouPlayASong triggered ability
+    // wheneverYouPlayASong({
+    //   name: "I Have To Do Everything Around Here",
+    //   text: "Whenever you play a song, you may move up to 2 damage counters from chosen character to chosen opposing character.",
+    //   effects: [
+    //     moveDamageEffect({
+    //       amount: 2,
+    //       from: chosenCharacter,
+    //       to: chosenOpposingCharacter,
+    //     }),
+    //   ],
+    // }),
+  ],
+  inkwell: false,
+  colors: ["amethyst"],
+  cost: 5,
+  strength: 4,
+  willpower: 5,
+  lore: 1,
+  illustrator: "Mel Milton",
+  number: 57,
+  set: "006",
+  rarity: "rare",
+};
+
 export const owlPirateLookout = { id: "owlPirateLookout" };
 export const goofyExpertShipwright = { id: "goofyExpertShipwright" };
 export const principeNaveenCarefreeExplorer = {

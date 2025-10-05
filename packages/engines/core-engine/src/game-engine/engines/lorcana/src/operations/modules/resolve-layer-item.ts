@@ -1574,6 +1574,104 @@ export function resolveLayerItem(
           }
           break;
         }
+        case "scry": {
+          // Scry effect (e.g., "Look at the top 3 cards of your deck. You may reveal a character card and play it for free.")
+          const { lookAt, destinations } = effect.parameters || {};
+          const scryParams = (trigger as any).scryParams;
+
+          if (!scryParams) {
+            logger.warn("Scry effect requires scryParams to be set");
+            break;
+          }
+
+          const playerId = sourceCard?.ownerId || trigger.controllerId;
+          const deckZone = this.getZone("deck", playerId);
+
+          if (!(deckZone && deckZone.cards) || deckZone.cards.length === 0) {
+            logger.debug("No cards in deck for scry effect");
+            break;
+          }
+
+          logger.debug(`Scry effect: looking at ${lookAt} cards`, {
+            destinations: destinations?.map((d) => d.zone),
+            scryParams,
+          });
+
+          // Process each zone in scryParams
+          for (const [zone, cardInstanceIds] of Object.entries(scryParams)) {
+            if (
+              !Array.isArray(cardInstanceIds) ||
+              cardInstanceIds.length === 0
+            ) {
+              continue;
+            }
+
+            // Find the matching destination from the effect definition
+            const destination = (destinations || []).find(
+              (d) => d.zone === zone,
+            );
+            const { position, exerted, reveal } = destination || {};
+
+            logger.debug(
+              `Processing scry zone: ${zone}, cards: ${cardInstanceIds.length}`,
+            );
+
+            for (const cardInstanceId of cardInstanceIds) {
+              const card =
+                this.engine.cardInstanceStore.getCardByInstanceId(
+                  cardInstanceId,
+                );
+
+              if (!card) {
+                logger.warn(`Card ${cardInstanceId} not found for scry`);
+                continue;
+              }
+
+              // Special handling for "play" destination - play the card for free
+              if (zone === "play") {
+                logger.debug(`Playing card ${card.name} for free via scry`);
+
+                // Move to play zone
+                this.moveCard({
+                  playerId: playerId,
+                  instanceId: card.instanceId,
+                  to: "play",
+                  from: "deck",
+                });
+
+                // Mark as played this turn if it's a character
+                if (card.card.type === "character") {
+                  this.setCardMeta(card.instanceId, {
+                    playedThisTurn: true,
+                    exerted: exerted,
+                  });
+                }
+
+                // Trigger onPlay effects
+                this.addTriggeredEffectsToTheBag("onPlay", card.instanceId);
+
+                // Reveal if specified
+                if (reveal) {
+                  logger.debug(`Revealing card ${card.name}`);
+                }
+              } else {
+                // Move card to destination zone
+                this.moveCard({
+                  playerId: playerId,
+                  instanceId: card.instanceId,
+                  to: zone,
+                  position: position,
+                });
+
+                logger.debug(
+                  `Moved ${card.name} to ${zone}${position ? ` at ${position}` : ""}`,
+                );
+              }
+            }
+          }
+
+          break;
+        }
         case "conditionalPlayer": {
           // Conditional effect (e.g., "If you have no cards in hand, draw 3. Otherwise, discard then draw.")
           const condition = effect.parameters?.condition;
@@ -1642,18 +1740,40 @@ export function resolveLayerItem(
           const effectToExecute = conditionMet ? conditionalEffect : elseEffect;
 
           if (effectToExecute) {
-            logger.debug(
-              `Executing ${conditionMet ? "effect" : "elseEffect"} for conditionalPlayer`,
-            );
-
             // Process the effect by handling common effect types inline
             const effectsArray = Array.isArray(effectToExecute)
               ? effectToExecute
               : [effectToExecute];
+
+            // Check if the effect requires targeting and we don't have targets
+            const requiresTargeting = effectsArray.some(
+              (e: any) => e.type === "discard",
+            );
+
+            if (requiresTargeting && !(trigger as any).selectedTargets) {
+              logger.warn(
+                "conditionalPlayer effect requires targeting but no targets provided - layer should not have auto-resolved",
+              );
+              // Don't execute - wait for player to provide targets
+              break;
+            }
+
+            logger.debug(
+              `Executing ${conditionMet ? "effect" : "elseEffect"} for conditionalPlayer`,
+            );
+
+            let discardedCount = 0; // Track discarded cards for dynamic values
+
             for (const subEffect of effectsArray) {
               switch (subEffect.type) {
                 case "draw": {
-                  const drawValueParam = subEffect.parameters?.value || 1;
+                  let drawValueParam = subEffect.parameters?.value || 1;
+
+                  // Handle dynamic value "discardCount"
+                  if (drawValueParam === "discardCount") {
+                    drawValueParam = discardedCount;
+                  }
+
                   const drawAmount =
                     typeof drawValueParam === "number" ? drawValueParam : 1;
 
@@ -1677,6 +1797,30 @@ export function resolveLayerItem(
                     for (let i = 0; i < drawAmount; i++) {
                       this.drawCard(playerId, 1);
                     }
+                  }
+                  break;
+                }
+                case "discard": {
+                  const playerId = sourceCard?.ownerId || trigger.controllerId;
+
+                  // Get targets from trigger.selectedTargets (injected by TestEngine) or trigger.targets
+                  const targetInstanceIds =
+                    (trigger as any).selectedTargets ||
+                    (trigger as any).targets ||
+                    [];
+
+                  logger.debug(
+                    `Discarding ${targetInstanceIds.length} cards for player ${playerId} (conditional)`,
+                  );
+
+                  for (const instanceId of targetInstanceIds) {
+                    this.moveCard({
+                      playerId: playerId,
+                      instanceId: instanceId,
+                      to: "discard",
+                      from: "hand",
+                    });
+                    discardedCount++;
                   }
                   break;
                 }
