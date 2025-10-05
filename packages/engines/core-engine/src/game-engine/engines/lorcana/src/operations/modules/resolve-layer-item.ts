@@ -1574,6 +1574,123 @@ export function resolveLayerItem(
           }
           break;
         }
+        case "conditionalPlayer": {
+          // Conditional effect (e.g., "If you have no cards in hand, draw 3. Otherwise, discard then draw.")
+          const condition = effect.parameters?.condition;
+          const conditionalEffect = effect.parameters?.effect;
+          const elseEffect = effect.parameters?.elseEffect;
+
+          if (!(condition && conditionalEffect)) {
+            logger.warn("conditionalPlayer effect missing condition or effect");
+            break;
+          }
+
+          // Evaluate the condition
+          let conditionMet = false;
+
+          switch (condition.type) {
+            case "hasCardsInHand": {
+              const maxCount = condition.maxCount ?? Number.POSITIVE_INFINITY;
+              const minCount = condition.minCount ?? 0;
+
+              // Get the player's hand size
+              const playerId = sourceCard?.ownerId || trigger.controllerId;
+              const handZone = this.getZone("hand", playerId);
+              const handSize = handZone?.cards?.length || 0;
+
+              conditionMet = handSize >= minCount && handSize <= maxCount;
+
+              logger.debug(
+                `Condition hasCardsInHand evaluated: handSize=${handSize}, min=${minCount}, max=${maxCount}, met=${conditionMet}`,
+              );
+              break;
+            }
+            case "handSizeComparison": {
+              const comparison = condition.comparison || "equalTo";
+
+              const playerId = sourceCard?.ownerId || trigger.controllerId;
+              const opponentId = this.engine.getOpponentId(playerId);
+
+              const playerHandSize =
+                this.getZone("hand", playerId)?.cards?.length || 0;
+              const opponentHandSize =
+                this.getZone("hand", opponentId)?.cards?.length || 0;
+
+              switch (comparison) {
+                case "lessThan":
+                  conditionMet = playerHandSize < opponentHandSize;
+                  break;
+                case "greaterThan":
+                  conditionMet = playerHandSize > opponentHandSize;
+                  break;
+                case "equalTo":
+                  conditionMet = playerHandSize === opponentHandSize;
+                  break;
+              }
+
+              logger.debug(
+                `Condition handSizeComparison evaluated: player=${playerHandSize}, opponent=${opponentHandSize}, comparison=${comparison}, met=${conditionMet}`,
+              );
+              break;
+            }
+            default:
+              logger.warn(`Unknown condition type: ${condition.type}`);
+              break;
+          }
+
+          // Execute the appropriate effect based on condition
+          const effectToExecute = conditionMet ? conditionalEffect : elseEffect;
+
+          if (effectToExecute) {
+            logger.debug(
+              `Executing ${conditionMet ? "effect" : "elseEffect"} for conditionalPlayer`,
+            );
+
+            // Process the effect by handling common effect types inline
+            const effectsArray = Array.isArray(effectToExecute)
+              ? effectToExecute
+              : [effectToExecute];
+            for (const subEffect of effectsArray) {
+              switch (subEffect.type) {
+                case "draw": {
+                  const drawValueParam = subEffect.parameters?.value || 1;
+                  const drawAmount =
+                    typeof drawValueParam === "number" ? drawValueParam : 1;
+
+                  const drawTargets = (subEffect as any).targets || [
+                    { player: "self" },
+                  ];
+
+                  for (const playerTarget of drawTargets) {
+                    const playerId =
+                      playerTarget.player === "opponent"
+                        ? this.engine.getOpponentId(
+                            sourceCard?.ownerId || trigger.controllerId,
+                          )
+                        : playerTarget.player === "self"
+                          ? sourceCard?.ownerId || trigger.controllerId
+                          : trigger.controllerId;
+
+                    logger.debug(
+                      `Drawing ${drawAmount} cards for player ${playerId} (conditional)`,
+                    );
+                    for (let i = 0; i < drawAmount; i++) {
+                      this.drawCard(playerId, 1);
+                    }
+                  }
+                  break;
+                }
+                default:
+                  logger.warn(
+                    `Unhandled conditional sub-effect type: ${subEffect.type}`,
+                  );
+                  break;
+              }
+            }
+          }
+
+          break;
+        }
         // Add other effect types as needed
         default:
           // Silently ignore unhandled effect types in production
