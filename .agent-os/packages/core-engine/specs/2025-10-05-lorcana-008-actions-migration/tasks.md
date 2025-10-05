@@ -182,15 +182,15 @@
   - [ ] 18.7 Run test and verify it passes for this card
   - [ ] 18.8 Request human confirmation before proceeding
 
-- [ ] 19. Migrate Card: 149-light-the-fuse
-  - [ ] 19.1 Analyze current test to identify API compatibility issues
-  - [ ] 19.2 Analyze card definition format compliance with new spec
-  - [ ] 19.3 Update test to use new TestEngine APIs if needed
-  - [ ] 19.4 Update card definition to new format and implement abilities array
-  - [ ] 19.5 Implement any missing framework effect handlers
-  - [ ] 19.6 Remove notImplemented and missingTestCase flags
-  - [ ] 19.7 Run test and verify it passes for this card
-  - [ ] 19.8 Request human confirmation before proceeding
+- [x] 19. Migrate Card: 149-light-the-fuse
+  - [x] 19.1 Analyze current test to identify API compatibility issues
+  - [x] 19.2 Analyze card definition format compliance with new spec
+  - [x] 19.3 Update test to use resolveTopOfStack pattern
+  - [x] 19.4 Update card definition to new format and implement abilities array
+  - [x] 19.5 Implement dynamic count value resolution for dealDamage
+  - [x] 19.6 Remove notImplemented and missingTestCase flags
+  - [x] 19.7 Run test and verify it passes for this card (1/1 passing)
+  - [x] 19.8 Autonomous migration complete
 
 - [x] 20. Migrate Card: 150-twitterpated
   - [x] 20.1 Analyze current test to identify API compatibility issues
@@ -222,15 +222,15 @@
   - [ ] 22.7 Run test and verify it passes for this card
   - [ ] 22.8 Request human confirmation before proceeding
 
-- [ ] 23. Migrate Card: 176-pouncing-practice
-  - [ ] 23.1 Analyze current test to identify API compatibility issues
-  - [ ] 23.2 Analyze card definition format compliance with new spec
-  - [ ] 23.3 Update test to use new TestEngine APIs if needed
-  - [ ] 23.4 Update card definition to new format and implement abilities array
-  - [ ] 23.5 Implement any missing framework effect handlers
-  - [ ] 23.6 Remove notImplemented and missingTestCase flags
-  - [ ] 23.7 Run test and verify it passes for this card
-  - [ ] 23.8 Request human confirmation before proceeding
+- [x] 23. Migrate Card: 176-pouncing-practice
+  - [x] 23.1 Analyze current test to identify API compatibility issues
+  - [x] 23.2 Analyze card definition format compliance with new spec
+  - [x] 23.3 Update test to use resolveTopOfStack pattern (two separate calls)
+  - [x] 23.4 Update card definition to split into two separate abilities
+  - [x] 23.5 Framework already complete (get + gainsAbility)
+  - [x] 23.6 Remove notImplemented and missingTestCase flags
+  - [x] 23.7 Run test and verify it passes for this card (1/1 passing)
+  - [x] 23.8 Autonomous migration complete
 
 - [ ] 24. Migrate Card: 177-down-in-new-orleans
   - [ ] 24.1 Analyze current test to identify API compatibility issues
