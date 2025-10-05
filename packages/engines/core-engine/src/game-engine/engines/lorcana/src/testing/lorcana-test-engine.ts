@@ -781,10 +781,10 @@ export class LorcanaTestEngine {
    * Resolve the top ability on the effects stack with optional target selection.
    * This is used for action cards and other effects that require targets.
    *
-   * @param opts - Optional parameters including targetId for selecting targets
+   * @param opts - Optional parameters including targetId for selecting targets and mode for modal effects
    * @returns this for chaining
    */
-  resolveTopOfStack(opts?: { targetId?: string; targets?: any[] }) {
+  resolveTopOfStack(opts?: { targetId?: string; targets?: any[]; mode?: string }) {
     const state = this.authoritativeEngine.getStore().state;
     const effects = state.G.effects;
 
@@ -795,6 +795,11 @@ export class LorcanaTestEngine {
 
     // Get the top effect (last in array)
     const topEffect = effects[effects.length - 1];
+
+    // If mode is provided, store it in the layer for modal effect resolution
+    if (opts?.mode) {
+      (topEffect as any).selectedMode = opts.mode;
+    }
 
     // If targetId is provided, store it in the layer for the resolver to use
     if (opts?.targetId) {

@@ -168,6 +168,158 @@ export function resolveLayerItem(
           }
           break;
         }
+        case "modal": {
+          // Modal effects require player to select a mode first
+          const selectedMode = (trigger as any).selectedMode;
+          const modes = effect.parameters?.modes || [];
+
+          if (!selectedMode) {
+            logger.warn("Modal effect requires selectedMode to be set");
+            break;
+          }
+
+          // Find the selected mode (modes are 1-indexed in the test)
+          const modeIndex = parseInt(selectedMode, 10) - 1;
+          const selectedModeData = modes[modeIndex];
+
+          if (!selectedModeData) {
+            logger.warn(`Invalid mode index: ${selectedMode}`);
+            break;
+          }
+
+          logger.debug(
+            `Resolving modal effect mode ${selectedMode}: ${selectedModeData.text}`,
+          );
+
+          // Process the selected mode's effects directly
+          // We don't create a new layer - we just process the effects inline
+          for (const modeEffect of selectedModeData.effects) {
+            // Process each effect type within the modal
+            switch (modeEffect.type) {
+              case "removeDamage": {
+                // Get targets for this specific effect
+                const valueParam = modeEffect.parameters?.value;
+                const maxAmount =
+                  typeof valueParam === "object" && "max" in valueParam
+                    ? valueParam.max
+                    : typeof valueParam === "number"
+                      ? valueParam
+                      : 0;
+
+                let targetCards: any[] = [];
+
+                if ((trigger as any).selectedTargets) {
+                  const selectedIds = (trigger as any).selectedTargets;
+                  targetCards = selectedIds
+                    .map((id: string) =>
+                      this.engine.cardInstanceStore.getCardByInstanceId(id),
+                    )
+                    .filter(Boolean);
+                } else {
+                  const targetDefs = modeEffect.targets || [];
+                  targetCards = this.resolveTargets(targetDefs, sourceCard);
+                }
+
+                logger.debug(
+                  `Removing up to ${maxAmount} damage from ${targetCards.length} cards`,
+                );
+
+                for (const targetCard of targetCards) {
+                  if (!this.state.ctx.cardMetas[targetCard.instanceId]) {
+                    this.state.ctx.cardMetas[targetCard.instanceId] = {} as any;
+                  }
+
+                  const cardMeta = this.state.ctx.cardMetas[
+                    targetCard.instanceId
+                  ] as any;
+                  const currentDamage = cardMeta.damage || 0;
+                  const damageToRemove = Math.min(currentDamage, maxAmount);
+
+                  if (damageToRemove > 0) {
+                    cardMeta.damage = currentDamage - damageToRemove;
+                    logger.debug(
+                      `Removed ${damageToRemove} damage from ${targetCard.name}`,
+                      {
+                        previousDamage: currentDamage,
+                        newDamage: cardMeta.damage,
+                      },
+                    );
+                  }
+                }
+                break;
+              }
+              // Add more effect types as needed for modal effects
+              default:
+                logger.warn(`Unhandled effect type in modal: ${modeEffect.type}`);
+            }
+          }
+          break;
+        }
+        case "removeDamage": {
+          // Remove damage effect (e.g., "Remove up to 3 damage from chosen character")
+          const valueParam = effect.parameters?.value;
+          const maxAmount =
+            typeof valueParam === "object" && "max" in valueParam
+              ? valueParam.max
+              : typeof valueParam === "number"
+                ? valueParam
+                : 0;
+
+          // Get target cards - either from selectedTargets (manual selection) or auto-resolve
+          let targetCards: any[] = [];
+
+          // Check if targets were manually selected
+          if ((trigger as any).selectedTargets) {
+            const selectedIds = (trigger as any).selectedTargets;
+            logger.debug(
+              `Using manually selected targets for removeDamage: ${selectedIds.join(", ")}`,
+            );
+            targetCards = selectedIds
+              .map((id: string) =>
+                this.engine.cardInstanceStore.getCardByInstanceId(id),
+              )
+              .filter(Boolean);
+          } else {
+            // Auto-resolve targets from target definitions
+            const targetDefs = effect.targets || trigger.ability?.targets || [];
+            logger.debug(
+              `Auto-resolving targets for removeDamage. targetDefs count: ${targetDefs.length}`,
+            );
+            targetCards = this.resolveTargets(targetDefs, sourceCard);
+          }
+
+          logger.debug(
+            `Removing up to ${maxAmount} damage from ${targetCards.length} cards`,
+            {
+              targetCardNames: targetCards.map((c) => c?.name || "unknown"),
+            },
+          );
+
+          // Remove damage from each target
+          for (const targetCard of targetCards) {
+            if (!this.state.ctx.cardMetas[targetCard.instanceId]) {
+              this.state.ctx.cardMetas[targetCard.instanceId] = {} as any;
+            }
+
+            const cardMeta = this.state.ctx.cardMetas[
+              targetCard.instanceId
+            ] as any;
+            const currentDamage = cardMeta.damage || 0;
+            const damageToRemove = Math.min(currentDamage, maxAmount);
+
+            if (damageToRemove > 0) {
+              cardMeta.damage = currentDamage - damageToRemove;
+              logger.debug(
+                `Removed ${damageToRemove} damage from ${targetCard.name}`,
+                {
+                  previousDamage: currentDamage,
+                  newDamage: cardMeta.damage,
+                },
+              );
+            }
+          }
+          break;
+        }
         // Add other effect types as needed
         default:
           // Silently ignore unhandled effect types in production

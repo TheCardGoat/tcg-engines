@@ -30,6 +30,14 @@ export function shouldAutoResolveLayer(layer: LayerItem) {
   const effects = (ability as any).effects;
   if (effects && Array.isArray(effects)) {
     for (const effect of effects) {
+      // Check for modal effects - they require player choice
+      if (effect.type === "modal") {
+        logger.log(
+          "shouldAutoResolveLayer: found modal effect, NOT auto-resolving",
+        );
+        return false;
+      }
+
       const effectTargets = effect.targets;
       if (effectTargets && Array.isArray(effectTargets)) {
         for (const target of effectTargets) {

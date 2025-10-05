@@ -2,25 +2,25 @@
 
 ## Tasks
 
-- [ ] 1. Migrate Card: 039-candy-drift
-  - [ ] 1.1 Analyze current test to identify API compatibility issues
-  - [ ] 1.2 Analyze card definition format compliance with new spec
-  - [ ] 1.3 Update test to use new TestEngine APIs if needed
-  - [ ] 1.4 Update card definition to new format and implement abilities array
-  - [ ] 1.5 Implement any missing framework effect handlers (draw, stat buff, end-of-turn banish)
-  - [ ] 1.6 Remove notImplemented and missingTestCase flags
-  - [ ] 1.7 Run test and verify it passes for this card
-  - [ ] 1.8 Request human confirmation before proceeding
+- [x] 1. Migrate Card: 039-candy-drift
+  - [x] 1.1 Analyze current test to identify API compatibility issues
+  - [x] 1.2 Analyze card definition format compliance with new spec
+  - [x] 1.3 Update test to use new TestEngine APIs if needed
+  - [x] 1.4 Update card definition to new format and implement abilities array
+  - [x] 1.5 Implement any missing framework effect handlers (draw, stat buff, end-of-turn banish)
+  - [x] 1.6 Remove notImplemented and missingTestCase flags
+  - [x] 1.7 Run test and verify it passes for this card
+  - [x] 1.8 Request human confirmation before proceeding
 
-- [ ] 2. Migrate Card: 040-she-s-your-person
-  - [ ] 2.1 Analyze current test to identify API compatibility issues
-  - [ ] 2.2 Analyze card definition format compliance with new spec
-  - [ ] 2.3 Update test to use new TestEngine APIs if needed
-  - [ ] 2.4 Update card definition to new format and implement abilities array
-  - [ ] 2.5 Implement any missing framework effect handlers
-  - [ ] 2.6 Remove notImplemented and missingTestCase flags
-  - [ ] 2.7 Run test and verify it passes for this card
-  - [ ] 2.8 Request human confirmation before proceeding
+- [x] 2. Migrate Card: 040-she-s-your-person
+  - [x] 2.1 Analyze current test to identify API compatibility issues
+  - [x] 2.2 Analyze card definition format compliance with new spec
+  - [x] 2.3 Update test to use new TestEngine APIs if needed
+  - [x] 2.4 Update card definition to new format and implement abilities array
+  - [x] 2.5 Implement any missing framework effect handlers (modal effects, removeDamage)
+  - [x] 2.6 Remove notImplemented and missingTestCase flags
+  - [x] 2.7 Run test and verify it passes for this card
+  - [x] 2.8 Request human confirmation before proceeding
 
 - [ ] 3. Migrate Card: 041-only-so-much-room
   - [ ] 3.1 Analyze current test to identify API compatibility issues
