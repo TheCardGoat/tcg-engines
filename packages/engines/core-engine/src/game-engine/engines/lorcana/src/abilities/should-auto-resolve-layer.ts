@@ -26,16 +26,59 @@ export function shouldAutoResolveLayer(layer: LayerItem) {
     }
   }
 
-  // Check effects for optional targets
+  // Check effects for optional targets or manual targeting requirements
   const effects = (ability as any).effects;
   if (effects && Array.isArray(effects)) {
     for (const effect of effects) {
+      // Check for modal effects - they require player choice
+      if (effect.type === "modal") {
+        logger.log(
+          "shouldAutoResolveLayer: found modal effect, NOT auto-resolving",
+        );
+        return false;
+      }
+
+      // Check for scry effects - they require player to choose card destinations
+      if (effect.type === "scry") {
+        logger.log(
+          "shouldAutoResolveLayer: found scry effect, NOT auto-resolving",
+        );
+        return false;
+      }
+
+      // Check for conditional effects that MIGHT require targeting
+      // We can't evaluate the condition here, so we must be conservative
+      // and NOT auto-resolve if ANY branch might need targeting
+      if (effect.type === "conditionalPlayer") {
+        const elseEffect = effect.parameters?.elseEffect;
+        if (Array.isArray(elseEffect)) {
+          const hasDiscardEffect = elseEffect.some(
+            (e: any) => e.type === "discard",
+          );
+          if (hasDiscardEffect) {
+            logger.log(
+              "shouldAutoResolveLayer: found conditionalPlayer with discard in elseEffect, NOT auto-resolving",
+            );
+            return false;
+          }
+        }
+      }
+
       const effectTargets = effect.targets;
       if (effectTargets && Array.isArray(effectTargets)) {
         for (const target of effectTargets) {
+          // Target requires manual selection if:
+          // 1. It's marked as optional
+          // 2. It requires a specific count (count === 1 or count > 0)
           if (target.optional === true) {
             logger.log(
               "shouldAutoResolveLayer: found optional target in effect, NOT auto-resolving",
+            );
+            return false;
+          }
+          if (target.count !== undefined && target.count > 0) {
+            logger.log(
+              "shouldAutoResolveLayer: found target with specific count requirement, NOT auto-resolving",
             );
             return false;
           }
@@ -45,7 +88,7 @@ export function shouldAutoResolveLayer(layer: LayerItem) {
   }
 
   logger.log(
-    "shouldAutoResolveLayer: no optional targets found, auto-resolving",
+    "shouldAutoResolveLayer: no manual targeting required, auto-resolving",
   );
   return true;
 }

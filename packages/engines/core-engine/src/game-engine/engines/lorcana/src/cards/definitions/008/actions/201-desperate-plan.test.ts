@@ -22,6 +22,13 @@ describe("Desperate Plan", () => {
 
       await testEngine.playCard(desperatePlan);
 
+      // Conditional effects don't auto-resolve if ANY branch needs targeting
+      // So we must manually resolve even when condition is met
+      expect(testEngine.stackLayers).toHaveLength(1);
+
+      // Resolve without targets (condition met: no cards in hand, will draw 3)
+      await testEngine.resolveStackLayer();
+
       expect(testEngine.stackLayers).toHaveLength(0);
       expect(testEngine.getZonesCardCount()).toEqual(
         expect.objectContaining({
@@ -44,7 +51,13 @@ describe("Desperate Plan", () => {
         deck: 20,
       });
 
-      await testEngine.playCard(desperatePlan, {
+      await testEngine.playCard(desperatePlan);
+
+      // The card creates a layer that needs targeting (conditional with discard)
+      expect(testEngine.stackLayers).toHaveLength(1);
+
+      // Resolve the layer with the cards to discard
+      await testEngine.resolveStackLayer({
         targets: toDiscard,
       });
 

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "alibaba/qwen3-coder-plus",
+  "theme": "system",
+  "instructions": [
+    ".agent-os/standards/code-style.md",
+    ".agent-os/standards/code-style/*.md",
+    ".agent-os/standards/best-practices.md",
+    ".agent-os/standards/tech-stack.md",
+    "CLAUDE.md",
+    ".github/copilot-instructions.md"
+  ],
+  "formatter": {
+    "prettier": {
+      "disabled": true
+    },
+    "biome": {
+      "disabled": false
+    }
+  },
+  "permission": {
+    "edit": "allow",
+    "bash": {
+      "git push": "ask",
+      "git status": "allow",
+      "git diff": "allow",
+      "ls": "allow",
+      "pwd": "allow",
+      "*": "ask"
+    }
+  },
+  "keybinds": {
+    "leader": "ctrl+x",
+    "session_compact": "<leader>c",
+    "session_child_cycle": "ctrl+right",
+    "session_child_cycle_reverse": "ctrl+left"
+  },
+  "tui": {
+    "scroll_speed": 3
+  }
+}

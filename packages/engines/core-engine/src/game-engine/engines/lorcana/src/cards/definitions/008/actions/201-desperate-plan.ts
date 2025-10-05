@@ -33,10 +33,21 @@ export const desperatePlan: LorcanaActionCardDefinition = {
             targets: [selfPlayerTarget],
             value: 3,
           }),
-          elseEffect: drawCardEffect({
-            targets: [selfPlayerTarget],
-            value: 3, // Simplified implementation - draw 3 cards for the "otherwise" case
-          }),
+          elseEffect: [
+            discardCardEffect({
+              targets: [selfPlayerTarget],
+              // Target filter allows selecting any number of cards from hand
+              filter: {
+                zone: "hand",
+                owner: "self",
+              },
+              count: { min: 0, max: 99 }, // Choose any number
+            }),
+            drawCardEffect({
+              targets: [selfPlayerTarget],
+              value: "discardCount", // Dynamic value - draw as many as discarded
+            }),
+          ],
         }),
       ],
     },

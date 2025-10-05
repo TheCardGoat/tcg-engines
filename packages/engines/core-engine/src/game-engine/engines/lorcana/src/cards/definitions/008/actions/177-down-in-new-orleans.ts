@@ -24,13 +24,15 @@ export const downInNewOrleans: LorcanaActionCardDefinition = {
             lookAt: 3,
             destinations: [
               {
-                zone: "hand",
-                count: 1,
+                zone: "play", // Play for free, not put in hand
+                min: 0,
+                max: 1,
                 filter: {
                   cardType: ["character", "item", "location"],
                   cost: { max: 6 },
                 },
                 reveal: true,
+                exerted: false, // Characters/items enter ready
               },
               {
                 zone: "deck",

@@ -31,7 +31,9 @@ describe("Everybody's Got A Weakness", () => {
       await testEngine.setCardDamage(char, 2);
     }
 
-    await testEngine.playCard(everybodysGotAWeakness, {
+    await testEngine.playCard(everybodysGotAWeakness);
+
+    await testEngine.resolveTopOfStack({
       targets: [goofyKnightForADay],
     });
 

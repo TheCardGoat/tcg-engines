@@ -214,6 +214,140 @@ export const EFFECT_PATTERNS: Record<string, EffectPattern[]> = {
       },
     },
   ],
+
+  // Move effects patterns
+  move: [
+    {
+      pattern: /\breturn\s+(.+?)\s+to\s+(?:your|their)\s+hand\b/i,
+      type: "move",
+      extractor: (match: RegExpMatchArray): ParsedEffect => ({
+        type: "move",
+        parameters: {
+          targetText: match[1]?.trim() || "",
+          to: "hand",
+        },
+      }),
+    },
+    {
+      pattern: /\bput\s+(.+?)\s+(?:into|to)\s+(?:your|their)\s+discard\b/i,
+      type: "move",
+      extractor: (match: RegExpMatchArray): ParsedEffect => ({
+        type: "move",
+        parameters: {
+          targetText: match[1]?.trim() || "",
+          to: "discard",
+        },
+      }),
+    },
+    {
+      pattern: /\bbanish\s+(.+?)\s+(?:from\s+play)?\b/i,
+      type: "move",
+      extractor: (match: RegExpMatchArray): ParsedEffect => ({
+        type: "move",
+        parameters: {
+          targetText: match[1]?.trim() || "",
+          to: "discard",
+        },
+      }),
+    },
+    {
+      pattern:
+        /\bput\s+(.+?)\s+(?:into|to)\s+(?:your|their)(?:\s+player['s]?)?\s+inkwell(?:\s+(.+?))?\b/i,
+      type: "move",
+      extractor: (match: RegExpMatchArray): ParsedEffect => {
+        const modifiers = match[2]?.trim() || "";
+        return {
+          type: "move",
+          parameters: {
+            targetText: match[1]?.trim() || "",
+            to: "inkwell",
+            exerted: modifiers.includes("exerted"),
+            facedown: modifiers.includes("facedown"),
+          },
+        };
+      },
+    },
+  ],
+
+  // Modal effects patterns
+  modal: [
+    {
+      pattern: /\bchoose\s+one\b/i,
+      type: "modal",
+      extractor: (): ParsedEffect => ({
+        type: "modal",
+        parameters: {},
+      }),
+    },
+  ],
+
+  // Move damage effects patterns
+  "move-damage": [
+    {
+      pattern:
+        /\bmove\s+(?:up\s+to\s+)?(\d+|a)\s+damage\s+(?:counter)?(?:s)?\s+from\s+(.+?)\s+to\s+(.+)/i,
+      type: "move-damage",
+      extractor: (match: RegExpMatchArray): ParsedEffect => {
+        const amountText = match[1]?.toLowerCase() || "1";
+        let amount: number | DynamicAmount;
+
+        if (amountText === "a" || amountText === "1") {
+          amount = 1;
+        } else {
+          amount = Number.parseInt(amountText, 10);
+        }
+
+        return {
+          type: "move-damage",
+          amount,
+          parameters: {
+            fromText: match[2]?.trim() || "",
+            toText: match[3]?.trim() || "",
+          },
+        };
+      },
+    },
+  ],
+
+  // Triggered ability patterns
+  triggered: [
+    {
+      pattern: /\bwhen\s+(.+?),\s*(.+)/i,
+      type: "triggered",
+      extractor: (match: RegExpMatchArray): ParsedEffect => ({
+        type: "triggered",
+        parameters: {
+          triggerText: match[1]?.trim() || "",
+          effectText: match[2]?.trim() || "",
+          triggerType: "when",
+        },
+      }),
+    },
+    {
+      pattern: /\bwhenever\s+(.+?),\s*(.+)/i,
+      type: "triggered",
+      extractor: (match: RegExpMatchArray): ParsedEffect => ({
+        type: "triggered",
+        parameters: {
+          triggerText: match[1]?.trim() || "",
+          effectText: match[2]?.trim() || "",
+          triggerType: "whenever",
+        },
+      }),
+    },
+    {
+      pattern: /\bat\s+the\s+end\s+of\s+(.+?),\s*(.+)/i,
+      type: "triggered",
+      extractor: (match: RegExpMatchArray): ParsedEffect => ({
+        type: "triggered",
+        parameters: {
+          triggerText: match[1]?.trim() || "",
+          effectText: match[2]?.trim() || "",
+          triggerType: "at-end-of",
+        },
+      }),
+    },
+  ],
 };
 
 /**

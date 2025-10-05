@@ -109,15 +109,39 @@ export class LorcanaCoreOperations extends CoreOperation<
    * Apply damage to a character or location (Lorcana-specific damage system)
    * Damage accumulates on the card until it's banished or healed
    */
-  applyDamage(cardId: string, damage: number): void {
+  applyDamage(
+    cardId: string,
+    damage: number,
+    source?: "challenges" | "abilities" | "spells" | "all",
+  ): void {
     if (damage <= 0) return; // No damage to apply
 
+    // Check for damage immunity
+    const meta = this.getCardMeta(cardId);
+    if (meta.damageImmunities && Array.isArray(meta.damageImmunities)) {
+      const hasImmunity = meta.damageImmunities.some((immunity: any) => {
+        if (!immunity.sources || immunity.sources.length === 0) {
+          return true; // Immunity with no sources means immune to all
+        }
+        return (
+          immunity.sources.includes(source) || immunity.sources.includes("all")
+        );
+      });
+
+      if (hasImmunity) {
+        logger.debug(
+          `${cardId} is immune to damage from ${source || "unknown source"}`,
+        );
+        return; // Don't apply damage if immune
+      }
+    }
+
     // Add damage to existing damage (damage accumulates)
-    const currentDamage = this.getCardMeta(cardId).damage || 0;
+    const currentDamage = meta.damage || 0;
     this.updateCardMeta(cardId, { damage: currentDamage + damage });
 
     logger.debug(
-      `Applied ${damage} damage to ${cardId}, total damage: ${this.getCardMeta(cardId).damage}`,
+      `Applied ${damage} damage to ${cardId} from ${source || "unknown source"}, total damage: ${this.getCardMeta(cardId).damage}`,
     );
   }
 
@@ -288,6 +312,18 @@ export class LorcanaCoreOperations extends CoreOperation<
   canAddAbilityToResolve(ability: LorcanaAbility, source: LorcanaCard) {
     // Check conditions for adding abilities
 
+    // Skip singer abilities - they should only be added when the card is sung, not played
+    if (
+      ability.type === "keyword" &&
+      ((ability as any).keyword === "sing-together" ||
+        (ability as any).keyword === "sing")
+    ) {
+      logger.debug(
+        `Skipping singer ability for ${source.name} (should only execute when sung)`,
+      );
+      return false;
+    }
+
     // check if there's valid targets for the abilities
 
     return true;
@@ -369,12 +405,38 @@ export class LorcanaCoreOperations extends CoreOperation<
         );
       }
 
+      // Filter by card name if specified
+      if (cardTarget.withName) {
+        logger.debug(
+          `resolveTargets: Filtering by withName: ${cardTarget.withName}`,
+        );
+        filteredCards = filteredCards.filter((card: any) => {
+          const cardName =
+            card?.name || card?.definition?.name || card?.card?.name;
+          const matches = cardName === cardTarget.withName;
+          logger.debug(
+            `Name filter check: cardName="${cardName}", targetName="${cardTarget.withName}", matches=${matches}`,
+          );
+          return matches;
+        });
+        logger.debug(
+          `resolveTargets: After name filtering: ${filteredCards.length} cards`,
+        );
+      }
+
       // For now, take the first N cards based on count (or all if targetAll)
       if (cardTarget.targetAll) {
         targets.push(...filteredCards);
       } else {
-        const count = cardTarget.count || 1;
-        targets.push(...filteredCards.slice(0, count));
+        // Handle "up to" targeting - if max is specified, take up to max cards
+        // Otherwise use count (defaulting to 1)
+        const maxCount = cardTarget.max;
+        if (maxCount !== undefined) {
+          targets.push(...filteredCards.slice(0, maxCount));
+        } else {
+          const count = cardTarget.count || 1;
+          targets.push(...filteredCards.slice(0, count));
+        }
       }
     }
 

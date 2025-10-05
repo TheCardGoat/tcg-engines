@@ -14,7 +14,8 @@ describe("Pull The Lever!", () => {
         deck: 10,
       });
 
-      await testEngine.playCard(pullTheLever, { mode: "1" });
+      await testEngine.playCard(pullTheLever);
+      await testEngine.resolveTopOfStack({ mode: "1" });
 
       expect(testEngine.getZonesCardCount()).toEqual(
         expect.objectContaining({
@@ -35,12 +36,8 @@ describe("Pull The Lever!", () => {
         },
       );
 
-      await testEngine.playCard(pullTheLever, { mode: "2" }, true);
-
-      testEngine.changeActivePlayer("player_two");
-      await testEngine.resolveTopOfStack({
-        targets: [wrongLeverAction],
-      });
+      await testEngine.playCard(pullTheLever);
+      await testEngine.resolveTopOfStack({ mode: "2" });
 
       expect(testEngine.getCardModel(wrongLeverAction).zone).toEqual("discard");
     });

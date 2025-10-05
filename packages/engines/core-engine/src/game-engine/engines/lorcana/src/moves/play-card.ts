@@ -186,6 +186,98 @@ export const playCardMove: LorcanaEnumerableMove = {
 
           // For singing, the ink cost is 0 (free) but we need to exert the singer
           totalCost = 0;
+        } else if (options.alternativeCost.type === "sing-together") {
+          // For sing together, validate that the card is a song and has sing-together keyword
+          const songCard = lorcanaCard.card;
+
+          // Check if the card is a song (has "song" in characteristics)
+          if (!songCard.characteristics?.includes("song")) {
+            return createInvalidMove(
+              "NOT_A_SONG",
+              "moves.playCard.errors.notASong",
+              { cardName: songCard.name, instanceId },
+            );
+          }
+
+          // Get the sing-together ability to check the required cost
+          const abilities = (songCard as any).abilities || [];
+          const singTogetherAbility = abilities.find(
+            (ability: any) =>
+              ability?.type === "keyword" &&
+              ability?.keyword === "sing-together",
+          );
+
+          if (!singTogetherAbility) {
+            return createInvalidMove(
+              "NOT_A_SING_TOGETHER_SONG",
+              "moves.playCard.errors.notASingTogetherSong",
+              { cardName: songCard.name },
+            );
+          }
+
+          const requiredCost =
+            typeof singTogetherAbility.value === "number"
+              ? singTogetherAbility.value
+              : 0;
+
+          // Get all singer characters
+          const singerInstanceIds = options.alternativeCost.targetInstanceId;
+          const singers = singerInstanceIds
+            .map((id) => lorcanaOps.getCardInstance(id))
+            .filter(Boolean);
+
+          if (singers.length === 0) {
+            return createInvalidMove(
+              "NO_SINGERS",
+              "moves.playCard.errors.noSingers",
+              { songName: songCard.name },
+            );
+          }
+
+          // Verify all singers are in play and ready
+          const playCards = lorcanaOps.getCardsInZone("play", playerID);
+          for (const singer of singers) {
+            const singerInPlay = playCards.find(
+              (card) => card.instanceId === singer.instanceId,
+            );
+            if (!singerInPlay) {
+              return createInvalidMove(
+                "SINGER_NOT_IN_PLAY",
+                "moves.playCard.errors.singerNotInPlay",
+                { singerInstanceId: singer.instanceId },
+              );
+            }
+
+            if (singerInPlay.isExerted) {
+              return createInvalidMove(
+                "SINGER_ALREADY_EXERTED",
+                "moves.playCard.errors.singerAlreadyExerted",
+                { singerInstanceId: singer.instanceId },
+              );
+            }
+          }
+
+          // Calculate total cost of singers
+          const totalSingerCost = singers.reduce(
+            (sum, singer) => sum + singer.card.cost,
+            0,
+          );
+
+          // Verify the total cost meets the requirement
+          if (totalSingerCost < requiredCost) {
+            return createInvalidMove(
+              "INSUFFICIENT_SINGER_COST",
+              "moves.playCard.errors.insufficientSingerCost",
+              {
+                totalSingerCost,
+                requiredCost,
+                songName: songCard.name,
+              },
+            );
+          }
+
+          // For sing together, the ink cost is 0 (free) but we need to exert all singers
+          totalCost = 0;
         }
       }
 
@@ -247,6 +339,17 @@ export const playCardMove: LorcanaEnumerableMove = {
         // Handle Singing - exert the singer character
         const singerInstanceId = options.alternativeCost.targetInstanceId[0];
         lorcanaOps.exertCard(singerInstanceId);
+      } else if (options?.alternativeCost?.type === "sing-together") {
+        // Handle Sing Together - exert all singer characters
+        const singerInstanceIds = options.alternativeCost.targetInstanceId;
+        for (const singerId of singerInstanceIds) {
+          lorcanaOps.exertCard(singerId);
+        }
+
+        // Store the singer count in card meta for the effect to access
+        coreOps.setCardMeta(instanceId, {
+          singerCount: singerInstanceIds.length,
+        });
       }
 
       // Move card to appropriate zone

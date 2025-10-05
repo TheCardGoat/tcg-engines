@@ -37,7 +37,7 @@ export const wrongLeverAction: LorcanaActionCardDefinition = {
                 to: "deck",
                 from: "discard",
                 position: "bottom",
-                targets: [cardNamedTarget({ name: "Pull the Lever!" })],
+                targets: [cardNamedTarget({ name: "Pull The Lever!" })],
                 followedBy: putCardEffect({
                   to: "deck",
                   from: "play",

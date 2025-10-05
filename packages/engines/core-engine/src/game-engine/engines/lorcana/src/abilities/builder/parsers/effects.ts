@@ -1,4 +1,4 @@
-import type { LorcanaEffect } from "../../effect-types";
+import type { LorcanaEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { CardTarget } from "../../targets/card-target";
 import type { PlayerTarget } from "../../targets/player-target";
 import { PATTERNS } from "./util";

@@ -18,7 +18,8 @@ describe("Wrong Lever!", () => {
       },
     );
 
-    await testEngine.playCard(wrongLeverAction, { mode: "1" }, true);
+    await testEngine.playCard(wrongLeverAction);
+    await testEngine.resolveTopOfStack({ mode: "1" });
     await testEngine.resolveTopOfStack({ targets: [mickeyMouseGiantMouse] });
 
     expect(testEngine.getCardModel(mickeyMouseGiantMouse).zone).toBe("hand");
@@ -36,10 +37,13 @@ describe("Wrong Lever!", () => {
       },
     );
 
+    // Verify pullTheLever is in discard before playing the action
+    const pullLeverModel = testEngine.getCardModel(pullTheLever);
+    expect(pullLeverModel.zone).toBe("discard");
+
     await testEngine.playCard(wrongLeverAction);
 
-    await testEngine.playCard(wrongLeverAction, { mode: "2" }, true);
-    await testEngine.resolveTopOfStack({ targets: [pullTheLever] }, true);
+    await testEngine.resolveTopOfStack({ mode: "2" });
     expect(testEngine.getCardModel(pullTheLever).zone).toBe("deck");
     expect(testEngine.stackLayers).toHaveLength(1);
 
@@ -60,7 +64,7 @@ describe("Wrong Lever!", () => {
 
     await testEngine.playCard(wrongLeverAction);
 
-    await testEngine.playCard(wrongLeverAction, { mode: "2" }, true);
+    await testEngine.resolveTopOfStack({ mode: "2" });
     expect(testEngine.stackLayers).toHaveLength(0);
   });
 });

@@ -16,15 +16,19 @@ describe("Only So Much Room", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(onlySoMuchRoom);
+    const simbaCard = testEngine.getCardModel(simbaHappygolucky);
+    const principeCard = testEngine.getCardModel(
+      principeNaveenCarefreeExplorer,
+    );
 
     await testEngine.playCard(cardUnderTest);
 
-    await testEngine.resolveTopOfStack({ targets: [simbaHappygolucky] }, true);
-    expect(testEngine.getCardModel(simbaHappygolucky).zone).toBe("hand");
-
+    // Single ability with two effects requires both targets in one call
     await testEngine.resolveTopOfStack({
-      targets: [principeNaveenCarefreeExplorer],
+      targets: [simbaCard.instanceId, principeCard.instanceId],
     });
+
+    expect(testEngine.getCardModel(simbaHappygolucky).zone).toBe("hand");
     expect(testEngine.getCardModel(principeNaveenCarefreeExplorer).zone).toBe(
       "hand",
     );

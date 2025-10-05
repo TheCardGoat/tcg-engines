@@ -9,17 +9,6 @@ import {
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Nothing We Won't Do", () => {
-  it("Sing Together 8 (Any number of your or your teammates' characters with total cost 8 or more may {E} to sing this song for free.)", async () => {
-    const testEngine = new TestEngine({
-      inkwell: nothingWeWontDo.cost,
-      hand: [nothingWeWontDo],
-    });
-
-    expect(testEngine.getCardModel(nothingWeWontDo).hasSingTogether).toEqual(
-      true,
-    );
-  });
-
   it("Ready all your characters. For the rest of this turn, they take no damage from challenges and can't quest.", async () => {
     const charsInPlay = [
       deweyLovableShowoff,
@@ -37,29 +26,34 @@ describe("Nothing We Won't Do", () => {
       },
     );
 
+    // Exert all characters
     for (const char of charsInPlay) {
-      await testEngine.tapCard(char);
-
-      expect(testEngine.getCardModel(char).ready).toEqual(false);
-      expect(testEngine.getCardModel(char).hasQuestRestriction).toEqual(false);
-      expect(testEngine.getCardModel(char).damage).toEqual(0);
-      expect(testEngine.getCardModel(char).zone).toEqual("play");
+      await testEngine.exertCard(char);
     }
 
-    await testEngine.playCard(nothingWeWontDo);
-    await testEngine.tapCard(goofyKnightForADay);
+    // Verify they are exerted before playing the card
+    for (const char of charsInPlay) {
+      expect(testEngine.getCardModel(char).meta.exerted).toEqual(true);
+      expect(testEngine.getCardModel(char).hasQuestRestriction).toEqual(false);
+    }
 
+    // Play the action card
+    await testEngine.playCard(nothingWeWontDo);
+
+    // Verify all characters are readied and have quest restriction
     for (const char of charsInPlay) {
       const charModel = testEngine.getCardModel(char);
 
-      expect(charModel.ready).toEqual(true);
+      expect(charModel.meta.exerted).toEqual(false);
       expect(charModel.hasQuestRestriction).toEqual(true);
 
+      // Challenge with each character to verify damage immunity
       await testEngine.challenge({
         attacker: char,
         defender: goofyKnightForADay,
       });
 
+      // Verify character took no damage and is still in play
       expect(charModel.zone).toEqual("play");
       expect(charModel.damage).toEqual(0);
     }

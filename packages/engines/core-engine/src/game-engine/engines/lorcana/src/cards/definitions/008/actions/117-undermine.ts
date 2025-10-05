@@ -9,7 +9,6 @@ import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/
 
 export const undermine: LorcanaActionCardDefinition = {
   id: "hbl",
-  missingTestCase: true,
   name: "Undermine",
   characteristics: ["action"],
   text: "Chosen opponent chooses and discards a card. Chosen character gets +2 {S} this turn.",

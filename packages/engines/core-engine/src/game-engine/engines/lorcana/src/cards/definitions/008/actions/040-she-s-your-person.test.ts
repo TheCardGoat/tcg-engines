@@ -17,13 +17,11 @@ describe("She's Your Person", () => {
 
       await testEngine.setCardDamage(mickeyMouseGiantMouse, 5);
 
-      await testEngine.playCard(
-        shesYourPerson,
-        {
-          mode: "1",
-        },
-        true,
-      );
+      await testEngine.playCard(shesYourPerson);
+
+      await testEngine.resolveTopOfStack({
+        mode: "1",
+      });
 
       await testEngine.resolveTopOfStack({
         targets: [mickeyMouseGiantMouse],
@@ -42,7 +40,9 @@ describe("She's Your Person", () => {
       await testEngine.setCardDamage(mickeyMouseGiantMouse, 5);
       await testEngine.setCardDamage(mickeyMouseMusketeer, 4);
 
-      await testEngine.playCard(shesYourPerson, {
+      await testEngine.playCard(shesYourPerson);
+
+      await testEngine.resolveTopOfStack({
         mode: "2",
       });
 

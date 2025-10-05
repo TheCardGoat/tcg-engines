@@ -243,6 +243,7 @@ export function chosenCharacterWithTarget({
     type: "card",
     cardType: "character",
     filter,
+    count: 1,
   };
 }
 

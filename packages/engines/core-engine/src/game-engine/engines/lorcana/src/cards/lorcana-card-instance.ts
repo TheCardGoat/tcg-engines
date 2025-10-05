@@ -106,14 +106,24 @@ export class LorcanaCardInstance extends CoreCardInstance<
   }
 
   get strength(): number {
-    const baseStrength = (this.card as any).strength || 0;
+    // Only characters and locations have strength/willpower
+    const cardDef = this.card;
+    const baseStrength =
+      cardDef.type === "character" || cardDef.type === "location"
+        ? cardDef.strength || 0
+        : 0;
     const meta = this.meta;
     const modifier = meta?.modifiers?.strength || 0;
     return baseStrength + modifier;
   }
 
   get willpower(): number {
-    const baseWillpower = (this.card as any).willpower || 0;
+    // Only characters and locations have willpower
+    const cardDef = this.card;
+    const baseWillpower =
+      cardDef.type === "character" || cardDef.type === "location"
+        ? cardDef.willpower
+        : 0;
     const modifier = this.meta?.modifiers?.willpower || 0;
     return baseWillpower + modifier;
   }
@@ -181,7 +191,12 @@ export class LorcanaCardInstance extends CoreCardInstance<
 
   // STUB METHODS, while we migrate tests
   playFromHand(): void {}
-  hasSingTogether = false;
+  get hasSingTogether(): boolean {
+    return this.card.abilities?.some(
+      (ability) =>
+        ability.type === "keyword" && ability.keyword === "sing-together",
+    );
+  }
   ready = true;
 }
 

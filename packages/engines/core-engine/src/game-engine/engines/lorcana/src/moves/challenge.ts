@@ -357,14 +357,22 @@ export const challengeMove: LorcanaMove = (
       logger.info(
         `Challenger deals ${targetDamageToTake} damage to target (after Resist: ${targetResist})`,
       );
-      lorcanaOps.applyDamage(options.targetInstanceId, targetDamageToTake);
+      lorcanaOps.applyDamage(
+        options.targetInstanceId,
+        targetDamageToTake,
+        "challenges",
+      );
     }
 
     if (challengerDamageToTake > 0 && isTargetCharacter) {
       logger.info(
         `Target deals ${challengerDamageToTake} damage to challenger`,
       );
-      lorcanaOps.applyDamage(challengerInstanceId, challengerDamageToTake);
+      lorcanaOps.applyDamage(
+        challengerInstanceId,
+        challengerDamageToTake,
+        "challenges",
+      );
     }
 
     // Game state check will automatically handle banishment (Rule 1.9.1.3)

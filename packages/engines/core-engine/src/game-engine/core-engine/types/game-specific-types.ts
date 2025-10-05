@@ -21,12 +21,79 @@ export interface BasePlayerState {
   name: string;
 }
 
+/**
+ * Serializable numeric comparison for attribute filtering
+ * This is the NEW format for rich filtering with explicit operators
+ */
+export type NumericComparison = {
+  readonly operator: "eq" | "gt" | "gte" | "lt" | "lte";
+  readonly value: number;
+};
+
+/**
+ * Legacy numeric range format for backward compatibility
+ * Used by existing Lorcana and One-Piece implementations
+ */
+export type NumericRange = {
+  readonly min?: number;
+  readonly max?: number;
+  readonly exact?: number;
+};
+
+/**
+ * Serializable string comparison for name/text filtering
+ */
+export type StringComparison = {
+  readonly operator: "eq" | "includes" | "startsWith" | "endsWith";
+  readonly value: string | readonly string[];
+  readonly caseInsensitive?: boolean;
+};
+
+/**
+ * Enhanced base card filter with rich filtering capabilities.
+ * All properties are optional, readonly, and serializable to JSON.
+ *
+ * This interface provides the foundation for type-safe, immutable,
+ * and serializable card filtering across all TCG implementations.
+ *
+ * NOTE: cost and strength accept BOTH NumericComparison (new format)
+ * and NumericRange (legacy format) for backward compatibility.
+ */
 export interface BaseCoreCardFilter {
-  zone?: string | string[];
-  owner?: string;
-  publicId?: string;
-  instanceId?: string;
-  type?: string | string[];
+  // Basic identification filters
+  readonly zone?: string | readonly string[];
+  readonly owner?: string;
+  readonly publicId?: string;
+  readonly instanceId?: string;
+  readonly type?: string | readonly string[];
+
+  // Status filters (boolean flags)
+  readonly ready?: boolean;
+  readonly exerted?: boolean;
+  readonly damaged?: boolean;
+
+  // Attribute comparison filters (serializable)
+  // Accept both new (NumericComparison) and legacy (NumericRange) formats
+  readonly cost?: NumericComparison | NumericRange;
+  readonly strength?: NumericComparison | NumericRange;
+  readonly name?: StringComparison;
+
+  // Keyword/Ability filters
+  readonly withKeyword?: string | readonly string[];
+  readonly withoutKeyword?: string | readonly string[];
+
+  // Characteristics filters with AND/OR logic
+  readonly withCharacteristics?: readonly string[];
+  readonly characteristicsMode?: "all" | "any";
+
+  // Quantity and selection modifiers
+  readonly count?: number | "all";
+  readonly upTo?: boolean;
+  readonly random?: boolean;
+  readonly excludeSelf?: boolean;
+
+  // Extensibility for game-specific filters
+  readonly custom?: Readonly<Record<string, any>>;
 }
 
 // biome-ignore lint/complexity/noBannedTypes: this is not an actual type, it's a placeholder

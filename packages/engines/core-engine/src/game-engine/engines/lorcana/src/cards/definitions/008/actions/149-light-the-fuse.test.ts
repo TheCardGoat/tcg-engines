@@ -31,7 +31,8 @@ describe("Light The Fuse", () => {
       await testEngine.tapCard(exertedChar);
     }
 
-    await testEngine.playCard(lightTheFuse, { targets: [goofyKnightForADay] });
+    await testEngine.playCard(lightTheFuse);
+    await testEngine.resolveTopOfStack({ targets: [goofyKnightForADay] });
 
     expect(testEngine.getCardModel(goofyKnightForADay).damage).toBe(
       exertedChars.length,

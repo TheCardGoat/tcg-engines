@@ -35,8 +35,10 @@ describe("Trials And Tribulations", () => {
     // Verify initial strength
     expect(testEngine.getCardModel(testCharacter).strength).toBe(5);
 
-    // Play the card - effect auto-resolves since target is not optional
+    // Play the card and resolve with target
     await testEngine.playCard(trialsAndTribulations);
+    const targetCard = testEngine.getCardModel(testCharacter);
+    await testEngine.resolveTopOfStack({ targets: [targetCard.instanceId] });
 
     // Verify strength decreased by 4 (5 - 4 = 1)
     expect(testEngine.getCardModel(testCharacter).strength).toBe(1);
