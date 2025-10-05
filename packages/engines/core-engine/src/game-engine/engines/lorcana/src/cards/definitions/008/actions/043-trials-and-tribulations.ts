@@ -5,7 +5,6 @@ import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/
 
 export const trialsAndTribulations: LorcanaActionCardDefinition = {
   id: "rky",
-  missingTestCase: true,
   name: "Trials And Tribulations",
   characteristics: ["action", "song"],
   text: "Chosen character gets -4 {S} until the start of your next turn.",
@@ -19,7 +18,7 @@ export const trialsAndTribulations: LorcanaActionCardDefinition = {
         getEffect({
           attribute: "strength",
           value: -4,
-          targets: chosenCharacterTarget,
+          targets: [chosenCharacterTarget],
           duration: UNTIL_START_OF_YOUR_NEXT_TURN,
         }),
       ],
