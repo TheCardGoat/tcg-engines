@@ -28,7 +28,31 @@ export function resolveLayerItem(
         case "gainLore": {
           // Use value property, with fallback to 1 if not provided
           const valueParam = effect.parameters?.value || 1;
-          const amount = typeof valueParam === "object" ? 1 : valueParam;
+          let amount = typeof valueParam === "object" ? 1 : valueParam;
+
+          // Handle dynamic values
+          if (typeof valueParam === "object" && valueParam.type === "targetDamage") {
+            // Get the target damage from the first selected target, or from ability-level targets
+            let targetCard: any = null;
+
+            if ((trigger as any).selectedTargets && (trigger as any).selectedTargets.length > 0) {
+              const targetId = (trigger as any).selectedTargets[0];
+              targetCard = this.engine.cardInstanceStore.getCardByInstanceId(targetId);
+            } else if (trigger.ability?.targets && trigger.ability.targets.length > 0) {
+              // Use ability-level targets
+              const abilityTargets = trigger.ability.targets;
+              const resolvedTargets = this.resolveTargets(abilityTargets, sourceCard);
+              if (resolvedTargets.length > 0) {
+                targetCard = resolvedTargets[0];
+              }
+            }
+
+            if (targetCard) {
+              amount = this.getCardMeta(targetCard.instanceId).damage || 0;
+              logger.debug(`Resolved targetDamage dynamic value: ${amount} from ${targetCard.name}`);
+            }
+          }
+
           if (this.state.ctx.players[trigger.controllerId]) {
             const playerState = this.state.ctx.players[
               trigger.controllerId
@@ -37,6 +61,69 @@ export function resolveLayerItem(
               playerState.lore = 0;
             }
             playerState.lore += amount;
+            logger.debug(`Player ${trigger.controllerId} gained ${amount} lore, total: ${playerState.lore}`);
+          }
+
+          // Process followedBy effect if present
+          if (effect.followedBy) {
+            logger.debug(`Processing followedBy effect: ${effect.followedBy.type}`);
+            // Process the followedBy effect inline
+            const followedByEffect = effect.followedBy;
+            switch (followedByEffect.type) {
+              case "banish": {
+                // Banish effect (e.g., "Banish chosen character")
+                const optional = followedByEffect.optional;
+
+                // Get target cards - use the same selected targets as the main effect
+                let targetCards: any[] = [];
+
+                if ((trigger as any).selectedTargets) {
+                  const selectedIds = (trigger as any).selectedTargets;
+                  logger.debug(
+                    `Using manually selected targets for followedBy banish: ${selectedIds.join(", ")}`,
+                  );
+                  targetCards = selectedIds
+                    .map((id: string) =>
+                      this.engine.cardInstanceStore.getCardByInstanceId(id),
+                    )
+                    .filter(Boolean);
+                } else {
+                  const targetDefs = followedByEffect.targets || trigger.ability?.targets || [];
+                  logger.debug(
+                    `Auto-resolving targets for followedBy banish. targetDefs count: ${targetDefs.length}`,
+                  );
+                  targetCards = this.resolveTargets(targetDefs, sourceCard);
+                }
+
+                logger.debug(
+                  `Banishing ${targetCards.length} cards (followedBy)`,
+                  {
+                    targetCardNames: targetCards.map((c) => c?.name || "unknown"),
+                  },
+                );
+
+                // Banish each target card (move to discard)
+                for (const targetCard of targetCards) {
+                  const currentZone = targetCard.zone;
+                  const ownerId = targetCard.ownerId;
+
+                  // Move the card to discard
+                  this.moveCard({
+                    playerId: ownerId,
+                    instanceId: targetCard.instanceId,
+                    to: "discard",
+                  });
+
+                  logger.debug(`Banished ${targetCard.name} to discard (followedBy)`, {
+                    from: currentZone,
+                    to: `${ownerId}-discard`,
+                  });
+                }
+                break;
+              }
+              default:
+                logger.warn(`Unhandled followedBy effect type: ${followedByEffect.type}`);
+            }
           }
           break;
         }
@@ -491,6 +578,174 @@ export function resolveLayerItem(
               from: currentZone,
               to: `${ownerId}-${toZone}`,
             });
+          }
+          break;
+        }
+        case "gainsAbility": {
+          // Gains ability effect (e.g., "Chosen character gains Evasive this turn")
+          const ability = effect.parameters?.ability;
+          const duration = effect.duration;
+
+          if (!ability) {
+            logger.warn("Gains ability effect missing ability parameter");
+            break;
+          }
+
+          // Get target cards - either from selectedTargets (manual selection) or auto-resolve
+          let targetCards: any[] = [];
+
+          if ((trigger as any).selectedTargets) {
+            const selectedIds = (trigger as any).selectedTargets;
+            logger.debug(
+              `Using manually selected targets for gainsAbility: ${selectedIds.join(", ")}`,
+            );
+            targetCards = selectedIds
+              .map((id: string) =>
+                this.engine.cardInstanceStore.getCardByInstanceId(id),
+              )
+              .filter(Boolean);
+          } else {
+            const targetDefs = effect.targets || trigger.ability?.targets || [];
+            logger.debug(
+              `Auto-resolving targets for gainsAbility. targetDefs count: ${targetDefs.length}`,
+            );
+            targetCards = this.resolveTargets(targetDefs, sourceCard);
+          }
+
+          logger.debug(
+            `Granting ability "${ability.keyword || ability.text?.substring(0, 20)}..." to ${targetCards.length} cards`,
+            {
+              duration: duration?.type,
+              targetCardNames: targetCards.map((c) => c?.name || "unknown"),
+            },
+          );
+
+          // Grant ability to each target
+          for (const targetCard of targetCards) {
+            if (!this.state.ctx.cardMetas[targetCard.instanceId]) {
+              this.state.ctx.cardMetas[targetCard.instanceId] = {} as any;
+            }
+
+            const cardMeta = this.state.ctx.cardMetas[
+              targetCard.instanceId
+            ] as any;
+
+            // Initialize granted abilities if they don't exist
+            if (!cardMeta.grantedAbilities) {
+              cardMeta.grantedAbilities = [];
+            }
+
+            // Add the granted ability
+            cardMeta.grantedAbilities.push({
+              ability,
+              duration,
+              appliedTurn: this.state.G.turnCount || 0,
+              appliedBy: sourceCard?.instanceId,
+            });
+
+            logger.debug(
+              `Granted ability to ${targetCard.name}`,
+              {
+                ability: ability.keyword || "custom ability",
+                duration: duration?.type,
+              },
+            );
+          }
+          break;
+        }
+        case "banish": {
+          // Banish effect (e.g., "Banish chosen character")
+          const optional = effect.optional;
+
+          // Get target cards - either from selectedTargets (manual selection) or auto-resolve
+          let targetCards: any[] = [];
+
+          if ((trigger as any).selectedTargets) {
+            const selectedIds = (trigger as any).selectedTargets;
+            logger.debug(
+              `Using manually selected targets for banish: ${selectedIds.join(", ")}`,
+            );
+            targetCards = selectedIds
+              .map((id: string) =>
+                this.engine.cardInstanceStore.getCardByInstanceId(id),
+              )
+              .filter(Boolean);
+          } else {
+            const targetDefs = effect.targets || trigger.ability?.targets || [];
+            logger.debug(
+              `Auto-resolving targets for banish. targetDefs count: ${targetDefs.length}`,
+            );
+            targetCards = this.resolveTargets(targetDefs, sourceCard);
+          }
+
+          logger.debug(
+            `Banishing ${targetCards.length} cards`,
+            {
+              targetCardNames: targetCards.map((c) => c?.name || "unknown"),
+            },
+          );
+
+          // Banish each target card (move to discard)
+          for (const targetCard of targetCards) {
+            const currentZone = targetCard.zone;
+            const ownerId = targetCard.ownerId;
+
+            // Move the card to discard
+            this.moveCard({
+              playerId: ownerId,
+              instanceId: targetCard.instanceId,
+              to: "discard",
+            });
+
+            logger.debug(`Banished ${targetCard.name} to discard`, {
+              from: currentZone,
+              to: `${ownerId}-discard`,
+            });
+          }
+          break;
+        }
+        case "dealDamage": {
+          // Deal damage effect (e.g., "Deal 1 damage to chosen character")
+          const valueParam = effect.parameters?.value || 1;
+          const amount = typeof valueParam === "object" ? 1 : valueParam;
+
+          // Get target cards - either from selectedTargets (manual selection) or auto-resolve
+          let targetCards: any[] = [];
+
+          if ((trigger as any).selectedTargets) {
+            const selectedIds = (trigger as any).selectedTargets;
+            logger.debug(
+              `Using manually selected targets for dealDamage: ${selectedIds.join(", ")}`,
+            );
+            targetCards = selectedIds
+              .map((id: string) =>
+                this.engine.cardInstanceStore.getCardByInstanceId(id),
+              )
+              .filter(Boolean);
+          } else {
+            const targetDefs = effect.targets || trigger.ability?.targets || [];
+            logger.debug(
+              `Auto-resolving targets for dealDamage. targetDefs count: ${targetDefs.length}`,
+            );
+            targetCards = this.resolveTargets(targetDefs, sourceCard);
+          }
+
+          logger.debug(
+            `Dealing ${amount} damage to ${targetCards.length} cards`,
+            {
+              targetCardNames: targetCards.map((c) => c?.name || "unknown"),
+            },
+          );
+
+          // Apply damage to each target
+          for (const targetCard of targetCards) {
+            this.applyDamage(targetCard.instanceId, amount);
+            logger.debug(
+              `Dealt ${amount} damage to ${targetCard.name}`,
+              {
+                totalDamage: this.getCardMeta(targetCard.instanceId).damage,
+              },
+            );
           }
           break;
         }

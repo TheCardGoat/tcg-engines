@@ -1149,24 +1149,48 @@ Object.defineProperty(LorcanaCardInstance.prototype, "activatedAbilities", {
 
 Object.defineProperty(LorcanaCardInstance.prototype, "hasEvasive", {
   get(this: LorcanaCardInstance) {
-    const abilities = (this.card as any)?.abilities || [];
-    return abilities.some(
+    // Check base card abilities
+    const baseAbilities = (this.card as any)?.abilities || [];
+    const hasBaseEvasive = baseAbilities.some(
       (a: any) =>
         (a?.keyword || "").toLowerCase().includes("evasive") ||
         (typeof a?.text === "string" &&
           a.text.toLowerCase().includes("evasive")),
+    );
+
+    if (hasBaseEvasive) return true;
+
+    // Check granted abilities
+    const grantedAbilities = (this.meta as any)?.grantedAbilities || [];
+    return grantedAbilities.some(
+      (granted: any) =>
+        (granted?.ability?.keyword || "").toLowerCase().includes("evasive") ||
+        (typeof granted?.ability?.text === "string" &&
+          granted.ability.text.toLowerCase().includes("evasive")),
     );
   },
 });
 
 Object.defineProperty(LorcanaCardInstance.prototype, "hasChallenger", {
   get(this: LorcanaCardInstance) {
-    const abilities = (this.card as any)?.abilities || [];
-    return abilities.some(
+    // Check base card abilities
+    const baseAbilities = (this.card as any)?.abilities || [];
+    const hasBaseChallenger = baseAbilities.some(
       (a: any) =>
         (a?.keyword || "").toLowerCase().includes("challenger") ||
         (typeof a?.text === "string" &&
           a.text.toLowerCase().includes("challenger")),
+    );
+
+    if (hasBaseChallenger) return true;
+
+    // Check granted abilities
+    const grantedAbilities = (this.meta as any)?.grantedAbilities || [];
+    return grantedAbilities.some(
+      (granted: any) =>
+        (granted?.ability?.keyword || "").toLowerCase().includes("challenger") ||
+        (typeof granted?.ability?.text === "string" &&
+          granted.ability.text.toLowerCase().includes("challenger")),
     );
   },
 });
