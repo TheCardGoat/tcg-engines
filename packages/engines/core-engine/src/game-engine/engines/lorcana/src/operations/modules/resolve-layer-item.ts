@@ -297,7 +297,7 @@ export function resolveLayerItem(
         }
         case "restrict": {
           // Restrict effect (e.g., "can't ready at the start of their next turn")
-          const restriction = effect.parameters?.restriction;
+          const restriction = (effect as any).restriction;
           const duration = effect.duration;
 
           // Get target cards
@@ -1326,6 +1326,45 @@ export function resolveLayerItem(
                 logger.warn(
                   `Unhandled followedBy effect type after banish: ${followedByEffect.type}`,
                 );
+            }
+          }
+          break;
+        }
+        case "ready": {
+          // Ready effect (e.g., "Ready all your characters")
+          // Get target cards - either from selectedTargets (manual selection) or auto-resolve
+          let targetCards: any[] = [];
+
+          if ((trigger as any).selectedTargets) {
+            const selectedIds = (trigger as any).selectedTargets;
+            logger.debug(
+              `Using manually selected targets for ready: ${selectedIds.join(", ")}`,
+            );
+            targetCards = selectedIds
+              .map((id: string) =>
+                this.engine.cardInstanceStore.getCardByInstanceId(id),
+              )
+              .filter(Boolean);
+          } else {
+            const targetDefs = effect.targets || trigger.ability?.targets || [];
+            logger.debug(
+              `Auto-resolving targets for ready. targetDefs count: ${targetDefs.length}`,
+            );
+            targetCards = this.resolveTargets(targetDefs, sourceCard);
+          }
+
+          logger.debug(`Readying ${targetCards.length} cards`, {
+            targetCardNames: targetCards.map((c) => c?.name || "unknown"),
+          });
+
+          // Ready (unexert) each target card
+          for (const targetCard of targetCards) {
+            const meta = this.state.ctx.cardMetas[targetCard.instanceId];
+            if (meta?.exerted) {
+              meta.exerted = false;
+              logger.debug(`Readied ${targetCard.name}`, {
+                instanceId: targetCard.instanceId,
+              });
             }
           }
           break;

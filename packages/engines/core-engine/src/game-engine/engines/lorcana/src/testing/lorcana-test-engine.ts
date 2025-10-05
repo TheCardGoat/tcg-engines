@@ -1257,8 +1257,19 @@ Object.defineProperty(LorcanaCardInstance.prototype, "hasChallenger", {
 
 Object.defineProperty(LorcanaCardInstance.prototype, "hasQuestRestriction", {
   get(this: LorcanaCardInstance) {
+    // Check card text for static restrictions
     const text: string = ((this.card as any)?.text || "").toLowerCase();
-    return text.includes("can't quest") || text.includes("cannot quest");
+    if (text.includes("can't quest") || text.includes("cannot quest")) {
+      return true;
+    }
+
+    // Check meta for dynamic restrictions
+    const meta = this.meta;
+    if (meta?.restrictions && Array.isArray(meta.restrictions)) {
+      return meta.restrictions.some((r: any) => r.restriction === "quest");
+    }
+
+    return false;
   },
 });
 
