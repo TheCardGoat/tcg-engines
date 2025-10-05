@@ -707,7 +707,27 @@ export function resolveLayerItem(
         case "dealDamage": {
           // Deal damage effect (e.g., "Deal 1 damage to chosen character")
           const valueParam = effect.parameters?.value || 1;
-          const amount = typeof valueParam === "object" ? 1 : valueParam;
+          let amount = typeof valueParam === "object" ? 1 : valueParam;
+
+          // Handle dynamic values
+          if (typeof valueParam === "object" && valueParam.type === "count") {
+            // Count cards matching the filter - need to create a CardTarget from the filter
+            const filter = valueParam.filter;
+            if (filter) {
+              // Convert filter to target format for resolveTargets
+              const countTarget = {
+                type: "card" as const,
+                ...filter,
+                targetAll: true, // We want to count all matching cards
+              };
+              const matchingCards = this.resolveTargets([countTarget], sourceCard);
+              amount = matchingCards.length;
+              logger.debug(`Resolved dynamic count value: ${amount} cards match filter`, {
+                filter,
+                matchingCardNames: matchingCards.map((c) => c?.name || "unknown"),
+              });
+            }
+          }
 
           // Get target cards - either from selectedTargets (manual selection) or auto-resolve
           let targetCards: any[] = [];

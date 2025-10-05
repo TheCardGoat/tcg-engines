@@ -214,6 +214,111 @@ export const EFFECT_PATTERNS: Record<string, EffectPattern[]> = {
       },
     },
   ],
+
+  // Move effects patterns
+  move: [
+    {
+      pattern: /\breturn\s+(.+?)\s+to\s+(?:your|their)\s+hand\b/i,
+      type: "move",
+      extractor: (match: RegExpMatchArray): ParsedEffect => ({
+        type: "move",
+        parameters: {
+          targetText: match[1]?.trim() || "",
+          to: "hand",
+        },
+      }),
+    },
+    {
+      pattern: /\bput\s+(.+?)\s+(?:into|to)\s+(?:your|their)\s+discard\b/i,
+      type: "move",
+      extractor: (match: RegExpMatchArray): ParsedEffect => ({
+        type: "move",
+        parameters: {
+          targetText: match[1]?.trim() || "",
+          to: "discard",
+        },
+      }),
+    },
+    {
+      pattern: /\bbanish\s+(.+?)\s+(?:from\s+play)?\b/i,
+      type: "move",
+      extractor: (match: RegExpMatchArray): ParsedEffect => ({
+        type: "move",
+        parameters: {
+          targetText: match[1]?.trim() || "",
+          to: "discard",
+        },
+      }),
+    },
+  ],
+
+  // Modal effects patterns
+  modal: [
+    {
+      pattern: /\bchoose\s+one\b/i,
+      type: "modal",
+      extractor: (): ParsedEffect => ({
+        type: "modal",
+        parameters: {},
+      }),
+    },
+  ],
+
+  // Move damage effects patterns
+  "move-damage": [
+    {
+      pattern: /\bmove\s+(\d+)\s+damage\s+counter\s+from\s+(.+?)\s+to\s+(.+)/i,
+      type: "move-damage",
+      extractor: (match: RegExpMatchArray): ParsedEffect => ({
+        type: "move-damage",
+        amount: Number.parseInt(match[1] || "1", 10),
+        parameters: {
+          fromText: match[2]?.trim() || "",
+          toText: match[3]?.trim() || "",
+        },
+      }),
+    },
+  ],
+
+  // Triggered ability patterns
+  "triggered": [
+    {
+      pattern: /\bwhen\s+(.+?),\s*(.+)/i,
+      type: "triggered",
+      extractor: (match: RegExpMatchArray): ParsedEffect => ({
+        type: "triggered",
+        parameters: {
+          triggerText: match[1]?.trim() || "",
+          effectText: match[2]?.trim() || "",
+          triggerType: "when",
+        },
+      }),
+    },
+    {
+      pattern: /\bwhenever\s+(.+?),\s*(.+)/i,
+      type: "triggered",
+      extractor: (match: RegExpMatchArray): ParsedEffect => ({
+        type: "triggered",
+        parameters: {
+          triggerText: match[1]?.trim() || "",
+          effectText: match[2]?.trim() || "",
+          triggerType: "whenever",
+        },
+      }),
+    },
+    {
+      pattern: /\bat\s+the\s+end\s+of\s+(.+?),\s*(.+)/i,
+      type: "triggered",
+      extractor: (match: RegExpMatchArray): ParsedEffect => ({
+        type: "triggered",
+        parameters: {
+          triggerText: match[1]?.trim() || "",
+          effectText: match[2]?.trim() || "",
+          triggerType: "at-end-of",
+        },
+      }),
+    },
+  ],
 };
 
 /**
