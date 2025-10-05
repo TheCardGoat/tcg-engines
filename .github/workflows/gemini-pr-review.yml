@@ -141,6 +141,18 @@ jobs:
             echo "EOF"
           } >> "${GITHUB_OUTPUT}"
 
+      - name: 'Read prompt file'
+        id: 'read_prompt'
+        run: |-
+          set -euo pipefail
+          
+          PROMPT_CONTENT="$(cat .agent-os/instructions/gemini-pr-review-prompt.md)"
+          {
+            echo "prompt_content<<EOF"
+            echo "${PROMPT_CONTENT}"
+            echo "EOF"
+          } >> "${GITHUB_OUTPUT}"
+
       - name: 'Run Gemini PR Review'
         uses: 'google-github-actions/run-gemini-cli@v0'
         id: 'gemini_pr_review'
@@ -198,7 +210,7 @@ jobs:
                 "target": "gcp"
               }
             }
-          prompt_file: '.agent-os/instructions/gemini-pr-review-prompt.md'
+          prompt: '${{ steps.read_prompt.outputs.prompt_content }}'
 
 
       - name: 'Post PR review failure comment'
