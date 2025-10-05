@@ -51,12 +51,41 @@ Before executing any Agent OS instructions, determine the current project contex
         SET PROJECT_ROOT = "apps/{PROJECT_NAME}"
         SET AGENT_OS_PATH = ".agent-os/apps/{PROJECT_NAME}"
         PROCEED to validation
-      
-      ELSE IF current_directory contains "packages/[name]" in path:
+
+      ELSE IF current_directory contains "packages/" in path:
         SET PROJECT_TYPE = "packages"
-        SET PROJECT_NAME = [name] (directory name after "packages/")
-        SET PROJECT_ROOT = "packages/{PROJECT_NAME}"
+
+        IMPORTANT: Handle nested package structures correctly
+
+        METHOD 1 (Preferred): Find deepest package.json
+          - Search upward from current directory for package.json
+          - Stop when reaching "packages/" directory
+          - Use the directory name containing that package.json as PROJECT_NAME
+          - Example: packages/engines/core-engine/ → PROJECT_NAME = "core-engine"
+
+        METHOD 2 (Fallback): Use deepest directory name
+          - Extract full path after "packages/"
+          - Take the LAST directory component as PROJECT_NAME
+          - Example: "packages/engines/core-engine" → PROJECT_NAME = "core-engine"
+          - Example: "packages/shared" → PROJECT_NAME = "shared"
+
+        CRITICAL: PROJECT_NAME must be the actual package name, not intermediate directories
+
+        SET PROJECT_NAME = [deepest directory name after packages/]
+        SET PROJECT_ROOT = [full path from packages/ to PROJECT_NAME]
         SET AGENT_OS_PATH = ".agent-os/packages/{PROJECT_NAME}"
+
+        EXAMPLES:
+          Path: packages/engines/core-engine/src/
+          → PROJECT_NAME = "core-engine"
+          → PROJECT_ROOT = "packages/engines/core-engine"
+          → AGENT_OS_PATH = ".agent-os/packages/core-engine"
+
+          Path: packages/shared/
+          → PROJECT_NAME = "shared"
+          → PROJECT_ROOT = "packages/shared"
+          → AGENT_OS_PATH = ".agent-os/packages/shared"
+
         PROCEED to validation
       
       ELSE:
@@ -84,16 +113,30 @@ Before executing any Agent OS instructions, determine the current project contex
     - MONOREPO_ROOT: string (workspace root directory name, e.g., "lorcanito")
     - PROJECT_TYPE: "apps" | "packages"
     - PROJECT_NAME: string (actual project directory name, e.g., "lorcanary")
-    - PROJECT_ROOT: string (relative path like "apps/lorcanary")
-    - AGENT_OS_PATH: string (path to project's .agent-os directory, e.g., ".agent-os/apps/lorcanary")
-    
-    CRITICAL DISTINCTION:
+    - PROJECT_ROOT: string (relative path like "apps/lorcanary" or "packages/engines/core-engine")
+    - AGENT_OS_PATH: string (path to project's .agent-os directory, e.g., ".agent-os/apps/lorcanary" or ".agent-os/packages/core-engine")
+
+    CRITICAL DISTINCTIONS:
       ❌ WRONG: Using MONOREPO_ROOT as PROJECT_NAME
       ✅ RIGHT: MONOREPO_ROOT and PROJECT_NAME are different
-      
-      Example:
+
+      ❌ WRONG: Using intermediate directory as PROJECT_NAME (e.g., "engines" in packages/engines/core-engine)
+      ✅ RIGHT: PROJECT_NAME is the deepest/actual package name (e.g., "core-engine")
+
+      ❌ WRONG: Creating .agent-os inside the package directory (e.g., packages/engines/core-engine/.agent-os/)
+      ✅ RIGHT: .agent-os is always at monorepo root (e.g., .agent-os/packages/core-engine/)
+
+      Example 1 (flat structure):
         MONOREPO_ROOT = "lorcanito" (workspace name)
         PROJECT_NAME = "lorcanary" (actual project we're working on)
+        PROJECT_ROOT = "apps/lorcanary"
+        AGENT_OS_PATH = ".agent-os/apps/lorcanary"
+
+      Example 2 (nested structure):
+        MONOREPO_ROOT = "tcg-engines" (workspace name)
+        PROJECT_NAME = "core-engine" (actual package, NOT "engines")
+        PROJECT_ROOT = "packages/engines/core-engine"
+        AGENT_OS_PATH = ".agent-os/packages/core-engine"
   </context_variables>
 
   <validation_requirements>
