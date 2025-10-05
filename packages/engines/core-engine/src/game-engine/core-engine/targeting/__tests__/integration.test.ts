@@ -272,7 +272,7 @@ describe("Integration Tests - Complete Targeting Flow", () => {
             t.zone === "play" &&
             t.card.type === "character" &&
             t.owner !== sourceCard?.owner &&
-            (t.meta as any)?.damaged === true &&
+            (t as any).meta?.damaged === true &&
             t.card.cost <= 3 &&
             t.card.keywords?.includes("flying"),
         ),

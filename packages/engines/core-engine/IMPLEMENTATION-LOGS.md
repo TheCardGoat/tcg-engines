@@ -1,5 +1,99 @@
 # Implementation Logs
 
+## 2025-10-05: Lorcana Set 007 Actions Migration - Restoring Atlantis Fix
+
+### Session Summary
+
+**Status**: 🟢 **62% COMPLETE** (18/29 tests passing, +1 from previous session)
+
+**Objective**: Continue Set 007 action cards migration per spec at `.agent-os/packages/core-engine/specs/2025-10-05-incremental-framework-migration/spec.md`
+
+#### What Was Accomplished
+
+**Fixed: Restoring Atlantis (201-restoring-atlantis.test.ts)**
+- **Issue**: Characters with "challengeable" restriction could still be challenged
+- **Root Cause**: `canChallenge` method in `lorcana-test-engine.ts` was a stub returning `true`
+- **Solution**: Implemented proper `canChallenge` validation checking target's meta.restrictions
+- **Impact**: Test now passing ✅
+
+**Implementation Details**:
+```typescript
+// lorcana-test-engine.ts:1413-1441
+LorcanaCardInstance.prototype.canChallenge = function (target) {
+  // Validate attacker (character, in play, not exerted)
+  if (this.type !== "character") return false;
+  if (this.zone !== "play") return false;
+  if (this.meta?.exerted) return false;
+
+  // Validate target (character, in play, different owner)
+  if (!target || typeof target !== "object") return false;
+  const targetCard = target as LorcanaCardInstance;
+  if (targetCard.type !== "character") return false;
+  if (targetCard.zone !== "play") return false;
+  if (targetCard.ownerId === this.ownerId) return false;
+
+  // Check if target has challengeable restriction
+  const targetMeta = targetCard.meta;
+  if (targetMeta?.restrictions?.some(r => r.type === "challengeable")) {
+    return false;
+  }
+
+  return true;
+};
+```
+
+#### Progress Update
+
+**Test Results**:
+- ✅ 18 passing (62%, +1 from session start)
+- ⏸️ 6 skipped (21%, unchanged)
+- ❌ 5 failing (17%, -1 from session start)
+
+**Detailed Breakdown**: See `SET-007-MIGRATION-STATUS.md`
+
+#### Files Modified
+
+**Framework Files**:
+1. `lorcana-test-engine.ts` - Updated `canChallenge` prototype method
+
+**Documentation**:
+1. `SET-007-MIGRATION-STATUS.md` - Created comprehensive status tracking document
+
+#### Key Learnings
+
+**1. LorcanaCard vs LorcanaCardInstance Confusion**
+- Initially modified wrong file (`lorcana-game-card.ts` - old GameCard-based implementation)
+- Tests use `LorcanaCardInstance` (new CoreCardInstance-based implementation)
+- Test engine extends `LorcanaCardInstance` with legacy methods via prototype
+
+**2. Meta Access Pattern**
+- `LorcanaCardInstance` has `meta` getter accessing `ctx.cardMetas[instanceId]`
+- Direct property access: `targetCard.meta.restrictions`
+- Follows pattern used throughout codebase
+
+**3. Restriction System**
+- Restrictions stored in `meta.restrictions` array
+- Each restriction has `type`, `duration`, `appliedTurn`, `appliedBy`
+- "challengeable" restriction prevents characters from being challenged
+
+#### Next Steps (Per Spec)
+
+**Option 1: Continue with Water Has Memory** (Recommended)
+- Extend scry system to support player targeting
+- Would bring passing rate to 69% (20/29 tests)
+- Medium effort (2-4 hours estimated)
+
+**Option 2: Document as "Substantially Complete"**
+- 62% passing with well-understood blockers
+- Remaining tests require major framework infrastructure
+- Create follow-up specs for optional abilities, challenge system
+
+**Option 3: Focus on Set 008 Completion**
+- Set 008 at 89% passing (40/45 tests)
+- May have easier wins available
+
+---
+
 ## 2025-10-05: Lorcana Set 008 Actions Migration - Complete
 
 ### Migration Summary

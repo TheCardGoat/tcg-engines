@@ -143,7 +143,7 @@ describe("TargetResolver - Filter Evaluation", () => {
       };
 
       // Expected: Cards with ready status
-      const expected = mockCards.filter((c) => c.meta?.ready === true);
+      const expected = mockCards.filter((c) => (c as any).meta?.ready === true);
       expect(expected.length).toBeGreaterThan(0);
     });
 
@@ -152,7 +152,9 @@ describe("TargetResolver - Filter Evaluation", () => {
         exerted: true,
       };
 
-      const expected = mockCards.filter((c) => c.meta?.exerted === true);
+      const expected = mockCards.filter(
+        (c) => (c as any).meta?.exerted === true,
+      );
       expect(expected.length).toBeGreaterThan(0);
     });
 
@@ -161,7 +163,9 @@ describe("TargetResolver - Filter Evaluation", () => {
         damaged: true,
       };
 
-      const expected = mockCards.filter((c) => c.meta?.damaged === true);
+      const expected = mockCards.filter(
+        (c) => (c as any).meta?.damaged === true,
+      );
       expect(expected.length).toBeGreaterThan(0);
     });
 
@@ -172,7 +176,8 @@ describe("TargetResolver - Filter Evaluation", () => {
       };
 
       const expected = mockCards.filter(
-        (c) => c.meta?.ready === false && c.meta?.damaged === true,
+        (c) =>
+          (c as any).meta?.ready === false && (c as any).meta?.damaged === true,
       );
       expect(expected.length).toBeGreaterThan(0);
     });
@@ -456,7 +461,7 @@ describe("TargetResolver - Filter Evaluation", () => {
           c.card.type === "character" &&
           c.owner === "player1" &&
           c.card.cost <= 3 &&
-          c.meta?.damaged === true &&
+          (c as any).meta?.damaged === true &&
           c.card.keywords?.includes("flying"),
       );
 

@@ -759,10 +759,10 @@ export class LorcanaEngine extends GameEngine<
     if (filter.zone) {
       const zones = Array.isArray(filter.zone) ? filter.zone : [filter.zone];
       baseCards = zones.flatMap((zone) => {
-        const legacyFilter: LorcanaCardFilter = { zone };
-        if (filter.owner === "self" || filter.owner === "opponent") {
-          legacyFilter.owner = filter.owner;
-        }
+        const legacyFilter: LorcanaCardFilter =
+          filter.owner === "self" || filter.owner === "opponent"
+            ? { zone, owner: filter.owner }
+            : { zone };
         return super.queryCardsByFilter(legacyFilter) as LorcanaCardInstance[];
       });
     } else {
@@ -776,10 +776,10 @@ export class LorcanaEngine extends GameEngine<
         "bag",
       ];
       baseCards = allZones.flatMap((zone) => {
-        const legacyFilter: LorcanaCardFilter = { zone };
-        if (filter.owner === "self" || filter.owner === "opponent") {
-          legacyFilter.owner = filter.owner;
-        }
+        const legacyFilter: LorcanaCardFilter =
+          filter.owner === "self" || filter.owner === "opponent"
+            ? { zone, owner: filter.owner }
+            : { zone };
         return super.queryCardsByFilter(legacyFilter) as LorcanaCardInstance[];
       });
     }

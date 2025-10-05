@@ -76,7 +76,7 @@ export class LorcanaCard extends GameCard<LorcanaCardDefinition> {
       def.type === "character" || def.type === "location"
         ? def.strength || 0
         : 0;
-    const modifier = this.meta?.modifiers?.strength || 0;
+    const modifier = (this as any).meta?.modifiers?.strength || 0;
     return baseStrength + modifier;
   }
 
@@ -85,7 +85,7 @@ export class LorcanaCard extends GameCard<LorcanaCardDefinition> {
     const def = this.definition;
     const baseWillpower =
       def.type === "character" || def.type === "location" ? def.willpower : 0;
-    const modifier = this.meta?.modifiers?.willpower || 0;
+    const modifier = (this as any).meta?.modifiers?.willpower || 0;
     return baseWillpower + modifier;
   }
 
@@ -218,13 +218,26 @@ export class LorcanaCard extends GameCard<LorcanaCardDefinition> {
     return true;
   }
 
-  canChallenge(ctx: LorcanaGameContext, target: LorcanaCard): boolean {
+  canChallenge(target: LorcanaCard): boolean {
     if (!this.isCharacter()) return false;
-    if (this.getZone(ctx) !== "play") return false;
-    if (this.isExerted(ctx)) return false;
+    if (this.zone !== "play") return false;
+
+    // Check if this card is exerted
+    const thisMeta = (this as any).meta;
+    if (thisMeta?.exerted) return false;
+
     if (!target.isCharacter()) return false;
-    if (target.getZone(ctx) !== "play") return false;
+    if (target.zone !== "play") return false;
     if (target.ownerId === this.ownerId) return false;
+
+    // Check if target has challengeable restriction
+    const targetMeta = (target as any).meta;
+    if (targetMeta?.restrictions) {
+      const hasNoChallengeRestriction = targetMeta.restrictions.some(
+        (r: any) => r.type === "challengeable",
+      );
+      if (hasNoChallengeRestriction) return false;
+    }
 
     return true;
   }

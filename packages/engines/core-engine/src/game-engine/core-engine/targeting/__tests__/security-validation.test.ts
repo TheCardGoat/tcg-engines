@@ -251,7 +251,7 @@ describe("Security Validation System", () => {
         id: "no-damaged",
         name: "Cannot Target Damaged Cards",
         check: (target) => {
-          if ((target.meta as any)?.damaged === true) {
+          if ((target as any).meta?.damaged === true) {
             return {
               valid: false,
               reason: "DAMAGED_PROTECTION",
@@ -276,7 +276,7 @@ describe("Security Validation System", () => {
         result.every((c) => {
           const characteristics = (c.card as any).characteristics || [];
           return !(
-            characteristics.includes("legendary") || (c.meta as any)?.damaged
+            characteristics.includes("legendary") || (c as any).meta?.damaged
           );
         }),
       ).toBe(true);

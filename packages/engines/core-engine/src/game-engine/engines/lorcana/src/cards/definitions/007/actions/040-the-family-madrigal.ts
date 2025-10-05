@@ -1,3 +1,4 @@
+import { scryEffect } from "~/game-engine/engines/lorcana/src/abilities/effect/scry";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theFamilyMadrigal: LorcanaActionCardDefinition = {
@@ -10,7 +11,35 @@ export const theFamilyMadrigal: LorcanaActionCardDefinition = {
     {
       type: "static",
       text: "Look at the top 5 cards of your deck. You may reveal up to 1 Madrigal character card and up to 1 song card and put them into your hand. Put the rest on the top of your deck in any order.",
-      effects: [],
+      effects: [
+        scryEffect({
+          lookAt: 5,
+          destinations: [
+            {
+              zone: "hand",
+              reveal: true,
+              max: 1,
+              filter: {
+                cardType: "character",
+                withCharacteristics: ["Madrigal"],
+              },
+            },
+            {
+              zone: "hand",
+              reveal: true,
+              max: 1,
+              filter: {
+                withCharacteristics: ["song"],
+              },
+            },
+            {
+              zone: "deck",
+              position: "top",
+              remainder: true,
+            },
+          ],
+        }),
+      ],
     },
   ],
   inkwell: true,

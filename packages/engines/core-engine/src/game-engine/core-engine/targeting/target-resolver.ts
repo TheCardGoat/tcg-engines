@@ -208,21 +208,21 @@ export class TargetResolver<
 
     if (filter.ready !== undefined) {
       result = result.filter((card) => {
-        const ready = (card.meta as any)?.ready;
+        const ready = (card as any).meta?.ready;
         return ready === filter.ready;
       });
     }
 
     if (filter.exerted !== undefined) {
       result = result.filter((card) => {
-        const exerted = (card.meta as any)?.exerted;
+        const exerted = (card as any).meta?.exerted;
         return exerted === filter.exerted;
       });
     }
 
     if (filter.damaged !== undefined) {
       result = result.filter((card) => {
-        const damaged = (card.meta as any)?.damaged;
+        const damaged = (card as any).meta?.damaged;
         return damaged === filter.damaged;
       });
     }
