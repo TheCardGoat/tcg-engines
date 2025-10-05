@@ -34,6 +34,7 @@ export const candyDrift: LorcanaActionCardDefinition = {
               cardType: "character",
               owner: "self",
               count: 1,
+              optional: true,
             },
           ],
           attribute: "strength",

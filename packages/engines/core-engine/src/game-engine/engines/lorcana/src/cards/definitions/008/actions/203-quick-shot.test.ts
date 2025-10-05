@@ -17,7 +17,8 @@ describe("Quick Shot", () => {
     );
 
     await testEngine.playCard(quickShot);
-    await testEngine.resolveTopOfStack({ targets: [goofyKnightForADay] });
+    const targetCard = testEngine.getCardModel(goofyKnightForADay);
+    await testEngine.resolveTopOfStack({ targets: [targetCard.instanceId] });
     expect(testEngine.getCardModel(goofyKnightForADay).meta.damage).toEqual(1);
     expect(testEngine.getZonesCardCount()).toEqual(
       expect.objectContaining({

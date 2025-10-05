@@ -24,7 +24,7 @@ describe("Candy Drift", () => {
 
     // Resolve the stack with target selection
     const targetCard = testEngine.getCardModel(testCharacter);
-    testEngine.resolveTopOfStack({ targetId: targetCard.instanceId });
+    testEngine.resolveTopOfStack({ targets: [targetCard.instanceId] });
 
     // Verify the character received +5 strength
     expect(testEngine.getCardModel(testCharacter).strength).toBe(

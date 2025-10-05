@@ -70,13 +70,21 @@ export class LorcanaCard extends GameCard<LorcanaCardDefinition> {
   }
 
   get strength(): number {
-    const baseStrength = (this.definition as any).strength || 0;
+    // Only characters and locations have strength
+    const def = this.definition;
+    const baseStrength =
+      def.type === "character" || def.type === "location"
+        ? def.strength || 0
+        : 0;
     const modifier = this.meta?.modifiers?.strength || 0;
     return baseStrength + modifier;
   }
 
   get willpower(): number {
-    const baseWillpower = (this.definition as any).willpower || 0;
+    // Only characters and locations have willpower
+    const def = this.definition;
+    const baseWillpower =
+      def.type === "character" || def.type === "location" ? def.willpower : 0;
     const modifier = this.meta?.modifiers?.willpower || 0;
     return baseWillpower + modifier;
   }

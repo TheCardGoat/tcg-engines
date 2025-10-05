@@ -456,36 +456,51 @@ export class LorcanaTestEngine {
     card: LorcanaCardDefinition | LorcanaCardInstance | { id: string },
     index?: number,
   ): LorcanaCardInstance & { cost: number } {
+    const cardId = "id" in card ? card.id : undefined;
+    const cardName = "name" in card ? card.name : undefined;
+
     const results = this.authoritativeEngine.queryCardsByFilter({
-      publicId: (card as any).id,
+      publicId: cardId,
     });
 
     if (results.length === 0) {
-      throw new Error(
-        `Unable to find card: ${(card as any).id} (${(card as any).name || ""})`,
-      );
+      throw new Error(`Unable to find card: ${cardId} (${cardName || ""})`);
     }
 
     if (typeof index === "undefined" && results.length > 1) {
       throw new Error(
-        `Multiple cards found for ${(card as any).id} (${(card as any).name || ""}).`,
+        `Multiple cards found for ${cardId} (${cardName || ""}).`,
       );
     }
 
     const cardInstance = results[0];
 
-    // Create a proxy that adds computed properties like cost
+    // Proxy is required to dynamically compute cost based on game state
+    // Cost reductions can change during gameplay and need to be tracked
+    // Alternative approaches (cost method, pre-computing) would break tests or miss state changes
     return new Proxy(cardInstance, {
       get(target, prop) {
         if (prop === "cost") {
           // Compute the effective cost taking into account cost reductions
-          const baseCost = (target.card as any).cost || 0;
+          const cardDef = target.card;
+          const baseCost = cardDef.cost;
           const ctx = target.contextProvider.getCtx();
-          const playerState = ctx.players[target.ownerId] as any;
+          const playerState = ctx.players[target.ownerId];
 
-          if (playerState?.costReductions) {
+          // Check if player state has cost reductions (runtime game state feature)
+          const costReductions = (
+            playerState as typeof playerState & {
+              costReductions?: Array<{
+                cardType?: string;
+                value: number;
+                remainingCount: number;
+              }>;
+            }
+          ).costReductions;
+
+          if (costReductions && costReductions.length > 0) {
             let effectiveCost = baseCost;
-            for (const reduction of playerState.costReductions) {
+            for (const reduction of costReductions) {
               // Check if this reduction applies to this card
               if (reduction.cardType === "character" || !reduction.cardType) {
                 effectiveCost = Math.max(0, effectiveCost - reduction.value);
@@ -494,10 +509,13 @@ export class LorcanaTestEngine {
                   reduction.remainingCount--;
                   // Remove the reduction if it's exhausted
                   if (reduction.remainingCount <= 0) {
-                    playerState.costReductions =
-                      playerState.costReductions.filter(
-                        (r: any) => r !== reduction,
-                      );
+                    (
+                      playerState as typeof playerState & {
+                        costReductions: typeof costReductions;
+                      }
+                    ).costReductions = costReductions.filter(
+                      (r) => r !== reduction,
+                    );
                   }
                 }
               }
@@ -509,7 +527,7 @@ export class LorcanaTestEngine {
         }
 
         // For all other properties, delegate to the original object
-        return (target as any)[prop];
+        return target[prop as keyof typeof target];
       },
     }) as LorcanaCardInstance & { cost: number };
   }
@@ -667,24 +685,34 @@ export class LorcanaTestEngine {
   // Compatibility: allow legacy positional arguments (card, opts?, autoResolve?)
   playCard(
     card: LorcanaCardDefinition | LorcanaCardInstance,
-    opts?: { targets?: any[]; scry?: any },
+    opts?: {
+      targets?: Array<LorcanaCardDefinition | LorcanaCardInstance | string>;
+      scry?: Record<string, Array<LorcanaCardDefinition | string>>;
+    },
     _autoResolve?: unknown,
   ) {
     const model = this.getCardModel(card);
 
     // Store targets for later use during effect resolution
     if (opts?.targets) {
-      (this as any)._pendingTargets = opts.targets;
+      // Convert targets to instance IDs and store
+      const targetIds = opts.targets.map((t) => {
+        if (typeof t === "string") return t;
+        if ("instanceId" in t) return t.instanceId;
+        return this.getCardModel(t).instanceId;
+      });
+      (this as typeof this & { _pendingTargets?: string[] })._pendingTargets =
+        targetIds;
     }
 
     // Store scry parameters for later use during effect resolution
-    let scryParams: any = null;
+    let scryParams: Record<string, string[]> | null = null;
     if (opts?.scry) {
       // Convert scry parameters from card definitions to instance IDs
       scryParams = {};
       for (const [zone, cards] of Object.entries(opts.scry)) {
         if (Array.isArray(cards)) {
-          scryParams[zone] = cards.map((card: any) => {
+          scryParams[zone] = cards.map((card) => {
             if (typeof card === "string") {
               return card;
             }
@@ -711,7 +739,11 @@ export class LorcanaTestEngine {
       const effects = state.G.effects;
       if (effects.length > 0) {
         const topEffect = effects[effects.length - 1];
-        (topEffect as any).scryParams = scryParams;
+        (
+          topEffect as typeof topEffect & {
+            scryParams?: Record<string, string[]>;
+          }
+        ).scryParams = scryParams;
         logger.log("Injected scryParams into top layer:", scryParams);
 
         // Auto-resolve the layer since scry params were provided
@@ -865,18 +897,12 @@ export class LorcanaTestEngine {
    * Resolve the top ability on the effects stack with optional target selection.
    * This is used for action cards and other effects that require targets.
    *
-   * @param opts - Optional parameters including targetId for selecting targets and mode for modal effects
+   * @param opts - Optional parameters including targets for selecting targets and mode for modal effects
    * @returns this for chaining
    */
-  resolveTopOfStack(
-    opts?: { targetId?: string; targets?: any[]; mode?: string },
-    _optional?: boolean,
-  ) {
+  resolveTopOfStack(opts?: { targets?: string[]; mode?: string }) {
     const state = this.authoritativeEngine.getStore().state;
     const effects = state.G.effects;
-
-    logger.log("resolveTopOfStack called with opts:", opts);
-    logger.log(`Current stack has ${effects.length} effects`);
 
     if (effects.length === 0) {
       logger.warn("No effects on stack to resolve");
@@ -885,40 +911,22 @@ export class LorcanaTestEngine {
 
     // Get the top effect (last in array)
     const topEffect = effects[effects.length - 1];
-    logger.log("Top effect:", {
-      id: topEffect.id,
-      sourceCardId: topEffect.sourceCardId,
-      abilityType: topEffect.ability?.type,
-      effectCount: topEffect.ability?.effects?.length,
-    });
 
     // If mode is provided, store it in the layer for modal effect resolution
     if (opts?.mode) {
-      (topEffect as any).selectedMode = opts.mode;
-      logger.log(`Set selectedMode to: ${opts.mode}`);
+      // Using type assertion as we're extending the layer with runtime data
+      // This is intentional for the test engine to inject selections
+      (topEffect as typeof topEffect & { selectedMode?: string }).selectedMode =
+        opts.mode;
     }
 
-    // If targetId is provided, store it in the layer for the resolver to use
-    if (opts?.targetId) {
-      // Store selected targets in the layer
-      (topEffect as any).selectedTargets = [opts.targetId];
-      logger.log(`Set selectedTargets (single): ${opts.targetId}`);
-    } else if (opts?.targets) {
-      // Support array of targets - convert card definitions to instance IDs
-      const targetIds = opts.targets.map((t: any) => {
-        if (typeof t === "string") {
-          return t;
-        }
-        // If it has instanceId, use it
-        if (t.instanceId) {
-          return t.instanceId;
-        }
-        // Otherwise, it's a card definition - find the instance
-        const instance = this.getCardModel(t);
-        return instance.instanceId;
-      });
-      (topEffect as any).selectedTargets = targetIds;
-      logger.log(`Set selectedTargets (array): ${targetIds.join(", ")}`);
+    // If targets are provided, store them in the layer for the resolver to use
+    if (opts?.targets && opts.targets.length > 0) {
+      // Using type assertion as we're extending the layer with runtime data
+      // This is intentional for the test engine to inject selections
+      (
+        topEffect as typeof topEffect & { selectedTargets?: string[] }
+      ).selectedTargets = opts.targets;
     }
 
     // Resolve the layer by creating a proper LorcanaCoreOperations instance
@@ -928,17 +936,12 @@ export class LorcanaTestEngine {
     const engine = this.authoritativeEngine;
 
     const ops = new LorcanaCoreOperations({ state, engine });
-    logger.log("Calling resolveLayer...");
     ops.resolveLayer(topEffect);
-    logger.log("Calling removeLayer...");
     ops.removeLayer(topEffect, "non-trigger");
 
     // Propagate state changes
     this.wasMoveExecutedAndPropagated();
 
-    logger.log(
-      `resolveTopOfStack complete. Stack now has ${state.G.effects.length} effects`,
-    );
     return this;
   }
 
@@ -1000,10 +1003,7 @@ declare module "./lorcana-test-engine" {
     getLayerIdForPlayer: (playerId: string) => string | undefined;
     acceptOptionalAbility: (..._args: any[]) => any;
     getCard: (card: unknown, index?: number) => LorcanaCardInstance;
-    resolveTopOfStack: (
-      opts?: { targetId?: string; targets?: any[]; mode?: string },
-      _optional?: boolean,
-    ) => this;
+    resolveTopOfStack: (opts?: { targets?: string[]; mode?: string }) => this;
     acceptOptionalLayer: (..._args: any[]) => void;
     setCardDamage(
       characterCard: LorcanaCardDefinition | LorcanaCardInstance,
