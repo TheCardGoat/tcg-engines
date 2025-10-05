@@ -371,18 +371,19 @@ export function parseModalOptions(
     const modeId = (i + 1).toString();
 
     try {
-      // For now, create a simple mode with placeholder effects
-      // In a full implementation, this would parse the option text into actual effects
+      // Parse the effects from the option text
+      const parsedEffects = parseTextIntoEffects(optionText, config);
+
       const mode: ModalEffectMode = {
         id: modeId,
         text: optionText || "", // Ensure text is never undefined
-        effects: [], // TODO: Parse option text into actual effects
+        effects: parsedEffects,
       };
 
       modes.push(mode);
 
       if (config.debug) {
-        console.log(`[Modal Parser] Created mode ${modeId}: "${optionText}"`);
+        console.log(`[Modal Parser] Created mode ${modeId}: "${optionText}" with ${parsedEffects.length} effects`);
       }
     } catch (error) {
       const errorMsg = `Failed to parse modal option "${optionText}": ${error}`;

@@ -82,15 +82,15 @@
   - [ ] 8.7 Run test and verify it passes for this card
   - [ ] 8.8 Task finished, immediatelly start the next one
 
-- [ ] 9. Migrate Card: 080-pull-the-lever
-  - [ ] 9.1 Analyze current test to identify API compatibility issues
-  - [ ] 9.2 Analyze card definition format compliance with new spec
-  - [ ] 9.3 Update test to use new TestEngine APIs if needed
-  - [ ] 9.4 Update card definition to new format and implement abilities array
-  - [ ] 9.5 Implement any missing framework effect handlers
-  - [ ] 9.6 Remove notImplemented and missingTestCase flags
-  - [ ] 9.7 Run test and verify it passes for this card
-  - [ ] 9.8 Task finished, immediatelly start the next one
+- [x] 9. Migrate Card: 080-pull-the-lever
+  - [x] 9.1 Updated test pattern to use resolveTopOfStack({ mode })
+  - [x] 9.2 Card definition already in new format with abilities array
+  - [x] 9.3 Simplified test by removing manual player switching
+  - [x] 9.4 Card uses modalEffect with draw + discard modes
+  - [x] 9.5 Framework already complete (modal draw + discard)
+  - [x] 9.6 No flags to remove (card already clean)
+  - [x] 9.7 All tests pass (2/2 passing)
+  - [x] 9.8 Autonomous migration complete
 
 - [x] 10. Migrate Card: 081-into-the-unknown
   - [x] 10.1 Tests already use new TestEngine APIs (singSong, resolveTopOfStack)
