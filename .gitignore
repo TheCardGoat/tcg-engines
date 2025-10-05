@@ -15,3 +15,5 @@ yarn.lock
 
 .turbo
 **/*.tsbuildinfo
+
+.claude/settings.local.json
