@@ -1,6 +1,7 @@
 import { CoreCardCtxProvider } from "~/game-engine/core-engine/card/core-card-ctx-provider";
 import { CoreCardInstance } from "~/game-engine/core-engine/card/core-card-instance";
 import type { CoreEngine } from "~/game-engine/core-engine/engine/core-engine";
+import { logger } from "~/game-engine/core-engine/utils";
 import type {
   LorcanaAbility,
   TriggerTiming,
@@ -94,13 +95,27 @@ export class LorcanaCardInstance extends CoreCardInstance<
     return true;
   }
 
-  get meta(): LorcanaCardMeta {
-    const ctx = this.contextProvider.getCtx();
-    return (ctx.cardMetas?.[this.instanceId] as LorcanaCardMeta) || {};
-  }
-
   get type(): LorcanaCardDefinition["type"] {
     return this.card.type;
+  }
+
+  get meta(): LorcanaCardMeta {
+    const ctx = this.contextProvider.getCtx();
+    const meta = ctx.cardMetas?.[this.instanceId];
+    return (meta || {}) as LorcanaCardMeta;
+  }
+
+  get strength(): number {
+    const baseStrength = (this.card as any).strength || 0;
+    const meta = this.meta;
+    const modifier = meta?.modifiers?.strength || 0;
+    return baseStrength + modifier;
+  }
+
+  get willpower(): number {
+    const baseWillpower = (this.card as any).willpower || 0;
+    const modifier = this.meta?.modifiers?.willpower || 0;
+    return baseWillpower + modifier;
   }
 
   get isExerted(): boolean {

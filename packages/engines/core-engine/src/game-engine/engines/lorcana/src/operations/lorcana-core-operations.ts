@@ -294,7 +294,7 @@ export class LorcanaCoreOperations extends CoreOperation<
   }
 
   addAbilityToResolve(ability: LorcanaAbility, source: LorcanaCard) {
-    const responder = "";
+    const responder = source.ownerId;
     const layerItem: LayerItem = {
       id: `${this.state.G.effects.length}_${responder}_${source.instanceId}_${source.publicId}`,
       sourceCardId: source.instanceId,
@@ -308,5 +308,115 @@ export class LorcanaCoreOperations extends CoreOperation<
       this.resolveLayer(layerItem);
       this.removeLayer(layerItem, "non-trigger");
     }
+  }
+
+  /**
+   * Resolve card targets based on target definitions
+   * This implements the targeting system for effects
+   */
+  resolveTargets(targetDefs: any[], sourceCard?: LorcanaCard): LorcanaCard[] {
+    const targets: LorcanaCard[] = [];
+
+    for (const targetDef of targetDefs) {
+      if (!targetDef || targetDef.type !== "card") {
+        continue;
+      }
+
+      const cardTarget = targetDef;
+
+      // Get the zone to search in (defaults to "play")
+      const zone = cardTarget.zone || "play";
+
+      // Determine the owner filter
+      let ownerFilter: string | undefined;
+      if (cardTarget.owner === "self" && sourceCard) {
+        ownerFilter = sourceCard.ownerId;
+      } else if (cardTarget.owner === "opponent" && sourceCard) {
+        // Find opponent of the source card owner
+        const allPlayers = Object.keys(this.state.ctx.players);
+        ownerFilter = allPlayers.find((p) => p !== sourceCard.ownerId);
+      }
+
+      // Get all cards in the zone
+      const cardsInZone = this.getAllCardsInZone(zone, ownerFilter);
+      logger.debug(
+        `resolveTargets: Got ${cardsInZone.length} cards from getAllCardsInZone`,
+      );
+
+      // Filter by card type if specified
+      let filteredCards = cardsInZone;
+      if (cardTarget.cardType) {
+        const cardTypes = Array.isArray(cardTarget.cardType)
+          ? cardTarget.cardType
+          : [cardTarget.cardType];
+        logger.debug(
+          `resolveTargets: Filtering by cardTypes: ${cardTypes.join(", ")}`,
+        );
+        filteredCards = filteredCards.filter((card: any) => {
+          const hasCard = !!card;
+          const hasDef = card && !!card.definition;
+          const hasType = card && card.type;
+          // Card might have .type directly instead of .definition.type
+          const cardType = card?.definition?.type || card?.type;
+          const matches = cardType && cardTypes.includes(cardType);
+          logger.debug(
+            `Filter check: hasCard=${hasCard}, hasDef=${hasDef}, cardType=${cardType}, matches=${matches}, cardKeys=${card ? Object.keys(card).join(",") : "none"}`,
+          );
+          return matches;
+        });
+        logger.debug(
+          `resolveTargets: After filtering: ${filteredCards.length} cards`,
+        );
+      }
+
+      // For now, take the first N cards based on count (or all if targetAll)
+      if (cardTarget.targetAll) {
+        targets.push(...filteredCards);
+      } else {
+        const count = cardTarget.count || 1;
+        targets.push(...filteredCards.slice(0, count));
+      }
+    }
+
+    return targets;
+  }
+
+  /**
+   * Get all cards in a specific zone, optionally filtered by owner
+   */
+  getAllCardsInZone(zone: string, ownerFilter?: string): LorcanaCard[] {
+    const cards: LorcanaCard[] = [];
+
+    for (const playerId of Object.keys(this.state.ctx.players)) {
+      // Skip if we have an owner filter and this player doesn't match
+      if (ownerFilter && playerId !== ownerFilter) {
+        continue;
+      }
+
+      const zoneName = `${playerId}-${zone}`;
+      const zoneData = this.getZone(zoneName, playerId);
+
+      logger.debug(
+        `getAllCardsInZone: zone=${zoneName}, hasData=${!!zoneData}, cardCount=${zoneData?.cards?.length || 0}`,
+      );
+
+      if (zoneData && zoneData.cards) {
+        for (const instanceId of zoneData.cards) {
+          const card =
+            this.engine.cardInstanceStore.getCardByInstanceId(instanceId);
+          if (card) {
+            cards.push(card);
+            logger.debug(
+              `Found card in ${zoneName}: ${card.name} (${card.instanceId})`,
+            );
+          }
+        }
+      }
+    }
+
+    logger.debug(
+      `getAllCardsInZone total: ${cards.length} cards found in zone ${zone}`,
+    );
+    return cards;
   }
 }

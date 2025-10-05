@@ -568,8 +568,17 @@ export class CoreOperation<
    * Draw a card for a player
    */
   drawCard(playerId: string, amount: number): void {
-    // TODO: Implement draw card logic
     logger.debug(`Draw card for player ${playerId}`);
+
+    for (let i = 0; i < amount; i++) {
+      this.moveCard({
+        playerId,
+        from: "deck",
+        to: "hand",
+        origin: "start", // Draw from top of deck
+        destination: "end", // Add to end of hand
+      });
+    }
   }
 
   /**
