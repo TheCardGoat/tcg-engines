@@ -14,9 +14,9 @@ export const bosssOrders: LorcanaActionCardDefinition = {
     {
       type: "static",
       text: "Chosen character gains Support this turn.",
-      targets: [chosenCharacterTarget],
       effects: [
         gainsAbilityEffect({
+          targets: [chosenCharacterTarget],
           ability: supportAbility,
           duration: FOR_THE_REST_OF_THIS_TURN,
         }),

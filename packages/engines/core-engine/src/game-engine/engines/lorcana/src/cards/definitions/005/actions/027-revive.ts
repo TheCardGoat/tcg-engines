@@ -3,7 +3,7 @@ import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/
 
 export const revive: LorcanaActionCardDefinition = {
   id: "xie",
-  missingTestCase: true,
+  notImplemented: true,
   name: "Revive",
   characteristics: ["action"],
   text: "Play a character card with cost 5 or less from your discard for free.",

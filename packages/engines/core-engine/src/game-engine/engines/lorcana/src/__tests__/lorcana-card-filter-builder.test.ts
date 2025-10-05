@@ -1045,11 +1045,11 @@ describe("LorcanaCardFilterBuilder", () => {
         { op: "ne" as const, expected: { exact: 3 } },
       ];
 
-      builders.forEach(({ op, expected }) => {
+      for (const { op, expected } of builders) {
         const comparison: NumericComparison = { operator: op, value: 3 };
         const filter = new LorcanaCardFilterBuilder().cost(comparison).build();
         expect(filter.cost).toEqual(expected);
-      });
+      }
     });
 
     it("should handle all string comparison operators", () => {
@@ -1061,10 +1061,10 @@ describe("LorcanaCardFilterBuilder", () => {
         { operator: "ne" as const, value: "Donald Duck" },
       ];
 
-      comparisons.forEach((comparison) => {
+      for (const comparison of comparisons) {
         const filter = new LorcanaCardFilterBuilder().name(comparison).build();
         expect(filter.name).toEqual(comparison);
-      });
+      }
     });
   });
 

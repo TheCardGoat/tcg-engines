@@ -33,7 +33,7 @@ export const iveGotADream: LorcanaActionCardDefinition = {
     },
   ],
   flavour:
-    "Tor would like to quit and be a florist \nGunther does interior design",
+    "Tor would like to quit and be a florist \\nGunther does interior design",
   inkwell: true,
   colors: ["ruby"],
   cost: 2,

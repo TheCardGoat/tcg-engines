@@ -11,7 +11,7 @@ export const bestowAGift: LorcanaActionCardDefinition = {
   missingTestCase: true,
   name: "Bestow a Gift",
   characteristics: ["action"],
-  text: "Move 1 damage counter from chosen character to chosen opposing character.",
+  text: "Move 1 damage counter from chosen character to chosen opposing character. Draw a card.",
   type: "action",
   abilities: [
     {
