@@ -154,6 +154,76 @@ export function resolveLayerItem(
           }
           break;
         }
+        case "discard": {
+          // Discard effect (e.g., "Chosen opponent chooses and discards a card")
+          const valueParam = effect.parameters?.value || 1;
+          const random = effect.parameters?.random;
+
+          // Get target players - either from effect.targets or default to controller
+          let targetPlayerIds: string[] = [];
+
+          if (effect.targets && effect.targets.length > 0) {
+            // Resolve player targets
+            for (const target of effect.targets as PlayerTarget[]) {
+              if (target.type === "player") {
+                if (target.value === "self") {
+                  targetPlayerIds.push(trigger.controllerId);
+                } else if (target.value === "opponent" || target.value === "eachOpponent") {
+                  // Find opponent(s)
+                  const allPlayers = Object.keys(this.state.ctx.players);
+                  const opponents = allPlayers.filter((p) => p !== trigger.controllerId);
+                  targetPlayerIds.push(...opponents);
+                } else if (target.value === "each" || target.value === "all") {
+                  // All players
+                  targetPlayerIds.push(...Object.keys(this.state.ctx.players));
+                }
+              }
+            }
+          } else {
+            // Default to controller
+            targetPlayerIds = [trigger.controllerId];
+          }
+
+          // Discard cards from each target player
+          for (const playerId of targetPlayerIds) {
+            const handZone = this.getZone("hand", playerId);
+
+            if (!handZone || !handZone.cards || handZone.cards.length === 0) {
+              logger.debug(`Player ${playerId} has no cards in hand to discard`);
+              continue;
+            }
+
+            // Determine how many cards to discard
+            let cardsToDiscard = typeof valueParam === "object" ? handZone.cards.length : Math.min(valueParam, handZone.cards.length);
+
+            logger.debug(`Player ${playerId} discarding ${cardsToDiscard} card(s) from hand`, {
+              handSize: handZone.cards.length,
+              random,
+            });
+
+            // For now, discard from the end of hand (simplification)
+            // In a real implementation, player would choose which cards
+            const cardsToMove = handZone.cards.slice(-cardsToDiscard);
+
+            for (const cardInstanceId of cardsToMove) {
+              this.moveCard({
+                playerId,
+                instanceId: cardInstanceId,
+                to: "discard",
+              });
+
+              logger.debug(`Discarded card ${cardInstanceId} from ${playerId} hand to discard`);
+            }
+          }
+
+          // Process followedBy effect if present
+          if (effect.followedBy) {
+            logger.debug(`Processing followedBy effect after discard: ${effect.followedBy.type}`);
+            // For now, just log - followedBy for discard would need specific handling
+            // This is mainly used for draw effects that follow discard
+          }
+          break;
+        }
         case "restrict": {
           // Restrict effect (e.g., "can't ready at the start of their next turn")
           const restriction = effect.parameters?.restriction;
