@@ -19,7 +19,7 @@ describe("Only So Much Room", () => {
 
     await testEngine.playCard(cardUnderTest);
 
-    await testEngine.resolveTopOfStack({ targets: [simbaHappygolucky] }, true);
+    await testEngine.resolveTopOfStack({ targets: [simbaHappygolucky] });
     expect(testEngine.getCardModel(simbaHappygolucky).zone).toBe("hand");
 
     await testEngine.resolveTopOfStack({

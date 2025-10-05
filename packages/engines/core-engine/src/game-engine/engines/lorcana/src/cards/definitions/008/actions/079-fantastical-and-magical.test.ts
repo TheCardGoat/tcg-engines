@@ -1,12 +1,11 @@
 import { describe, expect, it } from "bun:test";
 import {
-  liloMakingAWish,
   mickeyMouseDetective,
+  teKaTheBurningOne,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   dalmatianPuppyTailWagger,
   fantasticalAndMagical,
-  puaProtectivePig,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
@@ -23,11 +22,9 @@ describe("Fantastical And Magical", () => {
 
   it("For each character that sang this song, draw a card and gain 1 lore.", async () => {
     const cardsInPlay = [
-      puaProtectivePig, // Cost 3
+      teKaTheBurningOne, // Cost 6
       mickeyMouseDetective, // Cost 3
-      dalmatianPuppyTailWagger, // Cost 2
-      liloMakingAWish, // Cost 1
-    ];
+    ]; // Total: 9, meets sing-together requirement exactly
     const testEngine = new TestEngine({
       hand: [fantasticalAndMagical],
       play: cardsInPlay,

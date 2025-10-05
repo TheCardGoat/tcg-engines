@@ -12,11 +12,28 @@ import type {
   BanishEffect,
   DamageEffect,
   DrawEffect,
-  MoveCardEffect,
   ModalEffect,
+  MoveCardEffect,
   MoveDamageEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { parseTargetFromText } from "./target-mapper";
 import type { ParsedEffect } from "./types";
+
+/**
+ * Creates a move damage effect
+ */
+export function createMoveDamageEffect(
+  amount: number | DynamicAmount,
+  from: CardEffectTarget,
+  to: CardEffectTarget,
+): MoveDamageEffect {
+  return {
+    type: "move-damage",
+    amount,
+    target: from,
+    to,
+  };
+}
 
 /**
  * Creates a draw effect that draws a single card
@@ -188,9 +205,10 @@ export function createSingCostModifierEffect(
  */
 export function createMoveCardEffect(
   target: CardEffectTarget,
-  to: "hand" | "discard" | "play" | "deck",
+  to: "hand" | "discard" | "play" | "deck" | "inkwell",
   exerted?: boolean,
   bottom?: boolean,
+  isPrivate?: boolean,
 ): MoveCardEffect {
   return {
     type: "move",
@@ -198,6 +216,7 @@ export function createMoveCardEffect(
     to,
     exerted,
     bottom,
+    isPrivate,
   };
 }
 
@@ -215,7 +234,7 @@ export function createModalEffect(
 ): ModalEffect {
   return {
     type: "modal",
-    modes: modes.map(mode => ({
+    modes: modes.map((mode) => ({
       id: mode.id,
       text: mode.text,
       effects: mode.effects,
@@ -227,27 +246,18 @@ export function createModalEffect(
 }
 
 /**
- * Creates a move damage effect
- */
-export function createMoveDamageEffect(
-  amount: number | DynamicAmount,
-  target: CardEffectTarget,
-  to: CardEffectTarget,
-): MoveDamageEffect {
-  return {
-    type: "move-damage",
-    amount,
-    target,
-    to,
-  };
-}
-
-/**
  * Factory function that creates effects based on ParsedEffect data
  */
 export function createEffectFromParsed(
   parsedEffect: ParsedEffect,
-): DrawEffect | DamageEffect | BanishEffect | AttributeEffect | MoveCardEffect | ModalEffect | MoveDamageEffect {
+):
+  | DrawEffect
+  | DamageEffect
+  | BanishEffect
+  | AttributeEffect
+  | MoveCardEffect
+  | ModalEffect
+  | MoveDamageEffect {
   switch (parsedEffect.type) {
     case "draw": {
       const amount = parsedEffect.amount || 1;
@@ -346,28 +356,50 @@ export function createEffectFromParsed(
     }
 
     case "move": {
-      const to = parsedEffect.parameters.to as "hand" | "discard" | "play" | "deck";
+      const to = parsedEffect.parameters.to as
+        | "hand"
+        | "discard"
+        | "play"
+        | "deck"
+        | "inkwell";
+      const exerted = parsedEffect.parameters.exerted as boolean;
+      const facedown = parsedEffect.parameters.facedown as boolean;
 
       // If target is already resolved, use it
       if (parsedEffect.target) {
         return createMoveCardEffect(
           parsedEffect.target as CardEffectTarget,
           to,
+          exerted,
+          facedown,
+          facedown, // facedown cards are private
         );
       }
 
-      // Otherwise, construct a target from parsed information
-      // For now, create a basic target - this would need more sophisticated logic
-      const target: CardEffectTarget = {
-        type: "card",
-        value: 1,
-        filters: [
-          { filter: "zone", value: to === "hand" ? "discard" : "play" }, // From zone
-          { filter: "owner", value: "self" },
-        ],
-      };
+      // Try to parse the target from the targetText
+      const targetText = parsedEffect.parameters.targetText || "";
+      const parsedTarget = parseTargetFromText(targetText);
 
-      return createMoveCardEffect(target, to);
+      let target: CardEffectTarget;
+      if (
+        parsedTarget &&
+        "type" in parsedTarget &&
+        parsedTarget.type === "card"
+      ) {
+        target = parsedTarget;
+      } else {
+        // Fallback: construct a basic target
+        target = {
+          type: "card",
+          value: 1,
+          filters: [
+            { filter: "zone", value: to === "hand" ? "discard" : "play" }, // From zone
+            { filter: "owner", value: "self" },
+          ],
+        };
+      }
+
+      return createMoveCardEffect(target, to, exerted, facedown, facedown);
     }
 
     case "modal": {
@@ -381,25 +413,54 @@ export function createEffectFromParsed(
         throw new Error("Move damage effect requires amount");
       }
 
-      // For move-damage, we need to construct both from and to targets
-      // This is a simplified implementation - in practice, we'd need better target parsing
-      const fromTarget: CardEffectTarget = {
-        type: "card",
-        value: 1,
-        filters: [
-          { filter: "zone", value: "play" },
-          { filter: "owner", value: "any" }, // Could be self or opponent
-        ],
-      };
+      // Parse the from and to targets from the text
+      const fromText = parsedEffect.parameters.fromText || "";
+      const toText = parsedEffect.parameters.toText || "";
 
-      const toTarget: CardEffectTarget = {
-        type: "card",
-        value: 1,
-        filters: [
-          { filter: "zone", value: "play" },
-          { filter: "owner", value: "opponent" }, // Usually moves to opponent
-        ],
-      };
+      let fromTarget: CardEffectTarget;
+      let toTarget: CardEffectTarget;
+
+      // Try to parse the targets from text
+      const parsedFromTarget = parseTargetFromText(fromText);
+      const parsedToTarget = parseTargetFromText(toText);
+
+      if (
+        parsedFromTarget &&
+        "type" in parsedFromTarget &&
+        parsedFromTarget.type === "card"
+      ) {
+        fromTarget = parsedFromTarget;
+      } else {
+        // Fallback: assume damaged characters
+        fromTarget = {
+          type: "card",
+          value: "all",
+          filters: [
+            { filter: "zone", value: "play" },
+            { filter: "owner", value: "self" },
+            { filter: "status", value: "damaged" },
+          ],
+        };
+      }
+
+      if (
+        parsedToTarget &&
+        "type" in parsedToTarget &&
+        parsedToTarget.type === "card"
+      ) {
+        toTarget = parsedToTarget;
+      } else {
+        // Fallback: assume chosen opposing character
+        toTarget = {
+          type: "card",
+          value: 1,
+          filters: [
+            { filter: "zone", value: "play" },
+            { filter: "owner", value: "opponent" },
+            { filter: "type", value: "character" },
+          ],
+        };
+      }
 
       return createMoveDamageEffect(parsedEffect.amount, fromTarget, toTarget);
     }
@@ -414,6 +475,14 @@ export function createEffectFromParsed(
  */
 export function createEffectsFromParsed(
   parsedEffects: ParsedEffect[],
-): (DrawEffect | DamageEffect | BanishEffect | AttributeEffect | MoveCardEffect | ModalEffect | MoveDamageEffect)[] {
+): (
+  | DrawEffect
+  | DamageEffect
+  | BanishEffect
+  | AttributeEffect
+  | MoveCardEffect
+  | ModalEffect
+  | MoveDamageEffect
+)[] {
   return parsedEffects.map(createEffectFromParsed);
 }

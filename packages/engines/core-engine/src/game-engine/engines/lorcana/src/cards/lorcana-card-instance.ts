@@ -181,7 +181,12 @@ export class LorcanaCardInstance extends CoreCardInstance<
 
   // STUB METHODS, while we migrate tests
   playFromHand(): void {}
-  hasSingTogether = false;
+  get hasSingTogether(): boolean {
+    return this.card.abilities?.some(
+      (ability) =>
+        ability.type === "keyword" && ability.keyword === "sing-together",
+    );
+  }
   ready = true;
 }
 

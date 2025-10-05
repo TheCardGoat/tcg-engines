@@ -10,6 +10,7 @@ import { playCardMove } from "./play-card";
 import { putACardIntoTheInkwellMove } from "./put-a-card-into-the-inkwell";
 import { questMove } from "./quest";
 import { singMove } from "./sing";
+import { singTogetherMove } from "./sing-together";
 import { useActivatedAbility } from "./use-activated-ability";
 
 export const lorcanaMoves = {
@@ -23,6 +24,7 @@ export const lorcanaMoves = {
   quest: questMove,
   challenge: challengeMove,
   sing: singMove,
+  singTogether: singTogetherMove,
   moveCharacterToLocation: moveCharacter,
   useActivatedAbility: useActivatedAbility,
   resolveBag: resolveBag,

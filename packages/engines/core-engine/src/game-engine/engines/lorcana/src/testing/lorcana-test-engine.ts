@@ -477,7 +477,7 @@ export class LorcanaTestEngine {
     // Create a proxy that adds computed properties like cost
     return new Proxy(cardInstance, {
       get(target, prop) {
-        if (prop === 'cost') {
+        if (prop === "cost") {
           // Compute the effective cost taking into account cost reductions
           const baseCost = (target.card as any).cost || 0;
           const ctx = target.contextProvider.getCtx();
@@ -487,14 +487,17 @@ export class LorcanaTestEngine {
             let effectiveCost = baseCost;
             for (const reduction of playerState.costReductions) {
               // Check if this reduction applies to this card
-              if (reduction.cardType === 'character' || !reduction.cardType) {
+              if (reduction.cardType === "character" || !reduction.cardType) {
                 effectiveCost = Math.max(0, effectiveCost - reduction.value);
                 // If this reduction has limited uses, decrement the count
                 if (reduction.remainingCount > 0) {
                   reduction.remainingCount--;
                   // Remove the reduction if it's exhausted
                   if (reduction.remainingCount <= 0) {
-                    playerState.costReductions = playerState.costReductions.filter((r: any) => r !== reduction);
+                    playerState.costReductions =
+                      playerState.costReductions.filter(
+                        (r: any) => r !== reduction,
+                      );
                   }
                 }
               }
@@ -825,11 +828,14 @@ export class LorcanaTestEngine {
    * @param opts - Optional parameters including targetId for selecting targets and mode for modal effects
    * @returns this for chaining
    */
-  resolveTopOfStack(opts?: { targetId?: string; targets?: any[]; mode?: string }) {
+  resolveTopOfStack(
+    opts?: { targetId?: string; targets?: any[]; mode?: string },
+    _optional?: boolean,
+  ) {
     const state = this.authoritativeEngine.getStore().state;
     const effects = state.G.effects;
 
-    logger.log(`resolveTopOfStack called with opts:`, opts);
+    logger.log("resolveTopOfStack called with opts:", opts);
     logger.log(`Current stack has ${effects.length} effects`);
 
     if (effects.length === 0) {
@@ -839,7 +845,7 @@ export class LorcanaTestEngine {
 
     // Get the top effect (last in array)
     const topEffect = effects[effects.length - 1];
-    logger.log(`Top effect:`, {
+    logger.log("Top effect:", {
       id: topEffect.id,
       sourceCardId: topEffect.sourceCardId,
       abilityType: topEffect.ability?.type,
@@ -882,15 +888,17 @@ export class LorcanaTestEngine {
     const engine = this.authoritativeEngine;
 
     const ops = new LorcanaCoreOperations({ state, engine });
-    logger.log(`Calling resolveLayer...`);
+    logger.log("Calling resolveLayer...");
     ops.resolveLayer(topEffect);
-    logger.log(`Calling removeLayer...`);
+    logger.log("Calling removeLayer...");
     ops.removeLayer(topEffect, "non-trigger");
 
     // Propagate state changes
     this.wasMoveExecutedAndPropagated();
 
-    logger.log(`resolveTopOfStack complete. Stack now has ${state.G.effects.length} effects`);
+    logger.log(
+      `resolveTopOfStack complete. Stack now has ${state.G.effects.length} effects`,
+    );
     return this;
   }
 
@@ -952,7 +960,10 @@ declare module "./lorcana-test-engine" {
     getLayerIdForPlayer: (playerId: string) => string | undefined;
     acceptOptionalAbility: (..._args: any[]) => any;
     getCard: (card: unknown, index?: number) => LorcanaCardInstance;
-    resolveTopOfStack: (_opts?: any, _optional?: boolean) => any;
+    resolveTopOfStack: (
+      opts?: { targetId?: string; targets?: any[]; mode?: string },
+      _optional?: boolean,
+    ) => this;
     acceptOptionalLayer: (..._args: any[]) => void;
     setCardDamage(
       characterCard: LorcanaCardDefinition | LorcanaCardInstance,
@@ -1002,9 +1013,55 @@ LorcanaTestEngine.prototype.activateCard = async function (
 
 LorcanaTestEngine.prototype.singSongTogether = async function (
   this: LorcanaTestEngine,
-  _opts?: unknown,
+  opts?: {
+    song: LorcanaCardDefinition | LorcanaCardInstance;
+    singers: (LorcanaCardDefinition | LorcanaCardInstance)[];
+  },
 ) {
-  // No-op stub for legacy tests
+  if (!opts) {
+    // No-op stub for legacy tests without opts
+    return;
+  }
+
+  const song = this.getCardModel(opts.song);
+  const singers = opts.singers.map((s) => {
+    const model = this.getCardModel(s);
+    if (!(model && model.instanceId)) {
+      throw new Error(`Singer model is invalid: ${JSON.stringify(model)}`);
+    }
+    logger.debug(`Singer: ${model.name} (${model.instanceId})`);
+    return model;
+  });
+
+  logger.debug(`Playing song ${song.name} with ${singers.length} singers`);
+  logger.debug(`Singer IDs: ${singers.map((s) => s.instanceId).join(", ")}`);
+
+  // Use the playCard move with sing-together options
+  // We inline this like the sing move does since move registration happens at engine init
+  const response = this.moves.playCard({
+    card: song.instanceId,
+    opts: {
+      alternativeCost: {
+        type: "sing-together",
+        targetInstanceId: singers.map((s) => s.instanceId),
+      },
+    },
+  });
+
+  if (!response.success) {
+    logger.error(
+      `Failed to sing song together ${song.instanceId} with singers ${singers.map((s) => s.instanceId).join(", ")}: ${JSON.stringify(response)}`,
+    );
+    throw new Error(
+      `Failed to sing song together: ${JSON.stringify(response)}`,
+    );
+  }
+
+  // Propagate state changes after the move
+  this.wasMoveExecutedAndPropagated();
+
+  // Resolve the song effect
+  await this.resolveTopOfStack();
 };
 
 Object.defineProperty(LorcanaTestEngine.prototype, "stackLayers", {
@@ -1188,7 +1245,9 @@ Object.defineProperty(LorcanaCardInstance.prototype, "hasChallenger", {
     const grantedAbilities = (this.meta as any)?.grantedAbilities || [];
     return grantedAbilities.some(
       (granted: any) =>
-        (granted?.ability?.keyword || "").toLowerCase().includes("challenger") ||
+        (granted?.ability?.keyword || "")
+          .toLowerCase()
+          .includes("challenger") ||
         (typeof granted?.ability?.text === "string" &&
           granted.ability.text.toLowerCase().includes("challenger")),
     );

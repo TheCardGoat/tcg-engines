@@ -15,6 +15,7 @@ import type {
   ModalEffectMode,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import { createEffectFromParsed } from "./effect-factory";
+import { extractEffectsFromText } from "./patterns";
 import type { ParsedClause, ParsedEffect } from "./types";
 
 /**
@@ -346,6 +347,47 @@ export function createModalEffect(
 }
 
 /**
+ * Parses text into effects using the pattern matching system
+ */
+function parseTextIntoEffects(
+  text: string,
+  config: AbilityBuilderConfig = {},
+): Effect[] {
+  try {
+    // Extract parsed effects from the text
+    const parsedEffects = extractEffectsFromText(text);
+
+    if (config.debug) {
+      console.log(
+        `[parseTextIntoEffects] Extracted ${parsedEffects.length} effects from "${text}"`,
+      );
+    }
+
+    // Convert parsed effects to actual effects
+    const effects = parsedEffects
+      .map((parsedEffect) => {
+        try {
+          return createEffectFromParsed(parsedEffect);
+        } catch (error) {
+          console.warn(
+            "Failed to create effect from parsed effect:",
+            parsedEffect,
+            error,
+          );
+          // Return a placeholder effect or skip
+          return null;
+        }
+      })
+      .filter((effect): effect is Effect => effect !== null);
+
+    return effects;
+  } catch (error) {
+    console.error(`Failed to parse effects from text "${text}":`, error);
+    return [];
+  }
+}
+
+/**
  * Parses modal options from text and creates corresponding modes
  */
 export function parseModalOptions(
@@ -383,7 +425,9 @@ export function parseModalOptions(
       modes.push(mode);
 
       if (config.debug) {
-        console.log(`[Modal Parser] Created mode ${modeId}: "${optionText}" with ${parsedEffects.length} effects`);
+        console.log(
+          `[Modal Parser] Created mode ${modeId}: "${optionText}" with ${parsedEffects.length} effects`,
+        );
       }
     } catch (error) {
       const errorMsg = `Failed to parse modal option "${optionText}": ${error}`;

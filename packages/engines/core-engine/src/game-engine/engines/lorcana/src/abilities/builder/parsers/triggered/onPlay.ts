@@ -1,5 +1,5 @@
+import type { LorcanaEffect } from "../../../effect-types";
 import { AbilityBuilder } from "../../ability-builder";
-import type { LorcanaEffect } from "../../effect-types";
 import { PATTERNS } from "../util";
 
 export function parseOnPlay(text: string) {

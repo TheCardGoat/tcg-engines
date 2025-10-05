@@ -31,17 +31,30 @@ export function resolveLayerItem(
           let amount = typeof valueParam === "object" ? 1 : valueParam;
 
           // Handle dynamic values
-          if (typeof valueParam === "object" && valueParam.type === "targetDamage") {
+          if (
+            typeof valueParam === "object" &&
+            valueParam.type === "targetDamage"
+          ) {
             // Get the target damage from the first selected target, or from ability-level targets
             let targetCard: any = null;
 
-            if ((trigger as any).selectedTargets && (trigger as any).selectedTargets.length > 0) {
+            if (
+              (trigger as any).selectedTargets &&
+              (trigger as any).selectedTargets.length > 0
+            ) {
               const targetId = (trigger as any).selectedTargets[0];
-              targetCard = this.engine.cardInstanceStore.getCardByInstanceId(targetId);
-            } else if (trigger.ability?.targets && trigger.ability.targets.length > 0) {
+              targetCard =
+                this.engine.cardInstanceStore.getCardByInstanceId(targetId);
+            } else if (
+              trigger.ability?.targets &&
+              trigger.ability.targets.length > 0
+            ) {
               // Use ability-level targets
               const abilityTargets = trigger.ability.targets;
-              const resolvedTargets = this.resolveTargets(abilityTargets, sourceCard);
+              const resolvedTargets = this.resolveTargets(
+                abilityTargets,
+                sourceCard,
+              );
               if (resolvedTargets.length > 0) {
                 targetCard = resolvedTargets[0];
               }
@@ -49,7 +62,20 @@ export function resolveLayerItem(
 
             if (targetCard) {
               amount = this.getCardMeta(targetCard.instanceId).damage || 0;
-              logger.debug(`Resolved targetDamage dynamic value: ${amount} from ${targetCard.name}`);
+              logger.debug(
+                `Resolved targetDamage dynamic value: ${amount} from ${targetCard.name}`,
+              );
+            }
+          } else if (
+            typeof valueParam === "object" &&
+            valueParam.type === "singerCount"
+          ) {
+            // Get the singer count from the source card's meta
+            if (sourceCard) {
+              amount = this.getCardMeta(sourceCard.instanceId).singerCount || 0;
+              logger.debug(
+                `Resolved singerCount dynamic value: ${amount} from ${sourceCard.name}`,
+              );
             }
           }
 
@@ -61,12 +87,16 @@ export function resolveLayerItem(
               playerState.lore = 0;
             }
             playerState.lore += amount;
-            logger.debug(`Player ${trigger.controllerId} gained ${amount} lore, total: ${playerState.lore}`);
+            logger.debug(
+              `Player ${trigger.controllerId} gained ${amount} lore, total: ${playerState.lore}`,
+            );
           }
 
           // Process followedBy effect if present
           if (effect.followedBy) {
-            logger.debug(`Processing followedBy effect: ${effect.followedBy.type}`);
+            logger.debug(
+              `Processing followedBy effect: ${effect.followedBy.type}`,
+            );
             // Process the followedBy effect inline
             const followedByEffect = effect.followedBy;
             switch (followedByEffect.type) {
@@ -88,7 +118,8 @@ export function resolveLayerItem(
                     )
                     .filter(Boolean);
                 } else {
-                  const targetDefs = followedByEffect.targets || trigger.ability?.targets || [];
+                  const targetDefs =
+                    followedByEffect.targets || trigger.ability?.targets || [];
                   logger.debug(
                     `Auto-resolving targets for followedBy banish. targetDefs count: ${targetDefs.length}`,
                   );
@@ -98,7 +129,9 @@ export function resolveLayerItem(
                 logger.debug(
                   `Banishing ${targetCards.length} cards (followedBy)`,
                   {
-                    targetCardNames: targetCards.map((c) => c?.name || "unknown"),
+                    targetCardNames: targetCards.map(
+                      (c) => c?.name || "unknown",
+                    ),
                   },
                 );
 
@@ -114,15 +147,20 @@ export function resolveLayerItem(
                     to: "discard",
                   });
 
-                  logger.debug(`Banished ${targetCard.name} to discard (followedBy)`, {
-                    from: currentZone,
-                    to: `${ownerId}-discard`,
-                  });
+                  logger.debug(
+                    `Banished ${targetCard.name} to discard (followedBy)`,
+                    {
+                      from: currentZone,
+                      to: `${ownerId}-discard`,
+                    },
+                  );
                 }
                 break;
               }
               default:
-                logger.warn(`Unhandled followedBy effect type: ${followedByEffect.type}`);
+                logger.warn(
+                  `Unhandled followedBy effect type: ${followedByEffect.type}`,
+                );
             }
           }
           break;
@@ -148,7 +186,23 @@ export function resolveLayerItem(
           }
 
           // Draw the card(s) using the core operations
-          const amountValue = typeof valueParam === "object" ? 1 : valueParam;
+          let amountValue = typeof valueParam === "object" ? 1 : valueParam;
+
+          // Handle dynamic values for draw
+          if (
+            typeof valueParam === "object" &&
+            valueParam.type === "singerCount"
+          ) {
+            // Get the singer count from the source card's meta
+            if (sourceCard) {
+              amountValue =
+                this.getCardMeta(sourceCard.instanceId).singerCount || 0;
+              logger.debug(
+                `Resolved singerCount dynamic value for draw: ${amountValue} from ${sourceCard.name}`,
+              );
+            }
+          }
+
           for (let i = 0; i < amountValue; i++) {
             this.drawCard(targetPlayerId, 1);
           }
@@ -168,10 +222,15 @@ export function resolveLayerItem(
               if (target.type === "player") {
                 if (target.value === "self") {
                   targetPlayerIds.push(trigger.controllerId);
-                } else if (target.value === "opponent" || target.value === "eachOpponent") {
+                } else if (
+                  target.value === "opponent" ||
+                  target.value === "eachOpponent"
+                ) {
                   // Find opponent(s)
                   const allPlayers = Object.keys(this.state.ctx.players);
-                  const opponents = allPlayers.filter((p) => p !== trigger.controllerId);
+                  const opponents = allPlayers.filter(
+                    (p) => p !== trigger.controllerId,
+                  );
                   targetPlayerIds.push(...opponents);
                 } else if (target.value === "each" || target.value === "all") {
                   // All players
@@ -188,18 +247,26 @@ export function resolveLayerItem(
           for (const playerId of targetPlayerIds) {
             const handZone = this.getZone("hand", playerId);
 
-            if (!handZone || !handZone.cards || handZone.cards.length === 0) {
-              logger.debug(`Player ${playerId} has no cards in hand to discard`);
+            if (!(handZone && handZone.cards) || handZone.cards.length === 0) {
+              logger.debug(
+                `Player ${playerId} has no cards in hand to discard`,
+              );
               continue;
             }
 
             // Determine how many cards to discard
-            let cardsToDiscard = typeof valueParam === "object" ? handZone.cards.length : Math.min(valueParam, handZone.cards.length);
+            const cardsToDiscard =
+              typeof valueParam === "object"
+                ? handZone.cards.length
+                : Math.min(valueParam, handZone.cards.length);
 
-            logger.debug(`Player ${playerId} discarding ${cardsToDiscard} card(s) from hand`, {
-              handSize: handZone.cards.length,
-              random,
-            });
+            logger.debug(
+              `Player ${playerId} discarding ${cardsToDiscard} card(s) from hand`,
+              {
+                handSize: handZone.cards.length,
+                random,
+              },
+            );
 
             // For now, discard from the end of hand (simplification)
             // In a real implementation, player would choose which cards
@@ -212,13 +279,17 @@ export function resolveLayerItem(
                 to: "discard",
               });
 
-              logger.debug(`Discarded card ${cardInstanceId} from ${playerId} hand to discard`);
+              logger.debug(
+                `Discarded card ${cardInstanceId} from ${playerId} hand to discard`,
+              );
             }
           }
 
           // Process followedBy effect if present
           if (effect.followedBy) {
-            logger.debug(`Processing followedBy effect after discard: ${effect.followedBy.type}`);
+            logger.debug(
+              `Processing followedBy effect after discard: ${effect.followedBy.type}`,
+            );
             // For now, just log - followedBy for discard would need specific handling
             // This is mainly used for draw effects that follow discard
           }
@@ -308,9 +379,13 @@ export function resolveLayerItem(
                 if (target.type === "player") {
                   if (target.value === "self") {
                     return trigger.controllerId;
-                  } else if (target.value === "opponent") {
+                  }
+                  if (target.value === "opponent") {
                     const allPlayers = Object.keys(this.state.ctx.players);
-                    return allPlayers.find((p) => p !== trigger.controllerId) || trigger.controllerId;
+                    return (
+                      allPlayers.find((p) => p !== trigger.controllerId) ||
+                      trigger.controllerId
+                    );
                   }
                 }
                 return null;
@@ -458,7 +533,7 @@ export function resolveLayerItem(
           }
 
           // Find the selected mode (modes are 1-indexed in the test)
-          const modeIndex = parseInt(selectedMode, 10) - 1;
+          const modeIndex = Number.parseInt(selectedMode, 10) - 1;
           const selectedModeData = modes[modeIndex];
 
           if (!selectedModeData) {
@@ -540,12 +615,22 @@ export function resolveLayerItem(
                     if (target.type === "player") {
                       if (target.value === "self") {
                         targetPlayerIds.push(trigger.controllerId);
-                      } else if (target.value === "opponent" || target.value === "eachOpponent") {
+                      } else if (
+                        target.value === "opponent" ||
+                        target.value === "eachOpponent"
+                      ) {
                         const allPlayers = Object.keys(this.state.ctx.players);
-                        const opponents = allPlayers.filter((p) => p !== trigger.controllerId);
+                        const opponents = allPlayers.filter(
+                          (p) => p !== trigger.controllerId,
+                        );
                         targetPlayerIds.push(...opponents);
-                      } else if (target.value === "each" || target.value === "all") {
-                        targetPlayerIds.push(...Object.keys(this.state.ctx.players));
+                      } else if (
+                        target.value === "each" ||
+                        target.value === "all"
+                      ) {
+                        targetPlayerIds.push(
+                          ...Object.keys(this.state.ctx.players),
+                        );
                       }
                     }
                   }
@@ -557,17 +642,28 @@ export function resolveLayerItem(
                 for (const playerId of targetPlayerIds) {
                   const handZone = this.getZone("hand", playerId);
 
-                  if (!handZone || !handZone.cards || handZone.cards.length === 0) {
-                    logger.debug(`Player ${playerId} has no cards in hand to discard (modal)`);
+                  if (
+                    !(handZone && handZone.cards) ||
+                    handZone.cards.length === 0
+                  ) {
+                    logger.debug(
+                      `Player ${playerId} has no cards in hand to discard (modal)`,
+                    );
                     continue;
                   }
 
-                  let cardsToDiscard = typeof valueParam === "object" ? handZone.cards.length : Math.min(valueParam, handZone.cards.length);
+                  const cardsToDiscard =
+                    typeof valueParam === "object"
+                      ? handZone.cards.length
+                      : Math.min(valueParam, handZone.cards.length);
 
-                  logger.debug(`Player ${playerId} discarding ${cardsToDiscard} card(s) from hand (modal)`, {
-                    handSize: handZone.cards.length,
-                    random,
-                  });
+                  logger.debug(
+                    `Player ${playerId} discarding ${cardsToDiscard} card(s) from hand (modal)`,
+                    {
+                      handSize: handZone.cards.length,
+                      random,
+                    },
+                  );
 
                   const cardsToMove = handZone.cards.slice(-cardsToDiscard);
 
@@ -578,7 +674,9 @@ export function resolveLayerItem(
                       to: "discard",
                     });
 
-                    logger.debug(`Discarded card ${cardInstanceId} from ${playerId} hand to discard (modal)`);
+                    logger.debug(
+                      `Discarded card ${cardInstanceId} from ${playerId} hand to discard (modal)`,
+                    );
                   }
                 }
                 break;
@@ -596,20 +694,36 @@ export function resolveLayerItem(
                     if (playerTarget.type === "player") {
                       if (playerTarget.value === "self") {
                         targetPlayerIds.push(trigger.controllerId);
-                      } else if (playerTarget.value === "opponent" || playerTarget.value === "eachOpponent") {
+                      } else if (
+                        playerTarget.value === "opponent" ||
+                        playerTarget.value === "eachOpponent"
+                      ) {
                         const allPlayers = Object.keys(this.state.ctx.players);
-                        const opponents = allPlayers.filter((p) => p !== trigger.controllerId);
+                        const opponents = allPlayers.filter(
+                          (p) => p !== trigger.controllerId,
+                        );
                         targetPlayerIds.push(...opponents);
-                      } else if (playerTarget.value === "each" || playerTarget.value === "all") {
-                        targetPlayerIds.push(...Object.keys(this.state.ctx.players));
+                      } else if (
+                        playerTarget.value === "each" ||
+                        playerTarget.value === "all"
+                      ) {
+                        targetPlayerIds.push(
+                          ...Object.keys(this.state.ctx.players),
+                        );
                       }
                     }
                   }
-                } else if (target && !Array.isArray(target) && target.type === "player") {
+                } else if (
+                  target &&
+                  !Array.isArray(target) &&
+                  target.type === "player"
+                ) {
                   const playerTarget = target as PlayerTarget;
                   if (playerTarget.value === "opponent") {
                     const allPlayers = Object.keys(this.state.ctx.players);
-                    const opponentId = allPlayers.find((p) => p !== trigger.controllerId) || trigger.controllerId;
+                    const opponentId =
+                      allPlayers.find((p) => p !== trigger.controllerId) ||
+                      trigger.controllerId;
                     targetPlayerIds.push(opponentId);
                   } else if (playerTarget.value === "self") {
                     targetPlayerIds.push(trigger.controllerId);
@@ -619,18 +733,199 @@ export function resolveLayerItem(
                 }
 
                 // Draw cards for each target player
-                const amountValue = typeof valueParam === "object" ? 1 : valueParam;
+                const amountValue =
+                  typeof valueParam === "object" ? 1 : valueParam;
                 for (const playerId of targetPlayerIds) {
                   for (let i = 0; i < amountValue; i++) {
                     this.drawCard(playerId, 1);
                   }
-                  logger.debug(`Player ${playerId} drew ${amountValue} card(s) (modal)`);
+                  logger.debug(
+                    `Player ${playerId} drew ${amountValue} card(s) (modal)`,
+                  );
+                }
+                break;
+              }
+              case "moveCard": {
+                // Move card effect within modal (e.g., "Return chosen character to hand", "Put card to bottom of deck")
+                const toZone =
+                  modeEffect.parameters?.zoneTo ||
+                  modeEffect.parameters?.to ||
+                  "hand";
+                const fromZone =
+                  modeEffect.parameters?.zoneFrom ||
+                  modeEffect.parameters?.from;
+                const position = modeEffect.parameters?.position; // "top" or "bottom" for deck
+
+                // Get target cards
+                let targetCards: any[] = [];
+
+                if ((trigger as any).selectedTargets) {
+                  const selectedIds = (trigger as any).selectedTargets;
+                  logger.debug(
+                    `Using manually selected targets for moveCard (modal): ${selectedIds.join(", ")}`,
+                  );
+                  targetCards = selectedIds
+                    .map((id: string) =>
+                      this.engine.cardInstanceStore.getCardByInstanceId(id),
+                    )
+                    .filter(Boolean);
+                } else {
+                  // Override target zone with fromZone if specified
+                  const targetDefs = (modeEffect.targets || []).map(
+                    (t: any) => ({
+                      ...t,
+                      zone: fromZone || t.zone,
+                    }),
+                  );
+                  logger.debug(
+                    `Auto-resolving targets for moveCard (modal). targetDefs count: ${targetDefs.length}, fromZone: ${fromZone}`,
+                  );
+                  targetCards = this.resolveTargets(targetDefs, sourceCard);
+                }
+
+                // Check if any targets were found
+                if (targetCards.length === 0) {
+                  logger.debug(
+                    "No targets found for moveCard effect, skipping",
+                  );
+                  break;
+                }
+
+                logger.debug(
+                  `Moving ${targetCards.length} card(s) from ${fromZone || "current zone"} to ${toZone} (modal)`,
+                  {
+                    targetCardNames: targetCards.map(
+                      (c) => c?.name || "unknown",
+                    ),
+                    position,
+                  },
+                );
+
+                // Move each target card
+                for (const targetCard of targetCards) {
+                  const currentZone = fromZone || targetCard.zone;
+                  const ownerId = targetCard.ownerId;
+
+                  // Move the card to the destination zone
+                  this.moveCard({
+                    playerId: ownerId,
+                    instanceId: targetCard.instanceId,
+                    to: toZone,
+                    position, // Pass position for deck placement (top/bottom)
+                  });
+
+                  logger.debug(
+                    `Moved ${targetCard.name} from ${currentZone} to ${toZone}`,
+                    {
+                      position,
+                    },
+                  );
+                }
+
+                // Process followedBy effect if present
+                if (modeEffect.followedBy) {
+                  logger.debug(
+                    `Processing followedBy effect after moveCard (modal): ${modeEffect.followedBy.type}`,
+                  );
+                  const followedByEffect = modeEffect.followedBy;
+
+                  // Check if followedBy effect requires targeting (count > 0 or count undefined)
+                  const followedByTargets = followedByEffect.targets || [];
+                  const requiresTargeting = followedByTargets.some(
+                    (t: any) =>
+                      (t.count === undefined || t.count > 0) &&
+                      t.type === "card",
+                  );
+
+                  if (requiresTargeting) {
+                    // Push followedBy effect as a new layer for manual targeting
+                    logger.debug(
+                      "followedBy effect requires targeting, creating new layer",
+                    );
+                    this.addAbilitiesToResolve({
+                      instanceId: sourceCard?.instanceId || "",
+                      name: sourceCard?.name || "Unknown",
+                      abilities: [
+                        {
+                          type: "static",
+                          effects: [followedByEffect],
+                        },
+                      ],
+                    } as any);
+                  } else {
+                    // Execute followedBy inline if no targeting required
+                    switch (followedByEffect.type) {
+                      case "moveCard": {
+                        // Nested moveCard effect (e.g., "Put card X to bottom of deck to put card Y to bottom of deck")
+                        const followedByToZone =
+                          followedByEffect.parameters?.zoneTo ||
+                          followedByEffect.parameters?.to ||
+                          "hand";
+                        const followedByFromZone =
+                          followedByEffect.parameters?.zoneFrom ||
+                          followedByEffect.parameters?.from;
+                        const followedByPosition =
+                          followedByEffect.parameters?.position;
+
+                        // Override target zone with fromZone if specified
+                        const followedByTargetDefs = (
+                          followedByEffect.targets || []
+                        ).map((t: any) => ({
+                          ...t,
+                          zone: followedByFromZone || t.zone,
+                        }));
+                        logger.debug(
+                          `Auto-resolving targets for followedBy moveCard (modal). targetDefs count: ${followedByTargetDefs.length}`,
+                        );
+                        const followedByTargetCards = this.resolveTargets(
+                          followedByTargetDefs,
+                          sourceCard,
+                        );
+
+                        logger.debug(
+                          `Moving ${followedByTargetCards.length} card(s) from ${followedByFromZone || "any zone"} to ${followedByToZone} (followedBy modal inline)`,
+                          {
+                            targetCardNames: followedByTargetCards.map(
+                              (c) => c?.name || "unknown",
+                            ),
+                            position: followedByPosition,
+                          },
+                        );
+
+                        // Move each followedBy target card
+                        for (const followedByCard of followedByTargetCards) {
+                          const ownerId = followedByCard.ownerId;
+
+                          this.moveCard({
+                            playerId: ownerId,
+                            instanceId: followedByCard.instanceId,
+                            to: followedByToZone,
+                            position: followedByPosition,
+                          });
+
+                          logger.debug(
+                            `Moved ${followedByCard.name} to ${followedByToZone} (followedBy modal inline)`,
+                            {
+                              position: followedByPosition,
+                            },
+                          );
+                        }
+                        break;
+                      }
+                      default:
+                        logger.warn(
+                          `Unhandled followedBy effect type after moveCard (modal): ${followedByEffect.type}`,
+                        );
+                    }
+                  }
                 }
                 break;
               }
               // Add more effect types as needed for modal effects
               default:
-                logger.warn(`Unhandled effect type in modal: ${modeEffect.type}`);
+                logger.warn(
+                  `Unhandled effect type in modal: ${modeEffect.type}`,
+                );
             }
           }
           break;
@@ -648,8 +943,13 @@ export function resolveLayerItem(
           // Get target cards - either from selectedTargets (manual selection) or auto-resolve
           let targetCards: any[] = [];
 
-          // Check if targets were manually selected
-          if ((trigger as any).selectedTargets) {
+          // Check if this effect should use manual targets or auto-resolve
+          // If the effect has targets with count: -1, it should always auto-resolve (target all matching)
+          const targetDefs = effect.targets || trigger.ability?.targets || [];
+          const shouldAutoResolve = targetDefs.some((t: any) => t.count === -1);
+
+          // Check if targets were manually selected AND this effect doesn't force auto-resolve
+          if ((trigger as any).selectedTargets && !shouldAutoResolve) {
             const selectedIds = (trigger as any).selectedTargets;
             logger.debug(
               `Using manually selected targets for removeDamage: ${selectedIds.join(", ")}`,
@@ -661,9 +961,8 @@ export function resolveLayerItem(
               .filter(Boolean);
           } else {
             // Auto-resolve targets from target definitions
-            const targetDefs = effect.targets || trigger.ability?.targets || [];
             logger.debug(
-              `Auto-resolving targets for removeDamage. targetDefs count: ${targetDefs.length}`,
+              `Auto-resolving targets for removeDamage. targetDefs count: ${targetDefs.length}, shouldAutoResolve: ${shouldAutoResolve}`,
             );
             targetCards = this.resolveTargets(targetDefs, sourceCard);
           }
@@ -702,8 +1001,10 @@ export function resolveLayerItem(
         }
         case "moveCard": {
           // Move card effect (e.g., "Return chosen character to their player's hand")
-          const toZone = effect.parameters?.zoneTo || effect.parameters?.to || "hand";
-          const fromZone = effect.parameters?.zoneFrom || effect.parameters?.from;
+          const toZone =
+            effect.parameters?.zoneTo || effect.parameters?.to || "hand";
+          const fromZone =
+            effect.parameters?.zoneFrom || effect.parameters?.from;
 
           // Get target cards
           let targetCards: any[] = [];
@@ -753,20 +1054,28 @@ export function resolveLayerItem(
 
           // Process followedBy effect if present
           if (effect.followedBy) {
-            logger.debug(`Processing followedBy effect after moveCard: ${effect.followedBy.type}`);
+            logger.debug(
+              `Processing followedBy effect after moveCard: ${effect.followedBy.type}`,
+            );
             // Process the followedBy effect inline (recursive call to handle the next effect)
             const followedByEffect = effect.followedBy;
             switch (followedByEffect.type) {
               case "moveCard": {
                 // Another moveCard effect (e.g., "return item from discard to hand")
-                const followedByToZone = followedByEffect.parameters?.zoneTo || followedByEffect.parameters?.to || "hand";
-                const followedByFromZone = followedByEffect.parameters?.zoneFrom || followedByEffect.parameters?.from;
+                const followedByToZone =
+                  followedByEffect.parameters?.zoneTo ||
+                  followedByEffect.parameters?.to ||
+                  "hand";
+                const followedByFromZone =
+                  followedByEffect.parameters?.zoneFrom ||
+                  followedByEffect.parameters?.from;
 
                 // Get target cards for followedBy
                 let followedByTargetCards: any[] = [];
 
                 if ((trigger as any).selectedFollowedByTargets) {
-                  const selectedIds = (trigger as any).selectedFollowedByTargets;
+                  const selectedIds = (trigger as any)
+                    .selectedFollowedByTargets;
                   logger.debug(
                     `Using manually selected followedBy targets: ${selectedIds.join(", ")}`,
                   );
@@ -780,13 +1089,18 @@ export function resolveLayerItem(
                   logger.debug(
                     `Auto-resolving targets for followedBy moveCard. targetDefs count: ${targetDefs.length}`,
                   );
-                  followedByTargetCards = this.resolveTargets(targetDefs, sourceCard);
+                  followedByTargetCards = this.resolveTargets(
+                    targetDefs,
+                    sourceCard,
+                  );
                 }
 
                 logger.debug(
                   `Moving ${followedByTargetCards.length} card(s) from ${followedByFromZone || "any zone"} to ${followedByToZone} (followedBy)`,
                   {
-                    targetCardNames: followedByTargetCards.map((c) => c?.name || "unknown"),
+                    targetCardNames: followedByTargetCards.map(
+                      (c) => c?.name || "unknown",
+                    ),
                   },
                 );
 
@@ -801,15 +1115,20 @@ export function resolveLayerItem(
                     to: followedByToZone,
                   });
 
-                  logger.debug(`Moved ${followedByCard.name} to ${ownerId}-${followedByToZone} (followedBy)`, {
-                    from: currentZone,
-                    to: `${ownerId}-${followedByToZone}`,
-                  });
+                  logger.debug(
+                    `Moved ${followedByCard.name} to ${ownerId}-${followedByToZone} (followedBy)`,
+                    {
+                      from: currentZone,
+                      to: `${ownerId}-${followedByToZone}`,
+                    },
+                  );
                 }
                 break;
               }
               default:
-                logger.warn(`Unhandled followedBy effect type after moveCard: ${followedByEffect.type}`);
+                logger.warn(
+                  `Unhandled followedBy effect type after moveCard: ${followedByEffect.type}`,
+                );
             }
           }
           break;
@@ -876,13 +1195,10 @@ export function resolveLayerItem(
               appliedBy: sourceCard?.instanceId,
             });
 
-            logger.debug(
-              `Granted ability to ${targetCard.name}`,
-              {
-                ability: ability.keyword || "custom ability",
-                duration: duration?.type,
-              },
-            );
+            logger.debug(`Granted ability to ${targetCard.name}`, {
+              ability: ability.keyword || "custom ability",
+              duration: duration?.type,
+            });
           }
           break;
         }
@@ -911,12 +1227,9 @@ export function resolveLayerItem(
             targetCards = this.resolveTargets(targetDefs, sourceCard);
           }
 
-          logger.debug(
-            `Banishing ${targetCards.length} cards`,
-            {
-              targetCardNames: targetCards.map((c) => c?.name || "unknown"),
-            },
-          );
+          logger.debug(`Banishing ${targetCards.length} cards`, {
+            targetCardNames: targetCards.map((c) => c?.name || "unknown"),
+          });
 
           // Banish each target card (move to discard)
           for (const targetCard of targetCards) {
@@ -938,20 +1251,28 @@ export function resolveLayerItem(
 
           // Process followedBy effect if present
           if (effect.followedBy) {
-            logger.debug(`Processing followedBy effect after banish: ${effect.followedBy.type}`);
+            logger.debug(
+              `Processing followedBy effect after banish: ${effect.followedBy.type}`,
+            );
             // Process the followedBy effect inline
             const followedByEffect = effect.followedBy;
             switch (followedByEffect.type) {
               case "moveCard": {
                 // Move card effect (e.g., "return item from discard to hand")
-                const followedByToZone = followedByEffect.parameters?.zoneTo || followedByEffect.parameters?.to || "hand";
-                const followedByFromZone = followedByEffect.parameters?.zoneFrom || followedByEffect.parameters?.from;
+                const followedByToZone =
+                  followedByEffect.parameters?.zoneTo ||
+                  followedByEffect.parameters?.to ||
+                  "hand";
+                const followedByFromZone =
+                  followedByEffect.parameters?.zoneFrom ||
+                  followedByEffect.parameters?.from;
 
                 // Get target cards for followedBy
                 let followedByTargetCards: any[] = [];
 
                 if ((trigger as any).selectedFollowedByTargets) {
-                  const selectedIds = (trigger as any).selectedFollowedByTargets;
+                  const selectedIds = (trigger as any)
+                    .selectedFollowedByTargets;
                   logger.debug(
                     `Using manually selected followedBy targets: ${selectedIds.join(", ")}`,
                   );
@@ -965,13 +1286,18 @@ export function resolveLayerItem(
                   logger.debug(
                     `Auto-resolving targets for followedBy moveCard. targetDefs count: ${targetDefs.length}`,
                   );
-                  followedByTargetCards = this.resolveTargets(targetDefs, sourceCard);
+                  followedByTargetCards = this.resolveTargets(
+                    targetDefs,
+                    sourceCard,
+                  );
                 }
 
                 logger.debug(
                   `Moving ${followedByTargetCards.length} card(s) from ${followedByFromZone || "any zone"} to ${followedByToZone} (followedBy)`,
                   {
-                    targetCardNames: followedByTargetCards.map((c) => c?.name || "unknown"),
+                    targetCardNames: followedByTargetCards.map(
+                      (c) => c?.name || "unknown",
+                    ),
                   },
                 );
 
@@ -986,15 +1312,20 @@ export function resolveLayerItem(
                     to: followedByToZone,
                   });
 
-                  logger.debug(`Moved ${followedByCard.name} to ${ownerId}-${followedByToZone} (followedBy)`, {
-                    from: currentZone,
-                    to: `${ownerId}-${followedByToZone}`,
-                  });
+                  logger.debug(
+                    `Moved ${followedByCard.name} to ${ownerId}-${followedByToZone} (followedBy)`,
+                    {
+                      from: currentZone,
+                      to: `${ownerId}-${followedByToZone}`,
+                    },
+                  );
                 }
                 break;
               }
               default:
-                logger.warn(`Unhandled followedBy effect type after banish: ${followedByEffect.type}`);
+                logger.warn(
+                  `Unhandled followedBy effect type after banish: ${followedByEffect.type}`,
+                );
             }
           }
           break;
@@ -1015,12 +1346,20 @@ export function resolveLayerItem(
                 ...filter,
                 targetAll: true, // We want to count all matching cards
               };
-              const matchingCards = this.resolveTargets([countTarget], sourceCard);
+              const matchingCards = this.resolveTargets(
+                [countTarget],
+                sourceCard,
+              );
               amount = matchingCards.length;
-              logger.debug(`Resolved dynamic count value: ${amount} cards match filter`, {
-                filter,
-                matchingCardNames: matchingCards.map((c) => c?.name || "unknown"),
-              });
+              logger.debug(
+                `Resolved dynamic count value: ${amount} cards match filter`,
+                {
+                  filter,
+                  matchingCardNames: matchingCards.map(
+                    (c) => c?.name || "unknown",
+                  ),
+                },
+              );
             }
           }
 
@@ -1055,12 +1394,79 @@ export function resolveLayerItem(
           // Apply damage to each target
           for (const targetCard of targetCards) {
             this.applyDamage(targetCard.instanceId, amount);
+            logger.debug(`Dealt ${amount} damage to ${targetCard.name}`, {
+              totalDamage: this.getCardMeta(targetCard.instanceId).damage,
+            });
+          }
+
+          // Process followedBy effect if present
+          if (effect.followedBy) {
             logger.debug(
-              `Dealt ${amount} damage to ${targetCard.name}`,
-              {
-                totalDamage: this.getCardMeta(targetCard.instanceId).damage,
-              },
+              `Processing followedBy effect after dealDamage: ${effect.followedBy.type}`,
             );
+            const followedByEffect = effect.followedBy;
+            switch (followedByEffect.type) {
+              case "draw": {
+                // Draw cards effect
+                const drawValueParam = followedByEffect.parameters?.value || 1;
+                let drawAmount =
+                  typeof drawValueParam === "number" ? drawValueParam : 1;
+
+                // Handle dynamic draw values
+                if (
+                  typeof drawValueParam === "object" &&
+                  drawValueParam.type === "count"
+                ) {
+                  const filter = drawValueParam.filter;
+                  if (filter) {
+                    const countTarget = {
+                      type: "card" as const,
+                      ...filter,
+                      targetAll: true,
+                    };
+                    const matchingCards = this.resolveTargets(
+                      [countTarget],
+                      sourceCard,
+                    );
+                    drawAmount = matchingCards.length;
+                    logger.debug(
+                      `Resolved dynamic draw count: ${drawAmount} cards match filter`,
+                      {
+                        filter,
+                        matchingCardNames: matchingCards.map(
+                          (c) => c?.name || "unknown",
+                        ),
+                      },
+                    );
+                  }
+                }
+
+                // Get target players for draw
+                const drawTargets = followedByEffect.targets || [];
+                for (const playerTarget of drawTargets) {
+                  const playerId =
+                    playerTarget.player === "opponent"
+                      ? this.engine.getOpponentId(
+                          sourceCard?.ownerId || trigger.controllerId,
+                        )
+                      : playerTarget.player === "self"
+                        ? sourceCard?.ownerId || trigger.controllerId
+                        : trigger.controllerId;
+
+                  logger.debug(
+                    `Drawing ${drawAmount} cards for player ${playerId}`,
+                  );
+                  for (let i = 0; i < drawAmount; i++) {
+                    this.drawCard(playerId, 1);
+                  }
+                }
+                break;
+              }
+              default:
+                logger.warn(
+                  `Unhandled followedBy effect type after dealDamage: ${followedByEffect.type}`,
+                );
+            }
           }
           break;
         }

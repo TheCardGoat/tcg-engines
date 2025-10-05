@@ -250,6 +250,23 @@ export const EFFECT_PATTERNS: Record<string, EffectPattern[]> = {
         },
       }),
     },
+    {
+      pattern:
+        /\bput\s+(.+?)\s+(?:into|to)\s+(?:your|their)(?:\s+player['s]?)?\s+inkwell(?:\s+(.+?))?\b/i,
+      type: "move",
+      extractor: (match: RegExpMatchArray): ParsedEffect => {
+        const modifiers = match[2]?.trim() || "";
+        return {
+          type: "move",
+          parameters: {
+            targetText: match[1]?.trim() || "",
+            to: "inkwell",
+            exerted: modifiers.includes("exerted"),
+            facedown: modifiers.includes("facedown"),
+          },
+        };
+      },
+    },
   ],
 
   // Modal effects patterns
@@ -267,7 +284,8 @@ export const EFFECT_PATTERNS: Record<string, EffectPattern[]> = {
   // Move damage effects patterns
   "move-damage": [
     {
-      pattern: /\bmove\s+(?:up\s+to\s+)?(\d+|a)\s+damage\s+(?:counter)?(?:s)?\s+from\s+(.+?)\s+to\s+(.+)/i,
+      pattern:
+        /\bmove\s+(?:up\s+to\s+)?(\d+|a)\s+damage\s+(?:counter)?(?:s)?\s+from\s+(.+?)\s+to\s+(.+)/i,
       type: "move-damage",
       extractor: (match: RegExpMatchArray): ParsedEffect => {
         const amountText = match[1]?.toLowerCase() || "1";
@@ -292,7 +310,7 @@ export const EFFECT_PATTERNS: Record<string, EffectPattern[]> = {
   ],
 
   // Triggered ability patterns
-  "triggered": [
+  triggered: [
     {
       pattern: /\bwhen\s+(.+?),\s*(.+)/i,
       type: "triggered",
