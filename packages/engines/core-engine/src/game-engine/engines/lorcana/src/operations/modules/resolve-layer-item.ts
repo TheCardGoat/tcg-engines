@@ -527,6 +527,107 @@ export function resolveLayerItem(
                 }
                 break;
               }
+              case "discard": {
+                // Discard effect within modal
+                const valueParam = modeEffect.parameters?.value || 1;
+                const random = modeEffect.parameters?.random;
+
+                // Get target players
+                let targetPlayerIds: string[] = [];
+
+                if (modeEffect.targets && modeEffect.targets.length > 0) {
+                  for (const target of modeEffect.targets as PlayerTarget[]) {
+                    if (target.type === "player") {
+                      if (target.value === "self") {
+                        targetPlayerIds.push(trigger.controllerId);
+                      } else if (target.value === "opponent" || target.value === "eachOpponent") {
+                        const allPlayers = Object.keys(this.state.ctx.players);
+                        const opponents = allPlayers.filter((p) => p !== trigger.controllerId);
+                        targetPlayerIds.push(...opponents);
+                      } else if (target.value === "each" || target.value === "all") {
+                        targetPlayerIds.push(...Object.keys(this.state.ctx.players));
+                      }
+                    }
+                  }
+                } else {
+                  targetPlayerIds = [trigger.controllerId];
+                }
+
+                // Discard from each target player
+                for (const playerId of targetPlayerIds) {
+                  const handZone = this.getZone("hand", playerId);
+
+                  if (!handZone || !handZone.cards || handZone.cards.length === 0) {
+                    logger.debug(`Player ${playerId} has no cards in hand to discard (modal)`);
+                    continue;
+                  }
+
+                  let cardsToDiscard = typeof valueParam === "object" ? handZone.cards.length : Math.min(valueParam, handZone.cards.length);
+
+                  logger.debug(`Player ${playerId} discarding ${cardsToDiscard} card(s) from hand (modal)`, {
+                    handSize: handZone.cards.length,
+                    random,
+                  });
+
+                  const cardsToMove = handZone.cards.slice(-cardsToDiscard);
+
+                  for (const cardInstanceId of cardsToMove) {
+                    this.moveCard({
+                      playerId,
+                      instanceId: cardInstanceId,
+                      to: "discard",
+                    });
+
+                    logger.debug(`Discarded card ${cardInstanceId} from ${playerId} hand to discard (modal)`);
+                  }
+                }
+                break;
+              }
+              case "draw": {
+                // Draw effect within modal
+                const valueParam = modeEffect.parameters?.value || 1;
+                const target = modeEffect.parameters?.target;
+
+                // Get target players
+                let targetPlayerIds: string[] = [];
+
+                if (modeEffect.targets && modeEffect.targets.length > 0) {
+                  for (const playerTarget of modeEffect.targets as PlayerTarget[]) {
+                    if (playerTarget.type === "player") {
+                      if (playerTarget.value === "self") {
+                        targetPlayerIds.push(trigger.controllerId);
+                      } else if (playerTarget.value === "opponent" || playerTarget.value === "eachOpponent") {
+                        const allPlayers = Object.keys(this.state.ctx.players);
+                        const opponents = allPlayers.filter((p) => p !== trigger.controllerId);
+                        targetPlayerIds.push(...opponents);
+                      } else if (playerTarget.value === "each" || playerTarget.value === "all") {
+                        targetPlayerIds.push(...Object.keys(this.state.ctx.players));
+                      }
+                    }
+                  }
+                } else if (target && !Array.isArray(target) && target.type === "player") {
+                  const playerTarget = target as PlayerTarget;
+                  if (playerTarget.value === "opponent") {
+                    const allPlayers = Object.keys(this.state.ctx.players);
+                    const opponentId = allPlayers.find((p) => p !== trigger.controllerId) || trigger.controllerId;
+                    targetPlayerIds.push(opponentId);
+                  } else if (playerTarget.value === "self") {
+                    targetPlayerIds.push(trigger.controllerId);
+                  }
+                } else {
+                  targetPlayerIds = [trigger.controllerId];
+                }
+
+                // Draw cards for each target player
+                const amountValue = typeof valueParam === "object" ? 1 : valueParam;
+                for (const playerId of targetPlayerIds) {
+                  for (let i = 0; i < amountValue; i++) {
+                    this.drawCard(playerId, 1);
+                  }
+                  logger.debug(`Player ${playerId} drew ${amountValue} card(s) (modal)`);
+                }
+                break;
+              }
               // Add more effect types as needed for modal effects
               default:
                 logger.warn(`Unhandled effect type in modal: ${modeEffect.type}`);
