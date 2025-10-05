@@ -1369,6 +1369,71 @@ export function resolveLayerItem(
           }
           break;
         }
+        case "damageImmunity": {
+          // Damage immunity effect (e.g., "take no damage from challenges")
+          const sources = effect.parameters?.sources || [];
+          const duration = effect.duration;
+
+          // Get target cards
+          let targetCards: any[] = [];
+
+          if ((trigger as any).selectedTargets) {
+            const selectedIds = (trigger as any).selectedTargets;
+            logger.debug(
+              `Using manually selected targets for damageImmunity: ${selectedIds.join(", ")}`,
+            );
+            targetCards = selectedIds
+              .map((id: string) =>
+                this.engine.cardInstanceStore.getCardByInstanceId(id),
+              )
+              .filter(Boolean);
+          } else {
+            const targetDefs = effect.targets || trigger.ability?.targets || [];
+            logger.debug(
+              `Auto-resolving targets for damageImmunity. targetDefs count: ${targetDefs.length}`,
+            );
+            targetCards = this.resolveTargets(targetDefs, sourceCard);
+          }
+
+          logger.debug(
+            `Applying damage immunity to ${targetCards.length} cards`,
+            {
+              sources,
+              duration: duration?.type,
+              targetCardNames: targetCards.map((c) => c?.name || "unknown"),
+            },
+          );
+
+          // Apply damage immunity to each target
+          for (const targetCard of targetCards) {
+            if (!this.state.ctx.cardMetas[targetCard.instanceId]) {
+              this.state.ctx.cardMetas[targetCard.instanceId] = {} as any;
+            }
+
+            const cardMeta = this.state.ctx.cardMetas[
+              targetCard.instanceId
+            ] as any;
+
+            // Initialize damage immunities if they don't exist
+            if (!cardMeta.damageImmunities) {
+              cardMeta.damageImmunities = [];
+            }
+
+            // Add the damage immunity
+            cardMeta.damageImmunities.push({
+              sources,
+              duration,
+              appliedTurn: this.state.G.turnCount || 0,
+              appliedBy: sourceCard?.instanceId,
+            });
+
+            logger.debug(`Applied damage immunity to ${targetCard.name}`, {
+              sources,
+              duration: duration?.type,
+            });
+          }
+          break;
+        }
         case "dealDamage": {
           // Deal damage effect (e.g., "Deal 1 damage to chosen character")
           const valueParam = effect.parameters?.value || 1;
