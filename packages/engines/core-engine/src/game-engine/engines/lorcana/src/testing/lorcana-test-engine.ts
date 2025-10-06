@@ -1069,6 +1069,14 @@ export class LorcanaTestEngine {
 
   // (removed duplicate getCardZone shim; merged into method above)
 
+  getACardFromHand(playerId = "player_one") {
+    const handCards = this.getCardsInZone("hand", playerId);
+    if (handCards.length === 0) {
+      throw new Error(`No cards in hand for player ${playerId}`);
+    }
+    return handCards[0];
+  }
+
   acceptOptionalLayer(..._args: any[]) {}
   acceptOptionalLayerBySource(..._args: any[]) {}
   skipTopOfStack() {}
