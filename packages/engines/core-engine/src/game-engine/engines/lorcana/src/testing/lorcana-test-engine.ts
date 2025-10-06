@@ -1123,7 +1123,7 @@ declare module "./lorcana-test-engine" {
     setCardDamage(
       characterCard: LorcanaCardDefinition | LorcanaCardInstance,
       amount: number,
-    ): Promise<void>;
+    ): Promise<LorcanaCardInstance>;
     getAvailableInkwellCardCount: (playerId?: string) => number;
     getTotalInkwellCardCount: (playerId?: string) => number;
   }
