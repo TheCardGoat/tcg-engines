@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const olafFriendlySnowman: LorcanitoCharacterCardDefinition = {
+export const olafFriendlySnowman: LorcanaCharacterCardDefinition = {
   id: "cul",
   reprints: ["q9w"],
   name: "Olaf",

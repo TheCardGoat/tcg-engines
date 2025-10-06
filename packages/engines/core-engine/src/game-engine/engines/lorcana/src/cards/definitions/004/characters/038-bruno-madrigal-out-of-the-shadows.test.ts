@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { brunoMadrigalOutOfTheShadows } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Bruno Madrigal - Out of the Shadows", () => {
   it.skip("**IT WAS YOUR VISION** When you play this character, chosen character gains 'When this character is banished in a challenge, you may return this card to your hand' this turn.", () => {

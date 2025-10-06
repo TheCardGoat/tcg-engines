@@ -2,7 +2,7 @@ import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effect
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const theHuntsmanReluctantEnforcer: LorcanitoCharacterCardDefinition = {
+export const theHuntsmanReluctantEnforcer: LorcanaCharacterCardDefinition = {
   id: "f1a",
 
   name: "The Huntsman",

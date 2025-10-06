@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   donaldDuckDaisysDate,
   monstroWhaleOfAWhale,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Donald Duck - Daisy's Date", () => {
   it("**PLUCKY PLAY** Whenever this character challenges another character, each opponent loses 1 lore.", () => {

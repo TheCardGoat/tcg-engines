@@ -7,7 +7,7 @@ import {
 import { voicelessAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/voicelessAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const gantuExperiencedEnforcer: LorcanitoCharacterCardDefinition = {
+export const gantuExperiencedEnforcer: LorcanaCharacterCardDefinition = {
   id: "t8l",
   name: "Gantu",
   title: "Experienced Enforcer",

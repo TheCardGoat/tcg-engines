@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { donaldDuck } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { donaldDuckPieSlinger } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Donald Duck - Pie Slinger", () => {
   it("**HUMBLE PIE** When you play this character, if you used **Shift** to play him, each opponent loses 2 lore.", () => {

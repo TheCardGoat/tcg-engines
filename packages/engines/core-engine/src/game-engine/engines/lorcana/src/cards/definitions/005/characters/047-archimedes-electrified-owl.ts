@@ -5,7 +5,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const archimedesElectrifiedOwl: LorcanitoCharacterCardDefinition = {
+export const archimedesElectrifiedOwl: LorcanaCharacterCardDefinition = {
   id: "p40",
   name: "Archimedes",
   title: "Electrified Owl",

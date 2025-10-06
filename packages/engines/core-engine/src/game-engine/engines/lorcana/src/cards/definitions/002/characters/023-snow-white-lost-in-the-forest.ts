@@ -1,7 +1,7 @@
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const snowWhiteLostInTheForest: LorcanitoCharacterCardDefinition = {
+export const snowWhiteLostInTheForest: LorcanaCharacterCardDefinition = {
   id: "h4k",
   name: "Snow White",
   title: "Lost in the Forest",

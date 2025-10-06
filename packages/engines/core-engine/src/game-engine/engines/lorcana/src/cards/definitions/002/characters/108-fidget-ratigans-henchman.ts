@@ -1,7 +1,7 @@
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const fidgetRatigansHenchman: LorcanitoCharacterCardDefinition = {
+export const fidgetRatigansHenchman: LorcanaCharacterCardDefinition = {
   id: "p8b",
   name: "Fidget",
   title: "Ratigan's Henchman",

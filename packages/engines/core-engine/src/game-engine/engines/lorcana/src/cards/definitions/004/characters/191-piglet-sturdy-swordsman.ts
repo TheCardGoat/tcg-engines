@@ -2,7 +2,7 @@ import { whileYouHaveNoCardsInHandThisCharacterCanChallengeReadyChars } from "@l
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pigletSturdySwordsman: LorcanitoCharacterCardDefinition = {
+export const pigletSturdySwordsman: LorcanaCharacterCardDefinition = {
   id: "gau",
   name: "Piglet",
   title: "Sturdy Swordsman",

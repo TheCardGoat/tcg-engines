@@ -4,7 +4,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const flynnRiderHisOwnBiggestFan: LorcanitoCharacterCardDefinition = {
+export const flynnRiderHisOwnBiggestFan: LorcanaCharacterCardDefinition = {
   id: "t36",
 
   name: "Flynn Rider",

@@ -1,7 +1,7 @@
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pongoOlRascal: LorcanitoCharacterCardDefinition = {
+export const pongoOlRascal: LorcanaCharacterCardDefinition = {
   id: "apm",
   name: "Pongo",
   title: "Ol' Rascal",

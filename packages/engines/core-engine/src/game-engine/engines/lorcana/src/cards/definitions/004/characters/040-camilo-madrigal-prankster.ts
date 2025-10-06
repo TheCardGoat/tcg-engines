@@ -5,7 +5,7 @@ import {
 } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const camiloMadrigalPrankster: LorcanitoCharacterCardDefinition = {
+export const camiloMadrigalPrankster: LorcanaCharacterCardDefinition = {
   id: "oct",
   reprints: ["bij"],
   missingTestCase: true,

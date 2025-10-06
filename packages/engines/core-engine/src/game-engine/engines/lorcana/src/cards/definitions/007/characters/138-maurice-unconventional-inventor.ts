@@ -76,7 +76,7 @@ const newVar: TargetConditionalEffect = {
   },
 };
 
-export const mauriceUnconventionalInventor: LorcanitoCharacterCardDefinition = {
+export const mauriceUnconventionalInventor: LorcanaCharacterCardDefinition = {
   id: "mgt",
   name: "Maurice",
   title: "Unconventional Inventor",

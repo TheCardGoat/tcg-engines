@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const abuMischievenusMonkey: LorcanitoCharacterCardDefinition = {
+export const abuMischievenusMonkey: LorcanaCharacterCardDefinition = {
   id: "pbo",
   name: "Abu",
   title: "Mischievous Monkey",

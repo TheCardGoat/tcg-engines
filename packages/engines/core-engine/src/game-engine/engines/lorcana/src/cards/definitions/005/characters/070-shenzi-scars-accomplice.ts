@@ -4,7 +4,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-export const shenziScarsAccomplice: LorcanitoCharacterCardDefinition = {
+export const shenziScarsAccomplice: LorcanaCharacterCardDefinition = {
   id: "b08",
   missingTestCase: true,
   name: "Shenzi",

@@ -2,7 +2,7 @@ import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword
 import { wheneverYouPlayASong } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const theMusesProclaimersOfHeroes: LorcanitoCharacterCardDefinition = {
+export const theMusesProclaimersOfHeroes: LorcanaCharacterCardDefinition = {
   id: "sir",
   missingTestCase: true,
   name: "The Muses",

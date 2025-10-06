@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   elsaTheFifthSpirit,
   monstroWhaleOfAWhale,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Elsa The Fifth Spirit", () => {
   it("**CRYSTALLIZE** When you play this character, exert chosen opposing character.", () => {

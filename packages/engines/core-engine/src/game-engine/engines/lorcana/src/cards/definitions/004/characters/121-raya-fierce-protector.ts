@@ -2,7 +2,7 @@ import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rayaFierceProtector: LorcanitoCharacterCardDefinition = {
+export const rayaFierceProtector: LorcanaCharacterCardDefinition = {
   id: "bcw",
   name: "Raya",
   title: "Fierce Protector",

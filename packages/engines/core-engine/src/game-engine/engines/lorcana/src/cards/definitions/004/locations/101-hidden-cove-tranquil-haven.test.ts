@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   mickeyMouseWaywardSorcerer,
   minnieMouseBelovedPrincess,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { faLiMulansMother } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hidden Cove - Tranquil Haven", () => {
   it("**REVITALIZING WATERS** Characters get +1 {S} and +1 {W}️ while here.", () => {

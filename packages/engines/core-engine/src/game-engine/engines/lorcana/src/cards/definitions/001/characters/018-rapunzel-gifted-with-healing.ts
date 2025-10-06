@@ -2,7 +2,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-export const rapunzelGiftedWithHealing: LorcanitoCharacterCardDefinition = {
+export const rapunzelGiftedWithHealing: LorcanaCharacterCardDefinition = {
   id: "kro",
   name: "Rapunzel",
   title: "Gifted with Healing",

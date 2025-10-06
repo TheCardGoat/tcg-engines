@@ -5,7 +5,7 @@ import {
 import { moveDamageAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const theNokkMythicalSpirit: LorcanitoCharacterCardDefinition = {
+export const theNokkMythicalSpirit: LorcanaCharacterCardDefinition = {
   id: "abr",
   missingTestCase: true,
   name: "The Nokk",

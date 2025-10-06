@@ -7,7 +7,7 @@ import { getStrengthThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverThisCharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const aliceAccidentallyAdrift: LorcanitoCharacterCardDefinition = {
+export const aliceAccidentallyAdrift: LorcanaCharacterCardDefinition = {
   id: "rql",
   // notImplemented: true,
   missingTestCase: false,

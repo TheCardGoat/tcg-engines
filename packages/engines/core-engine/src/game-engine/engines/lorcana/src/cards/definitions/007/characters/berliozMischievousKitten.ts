@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const berliozMischievousKitten: LorcanitoCharacterCardDefinition = {
+export const berliozMischievousKitten: LorcanaCharacterCardDefinition = {
   id: "ow3",
   name: "Berlioz",
   title: "Mischievous Kitten",

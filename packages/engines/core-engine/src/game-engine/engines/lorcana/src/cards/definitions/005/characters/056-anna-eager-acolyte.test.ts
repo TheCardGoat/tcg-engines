@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   annaEagerAcolyte,
   rafikiShamanDuelist,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Anna - Eager Acolyte", () => {
   it("**GROWING POWERS** When you play this character, each opponent choses and exerts on of their ready characters.", () => {

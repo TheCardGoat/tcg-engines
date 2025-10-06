@@ -1,7 +1,7 @@
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const beastThickSkinned: LorcanitoCharacterCardDefinition = {
+export const beastThickSkinned: LorcanaCharacterCardDefinition = {
   id: "xyo",
   name: "Beast",
   title: "Thick-Skinned",

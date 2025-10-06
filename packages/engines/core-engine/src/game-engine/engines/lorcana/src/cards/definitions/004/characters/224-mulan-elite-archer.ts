@@ -7,7 +7,7 @@ import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keywor
 import { wheneverThisCharacterDealsDamageInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mulanEliteArcher: LorcanitoCharacterCardDefinition = {
+export const mulanEliteArcher: LorcanaCharacterCardDefinition = {
   id: "nst",
   reprints: ["t4r"],
   name: "Mulan",

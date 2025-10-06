@@ -2,7 +2,7 @@ import { whileYouHaveACharacterNamedThisCharGains } from "@lorcanito/lorcana-eng
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rapunzelAppreciativeArtist: LorcanitoCharacterCardDefinition = {
+export const rapunzelAppreciativeArtist: LorcanaCharacterCardDefinition = {
   id: "jzp",
   missingTestCase: true,
   name: "Rapunzel",

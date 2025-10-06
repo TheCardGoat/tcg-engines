@@ -8,7 +8,7 @@ import {
   resistAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
 
-export const grumpySkepticalKnight: LorcanitoCharacterCardDefinition = {
+export const grumpySkepticalKnight: LorcanaCharacterCardDefinition = {
   id: "fmq",
   missingTestCase: true,
   name: "Grumpy",

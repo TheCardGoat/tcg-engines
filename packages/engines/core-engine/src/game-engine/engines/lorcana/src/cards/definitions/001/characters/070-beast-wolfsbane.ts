@@ -2,7 +2,7 @@ import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/
 import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/rushAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const beastWolfbane: LorcanitoCharacterCardDefinition = {
+export const beastWolfbane: LorcanaCharacterCardDefinition = {
   id: "njm",
   name: "Beast",
   title: "Wolfsbane",

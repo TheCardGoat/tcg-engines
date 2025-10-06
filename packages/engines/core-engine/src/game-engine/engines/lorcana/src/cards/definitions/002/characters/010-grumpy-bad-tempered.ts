@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const grumpyBadTempered: LorcanitoCharacterCardDefinition = {
+export const grumpyBadTempered: LorcanaCharacterCardDefinition = {
   id: "wsw",
   name: "Grumpy",
   title: "Bad-Tempered",

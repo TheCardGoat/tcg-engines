@@ -5,7 +5,7 @@ import {
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const camiloMadrigalFamilyCopycat: LorcanitoCharacterCardDefinition = {
+export const camiloMadrigalFamilyCopycat: LorcanaCharacterCardDefinition = {
   id: "oxz",
   name: "Camilo Madrigal",
   title: "Family Copycat",

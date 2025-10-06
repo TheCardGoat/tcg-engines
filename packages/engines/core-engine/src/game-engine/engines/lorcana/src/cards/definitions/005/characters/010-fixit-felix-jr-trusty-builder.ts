@@ -1,7 +1,7 @@
 import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const fixitFelixJrTrustyBuilder: LorcanitoCharacterCardDefinition = {
+export const fixitFelixJrTrustyBuilder: LorcanaCharacterCardDefinition = {
   id: "r49",
   name: "Fix‐It Felix, Jr.",
   title: "Trusty Builder",

@@ -2,7 +2,7 @@ import { singerAbility } from "~/game-engine/engines/lorcana/src/abilities/keywo
 import { wheneverThisCharSings } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const cinderellaMelodyWeaver: LorcanitoCharacterCardDefinition = {
+export const cinderellaMelodyWeaver: LorcanaCharacterCardDefinition = {
   id: "mma",
   name: "Cinderella",
   title: "Melody Weaver",

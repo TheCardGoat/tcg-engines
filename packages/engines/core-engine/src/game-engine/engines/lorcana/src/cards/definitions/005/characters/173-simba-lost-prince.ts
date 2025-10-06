@@ -2,7 +2,7 @@ import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverBanishesAnotherCharacterInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const simbaLostPrince: LorcanitoCharacterCardDefinition = {
+export const simbaLostPrince: LorcanaCharacterCardDefinition = {
   id: "ltv",
   missingTestCase: true,
   name: "Simba",

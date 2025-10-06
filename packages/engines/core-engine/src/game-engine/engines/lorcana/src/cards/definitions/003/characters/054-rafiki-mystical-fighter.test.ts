@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { magicBroomBucketBrigade } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { rafikiMysticalFighter } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { shenziHeadHyena } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";

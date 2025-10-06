@@ -1,7 +1,7 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import { notAnOrdinaryAppleAbility } from "./notAnOrdinaryAppleAbility";
 
-export const theQueenJealousBeauty: LorcanitoCharacterCardDefinition = {
+export const theQueenJealousBeauty: LorcanaCharacterCardDefinition = {
   id: "tn7",
   name: "The Queen",
   title: "Jealous Beauty",

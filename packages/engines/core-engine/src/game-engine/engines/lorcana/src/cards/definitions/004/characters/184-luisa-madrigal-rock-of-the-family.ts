@@ -1,7 +1,7 @@
 import { whileYouHaveAnotherCharacterInPlayThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const luisaMadrigalRockOfTheFamily: LorcanitoCharacterCardDefinition = {
+export const luisaMadrigalRockOfTheFamily: LorcanaCharacterCardDefinition = {
   id: "yza",
   name: "Luisa Madrigal",
   title: "Rock of the Family",

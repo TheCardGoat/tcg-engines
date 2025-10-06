@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   auroraTranquilPrincess,
   lumiereFieryFriend,
   pegasusFlyingSteed,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Lumiere - Fiery Friend", () => {
   it("**FERVENT ADDRESS** Your other characters get +1 {S}.", () => {

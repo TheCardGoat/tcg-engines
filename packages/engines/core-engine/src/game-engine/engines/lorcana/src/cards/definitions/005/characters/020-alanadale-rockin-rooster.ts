@@ -2,7 +2,7 @@ import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverYouPlayASong } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const alanadaleRockinRooster: LorcanitoCharacterCardDefinition = {
+export const alanadaleRockinRooster: LorcanaCharacterCardDefinition = {
   id: "srn",
   missingTestCase: true,
   name: "Alan-a-Dale",

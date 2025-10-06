@@ -1,7 +1,7 @@
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pegasusFlyingSteed: LorcanitoCharacterCardDefinition = {
+export const pegasusFlyingSteed: LorcanaCharacterCardDefinition = {
   id: "u8h",
   name: "Pegasus",
   title: "Flying Steed",

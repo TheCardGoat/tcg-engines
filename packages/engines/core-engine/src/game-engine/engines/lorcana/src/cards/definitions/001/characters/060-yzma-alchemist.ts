@@ -2,7 +2,7 @@ import { lookAtTopCardOfYourDeckAndPutItOnTopOrBottom } from "@lorcanito/lorcana
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const yzmaAlchemist: LorcanitoCharacterCardDefinition = {
+export const yzmaAlchemist: LorcanaCharacterCardDefinition = {
   id: "drx",
   name: "Yzma",
   title: "Alchemist",

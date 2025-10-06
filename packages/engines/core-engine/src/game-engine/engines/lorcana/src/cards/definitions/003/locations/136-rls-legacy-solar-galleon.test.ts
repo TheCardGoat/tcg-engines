@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   liloMakingAWish,
   stichtNewDog,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { rlsLegacySolarGalleon } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("RLS Legacy - Solar Galleon", () => {
   it("**THIS IS OUR SHIP** Characters gain **Evasive** while here. _(Only characters with Evasive can challenge them.)_", () => {

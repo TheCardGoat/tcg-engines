@@ -1,7 +1,7 @@
 import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const beastWounded: LorcanitoCharacterCardDefinition = {
+export const beastWounded: LorcanaCharacterCardDefinition = {
   id: "jrk",
   name: "Beast",
   title: "Wounded",

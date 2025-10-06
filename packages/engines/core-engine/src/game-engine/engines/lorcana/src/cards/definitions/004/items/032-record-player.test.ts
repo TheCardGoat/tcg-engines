@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   gastonArrogantHunter,
   liloMakingAWish,
@@ -11,6 +10,10 @@ import {
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/027-hakuna-matata";
 import { recordPlayer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Record Player", () => {
   it("**LOOK AT THIS!** Whenever you play a song, chosen character gets -2 {S} until the start of your next turn.", () => {

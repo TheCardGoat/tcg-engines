@@ -1,7 +1,7 @@
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const princePhillipWardenOfTheWoods: LorcanitoCharacterCardDefinition = {
+export const princePhillipWardenOfTheWoods: LorcanaCharacterCardDefinition = {
   id: "xq2",
   reprints: ["l8f"],
   missingTestCase: true,

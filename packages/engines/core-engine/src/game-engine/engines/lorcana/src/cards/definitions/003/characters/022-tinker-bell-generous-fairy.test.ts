@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   tinkerBellGenerousFairy,
   wendyDarlingTalentedSailor,
@@ -12,6 +11,10 @@ import {
   cleansingRainwater,
   wildcatsWrench,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Tinker Bell - Generous Fairy", () => {
   it("**MAKE A NEW FRIEND** When you play this character, look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Place the rest on the bottom of your deck in any order.", () => {

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { mcduckManorScroogesMansion } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
 import {
   cinderellaMelodyWeaver,

@@ -4,7 +4,7 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const peteGamesReferee: LorcanitoCharacterCardDefinition = {
+export const peteGamesReferee: LorcanaCharacterCardDefinition = {
   id: "kxp",
   name: "Pete",
   title: "Games Referee",

@@ -47,7 +47,7 @@ const putItToGoodUse: MetaAbility = {
   ],
 };
 
-export const scroogeMcduckResourcefulMiser: LorcanitoCharacterCardDefinition = {
+export const scroogeMcduckResourcefulMiser: LorcanaCharacterCardDefinition = {
   id: "z1q",
   name: "Scrooge Mcduck",
   title: "Resourceful Miser",

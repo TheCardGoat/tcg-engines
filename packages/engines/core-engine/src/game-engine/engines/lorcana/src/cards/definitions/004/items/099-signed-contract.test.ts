@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { signedContract } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Signed Contract", () => {
   it.skip("**FINE PRINT** Whenever an opponent plays a song, you may draw a card.", () => {

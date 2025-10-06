@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   arielSpectacularSinger,
   drFacilierRemarkable,
@@ -11,6 +10,10 @@ import {
   yzmaAlchemist,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Dr. Facilier - Remarkable Gentleman", () => {
   it("**DREAMS MADE REAL** Whenever you play a song, you may look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.", () => {

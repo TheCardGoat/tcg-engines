@@ -3,7 +3,7 @@ import { whenChallengedAndBanished } from "@lorcanito/lorcana-engine/abilities/w
 import { returnCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const guntherInteriorDesigner: LorcanitoCharacterCardDefinition = {
+export const guntherInteriorDesigner: LorcanaCharacterCardDefinition = {
   id: "n20",
   missingTestCase: true,
   name: "Gunther",

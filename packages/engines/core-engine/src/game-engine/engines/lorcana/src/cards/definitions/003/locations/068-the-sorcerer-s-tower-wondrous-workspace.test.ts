@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { magicBroomBucketBrigade } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { magicBroomTheBigSweeper } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { theSorcerersTowerWondrousWorkspace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Sorcerer's Tower - Wondrous Workspace", () => {
   it("**BROOM CLOSET** Your characters named Magic Broom may move here for free.", () => {

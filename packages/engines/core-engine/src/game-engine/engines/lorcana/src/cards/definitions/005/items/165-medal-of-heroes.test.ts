@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { medalOfHeroes } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Medal of Heroes", () => {
   it.skip("**CONGRATULATIONS, SOLDIER**{E}, 2 {I}, Banish this item − Chosen character of yours gets +2 {L} this turn.", () => {

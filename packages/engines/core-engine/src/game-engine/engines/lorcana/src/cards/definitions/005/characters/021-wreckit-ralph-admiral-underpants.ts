@@ -40,7 +40,7 @@ const iveGotTheCoolestFriend: ResolutionAbility = {
   ],
 };
 
-export const wreckitRalphAdmiralUnderpants: LorcanitoCharacterCardDefinition = {
+export const wreckitRalphAdmiralUnderpants: LorcanaCharacterCardDefinition = {
   id: "cso",
   name: "Wreck-It Ralph",
   title: "Admiral Underpants",

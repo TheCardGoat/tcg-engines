@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const princeNaveenPennilessRoyal: LorcanitoCharacterCardDefinition = {
+export const princeNaveenPennilessRoyal: LorcanaCharacterCardDefinition = {
   id: "m7y",
   reprints: ["lx6"],
   name: "Prince Naveen",

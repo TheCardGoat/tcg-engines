@@ -1,7 +1,7 @@
 import { wheneverBanishesAnotherCharacterInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const simbaRightfulHeir: LorcanitoCharacterCardDefinition = {
+export const simbaRightfulHeir: LorcanaCharacterCardDefinition = {
   id: "ac0",
   name: "Simba",
   title: "Rightful Heir",

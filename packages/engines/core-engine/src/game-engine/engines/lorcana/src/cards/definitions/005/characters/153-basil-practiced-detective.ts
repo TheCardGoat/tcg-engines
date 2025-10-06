@@ -1,7 +1,7 @@
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const basilPracticedDetective: LorcanitoCharacterCardDefinition = {
+export const basilPracticedDetective: LorcanaCharacterCardDefinition = {
   id: "orz",
   name: "Basil",
   title: "Practiced Detective",

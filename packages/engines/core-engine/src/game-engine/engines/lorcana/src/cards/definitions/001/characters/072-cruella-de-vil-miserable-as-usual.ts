@@ -2,7 +2,7 @@ import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { whenChallengedAndBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const cruellaDeVilMiserableAsUsual: LorcanitoCharacterCardDefinition = {
+export const cruellaDeVilMiserableAsUsual: LorcanaCharacterCardDefinition = {
   id: "wr1",
 
   name: "Cruella De Vil",

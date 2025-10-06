@@ -1,7 +1,7 @@
 import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const chienPoImperialSoldier: LorcanitoCharacterCardDefinition = {
+export const chienPoImperialSoldier: LorcanaCharacterCardDefinition = {
   id: "ml5",
   name: "Chien-Po",
   title: "Imperial Soldier",

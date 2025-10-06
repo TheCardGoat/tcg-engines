@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const liShangGeneralsSon: LorcanitoCharacterCardDefinition = {
+export const liShangGeneralsSon: LorcanaCharacterCardDefinition = {
   id: "e9z",
   name: "Li Shang",
   title: "General's Son",

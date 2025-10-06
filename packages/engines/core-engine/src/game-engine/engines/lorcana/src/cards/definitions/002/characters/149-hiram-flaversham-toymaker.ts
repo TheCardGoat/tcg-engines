@@ -3,7 +3,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { whenPlayAndWheneverQuests } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const hiramFlavershamToymaker: LorcanitoCharacterCardDefinition = {
+export const hiramFlavershamToymaker: LorcanaCharacterCardDefinition = {
   id: "fap",
   name: "Hiram Flaversham",
   title: "Toymaker",

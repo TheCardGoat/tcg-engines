@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   gantuGalacticFederationCaptain,
   horaceNoGood,
   jumbaJokibaaRenegadeScientist,
   tamatoaDrabLittleCrab,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Gantu - Galactic Federation Captain", () => {
   describe("**Under arrest** Characters with cost 2 or less can't challenge your characters.", () => {

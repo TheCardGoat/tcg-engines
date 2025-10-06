@@ -2,7 +2,7 @@ import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abil
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const olafHappyPassenger: LorcanitoCharacterCardDefinition = {
+export const olafHappyPassenger: LorcanaCharacterCardDefinition = {
   id: "j4c",
   name: "Olaf",
   title: "Happy Passenger",

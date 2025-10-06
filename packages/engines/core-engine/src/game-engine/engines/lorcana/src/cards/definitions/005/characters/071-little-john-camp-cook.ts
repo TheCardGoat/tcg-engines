@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const littleJohnCampCook: LorcanitoCharacterCardDefinition = {
+export const littleJohnCampCook: LorcanaCharacterCardDefinition = {
   id: "olq",
   name: "Little John",
   title: "Camp Cook",

@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { criKeeLuckyCricket } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Cri-Kee - Lucky Cricket", () => {
   it.skip("**SPREADING GOOD FORTUNE** When you play this character, your other characters get +3 {S} this turn.", () => {

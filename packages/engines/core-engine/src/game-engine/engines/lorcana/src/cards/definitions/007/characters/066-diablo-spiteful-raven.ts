@@ -4,7 +4,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const diabloSpitefulRaven: LorcanitoCharacterCardDefinition = {
+export const diabloSpitefulRaven: LorcanaCharacterCardDefinition = {
   id: "lzu",
   name: "Diablo",
   title: "Spiteful Raven",

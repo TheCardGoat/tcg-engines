@@ -2,7 +2,7 @@ import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const hansNobleScoundrel: LorcanitoCharacterCardDefinition = {
+export const hansNobleScoundrel: LorcanaCharacterCardDefinition = {
   id: "zqc",
   reprints: ["e93"],
   missingTestCase: true,

@@ -5,7 +5,7 @@ import {
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const merlinCleverClairvoyant: LorcanitoCharacterCardDefinition = {
+export const merlinCleverClairvoyant: LorcanaCharacterCardDefinition = {
   id: "nyh",
   name: "Merlin",
   title: "Clever Clairvoyant",

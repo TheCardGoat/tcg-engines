@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { kuzcosPalaceHomeOfTheEmperor } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Kuzco's Palace - Home of the Emperor", () => {
   it.skip("**CITY WALLS** Whenever a character is challenged and banished while here, banish the challenging character.", () => {

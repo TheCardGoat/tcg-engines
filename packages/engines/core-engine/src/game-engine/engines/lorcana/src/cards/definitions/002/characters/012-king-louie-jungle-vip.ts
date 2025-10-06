@@ -1,7 +1,7 @@
 import { wheneverAnotherCharIsBanished } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const kingLouieJungleVip: LorcanitoCharacterCardDefinition = {
+export const kingLouieJungleVip: LorcanaCharacterCardDefinition = {
   id: "xiu",
   name: "King Louie",
   title: "Jungle VIP",

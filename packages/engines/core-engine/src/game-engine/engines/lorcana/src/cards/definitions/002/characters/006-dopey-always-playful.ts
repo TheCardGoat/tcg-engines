@@ -1,7 +1,7 @@
 import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const dopeyAlwaysPlayful: LorcanitoCharacterCardDefinition = {
+export const dopeyAlwaysPlayful: LorcanaCharacterCardDefinition = {
   id: "zdu",
   name: "Dopey",
   title: "Always Playful",

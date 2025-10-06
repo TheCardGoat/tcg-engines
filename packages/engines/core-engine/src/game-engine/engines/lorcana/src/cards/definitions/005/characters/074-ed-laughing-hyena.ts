@@ -1,7 +1,7 @@
 import { chosenDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const edLaughingHyena: LorcanitoCharacterCardDefinition = {
+export const edLaughingHyena: LorcanaCharacterCardDefinition = {
   id: "sgn",
   missingTestCase: true,
   name: "Ed",

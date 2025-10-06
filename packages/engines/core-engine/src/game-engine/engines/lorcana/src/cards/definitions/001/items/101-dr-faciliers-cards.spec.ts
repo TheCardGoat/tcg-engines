@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { hesGotASword } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import { drFacilierCards } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
 import { reflection } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Dr. Facilier's Cards", () => {
   it("The Cards Will Tell - You pay 1 {I} less for the next action you play this turn.", () => {

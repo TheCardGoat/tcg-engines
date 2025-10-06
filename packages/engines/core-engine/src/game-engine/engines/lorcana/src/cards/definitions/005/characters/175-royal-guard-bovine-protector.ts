@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const royalGuardBovineProtector: LorcanitoCharacterCardDefinition = {
+export const royalGuardBovineProtector: LorcanaCharacterCardDefinition = {
   id: "dua",
   name: "Royal Guard",
   title: "Bovine Protector",

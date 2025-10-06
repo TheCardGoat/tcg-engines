@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { chernabogEvildoer } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import {
   arthurNoviceSparrow,
@@ -12,6 +11,10 @@ import {
   petePastryChomper,
   theQueenCruelestOfAll,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Chernabog - Evildoer", () => {
   describe("**THE POWER OF EVIL** When you play this character, pay 1 {I} less for every character card in your discard.", () => {

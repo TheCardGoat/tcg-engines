@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const princeCharmingHeirToTheThrone: LorcanitoCharacterCardDefinition = {
+export const princeCharmingHeirToTheThrone: LorcanaCharacterCardDefinition = {
   id: "nwc",
   name: "Prince Charming",
   title: "Heir to the Throne",

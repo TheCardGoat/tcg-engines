@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { halfHexwellCrown } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Half Hexwell Crown", () => {
   it.skip("**AN UNEXPECTED FIND**, {E}, 2 {I} — Draw a card.", () => {

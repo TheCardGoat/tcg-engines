@@ -37,7 +37,7 @@ const notTargetingPain: AttributeEffect = {
   },
 };
 
-export const panicUnderworldImp: LorcanitoCharacterCardDefinition = {
+export const panicUnderworldImp: LorcanaCharacterCardDefinition = {
   id: "zro",
   name: "Panic",
   title: "Underworld Imp",

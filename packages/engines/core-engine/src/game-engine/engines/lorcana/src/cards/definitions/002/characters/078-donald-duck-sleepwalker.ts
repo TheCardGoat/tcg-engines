@@ -1,7 +1,7 @@
 import { wheneverPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const donaldDuckSleepwalker: LorcanitoCharacterCardDefinition = {
+export const donaldDuckSleepwalker: LorcanaCharacterCardDefinition = {
   id: "kjq",
   reprints: ["w9x"],
 

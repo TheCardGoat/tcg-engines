@@ -1,7 +1,7 @@
 import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const stichtCarefreeSurfer: LorcanitoCharacterCardDefinition = {
+export const stichtCarefreeSurfer: LorcanaCharacterCardDefinition = {
   id: "jzu",
   reprints: ["jdo"],
   name: "Stitch",

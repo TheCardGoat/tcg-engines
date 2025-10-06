@@ -3,7 +3,7 @@ import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyw
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const goofyExtremeAthlete: LorcanitoCharacterCardDefinition = {
+export const goofyExtremeAthlete: LorcanaCharacterCardDefinition = {
   id: "pve",
   name: "Goofy",
   title: "Extreme Athlete",

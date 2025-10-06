@@ -59,7 +59,7 @@ export type CardRarity =
 
 type LorcanaBaseCardDefinition = {
   type: "character" | "item" | "action" | "location";
-  reprints: string[];
+  reprints?: string[];
   missingTestCase?: true;
   notImplemented?: true;
   id: string;

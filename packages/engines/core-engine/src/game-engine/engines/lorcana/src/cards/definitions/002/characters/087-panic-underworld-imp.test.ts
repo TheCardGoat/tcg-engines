@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { aladdinCorneredSwordman } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import {
   painUnderworldImp,
   panicUnderworldImp,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Panic - Underworld Imp", () => {
   describe("**I CAN HANDLE IT** When you play this character, chosen character gets +2 {S} this turn. If the chosen character is named Pain, he gets +4 {S} instead.", () => {

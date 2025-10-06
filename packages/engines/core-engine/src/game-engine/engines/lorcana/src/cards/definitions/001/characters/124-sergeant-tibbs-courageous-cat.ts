@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const seargentTibbies: LorcanitoCharacterCardDefinition = {
+export const seargentTibbies: LorcanaCharacterCardDefinition = {
   id: "bpd",
   reprints: ["cz0"],
 

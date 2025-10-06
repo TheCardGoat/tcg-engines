@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
 import { nickWildeWilyFox } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Nick Wilde - Wily Fox", () => {
   describe("**IT'S CALLED A HUSTLE** When you play this character, you may return an item card named Pawpsicle from your discard to your hand.", () => {

@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { goonsMaleficent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { missBiancaIndefectibleAgent } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Miss Bianca - Indefectible Agent", () => {
   it("KEEP HOPE Playing this character costs you 2 {I} less if you have an Ally character in play.", async () => {

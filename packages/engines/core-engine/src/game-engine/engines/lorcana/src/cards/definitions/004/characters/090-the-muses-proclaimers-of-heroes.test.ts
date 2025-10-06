@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import {
   friendsOnTheOtherSide,
@@ -20,6 +19,10 @@ import {
   faLiMulansMother,
   theMusesProclaimersOfHeroes,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Muses - Proclaimers of Heroes", () => {
   describe("**THE GOSPEL TRUTH** Whenever you play a song, you may return chosen character with 2 {S} or less to their player's hand.", () => {

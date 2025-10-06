@@ -3,7 +3,7 @@ import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/tar
 import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const annaHeirToArendelle: LorcanitoCharacterCardDefinition = {
+export const annaHeirToArendelle: LorcanaCharacterCardDefinition = {
   id: "ibd",
   name: "Anna",
   title: "Heir to Arendelle",

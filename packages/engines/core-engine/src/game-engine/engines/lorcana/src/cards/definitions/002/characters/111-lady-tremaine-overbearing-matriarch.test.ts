@@ -3,8 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { ladyTremaineOverbearingMatriarch } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Lady Tremaine - Overbearing Matriarch", () => {
   it("**NOT FOR YOU** When you play this character, each opponent with more lore than you loses 1 lore.", () => {

@@ -1,7 +1,7 @@
 import { banishChosenOpposingCharacter } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const peteSteamboatRival: LorcanitoCharacterCardDefinition = {
+export const peteSteamboatRival: LorcanaCharacterCardDefinition = {
   id: "r5l",
   name: "Pete",
   title: "Steamboat Rival",

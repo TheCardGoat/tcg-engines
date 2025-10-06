@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   heiheiBoatSnack,
   mauiHeroToAll,
@@ -11,6 +10,10 @@ import {
   mulanImperialSoldier,
   teKaHeartless,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mulan - Imperial Soldier", () => {
   describe("**Lead by example** During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.", () => {

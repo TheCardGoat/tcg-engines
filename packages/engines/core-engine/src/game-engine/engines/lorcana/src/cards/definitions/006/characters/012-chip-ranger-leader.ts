@@ -4,7 +4,7 @@ import { whileYouHaveACharacterNamedThisCharGains } from "@lorcanito/lorcana-eng
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const chipRangerLeader: LorcanitoCharacterCardDefinition = {
+export const chipRangerLeader: LorcanaCharacterCardDefinition = {
   id: "q8j",
   name: "Chip",
   title: "Ranger Leader",

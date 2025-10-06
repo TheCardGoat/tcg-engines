@@ -3,7 +3,7 @@ import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abil
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const flounderCollectorsCompanion: LorcanitoCharacterCardDefinition = {
+export const flounderCollectorsCompanion: LorcanaCharacterCardDefinition = {
   id: "ti7",
   name: "Flounder",
   title: "Collector's Companion",

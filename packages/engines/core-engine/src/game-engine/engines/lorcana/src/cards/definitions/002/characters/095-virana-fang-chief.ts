@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const viranaFangChief: LorcanitoCharacterCardDefinition = {
+export const viranaFangChief: LorcanaCharacterCardDefinition = {
   id: "ryo",
   reprints: ["q5j"],
   name: "Virana",

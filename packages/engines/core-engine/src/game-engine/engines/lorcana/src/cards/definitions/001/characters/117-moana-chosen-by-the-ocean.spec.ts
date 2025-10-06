@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   mauiHeroToAll,
   moanChosenByTheOcean,
   teKaHeartless,
   teKaTheBurningOne,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Moana Chosen By The Ocean", () => {
   describe("**THIS IS NOT WHO YOU ARE** When you play this character, you may banish chosen character named Te Ka.", () => {

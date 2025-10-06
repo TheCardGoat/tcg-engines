@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const maleficentVengefulSorceress: LorcanitoCharacterCardDefinition = {
+export const maleficentVengefulSorceress: LorcanaCharacterCardDefinition = {
   id: "may",
   name: "Maleficent",
   title: "Vengeful Sorceress",

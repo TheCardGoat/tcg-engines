@@ -6,7 +6,7 @@ import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/wh
 import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const paniqueTenseImp: LorcanitoCharacterCardDefinition = {
+export const paniqueTenseImp: LorcanaCharacterCardDefinition = {
   id: "fin",
   name: "Panic",
   title: "High-Strung Imp",

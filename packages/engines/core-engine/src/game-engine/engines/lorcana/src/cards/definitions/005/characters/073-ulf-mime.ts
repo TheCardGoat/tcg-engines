@@ -1,7 +1,7 @@
 import { voicelessAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/voicelessAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ulfMime: LorcanitoCharacterCardDefinition = {
+export const ulfMime: LorcanaCharacterCardDefinition = {
   id: "hyz",
   name: "Ulf",
   title: "Mime",

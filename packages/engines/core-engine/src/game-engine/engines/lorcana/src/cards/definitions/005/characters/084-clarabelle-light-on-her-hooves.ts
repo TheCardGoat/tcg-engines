@@ -3,7 +3,7 @@ import { drawCardsUntilYouHaveSameNumberOfCardsAsOpponent } from "@lorcanito/lor
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const clarabelleLightOnHerHooves: LorcanitoCharacterCardDefinition = {
+export const clarabelleLightOnHerHooves: LorcanaCharacterCardDefinition = {
   id: "xzi",
   name: "Clarabelle",
   title: "Light on Her Hooves",

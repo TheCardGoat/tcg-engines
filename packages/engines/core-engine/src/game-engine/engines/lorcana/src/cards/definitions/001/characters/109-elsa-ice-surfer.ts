@@ -2,7 +2,7 @@ import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const elsaIceSurfer: LorcanitoCharacterCardDefinition = {
+export const elsaIceSurfer: LorcanaCharacterCardDefinition = {
   id: "a9h",
   name: "Elsa",
   title: "Ice Surfer",

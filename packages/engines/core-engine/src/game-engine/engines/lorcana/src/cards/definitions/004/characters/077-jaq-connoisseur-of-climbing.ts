@@ -1,7 +1,7 @@
 import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const jaqConnoisseurOfClimbing: LorcanitoCharacterCardDefinition = {
+export const jaqConnoisseurOfClimbing: LorcanaCharacterCardDefinition = {
   id: "d8y",
   name: "Jaq",
   title: "Connoisseur of Climbing",

@@ -1,7 +1,7 @@
 import { whileYouHaveAnotherCharacterWithCharacteristicThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const annaBravingTheStorm: LorcanitoCharacterCardDefinition = {
+export const annaBravingTheStorm: LorcanaCharacterCardDefinition = {
   id: "mij",
   reprints: ["ads"],
   missingTestCase: true,

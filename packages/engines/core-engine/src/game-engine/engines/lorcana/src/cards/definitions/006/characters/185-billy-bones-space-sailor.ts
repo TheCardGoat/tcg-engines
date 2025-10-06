@@ -4,7 +4,7 @@ import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/w
 import { banishChosenItemOrLocation } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const billyBonesSpaceSailor: LorcanitoCharacterCardDefinition = {
+export const billyBonesSpaceSailor: LorcanaCharacterCardDefinition = {
   id: "vn5",
   missingTestCase: true,
   name: "Billy Bones",

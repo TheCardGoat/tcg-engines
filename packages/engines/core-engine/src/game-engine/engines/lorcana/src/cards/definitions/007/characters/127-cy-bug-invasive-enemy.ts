@@ -1,7 +1,7 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import { propertyStaticAbilities } from "../../../abilities/propertyStaticAbilities";
 
-export const cybugInvasiveEnemy: LorcanitoCharacterCardDefinition = {
+export const cybugInvasiveEnemy: LorcanaCharacterCardDefinition = {
   id: "eku",
   name: "Cy-bug",
   title: "Invasive Enemy",

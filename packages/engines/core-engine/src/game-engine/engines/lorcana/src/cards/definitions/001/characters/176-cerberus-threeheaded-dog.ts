@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const cerberusThreeHeadedDog: LorcanitoCharacterCardDefinition = {
+export const cerberusThreeHeadedDog: LorcanaCharacterCardDefinition = {
   id: "zie",
   name: "Cerberus",
   title: "Three-Headed Dog",

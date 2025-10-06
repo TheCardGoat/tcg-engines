@@ -3,7 +3,7 @@ import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword
 import { wheneverPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const peteBadGuy: LorcanitoCharacterCardDefinition = {
+export const peteBadGuy: LorcanaCharacterCardDefinition = {
   id: "rsd",
   name: "Pete",
   title: "Bad Guy",

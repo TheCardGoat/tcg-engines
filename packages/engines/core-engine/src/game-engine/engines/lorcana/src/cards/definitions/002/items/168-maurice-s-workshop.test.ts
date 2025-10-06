@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   gumboPot,
   mauricesWorkshop,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Maurice's Workshop", () => {
   it("**LOOKING FOR THIS?** Whenever you play another item, you may pay 1 {I} to draw a card.", () => {

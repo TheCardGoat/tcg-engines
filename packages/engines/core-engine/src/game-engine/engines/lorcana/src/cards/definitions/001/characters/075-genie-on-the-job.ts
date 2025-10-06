@@ -3,7 +3,7 @@ import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const genieOnTheJob: LorcanitoCharacterCardDefinition = {
+export const genieOnTheJob: LorcanaCharacterCardDefinition = {
   id: "tgk",
   name: "Genie",
   title: "On the Job",

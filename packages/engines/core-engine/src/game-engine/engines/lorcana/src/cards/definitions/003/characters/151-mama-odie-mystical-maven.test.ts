@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { mauriceWorldFamousInventor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { mamaOdieMysticalMaven } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { iFindEmIFlattenEm } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mama Odie - Mystical Maven", () => {
   it("**THIS GOING TO BE GOOD** Whenever you play a song, you may put the top card of your deck into your inkwell facedown and exerted.", () => {

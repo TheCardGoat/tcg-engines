@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   arthurKingVictorious,
   mufasaRulerOfPrideRock,
   princeNaveenUkulelePlayer,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Arthur - King Victorious", () => {
   it("**KNIGHTED BY THE KING** When you play this character, chosen character gains **Challenger** +2 and **Resist** +2 and can challenge ready characters this turn. _(They get +2 {S} while challenging. Damage dealt to them is reduced by 2.)_", () => {

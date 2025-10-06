@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { mickeyMouseTrueFriend } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { queenOfHeartsQuickTempered } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Queen of Hearts - Quick-Tempered", () => {
   it("**ROYALE RAGE** When you play this character, deal 1 damage to chosen damaged opposing character.", () => {

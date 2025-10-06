@@ -3,7 +3,7 @@ import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/
 import { singerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singerAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const arielSpectacularSinger: LorcanitoCharacterCardDefinition = {
+export const arielSpectacularSinger: LorcanaCharacterCardDefinition = {
   id: "n9e",
   name: "Ariel",
   title: "Spectacular Singer",

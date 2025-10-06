@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const magicalMaidFeatherDuster: LorcanitoCharacterCardDefinition = {
+export const magicalMaidFeatherDuster: LorcanaCharacterCardDefinition = {
   id: "dx1",
   name: "Magical Maid",
   title: "Feather Duster",

@@ -1,7 +1,7 @@
 import { ursulaVanessa as ogUrsulaVanessa } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/25-ursula-vanessa";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ursulaVanessa: LorcanitoCharacterCardDefinition = {
+export const ursulaVanessa: LorcanaCharacterCardDefinition = {
   ...ogUrsulaVanessa,
   id: "iye",
   reprints: [ogUrsulaVanessa.id],

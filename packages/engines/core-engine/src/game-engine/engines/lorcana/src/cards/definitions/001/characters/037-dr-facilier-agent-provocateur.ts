@@ -2,7 +2,7 @@ import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keywor
 import { wheneverOneOfYourCharactersIsBanishedInAChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const drFacilierAgentProvocateur: LorcanitoCharacterCardDefinition = {
+export const drFacilierAgentProvocateur: LorcanaCharacterCardDefinition = {
   id: "pyt",
 
   name: "Dr. Facilier",

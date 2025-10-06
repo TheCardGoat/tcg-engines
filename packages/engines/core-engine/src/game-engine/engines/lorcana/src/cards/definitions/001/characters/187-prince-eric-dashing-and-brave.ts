@@ -1,7 +1,7 @@
 import type { ChallengerAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const priceEricDashingAndBrave: LorcanitoCharacterCardDefinition = {
+export const priceEricDashingAndBrave: LorcanaCharacterCardDefinition = {
   id: "omx",
   reprints: ["rfl"],
 

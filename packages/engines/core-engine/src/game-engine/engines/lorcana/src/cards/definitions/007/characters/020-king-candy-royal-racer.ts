@@ -2,7 +2,7 @@ import { opponent } from "@lorcanito/lorcana-engine/abilities/targets";
 import { whenYourOtherCharactersIsBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const kingCandyRoyalRacer: LorcanitoCharacterCardDefinition = {
+export const kingCandyRoyalRacer: LorcanaCharacterCardDefinition = {
   id: "fv1",
   name: "King Candy",
   title: "Royal Racer",

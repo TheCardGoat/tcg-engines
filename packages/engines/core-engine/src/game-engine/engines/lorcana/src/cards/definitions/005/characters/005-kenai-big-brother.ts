@@ -7,7 +7,7 @@ const name = "Brothers Forever";
 const text =
   "While this character is exerted, your characters named Koda can't be challenged.";
 
-export const kenaiBigBrother: LorcanitoCharacterCardDefinition = {
+export const kenaiBigBrother: LorcanaCharacterCardDefinition = {
   id: "v56",
   missingTestCase: true,
   name: "Kenai",

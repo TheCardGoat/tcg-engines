@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   banzaiTauntingHyena,
   monstroWhaleOfAWhale,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Banzai - Taunting Hyena", () => {
   it("**HERE KITTY, KITTY, KITTY** When you play this character, you may exert chosen damaged character.", () => {

@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   owlLogicalLecturer,
   rabbitReluctantHost,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { gumboPot } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Gumbo Pot", () => {
   describe("**THE BEST I'VE EVER TASTED** {E} − Remove 1 damage each from up to 2 chosen characters.", () => {

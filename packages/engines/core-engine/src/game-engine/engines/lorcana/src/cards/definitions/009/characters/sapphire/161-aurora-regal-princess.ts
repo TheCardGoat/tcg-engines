@@ -1,7 +1,7 @@
 import { auroraRegalPrincess as auroraRegalPrincessAsOrig } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const auroraRegalPrincess: LorcanitoCharacterCardDefinition = {
+export const auroraRegalPrincess: LorcanaCharacterCardDefinition = {
   ...auroraRegalPrincessAsOrig,
   id: "gc3",
   reprints: [auroraRegalPrincessAsOrig.id],

@@ -2,7 +2,7 @@ import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/tar
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const madamMimCheatingSpellcaster: LorcanitoCharacterCardDefinition = {
+export const madamMimCheatingSpellcaster: LorcanaCharacterCardDefinition = {
   id: "hsi",
   name: "Madam Mim",
   title: "Cheating Spellcaster",

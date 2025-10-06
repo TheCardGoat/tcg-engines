@@ -3,8 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { gastonSchemingSuitor } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Gaston - Scheming Suitor", () => {
   describe("**YES, I'M INTIMIDATING** While one or more opponents have no cards in their hands, this character gets +3 {S}.", () => {

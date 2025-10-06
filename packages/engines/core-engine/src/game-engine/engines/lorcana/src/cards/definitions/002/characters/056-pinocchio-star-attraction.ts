@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pinocchioStarAttraction: LorcanitoCharacterCardDefinition = {
+export const pinocchioStarAttraction: LorcanaCharacterCardDefinition = {
   id: "z8x",
 
   name: "Pinocchio",

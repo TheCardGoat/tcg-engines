@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { amberChromiconItem } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Amber Chromicon - Item", () => {
   it.skip("**AMBER LIGHT** {E} – Remove up to 1 damage from each of your characters.", () => {

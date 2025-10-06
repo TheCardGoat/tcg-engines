@@ -15,7 +15,7 @@ const drasticMeasures: ResolutionAbility = {
   effects: [discardYourHand, drawXCards(2)],
 };
 
-export const docBoldKnight: LorcanitoCharacterCardDefinition = {
+export const docBoldKnight: LorcanaCharacterCardDefinition = {
   id: "bsn",
   name: "Doc",
   title: "Bold Knight",

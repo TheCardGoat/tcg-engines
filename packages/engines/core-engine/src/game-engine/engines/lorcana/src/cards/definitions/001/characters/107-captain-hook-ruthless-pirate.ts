@@ -5,7 +5,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const captainHookRecklessPirate: LorcanitoCharacterCardDefinition = {
+export const captainHookRecklessPirate: LorcanaCharacterCardDefinition = {
   id: "heh",
   name: "Captain Hook",
   title: "Ruthless Pirate",

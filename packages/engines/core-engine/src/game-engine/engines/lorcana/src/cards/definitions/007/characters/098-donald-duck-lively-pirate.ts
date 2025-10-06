@@ -1,7 +1,7 @@
 import { whenChallenged } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const donaldDuckLivelyPirate: LorcanitoCharacterCardDefinition = {
+export const donaldDuckLivelyPirate: LorcanaCharacterCardDefinition = {
   id: "lp9",
   name: "Donald Duck",
   title: "Lively Pirate",

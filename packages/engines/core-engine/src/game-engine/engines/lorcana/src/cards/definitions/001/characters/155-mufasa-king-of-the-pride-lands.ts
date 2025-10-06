@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mufasaKingOfProudLands: LorcanitoCharacterCardDefinition = {
+export const mufasaKingOfProudLands: LorcanaCharacterCardDefinition = {
   id: "py9",
   reprints: ["adw"],
 

@@ -2,7 +2,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { whenMovesToALocation } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const peterPanLostBoyLeader: LorcanitoCharacterCardDefinition = {
+export const peterPanLostBoyLeader: LorcanaCharacterCardDefinition = {
   id: "twu",
   name: "Peter Pan",
   title: "Lost Boy Leader",

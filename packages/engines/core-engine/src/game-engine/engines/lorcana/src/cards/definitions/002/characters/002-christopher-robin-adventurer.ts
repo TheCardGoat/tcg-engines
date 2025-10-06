@@ -2,7 +2,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { wheneverYouReadyThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const christopherRobinAdventurer: LorcanitoCharacterCardDefinition = {
+export const christopherRobinAdventurer: LorcanaCharacterCardDefinition = {
   id: "yf4",
   name: "Christopher Robin",
   title: "Adventurer",

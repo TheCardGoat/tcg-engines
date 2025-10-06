@@ -6,7 +6,7 @@ import {
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const nalaUndauntedLioness: LorcanitoCharacterCardDefinition = {
+export const nalaUndauntedLioness: LorcanaCharacterCardDefinition = {
   id: "dg0",
   name: "Nala",
   title: "Undaunted Lioness",

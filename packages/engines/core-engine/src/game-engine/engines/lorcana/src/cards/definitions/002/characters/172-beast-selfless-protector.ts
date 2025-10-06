@@ -1,7 +1,7 @@
 import { protectorAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const beastSelflessProtector: LorcanitoCharacterCardDefinition = {
+export const beastSelflessProtector: LorcanaCharacterCardDefinition = {
   id: "njt",
 
   name: "Beast",

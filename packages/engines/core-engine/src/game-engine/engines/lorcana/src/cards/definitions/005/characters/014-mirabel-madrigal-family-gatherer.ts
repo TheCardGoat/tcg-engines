@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mirabelMadrigalFamilyGatherer: LorcanitoCharacterCardDefinition = {
+export const mirabelMadrigalFamilyGatherer: LorcanaCharacterCardDefinition = {
   id: "bjy",
   name: "Mirabel Madrigal",
   title: "Family Gatherer",

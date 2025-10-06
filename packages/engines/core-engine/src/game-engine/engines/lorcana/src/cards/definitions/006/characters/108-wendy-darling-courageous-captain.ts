@@ -4,7 +4,7 @@ import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const wendyDarlingCourageousCaptain: LorcanitoCharacterCardDefinition = {
+export const wendyDarlingCourageousCaptain: LorcanaCharacterCardDefinition = {
   id: "mxj",
   name: "Wendy Darling",
   title: "Courageous Captain",

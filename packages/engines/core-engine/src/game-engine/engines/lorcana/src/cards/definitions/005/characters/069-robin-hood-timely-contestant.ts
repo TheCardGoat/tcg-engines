@@ -2,7 +2,7 @@ import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abil
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const robinHoodTimelyContestant: LorcanitoCharacterCardDefinition = {
+export const robinHoodTimelyContestant: LorcanaCharacterCardDefinition = {
   id: "abw",
   name: "Robin Hood",
   title: "Timely Contestant",

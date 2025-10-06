@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   theNokkWaterSpirit,
   winnieThePoohHavingAThink,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Winnie the Pooh - Having a Think", () => {
   it("**HUNNY POT** Whenever this character quests, you may put a card from your hand into your inkwell facedown.", () => {

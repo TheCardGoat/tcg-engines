@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { sisuInHerElement } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Sisu - In Her Element", () => {
   it.skip("**Challenger +2** _(While challenging, this character gets +2 {S}.)_", () => {

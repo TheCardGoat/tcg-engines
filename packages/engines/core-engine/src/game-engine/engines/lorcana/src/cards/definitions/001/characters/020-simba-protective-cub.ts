@@ -1,7 +1,7 @@
 import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const simbaProtectiveCub: LorcanitoCharacterCardDefinition = {
+export const simbaProtectiveCub: LorcanaCharacterCardDefinition = {
   id: "z0z",
   name: "Simba",
   title: "Protective Cub",

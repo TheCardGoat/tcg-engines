@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const faunaGoodFairy: LorcanitoCharacterCardDefinition = {
+export const faunaGoodFairy: LorcanaCharacterCardDefinition = {
   id: "y9h",
   name: "Fauna",
   title: "Good Fairy",

@@ -3,7 +3,7 @@ import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keywor
 import { wheneverOneOfYourCharChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const queenOfHeartsSensingWeakness: LorcanitoCharacterCardDefinition = {
+export const queenOfHeartsSensingWeakness: LorcanaCharacterCardDefinition = {
   id: "l3z",
   reprints: ["a6w"],
 

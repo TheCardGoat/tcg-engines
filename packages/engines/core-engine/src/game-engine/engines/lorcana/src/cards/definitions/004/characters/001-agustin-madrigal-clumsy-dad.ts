@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const agustinMadrigalClumsyDad: LorcanitoCharacterCardDefinition = {
+export const agustinMadrigalClumsyDad: LorcanaCharacterCardDefinition = {
   id: "e63",
   name: "Agustin Madrigal",
   title: "Clumsy Dad",

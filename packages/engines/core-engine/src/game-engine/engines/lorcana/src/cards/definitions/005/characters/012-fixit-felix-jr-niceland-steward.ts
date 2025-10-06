@@ -1,7 +1,7 @@
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const fixitFelixJrNicelandSteward: LorcanitoCharacterCardDefinition = {
+export const fixitFelixJrNicelandSteward: LorcanaCharacterCardDefinition = {
   id: "vqf",
   name: "Fix‐It Felix, Jr.",
   title: "Niceland Steward",

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
 import {
   aladdinResoluteSwordsman,
@@ -11,6 +10,10 @@ import {
   sisuWiseFriend,
   tukTukCuriousPartner,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Scuttle - Expert on Humans", () => {
   it("**LET ME SEE** When you play this character, look at the top 4 cards of your deck. You may reveal an item card and put it in your hand. Put the rest on the bottom of your deck in any order.", () => {

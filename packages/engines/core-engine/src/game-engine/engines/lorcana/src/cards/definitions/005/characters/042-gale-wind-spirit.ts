@@ -2,7 +2,7 @@ import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/w
 import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const galeWindSpirit: LorcanitoCharacterCardDefinition = {
+export const galeWindSpirit: LorcanaCharacterCardDefinition = {
   id: "coq",
   name: "Gale",
   title: "Wind Spirit",

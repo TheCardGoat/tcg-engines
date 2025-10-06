@@ -1,7 +1,7 @@
 import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const gastonSchemingSuitor: LorcanitoCharacterCardDefinition = {
+export const gastonSchemingSuitor: LorcanaCharacterCardDefinition = {
   id: "eck",
   name: "Gaston",
   title: "Scheming Suitor",

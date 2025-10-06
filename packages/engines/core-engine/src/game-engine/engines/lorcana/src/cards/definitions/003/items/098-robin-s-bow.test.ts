@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { pigletVerySmallAnimal } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { robinHoodDaydreamer } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { robinsBow } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Robin's Bow", () => {
   it("**A BIT OF A LARK** Whenever a character of yours named Robin Hood quests, you may ready this item.", () => {

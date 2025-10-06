@@ -1,7 +1,7 @@
 import { recklessAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/recklessAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const teKaTheBurningOne: LorcanitoCharacterCardDefinition = {
+export const teKaTheBurningOne: LorcanaCharacterCardDefinition = {
   id: "cs8",
   name: "Te Ka",
   title: "The Burning One",

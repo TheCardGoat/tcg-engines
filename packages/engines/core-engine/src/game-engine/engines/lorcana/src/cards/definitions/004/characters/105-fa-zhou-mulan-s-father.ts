@@ -5,7 +5,7 @@ import {
 import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const faZhouMulansFather: LorcanitoCharacterCardDefinition = {
+export const faZhouMulansFather: LorcanaCharacterCardDefinition = {
   id: "ex8",
   missingTestCase: true,
   name: "Fa Zhou",

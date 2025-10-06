@@ -2,7 +2,7 @@ import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import { readyAndCantQuestOrChallenge } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const svenReindeerSteed: LorcanitoCharacterCardDefinition = {
+export const svenReindeerSteed: LorcanaCharacterCardDefinition = {
   id: "xe9",
   name: "Sven",
   title: "Reindeer Steed",

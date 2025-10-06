@@ -1,7 +1,7 @@
 import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const missBiancaIndefectibleAgent: LorcanitoCharacterCardDefinition = {
+export const missBiancaIndefectibleAgent: LorcanaCharacterCardDefinition = {
   id: "atj",
   name: "Miss Bianca",
   title: "Unwavering Agent",

@@ -5,7 +5,7 @@ import { readyAnotherChosenCharacter } from "@lorcanito/lorcana-engine/effects/e
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const judyHoppsResourcefulRabbit: LorcanitoCharacterCardDefinition = {
+export const judyHoppsResourcefulRabbit: LorcanaCharacterCardDefinition = {
   id: "cd4",
   name: "Judy Hopps",
   title: "Resourceful Rabbit",

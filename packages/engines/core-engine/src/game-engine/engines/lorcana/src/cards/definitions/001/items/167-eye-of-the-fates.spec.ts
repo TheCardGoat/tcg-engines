@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { mickeyMouseTrueFriend } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { eyeOfTheFate } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Eye of the Fates", () => {
   it("See the Future - Chosen character gets +1 {L} this turn.", () => {

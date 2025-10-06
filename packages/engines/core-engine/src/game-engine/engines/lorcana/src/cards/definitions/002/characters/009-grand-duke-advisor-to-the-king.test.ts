@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   grandDukeAdvisorToTheKing,
   kuzcoWantedLlama,
@@ -11,6 +10,10 @@ import {
   theQueenRegalMonarch,
   tianaDiligentWaitress,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Grand Duke - Advisor to the King", () => {
   it("**YES, YOUR MAJESTY** Your Prince, Princess, King and Queen characters gain +1 {S}.", () => {

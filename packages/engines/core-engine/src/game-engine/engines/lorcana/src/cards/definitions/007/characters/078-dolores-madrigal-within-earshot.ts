@@ -2,7 +2,7 @@ import { opponentRevealHand } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverOneOfYourCharactersSings } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const doloresMadrigalWithinEarshot: LorcanitoCharacterCardDefinition = {
+export const doloresMadrigalWithinEarshot: LorcanaCharacterCardDefinition = {
   id: "b3f",
   name: "Dolores Madrigal",
   title: "Within Earshot",

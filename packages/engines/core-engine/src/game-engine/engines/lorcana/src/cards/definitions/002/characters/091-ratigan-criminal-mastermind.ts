@@ -1,7 +1,7 @@
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ratiganCriminalMastermind: LorcanitoCharacterCardDefinition = {
+export const ratiganCriminalMastermind: LorcanaCharacterCardDefinition = {
   id: "r5c",
   name: "Ratigan",
   title: "Criminal Mastermind",

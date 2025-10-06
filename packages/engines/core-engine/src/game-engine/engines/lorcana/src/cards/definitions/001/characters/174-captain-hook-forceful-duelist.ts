@@ -1,7 +1,7 @@
 import type { ChallengerAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const captainHookForcefulDuelist: LorcanitoCharacterCardDefinition = {
+export const captainHookForcefulDuelist: LorcanaCharacterCardDefinition = {
   id: "uk5",
   reprints: ["whb"],
   name: "Captain Hook",

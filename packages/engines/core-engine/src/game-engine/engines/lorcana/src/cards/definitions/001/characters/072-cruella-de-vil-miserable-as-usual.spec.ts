@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   cruellaDeVilMiserableAsUsual,
   teKaTheBurningOne,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Cruella De Vil - Miserable As Usual", () => {
   describe("**You'll Be Sorry** When this character is challenged and banished, you may return chosen character to their player's hand.", () => {

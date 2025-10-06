@@ -1,7 +1,7 @@
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const archimedesExasperatedOwl: LorcanitoCharacterCardDefinition = {
+export const archimedesExasperatedOwl: LorcanaCharacterCardDefinition = {
   id: "fyr",
   name: "Archimedes",
   title: "Exasperated Owl",

@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const tukTukCuriousPartner: LorcanitoCharacterCardDefinition = {
+export const tukTukCuriousPartner: LorcanaCharacterCardDefinition = {
   id: "un6",
   name: "Tuk Tuk",
   title: "Curious Partner",

@@ -2,7 +2,7 @@ import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/con
 import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const maxLoyalSheepdog: LorcanitoCharacterCardDefinition = {
+export const maxLoyalSheepdog: LorcanaCharacterCardDefinition = {
   id: "zmv",
   name: "Max",
   title: "Loyal Sheepdog",

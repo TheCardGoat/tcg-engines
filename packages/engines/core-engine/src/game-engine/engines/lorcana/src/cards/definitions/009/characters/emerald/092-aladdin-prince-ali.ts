@@ -1,7 +1,7 @@
 import { aladdinPrinceAli as aladdinPrinceAliAsOrig } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/069-aladdin-prince-ali";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const aladdinPrinceAli: LorcanitoCharacterCardDefinition = {
+export const aladdinPrinceAli: LorcanaCharacterCardDefinition = {
   ...aladdinPrinceAliAsOrig,
   id: "n78",
   reprints: [aladdinPrinceAliAsOrig.id],

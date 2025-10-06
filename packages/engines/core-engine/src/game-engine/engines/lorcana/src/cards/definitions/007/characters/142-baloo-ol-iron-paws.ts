@@ -27,7 +27,7 @@ const yourCharactersWith7StrOrMore: CardEffectTarget = {
   ],
 };
 
-export const balooOlIronPaws: LorcanitoCharacterCardDefinition = {
+export const balooOlIronPaws: LorcanaCharacterCardDefinition = {
   id: "cpi",
   name: "Baloo",
   title: "Ol' Iron Paws",

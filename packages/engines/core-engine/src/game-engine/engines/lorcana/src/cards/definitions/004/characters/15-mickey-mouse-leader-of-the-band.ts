@@ -2,7 +2,7 @@ import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mickeyMouseLeaderOfTheBand: LorcanitoCharacterCardDefinition = {
+export const mickeyMouseLeaderOfTheBand: LorcanaCharacterCardDefinition = {
   id: "mpt",
   name: "Mickey Mouse",
   title: "Leader of the Band",

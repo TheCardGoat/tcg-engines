@@ -2,7 +2,7 @@ import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/
 import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const simbaFutureKing: LorcanitoCharacterCardDefinition = {
+export const simbaFutureKing: LorcanaCharacterCardDefinition = {
   id: "umu",
   name: "Simba",
   title: "Future King",

@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const svenOficialIceDeliverer: LorcanitoCharacterCardDefinition = {
+export const svenOficialIceDeliverer: LorcanaCharacterCardDefinition = {
   id: "kar",
   reprints: ["tf5"],
   name: "Sven",

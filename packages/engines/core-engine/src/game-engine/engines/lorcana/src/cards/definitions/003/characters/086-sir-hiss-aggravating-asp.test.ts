@@ -3,8 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { sirHissAggravatingAsp } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Sir Hiss - Aggravating Asp", () => {
   it.skip("**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {

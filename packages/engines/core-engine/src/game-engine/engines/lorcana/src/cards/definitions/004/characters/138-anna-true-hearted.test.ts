@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { annaTrueHearted } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { minnieMouseQuickthinkingInventor } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Anna - True-Hearted", () => {
   it("**LET ME HELP YOU** Whenever this character quests, your other Hero characters get +1 {L} this turn.", () => {

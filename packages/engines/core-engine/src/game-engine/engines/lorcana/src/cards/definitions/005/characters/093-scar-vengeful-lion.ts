@@ -3,7 +3,7 @@ import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword
 import { wheneverOneOfYourCharChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const scarVengefulLion: LorcanitoCharacterCardDefinition = {
+export const scarVengefulLion: LorcanaCharacterCardDefinition = {
   id: "rkn",
   missingTestCase: true,
   name: "Scar",

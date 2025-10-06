@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   theQueenCrownOfTheCouncil,
   theQueenCruelestOfAll,
   theQueenFairestOfAll,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Queen - Fairest of All", () => {
   it("**REFLECTIONS OF VANITY** For each other character named The Queen you have in play, this character gets +1 {L}.", () => {

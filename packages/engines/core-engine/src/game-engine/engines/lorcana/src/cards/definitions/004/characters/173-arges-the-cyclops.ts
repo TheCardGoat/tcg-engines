@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const argesTheCyclops: LorcanitoCharacterCardDefinition = {
+export const argesTheCyclops: LorcanaCharacterCardDefinition = {
   id: "gam",
   name: "Arges",
   title: "The Cyclops",

@@ -3,7 +3,7 @@ import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abili
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const aliceGrowingGirl: LorcanitoCharacterCardDefinition = {
+export const aliceGrowingGirl: LorcanaCharacterCardDefinition = {
   id: "wfi",
   reprints: ["rtw"],
 

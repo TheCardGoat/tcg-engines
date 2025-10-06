@@ -1,7 +1,7 @@
 import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const belleStrangeButBeautiful: LorcanitoCharacterCardDefinition = {
+export const belleStrangeButBeautiful: LorcanaCharacterCardDefinition = {
   id: "uxx",
   name: "Belle",
   title: "Strange but Special",

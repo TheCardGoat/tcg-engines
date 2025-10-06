@@ -21,7 +21,7 @@ const takePoint: StaticAbility = {
   ],
 };
 
-export const cardSoldiersRoyalTroops: LorcanitoCharacterCardDefinition = {
+export const cardSoldiersRoyalTroops: LorcanaCharacterCardDefinition = {
   id: "z86",
   name: "Card Soldiers",
   title: "Royal Troops",

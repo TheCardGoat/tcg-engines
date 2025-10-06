@@ -6,7 +6,7 @@ import { moveDamageAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mamaOdieVoiceOfWisdom: LorcanitoCharacterCardDefinition = {
+export const mamaOdieVoiceOfWisdom: LorcanaCharacterCardDefinition = {
   id: "l0k",
   reprints: ["ozw"],
   missingTestCase: true,

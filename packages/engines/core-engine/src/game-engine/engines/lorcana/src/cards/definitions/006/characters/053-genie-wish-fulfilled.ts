@@ -4,7 +4,7 @@ import { whenYouPlayMayDrawACard } from "@lorcanito/lorcana-engine/abilities/whe
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const genieWishFulfilled: LorcanitoCharacterCardDefinition = {
+export const genieWishFulfilled: LorcanaCharacterCardDefinition = {
   id: "xl7",
   missingTestCase: true,
   name: "Genie",

@@ -3,7 +3,7 @@ import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyw
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const fidgetSneakyBat: LorcanitoCharacterCardDefinition = {
+export const fidgetSneakyBat: LorcanaCharacterCardDefinition = {
   id: "zgb",
   name: "Fidget",
   title: "Sneaky Bat",

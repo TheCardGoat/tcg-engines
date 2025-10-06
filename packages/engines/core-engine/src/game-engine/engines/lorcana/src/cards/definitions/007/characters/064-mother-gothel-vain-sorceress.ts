@@ -6,7 +6,7 @@ import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverOneOfYourCharChallengesAnotherCharOrLocation } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const motherGothelVainSorceress: LorcanitoCharacterCardDefinition = {
+export const motherGothelVainSorceress: LorcanaCharacterCardDefinition = {
   id: "rm8",
   name: "Mother Gothel",
   title: "Vain Sorceress",

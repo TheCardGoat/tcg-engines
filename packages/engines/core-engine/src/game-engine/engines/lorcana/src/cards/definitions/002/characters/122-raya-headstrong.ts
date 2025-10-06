@@ -2,7 +2,7 @@ import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverBanishesAnotherCharacterInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rayaHeadstrong: LorcanitoCharacterCardDefinition = {
+export const rayaHeadstrong: LorcanaCharacterCardDefinition = {
   id: "a5t",
   reprints: ["g6t"],
   name: "Raya",

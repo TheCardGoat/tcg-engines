@@ -1,7 +1,7 @@
 import { wheneverYouPlayAFloodBorn } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const honestJohnNotThatHonest: LorcanitoCharacterCardDefinition = {
+export const honestJohnNotThatHonest: LorcanaCharacterCardDefinition = {
   id: "hkq",
 
   name: "Honest John",

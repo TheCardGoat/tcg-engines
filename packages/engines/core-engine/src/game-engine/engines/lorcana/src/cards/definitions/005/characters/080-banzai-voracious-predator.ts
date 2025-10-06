@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const banzaiVoraciousPredator: LorcanitoCharacterCardDefinition = {
+export const banzaiVoraciousPredator: LorcanaCharacterCardDefinition = {
   id: "q8r",
   name: "Banzai",
   title: "Gluttonous Predator",

@@ -13,7 +13,7 @@ const smartManeuver: ResolutionAbility = {
   effects: [discardACard],
 };
 
-export const jasmineDesertWarrior: LorcanitoCharacterCardDefinition = {
+export const jasmineDesertWarrior: LorcanaCharacterCardDefinition = {
   id: "g9b",
   missingTestCase: true,
   name: "Jasmine",

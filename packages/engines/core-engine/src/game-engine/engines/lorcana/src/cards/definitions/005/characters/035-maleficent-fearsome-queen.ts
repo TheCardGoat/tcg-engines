@@ -1,7 +1,7 @@
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const maleficentFearsomeQueen: LorcanitoCharacterCardDefinition = {
+export const maleficentFearsomeQueen: LorcanaCharacterCardDefinition = {
   id: "ffi",
   missingTestCase: true,
   name: "Maleficent",

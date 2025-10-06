@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   liloMakingAWish,
   magicBroomBucketBrigade,
   mickeyMouseWaywardSorcerer,
   simbaProtectiveCub,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mickey Mouse - Wayward Sorcerer", () => {
   describe("**ANIMATE BROOM** You pay 1 {I} less to play Broom characters.", () => {

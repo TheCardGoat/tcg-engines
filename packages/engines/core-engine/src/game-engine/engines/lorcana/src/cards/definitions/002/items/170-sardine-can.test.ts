@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   cruellaDeVilPerfectlyWretched,
   gastonIntellectualPowerhouse,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { sardineCan } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Sardine Can", () => {
   it("**FLIGHT CABIN** Your exerted characters gain **Ward**. _(Opponents can’t choose them except to challenge.)_", () => {

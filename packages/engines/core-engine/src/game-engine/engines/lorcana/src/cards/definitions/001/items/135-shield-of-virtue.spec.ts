@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { heiheiBoatSnack } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { shieldOfVirtue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Shield of Virtue", () => {
   it("Fireproof - Ready chosen character. They can't quest for the rest of this turn.", () => {

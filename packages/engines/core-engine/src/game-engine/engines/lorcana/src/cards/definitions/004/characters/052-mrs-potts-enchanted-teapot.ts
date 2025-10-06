@@ -2,7 +2,7 @@ import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/con
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mrsPottsEnchantedTeapot: LorcanitoCharacterCardDefinition = {
+export const mrsPottsEnchantedTeapot: LorcanaCharacterCardDefinition = {
   id: "rxo",
   missingTestCase: true,
   name: "Mrs. Potts",

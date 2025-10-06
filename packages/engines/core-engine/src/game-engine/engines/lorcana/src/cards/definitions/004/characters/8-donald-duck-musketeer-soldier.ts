@@ -2,7 +2,7 @@ import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const donaldDuckMusketeerSoldier: LorcanitoCharacterCardDefinition = {
+export const donaldDuckMusketeerSoldier: LorcanaCharacterCardDefinition = {
   id: "xjt",
   name: "Donald Duck",
   title: "Musketeer Soldier",

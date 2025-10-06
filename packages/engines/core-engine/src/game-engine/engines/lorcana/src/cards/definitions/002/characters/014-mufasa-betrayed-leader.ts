@@ -1,7 +1,7 @@
 import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mufasaBetrayedLeader: LorcanitoCharacterCardDefinition = {
+export const mufasaBetrayedLeader: LorcanaCharacterCardDefinition = {
   id: "j4z",
   name: "Mufasa",
   title: "Betrayed Leader",

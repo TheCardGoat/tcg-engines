@@ -4,7 +4,7 @@ import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverACharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const daisyDuckPirateCaptain: LorcanitoCharacterCardDefinition = {
+export const daisyDuckPirateCaptain: LorcanaCharacterCardDefinition = {
   id: "zbi",
   name: "Daisy Duck",
   title: "Pirate Captain",

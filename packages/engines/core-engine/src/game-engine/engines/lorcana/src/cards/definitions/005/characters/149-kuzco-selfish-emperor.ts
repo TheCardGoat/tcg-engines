@@ -1,7 +1,7 @@
 import { yourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const kuzcoSelfishEmperor: LorcanitoCharacterCardDefinition = {
+export const kuzcoSelfishEmperor: LorcanaCharacterCardDefinition = {
   id: "v40",
   name: "Kuzco",
   title: "Selfish Emperor",

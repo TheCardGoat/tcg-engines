@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { ursulaShellNecklace } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
 import {
   grabYourSword,
   hakunaMatata,
   reflection,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Ursula's Shell Necklace", () => {
   describe('"NOW, SING! - Whenever you play a song, you may pay 1 **{I}** to draw a card.', () => {

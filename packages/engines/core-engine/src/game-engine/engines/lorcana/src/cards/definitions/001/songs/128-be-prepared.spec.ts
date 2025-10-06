@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   chiefTui,
   heiheiBoatSnack,
@@ -12,6 +11,10 @@ import {
   moanaOfMotunui,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { bePrepared } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Be Prepared", () => {
   it("Board wipe", () => {

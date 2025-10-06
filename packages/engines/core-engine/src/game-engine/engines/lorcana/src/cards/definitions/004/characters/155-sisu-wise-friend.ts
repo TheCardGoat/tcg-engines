@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const sisuWiseFriend: LorcanitoCharacterCardDefinition = {
+export const sisuWiseFriend: LorcanaCharacterCardDefinition = {
   id: "lgb",
   name: "Sisu",
   title: "Wise Friend",

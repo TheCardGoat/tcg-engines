@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { cubbyMightyLostBoy } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Cubby - Mighty Lost Boy", () => {
   it.skip("**THE BEAR** Whenever this character moves to a location, he gets +3 {S} this turn.", () => {

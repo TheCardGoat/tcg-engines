@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, test } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { gumboPot } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hiram Flaversham - Toymaker", () => {
   describe("**ARTIFICER** When you play this character and whenever he quests, you may banish one of your items to draw 2 cards.", () => {

@@ -1,7 +1,7 @@
 import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const herculesTrueHero: LorcanitoCharacterCardDefinition = {
+export const herculesTrueHero: LorcanaCharacterCardDefinition = {
   id: "uyj",
   reprints: ["s5k"],
 

@@ -18,7 +18,7 @@ const noiWhileCondition: Condition[] = [
   },
 ];
 
-export const noiOrphanedThief: LorcanitoCharacterCardDefinition = {
+export const noiOrphanedThief: LorcanaCharacterCardDefinition = {
   id: "r77",
   name: "Noi",
   title: "Orphaned Thief",

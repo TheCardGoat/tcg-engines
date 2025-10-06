@@ -2,7 +2,7 @@ import { oneOfYourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/ta
 import { wheneverIsReturnedToHand } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const merlinShapeshifter: LorcanitoCharacterCardDefinition = {
+export const merlinShapeshifter: LorcanaCharacterCardDefinition = {
   id: "lcu",
   name: "Merlin",
   title: "Shapeshifter",

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   aWholeNewWorld,
   hakunaMatata,
@@ -12,6 +11,10 @@ import {
   peteGamesReferee,
   princeNaveenUkulelePlayer,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Prince Naveen - Ukulele Player", () => {
   it("**IT’S BEAUTIFUL NO?** When you play this character, you may play a song with cost 6 or less for free.", () => {

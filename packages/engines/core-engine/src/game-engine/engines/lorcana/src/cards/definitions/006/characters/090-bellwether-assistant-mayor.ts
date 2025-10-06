@@ -5,7 +5,7 @@ import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/tar
 import { wheneverACardIsPutIntoYourInkwell } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const bellwetherAssistantMayor: LorcanitoCharacterCardDefinition = {
+export const bellwetherAssistantMayor: LorcanaCharacterCardDefinition = {
   id: "aom",
   missingTestCase: true,
   name: "Bellwether",

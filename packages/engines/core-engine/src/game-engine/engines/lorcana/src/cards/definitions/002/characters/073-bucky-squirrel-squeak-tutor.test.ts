@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { liloGalacticHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import {
   buckySquirrelSqueakTutor,
@@ -11,6 +10,10 @@ import {
   cheshireCatFromTheShadows,
   herculesDivineHero,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Bucky - Squirrel Squeak Tutor", () => {
   describe("**SQUEAK** Whenever you play a Floodborn character, if you used Shift to play them, each opponent chooses and discards a card.", () => {

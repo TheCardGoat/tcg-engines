@@ -43,7 +43,7 @@ const helpingHand: PlayEffect = {
   },
 };
 
-export const aladdinResearchAssistant: LorcanitoCharacterCardDefinition = {
+export const aladdinResearchAssistant: LorcanaCharacterCardDefinition = {
   id: "vw0",
   name: "Aladdin",
   title: "Research Assistant",

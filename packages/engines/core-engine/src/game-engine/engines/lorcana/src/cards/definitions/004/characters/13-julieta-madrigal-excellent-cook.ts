@@ -4,7 +4,7 @@ import {
 } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const julietaMadrigalExcellentCook: LorcanitoCharacterCardDefinition = {
+export const julietaMadrigalExcellentCook: LorcanaCharacterCardDefinition = {
   id: "ig1",
   reprints: ["gxo"],
   missingTestCase: true,

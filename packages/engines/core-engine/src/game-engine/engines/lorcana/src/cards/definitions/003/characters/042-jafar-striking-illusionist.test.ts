@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
 import { aWholeNewWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
 import { jafarStrikingIllusionist } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Jafar - Striking Illusionist", () => {
   it("**Shift** 5 _(You may pay 5 {I} to play this on top of one of your characters named Jafar.)_**Evasive** _(Only characters with Evasive can challenge this character.)_**POWER BEYOND MEASURE** During your turn, while this character is exerted, whenever you draw a card, gain 1 lore.", () => {

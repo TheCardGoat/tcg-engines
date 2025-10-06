@@ -3,7 +3,7 @@ import { exertAndCantReady } from "@lorcanito/lorcana-engine/effects/effects";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const elsaSpiritOfWinter: LorcanitoCharacterCardDefinition = {
+export const elsaSpiritOfWinter: LorcanaCharacterCardDefinition = {
   id: "qc4",
   reprints: ["qun"],
   name: "Elsa",

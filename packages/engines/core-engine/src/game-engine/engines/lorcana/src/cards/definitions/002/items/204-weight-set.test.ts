@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   cruellaDeVilPerfectlyWretched,
   grandPabbieOldestAndWisest,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { weightSet } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Weight Set", () => {
   describe("**TRAINING** Whenever you play a character with 4 {S} or more, you may pay 1 {I} to draw a card.", () => {

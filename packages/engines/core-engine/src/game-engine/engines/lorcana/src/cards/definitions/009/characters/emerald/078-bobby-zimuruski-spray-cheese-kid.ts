@@ -1,7 +1,7 @@
 import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const bobbyZimuruskiSprayCheeseKid: LorcanitoCharacterCardDefinition = {
+export const bobbyZimuruskiSprayCheeseKid: LorcanaCharacterCardDefinition = {
   id: "wcd",
   missingTestCase: true,
   name: "Bobby Zimuruski",

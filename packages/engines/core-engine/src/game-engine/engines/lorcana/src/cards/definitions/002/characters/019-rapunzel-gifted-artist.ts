@@ -3,7 +3,7 @@ import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keywor
 import { wheneverYouHeal } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rapunzelGiftedArtist: LorcanitoCharacterCardDefinition = {
+export const rapunzelGiftedArtist: LorcanaCharacterCardDefinition = {
   id: "d99",
   name: "Rapunzel",
   title: "Gifted Artist",

@@ -2,7 +2,7 @@ import { haveMoreCardsThanOpponent } from "@lorcanito/lorcana-engine/abilities/c
 import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pachaTrekmate: LorcanitoCharacterCardDefinition = {
+export const pachaTrekmate: LorcanaCharacterCardDefinition = {
   id: "nu8",
   name: "Pacha",
   title: "Trekmate",

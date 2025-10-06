@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mickeyMouseTrueFriend: LorcanitoCharacterCardDefinition = {
+export const mickeyMouseTrueFriend: LorcanaCharacterCardDefinition = {
   id: "dr0",
   reprints: ["c2m"],
   name: "Mickey Mouse",

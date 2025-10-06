@@ -5,7 +5,7 @@ import { whileConditionOnThisCharacterTargetsGain } from "@lorcanito/lorcana-eng
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const genieOfTheLamp: LorcanitoCharacterCardDefinition = {
+export const genieOfTheLamp: LorcanaCharacterCardDefinition = {
   id: "lzg",
   name: "Genie",
   title: "Of the Lamp",

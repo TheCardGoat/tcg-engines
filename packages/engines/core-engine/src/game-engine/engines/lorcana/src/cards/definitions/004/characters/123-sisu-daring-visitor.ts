@@ -2,7 +2,7 @@ import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbiliti
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const sisuDaringVisitor: LorcanitoCharacterCardDefinition = {
+export const sisuDaringVisitor: LorcanaCharacterCardDefinition = {
   id: "npe",
   reprints: ["eyu"],
   missingTestCase: true,

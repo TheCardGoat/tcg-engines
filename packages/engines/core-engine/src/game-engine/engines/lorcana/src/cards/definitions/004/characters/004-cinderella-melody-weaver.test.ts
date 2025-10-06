@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   rafikiMysterious,
   rapunzelGiftedWithHealing,
@@ -11,6 +10,10 @@ import {
 import { cinderellaBallroomSensation } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { underTheSea } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import { cinderellaMelodyWeaver } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Cinderella - Melody Weaver", () => {
   it("**Singer** 9 _(This character counts as cost 9 to sing songs.)_**BEAUTIFUL VOICE** Whenever this character sings a song, your other Princess characters get +1 {L} this turn.", () => {

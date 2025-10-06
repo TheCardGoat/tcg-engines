@@ -2,7 +2,7 @@ import { discardACard } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const daisyDuckSecretAgent: LorcanitoCharacterCardDefinition = {
+export const daisyDuckSecretAgent: LorcanaCharacterCardDefinition = {
   id: "vqt",
   reprints: ["pqa"],
 

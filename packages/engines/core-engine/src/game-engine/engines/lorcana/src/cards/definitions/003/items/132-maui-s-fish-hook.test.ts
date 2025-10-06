@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   heiheiBoatSnack,
   mauiDemiGod,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { mauisFishHook } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Maui's Fish Hook", () => {
   it("**IT'S MAUI TIME!** If you have a character named Maui in play, you may use this item's Shapeshift ability for free.", () => {

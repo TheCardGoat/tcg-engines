@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { mulanImperialSoldier } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { scuttleExpertOnHumans } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { medallionWeights } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Medallion Weights", () => {
   it("**DISCIPLINE AND STRENGTH** {E}, 2 {I} - Chosen character gets +2 {S} this turn. Whenever they challenge another character this turn, you may draw a card.", () => {

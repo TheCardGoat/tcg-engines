@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const hadesMeticulousPlotter: LorcanitoCharacterCardDefinition = {
+export const hadesMeticulousPlotter: LorcanaCharacterCardDefinition = {
   id: "d5u",
   name: "Hades",
   title: "Meticulous Plotter",

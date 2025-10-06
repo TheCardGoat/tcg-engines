@@ -29,7 +29,7 @@ const playEffect: PlayEffect = {
   target: songFromDiscard,
 };
 
-export const maxGoofChartTopper: LorcanitoCharacterCardDefinition = {
+export const maxGoofChartTopper: LorcanaCharacterCardDefinition = {
   id: "o1c",
   // notImplemented: true,
   missingTestCase: false,

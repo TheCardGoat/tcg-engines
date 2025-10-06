@@ -6,7 +6,7 @@ import { moveToLocation } from "@lorcanito/lorcana-engine/effects/effects";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const tukTukLivelyPartner: LorcanitoCharacterCardDefinition = {
+export const tukTukLivelyPartner: LorcanaCharacterCardDefinition = {
   id: "fjt",
   reprints: ["lts"],
   name: "Tuk Tuk",

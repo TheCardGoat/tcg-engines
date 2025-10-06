@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pigletVerySmallAnimal: LorcanitoCharacterCardDefinition = {
+export const pigletVerySmallAnimal: LorcanaCharacterCardDefinition = {
   id: "d7w",
   name: "Piglet",
   title: "Very Small Animal",

@@ -3,8 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { belleBookworm } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Belle - Bookworm", () => {
   describe("**USE YOUR IMAGINATION** While an opponent has no cards in their hand, this character gets +2 {L}.", () => {

@@ -2,7 +2,7 @@ import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { whileThisCharacterHasNoDamageGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const lawrenceJealousManservant: LorcanitoCharacterCardDefinition = {
+export const lawrenceJealousManservant: LorcanaCharacterCardDefinition = {
   id: "ytl",
   reprints: ["b85"],
   name: "Lawrence",

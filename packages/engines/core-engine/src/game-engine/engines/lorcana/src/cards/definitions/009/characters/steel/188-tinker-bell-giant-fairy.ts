@@ -1,7 +1,7 @@
 import { tinkerBellGiantFairy as ogTinkerBellGiantFairy } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/193-tinker-bell-giant-fairy";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const tinkerBellGiantFairy: LorcanitoCharacterCardDefinition = {
+export const tinkerBellGiantFairy: LorcanaCharacterCardDefinition = {
   ...ogTinkerBellGiantFairy,
   id: "rtd",
   reprints: [ogTinkerBellGiantFairy.id],

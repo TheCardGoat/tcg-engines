@@ -2,7 +2,7 @@ import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const magicBroomIndustrialModel: LorcanitoCharacterCardDefinition = {
+export const magicBroomIndustrialModel: LorcanaCharacterCardDefinition = {
   id: "ang",
 
   name: "Magic Broom",

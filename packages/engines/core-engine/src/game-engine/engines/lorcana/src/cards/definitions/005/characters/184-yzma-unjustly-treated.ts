@@ -4,7 +4,7 @@ import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverOpposingCharIsBanishedInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const yzmaUnjustlyTreated: LorcanitoCharacterCardDefinition = {
+export const yzmaUnjustlyTreated: LorcanaCharacterCardDefinition = {
   id: "pdd",
   missingTestCase: true,
   name: "Yzma",

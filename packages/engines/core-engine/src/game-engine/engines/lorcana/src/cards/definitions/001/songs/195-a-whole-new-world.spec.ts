@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   magicBroomBucketBrigade,
   moanaOfMotunui,
@@ -11,6 +10,10 @@ import {
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
 import { aWholeNewWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("A Whole New World", () => {
   it("Each player discards their hand and draws 7 cards.", () => {

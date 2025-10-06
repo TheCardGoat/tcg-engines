@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const fairyGodmotherHereToHelp: LorcanitoCharacterCardDefinition = {
+export const fairyGodmotherHereToHelp: LorcanaCharacterCardDefinition = {
   id: "foy",
 
   name: "Fairy Godmother",

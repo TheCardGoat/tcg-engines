@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { triggerImpreciseShooter } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Trigger - Imprecise Shooter", () => {
   it.skip("**MY OL' BETSY** Your characters named Nutsy gain +1 {L}.", () => {

@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const minnieMouseZippingAround: LorcanitoCharacterCardDefinition = {
+export const minnieMouseZippingAround: LorcanaCharacterCardDefinition = {
   id: "d3n",
 
   name: "Minnie Mouse",

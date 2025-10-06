@@ -6,7 +6,7 @@ import {
 import { wheneverBanishesAnotherCharacterInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rayaUnstoppableForce: LorcanitoCharacterCardDefinition = {
+export const rayaUnstoppableForce: LorcanaCharacterCardDefinition = {
   id: "db2",
   missingTestCase: true,
   name: "Raya",

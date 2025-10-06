@@ -5,7 +5,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const peterPanShadowFinder: LorcanitoCharacterCardDefinition = {
+export const peterPanShadowFinder: LorcanaCharacterCardDefinition = {
   id: "o7c",
   name: "Peter Pan",
   title: "Shadow Finder",

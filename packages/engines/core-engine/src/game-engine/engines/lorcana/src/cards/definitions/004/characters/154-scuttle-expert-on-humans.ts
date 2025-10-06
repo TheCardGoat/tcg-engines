@@ -4,7 +4,7 @@ import type {
 } from "@lorcanito/lorcana-engine";
 import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 
-export const scuttleExpertOnHumans: LorcanitoCharacterCardDefinition = {
+export const scuttleExpertOnHumans: LorcanaCharacterCardDefinition = {
   id: "r46",
   name: "Scuttle",
   title: "Expert on Humans",

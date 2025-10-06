@@ -5,7 +5,7 @@ import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import { madameMimAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const madamMimElephant: LorcanitoCharacterCardDefinition = {
+export const madamMimElephant: LorcanaCharacterCardDefinition = {
   id: "txu",
   missingTestCase: true,
   name: "Madam Mim",

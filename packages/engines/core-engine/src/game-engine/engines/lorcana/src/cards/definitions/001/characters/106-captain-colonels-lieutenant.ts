@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const captainColonelsLieutenant: LorcanitoCharacterCardDefinition = {
+export const captainColonelsLieutenant: LorcanaCharacterCardDefinition = {
   id: "t2f",
   name: "Captain",
   title: "Colonel's Lieutenant",

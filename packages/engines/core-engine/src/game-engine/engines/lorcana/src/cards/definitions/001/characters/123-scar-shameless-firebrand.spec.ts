@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   chiefTui,
   drFacilierCharlatan,
@@ -11,6 +10,10 @@ import {
   scarShamelessFirebrand,
   stichtNewDog,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Scar Shameless Firebrand", () => {
   it("ROUSING SPEECH effect- Ready All characters with cost 3 or less", () => {

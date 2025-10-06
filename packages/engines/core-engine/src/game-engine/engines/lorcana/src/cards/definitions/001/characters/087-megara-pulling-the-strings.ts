@@ -1,7 +1,7 @@
 import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const megaraPullingTheStrings: LorcanitoCharacterCardDefinition = {
+export const megaraPullingTheStrings: LorcanaCharacterCardDefinition = {
   id: "kv6",
   reprints: ["g7m"],
   name: "Megara",

@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { youHaveForgottenMe } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   aWholeNewWorld,
   grabYourSword,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import { arielDeterminedMermaid } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Ariel - Determined Mermaid", () => {
   it("**I WANT MORE** Whenever you play a song, you may draw a card, then choose and discard a card.", () => {

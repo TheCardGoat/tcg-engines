@@ -1,7 +1,7 @@
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const happyGoodNatured: LorcanitoCharacterCardDefinition = {
+export const happyGoodNatured: LorcanaCharacterCardDefinition = {
   id: "gx6",
   name: "Happy",
   title: "Good-Natured",

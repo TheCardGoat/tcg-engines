@@ -6,7 +6,7 @@ import { readyYourOtherCharacters } from "@lorcanito/lorcana-engine/effects/effe
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const simbaPrideProtector: LorcanitoCharacterCardDefinition = {
+export const simbaPrideProtector: LorcanaCharacterCardDefinition = {
   id: "xe0",
   missingTestCase: true,
   name: "Simba",

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { simbaFutureKing } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { mufasaChampionOfThePrideLands } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { prideLandsPrideRock } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";

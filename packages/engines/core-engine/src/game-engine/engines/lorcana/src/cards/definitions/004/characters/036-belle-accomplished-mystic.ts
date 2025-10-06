@@ -9,7 +9,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const belleAccomplishedMystic: LorcanitoCharacterCardDefinition = {
+export const belleAccomplishedMystic: LorcanaCharacterCardDefinition = {
   id: "j8p",
   reprints: ["cqp"],
   missingTestCase: true,

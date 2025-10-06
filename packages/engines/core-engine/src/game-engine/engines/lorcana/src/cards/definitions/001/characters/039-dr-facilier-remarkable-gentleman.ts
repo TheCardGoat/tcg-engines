@@ -1,7 +1,7 @@
 import { wheneverPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const drFacilierRemarkable: LorcanitoCharacterCardDefinition = {
+export const drFacilierRemarkable: LorcanaCharacterCardDefinition = {
   id: "xhk",
   name: "Dr. Facilier",
   title: "Remarkable Gentleman",

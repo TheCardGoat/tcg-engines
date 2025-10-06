@@ -2,12 +2,15 @@
  * @jest-environment node
  */
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   megaraPullingTheStrings,
   mickeyMouseArtfulRogue,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mickey Mouse - Artful Rogue", () => {
   it("**MISDIRECTION** Whenever you play an action, chosen opposing character can't quest during their next turn.", () => {

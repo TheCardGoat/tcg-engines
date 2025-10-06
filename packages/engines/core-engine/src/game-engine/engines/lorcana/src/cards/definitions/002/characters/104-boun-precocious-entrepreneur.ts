@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const bounPrecociousEnterpreneur: LorcanitoCharacterCardDefinition = {
+export const bounPrecociousEnterpreneur: LorcanaCharacterCardDefinition = {
   id: "hz1",
   name: "Boun",
   title: "Precocious Entrepreneur",

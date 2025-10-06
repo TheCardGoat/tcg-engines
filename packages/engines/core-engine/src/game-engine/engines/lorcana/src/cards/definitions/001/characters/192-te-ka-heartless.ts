@@ -2,7 +2,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { wheneverBanishesAnotherCharacterInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const teKaHeartless: LorcanitoCharacterCardDefinition = {
+export const teKaHeartless: LorcanaCharacterCardDefinition = {
   id: "pfr",
   name: "Te Ka",
   title: "Heartless",

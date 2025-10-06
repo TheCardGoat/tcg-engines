@@ -4,7 +4,7 @@ import {
 } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const maleficentSorceress: LorcanitoCharacterCardDefinition = {
+export const maleficentSorceress: LorcanaCharacterCardDefinition = {
   id: "eb1",
 
   name: "Maleficent",

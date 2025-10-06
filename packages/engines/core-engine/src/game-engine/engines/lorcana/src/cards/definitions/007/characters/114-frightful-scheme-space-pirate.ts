@@ -39,7 +39,7 @@ const frightfulSchemeAbility: StaticAbility[] = [
   piratesGainsResist,
 ];
 
-export const peteSpacePirate: LorcanitoCharacterCardDefinition = {
+export const peteSpacePirate: LorcanaCharacterCardDefinition = {
   id: "be5",
   name: "Pete",
   title: "Space Pirate",

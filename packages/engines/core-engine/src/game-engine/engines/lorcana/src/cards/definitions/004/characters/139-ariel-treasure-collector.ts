@@ -2,7 +2,7 @@ import { whileYouHaveMoreItemsInPlayThanEachOpponentThisCharacterGets } from "@l
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const arielTreasureCollector: LorcanitoCharacterCardDefinition = {
+export const arielTreasureCollector: LorcanaCharacterCardDefinition = {
   id: "stn",
   name: "Ariel",
   title: "Treasure Collector",

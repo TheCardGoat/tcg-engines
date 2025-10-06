@@ -6,7 +6,7 @@ import {
 import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const kenaiMagicalBear: LorcanitoCharacterCardDefinition = {
+export const kenaiMagicalBear: LorcanaCharacterCardDefinition = {
   id: "upm",
   name: "Kenai",
   title: "Magical Bear",

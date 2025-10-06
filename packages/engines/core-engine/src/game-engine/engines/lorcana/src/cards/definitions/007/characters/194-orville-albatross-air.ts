@@ -3,7 +3,7 @@ import { whileYouHaveACharacterNamedThisCharGains } from "@lorcanito/lorcana-eng
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const orvilleAlbatrossAir: LorcanitoCharacterCardDefinition = {
+export const orvilleAlbatrossAir: LorcanaCharacterCardDefinition = {
   id: "a0j",
   name: "Orville",
   title: "Albatross Air",

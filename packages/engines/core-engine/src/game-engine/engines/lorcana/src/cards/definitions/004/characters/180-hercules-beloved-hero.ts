@@ -4,7 +4,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const herculesBelovedHero: LorcanitoCharacterCardDefinition = {
+export const herculesBelovedHero: LorcanaCharacterCardDefinition = {
   id: "o9h",
   reprints: ["p5o"],
   name: "Hercules",

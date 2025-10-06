@@ -2,7 +2,7 @@ import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheA
 import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const flynnRiderFrenemy: LorcanitoCharacterCardDefinition = {
+export const flynnRiderFrenemy: LorcanaCharacterCardDefinition = {
   id: "n71",
   name: "Flynn Rider",
   title: "Frenemy",

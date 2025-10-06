@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it, test } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   madamMimPurpleDragon,
   pinocchioStarAttraction,
   winnieThePoohHunnyWizard,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Madam Mim - Purple Dragon", () => {
   test("Evasive", () => {

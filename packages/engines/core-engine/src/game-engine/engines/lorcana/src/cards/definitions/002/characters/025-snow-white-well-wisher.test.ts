@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { snowWhiteWellWisher } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { dragonGem } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Snow White - Well Wisher", () => {
   describe("**WISHES COME TRUE** Whenever this character quests, you may return a character card from your discard to your hand.", () => {

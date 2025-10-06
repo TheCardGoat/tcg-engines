@@ -4,7 +4,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const theTroubadourMusicalNarrator: LorcanitoCharacterCardDefinition = {
+export const theTroubadourMusicalNarrator: LorcanaCharacterCardDefinition = {
   id: "jh3",
   name: "The Troubadour",
   title: "Musical Narrator",

@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const jafarKeeperOfSecrets: LorcanitoCharacterCardDefinition = {
+export const jafarKeeperOfSecrets: LorcanaCharacterCardDefinition = {
   id: "rau",
   reprints: ["f6f"],
   name: "Jafar",

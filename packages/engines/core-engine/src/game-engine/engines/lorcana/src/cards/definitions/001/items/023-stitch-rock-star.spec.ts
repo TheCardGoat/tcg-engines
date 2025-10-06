@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   liloMakingAWish,
   stichtNewDog,
   stitchRockStar,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Stitch Rock Star", () => {
   describe('"ADORING FANS - Whenever you play a character with cost 2 or less, you may exert them to draw a card.', () => {

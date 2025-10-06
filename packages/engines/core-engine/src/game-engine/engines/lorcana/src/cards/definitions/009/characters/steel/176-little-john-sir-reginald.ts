@@ -3,7 +3,7 @@ import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/wh
 import { targetCardGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const littleJohnSirReginald: LorcanitoCharacterCardDefinition = {
+export const littleJohnSirReginald: LorcanaCharacterCardDefinition = {
   id: "kkx",
   name: "Little John",
   title: "Sir Reginald",

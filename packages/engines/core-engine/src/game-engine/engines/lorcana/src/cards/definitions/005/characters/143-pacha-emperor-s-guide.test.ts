@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
 import { pachaEmperorsGuide } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import { rapunzelsTowerSecludedPrison } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Pacha - Emperor's Guide", () => {
   it("**HELPFUL SUPPLIES** At the start of your turn, if you have an item in play, gain 1 lore.", () => {

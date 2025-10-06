@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { rajahRoyalProtector } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Rajah - Royal Protector", () => {
   it.skip("**STEADY GAZE** While you have no cards in your hand, characters with cost 4 or less can't challenge this character.", () => {

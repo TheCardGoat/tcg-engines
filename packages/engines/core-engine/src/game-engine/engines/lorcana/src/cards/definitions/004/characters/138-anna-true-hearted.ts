@@ -1,7 +1,7 @@
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const annaTrueHearted: LorcanitoCharacterCardDefinition = {
+export const annaTrueHearted: LorcanaCharacterCardDefinition = {
   id: "lok",
   reprints: ["p5i"],
   missingTestCase: true,

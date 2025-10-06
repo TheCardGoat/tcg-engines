@@ -2,7 +2,7 @@ import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ratiganNefariousCriminal: LorcanitoCharacterCardDefinition = {
+export const ratiganNefariousCriminal: LorcanaCharacterCardDefinition = {
   id: "kod",
   name: "Ratigan",
   title: "Nefarious Criminal",

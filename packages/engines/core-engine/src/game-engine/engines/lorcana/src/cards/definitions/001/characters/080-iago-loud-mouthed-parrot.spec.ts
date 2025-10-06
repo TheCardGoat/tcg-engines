@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   iagoLoudMouthedParrot,
   johnSilverAlienPirate,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Iago Silver - Loud-Mouthed Parrot", () => {
   it("YOU GOT A PROBLEM? - {E} − Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_", () => {

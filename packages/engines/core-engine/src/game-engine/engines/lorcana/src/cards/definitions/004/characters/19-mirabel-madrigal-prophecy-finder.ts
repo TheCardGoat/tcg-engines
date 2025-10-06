@@ -1,7 +1,7 @@
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mirabelMadrigalProphecyFinder: LorcanitoCharacterCardDefinition = {
+export const mirabelMadrigalProphecyFinder: LorcanaCharacterCardDefinition = {
   id: "oqf",
   name: "Mirabel Madrigal",
   title: "Prophecy Finder",

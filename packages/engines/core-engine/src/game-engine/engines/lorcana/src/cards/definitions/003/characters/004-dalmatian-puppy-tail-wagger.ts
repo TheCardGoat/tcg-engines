@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const dalmatianPuppyTailWagger: LorcanitoCharacterCardDefinition = {
+export const dalmatianPuppyTailWagger: LorcanaCharacterCardDefinition = {
   id: "xvo",
   reprints: ["n4q"],
   name: "Dalmatian Puppy",

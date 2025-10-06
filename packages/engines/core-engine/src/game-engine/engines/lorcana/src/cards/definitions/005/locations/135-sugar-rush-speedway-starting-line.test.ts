@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { stichtCarefreeSurfer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { vanellopeVonSchweetzSugarRushChamp } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import {

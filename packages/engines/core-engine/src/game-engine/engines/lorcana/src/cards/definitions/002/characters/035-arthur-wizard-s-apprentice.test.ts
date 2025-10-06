@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   arthurWizardsApprentice,
   chipTheTeacupGentleSoul,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Arthur - Wizard's Apprentice", () => {
   describe("**STUDENT** Whenever this character quests, you may return another chosen character of yours to your hand to gain 2 lore.", () => {

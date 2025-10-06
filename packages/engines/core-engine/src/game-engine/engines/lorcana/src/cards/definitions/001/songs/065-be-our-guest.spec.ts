@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
 import {
   chiefTui,

@@ -1,7 +1,7 @@
 import { wheneverPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const arielWhoseitCollector: LorcanitoCharacterCardDefinition = {
+export const arielWhoseitCollector: LorcanaCharacterCardDefinition = {
   id: "df2",
   name: "Ariel",
   title: "Whoseit Collector",

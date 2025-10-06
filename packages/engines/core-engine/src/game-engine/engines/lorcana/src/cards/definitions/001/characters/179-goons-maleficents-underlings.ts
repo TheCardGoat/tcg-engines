@@ -1,5 +1,5 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-export const goonsMaleficent: LorcanitoCharacterCardDefinition = {
+export const goonsMaleficent: LorcanaCharacterCardDefinition = {
   id: "blh",
   name: "Goons",
   title: "Maleficent's Underlings",

@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { herculesTrueHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { theQueenCruelestOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import { queensSensorCoreItem } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Queen's Sensor Core - Item", () => {
   describe("**SYMBOL OF NOBILITY** At the start of your turn, if you have a Princess or Queen character in play, gain 1 lore.", () => {

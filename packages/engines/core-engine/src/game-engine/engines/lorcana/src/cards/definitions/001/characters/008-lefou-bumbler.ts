@@ -2,7 +2,7 @@ import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/con
 import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const lefouBumbler: LorcanitoCharacterCardDefinition = {
+export const lefouBumbler: LorcanaCharacterCardDefinition = {
   id: "eal",
   name: "Lefou",
   title: "Bumbler",

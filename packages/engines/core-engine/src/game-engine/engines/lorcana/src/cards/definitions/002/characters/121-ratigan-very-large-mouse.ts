@@ -2,7 +2,7 @@ import { anotherChosenCharOfYours } from "@lorcanito/lorcana-engine/abilities/ta
 import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ratiganVeryLargeMouse: LorcanitoCharacterCardDefinition = {
+export const ratiganVeryLargeMouse: LorcanaCharacterCardDefinition = {
   id: "vl3",
   name: "Ratigan",
   title: "Very Large Mouse",

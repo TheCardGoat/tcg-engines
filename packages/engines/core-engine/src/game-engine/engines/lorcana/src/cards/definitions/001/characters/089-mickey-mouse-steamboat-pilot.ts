@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mickeyMouseSteamBoatPilot: LorcanitoCharacterCardDefinition = {
+export const mickeyMouseSteamBoatPilot: LorcanaCharacterCardDefinition = {
   id: "p7k",
   reprints: ["y3c"],
 

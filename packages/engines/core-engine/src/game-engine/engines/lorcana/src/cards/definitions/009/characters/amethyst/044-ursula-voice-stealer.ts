@@ -5,7 +5,7 @@ import {
 import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ursulaVoiceStealer: LorcanitoCharacterCardDefinition = {
+export const ursulaVoiceStealer: LorcanaCharacterCardDefinition = {
   id: "mkd",
   name: "Ursula",
   title: "Voice Stealer",

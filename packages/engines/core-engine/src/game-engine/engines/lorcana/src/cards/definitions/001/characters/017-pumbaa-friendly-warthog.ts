@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pumbaFriendlyWarhog: LorcanitoCharacterCardDefinition = {
+export const pumbaFriendlyWarhog: LorcanaCharacterCardDefinition = {
   id: "b1f",
   name: "Pumbaa",
   title: "Friendly Warthog",

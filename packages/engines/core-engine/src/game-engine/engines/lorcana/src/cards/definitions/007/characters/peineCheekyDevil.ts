@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const peineCheekyDevil: LorcanitoCharacterCardDefinition = {
+export const peineCheekyDevil: LorcanaCharacterCardDefinition = {
   id: "met",
   name: "Pain",
   title: "Impudent Imp",

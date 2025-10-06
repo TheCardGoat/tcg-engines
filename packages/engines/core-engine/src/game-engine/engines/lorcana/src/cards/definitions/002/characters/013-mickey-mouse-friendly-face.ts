@@ -1,7 +1,7 @@
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mickeyMouseFriendlyFace: LorcanitoCharacterCardDefinition = {
+export const mickeyMouseFriendlyFace: LorcanaCharacterCardDefinition = {
   id: "ll5",
   name: "Mickey Mouse",
   title: "Friendly Face",

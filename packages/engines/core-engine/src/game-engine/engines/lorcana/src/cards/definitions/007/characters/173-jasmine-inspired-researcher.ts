@@ -2,7 +2,7 @@ import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const jasmineInspiredResearcher: LorcanitoCharacterCardDefinition = {
+export const jasmineInspiredResearcher: LorcanaCharacterCardDefinition = {
   id: "i0v",
   name: "Jasmine",
   title: "Inspired Researcher",

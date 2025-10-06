@@ -4,7 +4,7 @@ import { putTopCardOfYourDeckIntoYourInkwellExerted } from "@lorcanito/lorcana-e
 import { wheneverIsBanished } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const cruellaDeVilStyleIcon: LorcanitoCharacterCardDefinition = {
+export const cruellaDeVilStyleIcon: LorcanaCharacterCardDefinition = {
   id: "mpf",
   name: "Cruella De Vil",
   title: "Style Icon",

@@ -2,7 +2,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { whenPlayAndWhenLeaves } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const merlinGoat: LorcanitoCharacterCardDefinition = {
+export const merlinGoat: LorcanaCharacterCardDefinition = {
   id: "r3h",
 
   name: "Merlin",

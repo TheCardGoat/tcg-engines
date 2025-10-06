@@ -2,7 +2,7 @@ import { yourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/target"
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const belleOfTheBall: LorcanitoCharacterCardDefinition = {
+export const belleOfTheBall: LorcanaCharacterCardDefinition = {
   id: "npn",
   missingTestCase: true,
   name: "Belle",

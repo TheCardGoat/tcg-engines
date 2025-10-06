@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { flintheartGlomgoldLoneCheater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Flintheart Glomgold - Lone Cheater", () => {
   it.skip("**THEY'LL NEVER SEE IT COMING!** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_", () => {

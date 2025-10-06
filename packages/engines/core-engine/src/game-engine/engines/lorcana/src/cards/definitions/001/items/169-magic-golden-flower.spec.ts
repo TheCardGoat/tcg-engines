@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { arielOnHumanLegs } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { magicGoldenFlower } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Magic Golden Flower", () => {
   it("Healing Pollen - healing 3 damage", () => {

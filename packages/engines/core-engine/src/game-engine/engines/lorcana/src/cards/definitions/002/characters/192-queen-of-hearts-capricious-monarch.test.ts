@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   arthurTrainedSwordsman,
   herculesHeroInTraining,
   queenOfHeartsCapriciousMonarch,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { brawl } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Queen of Hearts- Capricious Monarch", () => {
   describe("**OFF WITH THEIR HEADS!** Whenever an opposing character is banished, you may ready this character.", () => {

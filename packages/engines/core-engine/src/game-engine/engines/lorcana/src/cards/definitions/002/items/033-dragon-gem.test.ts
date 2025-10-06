@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   docLeaderOfTheSevenDwarfs,
   happyGoodNatured,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { dragonGem } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Dragon Gem", () => {
   describe("**BRING BACK TO LIFE** {E}, 3 {I} − Return a character card with **Support** from your discard to your hand.", () => {

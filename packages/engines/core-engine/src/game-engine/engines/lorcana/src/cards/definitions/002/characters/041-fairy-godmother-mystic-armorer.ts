@@ -6,7 +6,7 @@ import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 
-export const fairyGodmotherMysticArmorer: LorcanitoCharacterCardDefinition = {
+export const fairyGodmotherMysticArmorer: LorcanaCharacterCardDefinition = {
   id: "fg2",
 
   name: "Fairy Godmother",

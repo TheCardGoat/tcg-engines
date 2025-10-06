@@ -1,7 +1,7 @@
 import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const jetsamUrsulasBaby: LorcanitoCharacterCardDefinition = {
+export const jetsamUrsulasBaby: LorcanaCharacterCardDefinition = {
   id: "tpe",
   missingTestCase: true,
   name: "Jetsam",

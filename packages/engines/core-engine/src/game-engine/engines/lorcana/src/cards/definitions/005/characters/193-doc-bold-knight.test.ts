@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   arthurKingVictorious,
   docBoldKnight,
@@ -11,6 +10,10 @@ import {
   princeNaveenUkulelePlayer,
   tukeNorthernMoose,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Doc - Bold Knight", () => {
   it("**DRASTIC MEASURES** When you play this character, you may discard your hand to draw 2 cards.", () => {

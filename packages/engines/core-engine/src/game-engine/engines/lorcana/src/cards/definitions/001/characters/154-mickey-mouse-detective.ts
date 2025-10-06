@@ -2,7 +2,7 @@ import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/
 import { putTopCardOfYourDeckIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mickeyMouseDetective: LorcanitoCharacterCardDefinition = {
+export const mickeyMouseDetective: LorcanaCharacterCardDefinition = {
   id: "aec",
   name: "Mickey Mouse",
   title: "Detective",

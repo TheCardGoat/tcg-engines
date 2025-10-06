@@ -4,7 +4,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mauiHeroToAll: LorcanitoCharacterCardDefinition = {
+export const mauiHeroToAll: LorcanaCharacterCardDefinition = {
   id: "tkz",
   name: "Maui",
   title: "Hero to All",

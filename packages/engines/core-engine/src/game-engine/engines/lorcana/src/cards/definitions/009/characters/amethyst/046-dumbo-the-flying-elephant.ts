@@ -3,7 +3,7 @@ import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/wh
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const dumboTheFlyingElephant: LorcanitoCharacterCardDefinition = {
+export const dumboTheFlyingElephant: LorcanaCharacterCardDefinition = {
   id: "qcy",
   name: "Dumbo",
   title: "The Flying Elephant",

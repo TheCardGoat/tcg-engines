@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   herculesTrueHero,
   liloMakingAWish,
@@ -11,6 +10,10 @@ import {
   teKaTheBurningOne,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { musketeerTabard } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Musketeer Tabard", () => {
   describe("**ALL FOR ONE AND ONE FOR ALL** Whenever one of your characters with **Bodyguard** is banished, you may draw a card.", () => {

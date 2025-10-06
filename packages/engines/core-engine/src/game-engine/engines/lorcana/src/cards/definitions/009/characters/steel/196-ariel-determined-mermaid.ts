@@ -1,7 +1,7 @@
 import { arielDeterminedMermaid as ogArielDeterminedMermaid } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/174-ariel-determined-mermaid";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const arielDeterminedMermaid: LorcanitoCharacterCardDefinition = {
+export const arielDeterminedMermaid: LorcanaCharacterCardDefinition = {
   ...ogArielDeterminedMermaid,
   id: "b8l",
   reprints: [ogArielDeterminedMermaid.id],

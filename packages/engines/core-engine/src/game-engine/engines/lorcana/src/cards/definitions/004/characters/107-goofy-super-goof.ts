@@ -3,7 +3,7 @@ import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const goofySuperGoof: LorcanitoCharacterCardDefinition = {
+export const goofySuperGoof: LorcanaCharacterCardDefinition = {
   id: "f8o",
   name: "Goofy",
   title: "Super Goof",

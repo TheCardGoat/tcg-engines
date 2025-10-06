@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { peteRottenGuy } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { fortisphere } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Fortisphere", () => {
   describe("**RESOURCEFUL** When you play this item, you may draw a card.", () => {

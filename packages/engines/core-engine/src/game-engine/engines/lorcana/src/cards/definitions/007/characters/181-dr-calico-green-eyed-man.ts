@@ -1,7 +1,7 @@
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const drCalicoGreeneyedMan: LorcanitoCharacterCardDefinition = {
+export const drCalicoGreeneyedMan: LorcanaCharacterCardDefinition = {
   id: "q5s",
   name: "Dr. Calico",
   title: "Green-Eyed Man",

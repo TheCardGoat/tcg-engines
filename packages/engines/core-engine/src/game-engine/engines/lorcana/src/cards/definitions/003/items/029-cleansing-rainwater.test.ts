@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   eeyoreOverstuffedDonkey,
   mamaOdieVoiceOfWisdom,
   pigletPoohPirateCaptain,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Cleansing Rainwater", () => {
   describe("**ANCIENT POWER** Banish this item – Remove up to 2 damage from each of your characters.", () => {

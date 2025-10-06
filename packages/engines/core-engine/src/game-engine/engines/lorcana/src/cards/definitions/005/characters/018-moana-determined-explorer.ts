@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const moanaDeterminedExplorer: LorcanitoCharacterCardDefinition = {
+export const moanaDeterminedExplorer: LorcanaCharacterCardDefinition = {
   id: "sc1",
   name: "Moana",
   title: "Determined Explorer",

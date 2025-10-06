@@ -4,7 +4,7 @@ import type {
 } from "@lorcanito/lorcana-engine";
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 
-export const dangHuTalonChief: LorcanitoCharacterCardDefinition = {
+export const dangHuTalonChief: LorcanaCharacterCardDefinition = {
   id: "ave",
   missingTestCase: true,
   name: "Dang Hu",

@@ -2,7 +2,7 @@ import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverACharChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const madHatterUnrulyEccentric: LorcanitoCharacterCardDefinition = {
+export const madHatterUnrulyEccentric: LorcanaCharacterCardDefinition = {
   id: "fdh",
   name: "Mad Hatter",
   title: "Unruly Eccentric",

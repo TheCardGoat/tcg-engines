@@ -2,7 +2,7 @@ import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverOneOfYourCharChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const shereKhanMenacingPredator: LorcanitoCharacterCardDefinition = {
+export const shereKhanMenacingPredator: LorcanaCharacterCardDefinition = {
   id: "uep",
   reprints: ["nzy"],
 

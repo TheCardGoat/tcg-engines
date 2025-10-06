@@ -5,7 +5,7 @@ import type {
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 
-export const arthurKingVictorious: LorcanitoCharacterCardDefinition = {
+export const arthurKingVictorious: LorcanaCharacterCardDefinition = {
   id: "l90",
   name: "Arthur",
   title: "King Victorious",

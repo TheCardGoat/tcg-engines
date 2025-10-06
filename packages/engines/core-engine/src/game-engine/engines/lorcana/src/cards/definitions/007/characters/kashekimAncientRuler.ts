@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const kashekimAncientRuler: LorcanitoCharacterCardDefinition = {
+export const kashekimAncientRuler: LorcanaCharacterCardDefinition = {
   id: "hdd",
   name: "Kashekim",
   title: "Ancient Ruler",

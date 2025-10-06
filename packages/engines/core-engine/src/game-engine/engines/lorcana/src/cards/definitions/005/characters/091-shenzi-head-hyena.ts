@@ -29,7 +29,7 @@ const stickAroundForDinner: StaticAbilityWithEffect = {
   ],
 };
 
-export const shenziHeadHyena: LorcanitoCharacterCardDefinition = {
+export const shenziHeadHyena: LorcanaCharacterCardDefinition = {
   id: "m32",
   name: "Shenzi",
   title: "Head Hyena",

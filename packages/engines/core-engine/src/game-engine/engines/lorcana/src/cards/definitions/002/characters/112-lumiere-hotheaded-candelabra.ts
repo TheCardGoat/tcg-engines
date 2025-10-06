@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const lumiereHotheadedCandelabra: LorcanitoCharacterCardDefinition = {
+export const lumiereHotheadedCandelabra: LorcanaCharacterCardDefinition = {
   id: "r40",
 
   name: "Lumiere",

@@ -1,7 +1,7 @@
 import { entersPlayExerted } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const sleepyNoddingOff: LorcanitoCharacterCardDefinition = {
+export const sleepyNoddingOff: LorcanaCharacterCardDefinition = {
   id: "w0u",
   name: "Sleepy",
   title: "Nodding Off",

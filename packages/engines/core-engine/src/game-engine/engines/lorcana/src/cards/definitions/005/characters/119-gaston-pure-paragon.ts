@@ -2,7 +2,7 @@ import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abil
 import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/rushAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const gastonPureParagon: LorcanitoCharacterCardDefinition = {
+export const gastonPureParagon: LorcanaCharacterCardDefinition = {
   id: "pzz",
   name: "Gaston",
   title: "Pure Paragon",

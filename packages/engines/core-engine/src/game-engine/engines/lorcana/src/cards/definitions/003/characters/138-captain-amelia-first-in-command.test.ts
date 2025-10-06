@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { captainAmeliaFirstInCommand } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Captain Amelia - First in Command", () => {
   it.skip("**DISCIPLINE** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_", () => {

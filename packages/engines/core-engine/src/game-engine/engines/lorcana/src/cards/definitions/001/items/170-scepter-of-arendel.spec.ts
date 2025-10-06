@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { scepterOfArendelle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Scepter Of Arendelle", () => {
   it("Command - Chosen character gains **Support** this turn.", () => {

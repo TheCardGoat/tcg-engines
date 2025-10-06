@@ -2,7 +2,7 @@ import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectType
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const iagoLoudMouthedParrot: LorcanitoCharacterCardDefinition = {
+export const iagoLoudMouthedParrot: LorcanaCharacterCardDefinition = {
   id: "s1f",
   name: "Iago",
   title: "Loud-Mouthed Parrot",

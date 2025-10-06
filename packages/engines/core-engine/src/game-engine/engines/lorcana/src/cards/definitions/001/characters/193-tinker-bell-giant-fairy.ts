@@ -7,7 +7,7 @@ import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keywor
 import { wheneverBanishesAnotherCharacterInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const tinkerBellGiantFairy: LorcanitoCharacterCardDefinition = {
+export const tinkerBellGiantFairy: LorcanaCharacterCardDefinition = {
   id: "kvc",
   reprints: ["rtd"],
   name: "Tinker Bell",

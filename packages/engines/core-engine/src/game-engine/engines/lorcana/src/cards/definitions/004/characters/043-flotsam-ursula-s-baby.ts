@@ -2,7 +2,7 @@ import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine
 import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const flotsamUrsulasBaby: LorcanitoCharacterCardDefinition = {
+export const flotsamUrsulasBaby: LorcanaCharacterCardDefinition = {
   id: "ha8",
   missingTestCase: true,
   name: "Flotsam",

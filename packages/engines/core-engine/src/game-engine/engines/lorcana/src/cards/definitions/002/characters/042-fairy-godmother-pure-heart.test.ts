@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   cinderellaBallroomSensation,
   fairyGodmotherPureHeart,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Fairy Godmother - Pure Heart", () => {
   describe("**JUST LEAVE IT TO ME** Whenever you play a character named Cinderella, you may exert chosen character.", () => {

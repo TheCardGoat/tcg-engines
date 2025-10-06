@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { tamatoaSoShiny } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import {
   coconutbasket,
   dingleHopper,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Tamatoa - So Shiny!", () => {
   it("Glam - This character gets +1 {L} for each item you have in play.", () => {

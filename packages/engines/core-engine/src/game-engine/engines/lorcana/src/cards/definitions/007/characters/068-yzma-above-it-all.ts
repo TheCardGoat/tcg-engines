@@ -6,7 +6,7 @@ import {
 import { wheneverAnotherCharIsBanishedInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const yzmaAboveItAll: LorcanitoCharacterCardDefinition = {
+export const yzmaAboveItAll: LorcanaCharacterCardDefinition = {
   id: "zav",
   name: "Yzma",
   title: "Above It All",

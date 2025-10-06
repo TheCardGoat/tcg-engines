@@ -4,7 +4,7 @@ import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyw
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const isabelaMadrigalGoldenChild: LorcanitoCharacterCardDefinition = {
+export const isabelaMadrigalGoldenChild: LorcanaCharacterCardDefinition = {
   id: "fal",
   name: "Isabela Madrigal",
   title: "Golden Child",

@@ -1,7 +1,7 @@
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ticktockEverpresentPursuer: LorcanitoCharacterCardDefinition = {
+export const ticktockEverpresentPursuer: LorcanaCharacterCardDefinition = {
   id: "sq0",
   reprints: ["znh"],
   name: "Tick-Tock",

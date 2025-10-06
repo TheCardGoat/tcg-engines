@@ -1,7 +1,7 @@
 import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/rushAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const queenOfHeartsImpulsiveRuler: LorcanitoCharacterCardDefinition = {
+export const queenOfHeartsImpulsiveRuler: LorcanaCharacterCardDefinition = {
   id: "e84",
   reprints: ["tge"],
   name: "Queen of Hearts",

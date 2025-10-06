@@ -1,7 +1,7 @@
 import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const panicImmortalSidekick: LorcanitoCharacterCardDefinition = {
+export const panicImmortalSidekick: LorcanaCharacterCardDefinition = {
   id: "eii",
   missingTestCase: true,
   name: "Panic",

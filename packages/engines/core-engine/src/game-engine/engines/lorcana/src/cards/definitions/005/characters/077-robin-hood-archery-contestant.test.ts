@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { robinHoodArcheryContestant } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Robin Hood - Archery Contestant", () => {
   it.skip("**TRICK SHOT** When you play this character, if an opponent has a damaged character in play, gain 1 lore.", () => {

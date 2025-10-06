@@ -3,7 +3,7 @@ import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keywor
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rayaLeaderOfHeart: LorcanitoCharacterCardDefinition = {
+export const rayaLeaderOfHeart: LorcanaCharacterCardDefinition = {
   id: "c4z",
   name: "Raya",
   title: "Leader of Heart",

@@ -7,7 +7,7 @@ import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/k
 import { wheneverThisCharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const liloBestExplorerEver: LorcanitoCharacterCardDefinition = {
+export const liloBestExplorerEver: LorcanaCharacterCardDefinition = {
   id: "lbe",
   name: "Lilo",
   title: "Best Explorer Ever",

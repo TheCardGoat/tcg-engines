@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { scepterOfArendelle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
 import { theGreatIlluminaryRadiantBallroom } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Great Illuminary - Radiant Ballroom", () => {
   describe("**WARM WELCOME** Characters with **Support** get +1 {L} and +2 {W}️ while here.", () => {

@@ -4,7 +4,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mauriceWorldFamousInventor: LorcanitoCharacterCardDefinition = {
+export const mauriceWorldFamousInventor: LorcanaCharacterCardDefinition = {
   id: "v0e",
 
   name: "Maurice",

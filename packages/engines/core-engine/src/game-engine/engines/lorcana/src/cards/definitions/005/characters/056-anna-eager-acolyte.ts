@@ -1,7 +1,7 @@
 import { opponentAsResponderExertOneOfTheirReadyCharacters } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const annaEagerAcolyte: LorcanitoCharacterCardDefinition = {
+export const annaEagerAcolyte: LorcanaCharacterCardDefinition = {
   id: "eqi",
   name: "Anna",
   title: "Eager Acolyte",

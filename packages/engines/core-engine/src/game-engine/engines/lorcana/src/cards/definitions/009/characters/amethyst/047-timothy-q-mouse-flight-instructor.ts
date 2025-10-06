@@ -2,7 +2,7 @@ import { whileYouHaveCharacterWithAbility } from "@lorcanito/lorcana-engine/abil
 import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const timothyQMouseFlightInstructor: LorcanitoCharacterCardDefinition = {
+export const timothyQMouseFlightInstructor: LorcanaCharacterCardDefinition = {
   id: "o6m",
   // notImplemented: true,
   missingTestCase: false,

@@ -2,7 +2,7 @@ import { whileConditionThisCharacterGains } from "@lorcanito/lorcana-engine/abil
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pascalRapunzelCompanion: LorcanitoCharacterCardDefinition = {
+export const pascalRapunzelCompanion: LorcanaCharacterCardDefinition = {
   id: "c2y",
   name: "Pascal",
   title: "Rapunzel's Companion",

@@ -1,7 +1,7 @@
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rayEasygoingFirefly: LorcanitoCharacterCardDefinition = {
+export const rayEasygoingFirefly: LorcanaCharacterCardDefinition = {
   id: "fdk",
   name: "Ray",
   title: "Easygoing Firefly",

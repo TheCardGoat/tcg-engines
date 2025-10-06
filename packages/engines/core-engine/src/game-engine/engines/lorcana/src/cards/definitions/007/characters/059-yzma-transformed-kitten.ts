@@ -3,7 +3,7 @@ import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const yzmaChangedIntoAKitten: LorcanitoCharacterCardDefinition = {
+export const yzmaChangedIntoAKitten: LorcanaCharacterCardDefinition = {
   id: "ol1",
   name: "Yzma",
   title: "Transformed Kitten",

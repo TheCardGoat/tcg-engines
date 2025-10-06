@@ -1,7 +1,7 @@
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pinocchioOnTheRun: LorcanitoCharacterCardDefinition = {
+export const pinocchioOnTheRun: LorcanaCharacterCardDefinition = {
   id: "juq",
 
   name: "Pinocchio",

@@ -5,7 +5,7 @@ import {
 import { wheneverYouPlayASong } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const arielDeterminedMermaid: LorcanitoCharacterCardDefinition = {
+export const arielDeterminedMermaid: LorcanaCharacterCardDefinition = {
   id: "ov6",
   reprints: ["b8l"],
   name: "Ariel",

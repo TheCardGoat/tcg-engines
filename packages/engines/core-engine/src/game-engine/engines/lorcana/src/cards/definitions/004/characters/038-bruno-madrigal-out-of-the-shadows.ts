@@ -3,7 +3,7 @@ import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/w
 import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const brunoMadrigalOutOfTheShadows: LorcanitoCharacterCardDefinition = {
+export const brunoMadrigalOutOfTheShadows: LorcanaCharacterCardDefinition = {
   id: "nsx",
   missingTestCase: true,
   name: "Bruno Madrigal",

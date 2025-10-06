@@ -2,7 +2,6 @@
  * @jest-environment node
  */
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
 import {
   chiefTui,
@@ -11,6 +10,10 @@ import {
   moanaOfMotunui,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { theQueenMirrorSeeker } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Queen - Mirror Seeker", () => {
   it("**CALCULATING AND VAIN** Whenever this character quests, you may look at the top 3 cards of your deck and put them back in any order.", () => {

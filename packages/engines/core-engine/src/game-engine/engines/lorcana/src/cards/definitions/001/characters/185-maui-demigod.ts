@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mauiDemiGod: LorcanitoCharacterCardDefinition = {
+export const mauiDemiGod: LorcanaCharacterCardDefinition = {
   id: "ehe",
   name: "Maui",
   title: "Demigod",

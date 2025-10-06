@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   magicBroomBucketBrigade,
   moanaOfMotunui,
   teKaTheBurningOne,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hakuna Matata", () => {
   it("Heals all characters", () => {

@@ -1,7 +1,7 @@
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const dukeWeaseltonSmallTimeCrook: LorcanitoCharacterCardDefinition = {
+export const dukeWeaseltonSmallTimeCrook: LorcanaCharacterCardDefinition = {
   id: "b5u",
 
   name: "Duke Weaselton",

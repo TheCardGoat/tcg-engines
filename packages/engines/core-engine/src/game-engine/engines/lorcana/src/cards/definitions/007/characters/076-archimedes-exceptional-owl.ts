@@ -2,7 +2,7 @@ import { whenThisIsTargeted } from "@lorcanito/lorcana-engine/abilities/whenAbil
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const archimedesExceptionalOwl: LorcanitoCharacterCardDefinition = {
+export const archimedesExceptionalOwl: LorcanaCharacterCardDefinition = {
   notImplemented: true,
   id: "vig",
   name: "Archimedes",

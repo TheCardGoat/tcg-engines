@@ -2,7 +2,7 @@ import { whenPlayAndWhenLeaves } from "@lorcanito/lorcana-engine/abilities/whenA
 import { lookAtTopCardOfYourDeckAndPutItOnTopOrBottom } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const merlinSquirrel: LorcanitoCharacterCardDefinition = {
+export const merlinSquirrel: LorcanaCharacterCardDefinition = {
   id: "lvm",
 
   name: "Merlin",

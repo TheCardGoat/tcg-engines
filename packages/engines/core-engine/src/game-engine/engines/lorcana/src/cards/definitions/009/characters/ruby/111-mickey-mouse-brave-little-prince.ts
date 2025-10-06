@@ -6,7 +6,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mickeyMouseBraveLittlePrince: LorcanitoCharacterCardDefinition = {
+export const mickeyMouseBraveLittlePrince: LorcanaCharacterCardDefinition = {
   id: "hin",
   name: "Mickey Mouse",
   title: "Brave Little Prince",

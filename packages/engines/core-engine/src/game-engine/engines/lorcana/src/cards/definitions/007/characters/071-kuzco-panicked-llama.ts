@@ -8,7 +8,7 @@ import {
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const kuzcoPanickedLlama: LorcanitoCharacterCardDefinition = {
+export const kuzcoPanickedLlama: LorcanaCharacterCardDefinition = {
   id: "jd3",
   name: "Kuzco",
   title: "Panicked Llama",

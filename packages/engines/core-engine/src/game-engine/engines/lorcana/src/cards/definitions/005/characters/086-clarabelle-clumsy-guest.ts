@@ -1,7 +1,7 @@
 import { banishChosenItem } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const clarabelleClumsyGuest: LorcanitoCharacterCardDefinition = {
+export const clarabelleClumsyGuest: LorcanaCharacterCardDefinition = {
   id: "ws8",
   missingTestCase: true,
   name: "Clarabelle",

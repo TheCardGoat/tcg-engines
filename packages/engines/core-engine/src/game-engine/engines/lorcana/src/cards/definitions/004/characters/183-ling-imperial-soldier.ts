@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const lingImperialSoldier: LorcanitoCharacterCardDefinition = {
+export const lingImperialSoldier: LorcanaCharacterCardDefinition = {
   id: "mp1",
   missingTestCase: true,
   name: "Ling",

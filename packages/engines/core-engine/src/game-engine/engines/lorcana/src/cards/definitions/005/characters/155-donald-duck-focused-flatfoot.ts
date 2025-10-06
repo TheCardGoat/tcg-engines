@@ -1,7 +1,7 @@
 import { putTopCardOfYourDeckIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const donaldDuckFocusedFlatfoot: LorcanitoCharacterCardDefinition = {
+export const donaldDuckFocusedFlatfoot: LorcanaCharacterCardDefinition = {
   id: "ulv",
   name: "Donald Duck",
   title: "Focused Flatfoot",

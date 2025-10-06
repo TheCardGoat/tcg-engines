@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
 import { agrabahMarketplace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
 import {
   aladdinBraveRescuer,
   aladdinResoluteSwordsman,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Aladdin - Brave Rescuer", () => {
   it("**Shift: Discard a location card** _(You may discard a location card to play this on top of one of your characters named Aladdin.)_", () => {

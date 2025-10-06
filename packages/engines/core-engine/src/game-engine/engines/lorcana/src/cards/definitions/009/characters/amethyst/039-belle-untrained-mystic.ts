@@ -1,7 +1,7 @@
 import { belleUntrainedMystic as ogBelleUntrainedMystic } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/037-belle-untrained-mystic";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const belleUntrainedMystic: LorcanitoCharacterCardDefinition = {
+export const belleUntrainedMystic: LorcanaCharacterCardDefinition = {
   ...ogBelleUntrainedMystic,
   id: "k6t",
   reprints: [ogBelleUntrainedMystic.id],

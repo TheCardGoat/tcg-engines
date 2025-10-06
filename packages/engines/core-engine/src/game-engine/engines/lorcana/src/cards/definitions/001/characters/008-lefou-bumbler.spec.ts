@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, test } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   gastonArrogantHunter,
   lefouBumbler,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Lefou - Bumbler", () => {
   describe("**LOYAL** If you have a character named Gaston in play, you pay 1 {I} less to play this character.", () => {

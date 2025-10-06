@@ -26,7 +26,7 @@ const ourBottleWorked = {
   conditions: [filterCondition],
 };
 
-export const pennyTheOrphanCleverChild: LorcanitoCharacterCardDefinition = {
+export const pennyTheOrphanCleverChild: LorcanaCharacterCardDefinition = {
   id: "zor",
   name: "Penny The Orphan",
   title: "Clever Child",

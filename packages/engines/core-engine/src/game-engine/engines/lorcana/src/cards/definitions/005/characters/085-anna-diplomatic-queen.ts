@@ -2,7 +2,7 @@ import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import { chosenDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const annaDiplomaticQueen: LorcanitoCharacterCardDefinition = {
+export const annaDiplomaticQueen: LorcanaCharacterCardDefinition = {
   id: "x1z",
   name: "Anna",
   title: "Diplomatic Queen",

@@ -1,7 +1,7 @@
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const snowWhiteFairhearted: LorcanitoCharacterCardDefinition = {
+export const snowWhiteFairhearted: LorcanaCharacterCardDefinition = {
   id: "s09",
   missingTestCase: true,
   name: "Snow White",

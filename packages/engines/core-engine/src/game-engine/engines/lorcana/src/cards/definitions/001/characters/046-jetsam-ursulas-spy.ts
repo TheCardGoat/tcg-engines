@@ -1,7 +1,7 @@
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const jetsamUrsulaSpy: LorcanitoCharacterCardDefinition = {
+export const jetsamUrsulaSpy: LorcanaCharacterCardDefinition = {
   id: "lh1",
   name: "Jetsam",
   title: "Ursula's Spy",

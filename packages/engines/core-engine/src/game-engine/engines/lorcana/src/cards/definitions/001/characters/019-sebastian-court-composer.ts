@@ -1,7 +1,7 @@
 import type { SingerAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const sebastianCourtComposer: LorcanitoCharacterCardDefinition = {
+export const sebastianCourtComposer: LorcanaCharacterCardDefinition = {
   id: "pj3",
 
   name: "Sebastian",

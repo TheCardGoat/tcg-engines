@@ -5,7 +5,7 @@ import type {
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 
-export const aladdinBraveRescuer: LorcanitoCharacterCardDefinition = {
+export const aladdinBraveRescuer: LorcanaCharacterCardDefinition = {
   id: "gf4",
   name: "Aladdin",
   title: "Brave Rescuer",

@@ -2,7 +2,7 @@ import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import { wheneverYouPlayAFloodBorn } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const nanaDarlingFamilyPet: LorcanitoCharacterCardDefinition = {
+export const nanaDarlingFamilyPet: LorcanaCharacterCardDefinition = {
   id: "v76",
   name: "Nana",
   title: "Darling Family Pet",

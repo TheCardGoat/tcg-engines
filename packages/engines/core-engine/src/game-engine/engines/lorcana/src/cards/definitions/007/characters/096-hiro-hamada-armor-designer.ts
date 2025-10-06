@@ -6,7 +6,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const hiroHamadaArmorDesigner: LorcanitoCharacterCardDefinition = {
+export const hiroHamadaArmorDesigner: LorcanaCharacterCardDefinition = {
   id: "ney",
   name: "Hiro Hamada",
   title: "Armor Designer",

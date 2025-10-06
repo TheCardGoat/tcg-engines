@@ -2,7 +2,7 @@ import { forEachCardInYourHand } from "@lorcanito/lorcana-engine/abilities/amoun
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import { propertyStaticAbilities } from "../../../abilities/propertyStaticAbilities";
 
-export const marshmallowTerrifyingSnowman: LorcanitoCharacterCardDefinition = {
+export const marshmallowTerrifyingSnowman: LorcanaCharacterCardDefinition = {
   id: "np5",
   missingTestCase: true,
   name: "Marshmallow",

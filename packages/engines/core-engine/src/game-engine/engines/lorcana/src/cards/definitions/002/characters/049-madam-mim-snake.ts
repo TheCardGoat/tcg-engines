@@ -1,7 +1,7 @@
 import { madameMimAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const madamMimSnake: LorcanitoCharacterCardDefinition = {
+export const madamMimSnake: LorcanaCharacterCardDefinition = {
   id: "fo8",
   name: "Madam Mim",
   title: "Snake",

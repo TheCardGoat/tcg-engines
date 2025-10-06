@@ -1,7 +1,7 @@
 import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const chernabogEvildoer: LorcanitoCharacterCardDefinition = {
+export const chernabogEvildoer: LorcanaCharacterCardDefinition = {
   id: "zif",
   name: "Chernabog",
   title: "Evildoer",

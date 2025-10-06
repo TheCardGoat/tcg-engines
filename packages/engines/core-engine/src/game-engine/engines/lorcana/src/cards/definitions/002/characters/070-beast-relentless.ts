@@ -2,7 +2,7 @@ import { readyThisCharacter } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverOppCharIsDamaged } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const beastRelentless: LorcanitoCharacterCardDefinition = {
+export const beastRelentless: LorcanaCharacterCardDefinition = {
   id: "ky8",
   name: "Beast",
   title: "Relentless",

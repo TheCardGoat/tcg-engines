@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   madHatterGraciousHost,
   magicBroomBucketBrigade,
   mauriceWorldFamousInventor,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mad Hatter - Gracious Host", () => {
   it("**TEA PARTY** Whenever this character is challenged, you may draw a card.", () => {

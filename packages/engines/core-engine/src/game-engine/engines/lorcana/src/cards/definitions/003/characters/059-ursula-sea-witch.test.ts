@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { ursulaSeaWitch } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Ursula - Sea Witch", () => {
   it.skip("**YOU'RE TOO LATE** Whenever this character quests, chosen opposing character can't ready at the start of their next turn.", () => {

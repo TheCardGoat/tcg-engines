@@ -3,7 +3,7 @@ import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword
 import { wheneverBanishesAnotherCharacterInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const scarViciousCheater: LorcanitoCharacterCardDefinition = {
+export const scarViciousCheater: LorcanaCharacterCardDefinition = {
   id: "i4t",
   name: "Scar",
   title: "Vicious Cheater",

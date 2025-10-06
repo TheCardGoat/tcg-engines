@@ -3,7 +3,7 @@
 import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const sourBillSurlyHenchman: LorcanitoCharacterCardDefinition = {
+export const sourBillSurlyHenchman: LorcanaCharacterCardDefinition = {
   id: "n2y",
   missingTestCase: true,
   name: "Sour Bill",

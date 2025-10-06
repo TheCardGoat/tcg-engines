@@ -1,7 +1,7 @@
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mickeyMouseFoodFightDefender: LorcanitoCharacterCardDefinition = {
+export const mickeyMouseFoodFightDefender: LorcanaCharacterCardDefinition = {
   id: "xff",
   name: "Mickey Mouse",
   title: "Food Fight Defender",

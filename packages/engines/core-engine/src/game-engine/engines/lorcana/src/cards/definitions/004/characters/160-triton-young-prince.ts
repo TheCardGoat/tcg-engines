@@ -7,7 +7,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const tritonYoungPrince: LorcanitoCharacterCardDefinition = {
+export const tritonYoungPrince: LorcanaCharacterCardDefinition = {
   id: "wlm",
   name: "Triton",
   title: "Young Prince",

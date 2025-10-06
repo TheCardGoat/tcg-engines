@@ -1,7 +1,7 @@
 import { singerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singerAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ursulaVanessa: LorcanitoCharacterCardDefinition = {
+export const ursulaVanessa: LorcanaCharacterCardDefinition = {
   id: "se6",
   reprints: ["iye"],
   name: "Ursula",

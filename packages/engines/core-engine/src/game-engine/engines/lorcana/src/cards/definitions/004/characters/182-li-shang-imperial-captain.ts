@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const liShangImperialCaptain: LorcanitoCharacterCardDefinition = {
+export const liShangImperialCaptain: LorcanaCharacterCardDefinition = {
   id: "z2e",
   reprints: ["swm"],
   name: "Li Shang",

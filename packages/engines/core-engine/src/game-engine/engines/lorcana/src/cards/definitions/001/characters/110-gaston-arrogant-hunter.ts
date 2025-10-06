@@ -1,7 +1,7 @@
 import { recklessAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/recklessAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const gastonArrogantHunter: LorcanitoCharacterCardDefinition = {
+export const gastonArrogantHunter: LorcanaCharacterCardDefinition = {
   id: "j7q",
   reprints: ["k2n"],
 

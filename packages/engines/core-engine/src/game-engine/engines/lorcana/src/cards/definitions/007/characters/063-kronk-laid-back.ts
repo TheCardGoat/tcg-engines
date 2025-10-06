@@ -1,7 +1,7 @@
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const kronkRelaxed: LorcanitoCharacterCardDefinition = {
+export const kronkRelaxed: LorcanaCharacterCardDefinition = {
   id: "e8c",
   name: "Kronk",
   title: "Laid Back",

@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { belleInventive } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { lantern } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Belle - Inventive Engineer", () => {
   it("**TINKER** Whenever this character quests, you pay 1 {I} less for the next item you play this turn.", () => {

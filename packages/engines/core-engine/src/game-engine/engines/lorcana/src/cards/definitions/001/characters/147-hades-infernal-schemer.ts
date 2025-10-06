@@ -2,7 +2,7 @@ import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/tar
 import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const hadesInfernalSchemer: LorcanitoCharacterCardDefinition = {
+export const hadesInfernalSchemer: LorcanaCharacterCardDefinition = {
   id: "x36",
   reprints: ["a03"],
   name: "Hades",

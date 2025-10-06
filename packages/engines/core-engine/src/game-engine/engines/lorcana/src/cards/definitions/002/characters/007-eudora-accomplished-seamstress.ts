@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const eudoraAccomplishedSeamstress: LorcanitoCharacterCardDefinition = {
+export const eudoraAccomplishedSeamstress: LorcanaCharacterCardDefinition = {
   id: "dgv",
   name: "Eudora",
   title: "Accomplished Seamstress",

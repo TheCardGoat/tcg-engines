@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const scarBetrayer: LorcanitoCharacterCardDefinition = {
+export const scarBetrayer: LorcanaCharacterCardDefinition = {
   id: "yvg",
   name: "Scar",
   title: "Betrayer",

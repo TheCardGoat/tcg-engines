@@ -2,7 +2,7 @@ import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const chichaDedicatedMother: LorcanitoCharacterCardDefinition = {
+export const chichaDedicatedMother: LorcanaCharacterCardDefinition = {
   id: "lux",
   name: "Chicha",
   title: "Dedicated Mother",

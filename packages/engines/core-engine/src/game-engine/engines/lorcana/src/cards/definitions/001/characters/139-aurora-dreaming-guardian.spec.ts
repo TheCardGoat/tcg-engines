@@ -2,12 +2,15 @@
  * @jest-environment node
  */
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   auroraDreamingGuardian,
   megaraPullingTheStrings,
   mickeyMouseTrueFriend,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Aurora - Dreaming Guardian", () => {
   describe("**Protective Embrace** Your other characters gain **Ward**. _(Opponents can't choose them except to challenge.)_", () => {

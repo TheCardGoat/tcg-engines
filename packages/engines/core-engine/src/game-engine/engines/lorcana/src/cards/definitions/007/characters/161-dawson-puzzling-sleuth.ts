@@ -3,7 +3,7 @@ import { lookAtTopCardOfYourDeckAndPutItOnTopOrBottom } from "@lorcanito/lorcana
 import { wheneverACardIsPutIntoYourInkwell } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const dawsonPuzzlingSleuth: LorcanitoCharacterCardDefinition = {
+export const dawsonPuzzlingSleuth: LorcanaCharacterCardDefinition = {
   id: "l0i",
   name: "Dawson",
   title: "Puzzling Sleuth",

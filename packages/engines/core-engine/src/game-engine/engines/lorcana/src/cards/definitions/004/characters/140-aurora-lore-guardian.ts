@@ -6,7 +6,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const auroraLoreGuardian: LorcanitoCharacterCardDefinition = {
+export const auroraLoreGuardian: LorcanaCharacterCardDefinition = {
   id: "i4c",
   name: "Aurora",
   title: "Lore Guardian",

@@ -4,7 +4,7 @@ import { returnLocationFromDiscardToHand } from "@lorcanito/lorcana-engine/effec
 import { wheneverACardIsPutIntoYourInkwell } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const minnieMousePirateLookout: LorcanitoCharacterCardDefinition = {
+export const minnieMousePirateLookout: LorcanaCharacterCardDefinition = {
   id: "lm2",
   name: "Minnie Mouse",
   title: "Pirate Lookout",

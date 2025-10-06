@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   arthurTrainedSwordsman,
   pinocchioOnTheRun,
   yzmaWithoutBeautySleep,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { theSorcerersSpellbook } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Pinocchio - On the Run", () => {
   describe("**LISTEN TO YOUR CONSCIENCE** When you play this character, you may return chosen character or item with cost 3 or less to their player's hand.", () => {

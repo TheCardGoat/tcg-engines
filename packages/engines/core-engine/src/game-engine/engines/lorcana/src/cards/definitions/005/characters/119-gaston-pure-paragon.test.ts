@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   arthurNoviceSparrow,
   chacaImpressiveDaughter,
@@ -12,6 +11,10 @@ import {
   petePastryChomper,
   theQueenCruelestOfAll,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Gaston - Pure Paragon", () => {
   describe("**A MAN AMONG MEN!** For each damaged character you have in play, you pay 2 {I} less to play this character.<br/>**Rush** _(This character can challenge the turn they're played.)_", () => {

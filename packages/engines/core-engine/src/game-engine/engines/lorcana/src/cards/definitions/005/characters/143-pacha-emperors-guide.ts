@@ -6,7 +6,7 @@ import {
 import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pachaEmperorsGuide: LorcanitoCharacterCardDefinition = {
+export const pachaEmperorsGuide: LorcanaCharacterCardDefinition = {
   id: "jw7",
   missingTestCase: true,
   name: "Pacha",

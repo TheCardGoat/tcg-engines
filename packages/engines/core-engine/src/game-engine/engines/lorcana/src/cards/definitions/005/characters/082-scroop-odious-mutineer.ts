@@ -5,7 +5,7 @@ import type {
 import { chosenDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 
-export const scroopOdiousMutineer: LorcanitoCharacterCardDefinition = {
+export const scroopOdiousMutineer: LorcanaCharacterCardDefinition = {
   id: "ig9",
   name: "Scroop",
   title: "Odious Mutineer",

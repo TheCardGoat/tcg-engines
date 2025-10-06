@@ -3,7 +3,7 @@ import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keywor
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const olafCarrotEnthusiast: LorcanitoCharacterCardDefinition = {
+export const olafCarrotEnthusiast: LorcanaCharacterCardDefinition = {
   id: "om0",
   name: "Olaf",
   title: "Carrot Enthusiast",

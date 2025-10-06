@@ -2,7 +2,7 @@ import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/
 import type { LoreEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rapunzelLettingHerHairDown: LorcanitoCharacterCardDefinition = {
+export const rapunzelLettingHerHairDown: LorcanaCharacterCardDefinition = {
   id: "eqs",
   reprints: ["aq6"],
 

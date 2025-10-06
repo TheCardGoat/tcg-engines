@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const khanBelovedSteed: LorcanitoCharacterCardDefinition = {
+export const khanBelovedSteed: LorcanaCharacterCardDefinition = {
   id: "e8z",
   name: "Khan",
   title: "Beloved Steed",

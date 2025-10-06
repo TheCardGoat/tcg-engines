@@ -1,7 +1,7 @@
 import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const almaMadrigalFamilyMatriarch: LorcanitoCharacterCardDefinition = {
+export const almaMadrigalFamilyMatriarch: LorcanaCharacterCardDefinition = {
   id: "lxy",
   name: "Alma Madrigal",
   title: "Family Matriarch",

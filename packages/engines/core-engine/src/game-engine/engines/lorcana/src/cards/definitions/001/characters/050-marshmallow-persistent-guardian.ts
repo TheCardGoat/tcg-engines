@@ -2,7 +2,7 @@ import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine
 import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const marshmallowPersistentGuardian: LorcanitoCharacterCardDefinition = {
+export const marshmallowPersistentGuardian: LorcanaCharacterCardDefinition = {
   id: "it5",
   name: "Marshmallow",
   title: "Persistent Guardian",

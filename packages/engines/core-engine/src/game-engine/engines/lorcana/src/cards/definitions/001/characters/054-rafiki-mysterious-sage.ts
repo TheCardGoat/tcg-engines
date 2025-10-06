@@ -1,7 +1,7 @@
 import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/rushAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rafikiMysterious: LorcanitoCharacterCardDefinition = {
+export const rafikiMysterious: LorcanaCharacterCardDefinition = {
   id: "v97",
   name: "Rafiki",
   title: "Mysterious Sage",

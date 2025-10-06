@@ -1,7 +1,7 @@
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const simbaAdventurousSuccessor: LorcanitoCharacterCardDefinition = {
+export const simbaAdventurousSuccessor: LorcanaCharacterCardDefinition = {
   id: "y3p",
   missingTestCase: true,
   name: "Simba",

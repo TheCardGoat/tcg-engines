@@ -2,7 +2,7 @@ import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abil
 import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const kristoffReindeerKeeper: LorcanitoCharacterCardDefinition = {
+export const kristoffReindeerKeeper: LorcanaCharacterCardDefinition = {
   id: "g08",
   name: "Kristoff",
   title: "Reindeer Keeper",

@@ -1,7 +1,7 @@
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const robinHoodCapableFighter: LorcanitoCharacterCardDefinition = {
+export const robinHoodCapableFighter: LorcanaCharacterCardDefinition = {
   id: "ta2",
   reprints: ["kjo"],
 

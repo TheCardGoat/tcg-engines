@@ -5,7 +5,7 @@ import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { wheneverACardIsPutIntoYourInkwell } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const jimHawkinsStubbornCabinBoy: LorcanitoCharacterCardDefinition = {
+export const jimHawkinsStubbornCabinBoy: LorcanaCharacterCardDefinition = {
   id: "geq",
   missingTestCase: true,
   name: "Jim Hawkins",

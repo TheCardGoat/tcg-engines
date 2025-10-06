@@ -4,7 +4,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const princePhillipVanquisherOfFoes: LorcanitoCharacterCardDefinition = {
+export const princePhillipVanquisherOfFoes: LorcanaCharacterCardDefinition = {
   id: "dh6",
   reprints: ["wj7"],
   missingTestCase: true,

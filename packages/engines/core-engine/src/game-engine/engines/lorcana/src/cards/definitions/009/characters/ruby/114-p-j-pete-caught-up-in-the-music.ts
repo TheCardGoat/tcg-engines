@@ -3,7 +3,7 @@ import { getStrengthThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverYouPlayASong } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pjPeteCaughtUpInTheMusic: LorcanitoCharacterCardDefinition = {
+export const pjPeteCaughtUpInTheMusic: LorcanaCharacterCardDefinition = {
   id: "pjp",
   // notImplemented: true,
   missingTestCase: false,

@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const cardSoldiersFullDeck: LorcanitoCharacterCardDefinition = {
+export const cardSoldiersFullDeck: LorcanaCharacterCardDefinition = {
   id: "x9a",
   reprints: ["yi4"],
   name: "Card Soldiers",

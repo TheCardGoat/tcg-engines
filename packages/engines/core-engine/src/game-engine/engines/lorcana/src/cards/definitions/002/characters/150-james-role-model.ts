@@ -2,7 +2,7 @@ import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/w
 import { putThisCardIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const jamesRoleModel: LorcanitoCharacterCardDefinition = {
+export const jamesRoleModel: LorcanaCharacterCardDefinition = {
   id: "seq",
   name: "James",
   title: "Role Model",

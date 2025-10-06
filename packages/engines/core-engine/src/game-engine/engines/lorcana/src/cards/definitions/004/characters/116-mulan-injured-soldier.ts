@@ -1,7 +1,7 @@
 import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mulanInjuredSoldier: LorcanitoCharacterCardDefinition = {
+export const mulanInjuredSoldier: LorcanaCharacterCardDefinition = {
   id: "kry",
   reprints: ["jmn"],
   name: "Mulan",

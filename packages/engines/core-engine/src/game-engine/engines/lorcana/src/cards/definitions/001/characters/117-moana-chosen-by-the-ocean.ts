@@ -1,7 +1,7 @@
 import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const moanChosenByTheOcean: LorcanitoCharacterCardDefinition = {
+export const moanChosenByTheOcean: LorcanaCharacterCardDefinition = {
   id: "w14",
   name: "Moana",
   title: "Chosen by the Ocean",

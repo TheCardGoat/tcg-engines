@@ -3,8 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { wrechitRalphDemolitionDude } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Wrech-It Ralph - Demolition Dude", () => {
   describe("**REFRESHING BREAK** Whenever you ready this character, gain 1 lore for each 1 damage on him.", () => {

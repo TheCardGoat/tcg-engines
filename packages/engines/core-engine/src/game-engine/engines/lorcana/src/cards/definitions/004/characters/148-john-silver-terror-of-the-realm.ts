@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const johnSilverTerrorOfTheRealm: LorcanitoCharacterCardDefinition = {
+export const johnSilverTerrorOfTheRealm: LorcanaCharacterCardDefinition = {
   id: "he7",
   name: "John Silver",
   title: "Terror of the Realm",

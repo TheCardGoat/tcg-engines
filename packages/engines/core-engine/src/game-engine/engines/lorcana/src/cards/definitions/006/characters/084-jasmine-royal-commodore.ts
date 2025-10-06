@@ -4,7 +4,7 @@ import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbiliti
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const jasmineRoyalCommodore: LorcanitoCharacterCardDefinition = {
+export const jasmineRoyalCommodore: LorcanaCharacterCardDefinition = {
   id: "pzt",
   name: "Jasmine",
   title: "Royal Commodore",

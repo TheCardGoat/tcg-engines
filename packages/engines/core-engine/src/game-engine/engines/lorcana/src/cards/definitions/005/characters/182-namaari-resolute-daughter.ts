@@ -1,7 +1,7 @@
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const namaariResoluteDaughter: LorcanitoCharacterCardDefinition = {
+export const namaariResoluteDaughter: LorcanaCharacterCardDefinition = {
   id: "p4n",
   name: "Namaari",
   title: "Resolute Daughter",

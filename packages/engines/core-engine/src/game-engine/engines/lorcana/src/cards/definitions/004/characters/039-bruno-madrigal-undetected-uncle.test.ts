@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   brunoMadrigalUndetectedUncle,
   luisaMadrigalMagicallyStrongOne,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { luisaMadrigalEntertainingMuscle } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Bruno Madrigal - Undetected Uncle", () => {
   it("**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {

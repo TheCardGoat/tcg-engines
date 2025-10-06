@@ -2,7 +2,7 @@ import { whenChallenged } from "@lorcanito/lorcana-engine/abilities/whenAbilitie
 import { discardACard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const flynnRiderCharmingRogue: LorcanitoCharacterCardDefinition = {
+export const flynnRiderCharmingRogue: LorcanaCharacterCardDefinition = {
   id: "pth",
   name: "Flynn Rider",
   title: "Charming Rogue",

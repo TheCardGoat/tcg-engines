@@ -4,7 +4,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const maximusPalaceHorse: LorcanitoCharacterCardDefinition = {
+export const maximusPalaceHorse: LorcanaCharacterCardDefinition = {
   id: "pfk",
   name: "Maximus",
   title: "Palace Horse",

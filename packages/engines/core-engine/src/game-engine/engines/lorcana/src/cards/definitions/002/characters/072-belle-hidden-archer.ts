@@ -3,7 +3,7 @@ import { discardAllCards } from "@lorcanito/lorcana-engine/effects/effects";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const belleHiddenArcher: LorcanitoCharacterCardDefinition = {
+export const belleHiddenArcher: LorcanaCharacterCardDefinition = {
   id: "y10",
   name: "Belle",
   title: "Hidden Archer",

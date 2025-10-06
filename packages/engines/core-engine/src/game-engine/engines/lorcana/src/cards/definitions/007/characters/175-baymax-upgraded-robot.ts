@@ -2,7 +2,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const baymaxUpgradedRobot: LorcanitoCharacterCardDefinition = {
+export const baymaxUpgradedRobot: LorcanaCharacterCardDefinition = {
   id: "kru",
   name: "Baymax",
   title: "Upgraded Robot",

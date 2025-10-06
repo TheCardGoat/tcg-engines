@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   agustinMadrigalClumsyDad,
   antonioMadrigalAnimalExpert,
@@ -12,6 +11,10 @@ import {
   tongSurvivor,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { iceBlock } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Sisu - Empowered Sibling", () => {
   it("**LET ME HANDLE THIS!** When you play this character, banish all opposing characters with 2 {S} or less.", () => {

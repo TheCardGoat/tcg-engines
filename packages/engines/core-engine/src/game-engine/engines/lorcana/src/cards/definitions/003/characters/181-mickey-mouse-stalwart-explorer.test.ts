@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { mickeyMouseStalwartExplorer } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mickey Mouse - Stalwart Explorer", () => {
   it.skip("**LET'S TAKE A LOOK** This character gets +1 {S} for each location you have in play.", () => {

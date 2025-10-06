@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const maxGoofRebelliousTeen: LorcanitoCharacterCardDefinition = {
+export const maxGoofRebelliousTeen: LorcanaCharacterCardDefinition = {
   id: "ctx",
   // notImplemented: true,
   missingTestCase: false,

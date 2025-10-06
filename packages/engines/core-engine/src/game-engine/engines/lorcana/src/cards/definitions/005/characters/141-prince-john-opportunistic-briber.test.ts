@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
 import { princeJohnOpportunisticBriber } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Prince John - Opportunistic Briber", () => {
   it("**TAXES NEVER FAIL ME** Whenever you play an item, this character gets +2 {S} this turn.", () => {

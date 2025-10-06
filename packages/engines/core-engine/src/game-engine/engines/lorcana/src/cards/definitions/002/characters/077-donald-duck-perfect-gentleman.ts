@@ -4,7 +4,7 @@ import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const donaldDuckPerfectGentleman: LorcanitoCharacterCardDefinition = {
+export const donaldDuckPerfectGentleman: LorcanaCharacterCardDefinition = {
   id: "pgk",
   reprints: ["g8a"],
   name: "Donald Duck",

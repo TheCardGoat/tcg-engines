@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const stitchAbomination: LorcanitoCharacterCardDefinition = {
+export const stitchAbomination: LorcanaCharacterCardDefinition = {
   id: "jhe",
 
   name: "Stitch",

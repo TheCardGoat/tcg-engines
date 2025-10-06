@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   ransack,
   youHaveForgottenMe,
@@ -12,6 +11,10 @@ import {
   magicBroomBucketBrigade,
   robinHoodUnrivaledArcher,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Robin Hood - Unrivaled Archer", () => {
   describe("Good Shot: During your turn, this character gains **Evasive**.", () => {

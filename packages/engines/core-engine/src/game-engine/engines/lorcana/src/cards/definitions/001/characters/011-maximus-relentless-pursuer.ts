@@ -1,7 +1,7 @@
 import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const maximusRentlessPersuer: LorcanitoCharacterCardDefinition = {
+export const maximusRentlessPersuer: LorcanaCharacterCardDefinition = {
   id: "ak8",
 
   name: "Maximus",

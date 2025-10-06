@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   captainHookForcefulDuelist,
   captainHookThinkingAHappyThought,
@@ -11,6 +10,10 @@ import {
   maleficentSorceress,
   moanaOfMotunui,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Captain Hook - Thinking a Happy Thought", () => {
   describe("**STOLEN DUST** Characters with cost 3 or less can't challenge this character.", () => {

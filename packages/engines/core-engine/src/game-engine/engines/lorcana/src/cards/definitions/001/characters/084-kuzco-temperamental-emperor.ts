@@ -3,7 +3,7 @@ import { banishChallengingCharacter } from "@lorcanito/lorcana-engine/effects/ef
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const kuzcoTemperamentalEmperor: LorcanitoCharacterCardDefinition = {
+export const kuzcoTemperamentalEmperor: LorcanaCharacterCardDefinition = {
   id: "j7u",
   reprints: ["l2r"],
   name: "Kuzco",

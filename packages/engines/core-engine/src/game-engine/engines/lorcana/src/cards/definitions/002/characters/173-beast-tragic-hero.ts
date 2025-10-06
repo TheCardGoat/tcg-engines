@@ -3,7 +3,7 @@ import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const beastTragicHero: LorcanitoCharacterCardDefinition = {
+export const beastTragicHero: LorcanaCharacterCardDefinition = {
   id: "jhf",
 
   name: "Beast",

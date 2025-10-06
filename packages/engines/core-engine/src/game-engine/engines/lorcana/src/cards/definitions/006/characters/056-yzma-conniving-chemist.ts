@@ -3,7 +3,7 @@
 import { drawCardsUntilYouHaveXCardsInHand } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const yzmaConnivingChemist: LorcanitoCharacterCardDefinition = {
+export const yzmaConnivingChemist: LorcanaCharacterCardDefinition = {
   id: "fsf",
   name: "Yzma",
   title: "Conniving Chemist",

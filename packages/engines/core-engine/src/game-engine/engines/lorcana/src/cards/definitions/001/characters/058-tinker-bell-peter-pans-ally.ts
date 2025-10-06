@@ -5,7 +5,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const tinkerBellPeterPan: LorcanitoCharacterCardDefinition = {
+export const tinkerBellPeterPan: LorcanaCharacterCardDefinition = {
   id: "xbz",
 
   name: "Tinker Bell",

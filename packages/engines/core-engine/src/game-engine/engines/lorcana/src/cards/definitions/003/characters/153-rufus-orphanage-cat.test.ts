@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { rufusOrphanageCat } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Rufus - Orphanage Cat", () => {
   it.skip("**A LITTLE TOO OLD TO HUNT MICE** When this character is banished, you may put this card into your inkwell facedown and exerted.", () => {

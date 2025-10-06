@@ -5,7 +5,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const heraQueenOfTheGods: LorcanitoCharacterCardDefinition = {
+export const heraQueenOfTheGods: LorcanaCharacterCardDefinition = {
   id: "qp0",
   name: "Hera",
   title: "Queen of the Gods",

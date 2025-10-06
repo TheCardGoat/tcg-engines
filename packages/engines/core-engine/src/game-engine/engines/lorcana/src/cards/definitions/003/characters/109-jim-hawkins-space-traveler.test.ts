@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { jimHawkinsSpaceTraveler } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import {
   prideLandsJungleOasis,
   rapunzelsTowerSecludedPrison,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Jim Hawkins - Space Traveler", () => {
   it("**THIS IS IT!** When you play this character, you may play a location with cost 4 or less for free.", () => {

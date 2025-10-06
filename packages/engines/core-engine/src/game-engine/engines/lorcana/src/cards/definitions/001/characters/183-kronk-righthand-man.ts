@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const kronRightHandMan: LorcanitoCharacterCardDefinition = {
+export const kronRightHandMan: LorcanaCharacterCardDefinition = {
   id: "qie",
   name: "Kronk",
   title: "Right-Hand Man",

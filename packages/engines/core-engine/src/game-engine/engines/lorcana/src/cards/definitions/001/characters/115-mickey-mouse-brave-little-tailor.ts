@@ -1,7 +1,7 @@
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mickeyBraveLittleTailor: LorcanitoCharacterCardDefinition = {
+export const mickeyBraveLittleTailor: LorcanaCharacterCardDefinition = {
   id: "ygl",
   name: "Mickey Mouse",
   title: "Brave Little Tailor",

@@ -1,7 +1,7 @@
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const sisuEmpoweredSibling: LorcanitoCharacterCardDefinition = {
+export const sisuEmpoweredSibling: LorcanaCharacterCardDefinition = {
   id: "vbb",
   name: "Sisu",
   title: "Empowered Sibling",

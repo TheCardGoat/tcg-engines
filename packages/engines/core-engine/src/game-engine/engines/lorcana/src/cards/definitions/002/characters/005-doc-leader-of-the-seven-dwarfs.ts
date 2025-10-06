@@ -2,7 +2,7 @@ import { youPayXLessToPlayNextCharThisTurn } from "@lorcanito/lorcana-engine/eff
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const docLeaderOfTheSevenDwarfs: LorcanitoCharacterCardDefinition = {
+export const docLeaderOfTheSevenDwarfs: LorcanaCharacterCardDefinition = {
   id: "fek",
   name: "Doc",
   title: "Leader of the Seven Dwarfs",

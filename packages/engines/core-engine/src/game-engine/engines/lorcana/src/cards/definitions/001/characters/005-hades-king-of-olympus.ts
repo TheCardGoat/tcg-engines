@@ -2,7 +2,7 @@ import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const hadesKingOfOlympus: LorcanitoCharacterCardDefinition = {
+export const hadesKingOfOlympus: LorcanaCharacterCardDefinition = {
   id: "j9i",
   name: "Hades",
   title: "King of Olympus",

@@ -1,7 +1,7 @@
 import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const sisuEmboldenedWarrior: LorcanitoCharacterCardDefinition = {
+export const sisuEmboldenedWarrior: LorcanaCharacterCardDefinition = {
   id: "m8s",
   reprints: ["g9x"],
   name: "Sisu",

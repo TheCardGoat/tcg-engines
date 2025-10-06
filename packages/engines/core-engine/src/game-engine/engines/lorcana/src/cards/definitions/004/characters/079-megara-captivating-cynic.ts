@@ -1,7 +1,7 @@
 import { discardACard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const megaraCaptivatingCynic: LorcanitoCharacterCardDefinition = {
+export const megaraCaptivatingCynic: LorcanaCharacterCardDefinition = {
   id: "spm",
   name: "Megara",
   title: "Captivating Cynic",

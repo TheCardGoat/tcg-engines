@@ -2,7 +2,7 @@ import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { discardACard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const luciferCunningCat: LorcanitoCharacterCardDefinition = {
+export const luciferCunningCat: LorcanaCharacterCardDefinition = {
   id: "s0r",
   name: "Lucifer",
   title: "Cunning Cat",

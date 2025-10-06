@@ -1,7 +1,7 @@
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const olafTrustingCompanion: LorcanitoCharacterCardDefinition = {
+export const olafTrustingCompanion: LorcanaCharacterCardDefinition = {
   id: "tln",
   name: "Olaf",
   title: "Trusting Companion",

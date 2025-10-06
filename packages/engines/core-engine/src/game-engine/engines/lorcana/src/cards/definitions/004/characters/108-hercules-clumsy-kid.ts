@@ -1,7 +1,7 @@
 import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/rushAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const herculesClumsyKid: LorcanitoCharacterCardDefinition = {
+export const herculesClumsyKid: LorcanaCharacterCardDefinition = {
   id: "gyy",
   name: "Hercules",
   title: "Clumsy Kid",

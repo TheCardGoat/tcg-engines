@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const benjaGuardianOfTheDragonGem: LorcanitoCharacterCardDefinition = {
+export const benjaGuardianOfTheDragonGem: LorcanaCharacterCardDefinition = {
   id: "buc",
   reprints: ["tik"],
   name: "Benja",

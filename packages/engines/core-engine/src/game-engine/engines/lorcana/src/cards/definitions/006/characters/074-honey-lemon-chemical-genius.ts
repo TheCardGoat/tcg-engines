@@ -3,7 +3,7 @@
 import { opponent } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const honeyLemonChemicalGenius: LorcanitoCharacterCardDefinition = {
+export const honeyLemonChemicalGenius: LorcanaCharacterCardDefinition = {
   id: "rl9",
   missingTestCase: true,
   name: "Honey Lemon",

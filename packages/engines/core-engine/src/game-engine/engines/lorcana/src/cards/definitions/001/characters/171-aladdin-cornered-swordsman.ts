@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const aladdinCorneredSwordman: LorcanitoCharacterCardDefinition = {
+export const aladdinCorneredSwordman: LorcanaCharacterCardDefinition = {
   id: "izd",
   name: "Aladdin",
   title: "Cornered Swordsman",

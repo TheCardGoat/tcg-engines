@@ -4,7 +4,7 @@ import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keywor
 import { wheneverYouPlayASong } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const arielSonicWarrior: LorcanitoCharacterCardDefinition = {
+export const arielSonicWarrior: LorcanaCharacterCardDefinition = {
   id: "v5n",
   reprints: ["hbk"],
   missingTestCase: true,

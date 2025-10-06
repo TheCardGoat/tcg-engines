@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const theFatesOnlyOneEye: LorcanitoCharacterCardDefinition = {
+export const theFatesOnlyOneEye: LorcanaCharacterCardDefinition = {
   id: "k7n",
   missingTestCase: true,
   name: "The Fates",

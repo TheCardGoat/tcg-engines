@@ -1,7 +1,7 @@
 import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/rushAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const peterPanFearless: LorcanitoCharacterCardDefinition = {
+export const peterPanFearless: LorcanaCharacterCardDefinition = {
   id: "luv",
 
   name: "Peter Pan",

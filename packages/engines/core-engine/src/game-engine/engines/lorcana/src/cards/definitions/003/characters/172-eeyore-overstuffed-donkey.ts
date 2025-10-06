@@ -1,7 +1,7 @@
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const eeyoreOverstuffedDonkey: LorcanitoCharacterCardDefinition = {
+export const eeyoreOverstuffedDonkey: LorcanaCharacterCardDefinition = {
   id: "jrd",
   reprints: ["k3s"],
   name: "Eeyore",

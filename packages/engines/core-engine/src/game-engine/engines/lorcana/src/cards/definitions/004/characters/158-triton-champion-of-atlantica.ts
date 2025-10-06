@@ -2,7 +2,7 @@ import { opposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets"
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const tritonChampionOfAtlantica: LorcanitoCharacterCardDefinition = {
+export const tritonChampionOfAtlantica: LorcanaCharacterCardDefinition = {
   id: "igf",
   missingTestCase: true,
   name: "Triton",

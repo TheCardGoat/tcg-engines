@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { peterPanFearless } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { peteBadGuy } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { peteWrestlingChamp } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Pete - Wrestling Champ", () => {
   describe("**RE-PETE** {E} - Reveal the top card of your deck. If it’s a character card named Pete, you may play it for free.", () => {

@@ -2,7 +2,7 @@ import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/tar
 import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const frecklesGoodBoy: LorcanitoCharacterCardDefinition = {
+export const frecklesGoodBoy: LorcanaCharacterCardDefinition = {
   id: "i2s",
   name: "Freckles",
   title: "Good Boy",

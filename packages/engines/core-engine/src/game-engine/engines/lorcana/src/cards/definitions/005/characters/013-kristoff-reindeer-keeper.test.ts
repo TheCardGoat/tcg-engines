@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { aWholeNewWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import { aladdinResoluteSwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import {
   kristoffReindeerKeeper,
   peteGamesReferee,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Kristoff - Reindeer Keeper", () => {
   describe("**SONG OF THE HERD** For each song card in your discard, you pay 1 {I} less to play this character.", () => {

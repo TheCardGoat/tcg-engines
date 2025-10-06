@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const tianaDiligentWaitress: LorcanitoCharacterCardDefinition = {
+export const tianaDiligentWaitress: LorcanaCharacterCardDefinition = {
   id: "e3u",
   reprints: ["ljv"],
   name: "Tiana",

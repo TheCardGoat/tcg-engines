@@ -4,7 +4,7 @@ import type {
 } from "@lorcanito/lorcana-engine";
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 
-export const cogsworthIlluminaryWatchman: LorcanitoCharacterCardDefinition = {
+export const cogsworthIlluminaryWatchman: LorcanaCharacterCardDefinition = {
   id: "xha",
   missingTestCase: true,
   name: "Cogsworth",

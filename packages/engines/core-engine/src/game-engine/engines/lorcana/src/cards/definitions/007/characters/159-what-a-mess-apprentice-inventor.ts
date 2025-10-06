@@ -17,7 +17,7 @@ const whatAMess: MetaAbility = {
   ],
 };
 
-export const belleApprenticeInventor: LorcanitoCharacterCardDefinition = {
+export const belleApprenticeInventor: LorcanaCharacterCardDefinition = {
   id: "i9g",
   name: "Belle",
   title: "Apprentice Inventor",

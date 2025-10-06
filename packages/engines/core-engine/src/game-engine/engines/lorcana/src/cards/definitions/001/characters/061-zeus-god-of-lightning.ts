@@ -4,7 +4,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const zeusGodOfLightning: LorcanitoCharacterCardDefinition = {
+export const zeusGodOfLightning: LorcanaCharacterCardDefinition = {
   id: "wvl",
   name: "Zeus",
   title: "God of Lightning",

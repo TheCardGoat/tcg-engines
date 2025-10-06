@@ -5,7 +5,7 @@ import {
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const zeusMrLightningBolts: LorcanitoCharacterCardDefinition = {
+export const zeusMrLightningBolts: LorcanaCharacterCardDefinition = {
   id: "qfh",
   name: "Zeus",
   title: "Mr. Lightning Bolts",

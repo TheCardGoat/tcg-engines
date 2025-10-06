@@ -5,7 +5,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const helgaSinclairToughAsNails: LorcanitoCharacterCardDefinition = {
+export const helgaSinclairToughAsNails: LorcanaCharacterCardDefinition = {
   id: "li7",
   name: "Helga Sinclair",
   title: "Tough as Nails",

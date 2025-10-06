@@ -4,7 +4,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const iagoGiantSpectralParrot: LorcanitoCharacterCardDefinition = {
+export const iagoGiantSpectralParrot: LorcanaCharacterCardDefinition = {
   id: "dfk",
   name: "Iago",
   title: "Giant Spectral Parrot",

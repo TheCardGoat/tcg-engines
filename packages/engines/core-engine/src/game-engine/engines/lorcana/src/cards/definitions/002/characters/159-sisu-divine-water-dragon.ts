@@ -2,7 +2,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const sisuDivineWaterDragon: LorcanitoCharacterCardDefinition = {
+export const sisuDivineWaterDragon: LorcanaCharacterCardDefinition = {
   id: "b3o",
   name: "Sisu",
   title: "Divine Water Dragon",

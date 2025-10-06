@@ -1,7 +1,7 @@
 import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const beastHardheaded: LorcanitoCharacterCardDefinition = {
+export const beastHardheaded: LorcanaCharacterCardDefinition = {
   id: "sh5",
   name: "Beast",
   title: "Hardheaded",

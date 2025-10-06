@@ -2,7 +2,7 @@ import { yourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/targets
 import { yourOtherCharactersGet } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rhinoMotivationalSpeaker: LorcanitoCharacterCardDefinition = {
+export const rhinoMotivationalSpeaker: LorcanaCharacterCardDefinition = {
   id: "jwn",
   name: "Rhino",
   title: "Motivational Speaker",

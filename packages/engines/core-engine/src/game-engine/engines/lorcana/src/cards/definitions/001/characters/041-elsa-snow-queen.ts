@@ -1,7 +1,7 @@
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const elsaSnowQueen: LorcanitoCharacterCardDefinition = {
+export const elsaSnowQueen: LorcanaCharacterCardDefinition = {
   id: "u2z",
   reprints: ["hcz"],
   name: "Elsa",

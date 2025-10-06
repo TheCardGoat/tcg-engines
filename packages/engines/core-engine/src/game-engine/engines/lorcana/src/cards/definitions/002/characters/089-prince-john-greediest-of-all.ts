@@ -3,7 +3,7 @@ import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword
 import { wheneverYourOpponentDiscardsOneOrMore } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const princeJohnGreediestOfAll: LorcanitoCharacterCardDefinition = {
+export const princeJohnGreediestOfAll: LorcanaCharacterCardDefinition = {
   id: "j3m",
 
   name: "Prince John",

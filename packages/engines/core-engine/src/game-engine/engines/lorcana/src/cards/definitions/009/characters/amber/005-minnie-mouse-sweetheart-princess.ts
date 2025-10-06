@@ -5,7 +5,7 @@ import {
 import { wheneverThisCharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const minnieMouseSweetheartPrincess: LorcanitoCharacterCardDefinition = {
+export const minnieMouseSweetheartPrincess: LorcanaCharacterCardDefinition = {
   id: "rcq",
   name: "Minnie Mouse",
   title: "Sweetheart Princess",

@@ -3,7 +3,7 @@ import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targ
 import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const maximusTeamChampion: LorcanitoCharacterCardDefinition = {
+export const maximusTeamChampion: LorcanaCharacterCardDefinition = {
   id: "cw2",
   name: "Maximus",
   title: "Team Champion",

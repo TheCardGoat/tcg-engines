@@ -2,7 +2,7 @@ import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/
 import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const lefouInstigator: LorcanitoCharacterCardDefinition = {
+export const lefouInstigator: LorcanaCharacterCardDefinition = {
   id: "dx9",
   reprints: ["bmd"],
   name: "Lefou",

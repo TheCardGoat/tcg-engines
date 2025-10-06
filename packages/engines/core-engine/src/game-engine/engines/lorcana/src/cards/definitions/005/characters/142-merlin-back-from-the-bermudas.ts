@@ -1,7 +1,7 @@
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const merlinBackFromTheBermudas: LorcanitoCharacterCardDefinition = {
+export const merlinBackFromTheBermudas: LorcanaCharacterCardDefinition = {
   id: "tbu",
   name: "Merlin",
   title: "Back from Bermuda",

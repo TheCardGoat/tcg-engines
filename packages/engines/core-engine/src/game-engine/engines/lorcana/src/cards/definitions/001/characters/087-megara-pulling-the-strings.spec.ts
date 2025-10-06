@@ -2,11 +2,14 @@
  * @jest-environment node
  */
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   megaraPullingTheStrings,
   mickeyMouseTrueFriend,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Megara Pulling the Strings", () => {
   it("**WONDER BOY** When you play this character, chosen character gets +2 {S} this turn.", () => {

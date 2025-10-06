@@ -1,7 +1,7 @@
 import { chosenDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const banzaiTauntingHyena: LorcanitoCharacterCardDefinition = {
+export const banzaiTauntingHyena: LorcanaCharacterCardDefinition = {
   id: "qgg",
   name: "Banzai",
   title: "Taunting Hyena",

@@ -2,7 +2,7 @@ import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyw
 import { wheneverYouPlayAFloodBorn } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const blueFairyRewardingGoodDeeds: LorcanitoCharacterCardDefinition = {
+export const blueFairyRewardingGoodDeeds: LorcanaCharacterCardDefinition = {
   id: "aid",
   name: "Blue Fairy",
   title: "Rewarding Good Deeds",

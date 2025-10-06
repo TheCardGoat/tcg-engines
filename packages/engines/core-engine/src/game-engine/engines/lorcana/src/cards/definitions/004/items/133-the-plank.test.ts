@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { tamatoaSoShiny } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { robinHoodChampionOfSherwood } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { thePlank } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Plank", () => {
   it("**WALK!** 2 {I}, Banish this item: Banish chosen Hero character.", () => {

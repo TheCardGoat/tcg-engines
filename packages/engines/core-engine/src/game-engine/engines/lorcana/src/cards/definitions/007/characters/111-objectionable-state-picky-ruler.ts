@@ -24,7 +24,7 @@ const objectionableStateAbility: EffectStaticAbility = {
   ],
 };
 
-export const kingOfHeartsPickyRuler: LorcanitoCharacterCardDefinition = {
+export const kingOfHeartsPickyRuler: LorcanaCharacterCardDefinition = {
   id: "qim",
   name: "King Of Hearts",
   title: "Picky Ruler",

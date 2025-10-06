@@ -5,7 +5,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mushuMajesticDragon: LorcanitoCharacterCardDefinition = {
+export const mushuMajesticDragon: LorcanaCharacterCardDefinition = {
   id: "bn6",
   name: "Mushu",
   title: "Majestic Dragon",

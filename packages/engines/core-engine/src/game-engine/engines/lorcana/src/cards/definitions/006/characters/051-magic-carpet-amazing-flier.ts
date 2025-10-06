@@ -1,7 +1,7 @@
 // TODO: Once the set is released, we organize the cards by set and type
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const magicCarpetAmazingFlier: LorcanitoCharacterCardDefinition = {
+export const magicCarpetAmazingFlier: LorcanaCharacterCardDefinition = {
   id: "f37",
   name: "Magic Carpet",
   title: "Amazing Flier",

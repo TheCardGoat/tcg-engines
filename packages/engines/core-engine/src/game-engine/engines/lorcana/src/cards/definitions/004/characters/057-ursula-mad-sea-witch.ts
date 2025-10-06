@@ -1,7 +1,7 @@
 import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ursulaMadSeaWitch: LorcanitoCharacterCardDefinition = {
+export const ursulaMadSeaWitch: LorcanaCharacterCardDefinition = {
   id: "l0q",
   name: "Ursula",
   title: "Mad Sea Witch",

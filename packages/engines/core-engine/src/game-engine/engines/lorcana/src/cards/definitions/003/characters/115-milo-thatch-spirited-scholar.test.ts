@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { miloThatchSpiritedScholar } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { forbiddenMountainMaleficentsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Milo Thatch - Spirited Scholar", () => {
   it("**I’M YOUR MAN!** While this character is at a location, he gets +2 {S}.", () => {

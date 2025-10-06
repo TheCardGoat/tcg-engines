@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
 import { sheriffOfNottinghamBushelBritches } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Sheriff of Nottingham - Bushel Britches", () => {
   it("**EVERY LITTLE BIT HELPS** For each item you have in play, you pay 1 {I} less to play this character.", () => {

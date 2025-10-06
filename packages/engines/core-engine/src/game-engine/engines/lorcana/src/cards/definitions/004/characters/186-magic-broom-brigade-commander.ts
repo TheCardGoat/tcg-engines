@@ -2,7 +2,7 @@ import { propertyStaticAbilities } from "@lorcanito/lorcana-engine/abilities/pro
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const magicBroomBrigadeCommander: LorcanitoCharacterCardDefinition = {
+export const magicBroomBrigadeCommander: LorcanaCharacterCardDefinition = {
   id: "arp",
   missingTestCase: true,
   name: "Magic Broom",

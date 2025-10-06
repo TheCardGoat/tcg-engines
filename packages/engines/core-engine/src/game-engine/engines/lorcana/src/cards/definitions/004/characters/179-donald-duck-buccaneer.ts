@@ -1,7 +1,7 @@
 import { wheneverBanishesAnotherCharacterInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const donaldDuckBuccaneer: LorcanitoCharacterCardDefinition = {
+export const donaldDuckBuccaneer: LorcanaCharacterCardDefinition = {
   id: "vz0",
   name: "Donald Duck",
   title: "Buccaneer",

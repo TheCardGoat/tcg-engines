@@ -3,7 +3,7 @@ import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abili
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const yenSidPowerfulSorcerer: LorcanitoCharacterCardDefinition = {
+export const yenSidPowerfulSorcerer: LorcanaCharacterCardDefinition = {
   id: "hvf",
   name: "Yen Sid",
   title: "Powerful Sorcerer",

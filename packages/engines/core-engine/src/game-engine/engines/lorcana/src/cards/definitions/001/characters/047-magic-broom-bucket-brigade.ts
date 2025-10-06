@@ -1,7 +1,7 @@
 import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const magicBroomBucketBrigade: LorcanitoCharacterCardDefinition = {
+export const magicBroomBucketBrigade: LorcanaCharacterCardDefinition = {
   id: "zyc",
   name: "Magic Broom",
   title: "Bucket Brigade",

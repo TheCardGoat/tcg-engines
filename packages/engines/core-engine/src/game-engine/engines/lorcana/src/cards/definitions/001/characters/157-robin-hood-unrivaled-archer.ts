@@ -4,7 +4,7 @@ import type { Condition } from "@lorcanito/lorcana-engine/store/resolvers/condit
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const robinHoodUnrivaledArcher: LorcanitoCharacterCardDefinition = {
+export const robinHoodUnrivaledArcher: LorcanaCharacterCardDefinition = {
   id: "dq9",
   reprints: ["l10"],
   name: "Robin Hood",

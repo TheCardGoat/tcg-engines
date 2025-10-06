@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
 import { arielsGrottoASecretPlace } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Ariel's Grotto - A Secret Place", () => {
   it("(no items) While you have 3 or more items in play, this location gets +2 {L}.", () => {

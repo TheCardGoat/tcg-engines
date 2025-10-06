@@ -2,7 +2,7 @@ import { whenChallenged } from "@lorcanito/lorcana-engine/abilities/whenAbilitie
 import type { PlayerEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const madHatterGraciousHost: LorcanitoCharacterCardDefinition = {
+export const madHatterGraciousHost: LorcanaCharacterCardDefinition = {
   id: "xw3",
 
   name: "Mad Hatter",

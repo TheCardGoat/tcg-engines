@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const theWardrobeBelleConfident: LorcanitoCharacterCardDefinition = {
+export const theWardrobeBelleConfident: LorcanaCharacterCardDefinition = {
   id: "qvy",
 
   name: "The Wardrobe",

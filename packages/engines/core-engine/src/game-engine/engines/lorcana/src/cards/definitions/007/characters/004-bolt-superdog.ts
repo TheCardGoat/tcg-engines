@@ -3,7 +3,7 @@ import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keywor
 import { wheneverYouReadyThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const boltSuperdog: LorcanitoCharacterCardDefinition = {
+export const boltSuperdog: LorcanaCharacterCardDefinition = {
   id: "zel",
   name: "Bolt",
   title: "Superdog",

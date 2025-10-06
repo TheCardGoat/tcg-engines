@@ -5,7 +5,7 @@ import {
 import { wheneverPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const minnieMouseWideEyedDiver: LorcanitoCharacterCardDefinition = {
+export const minnieMouseWideEyedDiver: LorcanaCharacterCardDefinition = {
   id: "whf",
   name: "Minnie Mouse",
   title: "Wide-Eyed Diver",

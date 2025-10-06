@@ -2,7 +2,7 @@ import { haveCaptainInPlay } from "@lorcanito/lorcana-engine/abilities/condition
 import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const starkeyHooksHenchman: LorcanitoCharacterCardDefinition = {
+export const starkeyHooksHenchman: LorcanaCharacterCardDefinition = {
   id: "wxx",
 
   name: "Starkey",

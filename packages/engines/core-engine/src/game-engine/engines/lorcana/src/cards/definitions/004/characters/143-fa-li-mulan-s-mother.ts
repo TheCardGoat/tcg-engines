@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const faLiMulansMother: LorcanitoCharacterCardDefinition = {
+export const faLiMulansMother: LorcanaCharacterCardDefinition = {
   id: "u1g",
   name: "Fa Li",
   title: "Mulan's Mother",

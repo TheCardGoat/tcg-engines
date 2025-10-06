@@ -2,7 +2,7 @@ import { whileConditionThisCharacterGains } from "@lorcanito/lorcana-engine/abil
 import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/rushAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const powerlineMusicalSuperstar: LorcanitoCharacterCardDefinition = {
+export const powerlineMusicalSuperstar: LorcanaCharacterCardDefinition = {
   id: "e1k",
   name: "Powerline",
   title: "Musical Superstar",

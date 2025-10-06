@@ -3,7 +3,7 @@ import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { vanishAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/vanishAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const giantCobraGhostlySerpent: LorcanitoCharacterCardDefinition = {
+export const giantCobraGhostlySerpent: LorcanaCharacterCardDefinition = {
   id: "u16",
   name: "Giant Cobra",
   title: "Ghostly Serpent",

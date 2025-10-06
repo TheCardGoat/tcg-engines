@@ -2,7 +2,7 @@ import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const stitchTeamUnderdog: LorcanitoCharacterCardDefinition = {
+export const stitchTeamUnderdog: LorcanaCharacterCardDefinition = {
   id: "ovo",
   missingTestCase: true,
   name: "Stitch",

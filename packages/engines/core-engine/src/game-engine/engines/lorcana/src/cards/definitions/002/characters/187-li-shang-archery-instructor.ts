@@ -3,7 +3,7 @@ import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectType
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const liShangArcheryInstructor: LorcanitoCharacterCardDefinition = {
+export const liShangArcheryInstructor: LorcanaCharacterCardDefinition = {
   id: "vg7",
 
   name: "Li Shang",

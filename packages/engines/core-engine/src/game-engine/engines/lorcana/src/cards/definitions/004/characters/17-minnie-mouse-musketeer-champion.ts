@@ -1,7 +1,7 @@
 import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const minnieMouseMusketeerChampion: LorcanitoCharacterCardDefinition = {
+export const minnieMouseMusketeerChampion: LorcanaCharacterCardDefinition = {
   id: "mkk",
   name: "Minnie Mouse",
   title: "Musketeer Champion",

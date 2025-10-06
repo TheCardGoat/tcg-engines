@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const denahiAvengingBrother: LorcanitoCharacterCardDefinition = {
+export const denahiAvengingBrother: LorcanaCharacterCardDefinition = {
   id: "bt9",
   name: "Denahi",
   title: "Avenging Brother",

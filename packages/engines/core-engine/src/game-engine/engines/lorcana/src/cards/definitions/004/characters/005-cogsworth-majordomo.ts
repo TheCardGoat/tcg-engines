@@ -2,7 +2,7 @@ import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const cogsworthMajordomo: LorcanitoCharacterCardDefinition = {
+export const cogsworthMajordomo: LorcanaCharacterCardDefinition = {
   id: "kfo",
   name: "Cogsworth",
   title: "Majordomo",

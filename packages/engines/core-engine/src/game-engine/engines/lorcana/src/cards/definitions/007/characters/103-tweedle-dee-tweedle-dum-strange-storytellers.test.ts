@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { letTheStormRageOn } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import { sisuEmpoweredSibling } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { tweedleDeeAndTweedleDumStrangeStorytellers } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("ANOTHER RECITATION Whenever this character quests, you may return chosen damaged character to their player's hand.", () => {
   it("should return damaged character", async () => {

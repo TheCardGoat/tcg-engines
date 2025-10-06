@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const maleficentBinding: LorcanitoCharacterCardDefinition = {
+export const maleficentBinding: LorcanaCharacterCardDefinition = {
   id: "d0r",
   name: "Maleficent",
   title: "Biding Her Time",

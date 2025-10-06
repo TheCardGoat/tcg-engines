@@ -1,7 +1,7 @@
 import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const cinderellaKnightInTraining: LorcanitoCharacterCardDefinition = {
+export const cinderellaKnightInTraining: LorcanaCharacterCardDefinition = {
   id: "y7h",
   name: "Cinderella",
   title: "Knight in Training",

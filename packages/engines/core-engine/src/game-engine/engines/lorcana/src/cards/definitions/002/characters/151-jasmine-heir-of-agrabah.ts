@@ -1,7 +1,7 @@
 import { anotherChosenCharOfYours } from "@lorcanito/lorcana-engine/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const jasmineHeirOfAgrabah: LorcanitoCharacterCardDefinition = {
+export const jasmineHeirOfAgrabah: LorcanaCharacterCardDefinition = {
   id: "tq1",
   reprints: ["cqu"],
   name: "Jasmine",

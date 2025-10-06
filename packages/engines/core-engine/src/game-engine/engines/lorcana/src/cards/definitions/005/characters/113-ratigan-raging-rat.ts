@@ -2,7 +2,7 @@ import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { whileThisCharacterHasDamageGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ratiganRagingRat: LorcanitoCharacterCardDefinition = {
+export const ratiganRagingRat: LorcanaCharacterCardDefinition = {
   id: "qhl",
   missingTestCase: true,
   name: "Ratigan",

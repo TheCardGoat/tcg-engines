@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { robinHoodBelovedOutlaw } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { sherwoodForestOutlawHideaway } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Sherwood Forest - Outlaw Hideaway", () => {
   it("**FOREST HOME** Your characters named Robin Hood may move here for free.", () => {

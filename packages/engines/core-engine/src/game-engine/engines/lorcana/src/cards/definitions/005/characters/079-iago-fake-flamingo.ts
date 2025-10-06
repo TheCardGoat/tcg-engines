@@ -3,7 +3,7 @@ import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyw
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const iagoFakeFlamingo: LorcanitoCharacterCardDefinition = {
+export const iagoFakeFlamingo: LorcanaCharacterCardDefinition = {
   id: "ebj",
   missingTestCase: true,
   name: "Iago",

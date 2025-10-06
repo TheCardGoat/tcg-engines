@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const stitchAlienDancer: LorcanitoCharacterCardDefinition = {
+export const stitchAlienDancer: LorcanaCharacterCardDefinition = {
   id: "hq5",
   reprints: ["g0k"],
   name: "Stitch",

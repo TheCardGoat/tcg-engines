@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   herculesDivineHero,
   honestJohnNotThatHonest,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Honest John - Not That Honest", () => {
   it("**EASY STREET** Whenever you play a Floodborn character, each opponent loses 1 lore.", () => {

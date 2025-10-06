@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const magicBroomLivelySweeper: LorcanitoCharacterCardDefinition = {
+export const magicBroomLivelySweeper: LorcanaCharacterCardDefinition = {
   id: "hxg",
   name: "Magic Broom",
   title: "Lively Sweeper",

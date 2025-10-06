@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   donaldDuckMusketeer,
   goofyMusketeer,
   scarShamelessFirebrand,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Goofy - Musketeer", () => {
   describe("**When you play this character, you may remove up to 2 damage from each of your Musketeer characters**", () => {

@@ -1,7 +1,7 @@
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ladyTremaineImperiousQueen: LorcanitoCharacterCardDefinition = {
+export const ladyTremaineImperiousQueen: LorcanaCharacterCardDefinition = {
   id: "m9y",
 
   name: "Lady Tremaine",

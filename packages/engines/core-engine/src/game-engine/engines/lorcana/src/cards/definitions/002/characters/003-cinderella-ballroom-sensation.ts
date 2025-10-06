@@ -1,7 +1,7 @@
 import { singerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singerAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const cinderellaBallroomSensation: LorcanitoCharacterCardDefinition = {
+export const cinderellaBallroomSensation: LorcanaCharacterCardDefinition = {
   id: "rgn",
   name: "Cinderella",
   title: "Ballroom Sensation",

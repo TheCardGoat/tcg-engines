@@ -2,7 +2,7 @@ import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { whileThisCharacterHasNoDamageGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const chiFuImperialAdvisor: LorcanitoCharacterCardDefinition = {
+export const chiFuImperialAdvisor: LorcanaCharacterCardDefinition = {
   id: "jnk",
   missingTestCase: true,
   name: "Chi-Fu",

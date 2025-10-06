@@ -6,7 +6,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const scarTempestuousLion: LorcanitoCharacterCardDefinition = {
+export const scarTempestuousLion: LorcanaCharacterCardDefinition = {
   id: "i6n",
   name: "Scar",
   title: "Tempestuous Lion",

@@ -3,7 +3,7 @@ import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const theQueenConceitedRuler: LorcanitoCharacterCardDefinition = {
+export const theQueenConceitedRuler: LorcanaCharacterCardDefinition = {
   id: "xvm",
   name: "The Queen",
   title: "Conceited Ruler",

@@ -1,7 +1,7 @@
 import { pegasusGiftForHercules as pegasusGiftForHerculesAsOrig } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/084-pegasus-gift-for-hercules";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pegasusGiftForHercules: LorcanitoCharacterCardDefinition = {
+export const pegasusGiftForHercules: LorcanaCharacterCardDefinition = {
   ...pegasusGiftForHerculesAsOrig,
   id: "w64",
   reprints: [pegasusGiftForHerculesAsOrig.id],

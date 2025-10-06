@@ -2,7 +2,7 @@ import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/tar
 import { exertAndCantReady } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pepaMadrigalWeatherMaker: LorcanitoCharacterCardDefinition = {
+export const pepaMadrigalWeatherMaker: LorcanaCharacterCardDefinition = {
   id: "zc5",
   missingTestCase: true,
   name: "Pepa Madrigal",

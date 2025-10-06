@@ -2,7 +2,7 @@ import { eachOpponentLosesXLore } from "@lorcanito/lorcana-engine/effects/effect
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const donaldDuckDaisysDate: LorcanitoCharacterCardDefinition = {
+export const donaldDuckDaisysDate: LorcanaCharacterCardDefinition = {
   id: "thl",
   name: "Donald Duck",
   title: "Daisy's Date",

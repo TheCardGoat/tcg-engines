@@ -30,7 +30,7 @@ const newVar: RestrictionStaticAbility = {
   ],
 };
 
-export const bashfulHopelessRomantic: LorcanitoCharacterCardDefinition = {
+export const bashfulHopelessRomantic: LorcanaCharacterCardDefinition = {
   id: "iu7",
   name: "Bashful",
   title: "Hopeless Romantic",

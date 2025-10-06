@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   bashfulHopelessRomantic,
   happyGoodNatured,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Bashful - Hopeless Romantic", () => {
   it("**OH, GOSH** This character can't quest unless you have another Seven Dwarfs character in play.", () => {

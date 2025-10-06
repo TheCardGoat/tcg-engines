@@ -2,7 +2,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { wheneverYouHeal } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const grandPabbieOldestAndWisest: LorcanitoCharacterCardDefinition = {
+export const grandPabbieOldestAndWisest: LorcanaCharacterCardDefinition = {
   id: "dy0",
   reprints: ["rj4"],
   name: "Grand Pabbie",

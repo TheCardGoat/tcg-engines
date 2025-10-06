@@ -1,7 +1,7 @@
 import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const theQueenDisguisedPeddler: LorcanitoCharacterCardDefinition = {
+export const theQueenDisguisedPeddler: LorcanaCharacterCardDefinition = {
   id: "htg",
   name: "The Queen",
   title: "Disguised Peddler",

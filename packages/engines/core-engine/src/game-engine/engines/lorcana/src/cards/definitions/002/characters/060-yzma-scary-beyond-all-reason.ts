@@ -3,7 +3,7 @@ import { targetOwnerDrawsXCards } from "@lorcanito/lorcana-engine/effects/effect
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const yzmaScaryBeyondAllReason: LorcanitoCharacterCardDefinition = {
+export const yzmaScaryBeyondAllReason: LorcanaCharacterCardDefinition = {
   id: "xdq",
   name: "Yzma",
   title: "Scary Beyond All Reason",

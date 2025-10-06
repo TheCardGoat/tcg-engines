@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const minniMouseAlwaysClassy: LorcanitoCharacterCardDefinition = {
+export const minniMouseAlwaysClassy: LorcanaCharacterCardDefinition = {
   id: "nwa",
 
   name: "Minnie Mouse",

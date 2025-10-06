@@ -1,7 +1,7 @@
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const beastForbiddingRecluse: LorcanitoCharacterCardDefinition = {
+export const beastForbiddingRecluse: LorcanaCharacterCardDefinition = {
   id: "j93",
 
   name: "Beast",

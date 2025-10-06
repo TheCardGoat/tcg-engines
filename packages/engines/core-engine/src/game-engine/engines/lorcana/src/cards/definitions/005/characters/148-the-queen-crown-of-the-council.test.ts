@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { theQueenDiviner } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import {
   theQueenCrownOfTheCouncil,
   theQueenCruelestOfAll,
   theQueenFairestOfAll,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Queen - Crown of the Council", () => {
   it("When you play this character, look at the top 3 cards of your deck. You may reveal any number of character cards named The Queen and put them into your hand. Put the rest on the bottom of your deck in any order.", () => {

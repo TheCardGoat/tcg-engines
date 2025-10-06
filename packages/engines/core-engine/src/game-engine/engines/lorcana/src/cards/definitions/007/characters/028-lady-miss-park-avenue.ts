@@ -2,7 +2,7 @@ import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbiliti
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ladyMissParkAvenue: LorcanitoCharacterCardDefinition = {
+export const ladyMissParkAvenue: LorcanaCharacterCardDefinition = {
   id: "r02",
   name: "Lady",
   title: "Miss Park Avenue",

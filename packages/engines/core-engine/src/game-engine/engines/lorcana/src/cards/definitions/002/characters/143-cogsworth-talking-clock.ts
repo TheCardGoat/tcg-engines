@@ -2,7 +2,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const cogsworthTalkingClock: LorcanitoCharacterCardDefinition = {
+export const cogsworthTalkingClock: LorcanaCharacterCardDefinition = {
   id: "ozp",
   name: "Cogsworth",
   title: "Talking Clock",

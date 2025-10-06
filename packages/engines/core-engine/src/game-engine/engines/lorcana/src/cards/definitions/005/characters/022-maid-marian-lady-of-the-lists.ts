@@ -1,7 +1,7 @@
 import { chosenOpposingCharacterLoseStrengthUntilNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const maidMarianLadyOfTheLists: LorcanitoCharacterCardDefinition = {
+export const maidMarianLadyOfTheLists: LorcanaCharacterCardDefinition = {
   id: "wd5",
   name: "Maid Marian",
   title: "Lady of the Lists",

@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mulanArmoredFighter: LorcanitoCharacterCardDefinition = {
+export const mulanArmoredFighter: LorcanaCharacterCardDefinition = {
   id: "v1e",
   name: "Mulan",
   title: "Armored Fighter",

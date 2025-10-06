@@ -1,7 +1,7 @@
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const namaariNemesis: LorcanitoCharacterCardDefinition = {
+export const namaariNemesis: LorcanaCharacterCardDefinition = {
   id: "jyl",
 
   name: "Namaari",

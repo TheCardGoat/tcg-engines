@@ -1,7 +1,7 @@
 import { wheneverOneOfYourCharactersIsBanishedInAChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mickeyMouseWaywardSorcerer: LorcanitoCharacterCardDefinition = {
+export const mickeyMouseWaywardSorcerer: LorcanaCharacterCardDefinition = {
   id: "kuw",
 
   name: "Mickey Mouse",

@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   mufasaRulerOfPrideRock,
   scarBetrayer,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Scar - Betrayer", () => {
   it("**LONG LIVE THE KING** When you play this character, you may banish chosen character named Mufasa.", () => {

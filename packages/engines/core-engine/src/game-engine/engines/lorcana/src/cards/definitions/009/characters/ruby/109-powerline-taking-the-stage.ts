@@ -1,7 +1,7 @@
 import { singerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singerAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const powerlineTakingTheStage: LorcanitoCharacterCardDefinition = {
+export const powerlineTakingTheStage: LorcanaCharacterCardDefinition = {
   id: "mpw",
   name: "Powerline",
   title: "Taking the Stage",

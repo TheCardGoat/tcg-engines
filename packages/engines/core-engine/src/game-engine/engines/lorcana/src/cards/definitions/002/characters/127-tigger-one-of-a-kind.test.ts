@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   nothingToHide,
   zeroToHero,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import { tiggerOneOfAKind } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Tigger - One of a Kind", () => {
   it("**ENERGETIC** Whenever you play an action, this character gets +2 {S} this turn.", () => {

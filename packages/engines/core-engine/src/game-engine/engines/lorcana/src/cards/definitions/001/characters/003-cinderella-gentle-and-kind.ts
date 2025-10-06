@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const cinderellaGentleAndKind: LorcanitoCharacterCardDefinition = {
+export const cinderellaGentleAndKind: LorcanaCharacterCardDefinition = {
   id: "qil",
   reprints: ["xks"],
   name: "Cinderella",

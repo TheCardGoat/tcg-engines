@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rudyGrooveDisrupter: LorcanitoCharacterCardDefinition = {
+export const rudyGrooveDisrupter: LorcanaCharacterCardDefinition = {
   id: "jrg",
   name: "Rudy",
   title: "Groove Disrupter",

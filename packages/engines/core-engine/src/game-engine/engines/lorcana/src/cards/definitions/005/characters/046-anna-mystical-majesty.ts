@@ -2,7 +2,7 @@ import { exertAllOpposingCharacters } from "@lorcanito/lorcana-engine/effects/ef
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const annaMysticalMajesty: LorcanitoCharacterCardDefinition = {
+export const annaMysticalMajesty: LorcanaCharacterCardDefinition = {
   id: "e80",
   name: "Anna",
   title: "Mystical Majesty",

@@ -3,8 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { helgaSinclairFemmeFatale } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Helga Sinclair - Femme Fatale", () => {
   it.skip("**Shift** 3 _(You may pay 3 {I} to play this on top of one of your characters named Helga Sinclair.)_**THIS CHANGES EVERYTHING** Whenever this character quests, you may deal 3 damage to chosen damaged character.", () => {

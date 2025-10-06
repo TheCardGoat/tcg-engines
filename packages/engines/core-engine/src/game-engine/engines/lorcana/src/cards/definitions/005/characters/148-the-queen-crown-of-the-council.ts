@@ -2,7 +2,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const theQueenCrownOfTheCouncil: LorcanitoCharacterCardDefinition = {
+export const theQueenCrownOfTheCouncil: LorcanaCharacterCardDefinition = {
   id: "lr0",
   name: "The Queen",
   title: "Crown of the Council",

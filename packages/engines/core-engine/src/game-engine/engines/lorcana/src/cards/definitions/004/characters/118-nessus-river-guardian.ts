@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const nessusRiverGuardian: LorcanitoCharacterCardDefinition = {
+export const nessusRiverGuardian: LorcanaCharacterCardDefinition = {
   id: "qof",
   name: "Nessus",
   title: "River Guardian",

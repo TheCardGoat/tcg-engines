@@ -1,7 +1,7 @@
 import { putTopCardOfYourDeckIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const heiheiBumblingRooster: LorcanitoCharacterCardDefinition = {
+export const heiheiBumblingRooster: LorcanaCharacterCardDefinition = {
   id: "rmn",
   reprints: ["yeh"],
   name: "Heihei",

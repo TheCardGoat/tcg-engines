@@ -5,7 +5,7 @@ import type {
 import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/rushAbility";
 
-export const rafikiShamanDuelist: LorcanitoCharacterCardDefinition = {
+export const rafikiShamanDuelist: LorcanaCharacterCardDefinition = {
   id: "qke",
   name: "Rafiki",
   title: "Shaman Duelist",

@@ -5,7 +5,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const elsaTheFifthSpirit: LorcanitoCharacterCardDefinition = {
+export const elsaTheFifthSpirit: LorcanaCharacterCardDefinition = {
   id: "pm7",
   name: "Elsa",
   title: "The Fifth Spirit",

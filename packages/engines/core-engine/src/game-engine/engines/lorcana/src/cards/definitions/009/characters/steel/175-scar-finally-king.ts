@@ -25,7 +25,7 @@ const chosenAllyOfYours: CardEffectTarget = {
   ],
 };
 
-export const scarFinallyKing: LorcanitoCharacterCardDefinition = {
+export const scarFinallyKing: LorcanaCharacterCardDefinition = {
   id: "sfk",
   name: "Scar",
   title: "Finally King",

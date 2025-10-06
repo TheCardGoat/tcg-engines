@@ -1,7 +1,7 @@
 import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const elsaStormChaser: LorcanitoCharacterCardDefinition = {
+export const elsaStormChaser: LorcanaCharacterCardDefinition = {
   id: "m70",
   missingTestCase: true,
   name: "Elsa",

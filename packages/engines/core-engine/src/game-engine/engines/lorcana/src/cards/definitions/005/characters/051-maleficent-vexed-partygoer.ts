@@ -2,7 +2,7 @@ import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const maleficentVexedPartygoer: LorcanitoCharacterCardDefinition = {
+export const maleficentVexedPartygoer: LorcanaCharacterCardDefinition = {
   id: "ejq",
   missingTestCase: true,
   name: "Maleficent",

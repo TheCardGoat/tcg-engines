@@ -3,7 +3,7 @@ import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targ
 import { wheneverACardIsPutIntoYourInkwell } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const daisyDuckMultitalentedPirate: LorcanitoCharacterCardDefinition = {
+export const daisyDuckMultitalentedPirate: LorcanaCharacterCardDefinition = {
   id: "nac",
   name: "Daisy Duck",
   title: "Multitalented Pirate",

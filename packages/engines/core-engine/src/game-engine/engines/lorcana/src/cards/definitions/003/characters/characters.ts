@@ -130,7 +130,7 @@ export { peterPanPiratesBane } from "./120-peter-pan-pirates-bane";
 export { wendyDarlingAuthorityOnPeterPan } from "./158-wendy-darling-authority-on-peter-pan";
 export { eeyoreOverstuffedDonkey } from "./172-eeyore-overstuffed-donkey";
 export { minnieMouseFunkySpelunker } from "./183-minnie-mouse-funky-spelunker";
-export const kidaProtectorOfAtlantis: LorcanitoCharacterCardDefinition = {
+export const kidaProtectorOfAtlantis: LorcanaCharacterCardDefinition = {
   id: "v6h",
   name: "Kida",
   title: "Protector of Atlantis",
@@ -197,7 +197,7 @@ export const missBiancaInternationalRescueAidSocietyAgent: LorcanitoCharacterCar
     set: "ITI",
     rarity: "common",
   };
-export const naniProtectiveSister: LorcanitoCharacterCardDefinition = {
+export const naniProtectiveSister: LorcanaCharacterCardDefinition = {
   id: "nyd",
   reprints: ["pws"],
   name: "Nani",
@@ -218,7 +218,7 @@ export const naniProtectiveSister: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const orvilleFlyingAce: LorcanitoCharacterCardDefinition = {
+export const orvilleFlyingAce: LorcanaCharacterCardDefinition = {
   id: "e1z",
   name: "Orville",
   title: "Ace Pilot",
@@ -237,7 +237,7 @@ export const orvilleFlyingAce: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const patchIntimidatingPup: LorcanitoCharacterCardDefinition = {
+export const patchIntimidatingPup: LorcanaCharacterCardDefinition = {
   id: "inf",
   missingTestCase: true,
   name: "Patch",
@@ -276,7 +276,7 @@ export const patchIntimidatingPup: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const perditaDevotedMother: LorcanitoCharacterCardDefinition = {
+export const perditaDevotedMother: LorcanaCharacterCardDefinition = {
   id: "sl2",
   name: "Perdita",
   title: "Devoted Mother",
@@ -322,7 +322,7 @@ export const perditaDevotedMother: LorcanitoCharacterCardDefinition = {
   rarity: "legendary",
 };
 
-export const plutoDeterminedDefender: LorcanitoCharacterCardDefinition = {
+export const plutoDeterminedDefender: LorcanaCharacterCardDefinition = {
   id: "oqn",
   missingTestCase: true,
   name: "Pluto",
@@ -351,7 +351,7 @@ export const plutoDeterminedDefender: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const plutoFriendlyPooch: LorcanitoCharacterCardDefinition = {
+export const plutoFriendlyPooch: LorcanaCharacterCardDefinition = {
   id: "rp5",
   reprints: ["gm9"],
   name: "Pluto",
@@ -379,7 +379,7 @@ export const plutoFriendlyPooch: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const pongoDeterminedFather: LorcanitoCharacterCardDefinition = {
+export const pongoDeterminedFather: LorcanaCharacterCardDefinition = {
   id: "eo3",
   name: "Pongo",
   reprints: ["nn4"],
@@ -462,7 +462,7 @@ export const queenOfHeartsWonderlandEmpress: LorcanitoCharacterCardDefinition =
     set: "ITI",
     rarity: "uncommon",
   };
-export const rollyHungryPup: LorcanitoCharacterCardDefinition = {
+export const rollyHungryPup: LorcanaCharacterCardDefinition = {
   id: "tuk",
   name: "Rolly",
   title: "Hungry Pup",
@@ -482,7 +482,7 @@ export const rollyHungryPup: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const tinkerBellGenerousFairy: LorcanitoCharacterCardDefinition = {
+export const tinkerBellGenerousFairy: LorcanaCharacterCardDefinition = {
   id: "rnw",
   reprints: ["grh"],
   name: "Tinker Bell",
@@ -531,7 +531,7 @@ export const tinkerBellGenerousFairy: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const wendyDarlingTalentedSailor: LorcanitoCharacterCardDefinition = {
+export const wendyDarlingTalentedSailor: LorcanaCharacterCardDefinition = {
   id: "f05",
   name: "Wendy Darling",
   title: "Talented Sailor",
@@ -551,7 +551,7 @@ export const wendyDarlingTalentedSailor: LorcanitoCharacterCardDefinition = {
   rarity: "uncommon",
 };
 
-export const aliceTeaAlchemist: LorcanitoCharacterCardDefinition = {
+export const aliceTeaAlchemist: LorcanaCharacterCardDefinition = {
   id: "c9l",
   name: "Alice",
   title: "Tea Alchemist",
@@ -613,7 +613,7 @@ export const aliceTeaAlchemist: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "super_rare",
 };
-export const diabloLoyalFamiliar: LorcanitoCharacterCardDefinition = {
+export const diabloLoyalFamiliar: LorcanaCharacterCardDefinition = {
   id: "gz4",
   missingTestCase: true,
   name: "Diablo",
@@ -652,7 +652,7 @@ export const diabloLoyalFamiliar: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const genieSupportiveFriend: LorcanitoCharacterCardDefinition = {
+export const genieSupportiveFriend: LorcanaCharacterCardDefinition = {
   id: "u24",
   name: "Genie",
   title: "Supportive Friend",
@@ -689,7 +689,7 @@ export const genieSupportiveFriend: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "super_rare",
 };
-export const hydrosIceTitan: LorcanitoCharacterCardDefinition = {
+export const hydrosIceTitan: LorcanaCharacterCardDefinition = {
   id: "io0",
   missingTestCase: true,
   name: "Hydros",
@@ -718,7 +718,7 @@ export const hydrosIceTitan: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const iagoPrettyPolly: LorcanitoCharacterCardDefinition = {
+export const iagoPrettyPolly: LorcanaCharacterCardDefinition = {
   id: "fik",
   name: "Iago",
   title: "Pretty Polly",
@@ -738,7 +738,7 @@ export const iagoPrettyPolly: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const jafarLampThief: LorcanitoCharacterCardDefinition = {
+export const jafarLampThief: LorcanaCharacterCardDefinition = {
   id: "cu2",
   reprints: ["rv8"],
   missingTestCase: true,
@@ -767,7 +767,7 @@ export const jafarLampThief: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const jafarStrikingIllusionist: LorcanitoCharacterCardDefinition = {
+export const jafarStrikingIllusionist: LorcanaCharacterCardDefinition = {
   id: "wle",
   name: "Jafar",
   title: "Striking Illusionist",
@@ -872,7 +872,7 @@ export const lenaSabrewingRebelliousTeenager: LorcanitoCharacterCardDefinition =
     set: "ITI",
     rarity: "common",
   };
-export const magicBroomDancingDuster: LorcanitoCharacterCardDefinition = {
+export const magicBroomDancingDuster: LorcanaCharacterCardDefinition = {
   id: "bvg",
   missingTestCase: true,
   name: "Magic Broom",
@@ -925,7 +925,7 @@ export const magicBroomDancingDuster: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const magicBroomSwiftCleaner: LorcanitoCharacterCardDefinition = {
+export const magicBroomSwiftCleaner: LorcanaCharacterCardDefinition = {
   id: "iwx",
   name: "Magic Broom",
   title: "Swift Cleaner",
@@ -971,7 +971,7 @@ export const magicBroomSwiftCleaner: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const magicaDeSpellAmbitiousWitch: LorcanitoCharacterCardDefinition = {
+export const magicaDeSpellAmbitiousWitch: LorcanaCharacterCardDefinition = {
   id: "nia",
   name: "Magica De Spell",
   title: "Ambitious Witch",
@@ -990,7 +990,7 @@ export const magicaDeSpellAmbitiousWitch: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const magicaDeSpellTheMidasTouch: LorcanitoCharacterCardDefinition = {
+export const magicaDeSpellTheMidasTouch: LorcanaCharacterCardDefinition = {
   id: "i5n",
   name: "Magica De Spell",
   title: "The Midas Touch",
@@ -1083,7 +1083,7 @@ export const magicaDeSpellThievingSorceress: LorcanitoCharacterCardDefinition =
     set: "ITI",
     rarity: "uncommon",
   };
-export const maleficentMistressOfEvil: LorcanitoCharacterCardDefinition = {
+export const maleficentMistressOfEvil: LorcanaCharacterCardDefinition = {
   id: "su0",
   missingTestCase: true,
   name: "Maleficent",
@@ -1121,7 +1121,7 @@ export const maleficentMistressOfEvil: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "legendary",
 };
-export const puaPotbelliedBuddy: LorcanitoCharacterCardDefinition = {
+export const puaPotbelliedBuddy: LorcanaCharacterCardDefinition = {
   id: "eni",
   missingTestCase: true,
   name: "Pua",
@@ -1148,7 +1148,7 @@ export const puaPotbelliedBuddy: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const theFirebirdForceOfDestruction: LorcanitoCharacterCardDefinition = {
+export const theFirebirdForceOfDestruction: LorcanaCharacterCardDefinition = {
   id: "msq",
   name: "The Firebird",
   title: "Force of Destruction",
@@ -1167,7 +1167,7 @@ export const theFirebirdForceOfDestruction: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const ursulaSeaWitch: LorcanitoCharacterCardDefinition = {
+export const ursulaSeaWitch: LorcanaCharacterCardDefinition = {
   id: "uqt",
   reprints: ["i2h"],
   missingTestCase: true,
@@ -1201,7 +1201,7 @@ export const ursulaSeaWitch: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const luckyThe_15thPuppy: LorcanitoCharacterCardDefinition = {
+export const luckyThe_15thPuppy: LorcanaCharacterCardDefinition = {
   id: "n2h",
   missingTestCase: true,
   name: "Lucky",
@@ -1276,7 +1276,7 @@ export const luckyThe_15thPuppy: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const minnieMouseMusicalArtist: LorcanitoCharacterCardDefinition = {
+export const minnieMouseMusicalArtist: LorcanaCharacterCardDefinition = {
   id: "ptc",
   name: "Minnie Mouse",
   title: "Musical Artist",
@@ -1314,7 +1314,7 @@ export const minnieMouseMusicalArtist: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const mrSnoopsIneptBusinessman: LorcanitoCharacterCardDefinition = {
+export const mrSnoopsIneptBusinessman: LorcanaCharacterCardDefinition = {
   id: "d9e",
   name: "Mr. Snoops",
   title: "Inept Businessman",
@@ -1333,7 +1333,7 @@ export const mrSnoopsIneptBusinessman: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const magicBroomTheBigSweeper: LorcanitoCharacterCardDefinition = {
+export const magicBroomTheBigSweeper: LorcanaCharacterCardDefinition = {
   id: "huj",
   name: "Magic Broom",
   title: "The Big Sweeper",
@@ -1370,7 +1370,7 @@ export const magicBroomTheBigSweeper: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const magicCarpetFlyingRug: LorcanitoCharacterCardDefinition = {
+export const magicCarpetFlyingRug: LorcanaCharacterCardDefinition = {
   id: "a0f",
   name: "Magic Carpet",
   title: "Flying Rug",
@@ -1422,7 +1422,7 @@ export const magicCarpetFlyingRug: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const rafikiMysticalFighter: LorcanitoCharacterCardDefinition = {
+export const rafikiMysticalFighter: LorcanaCharacterCardDefinition = {
   id: "foa",
   reprints: ["b7e"],
   name: "Rafiki",
@@ -1470,7 +1470,7 @@ export const rafikiMysticalFighter: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const stratosTornadoTitan: LorcanitoCharacterCardDefinition = {
+export const stratosTornadoTitan: LorcanaCharacterCardDefinition = {
   id: "rck",
   missingTestCase: true,
   name: "Stratos",
@@ -1509,7 +1509,7 @@ export const stratosTornadoTitan: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const theQueenHatefulRival: LorcanitoCharacterCardDefinition = {
+export const theQueenHatefulRival: LorcanaCharacterCardDefinition = {
   id: "in2",
   name: "The Queen",
   title: "Hateful Rival",
@@ -1570,7 +1570,7 @@ export const treasureGuardianProtectorOfTheCave: LorcanitoCharacterCardDefinitio
     set: "ITI",
     rarity: "rare",
   };
-export const friarTuckPriestOfNottingham: LorcanitoCharacterCardDefinition = {
+export const friarTuckPriestOfNottingham: LorcanaCharacterCardDefinition = {
   id: "hlb",
   name: "Friar Tuck",
   title: "Priest of Nottingham",
@@ -1618,7 +1618,7 @@ export const friarTuckPriestOfNottingham: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const kitCloudkickerToughGuy: LorcanitoCharacterCardDefinition = {
+export const kitCloudkickerToughGuy: LorcanaCharacterCardDefinition = {
   id: "dgd",
   missingTestCase: true,
   name: "Kit Cloudkicker",
@@ -1647,7 +1647,7 @@ export const kitCloudkickerToughGuy: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const stitchCovertAgent: LorcanitoCharacterCardDefinition = {
+export const stitchCovertAgent: LorcanaCharacterCardDefinition = {
   id: "i0l",
   missingTestCase: true,
   name: "Stitch",
@@ -1679,7 +1679,7 @@ export const stitchCovertAgent: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const billyBonesKeeperOfTheMap: LorcanitoCharacterCardDefinition = {
+export const billyBonesKeeperOfTheMap: LorcanaCharacterCardDefinition = {
   id: "e3j",
   name: "Billy Bones",
   title: "Keeper of the Map",
@@ -1698,7 +1698,7 @@ export const billyBonesKeeperOfTheMap: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const captainAmeliaFirstInCommand: LorcanitoCharacterCardDefinition = {
+export const captainAmeliaFirstInCommand: LorcanaCharacterCardDefinition = {
   id: "efm",
   missingTestCase: true,
   name: "Captain Amelia",
@@ -1726,7 +1726,7 @@ export const captainAmeliaFirstInCommand: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const genieCrampedInTheLamp: LorcanitoCharacterCardDefinition = {
+export const genieCrampedInTheLamp: LorcanaCharacterCardDefinition = {
   id: "wg4",
   name: "Genie",
   title: "Cramped in the Lamp",
@@ -1744,7 +1744,7 @@ export const genieCrampedInTheLamp: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const kitCloudkickerNavigator: LorcanitoCharacterCardDefinition = {
+export const kitCloudkickerNavigator: LorcanaCharacterCardDefinition = {
   id: "j9c",
   name: "Kit Cloudkicker",
   title: "Navigator",
@@ -1763,7 +1763,7 @@ export const kitCloudkickerNavigator: LorcanitoCharacterCardDefinition = {
   illustrator: "Roger Pérez",
   rarity: "uncommon",
 };
-export const kitCloudkickerSpunkyBearCub: LorcanitoCharacterCardDefinition = {
+export const kitCloudkickerSpunkyBearCub: LorcanaCharacterCardDefinition = {
   id: "f03",
   name: "Kit Cloudkicker",
   title: "Spunky Bear Cub",
@@ -1783,7 +1783,7 @@ export const kitCloudkickerSpunkyBearCub: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const plutoMickeysCleverFriend: LorcanitoCharacterCardDefinition = {
+export const plutoMickeysCleverFriend: LorcanaCharacterCardDefinition = {
   id: "es5",
   name: "Pluto",
   title: "Mickey's Clever Friend",
@@ -1802,7 +1802,7 @@ export const plutoMickeysCleverFriend: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const scroogeMcduckUncleMoneybags: LorcanitoCharacterCardDefinition = {
+export const scroogeMcduckUncleMoneybags: LorcanaCharacterCardDefinition = {
   id: "twh",
   missingTestCase: true,
   name: "Scrooge McDuck",
@@ -1833,7 +1833,7 @@ export const scroogeMcduckUncleMoneybags: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const theQueenMirrorSeeker: LorcanitoCharacterCardDefinition = {
+export const theQueenMirrorSeeker: LorcanaCharacterCardDefinition = {
   id: "hmg",
   reprints: ["yku"],
   name: "The Queen",
@@ -1970,7 +1970,7 @@ export const johnSilverGreedyTreasureSeeker: LorcanitoCharacterCardDefinition =
     set: "ITI",
     rarity: "rare",
   };
-export const mickeyMouseStalwartExplorer: LorcanitoCharacterCardDefinition = {
+export const mickeyMouseStalwartExplorer: LorcanaCharacterCardDefinition = {
   id: "pon",
   missingTestCase: true,
   name: "Mickey Mouse",
@@ -2015,7 +2015,7 @@ export const mickeyMouseStalwartExplorer: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const mufasaChampionOfThePrideLands: LorcanitoCharacterCardDefinition = {
+export const mufasaChampionOfThePrideLands: LorcanaCharacterCardDefinition = {
   id: "er8",
   name: "Mufasa",
   title: "Champion of the Pride Lands",
@@ -2033,7 +2033,7 @@ export const mufasaChampionOfThePrideLands: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const pyrosLavaTitan: LorcanitoCharacterCardDefinition = {
+export const pyrosLavaTitan: LorcanaCharacterCardDefinition = {
   id: "ggw",
   missingTestCase: true,
   name: "Pyros",
@@ -2060,7 +2060,7 @@ export const pyrosLavaTitan: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const razoulPalaceGuard: LorcanitoCharacterCardDefinition = {
+export const razoulPalaceGuard: LorcanaCharacterCardDefinition = {
   id: "mui",
   name: "Razoul",
   title: "Palace Guard",
@@ -2096,7 +2096,7 @@ export const razoulPalaceGuard: LorcanitoCharacterCardDefinition = {
   rarity: "common",
 };
 
-export const cubbyMightyLostBoy: LorcanitoCharacterCardDefinition = {
+export const cubbyMightyLostBoy: LorcanaCharacterCardDefinition = {
   id: "zfd",
   missingTestCase: true,
   name: "Cubby",
@@ -2133,7 +2133,7 @@ export const cubbyMightyLostBoy: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const cursedMerfolkUrsulasHandiwork: LorcanitoCharacterCardDefinition = {
+export const cursedMerfolkUrsulasHandiwork: LorcanaCharacterCardDefinition = {
   id: "pr9",
   reprints: ["uww"],
   missingTestCase: true,
@@ -2162,7 +2162,7 @@ export const cursedMerfolkUrsulasHandiwork: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const donKarnagePiratePrince: LorcanitoCharacterCardDefinition = {
+export const donKarnagePiratePrince: LorcanaCharacterCardDefinition = {
   id: "d3j",
   name: "Don Karnage",
   title: "Prince of Pirates",
@@ -2183,7 +2183,7 @@ export const donKarnagePiratePrince: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const flotsamRiffraff: LorcanitoCharacterCardDefinition = {
+export const flotsamRiffraff: LorcanaCharacterCardDefinition = {
   id: "k3m",
   missingTestCase: true,
   name: "Flotsam",
@@ -2235,7 +2235,7 @@ export const flotsamRiffraff: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const helgaSinclairFemmeFatale: LorcanitoCharacterCardDefinition = {
+export const helgaSinclairFemmeFatale: LorcanaCharacterCardDefinition = {
   id: "y4a",
   missingTestCase: true,
   name: "Helga Sinclair",
@@ -2280,7 +2280,7 @@ export const helgaSinclairFemmeFatale: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "super_rare",
 };
-export const helgaSinclairVengefulPartner: LorcanitoCharacterCardDefinition = {
+export const helgaSinclairVengefulPartner: LorcanaCharacterCardDefinition = {
   id: "ytw",
   missingTestCase: true,
   name: "Helga Sinclair",
@@ -2307,7 +2307,7 @@ export const helgaSinclairVengefulPartner: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const jetsamRiffraff: LorcanitoCharacterCardDefinition = {
+export const jetsamRiffraff: LorcanaCharacterCardDefinition = {
   id: "rb9",
   missingTestCase: true,
   name: "Jetsam",
@@ -2399,7 +2399,7 @@ export const lyleTiberiusRourkeCunningMercenary: LorcanitoCharacterCardDefinitio
     set: "ITI",
     rarity: "super_rare",
   };
-export const miloThatchCleverCartographer: LorcanitoCharacterCardDefinition = {
+export const miloThatchCleverCartographer: LorcanaCharacterCardDefinition = {
   id: "gpo",
   name: "Milo Thatch",
   title: "Clever Cartographer",
@@ -2417,7 +2417,7 @@ export const miloThatchCleverCartographer: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const miloThatchKingOfAtlantis: LorcanitoCharacterCardDefinition = {
+export const miloThatchKingOfAtlantis: LorcanaCharacterCardDefinition = {
   id: "vpk",
   missingTestCase: true,
   name: "Milo Thatch",
@@ -2450,7 +2450,7 @@ export const miloThatchKingOfAtlantis: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "legendary",
 };
-export const morphSpaceGoo: LorcanitoCharacterCardDefinition = {
+export const morphSpaceGoo: LorcanaCharacterCardDefinition = {
   id: "z9h",
   name: "Morph",
   title: "Space Goo",
@@ -2469,7 +2469,7 @@ export const morphSpaceGoo: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const princeJohnFalseKing: LorcanitoCharacterCardDefinition = {
+export const princeJohnFalseKing: LorcanaCharacterCardDefinition = {
   id: "aw4",
   name: "Prince John",
   title: "Phony King",
@@ -2508,7 +2508,7 @@ export const princeJohnFalseKing: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const robinHoodDaydreamer: LorcanitoCharacterCardDefinition = {
+export const robinHoodDaydreamer: LorcanaCharacterCardDefinition = {
   id: "la4",
   reprints: ["x4m"],
   name: "Robin Hood",
@@ -2527,7 +2527,7 @@ export const robinHoodDaydreamer: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const shenziHyenaPackLeader: LorcanitoCharacterCardDefinition = {
+export const shenziHyenaPackLeader: LorcanaCharacterCardDefinition = {
   id: "jm3",
   reprints: ["bh1"],
   missingTestCase: true,
@@ -2573,7 +2573,7 @@ export const shenziHyenaPackLeader: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "super_rare",
 };
-export const sirHissAggravatingAsp: LorcanitoCharacterCardDefinition = {
+export const sirHissAggravatingAsp: LorcanaCharacterCardDefinition = {
   id: "ymp",
   name: "Sir Hiss",
   title: "Aggravating Asp",
@@ -2593,7 +2593,7 @@ export const sirHissAggravatingAsp: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const skippyEnergeticRabbit: LorcanitoCharacterCardDefinition = {
+export const skippyEnergeticRabbit: LorcanaCharacterCardDefinition = {
   id: "q7c",
   name: "Skippy",
   title: "Energetic Rabbit",
@@ -2613,7 +2613,7 @@ export const skippyEnergeticRabbit: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const starkeyDeviousPirate: LorcanitoCharacterCardDefinition = {
+export const starkeyDeviousPirate: LorcanaCharacterCardDefinition = {
   id: "x83",
   name: "Starkey",
   title: "Devious Pirate",
@@ -2646,7 +2646,7 @@ const ursulaEffect: DiscardEffect = {
   },
 };
 
-export const ursulaDeceiver: LorcanitoCharacterCardDefinition = {
+export const ursulaDeceiver: LorcanaCharacterCardDefinition = {
   id: "l1v",
   reprints: ["r8u"],
   name: "Ursula",
@@ -2674,7 +2674,7 @@ export const ursulaDeceiver: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const ursulaDeceiverOfAll: LorcanitoCharacterCardDefinition = {
+export const ursulaDeceiverOfAll: LorcanaCharacterCardDefinition = {
   id: "igx",
   name: "Ursula",
   title: "Deceiver of All",
@@ -2712,7 +2712,7 @@ export const ursulaDeceiverOfAll: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "legendary",
 };
-export const wildcatMechanic: LorcanitoCharacterCardDefinition = {
+export const wildcatMechanic: LorcanaCharacterCardDefinition = {
   id: "o3a",
   reprints: ["lmm"],
   name: "Wildcat",
@@ -2754,7 +2754,7 @@ export const wildcatMechanic: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const zazuPrideLandsManager: LorcanitoCharacterCardDefinition = {
+export const zazuPrideLandsManager: LorcanaCharacterCardDefinition = {
   id: "a8c",
   name: "Zazu",
   title: "Steward of the Pride Lands",
@@ -2789,7 +2789,7 @@ export const zazuPrideLandsManager: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const arielAdventurousCollector: LorcanitoCharacterCardDefinition = {
+export const arielAdventurousCollector: LorcanaCharacterCardDefinition = {
   id: "ix1",
   reprints: ["uny"],
   name: "Ariel",
@@ -2838,7 +2838,7 @@ export const arielAdventurousCollector: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "super_rare",
 };
-export const captainHookMasterSwordsman: LorcanitoCharacterCardDefinition = {
+export const captainHookMasterSwordsman: LorcanaCharacterCardDefinition = {
   id: "ult",
   name: "Captain Hook",
   title: "Master Swordsman",
@@ -2869,7 +2869,7 @@ export const captainHookMasterSwordsman: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const dellaDuckUnstoppableMom: LorcanitoCharacterCardDefinition = {
+export const dellaDuckUnstoppableMom: LorcanaCharacterCardDefinition = {
   id: "e2w",
   name: "Della Duck",
   title: "Unstoppable Mom",
@@ -2888,7 +2888,7 @@ export const dellaDuckUnstoppableMom: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const heiheiAccidentalExplorer: LorcanitoCharacterCardDefinition = {
+export const heiheiAccidentalExplorer: LorcanaCharacterCardDefinition = {
   id: "mjn",
   missingTestCase: true,
   name: "HeiHei",
@@ -2923,7 +2923,7 @@ export const heiheiAccidentalExplorer: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const hydraDeadlySerpent: LorcanitoCharacterCardDefinition = {
+export const hydraDeadlySerpent: LorcanaCharacterCardDefinition = {
   id: "ppz",
   name: "Hydra",
   title: "Deadly Serpent",
@@ -2953,7 +2953,7 @@ export const hydraDeadlySerpent: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "legendary",
 };
-export const jimHawkinsSpaceTraveler: LorcanitoCharacterCardDefinition = {
+export const jimHawkinsSpaceTraveler: LorcanaCharacterCardDefinition = {
   id: "s51",
   name: "Jim Hawkins",
   title: "Space Traveler",
@@ -3017,7 +3017,7 @@ export const jimHawkinsSpaceTraveler: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "legendary",
 };
-export const jimHawkinsThrillSeeker: LorcanitoCharacterCardDefinition = {
+export const jimHawkinsThrillSeeker: LorcanaCharacterCardDefinition = {
   id: "lmu",
   name: "Jim Hawkins",
   title: "Thrill Seeker",
@@ -3035,7 +3035,7 @@ export const jimHawkinsThrillSeeker: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const kakamoraMenacingSailor: LorcanitoCharacterCardDefinition = {
+export const kakamoraMenacingSailor: LorcanaCharacterCardDefinition = {
   id: "zi5",
   name: "Kakamora",
   title: "Menacing Sailor",
@@ -3068,7 +3068,7 @@ export const kakamoraMenacingSailor: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const madameMedusaTheBoss: LorcanitoCharacterCardDefinition = {
+export const madameMedusaTheBoss: LorcanaCharacterCardDefinition = {
   id: "pp1",
   name: "Madame Medusa",
   title: "The Boss",
@@ -3112,7 +3112,7 @@ export const madameMedusaTheBoss: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "super_rare",
 };
-export const mauiWingedDemigod: LorcanitoCharacterCardDefinition = {
+export const mauiWingedDemigod: LorcanaCharacterCardDefinition = {
   id: "joc",
   name: "Maui",
   title: "Soaring Demigod",
@@ -3169,7 +3169,7 @@ const dontWorryImHere: ActivatedAbility = {
   effects: [...readyAndCantQuest(thisCharacter)],
 };
 
-export const mauiWhale: LorcanitoCharacterCardDefinition = {
+export const mauiWhale: LorcanaCharacterCardDefinition = {
   id: "v33",
   reprints: ["daf"],
   missingTestCase: true,
@@ -3191,7 +3191,7 @@ export const mauiWhale: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const miloThatchSpiritedScholar: LorcanitoCharacterCardDefinition = {
+export const miloThatchSpiritedScholar: LorcanaCharacterCardDefinition = {
   id: "ork",
   name: "Milo Thatch",
   title: "Spirited Scholar",
@@ -3228,7 +3228,7 @@ export const miloThatchSpiritedScholar: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const moanaBornLeader: LorcanitoCharacterCardDefinition = {
+export const moanaBornLeader: LorcanaCharacterCardDefinition = {
   id: "sjt",
   name: "Moana",
   title: "Born Leader",
@@ -3255,7 +3255,7 @@ export const moanaBornLeader: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const moanaUndeterredVoyager: LorcanitoCharacterCardDefinition = {
+export const moanaUndeterredVoyager: LorcanaCharacterCardDefinition = {
   id: "shd",
   reprints: ["n3t"],
   name: "Moana",
@@ -3276,7 +3276,7 @@ export const moanaUndeterredVoyager: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const nutsyVultureHenchman: LorcanitoCharacterCardDefinition = {
+export const nutsyVultureHenchman: LorcanaCharacterCardDefinition = {
   id: "vqo",
   name: "Nutsy",
   title: "Vulture Henchman",
@@ -3294,7 +3294,7 @@ export const nutsyVultureHenchman: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const peterPanNeverLandHero: LorcanitoCharacterCardDefinition = {
+export const peterPanNeverLandHero: LorcanaCharacterCardDefinition = {
   id: "ufv",
   missingTestCase: true,
   name: "Peter Pan",
@@ -3332,7 +3332,7 @@ export const peterPanNeverLandHero: LorcanitoCharacterCardDefinition = {
   rarity: "common",
 };
 
-export const princeEricExpertHelmsman: LorcanitoCharacterCardDefinition = {
+export const princeEricExpertHelmsman: LorcanaCharacterCardDefinition = {
   id: "faa",
   missingTestCase: true,
   name: "Prince Eric",
@@ -3360,7 +3360,7 @@ export const princeEricExpertHelmsman: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "super_rare",
 };
-export const scroopBackstabber: LorcanitoCharacterCardDefinition = {
+export const scroopBackstabber: LorcanaCharacterCardDefinition = {
   id: "ca8",
   missingTestCase: true,
   name: "Scroop",
@@ -3396,7 +3396,7 @@ export const scroopBackstabber: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const simbaScrappyCub: LorcanitoCharacterCardDefinition = {
+export const simbaScrappyCub: LorcanaCharacterCardDefinition = {
   id: "f6m",
   reprints: ["bt1"],
   name: "Simba",
@@ -3414,7 +3414,7 @@ export const simbaScrappyCub: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const slightlyLostBoy: LorcanitoCharacterCardDefinition = {
+export const slightlyLostBoy: LorcanaCharacterCardDefinition = {
   id: "xuy",
   missingTestCase: true,
   name: "Slightly",
@@ -3443,7 +3443,7 @@ export const slightlyLostBoy: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const stitchLittleRocket: LorcanitoCharacterCardDefinition = {
+export const stitchLittleRocket: LorcanaCharacterCardDefinition = {
   id: "pv2",
   name: "Stitch",
   title: "Little Rocket",
@@ -3462,7 +3462,7 @@ export const stitchLittleRocket: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const triggerImpreciseShooter: LorcanitoCharacterCardDefinition = {
+export const triggerImpreciseShooter: LorcanaCharacterCardDefinition = {
   id: "bjr",
   missingTestCase: true,
   name: "Trigger",
@@ -3531,7 +3531,7 @@ export const webbyVanderquackEnthusiasticDuck: LorcanitoCharacterCardDefinition 
     set: "ITI",
     rarity: "common",
   };
-export const audreyRamirezTheEngineer: LorcanitoCharacterCardDefinition = {
+export const audreyRamirezTheEngineer: LorcanaCharacterCardDefinition = {
   id: "duu",
   name: "Audrey Ramirez",
   title: "The Engineer",
@@ -3573,7 +3573,7 @@ export const audreyRamirezTheEngineer: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const deweyShowyNephew: LorcanitoCharacterCardDefinition = {
+export const deweyShowyNephew: LorcanaCharacterCardDefinition = {
   id: "xer",
   reprints: ["kyd"],
   name: "Dewey",
@@ -3594,7 +3594,7 @@ export const deweyShowyNephew: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const flintheartGlomgoldLoneCheater: LorcanitoCharacterCardDefinition = {
+export const flintheartGlomgoldLoneCheater: LorcanaCharacterCardDefinition = {
   id: "z4e",
   missingTestCase: true,
   name: "Flintheart Glomgold",
@@ -3667,7 +3667,7 @@ export const grammaTalaKeeperOfAncientStories: LorcanitoCharacterCardDefinition 
     set: "ITI",
     rarity: "common",
   };
-export const grammaTalaSpiritOfTheOcean: LorcanitoCharacterCardDefinition = {
+export const grammaTalaSpiritOfTheOcean: LorcanaCharacterCardDefinition = {
   id: "ei5",
   name: "Gramma Tala",
   title: "Spirit of the Ocean",
@@ -3709,7 +3709,7 @@ export const grammaTalaSpiritOfTheOcean: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "legendary",
 };
-export const gyroGearlooseGadgetGenius: LorcanitoCharacterCardDefinition = {
+export const gyroGearlooseGadgetGenius: LorcanaCharacterCardDefinition = {
   id: "j4d",
   missingTestCase: true,
   name: "Gyro Gearloose",
@@ -3752,7 +3752,7 @@ export const gyroGearlooseGadgetGenius: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const hueySavvyNephew: LorcanitoCharacterCardDefinition = {
+export const hueySavvyNephew: LorcanaCharacterCardDefinition = {
   id: "k4e",
   reprints: ["ksz"],
   missingTestCase: true,
@@ -3789,7 +3789,7 @@ export const hueySavvyNephew: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const kingLouieBandleader: LorcanitoCharacterCardDefinition = {
+export const kingLouieBandleader: LorcanaCharacterCardDefinition = {
   id: "i0k",
   name: "King Louie",
   title: "Bandleader",
@@ -3807,7 +3807,7 @@ export const kingLouieBandleader: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const louieChillNephew: LorcanitoCharacterCardDefinition = {
+export const louieChillNephew: LorcanaCharacterCardDefinition = {
   id: "j0s",
   reprints: ["pec"],
   name: "Louie",
@@ -3828,7 +3828,7 @@ export const louieChillNephew: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const ladyMarianAdorableDreamer: LorcanitoCharacterCardDefinition = {
+export const ladyMarianAdorableDreamer: LorcanaCharacterCardDefinition = {
   id: "rd4",
   reprints: ["c8w"],
   name: "Maid Marian",
@@ -3864,7 +3864,7 @@ export const ladyMarianAdorableDreamer: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const mamaOdieMysticalMaven: LorcanitoCharacterCardDefinition = {
+export const mamaOdieMysticalMaven: LorcanaCharacterCardDefinition = {
   id: "c31",
   reprints: ["j6p"],
   name: "Mama Odie",
@@ -3894,7 +3894,7 @@ export const mamaOdieMysticalMaven: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const rufusOrphanageCat: LorcanitoCharacterCardDefinition = {
+export const rufusOrphanageCat: LorcanaCharacterCardDefinition = {
   id: "zvd",
   missingTestCase: true,
   name: "Rufus",
@@ -3961,7 +3961,7 @@ export const scroogeMcduckRichestDuckInTheWorld: LorcanitoCharacterCardDefinitio
     set: "ITI",
     rarity: "super_rare",
   };
-export const tinkerBellVeryCleverFairy: LorcanitoCharacterCardDefinition = {
+export const tinkerBellVeryCleverFairy: LorcanaCharacterCardDefinition = {
   id: "lvr",
   missingTestCase: true,
   name: "Tinker Bell",
@@ -3996,7 +3996,7 @@ export const tinkerBellVeryCleverFairy: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "super_rare",
 };
-export const chiefTuiProudOfMotunui: LorcanitoCharacterCardDefinition = {
+export const chiefTuiProudOfMotunui: LorcanaCharacterCardDefinition = {
   id: "kg5",
   name: "Chief Tui",
   title: "Proud of Motunui",
@@ -4014,7 +4014,7 @@ export const chiefTuiProudOfMotunui: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const hadesWrathfulRuler: LorcanitoCharacterCardDefinition = {
+export const hadesWrathfulRuler: LorcanaCharacterCardDefinition = {
   id: "qqe",
   missingTestCase: true,
   name: "Hades",
@@ -4059,7 +4059,7 @@ export const hadesWrathfulRuler: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "rare",
 };
-export const helgaSinclairRightHandWoman: LorcanitoCharacterCardDefinition = {
+export const helgaSinclairRightHandWoman: LorcanaCharacterCardDefinition = {
   id: "mag",
   name: "Helga Sinclair",
   title: "Right-Hand Woman",
@@ -4079,7 +4079,7 @@ export const helgaSinclairRightHandWoman: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const kidaRoyalWarrior: LorcanitoCharacterCardDefinition = {
+export const kidaRoyalWarrior: LorcanaCharacterCardDefinition = {
   id: "owz",
   name: "Kida",
   title: "Royal Warrior",
@@ -4100,7 +4100,7 @@ export const kidaRoyalWarrior: LorcanitoCharacterCardDefinition = {
   rarity: "common",
 };
 
-export const littleJohnResourcefulOutlaw: LorcanitoCharacterCardDefinition = {
+export const littleJohnResourcefulOutlaw: LorcanaCharacterCardDefinition = {
   id: "ai0",
   missingTestCase: true,
   name: "Little John",
@@ -4163,7 +4163,7 @@ export const littleJohnResourcefulOutlaw: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "super_rare",
 };
-export const littleJohnRobinsCompanion: LorcanitoCharacterCardDefinition = {
+export const littleJohnRobinsCompanion: LorcanaCharacterCardDefinition = {
   id: "lkk",
   missingTestCase: true,
   name: "Little John",
@@ -4190,7 +4190,7 @@ export const littleJohnRobinsCompanion: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const lythosRockTitan: LorcanitoCharacterCardDefinition = {
+export const lythosRockTitan: LorcanaCharacterCardDefinition = {
   id: "qjs",
   missingTestCase: true,
   name: "Lythos",
@@ -4238,7 +4238,7 @@ export const lythosRockTitan: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const mickeyMouseTrumpeter: LorcanitoCharacterCardDefinition = {
+export const mickeyMouseTrumpeter: LorcanaCharacterCardDefinition = {
   id: "zep",
   reprints: ["ftq"],
   missingTestCase: true,
@@ -4280,7 +4280,7 @@ export const mickeyMouseTrumpeter: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "legendary",
 };
-export const mrSmeeBumblingMate: LorcanitoCharacterCardDefinition = {
+export const mrSmeeBumblingMate: LorcanaCharacterCardDefinition = {
   id: "gpk",
   name: "Mr. Smee",
   title: "Bumbling Mate",
@@ -4333,7 +4333,7 @@ export const mrSmeeBumblingMate: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const nalaFierceFriend: LorcanitoCharacterCardDefinition = {
+export const nalaFierceFriend: LorcanaCharacterCardDefinition = {
   id: "apz",
   name: "Nala",
   title: "Fierce Friend",
@@ -4351,7 +4351,7 @@ export const nalaFierceFriend: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const robinHoodBelovedOutlaw: LorcanitoCharacterCardDefinition = {
+export const robinHoodBelovedOutlaw: LorcanaCharacterCardDefinition = {
   id: "n4x",
   name: "Robin Hood",
   title: "Beloved Outlaw",
@@ -4369,7 +4369,7 @@ export const robinHoodBelovedOutlaw: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const robinHoodChampionOfSherwood: LorcanitoCharacterCardDefinition = {
+export const robinHoodChampionOfSherwood: LorcanaCharacterCardDefinition = {
   id: "f1t",
   reprints: ["mfa"],
   name: "Robin Hood",
@@ -4472,7 +4472,7 @@ const submitOrFight: ModalEffect = {
   ],
 };
 
-export const simbaFightingPrince: LorcanitoCharacterCardDefinition = {
+export const simbaFightingPrince: LorcanaCharacterCardDefinition = {
   id: "gm1",
   missingTestCase: true,
   name: "Simba",
@@ -4507,7 +4507,7 @@ export const simbaFightingPrince: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "super_rare",
 };
-export const simbaRightfulKing: LorcanitoCharacterCardDefinition = {
+export const simbaRightfulKing: LorcanaCharacterCardDefinition = {
   id: "fgi",
   missingTestCase: true,
   name: "Simba",
@@ -4534,7 +4534,7 @@ export const simbaRightfulKing: LorcanitoCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const thaddeusEKlangMetalHead: LorcanitoCharacterCardDefinition = {
+export const thaddeusEKlangMetalHead: LorcanaCharacterCardDefinition = {
   id: "uvv",
   missingTestCase: true,
   name: "Thaddeus E. Klang",

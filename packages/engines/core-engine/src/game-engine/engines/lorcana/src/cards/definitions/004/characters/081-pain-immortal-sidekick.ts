@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const painImmortalSidekick: LorcanitoCharacterCardDefinition = {
+export const painImmortalSidekick: LorcanaCharacterCardDefinition = {
   id: "yj2",
   name: "Pain",
   title: "Immortal Sidekick",

@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const winnieThePoohHunnyWizard: LorcanitoCharacterCardDefinition = {
+export const winnieThePoohHunnyWizard: LorcanaCharacterCardDefinition = {
   id: "nkw",
   reprints: ["emh"],
 

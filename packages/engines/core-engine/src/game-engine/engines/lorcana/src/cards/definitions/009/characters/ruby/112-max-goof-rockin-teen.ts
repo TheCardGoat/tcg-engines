@@ -20,7 +20,7 @@ const justWannaStayAtHome: EffectStaticAbility = {
   ],
 };
 
-export const maxGoofRockinTeen: LorcanitoCharacterCardDefinition = {
+export const maxGoofRockinTeen: LorcanaCharacterCardDefinition = {
   id: "ob7",
   name: "Max Goof",
   title: "Rockin' Teen",

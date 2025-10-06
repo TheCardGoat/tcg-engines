@@ -2,7 +2,7 @@ import { revealTopOfDeckPutInHandOrDeck } from "@lorcanito/lorcana-engine/effect
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const daisyDuckDonaldsDate: LorcanitoCharacterCardDefinition = {
+export const daisyDuckDonaldsDate: LorcanaCharacterCardDefinition = {
   id: "x3z",
   name: "Daisy Duck",
   title: "Donald's Date",

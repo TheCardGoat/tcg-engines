@@ -2,7 +2,7 @@ import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { wheneverTargetPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const princeJohnOpportunisticBriber: LorcanitoCharacterCardDefinition = {
+export const princeJohnOpportunisticBriber: LorcanaCharacterCardDefinition = {
   id: "xu2",
   name: "Prince John",
   title: "Opportunistic Briber",

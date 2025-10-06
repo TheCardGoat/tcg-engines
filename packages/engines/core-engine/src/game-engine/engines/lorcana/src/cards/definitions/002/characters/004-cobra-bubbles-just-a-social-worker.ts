@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const cobraBubblesSimpleEducator: LorcanitoCharacterCardDefinition = {
+export const cobraBubblesSimpleEducator: LorcanaCharacterCardDefinition = {
   id: "ygo",
   name: "Cobra Bubbles",
   title: "Just a Social Worker",

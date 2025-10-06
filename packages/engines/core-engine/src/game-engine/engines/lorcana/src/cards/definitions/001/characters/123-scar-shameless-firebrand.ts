@@ -3,7 +3,7 @@ import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const scarShamelessFirebrand: LorcanitoCharacterCardDefinition = {
+export const scarShamelessFirebrand: LorcanaCharacterCardDefinition = {
   id: "mm7",
   name: "Scar",
   title: "Shameless Firebrand",

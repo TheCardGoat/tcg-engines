@@ -1,7 +1,7 @@
 import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const joshuaSweetTheDoctor: LorcanitoCharacterCardDefinition = {
+export const joshuaSweetTheDoctor: LorcanaCharacterCardDefinition = {
   id: "xtr",
   missingTestCase: true,
   name: "Joshua Sweet",

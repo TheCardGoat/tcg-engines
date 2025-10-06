@@ -2,7 +2,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { wheneverTargetPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const magicBroomIlluminaryKeeper: LorcanitoCharacterCardDefinition = {
+export const magicBroomIlluminaryKeeper: LorcanaCharacterCardDefinition = {
   id: "kgu",
   name: "Magic Broom",
   title: "Illuminary Keeper",

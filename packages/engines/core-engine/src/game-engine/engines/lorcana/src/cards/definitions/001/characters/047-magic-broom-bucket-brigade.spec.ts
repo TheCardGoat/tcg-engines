@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   captainColonelsLieutenant,
   heiheiBoatSnack,
@@ -11,6 +10,10 @@ import {
   mickeyMouseTrueFriend,
   moanaOfMotunui,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Magic Broom - Bucket Brigade", () => {
   it("Weep effect - Own Discard", () => {

@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { helgaSinclairVengefulPartner } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Helga Sinclair - Vengeful Partner", () => {
   it.skip("**NOTHING PERSONAL** When this character is challenged and banished, banish the challenging character.", () => {

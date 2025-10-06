@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const kingCandySovereignOfSugar: LorcanitoCharacterCardDefinition = {
+export const kingCandySovereignOfSugar: LorcanaCharacterCardDefinition = {
   id: "v25",
   name: "King Candy",
   title: "Sovereign of Sugar",

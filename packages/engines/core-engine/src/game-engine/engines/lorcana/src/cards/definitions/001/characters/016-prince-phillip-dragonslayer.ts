@@ -1,7 +1,7 @@
 import { whenThisCharChallengesAndIsBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const princePhillipDragonSlayer: LorcanitoCharacterCardDefinition = {
+export const princePhillipDragonSlayer: LorcanaCharacterCardDefinition = {
   id: "u23",
   name: "Prince Phillip",
   title: "Dragonslayer",

@@ -6,7 +6,7 @@ import {
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ursulaSeaWitchQueen: LorcanitoCharacterCardDefinition = {
+export const ursulaSeaWitchQueen: LorcanaCharacterCardDefinition = {
   id: "k0n",
   name: "Ursula",
   title: "Sea Witch Queen",

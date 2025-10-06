@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const snowWhiteUnexpectedHouseGuest: LorcanitoCharacterCardDefinition = {
+export const snowWhiteUnexpectedHouseGuest: LorcanaCharacterCardDefinition = {
   id: "pyl",
   name: "Snow White",
   title: "Unexpected Houseguest",

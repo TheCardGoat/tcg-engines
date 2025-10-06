@@ -2,7 +2,7 @@ import { yourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/targets
 import { yourOtherCharactersGet } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const lumiereFieryFriend: LorcanitoCharacterCardDefinition = {
+export const lumiereFieryFriend: LorcanaCharacterCardDefinition = {
   id: "tok",
   reprints: ["bk1"],
   name: "Lumiere",

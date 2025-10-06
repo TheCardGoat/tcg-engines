@@ -5,7 +5,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const madamMimRivalOfMerlin: LorcanitoCharacterCardDefinition = {
+export const madamMimRivalOfMerlin: LorcanaCharacterCardDefinition = {
   id: "esw",
   name: "Madam Mim",
   title: "Rival of Merlin",

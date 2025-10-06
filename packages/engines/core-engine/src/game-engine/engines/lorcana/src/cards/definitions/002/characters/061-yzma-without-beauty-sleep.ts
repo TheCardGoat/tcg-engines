@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const yzmaWithoutBeautySleep: LorcanitoCharacterCardDefinition = {
+export const yzmaWithoutBeautySleep: LorcanaCharacterCardDefinition = {
   id: "doq",
   name: "Yzma",
   title: "Without Beauty Sleep",

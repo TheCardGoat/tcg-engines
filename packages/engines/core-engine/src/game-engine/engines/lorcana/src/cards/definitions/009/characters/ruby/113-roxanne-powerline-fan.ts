@@ -2,7 +2,7 @@ import { whileYouHaveCharacterWithAbility } from "@lorcanito/lorcana-engine/abil
 import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const roxannePowerlineFan: LorcanitoCharacterCardDefinition = {
+export const roxannePowerlineFan: LorcanaCharacterCardDefinition = {
   id: "rpf",
   name: "Roxanne",
   title: "Powerline Fan",

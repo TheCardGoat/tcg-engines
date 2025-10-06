@@ -2,7 +2,7 @@ import { opponent, self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ursulaPowerHungry: LorcanitoCharacterCardDefinition = {
+export const ursulaPowerHungry: LorcanaCharacterCardDefinition = {
   id: "z61",
   name: "Ursula",
   title: "Power Hungry",

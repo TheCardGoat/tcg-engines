@@ -1,7 +1,7 @@
 import { recklessAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/recklessAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const tukTukWreckingBall: LorcanitoCharacterCardDefinition = {
+export const tukTukWreckingBall: LorcanaCharacterCardDefinition = {
   id: "nqd",
 
   name: "Tuk Tuk",

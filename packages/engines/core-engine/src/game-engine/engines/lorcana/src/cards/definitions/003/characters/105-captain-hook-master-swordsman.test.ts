@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   pinocchioStarAttraction,
   pinocchioTalkativePuppet,
   theHuntsmanReluctantEnforcer,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { captainHookMasterSwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Captain Hook - Master Swordsman", () => {
   it("**NEMESIS** During your turn, whenever this character banishes another character in a challenge, ready this character. He can't quest for the rest of this turn.", () => {

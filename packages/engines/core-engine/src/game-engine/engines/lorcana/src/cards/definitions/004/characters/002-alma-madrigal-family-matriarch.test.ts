@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   liloMakingAWish,
   stichtNewDog,
@@ -13,6 +12,10 @@ import {
   almaMadrigalFamilyMatriarch,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { luisaMadrigalEntertainingMuscle } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Alma Madrigal - Family Matriarch", () => {
   it("**ALL AT THE TABLE** When you play this character, look at your deck. You may reveal a Madrigal character card. Shuffle your deck and put that card on top of your deck.", () => {

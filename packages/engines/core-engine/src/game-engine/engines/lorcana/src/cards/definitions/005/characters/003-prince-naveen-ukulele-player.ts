@@ -4,7 +4,7 @@ import type {
 } from "@lorcanito/lorcana-engine";
 import { singerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singerAbility";
 
-export const princeNaveenUkulelePlayer: LorcanitoCharacterCardDefinition = {
+export const princeNaveenUkulelePlayer: LorcanaCharacterCardDefinition = {
   id: "mnj",
   name: "Prince Naveen",
   title: "Ukulele Player",

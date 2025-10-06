@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const genieTheEverImpressive: LorcanitoCharacterCardDefinition = {
+export const genieTheEverImpressive: LorcanaCharacterCardDefinition = {
   id: "oy4",
   name: "Genie",
   title: "The Ever Impressive",

@@ -29,7 +29,7 @@ const attributeEffeect: AttributeEffect = {
   target: thisCharacter,
 };
 
-export const donaldDuckPieSlinger: LorcanitoCharacterCardDefinition = {
+export const donaldDuckPieSlinger: LorcanaCharacterCardDefinition = {
   id: "t57",
   name: "Donald Duck",
   title: "Pie Slinger",

@@ -1,7 +1,7 @@
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mufasaRulerOfPrideRock: LorcanitoCharacterCardDefinition = {
+export const mufasaRulerOfPrideRock: LorcanaCharacterCardDefinition = {
   id: "rlb",
   name: "Mufasa",
   title: "Ruler of Pride Rock",

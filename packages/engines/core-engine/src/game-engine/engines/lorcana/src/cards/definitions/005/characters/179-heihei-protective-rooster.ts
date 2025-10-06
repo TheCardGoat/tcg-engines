@@ -1,7 +1,7 @@
 import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const heiheiProtectiveRooster: LorcanitoCharacterCardDefinition = {
+export const heiheiProtectiveRooster: LorcanaCharacterCardDefinition = {
   id: "l2b",
   name: "HeiHei",
   title: "Protective Rooster",

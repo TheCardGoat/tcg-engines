@@ -2,7 +2,7 @@ import { whenPlayAndWheneverQuests } from "@lorcanito/lorcana-engine/abilities/w
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const jasmineQueenOfAgrabah: LorcanitoCharacterCardDefinition = {
+export const jasmineQueenOfAgrabah: LorcanaCharacterCardDefinition = {
   id: "a4n",
   name: "Jasmine",
   title: "Queen of Agrabah",

@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { monstroWhaleOfAWhale } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import { ratigansPartySeedyBackRoom } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Ratigan's Party - Seedy Back Room", () => {
   describe("**MISFITS’ REVELRY** While you have a damaged character here, this location gets +2 {L}.", () => {

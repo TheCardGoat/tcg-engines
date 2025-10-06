@@ -5,7 +5,7 @@ import {
 import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const belleUntrainedMystic: LorcanitoCharacterCardDefinition = {
+export const belleUntrainedMystic: LorcanaCharacterCardDefinition = {
   id: "gfw",
   reprints: ["k6t"],
   missingTestCase: true,

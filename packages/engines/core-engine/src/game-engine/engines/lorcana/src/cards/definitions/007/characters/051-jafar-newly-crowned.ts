@@ -1,7 +1,7 @@
 import { wheneverOneOfYouCharactersIsBanished } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const jafarNewlyCrowned: LorcanitoCharacterCardDefinition = {
+export const jafarNewlyCrowned: LorcanaCharacterCardDefinition = {
   id: "zb8",
   name: "Jafar",
   title: "Newly Crowned",

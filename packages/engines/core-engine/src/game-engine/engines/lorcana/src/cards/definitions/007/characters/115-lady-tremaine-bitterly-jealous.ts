@@ -1,7 +1,7 @@
 import { opponentDiscardsARandomCard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ladyTremaineBitterlyJealous: LorcanitoCharacterCardDefinition = {
+export const ladyTremaineBitterlyJealous: LorcanaCharacterCardDefinition = {
   id: "zl6",
   name: "Lady Tremaine",
   title: "Bitterly Jealous",

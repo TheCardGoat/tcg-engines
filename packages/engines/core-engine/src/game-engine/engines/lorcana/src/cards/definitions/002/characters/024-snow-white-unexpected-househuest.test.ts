@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   bashfulHopelessRomantic,
   docLeaderOfTheSevenDwarfs,
@@ -11,6 +10,10 @@ import {
   sleepyNoddingOff,
   snowWhiteUnexpectedHouseGuest,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Snow White - Unexpected Househuest", () => {
   it("**HOW DO YOU DO?** You pay 1 {I} less to play Seven Dwarfs characters.", () => {

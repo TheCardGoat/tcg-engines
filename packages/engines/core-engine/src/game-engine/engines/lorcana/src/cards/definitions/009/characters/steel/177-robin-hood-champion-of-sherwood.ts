@@ -1,7 +1,7 @@
 import { robinHoodChampionOfSherwood as robinHoodChampionOfSherwoodAsOrig } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const robinHoodChampionOfSherwood: LorcanitoCharacterCardDefinition = {
+export const robinHoodChampionOfSherwood: LorcanaCharacterCardDefinition = {
   ...robinHoodChampionOfSherwoodAsOrig,
   id: "mfa",
   reprints: [robinHoodChampionOfSherwoodAsOrig.id],

@@ -5,7 +5,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const jafarDreadnought: LorcanitoCharacterCardDefinition = {
+export const jafarDreadnought: LorcanaCharacterCardDefinition = {
   id: "cgs",
 
   name: "Jafar",

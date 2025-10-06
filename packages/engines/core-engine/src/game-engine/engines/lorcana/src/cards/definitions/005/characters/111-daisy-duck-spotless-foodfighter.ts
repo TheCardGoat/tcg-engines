@@ -1,7 +1,7 @@
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const daisyDuckSpotlessFoodfighter: LorcanitoCharacterCardDefinition = {
+export const daisyDuckSpotlessFoodfighter: LorcanaCharacterCardDefinition = {
   id: "r79",
   name: "Daisy Duck",
   title: "Spotless Food-Fighter",

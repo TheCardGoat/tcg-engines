@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { princePhillipSwordsmanOfTheRealm } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Prince Phillip - Swordsman of the Realm", () => {
   it.skip("**SLAYER OF DRAGONS** When you play this character, banish chosen opposing Dragon character.", () => {

@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const edgarBalthazarAmbitiousButler: LorcanitoCharacterCardDefinition = {
+export const edgarBalthazarAmbitiousButler: LorcanaCharacterCardDefinition = {
   id: "ljt",
   name: "Edgar Balthazar",
   title: "Ambitious Butler",

@@ -1,7 +1,7 @@
 import { winnieThePoohHunnyWizard as ogWinnieThePoohHunnyWizard } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/059-winnie-the-pooh-hunny-wizard";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const winnieThePoohHunnyWizard: LorcanitoCharacterCardDefinition = {
+export const winnieThePoohHunnyWizard: LorcanaCharacterCardDefinition = {
   ...ogWinnieThePoohHunnyWizard,
   id: "emh",
   reprints: [ogWinnieThePoohHunnyWizard.id],

@@ -1,7 +1,7 @@
 import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const elsaGlovesOff: LorcanitoCharacterCardDefinition = {
+export const elsaGlovesOff: LorcanaCharacterCardDefinition = {
   id: "dmk",
   reprints: ["b83"],
   name: "Elsa",

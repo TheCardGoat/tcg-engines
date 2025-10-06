@@ -2,7 +2,7 @@ import { chosenCharacterOfYoursAtLocation } from "@lorcanito/lorcana-engine/abil
 import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rayaGuardianOfTheDragonGem: LorcanitoCharacterCardDefinition = {
+export const rayaGuardianOfTheDragonGem: LorcanaCharacterCardDefinition = {
   id: "cbs",
   missingTestCase: true,
   name: "Raya",

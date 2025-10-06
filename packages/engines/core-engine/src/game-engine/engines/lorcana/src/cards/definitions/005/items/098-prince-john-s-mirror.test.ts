@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   mickeyBraveLittleTailor,
   mickeyMouseDetective,
@@ -15,6 +14,10 @@ import {
   princeJohnGreediestOfAll,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { princeJohnsMirror } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Prince John's Mirror", () => {
   it("**YOU LOOK REGAL** If you have a character named Prince John in play, you pay 1 {I} less to play this item.", () => {

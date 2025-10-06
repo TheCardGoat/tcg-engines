@@ -1,7 +1,7 @@
 import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const yaoImperialSoldier: LorcanitoCharacterCardDefinition = {
+export const yaoImperialSoldier: LorcanaCharacterCardDefinition = {
   id: "wch",
   name: "Yao",
   title: "Imperial Soldier",

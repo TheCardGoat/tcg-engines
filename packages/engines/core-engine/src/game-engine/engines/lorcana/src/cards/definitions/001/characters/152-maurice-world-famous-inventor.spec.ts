@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   mauriceWorldFamousInventor,
   tinkerBellTinyTactician,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { ursulaShellNecklace } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Maurice - World-Famous Inventor", () => {
   it("Give it a try: Whenever this character quests, you pay 2 {I} less for the next item you play this turn.", () => {

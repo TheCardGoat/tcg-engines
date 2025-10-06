@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   chipTheTeacupGentleSoul,
   heiheiPersistentPresence,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 export function heiheiPersistenetPresenceTestCases() {
   describe("**HE'S BACK!** When this character is banished in a challenge, return this card to your hand.", () => {

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { youHaveForgottenMe } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   liloMakingAWish,
@@ -12,6 +11,10 @@ import {
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { suddenChill } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import { princeJohnGreediestOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Prince John - Greediest of All", () => {
   it("Ward", () => {

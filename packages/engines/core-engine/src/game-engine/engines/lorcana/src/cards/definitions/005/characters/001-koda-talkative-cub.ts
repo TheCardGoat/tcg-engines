@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const kodaTalkativeCub: LorcanitoCharacterCardDefinition = {
+export const kodaTalkativeCub: LorcanaCharacterCardDefinition = {
   notImplemented: true,
   id: "ftx",
   missingTestCase: true,

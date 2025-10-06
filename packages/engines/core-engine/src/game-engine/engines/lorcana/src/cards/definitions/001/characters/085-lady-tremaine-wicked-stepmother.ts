@@ -1,7 +1,7 @@
 import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ladyTremaine: LorcanitoCharacterCardDefinition = {
+export const ladyTremaine: LorcanaCharacterCardDefinition = {
   id: "ucd",
 
   name: "Lady Tremaine",

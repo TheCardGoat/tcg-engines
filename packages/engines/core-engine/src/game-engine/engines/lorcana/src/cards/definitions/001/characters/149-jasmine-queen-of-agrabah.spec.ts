@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   jasmineQueenOfAgrabah,
   mauiHeroToAll,
   mickeyMouseTrueFriend,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Jasmine - Queen of Agrabah", () => {
   describe("Caretaker - When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.", () => {

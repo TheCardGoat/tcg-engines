@@ -3,7 +3,7 @@ import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const tinkerBellMostHelpful: LorcanitoCharacterCardDefinition = {
+export const tinkerBellMostHelpful: LorcanaCharacterCardDefinition = {
   id: "xkn",
   reprints: ["rxt"],
   name: "Tinker Bell",

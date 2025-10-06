@@ -1,7 +1,7 @@
 import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const sleepySluggishKnight: LorcanitoCharacterCardDefinition = {
+export const sleepySluggishKnight: LorcanaCharacterCardDefinition = {
   id: "zvc",
   name: "Sleepy",
   title: "Sluggish Knight",

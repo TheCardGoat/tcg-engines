@@ -1,7 +1,7 @@
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const zazuAdvisorToMufasa: LorcanitoCharacterCardDefinition = {
+export const zazuAdvisorToMufasa: LorcanaCharacterCardDefinition = {
   id: "g60",
   name: "Zazu",
   title: "Advisor to Mufasa",

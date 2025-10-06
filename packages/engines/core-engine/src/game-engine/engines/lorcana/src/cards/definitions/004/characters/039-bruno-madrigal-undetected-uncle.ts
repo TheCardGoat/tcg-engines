@@ -6,7 +6,7 @@ import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const brunoMadrigalUndetectedUncle: LorcanitoCharacterCardDefinition = {
+export const brunoMadrigalUndetectedUncle: LorcanaCharacterCardDefinition = {
   id: "le7",
   reprints: ["tiq"],
   name: "Bruno Madrigal",

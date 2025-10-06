@@ -9,7 +9,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const princeEricUrsulasGroom: LorcanitoCharacterCardDefinition = {
+export const princeEricUrsulasGroom: LorcanaCharacterCardDefinition = {
   id: "k1b",
   missingTestCase: true,
   name: "Prince Eric",

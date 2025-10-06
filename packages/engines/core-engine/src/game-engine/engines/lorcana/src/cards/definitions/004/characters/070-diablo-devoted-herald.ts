@@ -6,7 +6,7 @@ import {
 import { wheneverOpponentDrawsACard } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const diabloDevotedHerald: LorcanitoCharacterCardDefinition = {
+export const diabloDevotedHerald: LorcanaCharacterCardDefinition = {
   id: "hxs",
   name: "Diablo",
   title: "Devoted Herald",

@@ -5,7 +5,7 @@ import {
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const geniePowerUnleashed: LorcanitoCharacterCardDefinition = {
+export const geniePowerUnleashed: LorcanaCharacterCardDefinition = {
   id: "dgz",
   name: "Genie",
   title: "Powers Unleashed",

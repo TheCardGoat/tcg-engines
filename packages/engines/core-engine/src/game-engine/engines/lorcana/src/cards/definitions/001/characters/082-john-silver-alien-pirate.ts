@@ -1,7 +1,7 @@
 import { whenPlayAndWheneverQuests } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const johnSilverAlienPirate: LorcanitoCharacterCardDefinition = {
+export const johnSilverAlienPirate: LorcanaCharacterCardDefinition = {
   id: "a8j",
   reprints: ["hsz"],
 

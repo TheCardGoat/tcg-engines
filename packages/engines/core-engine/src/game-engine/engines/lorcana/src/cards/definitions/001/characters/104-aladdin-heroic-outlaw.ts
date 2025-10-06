@@ -6,7 +6,7 @@ import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keywor
 import { wheneverBanishesAnotherCharacterInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const aladdinHeroicOutlaw: LorcanitoCharacterCardDefinition = {
+export const aladdinHeroicOutlaw: LorcanaCharacterCardDefinition = {
   id: "c0t",
   name: "Aladdin",
   title: "Heroic Outlaw",

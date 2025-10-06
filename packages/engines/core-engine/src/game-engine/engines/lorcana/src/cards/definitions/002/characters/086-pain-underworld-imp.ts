@@ -1,7 +1,7 @@
 import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const painUnderworldImp: LorcanitoCharacterCardDefinition = {
+export const painUnderworldImp: LorcanaCharacterCardDefinition = {
   id: "hrt",
   name: "Pain",
   title: "Underworld Imp",

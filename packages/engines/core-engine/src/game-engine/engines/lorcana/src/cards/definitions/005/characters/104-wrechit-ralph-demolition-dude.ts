@@ -2,7 +2,7 @@ import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverYouReadyThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const wrechitRalphDemolitionDude: LorcanitoCharacterCardDefinition = {
+export const wrechitRalphDemolitionDude: LorcanaCharacterCardDefinition = {
   id: "lpn",
   name: "Wreck-It Ralph",
   title: "Demolition Dude",

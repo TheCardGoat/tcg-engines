@@ -3,7 +3,7 @@
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const basilHypnotizedMouse: LorcanitoCharacterCardDefinition = {
+export const basilHypnotizedMouse: LorcanaCharacterCardDefinition = {
   id: "i84",
   name: "Basil",
   title: "Hypnotized Mouse",

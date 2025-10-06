@@ -1,7 +1,7 @@
 import { recklessAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/recklessAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const feliciaAlwaysHungry: LorcanitoCharacterCardDefinition = {
+export const feliciaAlwaysHungry: LorcanaCharacterCardDefinition = {
   id: "trb",
 
   name: "Felicia",

@@ -3,12 +3,15 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   grammaTalaKeeperOfAncientStories,
   mrSmeeBumblingMate,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Gramma Tala - Keeper of Ancient Stories", () => {
   it("**THERE WAS ONLY OCEAN** When you play this character, look at the top 2 cards of your deck. You may add one into your hand. Put the rest on the bottom of your deck in any order.", () => {

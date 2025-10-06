@@ -1,7 +1,7 @@
 import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const tinkerBellTinyTactician: LorcanitoCharacterCardDefinition = {
+export const tinkerBellTinyTactician: LorcanaCharacterCardDefinition = {
   id: "s44",
   reprints: ["ahg"],
 

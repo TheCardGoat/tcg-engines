@@ -2,7 +2,7 @@ import { banishChosenItemOrLocation } from "@lorcanito/lorcana-engine/effects/ef
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const simbaSonOfMufasa: LorcanitoCharacterCardDefinition = {
+export const simbaSonOfMufasa: LorcanaCharacterCardDefinition = {
   id: "me7",
   missingTestCase: true,
   name: "Simba",

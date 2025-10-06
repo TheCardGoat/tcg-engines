@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   pumbaFriendlyWarhog,
   simbaFutureKing,
@@ -11,6 +10,10 @@ import {
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { mufasaBetrayedLeader } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { prideLandsJungleOasis } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Pride Lands - Jungle Oasis", () => {
   describe("**OUR HUMBLE HOME**While you have 3 or more characters here, you may banish this location to play a character from your discard for free.", () => {

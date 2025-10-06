@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   donaldDuckFocusedFlatfoot,
   tipoGrowingSon,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Donald Duck - Focused Flatfoot", () => {
   it("**BAFFLING MYSTERY** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.", () => {

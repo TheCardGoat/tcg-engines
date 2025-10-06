@@ -1,7 +1,7 @@
 import { discardACard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const daisyDuckMusketeerSpy: LorcanitoCharacterCardDefinition = {
+export const daisyDuckMusketeerSpy: LorcanaCharacterCardDefinition = {
   id: "w9s",
   reprints: ["ex3"],
   missingTestCase: true,

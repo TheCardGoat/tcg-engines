@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { goonsMaleficent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { airfoil } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
 import { gatheringKnowledgeAndWisdom } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Airfoil", () => {
   it("**I GOT TO BE GOING** -> Do nothing on <2 actions played", () => {

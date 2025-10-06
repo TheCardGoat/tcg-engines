@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   liloGalacticHero,
   rapunzelGiftedWithHealing,
@@ -13,6 +12,10 @@ import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/defi
 import { bindingContract } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
 import { theQueenDiviner } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { greatStoneDragon } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Queen - Diviner", () => {
   describe("**CONSULT THE GRIMOIRE** {E} – Look at the top 4 cards of your deck. You may reveal an item card and put it into your hand. If that item card costs 3 or less, you may play that item for free and it enters play exerted. Put the rest on the bottom of your deck in any order.", () => {

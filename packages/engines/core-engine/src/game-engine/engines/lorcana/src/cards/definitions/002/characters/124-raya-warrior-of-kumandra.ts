@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rayaWarriorOfKumandra: LorcanitoCharacterCardDefinition = {
+export const rayaWarriorOfKumandra: LorcanaCharacterCardDefinition = {
   id: "goj",
   name: "Raya",
   title: "Warrior of Kumandra",

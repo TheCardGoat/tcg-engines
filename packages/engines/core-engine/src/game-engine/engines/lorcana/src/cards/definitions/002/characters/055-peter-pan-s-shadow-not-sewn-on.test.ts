@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   mulanSoldierInTraining,
   peterPansShadowNotSewnOn,
   queenOfHeartsImpulsiveRuler,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Peter Pan's Shadow - Not Sewn On", () => {
   it("Evasive", () => {

@@ -1,7 +1,7 @@
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const liloJuniorCakeDecorator: LorcanitoCharacterCardDefinition = {
+export const liloJuniorCakeDecorator: LorcanaCharacterCardDefinition = {
   id: "yur",
   name: "Lilo",
   title: "Junior Cake Decorator",

@@ -1,7 +1,7 @@
 import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const heiheiPersistentPresence: LorcanitoCharacterCardDefinition = {
+export const heiheiPersistentPresence: LorcanaCharacterCardDefinition = {
   id: "anm",
 
   name: "HeiHei",

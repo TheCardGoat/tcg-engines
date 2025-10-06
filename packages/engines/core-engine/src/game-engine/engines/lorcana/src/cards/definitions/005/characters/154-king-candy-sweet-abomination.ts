@@ -2,7 +2,7 @@ import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const kingCandySweetAbomination: LorcanitoCharacterCardDefinition = {
+export const kingCandySweetAbomination: LorcanaCharacterCardDefinition = {
   id: "puc",
   name: "King Candy",
   title: "Sweet Abomination",

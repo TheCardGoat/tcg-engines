@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   eeyoreOverstuffedDonkey,
   pigletPoohPirateCaptain,
   wendyDarlingAuthorityOnPeterPan,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Piglet - Pooh Pirate Captain", () => {
   it("**AND I'M THE CAPTAIN!** While you have 2 or more other characters in play, this characters gets +2 {L}.", () => {

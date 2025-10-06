@@ -1,7 +1,7 @@
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const pegasusGiftForHercules: LorcanitoCharacterCardDefinition = {
+export const pegasusGiftForHercules: LorcanaCharacterCardDefinition = {
   id: "lp3",
   reprints: ["w64"],
   name: "Pegasus",

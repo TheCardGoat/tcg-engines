@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { youHaveForgottenMe } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   aladdinHeroicOutlaw,
@@ -11,6 +10,10 @@ import {
   simbaFutureKing,
   tinkerBellTinyTactician,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Tinker Bell - Tiny Tactician", () => {
   it("**Battle plans** {E} - Draw a card, then choose and discard a card.", () => {

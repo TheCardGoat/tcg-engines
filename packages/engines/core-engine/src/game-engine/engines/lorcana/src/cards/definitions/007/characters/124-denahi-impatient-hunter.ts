@@ -4,7 +4,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const denahiImpatientHunter: LorcanitoCharacterCardDefinition = {
+export const denahiImpatientHunter: LorcanaCharacterCardDefinition = {
   id: "lb2",
   name: "Denahi",
   title: "Impatient Hunter",

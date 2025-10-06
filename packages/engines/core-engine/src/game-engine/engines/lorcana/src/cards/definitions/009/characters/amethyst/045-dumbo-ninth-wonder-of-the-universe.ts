@@ -8,7 +8,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const dumboNinthWonderOfTheUniverse: LorcanitoCharacterCardDefinition = {
+export const dumboNinthWonderOfTheUniverse: LorcanaCharacterCardDefinition = {
   id: "uxf",
   name: "Dumbo",
   title: "Ninth Wonder of the Universe",

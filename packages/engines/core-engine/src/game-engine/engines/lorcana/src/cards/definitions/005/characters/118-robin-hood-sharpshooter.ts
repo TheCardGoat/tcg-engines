@@ -2,7 +2,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const robinHoodSharpshooter: LorcanitoCharacterCardDefinition = {
+export const robinHoodSharpshooter: LorcanaCharacterCardDefinition = {
   id: "zti",
   name: "Robin Hood",
   title: "Sharpshooter",

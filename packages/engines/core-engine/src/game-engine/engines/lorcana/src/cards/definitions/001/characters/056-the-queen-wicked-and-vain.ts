@@ -1,6 +1,6 @@
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-export const theQueenWickedAndVain: LorcanitoCharacterCardDefinition = {
+export const theQueenWickedAndVain: LorcanaCharacterCardDefinition = {
   id: "y32",
   reprints: ["k4l"],
   name: "The Queen",

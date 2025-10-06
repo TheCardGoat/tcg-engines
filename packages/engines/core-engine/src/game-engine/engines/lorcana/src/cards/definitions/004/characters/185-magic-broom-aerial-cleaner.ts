@@ -4,7 +4,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const magicBroomAerialCleaner: LorcanitoCharacterCardDefinition = {
+export const magicBroomAerialCleaner: LorcanaCharacterCardDefinition = {
   id: "t2t",
   missingTestCase: true,
   name: "Magic Broom",

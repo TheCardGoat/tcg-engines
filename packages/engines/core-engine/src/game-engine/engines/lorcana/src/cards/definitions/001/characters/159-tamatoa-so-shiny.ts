@@ -3,7 +3,7 @@ import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorca
 
 import { propertyStaticAbilities } from "../../../abilities/propertyStaticAbilities"; // Add import
 
-export const tamatoaSoShiny: LorcanitoCharacterCardDefinition = {
+export const tamatoaSoShiny: LorcanaCharacterCardDefinition = {
   id: "jzt",
   name: "Tamatoa",
   title: "So Shiny!",

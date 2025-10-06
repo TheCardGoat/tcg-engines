@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const chipTheTeacupGentleSoul: LorcanitoCharacterCardDefinition = {
+export const chipTheTeacupGentleSoul: LorcanaCharacterCardDefinition = {
   id: "v6d",
   name: "Chip the Teacup",
   title: "Gentle Soul",

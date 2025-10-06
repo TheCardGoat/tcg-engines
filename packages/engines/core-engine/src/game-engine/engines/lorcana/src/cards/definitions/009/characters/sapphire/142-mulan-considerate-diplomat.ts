@@ -2,7 +2,7 @@ import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { wheneverThisCharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mulanConsiderateDiplomat: LorcanitoCharacterCardDefinition = {
+export const mulanConsiderateDiplomat: LorcanaCharacterCardDefinition = {
   id: "k64",
   // notImplemented: true,
   missingTestCase: false,

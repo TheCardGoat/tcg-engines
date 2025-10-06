@@ -4,7 +4,7 @@ import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targ
 import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const bernardBrandNewAgent: LorcanitoCharacterCardDefinition = {
+export const bernardBrandNewAgent: LorcanaCharacterCardDefinition = {
   id: "bzq",
   missingTestCase: true,
   name: "Bernard",
