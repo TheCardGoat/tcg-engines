@@ -256,8 +256,8 @@ export class LorcanaCardInstance extends CoreCardInstance<
     throw new Error("hasShift() not implemented");
   }
 
-  hasEvasive(): boolean {
-    throw new Error("hasEvasive() not implemented");
+  get hasEvasive(): boolean {
+    throw new Error("hasEvasive not implemented");
   }
 
   get hasChallenger(): boolean {
