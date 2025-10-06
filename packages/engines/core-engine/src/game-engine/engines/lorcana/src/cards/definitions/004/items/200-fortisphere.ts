@@ -4,7 +4,6 @@ import { whenYouPlayMayDrawACard } from "~/game-engine/engines/lorcana/src/abili
 import type {
   AbilityEffect,
   LorcanaItemCardDefinition,
-  LorcanitoItemCard,
 } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const fortisphere: LorcanaItemCardDefinition = {

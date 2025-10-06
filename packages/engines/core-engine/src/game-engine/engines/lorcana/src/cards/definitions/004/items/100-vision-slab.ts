@@ -8,7 +8,6 @@ import { targetCardsGains } from "~/game-engine/engines/lorcana/src/abilities/wh
 import type {
   CardEffectTarget,
   LorcanaItemCardDefinition,
-  LorcanitoItemCard,
 } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const cardsInPlay: CardEffectTarget = {

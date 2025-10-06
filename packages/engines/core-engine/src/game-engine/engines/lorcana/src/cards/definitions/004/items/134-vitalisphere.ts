@@ -1,7 +1,6 @@
 import type {
   AbilityEffect,
   LorcanaItemCardDefinition,
-  LorcanitoItemCard,
 } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const vitalisphere: LorcanaItemCardDefinition = {
