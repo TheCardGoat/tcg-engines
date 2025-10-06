@@ -877,8 +877,8 @@ export class LorcanaTestEngine {
     return response;
   }
 
-  passTurn(_playerId?: string) {
-    // Legacy: playerId parameter ignored - turn is passed for active player
+  passTurn(_playerId?: string, _skipOptional?: boolean) {
+    // Legacy: playerId and skipOptional parameters ignored - turn is passed for active player
     const response = this.moves.passTurn();
 
     if (!response.success) {
