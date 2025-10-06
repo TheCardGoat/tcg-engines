@@ -61,8 +61,6 @@ export const maidMarianBadmintonAce: LorcanaCharacterCardDefinition = {
     },
   ],
   inkwell: true,
-  // @ts-expect-error
-  color: "",
   colors: ["sapphire", "steel"],
   cost: 4,
   strength: 3,

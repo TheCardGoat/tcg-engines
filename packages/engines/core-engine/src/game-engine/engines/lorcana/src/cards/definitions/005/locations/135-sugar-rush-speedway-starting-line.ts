@@ -76,7 +76,6 @@ const moveToLocationEffect: MoveToLocationEffect = {
     //     },
     //   ],
     // },
-    // @ts-expect-error
     damageEffect,
   ],
 };

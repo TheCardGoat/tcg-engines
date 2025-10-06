@@ -32,8 +32,6 @@ export const tweedleDeeAndTweedleDumStrangeStorytellers: LorcanitoCharacterCard 
       }),
     ],
     inkwell: true,
-    // @ts-expect-error
-    color: "",
     colors: ["emerald", "ruby"],
     cost: 5,
     strength: 4,
