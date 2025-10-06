@@ -40,6 +40,10 @@ export function duringYourTurn(config: any): Condition {
   return config as Condition;
 }
 
+export function duringOpponentsTurn(config?: any): Condition {
+  return { type: "duringOpponentsTurn", ...config } as Condition;
+}
+
 export function unlessItIsAtALocation(config: any): Condition {
   return config as Condition;
 }
