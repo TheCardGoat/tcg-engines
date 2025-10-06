@@ -16,7 +16,7 @@ export const wreckitRalphBackSeatDriver: LorcanaCharacterCardDefinition = {
       effects: [
         getStrengthThisTurn(4, {
           type: "card",
-          value: 1,
+          count: 1,
           filters: [
             { filter: "type", value: "character" },
             { filter: "zone", value: "play" },
