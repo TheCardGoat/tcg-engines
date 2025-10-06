@@ -46,9 +46,6 @@ export const aladdinBraveRescuer: LorcanaCharacterCardDefinition = {
         } as BanishEffect,
       ],
     }),
-    {
-      name: "**CRASHING THROUGH** Whenever this character quests, you may banish chosen item.",
-    },
   ],
   inkwell: true,
   colors: ["steel"],
