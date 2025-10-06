@@ -408,18 +408,23 @@ export class LorcanaTestEngine {
     );
   }
 
-  changeActivePlayer(playerId: string) {
-    if (playerId !== "player_one" && playerId !== "player_two") {
-      throw new Error(`Invalid player ID: ${playerId}`);
+  changeActivePlayer(playerId?: string) {
+    // If no playerId provided, toggle between players
+    const targetPlayerId =
+      playerId ||
+      (this.activePlayerEngine === "player_one" ? "player_two" : "player_one");
+
+    if (targetPlayerId !== "player_one" && targetPlayerId !== "player_two") {
+      throw new Error(`Invalid player ID: ${targetPlayerId}`);
     }
 
     if (debuggers.testEngine) {
-      logger.debug(`Changing active player to: ${playerId}`);
+      logger.debug(`Changing active player to: ${targetPlayerId}`);
     }
-    this.activePlayerEngine = playerId;
+    this.activePlayerEngine = targetPlayerId;
     // Maintain legacy store shape for tests that read priority player
     (this as any).store = (this as any).store || {};
-    (this as any).store.priorityPlayer = playerId;
+    (this as any).store.priorityPlayer = targetPlayerId;
     return this; // Return this for chaining
   }
 
