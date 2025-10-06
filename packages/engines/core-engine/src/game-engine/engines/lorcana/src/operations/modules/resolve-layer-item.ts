@@ -524,7 +524,8 @@ export function resolveLayerItem(
           logger.debug(
             `Applying +${value} ${attribute} to ${targetCards.length} cards`,
             {
-              duration: duration?.type,
+              duration:
+                typeof duration === "object" ? duration?.type : duration,
               targetCardNames: targetCards.map((c) => c?.name || "unknown"),
             },
           );
@@ -1268,7 +1269,8 @@ export function resolveLayerItem(
           logger.debug(
             `Granting ability "${(ability as any).keyword || ability.text?.substring(0, 20)}..." to ${targetCards.length} cards`,
             {
-              duration: duration?.type,
+              duration:
+                typeof duration === "object" ? duration?.type : duration,
               targetCardNames: targetCards.map((c) => c?.name || "unknown"),
             },
           );
@@ -1298,7 +1300,8 @@ export function resolveLayerItem(
 
             logger.debug(`Granted ability to ${targetCard.name}`, {
               ability: (ability as any).keyword || "custom ability",
-              duration: duration?.type,
+              duration:
+                typeof duration === "object" ? duration?.type : duration,
             });
           }
           break;
@@ -1536,7 +1539,8 @@ export function resolveLayerItem(
             `Applying damage immunity to ${targetCards.length} cards`,
             {
               sources,
-              duration: duration?.type,
+              duration:
+                typeof duration === "object" ? duration?.type : duration,
               targetCardNames: targetCards.map((c) => c?.name || "unknown"),
             },
           );
@@ -1566,7 +1570,8 @@ export function resolveLayerItem(
 
             logger.debug(`Applied damage immunity to ${targetCard.name}`, {
               sources,
-              duration: duration?.type,
+              duration:
+                typeof duration === "object" ? duration?.type : duration,
             });
           }
           break;

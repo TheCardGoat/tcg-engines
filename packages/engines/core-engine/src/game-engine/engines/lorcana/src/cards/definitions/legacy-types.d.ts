@@ -30,4 +30,20 @@ declare module "@lorcanito/lorcana-engine/effects/effectTypes" {
   export type GetEffect = any;
   export type CreateLayerTargetingPlayer = any;
   export type CreateLayerBasedOnTarget = any;
+  export type RevealTopCardEffect = any;
+}
+
+declare module "@lorcanito/lorcana-engine/effects/effectTargets" {
+  export const chosenCharacter: any;
+  export const allCharacters: any;
+  export const self: any;
+  export type CardEffectTarget = any;
+}
+
+declare module "@lorcanito/lorcana-engine/__mocks__/createGameMock" {
+  export const createGameMock: any;
+}
+
+declare module "@lorcanito/lorcana-engine/store/resolvers/conditionResolver" {
+  export const conditionResolver: any;
 }
