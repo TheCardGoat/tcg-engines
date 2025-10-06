@@ -1089,13 +1089,23 @@ declare module "./lorcana-test-engine" {
     tapCard: (card: unknown, _optional?: boolean) => Promise<any>;
     putIntoInkwell: (card: unknown) => Promise<any>;
     drawCard: (playerId?: string) => Promise<void>;
-    challenge: (opts: LegacyChallengeParams) => Promise<void>;
-    activateCard: (card: unknown, opts?: unknown) => Promise<void>;
+    challenge: (opts: LegacyChallengeParams) => Promise<{
+      attacker: LorcanaCardInstance;
+      defender: LorcanaCardInstance;
+    }>;
+    activateCard: (
+      card: unknown,
+      opts?: unknown,
+      optional?: boolean,
+    ) => Promise<void>;
     singSongTogether: (opts?: unknown) => Promise<void>;
     shiftCard: (opts: {
       shifter: LorcanaCardDefinition | LorcanaCardInstance;
       shifted: LorcanaCardDefinition | LorcanaCardInstance;
-    }) => Promise<void>;
+    }) => Promise<{
+      shifter: LorcanaCardInstance;
+      shifted: LorcanaCardInstance;
+    }>;
     readonly stackLayers: any[];
     resolveStackLayer: (_opts?: any, _optional?: boolean) => any;
     getLayerIdForPlayer: (playerId: string) => string | undefined;
