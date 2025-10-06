@@ -1,8 +1,8 @@
-import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   challengerAbility,
   yourCharactersNamedGain,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { drawACard } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { wheneverOpposingCharIsBanishedInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { oneJumpAhead as ogOneJumpAhead } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/164-one-jump-ahead";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const oneJumpAhead: LorcanaActionCardDefinition = {
   ...ogOneJumpAhead,

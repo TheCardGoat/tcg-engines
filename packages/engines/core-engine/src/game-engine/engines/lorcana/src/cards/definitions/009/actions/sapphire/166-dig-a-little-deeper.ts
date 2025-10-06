@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { digALittleDeeper as ogDigALittleDeeper } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions/162-dig-a-little-deeper";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const digALittleDeeper: LorcanaActionCardDefinition = {
   ...ogDigALittleDeeper,

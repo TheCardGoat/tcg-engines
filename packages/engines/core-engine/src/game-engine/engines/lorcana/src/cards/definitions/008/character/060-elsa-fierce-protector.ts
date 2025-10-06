@@ -1,5 +1,5 @@
-import { exertChosenOpposingCharacter } from "@lorcanito/lorcana-engine/effects/effects";
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import { exertChosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const iceOver: ActivatedAbility = {

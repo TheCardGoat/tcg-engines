@@ -1,6 +1,6 @@
-import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import { madameMimAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { moveDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

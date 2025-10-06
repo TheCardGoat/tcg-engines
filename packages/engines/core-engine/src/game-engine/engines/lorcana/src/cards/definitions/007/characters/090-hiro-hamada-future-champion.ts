@@ -1,5 +1,5 @@
-import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import { drawACard } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { whenPlayOnThisCard } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

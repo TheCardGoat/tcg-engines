@@ -1,7 +1,7 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { entersPlayExerted } from "@lorcanito/lorcana-engine/effects/effects";
 import type { PlayerRestrictionStaticAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import { entersPlayExerted } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { opponent } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whileConditionThisCharacterGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

@@ -1,5 +1,5 @@
-import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import { duringYourTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { drawACard } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import { wheneverYouReadyThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

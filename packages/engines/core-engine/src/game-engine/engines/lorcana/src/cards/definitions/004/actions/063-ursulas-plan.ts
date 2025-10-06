@@ -1,4 +1,4 @@
-// import { exertedSelfCharCantReadyNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
+// import { exertedSelfCharCantReadyNextTurn } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const ursulasPlan: LorcanaActionCardDefinition = {

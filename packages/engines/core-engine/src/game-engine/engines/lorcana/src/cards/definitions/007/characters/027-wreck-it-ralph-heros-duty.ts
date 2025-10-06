@@ -1,5 +1,5 @@
-import { thisCharacterGetsLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { duringYourTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { thisCharacterGetsLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { whenYourOtherCharactersIsBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

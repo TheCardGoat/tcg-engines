@@ -1,5 +1,5 @@
-import { chosenCharacterGetLoreThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import { chosenCharacterGetLoreThisTurn } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const eyeOfTheFate: LorcanaItemCardDefinition = {

@@ -5,7 +5,7 @@
 import { describe, expect, it } from "@jest/globals";
 import { cinderellaBallroomSensation } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
-import { neverLandMermaidLagoon } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { neverLandMermaidLagoon } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import { miracleCandle } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/index";
 import { daisyDuckDonaldsDate } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {

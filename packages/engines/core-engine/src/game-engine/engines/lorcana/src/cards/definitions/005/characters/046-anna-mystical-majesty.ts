@@ -1,4 +1,4 @@
-import { exertAllOpposingCharacters } from "@lorcanito/lorcana-engine/effects/effects";
+import { exertAllOpposingCharacters } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

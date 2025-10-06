@@ -203,6 +203,22 @@ export interface PlayCardEffect extends BaseCardEffect {
   };
 }
 
+// Legacy effect types for backward compatibility during migration
+export interface HealEffect extends BaseCardEffect {
+  type: "heal";
+  parameters: {
+    value: number | DynamicValue;
+  };
+}
+
+export interface AttributeEffect extends BaseCardEffect {
+  type: "attribute";
+  parameters: {
+    attribute: "strength" | "lore" | "willpower";
+    value: number | DynamicValue;
+  };
+}
+
 type CardEffect =
   | GetEffect
   | BanishEffect
@@ -222,7 +238,9 @@ type CardEffect =
   | RestrictEffect
   | ExertEffect
   | RemoveDamageEffect
-  | BasicInkwellTriggerEffect;
+  | BasicInkwellTriggerEffect
+  | HealEffect
+  | AttributeEffect;
 
 // Union of all effect types
 export type LorcanaEffect =

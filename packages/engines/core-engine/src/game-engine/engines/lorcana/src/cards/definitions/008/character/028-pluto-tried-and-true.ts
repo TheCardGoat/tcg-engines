@@ -1,4 +1,4 @@
-import { thisCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
+import { thisCharacterGetsStrength } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import {
   whileThisCharacterHasNoDamageGains,

@@ -1,4 +1,4 @@
-import { thisCharacterGetsLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { thisCharacterGetsLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import {
   wheneverQuests,

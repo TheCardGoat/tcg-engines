@@ -1,6 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { millOwnXCards } from "@lorcanito/lorcana-engine/effects/effects";
+import { millOwnXCards } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

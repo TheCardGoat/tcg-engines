@@ -1,7 +1,7 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
 import { gainAbilityWhileHere } from "~/game-engine/engines/lorcana/src/abilities";
+import { youMayDrawThenChooseAndDiscard } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theBayouMysteriousSwamp: LorcanaLocationCardDefinition = {
   id: "tu0",

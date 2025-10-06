@@ -1,5 +1,5 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
 import { mauisPlaceOfExileHiddenIsland as ogMauisPlaceOfExileHiddenIsland } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/202-mauis-place-of-exile-hidden-island";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const mauisPlaceOfExileHiddenIsland: LorcanaLocationCardDefinition = {
   ...ogMauisPlaceOfExileHiddenIsland,

@@ -1,5 +1,5 @@
-import { lookAtTopCardOfYourDeckAndPutItOnTopOrBottom } from "@lorcanito/lorcana-engine/effects/effects";
 import { duringYourTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { lookAtTopCardOfYourDeckAndPutItOnTopOrBottom } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { wheneverACardIsPutIntoYourInkwell } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

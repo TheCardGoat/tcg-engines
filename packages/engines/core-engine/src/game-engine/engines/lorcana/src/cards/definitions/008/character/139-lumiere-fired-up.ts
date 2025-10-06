@@ -1,8 +1,8 @@
-import { thisCharacterGetsLore } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   evasiveAbility,
   shiftAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { thisCharacterGetsLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const lumiereFiredUp: LorcanaCharacterCardDefinition = {

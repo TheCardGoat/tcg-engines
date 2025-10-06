@@ -1,6 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
+import { returnThisCardToHand } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { whenThisCharacterBanishedInAChallenge } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

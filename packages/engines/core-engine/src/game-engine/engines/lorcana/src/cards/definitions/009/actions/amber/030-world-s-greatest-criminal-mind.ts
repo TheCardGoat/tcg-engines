@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { worldsGreatestCriminalMind as ogWorldsGreatestCriminalMind } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions/031-worlds-greatest-criminal-mind";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const worldsGreatestCriminalMind: LorcanaActionCardDefinition = {
   ...ogWorldsGreatestCriminalMind,

@@ -1,5 +1,5 @@
-import { drawCardsUntilYouHaveSameNumberOfCardsAsOpponent } from "@lorcanito/lorcana-engine/effects/effects";
 import { atTheEndOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { drawCardsUntilYouHaveSameNumberOfCardsAsOpponent } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

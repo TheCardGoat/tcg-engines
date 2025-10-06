@@ -1,30 +1,29 @@
-import { opponentLoseLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { opponentLoseLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const theMatchmakerUnforgivingExpert: LorcanitoCharacterCardDefinition =
-  {
-    id: "wmb",
-    name: "The Matchmaker",
-    title: "Unforgiving Expert",
-    characteristics: ["storyborn"],
-    text: "YOU ARE A DISGRACE! Whenever this character challenges another character, each opponent loses 1 lore.",
-    type: "character",
-    abilities: [
-      wheneverChallengesAnotherChar({
-        name: "You are a disgrace!",
-        text: "Whenever this character challenges another character, each opponent loses 1 lore.",
-        effects: [opponentLoseLore(1)],
-      }),
-    ],
-    inkwell: true,
-    colors: ["ruby"],
-    cost: 4,
-    strength: 4,
-    willpower: 3,
-    illustrator: "Brian Weiss",
-    number: 123,
-    set: "007",
-    rarity: "common",
-    lore: 1,
-  };
+export const theMatchmakerUnforgivingExpert: LorcanaCharacterCardDefinition = {
+  id: "wmb",
+  name: "The Matchmaker",
+  title: "Unforgiving Expert",
+  characteristics: ["storyborn"],
+  text: "YOU ARE A DISGRACE! Whenever this character challenges another character, each opponent loses 1 lore.",
+  type: "character",
+  abilities: [
+    wheneverChallengesAnotherChar({
+      name: "You are a disgrace!",
+      text: "Whenever this character challenges another character, each opponent loses 1 lore.",
+      effects: [opponentLoseLore(1)],
+    }),
+  ],
+  inkwell: true,
+  colors: ["ruby"],
+  cost: 4,
+  strength: 4,
+  willpower: 3,
+  illustrator: "Brian Weiss",
+  number: 123,
+  set: "007",
+  rarity: "common",
+  lore: 1,
+};

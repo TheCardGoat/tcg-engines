@@ -2,7 +2,7 @@ import {
   discardACard,
   drawACard,
   youPayXLessToPlayNextActionThisTurn,
-} from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const starlightVial: LorcanaItemCardDefinition = {

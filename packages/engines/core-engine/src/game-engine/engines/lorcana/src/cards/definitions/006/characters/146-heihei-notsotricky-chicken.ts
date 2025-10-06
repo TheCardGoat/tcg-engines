@@ -3,7 +3,7 @@
 import {
   exertChosenItem,
   exertedItemCantReadyNextTurn,
-} from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import { whileConditionThisCharacterGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

@@ -2,7 +2,7 @@ import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keywor
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const mirabelMadrigalMusicallyTalented: LorcanitoCharacterCardDefinition =
+export const mirabelMadrigalMusicallyTalented: LorcanaCharacterCardDefinition =
   {
     id: "gpn",
     name: "Mirabel Madrigal",

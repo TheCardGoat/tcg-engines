@@ -1,8 +1,8 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
 import {
   gainAbilityWhileHere,
   resistAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const mauisPlaceOfExileHiddenIsland: LorcanaLocationCardDefinition = {
   id: "cpd",

@@ -1,4 +1,4 @@
-import { chosenPlayerMillXCards } from "@lorcanito/lorcana-engine/effects/effects";
+import { chosenPlayerMillXCards } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import {
   anotherChosenCharacterOfYours,
   thisCharacter,

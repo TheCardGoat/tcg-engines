@@ -1,7 +1,7 @@
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const motherGothelConceitedManipulator: LorcanitoCharacterCardDefinition =
+export const motherGothelConceitedManipulator: LorcanaCharacterCardDefinition =
   {
     id: "frm",
     name: "Mother Gothel",

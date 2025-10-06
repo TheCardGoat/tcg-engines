@@ -1,8 +1,8 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
 import { gainAbilityWhileHere } from "~/game-engine/engines/lorcana/src/abilities";
 import { duringOpponentsTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenThisCharacterBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const hundredAcreIslandPoohsHome: LorcanaLocationCardDefinition = {
   id: "qkp",

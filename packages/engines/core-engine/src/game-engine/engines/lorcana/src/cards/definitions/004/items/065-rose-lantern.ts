@@ -1,4 +1,4 @@
-import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { moveDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 
 import {
   chosenCharacter,

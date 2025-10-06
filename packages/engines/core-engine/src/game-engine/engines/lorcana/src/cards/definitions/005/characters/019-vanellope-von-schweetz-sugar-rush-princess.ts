@@ -1,10 +1,10 @@
-import { opponentCharactersLoseStrengthUntilNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
+import { opponentCharactersLoseStrengthUntilNextTurn } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 
 import { wheneverYouPlayAnotherPrincess } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const vanellopeVonSchweetzSugarRushPrincess: LorcanitoCharacterCardDefinition =
+export const vanellopeVonSchweetzSugarRushPrincess: LorcanaCharacterCardDefinition =
   {
     id: "tiv",
     name: "Vanellope von Schweetz",

@@ -1,15 +1,15 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+import type { CreateLayerBasedOnCondition } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { xOrMoreCharsSangThisSongCondition } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import {
   drawXCards,
   readyAndCantQuest,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { CreateLayerBasedOnCondition } from "@lorcanito/lorcana-engine/effects/effectTypes";
-import { xOrMoreCharsSangThisSongCondition } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { singerTogetherAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singerTogetherAbility";
 import {
   opponent,
   self,
 } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const conditionalEffects: CreateLayerBasedOnCondition = {
   type: "create-layer-based-on-condition",

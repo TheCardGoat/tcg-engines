@@ -1,9 +1,9 @@
-import { dealDamageToChosenOpposingCharacter } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   type ResolutionAbility,
   resistAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
 import { duringOpponentsTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { dealDamageToChosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { DamageTrigger } from "~/game-engine/engines/lorcana/src/abilities/triggers";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

@@ -1,4 +1,4 @@
-import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { youGainLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { vanishAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/vanishAbility";
 import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";

@@ -1,4 +1,4 @@
-import { getStrengthThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
+import { getStrengthThisTurn } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

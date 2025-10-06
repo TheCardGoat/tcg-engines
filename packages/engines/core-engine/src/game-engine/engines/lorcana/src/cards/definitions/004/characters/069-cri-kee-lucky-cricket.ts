@@ -1,4 +1,4 @@
-import { yourOtherCharactersGainStrengthThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
+import { yourOtherCharactersGainStrengthThisTurn } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const criKeeLuckyCricket: LorcanaCharacterCardDefinition = {

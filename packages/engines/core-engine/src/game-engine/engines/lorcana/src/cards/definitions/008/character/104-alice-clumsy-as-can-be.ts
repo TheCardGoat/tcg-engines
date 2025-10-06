@@ -1,4 +1,4 @@
-import { putDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { putDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import { eachOtherCharacterInPlay } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverThisCharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";

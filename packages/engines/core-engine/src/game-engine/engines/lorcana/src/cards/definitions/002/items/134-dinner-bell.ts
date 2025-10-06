@@ -1,8 +1,8 @@
+import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
 import {
   drawXCards,
   mayBanish,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const chosenCharacterOfYours: CardEffectTarget = {

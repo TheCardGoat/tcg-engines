@@ -1,7 +1,7 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { discardACard } from "@lorcanito/lorcana-engine/effects/effects";
 import { gainAbilityWhileHere } from "~/game-engine/engines/lorcana/src/abilities";
+import { discardACard } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { whenChallenged } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const perilousMazeWateryLabyrinth: LorcanaLocationCardDefinition = {
   id: "jrf",

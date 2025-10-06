@@ -1,7 +1,7 @@
 import {
   opponentLoseLore,
   youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import { wheneverBanishesAnotherCharacterInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

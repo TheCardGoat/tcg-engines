@@ -1,6 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { lookAtTopCardOfYourDeckAndPutItOnTopOrBottom } from "@lorcanito/lorcana-engine/effects/effects";
+import { lookAtTopCardOfYourDeckAndPutItOnTopOrBottom } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

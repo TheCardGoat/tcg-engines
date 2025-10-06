@@ -1,9 +1,9 @@
-import { readyThisCharacter } from "@lorcanito/lorcana-engine/effects/effects";
+import { readyThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const princePhillipSwordsmanOfTheRealm: LorcanitoCharacterCardDefinition =
+export const princePhillipSwordsmanOfTheRealm: LorcanaCharacterCardDefinition =
   {
     id: "yrg",
     missingTestCase: true,

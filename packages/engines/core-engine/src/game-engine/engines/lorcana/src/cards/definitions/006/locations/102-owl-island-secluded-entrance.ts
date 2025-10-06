@@ -1,7 +1,7 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { youGainLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { actionCardsInHand } from "~/game-engine/engines/lorcana/src/abilities/target";
 import { wheneverPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const owlIslandSecludedEntrance: LorcanaLocationCardDefinition = {
   id: "ox9",

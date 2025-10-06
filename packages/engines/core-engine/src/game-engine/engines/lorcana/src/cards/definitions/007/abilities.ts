@@ -4,6 +4,8 @@ import type {
   ScryEffect,
   StaticAbility,
 } from "@lorcanito/lorcana-engine";
+import type { CreateLayerTargetingPlayer } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import {
   banishChosenItem,
   chosenCharacterGainsChallenger,
@@ -16,9 +18,7 @@ import {
   youGainLore,
   youMayDrawThenChooseAndDiscard,
   youPayXLessToPlayNextItemThisTurn,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import type { CreateLayerTargetingPlayer } from "@lorcanito/lorcana-engine/effects/effectTypes";
-import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenCharacterOrLocation } from "~/game-engine/engines/lorcana/src/abilities/target";
 import {
   chosenCharacter,

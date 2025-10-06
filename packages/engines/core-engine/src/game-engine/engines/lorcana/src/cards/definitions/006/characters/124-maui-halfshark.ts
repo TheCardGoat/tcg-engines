@@ -1,6 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { youGainLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import {
   wheneverChallengesAnotherChar,

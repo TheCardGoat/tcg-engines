@@ -1,4 +1,4 @@
-import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { youGainLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";

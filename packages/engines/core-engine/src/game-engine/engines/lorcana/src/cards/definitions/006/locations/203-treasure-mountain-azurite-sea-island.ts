@@ -1,7 +1,7 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenCharacterOrLocation } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const treasureMountainAzuriteSeaIsland: LorcanaLocationCardDefinition = {
   id: "nmj",

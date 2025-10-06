@@ -1,7 +1,7 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { healEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { healEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverACharacterQuestsWhileHere } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const winterCampMedicalTent: LorcanaLocationCardDefinition = {
   id: "ppi",

@@ -1,4 +1,4 @@
-import { putDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { putDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import {
   allOpposingCharacters,
   allOpposingItems,

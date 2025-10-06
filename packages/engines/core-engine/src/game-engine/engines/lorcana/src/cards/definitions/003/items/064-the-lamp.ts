@@ -1,6 +1,5 @@
-import { returnChosenCharacterWithCostLess } from "@lorcanito/lorcana-engine/effects/effects";
-
 import { ifYouHaveCharacterNamed } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { returnChosenCharacterWithCostLess } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

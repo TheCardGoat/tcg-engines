@@ -2,7 +2,7 @@ import {
   opponentDiscardsACard,
   opponentRevealHand,
   putThisCardIntoYourInkwellExerted,
-} from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import {
   whenThisIsBanished,
   whenYouPlayThis,

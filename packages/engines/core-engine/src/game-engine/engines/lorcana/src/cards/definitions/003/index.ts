@@ -209,7 +209,7 @@ import {
   theQueensCastleMirrorChamber,
   theSorcerersTowerWondrousWorkspace,
   tianasPalaceJazzRestaurant,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const all003Cards: LorcanaCardDefinition[] = [

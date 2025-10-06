@@ -1,7 +1,7 @@
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const minnieMouseQuickthinkingInventor: LorcanitoCharacterCardDefinition =
+export const minnieMouseQuickthinkingInventor: LorcanaCharacterCardDefinition =
   {
     id: "zsf",
     missingTestCase: true,

@@ -3,7 +3,7 @@ import { yourOtherCharacters } from "~/game-engine/engines/lorcana/src/abilities
 import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const captainAmeliaCommanderOfTheLegacy: LorcanitoCharacterCardDefinition =
+export const captainAmeliaCommanderOfTheLegacy: LorcanaCharacterCardDefinition =
   {
     id: "izk",
     name: "Captain Amelia",

@@ -1,4 +1,4 @@
-import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
+import { drawXCards } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

@@ -1,7 +1,7 @@
 import {
   enterPlaysExerted,
   youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 
 import { chosenYourExertedCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";

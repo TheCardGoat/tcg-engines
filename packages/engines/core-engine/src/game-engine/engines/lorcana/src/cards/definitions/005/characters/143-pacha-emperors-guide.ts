@@ -1,9 +1,9 @@
-import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
 import {
   youHaveItemInPlay,
   youHaveLocationInPlay,
 } from "~/game-engine/engines/lorcana/src/abilities/conditions";
+import { youGainLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const pachaEmperorsGuide: LorcanaCharacterCardDefinition = {

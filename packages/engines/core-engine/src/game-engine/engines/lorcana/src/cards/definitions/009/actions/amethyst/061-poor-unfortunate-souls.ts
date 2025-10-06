@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { poorUnfortunateSouls as ogPoorUnfortunateSouls } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions/060-poor-unfortunate-souls";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const poorUnfortunateSouls: LorcanaActionCardDefinition = {
   ...ogPoorUnfortunateSouls,

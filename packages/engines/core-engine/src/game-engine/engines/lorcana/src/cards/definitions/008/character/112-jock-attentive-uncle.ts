@@ -1,5 +1,5 @@
-import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { haveXorMoreCharactersInPlay } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { youGainLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

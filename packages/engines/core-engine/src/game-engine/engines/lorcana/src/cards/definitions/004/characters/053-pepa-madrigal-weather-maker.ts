@@ -1,4 +1,4 @@
-import { exertAndCantReady } from "@lorcanito/lorcana-engine/effects/effects";
+import { exertAndCantReady } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

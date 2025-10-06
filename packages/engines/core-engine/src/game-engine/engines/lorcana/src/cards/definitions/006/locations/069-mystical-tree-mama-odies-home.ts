@@ -1,10 +1,10 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { moveDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import {
   chosenCharacter,
   chosenOpposingCharacter,
 } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const mysticalTreeMamaOdiesHome: LorcanaLocationCardDefinition = {
   id: "ghp",

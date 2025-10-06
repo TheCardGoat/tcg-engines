@@ -1,4 +1,4 @@
-import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import {
   chosenCharacter,

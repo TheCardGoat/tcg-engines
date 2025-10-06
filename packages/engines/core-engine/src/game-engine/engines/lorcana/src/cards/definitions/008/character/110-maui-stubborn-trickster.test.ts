@@ -13,7 +13,7 @@ import {
   luckyDime,
   mauisFishHook,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
-import { mauisPlaceOfExileHiddenIsland } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { mauisPlaceOfExileHiddenIsland } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations";
 import { perilousMazeWateryLabyrinth } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import {

@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import { friendsOnTheOtherSide } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
-import { forbiddenMountainMaleficentsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { forbiddenMountainMaleficentsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import { peteGamesReferee } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,

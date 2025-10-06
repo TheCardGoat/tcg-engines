@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { motunuiIslandParadise } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { motunuiIslandParadise } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/index";
 import {
   TestEngine,
   TestStore,

@@ -9,7 +9,7 @@ import {
   mrSnoopsIneptBusinessman,
   puaPotbelliedBuddy,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
-import { motunuiIslandParadise } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { motunuiIslandParadise } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import {
   TestEngine,
   TestStore,

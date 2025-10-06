@@ -1,4 +1,4 @@
-import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenYouPlayThisForEachYouPayLess } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";

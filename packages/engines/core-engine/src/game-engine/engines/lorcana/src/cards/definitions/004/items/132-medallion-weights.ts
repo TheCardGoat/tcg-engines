@@ -1,4 +1,4 @@
-import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+import { drawACard } from "~/game-engine/engines/lorcana/src/abilities/effect";
 
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";

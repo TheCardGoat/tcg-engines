@@ -1,9 +1,9 @@
-import { lookAtTopCardOfYourDeckAndPutItOnTopOrBottom } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   exertItemCost,
   shiftAbility,
   wardAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { lookAtTopCardOfYourDeckAndPutItOnTopOrBottom } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const auroraLoreGuardian: LorcanaCharacterCardDefinition = {

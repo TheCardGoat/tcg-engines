@@ -6,35 +6,6 @@ import type {
   ResolutionAbility,
   ScryEffect,
 } from "@lorcanito/lorcana-engine";
-import {
-  banishChallengingCharacter,
-  banishChosenCharacter,
-  chosenCharacterCantChallengeDuringNextTurn,
-  dealDamageEffect,
-  discardACard,
-  discardTwoCards,
-  drawACard,
-  drawXCards,
-  entersPlayExerted,
-  exertChosenCharacter,
-  exertedCharCantReadyNextTurn,
-  healEffect,
-  lookAtTopCardOfYourDeckAndPutItOnTopOrBottom,
-  opponentRevealHand,
-  putOneOnTheTopAndTheOtherOnTheBottomOfYourDeck,
-  putThisCardIntoYourInkwellExerted,
-  putTopCardOfYourDeckIntoYourInkwellExerted,
-  readyAndCantQuest,
-  readyChosenCharacter,
-  readyThisCharacter,
-  removeDamageEffect,
-  returnChosenOpposingCharacterWithStrength,
-  revealTopOfDeckPutInHandOrDeck,
-  shuffleThisCardIntoYourDeck,
-  youGainLore,
-  youPayXLessToPlayNextCharThisTurn,
-  youPayXLessToPlayNextItemThisTurn,
-} from "@lorcanito/lorcana-engine/effects/effects";
 import type { ModalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import {
   type ActivatedAbility,
@@ -65,6 +36,35 @@ import {
   whileCharacterIsAtLocation,
   whileThisCharacterIsExerted,
 } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import {
+  banishChallengingCharacter,
+  banishChosenCharacter,
+  chosenCharacterCantChallengeDuringNextTurn,
+  dealDamageEffect,
+  discardACard,
+  discardTwoCards,
+  drawACard,
+  drawXCards,
+  entersPlayExerted,
+  exertChosenCharacter,
+  exertedCharCantReadyNextTurn,
+  healEffect,
+  lookAtTopCardOfYourDeckAndPutItOnTopOrBottom,
+  opponentRevealHand,
+  putOneOnTheTopAndTheOtherOnTheBottomOfYourDeck,
+  putThisCardIntoYourInkwellExerted,
+  putTopCardOfYourDeckIntoYourInkwellExerted,
+  readyAndCantQuest,
+  readyChosenCharacter,
+  readyThisCharacter,
+  removeDamageEffect,
+  returnChosenOpposingCharacterWithStrength,
+  revealTopOfDeckPutInHandOrDeck,
+  shuffleThisCardIntoYourDeck,
+  youGainLore,
+  youPayXLessToPlayNextCharThisTurn,
+  youPayXLessToPlayNextItemThisTurn,
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import {
   allOtherCharactersHere,
   chosenItemOfYours,
@@ -415,53 +415,52 @@ export const pongoDeterminedFather: LorcanaCharacterCardDefinition = {
   set: "ITI",
   rarity: "super_rare",
 };
-export const queenOfHeartsWonderlandEmpress: LorcanitoCharacterCardDefinition =
-  {
-    id: "art",
-    reprints: ["ifp"],
-    name: "Queen of Hearts",
-    title: "Wonderland Empress",
-    characteristics: ["dreamborn", "queen", "villain"],
-    text: "**ALL WAYS HERE ARE MY WAYS** Whenever this character quests, your other Villain characters get +1 {L} this turn.",
-    type: "character",
-    abilities: [
-      wheneverQuests({
-        name: "All Ways Here Are My Ways",
-        text: "Whenever this character quests, your other Villain characters get +1 {L} this turn.",
-        effects: [
-          {
-            type: "attribute",
-            attribute: "lore",
-            amount: 1,
-            duration: "turn",
-            modifier: "add",
-            target: {
-              type: "card",
-              value: "all",
-              excludeSelf: true,
-              filters: [
-                { filter: "characteristics", value: ["villain"] },
-                { filter: "owner", value: "self" },
-                { filter: "zone", value: "play" },
-                { filter: "type", value: "character" },
-              ],
-            },
+export const queenOfHeartsWonderlandEmpress: LorcanaCharacterCardDefinition = {
+  id: "art",
+  reprints: ["ifp"],
+  name: "Queen of Hearts",
+  title: "Wonderland Empress",
+  characteristics: ["dreamborn", "queen", "villain"],
+  text: "**ALL WAYS HERE ARE MY WAYS** Whenever this character quests, your other Villain characters get +1 {L} this turn.",
+  type: "character",
+  abilities: [
+    wheneverQuests({
+      name: "All Ways Here Are My Ways",
+      text: "Whenever this character quests, your other Villain characters get +1 {L} this turn.",
+      effects: [
+        {
+          type: "attribute",
+          attribute: "lore",
+          amount: 1,
+          duration: "turn",
+          modifier: "add",
+          target: {
+            type: "card",
+            value: "all",
+            excludeSelf: true,
+            filters: [
+              { filter: "characteristics", value: ["villain"] },
+              { filter: "owner", value: "self" },
+              { filter: "zone", value: "play" },
+              { filter: "type", value: "character" },
+            ],
           },
-        ],
-      }),
-    ],
-    flavour: "The more of the Inklands she claims, the more she wants.",
-    inkwell: true,
-    colors: ["amber"],
-    cost: 3,
-    strength: 3,
-    willpower: 3,
-    lore: 1,
-    illustrator: "Brianna Garcia",
-    number: 20,
-    set: "ITI",
-    rarity: "uncommon",
-  };
+        },
+      ],
+    }),
+  ],
+  flavour: "The more of the Inklands she claims, the more she wants.",
+  inkwell: true,
+  colors: ["amber"],
+  cost: 3,
+  strength: 3,
+  willpower: 3,
+  lore: 1,
+  illustrator: "Brianna Garcia",
+  number: 20,
+  set: "ITI",
+  rarity: "uncommon",
+};
 export const rollyHungryPup: LorcanaCharacterCardDefinition = {
   id: "tuk",
   name: "Rolly",
@@ -801,7 +800,7 @@ export const jafarStrikingIllusionist: LorcanaCharacterCardDefinition = {
   set: "ITI",
   rarity: "legendary",
 };
-export const chernabogsFollowersCreaturesOfEvil: LorcanitoCharacterCardDefinition =
+export const chernabogsFollowersCreaturesOfEvil: LorcanaCharacterCardDefinition =
   {
     id: "qjz",
     name: "Chernabog's Followers",
@@ -851,27 +850,26 @@ export const chernabogsFollowersCreaturesOfEvil: LorcanitoCharacterCardDefinitio
     rarity: "uncommon",
   };
 
-export const lenaSabrewingRebelliousTeenager: LorcanitoCharacterCardDefinition =
-  {
-    id: "u44",
-    name: "Lena Sabrewing",
-    title: "Rebellious Teenager",
-    characteristics: ["hero", "sorcerer", "storyborn"],
-    text: "**Rush** _(This character can challenge the turn they're played.)_",
-    type: "character",
-    abilities: [rushAbility],
-    flavour: "Born from the shadows. Saved by friendship.",
-    inkwell: true,
-    colors: ["amethyst"],
-    cost: 2,
-    strength: 1,
-    willpower: 3,
-    lore: 1,
-    illustrator: "Heidi Neunhoffer",
-    number: 43,
-    set: "ITI",
-    rarity: "common",
-  };
+export const lenaSabrewingRebelliousTeenager: LorcanaCharacterCardDefinition = {
+  id: "u44",
+  name: "Lena Sabrewing",
+  title: "Rebellious Teenager",
+  characteristics: ["hero", "sorcerer", "storyborn"],
+  text: "**Rush** _(This character can challenge the turn they're played.)_",
+  type: "character",
+  abilities: [rushAbility],
+  flavour: "Born from the shadows. Saved by friendship.",
+  inkwell: true,
+  colors: ["amethyst"],
+  cost: 2,
+  strength: 1,
+  willpower: 3,
+  lore: 1,
+  illustrator: "Heidi Neunhoffer",
+  number: 43,
+  set: "ITI",
+  rarity: "common",
+};
 export const magicBroomDancingDuster: LorcanaCharacterCardDefinition = {
   id: "bvg",
   missingTestCase: true,
@@ -1034,55 +1032,54 @@ export const magicaDeSpellTheMidasTouch: LorcanaCharacterCardDefinition = {
   set: "ITI",
   rarity: "super_rare",
 };
-export const magicaDeSpellThievingSorceress: LorcanitoCharacterCardDefinition =
-  {
-    id: "ioe",
-    missingTestCase: true,
-    name: "Magica De Spell",
-    title: "Thieving Sorceress",
-    characteristics: ["sorcerer", "storyborn", "villain"],
-    text: "**TELEKINESIS** {E} – Return chosen item with cost equal to or less than this character's {S} to its player's hand.",
-    type: "character",
-    abilities: [
-      {
-        type: "activated",
-        name: "Telekinesis",
-        text: "{E} – Return chosen item with cost equal to or less than this character's {S} to its player's hand.",
-        costs: [{ type: "exert" }],
-        effects: [
-          {
-            type: "move",
-            to: "hand",
-            target: {
-              type: "card",
-              value: 1,
-              filters: [
-                { filter: "type", value: "item" },
-                { filter: "zone", value: "play" },
-                {
-                  filter: "attribute",
-                  value: "cost",
-                  // TODO: This is wrong, should be based on the character's {S}
-                  comparison: { operator: "lte", value: 3 },
-                },
-              ],
-            },
+export const magicaDeSpellThievingSorceress: LorcanaCharacterCardDefinition = {
+  id: "ioe",
+  missingTestCase: true,
+  name: "Magica De Spell",
+  title: "Thieving Sorceress",
+  characteristics: ["sorcerer", "storyborn", "villain"],
+  text: "**TELEKINESIS** {E} – Return chosen item with cost equal to or less than this character's {S} to its player's hand.",
+  type: "character",
+  abilities: [
+    {
+      type: "activated",
+      name: "Telekinesis",
+      text: "{E} – Return chosen item with cost equal to or less than this character's {S} to its player's hand.",
+      costs: [{ type: "exert" }],
+      effects: [
+        {
+          type: "move",
+          to: "hand",
+          target: {
+            type: "card",
+            value: 1,
+            filters: [
+              { filter: "type", value: "item" },
+              { filter: "zone", value: "play" },
+              {
+                filter: "attribute",
+                value: "cost",
+                // TODO: This is wrong, should be based on the character's {S}
+                comparison: { operator: "lte", value: 3 },
+              },
+            ],
           },
-        ],
-      },
-    ],
-    flavour: "Do you know what I call this? A good start!",
-    inkwell: true,
-    colors: ["amethyst"],
-    cost: 4,
-    strength: 3,
-    willpower: 4,
-    lore: 2,
-    illustrator: "Giulia Riva",
-    number: 50,
-    set: "ITI",
-    rarity: "uncommon",
-  };
+        },
+      ],
+    },
+  ],
+  flavour: "Do you know what I call this? A good start!",
+  inkwell: true,
+  colors: ["amethyst"],
+  cost: 4,
+  strength: 3,
+  willpower: 4,
+  lore: 2,
+  illustrator: "Giulia Riva",
+  number: 50,
+  set: "ITI",
+  rarity: "uncommon",
+};
 export const maleficentMistressOfEvil: LorcanaCharacterCardDefinition = {
   id: "su0",
   missingTestCase: true,
@@ -1528,7 +1525,7 @@ export const theQueenHatefulRival: LorcanaCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const treasureGuardianProtectorOfTheCave: LorcanitoCharacterCardDefinition =
+export const treasureGuardianProtectorOfTheCave: LorcanaCharacterCardDefinition =
   {
     id: "bma",
     missingTestCase: true,
@@ -1889,7 +1886,7 @@ const allTiedUp: StaticAbilityWithEffect = {
     },
   ],
 };
-export const gustavTheGiantTerrorOfTheKingdom: LorcanitoCharacterCardDefinition =
+export const gustavTheGiantTerrorOfTheKingdom: LorcanaCharacterCardDefinition =
   {
     id: "irs",
     name: "Gustav the Giant",
@@ -1926,50 +1923,49 @@ export const gustavTheGiantTerrorOfTheKingdom: LorcanitoCharacterCardDefinition 
     set: "ITI",
     rarity: "rare",
   };
-export const johnSilverGreedyTreasureSeeker: LorcanitoCharacterCardDefinition =
-  {
-    id: "lzb",
-    reprints: ["vpb"],
-    name: "John Silver",
-    title: "Greedy Treasure Seeker",
-    characteristics: ["dreamborn", "alien", "villain", "pirate", "captain"],
-    text: "**CHART YOUR OWN COURSE** For each location you have in play, this character gains **Resist** +1 and gets +1 {L}. _(Damage dealt to them is reduced by 1.)_",
-    type: "character",
-    abilities: [
-      propertyStaticAbilities({
-        name: "CHART YOUR OWN COURSE",
-        text: "**CHART YOUR OWN COURSE** For each location you have in play, this character gets +1 {L}.",
-        attribute: "lore",
-        amount: {
-          dynamic: true,
-          filters: [
-            { filter: "zone", value: "play" },
-            { filter: "type", value: "location" },
-            { filter: "owner", value: "self" },
-          ],
-        },
-      }),
-      resistAbility({
+export const johnSilverGreedyTreasureSeeker: LorcanaCharacterCardDefinition = {
+  id: "lzb",
+  reprints: ["vpb"],
+  name: "John Silver",
+  title: "Greedy Treasure Seeker",
+  characteristics: ["dreamborn", "alien", "villain", "pirate", "captain"],
+  text: "**CHART YOUR OWN COURSE** For each location you have in play, this character gains **Resist** +1 and gets +1 {L}. _(Damage dealt to them is reduced by 1.)_",
+  type: "character",
+  abilities: [
+    propertyStaticAbilities({
+      name: "CHART YOUR OWN COURSE",
+      text: "**CHART YOUR OWN COURSE** For each location you have in play, this character gets +1 {L}.",
+      attribute: "lore",
+      amount: {
         dynamic: true,
         filters: [
           { filter: "zone", value: "play" },
           { filter: "type", value: "location" },
           { filter: "owner", value: "self" },
         ],
-      }),
-    ],
-    flavour: "I was never much good at games. Always hated to lose.",
-    inkwell: true,
-    colors: ["steel"],
-    strength: 3,
-    willpower: 3,
-    lore: 1,
-    cost: 3,
-    illustrator: "Gaku Kumatori",
-    number: 176,
-    set: "ITI",
-    rarity: "rare",
-  };
+      },
+    }),
+    resistAbility({
+      dynamic: true,
+      filters: [
+        { filter: "zone", value: "play" },
+        { filter: "type", value: "location" },
+        { filter: "owner", value: "self" },
+      ],
+    }),
+  ],
+  flavour: "I was never much good at games. Always hated to lose.",
+  inkwell: true,
+  colors: ["steel"],
+  strength: 3,
+  willpower: 3,
+  lore: 1,
+  cost: 3,
+  illustrator: "Gaku Kumatori",
+  number: 176,
+  set: "ITI",
+  rarity: "rare",
+};
 export const mickeyMouseStalwartExplorer: LorcanaCharacterCardDefinition = {
   id: "pon",
   missingTestCase: true,
@@ -2352,7 +2348,7 @@ export const jetsamRiffraff: LorcanaCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const lyleTiberiusRourkeCunningMercenary: LorcanitoCharacterCardDefinition =
+export const lyleTiberiusRourkeCunningMercenary: LorcanaCharacterCardDefinition =
   {
     id: "ssp",
     name: "Lyle Tiberius Rourke",
@@ -3512,7 +3508,7 @@ export const triggerImpreciseShooter: LorcanaCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const webbyVanderquackEnthusiasticDuck: LorcanitoCharacterCardDefinition =
+export const webbyVanderquackEnthusiasticDuck: LorcanaCharacterCardDefinition =
   {
     id: "t7c",
     name: "Webby Vanderquack",
@@ -3621,7 +3617,7 @@ export const flintheartGlomgoldLoneCheater: LorcanaCharacterCardDefinition = {
   set: "ITI",
   rarity: "uncommon",
 };
-export const grammaTalaKeeperOfAncientStories: LorcanitoCharacterCardDefinition =
+export const grammaTalaKeeperOfAncientStories: LorcanaCharacterCardDefinition =
   {
     id: "e89",
     name: "Gramma Tala",
@@ -3922,7 +3918,7 @@ export const rufusOrphanageCat: LorcanaCharacterCardDefinition = {
   set: "ITI",
   rarity: "common",
 };
-export const scroogeMcduckRichestDuckInTheWorld: LorcanitoCharacterCardDefinition =
+export const scroogeMcduckRichestDuckInTheWorld: LorcanaCharacterCardDefinition =
   {
     id: "cdd",
     missingTestCase: true,
@@ -4409,7 +4405,7 @@ export const robinHoodChampionOfSherwood: LorcanaCharacterCardDefinition = {
   set: "ITI",
   rarity: "legendary",
 };
-export const sheriffOfNottinghamCorruptOfficial: LorcanitoCharacterCardDefinition =
+export const sheriffOfNottinghamCorruptOfficial: LorcanaCharacterCardDefinition =
   {
     id: "mjo",
     missingTestCase: true,

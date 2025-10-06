@@ -1,7 +1,7 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
 import { gainAbilityWhileHere } from "~/game-engine/engines/lorcana/src/abilities";
 import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverBanishesAnotherCharacterInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const thebesTheBigOlive: LorcanaLocationCardDefinition = {
   id: "pph",

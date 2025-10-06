@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import { baBoom } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
 import { scroogeMcduckUncleMoneybags } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import { vaultDoor } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";
-import { mcduckManorScroogesMansion } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { mcduckManorScroogesMansion } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import {
   TestEngine,
   TestStore,

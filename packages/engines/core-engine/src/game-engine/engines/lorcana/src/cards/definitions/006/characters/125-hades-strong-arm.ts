@@ -1,6 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { banishChosenCharacter } from "@lorcanito/lorcana-engine/effects/effects";
+import { banishChosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const hadesStrongArm: LorcanaCharacterCardDefinition = {

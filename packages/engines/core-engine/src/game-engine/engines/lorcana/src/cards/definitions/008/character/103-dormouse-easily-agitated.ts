@@ -1,4 +1,4 @@
-import { putDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { putDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

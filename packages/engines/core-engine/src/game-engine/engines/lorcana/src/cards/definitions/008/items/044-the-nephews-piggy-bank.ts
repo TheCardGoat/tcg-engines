@@ -1,6 +1,5 @@
-import { chosenCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
-
 import { ifYouHaveCharacterNamed } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { chosenCharacterGetsStrength } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { whenYouPlayThisForEachYouPayLess } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

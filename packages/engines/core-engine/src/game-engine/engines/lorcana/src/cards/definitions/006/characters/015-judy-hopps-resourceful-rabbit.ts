@@ -1,7 +1,7 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { readyAnotherChosenCharacter } from "@lorcanito/lorcana-engine/effects/effects";
 import { atTheEndOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { readyAnotherChosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

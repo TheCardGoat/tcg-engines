@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   jollyRogerHooksShip,
   rlsLegacySolarGalleon,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import {
   goofyFlyingFool,
   kakamoraPiratePitcher,

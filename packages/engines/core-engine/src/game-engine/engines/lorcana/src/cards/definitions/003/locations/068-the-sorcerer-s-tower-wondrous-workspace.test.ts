@@ -5,7 +5,7 @@
 import { describe, expect, it } from "@jest/globals";
 import { magicBroomBucketBrigade } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { magicBroomTheBigSweeper } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
-import { theSorcerersTowerWondrousWorkspace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { theSorcerersTowerWondrousWorkspace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/index";
 import {
   TestEngine,
   TestStore,

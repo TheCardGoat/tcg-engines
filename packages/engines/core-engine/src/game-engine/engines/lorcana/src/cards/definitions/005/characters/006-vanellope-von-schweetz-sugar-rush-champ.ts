@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const vanellopeVonSchweetzSugarRushChamp: LorcanitoCharacterCardDefinition =
+export const vanellopeVonSchweetzSugarRushChamp: LorcanaCharacterCardDefinition =
   {
     id: "huy",
     name: "Vanellope von Schweetz",

@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { fourDozenEggs as ogFourDozenEggs } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions/163-four-dozen-eggs";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const fourDozenEggs: LorcanaActionCardDefinition = {
   ...ogFourDozenEggs,

@@ -1,8 +1,8 @@
-import { banishThisCharacter } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   type GainAbilityStaticAbility,
   shiftAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { banishThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import {
   opposingCharacters,
   thisCharacter,

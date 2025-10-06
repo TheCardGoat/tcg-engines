@@ -1,4 +1,4 @@
-import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { youGainLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { vanishAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/vanishAbility";
 import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

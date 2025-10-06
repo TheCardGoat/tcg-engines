@@ -1,6 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
+import { youMayDrawThenChooseAndDiscard } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { bodyguardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/bodyguardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

@@ -5,7 +5,7 @@ import type {
 import {
   chosenCharacterGainsChallenger,
   chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
-} from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import {
   anotherChosenCharacterOfYours,
   parentsTarget,

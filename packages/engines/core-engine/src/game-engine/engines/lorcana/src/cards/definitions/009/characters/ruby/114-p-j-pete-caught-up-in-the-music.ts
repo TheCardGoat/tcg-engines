@@ -1,4 +1,4 @@
-import { getStrengthThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
+import { getStrengthThisTurn } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverYouPlayASong } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

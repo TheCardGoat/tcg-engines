@@ -323,6 +323,19 @@ export class LorcanaTestEngine {
     return { result: true };
   }
 
+  // STUB: Legacy quest method for test compatibility
+  questCard(
+    card: LorcanaCardDefinition | LorcanaCardInstance | { id: string },
+  ) {
+    const model = this.getCardModel(card as any);
+    this.authoritativeEngine.exertCard({
+      card: model.instanceId,
+      exerted: true,
+    });
+    this.wasMoveExecutedAndPropagated();
+    return { result: true };
+  }
+
   moveToLocation(params: {
     location: LorcanaCardInstance | LorcanaCardDefinition;
     character: LorcanaCardInstance | LorcanaCardDefinition;
@@ -689,6 +702,10 @@ export class LorcanaTestEngine {
       targets?: Array<LorcanaCardDefinition | LorcanaCardInstance | string>;
       scry?: Record<string, Array<LorcanaCardDefinition | string>>;
       targetPlayer?: string;
+      targetId?: string; // Legacy: use targets instead
+      mode?: string; // Legacy: for modal abilities
+      acceptOptionalLayer?: boolean; // Legacy: for optional effects
+      skip?: boolean; // Legacy: for skipping effects
     },
     _autoResolve?: unknown,
   ) {
@@ -914,9 +931,12 @@ export class LorcanaTestEngine {
    * @returns this for chaining
    */
   resolveTopOfStack(opts?: {
-    targets?: string[];
+    targets?: Array<LorcanaCardDefinition | LorcanaCardInstance | string>;
     mode?: string;
     scry?: Record<string, any>;
+    targetId?: string; // Legacy: use targets instead
+    acceptOptionalLayer?: boolean; // Legacy: for optional effects
+    skip?: boolean; // Legacy: for skipping effects
   }) {
     const state = this.authoritativeEngine.getStore().state;
     const effects = state.G.effects;
@@ -1056,7 +1076,14 @@ declare module "./lorcana-test-engine" {
     getLayerIdForPlayer: (playerId: string) => string | undefined;
     acceptOptionalAbility: (..._args: any[]) => any;
     getCard: (card: unknown, index?: number) => LorcanaCardInstance;
-    resolveTopOfStack: (opts?: { targets?: string[]; mode?: string }) => this;
+    resolveTopOfStack: (opts?: {
+      targets?: Array<LorcanaCardDefinition | LorcanaCardInstance | string>;
+      mode?: string;
+      scry?: Record<string, any>;
+      targetId?: string;
+      acceptOptionalLayer?: boolean;
+      skip?: boolean;
+    }) => this;
     acceptOptionalLayer: (..._args: any[]) => void;
     setCardDamage(
       characterCard: LorcanaCardDefinition | LorcanaCardInstance,

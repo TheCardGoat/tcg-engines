@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const rancisFluggerbutterChocolateCharger: LorcanitoCharacterCardDefinition =
+export const rancisFluggerbutterChocolateCharger: LorcanaCharacterCardDefinition =
   {
     id: "kcc",
     name: "Rancis Fluggerbutter",

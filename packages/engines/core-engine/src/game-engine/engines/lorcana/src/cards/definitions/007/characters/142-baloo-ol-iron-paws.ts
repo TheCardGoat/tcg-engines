@@ -1,6 +1,6 @@
-import { damageDealtRestrictionEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
 import type { StaticAbilityWithEffect } from "~/game-engine/engines/lorcana/src/abilities";
+import { damageDealtRestrictionEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { withStrengthXorMore } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { targetCardsGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

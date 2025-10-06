@@ -2,7 +2,7 @@ import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abili
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const vanellopeVonSchweetzCandyMechanic: LorcanitoCharacterCardDefinition =
+export const vanellopeVonSchweetzCandyMechanic: LorcanaCharacterCardDefinition =
   {
     id: "pvk",
     name: "Vanellope Von Schweetz",

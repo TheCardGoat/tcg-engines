@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { smash as ogSmash } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions/200-smash";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const smash: LorcanaActionCardDefinition = {
   ...ogSmash,

@@ -1,6 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import { chosenCharacterOrLocation } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";

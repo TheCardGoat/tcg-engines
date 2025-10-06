@@ -1,7 +1,7 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import { ifThisCharacterIsExerted } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { drawACard } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenChallenged } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

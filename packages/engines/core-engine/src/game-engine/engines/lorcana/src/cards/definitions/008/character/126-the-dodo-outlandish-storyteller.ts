@@ -1,4 +1,4 @@
-import { thisCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
+import { thisCharacterGetsStrength } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theDodoOutlandishStoryteller: LorcanaCharacterCardDefinition = {

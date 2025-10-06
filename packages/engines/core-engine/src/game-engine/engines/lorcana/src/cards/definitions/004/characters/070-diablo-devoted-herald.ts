@@ -1,8 +1,8 @@
-import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   evasiveAbility,
   shiftAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { drawACard } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { wheneverOpponentDrawsACard } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

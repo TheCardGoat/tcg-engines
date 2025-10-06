@@ -1,4 +1,4 @@
-import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+import { drawACard } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { wheneverOpponentPlaysASong } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

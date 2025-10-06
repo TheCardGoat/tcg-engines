@@ -1,7 +1,7 @@
 import {
   drawACard,
   exertChosenCharacter,
-} from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 
 import { chosenCardFromYourHand } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

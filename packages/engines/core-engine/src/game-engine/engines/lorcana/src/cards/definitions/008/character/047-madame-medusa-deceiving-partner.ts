@@ -1,4 +1,4 @@
-import { returnChosenCharacterWithCostLess } from "@lorcanito/lorcana-engine/effects/effects";
+import { returnChosenCharacterWithCostLess } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import {
   anotherChosenCharacterOfYours,
   thisCharacter,

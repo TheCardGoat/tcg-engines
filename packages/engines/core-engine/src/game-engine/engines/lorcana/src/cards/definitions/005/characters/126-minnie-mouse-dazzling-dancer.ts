@@ -1,4 +1,4 @@
-import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { youGainLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import {
   wheneverACharNamedXChallengesAnotherChar,
   wheneverChallengesAnotherChar,

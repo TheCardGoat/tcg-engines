@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { underTheSea as ogUnderTheSea } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions/095-under-the-sea";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const underTheSea: LorcanaActionCardDefinition = {
   ...ogUnderTheSea,

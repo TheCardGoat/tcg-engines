@@ -1,4 +1,4 @@
-import { entersPlayExerted } from "@lorcanito/lorcana-engine/effects/effects";
+import { entersPlayExerted } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const baymaxLowBattery: LorcanaCharacterCardDefinition = {

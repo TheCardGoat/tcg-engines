@@ -1,4 +1,4 @@
-import { targetCardGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
+import { targetCardGainsResist } from "~/game-engine/engines/lorcana/src/abilities/effect";
 
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

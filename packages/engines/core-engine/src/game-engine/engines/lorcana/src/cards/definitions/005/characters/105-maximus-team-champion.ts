@@ -1,5 +1,5 @@
-import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { atTheEndOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { youGainLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenCharacterOfYours } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

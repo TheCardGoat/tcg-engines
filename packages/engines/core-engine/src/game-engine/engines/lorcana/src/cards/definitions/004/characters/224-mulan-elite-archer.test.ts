@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mcduckManorScroogesMansion } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { mcduckManorScroogesMansion } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import {
   cinderellaMelodyWeaver,
   mulanEliteArcher,

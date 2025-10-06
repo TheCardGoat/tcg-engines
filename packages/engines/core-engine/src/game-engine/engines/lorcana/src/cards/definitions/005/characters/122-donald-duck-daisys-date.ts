@@ -1,4 +1,4 @@
-import { eachOpponentLosesXLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { eachOpponentLosesXLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

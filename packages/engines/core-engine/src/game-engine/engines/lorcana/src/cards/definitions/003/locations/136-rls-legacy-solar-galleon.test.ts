@@ -7,7 +7,7 @@ import {
   liloMakingAWish,
   stichtNewDog,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
-import { rlsLegacySolarGalleon } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { rlsLegacySolarGalleon } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/index";
 import {
   TestEngine,
   TestStore,

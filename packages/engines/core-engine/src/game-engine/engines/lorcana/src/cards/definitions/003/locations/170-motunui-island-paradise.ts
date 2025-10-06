@@ -1,7 +1,7 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { putThisCardIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
 import { gainAbilityWhileHere } from "~/game-engine/engines/lorcana/src/abilities";
+import { putThisCardIntoYourInkwellExerted } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { whenThisCharacterBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const motunuiIslandParadise: LorcanaLocationCardDefinition = {
   id: "rqt",

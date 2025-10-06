@@ -6,7 +6,7 @@ import type {
 import {
   returnCharacterFromDiscardToHand,
   youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 
 const targetPrincesInYourDiscard: CardEffectTarget = {
   type: "card",

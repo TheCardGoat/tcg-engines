@@ -9,7 +9,7 @@ import {
   madamMimSnake,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
-import { bellesHouseMauricesWorkshop } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { bellesHouseMauricesWorkshop } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations";
 import {
   denahiImpatientHunter,

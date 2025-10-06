@@ -7,7 +7,7 @@ import {
   shenziHyenaPackLeader,
   ursulaDeceiver,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
-import { nottinghamPrinceJohnsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { nottinghamPrinceJohnsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import {
   TestEngine,
   TestStore,

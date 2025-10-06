@@ -1,5 +1,5 @@
-import { putTopCardOfOpponentDeckIntoTheirInkwell } from "@lorcanito/lorcana-engine/effects/effects";
 import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { putTopCardOfOpponentDeckIntoTheirInkwell } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import {
   thisCard,
   thisCharacter,

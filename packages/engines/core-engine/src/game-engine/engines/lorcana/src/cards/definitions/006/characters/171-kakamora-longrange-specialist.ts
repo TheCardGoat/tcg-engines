@@ -1,7 +1,7 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import { ifYouHaveAnotherPirate } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenCharacterOrLocation } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

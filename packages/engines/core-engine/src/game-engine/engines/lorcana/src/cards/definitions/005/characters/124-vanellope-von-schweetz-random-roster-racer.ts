@@ -2,7 +2,7 @@ import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword
 import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const vanellopeVonSchweetzRandomRosterRacer: LorcanitoCharacterCardDefinition =
+export const vanellopeVonSchweetzRandomRosterRacer: LorcanaCharacterCardDefinition =
   {
     id: "zv7",
     name: "Vanellope von Schweetz",

@@ -1,4 +1,4 @@
-import { putTopCardOfYourDeckIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
+import { putTopCardOfYourDeckIntoYourInkwellExerted } from "~/game-engine/engines/lorcana/src/abilities/effect";
 
 import { yourCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenChallenged } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";

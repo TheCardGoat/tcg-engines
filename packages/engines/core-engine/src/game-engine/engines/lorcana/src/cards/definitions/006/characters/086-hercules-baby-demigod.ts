@@ -1,6 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
 import { chosenDamagedCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

@@ -1,7 +1,7 @@
 import {
   gainsAbilityEffect,
   untilTheEndOfYourNextTurn,
-} from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { voicelessAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/voicelessAbility";
 import { allCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";

@@ -1,5 +1,5 @@
-import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import { drawXCards } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const iHaveJustTheThing: ActivatedAbility = {

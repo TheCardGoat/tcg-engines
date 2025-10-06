@@ -1,8 +1,8 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { gainAbilityWhileHere } from "~/game-engine/engines/lorcana/src/abilities";
 import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { youGainLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const skullRockIsolatedFortress: LorcanaLocationCardDefinition = {
   id: "sv6",

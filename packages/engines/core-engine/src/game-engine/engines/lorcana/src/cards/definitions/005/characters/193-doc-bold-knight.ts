@@ -5,7 +5,7 @@ import type {
 import {
   discardYourHand,
   drawXCards,
-} from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 
 const drasticMeasures: ResolutionAbility = {
   type: "resolution",

@@ -1,4 +1,4 @@
-import { chosenCharacterCantChallengeDuringNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
+import { chosenCharacterCantChallengeDuringNextTurn } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const fryingPan: LorcanaItemCardDefinition = {

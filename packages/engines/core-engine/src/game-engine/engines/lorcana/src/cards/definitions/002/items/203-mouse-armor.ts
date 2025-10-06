@@ -1,4 +1,4 @@
-import { chosenCharacterGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
+import { chosenCharacterGainsResist } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const mouseArmor: LorcanaItemCardDefinition = {

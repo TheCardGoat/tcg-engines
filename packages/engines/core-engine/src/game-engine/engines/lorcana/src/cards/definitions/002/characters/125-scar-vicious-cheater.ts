@@ -1,4 +1,4 @@
-import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+import { readyAndCantQuest } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/rushAbility";
 import { wheneverBanishesAnotherCharacterInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

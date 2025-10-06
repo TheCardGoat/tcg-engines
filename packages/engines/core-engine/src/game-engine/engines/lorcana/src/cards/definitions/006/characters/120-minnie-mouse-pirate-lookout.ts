@@ -1,6 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { returnLocationFromDiscardToHand } from "@lorcanito/lorcana-engine/effects/effects";
+import { returnLocationFromDiscardToHand } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { wheneverACardIsPutIntoYourInkwell } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

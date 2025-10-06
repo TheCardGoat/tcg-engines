@@ -1,5 +1,5 @@
-import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+import { readyAndCantQuest } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { wheneverIsReturnedToHand } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

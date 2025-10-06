@@ -1,6 +1,6 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
 import { gainAbilityWhileHere } from "~/game-engine/engines/lorcana/src/abilities";
 import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const tianasPalaceJazzRestaurant: LorcanaLocationCardDefinition = {
   id: "sfq",

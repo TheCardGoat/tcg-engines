@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { lastDitchEffort as ogLastDitchEffort } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions/062-last-ditch-effort";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const lastditchEffort: LorcanaActionCardDefinition = {
   ...ogLastDitchEffort,

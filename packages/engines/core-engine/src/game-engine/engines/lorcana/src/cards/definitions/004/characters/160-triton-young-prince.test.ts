@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   bellesHouseMauricesWorkshop,
   mcduckManorScroogesMansion,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import { tritonYoungPrince } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import { arielsGrottoASecretPlace } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations";
 import {

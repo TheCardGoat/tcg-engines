@@ -1,5 +1,5 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
 import { recklessAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/recklessAbility";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const tropicalRainforestJaguarLair: LorcanaLocationCardDefinition = {
   id: "voi",

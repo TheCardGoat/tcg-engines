@@ -1,9 +1,9 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { youGainLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const alistairKreiAmbitiousEntrepreneur: LorcanitoCharacterCardDefinition =
+export const alistairKreiAmbitiousEntrepreneur: LorcanaCharacterCardDefinition =
   {
     id: "v7y",
     missingTestCase: true,

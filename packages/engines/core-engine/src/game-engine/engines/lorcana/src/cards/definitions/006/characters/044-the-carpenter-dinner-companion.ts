@@ -1,6 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { exertChosenCharacter } from "@lorcanito/lorcana-engine/effects/effects";
+import { exertChosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { whenThisCharacterBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

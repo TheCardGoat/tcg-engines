@@ -197,6 +197,14 @@ export class LorcanaCardInstance extends CoreCardInstance<
         ability.type === "keyword" && ability.keyword === "sing-together",
     );
   }
+  get hasRush(): boolean {
+    return this.card.abilities?.some(
+      (ability) => ability.type === "keyword" && ability.keyword === "rush",
+    );
+  }
+  get isDead(): boolean {
+    return this.zone === "discard" || this.meta.damage >= this.willpower;
+  }
   ready = true;
 }
 

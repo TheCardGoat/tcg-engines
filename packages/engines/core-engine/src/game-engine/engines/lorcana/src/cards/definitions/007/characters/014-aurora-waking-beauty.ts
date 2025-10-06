@@ -1,4 +1,4 @@
-import { readyAndCantQuestOrChallenge } from "@lorcanito/lorcana-engine/effects/effects";
+import { readyAndCantQuestOrChallenge } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { singerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singerAbility";
 import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverYouHealAnyCharacter } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";

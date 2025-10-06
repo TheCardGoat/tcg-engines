@@ -1,5 +1,5 @@
-import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
 import { singerTogetherAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singerTogetherAbility";
+import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const circleOfLife: LorcanaActionCardDefinition = {
   id: "w6g",

@@ -1,5 +1,5 @@
-import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
 import { wheneverACharacterQuestsWhileHere } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
+import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theUnderworldRiverStyx: LorcanaLocationCardDefinition = {
   id: "ez0",

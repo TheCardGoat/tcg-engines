@@ -7,7 +7,7 @@ import { peterPanLostBoyLeader } from "~/game-engine/engines/lorcana/src/cards/d
 import {
   forbiddenMountainMaleficentsCastle,
   neverLandMermaidLagoon,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import {
   TestEngine,
   TestStore,

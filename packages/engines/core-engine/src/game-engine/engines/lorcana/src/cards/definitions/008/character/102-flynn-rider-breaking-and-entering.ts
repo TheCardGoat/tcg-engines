@@ -1,7 +1,7 @@
 import {
   discardACard,
   yourOpponentGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenChallenged } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

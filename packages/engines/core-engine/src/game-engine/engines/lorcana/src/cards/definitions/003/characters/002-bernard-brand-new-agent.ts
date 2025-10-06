@@ -1,6 +1,6 @@
-import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 import { atTheEndOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
 import { ifThisCharacterIsExerted } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { readyAndCantQuest } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenCharacterOfYours } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

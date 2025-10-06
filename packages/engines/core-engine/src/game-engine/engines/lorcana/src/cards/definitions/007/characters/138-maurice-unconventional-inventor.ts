@@ -1,12 +1,12 @@
-import {
-  drawACard,
-  mayBanish,
-} from "@lorcanito/lorcana-engine/effects/effects";
 import type {
   BanishEffect,
   CreateLayerBasedOnTarget,
   TargetConditionalEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import {
+  drawACard,
+  mayBanish,
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenItemOfYours } from "~/game-engine/engines/lorcana/src/abilities/target";
 import { chosenCharacterWithStrengthXorLess } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";

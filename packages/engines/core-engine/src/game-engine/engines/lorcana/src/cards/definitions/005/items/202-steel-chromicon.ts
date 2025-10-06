@@ -1,4 +1,4 @@
-import { dealDamageToChosenCharacter } from "@lorcanito/lorcana-engine/effects/effects";
+import { dealDamageToChosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const steelChromicon: LorcanaItemCardDefinition = {

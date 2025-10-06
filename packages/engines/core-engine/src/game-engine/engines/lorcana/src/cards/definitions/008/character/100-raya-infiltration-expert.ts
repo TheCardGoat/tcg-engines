@@ -1,4 +1,4 @@
-import { readyAnotherChosenCharacter } from "@lorcanito/lorcana-engine/effects/effects";
+import { readyAnotherChosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { wheneverThisCharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

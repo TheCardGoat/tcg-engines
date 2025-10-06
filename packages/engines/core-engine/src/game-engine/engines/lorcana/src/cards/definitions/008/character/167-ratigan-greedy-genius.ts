@@ -1,6 +1,6 @@
-import { banishThisCharacter } from "@lorcanito/lorcana-engine/effects/effects";
 import { atTheEndOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
 import { youDidntPutAnyCardsIntoYourInkwellThisTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { banishThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

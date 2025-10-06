@@ -1,6 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { moveDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import {
   chosenCharacter,
   chosenOpposingCharacter,

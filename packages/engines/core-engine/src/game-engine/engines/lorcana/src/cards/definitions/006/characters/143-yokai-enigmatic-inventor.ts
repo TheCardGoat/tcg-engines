@@ -1,6 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { youPayXLessToPlayNextItemThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
+import { youPayXLessToPlayNextItemThisTurn } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenItemOfYours } from "~/game-engine/engines/lorcana/src/abilities/target";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

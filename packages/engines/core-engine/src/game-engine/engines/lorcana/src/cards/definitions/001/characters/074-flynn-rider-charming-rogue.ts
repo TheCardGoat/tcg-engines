@@ -1,4 +1,4 @@
-import { discardACard } from "@lorcanito/lorcana-engine/effects/effects";
+import { discardACard } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { whenChallenged } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

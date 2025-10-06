@@ -1,7 +1,7 @@
 import {
   drawACard,
   moveToLocation,
-} from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { chosenCharacterOfYours } from "~/game-engine/engines/lorcana/src/abilities/target";
 import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenMovesToALocation } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";

@@ -1,11 +1,11 @@
 import {
-  drawACard,
-  youGainLore,
-} from "@lorcanito/lorcana-engine/effects/effects";
-import {
   evasiveAbility,
   yourOtherCharactersWithGain,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import {
+  drawACard,
+  youGainLore,
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const dumboNinthWonderOfTheUniverse: LorcanaCharacterCardDefinition = {

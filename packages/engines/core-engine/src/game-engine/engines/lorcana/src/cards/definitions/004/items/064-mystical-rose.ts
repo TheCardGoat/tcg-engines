@@ -1,9 +1,8 @@
+import { ifYouHaveCharacterNamed } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import {
   getLoreThisTurn,
   moveDamageEffect,
-} from "@lorcanito/lorcana-engine/effects/effects";
-
-import { ifYouHaveCharacterNamed } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 import {
   chosenCharacter,
   chosenOpposingCharacter,

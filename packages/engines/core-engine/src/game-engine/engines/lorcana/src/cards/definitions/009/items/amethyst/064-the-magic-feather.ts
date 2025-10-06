@@ -1,4 +1,4 @@
-import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
+import { returnThisCardToHand } from "~/game-engine/engines/lorcana/src/abilities/effect";
 
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";

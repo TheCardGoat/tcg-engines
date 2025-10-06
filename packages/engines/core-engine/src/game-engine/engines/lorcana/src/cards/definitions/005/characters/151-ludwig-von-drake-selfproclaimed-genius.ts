@@ -1,6 +1,6 @@
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const ludwigVonDrakeSelfproclaimedGenius: LorcanitoCharacterCardDefinition =
+export const ludwigVonDrakeSelfproclaimedGenius: LorcanaCharacterCardDefinition =
   {
     id: "hbw",
     name: "Ludwig Von Drake",

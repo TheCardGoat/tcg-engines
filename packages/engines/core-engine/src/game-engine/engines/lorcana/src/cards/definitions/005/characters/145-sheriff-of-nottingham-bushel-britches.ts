@@ -2,7 +2,7 @@ import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyw
 import { whenYouPlayThisForEachYouPayLess } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const sheriffOfNottinghamBushelBritches: LorcanitoCharacterCardDefinition =
+export const sheriffOfNottinghamBushelBritches: LorcanaCharacterCardDefinition =
   {
     id: "e7d",
     name: "Sheriff of Nottingham",

@@ -1,4 +1,4 @@
-import { moveToLocation } from "@lorcanito/lorcana-engine/effects/effects";
+import { moveToLocation } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import {
   chosenCharacterOfYoursIncludingSelf,

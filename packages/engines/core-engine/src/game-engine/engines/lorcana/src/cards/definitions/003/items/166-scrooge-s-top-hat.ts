@@ -2,7 +2,7 @@ import {
   youPayXLessToPlayNextActionThisTurn,
   youPayXLessToPlayNextItemThisTurn,
   youPayXLessToPlayNextLocationThisTurn,
-} from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/effect";
 
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
-import { agrabahMarketplace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { agrabahMarketplace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import {
   aladdinBraveRescuer,
   aladdinResoluteSwordsman,
