@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   liloMakingAWish,
   mauiHeroToAll,
@@ -12,6 +11,10 @@ import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/0
 import { chernabogsFollowersCreaturesOfEvil } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { daisyDuckDonaldsDate } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import { minnieMouseStoryteller } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Minnie Mouse - Storyteller", () => {
   it("GATHER AROUND Whenever you play a character, this character gets +1 {L} this turn.", async () => {

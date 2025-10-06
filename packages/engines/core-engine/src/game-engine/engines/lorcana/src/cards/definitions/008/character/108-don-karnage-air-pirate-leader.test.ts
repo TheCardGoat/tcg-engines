@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { brawl } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import { elsaTheFifthSpirit } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import {
   deweyLovableShowoff,
   donKarnageAirPirateLeader,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Don Karnage - Air Pirate Leader", () => {
   it.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {

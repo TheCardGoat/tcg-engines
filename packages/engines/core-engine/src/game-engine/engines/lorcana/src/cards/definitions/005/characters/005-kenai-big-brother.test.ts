@@ -3,8 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { kenaiBigBrother } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 import { brawl } from "../../004/actions/130-brawl";
 import { kodaSmallishBear } from "../../007";
 import {

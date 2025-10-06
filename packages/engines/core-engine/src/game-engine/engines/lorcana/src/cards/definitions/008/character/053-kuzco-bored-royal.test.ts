@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { agustinMadrigalClumsyDad } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { kuzcoBoredRoyal } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Kuzco - Bored Royal", () => {
   it("LLAMA BREATH When you play this character, you may return chosen character, item, or location with cost 2 or less to their player's hand.", async () => {

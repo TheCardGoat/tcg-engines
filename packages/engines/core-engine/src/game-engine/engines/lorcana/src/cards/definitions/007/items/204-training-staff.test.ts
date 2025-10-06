@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   kashekimAncientRuler,
   trainingStaff,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Training Staff", () => {
   it("PRECISION STRIKE {E}, 1 {I} – Chosen character gains Challenger +2 this turn. (They get +2 {S} while challenging.)", async () => {

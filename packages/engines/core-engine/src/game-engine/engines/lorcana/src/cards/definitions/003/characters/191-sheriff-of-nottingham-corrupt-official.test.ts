@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { suddenChill } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import {
   robinHoodBelovedOutlaw,
   sheriffOfNottinghamCorruptOfficial,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Sheriff of Nottingham - Corrupt Official", () => {
   it.skip("**TAXES SHOULD HURT** Whenever you discard a card, you may deal 1 damage to chosen opposing character.", () => {

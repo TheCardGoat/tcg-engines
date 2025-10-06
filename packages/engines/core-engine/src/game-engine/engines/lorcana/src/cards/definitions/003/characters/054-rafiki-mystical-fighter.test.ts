@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { magicBroomBucketBrigade } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { rafikiMysticalFighter } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { shenziHeadHyena } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Rafiki - Mystical Fighter", () => {
   it("**Challenger** +3 _(While challenging, this character gets +3 {S}.)_**ANCIENT SKILLS** Whenever he challenges a Hyena character, this character takes no damage from the challenge.", () => {

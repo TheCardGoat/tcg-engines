@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { deweyLovableShowoff } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import { theMagicFeather } from "~/game-engine/engines/lorcana/src/cards/definitions/009";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Magic Feather", () => {
   it("NOW YOU CAN FLY! When you play this item, choose a character of yours. While this item is in play, that character gains Evasive. (Only characters with Evasive can challenge them.)", async () => {

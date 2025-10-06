@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   palaceGuardSpectralSentry,
   scarab,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Scarab", () => {
   it("SEARCH THE SANDS {E} 2 {I} – Return an Illusion character card from your discard to your hand.", async () => {

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/027-hakuna-matata";
 import { clarabelleLightOnHerHooves } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/084-clarabelle-light-on-her-hooves";
 import { allIsFound } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
@@ -12,6 +11,10 @@ import {
   minnieMouseSweetheartPrincess,
   ursulaVoiceStealer,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/009";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Ursula - Voice Stealer", () => {
   it("SING FOR ME When you play this character, exert chosen opposing ready character. Then, you may play a song with cost equal to or less than the exerted character's cost for free.", async () => {

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { plasmaBlaster } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
 import {
   devilsEyeDiamond,
@@ -11,6 +10,10 @@ import {
   suzyMasterSeamstress,
   tobyDoggedCompanion,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Devil's Eye Diamond", () => {
   it("THE PRICE OF POWER {E} - If one of your characters was damaged this turn, gain 1 lore.", async () => {

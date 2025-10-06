@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   outOfOrder,
   yzmaChangedIntoAKitten,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007/";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Yzma - Changed into a Kitten", () => {
   describe("I WON When this character is banished, if you have more cards in hand than any opponent, you may return this character to your hand.", () => {

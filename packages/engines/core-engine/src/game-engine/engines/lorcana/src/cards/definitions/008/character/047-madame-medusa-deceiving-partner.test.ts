@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   dormouseEasilyAgitated,
   madameMedusaDeceivingPartner,
   mickeyMouseGiantMouse,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Madame Medusa - Deceiving Partner", () => {
   it("DOUBLE-CROSS When you play this character, you may deal 2 damage to another chosen character of yours to return chosen character with cost 2 or less to their player's hand.", async () => {

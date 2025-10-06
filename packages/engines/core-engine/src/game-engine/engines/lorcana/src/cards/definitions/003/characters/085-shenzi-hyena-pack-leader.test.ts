@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   shenziHyenaPackLeader,
   ursulaDeceiver,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { nottinghamPrinceJohnsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Shenzi - Hyena Pack Leader", () => {
   it("**I WILL DO IT** When this character is at a location, she gets +3 {S}.", async () => {

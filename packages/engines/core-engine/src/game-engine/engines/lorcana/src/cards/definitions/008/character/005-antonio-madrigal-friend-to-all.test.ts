@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { thisIsMyFamily } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import {
   antonioMadrigalFriendToAll,
@@ -12,6 +11,10 @@ import {
   hueyReliableLeader,
   louieOneCoolDuck,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Antonio Madrigal - Friend to All", () => {
   it("OF COURSE THEY CAN COME Once during your turn, whenever one of your characters sings a song, you may search your deck for a character card with cost 3 or less and reveal that card to all players. Put that card into your hand and shuffle your deck.", async () => {

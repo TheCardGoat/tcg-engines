@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/169-pawpsicle";
 import { deweyLovableShowoff } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import { aliceAccidentallyAdrift } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Alice - Accidentally Adrift", () => {
   it("WASHED AWAY When you play this character, you may put chosen item into its player's inkwell facedown and exerted.", async () => {

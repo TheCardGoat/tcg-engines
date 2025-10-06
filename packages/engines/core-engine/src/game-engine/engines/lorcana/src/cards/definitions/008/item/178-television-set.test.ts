@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { luckyThe_15thPuppy } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import {
   antoniosJaguarFaithfulCompanion,
@@ -11,6 +10,10 @@ import {
   dalmatianPuppyTailWagger,
   televisionSet,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Television Set", () => {
   it("IS IT ON YET? {E}, 1 {I} – Look at the top card of your deck. If it's a Puppy character card, you may reveal it and put it into your hand. Otherwise, put it on the bottom of your deck.", async () => {

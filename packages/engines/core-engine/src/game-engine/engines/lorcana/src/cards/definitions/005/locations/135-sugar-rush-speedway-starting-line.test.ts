@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { stichtCarefreeSurfer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { vanellopeVonSchweetzSugarRushChamp } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
@@ -12,6 +11,10 @@ import {
   sugarRushSpeedwayStartingLine,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
 import { sugarRushSpeedwayFinishLine } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Sugar Rush Speedway - Starting Line", () => {
   it("**ON YOUR MARKS!** Once per turn, you may {E} chosen character here and deal them 1 damage to move them to another location for free.", () => {

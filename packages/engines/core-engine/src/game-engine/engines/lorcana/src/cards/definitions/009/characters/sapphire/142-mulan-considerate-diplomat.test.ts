@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { heiheiBoatSnack } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/007-heihei-boat-snack";
 import { shieldOfVirtue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/135-shield-of-virtue";
 import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/149-hiram-flaversham-toymaker";
@@ -13,6 +12,10 @@ import {
   deweyLovableShowoff,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import { mulanConsiderateDiplomat } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mulan - Considerate Diplomat", () => {
   it("IMPERIAL INVITATION Whenever this character quests, look at the top 4 cards of your deck. You may reveal a Princess character card and put it into your hand. Put the rest on the bottom of your deck in any order.", async () => {

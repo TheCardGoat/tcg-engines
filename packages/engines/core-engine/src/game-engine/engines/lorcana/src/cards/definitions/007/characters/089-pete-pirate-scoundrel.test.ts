@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { aPiratesLife } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import { hiddenInkcaster } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
 import { gatheringKnowledgeAndWisdom } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import { petePirateScoundrel } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("PILFER AND PLUNDER Whenever you play an action that isn’t a song, you may banish chosen item.", () => {
   it("should banish chosen item when playing an action not a song", async () => {

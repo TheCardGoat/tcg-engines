@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import {
   beagleBoysSmalltimeCrooks,
   miloThatchUndauntedScholar,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Milo Thatch - Undaunted Scholar", () => {
   it("I'M YOUR GUY Whenever you play an action, you may give chosen character +2 {S} this turn.", async () => {

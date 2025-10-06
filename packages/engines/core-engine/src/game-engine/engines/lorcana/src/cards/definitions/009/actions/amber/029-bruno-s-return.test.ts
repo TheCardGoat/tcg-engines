@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { brunosReturn } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Bruno's Return", () => {
   it.skip("Return a character card from your discard to your hand. Then remove up to 2 damage from chosen character.", async () => {

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { sisuEmpoweredSibling } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
@@ -18,6 +17,10 @@ import {
   pullTheLever,
   wrongLeverAction,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 import { mrSmeeBumblingMate } from "../../003/characters/characters";
 
 describe("Emerald Chromicon", () => {

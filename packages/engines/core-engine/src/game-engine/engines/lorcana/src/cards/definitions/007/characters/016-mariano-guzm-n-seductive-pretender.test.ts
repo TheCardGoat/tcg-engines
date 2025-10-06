@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { doloresMadrigalEasyListener } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { marianoGuzmanSeductivePretender } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mariano Guzmán - Seductive Pretender", () => {
   it("I SEE YOU As long as you have a Dolores Madrigal character in play, this character gets +1 {L}.", async () => {

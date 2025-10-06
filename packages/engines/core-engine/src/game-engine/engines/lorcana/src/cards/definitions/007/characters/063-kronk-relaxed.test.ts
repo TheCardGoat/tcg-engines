@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { suddenChill } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import { kronkRelaxed } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Kronk - Relaxed", () => {
   it("Ward", async () => {

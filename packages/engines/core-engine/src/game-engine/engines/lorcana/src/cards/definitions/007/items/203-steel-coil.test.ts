@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   kashekimAncientRuler,
   kodaSmallishBear,
   steelCoil,
   suzyMasterSeamstress,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Steel Coil", () => {
   it("METALLIC FLOW During your turn, whenever a card is put into your inkwell, you may draw a card, then choose and discard a card.", async () => {

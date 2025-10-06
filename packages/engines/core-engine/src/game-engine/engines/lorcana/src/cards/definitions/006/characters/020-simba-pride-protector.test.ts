@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   aladdinCorneredSwordman,
   maleficentBinding,
   mauiHeroToAll,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { simbaPrideProtector } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Simba - Pride Protector", () => {
   it("Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Simba.)", async () => {

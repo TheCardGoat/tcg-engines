@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { pigletPoohPirateCaptain } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { diabloDevotedHerald } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import {
   daisyDuckPirateCaptain,
   perilousMazeWateryLabyrinth,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Distant Shores", () => {
   it("Whenever one of your Pirate characters quests while at a location, draw a card.", async () => {

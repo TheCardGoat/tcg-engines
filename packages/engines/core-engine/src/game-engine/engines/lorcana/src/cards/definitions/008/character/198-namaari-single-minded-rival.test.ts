@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   rayaFierceProtector,
   sisuDaringVisitor,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { namaariSinglemindedRival } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Namaari - Single-Minded Rival", () => {
   it("STRATEGIC EDGE When you play this character and at the start of your turn, you may draw a card, then choose and discard a card.", async () => {

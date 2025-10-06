@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   antonioMadrigalFriendToAll,
   antoniosJaguarFaithfulCompanion,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Antonio's Jaguar - Faithful Companion", () => {
   it("YOU WANT TO GO WHERE? When you play this character, if you have a character in play named Antonio Madrigal, gain 1 lore.", async () => {

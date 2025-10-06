@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import { wreckitRalphAdmiralUnderpants } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import { candleheadDedicatedRacer } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
@@ -11,6 +10,10 @@ import {
   gloydOrangeboarFierceCompetitor,
   kingCandySugarRushNightmare,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("King Candy - Sugar Rush Nightmare", () => {
   it("A NEW ROSTER When this character is banished, you may return another Racer character card from your discard to your hand.", async () => {

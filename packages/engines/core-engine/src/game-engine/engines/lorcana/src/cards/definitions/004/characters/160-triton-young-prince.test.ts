@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   bellesHouseMauricesWorkshop,
   mcduckManorScroogesMansion,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
 import { tritonYoungPrince } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { arielsGrottoASecretPlace } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Triton - Young Prince", () => {
   it("**SUPERIOR SWIMMER** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_**KEEPER OF ATLANTICA** Whenever one of your locations is banished, you may put that card into your inkwell facedown and exerted.", async () => {

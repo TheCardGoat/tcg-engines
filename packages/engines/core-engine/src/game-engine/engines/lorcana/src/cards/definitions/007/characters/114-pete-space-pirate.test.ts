@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   kakamoraBandOfPirates,
   peteSpacePirate,
@@ -12,6 +11,10 @@ import {
   mickeyMouseGiantMouse,
   nothingWeWontDo,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Pete - Space Pirate", () => {
   it("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Pete.)", async () => {

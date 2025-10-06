@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { iagoPrettyPolly } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { aPiratesLife } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions/128-a-pirates-life";
 import {
   dumboNinthWonderOfTheUniverse,
   dumboTheFlyingElephant,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/009";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Dumbo - Ninth Wonder of the Universe", () => {
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {

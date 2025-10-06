@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   theQueenCommandingPresence,
   theQueenRegalMonarch,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { yokaiScientificSupervillain } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { yokaiIntellectualSchemer } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("INNOVATE You pay 1{I} less to play characters using their Shift ability.", () => {
   it("should reduce shift cost", async () => {

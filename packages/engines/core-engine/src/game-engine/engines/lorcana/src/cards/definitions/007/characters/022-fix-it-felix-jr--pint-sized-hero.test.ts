@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { iWontGiveIn } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import {
   calhounBattletested,
   candleheadDedicatedRacer,
   fixitFelixJrPintsizedHero,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Fix‐It Felix, Jr. - Pint‐Sized Hero", () => {
   it("LET’S GET TO WORK Whenever you return a Racer character card from your discard to your hand, you may ready chosen Racer character. They can’t quest for the rest of this turn.", async () => {

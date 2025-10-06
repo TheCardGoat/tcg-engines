@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { hadesDoubleDealer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import {
   kuzcoPanickedLlama,
   pongoDearOldDad,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Kuzco - Panicked Llama", () => {
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import { goonsMaleficent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
@@ -11,6 +10,10 @@ import {
   mrSmeeSteadfastMate,
   mullinsSeasonedShipmate,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mullins - Seasoned Shipmate", () => {
   it("FALL IN LINE While you have a character named Mr. Smee in play, this character gains Resist +1. (Damage dealt to them is reduced by 1.)", async () => {

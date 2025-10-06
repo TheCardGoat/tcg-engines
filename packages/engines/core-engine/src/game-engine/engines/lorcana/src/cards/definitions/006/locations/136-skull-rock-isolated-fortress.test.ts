@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { skullRockIsolatedFortress } from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Skull Rock - Isolated Fortress", () => {
   it.skip("FAMILIAR GROUND Characters get +1 {S} while here.", async () => {

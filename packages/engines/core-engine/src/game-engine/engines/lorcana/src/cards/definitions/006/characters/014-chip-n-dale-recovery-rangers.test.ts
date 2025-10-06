@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { mickeyMouseDetective } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import {
@@ -14,6 +13,10 @@ import {
   gadgetHackwrenchPerceptiveMouse,
   rafikiShamanOfTheSavanna,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Chip 'n' Dale - Recovery Rangers", () => {
   describe("Shift", () => {

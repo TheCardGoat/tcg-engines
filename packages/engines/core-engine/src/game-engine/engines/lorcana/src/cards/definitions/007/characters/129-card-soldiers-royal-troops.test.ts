@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   bagheeraGuardianJaguar,
   cardSoldiersRoyalTroops,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Card Soldiers - Royal Troops", () => {
   it("TAKE POINT While a damaged character is in play, this character gets +2 {S}.", async () => {

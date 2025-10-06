@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { heiheiNotsotrickyChicken } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Heihei - Not-So-Tricky Chicken", () => {
   it.skip("EAT ANYTHING When you play this character, exert chosen opposing item. It can't ready at the start of its next turn.", async () => {

@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   dalmatianPuppyTailWagger,
   hueyReliableLeader,
   perditaOnTheLookout,
   tianaNaturalTalent,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Huey - Reliable Leader", () => {
   it("I KNOW THE WAY Whenever this character quests, you pay 1 {I} less for the next character you play this turn.", async () => {

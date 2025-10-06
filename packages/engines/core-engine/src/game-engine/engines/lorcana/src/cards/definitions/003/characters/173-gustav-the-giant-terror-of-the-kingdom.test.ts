@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   gustavTheGiantTerrorOfTheKingdom,
   miloThatchCleverCartographer,
   starkeyDeviousPirate,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Gustav the Giant - Terror of the Kingdom", () => {
   it("**ALL TIED UP** This character enters play exerted and can't ready at the start of your turn.", async () => {

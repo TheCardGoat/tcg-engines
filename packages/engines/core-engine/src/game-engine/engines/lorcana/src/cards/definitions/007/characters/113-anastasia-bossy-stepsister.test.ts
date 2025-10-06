@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { anastasiaBossyStepsister } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Anastasia - Bossy Stepsister", () => {
   it.skip("OH, I HATE THIS! Whenever this character is challenged, the challenging player chooses and discards a card.", async () => {

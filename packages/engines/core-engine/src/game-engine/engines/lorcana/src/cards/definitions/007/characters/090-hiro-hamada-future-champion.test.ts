@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { hiroHamadaRoboticsProdigy } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import {
   hiroHamadaArmorDesigner,
   hiroHamadaFutureChampion,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hiro Hamada - Future Champion", () => {
   it("ORIGIN STORY When you play a Floodborn character on this card, draw a card.", async () => {

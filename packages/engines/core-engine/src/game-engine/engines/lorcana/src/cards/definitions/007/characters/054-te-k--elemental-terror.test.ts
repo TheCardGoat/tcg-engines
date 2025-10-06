@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { teKaTheBurningOne } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { annaMysticalMajesty } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import {
@@ -11,6 +10,10 @@ import {
   teKaElementalTerror,
   thomasOmalleyFelineCharmer,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Te Kā - Elemental Terror", () => {
   it("Shift 7 (You may pay 7 {I} to play this on top of one of your characters named Te Kā.)", async () => {

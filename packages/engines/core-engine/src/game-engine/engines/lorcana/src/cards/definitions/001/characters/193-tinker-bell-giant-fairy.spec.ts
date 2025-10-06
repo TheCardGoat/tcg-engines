@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   heiheiBoatSnack,
@@ -12,6 +11,10 @@ import {
   tinkerBellGiantFairy,
   tinkerBellTinyTactician,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Tinker Bell - Giant Fairy", () => {
   describe("**PUNY PIRATE!** During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen opposing character.", () => {

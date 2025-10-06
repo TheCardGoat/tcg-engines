@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   kakamoraBoardingParty,
   sisuInHerElement,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
 import { treasureMountainAzuriteSeaIsland } from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Treasure Mountain - Azurite Sea Island", () => {
   it("SECRET WEAPON At the start of your turn, deal damage to chosen character or location equal to the number of characters here.", async () => {

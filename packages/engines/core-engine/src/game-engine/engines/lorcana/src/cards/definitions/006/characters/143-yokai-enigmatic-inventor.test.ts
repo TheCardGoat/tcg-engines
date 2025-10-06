@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   pixieDust,
   poohPirateShip,
   yokaiEnigmaticInventor,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Yokai - Enigmatic Inventor", () => {
   it("TIME TO UPGRADE Whenever this character quests, you may return one of your items to your hand to pay 2 {I} less for the next item you play this turn.", async () => {

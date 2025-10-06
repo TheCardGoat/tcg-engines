@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   genieSupportiveFriend,
   hydrosIceTitan,
   iagoPrettyPolly,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { tianasPalaceJazzRestaurant } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Tiana's Palace - Jazz Restaurant", () => {
   it("**NIGHT OUT** Characters can't be challenged while here.", async () => {

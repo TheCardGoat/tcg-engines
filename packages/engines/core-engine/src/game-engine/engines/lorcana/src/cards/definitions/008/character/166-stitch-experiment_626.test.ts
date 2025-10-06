@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   arthurDeterminedSquire,
   roquefortLockExpert,
   stitchExperiment_626,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Stitch - Experiment 626", () => {
   it("SO NAUGHTY When you play this character, each opponent puts the top card of their deck into their inkwell.", async () => {

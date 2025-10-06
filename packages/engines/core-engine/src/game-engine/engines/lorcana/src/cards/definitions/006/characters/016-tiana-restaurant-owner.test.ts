@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   arielSpectacularSinger,
   mickeyBraveLittleTailor,
@@ -14,6 +13,10 @@ import {
   madamMimSnake,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { tianaRestaurantOwner } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Tiana - Restaurant Owner", () => {
   describe("SPECIAL RESERVATION - Whenever a character of yours is challenged while this character is exerted, the challenging character gets -3 {S} this turn unless their player pays 3 {I}.", () => {

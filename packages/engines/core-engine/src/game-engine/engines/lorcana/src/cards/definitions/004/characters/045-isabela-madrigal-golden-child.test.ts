@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   liloMakingAWish,
   stichtNewDog,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { isabelaMadrigalGoldenChild } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Isabela Madrigal - Golden Child", () => {
   it("**LEAVE IT TO ME** Whenever this character quests, your other characters can't quest for the rest of this turn.", () => {

@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { monstroWhaleOfAWhale } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import {
   deweyLovableShowoff,
   trampDapperRascal,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Tramp - Dapper Rascal", () => {
   it.skip("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Tramp.)", async () => {

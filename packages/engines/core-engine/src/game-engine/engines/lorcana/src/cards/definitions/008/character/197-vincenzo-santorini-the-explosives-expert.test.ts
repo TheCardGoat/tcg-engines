@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { kidaProtectorOfAtlantis } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { vincenzoSantoriniTheExplosivesExpert } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Vincenzo Santorini - The Explosives Expert", () => {
   it("I JUST LIKE TO BLOW THINGS UP When you play this character, you may deal 3 damage to chosen character.", async () => {

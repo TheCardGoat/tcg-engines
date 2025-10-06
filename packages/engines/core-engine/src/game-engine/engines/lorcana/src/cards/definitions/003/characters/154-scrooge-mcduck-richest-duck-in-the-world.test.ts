@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { scroogeMcduckRichestDuckInTheWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { luckyDime } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
 import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Scrooge McDuck - Richest Duck in the World", () => {
   it("**I DIDN'T GET RICH BY BEING STUPID** During your turn, whenever this character banishes another character in a challenge, you may play an item for free.", async () => {

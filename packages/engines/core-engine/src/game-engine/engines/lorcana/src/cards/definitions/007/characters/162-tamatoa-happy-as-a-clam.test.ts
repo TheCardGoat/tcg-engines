@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   sapphireCoil,
   steelCoil,
   tamatoaHappyAsAClam,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Tamatoa - Happy as a Clam", () => {
   it("COOLEST COLLECTION When you play this character, return up to 2 item cards from your discard to your hand.", async () => {

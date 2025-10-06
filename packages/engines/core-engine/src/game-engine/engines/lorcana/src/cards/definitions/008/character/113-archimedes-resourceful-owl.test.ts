@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
 import { luckyDime } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
 import {
   archimedesResourcefulOwl,
   deweyLovableShowoff,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Archimedes - Resourceful Owl", () => {
   it("YOU DON'T NEED THAT When you play this character, you may banish chosen item.", async () => {

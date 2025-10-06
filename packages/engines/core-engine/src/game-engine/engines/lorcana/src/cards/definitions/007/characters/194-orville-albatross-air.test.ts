@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { bernardBrandNewAgent } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import {
   missBiancaIndefectibleAgent,
   orvilleAlbatrossAir,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Orville - Albatross Air", () => {
   it("Should not have Evasive when no Miss Bianca or Bernard in play", async () => {

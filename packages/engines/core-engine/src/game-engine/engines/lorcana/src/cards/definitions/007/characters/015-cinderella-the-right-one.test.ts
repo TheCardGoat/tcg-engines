@@ -4,11 +4,14 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { testCharacterCard } from "@lorcanito/lorcana-engine/__mocks__/createGameMock";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   cinderellaTheRightOne,
   theGlassSlipper,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Cinderella - The Right One", () => {
   describe("IF THE SLIPPER FITS When you play this character, you may put an item card named The Glass Slipper from your discard on the bottom of your deck to gain 3 lore.", () => {

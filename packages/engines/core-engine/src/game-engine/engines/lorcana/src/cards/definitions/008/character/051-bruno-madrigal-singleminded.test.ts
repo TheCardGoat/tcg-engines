@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   brunoMadrigalSingleminded,
   camiloMadrigalAtTheCenterOfAttention,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Bruno Madrigal - Single-Minded", () => {
   it("STANDING TALL When you play this character, chosen opposing character can’t ready at the start of their next turn.", async () => {

@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   mauiDemiGod,
   stichtNewDog,
   tamatoaSoShiny,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { rayaFierceProtector } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Raya - Fierce Protector", () => {
   it("**DON'T CROSS ME** Whenever this character challenges another character, gain 1 lore for each other damaged character you have in play.", async () => {

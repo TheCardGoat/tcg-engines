@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { tamatoaSoShiny } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { cogsworthMajordomo } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Cogsworth - Majordomo", () => {
   it("AS YOU WERE! Whenever this character quests, you may give chosen character -2 {S} until the start of your next turn.", async () => {

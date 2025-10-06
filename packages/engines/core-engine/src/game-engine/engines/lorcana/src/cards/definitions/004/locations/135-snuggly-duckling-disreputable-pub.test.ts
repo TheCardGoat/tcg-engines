@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   hadesMeticulousPlotter,
   sisuWiseFriend,
@@ -11,6 +10,10 @@ import {
   tukTukCuriousPartner,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { snugglyDucklingDisreputablePub } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Snuggly Duckling - Disreputable Pub", () => {
   describe("**ROUTINE RUCKUS** Whenever a character with 3 {S} or more challenges another character while here, gain 1 lore. If the challenging character has 6 {S} or more, gain 3 lore instead.", () => {

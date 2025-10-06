@@ -4,7 +4,6 @@
 
 import { describe, expect, it } from "@jest/globals";
 import type { CardModel } from "@lorcanito/lorcana-engine";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import type { GenerateOnDemandLayerMove } from "@lorcanito/shared";
 import { weKnowTheWay } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import { alanadaleRockinRooster } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
@@ -13,6 +12,10 @@ import {
   donaldDuckCoinCollector,
   monstroInfamousWhale,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 import { moneyEverywhere } from "./037-donaldDuckCoinCollector";
 import {
   fullBreach,

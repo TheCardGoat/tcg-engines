@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { goonsMaleficent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 import { rapunzelGiftedArtist } from "../../002/characters/characters";
 import { rapunzelsTowerSecludedPrison } from "../../005/locations/locations";
 import { motherGothelVainSorceress } from "./064-mother-gothel-vain-sorceress";

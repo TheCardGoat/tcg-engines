@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { befuddle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import { tamatoaSoShiny } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
@@ -13,6 +12,10 @@ import {
   maleficentsStaff,
   mertleEdmondsLilosRival,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Maleficent's Staff", () => {
   describe("BACK, FOOLS! Whenever one of your opponents' characters, items, or locations is returned to their hand from play, gain 1 lore.", () => {

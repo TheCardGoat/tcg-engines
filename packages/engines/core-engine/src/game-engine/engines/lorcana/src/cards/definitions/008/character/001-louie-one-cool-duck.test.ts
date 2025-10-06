@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   kingCandySugarRushNightmare,
   louieOneCoolDuck,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Louie - One Cool Duck", () => {
   it("SPRING THE TRAP While this character is being challenged, the challenging character gets -1 {S}.", async () => {

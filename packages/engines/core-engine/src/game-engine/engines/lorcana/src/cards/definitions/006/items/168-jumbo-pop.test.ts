@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { jumboPop } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Jumbo Pop", () => {
   it.skip("HERE YOU GO Banish this item – Remove up to 2 damage from each of your characters. Draw a card.", async () => {

@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { thisIsMyFamily } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import { pjPeteCaughtUpInTheMusic } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("P.J. Pete - Caught Up in the Music", () => {
   it("SHOUT OUT LOUD! Whenever you play a song, this character gets +2 {S} this turn.", async () => {

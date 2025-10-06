@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   ladyElegantSpaniel,
   mufasaRespectedKing,
   trampEnterprisingDog,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Tramp - Enterprising Dog", () => {
   it("HEY, PIDGE If you have a character named Lady in play, you pay 1 {I} less to play this character.", async () => {

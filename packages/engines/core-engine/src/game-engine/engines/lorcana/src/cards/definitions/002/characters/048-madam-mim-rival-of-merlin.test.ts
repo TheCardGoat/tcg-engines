@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   drFacilierSavvyOpportunist,
   madamMimRivalOfMerlin,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { pegasusFlyingSteed } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Madam Mim - Rival of Merlin", () => {
   it("**GRUESOME AND GRIM** {E} − Play a character with cost 4 or less for free. They gain **Rush**. At the end of the turn, banish them. _They can challenge the turn they're played._'", async () => {

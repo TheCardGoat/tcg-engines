@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   stichtCarefreeSurfer,
   stichtNewDog,
@@ -17,6 +16,10 @@ import {
   kronkHeadOfSecurity,
   liloJuniorCakeDecorator,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Pegasus - Cloud Racer", () => {
   describe("Regression", () => {

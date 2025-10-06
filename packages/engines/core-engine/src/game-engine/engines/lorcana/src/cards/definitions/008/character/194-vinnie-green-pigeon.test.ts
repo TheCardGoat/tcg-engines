@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { bePrepared } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import {
   bobbyPurplePigeon,
@@ -11,6 +10,10 @@ import {
   rhinoPowerHamster,
   vinnieGreenPigeon,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Vinnie - Green Pigeon", () => {
   it("LEARNING EXPERIENCE During an opponent's turn, whenever one of your other characters is banished, gain 1 lore.", async () => {

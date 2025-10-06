@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   beastGraciousPrince,
   liloBestExplorerEver,
   stitchRockStar,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/009";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Lilo - Best Explorer Ever", () => {
   it("COME ON, PEOPLE, LET'S MOVE When you play this character, your other characters gain Challenger +2 this turn. (They get +2 {S} while challenging.)", async () => {

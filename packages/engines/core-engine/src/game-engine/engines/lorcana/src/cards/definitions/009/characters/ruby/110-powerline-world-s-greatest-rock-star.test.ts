@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import { aPiratesLife } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import {
@@ -12,6 +11,10 @@ import {
   stitchRockStar,
   theQueenRegalMonarch,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/009";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Powerline - World's Greatest Rock Star", () => {
   it("Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Powerline.)", async () => {

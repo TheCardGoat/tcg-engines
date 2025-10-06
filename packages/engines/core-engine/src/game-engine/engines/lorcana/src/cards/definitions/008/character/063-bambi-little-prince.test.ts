@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { sisuDaringVisitor } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/123-sisu-daring-visitor";
 import {
   bambiLittlePrince,
   deweyLovableShowoff,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Bambi - Little Prince", () => {
   it("SAY HELLO When you play this character, gain 1 lore.", async () => {

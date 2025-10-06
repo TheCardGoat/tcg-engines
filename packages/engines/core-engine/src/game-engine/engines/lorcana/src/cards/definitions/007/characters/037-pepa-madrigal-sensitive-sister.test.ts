@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   hesATramp,
   pepaMadrigalSensitiveSister,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Pepa Madrigal - Sensitive Sister", () => {
   describe("CLEAR SKIES, CLEAR SKIES Whenever one or more of your characters sings a song, gain 1 lore.", () => {

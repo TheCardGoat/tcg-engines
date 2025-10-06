@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   donaldDuck,
   mickeyBraveLittleTailor,
@@ -22,6 +21,10 @@ import {
   luisaMadrigalEntertainingMuscle,
   whiteRabbitRoyalHerald,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Vision Slab", () => {
   describe("**TRAPPED!** Damage counters can't be removed.", () => {

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   berliozMischievousKitten,
   drizellaSpoiledStepsister,
@@ -15,6 +14,10 @@ import {
   tipoJuniorChipmunk,
   wilhelminaPackardRadioOperator,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Queen Of Hearts - Haughty Monarch", () => {
   it("COUNT OFF! While there are 5 or more characters with damage in play, this character gets +3 {L}.", async () => {

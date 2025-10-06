@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   duchessElegantFeline,
@@ -11,6 +10,10 @@ import {
   outOfOrder,
   wreckitRalphHerosDuty,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Wreck-it Ralph - Hero's Duty", () => {
   it("OUTFLANK During your turn, whenever one of your other characters is banished, this character gets +1 {L} this turn.", async () => {

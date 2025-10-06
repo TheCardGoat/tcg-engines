@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   stealFromRich,
   tangle,
@@ -12,6 +11,10 @@ import { lefouBumbler } from "~/game-engine/engines/lorcana/src/cards/definition
 import { bePrepared } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import { thievery } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { liloCausingAnUproar } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Lilo - Causing an Uproar", () => {
   it("STOMPIN' TIME! During your turn, if you've played 3 or more actions this turn, you may play this character for free.", async () => {

@@ -3,7 +3,10 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 import { mauricesWorkshop } from "../../002/items/168-maurices-workshop";
 import { monsieurDArqueDespicableProprietor } from "./157-monsieur-darque-despicable-proprietor";
 

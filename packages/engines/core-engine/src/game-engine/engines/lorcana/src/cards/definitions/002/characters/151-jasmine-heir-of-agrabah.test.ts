@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { donaldDuckMusketeer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { jasmineHeirOfAgrabah } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Jasmine - Heir of Agrabah", () => {
   it("**I'M A FAST LEARNER** When you play this character, remove up to 1 damage from chosen character of yours.", () => {

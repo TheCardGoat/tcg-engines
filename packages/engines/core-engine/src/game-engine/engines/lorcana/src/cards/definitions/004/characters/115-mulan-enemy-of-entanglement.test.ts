@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { packTactics } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import { mulanEnemyOfEntanglement } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import {
   gatheringKnowledgeAndWisdom,
   rememberWhoYouAre,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mulan - Enemy of Entanglement", () => {
   it("**TIME TO SHINE** Whenever you play an action, this character gets +2 {S} this turn.", () => {

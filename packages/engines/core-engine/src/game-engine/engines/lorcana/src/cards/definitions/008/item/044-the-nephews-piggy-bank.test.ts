@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { donaldDuck } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import {
   jumbaJookibaCriticalScientist,
   theNephewsPiggyBank,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Nephews' Piggy Bank", () => {
   it("INSIDE JOB If you have a character named Donald Duck in play, you pay 1 {I} less to play this item.", async () => {

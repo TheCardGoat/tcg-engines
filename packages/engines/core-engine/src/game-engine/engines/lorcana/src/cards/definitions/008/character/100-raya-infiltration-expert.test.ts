@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   deweyLovableShowoff,
   rayaInfiltrationExpert,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Raya - Infiltration Expert", () => {
   it("UNCONVENTIONAL TACTICS Whenever this character quests, you may pay 2 {I} to ready another chosen character.", async () => {

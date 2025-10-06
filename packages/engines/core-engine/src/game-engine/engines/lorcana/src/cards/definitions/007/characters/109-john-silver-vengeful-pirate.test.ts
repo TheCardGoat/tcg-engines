@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { plasmaBlaster } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
 import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import {
@@ -11,6 +10,10 @@ import {
   johnSilverVengefulPirate,
   weveGotCompany,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("John Silver - Vengeful Pirate", () => {
   describe("DRAWN TO A FIGHT If an opposing character was damaged this turn, you pay 2 {I} less to play this character.", () => {

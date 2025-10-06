@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { tianaRestaurantOwner } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import {
   auroraHoldingCourt,
   mulanConsiderateDiplomat,
   theQueenWickedAndVain,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/009";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Aurora - Holding Court", () => {
   it("[QUEEN] ROYAL WELCOME Whenever this character quests, you pay 1 {I} less for the next Princess or Queen character you play this turn.", async () => {

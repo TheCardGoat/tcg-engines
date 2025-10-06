@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { madamMimFox } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import {
   brutusFearsomeCrocodile,
   deweyLovableShowoff,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Brutus - Fearsome Crocodile", () => {
   it("SPITEFUL During your turn, when this character is banished, if one of your characters was damaged this turn, gain 2 lore.", async () => {

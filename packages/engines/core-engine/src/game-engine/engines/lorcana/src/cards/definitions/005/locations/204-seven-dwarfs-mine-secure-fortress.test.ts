@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
 import {
   dopeyKnightApprentice,
@@ -12,6 +11,10 @@ import {
   sleepySluggishKnight,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import { sevenDwarfsMineSecureFortress } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Seven Dwarfs' Mine - Secure Fortress", () => {
   describe("**MOUNTAIN DEFENSE** During your turn, the first time you move a character here, you may deal 1 damage to chosen character. If the moved character is a Knight, deal 2 damage instead.", () => {

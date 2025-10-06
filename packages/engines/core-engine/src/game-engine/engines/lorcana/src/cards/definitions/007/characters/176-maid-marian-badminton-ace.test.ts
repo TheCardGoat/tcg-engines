@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { goonsMaleficent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { goofyFlyingFool } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
@@ -11,6 +10,10 @@ import {
   ladyKluckProtectiveConfidant,
   maidMarianBadmintonAce,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Maid Marian - Badminton Ace", () => {
   it("During an opponent’s turn, whenever one of your Ally characters is damaged, deal 1 damage to chosen opposing character.", async () => {

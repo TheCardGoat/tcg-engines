@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   baymaxPersonalHealthcareCompanion,
   hiroHamadaRoboticsProdigy,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Baymax - Personal Healthcare Companion", () => {
   it("**FULLY CHARGED** If you have an Inventor character in play, you pay 1 {I} less to play this character.", async () => {

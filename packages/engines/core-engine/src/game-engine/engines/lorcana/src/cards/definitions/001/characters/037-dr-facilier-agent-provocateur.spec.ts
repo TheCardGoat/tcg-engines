@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   dragonFire,
@@ -15,6 +14,10 @@ import {
   mauiHeroToAll,
   mickeyMouseTrueFriend,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Dr. Facilier - Agent Provocateur", () => {
   describe("Into the Shadows: Whenever one of your other characters is banished in a challenge, you may return that card to your hand.", () => {

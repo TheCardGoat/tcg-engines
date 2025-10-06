@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { microbots } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Microbots", () => {
   it.skip("LIMITLESS APPLICATIONS You may have any number of cards named Microbots in your deck.", async () => {

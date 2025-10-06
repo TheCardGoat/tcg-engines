@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   annaIceBreaker,
   doloresMadrigalWithinEarshot,
   donaldDuckFlusteredSorcerer,
   theQueenJealousBeauty,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Anna - Ice Breaker", () => {
   it("Support (Whenever this character quests, you may add their {S} to another chosen character’s {S} this turn.)", async () => {

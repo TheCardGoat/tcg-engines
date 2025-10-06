@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it, test } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   madamMimSnake,
   pinocchioStarAttraction,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { magicBroomIlluminaryKeeper } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Madam Mim - Snake", () => {
   describe("**JUST YOU WAIT** When you play this character, banish her or return another chosen character of yours to your hand.", () => {

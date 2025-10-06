@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { mrSmeeEfficientCaptain } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mr. Smee - Efficient Captain", () => {
   it.skip("PIPE UP THE CREW Whenever you play an action that isn’t a song, you may ready chosen Pirate character.", async () => {

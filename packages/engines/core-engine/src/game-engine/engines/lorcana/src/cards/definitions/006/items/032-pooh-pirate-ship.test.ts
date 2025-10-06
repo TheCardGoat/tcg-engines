@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { poohPirateShip } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Pooh Pirate Ship", () => {
   it.skip("MAKE A RESCUE {E}, 3 {I} – Return a Pirate character card from your discard to your hand.", async () => {

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   moanChosenByTheOcean,
@@ -22,6 +21,10 @@ import {
   teKaElementalTerror,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import { mauiStubbornTrickster } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Maui - Stubborn Trickster", () => {
   it("I'M NOT FINISHED YET When this character is banished, choose one:", async () => {

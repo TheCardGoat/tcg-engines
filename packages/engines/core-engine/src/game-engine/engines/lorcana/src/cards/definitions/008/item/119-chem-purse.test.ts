@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   brunoMadrigalSingingSeer,
   brunoMadrigalSingleminded,
   chemPurse,
   jumbaJookibaCriticalScientist,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Chem Purse", () => {
   it("HERE'S THE BEST PART Whenever you play a character, if you used Shift to play them, they get +4 {S} this turn.", async () => {

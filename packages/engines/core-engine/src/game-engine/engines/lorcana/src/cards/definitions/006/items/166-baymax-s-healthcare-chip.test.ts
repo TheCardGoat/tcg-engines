@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { baymaxsHealthcareChip } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Baymax's Healthcare Chip", () => {
   it.skip("10,000 MEDICAL PROCEDURES {E} - Choose one:", async () => {

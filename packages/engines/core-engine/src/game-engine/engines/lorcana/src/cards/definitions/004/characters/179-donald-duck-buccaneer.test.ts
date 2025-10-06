@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   heiheiBoatSnack,
@@ -12,6 +11,10 @@ import {
   teKaHeartless,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { donaldDuckBuccaneer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Donald Duck - Buccaneer", () => {
   describe("**BOARDING PARTY** During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.", () => {

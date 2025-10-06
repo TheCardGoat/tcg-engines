@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   aPiratesLife,
   secondStarToTheRight,
@@ -15,6 +14,10 @@ import {
   thumperYoungBunny,
   vanellopeVonSchweetzSpunkySpeedster,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 import { mickeyBraveLittleTailor } from "../../001/characters/115-mickey-mouse-brave-little-tailor";
 import { hakunaMatata } from "../../001/songs/027-hakuna-matata";
 

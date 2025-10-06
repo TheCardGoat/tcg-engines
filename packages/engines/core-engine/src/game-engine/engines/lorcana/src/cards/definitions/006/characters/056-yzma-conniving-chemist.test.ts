@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   liloGalacticHero,
   mauiDemiGod,
@@ -12,6 +11,10 @@ import {
 import { madamMimFox } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { madamMimElephant } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import { yzmaConnivingChemist } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Yzma - Conniving Chemist", () => {
   it("**FEEL THE POWER** – _If you have fewer than 3 cards in your hand, draw until you have 3 cards in your hand._", async () => {

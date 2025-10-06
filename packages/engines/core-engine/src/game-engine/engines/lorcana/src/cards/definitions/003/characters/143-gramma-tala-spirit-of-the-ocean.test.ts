@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { letItGo } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
@@ -14,6 +13,10 @@ import {
   donaldDuckFocusedFlatfoot,
   tipoGrowingSon,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Gramma Tala - Spirit of the Ocean", () => {
   describe("**DO YOU KNOW WHO YOU ARE?** Whenever a card is put into your inkwell, gain 1 lore.", () => {

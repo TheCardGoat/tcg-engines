@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { stitchAlienBuccaneer } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
 import { galacticCouncilChamber } from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Galactic Council Chamber - Courtroom", () => {
   it("**FEDERATION DECREE** While you have an Alien or Robot character here, this location can’t be challenged.", async () => {

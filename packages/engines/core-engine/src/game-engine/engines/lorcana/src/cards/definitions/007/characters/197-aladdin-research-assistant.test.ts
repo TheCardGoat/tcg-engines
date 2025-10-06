@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   jafarKeeperOfSecrets,
   jafarWicked,
@@ -12,6 +11,10 @@ import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/defi
 import { docBoldKnight } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import { gopherShipsCarpenter } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { aladdinResearchAssistant } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Aladdin - Research Assistant", () => {
   describe("HELPING HAND Whenever this character quests, you can play an Ally character with cost 3 or less for free.", () => {

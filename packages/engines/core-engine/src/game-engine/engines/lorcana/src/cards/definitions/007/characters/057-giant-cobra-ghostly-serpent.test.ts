@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it, test } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { magicBroomIlluminaryKeeper } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import {
   duchessElegantFeline,
   giantCobraGhostlySerpent,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Giant Cobra - Ghostly Serpent", () => {
   it("Vanish (When an opponent chooses this character for an action, banish them.)", async () => {

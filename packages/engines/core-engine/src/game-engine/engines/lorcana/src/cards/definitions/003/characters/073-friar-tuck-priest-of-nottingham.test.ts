@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   liloGalacticHero,
   mickeyMouseDetective,
   stichtNewDog,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { friarTuckPriestOfNottingham } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Friar Tuck - Priest of Nottingham", () => {
   describe("**YOU THIEVING SCOUNDREL** When you play this character, the player or players with the most cards in their hand chooses and discards a card.", () => {

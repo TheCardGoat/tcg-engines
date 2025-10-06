@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   captainHookForcefulDuelist,
   hadesInfernalSchemer,
@@ -14,6 +13,10 @@ import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards
 import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { plutoGuardDog } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { mittensSassyStreetCat } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mittens - Sassy Street Cat", () => {
   it("Bodyguard", async () => {

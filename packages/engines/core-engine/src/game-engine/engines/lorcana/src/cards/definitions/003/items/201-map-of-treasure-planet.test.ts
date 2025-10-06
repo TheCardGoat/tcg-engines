@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { mapOfTreasurePlanet } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
 import { bellesHouseMauricesWorkshop } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Map of Treasure Planet", () => {
   it("**KEY TO THE PORTAL** {E} – You pay 1 {I} less for the next location you play this turn.", async () => {

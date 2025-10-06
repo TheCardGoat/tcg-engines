@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { kuzcoTemporaryWhale } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   charlotteLaBouffMardiGrasPrincess,
   deweyLovableShowoff,
   tianaNaturalTalent,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Kuzco - Temporary Whale", () => {
   it("DON'T YOU SAY A WORD Once during your turn, whenever a card is put into your inkwell, you may return chosen character, item, or location with cost 2 or less to their player's hand, then that player draws a card.", async () => {

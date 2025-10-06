@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   annaDiplomaticQueen,
   edLaughingHyena,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Anna - Diplomatic Queen", () => {
   describe("**ROYAL RESOLUTION** When you play this character you may pay 2 {I} to chose one:* Each opponent choses and discards a card.* Chosen character gets +2 {S} this turn. * Banish chosen damaged character.", () => {

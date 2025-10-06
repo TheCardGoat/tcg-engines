@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { madamMimSnake } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import {
   rajahGhostlyTiger,
   treasureGuardianForebodingSentry,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Treasure Guardian - Foreboding Sentry", () => {
   it("UNTOLD TREASURE When you play this character, if you have an Illusion character in play, you may draw a card.", async () => {

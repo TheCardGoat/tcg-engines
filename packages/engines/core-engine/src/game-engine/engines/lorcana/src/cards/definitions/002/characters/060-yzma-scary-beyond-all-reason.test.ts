@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { mauiDemiGod } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import {
   goofyKnightForADay,
   yzmaScaryBeyondAllReason,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 // Flaky test, skipping for now
 describe.skip("Yzma - Scary Beyond All Reason", () => {

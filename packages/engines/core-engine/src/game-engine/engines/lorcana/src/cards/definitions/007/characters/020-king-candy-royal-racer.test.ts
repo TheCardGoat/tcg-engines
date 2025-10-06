@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   beastFrustratedDesigner,
   calhounCourageousRescuer,
@@ -11,6 +10,10 @@ import {
   liShangNewlyPromoted,
   outOfOrder,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("King Candy - Royal Racer", () => {
   it("SWEET REVENGE Whenever one of your other Racer characters is banished, each opponent chooses and banishes one of their characters.", async () => {

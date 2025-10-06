@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   liloMakingAWish,
   stichtCarefreeSurfer,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { princeJohnGreediestOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { cursedMerfolkUrsulasHandiwork } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Cursed Merfolk - Ursula's Handiwork", () => {
   it("**POOR SOULS** Whenever this character is challenged, each opponent chooses and discards a card.", async () => {

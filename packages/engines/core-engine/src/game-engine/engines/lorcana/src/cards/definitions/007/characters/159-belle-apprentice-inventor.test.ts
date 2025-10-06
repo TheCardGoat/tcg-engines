@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   belleApprenticeInventor,
   spaghettiDinner,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Belle - Apprentice Inventor", () => {
   it("WHAT A MESS During your turn, you may banish chosen item of yours to play this character for free.", async () => {

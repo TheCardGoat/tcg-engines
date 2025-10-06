@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { pinocchioOnTheRun } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { peterPanShadowFinder } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import {
   jiminyCricketLevelheadedAndWise,
   monstroInfamousWhale,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Jiminy Cricket - Level-Headed and Wise", () => {
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {

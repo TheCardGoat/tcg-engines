@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   cogsworthIlluminaryWatchman,
   maleficentFearsomeQueen,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Maleficent - Fearsome Queen", () => {
   // TODO: Fix the card, it's broken dynamicAmount.ts is not calculating correctly the amount of targets

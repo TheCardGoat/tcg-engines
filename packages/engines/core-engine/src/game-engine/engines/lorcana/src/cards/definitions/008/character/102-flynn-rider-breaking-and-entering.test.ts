@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   flynnRiderBreakingAndEntering,
   montereyJackDefiantProtector,
   wasabiAlwaysPrepared,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Flynn Rider - Breaking and Entering", () => {
   describe("THIS IS A VERY BIG DAY Whenever this character is challenged, the challenging player may choose and discard a card. If they don’t, you gain 2 lore.", () => {

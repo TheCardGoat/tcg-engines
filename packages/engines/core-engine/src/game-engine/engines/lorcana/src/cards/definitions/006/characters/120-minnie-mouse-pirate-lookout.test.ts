@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   jollyRogerHooksShip,
   rlsLegacySolarGalleon,
@@ -14,6 +13,10 @@ import {
   mickeyMouseCourageousSailor,
   minnieMousePirateLookout,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Minnie Mouse - Pirate Lookout", () => {
   it("LAND, HO! Once during your turn, whenever a card is put into your inkwell, you may return a location card from your discard to your hand.", async () => {

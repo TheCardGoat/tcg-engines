@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   kuzcoTemperamentalEmperor,
@@ -12,6 +11,10 @@ import {
   teKaTheBurningOne,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { grabYourSword } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Grab Your Sword", () => {
   it("Damages all opponent's characters", () => {

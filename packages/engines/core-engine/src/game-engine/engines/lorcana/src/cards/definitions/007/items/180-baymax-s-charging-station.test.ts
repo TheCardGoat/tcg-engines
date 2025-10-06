@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { belleBookworm } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import {
   baymaxsChargingStation,
   belleMechanicExtraordinaire,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Baymax's Charging Station", () => {
   it("ENERGY CONVERTER Whenever you play a Floodborn character, if you used Shift to play them, you may draw a card.", async () => {

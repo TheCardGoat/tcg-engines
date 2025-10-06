@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { fireTheCannons } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import {
   jiminyCricketLevelheadedAndWise,
   nathanielFlintNotoriousPirate,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Nathaniel Flint - Notorious Pirate", () => {
   it("PREDATORY INSTINCT You can't play this character unless an opposing character was damaged this turn.", async () => {

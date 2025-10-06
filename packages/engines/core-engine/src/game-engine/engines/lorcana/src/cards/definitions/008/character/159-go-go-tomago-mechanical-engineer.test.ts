@@ -7,12 +7,15 @@ import {
   allCardsById,
   type LorcanitoCharacterCard,
 } from "@lorcanito/lorcana-engine";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import {
   goGoTomagoMechanicalEngineer,
   littleSisterResponsibleRabbit,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 const testCard: LorcanaCharacterCardDefinition = {
   id: "j8q1276827136",

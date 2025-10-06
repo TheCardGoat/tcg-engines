@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { liloGalacticHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { friendsOnTheOtherSide } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import { breakFree } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
@@ -14,6 +13,10 @@ import {
   robinHoodSharpshooter,
   simbaAdventurousSuccessor,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Robin Hood - Sharpshooter", () => {
   it("**MY GREATEST PERFORMANCE** Additional test with friends on the other side", async () => {

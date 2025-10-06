@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { merlinGoat } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import {
   donaldDuckFirstMate,
   peterPanNeverLandPrankster,
   thievery,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Peter Pan - Never Land Prankster", () => {
   it("LOOK INNOCENT This character enters play exerted.", async () => {

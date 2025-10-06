@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { arielSpectacularSinger } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import {
   mrSmeeBumblingMate,
@@ -12,6 +11,10 @@ import {
 import { underTheSea } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import { daisyDuckDonaldsDate } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import { naveensUkulele } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/items";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Naveen's Ukulele", () => {
   it("MAKE IT SING 1 {I}, Banish this item - Chosen character counts as having +3 cost to sing songs this turn.", async () => {

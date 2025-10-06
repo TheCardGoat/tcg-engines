@@ -3,8 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { gloydOrangeboarFierceCompetitor } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Gloyd Orangeboar - Fierce Competitor", () => {
   it("PUMPKIN SPICE When you play this character, each opponent loses 1 lore and you gain 1 lore.", async () => {

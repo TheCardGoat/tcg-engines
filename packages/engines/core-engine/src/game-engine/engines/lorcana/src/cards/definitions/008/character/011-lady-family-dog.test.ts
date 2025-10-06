@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { goofyDaredevil } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/111-goofy-daredevil";
 import { liloGalacticHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/184-lilo-galactic-hero";
 import { liloJuniorCakeDecorator } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/008-lilo-junior-cake-decorator";
@@ -14,6 +13,10 @@ import {
   liloCausingAnUproar,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import { liloBestExplorerEver } from "~/game-engine/engines/lorcana/src/cards/definitions/009";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Lady - Family Dog", () => {
   it("SOMEONE TO CARE FOR When you play this character, you may play a character with cost 2 or less for free.", async () => {

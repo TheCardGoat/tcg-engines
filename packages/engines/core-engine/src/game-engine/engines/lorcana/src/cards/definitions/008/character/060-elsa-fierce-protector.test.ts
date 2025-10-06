@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   bambiPrinceOfTheForest,
   deweyLovableShowoff,
   elsaFierceProtector,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Elsa - Fierce Protector", () => {
   it("ICE OVER 1 {I}, Choose and discard a card – Exert chosen opposing character.", async () => {

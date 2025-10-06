@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import {
   balooVonBruinwaldXiii,
@@ -12,6 +11,10 @@ import {
   puaPotbelliedBuddy,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { motunuiIslandParadise } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Moana - Born Leader", () => {
   it("**Shift** 3 (_You may pay 3 {I} to play this on top of one of your characters named Moana._)", () => {

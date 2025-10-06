@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   captainAmeliaCommanderOfTheLegacy,
   chipRangerLeader,
@@ -11,6 +10,10 @@ import {
   jafarPowerhungryVizier,
   jimHawkinsHonorablePirate,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Captain Amelia - Commander of the Legacy", () => {
   it("DRIVELING GALOOTS This character can't be challenged by Pirate characters.", async () => {

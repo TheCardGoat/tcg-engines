@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   mickeyBraveLittleTailor,
   mickeyMouseTrueFriend,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { madamMimFox } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { hadesDoubleDealer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hades - Double Dealer", () => {
   it("**GET DOWN TO BUSINESS** {E},  Banish chosen character of yours - Play another character from your hand with the same name.", () => {

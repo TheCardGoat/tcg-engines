@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   littleSisterResponsibleRabbit,
   roquefortLockExpert,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Little Sister - Responsible Rabbit", () => {
   it("LET ME HELP When you play this character, you may remove up to 1 damage from chosen character.", async () => {

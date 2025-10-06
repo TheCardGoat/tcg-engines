@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { arielSpectacularSinger } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import {
@@ -16,6 +15,10 @@ import {
   nessusRiverGuardian,
   sisuWiseFriend,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Flynn Rider - Frenemy", () => {
   describe("**NARROW ADVANTAGE** At the start of your turn, if you have a character in play with more {S}than each opposing character, gain 3 lore.", () => {

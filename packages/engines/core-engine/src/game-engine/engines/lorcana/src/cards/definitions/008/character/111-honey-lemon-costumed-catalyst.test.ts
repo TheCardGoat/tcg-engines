@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   sisuEmboldenedWarrior,
   sisuEmpoweredSibling,
@@ -12,6 +11,10 @@ import {
   deweyLovableShowoff,
   honeyLemonCostumedCatalyst,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Honey Lemon - Costumed Catalyst", () => {
   it("LET'S DO THIS! Whenever you play a Floodborn character, if you used Shift to play them, you may return chosen character to their player's hand.", async () => {

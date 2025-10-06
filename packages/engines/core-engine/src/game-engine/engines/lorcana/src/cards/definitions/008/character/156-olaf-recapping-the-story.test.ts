@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   lafayetteSleepyDachshund,
   olafRecappingTheStory,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Olaf - Recapping the Story", () => {
   it("ENDLESS TALE When you play this character, chosen opposing character gets -1 {S} this turn.", async () => {

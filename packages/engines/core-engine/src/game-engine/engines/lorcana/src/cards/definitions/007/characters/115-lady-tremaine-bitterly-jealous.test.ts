@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { diabloDevotedHerald } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { ladyTremaineBitterlyJealous } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import { deweyLovableShowoff } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Lady Tremaine - Bitterly Jealous", () => {
   it("THAT'S QUITE ENOUGH {E} – Return chosen damaged character to their player's hand. Then, each opponent discards a card at random.", async () => {

@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { annaBravingTheStorm } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { elsaTrustedSister } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Elsa - Trusted Sister", () => {
   it("WHAT DO WE DO NOW? Whenever this character quests, if you have a character named Anna in play, gain 1 lore.", async () => {

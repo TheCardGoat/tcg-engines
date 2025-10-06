@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   amberCoil,
   kashekimAncientRuler,
   kodaSmallishBear,
   suzyMasterSeamstress,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Amber Coil", () => {
   it("HEALING AURA During your turn, whenever a card is put into your inkwell, you may remove up to 2 damage from chosen character.", async () => {

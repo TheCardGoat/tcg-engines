@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { liShangNewlyPromoted } from "~/game-engine/engines/lorcana/src/cards/definitions/007/characters/characters";
 import { mulanChargingAhead } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mulan - Charging Ahead", () => {
   it("Reckless (This character can’t quest and must challenge each turn if able.)", async () => {

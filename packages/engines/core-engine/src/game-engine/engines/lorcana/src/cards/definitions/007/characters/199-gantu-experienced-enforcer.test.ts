@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { aPiratesLife } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import { princeNaveenUkulelePlayer } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import {
@@ -16,6 +15,10 @@ import {
   theTroubadourMusicalNarrator,
   thunderboltWonderDog,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007/";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Gantu - Experienced Enforcer", () => {
   it("CLOSE ALL CHANNELS When you play this character, characters can’t exert to sing songs until the start of your next turn.", async () => {

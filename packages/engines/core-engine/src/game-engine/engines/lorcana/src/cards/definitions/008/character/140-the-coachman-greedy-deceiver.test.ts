@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   deweyLovableShowoff,
   khanWarHorse,
   theCoachmanGreedyDeceiver,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Coachman - Greedy Deceiver", () => {
   it("RECKLESS RUN While you have 2 or more characters exerted, this character gets +2 {S} and Evasive.", async () => {

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   hesATramp,
   isabelaMadrigalInTheMoment,
@@ -11,6 +10,10 @@ import {
   soMuchToGive,
   theTroubadourMusicalNarrator,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Isabela Madrigal - In the Moment", () => {
   it("I WILL NOT BE PERFECT Every time one of your characters sings a song, this character cannot be challenged until the start of your next turn.", async () => {

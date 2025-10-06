@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it, test } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { developYourBrain } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
@@ -25,6 +24,10 @@ import {
   diabloDevotedHerald,
   diabloMaleficentsSpy,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Diablo - Devoted Herald", () => {
   it("**Evasive** _(Only characters with Evasive can challenge this character.)_", () => {

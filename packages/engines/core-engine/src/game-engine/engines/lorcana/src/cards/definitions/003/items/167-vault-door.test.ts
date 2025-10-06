@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { baBoom } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
 import { scroogeMcduckUncleMoneybags } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { vaultDoor } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
 import { mcduckManorScroogesMansion } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Vault Door", () => {
   it("Your locations gain **Resist** +1", async () => {

@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   madamMimFox,
   merlinCrab,
   merlinGoat,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { aliceTeaAlchemist } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Alice - Tea Alchemist", () => {
   it("**CURIOUSER AND CURIOUSER** {E} – Exert chosen opposing character and all other opposing characters with the same name.", () => {

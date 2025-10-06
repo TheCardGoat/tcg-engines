@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   aliceClumsyAsCanBe,
   daleBumbler,
   deweyLovableShowoff,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Alice - Clumsy as Can Be", () => {
   it("Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Alice.)", async () => {

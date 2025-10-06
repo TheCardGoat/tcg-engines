@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { goGoTomagoDartingDynamo } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { goGoTomagoCuttingEdge } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Go Go Tomago - Cutting Edge", () => {
   it("Shift 4)", async () => {

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   flotillaCoconutArmada,
   kakamoraBoardingParty,
@@ -11,6 +10,10 @@ import {
   kakamoraPiratePitcher,
   moanaKakamoraLeader,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Moana - Kakamora Leader", () => {
   it("Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Moana.)", async () => {

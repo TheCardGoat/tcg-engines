@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   bernardOverprepared,
   jimDearBelovedHusband,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Bernard - Over-Prepared", () => {
   it("GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.", async () => {

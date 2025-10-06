@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { mysticalTreeMamaOdiesHome } from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mystical Tree - Mama Odie's Home", () => {
   it.skip("NOT BAD At the start of your turn, you may move 1 damage counter from chosen character here to chosen opposing character.", async () => {

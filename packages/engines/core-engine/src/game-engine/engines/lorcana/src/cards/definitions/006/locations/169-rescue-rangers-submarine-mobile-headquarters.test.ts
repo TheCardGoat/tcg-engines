@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { daleFriendInNeed } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
 import { rescueRangersSubmarineMobileHeadquarters } from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Rescue Rangers Submarine - Mobile Headquarters", () => {
   it("PLANNING SESSION At the start of your turn, if you have a character here, you may put the top card of your deck into your inkwell facedown and exerted.", async () => {

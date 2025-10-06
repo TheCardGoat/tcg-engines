@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { instituteOfTechnologyPrestigiousUniversity } from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Institute of Technology - Prestigious University", () => {
   it.skip("WELCOME TO THE LAB Inventor characters get +1 {W} while here.", async () => {

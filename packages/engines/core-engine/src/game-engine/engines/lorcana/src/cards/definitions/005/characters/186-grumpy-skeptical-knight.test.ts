@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   grumpySkepticalKnight,
   happyLivelyKnight,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 import { cursedMerfolkUrsulasHandiwork } from "../../003/characters/characters";
 import { sevenDwarfsMineSecureFortress } from "../locations/204-seven-dwarfs-mine-secure-fortress";
 

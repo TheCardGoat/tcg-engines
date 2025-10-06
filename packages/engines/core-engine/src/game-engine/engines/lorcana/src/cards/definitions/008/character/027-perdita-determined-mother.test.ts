@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { cruellaDeVilFashionableCruiser } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import {
   dalmatianPuppyTailWagger,
@@ -11,6 +10,10 @@ import {
   perditaDeterminedMother,
   rollyChubbyPuppy,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Perdita - Determined Mother", () => {
   it("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Perdita.)", async () => {

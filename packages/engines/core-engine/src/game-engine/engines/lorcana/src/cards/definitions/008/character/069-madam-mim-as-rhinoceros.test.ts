@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   deweyLovableShowoff,
   madamMimAsRhinoceros,
   madamMimUpToNoGood,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Madam Mim - As Rhinoceros", () => {
   it("SHIFT 2 (You can pay 2 {I} to play this character on one of your Madame Mime characters.)", async () => {

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { friendsOnTheOtherSide } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import { minnieMouseMusicalArtist } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
@@ -11,6 +10,10 @@ import {
   donaldDuckMusketeerSoldier,
   goofyMusketeerSwordsman,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Minnie Mouse - Musical Artist", () => {
   it("**Singer** 3 _(This character counts as cost 3 to sing songs.)", async () => {

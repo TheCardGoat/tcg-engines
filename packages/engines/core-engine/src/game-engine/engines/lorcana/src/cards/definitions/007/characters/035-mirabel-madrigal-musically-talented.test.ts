@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   mirabelMadrigalMusicallyTalented,
   soMuchToGive,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mirabel Madrigal - Musically Talented", () => {
   it("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Mirabel Madrigal.)", async () => {

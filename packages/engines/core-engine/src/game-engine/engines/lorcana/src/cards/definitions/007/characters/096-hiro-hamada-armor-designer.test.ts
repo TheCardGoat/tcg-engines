@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { heiheiBoatSnack } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import {
   boltDependableFriend,
@@ -12,6 +11,10 @@ import {
   heiheiExpandedConsciousness,
   hiroHamadaArmorDesigner,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hiro Hamada - Armor Designer", () => {
   it("Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Hiro Hamada.)", async () => {

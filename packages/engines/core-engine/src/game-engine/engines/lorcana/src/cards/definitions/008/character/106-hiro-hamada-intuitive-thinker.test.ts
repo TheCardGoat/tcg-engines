@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   hiroHamadaIntuitiveThinker,
   lumiereFiredUp,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hiro Hamada - Intuitive Thinker", () => {
   it("LOOK FOR A NEW ANGLE {E} - Ready chosen Floodborn character.", async () => {

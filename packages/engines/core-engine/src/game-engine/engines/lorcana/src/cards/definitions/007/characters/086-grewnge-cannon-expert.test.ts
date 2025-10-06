@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { hypnotize } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import { dodge } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import { grewngeCannonExpert } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("RAPID FIRE Whenever this character quests, you pay 1 {I} less for the next action you play this turn.", () => {
   it("should pay 1 {i} less for the next action", async () => {

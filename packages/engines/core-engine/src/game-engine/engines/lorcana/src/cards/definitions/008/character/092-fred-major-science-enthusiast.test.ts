@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { mauisFishHook } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
 import { fredMajorScienceEnthusiast } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Fred - Major Science Enthusiast", () => {
   it("SPITTING FIRE! When you play this character, you may banish chosen item.", async () => {

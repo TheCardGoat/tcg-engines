@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { rollyHungryPup } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { perditaPlayfulMother } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Perdita - Playful Mother", () => {
   describe("WHO'S NEXT? Whenever this character quests, you pay 2 {I} less for the next Puppy character you play this turn.", () => {

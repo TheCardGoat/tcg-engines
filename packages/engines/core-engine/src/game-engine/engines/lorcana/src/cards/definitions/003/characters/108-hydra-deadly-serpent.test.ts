@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { smash } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
@@ -12,6 +11,10 @@ import {
   kingLouieBandleader,
   kitCloudkickerNavigator,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Hydra - Deadly Serpent", () => {
   describe("**WATCH THE TEETH** When this character is damaged, deal the same amount of damage to a chosen opposing character.", () => {

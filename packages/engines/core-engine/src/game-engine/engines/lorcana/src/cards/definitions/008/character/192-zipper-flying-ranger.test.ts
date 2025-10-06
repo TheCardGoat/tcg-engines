@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   montereyJackDefiantProtector,
   zipperFlyingRanger,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Zipper - Flying Ranger", () => {
   it("BEST MATES If you have a character named Monterey Jack in play, you pay 1 {I} less to play this character.", async () => {

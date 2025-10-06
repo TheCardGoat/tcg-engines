@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { wreckitRalphHamHands } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Wreck-it Ralph - Ham Hands", () => {
   it.skip("I WRECK THINGS Whenever this character quests, you may banish chosen item or location to gain 2 lore.", async () => {

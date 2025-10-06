@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { goofyMusketeer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { goofyMusketeerSwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { goofyFlyingFool } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { goofyGroundbreakingChef } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Goofy - Groundbreaking Chef", () => {
   it("PLENTY TO GO AROUND At the end of your turn, you may remove up to 1 damage from each of your other characters. Ready each character you removed damage from this way.", async () => {

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { captainHookForcefulDuelist } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import {
   madamMimFox,
@@ -16,6 +15,10 @@ import {
   denahiImpatientHunter,
   kingOfHeartsPickyRuler,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("King Of Hearts - Picky Ruler", () => {
   it("OBJECTIONABLE STATE Damaged characters can't challenge your characters.", async () => {

@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { scarHeartlessHunter } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Scar - Heartless Hunter", () => {
   it.skip("BARED TEETH When you play this character, deal 2 damage to chosen character of yours to deal 2 damage to chosen character.", async () => {

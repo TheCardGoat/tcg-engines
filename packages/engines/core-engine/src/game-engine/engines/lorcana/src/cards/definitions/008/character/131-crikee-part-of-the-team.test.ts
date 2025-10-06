@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   crikeePartOfTheTeam,
   marchHareHareBrainedEccentric,
   palaceGuardSpectralSentry,
   theColonelOldSheepdog,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Cri-kee - Part of the Team", () => {
   it("AT HER SIDE While you have 2 or more other exerted characters in play, this character gets +2 {L}.", async () => {

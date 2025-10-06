@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   luciferCunningCat,
   painUnderworldImp,
@@ -11,6 +10,10 @@ import {
   peteBadGuy,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { NnPuppies } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Lucifer - Cunning Cat", () => {
   describe("**MOUSE CATCHER** When you play this character, each opponent chooses and discards either 2 cards or 1 action card.", () => {

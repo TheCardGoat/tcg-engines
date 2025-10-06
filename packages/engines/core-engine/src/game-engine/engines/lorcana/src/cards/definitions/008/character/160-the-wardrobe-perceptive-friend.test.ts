@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
 import {
   lumiereFieryFriend,
   mrsPottsEnchantedTeapot,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { theWardrobePerceptiveFriend } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Wardrobe - Perceptive Friend", () => {
   it("I HAVE JUST THE THING {E}, Choose and discard an item card - Draw 2 cards", async () => {

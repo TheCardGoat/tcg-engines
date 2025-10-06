@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { packTactics } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import {
   gatheringKnowledgeAndWisdom,
   rememberWhoYouAre,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import { tiggerInTheCrowsNest } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Tigger - In the Crow’s Nest", () => {
   it("**SWASH YOUR BUCKLES** Whenever you play an action, this character gets +1 {S} and +1 {L} this turn.", async () => {

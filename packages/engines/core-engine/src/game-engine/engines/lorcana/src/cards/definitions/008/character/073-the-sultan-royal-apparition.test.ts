@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { giantCobraGhostlySerpent } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import {
   deweyLovableShowoff,
   pullTheLever,
   theSultanRoyalApparition,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Sultan - Royal Apparition", () => {
   it("COMMANDING PRESENCE Whenever one of your Illusion characters quests, exert chosen opposing character.", async () => {

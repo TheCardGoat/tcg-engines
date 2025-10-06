@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   atlanteanCrystal,
   roquefortLockExpert,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Roquefort - Lock Expert", () => {
   it("SAFEKEEPING Whenever this character quests, you may put chosen item into its player's inkwell facedown and exerted.", async () => {

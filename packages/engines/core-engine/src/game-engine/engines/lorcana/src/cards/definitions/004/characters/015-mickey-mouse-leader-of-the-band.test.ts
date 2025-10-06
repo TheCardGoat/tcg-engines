@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   mickeyMouseLeaderOfTheBand,
   princeEricSeafaringPrince,
   ursulaVanessa,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mickey Mouse - Leader of the Band", () => {
   it("**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_", async () => {

@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   billTheLizardChimneySweep,
   deweyLovableShowoff,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Bill The Lizard - Chimney Sweep", () => {
   it("NOTHING TO IT While another character in play has damage, this character gains Evasive. (Only characters with Evasive can challenge them.)", async () => {

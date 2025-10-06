@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   neverLandMermaidLagoon,
   prideLandsPrideRock,
@@ -13,6 +12,10 @@ import {
   boltHeadstrongDog,
   honeymarenNorthuldraGuide,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Honeymaren - Northuldra Guide", () => {
   describe("TALE OF THE FIFTH SPIRIT When you play this character, if an opponent has an exerted character in play, gain 1 lore.", () => {

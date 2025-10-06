@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   hadesMeticulousPlotter,
   tukTukCuriousPartner,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { ursulasGardenFullOfTheUnfortunate } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Ursula's Garden - Full of the Unfortunate", () => {
   it("**Abandon Hope** While you have an exerted character here, opposing characters get -1 {L}.", async () => {

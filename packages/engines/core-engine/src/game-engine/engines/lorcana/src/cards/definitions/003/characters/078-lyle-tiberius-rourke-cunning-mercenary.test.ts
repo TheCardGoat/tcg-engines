@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
@@ -16,6 +15,10 @@ import {
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
 import { lyleTiberiusRourkeCunningMercenary } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { liloJuniorCakeDecorator } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Lyle Tiberius Rourke - Cunning Mercenary", () => {
   it("**WELL, NOW YOU KNOW** When you play this character, chosen opposing character gains **Reckless** during their next turn. _(They can’t quest and must challenge if able.)", () => {

@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   agustinMadrigalClumsyDad,
   antonioMadrigalAnimalExpert,
@@ -12,6 +11,10 @@ import {
   julietaMadrigalExcellentCook,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { mirabelMadrigalFamilyGatherer } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mirabel Madrigal - Family Gatherer", () => {
   describe("**NOT WITHOUT MY FAMILY** You can’t play this character unless you have 5 or more characters in play.", () => {

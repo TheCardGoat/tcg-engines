@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { mulanArmoredFighter } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import {
   khanWarHorse,
   perditaOnTheLookout,
   theSwordOfShanYu,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Sword Of Shan Yu", () => {
   it("WORTHY WEAPON {E}, {E} one of your characters - Ready chosen character. They can't quest for the rest of this turn.", async () => {

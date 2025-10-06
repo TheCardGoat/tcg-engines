@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { mickeyMouseTrueFriend } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/012-mickey-mouse-true-friend";
 import { mickeyMouseBraveLittlePrince } from "~/game-engine/engines/lorcana/src/cards/definitions/009/characters/ruby/111-mickey-mouse-brave-little-prince";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mickey Mouse - Brave Little Prince", () => {
   it("Shift 5 {I} (You may pay 5 {I} to play this on top of one of your characters named Mickey Mouse.)", async () => {

@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { louieChillNephew } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import {
   deweyLovableShowoff,
   jockAttentiveUncle,
   trampDapperRascal,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Jock - Attentive Uncle", () => {
   it("VOICE OF EXPERIENCE When you play this character, if you have 3 or more other characters in play, gain 2 lore.", async () => {

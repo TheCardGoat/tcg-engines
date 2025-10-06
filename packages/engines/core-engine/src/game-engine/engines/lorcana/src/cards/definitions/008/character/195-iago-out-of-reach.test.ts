@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   liloGalacticHero,
   stitchRockStar,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { iagoOutOfReach } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Iago - Out of Reach", () => {
   it("SELF-PRESERVATION While you have another exerted character in play, this character can't be challenged.", async () => {

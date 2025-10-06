@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { elsaQueenRegent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import {
@@ -12,6 +11,10 @@ import {
   deweyLovableShowoff,
   hueyReliableLeader,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Captain Hook - The Pirate King", () => {
   it("SHIFT 3 (You may pay 3 {I} to play this on top of one of your characters named Captain Hook.)", async () => {

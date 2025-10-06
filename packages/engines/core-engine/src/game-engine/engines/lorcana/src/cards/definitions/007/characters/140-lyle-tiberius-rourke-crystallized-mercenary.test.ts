@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   kakamoraBandOfPirates,
   kenaiProtectiveBrother,
   lyleTiberiusRourkeCrystallizedMercenary,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Lyle Tiberius Rourke - Crystallized Mercenary", () => {
   it("EXPLOSIVE Once during your turn, whenever a card is put into your inkwell, deal 2 damage to each character in play.", async () => {

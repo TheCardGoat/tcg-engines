@@ -3,7 +3,10 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 import { donaldDuckFlusteredSorcerer } from "./073-donald-duck-flustered-sorcerer";
 
 describe.skip("Donald Duck - Flustered Sorcerer", () => {

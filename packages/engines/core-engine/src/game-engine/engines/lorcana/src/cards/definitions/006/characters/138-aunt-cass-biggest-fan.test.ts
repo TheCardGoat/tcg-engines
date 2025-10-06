@@ -3,8 +3,11 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { auntCassBiggestFan } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Aunt Cass - Biggest Fan", () => {
   it.skip("HAPPY TO HELP Whenever this character quests, chosen Inventor character gets +1 {L} this turn.", async () => {

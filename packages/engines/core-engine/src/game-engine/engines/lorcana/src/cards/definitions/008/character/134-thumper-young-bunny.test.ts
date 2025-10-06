@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   deweyLovableShowoff,
   thumperYoungBunny,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Thumper - Young Bunny", () => {
   it("YOU CAN DO IT! {E} – Chosen character gets +3 {S} this turn.", async () => {

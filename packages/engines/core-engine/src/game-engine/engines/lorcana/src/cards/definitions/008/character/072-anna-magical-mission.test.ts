@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { elsaQueenRegent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { annaMagicalMission } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Anna - Magical Mission", () => {
   it.skip("Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Anna.)", async () => {

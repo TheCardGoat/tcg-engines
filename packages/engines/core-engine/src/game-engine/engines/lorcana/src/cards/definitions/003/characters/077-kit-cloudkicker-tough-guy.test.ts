@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   kitCloudkickerToughGuy,
   mrSmeeBumblingMate,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Kit Cloudkicker - Tough Guy", () => {
   it("**SKYSURFING** When you play this character, you may return chosen opposing character with 2 {S} or less to their player's hand.", async () => {

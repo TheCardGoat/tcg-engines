@@ -3,9 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { rayaLeaderOfHeart } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { deweyLovableShowoff } from "~/game-engine/engines/lorcana/src/cards/definitions/008/character/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Raya - Leader of Heart", () => {
   it("Shift", () => {

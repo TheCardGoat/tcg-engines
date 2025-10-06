@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   donaldDuck,
   teKaTheBurningOne,
@@ -14,6 +13,10 @@ import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/defi
 import { belleAccomplishedMystic } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
 import { mosquitoBite } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { balooOlIronPaws } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Baloo - Ol' Iron Paws", () => {
   describe("FIGHT LIKE A BEAR Your characters with 7 {S} or more can't be dealt damage.", () => {

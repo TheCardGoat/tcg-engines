@@ -3,13 +3,16 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   mamaOdieVoiceOfWisdom,
   nalaFierceFriend,
   robinHoodBelovedOutlaw,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
 import { theQueensCastleMirrorChamber } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("The Queen's Castle - Mirror Chamber", () => {
   it("**USING THE MIRROR** At the start of your turn, for each character you have here, you may draw a card.", () => {

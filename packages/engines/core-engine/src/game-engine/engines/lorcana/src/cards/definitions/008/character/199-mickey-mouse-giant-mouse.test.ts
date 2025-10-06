@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   goonsMaleficent,
@@ -11,6 +10,10 @@ import {
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { montereyJackGoodheartedRanger } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { mickeyMouseGiantMouse } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mickey Mouse - Giant Mouse", () => {
   it("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {

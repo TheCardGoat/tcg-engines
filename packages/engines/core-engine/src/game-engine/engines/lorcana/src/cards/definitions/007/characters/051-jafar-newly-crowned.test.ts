@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import {
   hesATramp,
   iagoGiantSpectralParrot,
@@ -11,6 +10,10 @@ import {
   outOfOrder,
   rajahGhostlyTiger,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/007/";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Jafar - Newly Crowned", () => {
   it("THIS IS NOT DONE YET During an opponent’s turn, whenever one of your Illusion characters is banished, you may return that card to your hand.", async () => {

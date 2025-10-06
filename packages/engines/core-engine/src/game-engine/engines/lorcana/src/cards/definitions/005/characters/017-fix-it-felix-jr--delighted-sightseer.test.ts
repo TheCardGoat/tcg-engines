@@ -3,10 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
 import { fixitFelixJrDelightedSightseer } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
 import { rapunzelsTowerSecludedPrison } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Fix‐It Felix, Jr. - Delighted Sightseer", () => {
   it("**OH, MY LAND!** When you play this character, if you have a location in play, draw a card.", () => {

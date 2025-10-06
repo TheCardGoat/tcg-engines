@@ -3,11 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { tinkerBellGiantFairy } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import { letTheStormRageOn } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import { beastTragicHero } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
 import { basilSecretInformer } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("DRAW THEM OUT Whenever this character quests, opposing damaged characters gain Reckless during their next turn. (They can't quest and must challenge if able.)", () => {
   it("should give Reckless to damaged opposing characters, when questing", async () => {

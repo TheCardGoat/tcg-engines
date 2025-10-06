@@ -3,12 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
 import { lefouInstigator } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
 import {
   argesTheCyclops,
   lefouOpportunisticFlunky,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import {
+  TestEngine,
+  TestStore,
+} from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Lefou - Opportunistic Flunky", () => {
   it("**I LEARNED FROM THE BEST** During your turn, you may play this character for free if an opposing character was banished in a challenge this turn.", async () => {
