@@ -116,6 +116,8 @@ export interface MoveCardEffect extends BaseCardEffect {
   parameters: {
     zoneTo: LorcanaZone;
     zoneFrom?: LorcanaZone;
+    to?: LorcanaZone; // Legacy: use zoneTo instead
+    from?: LorcanaZone; // Legacy: use zoneFrom instead
     placement?: "top" | "bottom" | "random";
     exerted?: boolean;
     shuffle?: boolean;
