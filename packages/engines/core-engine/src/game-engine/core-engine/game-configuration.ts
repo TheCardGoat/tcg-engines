@@ -6,7 +6,6 @@ import type {
   BaseCoreCardFilter,
   DefaultCardMeta,
   DefaultPlayerState,
-  GameSpecificCardMeta,
 } from "./types/game-specific-types";
 export type { SegmentMap };
 

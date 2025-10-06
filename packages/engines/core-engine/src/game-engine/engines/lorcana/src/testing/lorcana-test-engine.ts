@@ -1314,7 +1314,7 @@ LorcanaTestEngine.prototype.singSongTogether = async function (
   }
 
   // Propagate state changes after the move
-  this.wasMoveExecutedAndPropagated();
+  (this as any).wasMoveExecutedAndPropagated();
 
   // Resolve the song effect
   await this.resolveTopOfStack();
@@ -1401,7 +1401,7 @@ LorcanaTestEngine.prototype.resolveStackLayer = async function (
   logger.log(`Removing layer ${targetLayer.id}...`);
   ops.removeLayer(targetLayer, "non-trigger");
 
-  this.wasMoveExecutedAndPropagated();
+  (this as any).wasMoveExecutedAndPropagated();
 };
 
 LorcanaTestEngine.prototype.getLayerIdForPlayer = function (
