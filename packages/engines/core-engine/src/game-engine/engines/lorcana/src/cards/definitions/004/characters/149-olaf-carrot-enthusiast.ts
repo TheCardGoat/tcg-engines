@@ -22,7 +22,7 @@ export const olafCarrotEnthusiast: LorcanaCharacterCardDefinition = {
             { filter: "owner", value: "self" },
             { filter: "type", value: "item" },
           ],
-        },
+        } as any,
       ],
       "Olaf",
       "**Shift: Discard an item card** _(You may discard an item card to play this on top of one of your characters named Olaf.)_",

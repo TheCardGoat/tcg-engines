@@ -22,7 +22,7 @@ export const flotsamAndJetsamEntanglingEels: LorcanaCharacterCardDefinition = {
             { filter: "owner", value: "self" },
             { filter: "source", value: "other" },
           ],
-        },
+        } as any,
       ],
       ["Flotsam", "Jetsam"],
       "**Shift: Discard 2 cards** _(You may discard 2 cards to play this on top of one of your characters named Flotsam or Jetsam.)_\n\n_(This character counts as being named both Flotsam and Jetsam)_",

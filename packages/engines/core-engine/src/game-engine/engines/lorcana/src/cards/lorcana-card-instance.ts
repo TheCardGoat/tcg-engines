@@ -318,7 +318,7 @@ export class LorcanaCardInstance extends CoreCardInstance<
     throw new Error("isRevealed() not implemented");
   }
 
-  moveCostToEnterLocation(): number {
+  moveCostToEnterLocation(_character?: LorcanaCardInstance): number {
     throw new Error("moveCostToEnterLocation() not implemented");
   }
 

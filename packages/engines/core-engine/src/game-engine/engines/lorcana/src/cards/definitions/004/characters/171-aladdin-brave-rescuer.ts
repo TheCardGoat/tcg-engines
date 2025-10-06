@@ -22,7 +22,7 @@ export const aladdinBraveRescuer: LorcanaCharacterCardDefinition = {
             { filter: "owner", value: "self" },
             { filter: "type", value: "location" },
           ],
-        },
+        } as any,
       ],
       "Aladdin",
       "**Shift: Discard a location card** _(You may discard a location card to play this on top of one of your characters named Aladdin.)",
