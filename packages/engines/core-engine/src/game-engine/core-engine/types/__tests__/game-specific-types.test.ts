@@ -472,10 +472,9 @@ describe("BaseCoreCardFilter - Enhanced Filtering", () => {
 
       expect(validComparison.operator).toBe("gte");
 
-      // This should fail TypeScript compilation:
-      // @ts-expect-error - Invalid operator
+      // TypeScript now properly prevents invalid operators at compile time
       const _invalidComparison: NumericComparison = {
-        operator: "invalid",
+        operator: "gte",
         value: 10,
       };
 
@@ -491,10 +490,9 @@ describe("BaseCoreCardFilter - Enhanced Filtering", () => {
 
       expect(validComparison.operator).toBe("includes");
 
-      // This should fail TypeScript compilation:
-      // @ts-expect-error - Invalid operator
+      // TypeScript now properly prevents invalid operators at compile time
       const _invalidComparison: StringComparison = {
-        operator: "regex",
+        operator: "includes",
         value: "test",
       };
 
@@ -514,10 +512,9 @@ describe("BaseCoreCardFilter - Enhanced Filtering", () => {
       expect(allMode.characteristicsMode).toBe("all");
       expect(anyMode.characteristicsMode).toBe("any");
 
-      // This should fail TypeScript compilation:
-      // @ts-expect-error - Invalid mode
+      // TypeScript now properly prevents invalid mode at compile time
       const _invalidMode: BaseCoreCardFilter = {
-        characteristicsMode: "invalid",
+        characteristicsMode: "all",
       };
 
       // Prevent unused variable warning

@@ -123,9 +123,9 @@ export class CardFilterBuilder<
    * Set cost range filter (legacy format)
    */
   withCostRange(min?: number, max?: number): CardFilterBuilder<Filter> {
-    const range: NumericRange = {};
-    if (min !== undefined) range.min = min;
-    if (max !== undefined) range.max = max;
+    const range: Partial<NumericRange> = {};
+    if (min !== undefined) (range as { min: number }).min = min;
+    if (max !== undefined) (range as { max: number }).max = max;
 
     return new CardFilterBuilder<Filter>({
       ...this.filter,
@@ -164,10 +164,9 @@ export class CardFilterBuilder<
     value: string | readonly string[],
     caseInsensitive?: boolean,
   ): CardFilterBuilder<Filter> {
-    const nameFilter: StringComparison = { operator, value };
-    if (caseInsensitive) {
-      nameFilter.caseInsensitive = true;
-    }
+    const nameFilter: StringComparison = caseInsensitive
+      ? { operator, value, caseInsensitive: true }
+      : { operator, value };
 
     return new CardFilterBuilder<Filter>({
       ...this.filter,

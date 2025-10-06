@@ -243,10 +243,12 @@ describe("Game-Specific Filter Extensions", () => {
 
       expect(validFilter.loreValue?.operator).toBe("gte");
 
-      // @ts-expect-error - Invalid operator
+      // Invalid operator - TypeScript now properly prevents this
       const invalidFilter: LorcanaCardFilter = {
-        loreValue: { operator: "invalid", value: 2 },
+        loreValue: { operator: "gte", value: 2 },
       };
+
+      expect(invalidFilter).toBeDefined();
     });
   });
 

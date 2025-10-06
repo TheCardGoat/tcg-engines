@@ -16,13 +16,14 @@ export const allIsFound: LorcanaActionCardDefinition = {
         putCardEffect({
           to: "inkwell",
           from: "discard",
+          exerted: true,
           targets: upToTarget({
+            upTo: 2,
             target: {
               type: "card",
               zone: "discard",
               count: 1,
             },
-            upTo: 2,
           }),
         }),
       ],

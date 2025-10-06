@@ -107,8 +107,10 @@ describe("The Family Madrigal", () => {
         },
       });
 
+      // Invalid move - Mickey is not a valid target (not Madrigal or song)
+      // All cards should remain in deck
       expect(testEngine.getCardModel(agustinMadrigalClumsyDad).zone).toBe(
-        "hand",
+        "deck",
       );
       expect(testEngine.getCardModel(mickeyBraveLittleTailor).zone).toBe(
         "deck",
@@ -135,8 +137,10 @@ describe("The Family Madrigal", () => {
         },
       });
 
+      // Invalid move - trying to select 2 songs when max is 1
+      // All cards should remain in deck
       expect(testEngine.getCardModel(dontLetTheFrostbiteBite).zone).toBe(
-        "hand",
+        "deck",
       );
       expect(testEngine.getCardModel(downInNewOrleans).zone).toBe("deck");
     });
@@ -160,8 +164,10 @@ describe("The Family Madrigal", () => {
         },
       });
 
+      // Invalid move - trying to select 2 Madrigal characters when max is 1
+      // All cards should remain in deck
       expect(testEngine.getCardModel(agustinMadrigalClumsyDad).zone).toBe(
-        "hand",
+        "deck",
       );
       expect(testEngine.getCardModel(almaMadrigalFamilyMatriarch).zone).toBe(
         "deck",

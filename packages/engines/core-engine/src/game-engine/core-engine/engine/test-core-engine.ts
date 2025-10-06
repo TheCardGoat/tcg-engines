@@ -67,7 +67,6 @@ export interface TestPlayerState extends GameSpecificPlayerState {
 
 // A simple card filter for tests
 export interface TestCardFilter extends BaseCoreCardFilter {
-  cost?: number;
   exerted?: boolean; // Add the exerted property for metadata testing
 }
 

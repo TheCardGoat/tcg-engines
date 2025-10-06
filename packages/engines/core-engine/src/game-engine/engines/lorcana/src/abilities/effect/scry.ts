@@ -48,3 +48,22 @@ export const putOneIntoYourHand: ScryDestination = {
   zone: "hand",
   count: 1,
 };
+
+export function scryEffect({
+  lookAt,
+  destinations,
+  targets,
+}: {
+  lookAt: number;
+  destinations: ScryDestination[];
+  targets?: any[];
+}): ScryEffect {
+  return {
+    type: "scry",
+    parameters: {
+      lookAt,
+      destinations,
+    },
+    targets,
+  };
+}

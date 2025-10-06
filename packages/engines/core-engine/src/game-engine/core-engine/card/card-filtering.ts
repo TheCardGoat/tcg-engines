@@ -52,7 +52,11 @@ export function filterCoreCardInstances<
     }
 
     if (zone) {
-      const cardZone = getCardZone(state.ctx, zone, card.owner);
+      const cardZone = getCardZone(
+        state.ctx,
+        (Array.isArray(zone) ? Array.from(zone) : zone) as string | string[],
+        card.owner,
+      );
 
       if (!cardZone) {
         logger.error(

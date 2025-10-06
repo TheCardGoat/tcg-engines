@@ -688,6 +688,7 @@ export class LorcanaTestEngine {
     opts?: {
       targets?: Array<LorcanaCardDefinition | LorcanaCardInstance | string>;
       scry?: Record<string, Array<LorcanaCardDefinition | string>>;
+      targetPlayer?: string;
     },
     _autoResolve?: unknown,
   ) {
@@ -733,20 +734,32 @@ export class LorcanaTestEngine {
       throw new Error(JSON.stringify(response));
     }
 
-    // If scry params were provided, inject them into the top layer and resolve it
-    if (scryParams) {
-      const state = this.authoritativeEngine.getStore().state;
-      const effects = state.G.effects;
-      if (effects.length > 0) {
-        const topEffect = effects[effects.length - 1];
+    // Inject optional parameters into the top layer
+    const state = this.authoritativeEngine.getStore().state;
+    const effects = state.G.effects;
+    if (effects.length > 0) {
+      const topEffect = effects[effects.length - 1];
+
+      // Inject scry params if provided
+      if (scryParams) {
         (
           topEffect as typeof topEffect & {
             scryParams?: Record<string, string[]>;
           }
         ).scryParams = scryParams;
         logger.log("Injected scryParams into top layer:", scryParams);
+      }
 
-        // Auto-resolve the layer since scry params were provided
+      // Inject target player if provided
+      if (opts?.targetPlayer) {
+        (
+          topEffect as typeof topEffect & { targetPlayer?: string }
+        ).targetPlayer = opts.targetPlayer;
+        logger.log("Injected targetPlayer into top layer:", opts.targetPlayer);
+      }
+
+      // Auto-resolve the layer if scry params were provided
+      if (scryParams) {
         const {
           LorcanaCoreOperations,
         } = require("~/game-engine/engines/lorcana/src/operations/lorcana-core-operations");
@@ -900,7 +913,11 @@ export class LorcanaTestEngine {
    * @param opts - Optional parameters including targets for selecting targets and mode for modal effects
    * @returns this for chaining
    */
-  resolveTopOfStack(opts?: { targets?: string[]; mode?: string }) {
+  resolveTopOfStack(opts?: {
+    targets?: string[];
+    mode?: string;
+    scry?: Record<string, any>;
+  }) {
     const state = this.authoritativeEngine.getStore().state;
     const effects = state.G.effects;
 
@@ -920,13 +937,49 @@ export class LorcanaTestEngine {
         opts.mode;
     }
 
-    // If targets are provided, store them in the layer for the resolver to use
+    // If targets are provided, convert to instance IDs and store them in the layer
     if (opts?.targets && opts.targets.length > 0) {
+      // Convert card definitions to instance IDs if needed
+      const instanceIds = opts.targets.map((target) => {
+        if (typeof target === "string") {
+          return target; // Already an instance ID
+        }
+        // It's a card definition - get its instance
+        const instance = this.getCardModel(target);
+        return instance.instanceId;
+      });
+
       // Using type assertion as we're extending the layer with runtime data
       // This is intentional for the test engine to inject selections
       (
         topEffect as typeof topEffect & { selectedTargets?: string[] }
-      ).selectedTargets = opts.targets;
+      ).selectedTargets = instanceIds;
+      logger.log(
+        `Injected selectedTargets into layer ${topEffect.id}:`,
+        instanceIds,
+      );
+    }
+
+    // If scry params are provided, convert card definitions to instance IDs and inject
+    if (opts?.scry) {
+      const scryParams: Record<string, string[]> = {};
+      for (const [zone, cards] of Object.entries(opts.scry)) {
+        if (Array.isArray(cards)) {
+          scryParams[zone] = cards.map((card) => {
+            if (typeof card === "string") {
+              return card;
+            }
+            const instance = this.getCardModel(card);
+            return instance.instanceId;
+          });
+        }
+      }
+      (
+        topEffect as typeof topEffect & {
+          scryParams?: Record<string, string[]>;
+        }
+      ).scryParams = scryParams;
+      logger.log(`Injected scryParams into layer ${topEffect.id}:`, scryParams);
     }
 
     // Resolve the layer by creating a proper LorcanaCoreOperations instance
@@ -1031,9 +1084,70 @@ LorcanaTestEngine.prototype.putIntoInkwell = async function (
 
 LorcanaTestEngine.prototype.drawCard = async function (
   this: LorcanaTestEngine,
-  _playerId?: string,
+  playerId?: string,
 ) {
-  // No-op stub for legacy tests
+  // Draw a card by using the engine's operations system
+  const targetPlayer = playerId || this.activePlayerEngine;
+
+  // Use the authoritative engine's operations to ensure state consistency
+  const engine = this.authoritativeEngine;
+  const ctx = engine.getCtx();
+  const deckZone = getCardZone(ctx, "deck", targetPlayer);
+
+  if (!(deckZone && deckZone.cards && deckZone.cards.length > 0)) {
+    logger.warn(`Player ${targetPlayer} has no cards in deck to draw`);
+    return;
+  }
+
+  // Get the top card of the deck
+  const cardInstanceId = deckZone.cards[0];
+  const handZoneBefore = getCardZone(ctx, "hand", targetPlayer);
+
+  logger.debug(
+    `Drawing card ${cardInstanceId} for ${targetPlayer} from deck of ${deckZone.cards.length} cards`,
+  );
+  logger.debug(
+    `Deck zone: ${deckZone.id} with ${deckZone.cards.length} cards, Hand zone: ${handZoneBefore?.id} with ${handZoneBefore?.cards?.length} cards`,
+  );
+  logger.debug(`Zones are same object: ${deckZone === handZoneBefore}`);
+  logger.debug(`Hand zone cards array: ${handZoneBefore?.cards}`);
+
+  // Use the engine's state reference directly via LorcanaCoreOperations
+  // This matches the pattern used in resolveTopOfStack
+  const {
+    LorcanaCoreOperations,
+  } = require("~/game-engine/engines/lorcana/src/operations/lorcana-core-operations");
+  const state = engine.getStore().state;
+  const ops = new LorcanaCoreOperations({ state, engine });
+
+  // Check if ctx and state.ctx are the same
+  logger.debug(`ctx === state.ctx: ${ctx === state.ctx}`);
+  logger.debug(
+    `Hand zone in state.ctx: ${getCardZone(state.ctx, "hand", targetPlayer)?.cards?.length} cards`,
+  );
+  logger.debug(
+    `Card ${cardInstanceId} is in deck: ${deckZone.cards.includes(cardInstanceId)}`,
+  );
+  logger.debug(
+    `Card ${cardInstanceId} is in hand: ${handZoneBefore?.cards?.includes(cardInstanceId)}`,
+  );
+
+  // Call moveCard directly with the instanceId to ensure proper tracking
+  ops.moveCard({
+    playerId: targetPlayer,
+    instanceId: cardInstanceId,
+    from: "deck",
+    to: "hand",
+    origin: "start",
+    destination: "end",
+  });
+
+  // Verify the draw succeeded
+  const handZone = getCardZone(engine.getCtx(), "hand", targetPlayer);
+  const newDeckZone = getCardZone(engine.getCtx(), "deck", targetPlayer);
+  logger.debug(
+    `After draw: deck has ${newDeckZone?.cards?.length || 0} cards, hand has ${handZone?.cards?.length || 0} cards`,
+  );
 };
 
 LorcanaTestEngine.prototype.challenge = async function (
@@ -1383,9 +1497,31 @@ Object.defineProperty(LorcanaCardInstance.prototype, "hasQuestRestriction", {
 
 LorcanaCardInstance.prototype.canChallenge = function (
   this: LorcanaCardInstance,
-  _target?: unknown,
+  target?: unknown,
 ) {
-  // Provide permissive default for legacy tests
+  // Basic validation
+  if (this.type !== "character") return false;
+  if (this.zone !== "play") return false;
+
+  // Check if this card is exerted
+  if (this.meta?.exerted) return false;
+
+  // Validate target
+  if (!target || typeof target !== "object") return false;
+  const targetCard = target as LorcanaCardInstance;
+  if (targetCard.type !== "character") return false;
+  if (targetCard.zone !== "play") return false;
+  if (targetCard.ownerId === this.ownerId) return false;
+
+  // Check if target has challengeable restriction
+  const targetMeta = targetCard.meta;
+  if (targetMeta?.restrictions && Array.isArray(targetMeta.restrictions)) {
+    const hasNoChallengeRestriction = targetMeta.restrictions.some(
+      (r: any) => r.type === "challengeable",
+    );
+    if (hasNoChallengeRestriction) return false;
+  }
+
   return true;
 };
 
