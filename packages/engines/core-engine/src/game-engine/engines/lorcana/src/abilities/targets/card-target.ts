@@ -28,6 +28,7 @@ export interface CardTarget extends BaseTarget {
   excludeSelf?: boolean; // For "chosen another character"
   has?: "challenged";
   filter?: LorcanaCardFilter;
+  filters?: Array<{ filter: string; value: any }>; // Legacy filter format
   min?: number;
   max?: number;
   count?: number | DynamicValue;
