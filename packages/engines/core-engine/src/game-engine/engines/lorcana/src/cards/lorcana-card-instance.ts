@@ -192,7 +192,7 @@ export class LorcanaCardInstance extends CoreCardInstance<
   // STUB METHODS - Runtime API stubs for test compatibility during migration
   // These throw "not implemented" errors to clearly indicate they need actual implementation
 
-  playFromHand(): void {
+  playFromHand(_opts?: any): void {
     throw new Error("playFromHand() not implemented");
   }
 
