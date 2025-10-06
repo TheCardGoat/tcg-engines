@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { herculesHeroInTraining } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { megaraLiberatedOne } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { herculesHeroInTraining } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { megaraLiberatedOne } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

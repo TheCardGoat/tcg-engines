@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { agustinMadrigalClumsyDad } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { vanellopeVonSchweetzSugarRushChamp } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { agustinMadrigalClumsyDad } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { vanellopeVonSchweetzSugarRushChamp } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { rhinoPowerHamster } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,

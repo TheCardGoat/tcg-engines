@@ -7,7 +7,7 @@ import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/
 import {
   goonsMaleficent,
   maleficentMonstrousDragon,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { montereyJackGoodheartedRanger } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { mickeyMouseGiantMouse } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import {

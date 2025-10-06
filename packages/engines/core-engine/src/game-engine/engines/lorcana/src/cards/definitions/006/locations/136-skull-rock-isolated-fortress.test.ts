@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { skullRockIsolatedFortress } from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/locations";
+import { skullRockIsolatedFortress } from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/index";
 import {
   TestEngine,
   TestStore,

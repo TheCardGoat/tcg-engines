@@ -1,10 +1,10 @@
-import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/target";
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenMovesToALocation } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import {
   drawACard,
   moveToLocation,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import { chosenCharacterOfYours } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenMovesToALocation } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const goofySetForAdventure: LorcanaCharacterCardDefinition = {

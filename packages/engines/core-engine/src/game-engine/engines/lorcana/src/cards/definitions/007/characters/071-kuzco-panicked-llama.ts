@@ -1,11 +1,14 @@
-import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-import { opponent, self } from "@lorcanito/lorcana-engine/abilities/targets";
 import {
   discardACard,
   drawXCards,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
+import {
+  opponent,
+  self,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const kuzcoPanickedLlama: LorcanaCharacterCardDefinition = {

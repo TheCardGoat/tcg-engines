@@ -7,8 +7,8 @@ import {
   mauiHeroToAll,
   mickeyBraveLittleTailor,
   peterPanNeverLanding,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { coconutbasket } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { coconutbasket } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/index";
 import {
   TestEngine,
   TestStore,

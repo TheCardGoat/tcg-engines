@@ -1,39 +1,10 @@
-import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-const minimalItem = (
-  id: string,
-  name: string,
-  colors: (
-    | "amber"
-    | "amethyst"
-    | "emerald"
-    | "ruby"
-    | "sapphire"
-    | "steel"
-  )[] = ["amber"],
-  cost = 1,
-): LorcanaItemCardDefinition => ({
-  id,
-  type: "item",
-  name,
-  characteristics: ["item"],
-  set: "008",
-  cost,
-  colors,
-  number: 0,
-  illustrator: "",
-  rarity: "common",
-});
-
-export const televisionSet = minimalItem(
-  "televisionSet",
-  "Television Set",
-  ["amethyst"],
-  2,
-);
-export const atlanteanCrystal = minimalItem(
-  "atlanteanCrystal",
-  "Atlantean Crystal",
-  ["sapphire"],
-  1,
-);
+export { theNephewsPiggyBank } from "./044-the-nephews-piggy-bank";
+export { scarab } from "./083-scarab";
+export { iceSpikes } from "./084-ice-spikes";
+export { chemPurse } from "./119-chem-purse";
+export { jeweledCollar } from "./120-jeweled-collar";
+export { theSwordOfShanYu } from "./152-the-sword-of-shan-yu";
+export { televisionSet } from "./178-television-set";
+export { bellesFavoriteBook } from "./179-belle-s-favorite-book";
+export { atlanteanCrystal } from "./180-atlantean-crystal";
+export { hamsterBall } from "./204-hamster-ball";

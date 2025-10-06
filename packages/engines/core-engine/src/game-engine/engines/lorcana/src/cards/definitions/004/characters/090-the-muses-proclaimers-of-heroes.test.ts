@@ -3,22 +3,22 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   friendsOnTheOtherSide,
   grabYourSword,
   suddenChill,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import {
   goofyKnightForADay,
   princeJohnGreediestOfAll,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   aladdinResoluteSwordsman,
   auroraTranquilPrincess,
   faLiMulansMother,
   theMusesProclaimersOfHeroes,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import { glitteringAccess } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/abilities";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const goldCoin: LorcanaItemCardDefinition = {
   id: "jmx",

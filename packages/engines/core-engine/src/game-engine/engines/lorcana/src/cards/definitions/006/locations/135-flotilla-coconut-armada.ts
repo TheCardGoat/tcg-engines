@@ -1,10 +1,10 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-import { ifYouHaveACharacterHere } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
 import {
   opponentLoseLore,
   youGainLore,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { ifYouHaveACharacterHere } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 
 export const flotillaCoconutArmada: LorcanaLocationCardDefinition = {
   id: "twz",

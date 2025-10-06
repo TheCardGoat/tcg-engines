@@ -1,12 +1,12 @@
 import {
-  chosenCharacter,
-  chosenOpposingCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
   moveDamageAbility,
   shiftAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import {
+  chosenCharacter,
+  chosenOpposingCharacter,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const belleAccomplishedMystic: LorcanaCharacterCardDefinition = {

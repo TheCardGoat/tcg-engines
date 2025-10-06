@@ -7,8 +7,8 @@ import {
   genieSupportiveFriend,
   hydrosIceTitan,
   iagoPrettyPolly,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { tianasPalaceJazzRestaurant } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { tianasPalaceJazzRestaurant } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   TestEngine,
   TestStore,

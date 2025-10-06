@@ -1,4 +1,4 @@
-import { robinHoodUnrivaledArcher as robinHoodUnrivaledArcherAsOrig } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import { robinHoodUnrivaledArcher as robinHoodUnrivaledArcherAsOrig } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const robinHoodUnrivaledArcher: LorcanaCharacterCardDefinition = {

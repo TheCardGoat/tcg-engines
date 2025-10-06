@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { chiefBogoGazelleFan } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import { chiefBogoGazelleFan } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

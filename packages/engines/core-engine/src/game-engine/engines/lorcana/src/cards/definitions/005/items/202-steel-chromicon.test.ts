@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { steelChromicon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+import { steelChromicon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/index";
 import {
   TestEngine,
   TestStore,

@@ -1,6 +1,6 @@
-import { duringYourTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { anotherChosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+import { duringYourTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
+import { anotherChosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverACardIsPutIntoYourInkwell } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

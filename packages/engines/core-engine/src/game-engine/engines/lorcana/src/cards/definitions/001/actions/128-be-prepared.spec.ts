@@ -9,7 +9,7 @@ import {
 import {
   bePrepared,
   letItGo,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Be Prepared", () => {

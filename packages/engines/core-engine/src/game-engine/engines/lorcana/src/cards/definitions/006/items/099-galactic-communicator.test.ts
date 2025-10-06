@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
-import { galacticCommunicator } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/items";
+import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
+import { galacticCommunicator } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/index";
 import {
   TestEngine,
   TestStore,

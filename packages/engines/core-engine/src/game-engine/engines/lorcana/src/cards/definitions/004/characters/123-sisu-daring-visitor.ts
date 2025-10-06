@@ -1,5 +1,5 @@
-import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
+import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const sisuDaringVisitor: LorcanaCharacterCardDefinition = {

@@ -1,6 +1,6 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverYouPlayASong } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

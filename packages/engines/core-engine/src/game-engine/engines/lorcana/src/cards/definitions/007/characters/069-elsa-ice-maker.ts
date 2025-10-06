@@ -1,11 +1,11 @@
 import {
-  ifYouHaveCharacterNamed,
-  notHaveCharacterNamed,
-} from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import {
   exertAndCantReady,
   exertChosenCharacter,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import {
+  ifYouHaveCharacterNamed,
+  notHaveCharacterNamed,
+} from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

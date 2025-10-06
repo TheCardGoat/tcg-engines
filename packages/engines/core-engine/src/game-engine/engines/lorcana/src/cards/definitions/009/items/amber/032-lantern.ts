@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import { lantern as ogLantern } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/033-lantern";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const lantern: LorcanaItemCardDefinition = {
   ...ogLantern,

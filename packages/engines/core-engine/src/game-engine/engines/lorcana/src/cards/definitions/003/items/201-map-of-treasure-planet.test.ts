@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { mapOfTreasurePlanet } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
-import { bellesHouseMauricesWorkshop } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { mapOfTreasurePlanet } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";
+import { bellesHouseMauricesWorkshop } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   TestEngine,
   TestStore,

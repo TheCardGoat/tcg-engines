@@ -3,13 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   banzaiVoraciousPredator,
   edLaughingHyena,
   shenziHeadHyena,
   shenziScarsAccomplice,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

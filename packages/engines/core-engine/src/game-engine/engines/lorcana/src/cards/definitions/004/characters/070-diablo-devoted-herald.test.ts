@@ -9,20 +9,20 @@ import {
   magicBroomBucketBrigade,
   moanaOfMotunui,
   teKaTheBurningOne,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import {
   aWholeNewWorld,
   friendsOnTheOtherSide,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { letTheStormRageOn } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
-import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import { brawl } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import {
   diabloDevotedHerald,
   diabloMaleficentsSpy,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

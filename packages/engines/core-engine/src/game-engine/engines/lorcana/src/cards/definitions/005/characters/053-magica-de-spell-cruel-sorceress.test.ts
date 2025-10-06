@@ -6,17 +6,17 @@ import { describe, expect, it } from "@jest/globals";
 import {
   mickeyMouseDetective,
   moanaOfMotunui,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   aWholeNewWorld,
   hakunaMatata,
   suddenChill,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { theBareNecessities } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
 import {
   annaDiplomaticQueen,
   magicaDeSpellCruelSorceress,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

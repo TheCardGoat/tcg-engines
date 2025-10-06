@@ -6,11 +6,11 @@ import { describe, expect, it } from "@jest/globals";
 import {
   aWholeNewWorld,
   hakunaMatata,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import {
   peteGamesReferee,
   princeNaveenUkulelePlayer,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

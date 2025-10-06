@@ -1,13 +1,14 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import {
-  chosenCharacter,
-  chosenOpposingCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
 import {
   getLoreThisTurn,
   moveDamageEffect,
 } from "@lorcanito/lorcana-engine/effects/effects";
+
+import { ifYouHaveCharacterNamed } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import {
+  chosenCharacter,
+  chosenOpposingCharacter,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const mysticalRose: LorcanaItemCardDefinition = {
   id: "d8l",

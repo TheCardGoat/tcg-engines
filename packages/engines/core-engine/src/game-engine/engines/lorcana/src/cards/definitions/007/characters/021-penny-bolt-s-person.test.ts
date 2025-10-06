@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { arielSingingMermaid } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { arielSingingMermaid } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { pennyBoltsPerson } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import {
   TestEngine,

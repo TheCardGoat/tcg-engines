@@ -1,6 +1,6 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYourOtherCharactersIsBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYourOtherCharactersIsBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const emeraldChromiconItem: LorcanaItemCardDefinition = {
   id: "ewm",

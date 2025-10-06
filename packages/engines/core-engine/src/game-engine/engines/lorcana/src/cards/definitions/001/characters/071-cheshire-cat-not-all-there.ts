@@ -1,5 +1,5 @@
-import { whenChallengedAndBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { banishChallengingCharacter } from "@lorcanito/lorcana-engine/effects/effects";
+import { whenChallengedAndBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const cheshireCat: LorcanaCharacterCardDefinition = {

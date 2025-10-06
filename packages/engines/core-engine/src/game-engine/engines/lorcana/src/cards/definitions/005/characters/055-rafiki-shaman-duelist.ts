@@ -2,8 +2,8 @@ import type {
   AbilityEffect,
   LorcanitoCharacterCard,
 } from "@lorcanito/lorcana-engine";
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/rushAbility";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 
 export const rafikiShamanDuelist: LorcanaCharacterCardDefinition = {
   id: "qke",

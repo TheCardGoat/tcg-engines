@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { magicBroomBucketBrigade } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { magicBroomBucketBrigade } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/index";
 import {
   TestEngine,
   TestStore,

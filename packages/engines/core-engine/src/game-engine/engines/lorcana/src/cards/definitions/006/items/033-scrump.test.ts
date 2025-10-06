@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { scrump } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/items";
+import { scrump } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/index";
 import {
   TestEngine,
   TestStore,

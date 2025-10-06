@@ -1,8 +1,8 @@
-import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import {
   chosenOpposingCharacterGainsRecklessDuringNextTurn,
   entersPlayExerted,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const louisEndearingAlligator: LorcanaCharacterCardDefinition = {

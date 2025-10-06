@@ -1,5 +1,5 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { allOpposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+import { allOpposingCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
 
 export const ursulasGardenFullOfTheUnfortunate: LorcanaLocationCardDefinition =
   {

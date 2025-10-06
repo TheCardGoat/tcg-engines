@@ -1,5 +1,5 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-import { chosenDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { chosenDamagedCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const annaDiplomaticQueen: LorcanaCharacterCardDefinition = {

@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mickeyMouseTrueFriend } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { cruellaDeVilPerfectlyWretched } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { mickeyMouseTrueFriend } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { cruellaDeVilPerfectlyWretched } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
   TestStore,

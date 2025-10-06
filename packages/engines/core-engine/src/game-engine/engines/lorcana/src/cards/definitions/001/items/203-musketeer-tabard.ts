@@ -1,5 +1,5 @@
-import type { BanishTrigger } from "@lorcanito/lorcana-engine/abilities/triggers";
 import type { TriggeredAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import type { BanishTrigger } from "~/game-engine/engines/lorcana/src/abilities/triggers";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const musketeerTabard: LorcanaItemCardDefinition = {

@@ -3,14 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { chernabogEvildoer } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { chernabogEvildoer } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   arthurNoviceSparrow,
   chacaImpressiveDaughter,
   ludwigVonDrakeSelfproclaimedGenius,
   petePastryChomper,
   theQueenCruelestOfAll,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   TestEngine,
   TestStore,

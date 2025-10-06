@@ -6,11 +6,11 @@ import { describe, expect, it } from "@jest/globals";
 import {
   tinkerBellGenerousFairy,
   wendyDarlingTalentedSailor,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   cleansingRainwater,
   wildcatsWrench,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
 import {
   TestEngine,
   TestStore,

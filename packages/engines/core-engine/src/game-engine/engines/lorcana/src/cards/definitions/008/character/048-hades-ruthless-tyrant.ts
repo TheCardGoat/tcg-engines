@@ -1,9 +1,9 @@
-import { anotherChosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenPlayAndWheneverQuests } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import {
   dealDamageEffect,
   drawXCards,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import { anotherChosenCharacterOfYours } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenPlayAndWheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const shortOnPatience = whenPlayAndWheneverQuests({

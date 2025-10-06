@@ -6,9 +6,9 @@ import { describe, expect, it } from "@jest/globals";
 import {
   donaldDuckMusketeer,
   mickeyMouseMusketeer,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { goofyMusketeerSwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { goofyMusketeerSwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

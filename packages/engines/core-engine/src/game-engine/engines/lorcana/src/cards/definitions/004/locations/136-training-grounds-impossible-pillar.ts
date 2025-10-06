@@ -1,5 +1,5 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 
 export const trainingGroundsImpossiblePillar: LorcanaLocationCardDefinition = {
   id: "c0i",

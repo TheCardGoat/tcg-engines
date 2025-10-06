@@ -6,10 +6,10 @@ import { describe, expect, it } from "@jest/globals";
 import {
   liloMakingAWish,
   mauiHeroToAll,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
-import { chernabogsFollowersCreaturesOfEvil } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { daisyDuckDonaldsDate } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
+import { chernabogsFollowersCreaturesOfEvil } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { daisyDuckDonaldsDate } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { minnieMouseStoryteller } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import {
   TestEngine,

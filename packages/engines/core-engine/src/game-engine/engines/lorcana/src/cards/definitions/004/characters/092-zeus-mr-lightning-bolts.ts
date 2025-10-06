@@ -1,7 +1,7 @@
 import {
   chosenCharacter,
   thisCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

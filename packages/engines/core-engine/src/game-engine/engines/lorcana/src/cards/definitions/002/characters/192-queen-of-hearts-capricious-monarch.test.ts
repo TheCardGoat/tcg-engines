@@ -7,7 +7,7 @@ import {
   arthurTrainedSwordsman,
   herculesHeroInTraining,
   queenOfHeartsCapriciousMonarch,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import { brawl } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import {
   TestEngine,

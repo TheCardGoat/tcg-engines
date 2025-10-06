@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { dalmatianPuppyTailWagger } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { dalmatianPuppyTailWagger } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

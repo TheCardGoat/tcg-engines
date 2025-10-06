@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
-import { benjaGuardianOfTheDragonGem } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { tinkerBellVeryCleverFairy } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
+import { benjaGuardianOfTheDragonGem } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { tinkerBellVeryCleverFairy } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

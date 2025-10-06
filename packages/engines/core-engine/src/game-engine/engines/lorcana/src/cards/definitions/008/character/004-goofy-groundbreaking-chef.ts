@@ -4,7 +4,7 @@ import type {
   HealEffect,
   LorcanitoCharacterCard,
 } from "@lorcanito/lorcana-engine";
-import { atTheEndOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
+import { atTheEndOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
 
 const yourOtherDamageChars: CardEffectTarget = {
   type: "card",

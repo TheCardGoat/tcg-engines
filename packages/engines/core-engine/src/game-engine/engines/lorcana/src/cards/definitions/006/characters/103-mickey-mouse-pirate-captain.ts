@@ -1,7 +1,7 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { chosenPirateCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
+import { chosenPirateCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

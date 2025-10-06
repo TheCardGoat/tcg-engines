@@ -1,7 +1,7 @@
-import { yourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whileNoOtherCharacterHasQuestedThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
+import { yourOtherCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
+import { whileNoOtherCharacterHasQuestedThisCharacterGets } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const isabelaMadrigalGoldenChild: LorcanaCharacterCardDefinition = {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
-import { suddenChill } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { suddenChill } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Sudden Chill", () => {

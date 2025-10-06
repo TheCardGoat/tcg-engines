@@ -8,8 +8,8 @@ import {
   sisuWiseFriend,
   tongSurvivor,
   tukTukCuriousPartner,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { snugglyDucklingDisreputablePub } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { snugglyDucklingDisreputablePub } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/index";
 import {
   TestEngine,
   TestStore,

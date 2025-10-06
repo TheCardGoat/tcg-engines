@@ -1,9 +1,9 @@
 import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export * from "./actions";
-export * from "./characters/characters";
-export * from "./items/items";
-export * from "./locations/locations";
+export * from "./characters";
+export * from "./items";
+export * from "./locations";
 
 import {
   aPiratesLife,
@@ -194,7 +194,7 @@ import {
   wildcatMechanic,
   winnieThePoohHavingAThink,
   winnieThePoohHunnyWizard,
-} from "./characters/characters";
+} from "./characters";
 
 import {
   aurelianGyrosensor,
@@ -211,7 +211,7 @@ import {
   theMagicFeather,
   ursulasShellNecklace,
   whiteRabbitsPocketWatch,
-} from "./items/items";
+} from "./items";
 
 import {
   agrabahMarketplace,
@@ -220,7 +220,7 @@ import {
   hiddenCoveTranquilHaven,
   mauisPlaceOfExileHiddenIsland,
   motunuiIslandParadise,
-} from "./locations/locations";
+} from "./locations";
 
 export const all009Cards: LorcanaCardDefinition[] = [
   lookAtThisFamily,

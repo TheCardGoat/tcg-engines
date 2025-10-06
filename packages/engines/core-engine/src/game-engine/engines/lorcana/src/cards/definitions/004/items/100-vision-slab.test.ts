@@ -7,20 +7,20 @@ import {
   donaldDuck,
   mickeyBraveLittleTailor,
   rapunzelGiftedWithHealing,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   goofyKnightForADay,
   madamMimSnake,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   belleAccomplishedMystic,
   goofySuperGoof,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { visionSlab } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { visionSlab } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/index";
 import {
   luisaMadrigalEntertainingMuscle,
   whiteRabbitRoyalHerald,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   TestEngine,
   TestStore,

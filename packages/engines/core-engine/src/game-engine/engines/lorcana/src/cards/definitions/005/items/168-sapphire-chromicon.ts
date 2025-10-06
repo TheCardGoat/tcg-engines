@@ -1,9 +1,10 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { chosenItemOfYours } from "@lorcanito/lorcana-engine/abilities/target";
 import {
   entersPlayExerted,
   youGainLore,
 } from "@lorcanito/lorcana-engine/effects/effects";
+
+import { chosenItemOfYours } from "~/game-engine/engines/lorcana/src/abilities/target";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const sapphireChromicon: LorcanaItemCardDefinition = {
   id: "f9o",

@@ -7,13 +7,13 @@ import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/
 import {
   liloGalacticHero,
   liloMakingAWish,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   bePrepared,
   grabYourSword,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { lyleTiberiusRourkeCunningMercenary } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { liloJuniorCakeDecorator } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
+import { lyleTiberiusRourkeCunningMercenary } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
+import { liloJuniorCakeDecorator } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   TestEngine,
   TestStore,

@@ -1,7 +1,7 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { yourLocationCards } from "@lorcanito/lorcana-engine/abilities/targets";
 import { youPayXLessToPlayNextLocationThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
 import { yourOtherCharactersGet } from "~/game-engine/engines/lorcana/src/abilities";
+import { yourLocationCards } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const mapOfTreasurePlanet: LorcanaItemCardDefinition = {
   id: "x73",

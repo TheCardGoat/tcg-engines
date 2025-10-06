@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { chosenCharacterOrLocation } from "@lorcanito/lorcana-engine/abilities/targets";
+import { chosenCharacterOrLocation } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const rlsLegacysCannon: LorcanaItemCardDefinition = {
   id: "etn",

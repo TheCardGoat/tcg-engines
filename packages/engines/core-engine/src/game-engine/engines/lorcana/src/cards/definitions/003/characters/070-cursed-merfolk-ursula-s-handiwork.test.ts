@@ -6,9 +6,9 @@ import { describe, expect, it } from "@jest/globals";
 import {
   liloMakingAWish,
   stichtCarefreeSurfer,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { princeJohnGreediestOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { cursedMerfolkUrsulasHandiwork } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { princeJohnGreediestOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { cursedMerfolkUrsulasHandiwork } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

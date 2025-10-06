@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { tamatoaSoShiny } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { cogsworthMajordomo } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { tamatoaSoShiny } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { cogsworthMajordomo } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

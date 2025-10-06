@@ -1,6 +1,6 @@
-import { haveElsaInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+import { haveElsaInPlay } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouPlayThisCharAbility } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const annaHeirToArendelle: LorcanaCharacterCardDefinition = {

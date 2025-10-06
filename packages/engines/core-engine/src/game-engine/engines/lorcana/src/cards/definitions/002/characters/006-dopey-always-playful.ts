@@ -1,4 +1,4 @@
-import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+import { whenThisCharacterBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const dopeyAlwaysPlayful: LorcanaCharacterCardDefinition = {

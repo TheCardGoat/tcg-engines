@@ -8,8 +8,8 @@ import {
   mickeyMouseTrueFriend,
   moanaOfMotunui,
   teKaTheBurningOne,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { grabYourSword } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { grabYourSword } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/index";
 import {
   TestEngine,
   TestStore,

@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { alistairKreiAmbitiousEntrepreneur } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import { alistairKreiAmbitiousEntrepreneur } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

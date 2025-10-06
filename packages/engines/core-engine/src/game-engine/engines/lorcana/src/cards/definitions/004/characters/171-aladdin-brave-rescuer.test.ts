@@ -3,12 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
-import { agrabahMarketplace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
+import { agrabahMarketplace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   aladdinBraveRescuer,
   aladdinResoluteSwordsman,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

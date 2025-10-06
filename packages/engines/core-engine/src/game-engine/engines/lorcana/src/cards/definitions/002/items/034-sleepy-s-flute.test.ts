@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { sleepysFlute } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
+import { sleepysFlute } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/index";
 import {
   TestEngine,
   TestStore,

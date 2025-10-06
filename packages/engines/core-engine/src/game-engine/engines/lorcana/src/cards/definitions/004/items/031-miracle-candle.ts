@@ -1,12 +1,13 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import {
-  chosenCharacterOfYours,
-  chosenLocation,
-} from "@lorcanito/lorcana-engine/abilities/targets";
 import {
   healEffect,
   youGainLore,
 } from "@lorcanito/lorcana-engine/effects/effects";
+
+import {
+  chosenCharacterOfYours,
+  chosenLocation,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const miracleCandle: LorcanaItemCardDefinition = {
   id: "ohm",

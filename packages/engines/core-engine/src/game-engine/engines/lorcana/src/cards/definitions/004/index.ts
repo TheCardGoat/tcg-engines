@@ -175,7 +175,7 @@ import {
   yaoImperialSoldier,
   yenSidPowerfulSorcerer,
   zeusMrLightningBolts,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   fieldOfIce,
   fortisphere,
@@ -195,7 +195,7 @@ import {
   tritonsTrident,
   visionSlab,
   vitalisphere,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/items";
 import {
   arielsGrottoASecretPlace,
   atlanticaConcertHall,
@@ -209,7 +209,7 @@ import {
   ursulasGardenFullOfTheUnfortunate,
   ursulasLairEyeOfTheStorm,
   winterCampMedicalTent,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations";
 import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const all004Cards: LorcanaCardDefinition[] = [

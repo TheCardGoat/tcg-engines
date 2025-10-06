@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { jafarDreadnought } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { jafarDreadnought } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
   TestStore,

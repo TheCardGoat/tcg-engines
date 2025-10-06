@@ -1,9 +1,9 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-import { ifYouHaveACharacterHere } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { gainAbilityWhileHere } from "~/game-engine/engines/lorcana/src/abilities";
+import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { ifYouHaveACharacterHere } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 
 export const instituteOfTechnologyPrestigiousUniversity: LorcanaLocationCardDefinition =
   {

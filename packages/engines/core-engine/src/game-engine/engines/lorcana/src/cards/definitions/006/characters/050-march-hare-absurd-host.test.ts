@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { marchHareAbsurdHost } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import { marchHareAbsurdHost } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

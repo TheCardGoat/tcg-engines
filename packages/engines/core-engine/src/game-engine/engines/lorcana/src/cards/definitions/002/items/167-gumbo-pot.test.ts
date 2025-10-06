@@ -6,8 +6,8 @@ import { describe, expect, it } from "@jest/globals";
 import {
   owlLogicalLecturer,
   rabbitReluctantHost,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { gumboPot } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { gumboPot } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/index";
 import {
   TestEngine,
   TestStore,

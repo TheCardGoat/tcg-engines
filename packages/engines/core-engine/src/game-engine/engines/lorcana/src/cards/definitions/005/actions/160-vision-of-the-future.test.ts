@@ -4,9 +4,9 @@ import {
   mauiHeroToAll,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
-import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import { sisuEmpoweredSibling } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
-import { iceBlock } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+import { iceBlock } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items";
 import { visionOfTheFuture } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import { mauiHalfshark } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";

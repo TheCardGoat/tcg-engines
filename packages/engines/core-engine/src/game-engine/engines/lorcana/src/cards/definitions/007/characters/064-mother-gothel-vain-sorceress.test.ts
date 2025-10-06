@@ -3,13 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { goonsMaleficent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import { goonsMaleficent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
-import { rapunzelGiftedArtist } from "../../002/characters/characters";
-import { rapunzelsTowerSecludedPrison } from "../../005/locations/locations";
+import { rapunzelGiftedArtist } from "../../002/characters";
+import { rapunzelsTowerSecludedPrison } from "../../005/locations";
 import { motherGothelVainSorceress } from "./064-mother-gothel-vain-sorceress";
 
 describe("Mother Gothel - Vain Sorceress", () => {

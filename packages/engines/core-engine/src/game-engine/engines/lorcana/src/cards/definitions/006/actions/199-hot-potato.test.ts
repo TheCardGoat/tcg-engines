@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { aladdinHeroicOutlaw } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
-import { fryingPan } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { fryingPan } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import { hotPotato } from "~/game-engine/engines/lorcana/src/cards/definitions/006/actions";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 

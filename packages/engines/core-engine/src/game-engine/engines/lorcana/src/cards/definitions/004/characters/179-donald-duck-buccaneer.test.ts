@@ -8,8 +8,8 @@ import {
   mauiHeroToAll,
   moanaOfMotunui,
   teKaHeartless,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { donaldDuckBuccaneer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { donaldDuckBuccaneer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

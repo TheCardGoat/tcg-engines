@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { goofySuperGoof } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { goofySuperGoof } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
+import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations";
 import {
   TestEngine,
   TestStore,

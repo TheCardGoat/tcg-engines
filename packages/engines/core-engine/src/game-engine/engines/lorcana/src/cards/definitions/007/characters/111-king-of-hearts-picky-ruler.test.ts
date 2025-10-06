@@ -3,14 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { captainHookForcefulDuelist } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import { captainHookForcefulDuelist } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   madamMimFox,
   madamMimSnake,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { bellesHouseMauricesWorkshop } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
-import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { bellesHouseMauricesWorkshop } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations";
 import {
   denahiImpatientHunter,
   kingOfHeartsPickyRuler,

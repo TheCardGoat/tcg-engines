@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { hypnotize } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
-import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import { donaldDuckLivelyPirate } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,

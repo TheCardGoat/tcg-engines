@@ -1,6 +1,6 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import { readyThisItem } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverACharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const robinsBow: LorcanaItemCardDefinition = {
   id: "b4u",

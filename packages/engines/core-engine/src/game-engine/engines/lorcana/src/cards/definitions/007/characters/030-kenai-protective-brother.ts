@@ -1,5 +1,5 @@
-import { atTheEndOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-import { anotherChosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
+import { atTheEndOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { anotherChosenCharacterOfYours } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const kenaiProtectiveBrother: LorcanaCharacterCardDefinition = {

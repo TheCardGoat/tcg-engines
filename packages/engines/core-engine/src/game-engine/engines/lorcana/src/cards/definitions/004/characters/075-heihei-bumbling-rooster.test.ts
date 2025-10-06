@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { heiheiBoatSnack } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { heiheiBumblingRooster } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { heiheiBoatSnack } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { heiheiBumblingRooster } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

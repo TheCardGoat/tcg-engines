@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const basilsMagnifyingGlass: LorcanaItemCardDefinition = {
   id: "q09",

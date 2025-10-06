@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { sumerianTalisman } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import { sumerianTalisman } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";
 import {
   TestEngine,
   TestStore,

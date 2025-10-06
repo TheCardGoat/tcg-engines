@@ -2,11 +2,11 @@ import type {
   LorcanitoCharacterCard,
   TargetFilter,
 } from "@lorcanito/lorcana-engine";
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import {
   shiftAbility,
   singerAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverThisCharSings } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 
 const filters: TargetFilter[] = [

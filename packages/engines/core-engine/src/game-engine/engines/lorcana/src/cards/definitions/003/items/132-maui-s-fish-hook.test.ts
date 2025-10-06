@@ -6,8 +6,8 @@ import { describe, expect, it } from "@jest/globals";
 import {
   heiheiBoatSnack,
   mauiDemiGod,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { mauisFishHook } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { mauisFishHook } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";
 import {
   TestEngine,
   TestStore,

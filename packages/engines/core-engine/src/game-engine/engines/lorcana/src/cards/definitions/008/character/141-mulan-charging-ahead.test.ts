@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { liShangNewlyPromoted } from "~/game-engine/engines/lorcana/src/cards/definitions/007/characters/characters";
+import { liShangNewlyPromoted } from "~/game-engine/engines/lorcana/src/cards/definitions/007/characters";
 import { mulanChargingAhead } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,

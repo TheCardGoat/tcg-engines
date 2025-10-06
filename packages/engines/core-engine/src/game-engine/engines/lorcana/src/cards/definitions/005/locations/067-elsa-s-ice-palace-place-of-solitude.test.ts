@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mickeyMouseMusketeer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { elsasIcePalacePlaceOfSolitude } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import { mickeyMouseMusketeer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { elsasIcePalacePlaceOfSolitude } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/index";
 import {
   TestEngine,
   TestStore,

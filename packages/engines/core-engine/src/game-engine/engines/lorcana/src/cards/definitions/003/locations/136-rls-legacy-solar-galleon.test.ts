@@ -6,8 +6,8 @@ import { describe, expect, it } from "@jest/globals";
 import {
   liloMakingAWish,
   stichtNewDog,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { rlsLegacySolarGalleon } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { rlsLegacySolarGalleon } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   TestEngine,
   TestStore,

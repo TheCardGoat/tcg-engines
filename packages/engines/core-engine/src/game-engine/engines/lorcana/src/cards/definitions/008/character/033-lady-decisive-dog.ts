@@ -1,7 +1,7 @@
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import { thisCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverYouPlayACharacter } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
+import { whileConditionThisCharacterGets } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const ladyDecisiveDog: LorcanaCharacterCardDefinition = {

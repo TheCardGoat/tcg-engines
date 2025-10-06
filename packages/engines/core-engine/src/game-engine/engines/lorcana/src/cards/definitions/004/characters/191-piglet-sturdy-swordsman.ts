@@ -1,5 +1,5 @@
-import { whileYouHaveNoCardsInHandThisCharacterCanChallengeReadyChars } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
+import { whileYouHaveNoCardsInHandThisCharacterCanChallengeReadyChars } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const pigletSturdySwordsman: LorcanaCharacterCardDefinition = {

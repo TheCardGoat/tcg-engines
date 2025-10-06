@@ -1,5 +1,5 @@
-import { whenPlayOnThisCard } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { putTopCardOfYourDeckIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
+import { whenPlayOnThisCard } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const goGoTomagoMechanicalEngineer: LorcanaCharacterCardDefinition = {

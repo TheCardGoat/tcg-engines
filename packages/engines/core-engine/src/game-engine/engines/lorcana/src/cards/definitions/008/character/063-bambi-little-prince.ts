@@ -1,6 +1,6 @@
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import { wheneverTargetPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

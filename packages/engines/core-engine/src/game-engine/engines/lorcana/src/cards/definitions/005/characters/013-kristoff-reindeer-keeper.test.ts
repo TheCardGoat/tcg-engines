@@ -3,12 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { aWholeNewWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { aladdinResoluteSwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { aWholeNewWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
+import { aladdinResoluteSwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   kristoffReindeerKeeper,
   peteGamesReferee,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

@@ -3,11 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { jimHawkinsSpaceTraveler } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { jimHawkinsSpaceTraveler } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   prideLandsJungleOasis,
   rapunzelsTowerSecludedPrison,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations";
 import {
   TestEngine,
   TestStore,

@@ -7,8 +7,8 @@ import {
   arielSpectacularSinger,
   heiheiBoatSnack,
   yzmaAlchemist,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { friendsOnTheOtherSide } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/index";
+import { friendsOnTheOtherSide } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import {
   TestEngine,
   TestStore,

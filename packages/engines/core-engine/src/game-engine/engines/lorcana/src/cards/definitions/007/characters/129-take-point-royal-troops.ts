@@ -1,6 +1,6 @@
-import { whileADamagedCharacterIsInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { StaticAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import { whileADamagedCharacterIsInPlay } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const takePoint: StaticAbility = {

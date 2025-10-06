@@ -1,8 +1,8 @@
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import {
   whenYouPlayThis,
   whenYouPlayThisForEachYouPayLess,
-} from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+} from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const trampStreetSmartDog: LorcanaCharacterCardDefinition = {

@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { fixitFelixJrNicelandSteward } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
-import { theLibraryAGiftForBelle } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import { fixitFelixJrNicelandSteward } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
+import { theLibraryAGiftForBelle } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations";
 import {
   TestEngine,
   TestStore,

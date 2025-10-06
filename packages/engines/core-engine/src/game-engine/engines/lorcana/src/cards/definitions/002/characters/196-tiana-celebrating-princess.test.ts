@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { grabYourSword } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { tianaCelebratingPrincess } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { grabYourSword } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
+import { tianaCelebratingPrincess } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
   TestStore,

@@ -3,12 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { tukTukLivelyPartner } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { tukTukLivelyPartner } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   rapunzelsTowerSecludedPrison,
   sevenDwarfsMineSecureFortress,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations";
 import {
   TestEngine,
   TestStore,

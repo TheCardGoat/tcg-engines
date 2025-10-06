@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { stichtNewDog } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { atlanticaConcertHall } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+import { stichtNewDog } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { atlanticaConcertHall } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/index";
 import {
   TestEngine,
   TestStore,

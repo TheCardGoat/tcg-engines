@@ -1,6 +1,6 @@
-import { yourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/target";
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
+import { yourOtherCharacters } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const captainAmeliaCommanderOfTheLegacy: LorcanitoCharacterCardDefinition =

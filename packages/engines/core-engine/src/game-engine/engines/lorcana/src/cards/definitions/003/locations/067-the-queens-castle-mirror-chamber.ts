@@ -1,5 +1,5 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
+import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
 
 export const theQueensCastleMirrorChamber: LorcanaLocationCardDefinition = {
   id: "vbq",

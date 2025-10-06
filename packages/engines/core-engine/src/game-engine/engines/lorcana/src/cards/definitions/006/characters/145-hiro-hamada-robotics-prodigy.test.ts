@@ -6,10 +6,10 @@ import { describe, expect, it } from "@jest/globals";
 import {
   liloMakingAWish,
   stichtNewDog,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
-import { aladdinBraveRescuer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { hiroHamadaRoboticsProdigy } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
+import { aladdinBraveRescuer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { hiroHamadaRoboticsProdigy } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { agustinMadrigalClumsyDad } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { agustinMadrigalClumsyDad } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { kuzcoBoredRoyal } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,

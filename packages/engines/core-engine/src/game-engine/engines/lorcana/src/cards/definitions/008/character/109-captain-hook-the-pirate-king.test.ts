@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { elsaQueenRegent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { elsaQueenRegent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import {
   captainHookForcefulDuelist,
   captainHookThePirateKing,

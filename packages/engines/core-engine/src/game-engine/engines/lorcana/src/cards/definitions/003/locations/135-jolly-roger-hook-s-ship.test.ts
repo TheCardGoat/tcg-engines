@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mickeyMouseArtfulRogue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { jollyRogerHooksShip } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { mickeyMouseArtfulRogue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { jollyRogerHooksShip } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   TestEngine,
   TestStore,

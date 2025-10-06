@@ -8,7 +8,7 @@ import {
   arielSonicWarrior,
   liShangValorousGeneral,
   sisuEmpoweredSibling,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

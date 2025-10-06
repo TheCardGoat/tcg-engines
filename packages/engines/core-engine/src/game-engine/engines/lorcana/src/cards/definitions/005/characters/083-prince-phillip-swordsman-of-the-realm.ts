@@ -1,5 +1,5 @@
-import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import { readyThisCharacter } from "@lorcanito/lorcana-engine/effects/effects";
+import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

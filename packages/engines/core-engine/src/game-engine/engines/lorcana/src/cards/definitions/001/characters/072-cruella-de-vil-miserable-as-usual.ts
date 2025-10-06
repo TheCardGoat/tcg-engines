@@ -1,5 +1,5 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenChallengedAndBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenChallengedAndBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const cruellaDeVilMiserableAsUsual: LorcanaCharacterCardDefinition = {

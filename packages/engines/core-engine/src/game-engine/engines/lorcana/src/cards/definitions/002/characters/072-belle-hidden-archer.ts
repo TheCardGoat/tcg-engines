@@ -1,6 +1,6 @@
-import { whenChallenged } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { discardAllCards } from "@lorcanito/lorcana-engine/effects/effects";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
+import { whenChallenged } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const belleHiddenArcher: LorcanaCharacterCardDefinition = {

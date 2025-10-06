@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it, test } from "@jest/globals";
-import { magicBroomIlluminaryKeeper } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { magicBroomIlluminaryKeeper } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   duchessElegantFeline,
   giantCobraGhostlySerpent,

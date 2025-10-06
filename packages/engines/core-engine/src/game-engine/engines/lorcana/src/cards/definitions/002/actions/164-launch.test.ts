@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { launch } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
-import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Launch", () => {

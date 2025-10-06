@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   megaraPullingTheStrings,
   mickeyMouseTrueFriend,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { letTheStormRageOn } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import {
   cogsworthGrandfatherClock,
@@ -14,7 +14,7 @@ import {
   goofyKnightForADay,
   madamMimFox,
   owlLogicalLecturer,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
   TestStore,

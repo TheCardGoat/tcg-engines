@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import { cogsworthClimbingClock } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import {
   TestEngine,

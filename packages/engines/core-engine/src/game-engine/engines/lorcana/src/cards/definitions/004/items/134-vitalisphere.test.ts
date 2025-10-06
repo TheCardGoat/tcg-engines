@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { agustinMadrigalClumsyDad } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { vitalisphere } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+import { agustinMadrigalClumsyDad } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { vitalisphere } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/index";
 import {
   TestEngine,
   TestStore,

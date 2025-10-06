@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import { heartOfTeFiti as heartOfTeFitiAsOrig } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/164-heart-of-te-fiti";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const heartOfTeFiti: LorcanaItemCardDefinition = {
   ...heartOfTeFitiAsOrig,

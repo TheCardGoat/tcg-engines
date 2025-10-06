@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { gastonSchemingSuitor } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { gastonSchemingSuitor } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
   TestStore,

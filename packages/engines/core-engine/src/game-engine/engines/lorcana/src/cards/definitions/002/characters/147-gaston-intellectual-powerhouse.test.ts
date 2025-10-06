@@ -8,8 +8,8 @@ import {
   heiheiBoatSnack,
   liloMakingAWish,
   moanaOfMotunui,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { gastonIntellectualPowerhouse } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { gastonIntellectualPowerhouse } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
   TestStore,

@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import { whiteRabbitPocketWatch as ogWhiteRabbitPocketWatch } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/068-white-rabbit-pocket-watch";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const whiteRabbitsPocketWatch: LorcanaItemCardDefinition = {
   ...ogWhiteRabbitPocketWatch,

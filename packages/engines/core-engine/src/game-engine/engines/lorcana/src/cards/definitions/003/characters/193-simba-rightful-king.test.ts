@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { simbaRightfulKing } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { simbaRightfulKing } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

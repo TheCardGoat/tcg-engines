@@ -4,9 +4,9 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
-import { letItGo } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { galeWindSpirit } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { letItGo } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { galeWindSpirit } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

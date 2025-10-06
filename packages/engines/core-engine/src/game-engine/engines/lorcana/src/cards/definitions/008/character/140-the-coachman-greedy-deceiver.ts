@@ -1,9 +1,9 @@
-import { whileYouHaveTwoOrMoreCharactersExerted } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
 import { thisCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   evasiveAbility,
   type StaticAbilityWithEffect,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { whileYouHaveTwoOrMoreCharactersExerted } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const recklessRun: StaticAbilityWithEffect = {

@@ -6,12 +6,12 @@ import { describe, expect, it } from "@jest/globals";
 import {
   liloMakingAWish,
   stichtNewDog,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   aladdinBraveRescuer,
   almaMadrigalFamilyMatriarch,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { luisaMadrigalEntertainingMuscle } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
+import { luisaMadrigalEntertainingMuscle } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   TestEngine,
   TestStore,

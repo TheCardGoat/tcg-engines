@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { magicBroomBucketBrigade } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import { magicBroomBucketBrigade } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { yzmaExasperatedSchemer } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,

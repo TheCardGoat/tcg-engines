@@ -187,7 +187,7 @@ import {
   winnieThePoohHunnyWizard,
   yzmaScaryBeyondAllReason,
   yzmaWithoutBeautySleep,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   bindingContract,
   croquetMallet,
@@ -207,7 +207,7 @@ import {
   swordInTheStone,
   theSorcerersSpellbook,
   weightSet,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const all002Cards = [

@@ -1,5 +1,5 @@
-import { youHaveLocationInPlay } from "@lorcanito/lorcana-engine/abilities/conditions";
 import { eachOpponentLosesXLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { youHaveLocationInPlay } from "~/game-engine/engines/lorcana/src/abilities/conditions";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const taffytaMuttonfudgeCrowdFavorite: LorcanitoCharacterCardDefinition =

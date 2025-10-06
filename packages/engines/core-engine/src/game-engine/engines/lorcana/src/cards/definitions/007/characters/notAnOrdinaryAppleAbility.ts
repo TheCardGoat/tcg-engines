@@ -1,5 +1,8 @@
-import { anyCard, self } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import {
+  anyCard,
+  self,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 
 export const notAnOrdinaryAppleAbility: ActivatedAbility = {
   type: "activated",

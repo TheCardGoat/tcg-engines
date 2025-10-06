@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { obscurosphere } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+import { obscurosphere } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/index";
 import {
   TestEngine,
   TestStore,

@@ -6,8 +6,8 @@ import { describe, expect, it } from "@jest/globals";
 import {
   kakamoraBoardingParty,
   sisuInHerElement,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
-import { treasureMountainAzuriteSeaIsland } from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters";
+import { treasureMountainAzuriteSeaIsland } from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/index";
 import {
   TestEngine,
   TestStore,

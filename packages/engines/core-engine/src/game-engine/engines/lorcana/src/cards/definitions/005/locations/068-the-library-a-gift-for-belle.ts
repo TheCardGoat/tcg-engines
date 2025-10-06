@@ -1,7 +1,7 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import { gainAbilityWhileHere } from "~/game-engine/engines/lorcana/src/abilities";
+import { whenThisCharacterBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 
 export const theLibraryAGiftForBelle: LorcanaLocationCardDefinition = {
   id: "xz3",

@@ -1,7 +1,7 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { whenChallengedAndBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { banishChallengingCharacter } from "@lorcanito/lorcana-engine/effects/effects";
 import { gainAbilityWhileHere } from "~/game-engine/engines/lorcana/src/abilities";
+import { whenChallengedAndBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 
 export const kuzcosPalaceHomeOfTheEmperor: LorcanaLocationCardDefinition = {
   id: "d8d",

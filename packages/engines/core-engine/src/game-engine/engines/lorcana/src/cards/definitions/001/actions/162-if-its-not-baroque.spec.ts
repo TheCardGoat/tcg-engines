@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { ifItsNotBaroque } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
-import { shieldOfVirtue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { shieldOfVirtue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("If it's Not Baroque", () => {

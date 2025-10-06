@@ -1,4 +1,4 @@
-import { whileAnotherDamagedCharacterIsInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+import { whileAnotherDamagedCharacterIsInPlay } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

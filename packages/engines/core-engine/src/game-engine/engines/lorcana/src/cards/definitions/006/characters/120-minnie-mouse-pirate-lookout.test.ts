@@ -6,13 +6,13 @@ import { describe, expect, it } from "@jest/globals";
 import {
   jollyRogerHooksShip,
   rlsLegacySolarGalleon,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   goofyFlyingFool,
   kakamoraPiratePitcher,
   mickeyMouseCourageousSailor,
   minnieMousePirateLookout,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

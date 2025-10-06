@@ -169,7 +169,7 @@ import {
   wendyDarlingTalentedSailor,
   wildcatMechanic,
   zazuPrideLandsManager,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import {
   airfoil,
   aurelianGyrosensor,
@@ -189,7 +189,7 @@ import {
   theSorcerersHat,
   vaultDoor,
   wildcatsWrench,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
 import {
   agrabahMarketplace,
   bellesHouseMauricesWorkshop,
@@ -209,7 +209,7 @@ import {
   theQueensCastleMirrorChamber,
   theSorcerersTowerWondrousWorkspace,
   tianasPalaceJazzRestaurant,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const all003Cards: LorcanaCardDefinition[] = [

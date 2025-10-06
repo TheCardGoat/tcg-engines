@@ -2,7 +2,7 @@ import { describe, expect, it } from "bun:test";
 import {
   dingleHopper,
   shieldOfVirtue,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import { treasuresUntold } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 

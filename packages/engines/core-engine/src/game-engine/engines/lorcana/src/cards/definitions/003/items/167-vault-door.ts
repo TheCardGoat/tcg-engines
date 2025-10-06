@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const vaultDoor: LorcanaItemCardDefinition = {
   id: "doz",

@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { liloGalacticHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { arielAdventurousCollector } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { liloGalacticHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
+import { arielAdventurousCollector } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { zazuPrideLandsManager } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { forbiddenMountainMaleficentsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { zazuPrideLandsManager } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
+import { forbiddenMountainMaleficentsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   TestEngine,
   TestStore,

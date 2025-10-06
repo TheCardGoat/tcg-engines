@@ -3,12 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { stichtCarefreeSurfer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { vanellopeVonSchweetzSugarRushChamp } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { stichtCarefreeSurfer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { vanellopeVonSchweetzSugarRushChamp } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   rapunzelsTowerSecludedPrison,
   sugarRushSpeedwayStartingLine,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/index";
 import { sugarRushSpeedwayFinishLine } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import {
   TestEngine,

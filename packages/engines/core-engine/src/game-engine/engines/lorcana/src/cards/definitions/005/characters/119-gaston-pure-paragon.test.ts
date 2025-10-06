@@ -10,7 +10,7 @@ import {
   ludwigVonDrakeSelfproclaimedGenius,
   petePastryChomper,
   theQueenCruelestOfAll,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

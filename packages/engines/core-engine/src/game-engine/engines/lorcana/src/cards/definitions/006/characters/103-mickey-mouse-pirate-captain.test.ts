@@ -7,7 +7,7 @@ import {
   abuBoldHelmsman,
   kakamoraBoardingParty,
   mickeyMousePirateCaptain,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import { mauricesMachineAbility } from "~/game-engine/engines/lorcana/src/cards/definitions/007/abilities";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const mauricesMachine: LorcanaItemCardDefinition = {
   id: "v7o",

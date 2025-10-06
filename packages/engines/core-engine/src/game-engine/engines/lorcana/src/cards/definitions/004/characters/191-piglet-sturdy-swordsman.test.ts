@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { ursulaDeceiverOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { pigletSturdySwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { ursulaDeceiverOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { pigletSturdySwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

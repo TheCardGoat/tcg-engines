@@ -1,9 +1,9 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { haveItemInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whileConditionThisCharacterGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+import { haveItemInPlay } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whileConditionThisCharacterGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const nickWildeCleverFox: LorcanaCharacterCardDefinition = {

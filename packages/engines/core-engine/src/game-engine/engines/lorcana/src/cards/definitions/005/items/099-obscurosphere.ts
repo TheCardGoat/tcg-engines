@@ -2,7 +2,7 @@ import type {
   AbilityEffect,
   LorcanitoItemCard,
 } from "@lorcanito/lorcana-engine";
-import { yourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+import { yourCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
 
 export const obscurosphere: LorcanaItemCardDefinition = {
   id: "z4x",

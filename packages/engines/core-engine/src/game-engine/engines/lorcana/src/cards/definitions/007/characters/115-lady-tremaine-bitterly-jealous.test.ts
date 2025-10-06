@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { diabloDevotedHerald } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { diabloDevotedHerald } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { ladyTremaineBitterlyJealous } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import { deweyLovableShowoff } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import {

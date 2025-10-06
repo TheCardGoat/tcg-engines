@@ -1,5 +1,5 @@
-import { chosenCharacterOrLocation } from "@lorcanito/lorcana-engine/abilities/target";
 import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { chosenCharacterOrLocation } from "~/game-engine/engines/lorcana/src/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const dopeyKnightApprentice: LorcanaCharacterCardDefinition = {

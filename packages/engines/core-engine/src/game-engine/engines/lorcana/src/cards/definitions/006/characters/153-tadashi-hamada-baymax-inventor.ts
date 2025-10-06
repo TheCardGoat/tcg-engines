@@ -1,6 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { forEachItemYouHaveInPlay } from "@lorcanito/lorcana-engine/abilities/amounts";
+import { forEachItemYouHaveInPlay } from "~/game-engine/engines/lorcana/src/abilities/amounts";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import { propertyStaticAbilities } from "../../../abilities/propertyStaticAbilities";
 

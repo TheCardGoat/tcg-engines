@@ -4,9 +4,9 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { befuddle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
-import { tamatoaSoShiny } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
-import { retrosphere } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+import { tamatoaSoShiny } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
+import { retrosphere } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items";
 import {
   flotillaCoconutArmada,
   maleficentsStaff,

@@ -1,4 +1,4 @@
-import { opposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+import { opposingCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverYouPlayAFloodBorn } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

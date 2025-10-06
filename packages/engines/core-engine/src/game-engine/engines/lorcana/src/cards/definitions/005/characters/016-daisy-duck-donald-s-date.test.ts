@@ -3,12 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { princeJohnGreediestOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { princeJohnGreediestOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { breakFree } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import {
   daisyDuckDonaldsDate,
   petePastryChomper,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

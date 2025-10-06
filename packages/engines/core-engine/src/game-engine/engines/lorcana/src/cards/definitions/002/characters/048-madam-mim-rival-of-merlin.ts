@@ -1,8 +1,8 @@
-import { targetCard } from "@lorcanito/lorcana-engine/abilities/targets";
 import {
   atEndOfTurnBanishItself,
   shiftAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { targetCard } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const madamMimRivalOfMerlin: LorcanaCharacterCardDefinition = {

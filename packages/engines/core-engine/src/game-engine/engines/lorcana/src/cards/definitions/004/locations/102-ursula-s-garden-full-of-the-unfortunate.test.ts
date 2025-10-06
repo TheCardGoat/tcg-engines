@@ -6,8 +6,8 @@ import { describe, expect, it } from "@jest/globals";
 import {
   hadesMeticulousPlotter,
   tukTukCuriousPartner,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { ursulasGardenFullOfTheUnfortunate } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { ursulasGardenFullOfTheUnfortunate } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/index";
 import {
   TestEngine,
   TestStore,

@@ -9,8 +9,8 @@ import {
   daisyDuckLovelyLady,
   sisuEmpoweredSibling,
   tongSurvivor,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { iceBlock } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
+import { iceBlock } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items";
 import {
   TestEngine,
   TestStore,

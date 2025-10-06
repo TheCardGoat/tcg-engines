@@ -8,7 +8,7 @@ import {
   gatheringKnowledgeAndWisdom,
   rememberWhoYouAre,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
-import { tiggerInTheCrowsNest } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import { tiggerInTheCrowsNest } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

@@ -7,8 +7,8 @@ import {
   genieOnTheJob,
   geniePowerUnleashed,
   genieTheEverImpressive,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { genieMainAttraction } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { genieMainAttraction } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

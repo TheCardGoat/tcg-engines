@@ -7,9 +7,9 @@ import {
   aladdinStreetRat,
   genieOnTheJob,
   hadesLordOfUnderworld,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { jafarDreadnought } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { theLamp } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { jafarDreadnought } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { theLamp } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";
 import { genieWishFulfilled } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import {
   tobyDoggedCompanion,

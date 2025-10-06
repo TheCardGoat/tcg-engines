@@ -6,8 +6,8 @@ import { describe, expect, it } from "@jest/globals";
 import {
   heiheiBoatSnack,
   teKaTheBurningOne,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { fryingPan } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { fryingPan } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/index";
 import {
   TestEngine,
   TestStore,

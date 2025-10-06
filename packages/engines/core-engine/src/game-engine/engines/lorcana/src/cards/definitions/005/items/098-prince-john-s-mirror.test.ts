@@ -7,13 +7,13 @@ import {
   mickeyBraveLittleTailor,
   mickeyMouseDetective,
   mickeyMouseTrueFriend,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   mickeyMouseFriendlyFace,
   princeCharmingHeirToTheThrone,
   princeJohnGreediestOfAll,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { princeJohnsMirror } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { princeJohnsMirror } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/index";
 import {
   TestEngine,
   TestStore,

@@ -7,8 +7,8 @@ import {
   stealFromRich,
   tangle,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
-import { lefouBumbler } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { bePrepared } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { lefouBumbler } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { bePrepared } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { thievery } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { liloCausingAnUproar } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {

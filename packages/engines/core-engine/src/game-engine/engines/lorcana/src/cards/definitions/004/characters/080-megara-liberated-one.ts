@@ -1,5 +1,5 @@
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

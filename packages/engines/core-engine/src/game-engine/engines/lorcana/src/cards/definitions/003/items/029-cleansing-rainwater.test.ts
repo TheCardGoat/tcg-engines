@@ -7,8 +7,8 @@ import {
   eeyoreOverstuffedDonkey,
   mamaOdieVoiceOfWisdom,
   pigletPoohPirateCaptain,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";
 import {
   TestEngine,
   TestStore,

@@ -1,10 +1,11 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { chosenYourExertedCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import {
   enterPlaysExerted,
   youGainLore,
 } from "@lorcanito/lorcana-engine/effects/effects";
+
+import { chosenYourExertedCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const familyFishingPole: LorcanaItemCardDefinition = {
   id: "zd9",

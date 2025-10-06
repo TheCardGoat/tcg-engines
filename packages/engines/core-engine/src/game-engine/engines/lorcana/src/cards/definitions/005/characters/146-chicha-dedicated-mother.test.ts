@@ -3,12 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mickeyMouseDetective } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { oneJumpAhead } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { mickeyMouseDetective } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { oneJumpAhead } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import {
   chichaDedicatedMother,
   petePastryChomper,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

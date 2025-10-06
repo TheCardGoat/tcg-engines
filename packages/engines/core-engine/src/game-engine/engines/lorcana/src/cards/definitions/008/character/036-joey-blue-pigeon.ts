@@ -1,4 +1,4 @@
-import { allYourCharactersWithAnSpecificAbility } from "@lorcanito/lorcana-engine/abilities/targets";
+import { allYourCharactersWithAnSpecificAbility } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverThisCharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { tinkerBellFlyingAtFullSpeed } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import { tinkerBellFlyingAtFullSpeed } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

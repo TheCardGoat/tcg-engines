@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { teKaTheBurningOne } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { annaMysticalMajesty } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { teKaTheBurningOne } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { annaMysticalMajesty } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   mufasaAmongTheStars,
   teKaElementalTerror,

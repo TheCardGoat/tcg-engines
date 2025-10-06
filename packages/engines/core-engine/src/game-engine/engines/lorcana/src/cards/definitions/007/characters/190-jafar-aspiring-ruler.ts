@@ -1,5 +1,5 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const jafarAspiringRuler: LorcanaCharacterCardDefinition = {

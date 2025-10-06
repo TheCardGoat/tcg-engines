@@ -7,8 +7,8 @@ import {
   mamaOdieVoiceOfWisdom,
   nalaFierceFriend,
   robinHoodBelovedOutlaw,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { theQueensCastleMirrorChamber } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { theQueensCastleMirrorChamber } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   TestEngine,
   TestStore,

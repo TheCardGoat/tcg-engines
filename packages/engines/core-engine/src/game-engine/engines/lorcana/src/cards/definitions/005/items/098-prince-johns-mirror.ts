@@ -1,6 +1,6 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { atTheEndOfOpponentTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+import { atTheEndOfOpponentTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { whenYouPlayThisForEachYouPayLess } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const princeJohnsMirror: LorcanaItemCardDefinition = {
   id: "l9o",

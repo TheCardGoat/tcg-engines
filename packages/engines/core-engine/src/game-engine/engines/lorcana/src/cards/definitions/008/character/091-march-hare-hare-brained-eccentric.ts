@@ -1,6 +1,6 @@
-import { chosenDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { chosenDamagedCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const marchHareHareBrainedEccentric: LorcanaCharacterCardDefinition = {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { fryingPan } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { fryingPan } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import { touchedMyHeart } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 

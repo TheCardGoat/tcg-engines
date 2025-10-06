@@ -7,7 +7,7 @@ import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/
 import {
   cinderellaGentleAndKind,
   geniePowerUnleashed,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/index";
 import {
   TestEngine,
   TestStore,

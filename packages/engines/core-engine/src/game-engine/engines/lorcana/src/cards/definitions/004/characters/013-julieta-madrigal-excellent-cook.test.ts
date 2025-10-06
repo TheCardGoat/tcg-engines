@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { chiefTui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { julietaMadrigalExcellentCook } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { chiefTui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { julietaMadrigalExcellentCook } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

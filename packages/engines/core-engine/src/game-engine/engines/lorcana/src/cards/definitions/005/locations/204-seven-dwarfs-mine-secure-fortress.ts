@@ -1,6 +1,6 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { whenYouMoveACharacterHere } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { dealDamageToChosenCharacter } from "@lorcanito/lorcana-engine/effects/effects";
+import { whenYouMoveACharacterHere } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 
 export const sevenDwarfsMineSecureFortress: LorcanaLocationCardDefinition = {
   id: "m2o",

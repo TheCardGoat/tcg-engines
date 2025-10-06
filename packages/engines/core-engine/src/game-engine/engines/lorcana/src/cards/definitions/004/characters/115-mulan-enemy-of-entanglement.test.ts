@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { packTactics } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
-import { mulanEnemyOfEntanglement } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { mulanEnemyOfEntanglement } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   gatheringKnowledgeAndWisdom,
   rememberWhoYouAre,

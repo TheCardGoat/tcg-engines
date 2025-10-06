@@ -2,8 +2,8 @@ import type {
   BanishEffect,
   LorcanitoCharacterCard,
 } from "@lorcanito/lorcana-engine";
-import { chosenDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
+import { chosenDamagedCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 
 export const scroopOdiousMutineer: LorcanaCharacterCardDefinition = {
   id: "ig9",

@@ -4,10 +4,10 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { fireTheCannons } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
-import { stichtNewDog } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { chernabogsFollowersCreaturesOfEvil } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { magicBroomIlluminaryKeeper } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { theLibraryAGiftForBelle } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import { stichtNewDog } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { chernabogsFollowersCreaturesOfEvil } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { magicBroomIlluminaryKeeper } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { theLibraryAGiftForBelle } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/index";
 import {
   TestEngine,
   TestStore,

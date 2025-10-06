@@ -1,5 +1,5 @@
-import { anotherChosenCharOfYours } from "@lorcanito/lorcana-engine/abilities/target";
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+import { anotherChosenCharOfYours } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

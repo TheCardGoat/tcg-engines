@@ -6,16 +6,16 @@ import { describe, expect, it } from "@jest/globals";
 import {
   stichtCarefreeSurfer,
   stichtNewDog,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   aladdinBraveRescuer,
   pegasusCloudRacer,
   pegasusGiftForHercules,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   kronkHeadOfSecurity,
   liloJuniorCakeDecorator,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   TestEngine,
   TestStore,

@@ -1,5 +1,5 @@
-import { haveMoreCardsThanOpponent } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+import { haveMoreCardsThanOpponent } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { whileConditionThisCharacterGets } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const pachaTrekmate: LorcanaCharacterCardDefinition = {

@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { dangHuTalonChief } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { dangHuTalonChief } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

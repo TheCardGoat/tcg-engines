@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   arielSpectacularSinger,
   mickeyBraveLittleTailor,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { liloEscapeArtist } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import {
   boltSuperdog,

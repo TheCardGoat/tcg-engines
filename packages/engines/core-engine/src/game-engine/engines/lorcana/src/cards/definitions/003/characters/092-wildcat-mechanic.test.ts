@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
-import { wildcatMechanic } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
+import { wildcatMechanic } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

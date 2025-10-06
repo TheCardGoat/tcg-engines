@@ -1,5 +1,5 @@
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/rushAbility";
+import { whenYouPlayThisForEachYouPayLess } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const gastonPureParagon: LorcanaCharacterCardDefinition = {

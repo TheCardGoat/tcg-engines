@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { hadesInfernalSchemer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { hadesInfernalSchemer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { andThenAlongCameZeus } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
 import { underTheSea } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions/095-under-the-sea";
 import {

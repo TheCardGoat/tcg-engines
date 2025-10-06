@@ -1,5 +1,8 @@
-import { opponent, self } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+import {
+  opponent,
+  self,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const gloydOrangeboarFierceCompetitor: LorcanaCharacterCardDefinition = {

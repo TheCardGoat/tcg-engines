@@ -1,7 +1,7 @@
-import { atTheEndOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-import { ifThisCharacterIsExerted } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
 import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+import { atTheEndOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { ifThisCharacterIsExerted } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { chosenCharacterOfYours } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const bernardBrandNewAgent: LorcanaCharacterCardDefinition = {

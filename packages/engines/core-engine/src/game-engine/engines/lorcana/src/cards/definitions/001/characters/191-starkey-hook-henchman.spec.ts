@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { starkeyHooksHenchman } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import { starkeyHooksHenchman } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/index";
 import {
   TestEngine,
   TestStore,

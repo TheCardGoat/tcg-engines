@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { befuddle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import { simbaProtectiveCub } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
-import { shieldOfVirtue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { shieldOfVirtue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Befuddle", () => {

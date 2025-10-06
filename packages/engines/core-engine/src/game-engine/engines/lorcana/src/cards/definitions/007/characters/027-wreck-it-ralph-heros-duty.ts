@@ -1,6 +1,6 @@
-import { duringYourTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { whenYourOtherCharactersIsBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { thisCharacterGetsLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { duringYourTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { whenYourOtherCharactersIsBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const wreckitRalphHerosDuty: LorcanaCharacterCardDefinition = {

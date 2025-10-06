@@ -2,7 +2,7 @@ import type {
   LorcanitoCharacterCard,
   ScryEffect,
 } from "@lorcanito/lorcana-engine";
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
 
 export const scuttleExpertOnHumans: LorcanaCharacterCardDefinition = {
   id: "r46",

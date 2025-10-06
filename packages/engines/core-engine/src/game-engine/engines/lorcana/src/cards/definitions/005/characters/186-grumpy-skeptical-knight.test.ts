@@ -6,12 +6,12 @@ import { describe, expect, it } from "@jest/globals";
 import {
   grumpySkepticalKnight,
   happyLivelyKnight,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
-import { cursedMerfolkUrsulasHandiwork } from "../../003/characters/characters";
+import { cursedMerfolkUrsulasHandiwork } from "../../003/characters";
 import { sevenDwarfsMineSecureFortress } from "../locations/204-seven-dwarfs-mine-secure-fortress";
 
 describe("Grumpy - Skeptical Knight", () => {

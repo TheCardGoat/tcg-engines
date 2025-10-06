@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const gizmosuit: LorcanaItemCardDefinition = {
   id: "f01",

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
 import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
-import { bePrepared } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { bePrepared } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { fangRiverCity } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 
 // Minimal local item used by tests

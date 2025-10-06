@@ -6,13 +6,13 @@ import { describe, expect, it } from "@jest/globals";
 import {
   arielSpectacularSinger,
   heiheiBoatSnack,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { friendsOnTheOtherSide } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { friendsOnTheOtherSide } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import {
   hiroHamadaRoboticsProdigy,
   hiroHamadaTeamLeader,
   wasabiMethodicalEngineer,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

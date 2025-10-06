@@ -7,54 +7,6 @@ import type {
   ScryEffect,
 } from "@lorcanito/lorcana-engine";
 import {
-  atTheEndOfYourTurn,
-  atTheStartOfYourTurn,
-} from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-import {
-  duringYourTurn,
-  ifThisCharacterIsExerted,
-  ifYouHaveCharacterNamed,
-  unlessItIsAtALocation,
-  whileCharacterIsAtLocation,
-  whileThisCharacterIsExerted,
-} from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import {
-  allOtherCharactersHere,
-  chosenItemOfYours,
-  chosenItemOfYoursInHand,
-  chosenOpposingCharacter,
-  yourOtherCharacters,
-} from "@lorcanito/lorcana-engine/abilities/target";
-import {
-  allOpposingCharacters,
-  chosenCharacter,
-  chosenCharacterOfYours,
-  opponent,
-  self,
-  thisCharacter,
-  withCostXorLess,
-  yourBanishedItems,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import {
-  whenChallenged,
-  whenChallengedAndBanished,
-  whenMovesToALocation,
-  whenPlayAndWheneverQuests,
-  whenThisCharacterBanished,
-  whenThisCharacterBanishedInAChallenge,
-  whenXIsBanished,
-  whenYouPlayThisForEachYouPayLess,
-  whenYourOtherCharactersIsBanished,
-} from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
-  thisMissionIsCursed,
-  whileCharacterIsAtLocationItGains,
-  whileCharacterIsAtLocationItGets,
-  whileThisCharacterHasDamageGets,
-  whileThisCharacterHasNoDamageGets,
-  whileYouHaveACharacterNamedThisCharGets,
-} from "@lorcanito/lorcana-engine/abilities/whileAbilities";
-import {
   banishChallengingCharacter,
   banishChosenCharacter,
   chosenCharacterCantChallengeDuringNextTurn,
@@ -102,6 +54,46 @@ import {
   wardAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
 import {
+  atTheEndOfYourTurn,
+  atTheStartOfYourTurn,
+} from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import {
+  duringYourTurn,
+  ifThisCharacterIsExerted,
+  ifYouHaveCharacterNamed,
+  unlessItIsAtALocation,
+  whileCharacterIsAtLocation,
+  whileThisCharacterIsExerted,
+} from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import {
+  allOtherCharactersHere,
+  chosenItemOfYours,
+  chosenItemOfYoursInHand,
+  chosenOpposingCharacter,
+  yourOtherCharacters,
+} from "~/game-engine/engines/lorcana/src/abilities/target";
+import {
+  allOpposingCharacters,
+  chosenCharacter,
+  chosenCharacterOfYours,
+  opponent,
+  self,
+  thisCharacter,
+  withCostXorLess,
+  yourBanishedItems,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
+import {
+  whenChallenged,
+  whenChallengedAndBanished,
+  whenMovesToALocation,
+  whenPlayAndWheneverQuests,
+  whenThisCharacterBanished,
+  whenThisCharacterBanishedInAChallenge,
+  whenXIsBanished,
+  whenYouPlayThisForEachYouPayLess,
+  whenYourOtherCharactersIsBanished,
+} from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
+import {
   wheneverBanishesAnotherCharacterInChallenge,
   wheneverChallengesAnotherChar,
   wheneverOpposingCharIsBanishedInChallenge,
@@ -114,6 +106,14 @@ import {
   wheneverYouPlayALocation,
   wheneverYouPlayASong,
 } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
+import {
+  thisMissionIsCursed,
+  whileCharacterIsAtLocationItGains,
+  whileCharacterIsAtLocationItGets,
+  whileThisCharacterHasDamageGets,
+  whileThisCharacterHasNoDamageGets,
+  whileYouHaveACharacterNamedThisCharGets,
+} from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import { propertyStaticAbilities } from "../../../abilities/propertyStaticAbilities";
 
 // Individual card imports

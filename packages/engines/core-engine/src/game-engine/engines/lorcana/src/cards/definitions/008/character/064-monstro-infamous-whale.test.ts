@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import type { CardModel } from "@lorcanito/lorcana-engine";
 import type { GenerateOnDemandLayerMove } from "@lorcanito/shared";
 import { weKnowTheWay } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
-import { alanadaleRockinRooster } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { alanadaleRockinRooster } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   deweyLovableShowoff,
   donaldDuckCoinCollector,

@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { nalaFierceFriend } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { luckyDime } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import { nalaFierceFriend } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { luckyDime } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";
 import {
   TestEngine,
   TestStore,

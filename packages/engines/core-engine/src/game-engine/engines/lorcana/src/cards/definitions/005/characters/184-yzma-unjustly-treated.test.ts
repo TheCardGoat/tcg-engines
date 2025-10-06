@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { deweyShowyNephew } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { yzmaUnjustlyTreated } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { deweyShowyNephew } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { yzmaUnjustlyTreated } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   charlotteLaBouffMardiGrasPrincess,
   deweyLovableShowoff,

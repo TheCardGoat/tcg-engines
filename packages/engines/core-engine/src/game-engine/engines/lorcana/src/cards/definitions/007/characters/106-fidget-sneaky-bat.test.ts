@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { theMusesProclaimersOfHeroes } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { theMusesProclaimersOfHeroes } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { fidgetSneakyBat } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,

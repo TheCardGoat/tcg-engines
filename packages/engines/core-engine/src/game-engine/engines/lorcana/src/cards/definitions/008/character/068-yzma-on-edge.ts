@@ -1,6 +1,6 @@
-import { ifYouHaveACardInYourDiscardNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+import { ifYouHaveACardInYourDiscardNamed } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const yzmaOnEdge: LorcanaCharacterCardDefinition = {

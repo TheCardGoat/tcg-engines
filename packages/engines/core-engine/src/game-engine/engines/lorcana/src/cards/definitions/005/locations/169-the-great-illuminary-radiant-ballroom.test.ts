@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { scepterOfArendelle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
-import { theGreatIlluminaryRadiantBallroom } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { scepterOfArendelle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
+import { theGreatIlluminaryRadiantBallroom } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/index";
 import {
   TestEngine,
   TestStore,

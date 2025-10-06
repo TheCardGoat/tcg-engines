@@ -7,11 +7,11 @@ import {
   liloGalacticHero,
   rapunzelGiftedWithHealing,
   stichtNewDog,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { bindingContract } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
-import { theQueenDiviner } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { greatStoneDragon } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { bindingContract } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
+import { theQueenDiviner } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
+import { greatStoneDragon } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items";
 import {
   TestEngine,
   TestStore,

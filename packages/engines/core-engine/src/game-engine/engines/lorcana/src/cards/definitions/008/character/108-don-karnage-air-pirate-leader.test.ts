@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { brawl } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
-import { elsaTheFifthSpirit } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { elsaTheFifthSpirit } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   deweyLovableShowoff,
   donKarnageAirPirateLeader,

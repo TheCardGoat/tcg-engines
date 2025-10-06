@@ -1,4 +1,3 @@
-import { opposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 import {
   type GainAbilityStaticAbility,
   resistAbility,
@@ -6,6 +5,7 @@ import {
   shiftAbility,
   voicelessAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { opposingCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const piratesGainsResist: GainAbilityStaticAbility = {

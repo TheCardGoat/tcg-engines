@@ -1,9 +1,9 @@
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import {
   whileThisCharacterHasNoDamageGains,
   whileThisCharacterHasNoDamageGets,
-} from "@lorcanito/lorcana-engine/abilities/whileAbilities";
-import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
+} from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const nalaUndauntedLioness: LorcanaCharacterCardDefinition = {

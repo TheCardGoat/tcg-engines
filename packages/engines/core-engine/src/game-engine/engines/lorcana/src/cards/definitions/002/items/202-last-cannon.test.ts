@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { arthurTrainedSwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { lastCannon } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { arthurTrainedSwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { lastCannon } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/index";
 import {
   TestEngine,
   TestStore,

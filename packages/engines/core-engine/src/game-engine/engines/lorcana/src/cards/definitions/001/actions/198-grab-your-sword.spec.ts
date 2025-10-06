@@ -6,7 +6,7 @@ import {
   moanaOfMotunui,
   teKaTheBurningOne,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
-import { grabYourSword } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { grabYourSword } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import {
   TestEngine,
   TestStore,

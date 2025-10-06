@@ -5,8 +5,8 @@
 import { describe, expect, it } from "@jest/globals";
 import { fireTheCannons } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import { brawl } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
-import { diabloDevotedHerald } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { diabloObedientRaven } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+import { diabloDevotedHerald } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { diabloObedientRaven } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

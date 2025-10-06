@@ -1,10 +1,10 @@
-import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+import { getStrengthThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
+import { ifYouHaveCharacterNamed } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import {
   whenYouPlayThisCharacter,
   whenYouPlayThisForEachYouPayLess,
-} from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import { getStrengthThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const trampEnterprisingDog: LorcanaCharacterCardDefinition = {

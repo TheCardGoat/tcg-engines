@@ -1,8 +1,8 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import {
   royalSearch,
   simboulOfRoyalty,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/abilities";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const kingsSensorCore: LorcanaItemCardDefinition = {
   id: "nrj",

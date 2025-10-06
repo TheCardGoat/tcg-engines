@@ -1,5 +1,5 @@
-import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
 import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const flynnRiderFrenemy: LorcanaCharacterCardDefinition = {

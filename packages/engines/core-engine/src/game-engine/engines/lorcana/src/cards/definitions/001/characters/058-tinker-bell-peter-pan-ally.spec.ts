@@ -7,8 +7,8 @@ import {
   peterPanFearless,
   peterPanNeverLanding,
   tinkerBellPeterPan,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { peterPansShadowNotSewnOn } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/index";
+import { peterPansShadowNotSewnOn } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   TestEngine,
   TestStore,

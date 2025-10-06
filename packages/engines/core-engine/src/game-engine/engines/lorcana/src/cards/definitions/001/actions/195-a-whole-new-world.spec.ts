@@ -4,8 +4,8 @@ import {
   moanaOfMotunui,
   teKaTheBurningOne,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
-import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
-import { aWholeNewWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
+import { aWholeNewWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("A Whole New World", () => {

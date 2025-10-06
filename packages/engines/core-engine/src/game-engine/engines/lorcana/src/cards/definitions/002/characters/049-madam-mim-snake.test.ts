@@ -6,8 +6,8 @@ import { describe, expect, it, test } from "@jest/globals";
 import {
   madamMimSnake,
   pinocchioStarAttraction,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { magicBroomIlluminaryKeeper } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
+import { magicBroomIlluminaryKeeper } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   TestEngine,
   TestStore,

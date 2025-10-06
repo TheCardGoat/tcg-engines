@@ -1,9 +1,9 @@
+import { thisCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
+import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import {
   whileThisCharacterHasNoDamageGains,
   whileThisCharacterHasNoDamageGets,
-} from "@lorcanito/lorcana-engine/abilities/whileAbilities";
-import { thisCharacterGetsStrength } from "@lorcanito/lorcana-engine/effects/effects";
-import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
+} from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const plutoAbilityNameAndText = {

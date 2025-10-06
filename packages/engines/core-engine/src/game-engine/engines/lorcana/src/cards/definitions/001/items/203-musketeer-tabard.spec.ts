@@ -8,8 +8,8 @@ import {
   liloMakingAWish,
   simbaProtectiveCub,
   teKaTheBurningOne,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { musketeerTabard } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { musketeerTabard } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/index";
 import {
   TestEngine,
   TestStore,

@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { diabloDevotedHerald } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { diabloDevotedHerald } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { perilousMazeWateryLabyrinth } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import {
   TestEngine,

@@ -1,8 +1,8 @@
+import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   chosenCharacterNamed,
   thisCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const faZhouMulansFather: LorcanaCharacterCardDefinition = {

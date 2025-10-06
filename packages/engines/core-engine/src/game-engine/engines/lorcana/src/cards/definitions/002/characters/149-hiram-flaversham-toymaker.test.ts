@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, test } from "@jest/globals";
-import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { gumboPot } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
+import { gumboPot } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import {
   TestEngine,
   TestStore,

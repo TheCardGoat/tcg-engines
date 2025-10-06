@@ -1,6 +1,6 @@
-import { duringYourTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { eachCharacterInPlay } from "@lorcanito/lorcana-engine/abilities/targets";
 import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { duringYourTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { eachCharacterInPlay } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverACardIsPutIntoYourInkwell } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

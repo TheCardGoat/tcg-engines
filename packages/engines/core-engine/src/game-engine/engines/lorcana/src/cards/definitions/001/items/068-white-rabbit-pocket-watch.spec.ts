@@ -2,8 +2,8 @@
  * @jest-environment node
  */
 import { describe, expect, it } from "@jest/globals";
-import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { whiteRabbitPocketWatch } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { whiteRabbitPocketWatch } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/index";
 import {
   TestEngine,
   TestStore,

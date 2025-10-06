@@ -1,6 +1,6 @@
-import { youHaveLocationInPlay } from "@lorcanito/lorcana-engine/abilities/conditions";
-import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+import { youHaveLocationInPlay } from "~/game-engine/engines/lorcana/src/abilities/conditions";
+import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const fixitFelixJrDelightedSightseer: LorcanitoCharacterCardDefinition =

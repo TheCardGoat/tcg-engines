@@ -3,10 +3,10 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { robinHoodBelovedOutlaw } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { sherwoodForestOutlawHideaway } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { robinHoodBelovedOutlaw } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { sherwoodForestOutlawHideaway } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/index";
 import {
   TestEngine,
   TestStore,

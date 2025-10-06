@@ -7,12 +7,12 @@ import {
   belleStrangeButBeautiful,
   goonsMaleficent,
   mauiDemiGod,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   mauiHalfshark,
   rayaKumandranRider,
   yokaiProfessorCallaghan,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

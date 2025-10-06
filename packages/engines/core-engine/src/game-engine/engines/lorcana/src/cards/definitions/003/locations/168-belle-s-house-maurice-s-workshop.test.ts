@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { gastonArrogantHunter } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
-import { bellesHouseMauricesWorkshop } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { gastonArrogantHunter } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
+import { bellesHouseMauricesWorkshop } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   TestEngine,
   TestStore,

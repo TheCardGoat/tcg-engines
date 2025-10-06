@@ -6,8 +6,8 @@ import { describe, expect, it } from "@jest/globals";
 import {
   liloMakingAWish,
   peterPanNeverLanding,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { lantern } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { lantern } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/index";
 import {
   TestEngine,
   TestStore,

@@ -1,5 +1,5 @@
-import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
+import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const annaIceBreaker: LorcanaCharacterCardDefinition = {

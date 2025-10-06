@@ -1,4 +1,4 @@
-import { chosenCharacterOrLocation } from "@lorcanito/lorcana-engine/abilities/target";
+import { chosenCharacterOrLocation } from "~/game-engine/engines/lorcana/src/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const tananaWiseWoman: LorcanaCharacterCardDefinition = {

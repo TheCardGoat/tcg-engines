@@ -7,9 +7,9 @@ import {
   gastonArrogantHunter,
   liloMakingAWish,
   stichtNewDog,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/027-hakuna-matata";
-import { recordPlayer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+import { recordPlayer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/index";
 import {
   TestEngine,
   TestStore,

@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { aPiratesLife } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
-import { hiddenInkcaster } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+import { hiddenInkcaster } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items";
 import { gatheringKnowledgeAndWisdom } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import { petePirateScoundrel } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {

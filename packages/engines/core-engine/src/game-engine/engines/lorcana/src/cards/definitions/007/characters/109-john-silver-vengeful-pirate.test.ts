@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { plasmaBlaster } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
-import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { plasmaBlaster } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   hesATramp,
   johnSilverVengefulPirate,

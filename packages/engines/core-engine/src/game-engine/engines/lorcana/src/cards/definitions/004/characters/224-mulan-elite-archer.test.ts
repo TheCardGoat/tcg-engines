@@ -3,14 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mcduckManorScroogesMansion } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { mcduckManorScroogesMansion } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   cinderellaMelodyWeaver,
   mulanEliteArcher,
   mulanInjuredSoldier,
   peteRottenGuy,
   plutoRescueDog,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

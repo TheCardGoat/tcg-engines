@@ -7,7 +7,7 @@ import {
   mulanSoldierInTraining,
   peterPansShadowNotSewnOn,
   queenOfHeartsImpulsiveRuler,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
   TestStore,

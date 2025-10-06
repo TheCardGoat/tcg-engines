@@ -3,15 +3,15 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { letItGo } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { grammaTalaSpiritOfTheOcean } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { aladdinBraveRescuer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { letItGo } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
+import { grammaTalaSpiritOfTheOcean } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
+import { aladdinBraveRescuer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { allFunnedOut } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import {
   donaldDuckFocusedFlatfoot,
   tipoGrowingSon,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   TestEngine,
   TestStore,

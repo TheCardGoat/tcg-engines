@@ -6,9 +6,9 @@ import { describe, expect, it } from "@jest/globals";
 import {
   jafarKeeperOfSecrets,
   jafarWicked,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { docBoldKnight } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { docBoldKnight } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { gopherShipsCarpenter } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { aladdinResearchAssistant } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import {

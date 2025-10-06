@@ -3,10 +3,10 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { magicCarpetFlyingRug } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
-import { taffytaMuttonfudgeSourSpeedster } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
-import { rapunzelsTowerSecludedPrison } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import { magicCarpetFlyingRug } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
+import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations";
+import { taffytaMuttonfudgeSourSpeedster } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
+import { rapunzelsTowerSecludedPrison } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations";
 import {
   TestEngine,
   TestStore,

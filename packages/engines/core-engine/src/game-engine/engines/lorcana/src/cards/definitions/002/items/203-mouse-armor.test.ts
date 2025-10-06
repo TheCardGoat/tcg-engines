@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { tianaDiligentWaitress } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { mouseArmor } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { tianaDiligentWaitress } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { mouseArmor } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/index";
 import {
   TestEngine,
   TestStore,

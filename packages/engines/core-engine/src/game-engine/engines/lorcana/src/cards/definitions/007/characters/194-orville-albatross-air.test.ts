@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { bernardBrandNewAgent } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { bernardBrandNewAgent } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import {
   missBiancaIndefectibleAgent,
   orvilleAlbatrossAir,

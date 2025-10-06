@@ -1,5 +1,5 @@
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouPlayThisCharAbility } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 export const rapunzelGiftedWithHealing: LorcanaCharacterCardDefinition = {

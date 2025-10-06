@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { wildcatsWrench } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
-import { forbiddenMountainMaleficentsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+import { wildcatsWrench } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";
+import { forbiddenMountainMaleficentsCastle } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   TestEngine,
   TestStore,

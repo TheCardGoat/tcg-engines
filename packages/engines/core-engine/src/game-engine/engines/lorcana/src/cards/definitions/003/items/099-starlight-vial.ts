@@ -1,9 +1,9 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import {
   discardACard,
   drawACard,
   youPayXLessToPlayNextActionThisTurn,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const starlightVial: LorcanaItemCardDefinition = {
   id: "f2k",

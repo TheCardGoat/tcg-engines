@@ -1,12 +1,12 @@
-import {
-  opposingCharacters,
-  thisCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
 import { banishThisCharacter } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   type GainAbilityStaticAbility,
   shiftAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import {
+  opposingCharacters,
+  thisCharacter,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverIsExerted } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

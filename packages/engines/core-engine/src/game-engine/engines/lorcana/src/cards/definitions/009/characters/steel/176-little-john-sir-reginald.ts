@@ -1,6 +1,6 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { targetCardGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const littleJohnSirReginald: LorcanaCharacterCardDefinition = {

@@ -6,7 +6,7 @@ import {
   healingDecanterItem,
   queensSensorCoreItem,
   retrosphere,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/items";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Royal Tantrum", () => {

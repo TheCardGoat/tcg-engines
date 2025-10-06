@@ -1,4 +1,4 @@
-import { duringYourTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+import { duringYourTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import { wheneverACardIsPutIntoYourInkwell } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

@@ -6,8 +6,8 @@ import { describe, expect, it } from "@jest/globals";
 import {
   mauriceWorldFamousInventor,
   tinkerBellTinyTactician,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { ursulaShellNecklace } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/index";
+import { ursulaShellNecklace } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import {
   TestEngine,
   TestStore,

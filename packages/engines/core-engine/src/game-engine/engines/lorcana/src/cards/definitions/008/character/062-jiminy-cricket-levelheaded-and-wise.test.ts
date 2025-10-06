@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { pinocchioOnTheRun } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { peterPanShadowFinder } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { pinocchioOnTheRun } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { peterPanShadowFinder } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   jiminyCricketLevelheadedAndWise,
   monstroInfamousWhale,

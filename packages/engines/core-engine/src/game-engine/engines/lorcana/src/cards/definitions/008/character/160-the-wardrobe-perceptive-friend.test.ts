@@ -3,11 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import {
   lumiereFieryFriend,
   mrsPottsEnchantedTeapot,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { theWardrobePerceptiveFriend } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import {
   TestEngine,

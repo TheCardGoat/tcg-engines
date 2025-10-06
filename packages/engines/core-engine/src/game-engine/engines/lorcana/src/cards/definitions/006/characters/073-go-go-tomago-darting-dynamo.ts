@@ -1,6 +1,6 @@
-import { chosenOpposingDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
+import { chosenOpposingDamagedCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const goGoTomagoDartingDynamo: LorcanaCharacterCardDefinition = {

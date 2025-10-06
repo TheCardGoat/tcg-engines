@@ -1,8 +1,8 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { chosenItem } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whileConditionThisCharacterGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
+import { chosenItem } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whileConditionThisCharacterGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const wasabiMethodicalEngineer: LorcanaCharacterCardDefinition = {

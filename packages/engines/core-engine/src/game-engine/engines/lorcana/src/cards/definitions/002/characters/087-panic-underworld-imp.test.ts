@@ -3,11 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { aladdinCorneredSwordman } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import { aladdinCorneredSwordman } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   painUnderworldImp,
   panicUnderworldImp,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
   TestStore,

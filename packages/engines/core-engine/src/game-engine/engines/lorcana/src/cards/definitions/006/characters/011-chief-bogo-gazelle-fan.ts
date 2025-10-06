@@ -1,7 +1,7 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { whileYouHaveACharacterNamedThisCharGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import { singerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singerAbility";
+import { whileYouHaveACharacterNamedThisCharGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const chiefBogoGazelleFan: LorcanaCharacterCardDefinition = {

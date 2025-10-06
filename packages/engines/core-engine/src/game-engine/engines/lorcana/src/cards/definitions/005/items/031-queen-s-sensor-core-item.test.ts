@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { herculesTrueHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { theQueenCruelestOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
-import { queensSensorCoreItem } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+import { herculesTrueHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { theQueenCruelestOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
+import { queensSensorCoreItem } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/index";
 import {
   TestEngine,
   TestStore,

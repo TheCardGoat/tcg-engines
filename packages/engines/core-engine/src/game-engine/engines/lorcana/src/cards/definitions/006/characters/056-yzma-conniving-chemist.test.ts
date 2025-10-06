@@ -7,10 +7,10 @@ import {
   liloGalacticHero,
   mauiDemiGod,
   stichtNewDog,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { madamMimFox } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { madamMimElephant } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
-import { yzmaConnivingChemist } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { madamMimFox } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { madamMimElephant } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
+import { yzmaConnivingChemist } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

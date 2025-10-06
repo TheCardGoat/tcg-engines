@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mauisFishHook } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import { mauisFishHook } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
 import { fredMajorScienceEnthusiast } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,

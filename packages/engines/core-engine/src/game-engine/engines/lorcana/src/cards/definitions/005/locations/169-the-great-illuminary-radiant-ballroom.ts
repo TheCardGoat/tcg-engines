@@ -1,6 +1,6 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { gainAbilityWhileHere } from "~/game-engine/engines/lorcana/src/abilities";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 
 export const theGreatIlluminaryRadiantBallroom: LorcanaLocationCardDefinition =
   {

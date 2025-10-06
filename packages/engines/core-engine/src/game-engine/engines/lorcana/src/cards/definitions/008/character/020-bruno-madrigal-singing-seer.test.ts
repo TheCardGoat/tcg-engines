@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import {
   brunoMadrigalSingingSeer,
   deweyLovableShowoff,

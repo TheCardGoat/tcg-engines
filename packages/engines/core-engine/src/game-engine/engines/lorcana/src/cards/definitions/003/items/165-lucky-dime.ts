@@ -1,6 +1,6 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/target";
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
+import { chosenCharacterOfYours } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const luckyDime: LorcanaItemCardDefinition = {
   id: "r2f",

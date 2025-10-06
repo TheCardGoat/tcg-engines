@@ -6,15 +6,15 @@ import { describe, expect, it } from "@jest/globals";
 import {
   donaldDuck,
   mickeyBraveLittleTailor,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   goofyKnightForADay,
   madamMimSnake,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   belleAccomplishedMystic,
   goofySuperGoof,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

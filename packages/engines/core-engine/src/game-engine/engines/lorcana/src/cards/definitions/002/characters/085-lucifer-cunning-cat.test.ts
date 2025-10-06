@@ -8,7 +8,7 @@ import {
   painUnderworldImp,
   panicUnderworldImp,
   peteBadGuy,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import { NnPuppies } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
 import {
   TestEngine,

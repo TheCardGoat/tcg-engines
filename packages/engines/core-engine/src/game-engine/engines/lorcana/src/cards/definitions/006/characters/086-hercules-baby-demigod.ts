@@ -1,8 +1,8 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { chosenDamagedCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
+import { chosenDamagedCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const herculesBabyDemigod: LorcanaCharacterCardDefinition = {

@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   neverLandMermaidLagoon,
   prideLandsPrideRock,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   belleApprenticeInventor,
   boltHeadstrongDog,

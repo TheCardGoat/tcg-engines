@@ -1,10 +1,10 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { chosenItemOrLocation } from "@lorcanito/lorcana-engine/abilities/targets";
 import {
   mayBanish,
   youGainLore,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import { chosenItemOrLocation } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

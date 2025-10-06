@@ -1,11 +1,11 @@
+import { putDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   allOpposingCharacters,
   allOpposingItems,
   allOpposingLocations,
   chosenCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import { putDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenThisCharacterBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const imNotFinishedYet = whenThisCharacterBanished({

@@ -1,11 +1,11 @@
+import type { PlayEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { StaticAbilityWithEffect } from "~/game-engine/engines/lorcana/src/abilities";
 import {
   allYourCharacteristicCharacters,
   thisCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whileConditionOnThisCharacterTargetsGain } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
-import type { PlayEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
-import type { StaticAbilityWithEffect } from "~/game-engine/engines/lorcana/src/abilities";
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
+import { whileConditionOnThisCharacterTargetsGain } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const ability: StaticAbilityWithEffect = {

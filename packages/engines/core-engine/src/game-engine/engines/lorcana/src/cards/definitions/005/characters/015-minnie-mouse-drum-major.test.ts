@@ -3,13 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { olafFriendlySnowman } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { chernabogEvildoer } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { olafFriendlySnowman } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { chernabogEvildoer } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import {
   merlinIntellectualVisionary,
   minnieMouseCompassionateFriend,
   minnieMouseDrumMajor,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

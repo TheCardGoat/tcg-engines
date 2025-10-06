@@ -6,9 +6,9 @@ import { describe, expect, it } from "@jest/globals";
 import {
   bellesHouseMauricesWorkshop,
   mcduckManorScroogesMansion,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
-import { tritonYoungPrince } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { arielsGrottoASecretPlace } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { tritonYoungPrince } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
+import { arielsGrottoASecretPlace } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations";
 import {
   TestEngine,
   TestStore,

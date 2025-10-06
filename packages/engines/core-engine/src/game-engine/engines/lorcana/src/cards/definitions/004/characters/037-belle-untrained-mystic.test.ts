@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { belleUntrainedMystic } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { belleUntrainedMystic } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

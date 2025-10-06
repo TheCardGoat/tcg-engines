@@ -1,5 +1,5 @@
-import { allYourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { allYourCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

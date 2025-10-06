@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   sisuEmboldenedWarrior,
   sisuEmpoweredSibling,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   deweyLovableShowoff,
   honeyLemonCostumedCatalyst,

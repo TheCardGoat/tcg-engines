@@ -6,11 +6,11 @@ import { describe, expect, it } from "@jest/globals";
 import {
   captainHookForcefulDuelist,
   hadesInfernalSchemer,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { fishboneQuill } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
-import { letItGo } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { fishboneQuill } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
+import { letItGo } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
+import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import { plutoGuardDog } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { mittensSassyStreetCat } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import {

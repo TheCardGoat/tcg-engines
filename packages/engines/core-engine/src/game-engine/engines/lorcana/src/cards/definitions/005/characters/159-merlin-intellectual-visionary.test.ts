@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { merlinIntellectualVisionary } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { merlinIntellectualVisionary } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

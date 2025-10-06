@@ -3,14 +3,14 @@ import type {
   LorcanitoCharacterCard,
 } from "@lorcanito/lorcana-engine";
 import {
-  anotherChosenCharacterOfYours,
-  parentsTarget,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
   chosenCharacterGainsChallenger,
   chosenCharacterOfYoursGainsWhenBanishedReturnToHand,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import {
+  anotherChosenCharacterOfYours,
+  parentsTarget,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 
 export const motherGothelKnowsWhatsBest: LorcanaCharacterCardDefinition = {
   id: "pwy",

@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { lythosRockTitan } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { lythosRockTitan } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

@@ -4,12 +4,12 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
-import { goonsMaleficent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { goonsMaleficent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   mrSmeeSteadfastMate,
   mullinsSeasonedShipmate,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

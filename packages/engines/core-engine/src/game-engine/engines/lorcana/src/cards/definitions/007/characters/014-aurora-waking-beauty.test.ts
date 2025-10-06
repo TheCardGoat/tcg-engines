@@ -6,9 +6,9 @@ import { describe, expect, it } from "@jest/globals";
 import {
   mrSmee,
   rapunzelGiftedWithHealing,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
-import { chienPoImperialSoldier } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
+import { chienPoImperialSoldier } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   auroraWakingBeauty,
   theFamilyMadrigal,

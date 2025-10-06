@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { pegasusFlyingSteed } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { pegasusFlyingSteed } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

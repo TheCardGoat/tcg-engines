@@ -3,11 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { tamatoaSoShiny } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import { tamatoaSoShiny } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/index";
 import {
   coconutbasket,
   dingleHopper,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import {
   TestEngine,
   TestStore,

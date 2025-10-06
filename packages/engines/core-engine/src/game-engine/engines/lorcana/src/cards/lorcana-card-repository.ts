@@ -66,7 +66,7 @@ type LorcanaBaseCardDefinition = {
   name: string;
   text?: string;
   flavour?: string;
-  set: "TFC" | "ROF" | "ITI" | "URR" | "SSK" | "006" | "007" | "008";
+  set: "TFC" | "ROF" | "ITI" | "URR" | "SSK" | "006" | "007" | "008" | "009";
   cost: number;
   colors: CardColor[];
   number: number;

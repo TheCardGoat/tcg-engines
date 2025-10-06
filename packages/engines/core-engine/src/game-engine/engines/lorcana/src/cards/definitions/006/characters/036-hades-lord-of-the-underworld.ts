@@ -1,7 +1,7 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYourOtherCharactersIsBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYourOtherCharactersIsBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const hadesLordOfTheUnderworld: LorcanaCharacterCardDefinition = {

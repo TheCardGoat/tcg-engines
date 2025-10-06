@@ -2,8 +2,8 @@ import type {
   AbilityEffect,
   LorcanitoCharacterCard,
 } from "@lorcanito/lorcana-engine";
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 
 export const arthurKingVictorious: LorcanaCharacterCardDefinition = {
   id: "l90",

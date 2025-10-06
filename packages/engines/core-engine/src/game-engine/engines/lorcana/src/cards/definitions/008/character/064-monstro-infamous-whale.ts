@@ -1,10 +1,10 @@
-import { allCardsInYourDeck } from "@lorcanito/lorcana-engine/abilities/amounts";
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   type ActivatedAbility,
   rushAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { allCardsInYourDeck } from "~/game-engine/engines/lorcana/src/abilities/amounts";
+import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const fullBreachAndMoneyEverywhereCombo: ActivatedAbility = {

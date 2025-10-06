@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { annaBravingTheStorm } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { annaBravingTheStorm } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { elsaTrustedSister } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { theBareNecessities } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 

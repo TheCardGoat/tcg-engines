@@ -4,22 +4,6 @@ import type {
   ScryEffect,
   StaticAbility,
 } from "@lorcanito/lorcana-engine";
-import { chosenCharacterOrLocation } from "@lorcanito/lorcana-engine/abilities/target";
-import {
-  chosenCharacter,
-  chosenCharacterOfYours,
-  chosenDamagedCharacter,
-  chosenOpposingCharacter,
-  chosenPlayer,
-  opponent,
-  self,
-  thisCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import type { BanishTrigger } from "@lorcanito/lorcana-engine/abilities/triggers";
-import {
-  whenThisIsBanished,
-  whenYouPlayThisCharacter,
-} from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import {
   banishChosenItem,
   chosenCharacterGainsChallenger,
@@ -35,6 +19,22 @@ import {
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { CreateLayerTargetingPlayer } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import { chosenCharacterOrLocation } from "~/game-engine/engines/lorcana/src/abilities/target";
+import {
+  chosenCharacter,
+  chosenCharacterOfYours,
+  chosenDamagedCharacter,
+  chosenOpposingCharacter,
+  chosenPlayer,
+  opponent,
+  self,
+  thisCharacter,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { BanishTrigger } from "~/game-engine/engines/lorcana/src/abilities/triggers";
+import {
+  whenThisIsBanished,
+  whenYouPlayThisCharacter,
+} from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import {
   wheneverACardIsPutIntoYourInkwell,
   wheneverYouPlayACharacter,

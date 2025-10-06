@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { eachOfYourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
+import { eachOfYourCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const amberChromiconItem: LorcanaItemCardDefinition = {
   id: "ny4",

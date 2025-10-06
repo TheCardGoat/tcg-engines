@@ -1,8 +1,8 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { ifYouHaveAnInventor } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { anotherChosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisForEachYouPayLess } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+import { ifYouHaveAnInventor } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { anotherChosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouPlayThisForEachYouPayLess } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const baymaxPersonalHealthcareCompanion: LorcanaCharacterCardDefinition =

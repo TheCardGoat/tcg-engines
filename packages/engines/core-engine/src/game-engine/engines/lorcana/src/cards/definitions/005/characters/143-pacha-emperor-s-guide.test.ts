@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
-import { pachaEmperorsGuide } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
-import { rapunzelsTowerSecludedPrison } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
+import { pachaEmperorsGuide } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
+import { rapunzelsTowerSecludedPrison } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations";
 import {
   TestEngine,
   TestStore,

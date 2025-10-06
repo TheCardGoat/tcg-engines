@@ -7,9 +7,9 @@ import {
   pumbaFriendlyWarhog,
   simbaFutureKing,
   simbaReturnedKing,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { mufasaBetrayedLeader } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { prideLandsJungleOasis } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { mufasaBetrayedLeader } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { prideLandsJungleOasis } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/index";
 import {
   TestEngine,
   TestStore,

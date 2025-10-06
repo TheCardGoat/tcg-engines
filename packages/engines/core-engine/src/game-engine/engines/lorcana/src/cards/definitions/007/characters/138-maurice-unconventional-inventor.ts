@@ -1,6 +1,3 @@
-import { chosenItemOfYours } from "@lorcanito/lorcana-engine/abilities/target";
-import { chosenCharacterWithStrengthXorLess } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import {
   drawACard,
   mayBanish,
@@ -10,6 +7,9 @@ import type {
   CreateLayerBasedOnTarget,
   TargetConditionalEffect,
 } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { chosenItemOfYours } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { chosenCharacterWithStrengthXorLess } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const afterEffect: CreateLayerBasedOnTarget = {

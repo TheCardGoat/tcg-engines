@@ -1,7 +1,7 @@
-import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { chosenItem } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { mayBanish } from "@lorcanito/lorcana-engine/effects/effects";
+import { ifYouHaveCharacterNamed } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { chosenItem } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const myOrdersComeFromJafar = whenYouPlayThisCharacter({

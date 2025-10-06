@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mickeyMouseDetective } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { mickeyMouseDetective } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   chipFriendIndeed,
   chipNDaleRecoveryRangers,
@@ -12,7 +12,7 @@ import {
   dawsonBasilsAssistant,
   gadgetHackwrenchPerceptiveMouse,
   rafikiShamanOfTheSavanna,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

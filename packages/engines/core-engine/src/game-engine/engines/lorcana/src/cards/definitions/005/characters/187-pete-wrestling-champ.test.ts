@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { peterPanFearless } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { peteBadGuy } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { peteWrestlingChamp } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { peterPanFearless } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { peteBadGuy } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { peteWrestlingChamp } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

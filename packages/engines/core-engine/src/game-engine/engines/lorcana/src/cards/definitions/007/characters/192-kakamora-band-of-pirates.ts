@@ -1,5 +1,5 @@
-import { whileYouHaveAnotherXCharacteristicInPlayThisCharacterGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
+import { whileYouHaveAnotherXCharacteristicInPlayThisCharacterGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const kakamoraBandOfPirates: LorcanaCharacterCardDefinition = {

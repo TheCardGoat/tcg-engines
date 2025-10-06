@@ -1,7 +1,7 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
 import { gainAbilityWhileHere } from "~/game-engine/engines/lorcana/src/abilities";
+import { whenThisCharacterBanishedInAChallenge } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 
 export const ursulasLairEyeOfTheStorm: LorcanaLocationCardDefinition = {
   id: "tj7",

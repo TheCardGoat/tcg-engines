@@ -4,9 +4,9 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { tangle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
-import { grabYourSword } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { grabYourSword } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { fourDozenEggs } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
-import { minnieMouseWideEyedDiver } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { minnieMouseWideEyedDiver } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
   TestStore,

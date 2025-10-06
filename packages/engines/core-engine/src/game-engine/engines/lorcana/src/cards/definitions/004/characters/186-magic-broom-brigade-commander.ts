@@ -1,5 +1,5 @@
-import { propertyStaticAbilities } from "@lorcanito/lorcana-engine/abilities/propertyStaticAbilities";
 import { resistAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/resistAbility";
+import { propertyStaticAbilities } from "~/game-engine/engines/lorcana/src/abilities/propertyStaticAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const magicBroomBrigadeCommander: LorcanaCharacterCardDefinition = {

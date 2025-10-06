@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mulanArmoredFighter } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { mulanArmoredFighter } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   khanWarHorse,
   perditaOnTheLookout,

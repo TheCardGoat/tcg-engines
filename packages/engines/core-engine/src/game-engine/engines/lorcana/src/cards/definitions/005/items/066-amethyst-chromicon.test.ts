@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { amethystChromicon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+import { amethystChromicon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/index";
 import {
   TestEngine,
   TestStore,

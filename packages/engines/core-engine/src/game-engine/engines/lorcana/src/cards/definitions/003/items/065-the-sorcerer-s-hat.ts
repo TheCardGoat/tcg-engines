@@ -1,8 +1,8 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import {
   anyCard,
   namedCard,
-} from "@lorcanito/lorcana-engine/abilities/targets";
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theSorcerersHat: LorcanaItemCardDefinition = {
   id: "h9u",

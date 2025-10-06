@@ -1,5 +1,5 @@
-import { eachOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { singerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singerAbility";
+import { eachOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverYouPlayASong } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

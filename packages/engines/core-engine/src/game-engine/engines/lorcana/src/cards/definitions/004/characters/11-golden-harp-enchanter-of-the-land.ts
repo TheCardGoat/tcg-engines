@@ -1,5 +1,5 @@
-import { atTheEndOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+import { atTheEndOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const goldenHarpEnchanterOfTheLand: LorcanaCharacterCardDefinition = {

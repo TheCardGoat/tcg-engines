@@ -3,14 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { sisuEmpoweredSibling } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { sisuEmpoweredSibling } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   kronkUnlicensedInvestigator,
   mickeyMouseFoodFightDefender,
   royalGuardBovineProtector,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
-import { emeraldChromiconItem } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
+import { emeraldChromiconItem } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/index";
 import {
   mickeyMouseGiantMouse,
   pullTheLever,
@@ -20,7 +20,7 @@ import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
-import { mrSmeeBumblingMate } from "../../003/characters/characters";
+import { mrSmeeBumblingMate } from "../../003/characters";
 
 describe("Emerald Chromicon", () => {
   describe("**EMERALD LIGHT** During opponents’ turns, whenever one of your characters is banished, you may return chosen character to their player’s hand.", () => {

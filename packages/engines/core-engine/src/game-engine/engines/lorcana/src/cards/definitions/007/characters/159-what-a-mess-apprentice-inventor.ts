@@ -1,5 +1,5 @@
-import { itemsYouControl } from "@lorcanito/lorcana-engine/abilities/target";
 import type { MetaAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import { itemsYouControl } from "~/game-engine/engines/lorcana/src/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const whatAMess: MetaAbility = {

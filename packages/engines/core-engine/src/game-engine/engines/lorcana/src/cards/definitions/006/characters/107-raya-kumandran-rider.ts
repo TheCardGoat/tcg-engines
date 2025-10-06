@@ -1,8 +1,8 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { duringYourTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { anotherChosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
 import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+import { duringYourTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { anotherChosenCharacterOfYours } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverACardIsPutIntoYourInkwell } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

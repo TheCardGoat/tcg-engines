@@ -1,6 +1,6 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import { lookAtTopCardOfYourDeckAndPutItOnTopOrBottom } from "@lorcanito/lorcana-engine/effects/effects";
 import { wheneverOneOfYourCharsQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const aurelianGyrosensor: LorcanaItemCardDefinition = {
   id: "zc9",

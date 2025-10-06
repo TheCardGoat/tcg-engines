@@ -6,8 +6,8 @@ import { describe, expect, it } from "@jest/globals";
 import {
   arielTreasureCollector,
   peteRottenGuy,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { fortisphere } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
+import { fortisphere } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items";
 import {
   TestEngine,
   TestStore,

@@ -6,8 +6,8 @@ import { describe, expect, it } from "@jest/globals";
 import {
   grandDukeAdvisorToTheKing,
   pigletVerySmallAnimal,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { bindingContract } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { bindingContract } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/index";
 import {
   TestEngine,
   TestStore,

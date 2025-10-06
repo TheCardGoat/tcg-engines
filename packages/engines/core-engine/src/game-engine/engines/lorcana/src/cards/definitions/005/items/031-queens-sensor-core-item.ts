@@ -1,9 +1,10 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
 import {
   revealTopOfDeckPutInHandOrDeck,
   youGainLore,
 } from "@lorcanito/lorcana-engine/effects/effects";
+
+import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const queensSensorCoreItem: LorcanaItemCardDefinition = {
   id: "rj3",

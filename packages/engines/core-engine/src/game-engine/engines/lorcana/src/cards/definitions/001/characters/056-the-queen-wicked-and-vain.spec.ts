@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { youHaveForgottenMe } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
-import { theQueenWickedAndVain } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import { theQueenWickedAndVain } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/index";
 import {
   TestEngine,
   TestStore,

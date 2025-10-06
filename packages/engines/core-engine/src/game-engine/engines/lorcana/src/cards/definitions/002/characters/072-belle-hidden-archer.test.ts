@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   belleHiddenArcher,
   pinocchioStarAttraction,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
   TestStore,

@@ -173,7 +173,7 @@ import {
   ursulaPowerHungry,
   yzmaAlchemist,
   zeusGodOfLightning,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   beastMirror,
   coconutbasket,
@@ -195,7 +195,7 @@ import {
   ursulaCaldron,
   ursulaShellNecklace,
   whiteRabbitPocketWatch,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import {
   aWholeNewWorld,
   beOurGuest,
@@ -209,7 +209,7 @@ import {
   partOfYourWorld,
   reflection,
   suddenChill,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const all001Cards: LorcanaCardDefinition[] = [

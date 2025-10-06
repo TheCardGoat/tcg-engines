@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { daleFriendInNeed } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
-import { rescueRangersSubmarineMobileHeadquarters } from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/locations";
+import { daleFriendInNeed } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters";
+import { rescueRangersSubmarineMobileHeadquarters } from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/index";
 import {
   TestEngine,
   TestStore,

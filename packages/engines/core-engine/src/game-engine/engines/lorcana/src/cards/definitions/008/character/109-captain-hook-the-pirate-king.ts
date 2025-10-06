@@ -1,10 +1,10 @@
-import { duringYourTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { allYourCharacteristicCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 import {
   getStrengthThisTurn,
   targetCardGainsResist,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import { duringYourTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
+import { allYourCharacteristicCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverOppCharIsDamaged } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

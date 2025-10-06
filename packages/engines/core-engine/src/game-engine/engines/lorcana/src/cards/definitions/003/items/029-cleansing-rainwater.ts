@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const cleansingRainwater: LorcanaItemCardDefinition = {
   id: "vlr",

@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import { chosenCharacterGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const plateArmor: LorcanaItemCardDefinition = {
   id: "pwi",

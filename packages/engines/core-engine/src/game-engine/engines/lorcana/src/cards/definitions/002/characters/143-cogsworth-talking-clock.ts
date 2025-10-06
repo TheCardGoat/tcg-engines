@@ -1,5 +1,5 @@
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const cogsworthTalkingClock: LorcanaCharacterCardDefinition = {

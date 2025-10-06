@@ -3,14 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { arielSpectacularSinger } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import { arielSpectacularSinger } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   mrSmeeBumblingMate,
   pigletPoohPirateCaptain,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import { underTheSea } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
-import { daisyDuckDonaldsDate } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
-import { naveensUkulele } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/items";
+import { daisyDuckDonaldsDate } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
+import { naveensUkulele } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/index";
 import {
   TestEngine,
   TestStore,

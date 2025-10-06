@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { kidaProtectorOfAtlantis } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { kidaProtectorOfAtlantis } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import { vincenzoSantoriniTheExplosivesExpert } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import {
   TestEngine,

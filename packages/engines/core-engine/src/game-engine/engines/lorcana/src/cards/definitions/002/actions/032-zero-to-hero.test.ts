@@ -12,7 +12,7 @@ import {
 import {
   fangCrossbow,
   pawpsicle,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Zero To Hero", () => {

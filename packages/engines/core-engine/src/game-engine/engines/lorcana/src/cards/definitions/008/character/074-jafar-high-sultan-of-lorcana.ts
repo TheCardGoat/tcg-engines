@@ -2,12 +2,12 @@ import type {
   CardEffectTarget,
   LorcanitoCharacterCard,
 } from "@lorcanito/lorcana-engine";
-import { parentsTarget } from "@lorcanito/lorcana-engine/abilities/targets";
 import {
   discardACard,
   drawACard,
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { CreateLayerBasedOnTarget } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { parentsTarget } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverThisCharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 
 const illusionCharacter: CardEffectTarget = {

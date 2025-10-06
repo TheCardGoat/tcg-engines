@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { goonsMaleficent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { airfoil } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import { goonsMaleficent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { airfoil } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";
 import { gatheringKnowledgeAndWisdom } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import {
   TestEngine,

@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { fixitFelixJrDelightedSightseer } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
-import { rapunzelsTowerSecludedPrison } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+import { fixitFelixJrDelightedSightseer } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
+import { rapunzelsTowerSecludedPrison } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations";
 import {
   TestEngine,
   TestStore,

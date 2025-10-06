@@ -1,9 +1,9 @@
-import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   shiftAbility,
   supportAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { ifYouHaveCharacterNamed } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import { wheneverThisCharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

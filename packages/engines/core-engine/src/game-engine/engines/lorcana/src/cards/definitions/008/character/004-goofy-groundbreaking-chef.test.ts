@@ -3,10 +3,10 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { goofyMusketeer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { goofyMusketeerSwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { goofyMusketeer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
+import { goofyMusketeerSwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { goofyFlyingFool } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { goofyGroundbreakingChef } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import {

@@ -1,4 +1,4 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const motherGothelConceitedManipulator: LorcanitoCharacterCardDefinition =

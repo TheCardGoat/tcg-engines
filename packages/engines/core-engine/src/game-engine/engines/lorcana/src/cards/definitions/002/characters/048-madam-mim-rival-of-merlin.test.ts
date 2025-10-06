@@ -6,8 +6,8 @@ import { describe, expect, it } from "@jest/globals";
 import {
   drFacilierSavvyOpportunist,
   madamMimRivalOfMerlin,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { pegasusFlyingSteed } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
+import { pegasusFlyingSteed } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   TestEngine,
   TestStore,

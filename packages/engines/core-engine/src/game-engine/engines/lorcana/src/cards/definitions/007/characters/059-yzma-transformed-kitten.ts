@@ -1,6 +1,6 @@
-import { haveMoreCardsThanOpponent } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+import { haveMoreCardsThanOpponent } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenThisCharacterBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const yzmaChangedIntoAKitten: LorcanaCharacterCardDefinition = {

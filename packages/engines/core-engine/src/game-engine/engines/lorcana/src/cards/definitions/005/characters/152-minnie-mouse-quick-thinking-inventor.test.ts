@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { minnieMouseQuickthinkingInventor } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { minnieMouseQuickthinkingInventor } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

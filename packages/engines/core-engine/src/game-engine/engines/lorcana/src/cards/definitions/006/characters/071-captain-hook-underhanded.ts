@@ -1,9 +1,9 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { ifThisCharacterIsExerted } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenChallenged } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+import { ifThisCharacterIsExerted } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenChallenged } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const captainHookUnderhanded: LorcanaCharacterCardDefinition = {

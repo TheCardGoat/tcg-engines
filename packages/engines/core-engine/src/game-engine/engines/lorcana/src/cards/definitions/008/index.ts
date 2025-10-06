@@ -2,14 +2,14 @@ import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/ca
 
 // Re-export all cards from the original structure to maintain compatibility
 export * from "./action/actions";
+export * from "./character";
 export { moneyEverywhere } from "./character/037-donaldDuckCoinCollector";
 // Export specific abilities that are used in the simulator
 export {
   fullBreach,
   fullBreachAndMoneyEverywhereCombo,
 } from "./character/064-monstro-infamous-whale";
-export * from "./character/characters";
-export * from "./item/items";
+export * from "./items";
 
 // Import specific cards for the aggregated export
 import {
@@ -210,7 +210,7 @@ import {
   yelanaNorthuldraLeader,
   yzmaOnEdge,
   zipperFlyingRanger,
-} from "./character/characters";
+} from "./character";
 
 import {
   atlanteanCrystal,
@@ -223,7 +223,7 @@ import {
   televisionSet,
   theNephewsPiggyBank,
   theSwordOfShanYu,
-} from "./item/items";
+} from "./items";
 
 export const all008Cards: LorcanaCardDefinition[] = [
   abuIllusoryPachyderm,

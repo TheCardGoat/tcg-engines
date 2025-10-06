@@ -1,6 +1,6 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { forEachCardInYourHand } from "@lorcanito/lorcana-engine/abilities/amounts";
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+import { forEachCardInYourHand } from "~/game-engine/engines/lorcana/src/abilities/amounts";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const tritonsTrident: LorcanaItemCardDefinition = {
   id: "tom",

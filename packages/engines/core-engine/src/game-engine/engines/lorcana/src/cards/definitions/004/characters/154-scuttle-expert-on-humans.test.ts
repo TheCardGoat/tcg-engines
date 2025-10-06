@@ -3,13 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
 import {
   aladdinResoluteSwordsman,
   scuttleExpertOnHumans,
   sisuWiseFriend,
   tukTukCuriousPartner,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

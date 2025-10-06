@@ -3,13 +3,13 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { friendsOnTheOtherSide } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { minnieMouseMusicalArtist } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { friendsOnTheOtherSide } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
+import { minnieMouseMusicalArtist } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   donaldDuckMusketeerSoldier,
   goofyMusketeerSwordsman,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   TestEngine,
   TestStore,

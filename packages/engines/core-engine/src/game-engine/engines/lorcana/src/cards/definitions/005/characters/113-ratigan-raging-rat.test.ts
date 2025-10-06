@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { ratiganRagingRat } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { ratiganRagingRat } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

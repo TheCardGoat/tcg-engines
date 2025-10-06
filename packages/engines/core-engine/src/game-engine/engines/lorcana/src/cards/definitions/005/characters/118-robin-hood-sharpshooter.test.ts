@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { liloGalacticHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { friendsOnTheOtherSide } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { liloGalacticHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { friendsOnTheOtherSide } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { breakFree } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import {
   daisyDuckSpotlessFoodfighter,
@@ -12,7 +12,7 @@ import {
   petePastryChomper,
   robinHoodSharpshooter,
   simbaAdventurousSuccessor,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

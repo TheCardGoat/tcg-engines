@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { robinHoodCapableFighter } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { robinHoodCapableFighter } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { gizmoduckSuitedUp } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,

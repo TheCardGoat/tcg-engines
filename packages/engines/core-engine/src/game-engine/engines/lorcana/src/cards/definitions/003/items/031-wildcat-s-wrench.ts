@@ -1,4 +1,4 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const wildcatsWrench: LorcanaItemCardDefinition = {
   id: "d8n",

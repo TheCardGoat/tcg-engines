@@ -1,7 +1,7 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverACardIsPutIntoYourInkwell } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

@@ -1,5 +1,5 @@
-import { youHaveDealtDamageToOpposingCharacterThisTurn } from "@lorcanito/lorcana-engine/abilities/conditions";
 import type { PlayConditionAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import { youHaveDealtDamageToOpposingCharacterThisTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const nathanielFlintNotoriousPirate: LorcanaCharacterCardDefinition = {

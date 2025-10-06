@@ -1,6 +1,10 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { opponent, self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+
+import {
+  opponent,
+  self,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const amethystChromicon: LorcanaItemCardDefinition = {
   id: "onp",

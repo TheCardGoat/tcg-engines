@@ -1,7 +1,8 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
+
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theMagicFeather: LorcanaItemCardDefinition = {
   id: "cxi",

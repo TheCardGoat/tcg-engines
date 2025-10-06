@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { magicaDeSpellThievingSorceress } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { magicaDeSpellThievingSorceress } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

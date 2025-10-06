@@ -8,7 +8,7 @@ import {
   johnSilverAlienPirate,
   moanaOfMotunui,
   rapunzelGiftedWithHealing,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/index";
 import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/027-hakuna-matata";
 import {
   TestEngine,

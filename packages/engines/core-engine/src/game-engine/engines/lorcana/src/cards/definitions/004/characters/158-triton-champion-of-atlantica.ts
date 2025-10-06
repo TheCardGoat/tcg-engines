@@ -1,5 +1,5 @@
-import { opposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
+import { opposingCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const tritonChampionOfAtlantica: LorcanaCharacterCardDefinition = {

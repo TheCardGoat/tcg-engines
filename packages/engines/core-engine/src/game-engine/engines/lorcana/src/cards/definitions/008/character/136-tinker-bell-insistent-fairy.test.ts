@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   arielOnHumanLegs,
   mauiHeroToAll,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { tinkerBellInsistentFairy } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,

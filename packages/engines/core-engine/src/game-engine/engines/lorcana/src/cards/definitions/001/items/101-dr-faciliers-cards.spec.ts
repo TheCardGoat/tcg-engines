@@ -4,8 +4,8 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { hesGotASword } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
-import { drFacilierCards } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
-import { reflection } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { drFacilierCards } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/index";
+import { reflection } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import {
   TestEngine,
   TestStore,

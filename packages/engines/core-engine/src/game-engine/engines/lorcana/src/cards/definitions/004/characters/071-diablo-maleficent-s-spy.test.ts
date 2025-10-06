@@ -7,8 +7,8 @@ import {
   mickeyBraveLittleTailor,
   mickeyMouseArtfulRogue,
   mickeyMouseTrueFriend,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { diabloMaleficentsSpy } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { diabloMaleficentsSpy } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

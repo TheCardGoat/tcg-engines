@@ -7,8 +7,8 @@ import { youHaveForgottenMe } from "~/game-engine/engines/lorcana/src/cards/defi
 import {
   aWholeNewWorld,
   grabYourSword,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { arielDeterminedMermaid } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
+import { arielDeterminedMermaid } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

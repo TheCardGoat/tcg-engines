@@ -1,8 +1,8 @@
-import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
+import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
 import {
   chosenCharacter,
   thisCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const camiloMadrigalPrankster: LorcanaCharacterCardDefinition = {

@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { theSorcerersSpellbook } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { theSorcerersSpellbook } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/index";
 import {
   TestEngine,
   TestStore,

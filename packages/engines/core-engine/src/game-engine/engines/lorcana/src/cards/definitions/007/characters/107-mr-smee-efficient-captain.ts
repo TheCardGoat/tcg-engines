@@ -1,4 +1,4 @@
-import { chosenPirateCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+import { chosenPirateCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverYouPlayAnActionNotASong } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

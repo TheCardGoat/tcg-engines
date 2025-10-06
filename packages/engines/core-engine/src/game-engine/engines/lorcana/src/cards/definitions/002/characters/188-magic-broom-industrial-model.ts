@@ -1,5 +1,5 @@
-import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const magicBroomIndustrialModel: LorcanaCharacterCardDefinition = {

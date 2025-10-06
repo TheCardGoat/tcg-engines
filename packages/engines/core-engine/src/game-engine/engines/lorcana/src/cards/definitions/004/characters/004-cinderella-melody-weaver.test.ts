@@ -6,10 +6,10 @@ import { describe, expect, it } from "@jest/globals";
 import {
   rafikiMysterious,
   rapunzelGiftedWithHealing,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { cinderellaBallroomSensation } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { cinderellaBallroomSensation } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { underTheSea } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
-import { cinderellaMelodyWeaver } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { cinderellaMelodyWeaver } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

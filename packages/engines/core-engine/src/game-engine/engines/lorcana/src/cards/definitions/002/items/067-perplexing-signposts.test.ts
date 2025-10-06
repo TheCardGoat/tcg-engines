@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { liloGalacticHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { perplexingSignposts } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { liloGalacticHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { perplexingSignposts } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/index";
 import {
   TestEngine,
   TestStore,

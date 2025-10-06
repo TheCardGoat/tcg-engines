@@ -1,7 +1,8 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { ifYouHaveCharacterNamed } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { self } from "@lorcanito/lorcana-engine/abilities/targets";
 import { returnChosenCharacterWithCostLess } from "@lorcanito/lorcana-engine/effects/effects";
+
+import { ifYouHaveCharacterNamed } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theLamp: LorcanaItemCardDefinition = {
   id: "byw",

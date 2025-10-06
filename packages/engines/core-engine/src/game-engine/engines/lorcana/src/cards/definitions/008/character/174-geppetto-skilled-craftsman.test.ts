@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import {
   mauricesMachine,
   unconventionalTool,

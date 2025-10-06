@@ -1,5 +1,8 @@
-import { self, targetCard } from "@lorcanito/lorcana-engine/abilities/targets";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
+import {
+  self,
+  targetCard,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

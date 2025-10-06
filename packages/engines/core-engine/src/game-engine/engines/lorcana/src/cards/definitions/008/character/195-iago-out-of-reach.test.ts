@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   liloGalacticHero,
   stitchRockStar,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { iagoOutOfReach } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import {
   TestEngine,

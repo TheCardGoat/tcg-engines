@@ -1,4 +1,4 @@
-import { forEachCardInYourHand } from "@lorcanito/lorcana-engine/abilities/amounts";
+import { forEachCardInYourHand } from "~/game-engine/engines/lorcana/src/abilities/amounts";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import { propertyStaticAbilities } from "../../../abilities/propertyStaticAbilities";
 

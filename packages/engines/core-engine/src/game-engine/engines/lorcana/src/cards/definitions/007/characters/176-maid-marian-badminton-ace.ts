@@ -1,10 +1,10 @@
-import { duringOpponentsTurn } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import type { DamageTrigger } from "@lorcanito/lorcana-engine/abilities/triggers";
 import { dealDamageToChosenOpposingCharacter } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   type ResolutionAbility,
   resistAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { duringOpponentsTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import type { DamageTrigger } from "~/game-engine/engines/lorcana/src/abilities/triggers";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const maidMarianBadmintonAce: LorcanaCharacterCardDefinition = {

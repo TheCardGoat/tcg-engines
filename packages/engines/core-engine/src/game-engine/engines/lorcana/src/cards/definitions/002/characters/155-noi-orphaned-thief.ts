@@ -1,10 +1,10 @@
-import { itemsYouControl } from "@lorcanito/lorcana-engine/abilities/target";
-import { whileConditionThisCharacterGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import type { Condition } from "@lorcanito/lorcana-engine/store/resolvers/conditionResolver";
 import {
   resistAbility,
   wardAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { itemsYouControl } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { whileConditionThisCharacterGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const noiWhileCondition: Condition[] = [

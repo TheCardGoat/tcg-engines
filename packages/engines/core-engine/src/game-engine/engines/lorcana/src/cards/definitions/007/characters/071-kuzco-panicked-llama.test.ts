@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { hadesDoubleDealer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { hadesDoubleDealer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   kuzcoPanickedLlama,
   pongoDearOldDad,

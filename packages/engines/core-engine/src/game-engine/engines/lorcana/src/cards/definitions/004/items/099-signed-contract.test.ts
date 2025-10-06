@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { signedContract } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+import { signedContract } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/index";
 import {
   TestEngine,
   TestStore,

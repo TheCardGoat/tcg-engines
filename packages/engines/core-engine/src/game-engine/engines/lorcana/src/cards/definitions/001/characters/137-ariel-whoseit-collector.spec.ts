@@ -3,11 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { arielWhoseitCollector } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import { arielWhoseitCollector } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/index";
 import {
   coconutbasket,
   lantern,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import {
   TestEngine,
   TestStore,

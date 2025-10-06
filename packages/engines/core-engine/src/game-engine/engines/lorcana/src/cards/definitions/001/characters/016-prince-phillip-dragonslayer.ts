@@ -1,4 +1,4 @@
-import { whenThisCharChallengesAndIsBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+import { whenThisCharChallengesAndIsBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const princePhillipDragonSlayer: LorcanaCharacterCardDefinition = {

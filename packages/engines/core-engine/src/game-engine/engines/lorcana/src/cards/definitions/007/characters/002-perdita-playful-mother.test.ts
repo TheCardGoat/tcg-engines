@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { rollyHungryPup } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { rollyHungryPup } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import { perditaPlayfulMother } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import {
   TestEngine,

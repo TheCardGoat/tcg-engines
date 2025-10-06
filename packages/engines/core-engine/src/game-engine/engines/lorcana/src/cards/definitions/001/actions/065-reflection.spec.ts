@@ -5,7 +5,7 @@ import {
   liloMakingAWish,
   moanaOfMotunui,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
-import { reflection } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { reflection } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Reflection", () => {

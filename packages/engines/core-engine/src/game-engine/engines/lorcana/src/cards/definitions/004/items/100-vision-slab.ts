@@ -2,13 +2,13 @@ import type {
   CardEffectTarget,
   LorcanitoItemCard,
 } from "@lorcanito/lorcana-engine";
-import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-import { targetCardsGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import {
   damageRemovalRestrictionEffect,
   youGainLore,
 } from "@lorcanito/lorcana-engine/effects/effects";
 import type { StaticAbilityWithEffect } from "~/game-engine/engines/lorcana/src/abilities";
+import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { targetCardsGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 
 const cardsInPlay: CardEffectTarget = {
   type: "card",

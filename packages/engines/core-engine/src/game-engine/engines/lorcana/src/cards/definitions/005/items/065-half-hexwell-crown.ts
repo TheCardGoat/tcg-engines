@@ -1,10 +1,10 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { chosenCardFromYourHand } from "@lorcanito/lorcana-engine/abilities/targets";
-
 import {
   drawACard,
   exertChosenCharacter,
 } from "@lorcanito/lorcana-engine/effects/effects";
+
+import { chosenCardFromYourHand } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const halfHexwellCrown: LorcanaItemCardDefinition = {
   id: "tj0",

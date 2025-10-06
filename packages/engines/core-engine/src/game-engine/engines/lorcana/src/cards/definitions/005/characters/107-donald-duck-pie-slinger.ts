@@ -3,10 +3,10 @@ import type {
   LorcanitoCharacterCard,
   ResolutionAbility,
 } from "@lorcanito/lorcana-engine";
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import { eachOpponentLosesXLore } from "@lorcanito/lorcana-engine/effects/effects";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whileConditionThisCharacterGets } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 
 const humblePie: ResolutionAbility = {
   type: "resolution",

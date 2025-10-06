@@ -1,9 +1,9 @@
-import { yourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/target";
+import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
+import { yourOtherCharacters } from "~/game-engine/engines/lorcana/src/abilities/target";
 import {
   chosenAlienCharacter,
   yourCharacters,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/challengerAbility";
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverThisCharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

@@ -1,9 +1,9 @@
+import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import {
   chosenCharacter,
   thisCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
-import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverThisCharacterDealsDamageInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

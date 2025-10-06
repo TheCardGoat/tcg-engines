@@ -1,5 +1,5 @@
-import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { banishChosenCharacter } from "@lorcanito/lorcana-engine/effects/effects";
+import { whenYouPlayThisCharAbility } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const maleficentMonstrousDragon: LorcanaCharacterCardDefinition = {

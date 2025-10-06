@@ -1,6 +1,6 @@
-import { thisCard } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { FilterCondition } from "@lorcanito/lorcana-engine/store/resolvers/conditionResolver";
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
+import { thisCard } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const filterCondition: FilterCondition = {

@@ -6,9 +6,9 @@ import { describe, expect, it } from "@jest/globals";
 import {
   goofyDaredevil,
   goofyMusketeer,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { dinnerBell } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { dinnerBell } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/index";
 import {
   TestEngine,
   TestStore,

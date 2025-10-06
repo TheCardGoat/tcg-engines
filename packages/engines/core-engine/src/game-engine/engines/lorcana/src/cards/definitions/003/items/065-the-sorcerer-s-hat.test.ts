@@ -3,12 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { theSorcerersHat } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { theSorcerersHat } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";
 import {
   brunoMadrigalUndetectedUncle,
   luisaMadrigalMagicallyStrongOne,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   TestEngine,
   TestStore,

@@ -1,5 +1,5 @@
-import { chosenItem } from "@lorcanito/lorcana-engine/abilities/target";
 import type { BanishEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { chosenItem } from "~/game-engine/engines/lorcana/src/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const judyHoppsOptimisticOfficer: LorcanaCharacterCardDefinition = {

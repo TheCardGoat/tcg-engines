@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import { glean } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import {
   TestEngine,

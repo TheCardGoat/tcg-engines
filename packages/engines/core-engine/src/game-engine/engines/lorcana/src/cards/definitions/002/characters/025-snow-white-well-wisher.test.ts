@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { snowWhiteWellWisher } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { dragonGem } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+import { snowWhiteWellWisher } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
+import { dragonGem } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import {
   TestEngine,
   TestStore,

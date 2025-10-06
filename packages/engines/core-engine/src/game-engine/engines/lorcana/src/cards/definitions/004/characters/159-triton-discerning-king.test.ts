@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { luckyDime } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
-import { tritonDiscerningKing } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { luckyDime } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
+import { tritonDiscerningKing } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

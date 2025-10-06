@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { fireTheCannons } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
-import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   jiminyCricketLevelheadedAndWise,
   nathanielFlintNotoriousPirate,

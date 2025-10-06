@@ -3,14 +3,14 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations";
 import {
   dopeyKnightApprentice,
   mickeyMouseFoodFightDefender,
   royalGuardBovineProtector,
   sleepySluggishKnight,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
-import { sevenDwarfsMineSecureFortress } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
+import { sevenDwarfsMineSecureFortress } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/index";
 import {
   TestEngine,
   TestStore,

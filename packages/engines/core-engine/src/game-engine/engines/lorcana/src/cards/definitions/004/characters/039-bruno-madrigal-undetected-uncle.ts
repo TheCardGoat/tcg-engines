@@ -1,9 +1,9 @@
+import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import {
   anyCard,
   namedCard,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
-import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const brunoMadrigalUndetectedUncle: LorcanaCharacterCardDefinition = {

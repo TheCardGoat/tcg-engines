@@ -7,8 +7,8 @@ import {
   pinocchioStarAttraction,
   pinocchioTalkativePuppet,
   theHuntsmanReluctantEnforcer,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { captainHookMasterSwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { captainHookMasterSwordsman } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

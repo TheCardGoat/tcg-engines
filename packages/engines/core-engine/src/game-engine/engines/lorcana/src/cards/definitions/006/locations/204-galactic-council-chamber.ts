@@ -1,6 +1,6 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { allOpposingCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whileYouHaveCharactersHere } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+import { allOpposingCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whileYouHaveCharactersHere } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 
 export const galacticCouncilChamber: LorcanaLocationCardDefinition = {
   id: "yrd",

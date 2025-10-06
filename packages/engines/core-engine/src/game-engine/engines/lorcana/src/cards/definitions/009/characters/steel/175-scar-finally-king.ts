@@ -2,14 +2,14 @@ import type {
   CardEffectTarget,
   LorcanitoCharacterCard,
 } from "@lorcanito/lorcana-engine";
-import { atTheEndOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
-import { ifThisCharacterIsExerted } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { sourceTarget } from "@lorcanito/lorcana-engine/abilities/targets";
 import {
   discardTwoCards,
   drawXCards,
   mayBanish,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import { atTheEndOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
+import { ifThisCharacterIsExerted } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { sourceTarget } from "~/game-engine/engines/lorcana/src/abilities/targets";
 
 const chosenAllyOfYours: CardEffectTarget = {
   type: "card",

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { mickeyMouseDetective } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
-import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import { getOut } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import { TestEngine } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 

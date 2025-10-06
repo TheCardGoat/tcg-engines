@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { belleInventive } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { lantern } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { belleInventive } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/index";
+import { lantern } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import {
   TestEngine,
   TestStore,

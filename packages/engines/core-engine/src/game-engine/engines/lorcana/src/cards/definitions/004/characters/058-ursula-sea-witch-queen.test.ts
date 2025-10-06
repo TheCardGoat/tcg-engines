@@ -3,12 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { partOfYourWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { cinderellaBallroomSensation } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { partOfYourWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
+import { cinderellaBallroomSensation } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   diabloMaleficentsSpy,
   ursulaSeaWitchQueen,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

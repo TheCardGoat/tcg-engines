@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { chosenHeroCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+import { chosenHeroCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const imperialBow: LorcanaItemCardDefinition = {
   id: "mcd",

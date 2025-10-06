@@ -7,7 +7,7 @@ import {
   nothingToHide,
   zeroToHero,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
-import { tiggerOneOfAKind } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { tiggerOneOfAKind } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
   TestStore,

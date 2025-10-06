@@ -6,8 +6,8 @@ import { describe, expect, it } from "@jest/globals";
 import {
   cruellaDeVilPerfectlyWretched,
   grandPabbieOldestAndWisest,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { weightSet } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { weightSet } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/index";
 import {
   TestEngine,
   TestStore,

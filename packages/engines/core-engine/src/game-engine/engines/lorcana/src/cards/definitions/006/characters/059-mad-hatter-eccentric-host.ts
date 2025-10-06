@@ -3,8 +3,8 @@ import type {
   LorcanitoCharacterCard,
   ScryEffect,
 } from "@lorcanito/lorcana-engine";
-import { chosenPlayer } from "@lorcanito/lorcana-engine/abilities/targets";
 import type { CreateLayerTargetingPlayer } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import { chosenPlayer } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 
 const lookAndDiscard: ScryEffect = {

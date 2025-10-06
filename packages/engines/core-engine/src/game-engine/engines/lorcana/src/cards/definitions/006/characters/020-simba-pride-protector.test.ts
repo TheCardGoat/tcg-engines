@@ -7,8 +7,8 @@ import {
   aladdinCorneredSwordman,
   maleficentBinding,
   mauiHeroToAll,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { simbaPrideProtector } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { simbaPrideProtector } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
   TestStore,

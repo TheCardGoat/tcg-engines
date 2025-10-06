@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { plasmaBlaster } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { plasmaBlaster } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import {
   devilsEyeDiamond,
   mulanDisguisedSoldier,

@@ -7,7 +7,7 @@ import {
   arielOnHumanLegs,
   arielSpectacularSinger,
   mickeyMouseTrueFriend,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { hadesFastTalker } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,

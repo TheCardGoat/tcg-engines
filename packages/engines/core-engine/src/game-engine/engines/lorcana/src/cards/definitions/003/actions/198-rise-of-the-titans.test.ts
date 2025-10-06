@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { riseOfTheTitans } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
-import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
 import { agrabahMarketplace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 

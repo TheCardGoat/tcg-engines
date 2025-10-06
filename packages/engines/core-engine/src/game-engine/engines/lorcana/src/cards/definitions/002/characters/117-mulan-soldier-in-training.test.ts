@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { mulanSoldierInTraining } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { mulanSoldierInTraining } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
   TestStore,

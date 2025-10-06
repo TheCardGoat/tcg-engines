@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
-import { wreckitRalphAdmiralUnderpants } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { wreckitRalphAdmiralUnderpants } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { candleheadDedicatedRacer } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import {
   gloydOrangeboarFierceCompetitor,

@@ -1,5 +1,5 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
 import { magicMirror as ogMagicMirror } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/066-magic-mirror";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const magicMirror: LorcanaItemCardDefinition = {
   ...ogMagicMirror,

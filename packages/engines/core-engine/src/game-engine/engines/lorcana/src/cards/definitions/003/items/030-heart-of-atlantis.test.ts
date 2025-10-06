@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { heartOfAtlantis } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import { heartOfAtlantis } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";
 import {
   TestEngine,
   TestStore,

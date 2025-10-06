@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { edHystericalPartygoer } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { edHystericalPartygoer } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { arielOnHumanLegs } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { magicGoldenFlower } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { arielOnHumanLegs } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { magicGoldenFlower } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/index";
 import {
   TestEngine,
   TestStore,

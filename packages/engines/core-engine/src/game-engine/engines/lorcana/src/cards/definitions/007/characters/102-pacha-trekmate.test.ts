@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { suddenChill } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { suddenChill } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { letTheStormRageOn } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import { brawl } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import { pachaTrekmate } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";

@@ -3,11 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { suddenChill } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+import { suddenChill } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import {
   robinHoodBelovedOutlaw,
   sheriffOfNottinghamCorruptOfficial,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

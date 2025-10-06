@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   cruellaDeVilMiserableAsUsual,
   teKaTheBurningOne,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/index";
 import {
   TestEngine,
   TestStore,

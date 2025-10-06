@@ -3,17 +3,17 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { arielSpectacularSinger } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import { arielSpectacularSinger } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   goofyKnightForADay,
   ladyTremaineImperiousQueen,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   flynnRiderFrenemy,
   hadesMeticulousPlotter,
   nessusRiverGuardian,
   sisuWiseFriend,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

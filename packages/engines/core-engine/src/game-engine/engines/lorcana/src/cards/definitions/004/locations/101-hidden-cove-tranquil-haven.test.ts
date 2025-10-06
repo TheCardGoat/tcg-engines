@@ -6,9 +6,9 @@ import { describe, expect, it } from "@jest/globals";
 import {
   mickeyMouseWaywardSorcerer,
   minnieMouseBelovedPrincess,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { faLiMulansMother } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { faLiMulansMother } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/index";
 import {
   TestEngine,
   TestStore,

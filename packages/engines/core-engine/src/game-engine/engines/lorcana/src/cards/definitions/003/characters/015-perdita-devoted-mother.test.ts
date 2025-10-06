@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { perditaDevotedMother } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { flynnRiderFrenemy } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { perditaDevotedMother } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
+import { flynnRiderFrenemy } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   TestEngine,
   TestStore,

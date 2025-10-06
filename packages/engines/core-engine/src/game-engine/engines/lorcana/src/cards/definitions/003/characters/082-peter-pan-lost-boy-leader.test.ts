@@ -3,11 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { peterPanLostBoyLeader } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { peterPanLostBoyLeader } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   forbiddenMountainMaleficentsCastle,
   neverLandMermaidLagoon,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   TestEngine,
   TestStore,

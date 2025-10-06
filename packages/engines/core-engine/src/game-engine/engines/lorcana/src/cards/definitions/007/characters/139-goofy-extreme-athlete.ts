@@ -1,5 +1,5 @@
-import { yourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
+import { yourOtherCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

@@ -1,6 +1,6 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { yourOtherLocations } from "@lorcanito/lorcana-engine/abilities/target";
-import { thisLocation } from "@lorcanito/lorcana-engine/abilities/targets";
+import { yourOtherLocations } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { thisLocation } from "~/game-engine/engines/lorcana/src/abilities/targets";
 
 export const theWallBorderFortress: LorcanaLocationCardDefinition = {
   id: "w4d",

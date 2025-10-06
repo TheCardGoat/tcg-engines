@@ -7,11 +7,11 @@ import {
   captainHookForcefulDuelist,
   mickeyMouseArtfulRogue,
   mrSmee,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   stitchCovertAgent,
   wendyDarlingAuthorityOnPeterPan,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import { trampStreetSmartDog } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,

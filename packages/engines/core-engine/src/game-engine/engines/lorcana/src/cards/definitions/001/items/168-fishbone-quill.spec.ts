@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   dingleHopper,
   fishboneQuill,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/index";
 import {
   TestEngine,
   TestStore,

@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mufasaBetrayedLeader } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { gastonDespicableDealer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { mufasaBetrayedLeader } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { gastonDespicableDealer } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
   TestStore,

@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { balooFunLovingBear } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { balooFunLovingBear } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { kaaHypnotizingPython } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,

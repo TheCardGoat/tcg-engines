@@ -175,7 +175,7 @@ import {
   yokaiScientificSupervillain,
   yzmaConnivingChemist,
   zipperAstuteDecoy,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters";
 import {
   baymaxsHealthcareChip,
   cardSoldiersSpear,
@@ -195,7 +195,7 @@ import {
   sunglasses,
   trainingDummy,
   transportPod,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006/items";
 import {
   fairyShipRoyalVessel,
   flotillaCoconutArmada,
@@ -209,7 +209,7 @@ import {
   skullRockIsolatedFortress,
   sugarRushSpeedwayFinishLine,
   treasureMountainAzuriteSeaIsland,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations";
 import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const all006Cards: LorcanaCardDefinition[] = [
@@ -420,9 +420,9 @@ export const all006Cards: LorcanaCardDefinition[] = [
 ];
 
 export * from "~/game-engine/engines/lorcana/src/cards/definitions/006/actions";
-export * from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
-export * from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/items";
-export * from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/locations";
+export * from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters";
+export * from "~/game-engine/engines/lorcana/src/cards/definitions/006/items";
+export * from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations";
 
 export const all006CardsById: Record<string, LorcanaCardDefinition> = {};
 all006Cards.forEach((card) => (all006CardsById[card.id] = card));

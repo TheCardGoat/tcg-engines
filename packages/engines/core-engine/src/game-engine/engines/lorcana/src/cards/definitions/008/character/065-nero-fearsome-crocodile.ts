@@ -1,8 +1,8 @@
+import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   chosenOpposingCharacter,
   thisCharacter,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const neroFearsomeCrocodile: LorcanaCharacterCardDefinition = {

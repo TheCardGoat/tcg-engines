@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { peteRottenGuy } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { fortisphere } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/items";
+import { peteRottenGuy } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { fortisphere } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/index";
 import {
   TestEngine,
   TestStore,

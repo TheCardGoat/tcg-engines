@@ -1,4 +1,3 @@
-import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const dingleHopper: LorcanaItemCardDefinition = {
@@ -29,7 +28,7 @@ export const dingleHopper: LorcanaItemCardDefinition = {
           },
         },
       ],
-    } as ActivatedAbility,
+    },
   ],
   flavour: "Enjoy the finest of human hairstyles.",
   inkwell: true,

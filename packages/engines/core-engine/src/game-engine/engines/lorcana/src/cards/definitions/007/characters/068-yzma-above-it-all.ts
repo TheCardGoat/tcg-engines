@@ -1,8 +1,8 @@
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
 import {
   evasiveAbility,
   shiftAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverAnotherCharIsBanishedInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

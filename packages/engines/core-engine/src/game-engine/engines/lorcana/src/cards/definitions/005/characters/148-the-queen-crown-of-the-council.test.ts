@@ -3,12 +3,12 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { theQueenDiviner } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
+import { theQueenDiviner } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   theQueenCrownOfTheCouncil,
   theQueenCruelestOfAll,
   theQueenFairestOfAll,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

@@ -1,5 +1,5 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+import { whileConditionThisCharacterGets } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 
 export const ratigansPartySeedyBackRoom: LorcanaLocationCardDefinition = {
   id: "dq2",

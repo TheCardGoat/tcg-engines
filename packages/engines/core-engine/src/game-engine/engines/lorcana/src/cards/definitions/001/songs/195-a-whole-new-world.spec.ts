@@ -7,9 +7,9 @@ import {
   magicBroomBucketBrigade,
   moanaOfMotunui,
   teKaTheBurningOne,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
-import { aWholeNewWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
+import { aWholeNewWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/index";
 import {
   TestEngine,
   TestStore,

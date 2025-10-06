@@ -1,8 +1,8 @@
-import { whileConditionThisCharacterGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import {
   resistAbility,
   shiftAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { whileConditionThisCharacterGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const cinderellaStouthearted: LorcanaCharacterCardDefinition = {

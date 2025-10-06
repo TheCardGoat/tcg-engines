@@ -1,8 +1,8 @@
+import { moveDamageAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import {
   chosenCharacter,
   chosenOpposingCharacter,
-} from "@lorcanito/lorcana-engine/abilities/target";
-import { moveDamageAbility } from "~/game-engine/engines/lorcana/src/abilities";
+} from "~/game-engine/engines/lorcana/src/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theNokkMythicalSpirit: LorcanaCharacterCardDefinition = {

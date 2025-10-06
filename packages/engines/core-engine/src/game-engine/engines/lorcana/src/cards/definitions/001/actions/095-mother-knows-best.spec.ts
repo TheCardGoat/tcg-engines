@@ -3,7 +3,7 @@ import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definiti
 import {
   letItGo,
   motherKnowsBest,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Mother Knows Best", () => {

@@ -8,8 +8,8 @@ import {
   moanaBornLeader,
   mrSnoopsIneptBusinessman,
   puaPotbelliedBuddy,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { motunuiIslandParadise } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
+import { motunuiIslandParadise } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
 import {
   TestEngine,
   TestStore,

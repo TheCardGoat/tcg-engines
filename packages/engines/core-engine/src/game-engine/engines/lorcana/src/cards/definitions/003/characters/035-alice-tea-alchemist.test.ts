@@ -7,8 +7,8 @@ import {
   madamMimFox,
   merlinCrab,
   merlinGoat,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { aliceTeaAlchemist } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
+import { aliceTeaAlchemist } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

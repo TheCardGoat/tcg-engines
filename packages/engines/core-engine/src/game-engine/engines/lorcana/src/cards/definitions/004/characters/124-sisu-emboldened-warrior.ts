@@ -1,4 +1,4 @@
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const sisuEmboldenedWarrior: LorcanaCharacterCardDefinition = {

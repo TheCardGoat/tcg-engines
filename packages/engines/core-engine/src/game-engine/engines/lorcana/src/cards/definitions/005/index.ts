@@ -144,7 +144,7 @@ import {
   wreckitRalphAdmiralUnderpants,
   yzmaUnjustlyTreated,
   zazuAdvisorToMufasa,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   amberChromiconItem,
   amethystChromicon,
@@ -165,7 +165,7 @@ import {
   shieldOfArendelle,
   steelChromicon,
   theSwordReleased,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/items";
 import {
   badanonVillainSupportCenter,
   elsasIcePalacePlaceOfSolitude,
@@ -179,7 +179,7 @@ import {
   theGreatIlluminaryRadiantBallroom,
   theLibraryAGiftForBelle,
   tropicalRainforestJaguarLair,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations";
 import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import {
   allFunnedOut,

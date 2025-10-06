@@ -1,6 +1,6 @@
-import { have3orMorePuppiesInPlay } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whileConditionThisCharacterGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+import { have3orMorePuppiesInPlay } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whileConditionThisCharacterGets } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theColonelOldSheepdog: LorcanaCharacterCardDefinition = {

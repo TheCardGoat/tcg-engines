@@ -1,5 +1,5 @@
-import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/target";
 import { exertAndCantReady } from "@lorcanito/lorcana-engine/effects/effects";
+import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const pepaMadrigalWeatherMaker: LorcanaCharacterCardDefinition = {

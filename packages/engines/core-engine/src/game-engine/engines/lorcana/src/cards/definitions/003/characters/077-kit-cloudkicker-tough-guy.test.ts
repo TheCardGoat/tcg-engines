@@ -6,8 +6,8 @@ import { describe, expect, it } from "@jest/globals";
 import {
   kitCloudkickerToughGuy,
   mrSmeeBumblingMate,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
+import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   TestEngine,
   TestStore,

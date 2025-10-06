@@ -4,12 +4,12 @@
 
 import { describe, expect, it } from "@jest/globals";
 import { smash } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
-import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   hydraDeadlySerpent,
   kingLouieBandleader,
   kitCloudkickerNavigator,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

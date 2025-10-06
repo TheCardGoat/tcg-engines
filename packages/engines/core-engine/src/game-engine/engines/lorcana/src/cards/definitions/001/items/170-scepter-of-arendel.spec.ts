@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { scepterOfArendelle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { scepterOfArendelle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/index";
 import {
   TestEngine,
   TestStore,

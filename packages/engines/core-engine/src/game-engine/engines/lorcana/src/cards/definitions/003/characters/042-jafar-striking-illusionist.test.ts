@@ -3,10 +3,10 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
-import { aWholeNewWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/songs";
-import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
-import { jafarStrikingIllusionist } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
+import { aWholeNewWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
+import { jafarStrikingIllusionist } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

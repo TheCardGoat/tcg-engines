@@ -7,14 +7,14 @@ import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/
 import {
   moanChosenByTheOcean,
   tamatoaSoShiny,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import {
   luckyDime,
   mauisFishHook,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
-import { mauisPlaceOfExileHiddenIsland } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/locations";
-import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/locations";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
+import { mauisPlaceOfExileHiddenIsland } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations/indext";
+import { hiddenCoveTranquilHaven } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations";
 import { perilousMazeWateryLabyrinth } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import {
   heiheiExpandedConsciousness,

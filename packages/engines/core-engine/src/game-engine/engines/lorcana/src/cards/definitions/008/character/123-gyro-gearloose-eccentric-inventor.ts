@@ -1,7 +1,7 @@
-import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { getStrengthThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
+import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const gyroGearlooseEccentricInventor: LorcanaCharacterCardDefinition = {

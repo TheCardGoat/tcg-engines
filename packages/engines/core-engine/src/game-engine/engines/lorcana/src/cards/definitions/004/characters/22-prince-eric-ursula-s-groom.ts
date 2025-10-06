@@ -1,12 +1,12 @@
-import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-import {
-  whileYouHaveACharacterNamedThisCharGains,
-  whileYouHaveACharacterNamedThisCharGets,
-} from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import {
   bodyguardAbility,
   shiftAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import {
+  whileYouHaveACharacterNamedThisCharGains,
+  whileYouHaveACharacterNamedThisCharGets,
+} from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const princeEricUrsulasGroom: LorcanaCharacterCardDefinition = {

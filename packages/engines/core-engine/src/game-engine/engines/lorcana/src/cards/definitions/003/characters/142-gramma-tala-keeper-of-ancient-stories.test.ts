@@ -6,8 +6,8 @@ import { describe, it } from "@jest/globals";
 import {
   grammaTalaKeeperOfAncientStories,
   mrSmeeBumblingMate,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
+import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
 import {
   TestEngine,
   TestStore,

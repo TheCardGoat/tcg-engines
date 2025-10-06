@@ -1,14 +1,14 @@
 import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
 import {
-  anyCardTargetYouOwn,
-  thisCard,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenYouMoveACharacterHere } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import {
   drawXCards,
   mayBanish,
   youGainLore,
 } from "@lorcanito/lorcana-engine/effects/effects";
+import {
+  anyCardTargetYouOwn,
+  thisCard,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenYouMoveACharacterHere } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 
 export const sugarRushSpeedwayFinishLine: LorcanaLocationCardDefinition = {
   id: "f7t",

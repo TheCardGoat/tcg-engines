@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { teKaTheBurningOne } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
-import { swordOfTruth } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
+import { swordOfTruth } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import { TestStore } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
 
 describe("Sword of Truth", () => {

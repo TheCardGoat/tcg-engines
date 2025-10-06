@@ -1,8 +1,8 @@
+import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import {
   chosenCharacter,
   chosenItemOfYours,
-} from "@lorcanito/lorcana-engine/abilities/targets";
-import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const iVeHadIt: ActivatedAbility = {

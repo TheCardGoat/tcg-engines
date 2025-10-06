@@ -9,8 +9,8 @@ import {
   camiloMadrigalPrankster,
   doloresMadrigalEasyListener,
   julietaMadrigalExcellentCook,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/characters";
-import { mirabelMadrigalFamilyGatherer } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
+import { mirabelMadrigalFamilyGatherer } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,
   TestStore,

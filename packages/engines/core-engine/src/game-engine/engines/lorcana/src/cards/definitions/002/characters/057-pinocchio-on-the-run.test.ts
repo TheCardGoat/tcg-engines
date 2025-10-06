@@ -7,8 +7,8 @@ import {
   arthurTrainedSwordsman,
   pinocchioOnTheRun,
   yzmaWithoutBeautySleep,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
-import { theSorcerersSpellbook } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items/items";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
+import { theSorcerersSpellbook } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import {
   TestEngine,
   TestStore,

@@ -1,10 +1,10 @@
-import { yourBanishedLocations } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenXIsBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
 import { putThisCardIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
 import {
   duringYourTurnGains,
   evasiveAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { yourBanishedLocations } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenXIsBanished } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const tritonYoungPrince: LorcanaCharacterCardDefinition = {

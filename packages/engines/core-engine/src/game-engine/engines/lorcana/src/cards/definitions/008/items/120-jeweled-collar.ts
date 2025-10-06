@@ -1,8 +1,9 @@
-import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-import { yourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
-import { whenChallenged } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-import { targetCardsGains } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
 import { putTopCardOfYourDeckIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
+
+import { yourCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import { whenChallenged } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
+import { targetCardsGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const jeweledCollar: LorcanaItemCardDefinition = {
   id: "xhq",

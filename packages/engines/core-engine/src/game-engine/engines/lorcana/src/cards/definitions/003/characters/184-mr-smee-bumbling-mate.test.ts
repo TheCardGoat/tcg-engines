@@ -3,11 +3,11 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { captainHookCaptainOfTheJollyRoger } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { beastTragicHero } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { captainHookCaptainOfTheJollyRoger } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { beastTragicHero } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { theBareNecessities } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
-import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { amethystChromicon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/items";
+import { mrSmeeBumblingMate } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
+import { amethystChromicon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items";
 import {
   TestEngine,
   TestStore,

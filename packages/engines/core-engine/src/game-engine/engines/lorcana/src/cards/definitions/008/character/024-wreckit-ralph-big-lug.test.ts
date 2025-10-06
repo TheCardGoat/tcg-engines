@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { vanellopeVonSchweetzCandyMechanic } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/characters";
+import { vanellopeVonSchweetzCandyMechanic } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { wreckitRalphBigLug } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,

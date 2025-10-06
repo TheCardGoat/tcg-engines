@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/items";
-import { magicaDeSpellTheMidasTouch } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
-import { luckyDime } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/items";
+import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
+import { magicaDeSpellTheMidasTouch } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
+import { luckyDime } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
 import {
   TestEngine,
   TestStore,

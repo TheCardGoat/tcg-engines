@@ -3,9 +3,9 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { tinkerBellGiantFairy } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
+import { tinkerBellGiantFairy } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { letTheStormRageOn } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
-import { beastTragicHero } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+import { beastTragicHero } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { basilSecretInformer } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,

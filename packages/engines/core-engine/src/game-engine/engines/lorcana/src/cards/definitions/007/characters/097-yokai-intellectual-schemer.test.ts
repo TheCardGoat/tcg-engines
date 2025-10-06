@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   theQueenCommandingPresence,
   theQueenRegalMonarch,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { yokaiScientificSupervillain } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { yokaiIntellectualSchemer } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {

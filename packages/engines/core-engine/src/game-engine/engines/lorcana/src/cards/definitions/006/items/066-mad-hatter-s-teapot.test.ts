@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { madHattersTeapot } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/items";
+import { madHattersTeapot } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/index";
 import {
   TestEngine,
   TestStore,

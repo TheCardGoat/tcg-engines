@@ -6,7 +6,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   plutoFriendlyPooch,
   pongoDeterminedFather,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+} from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
   TestStore,

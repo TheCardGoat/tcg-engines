@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { mauriceWorldFamousInventor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/characters";
-import { mamaOdieMysticalMaven } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+import { mauriceWorldFamousInventor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
+import { mamaOdieMysticalMaven } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import { iFindEmIFlattenEm } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import {
   TestEngine,

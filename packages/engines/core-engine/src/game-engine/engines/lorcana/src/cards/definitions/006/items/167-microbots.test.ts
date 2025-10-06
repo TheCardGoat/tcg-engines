@@ -3,7 +3,7 @@
  */
 
 import { describe, it } from "@jest/globals";
-import { microbots } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/items";
+import { microbots } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/index";
 import {
   TestEngine,
   TestStore,
