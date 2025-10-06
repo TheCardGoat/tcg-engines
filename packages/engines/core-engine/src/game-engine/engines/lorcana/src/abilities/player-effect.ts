@@ -18,7 +18,8 @@ export interface BasePlayerEffect extends BaseEffect {
 // Player-targeting effects (effects that can only target players)
 export interface DrawEffect extends BasePlayerEffect {
   type: "draw";
-  parameters: {
+  amount?: number | DynamicValue; // Legacy property name
+  parameters?: {
     value: number | DynamicValue;
     target?: PlayerTarget;
   };
@@ -97,7 +98,8 @@ export interface DrawThenDiscardEffect extends BasePlayerEffect {
 
 export interface DiscardEffect extends BasePlayerEffect {
   type: "discard";
-  parameters: {
+  amount?: number | DynamicValue; // Legacy property name
+  parameters?: {
     value: number | DynamicValue;
     random?: boolean;
   };

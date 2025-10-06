@@ -1,10 +1,10 @@
-import type {
-  AbilityEffect,
-  LorcanitoItemCard,
-} from "@lorcanito/lorcana-engine";
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenYouPlayMayDrawACard } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
+import type {
+  AbilityEffect,
+  LorcanitoItemCard,
+} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const fortisphere: LorcanaItemCardDefinition = {
   id: "id0",

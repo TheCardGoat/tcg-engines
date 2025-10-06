@@ -1,7 +1,6 @@
+import { propertyStaticAbilities } from "~/game-engine/engines/lorcana/src/abilities/propertyStaticAbilities";
 import { whenPlayAndWheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-import { propertyStaticAbilities } from "../../../abilities/propertyStaticAbilities"; // Add import
 
 export const tamatoaSoShiny: LorcanaCharacterCardDefinition = {
   id: "jzt",

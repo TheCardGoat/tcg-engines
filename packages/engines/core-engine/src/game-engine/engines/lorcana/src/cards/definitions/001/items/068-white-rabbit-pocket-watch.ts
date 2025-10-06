@@ -1,5 +1,5 @@
-import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import type { AbilityEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const whiteRabbitPocketWatch: LorcanaItemCardDefinition = {

@@ -1,9 +1,9 @@
+import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
+import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type {
   BanishEffect,
   LorcanitoCharacterCard,
-} from "@lorcanito/lorcana-engine";
-import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
-import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
+} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const aladdinBraveRescuer: LorcanaCharacterCardDefinition = {
   id: "gf4",

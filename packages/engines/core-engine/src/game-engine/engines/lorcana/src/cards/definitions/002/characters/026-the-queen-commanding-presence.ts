@@ -2,7 +2,7 @@ import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keywor
 import {
   chosenCharacter,
   chosenOpposingCharacter,
-} from "~/game-engine/engines/lorcana/src/abilities/target";
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

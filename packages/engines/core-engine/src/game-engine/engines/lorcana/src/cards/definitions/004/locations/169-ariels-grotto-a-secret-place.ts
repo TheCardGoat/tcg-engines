@@ -1,5 +1,5 @@
+import { propertyStaticAbilities } from "~/game-engine/engines/lorcana/src/abilities/propertyStaticAbilities";
 import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-import { propertyStaticAbilities } from "../../../abilities/propertyStaticAbilities";
 
 export const arielsGrottoASecretPlace: LorcanaLocationCardDefinition = {
   id: "ip4",

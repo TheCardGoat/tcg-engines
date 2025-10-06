@@ -87,7 +87,11 @@ export type AbilityDuration =
   | { type: "forTheRestOfThisTurn" }
   | { type: "duringTheirNextTurn" }
   | { type: "turns"; count: number }
-  | { type: "permanent" };
+  | { type: "permanent" }
+  | "turn" // Legacy: string format
+  | "next_turn" // Legacy: string format
+  | "continuous" // Legacy: string format
+  | string; // Legacy: support other legacy string durations
 
 type UpToValue = {
   type: "upTo";
@@ -101,30 +105,36 @@ export type DynamicValue =
       filter?: LorcanaCardFilter;
       previousEffectTargets?: true;
       multiplier?: number;
+      dynamic?: any; // Legacy: support old dynamic property format
     }
   | {
       type: "targetDamage";
       multiplier?: number;
+      dynamic?: any; // Legacy: support old dynamic property format
     }
   | {
       type: "lastEffectValue";
       multiplier?: number;
+      dynamic?: any; // Legacy: support old dynamic property format
     }
   | {
       type: "sourceStat";
       stat: "strength" | "willpower" | "lore" | "cost";
       multiplier?: number;
+      dynamic?: any; // Legacy: support old dynamic property format
     }
   | {
       type: "previousTargetStat";
       stat: "strength" | "willpower" | "lore" | "cost";
       multiplier?: number;
+      dynamic?: any; // Legacy: support old dynamic property format
     }
   | {
       type: "handSizeDifference";
       basePlayer: "self" | "opponent";
       comparePlayer: "target" | "self" | "opponent";
       multiplier?: number;
+      dynamic?: any; // Legacy: support old dynamic property format
     }
   | {
       type: "locationStat";
@@ -333,12 +343,24 @@ export interface LorcanaBaseAbility {
   responder?: "self" | "opponent"; // Who resolves the ability, who chooses targets, etc. This also changes how we resolve conditions/filters/etc in this context self refers to the responder, and opponent refers to the responder's opponent
 }
 
+// Legacy resolution ability for action/song cards
+export interface LorcanaResolutionAbility extends LorcanaBaseAbility {
+  type: "resolution";
+  effects: any[]; // Legacy: effects array
+  resolutionConditions?: any[]; // Legacy: conditions for resolution
+  dependentEffects?: any[] | boolean; // Legacy: effects dependent on primary effects or boolean flag
+  resolveEffectsIndividually?: boolean; // Legacy: resolve effects one at a time
+  conditions?: any[]; // Legacy: conditions array (plural form)
+  onCancelLayer?: () => void; // Legacy: callback when layer is cancelled
+}
+
 export type LorcanaAbility =
   | LorcanaKeywordAbility
   | LorcanaActivatedAbility
   | LorcanaReplacementAbility
   | LorcanaStaticAbility
-  | LorcanaTriggeredAbility;
+  | LorcanaTriggeredAbility
+  | LorcanaResolutionAbility; // Legacy: resolution ability type
 
 export type Ability = LorcanaAbility;
 

@@ -1,10 +1,11 @@
 import type {
   AbilityEffect,
   LorcanitoCharacterCard,
-} from "@lorcanito/lorcana-engine";
+} from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import { whenThisCharacterBanishedInAChallenge } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
+import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const fairyGodmotherMysticArmorer: LorcanaCharacterCardDefinition = {
   id: "fg2",

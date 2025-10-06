@@ -24,7 +24,12 @@ import type {
 
 export interface LorcanaActivatedAbility extends LorcanaBaseAbility {
   type: "activated";
-  costs: LorcanaAbilityCost;
+  costs: LorcanaAbilityCost | Array<{ type: string; [key: string]: any }>; // Legacy: array format
+  conditions?: any[]; // Legacy: conditions array
+  effects?: any[]; // Legacy: effects array
+  oncePerTurn?: boolean; // Legacy: once per turn flag
+  resolveEffectsIndividually?: boolean; // Legacy: resolve effects one at a time
+  nameACard?: boolean; // Legacy: requires naming a card
 }
 
 export const isActivatedAbility = (

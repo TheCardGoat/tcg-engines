@@ -1,4 +1,4 @@
-import type { LoreEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { LoreEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import { whenYouPlayThisCharAbility } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

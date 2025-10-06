@@ -1,4 +1,4 @@
-import type { CardRestrictionEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { CardRestrictionEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

@@ -1,8 +1,8 @@
+import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type {
   AttributeEffect,
   TargetConditionalEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
-import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
+} from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const targetingAladdin: AttributeEffect = {

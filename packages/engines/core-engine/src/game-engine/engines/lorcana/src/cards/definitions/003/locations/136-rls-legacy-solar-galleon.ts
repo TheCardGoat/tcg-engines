@@ -2,8 +2,8 @@ import {
   evasiveAbility,
   gainAbilityWhileHere,
 } from "~/game-engine/engines/lorcana/src/abilities";
+import { propertyStaticAbilities } from "~/game-engine/engines/lorcana/src/abilities/propertyStaticAbilities";
 import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-import { propertyStaticAbilities } from "../../../abilities/propertyStaticAbilities";
 
 export const rlsLegacySolarGalleon: LorcanaLocationCardDefinition = {
   id: "ok0",

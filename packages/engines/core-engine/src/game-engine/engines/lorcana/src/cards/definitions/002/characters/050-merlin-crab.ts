@@ -1,4 +1,4 @@
-import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenPlayAndWhenLeaves } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

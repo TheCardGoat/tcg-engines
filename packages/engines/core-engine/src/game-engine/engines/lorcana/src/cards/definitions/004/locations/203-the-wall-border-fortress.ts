@@ -1,5 +1,7 @@
-import { yourOtherLocations } from "~/game-engine/engines/lorcana/src/abilities/target";
-import { thisLocation } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import {
+  thisLocation,
+  yourOtherLocations,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theWallBorderFortress: LorcanaLocationCardDefinition = {

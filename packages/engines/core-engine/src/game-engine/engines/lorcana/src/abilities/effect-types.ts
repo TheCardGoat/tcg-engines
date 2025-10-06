@@ -52,6 +52,7 @@ export interface ModifyStatEffect extends BaseCardEffect {
 
 export interface BanishEffect extends BaseCardEffect {
   type: "banish";
+  target?: any; // Legacy: singular target property
 }
 
 export interface DealDamageEffect extends BaseCardEffect {
@@ -137,7 +138,9 @@ export interface MultiEffect extends BaseEffect {
 // Modal effect type
 export interface ModalEffect extends BaseEffect {
   type: "modal";
-  parameters: {
+  target?: any; // Legacy: singular target property
+  modes?: any[]; // Legacy: modes at top level
+  parameters?: {
     modes: Array<{
       text: string;
       effects: LorcanaEffect[];
@@ -206,18 +209,61 @@ export interface PlayCardEffect extends BaseCardEffect {
 // Legacy effect types for backward compatibility during migration
 export interface HealEffect extends BaseCardEffect {
   type: "heal";
-  parameters: {
+  amount?: number | DynamicValue; // Legacy property name
+  target?: any; // Legacy singular target property
+  parameters?: {
     value: number | DynamicValue;
   };
 }
 
 export interface AttributeEffect extends BaseCardEffect {
   type: "attribute";
-  parameters: {
+  attribute?: "strength" | "lore" | "willpower"; // Legacy property name
+  amount?: number | DynamicValue; // Legacy property name
+  modifier?: "add" | "subtract"; // Legacy modifier property
+  dynamic?: any; // Legacy dynamic value
+  target?: any; // Legacy: singular target property
+  parameters?: {
     attribute: "strength" | "lore" | "willpower";
     value: number | DynamicValue;
   };
 }
+
+export interface ReplacementEffect extends BaseCardEffect {
+  type: "replacement";
+  replacement?: string; // Legacy replacement type
+  amount?: number | DynamicValue; // Legacy property for value replacement
+  duration?: AbilityDuration;
+}
+
+// Legacy effect types for backward compatibility
+export interface MoveEffect extends BaseCardEffect {
+  type: "move";
+  to: string;
+  from?: string;
+  exerted?: boolean;
+  target?: any; // Legacy singular target property
+}
+
+export interface DamageEffect extends BaseCardEffect {
+  type: "damage";
+  amount?: number | DynamicValue; // Legacy amount property
+  target?: any; // Legacy singular target property
+}
+
+// Legacy type exports from old @lorcanito/lorcana-engine package
+export type ScryEffect = any;
+export type AbilityEffect = any;
+export type LoreEffect = any;
+export type CardEffectTarget = any;
+export type PlayerEffectTarget = any;
+export type EffectTargets = any;
+export type TargetConditionalEffect = any;
+export type ExertEffect = any;
+export type CardRestrictionEffect = any;
+export type LorcanitoCharacterCard = any;
+export type DiscardEffect = any;
+export type ResolutionAbility = any;
 
 type CardEffect =
   | GetEffect
@@ -240,7 +286,10 @@ type CardEffect =
   | RemoveDamageEffect
   | BasicInkwellTriggerEffect
   | HealEffect
-  | AttributeEffect;
+  | AttributeEffect
+  | ReplacementEffect
+  | MoveEffect // Legacy
+  | DamageEffect; // Legacy
 
 // Union of all effect types
 export type LorcanaEffect =

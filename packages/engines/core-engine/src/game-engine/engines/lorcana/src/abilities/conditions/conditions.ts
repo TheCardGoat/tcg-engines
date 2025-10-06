@@ -10,3 +10,39 @@ export type Condition = {
 export function createCondition(config: any): Condition {
   return config as Condition;
 }
+
+// Legacy condition constructors
+export function ifYouHaveCharacterNamed(name: string): Condition {
+  return { type: "hasCharacterNamed", name };
+}
+
+export function haveElsaInPlay(): Condition {
+  return { type: "hasCharacterNamed", name: "Elsa" };
+}
+
+export function haveCaptainInPlay(): Condition {
+  return { type: "hasCharacterWithClassification", classification: "captain" };
+}
+
+export function whileCharacterIsAtLocation(config: any): Condition {
+  return config as Condition;
+}
+
+export function whileThisCharacterIsExerted(config: any): Condition {
+  return config as Condition;
+}
+
+export function ifThisCharacterIsExerted(config: any): Condition {
+  return config as Condition;
+}
+
+export function duringYourTurn(config: any): Condition {
+  return config as Condition;
+}
+
+export function unlessItIsAtALocation(config: any): Condition {
+  return config as Condition;
+}
+
+// Re-export Condition type for old import paths
+export type { Condition };

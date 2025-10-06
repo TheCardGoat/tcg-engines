@@ -1,4 +1,4 @@
-import type { ScryEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { ScryEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const beOurGuest: LorcanaActionCardDefinition = {

@@ -1,9 +1,9 @@
+import { discardACard } from "~/game-engine/engines/lorcana/src/abilities/effect";
+import { whenChallenged } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type {
   LorcanitoCharacterCard,
   ResolutionAbility,
-} from "@lorcanito/lorcana-engine";
-import { discardACard } from "~/game-engine/engines/lorcana/src/abilities/effect";
-import { whenChallenged } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
+} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const smartManeuver: ResolutionAbility = {
   type: "resolution",

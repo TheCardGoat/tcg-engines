@@ -1,5 +1,5 @@
-import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import type { CardEffectTarget } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const chosenCharacter: CardEffectTarget = {

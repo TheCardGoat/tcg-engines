@@ -1,9 +1,9 @@
-import type { Condition } from "@lorcanito/lorcana-engine/store/resolvers/conditionResolver";
 import {
   resistAbility,
   wardAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
-import { itemsYouControl } from "~/game-engine/engines/lorcana/src/abilities/target";
+import type { Condition } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
+import { itemsYouControl } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whileConditionThisCharacterGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

@@ -9,3 +9,76 @@ export type WhenAbility = LorcanaTriggeredAbility;
 export function createWhenAbility(config: any): LorcanaTriggeredAbility {
   return config as LorcanaTriggeredAbility;
 }
+
+// Legacy ability constructors
+export function whenYouPlayThisCharAbility(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenYouPlayThisForEachYouPayLess(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenThisCharChallengesAndIsBanished(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenYouPlayMayDrawACard(config: any): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenThisCharacterBanishedInAChallenge(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenChallengedAndBanished(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenChallenged(config: any): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenPlayAndWheneverQuests(
+  config: any,
+): LorcanaTriggeredAbility[] {
+  return [config as LorcanaTriggeredAbility];
+}
+
+export function whenThisCharacterBanished(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenPlayAndWhenLeaves(config: any): LorcanaTriggeredAbility[] {
+  return [config as LorcanaTriggeredAbility];
+}
+
+export function whenYourOtherCharactersIsBanished(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenXIsBanished(config: any): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenMovesToALocation(config: any): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenYouPlayThis(config: any): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}

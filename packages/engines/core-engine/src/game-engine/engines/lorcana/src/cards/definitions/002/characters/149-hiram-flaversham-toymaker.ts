@@ -1,5 +1,7 @@
-import { chosenItemOfYours } from "~/game-engine/engines/lorcana/src/abilities/target";
-import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import {
+  chosenItemOfYours,
+  self,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenPlayAndWheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

@@ -1,4 +1,4 @@
-import type { Condition } from "@lorcanito/lorcana-engine/store/resolvers/conditionResolver";
+import type { Condition } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
 import { whenYouPlayThisCharAbility } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import { whileConditionThisCharacterGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";

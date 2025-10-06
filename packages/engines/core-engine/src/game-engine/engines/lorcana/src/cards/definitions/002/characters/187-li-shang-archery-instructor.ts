@@ -1,4 +1,4 @@
-import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { AbilityEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import { allYourCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

@@ -1,8 +1,8 @@
+import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
 import type {
   GainAbilityStaticAbility,
   LorcanitoCharacterCard,
-} from "@lorcanito/lorcana-engine";
-import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
+} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const dangHuTalonChief: LorcanaCharacterCardDefinition = {
   id: "ave",

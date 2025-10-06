@@ -1,12 +1,3 @@
-import type {
-  BanishEffect,
-  DamageEffect,
-  DiscardEffect,
-  LorcanitoCharacterCard,
-  ResolutionAbility,
-  ScryEffect,
-} from "@lorcanito/lorcana-engine";
-import type { ModalEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import {
   type ActivatedAbility,
   bodyguardAbility,
@@ -65,22 +56,30 @@ import {
   youPayXLessToPlayNextCharThisTurn,
   youPayXLessToPlayNextItemThisTurn,
 } from "~/game-engine/engines/lorcana/src/abilities/effect";
+import type {
+  BanishEffect,
+  DamageEffect,
+  DiscardEffect,
+  LorcanitoCharacterCard,
+  ModalEffect,
+  ResolutionAbility,
+  ScryEffect,
+} from "~/game-engine/engines/lorcana/src/abilities/effect-types";
+import { propertyStaticAbilities } from "~/game-engine/engines/lorcana/src/abilities/propertyStaticAbilities";
 import {
+  allOpposingCharacters,
   allOtherCharactersHere,
+  chosenCharacter,
+  chosenCharacterOfYours,
   chosenItemOfYours,
   chosenItemOfYoursInHand,
   chosenOpposingCharacter,
-  yourOtherCharacters,
-} from "~/game-engine/engines/lorcana/src/abilities/target";
-import {
-  allOpposingCharacters,
-  chosenCharacter,
-  chosenCharacterOfYours,
   opponent,
   self,
   thisCharacter,
   withCostXorLess,
   yourBanishedItems,
+  yourOtherCharacters,
 } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import {
   whenChallenged,
@@ -114,7 +113,7 @@ import {
   whileThisCharacterHasNoDamageGets,
   whileYouHaveACharacterNamedThisCharGets,
 } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
-import { propertyStaticAbilities } from "../../../abilities/propertyStaticAbilities";
+import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 // Individual card imports
 export { balooVonBruinwaldXiii } from "./001-baloo-von-bruinwald-xiii";

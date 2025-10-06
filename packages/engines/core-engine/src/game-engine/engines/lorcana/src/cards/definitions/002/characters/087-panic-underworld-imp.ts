@@ -1,4 +1,4 @@
-import type { AttributeEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+import type { AttributeEffect } from "~/game-engine/engines/lorcana/src/abilities/effect-types";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const targetingPain: AttributeEffect = {

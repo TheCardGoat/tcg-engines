@@ -26,6 +26,7 @@ export type ScryParameters = {
 
 export type ScryEffect = BasePlayerEffect & {
   type: "scry";
+  amount?: number; // Legacy property name
   parameters: ScryParameters;
 };
 

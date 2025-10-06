@@ -1,7 +1,3 @@
-import type {
-  CardEffectTarget,
-  LorcanitoItemCard,
-} from "@lorcanito/lorcana-engine";
 import type { StaticAbilityWithEffect } from "~/game-engine/engines/lorcana/src/abilities";
 import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
 import {
@@ -9,6 +5,10 @@ import {
   youGainLore,
 } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { targetCardsGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
+import type {
+  CardEffectTarget,
+  LorcanitoItemCard,
+} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const cardsInPlay: CardEffectTarget = {
   type: "card",

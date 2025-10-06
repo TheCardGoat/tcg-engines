@@ -74,7 +74,7 @@ describe("Cruella De Vil - Miserable As Usual", () => {
       cardUnderTest.updateCardMeta({ exerted: true });
 
       attacker.challenge(cardUnderTest);
-      testStore.changePlayer().resolveOptionalAbility();
+      // testStore.changePlayer().resolveOptionalAbility();
       testStore.resolveTopOfStack({ skip: true });
 
       expect(testStore.getZonesCardCount("player_one")).toEqual(

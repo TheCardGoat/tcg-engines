@@ -14,6 +14,12 @@ import type {
 
 export interface LorcanaStaticAbility extends LorcanaBaseAbility {
   type: "static";
+  ability?: string; // Legacy: ability name/type
+  value?: number; // Legacy: ability value (e.g., Singer 5)
+  gainedAbility?: any; // Legacy: ability granted to other cards
+  target?: any; // Legacy: singular target property
+  effects?: any[]; // Legacy: effects array for static abilities
+  conditions?: any[]; // Legacy: conditions array (plural form)
 }
 
 export const isStaticAbility = (
