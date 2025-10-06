@@ -153,6 +153,12 @@ export function wheneverThisCharSings(config: any): LorcanaTriggeredAbility {
   return config as LorcanaTriggeredAbility;
 }
 
+export function wheneverOneOfYourCharactersSings(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
 export function wheneverYouDiscardACard(config: any): LorcanaTriggeredAbility {
   return config as LorcanaTriggeredAbility;
 }
