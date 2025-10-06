@@ -1,0 +1,22 @@
+/**
+ * @jest-environment node
+ */
+
+import { describe, it } from "@jest/globals";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { auntCassBiggestFan } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/characters";
+
+describe("Aunt Cass - Biggest Fan", () => {
+  it.skip("HAPPY TO HELP Whenever this character quests, chosen Inventor character gets +1 {L} this turn.", async () => {
+    const testEngine = new TestEngine({
+      inkwell: auntCassBiggestFan.cost,
+      play: [auntCassBiggestFan],
+      hand: [auntCassBiggestFan],
+    });
+
+    await testEngine.playCard(auntCassBiggestFan);
+
+    await testEngine.resolveOptionalAbility();
+    await testEngine.resolveTopOfStack({});
+  });
+});

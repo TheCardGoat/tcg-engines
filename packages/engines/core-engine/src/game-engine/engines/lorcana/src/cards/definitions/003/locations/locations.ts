@@ -1,92 +1,18 @@
-import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-export const fangRiverCity: LorcanaLocationCardDefinition = {
-  id: "fangRiverCity",
-  type: "location",
-  name: "Fang",
-  title: "River City",
-  characteristics: ["location"],
-  inkwell: true,
-  colors: ["sapphire"],
-  cost: 2,
-  willpower: 6,
-  lore: 1,
-  moveCost: 1,
-  illustrator: "",
-  number: 0,
-  set: "ITI",
-  rarity: "common",
-};
-
-export const agrabahMarketplace: LorcanaLocationCardDefinition = {
-  id: "agrabahMarketplace",
-  type: "location",
-  name: "Agrabah",
-  title: "Marketplace",
-  characteristics: ["location"],
-  inkwell: true,
-  colors: ["amber"],
-  cost: 1,
-  willpower: 4,
-  lore: 1,
-  moveCost: 1,
-  illustrator: "",
-  number: 0,
-  set: "ITI",
-  rarity: "common",
-};
-
-export const prideLandsJungleOasis: LorcanaLocationCardDefinition = {
-  id: "prideLandsJungleOasis",
-  type: "location",
-  name: "Pride Lands",
-  title: "Jungle Oasis",
-  characteristics: ["location"],
-  inkwell: true,
-  colors: ["amber"],
-  cost: 2,
-  willpower: 7,
-  lore: 1,
-  moveCost: 2,
-  illustrator: "",
-  number: 0,
-  set: "SSK",
-  rarity: "rare",
-};
-
-export const theQueensCastleMirrorChamber: LorcanaLocationCardDefinition = {
-  id: "theQueensCastleMirrorChamber",
-  type: "location",
-  name: "The Queen's Castle",
-  title: "Mirror Chamber",
-  characteristics: ["location"],
-  inkwell: true,
-  colors: ["sapphire"],
-  cost: 3,
-  willpower: 8,
-  lore: 1,
-  moveCost: 2,
-  illustrator: "",
-  number: 0,
-  set: "ITI",
-  rarity: "uncommon",
-};
-
-export const forbiddenMountainMaleficentsCastle: LorcanaLocationCardDefinition =
-  {
-    id: "forbiddenMountainMaleficentsCastle",
-    type: "location",
-    name: "Forbidden Mountain",
-    title: "Maleficent's Castle",
-    characteristics: ["location"],
-    inkwell: true,
-    colors: ["amethyst"],
-    cost: 2,
-    willpower: 6,
-    lore: 1,
-    moveCost: 1,
-    illustrator: "",
-    number: 0,
-    set: "ITI",
-    rarity: "common",
-  };
+export { neverLandMermaidLagoon } from "./032-never-land-mermaid-lagoon";
+export { prideLandsPrideRock } from "./033-pride-lands-pride-rock";
+export { tianasPalaceJazzRestaurant } from "./034-tianas-palace-jazz-restaurant";
+export { forbiddenMountainMaleficentsCastle } from "./066-forbidden-mountain-maleficents-castle";
+export { theQueensCastleMirrorChamber } from "./067-the-queens-castle-mirror-chamber";
+export { theSorcerersTowerWondrousWorkspace } from "./068-the-sorcerers-tower-wondrous-workspace";
+export { deVilManorCruellasEstate } from "./100-de-vil-manor-cruellas-estate";
+export { fangRiverCity } from "./101-fang-river-city";
+export { kuzcosPalaceHomeOfTheEmperor } from "./102-kuzcos-palace-home-of-the-emperor";
+export { agrabahMarketplace } from "./134-agrabah-marketplace";
+export { jollyRogerHooksShip } from "./135-jolly-roger-hooks-ship";
+export { rlsLegacySolarGalleon } from "./136-rls-legacy-solar-galleon";
+export { bellesHouseMauricesWorkshop } from "./168-belles-house-maurices-workshop";
+export { mcduckManorScroogesMansion } from "./169-mcduck-manor-scrooges-mansion";
+export { motunuiIslandParadise } from "./170-motunui-island-paradise";
+export { mauisPlaceOfExileHiddenIsland } from "./202-mauis-place-of-exile-hidden-island";
+export { nottinghamPrinceJohnsCastle } from "./203-nottingham-prince-johns-castle";
+export { theBayouMysteriousSwamp } from "./204-the-bayou-mysterious-swamp";

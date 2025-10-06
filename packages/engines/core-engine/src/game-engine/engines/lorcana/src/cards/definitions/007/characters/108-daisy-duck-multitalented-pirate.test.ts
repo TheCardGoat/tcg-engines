@@ -1,0 +1,34 @@
+/**
+ * @jest-environment node
+ */
+
+import { describe, expect, it } from "@jest/globals";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import {
+  anastasiaBossyStepsister,
+  daisyDuckMultitalentedPirate,
+  johnSilverVengefulPirate,
+} from "~/game-engine/engines/lorcana/src/cards/definitions/007";
+
+describe("Daisy Duck - Multitalented Pirate", () => {
+  it("FOWL PLAY Once during your turn, whenever a card is put into your inkwell, chosen opponent chooses one of their characters and returns that card to their hand.", async () => {
+    const testEngine = new TestEngine(
+      {
+        play: [daisyDuckMultitalentedPirate],
+        hand: [johnSilverVengefulPirate],
+      },
+      {
+        play: [anastasiaBossyStepsister],
+      },
+    );
+
+    await testEngine.putIntoInkwell(johnSilverVengefulPirate);
+
+    testEngine.changeActivePlayer("player_two");
+    await testEngine.resolveTopOfStack({
+      targets: [anastasiaBossyStepsister],
+    });
+
+    expect(testEngine.getCardModel(anastasiaBossyStepsister).zone).toBe("hand");
+  });
+});

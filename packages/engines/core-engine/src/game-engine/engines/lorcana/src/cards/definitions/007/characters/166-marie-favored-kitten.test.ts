@@ -1,0 +1,22 @@
+/**
+ * @jest-environment node
+ */
+
+import { describe, it } from "@jest/globals";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { marieFavoredKitten } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+
+describe("Marie - Favored Kitten", () => {
+  it.skip("I'LL SHOW YOU Whenever this character quests, you may give chosen character -2 {S} this turn.", async () => {
+    const testEngine = new TestEngine({
+      inkwell: marieFavoredKitten.cost,
+      play: [marieFavoredKitten],
+      hand: [marieFavoredKitten],
+    });
+
+    await testEngine.playCard(marieFavoredKitten);
+
+    await testEngine.resolveOptionalAbility();
+    await testEngine.resolveTopOfStack({});
+  });
+});

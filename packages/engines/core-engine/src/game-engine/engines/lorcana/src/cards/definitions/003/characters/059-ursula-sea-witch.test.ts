@@ -1,0 +1,22 @@
+/**
+ * @jest-environment node
+ */
+
+import { describe, it } from "@jest/globals";
+import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+import { ursulaSeaWitch } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+
+describe("Ursula - Sea Witch", () => {
+  it.skip("**YOU'RE TOO LATE** Whenever this character quests, chosen opposing character can't ready at the start of their next turn.", () => {
+    const testStore = new TestStore({
+      inkwell: ursulaSeaWitch.cost,
+      play: [ursulaSeaWitch],
+    });
+
+    const cardUnderTest = testStore.getByZoneAndId("play", ursulaSeaWitch.id);
+
+    cardUnderTest.playFromHand();
+    testStore.resolveOptionalAbility();
+    testStore.resolveTopOfStack({});
+  });
+});

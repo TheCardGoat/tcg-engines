@@ -1,66 +1,20 @@
-import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-export const dingleHopper: LorcanaItemCardDefinition = {
-  id: "dingleHopper",
-  type: "item",
-  name: "Dinglehopper",
-  characteristics: ["item"],
-  set: "TFC",
-  cost: 1,
-  colors: ["amethyst"],
-  number: 0,
-  illustrator: "",
-  rarity: "common",
-};
-
-export const fryingPan: LorcanaItemCardDefinition = {
-  id: "fryingPan",
-  type: "item",
-  name: "Frying Pan",
-  characteristics: ["item"],
-  set: "TFC",
-  cost: 1,
-  colors: ["sapphire"],
-  number: 0,
-  illustrator: "",
-  rarity: "common",
-};
-
-export const shieldOfVirtue: LorcanaItemCardDefinition = {
-  id: "shieldOfVirtue",
-  type: "item",
-  name: "Shield of Virtue",
-  characteristics: ["item"],
-  set: "TFC",
-  cost: 2,
-  colors: ["steel"],
-  number: 0,
-  illustrator: "",
-  rarity: "uncommon",
-};
-
-export const swordOfTruth: LorcanaItemCardDefinition = {
-  id: "swordOfTruth",
-  type: "item",
-  name: "Sword of Truth",
-  characteristics: ["item"],
-  set: "TFC",
-  cost: 4,
-  colors: ["ruby"],
-  number: 0,
-  illustrator: "",
-  rarity: "rare",
-};
-
-export const fishboneQuill: LorcanaItemCardDefinition = {
-  id: "fishboneQuill",
-  type: "item",
-  name: "Fishbone Quill",
-  characteristics: ["item"],
-  set: "TFC",
-  cost: 1,
-  colors: ["amethyst"],
-  number: 0,
-  illustrator: "",
-  rarity: "common",
-};
+export { dingleHopper } from "./032-dinglehopper";
+export { lantern } from "./033-lantern";
+export { ursulaShellNecklace } from "./034-ursula-shell-necklace";
+export { magicMirror } from "./066-magic-mirror";
+export { ursulaCaldron } from "./067-ursula-cauldron";
+export { whiteRabbitPocketWatch } from "./068-white-rabbit-pocket-watch";
+export { drFacilierCards } from "./101-dr-facilier-cards";
+export { stolenScimitar } from "./102-stolen-scimitar";
+export { poisonedApple } from "./134-poisoned-apple";
+export { shieldOfVirtue } from "./135-shield-of-virtue";
+export { swordOfTruth } from "./136-sword-of-truth";
+export { coconutbasket } from "./166-coconut-basket";
+export { eyeOfTheFate } from "./167-eye-of-the-fates";
+export { fishboneQuill } from "./168-fishbone-quill";
+export { magicGoldenFlower } from "./169-magic-golden-flower";
+export { scepterOfArendelle } from "./170-scepter-of-arendelle";
+export { beastMirror } from "./201-beast-mirror";
+export { fryingPan } from "./202-frying-pan";
+export { musketeerTabard } from "./203-musketeer-tabard";
+export { plasmaBlaster } from "./204-plasma-blaster";

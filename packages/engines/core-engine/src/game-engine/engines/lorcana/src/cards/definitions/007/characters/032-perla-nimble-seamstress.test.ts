@@ -1,0 +1,27 @@
+/**
+ * @jest-environment node
+ */
+
+import { describe, expect, it } from "@jest/globals";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { perlaNimbleSeamstress } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+
+describe("Perla - Nimble Seamstress", () => {
+  it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
+    const testEngine = new TestEngine({
+      play: [perlaNimbleSeamstress],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(perlaNimbleSeamstress);
+    expect(cardUnderTest.hasEvasive).toBe(true);
+  });
+
+  it("Support (Whenever this character quests, you may add their {S} to another chosen character’s {S} this turn.)", async () => {
+    const testEngine = new TestEngine({
+      play: [perlaNimbleSeamstress],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(perlaNimbleSeamstress);
+    expect(cardUnderTest.hasSupport).toBe(true);
+  });
+});

@@ -1,0 +1,25 @@
+/**
+ * @jest-environment node
+ */
+
+import { describe, it } from "@jest/globals";
+import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
+import { rufusOrphanageCat } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/characters";
+
+describe("Rufus - Orphanage Cat", () => {
+  it.skip("**A LITTLE TOO OLD TO HUNT MICE** When this character is banished, you may put this card into your inkwell facedown and exerted.", () => {
+    const testStore = new TestStore({
+      inkwell: rufusOrphanageCat.cost,
+      play: [rufusOrphanageCat],
+    });
+
+    const cardUnderTest = testStore.getByZoneAndId(
+      "play",
+      rufusOrphanageCat.id,
+    );
+
+    cardUnderTest.playFromHand();
+    testStore.resolveOptionalAbility();
+    testStore.resolveTopOfStack({});
+  });
+});

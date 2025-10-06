@@ -1,0 +1,19 @@
+import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+import { aSuitableWeapon } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/abilities";
+
+export const cardSoldiersSpear: LorcanaItemCardDefinition = {
+  id: "bka",
+  missingTestCase: true,
+  name: "Card Soldier's Spear",
+  characteristics: ["item"],
+  text: "A SUITABLE WEAPON Your damaged characters get +1 {S}.",
+  type: "item",
+  abilities: [aSuitableWeapon],
+  inkwell: true,
+  colors: ["ruby"],
+  cost: 1,
+  illustrator: "Kristen Kuloba",
+  number: 134,
+  set: "006",
+  rarity: "uncommon",
+};

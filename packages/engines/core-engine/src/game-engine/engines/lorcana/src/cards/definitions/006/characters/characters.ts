@@ -1,49 +1,148 @@
-import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
-
-const minimalChar = (
-  id: string,
-  name: string,
-  title: string,
-  colors: (
-    | "amber"
-    | "amethyst"
-    | "emerald"
-    | "ruby"
-    | "sapphire"
-    | "steel"
-  )[] = ["amber"],
-  cost = 1,
-  strength = 1,
-  willpower = 1,
-  lore = 1,
-): LorcanaCharacterCardDefinition => ({
-  id,
-  type: "character",
-  name,
-  title,
-  characteristics: ["storyborn"],
-  inkwell: true,
-  colors,
-  cost,
-  strength,
-  willpower,
-  lore,
-  illustrator: "",
-  number: 0,
-  set: "006",
-  rarity: "common",
-});
-
-export const liloEscapeArtist = minimalChar(
-  "liloEscapeArtist",
-  "Lilo",
-  "Escape Artist",
-);
-export const abuBoldHelmsman = minimalChar(
-  "abuBoldHelmsman",
-  "Abu",
-  "Bold Helmsman",
-);
-
-// Re-export the names module-style to satisfy tests that import from '/006'
-export * from "./characters";
+export { owlPirateLookout } from "./001-owl-pirate-lookout";
+export { liloEscapeArtist } from "./002-lilo-escape-artist";
+export { winnieThePoohHoneyPirateLookout } from "./003-winnie-the-pooh-honey-pirate-lookout";
+export { gopherShipsCarpenter } from "./004-gopher-ships-carpenter";
+export { simbaHappygolucky } from "./005-simba-happygolucky";
+export { chipFriendIndeed } from "./006-chip-friend-indeed";
+export { daleFriendInNeed } from "./007-dale-friend-in-need";
+export { davidImpressiveSurfer } from "./008-david-impressive-surfer";
+export { princeNaveenVigilantFirstMate } from "./009-prince-naveen-vigilant-first-mate";
+export { principeNaveenCarefreeExplorer } from "./010-principe-naveen-carefree-explorer";
+export { chiefBogoGazelleFan } from "./011-chief-bogo-gazelle-fan";
+export { chipRangerLeader } from "./012-chip-ranger-leader";
+export { montereyJackGoodheartedRanger } from "./013-monterey-jack-goodhearted-ranger";
+export { chipNDaleRecoveryRangers } from "./014-chip-n-dale-recovery-rangers";
+export { judyHoppsResourcefulRabbit } from "./015-judy-hopps-resourceful-rabbit";
+export { tianaRestaurantOwner } from "./016-tiana-restaurant-owner";
+export { grandCouncilwomanFederationLeader } from "./017-grand-councilwoman-federation-leader";
+export { daleMischievousRanger } from "./018-dale-mischievous-ranger";
+export { naniCaringSister } from "./019-nani-caring-sister";
+export { simbaPrideProtector } from "./020-simba-pride-protector";
+export { kangaNurturingMother } from "./021-kanga-nurturing-mother";
+export { rabbitIndignantPirate } from "./022-rabbit-indignant-pirate";
+export { rooLittlestPirate } from "./023-roo-littlest-pirate";
+export { mrLitwakArcadeOwner } from "./024-mr-litwak-arcade-owner";
+export { jimHawkinsHonorablePirate } from "./025-jim-hawkins-honorable-pirate";
+export { stitchLittleTrickster } from "./026-stitch-little-trickster";
+export { hadesLordOfTheUnderworld } from "./036-hades-lord-of-the-underworld";
+export { madamMimTinyAdversary } from "./037-madam-mim-tiny-adversary";
+export { genieExcitedShipbuilder } from "./038-genie-excited-shipbuilder";
+export { sisuInHerElement } from "./039-sisu-in-her-element";
+export { theWhiteRoseGemOfTheGarden } from "./040-the-white-rose-gem-of-the-garden";
+export { jujuMamaOdiesCompanion } from "./041-juju-mama-odies-companion";
+export { rafikiShamanOfTheSavanna } from "./042-rafiki-shaman-of-the-savanna";
+export { tinkerBellFlyingAtFullSpeed } from "./043-tinker-bell-flying-at-full-speed";
+export { theCarpenterDinnerCompanion } from "./044-the-carpenter-dinner-companion";
+export { iagoReappearingParrot } from "./045-iago-reappearing-parrot";
+export { theWalrusGreedyGourmand } from "./046-the-walrus-greedy-gourmand";
+export { scarTempestuousLion } from "./047-scar-tempestuous-lion";
+export { tinkerBellQueenOfTheAzuriteFairies } from "./048-tinker-bell-queen-of-the-azurite-fairies";
+export { diabloObedientRaven } from "./049-diablo-obedient-raven";
+export { marchHareAbsurdHost } from "./050-march-hare-absurd-host";
+export { magicCarpetAmazingFlier } from "./051-magic-carpet-amazing-flier";
+export { rafikiEtherealGuide } from "./052-rafiki-ethereal-guide";
+export { genieWishFulfilled } from "./053-genie-wish-fulfilled";
+export { sisuUnitingDragon } from "./054-sisu-uniting-dragon";
+export { madamMimTrulyMarvelous } from "./055-madam-mim-truly-marvelous";
+export { yzmaConnivingChemist } from "./056-yzma-conniving-chemist";
+export { mammaOdieLoneSage } from "./057-mamma-odie-lone-sage";
+export { peterPanShadowCatcher } from "./058-peter-pan-shadow-catcher";
+export { madHatterEccentricHost } from "./059-mad-hatter-eccentric-host";
+export { genieWonderfulTrickster } from "./061-genie-wonderful-trickster";
+export { jasmineRoyalSeafarer } from "./070-jasmine-royal-seafarer";
+export { captainHookUnderhanded } from "./071-captain-hook-underhanded";
+export { stitchAlienBuccaneer } from "./072-stitch-alien-buccaneer";
+export { goGoTomagoDartingDynamo } from "./073-go-go-tomago-darting-dynamo";
+export { honeyLemonChemicalGenius } from "./074-honey-lemon-chemical-genius";
+export { fredMascotByDay } from "./075-fred-mascot-by-day";
+export { tootlesLostBoy } from "./076-tootles-lost-boy";
+export { dawsonBasilsAssistant } from "./077-dawson-basils-assistant";
+export { heathcliffStoicButler } from "./078-heathcliff-stoic-butler";
+export { basilHypnotizedMouse } from "./079-basil-hypnotized-mouse";
+export { donaldDuckFirstMate } from "./080-donald-duck-first-mate";
+export { daisyDuckPirateCaptain } from "./081-daisy-duck-pirate-captain";
+export { mertleEdmondsLilosRival } from "./082-mertle-edmonds-lilos-rival";
+export { princePhillipRoyalExplorer } from "./083-prince-phillip-royal-explorer";
+export { jasmineRoyalCommodore } from "./084-jasmine-royal-commodore";
+export { peterPanNeverLandPrankster } from "./085-peter-pan-never-land-prankster";
+export { herculesBabyDemigod } from "./086-hercules-baby-demigod";
+export { alistairKreiAmbitiousEntrepreneur } from "./087-alistair-krei-ambitious-entrepreneur";
+export { gazelleAngelWithHorns } from "./088-gazelle-angel-with-horns";
+export { goofyExpertShipwright } from "./089-goofy-expert-shipwright";
+export { bellwetherAssistantMayor } from "./090-bellwether-assistant-mayor";
+export { basilDisguisedDetective } from "./091-basil-disguised-detective";
+export { oliviaFlavershamToymakersDaughter } from "./092-olivia-flaversham-toymakers-daughter";
+export { mickeyMousePirateCaptain } from "./103-mickey-mouse-pirate-captain";
+export { kakamoraBoardingParty } from "./104-kakamora-boarding-party";
+export { kakamoraPiratePitcher } from "./105-kakamora-pirate-pitcher";
+export { jasmineRebelliousPrincess } from "./106-jasmine-rebellious-princess";
+export { rayaKumandranRider } from "./107-raya-kumandran-rider";
+export { wendyDarlingCourageousCaptain } from "./108-wendy-darling-courageous-captain";
+export { johnSilverDangerousFriend } from "./109-john-silver-dangerous-friend";
+export { vanellopeVonSchweetzGutsyGogetter } from "./110-vanellope-von-schweetz-gutsy-gogetter";
+export { michaelDarlingPlayfulSwordsman } from "./111-michael-darling-playful-swordsman";
+export { aladdinIntrepidNavigator } from "./112-aladdin-intrepid-navigator";
+export { markowskiSpaceTrooper } from "./113-markowski-space-trooper";
+export { abuBoldHelmsman } from "./114-abu-bold-helmsman";
+export { mickeyMouseCourageousSailor } from "./115-mickey-mouse-courageous-sailor";
+export { adorabeezleWinterpopIceRocketRacer } from "./116-adorabeezle-winterpop-ice-rocket-racer";
+export { moanaSelftaughtSailor } from "./117-moana-selftaught-sailor";
+export { johnDarlingDistinguishedSwordsman } from "./118-john-darling-distinguished-swordsman";
+export { aladdinIntrepidCommander } from "./119-aladdin-intrepid-commander";
+export { minnieMousePirateLookout } from "./120-minnie-mouse-pirate-lookout";
+export { moanaKakamoraLeader } from "./121-moana-kakamora-leader";
+export { peteSwashbuckler } from "./122-pete-swashbuckler";
+export { goofyFlyingFool } from "./123-goofy-flying-fool";
+export { mauiHalfshark } from "./124-maui-halfshark";
+export { hadesStrongArm } from "./125-hades-strong-arm";
+export { tiggerInTheCrowsNest } from "./126-tigger-in-the-crows-nest";
+export { scarHeartlessHunter } from "./127-scar-heartless-hunter";
+export { benEccentricRobot } from "./137-ben-eccentric-robot";
+export { auntCassBiggestFan } from "./138-aunt-cass-biggest-fan";
+export { gadgetHackwrenchCreativeThinker } from "./139-gadget-hackwrench-creative-thinker";
+export { gadgetHackwrenchBrilliantBosun } from "./140-gadget-hackwrench-brilliant-bosun";
+export { zipperAstuteDecoy } from "./141-zipper-astute-decoy";
+export { oswaldTheLuckyRabbit } from "./142-oswald-the-lucky-rabbit";
+export { yokaiEnigmaticInventor } from "./143-yokai-enigmatic-inventor";
+export { pleakleyScientificExpert } from "./144-pleakley-scientific-expert";
+export { hiroHamadaRoboticsProdigy } from "./145-hiro-hamada-robotics-prodigy";
+export { heiheiNotsotrickyChicken } from "./146-heihei-notsotricky-chicken";
+export { sourBillSurlyHenchman } from "./147-sour-bill-surly-henchman";
+export { nickWildeSoggyFox } from "./148-nick-wilde-soggy-fox";
+export { wasabiMethodicalEngineer } from "./149-wasabi-methodical-engineer";
+export { nickWildeCleverFox } from "./150-nick-wilde-clever-fox";
+export { gadgetHackwrenchPerceptiveMouse } from "./151-gadget-hackwrench-perceptive-mouse";
+export { drDelbertDopplerPreciseAstronomer } from "./152-dr-delbert-doppler-precise-astronomer";
+export { tadashiHamadaBaymaxInventor } from "./153-tadashi-hamada-baymax-inventor";
+export { hiroHamadaTeamLeader } from "./154-hiro-hamada-team-leader";
+export { tadashiHamadaGiftedRoboticist } from "./155-tadashi-hamada-gifted-roboticist";
+export { baymaxPersonalHealthcareCompanion } from "./156-baymax-personal-healthcare-companion";
+export { baymaxArmoredCompanion } from "./157-baymax-armored-companion";
+export { yokaiProfessorCallaghan } from "./158-yokai-professor-callaghan";
+export { hiramFlavershamCuriousInventor } from "./159-hiram-flaversham-curious-inventor";
+export { yokaiScientificSupervillain } from "./160-yokai-scientific-supervillain";
+export { aliceSavvySailor } from "./161-alice-savvy-sailor";
+export { kakamoraLongrangeSpecialist } from "./171-kakamora-longrange-specialist";
+export { kokomoraPirateChief } from "./172-kokomora-pirate-chief";
+export { jimHawkinsStubbornCabinBoy } from "./173-jim-hawkins-stubborn-cabin-boy";
+export { mrBigShrewdTycoon } from "./174-mr-big-shrewd-tycoon";
+export { mrSmeeSteadfastMate } from "./175-mr-smee-steadfast-mate";
+export { mrSmeeCaptainOfTheJollyRoger } from "./176-mr-smee-captain-of-the-jolly-roger";
+export { mullinsSeasonedShipmate } from "./177-mullins-seasoned-shipmate";
+export { kohutTrustedMarine } from "./178-kohut-trusted-marine";
+export { kingHubertPhillipsFather } from "./179-king-hubert-phillips-father";
+export { herculesUnwaveringDemigod } from "./180-hercules-unwavering-demigod";
+export { johnSilverShipsCook } from "./181-john-silver-ships-cook";
+export { mrArrowLegacysFirstMate } from "./182-mr-arrow-legacys-first-mate";
+export { jimHawkinsRiggerSpecialist } from "./183-jim-hawkins-rigger-specialist";
+export { tukTukBigBuddy } from "./184-tuk-tuk-big-buddy";
+export { billyBonesSpaceSailor } from "./185-billy-bones-space-sailor";
+export { plutoGuardDog } from "./186-pluto-guard-dog";
+export { mickeyMouseNightWatchman } from "./187-mickey-mouse-night-watchman";
+export { cobraBubblesFormerCia } from "./188-cobra-bubbles-former-cia";
+export { gantuStubbornCaptain } from "./189-gantu-stubborn-captain";
+export { wreckitRalphHamHands } from "./190-wreckit-ralph-ham-hands";
+export { calhounMarineSergeant } from "./191-calhoun-marine-sergeant";
+export { captainAmeliaCommanderOfTheLegacy } from "./192-captain-amelia-commander-of-the-legacy";
+export { jafarPowerhungryVizier } from "./193-jafar-powerhungry-vizier";
+export { johnSilverSternCaptain } from "./194-john-silver-stern-captain";

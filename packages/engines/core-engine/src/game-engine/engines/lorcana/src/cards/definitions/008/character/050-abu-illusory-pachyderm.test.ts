@@ -1,0 +1,39 @@
+/**
+ * @jest-environment node
+ */
+
+import { describe, expect, it } from "@jest/globals";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import {
+  abuIllusoryPachyderm,
+  boltDownButNotOut,
+} from "~/game-engine/engines/lorcana/src/cards/definitions/008";
+
+describe("Abu - Illusory Pachyderm", () => {
+  it("Vanish (When an opponent chooses this character for an action, banish them.)", async () => {
+    const testEngine = new TestEngine({
+      play: [abuIllusoryPachyderm],
+    });
+
+    expect(testEngine.getCardModel(abuIllusoryPachyderm).hasVanish).toBe(true);
+  });
+
+  it("GRASPING TRUNK Whenever this character quests, gain lore equal to the {L} of chosen opposing character.", async () => {
+    const testEngine = new TestEngine(
+      {
+        play: [abuIllusoryPachyderm],
+      },
+      {
+        play: [boltDownButNotOut],
+      },
+    );
+
+    await testEngine.questCard(abuIllusoryPachyderm);
+    expect(testEngine.getPlayerLore()).toBe(abuIllusoryPachyderm.lore);
+
+    await testEngine.resolveTopOfStack({ targets: [boltDownButNotOut] });
+    expect(testEngine.getPlayerLore()).toBe(
+      boltDownButNotOut.lore + abuIllusoryPachyderm.lore,
+    );
+  });
+});

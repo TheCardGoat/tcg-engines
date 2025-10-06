@@ -1,0 +1,18 @@
+/**
+ * @jest-environment node
+ */
+
+import { describe, expect, it } from "@jest/globals";
+import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { thomasOmalleyFelineCharmer } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
+
+describe("Thomas O'malley - Feline Charmer", () => {
+  it.skip("Ward (Opponents can't choose this character except to challenge.)", async () => {
+    const testEngine = new TestEngine({
+      play: [thomasOmalleyFelineCharmer],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(thomasOmalleyFelineCharmer);
+    expect(cardUnderTest.hasWard).toBe(true);
+  });
+});
