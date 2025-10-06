@@ -5,7 +5,6 @@ import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorca
 export const timothyQMouseFlightInstructor: LorcanaCharacterCardDefinition = {
   id: "o6m",
   // notImplemented: true,
-  missingTestCase: false,
   name: "Timothy Q. Mouse",
   title: "Flight Instructor",
   characteristics: ["storyborn", "mentor"],

@@ -1,13 +1,12 @@
 import { returnThisCardToHand } from "~/game-engine/engines/lorcana/src/abilities/effect";
 
-import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenYouPlayThis } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const theMagicFeather: LorcanaItemCardDefinition = {
   id: "cxi",
   // notImplemented: true,
-  missingTestCase: false,
   name: "The Magic Feather",
   characteristics: ["item"],
   text: "NOW YOU CAN FLY! When you play this item, choose a character of yours. While this item is in play, that character gains Evasive.\nGROUNDED 3 {I} – Return this item to your hand.",

@@ -1,6 +1,6 @@
 import { duringYourTurn } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import { dealDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
-import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverOpposingCharIsBanishedInChallenge } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

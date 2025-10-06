@@ -1,4 +1,5 @@
 import type {
+  LorcanaCharacterCardDefinition,
   LorcanitoCharacterCard,
   ResolutionAbility,
 } from "@lorcanito/lorcana-engine";

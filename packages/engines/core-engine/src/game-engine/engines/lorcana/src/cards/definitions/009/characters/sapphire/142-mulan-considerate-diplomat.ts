@@ -5,7 +5,6 @@ import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorca
 export const mulanConsiderateDiplomat: LorcanaCharacterCardDefinition = {
   id: "k64",
   // notImplemented: true,
-  missingTestCase: false,
   name: "Mulan",
   title: "Considerate Diplomat",
   characteristics: ["storyborn", "hero", "princess"],

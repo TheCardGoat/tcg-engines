@@ -1,5 +1,6 @@
 import type {
   BanishEffect,
+  LorcanaCharacterCardDefinition,
   LorcanitoCharacterCard,
 } from "@lorcanito/lorcana-engine";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";

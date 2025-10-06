@@ -1,4 +1,4 @@
-// import { allCards, allCardsById } from "@lorcanito/lorcana-engine";
+// // Legacy import removed - types available via local definitions
 
 import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 import { all001Cards, all001CardsById } from "./001";

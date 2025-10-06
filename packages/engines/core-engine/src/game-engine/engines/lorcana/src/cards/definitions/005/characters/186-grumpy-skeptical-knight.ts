@@ -1,5 +1,6 @@
 import type {
   GainAbilityStaticAbility,
+  LorcanaCharacterCardDefinition,
   LorcanitoCharacterCard,
 } from "@lorcanito/lorcana-engine";
 import {

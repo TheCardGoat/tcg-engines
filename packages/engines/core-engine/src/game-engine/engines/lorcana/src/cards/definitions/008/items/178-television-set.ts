@@ -5,6 +5,7 @@ import type {
 import type { RevealTopCardEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import { topCardOfYourDeck } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const puppyCharacter: CardEffectTarget = {
   type: "card",

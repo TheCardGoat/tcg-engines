@@ -2,15 +2,16 @@ import {
   drawACard,
   moveToLocation,
 } from "~/game-engine/engines/lorcana/src/abilities/effect";
-import { chosenCharacterOfYours } from "~/game-engine/engines/lorcana/src/abilities/target";
-import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import {
+  chosenCharacterOfYours,
+  thisCharacter,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenMovesToALocation } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const goofySetForAdventure: LorcanaCharacterCardDefinition = {
   id: "lot",
   // notImplemented: true,
-  missingTestCase: false,
   name: "Goofy",
   title: "Set for Adventure",
   characteristics: ["storyborn", "hero"],

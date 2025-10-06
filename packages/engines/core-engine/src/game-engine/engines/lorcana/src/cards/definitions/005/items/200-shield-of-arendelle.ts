@@ -3,6 +3,7 @@ import type {
   LorcanitoItemCard,
 } from "@lorcanito/lorcana-engine";
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const shieldOfArendelle: LorcanaItemCardDefinition = {
   id: "ws0",

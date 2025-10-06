@@ -199,3 +199,6 @@ export class LorcanaCardRepository extends CardRepository<LorcanaCardDefinition>
     );
   }
 }
+
+// Legacy type alias for backward compatibility
+// Legacy type alias already defined above as interface LorcanaCharacterCardDefinition

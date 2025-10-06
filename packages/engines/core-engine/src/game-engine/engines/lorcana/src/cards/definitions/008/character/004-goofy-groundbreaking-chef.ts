@@ -2,6 +2,7 @@ import type {
   CardEffectTarget,
   ExertEffect,
   HealEffect,
+  LorcanaCharacterCardDefinition,
   LorcanitoCharacterCard,
 } from "@lorcanito/lorcana-engine";
 import { atTheEndOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";

@@ -1,5 +1,6 @@
 import type {
   AttributeEffect,
+  LorcanaCharacterCardDefinition,
   LorcanitoCharacterCard,
   ResolutionAbility,
 } from "@lorcanito/lorcana-engine";

@@ -2,7 +2,7 @@ import { getStrengthThisTurn } from "~/game-engine/engines/lorcana/src/abilities
 import {
   chosenItem,
   chosenOpposingCharacter,
-} from "~/game-engine/engines/lorcana/src/abilities/target";
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import { wheneverThisCharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
@@ -10,7 +10,6 @@ import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorca
 export const aliceAccidentallyAdrift: LorcanaCharacterCardDefinition = {
   id: "rql",
   // notImplemented: true,
-  missingTestCase: false,
   name: "Alice",
   title: "Accidentally Adrift",
   characteristics: ["storyborn", "hero"],

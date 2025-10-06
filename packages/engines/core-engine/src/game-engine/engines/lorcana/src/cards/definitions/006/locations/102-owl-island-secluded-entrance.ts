@@ -1,5 +1,5 @@
 import { youGainLore } from "~/game-engine/engines/lorcana/src/abilities/effect";
-import { actionCardsInHand } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { actionCardsInHand } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverPlays } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaLocationCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

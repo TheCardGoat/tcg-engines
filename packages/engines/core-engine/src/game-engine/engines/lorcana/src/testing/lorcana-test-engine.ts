@@ -326,6 +326,7 @@ export class LorcanaTestEngine {
   // STUB: Legacy quest method for test compatibility
   questCard(
     card: LorcanaCardDefinition | LorcanaCardInstance | { id: string },
+    _opts?: unknown, // Legacy: optional second parameter for options
   ) {
     const model = this.getCardModel(card as any);
     this.authoritativeEngine.exertCard({
@@ -419,10 +420,16 @@ export class LorcanaTestEngine {
     // Maintain legacy store shape for tests that read priority player
     (this as any).store = (this as any).store || {};
     (this as any).store.priorityPlayer = playerId;
+    return this; // Return this for chaining
   }
 
   // Legacy alias
-  changePlayer(playerId: string) {
+  changePlayer(playerId?: string) {
+    // If no playerId provided, toggle between players
+    if (!playerId) {
+      playerId =
+        this.activePlayerEngine === "player_one" ? "player_two" : "player_one";
+    }
     return this.changeActivePlayer(playerId);
   }
 
@@ -799,7 +806,7 @@ export class LorcanaTestEngine {
   async setCardDamage(
     characterCard: LorcanaCardDefinition | LorcanaCardInstance | { id: string },
     amount: number,
-  ): Promise<void> {
+  ): Promise<LorcanaCardInstance> {
     const model =
       "instanceId" in (characterCard as any)
         ? (characterCard as LorcanaCardInstance)
@@ -809,6 +816,8 @@ export class LorcanaTestEngine {
     ctx.cardMetas ||= {} as any;
     const current = (ctx.cardMetas[model.instanceId] ||= {} as any);
     current.damage = Math.max(0, amount | 0);
+
+    return model;
   }
 
   getAvailableInkwellCardCount(playerId = "player_one") {
@@ -862,7 +871,8 @@ export class LorcanaTestEngine {
     return response;
   }
 
-  passTurn() {
+  passTurn(_playerId?: string) {
+    // Legacy: playerId parameter ignored - turn is passed for active player
     const response = this.moves.passTurn();
 
     if (!response.success) {
@@ -875,6 +885,11 @@ export class LorcanaTestEngine {
     this.wasMoveExecutedAndPropagated();
 
     return response;
+  }
+
+  skipOptionalAbility() {
+    // Stub for legacy tests - skip optional ability resolution
+    return this.resolveTopOfStack({ skip: true });
   }
 
   isGameOver() {
@@ -930,14 +945,19 @@ export class LorcanaTestEngine {
    * @param opts - Optional parameters including targets for selecting targets and mode for modal effects
    * @returns this for chaining
    */
-  resolveTopOfStack(opts?: {
-    targets?: Array<LorcanaCardDefinition | LorcanaCardInstance | string>;
-    mode?: string;
-    scry?: Record<string, any>;
-    targetId?: string; // Legacy: use targets instead
-    acceptOptionalLayer?: boolean; // Legacy: for optional effects
-    skip?: boolean; // Legacy: for skipping effects
-  }) {
+  resolveTopOfStack(
+    opts?: {
+      targets?: Array<LorcanaCardDefinition | LorcanaCardInstance | string>;
+      mode?: string;
+      scry?: Record<string, any>;
+      targetId?: string; // Legacy: use targets instead
+      acceptOptionalLayer?: boolean; // Legacy: for optional effects
+      skip?: boolean; // Legacy: for skipping effects
+      nameACard?: string; // Legacy: for naming a card
+      bodyguard?: boolean; // Legacy: for bodyguard parameter
+    },
+    _optional?: boolean, // Legacy: second parameter for optional flag
+  ) {
     const state = this.authoritativeEngine.getStore().state;
     const effects = state.G.effects;
 
@@ -1021,7 +1041,7 @@ export class LorcanaTestEngine {
   /**
    * Stub for resolving an optional ability. No-op for type-checking.
    */
-  resolveOptionalAbility() {
+  resolveOptionalAbility(_accept?: boolean) {
     // No-op stub for type checking
     return this as any;
   }
@@ -1043,6 +1063,7 @@ export class LorcanaTestEngine {
   // (removed duplicate getCardZone shim; merged into method above)
 
   acceptOptionalLayer(..._args: any[]) {}
+  acceptOptionalLayerBySource(..._args: any[]) {}
   skipTopOfStack() {}
 
   store: any;
@@ -1065,12 +1086,16 @@ export interface LegacyChallengeParams {
 
 declare module "./lorcana-test-engine" {
   interface LorcanaTestEngine {
-    tapCard: (card: unknown) => Promise<any>;
+    tapCard: (card: unknown, _optional?: boolean) => Promise<any>;
     putIntoInkwell: (card: unknown) => Promise<any>;
     drawCard: (playerId?: string) => Promise<void>;
     challenge: (opts: LegacyChallengeParams) => Promise<void>;
     activateCard: (card: unknown, opts?: unknown) => Promise<void>;
     singSongTogether: (opts?: unknown) => Promise<void>;
+    shiftCard: (opts: {
+      shifter: LorcanaCardDefinition | LorcanaCardInstance;
+      shifted: LorcanaCardDefinition | LorcanaCardInstance;
+    }) => Promise<void>;
     readonly stackLayers: any[];
     resolveStackLayer: (_opts?: any, _optional?: boolean) => any;
     getLayerIdForPlayer: (playerId: string) => string | undefined;
@@ -1097,6 +1122,7 @@ declare module "./lorcana-test-engine" {
 LorcanaTestEngine.prototype.tapCard = async function (
   this: LorcanaTestEngine,
   card: unknown,
+  _optional?: boolean, // Legacy: optional second parameter
 ) {
   const model = this.getCardModel(card as any);
   return this.exertCard({ card: model.instanceId, exerted: true });
@@ -1179,17 +1205,40 @@ LorcanaTestEngine.prototype.drawCard = async function (
 
 LorcanaTestEngine.prototype.challenge = async function (
   this: LorcanaTestEngine,
-  _opts: LegacyChallengeParams,
+  opts: LegacyChallengeParams,
 ) {
-  // No-op stub for legacy tests
+  // Stub for legacy tests - returns attacker and defender for type checking
+  const attacker = this.getCardModel(opts.attacker);
+  const defender = this.getCardModel(opts.defender);
+
+  // TODO: Implement actual challenge logic
+  throw new Error(
+    "challenge() not fully implemented - stub for type checking only",
+  );
+
+  return { attacker, defender };
 };
 
 LorcanaTestEngine.prototype.activateCard = async function (
   this: LorcanaTestEngine,
   _card: unknown,
   _opts?: unknown,
+  _optional?: boolean, // Legacy: third parameter for optional flag
 ) {
   // No-op stub for legacy tests
+};
+
+LorcanaTestEngine.prototype.shiftCard = async function (
+  this: LorcanaTestEngine,
+  opts: {
+    shifter: LorcanaCardDefinition | LorcanaCardInstance;
+    shifted: LorcanaCardDefinition | LorcanaCardInstance;
+  },
+) {
+  // Stub for legacy tests
+  throw new Error(
+    "shiftCard() not fully implemented - stub for type checking only",
+  );
 };
 
 LorcanaTestEngine.prototype.singSongTogether = async function (

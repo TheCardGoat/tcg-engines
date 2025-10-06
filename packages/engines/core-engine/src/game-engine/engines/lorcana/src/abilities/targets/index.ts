@@ -82,3 +82,25 @@ export const yourBanishedLocations: any = {
   zone: "discard",
 };
 export const targetCardsGains: any = { type: "card" };
+export const chosenDamagedCharacterTarget: any = {
+  type: "card",
+  status: "damaged",
+};
+
+// Legacy aliases for target variations
+export const chosenDamagedCharacter = chosenDamagedCharacterTarget;
+export const anotherChosenCharacterOfYours = anotherChosenCharOfYours;
+
+// More legacy target aliases
+export const chosenCharacterOrLocation = chosenCharacterOrLocationTarget;
+export const yourCharacters = allYourCharacters;
+export const thisCard = self;
+export const chosenPirateCharacter: any = {
+  type: "card",
+  characteristics: ["pirate"],
+};
+export const yourOtherLocations: any = {
+  type: "card",
+  cardType: "location",
+  owner: "self",
+};

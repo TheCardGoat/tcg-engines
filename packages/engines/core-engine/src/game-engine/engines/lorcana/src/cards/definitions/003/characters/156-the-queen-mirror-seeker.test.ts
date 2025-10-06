@@ -2,7 +2,10 @@
  * @jest-environment node
  */
 import { describe, expect, it } from "@jest/globals";
-import type { CardModel } from "@lorcanito/lorcana-engine/store/models/CardModel";
+
+// Legacy import - using any type for CardModel during migration
+type CardModel = any;
+
 import {
   chiefTui,
   heiheiBoatSnack,

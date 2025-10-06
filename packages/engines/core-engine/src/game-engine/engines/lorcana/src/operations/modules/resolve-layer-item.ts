@@ -53,7 +53,7 @@ export function resolveLayerItem(
               const abilityTargets = trigger.ability.targets;
               const resolvedTargets = this.resolveTargets(
                 abilityTargets,
-                sourceCard,
+                sourceCard as any,
               );
               if (resolvedTargets.length > 0) {
                 targetCard = resolvedTargets[0];
@@ -352,7 +352,8 @@ export function resolveLayerItem(
             `Applying ${restriction} restriction to ${targetCards.length} cards`,
             {
               restriction,
-              duration: duration?.type,
+              duration:
+                typeof duration === "object" ? duration?.type : duration,
               targetCardNames: targetCards.map((c) => c?.name || "unknown"),
             },
           );
@@ -384,7 +385,8 @@ export function resolveLayerItem(
               `Applied ${restriction} restriction to ${targetCard.name}`,
               {
                 restriction,
-                duration: duration?.type,
+                duration:
+                  typeof duration === "object" ? duration?.type : duration,
               },
             );
           }
@@ -441,7 +443,8 @@ export function resolveLayerItem(
             logger.debug(
               `Applied cost reduction of ${value} for ${count} ${cardType}(s) to player ${playerId}`,
               {
-                duration: duration?.type,
+                duration:
+                  typeof duration === "object" ? duration?.type : duration,
                 remainingReductions: playerState.costReductions.length,
               },
             );
@@ -479,7 +482,7 @@ export function resolveLayerItem(
               };
               const matchingCards = this.resolveTargets(
                 [countTarget],
-                sourceCard,
+                sourceCard as any,
               );
               value = matchingCards.length;
               logger.debug(
@@ -940,7 +943,7 @@ export function resolveLayerItem(
                         );
                         const followedByTargetCards = this.resolveTargets(
                           followedByTargetDefs,
-                          sourceCard,
+                          sourceCard as any,
                         );
 
                         logger.debug(
@@ -1189,7 +1192,7 @@ export function resolveLayerItem(
                   );
                   followedByTargetCards = this.resolveTargets(
                     targetDefs,
-                    sourceCard,
+                    sourceCard as any,
                   );
                 }
 
@@ -1386,7 +1389,7 @@ export function resolveLayerItem(
                   );
                   followedByTargetCards = this.resolveTargets(
                     targetDefs,
-                    sourceCard,
+                    sourceCard as any,
                   );
                 }
 
@@ -1586,7 +1589,7 @@ export function resolveLayerItem(
               };
               const matchingCards = this.resolveTargets(
                 [countTarget],
-                sourceCard,
+                sourceCard as any,
               );
               amount = matchingCards.length;
               logger.debug(
@@ -1664,7 +1667,7 @@ export function resolveLayerItem(
                     };
                     const matchingCards = this.resolveTargets(
                       [countTarget],
-                      sourceCard,
+                      sourceCard as any,
                     );
                     drawAmount = matchingCards.length;
                     logger.debug(

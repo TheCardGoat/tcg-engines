@@ -2,7 +2,8 @@
 export * from "./ability-types";
 export * from "./duration";
 export * from "./effect-types";
-export * from "./player-effect";
+// Note: player-effect has duplicate exports (DiscardEffect) so we import specifically
+export type { PlayerEffect } from "./player-effect";
 export * from "./should-auto-resolve-layer";
 export * from "./trigger-resolver";
 
@@ -62,3 +63,10 @@ export const moveDamageAbility: any = () => ({});
 export const yourOtherCharactersGet: any = () => ({});
 export const otherCharacterGains: any = () => ({});
 export const exertItemCost: any = { type: "exert" };
+export const wheneverYouPlayAnActionNotASong: any = () => ({});
+export const wheneverOneOfYouCharactersIsBanished: any = () => ({});
+export const wheneverOneOfYourCharactersSings: any = () => ({});
+export const whenThisIsBanished: any = () => ({});
+export const duringYourTurnThisCharacterGains: any = () => ({});
+export const duringOpponentsTurn: any = () => ({});
+export const yourCharactersNamed: any = () => ({});

@@ -3,7 +3,6 @@ import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorca
 export const maxGoofRebelliousTeen: LorcanaCharacterCardDefinition = {
   id: "ctx",
   // notImplemented: true,
-  missingTestCase: false,
   name: "Max Goof",
   title: "Rebellious Teen",
   characteristics: ["storyborn", "hero"],

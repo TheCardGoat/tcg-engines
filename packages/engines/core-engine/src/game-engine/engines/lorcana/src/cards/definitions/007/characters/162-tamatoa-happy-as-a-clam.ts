@@ -1,4 +1,4 @@
-import { chosenItemOfYoursInHand } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { chosenItemOfYoursInHand } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import { wheneverThisCharacterQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";

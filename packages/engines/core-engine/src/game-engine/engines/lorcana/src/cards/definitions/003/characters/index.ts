@@ -832,9 +832,10 @@ export const chernabogsFollowersCreaturesOfEvil: LorcanaCharacterCardDefinition 
           },
         ],
       }),
-      {
-        name: "**RESTLESS SOULS** Whenever this character quests, you may banish this character to draw a card.",
-      },
+      // TODO: Convert legacy ability to new format
+      // {
+      //   name: "**RESTLESS SOULS** Whenever this character quests, you may banish this character to draw a card.",
+      // },
     ],
     flavour: "Let chaos reign.",
     inkwell: true,
@@ -1295,7 +1296,7 @@ export const minnieMouseMusicalArtist: LorcanaCharacterCardDefinition = {
           },
         ],
       },
-      effects: [removeDamageEffect(2, chosenCharacter)],
+      effects: [removeDamageEffect({ value: 2, targets: chosenCharacter })],
     }),
   ],
   flavour: "Her musical talents are off the charts!",
@@ -1350,9 +1351,10 @@ export const magicBroomTheBigSweeper: LorcanaCharacterCardDefinition = {
         },
       ],
     }),
-    {
-      name: "**CLEAN SWEEP** While this character is at a location, it gets +2 {S}.",
-    },
+    // TODO: Convert legacy ability to new format
+    // {
+    //   name: "**CLEAN SWEEP** While this character is at a location, it gets +2 {S}.",
+    // },
   ],
   flavour: "Super-sized tidiness.",
   inkwell: true,
@@ -1807,9 +1809,10 @@ export const scroogeMcduckUncleMoneybags: LorcanaCharacterCardDefinition = {
   text: "TREASURE FINDER  Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
   type: "character",
   abilities: [
-    {
-      name: "TREASURE FINDER  Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
-    },
+    // TODO: Convert legacy ability to new format
+    // {
+    //   name: "TREASURE FINDER  Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
+    // },
     wheneverQuests({
       name: "Treasure Finder",
       text: "You pay 1 {I} less for the next item you play this turn.",
@@ -2930,10 +2933,10 @@ export const hydraDeadlySerpent: LorcanaCharacterCardDefinition = {
       name: "Watch the Teeth",
       text: "When this character is damaged, deal the same amount of damage to a chosen opposing character.",
       effects: [
-        dealDamageEffect(
-          { dynamic: true, getAmountFromTrigger: true },
-          chosenOpposingCharacter,
-        ),
+        dealDamageEffect({
+          value: { type: "targetDamage" },
+          targets: chosenOpposingCharacter,
+        }),
       ],
     }),
   ],
@@ -3207,9 +3210,10 @@ export const miloThatchSpiritedScholar: LorcanaCharacterCardDefinition = {
         },
       ],
     }),
-    {
-      name: "**I’M YOUR MAN!** While this character is at a location, he gets +2 {S}.",
-    },
+    // TODO: Convert legacy ability to new format
+    // {
+    //   name: "**I'M YOUR MAN!** While this character is at a location, he gets +2 {S}.",
+    // },
   ],
   flavour: "My grandpa never told me about this place!",
   inkwell: true,
@@ -3874,9 +3878,10 @@ export const mamaOdieMysticalMaven: LorcanaCharacterCardDefinition = {
       optional: true,
       effects: [putTopCardOfYourDeckIntoYourInkwellExerted],
     }),
-    {
-      name: "**THIS GOING TO BE GOOD** Whenever you play a song, you may put the top card of your deck into your inkwell facedown and exerted.",
-    },
+    // TODO: Convert legacy ability to new format
+    // {
+    //   name: "**THIS GOING TO BE GOOD** Whenever you play a song, you may put the top card of your deck into your inkwell facedown and exerted.",
+    // },
   ],
   flavour: "You dig a little deeper, you'll find everything you need.",
   colors: ["sapphire"],

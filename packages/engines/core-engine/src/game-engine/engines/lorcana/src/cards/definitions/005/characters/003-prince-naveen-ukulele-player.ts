@@ -3,6 +3,7 @@ import type {
   PlayEffect,
 } from "@lorcanito/lorcana-engine";
 import { singerAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/singerAbility";
+import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const princeNaveenUkulelePlayer: LorcanaCharacterCardDefinition = {
   id: "mnj",

@@ -328,7 +328,8 @@ export type LorcanaAbilityType =
   | "triggered"
   | "static"
   | "keyword"
-  | "replacement";
+  | "replacement"
+  | "resolution"; // Legacy: resolution ability type for actions/songs
 
 export interface LorcanaBaseAbility {
   type: LorcanaAbilityType;
@@ -336,7 +337,7 @@ export interface LorcanaBaseAbility {
   nameKey?: string; // For translation purposes
   text?: string;
   textKey?: string; // For translation purposes
-  effects: LorcanaEffect[];
+  effects?: LorcanaEffect[]; // Optional: not all abilities have effects (e.g., keyword abilities)
   condition?: AbilityCondition;
   optional?: boolean;
   targets?: AbilityTarget[]; // Optional targets for the ability
@@ -347,6 +348,7 @@ export interface LorcanaBaseAbility {
 export interface LorcanaResolutionAbility extends LorcanaBaseAbility {
   type: "resolution";
   effects: any[]; // Legacy: effects array
+  costs?: any[]; // Legacy: costs array for abilities with costs
   resolutionConditions?: any[]; // Legacy: conditions for resolution
   dependentEffects?: any[] | boolean; // Legacy: effects dependent on primary effects or boolean flag
   resolveEffectsIndividually?: boolean; // Legacy: resolve effects one at a time

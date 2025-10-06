@@ -1,8 +1,6 @@
+import type { LorcanaGainAbilityStaticAbility } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import { supportAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/supportAbility";
-import type {
-  GainAbilityStaticAbility,
-  LorcanitoCharacterCard,
-} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
+import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const dangHuTalonChief: LorcanaCharacterCardDefinition = {
   id: "ave",
@@ -30,7 +28,7 @@ export const dangHuTalonChief: LorcanaCharacterCardDefinition = {
           { filter: "zone", value: "play" },
         ],
       },
-    } as GainAbilityStaticAbility,
+    } as LorcanaGainAbilityStaticAbility,
   ],
   flavour: "You can find villainy in the most unexpected places.",
   inkwell: true,

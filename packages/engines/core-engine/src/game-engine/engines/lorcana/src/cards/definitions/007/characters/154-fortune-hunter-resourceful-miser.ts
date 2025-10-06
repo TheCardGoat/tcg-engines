@@ -2,8 +2,10 @@ import type {
   MetaAbility,
   ResolutionAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
-import { readyItemsYouControl } from "~/game-engine/engines/lorcana/src/abilities/target";
-import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import {
+  readyItemsYouControl,
+  self,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const fortuneHunterAbility: ResolutionAbility = {

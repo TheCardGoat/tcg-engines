@@ -1,7 +1,7 @@
 import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 // Re-export all cards from the original structure to maintain compatibility
-export * from "./action/actions";
+export * from "./actions";
 export * from "./character";
 export { moneyEverywhere } from "./character/037-donaldDuckCoinCollector";
 // Export specific abilities that are used in the simulator
@@ -40,7 +40,7 @@ import {
   undermine,
   walkThePlank,
   wrongLeverAction,
-} from "./action/actions";
+} from "./actions";
 
 import {
   abuIllusoryPachyderm,

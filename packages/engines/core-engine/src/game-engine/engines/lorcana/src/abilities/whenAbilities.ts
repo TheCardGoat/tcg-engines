@@ -82,3 +82,6 @@ export function whenMovesToALocation(config: any): LorcanaTriggeredAbility {
 export function whenYouPlayThis(config: any): LorcanaTriggeredAbility {
   return config as LorcanaTriggeredAbility;
 }
+
+// Legacy alias
+export const whenYouPlayThisCharacter = whenYouPlayThisCharAbility;

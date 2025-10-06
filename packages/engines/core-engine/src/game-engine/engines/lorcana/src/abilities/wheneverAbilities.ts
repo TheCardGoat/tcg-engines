@@ -35,6 +35,34 @@ export function wheneverBanishesAnotherCharacterInChallenge(
   return config as LorcanaTriggeredAbility;
 }
 
+export function wheneverThisCharacterQuests(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function wheneverThisCharSings(config: any): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function wheneverYouPlayAnotherPrincess(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function wheneverYouPlayAnActionNotASong(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function wheneverOneOfYouCharactersIsBanished(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
 export function wheneverYouReadyThisCharacter(
   config: any,
 ): LorcanaTriggeredAbility {
@@ -166,3 +194,9 @@ export function wheneverThisCharacterDealsDamageInChallenge(
 ): LorcanaTriggeredAbility {
   return config as LorcanaTriggeredAbility;
 }
+
+// Legacy aliases for common variations
+export const wheneverThisCharacterQuests = wheneverQuests;
+export const wheneverACardIsPutIntoYourInkwell = (
+  config: any,
+): LorcanaTriggeredAbility => config as LorcanaTriggeredAbility;

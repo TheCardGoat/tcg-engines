@@ -1,4 +1,4 @@
-import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

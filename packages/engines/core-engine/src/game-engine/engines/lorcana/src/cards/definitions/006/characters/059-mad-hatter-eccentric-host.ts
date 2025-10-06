@@ -1,5 +1,6 @@
 // TODO: Once the set is released, we organize the cards by set and type
 import type {
+  LorcanaCharacterCardDefinition,
   LorcanitoCharacterCard,
   ScryEffect,
 } from "@lorcanito/lorcana-engine";

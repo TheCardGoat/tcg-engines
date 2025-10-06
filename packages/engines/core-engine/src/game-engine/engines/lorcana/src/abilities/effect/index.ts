@@ -55,3 +55,18 @@ export const damageRemovalRestrictionEffect: any = () => ({});
 export const exertItemCost: any = { type: "exert" };
 export const returnCardToHand: any = () => ({});
 export const yourOtherCharactersGainStrengthThisTurn: any = () => ({});
+
+// Legacy exports for missing effects (getStrengthThisTurn is exported from ./effect)
+export const banishChosenItem: any = () => ({});
+export const chosenCharacterGetsStrength: any = () => ({});
+export const exertChosenOpposingCharacter: any = () => ({});
+export const eachOpponentLosesXLore: any = () => ({});
+export const discardYourHand: any = () => ({});
+export const chosenOpposingCharacterLoseStrengthUntilNextTurn: any = () => ({});
+export const chosenOpposingCharacterGainsRecklessDuringNextTurn: any =
+  () => ({});
+export const opponentCharactersLoseStrengthUntilNextTurn: any = () => ({});
+export const targetCardGainsResist: any = () => ({});
+export const chosenCharacterGainsChallenger: any = () => ({});
+export const chosenCharacterOfYoursGainsWhenBanishedReturnToHand: any =
+  () => ({});

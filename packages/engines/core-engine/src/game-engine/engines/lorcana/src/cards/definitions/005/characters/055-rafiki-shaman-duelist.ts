@@ -1,5 +1,6 @@
 import type {
   AbilityEffect,
+  LorcanaCharacterCardDefinition,
   LorcanitoCharacterCard,
 } from "@lorcanito/lorcana-engine";
 import { rushAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/rushAbility";

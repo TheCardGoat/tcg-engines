@@ -1,5 +1,6 @@
 import type {
   CardEffectTarget,
+  LorcanaCharacterCardDefinition,
   LorcanitoCharacterCard,
   ResolutionAbility,
 } from "@lorcanito/lorcana-engine";

@@ -7,6 +7,7 @@ import {
 import { targetCardsGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type {
   CardEffectTarget,
+  LorcanaItemCardDefinition,
   LorcanitoItemCard,
 } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

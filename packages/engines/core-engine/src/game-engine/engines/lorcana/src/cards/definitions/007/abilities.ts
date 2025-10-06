@@ -19,10 +19,10 @@ import {
   youMayDrawThenChooseAndDiscard,
   youPayXLessToPlayNextItemThisTurn,
 } from "~/game-engine/engines/lorcana/src/abilities/effect";
-import { chosenCharacterOrLocation } from "~/game-engine/engines/lorcana/src/abilities/target";
 import {
   chosenCharacter,
   chosenCharacterOfYours,
+  chosenCharacterOrLocation,
   chosenDamagedCharacter,
   chosenOpposingCharacter,
   chosenPlayer,

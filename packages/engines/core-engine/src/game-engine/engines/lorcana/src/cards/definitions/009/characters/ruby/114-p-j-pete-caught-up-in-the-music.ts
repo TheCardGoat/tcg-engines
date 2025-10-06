@@ -6,7 +6,6 @@ import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorca
 export const pjPeteCaughtUpInTheMusic: LorcanaCharacterCardDefinition = {
   id: "pjp",
   // notImplemented: true,
-  missingTestCase: false,
   name: "P.J. Pete",
   title: "Caught Up in the Music",
   characteristics: ["storyborn", "ally"],

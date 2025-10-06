@@ -10,7 +10,6 @@ import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/sr
 export const familyFishingPole: LorcanaItemCardDefinition = {
   id: "zd9",
   // notImplemented: true,
-  missingTestCase: false,
   name: "Family Fishing Pole",
   characteristics: ["item"],
   text: "WATCH CLOSELY This item enters play exerted.\nTHE PERFECT CAST {E}, 1 {I}, Banish this item – Return chosen exerted character of yours to your hand to gain 2 lore.",

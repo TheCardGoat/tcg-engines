@@ -4,7 +4,7 @@ import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/
 
 export const poorUnfortunateSouls: LorcanaActionCardDefinition = {
   id: "d2i",
-  missingTestCase: false,
+  // missingTestCase: false, // Type only allows `true`, not `false`
   name: "Poor Unfortunate Souls",
   characteristics: ["action", "song"],
   text: "Return a character, item or location with cost 2 or less to their player's hand.",

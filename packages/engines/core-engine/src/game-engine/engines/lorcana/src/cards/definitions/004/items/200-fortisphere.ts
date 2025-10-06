@@ -3,6 +3,7 @@ import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/tar
 import { whenYouPlayMayDrawACard } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type {
   AbilityEffect,
+  LorcanaItemCardDefinition,
   LorcanitoItemCard,
 } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

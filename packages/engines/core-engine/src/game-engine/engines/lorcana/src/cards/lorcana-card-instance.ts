@@ -189,22 +189,168 @@ export class LorcanaCardInstance extends CoreCardInstance<
     );
   }
 
-  // STUB METHODS, while we migrate tests
-  playFromHand(): void {}
+  // STUB METHODS - Runtime API stubs for test compatibility during migration
+  // These throw "not implemented" errors to clearly indicate they need actual implementation
+
+  playFromHand(): void {
+    throw new Error("playFromHand() not implemented");
+  }
+
+  play(): void {
+    throw new Error("play() not implemented");
+  }
+
+  sing(song?: any): void {
+    throw new Error("sing() not implemented");
+  }
+
+  banish(): void {
+    throw new Error("banish() not implemented");
+  }
+
+  shift(card?: any): void {
+    throw new Error("shift() not implemented");
+  }
+
+  activate(ability?: any): void {
+    throw new Error("activate() not implemented");
+  }
+
+  enterLocation(_location?: unknown): void {
+    throw new Error("enterLocation() not implemented");
+  }
+
+  hasSinger(): boolean {
+    throw new Error("hasSinger() not implemented");
+  }
+
+  hasBodyguard(): boolean {
+    throw new Error("hasBodyguard() not implemented");
+  }
+
+  canBeChallenged(_challenger?: any): boolean {
+    throw new Error("canBeChallenged() not implemented");
+  }
+
+  get singerCost(): number {
+    throw new Error("singerCost not implemented");
+  }
+
+  get hasVoiceless(): boolean {
+    throw new Error("hasVoiceless not implemented");
+  }
+
+  get hasVanish(): boolean {
+    throw new Error("hasVanish not implemented");
+  }
+
+  get hasDamageDealtRestriction(): boolean {
+    throw new Error("hasDamageDealtRestriction not implemented");
+  }
+
+  get hasChallengeCharactersRestriction(): boolean {
+    throw new Error("hasChallengeCharactersRestriction not implemented");
+  }
+
+  hasShift(): boolean {
+    throw new Error("hasShift() not implemented");
+  }
+
+  hasEvasive(): boolean {
+    throw new Error("hasEvasive() not implemented");
+  }
+
+  get hasChallenger(): boolean {
+    throw new Error("hasChallenger not implemented");
+  }
+
+  hasReckless(): boolean {
+    throw new Error("hasReckless() not implemented");
+  }
+
+  hasWard(): boolean {
+    throw new Error("hasWard() not implemented");
+  }
+
+  hasSupport(): boolean {
+    throw new Error("hasSupport() not implemented");
+  }
+
+  get hasResist(): boolean {
+    throw new Error("hasResist not implemented");
+  }
+
+  get canChallengeReadyCharacters(): boolean {
+    throw new Error("canChallengeReadyCharacters not implemented");
+  }
+
+  get lore(): number {
+    const cardDef = this.card;
+    if (cardDef.type === "character") {
+      return cardDef.lore || 0;
+    }
+    return 0;
+  }
+
+  get damage(): number {
+    return this.meta.damage || 0;
+  }
+
+  set damage(value: number) {
+    throw new Error(
+      "Setting damage directly not implemented - use damage action",
+    );
+  }
+
+  get canQuest(): boolean {
+    throw new Error("canQuest not implemented");
+  }
+
+  addToInkwell(): void {
+    throw new Error("addToInkwell() not implemented");
+  }
+
+  damageReduction(): number {
+    throw new Error("damageReduction() not implemented");
+  }
+
+  isRevealed(): boolean {
+    throw new Error("isRevealed() not implemented");
+  }
+
+  moveCostToEnterLocation(): number {
+    throw new Error("moveCostToEnterLocation() not implemented");
+  }
+
   get hasSingTogether(): boolean {
     return this.card.abilities?.some(
       (ability) =>
         ability.type === "keyword" && ability.keyword === "sing-together",
     );
   }
+
   get hasRush(): boolean {
     return this.card.abilities?.some(
       (ability) => ability.type === "keyword" && ability.keyword === "rush",
     );
   }
+
   get isDead(): boolean {
     return this.zone === "discard" || this.meta.damage >= this.willpower;
   }
+
+  get hasSingRestriction(): boolean {
+    throw new Error("hasSingRestriction not implemented");
+  }
+
+  get hasChallengeRestriction(): boolean {
+    throw new Error("hasChallengeRestriction not implemented");
+  }
+
+  get hasQuestRestriction(): boolean {
+    throw new Error("hasQuestRestriction not implemented");
+  }
+
   ready = true;
 }
 

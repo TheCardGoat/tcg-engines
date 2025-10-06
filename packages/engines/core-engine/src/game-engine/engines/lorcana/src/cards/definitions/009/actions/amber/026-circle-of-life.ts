@@ -3,7 +3,6 @@ import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/
 
 export const circleOfLife: LorcanaActionCardDefinition = {
   id: "w6g",
-  missingTestCase: false,
   name: "Circle Of Life",
   characteristics: ["action", "song"],
   text: "Sing Together 8 (Any number of your or your teammates' characters with total cost 8 or more may {E} to sing this song for free.)\nPlay a character from your discard for free.",

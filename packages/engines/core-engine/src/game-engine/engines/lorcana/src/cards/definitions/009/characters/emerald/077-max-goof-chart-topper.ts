@@ -1,5 +1,6 @@
 import type {
   CardEffectTarget,
+  LorcanaCharacterCardDefinition,
   LorcanitoCharacterCard,
   PlayEffect,
 } from "@lorcanito/lorcana-engine";

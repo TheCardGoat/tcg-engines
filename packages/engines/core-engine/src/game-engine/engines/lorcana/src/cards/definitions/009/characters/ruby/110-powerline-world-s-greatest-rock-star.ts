@@ -1,4 +1,5 @@
 import type {
+  LorcanaCharacterCardDefinition,
   LorcanitoCharacterCard,
   TargetFilter,
 } from "@lorcanito/lorcana-engine";

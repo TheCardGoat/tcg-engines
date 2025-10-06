@@ -1,7 +1,9 @@
 import { whileThisCharacterIsExerted } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
-import { yourOtherCharacters } from "~/game-engine/engines/lorcana/src/abilities/target";
-import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import {
+  thisCharacter,
+  yourOtherCharacters,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whileConditionOnThisCharacterTargetsGain } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

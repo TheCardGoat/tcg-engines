@@ -208,17 +208,47 @@ export function readyAndCantQuest(params: {
   ];
 }
 
-// Implementation that handles both signatures
-export function dealDamageEffect({
-  targets,
-  value,
-  followedBy,
-}: {
-  targets?: CardTarget | CardTarget[];
-  value: number | DynamicValue;
-  source?: string;
-  followedBy?: LorcanaEffect;
-}): DealDamageEffect {
+// Implementation that handles both new and legacy signatures
+export function dealDamageEffect(
+  valueOrOptions:
+    | number
+    | DynamicValue
+    | {
+        targets?: CardTarget | CardTarget[];
+        value: number | DynamicValue;
+        source?: string;
+        followedBy?: LorcanaEffect;
+      },
+  legacyTargets?: CardTarget | CardTarget[],
+): DealDamageEffect {
+  // Handle legacy signature: dealDamageEffect(3, chosenCharacter)
+  if (
+    typeof valueOrOptions === "number" ||
+    (typeof valueOrOptions === "object" &&
+      ("type" in valueOrOptions || "dynamic" in valueOrOptions))
+  ) {
+    return {
+      type: "dealDamage",
+      ...(legacyTargets !== undefined
+        ? {
+            targets: Array.isArray(legacyTargets)
+              ? legacyTargets
+              : [legacyTargets],
+          }
+        : {}),
+      parameters: {
+        value: valueOrOptions as number | DynamicValue,
+      },
+    };
+  }
+
+  // Handle new signature: dealDamageEffect({ value, targets })
+  const { targets, value, followedBy } = valueOrOptions as {
+    targets?: CardTarget | CardTarget[];
+    value: number | DynamicValue;
+    followedBy?: LorcanaEffect;
+  };
+
   return {
     type: "dealDamage",
     ...(targets !== undefined
@@ -231,15 +261,40 @@ export function dealDamageEffect({
   };
 }
 
-export function removeDamageEffect({
-  targets,
-  value,
-  followedBy,
-}: {
-  targets?: CardTarget | CardTarget[];
-  value: number | DynamicValue;
-  followedBy?: LorcanaEffect;
-}): RemoveDamageEffect {
+// Implementation that handles both new and legacy signatures
+export function removeDamageEffect(
+  valueOrOptions:
+    | number
+    | DynamicValue
+    | {
+        targets?: CardTarget | CardTarget[];
+        value: number | DynamicValue;
+        followedBy?: LorcanaEffect;
+      },
+  legacyTargets?: CardTarget | CardTarget[],
+): RemoveDamageEffect {
+  // Handle legacy signature: removeDamageEffect(2, chosenCharacter)
+  if (typeof valueOrOptions === "number") {
+    return {
+      type: "removeDamage",
+      ...(legacyTargets !== undefined
+        ? {
+            targets: Array.isArray(legacyTargets)
+              ? legacyTargets
+              : [legacyTargets],
+          }
+        : {}),
+      parameters: { value: valueOrOptions },
+    };
+  }
+
+  // Handle new signature: removeDamageEffect({ value, targets })
+  const { targets, value, followedBy } = valueOrOptions as {
+    targets?: CardTarget | CardTarget[];
+    value: number | DynamicValue;
+    followedBy?: LorcanaEffect;
+  };
+
   return {
     type: "removeDamage",
     ...(targets !== undefined
@@ -250,46 +305,98 @@ export function removeDamageEffect({
   };
 }
 
-export function putDamageEffect({
-  targets,
-  value,
-  followedBy,
-}: {
-  targets?: CardTarget | CardTarget[];
-  value?: number | DynamicValue;
-  followedBy?: LorcanaEffect;
-}): DealDamageEffect {
+// Implementation that handles both new and legacy signatures
+export function putDamageEffect(
+  valueOrOptions?:
+    | number
+    | DynamicValue
+    | {
+        targets?: CardTarget | CardTarget[];
+        value?: number | DynamicValue;
+        followedBy?: LorcanaEffect;
+      },
+  legacyTargets?: CardTarget | CardTarget[],
+): DealDamageEffect {
+  // Handle legacy signature: putDamageEffect(1, chosenCharacter)
+  if (typeof valueOrOptions === "number") {
+    return {
+      type: "dealDamage",
+      ...(legacyTargets !== undefined
+        ? {
+            targets: Array.isArray(legacyTargets)
+              ? legacyTargets
+              : [legacyTargets],
+          }
+        : {}),
+      parameters: {
+        value: valueOrOptions,
+      },
+    };
+  }
+
+  // Handle new signature: putDamageEffect({ value, targets })
+  if (valueOrOptions && typeof valueOrOptions === "object") {
+    const { targets, value, followedBy } = valueOrOptions as {
+      targets?: CardTarget | CardTarget[];
+      value?: number | DynamicValue;
+      followedBy?: LorcanaEffect;
+    };
+
+    return {
+      type: "dealDamage",
+      ...(targets !== undefined
+        ? { targets: Array.isArray(targets) ? targets : [targets] }
+        : {}),
+      parameters: {
+        value: value || 1,
+      },
+      followedBy: followedBy,
+    };
+  }
+
+  // Default: no arguments
   return {
     type: "dealDamage",
-    ...(targets !== undefined
-      ? { targets: Array.isArray(targets) ? targets : [targets] }
-      : {}),
     parameters: {
-      value: value || 1,
+      value: 1,
     },
-    followedBy: followedBy,
   };
 }
 
 export function moveDamageEffect({
   fromTargets,
+  from,
   toTargets,
+  to,
   value,
+  amount,
   followedBy,
 }: {
-  fromTargets: CardTarget | CardTarget[];
-  toTargets: CardTarget | CardTarget[];
+  fromTargets?: CardTarget | CardTarget[];
+  from?: CardTarget | CardTarget[];
+  toTargets?: CardTarget | CardTarget[];
+  to?: CardTarget | CardTarget[];
   value?: number | DynamicValue;
+  amount?: number | DynamicValue;
   followedBy?: LorcanaEffect;
 }): LorcanaEffect[] {
-  const damageValue = value || 1;
+  const damageValue = value || amount || 1;
+  const fromT = fromTargets || from;
+  const toT = toTargets || to;
+
+  if (!(fromT && toT)) {
+    throw new Error(
+      "moveDamageEffect requires fromTargets/from and toTargets/to",
+    );
+  }
+
   return [
     removeDamageEffect({
-      targets: fromTargets,
+      targets: fromT,
       value: damageValue,
     }),
     putDamageEffect({
-      targets: toTargets,
+      targets: toT,
       value: damageValue,
       followedBy,
     }),
@@ -1009,4 +1116,33 @@ export function createCardEffectsForTargetPlayer({
       effects,
     },
   };
+}
+
+// Legacy exports for missing effects
+export function thisCharacterGetsStrength(value: number): GetEffect {
+  return getEffect({
+    attribute: "strength",
+    value,
+    duration: FOR_THE_REST_OF_THIS_TURN,
+  });
+}
+
+export function getStrengthThisTurn(
+  value: any, // Accept any for legacy format support
+  targets?: CardTarget | CardTarget[],
+): GetEffect {
+  return getEffect({
+    attribute: "strength",
+    value,
+    targets,
+    duration: FOR_THE_REST_OF_THIS_TURN,
+  });
+}
+
+export function thisCharacterGetsLore(value: number): GetEffect {
+  return getEffect({
+    attribute: "lore",
+    value,
+    duration: FOR_THE_REST_OF_THIS_TURN,
+  });
 }

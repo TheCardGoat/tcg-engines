@@ -29,6 +29,10 @@ export function whileConditionThisCharacterGets(
   return config as LorcanaStaticAbility;
 }
 
+export function targetCardsGains(config: any): LorcanaStaticAbility {
+  return config as LorcanaStaticAbility;
+}
+
 export function whileThisCharacterHasNoDamageGets(
   config: any,
 ): LorcanaStaticAbility {

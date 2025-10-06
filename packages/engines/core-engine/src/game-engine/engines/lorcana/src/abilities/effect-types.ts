@@ -259,7 +259,7 @@ export type CardEffectTarget = any;
 export type PlayerEffectTarget = any;
 export type EffectTargets = any;
 export type TargetConditionalEffect = any;
-export type ExertEffect = any;
+// ExertEffect is defined above as an interface, not duplicated here
 export type CardRestrictionEffect = any;
 export type LorcanitoCharacterCard = any;
 export type DiscardEffect = any;

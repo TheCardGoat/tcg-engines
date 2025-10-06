@@ -1,11 +1,9 @@
+import type { LorcanaResolutionAbility } from "~/game-engine/engines/lorcana/src/abilities/ability-types";
 import { discardACard } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { whenChallenged } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
-import type {
-  LorcanitoCharacterCard,
-  ResolutionAbility,
-} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
+import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-const smartManeuver: ResolutionAbility = {
+const smartManeuver: LorcanaResolutionAbility = {
   type: "resolution",
   name: "Smart Maneuver",
   text: "When you play this character and each time she is challenged, each opponent chooses and discards a card.",

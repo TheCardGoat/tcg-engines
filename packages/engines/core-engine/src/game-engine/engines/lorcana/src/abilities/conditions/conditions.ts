@@ -43,6 +43,3 @@ export function duringYourTurn(config: any): Condition {
 export function unlessItIsAtALocation(config: any): Condition {
   return config as Condition;
 }
-
-// Re-export Condition type for old import paths
-export type { Condition };

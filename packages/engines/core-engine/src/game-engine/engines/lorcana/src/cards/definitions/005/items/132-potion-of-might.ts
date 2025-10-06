@@ -2,6 +2,7 @@ import type {
   LorcanitoItemCard,
   TargetConditionalEffect,
 } from "@lorcanito/lorcana-engine";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 const targetConditional: TargetConditionalEffect = {
   type: "target-conditional",

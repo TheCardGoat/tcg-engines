@@ -5,6 +5,7 @@
 import { describe, expect, it } from "@jest/globals";
 import {
   allCardsById,
+  type LorcanaCharacterCardDefinition,
   type LorcanitoCharacterCard,
 } from "@lorcanito/lorcana-engine";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";

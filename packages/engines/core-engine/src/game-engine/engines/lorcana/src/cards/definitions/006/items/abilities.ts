@@ -18,12 +18,11 @@ import {
   moveToLocation,
   readyAndCantQuest,
   removeDamageEffect,
-  returnChosenCharacterWithStrength,
+  returnChosenOpposingCharacterWithStrength,
   revealTopOfDeckPutInHandOrDeck,
   youGainLore,
   youMayDrawThenChooseAndDiscard,
 } from "~/game-engine/engines/lorcana/src/abilities/effect";
-import { yourDamagedCharacters } from "~/game-engine/engines/lorcana/src/abilities/target";
 import {
   anyTarget,
   chosenCharacter,
@@ -31,6 +30,7 @@ import {
   chosenDamagedCharacter,
   eachOfYourCharacters,
   oneOfYourOpponentsCharactersItemsOrLocations,
+  yourDamagedCharacters,
 } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverIsReturnedToHand } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 
@@ -100,7 +100,7 @@ export const thereYouGo: ActivatedAbility = {
 export const resourceAllocation: ActivatedAbility = {
   type: "activated",
   costs: [{ type: "ink", amount: 1 }, { type: "banish" }],
-  effects: [returnChosenCharacterWithStrength(2, "lte")],
+  effects: [returnChosenOpposingCharacterWithStrength(2, "lte")],
 };
 export const tenThousandMedicalProcedures: ActivatedAbility = {
   type: "activated",

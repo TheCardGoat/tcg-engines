@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import type { CardModel } from "@lorcanito/lorcana-engine";
+// Legacy import removed - types available via local definitions
 import type { GenerateOnDemandLayerMove } from "@lorcanito/shared";
 import { weKnowTheWay } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import { alanadaleRockinRooster } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";

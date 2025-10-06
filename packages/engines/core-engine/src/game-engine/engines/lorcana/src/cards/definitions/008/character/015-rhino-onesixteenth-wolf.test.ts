@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import type { CardModel } from "@lorcanito/lorcana-engine";
+// Legacy import removed - types available via local definitions
 import {
   lafayetteSleepyDachshund,
   rhinoOnesixteenthWolf,

@@ -350,8 +350,11 @@ export class LorcanaCoreOperations extends CoreOperation<
    * Resolve card targets based on target definitions
    * This implements the targeting system for effects
    */
-  resolveTargets(targetDefs: any[], sourceCard?: LorcanaCard): LorcanaCard[] {
-    const targets: LorcanaCard[] = [];
+  resolveTargets(
+    targetDefs: any[],
+    sourceCard?: LorcanaCard,
+  ): LorcanaCardInstance[] {
+    const targets: LorcanaCardInstance[] = [];
 
     for (const targetDef of targetDefs) {
       if (!targetDef || targetDef.type !== "card") {
@@ -446,8 +449,8 @@ export class LorcanaCoreOperations extends CoreOperation<
   /**
    * Get all cards in a specific zone, optionally filtered by owner
    */
-  getAllCardsInZone(zone: string, ownerFilter?: string): LorcanaCard[] {
-    const cards: LorcanaCard[] = [];
+  getAllCardsInZone(zone: string, ownerFilter?: string): LorcanaCardInstance[] {
+    const cards: LorcanaCardInstance[] = [];
 
     for (const playerId of Object.keys(this.state.ctx.players)) {
       // Skip if we have an owner filter and this player doesn't match

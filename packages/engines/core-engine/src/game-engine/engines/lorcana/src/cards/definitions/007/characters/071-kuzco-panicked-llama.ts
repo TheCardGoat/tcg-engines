@@ -4,8 +4,8 @@ import {
   drawXCards,
 } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
-import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
 import {
+  chosenCharacter,
   opponent,
   self,
 } from "~/game-engine/engines/lorcana/src/abilities/targets";

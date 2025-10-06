@@ -1,6 +1,6 @@
 import { getStrengthThisTurn } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { evasiveAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/evasiveAbility";
-import { anotherChosenCharOfYours } from "~/game-engine/engines/lorcana/src/abilities/target";
+import { anotherChosenCharOfYours } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { wheneverChallengesAnotherChar } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 

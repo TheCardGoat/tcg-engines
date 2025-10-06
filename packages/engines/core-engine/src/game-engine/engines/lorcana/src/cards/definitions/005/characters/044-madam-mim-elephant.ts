@@ -1,8 +1,10 @@
 import { madameMimAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import { atTheStartOfYourTurn } from "~/game-engine/engines/lorcana/src/abilities/atTheAbilities";
 import { moveDamageEffect } from "~/game-engine/engines/lorcana/src/abilities/effect";
-import { chosenOpposingCharacter } from "~/game-engine/engines/lorcana/src/abilities/target";
-import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import {
+  chosenOpposingCharacter,
+  thisCharacter,
+} from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const madamMimElephant: LorcanaCharacterCardDefinition = {
