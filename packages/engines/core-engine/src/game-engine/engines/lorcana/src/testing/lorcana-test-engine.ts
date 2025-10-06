@@ -951,6 +951,7 @@ export class LorcanaTestEngine {
       mode?: string;
       scry?: Record<string, any>;
       targetId?: string; // Legacy: use targets instead
+      targetPlayer?: string; // Legacy: target player for scry effects
       acceptOptionalLayer?: boolean; // Legacy: for optional effects
       skip?: boolean; // Legacy: for skipping effects
       nameACard?: string; // Legacy: for naming a card
@@ -1116,6 +1117,7 @@ declare module "./lorcana-test-engine" {
       mode?: string;
       scry?: Record<string, any>;
       targetId?: string;
+      targetPlayer?: string;
       acceptOptionalLayer?: boolean;
       skip?: boolean;
     }) => this;
