@@ -718,6 +718,7 @@ export class LorcanaTestEngine {
       mode?: string; // Legacy: for modal abilities
       acceptOptionalLayer?: boolean; // Legacy: for optional effects
       skip?: boolean; // Legacy: for skipping effects
+      bodyguard?: boolean; // Legacy: for bodyguard parameter
     },
     _autoResolve?: unknown,
   ) {
@@ -1117,15 +1118,20 @@ declare module "./lorcana-test-engine" {
     getLayerIdForPlayer: (playerId: string) => string | undefined;
     acceptOptionalAbility: (..._args: any[]) => any;
     getCard: (card: unknown, index?: number) => LorcanaCardInstance;
-    resolveTopOfStack: (opts?: {
-      targets?: Array<LorcanaCardDefinition | LorcanaCardInstance | string>;
-      mode?: string;
-      scry?: Record<string, any>;
-      targetId?: string;
-      targetPlayer?: string;
-      acceptOptionalLayer?: boolean;
-      skip?: boolean;
-    }) => this;
+    resolveTopOfStack: (
+      opts?: {
+        targets?: Array<LorcanaCardDefinition | LorcanaCardInstance | string>;
+        mode?: string;
+        scry?: Record<string, any>;
+        targetId?: string;
+        targetPlayer?: string;
+        acceptOptionalLayer?: boolean;
+        skip?: boolean;
+        nameACard?: string;
+        bodyguard?: boolean;
+      },
+      _optional?: boolean,
+    ) => this;
     acceptOptionalLayer: (..._args: any[]) => void;
     setCardDamage(
       characterCard: LorcanaCardDefinition | LorcanaCardInstance,
