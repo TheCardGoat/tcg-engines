@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import seedrandom from "seedrandom";
 import type { CardId } from "../types";
 import type { Zone } from "./zone";
@@ -20,17 +21,13 @@ export function addCard(zone: Zone, cardId: CardId, position?: number): Zone {
     );
   }
 
-  const newCards = [...zone.cards];
-  if (position !== undefined) {
-    newCards.splice(position, 0, cardId);
-  } else {
-    newCards.push(cardId);
-  }
-
-  return {
-    ...zone,
-    cards: newCards,
-  };
+  return produce(zone, (draft) => {
+    if (position !== undefined) {
+      draft.cards.splice(position, 0, cardId);
+    } else {
+      draft.cards.push(cardId);
+    }
+  });
 }
 
 /**
@@ -46,13 +43,9 @@ export function removeCard(zone: Zone, cardId: CardId): Zone {
     throw new Error(`Card ${cardId} not found in zone ${zone.config.id}`);
   }
 
-  const newCards = [...zone.cards];
-  newCards.splice(index, 1);
-
-  return {
-    ...zone,
-    cards: newCards,
-  };
+  return produce(zone, (draft) => {
+    draft.cards.splice(index, 1);
+  });
 }
 
 /**
@@ -98,14 +91,14 @@ export function draw(
   }
 
   const drawnCards = deck.cards.slice(0, count);
-  const newDeck = {
-    ...deck,
-    cards: deck.cards.slice(count),
-  };
-  const newHand = {
-    ...hand,
-    cards: [...hand.cards, ...drawnCards],
-  };
+
+  const newDeck = produce(deck, (draft) => {
+    draft.cards.splice(0, count);
+  });
+
+  const newHand = produce(hand, (draft) => {
+    draft.cards.push(...drawnCards);
+  });
 
   return {
     fromZone: newDeck,
@@ -122,18 +115,14 @@ export function draw(
  */
 export function shuffle(zone: Zone, seed: string): Zone {
   const rng = seedrandom(seed);
-  const shuffled = [...zone.cards];
 
-  // Fisher-Yates shuffle with seeded RNG
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-
-  return {
-    ...zone,
-    cards: shuffled,
-  };
+  return produce(zone, (draft) => {
+    // Fisher-Yates shuffle with seeded RNG
+    for (let i = draft.cards.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [draft.cards[i], draft.cards[j]] = [draft.cards[j], draft.cards[i]];
+    }
+  });
 }
 
 /**
@@ -172,14 +161,14 @@ export function mill(
   count: number,
 ): { fromZone: Zone; toZone: Zone; milledCards: CardId[] } {
   const milledCards = deck.cards.slice(0, count);
-  const newDeck = {
-    ...deck,
-    cards: deck.cards.slice(count),
-  };
-  const newGraveyard = {
-    ...graveyard,
-    cards: [...graveyard.cards, ...milledCards],
-  };
+
+  const newDeck = produce(deck, (draft) => {
+    draft.cards.splice(0, count);
+  });
+
+  const newGraveyard = produce(graveyard, (draft) => {
+    draft.cards.push(...milledCards);
+  });
 
   return {
     fromZone: newDeck,
