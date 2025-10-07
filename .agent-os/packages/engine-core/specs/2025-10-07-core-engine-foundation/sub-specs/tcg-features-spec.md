@@ -19,18 +19,8 @@ type ZoneConfig = {
   visibility: ZoneVisibility;
   owner?: PlayerId; // undefined for shared zones
   ordered: boolean; // does order matter? (deck yes, play area maybe not)
-  faceUp: boolean; // are cards face-up by default?
+  faceDown?: boolean; // are cards face-up by default
   maxSize?: number; // deck size limit, hand size limit, etc.
-};
-
-// Common TCG zones
-type StandardZones = {
-  deck: Zone;
-  hand: Zone;
-  play: Zone;
-  graveyard: Zone;
-  exile: Zone;
-  // Games can add custom zones (sideboard, command zone, etc.)
 };
 ```
 
@@ -59,9 +49,6 @@ type ZoneOperations = {
   // Look at top N cards
   peek(zoneId: ZoneId, count: number): Card[];
   
-  // Mill (move from deck to graveyard)
-  mill(playerId: PlayerId, count: number): CardId[];
-  
   // Reveal cards (make temporarily visible)
   reveal(cardIds: CardId[], duration?: 'permanent' | 'until-end-of-turn'): void;
   
@@ -77,7 +64,7 @@ type ZoneOperations = {
 
 ```typescript
 type GameStateWithZones<TCustomZones = {}> = {
-  zones: StandardZones & TCustomZones;
+  zones: TCustomZones;
   zoneConfigs: Record<string, ZoneConfig>;
   // ... other game state
 };
@@ -138,49 +125,174 @@ moves: {
 
 ### Card Instance Model
 
+**Core Concept:** Card instances have a **mandatory base type** with core TCG fields, and games extend with custom state.
+
 ```typescript
-type CardInstance = {
-  // Identity
-  id: CardId; // unique instance ID
+// Mandatory base fields that ALL TCGs need
+type CardInstanceBase = {
+  // Identity (mandatory)
+  id: CardId;
   definitionId: string; // references card definition
   owner: PlayerId;
   controller: PlayerId; // can differ from owner
   
-  // Location
+  // Location (mandatory)
   zone: ZoneId;
   position?: number; // position within zone if ordered
   
-  // State flags
+  // State flags (mandatory)
   tapped: boolean;
   flipped: boolean; // face-up/face-down
   revealed: boolean; // temporarily visible to all
   phased: boolean; // phased out (not in play but not in another zone)
-  
-  // Modifications
-  counters: Record<string, number>; // +1/+1 counters, loyalty, etc.
-  attachments: CardId[]; // attached cards (auras, equipment)
-  attachedTo?: CardId; // what this card is attached to
-  
-  // Temporary modifications
-  modifiers: Modifier[]; // temporary stat changes, abilities
-  
-  // Metadata
-  summoningSick?: boolean;
-  damageTaken?: number;
-  markedForDeath?: boolean;
-  
-  // Custom game-specific properties
-  [key: string]: unknown;
 };
 
+// Generic card instance - games extend with custom state
+type CardInstance<TCustomState = {}> = CardInstanceBase & TCustomState;
+
+// Example: Magic the Gathering custom state
+type MagicCardState = {
+  summoningSick: boolean;
+  damageTaken: number;
+  counters: Record<string, number>; // +1/+1, -1/-1, etc.
+  attachments: CardId[];
+  attachedTo?: CardId;
+  modifiers: Modifier[];
+};
+
+type MagicCard = CardInstance<MagicCardState>;
+
+// Example: Hearthstone custom state (different needs)
+type HearthstoneCardState = {
+  damageTaken: number;
+  divineShield: boolean;
+  stealth: boolean;
+  frozen: boolean;
+  silenced: boolean;
+};
+
+type HearthstoneCard = CardInstance<HearthstoneCardState>;
+```
+
+### Modifier System
+
+```typescript
 type Modifier = {
   id: string;
   type: 'stat' | 'ability' | 'type' | 'keyword';
-  value: unknown;
+  property: string; // which property to modify (e.g., 'power', 'toughness')
+  value: number | string | boolean;
   duration: 'permanent' | 'until-end-of-turn' | 'while-condition';
   condition?: (state: GameState) => boolean;
   source: CardId; // what card created this modifier
+  layer?: number; // modifier layer (for complex interactions)
 };
+```
+
+### Computed Properties Pattern
+
+**Problem:** Card power = base power + modifiers. How do we compute this?
+
+**Solution:** Pure functions that compute values from state (never store computed values in state).
+
+```typescript
+// Card Definition (static data)
+type CardDefinition = {
+  id: string;
+  name: string;
+  type: string;
+  basePower?: number;
+  baseToughness?: number;
+  baseCost?: number;
+  abilities: string[];
+  // ... other static properties
+};
+
+// Card Instance (mutable state)
+type CardInstance<TCustomState> = CardInstanceBase & TCustomState & {
+  // Only store RAW state, never computed values
+  modifiers: Modifier[];
+};
+
+// Computed Properties (pure functions)
+const getCardPower = (card: CardInstance, state: GameState): number => {
+  const definition = getCardDefinition(card.definitionId);
+  const basePower = definition.basePower ?? 0;
+  
+  // Sum all power modifiers
+  const modifierBonus = card.modifiers
+    .filter(m => m.type === 'stat' && m.property === 'power')
+    .filter(m => !m.condition || m.condition(state)) // check conditions
+    .reduce((sum, m) => sum + (m.value as number), 0);
+  
+  return basePower + modifierBonus;
+};
+
+const getCardToughness = (card: CardInstance, state: GameState): number => {
+  const definition = getCardDefinition(card.definitionId);
+  const baseToughness = definition.baseToughness ?? 0;
+  
+  const modifierBonus = card.modifiers
+    .filter(m => m.type === 'stat' && m.property === 'toughness')
+    .filter(m => !m.condition || m.condition(state))
+    .reduce((sum, m) => sum + (m.value as number), 0);
+  
+  return baseToughness + modifierBonus;
+};
+
+const getCardCost = (card: CardInstance, state: GameState): number => {
+  const definition = getCardDefinition(card.definitionId);
+  const baseCost = definition.baseCost ?? 0;
+  
+  // Cost reduction effects
+  const costReduction = card.modifiers
+    .filter(m => m.type === 'stat' && m.property === 'cost')
+    .filter(m => !m.condition || m.condition(state))
+    .reduce((sum, m) => sum + (m.value as number), 0);
+  
+  return Math.max(0, baseCost + costReduction); // Can't go negative
+};
+
+// Usage in game logic
+const attackCreature = (attacker: CardInstance, defender: CardInstance, state: GameState) => {
+  const attackPower = getCardPower(attacker, state);
+  const defenderToughness = getCardToughness(defender, state);
+  
+  if (attackPower >= defenderToughness) {
+    // Destroy defender
+  }
+};
+```
+
+**Why This Pattern?**
+
+1. **Deterministic** - Same state always produces same computed value
+2. **Replayable** - No hidden state, everything computable from base state
+3. **Testable** - Easy to test: given state, expect output
+4. **Immutable** - State only stores raw data, never derived data
+5. **Cacheable** - Can memoize computed functions if needed for performance
+
+**Example with Conditional Modifiers:**
+
+```typescript
+// Add modifier that gives +2 power while card is tapped
+const addConditionalModifier = (card: CardInstance, state: Draft<GameState>) => {
+  card.modifiers.push({
+    id: nanoid(),
+    type: 'stat',
+    property: 'power',
+    value: 2,
+    duration: 'while-condition',
+    condition: (s) => {
+      const c = s.cards[card.id];
+      return c.tapped; // Only apply if tapped
+    },
+    source: card.id
+  });
+};
+
+// When computing power, condition is checked
+const power = getCardPower(card, state); // 3 + 2 = 5 (if tapped)
 ```
 
 ### Card Operations
@@ -333,7 +445,357 @@ const myCreatures = untappedCreatures
 
 ---
 
-## 4. AI Move Enumeration
+## 4. Targeting System
+
+### Overview
+
+Targeting is fundamental to TCGs but often complex. The framework must provide first-class targeting support to handle:
+- Target selection and validation
+- Targeting restrictions (e.g., "target creature you don't control")
+- Min/max target requirements
+- Multi-target support
+- Optional vs required targets
+- Target legality checks
+
+### Target Definition
+
+```typescript
+type TargetDefinition = {
+  id: string; // unique target slot ID
+  filter: CardFilter; // what can be targeted
+  count: number | { min: number; max: number }; // how many targets
+  required: boolean; // must select target(s) to execute move
+  restrictions?: TargetRestriction[];
+};
+
+type TargetRestriction =
+  | { type: 'not-self' } // Can't target the source card
+  | { type: 'not-controller' } // Can't target cards you control
+  | { type: 'not-owner' } // Can't target cards you own
+  | { type: 'different-targets' } // All targets must be different
+  | { type: 'same-controller' } // All targets must share controller
+  | { type: 'custom'; check: (target: CardId, state: GameState) => boolean };
+```
+
+### Move with Targeting
+
+```typescript
+moves: {
+  dealDamage: {
+    // Define targets for this move
+    targets: {
+      creature: {
+        id: 'creature',
+        filter: { zone: 'play', type: 'creature' },
+        count: 1,
+        required: true,
+        restrictions: [
+          { type: 'not-controller' } // Can't target your own creatures
+        ]
+      }
+    },
+    
+    // Target is validated before move executes
+    move: (state, { damage }, { targets, rng }) => {
+      const targetId = targets.creature[0]; // Guaranteed to exist (required: true)
+      const card = state.cards[targetId];
+      card.damageTaken += damage;
+    },
+    
+    condition: (state, { playerId }) => {
+      // Player must have mana to cast
+      return state.players[playerId].mana >= 3;
+    }
+  },
+  
+  // Multi-target example
+  multiTarget: {
+    targets: {
+      creatures: {
+        id: 'creatures',
+        filter: { zone: 'play', type: 'creature' },
+        count: { min: 1, max: 3 }, // 1-3 targets
+        required: true,
+        restrictions: [
+          { type: 'different-targets' } // Can't pick same creature twice
+        ]
+      }
+    },
+    move: (state, { effect }, { targets }) => {
+      const targetIds = targets.creatures; // Array of 1-3 card IDs
+      for (const id of targetIds) {
+        // Apply effect to each target
+        state.cards[id].tapped = true;
+      }
+    }
+  },
+  
+  // Optional target example
+  optionalBuff: {
+    targets: {
+      ally: {
+        id: 'ally',
+        filter: { zone: 'play', type: 'creature', controller: '$self' },
+        count: 1,
+        required: false // Optional - can cast without target
+      }
+    },
+    move: (state, { bonus }, { targets }) => {
+      if (targets.ally && targets.ally.length > 0) {
+        const targetId = targets.ally[0];
+        state.cards[targetId].modifiers.push({
+          id: nanoid(),
+          type: 'stat',
+          property: 'power',
+          value: bonus,
+          duration: 'until-end-of-turn',
+          source: 'optionalBuff'
+        });
+      }
+      // Effect still resolves even without target
+    }
+  }
+}
+```
+
+### Target Validation
+
+```typescript
+type TargetValidator = {
+  // Check if a specific card is a legal target
+  isLegalTarget(
+    state: GameState,
+    targetDef: TargetDefinition,
+    cardId: CardId,
+    moveContext: MoveContext
+  ): boolean;
+  
+  // Get all legal targets for a target definition
+  getLegalTargets(
+    state: GameState,
+    targetDef: TargetDefinition,
+    moveContext: MoveContext
+  ): CardId[];
+  
+  // Validate complete target selection
+  validateTargetSelection(
+    state: GameState,
+    targetDef: TargetDefinition,
+    selectedTargets: CardId[],
+    moveContext: MoveContext
+  ): ValidationResult;
+};
+
+// Implementation example
+const isLegalTarget = (
+  state: GameState,
+  targetDef: TargetDefinition,
+  cardId: CardId,
+  context: MoveContext
+): boolean => {
+  const card = state.cards[cardId];
+  if (!card) return false;
+  
+  // Check filter
+  if (!matchesFilter(card, targetDef.filter, state)) {
+    return false;
+  }
+  
+  // Check restrictions
+  for (const restriction of targetDef.restrictions ?? []) {
+    switch (restriction.type) {
+      case 'not-self':
+        if (cardId === context.sourceCard) return false;
+        break;
+      
+      case 'not-controller':
+        if (card.controller === context.playerId) return false;
+        break;
+      
+      case 'not-owner':
+        if (card.owner === context.playerId) return false;
+        break;
+      
+      case 'custom':
+        if (!restriction.check(cardId, state)) return false;
+        break;
+    }
+  }
+  
+  return true;
+};
+```
+
+### Target Enumeration (for AI)
+
+```typescript
+// Enumerate all valid target combinations for a move
+const enumerateTargetCombinations = (
+  state: GameState,
+  moveName: string,
+  context: MoveContext
+): CardId[][] => {
+  const moveDef = getMoveDefinition(moveName);
+  const targetDef = moveDef.targets;
+  
+  if (!targetDef) return [[]]; // No targets needed
+  
+  const combinations: CardId[][] = [];
+  const legalTargets = getLegalTargets(state, targetDef, context);
+  
+  // Handle count
+  if (typeof targetDef.count === 'number') {
+    // Exact count: generate all permutations of that size
+    const perms = generatePermutations(legalTargets, targetDef.count);
+    combinations.push(...perms);
+  } else {
+    // Min/max: generate all valid sizes
+    for (let size = targetDef.count.min; size <= targetDef.count.max; size++) {
+      const perms = generatePermutations(legalTargets, size);
+      combinations.push(...perms);
+    }
+  }
+  
+  // If optional, include empty selection
+  if (!targetDef.required) {
+    combinations.push([]);
+  }
+  
+  return combinations;
+};
+
+// Usage in AI move enumeration
+const validMoves = enumerateValidMoves(state, playerId);
+// Returns:
+// [
+//   { name: 'dealDamage', args: { damage: 3 }, targets: ['card-1'] },
+//   { name: 'dealDamage', args: { damage: 3 }, targets: ['card-2'] },
+//   { name: 'multiTarget', args: {}, targets: ['card-1'] },
+//   { name: 'multiTarget', args: {}, targets: ['card-1', 'card-2'] },
+//   { name: 'multiTarget', args: {}, targets: ['card-1', 'card-2', 'card-3'] },
+//   // ... all valid combinations
+// ]
+```
+
+### Advanced Targeting: Modal Spells
+
+```typescript
+// Modal spells: choose one or more modes
+moves: {
+  charm: {
+    modes: [
+      {
+        id: 'mode1',
+        name: 'Draw cards',
+        targets: {
+          player: {
+            id: 'player',
+            filter: { type: 'player' },
+            count: 1,
+            required: true
+          }
+        },
+        execute: (state, { targets }) => {
+          // Draw 2 cards
+        }
+      },
+      {
+        id: 'mode2',
+        name: 'Destroy creature',
+        targets: {
+          creature: {
+            id: 'creature',
+            filter: { zone: 'play', type: 'creature' },
+            count: 1,
+            required: true
+          }
+        },
+        execute: (state, { targets }) => {
+          // Destroy targeted creature
+        }
+      }
+    ],
+    modeSelection: { min: 1, max: 2 }, // Choose 1-2 modes
+    
+    move: (state, { selectedModes }, { targets }) => {
+      for (const modeId of selectedModes) {
+        const mode = findMode(modeId);
+        mode.execute(state, { targets });
+      }
+    }
+  }
+}
+```
+
+### Targeting Context
+
+```typescript
+type MoveContext = {
+  playerId: PlayerId;
+  sourceCard?: CardId; // Card causing this move (for abilities)
+  timestamp: number;
+  rng: SeededRNG;
+  targets: Record<string, CardId[]>; // Resolved targets
+};
+
+// Context is passed to move reducer
+moves: {
+  cardAbility: {
+    targets: { /* ... */ },
+    move: (state, args, context) => {
+      const { playerId, sourceCard, targets, rng } = context;
+      
+      // Use source card
+      const source = state.cards[sourceCard!];
+      
+      // Use targets
+      const targetIds = targets.creature;
+      
+      // Use RNG
+      const roll = rng.rollDice(6);
+    }
+  }
+}
+```
+
+### Target Re-validation
+
+**Problem:** Target becomes illegal after selection but before resolution (e.g., target is destroyed).
+
+**Solution:** Re-validate targets before executing move.
+
+```typescript
+const executeMove = (move: Move, state: GameState): MoveResult => {
+  // 1. Validate move
+  if (!isValidMove(move, state)) {
+    return { success: false, error: 'Invalid move' };
+  }
+  
+  // 2. Resolve targets
+  const targets = resolveTargets(move, state);
+  
+  // 3. Re-validate targets (they might have become illegal)
+  for (const [targetKey, targetIds] of Object.entries(targets)) {
+    const targetDef = move.targets[targetKey];
+    
+    for (const targetId of targetIds) {
+      if (!isLegalTarget(state, targetDef, targetId, moveContext)) {
+        return { 
+          success: false, 
+          error: `Target ${targetId} is no longer legal` 
+        };
+      }
+    }
+  }
+  
+  // 4. Execute move with validated targets
+  return applyMove(move, state, { targets });
+};
+```
+
+---
+
+## 5. AI Move Enumeration
 
 ### Overview
 
@@ -783,14 +1245,16 @@ class RuleEngine<TState, TMoves> {
 
 ## Summary
 
-These six features form the foundation of a comprehensive TCG framework:
+These seven first-class features form the foundation of a comprehensive TCG framework:
 
-1. **Zone Management** - Cards live in zones, zones have visibility rules
-2. **Card State** - Cards have rich state (tapped, counters, modifiers)
-3. **Card Filtering DSL** - Query cards declaratively
-4. **AI Move Enumeration** - Generate all valid moves for AI
-5. **Seeded RNG** - Deterministic randomness for replay
-6. **XState Flow** - Visualizable, type-safe turn orchestration
+1. **Zone Management** - Cards live in zones with visibility rules (private/public/secret)
+2. **Card State** - Generic card instance model with mandatory core fields + game-specific extensions
+3. **Computed Properties** - Pure functions for derived values (power = base + modifiers)
+4. **Card Filtering DSL** - Query cards declaratively with type-safe filters
+5. **Targeting System** - Comprehensive targeting infrastructure with validation, restrictions, and multi-target support
+6. **AI Move Enumeration** - Generate all valid moves and targets for AI
+7. **Seeded RNG** - Deterministic randomness for replay consistency
+8. **XState Flow** - Visualizable, type-safe turn orchestration
 
 Together, these features enable developers to build any TCG without reinventing core infrastructure.
 

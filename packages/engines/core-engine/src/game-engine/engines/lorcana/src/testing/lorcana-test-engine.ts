@@ -327,6 +327,7 @@ export class LorcanaTestEngine {
   questCard(
     card: LorcanaCardDefinition | LorcanaCardInstance | { id: string },
     _opts?: unknown, // Legacy: optional second parameter for options
+    _optional?: boolean, // Legacy: third parameter for optional flag
   ) {
     const model = this.getCardModel(card as any);
     this.authoritativeEngine.exertCard({
@@ -963,6 +964,7 @@ export class LorcanaTestEngine {
       skip?: boolean; // Legacy: for skipping effects
       nameACard?: string; // Legacy: for naming a card
       bodyguard?: boolean; // Legacy: for bodyguard parameter
+      layerId?: string; // Legacy test parameter
     },
     _optional?: boolean, // Legacy: second parameter for optional flag
   ) {
@@ -1113,11 +1115,12 @@ declare module "./lorcana-test-engine" {
       card: unknown,
       opts?: unknown,
       optional?: boolean,
-    ) => Promise<void>;
+    ) => Promise<LorcanaCardInstance>;
     singSongTogether: (opts?: unknown) => Promise<void>;
     shiftCard: (opts: {
       shifter: LorcanaCardDefinition | LorcanaCardInstance;
       shifted: LorcanaCardDefinition | LorcanaCardInstance;
+      costs?: any[]; // Legacy test parameter
     }) => Promise<{
       shifter: LorcanaCardInstance;
       shifted: LorcanaCardInstance;
@@ -1138,6 +1141,7 @@ declare module "./lorcana-test-engine" {
         skip?: boolean;
         nameACard?: string;
         bodyguard?: boolean;
+        layerId?: string; // Legacy test parameter
       },
       _optional?: boolean,
     ) => this;
@@ -1148,6 +1152,8 @@ declare module "./lorcana-test-engine" {
     ): Promise<LorcanaCardInstance>;
     getAvailableInkwellCardCount: (playerId?: string) => number;
     getTotalInkwellCardCount: (playerId?: string) => number;
+    exertAllInkwell: (playerId?: string) => void; // Legacy test helper
+    engine: any; // Legacy test helper - access to internal engine
   }
 }
 
@@ -1252,11 +1258,12 @@ LorcanaTestEngine.prototype.challenge = async function (
 
 LorcanaTestEngine.prototype.activateCard = async function (
   this: LorcanaTestEngine,
-  _card: unknown,
+  card: unknown,
   _opts?: unknown,
   _optional?: boolean, // Legacy: third parameter for optional flag
 ) {
-  // No-op stub for legacy tests
+  // Return card instance for legacy tests
+  return this.getCardModel(card as any);
 };
 
 LorcanaTestEngine.prototype.shiftCard = async function (
@@ -1473,6 +1480,11 @@ declare module "../cards/lorcana-card-instance" {
     canShiftInto: (target: unknown) => boolean;
     shift: (card?: any) => void;
     readonly lorcanitoCard: any;
+    getCardsAtLocation: any; // Legacy test helper
+    readyCharacter: any; // Legacy test helper
+    canSingASong: any; // Legacy test helper
+    shiftInkCost: any; // Legacy test helper
+    canEnterLocation: any; // Legacy test helper
   }
 }
 

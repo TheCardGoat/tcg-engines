@@ -212,7 +212,7 @@ export class LorcanaCardInstance extends CoreCardInstance<
     throw new Error("shift() not implemented");
   }
 
-  activate(ability?: any): void {
+  activate(ability?: any, _opts?: any): void {
     throw new Error("activate() not implemented");
   }
 

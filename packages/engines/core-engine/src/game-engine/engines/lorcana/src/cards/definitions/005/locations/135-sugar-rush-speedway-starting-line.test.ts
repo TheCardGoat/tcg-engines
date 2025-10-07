@@ -60,7 +60,7 @@ describe("Sugar Rush Speedway - Starting Line", () => {
       });
 
       await testEngine.moveToLocation({
-        location: sugarRushSpeedwayStartingLine,
+        location: sugarRushSpeedwayStartingLine as any,
         character: vanellopeVonSchweetzSugarRushChamp,
       });
 

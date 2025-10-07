@@ -9,12 +9,14 @@ This is the technical specification for the spec detailed in @.agent-os/packages
 The engine is composed of several interconnected systems:
 1. **Rule Engine Core** - Main engine managing state and moves
 2. **Zone Management** - Card zone abstraction with visibility rules
-3. **Card System** - Card state management and filtering DSL
-4. **Flow Manager** - XState-based turn/phase orchestration
-5. **RNG System** - Seeded random number generation
-6. **AI Enumeration** - Valid move and target enumeration
+3. **Card System** - Generic card instance model with computed properties
+4. **Card Filtering DSL** - Declarative query language for card selection
+5. **Targeting System** - Comprehensive targeting infrastructure
+6. **Flow Manager** - XState-based turn/phase orchestration
+7. **RNG System** - Seeded random number generation
+8. **AI Enumeration** - Valid move and target enumeration
 
-See @sub-specs/tcg-features-spec.md for detailed specifications of zones, cards, filtering, RNG, and flow management.
+See @sub-specs/tcg-features-spec.md for detailed specifications of zones, cards, computed properties, filtering, targeting, RNG, and flow management.
 
 ### 1. GameDefinition Type System
 

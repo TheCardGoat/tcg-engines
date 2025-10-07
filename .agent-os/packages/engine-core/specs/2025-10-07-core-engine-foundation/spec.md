@@ -58,23 +58,25 @@ As a developer, I want built-in support for undo/redo and game replay, so that I
 
 4. **Zone Management System** - First-class zone abstraction for managing card zones (hand, deck, play area, graveyard, exile, etc.) with support for private/public/secret zones, zone operations (draw, shuffle, move cards), and zone queries.
 
-5. **Card State Management** - Comprehensive card information tracking (tapped/untapped, revealed/hidden, face-up/face-down, counters, attachments, etc.) with type-safe card instance model.
+5. **Card State Management** - Generic card instance model with mandatory core fields (id, zone, owner, tapped, etc.) and game-specific extensions. Computed properties pattern for derived values (power + modifiers).
 
 6. **Card Filtering DSL** - Declarative query language for selecting and filtering cards based on properties, zones, and game state (e.g., "all creatures with power > 5", "all tapped permanents you control").
 
-7. **Move System** - Type-safe move definitions with validation conditions, execution reducers, automatic error handling, and support for targeting.
+7. **Targeting System** - Comprehensive targeting infrastructure for move validation, including target selection, legal target validation, target requirements (min/max), targeting restrictions, and multi-target support.
 
-8. **XState Flow Manager** - Turn/phase/step orchestration using XState state machines for configurable, visualizable game flow with automatic transitions, guards, and actions.
+8. **Move System** - Type-safe move definitions with validation conditions, execution reducers, automatic error handling, and integrated targeting support.
 
-9. **Seeded RNG System** - Deterministic random number generation with seed management, allowing replay consistency and testing predictability.
+9. **XState Flow Manager** - Turn/phase/step orchestration using XState state machines for configurable, visualizable game flow with automatic transitions, guards, and actions.
 
-10. **AI Move Enumeration** - APIs for enumerating all valid moves and targets at any game state, enabling AI opponent implementation and move suggestion.
+10. **Seeded RNG System** - Deterministic random number generation with seed management, allowing replay consistency and testing predictability.
 
-11. **Delta Synchronization** - Utilities for working with Immer patches: apply, reverse, serialize, and deserialize for network transmission.
+11. **AI Move Enumeration** - APIs for enumerating all valid moves and targets at any game state, enabling AI opponent implementation and move suggestion.
 
-12. **Player View Filtering** - Generate player-specific state views that hide private information (opponent's hand, deck contents, face-down cards).
+12. **Delta Synchronization** - Utilities for working with Immer patches: apply, reverse, serialize, and deserialize for network transmission.
 
-13. **Replay System** - Reconstruct any game state from initial state plus action log with deterministic execution.
+13. **Player View Filtering** - Generate player-specific state views that hide private information (opponent's hand, deck contents, face-down cards).
+
+14. **Replay System** - Reconstruct any game state from initial state plus action log with deterministic execution.
 
 ## Out of Scope
 
