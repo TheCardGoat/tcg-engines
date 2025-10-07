@@ -1,4 +1,3 @@
-import type { PlayEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import type { StaticAbilityWithEffect } from "~/game-engine/engines/lorcana/src/abilities";
 import {
   allYourCharacteristicCharacters,
@@ -23,7 +22,7 @@ const ability: StaticAbilityWithEffect = {
   ],
 };
 
-const helpingHand: PlayEffect = {
+const helpingHand = {
   type: "play",
   forFree: true,
   target: {

@@ -1,4 +1,3 @@
-import type { ScryEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import {
   type ActivatedAbility,
   wardAbility,
@@ -6,7 +5,7 @@ import {
 import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-const scry: ScryEffect = {
+const scry = {
   type: "scry",
   amount: 2,
   mode: "inkwell",
