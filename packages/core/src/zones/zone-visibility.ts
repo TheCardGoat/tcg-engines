@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import type { PlayerId } from "../types";
 import type { Zone } from "./zone";
 
@@ -19,18 +20,16 @@ export function filterZoneByVisibility(zone: Zone, viewerId: PlayerId): Zone {
       return zone;
     }
     // Non-owner sees config but no cards
-    return {
-      ...zone,
-      cards: [],
-    };
+    return produce(zone, (draft) => {
+      draft.cards = [];
+    });
   }
 
   // Secret zones: no one sees card details
   if (zone.config.visibility === "secret") {
-    return {
-      ...zone,
-      cards: [],
-    };
+    return produce(zone, (draft) => {
+      draft.cards = [];
+    });
   }
 
   return zone;
