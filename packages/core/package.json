@@ -1,0 +1,44 @@
+{
+  "name": "@tcg/core",
+  "version": "0.1.0",
+  "description": "Core TCG engine framework with declarative game definitions",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.d.ts",
+  "files": [
+    "src/"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "format": "bunx @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
+    "lint": "bunx @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error ./src",
+    "test": "AGENT=1 bun test --silent",
+    "test:watch": "bun test --watch",
+    "test:coverage": "bun test --coverage",
+    "check": "turbo format lint check-types test"
+  },
+  "dependencies": {
+    "immer": "^10.0.0",
+    "nanoid": "^5.0.0",
+    "seedrandom": "^3.0.5",
+    "xstate": "^5.0.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.4",
+    "@types/bun": "1.2.14",
+    "@types/seedrandom": "^3.0.8",
+    "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "typescript": "5.8.3"
+  }
+}
