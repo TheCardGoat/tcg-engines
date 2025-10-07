@@ -4,7 +4,7 @@ This is the API specification for the spec detailed in @.agent-os/packages/engin
 
 ## Core API
 
-### GameEngine Class
+### RuleEngine Class
 
 **Purpose:** Main entry point for game execution, state management, and move processing.
 

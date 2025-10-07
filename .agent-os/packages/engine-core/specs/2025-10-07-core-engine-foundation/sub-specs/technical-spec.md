@@ -34,11 +34,11 @@ type GameDefinition<TState, TMoves> = {
 - Phase/step IDs must be unique within their scope
 - All referenced functions must be present
 
-### 2. Game Engine Core
+### 2. Rule Engine Core
 
 **Class Structure:**
 ```typescript
-class GameEngine<TState, TMoves> {
+class RuleEngine<TState, TMoves> {
   constructor(definition: GameDefinition<TState, TMoves>);
   
   // State access

@@ -72,7 +72,7 @@ const moveToLocationEffect = {
     damageEffect,
   ],
 };
-export const sugarRushSpeedwayStartingLine: LorcanaLocationCardDefinition = {
+export const sugarRushSpeedwayStartingLine = {
   id: "vy0",
   name: "Sugar Rush Speedway",
   title: "Starting Line",

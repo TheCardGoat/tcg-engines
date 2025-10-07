@@ -404,7 +404,7 @@ const banishTrigger: BanishTrigger = {
     { filter: "owner", value: "opponent" },
   ],
 };
-const gainLoreOnBanish: FloatingTriggeredAbility = {
+const gainLoreOnBanish = {
   type: "floating-triggered",
   text: "Whenever one of your characters banishes another character in a challenge this turn, gain 2 lore.",
   duration: "turn",
