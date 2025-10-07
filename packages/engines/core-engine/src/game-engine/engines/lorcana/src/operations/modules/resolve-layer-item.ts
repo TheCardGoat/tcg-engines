@@ -1691,11 +1691,11 @@ export function resolveLayerItem(
                 const drawTargets = followedByEffect.targets || [];
                 for (const playerTarget of drawTargets) {
                   const playerId =
-                    playerTarget.player === "opponent"
+                    playerTarget.value === "opponent"
                       ? (this.engine as any).getOpponentId(
                           sourceCard?.ownerId || trigger.controllerId,
                         )
-                      : playerTarget.player === "self"
+                      : playerTarget.value === "self"
                         ? sourceCard?.ownerId || trigger.controllerId
                         : trigger.controllerId;
 

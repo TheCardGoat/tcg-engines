@@ -16,7 +16,7 @@ export const maidMarianBadmintonAce: LorcanaCharacterCardDefinition = {
   type: "character",
   abilities: [
     {
-      type: "static-triggered",
+      type: "triggered",
       optional: false,
       name: "Good Shot",
       text: "During an opponent’s turn, whenever one of your Ally characters is damaged, deal 1 damage to chosen opposing character.",
