@@ -719,6 +719,7 @@ export class LorcanaTestEngine {
       acceptOptionalLayer?: boolean; // Legacy: for optional effects
       skip?: boolean; // Legacy: for skipping effects
       bodyguard?: boolean; // Legacy: for bodyguard parameter
+      alternativeCosts?: any[]; // Legacy: for alternative cost cards
     },
     _autoResolve?: unknown,
   ) {
