@@ -13,6 +13,7 @@
   - [ ] 1.8 Verify all tests pass for this project (`bun test`)
   - [ ] 1.9 Verify linter rules pass (`biome check`)
   - [ ] 1.10 Verify type safety (`tsc --noEmit`)
+  - [ ] 1.11 Setup Turborepo boundaries https://turborepo.com/docs/reference/boundaries the package should NOT depend on any other package in the monorepo.
 
 - [ ] 2. Zone Management System
   - [ ] 2.1 Write tests for Zone type definitions and ZoneConfig
