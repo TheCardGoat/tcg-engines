@@ -91,7 +91,7 @@ export const thisIsMyFamilyAbility = {
   effects: [youGainLore(1), drawACard],
 };
 
-export const showMeMoreAbilities: ResolutionAbility[] = [
+export const showMeMoreAbilities = [
   {
     type: "resolution",
     name: "Show Me More!",
@@ -236,7 +236,7 @@ export const theFamilyMadrigalAbility = {
   effects: [madrigalScry],
 };
 
-export const theReturnOfHerculesAbility: ResolutionAbility[] = [
+export const theReturnOfHerculesAbility = [
   {
     type: "resolution",
     name: "The Return Of Hercules",
@@ -443,7 +443,7 @@ export const spaghettiDinnerAbility: ActivatedAbility = {
   ],
   effects: [youGainLore(1)],
 };
-export const kanineKrunchiesAbility: StaticAbility = {
+export const kanineKrunchiesAbility = {
   type: "static",
   ability: "effects",
   name: "You Can Be A Champion, Too",
@@ -621,7 +621,7 @@ export const trainingStaffAbility: ActivatedAbility = {
   effects: [chosenCharacterGainsChallenger(2)],
 };
 
-export const hiddenAwayAbility: StaticAbility = {
+export const hiddenAwayAbility = {
   type: "static",
   ability: "effects",
   name: "HIDDEN AWAY",

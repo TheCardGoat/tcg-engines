@@ -12,7 +12,7 @@ export function createCondition(config: any): Condition {
 }
 
 // Legacy condition constructors
-export function ifYouHaveCharacterNamed(name: string): Condition {
+export function ifYouHaveCharacterNamed(name: string | string[]): Condition {
   return { type: "hasCharacterNamed", name };
 }
 
