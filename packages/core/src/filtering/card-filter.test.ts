@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { createCardId, createPlayerId, createZoneId } from "../types";
+import { createPlayerId, createZoneId } from "../types";
 import type { CardFilter, NumberFilter } from "./card-filter";
 
 describe("Card Filter Types", () => {
@@ -158,7 +158,7 @@ describe("Card Filter Types", () => {
 
     it("should support custom where predicate", () => {
       const filter: CardFilter = {
-        where: (card, state) => card.tapped === true,
+        where: (card, _state) => card.tapped === true,
       };
 
       expect(typeof filter.where).toBe("function");

@@ -707,7 +707,7 @@ describe("CardQuery Builder", () => {
       };
 
       const result = CardQuery.create(state, registry)
-        .where((card, state) => {
+        .where((card, _state) => {
           const definition = registry.get(card.definitionId);
           return (
             definition?.baseCost !== undefined && definition.baseCost % 2 === 0

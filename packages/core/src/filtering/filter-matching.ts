@@ -101,14 +101,19 @@ export function matchesPropertyFilter(
 
 /**
  * Checks if a card matches a CardFilter
+ * @template TGameState - The game state type
  * @param card - Card instance to check
  * @param filter - Filter to match against
  * @param state - Game state for computed properties
  * @param registry - Card definition registry
  * @returns true if card matches the filter
  */
-export function matchesFilter<TGameState>(
-  card: CardInstance,
+export function matchesFilter<
+  TGameState extends { cards: Record<string, CardInstance<any>> } = {
+    cards: Record<string, CardInstance<unknown>>;
+  },
+>(
+  card: TGameState["cards"][string],
   filter: CardFilter<TGameState>,
   state: TGameState,
   registry: DefinitionRegistry,
@@ -255,6 +260,7 @@ export function matchesFilter<TGameState>(
 
 /**
  * Selects all cards from state that match the filter
+ * @template TGameState - The game state type
  * @param state - Game state containing cards
  * @param filter - Filter to apply
  * @param registry - Card definition registry
@@ -266,13 +272,14 @@ export function selectCards<
   state: TGameState,
   filter: CardFilter<TGameState>,
   registry: DefinitionRegistry,
-): CardInstance<any>[] {
+): TGameState["cards"][string][] {
   const cards = Object.values(state.cards);
   return cards.filter((card) => matchesFilter(card, filter, state, registry));
 }
 
 /**
  * Counts cards that match the filter
+ * @template TGameState - The game state type
  * @param state - Game state containing cards
  * @param filter - Filter to apply
  * @param registry - Card definition registry
@@ -290,6 +297,7 @@ export function countCards<
 
 /**
  * Checks if any card matches the filter
+ * @template TGameState - The game state type
  * @param state - Game state containing cards
  * @param filter - Filter to apply
  * @param registry - Card definition registry

@@ -7,6 +7,7 @@ import { anyCard, countCards, selectCards } from "./filter-matching";
 /**
  * Fluent builder API for constructing card queries
  * Provides chainable methods to build complex CardFilter objects
+ * @template TGameState - The game state type
  */
 export class CardQuery<
   TGameState extends { cards: Record<string, CardInstance<any>> },
@@ -20,6 +21,7 @@ export class CardQuery<
 
   /**
    * Creates a new CardQuery builder
+   * @template TGameState - The game state type
    * @param state - Game state containing cards
    * @param registry - Card definition registry
    * @returns New CardQuery instance
@@ -215,7 +217,12 @@ export class CardQuery<
    * @param predicate - Custom filter function
    * @returns this for chaining
    */
-  where(predicate: (card: CardInstance, state: TGameState) => boolean): this {
+  where(
+    predicate: (
+      card: TGameState["cards"][string],
+      state: TGameState,
+    ) => boolean,
+  ): this {
     this.filter.where = predicate;
     return this;
   }
@@ -224,7 +231,7 @@ export class CardQuery<
    * Execute the query and return matching cards
    * @returns Array of matching cards
    */
-  execute(): CardInstance<any>[] {
+  execute(): TGameState["cards"][string][] {
     return selectCards(this.state, this.filter, this.registry);
   }
 
@@ -248,7 +255,7 @@ export class CardQuery<
    * Get the first matching card
    * @returns First matching card or undefined if none match
    */
-  first(): CardInstance<any> | undefined {
+  first(): TGameState["cards"][string] | undefined {
     const results = this.execute();
     return results[0];
   }

@@ -871,7 +871,7 @@ describe("Filter Matching", () => {
 
         // Custom filter: cards with even cost
         const filter: CardFilter<TestGameState> = {
-          where: (card, state) => {
+          where: (card, _state) => {
             const definition = registry.get(card.definitionId);
             return (
               definition?.baseCost !== undefined &&
@@ -924,7 +924,7 @@ describe("Filter Matching", () => {
         // Custom filter combined with tapped state
         const filter: CardFilter<TestGameState> = {
           tapped: false,
-          where: (card, state) => {
+          where: (card, _state) => {
             const definition = registry.get(card.definitionId);
             return (
               definition?.baseCost !== undefined &&
