@@ -336,23 +336,42 @@ if (result.success) {
 }
 ```
 
-### Network Synchronization
+### Network Synchronization (Server-Authoritative)
 
 ```typescript
-// Server
-const serverEngine = new GameEngine(definition);
-const result = serverEngine.executeMove(move);
+// Client - sends move to server
+const move = { 
+  name: 'playCard', 
+  args: { cardId: '123' }, 
+  playerId: myId 
+};
+socket.send(JSON.stringify({ type: 'MOVE', move }));
 
-if (result.success) {
-  const patchesJson = serializePatches(result.patches);
-  broadcastToClients(patchesJson);
-}
-
-// Client
+// Client - receives authoritative patches from server
 socket.on('patches', (patchesJson) => {
   const patches = deserializePatches(patchesJson);
   clientEngine.applyPatches(patches);
   updateUI(clientEngine.getPlayerView(myPlayerId));
+});
+
+// Server - receives move, executes authoritatively, broadcasts patches
+socket.on('message', (message) => {
+  const { type, move } = JSON.parse(message);
+  
+  if (type === 'MOVE') {
+    const result = serverEngine.executeMove(move);
+    
+    if (result.success) {
+      // Broadcast authoritative patches to all clients
+      broadcastToAllClients({
+        type: 'patches',
+        patches: serializePatches(result.patches)
+      });
+    } else {
+      // Send error to requesting client
+      socket.send({ type: 'ERROR', error: result.error });
+    }
+  }
 });
 ```
 

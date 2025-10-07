@@ -1243,8 +1243,8 @@ LorcanaTestEngine.prototype.challenge = async function (
   defender: LorcanaCardInstance;
 }> {
   // Stub for legacy tests - returns attacker and defender for type checking
-  const attacker = this.getCardModel(opts.attacker);
-  const defender = this.getCardModel(opts.defender);
+  const attacker = this.getCardModel(opts.attacker as any);
+  const defender = this.getCardModel(opts.defender as any);
 
   // TODO: Implement actual challenge logic
   return { attacker, defender };
@@ -1303,7 +1303,7 @@ LorcanaTestEngine.prototype.singSongTogether = async function (
 
   // Use the playCard move with sing-together options
   // We inline this like the sing move does since move registration happens at engine init
-  const response = this.moves.playCard({
+  const response = (this as any).moves.playCard({
     card: song.instanceId,
     opts: {
       alternativeCost: {
@@ -1453,12 +1453,12 @@ declare module "../cards/lorcana-card-instance" {
       meta: Partial<import("../lorcana-engine-types").LorcanaCardMeta>,
     ) => void;
     updateCardDamage: (amount: number, mode?: "add" | "remove" | "set") => void;
-    readonly damage: number;
-    readonly strength: number;
-    readonly cost: number;
-    readonly hasEvasive: boolean;
-    readonly hasChallenger: boolean;
-    readonly hasQuestRestriction: boolean;
+    damage: number;
+    strength: number;
+    cost: number;
+    hasEvasive: boolean;
+    hasChallenger: boolean;
+    hasQuestRestriction: boolean;
     canChallenge: (target?: unknown) => boolean;
     readonly hasActivatedAbility: boolean;
     readonly activatedAbilities: any[];
@@ -1466,12 +1466,12 @@ declare module "../cards/lorcana-card-instance" {
     hasResist: boolean;
     canChallengeReadyCharacters: boolean;
     hasAbility?: (abilityName: string) => boolean;
-    canBeChallenged: boolean;
+    canBeChallenged: (_challenger?: any) => boolean;
     challenge: (target: unknown) => void;
     quest: (..._args: any[]) => void;
     exert: () => void;
     canShiftInto: (target: unknown) => boolean;
-    shift: (target: unknown) => void;
+    shift: (card?: any) => void;
     readonly lorcanitoCard: any;
   }
 }

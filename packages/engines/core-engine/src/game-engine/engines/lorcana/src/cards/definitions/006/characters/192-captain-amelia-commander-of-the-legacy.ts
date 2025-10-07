@@ -35,7 +35,7 @@ export const captainAmeliaCommanderOfTheLegacy: LorcanaCharacterCardDefinition =
         ability: "gain-ability",
         name: "Everything Shipshape",
         text: "While being challenged, your other characters gain Resist +1.",
-        gainedAbility: resistAbility(1, true, true),
+        gainedAbility: resistAbility(1),
         target: yourOtherCharacters,
       },
     ],

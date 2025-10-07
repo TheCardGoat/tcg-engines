@@ -220,14 +220,14 @@ export class LorcanaCard extends GameCard<LorcanaCardDefinition> {
 
   canChallenge(target: LorcanaCard): boolean {
     if (!this.isCharacter()) return false;
-    if (this.zone !== "play") return false;
+    if ((this as any).zone !== "play") return false;
 
     // Check if this card is exerted
     const thisMeta = (this as any).meta;
     if (thisMeta?.exerted) return false;
 
     if (!target.isCharacter()) return false;
-    if (target.zone !== "play") return false;
+    if ((target as any).zone !== "play") return false;
     if (target.ownerId === this.ownerId) return false;
 
     // Check if target has challengeable restriction

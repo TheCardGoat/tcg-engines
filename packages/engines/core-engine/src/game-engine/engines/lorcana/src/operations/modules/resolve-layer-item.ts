@@ -877,7 +877,7 @@ export function resolveLayerItem(
                     instanceId: targetCard.instanceId,
                     to: toZone,
                     position, // Pass position for deck placement (top/bottom)
-                  });
+                  } as any); // Legacy: position property
 
                   logger.debug(
                     `Moved ${targetCard.name} from ${currentZone} to ${toZone}`,
@@ -929,8 +929,9 @@ export function resolveLayerItem(
                         const followedByFromZone =
                           followedByEffect.parameters?.zoneFrom ||
                           followedByEffect.parameters?.from;
-                        const followedByPosition =
-                          followedByEffect.parameters?.position;
+                        const followedByPosition = (
+                          followedByEffect.parameters as any
+                        )?.position;
 
                         // Override target zone with fromZone if specified
                         const followedByTargetDefs = (
@@ -966,7 +967,7 @@ export function resolveLayerItem(
                             instanceId: followedByCard.instanceId,
                             to: followedByToZone,
                             position: followedByPosition,
-                          });
+                          } as any); // Legacy: position property
 
                           logger.debug(
                             `Moved ${followedByCard.name} to ${followedByToZone} (followedBy modal inline)`,
@@ -1824,7 +1825,7 @@ export function resolveLayerItem(
                     const hasAllCharacteristics =
                       destination.filter.withCharacteristics.every(
                         (char: string) =>
-                          card.card.characteristics?.includes(char),
+                          card.card.characteristics?.includes(char as any),
                       );
                     if (!hasAllCharacteristics) {
                       matchesFilter = false;
@@ -1842,10 +1843,10 @@ export function resolveLayerItem(
                         (subtype: string) => {
                           const subtypeLower = subtype.toLowerCase();
                           return (
-                            card.card.subtypes?.some(
-                              (s) => s.toLowerCase() === subtypeLower,
+                            (card.card as any).subtypes?.some(
+                              (s: string) => s.toLowerCase() === subtypeLower,
                             ) ||
-                            card.card.versions?.some((v: any) =>
+                            (card.card as any).versions?.some((v: any) =>
                               v.subtypes?.some(
                                 (s: string) => s.toLowerCase() === subtypeLower,
                               ),

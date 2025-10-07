@@ -121,7 +121,7 @@ export const useActivatedAbility: LorcanaMove = (
       lorcanaOps,
       playerID,
       cardInstanceId,
-      selectedAbility.costs,
+      selectedAbility.costs as any, // Legacy: costs may be array
     );
     if (!canPayCost.valid) {
       logger.error(
@@ -143,7 +143,7 @@ export const useActivatedAbility: LorcanaMove = (
       lorcanaOps,
       playerID,
       cardInstanceId,
-      selectedAbility.costs,
+      selectedAbility.costs as any, // Legacy: costs may be array
     );
     if (!paymentResult.success) {
       logger.error(`Failed to pay ability cost: ${paymentResult.reason}`);
