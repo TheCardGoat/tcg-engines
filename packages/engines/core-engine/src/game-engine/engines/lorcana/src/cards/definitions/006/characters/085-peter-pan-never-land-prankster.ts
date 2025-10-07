@@ -1,12 +1,11 @@
 // TODO: Once the set is released, we organize the cards by set and type
 
-import type { PlayerRestrictionStaticAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import { entersPlayExerted } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { opponent } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whileConditionThisCharacterGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-const ability: PlayerRestrictionStaticAbility = {
+const ability = {
   type: "static",
   ability: "player-restriction",
   effect: {
