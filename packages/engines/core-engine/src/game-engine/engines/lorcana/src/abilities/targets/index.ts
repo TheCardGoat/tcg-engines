@@ -102,6 +102,10 @@ export const chosenOpposingReadyCharacter = chosenOpposingCharacter;
 export const chosenAlienCharacter = chosenCharacter;
 export const sourceTarget = sourceCardTarget;
 export const chosenYourExertedCharacter = chosenExertedCharacterTarget;
+export const anyNumberOfYourCharacters = anyNumberOfChosenCharacters;
+export const chosenItemOrLocation = chosenLocation;
+export const eachOpposingReadyCharacter = eachOpposingCharacter;
+export const yourDamagedCharacters = yourDamagedCharactersFilter;
 export const thisCard = self;
 export const chosenPirateCharacter: any = {
   type: "card",

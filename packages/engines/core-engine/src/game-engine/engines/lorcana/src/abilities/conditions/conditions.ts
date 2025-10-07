@@ -125,5 +125,7 @@ export function ifThereIsACardUnder(): Condition {
   return { type: "ifThereIsACardUnder" };
 }
 
-// Legacy alias
+// Legacy aliases
 export const ifYouHaveACharacterHere = ifYouHaveCharacterNamed;
+export const ifThisCharacterIsAtALocation = whileCharacterIsAtLocation;
+export const dontHaveCaptainInPlay = haveCaptainInPlay;

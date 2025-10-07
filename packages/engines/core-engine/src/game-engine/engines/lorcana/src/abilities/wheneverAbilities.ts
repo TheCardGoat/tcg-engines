@@ -208,3 +208,4 @@ export const wheneverIsBanished = (config: any): LorcanaTriggeredAbility =>
   config as LorcanaTriggeredAbility;
 export const wheneverACharNamedXChallengesAnotherChar =
   wheneverChallengesAnotherChar;
+export const wheneverYouPlayAnItem = wheneverYouPlayASong;

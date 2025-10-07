@@ -82,3 +82,4 @@ export const chosenExertedCharacterCantReadyWhileThisIsInPlace: any =
   () => ({});
 export const duringYourTurnWheneverBanishesItem: any = () => ({});
 export const targetCharacterGains: any = () => ({});
+export const PlayerRestrictionStaticAbility = RestrictionStaticAbility;
