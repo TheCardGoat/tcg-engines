@@ -20,7 +20,6 @@ export const maidMarianBadmintonAce: LorcanaCharacterCardDefinition = {
       optional: false,
       name: "Good Shot",
       text: "During an opponent's turn, whenever one of your Ally characters is damaged, deal 1 damage to chosen opposing character.",
-      condition: [duringOpponentsTurn],
       trigger: {
         on: "damage",
         filters: [

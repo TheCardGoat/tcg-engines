@@ -15,12 +15,6 @@ export const chichaDedicatedMother: LorcanaCharacterCardDefinition = {
       type: "triggered",
       name: "On the way",
       text: "During your turn, when you put a card into your inkwell, if it's the second card you've put into your inkwell this turn, you may draw a card.",
-      condition: [
-        {
-          type: "during-turn",
-          value: "self",
-        },
-      ],
       trigger: {
         on: "inkwell",
         target: {

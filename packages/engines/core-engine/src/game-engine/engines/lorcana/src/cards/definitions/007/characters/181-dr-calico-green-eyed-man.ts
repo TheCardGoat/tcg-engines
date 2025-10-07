@@ -8,12 +8,7 @@ export const drCalicoGreeneyedMan: LorcanaCharacterCardDefinition = {
   characteristics: ["storyborn", "villain"],
   text: "YOU'RE BEGINNING TO IRK ME While this character has no damage, he gains Resist +2.",
   type: "character",
-  abilities: [
-    {
-      ...resistAbility(2),
-      condition: [{ type: "damage", comparison: { operator: "eq", value: 0 } }],
-    },
-  ],
+  abilities: [resistAbility(2)],
   inkwell: true,
   colors: ["steel"],
   cost: 4,

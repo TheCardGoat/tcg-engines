@@ -26,7 +26,7 @@
 - **Test Runner:** Bun test
 - **Test Approach:** Behavior-driven testing (TDD mandatory)
 - **Coverage:** Bun test coverage
-- **Test Philosophy:** Tests as specifications, no mocking/stubbing
+- **Test Philosophy:** Tests as specifications, no mocking/stubbing. We always instantiate a real engine with test data and test the behavior of the engine.
 
 ## Core Dependencies
 
@@ -36,7 +36,7 @@
 
 ### Type Utilities
 - **Type-Level Utilities:** TypeScript utility types (built-in)
-- **Runtime Validation:** (TBD - consider Zod or similar for GameDefinition validation)
+- **Runtime Validation:** Zod (for GameDefinition validation)
 
 ### Utilities
 - **IDs:** nanoid (for unique game/player IDs)
@@ -51,10 +51,15 @@ packages/engine-core/
 │   ├── core/                     # Core engine implementation
 │   │   ├── game-definition.ts    # GameDefinition types
 │   │   ├── game-engine.ts        # Main engine class
+│   │   ├── game-engine.test.ts   # Test
 │   │   ├── state-manager.ts      # State + Immer integration
+│   │   ├── state-manager.test.ts # Test
 │   │   ├── move-validator.ts     # Move validation logic
+│   │   ├── move-validator.test.ts # Test
 │   │   ├── flow-manager.ts       # Turn/phase/step orchestration
+│   │   ├── flow-manager.test.ts  # Test
 │   │   └── player-view.ts        # Player view filtering
+│   │   └── player-view.test.ts   # Test
 │   ├── types/                    # Type definitions
 │   │   ├── game-state.ts         # Base game state types
 │   │   ├── move.ts               # Move types
@@ -65,10 +70,6 @@ packages/engine-core/
 │   │   ├── validation.ts         # Validation helpers
 │   │   └── index.ts              # Exports
 │   └── index.ts                  # Main entry point
-├── __tests__/                    # Test files (co-located)
-│   ├── game-engine.test.ts
-│   ├── flow-manager.test.ts
-│   └── ...
 ├── package.json
 ├── tsconfig.json
 ├── biome.json
