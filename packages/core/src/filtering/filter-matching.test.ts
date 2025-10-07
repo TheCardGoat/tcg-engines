@@ -814,7 +814,10 @@ describe("Filter Matching", () => {
             { zone: playZone },
             { type: "creature" },
             {
-              or: [{ power: { gte: 3 } }, { cost: { lte: 2 } }],
+              or: [
+                { properties: { basePower: { gte: 3 } } },
+                { properties: { baseCost: { lte: 2 } } },
+              ],
             },
           ],
         };
