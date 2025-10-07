@@ -11,9 +11,7 @@ export const drCalicoGreeneyedMan: LorcanaCharacterCardDefinition = {
   abilities: [
     {
       ...resistAbility(2),
-      conditions: [
-        { type: "damage", comparison: { operator: "eq", value: 0 } },
-      ],
+      condition: [{ type: "damage", comparison: { operator: "eq", value: 0 } }],
     },
   ],
   inkwell: true,

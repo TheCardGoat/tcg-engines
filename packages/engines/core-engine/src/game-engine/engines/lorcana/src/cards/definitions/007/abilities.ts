@@ -1,10 +1,3 @@
-import type {
-  FloatingTriggeredAbility,
-  ResolutionAbility,
-  ScryEffect,
-  StaticAbility,
-} from "@lorcanito/lorcana-engine";
-import type { CreateLayerTargetingPlayer } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import type { ActivatedAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import {
   banishChosenItem,
@@ -41,7 +34,7 @@ import {
   wheneverYouPlayAnActionNotASong,
 } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 
-export const soMuchToGiveAbility: ResolutionAbility = {
+export const soMuchToGiveAbility = {
   type: "resolution",
   name: "So Much To Give",
   text: "Draw a card. Chosen character gains Bodyguard until the start of your next turn.",
@@ -59,7 +52,7 @@ export const soMuchToGiveAbility: ResolutionAbility = {
   ],
 };
 
-export const restoringTheHeartAbility: ResolutionAbility = {
+export const restoringTheHeartAbility = {
   type: "resolution",
   text: "Remove up to 3 damage from chosen character or location. Draw a card.",
   resolveEffectsIndividually: true,
@@ -73,7 +66,7 @@ export const restoringTheHeartAbility: ResolutionAbility = {
   ],
 };
 
-export const magicalManeuversAbility: ResolutionAbility = {
+export const magicalManeuversAbility = {
   type: "resolution",
   text: "Return chosen character of yours to your hand. Exert chosen character.",
   resolveEffectsIndividually: true,
@@ -91,7 +84,7 @@ export const magicalManeuversAbility: ResolutionAbility = {
   ],
 };
 
-export const thisIsMyFamilyAbility: ResolutionAbility = {
+export const thisIsMyFamilyAbility = {
   type: "resolution",
   text: "(A character with cost 2 or more can {E} to sing this song for free.)\nGain 1 lore. Draw a card.",
   resolveEffectsIndividually: true,
@@ -106,7 +99,7 @@ export const showMeMoreAbilities: ResolutionAbility[] = [
     effects: [drawXCards(3, self), drawXCards(3, opponent)],
   },
 ];
-export const weveGotCompanyAbility: ResolutionAbility = {
+export const weveGotCompanyAbility = {
   type: "resolution",
   text: "Ready all your characters. They gain Reckless this turn. (They can't quest and must challenge if able.)",
   effects: [
@@ -139,7 +132,7 @@ export const weveGotCompanyAbility: ResolutionAbility = {
   ],
 };
 
-export const outOfOrderAbility: ResolutionAbility = {
+export const outOfOrderAbility = {
   type: "resolution",
   text: "Banish chosen character.",
   effects: [
@@ -150,7 +143,7 @@ export const outOfOrderAbility: ResolutionAbility = {
   ],
 };
 
-const waterHasMemoryEffect: ScryEffect = {
+const waterHasMemoryEffect = {
   type: "scry",
   amount: 4,
   mode: "both",
@@ -163,7 +156,7 @@ const waterHasMemoryEffect: ScryEffect = {
 };
 
 // IT's a two steps process, so the active player can choose the target and then resolve the effect
-const waterHasMemoryChoseTarget: CreateLayerTargetingPlayer = {
+const waterHasMemoryChoseTarget = {
   type: "create-layer-targeting-player",
   target: chosenPlayer,
   layer: {
@@ -174,14 +167,14 @@ const waterHasMemoryChoseTarget: CreateLayerTargetingPlayer = {
   },
 };
 
-export const waterHasMemoryAbility: ResolutionAbility = {
+export const waterHasMemoryAbility = {
   type: "resolution",
   name: "Water Has Memory",
   text: "Look at the top 4 cards of chosen player's deck. Put one on the top of their deck and the rest on the bottom of their deck in any order.",
   effects: [waterHasMemoryChoseTarget],
 };
 
-export const restoringAtlantisAbility: ResolutionAbility = {
+export const restoringAtlantisAbility = {
   type: "resolution",
   text: "Your characters can't be challenged until the start of your next turn.",
   effects: [
@@ -203,7 +196,7 @@ export const restoringAtlantisAbility: ResolutionAbility = {
   ],
 };
 
-const madrigalScry: ScryEffect = {
+const madrigalScry = {
   type: "scry",
   amount: 5,
   mode: "top",
@@ -236,7 +229,7 @@ const madrigalScry: ScryEffect = {
   },
 };
 
-export const theFamilyMadrigalAbility: ResolutionAbility = {
+export const theFamilyMadrigalAbility = {
   type: "resolution",
   name: "The Family Madrigal",
   text: "Look at the top 5 cards of your deck. You may reveal up to 1 Madrigal character card and up to 1 song card and put them into your hand. Put the rest on the top of your deck in any order.",
@@ -290,7 +283,7 @@ export const theReturnOfHerculesAbility: ResolutionAbility[] = [
   },
 ];
 
-export const allIsFoundAbility: ResolutionAbility = {
+export const allIsFoundAbility = {
   type: "resolution",
   name: "All Is Found",
   text: "Put up to 2 cards from your discard into your inkwell, facedown and exerted.",
@@ -313,7 +306,7 @@ export const allIsFoundAbility: ResolutionAbility = {
   ],
 };
 
-export const doubleTroubleAbility: ResolutionAbility = {
+export const doubleTroubleAbility = {
   type: "resolution",
   text: "Deal 1 damage to up to 2 chosen characters.",
   effects: [
@@ -333,7 +326,7 @@ export const doubleTroubleAbility: ResolutionAbility = {
   ],
 };
 
-export const hesATrampAbility: ResolutionAbility = {
+export const hesATrampAbility = {
   type: "resolution",
   name: "He's A Tramp",
   text: "Chosen character gets +1 {S} this turn for each character you have in play.",
@@ -357,7 +350,7 @@ export const hesATrampAbility: ResolutionAbility = {
   ],
 };
 
-export const wakeUpAliceAbility: ResolutionAbility = {
+export const wakeUpAliceAbility = {
   type: "resolution",
   name: "Wake Up, Alice!",
   text: "Return chosen damaged character to their player's hand.",
@@ -382,7 +375,7 @@ export const wakeUpAliceAbility: ResolutionAbility = {
   ],
 };
 
-const exertAllOpposingChars: ResolutionAbility = {
+const exertAllOpposingChars = {
   type: "resolution",
   name: "Restoring The Crown",
   text: "Exert all opposing characters.",
@@ -661,7 +654,7 @@ export const taleOfTheFifthSpiritAbility = whenYouPlayThisCharacter({
   effects: [youGainLore(1)],
 });
 
-export const midnightFestivitiesAbility: ResolutionAbility = {
+export const midnightFestivitiesAbility = {
   type: "resolution",
   name: "MIDNIGHT FESTIVITIES",
   text: "When you play this character, each opponent chooses one of their readied characters and exhausts it. Characters exhausted this way do not ready at the start of their next turn.",
@@ -694,7 +687,7 @@ export const midnightFestivitiesAbility: ResolutionAbility = {
   ],
 };
 
-export const madGrinAbility: ResolutionAbility = {
+export const madGrinAbility = {
   type: "resolution",
   name: "MAD GRIN",
   text: "When you play this character, you may deal 2 damage to chosen damaged character.",

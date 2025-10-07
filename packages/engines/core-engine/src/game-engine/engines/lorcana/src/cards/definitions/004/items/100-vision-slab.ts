@@ -10,8 +10,7 @@ import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/sr
 
 const cardsInPlay: CardTarget = {
   type: "card",
-  value: "all",
-  filters: [{ filter: "zone", value: "play" }],
+  zone: "play",
 };
 
 const damageCountersCannotBeRemovedAbility: StaticAbilityWithEffect = {

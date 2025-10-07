@@ -6,11 +6,9 @@ import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorca
 
 const floodBornCharInYourDeck: CardTarget = {
   type: "card",
-  value: "all",
-  filters: [
-    { filter: "type", value: "character" },
-    { filter: "characteristics", value: ["floodborn"] },
-  ],
+  cardType: "character",
+  withClassification: "floodborn",
+  zone: "deck",
 };
 
 const revealTopCardEffect = {
