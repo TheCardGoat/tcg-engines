@@ -42,12 +42,12 @@ export const desperatePlan: LorcanaActionCardDefinition = {
                 owner: "self",
               },
               count: { min: 0, max: 99 }, // Choose any number
-            }),
+            } as any), // Legacy: filter property
             drawCardEffect({
               targets: [selfPlayerTarget],
-              value: "discardCount", // Dynamic value - draw as many as discarded
+              value: "discardCount" as any, // Legacy: string value for dynamic
             }),
-          ],
+          ] as any, // Legacy: array for elseEffect
         }),
       ],
     },

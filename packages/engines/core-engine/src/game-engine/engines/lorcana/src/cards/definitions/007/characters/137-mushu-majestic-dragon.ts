@@ -26,7 +26,7 @@ export const mushuMajesticDragon: LorcanaCharacterCardDefinition = {
         {
           type: "ability",
           ability: "custom",
-          customAbility: resistAbility(2, true),
+          customAbility: resistAbility(2),
           modifier: "add",
           amount: 2,
           duration: "challenge",

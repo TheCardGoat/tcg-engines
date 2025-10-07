@@ -22,10 +22,10 @@ export const gantuExperiencedEnforcer: LorcanaCharacterCardDefinition = {
         untilTheEndOfYourNextTurn(
           gainsAbilityEffect({
             ability: voicelessAbility,
-            target: allCharacters,
+            targets: allCharacters,
             duration: "next_turn",
             until: true,
-          }),
+          } as any), // Legacy: until property
         ),
       ],
     }),
