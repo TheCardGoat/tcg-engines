@@ -115,6 +115,7 @@ export type LorcanaCardFilter = ExtendCardFilter<{
   // Keyword filtering
   hasKeyword?: string[];
   abilities?: string[]; // Filter by ability text/type
+  withSubtypes?: string[]; // Filter by card subtypes (e.g., ["Madrigal"])
 
   // Game state filtering
   canQuest?: boolean;
