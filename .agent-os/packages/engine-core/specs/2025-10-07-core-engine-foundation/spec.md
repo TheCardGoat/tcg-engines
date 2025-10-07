@@ -52,19 +52,29 @@ As a developer, I want built-in support for undo/redo and game replay, so that I
 
 1. **GameDefinition Type System** - Declarative configuration for game setup, moves, flow, win conditions, and player views with full TypeScript generics.
 
-2. **Game Engine Core** - Main engine class that accepts GameDefinition, processes moves, manages state transitions, and provides APIs for game interaction.
+2. **Rule Engine Core** - Main engine class that accepts GameDefinition, processes moves, manages state transitions, and provides APIs for game interaction.
 
 3. **Immer-Based State Management** - Immutable state updates using Immer with automatic patch generation for every state change.
 
-4. **Move System** - Type-safe move definitions with validation conditions, execution reducers, and automatic error handling.
+4. **Zone Management System** - First-class zone abstraction for managing card zones (hand, deck, play area, graveyard, exile, etc.) with support for private/public/secret zones, zone operations (draw, shuffle, move cards), and zone queries.
 
-5. **Flow Manager** - Turn/phase/step orchestration with configurable phases, automatic transitions, lifecycle hooks (onBegin, onEnd), and endIf conditions.
+5. **Card State Management** - Comprehensive card information tracking (tapped/untapped, revealed/hidden, face-up/face-down, counters, attachments, etc.) with type-safe card instance model.
 
-6. **Delta Synchronization** - Utilities for working with Immer patches: apply, reverse, serialize, and deserialize for network transmission.
+6. **Card Filtering DSL** - Declarative query language for selecting and filtering cards based on properties, zones, and game state (e.g., "all creatures with power > 5", "all tapped permanents you control").
 
-7. **Player View Filtering** - Generate player-specific state views that hide private information (opponent's hand, deck contents).
+7. **Move System** - Type-safe move definitions with validation conditions, execution reducers, automatic error handling, and support for targeting.
 
-8. **Replay System** - Reconstruct any game state from initial state plus action log with deterministic execution.
+8. **XState Flow Manager** - Turn/phase/step orchestration using XState state machines for configurable, visualizable game flow with automatic transitions, guards, and actions.
+
+9. **Seeded RNG System** - Deterministic random number generation with seed management, allowing replay consistency and testing predictability.
+
+10. **AI Move Enumeration** - APIs for enumerating all valid moves and targets at any game state, enabling AI opponent implementation and move suggestion.
+
+11. **Delta Synchronization** - Utilities for working with Immer patches: apply, reverse, serialize, and deserialize for network transmission.
+
+12. **Player View Filtering** - Generate player-specific state views that hide private information (opponent's hand, deck contents, face-down cards).
+
+13. **Replay System** - Reconstruct any game state from initial state plus action log with deterministic execution.
 
 ## Out of Scope
 
@@ -78,13 +88,23 @@ As a developer, I want built-in support for undo/redo and game replay, so that I
 
 ## Expected Deliverable
 
-1. **Functional Core Engine** - Developers can create a simple TCG (e.g., coin flip game or rock-paper-scissors) using GameDefinition with moves executing correctly and state transitioning through phases.
+1. **Functional Core Engine** - Developers can create a TCG with zones, cards, and moves executing correctly. Example: simple card game with deck, hand, and play zones where players can draw, play, and interact with cards.
 
-2. **Delta Synchronization Working** - Engine generates Immer patches for every move, patches can be serialized/deserialized, and state can be reconstructed by applying patches in sequence.
+2. **Zone Management Working** - Zones (deck, hand, play area, graveyard) with operations (draw, shuffle, move between zones) and support for private/public visibility.
 
-3. **Comprehensive Test Coverage** - 95%+ behavior test coverage with tests documenting expected behavior for all core features: move validation, state transitions, flow orchestration, player views, and replay.
+3. **Card Filtering DSL Functional** - Query language for selecting cards: developers can write filters like `cards.where({ zone: 'play', type: 'creature', power: { gte: 5 } })`.
 
-4. **Type-Safe APIs** - Full TypeScript strict mode with generics, no `any` types, complete IDE autocomplete for GameDefinition and moves.
+4. **Seeded RNG Integrated** - Deterministic randomness: shuffling deck with seed produces same order, enabling replay and testing.
 
-5. **Documentation Complete** - API reference via TypeDoc, core concepts guide explaining GameDefinition/moves/flow/deltas, and quick start tutorial showing simple game implementation.
+5. **AI Move Enumeration** - API to get all valid moves and targets at current state: `engine.getValidMoves(playerId)` returns enumerated actions.
+
+6. **XState Flow Orchestration** - Turn flow managed via XState machines with visualizable state transitions, guards, and actions.
+
+7. **Delta Synchronization Working** - Engine generates Immer patches for every move, patches can be serialized/deserialized for network sync.
+
+8. **Comprehensive Test Coverage** - 95%+ behavior test coverage covering zones, cards, filtering, RNG, flow, and replay.
+
+9. **Type-Safe APIs** - Full TypeScript strict mode with generics, no `any` types, complete IDE autocomplete.
+
+10. **Documentation Complete** - API reference via TypeDoc, guides for zones/cards/DSL/flow/RNG, and tutorial showing complete TCG implementation.
 

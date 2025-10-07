@@ -35,7 +35,7 @@ export const candyDrift: LorcanaActionCardDefinition = {
               owner: "self",
               count: 1,
               optional: true,
-            },
+            } as any, // Legacy: optional property in CardTarget
           ],
           attribute: "strength",
           value: 5,

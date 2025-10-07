@@ -33,14 +33,16 @@
 ### State Management
 - **Immutability:** Immer (core dependency - provides immutable updates and patch generation)
 - **Delta Synchronization:** Immer patches (built-in to Immer)
+- **Flow Management:** XState (state machine for turn/phase/step orchestration)
 
 ### Type Utilities
 - **Type-Level Utilities:** TypeScript utility types (built-in)
-- **Runtime Validation:** Zod (for GameDefinition validation)
+- **Runtime Validation:** Zod (for GameDefinition validation and card filtering DSL)
 
 ### Utilities
 - **IDs:** nanoid (for unique game/player IDs)
-- **Scheduling:** (TBD - may use native Promises or async utilities)
+- **Seeded RNG:** seedrandom (deterministic random number generation)
+- **Card Filtering:** Custom DSL built on Zod schemas
 
 ## Project Structure
 
@@ -50,20 +52,41 @@ packages/engine-core/
 ├── src/
 │   ├── core/                     # Core engine implementation
 │   │   ├── game-definition.ts    # GameDefinition types
-│   │   ├── game-engine.ts        # Main engine class
-│   │   ├── game-engine.test.ts   # Test
+│   │   ├── rule-engine.ts        # Main engine class
+│   │   ├── rule-engine.test.ts   # Test
 │   │   ├── state-manager.ts      # State + Immer integration
 │   │   ├── state-manager.test.ts # Test
 │   │   ├── move-validator.ts     # Move validation logic
 │   │   ├── move-validator.test.ts # Test
-│   │   ├── flow-manager.ts       # Turn/phase/step orchestration
+│   │   ├── flow-manager.ts       # XState flow orchestration
 │   │   ├── flow-manager.test.ts  # Test
 │   │   └── player-view.ts        # Player view filtering
 │   │   └── player-view.test.ts   # Test
+│   ├── zones/                    # Zone management system
+│   │   ├── zone-manager.ts       # Zone operations & queries
+│   │   ├── zone-manager.test.ts  # Test
+│   │   ├── zone-types.ts         # Zone type definitions
+│   │   └── index.ts              # Exports
+│   ├── cards/                    # Card management system
+│   │   ├── card-instance.ts      # Card state model
+│   │   ├── card-instance.test.ts # Test
+│   │   ├── card-filter.ts        # Card filtering DSL
+│   │   ├── card-filter.test.ts   # Test
+│   │   └── index.ts              # Exports
+│   ├── ai/                       # AI move enumeration
+│   │   ├── move-enumerator.ts    # Valid move enumeration
+│   │   ├── move-enumerator.test.ts # Test
+│   │   └── index.ts              # Exports
+│   ├── rng/                      # Seeded RNG system
+│   │   ├── seeded-rng.ts         # Deterministic RNG
+│   │   ├── seeded-rng.test.ts    # Test
+│   │   └── index.ts              # Exports
 │   ├── types/                    # Type definitions
 │   │   ├── game-state.ts         # Base game state types
 │   │   ├── move.ts               # Move types
-│   │   ├── flow.ts               # Flow types (phase/step)
+│   │   ├── flow.ts               # XState flow types
+│   │   ├── card.ts               # Card types
+│   │   ├── zone.ts               # Zone types
 │   │   └── index.ts              # Exports
 │   ├── utils/                    # Utility functions
 │   │   ├── delta.ts              # Delta patching utilities
