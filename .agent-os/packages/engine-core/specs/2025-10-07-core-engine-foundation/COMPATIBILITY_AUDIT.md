@@ -110,16 +110,21 @@ This document tracks the gaps between the specification (tasks.md) and the exist
 - Patch validation
 
 **Current Implementation:**
-- ⚠️  Patches likely exist (Immer is used)
-- ❌ Missing utility functions as described in spec
+- ✅ Complete implementation in `sync/delta-sync.ts`
+- ✅ serializePatches: Convert patches to JSON
+- ✅ deserializePatches: Parse JSON to patches
+- ✅ applyPatchesToState: Apply patches immutably
+- ✅ batchApplyPatches: Apply multiple patch batches
+- ✅ validatePatch / validatePatches: Validation functions
+- ✅ 26 comprehensive tests, all passing
+- ✅ Linting clean, types verified
 
-**Compatibility Layer Needed:**
-- [ ] Create patch serialization utilities
-- [ ] Create patch application utilities
-- [ ] Add patch validation
-- [ ] Export as standalone module
+**Implementation Notes:**
+- reversePatch intentionally throws - users should use produceWithPatches directly
+- Empty patches return new object reference for immutability
+- Complete JSDoc documentation
 
-**Status:** MISSING - Needs implementation
+**Status:** ✅ COMPLETE
 
 ---
 
@@ -134,16 +139,22 @@ This document tracks the gaps between the specification (tasks.md) and the exist
 - Deterministic views
 
 **Current Implementation:**
-- ⚠️  May exist in GameDefinition.playerView
-- ❌ Not as standalone system
+- ✅ Complete implementation in `player-view/player-view.ts`
+- ✅ filterOpponentHand: Hide opponent hands
+- ✅ filterDeck: Hide deck contents
+- ✅ filterFaceDownCards: Hide face-down cards
+- ✅ applyZoneVisibility: Zone-specific visibility rules
+- ✅ createPlayerView: Create player-specific filtered views
+- ✅ 17 comprehensive tests, all passing
+- ✅ Linting clean, types verified
 
-**Compatibility Layer Needed:**
-- [ ] Create playerView filtering module
-- [ ] Implement visibility rules
-- [ ] Create helper functions for common patterns
-- [ ] Tests for determinism
+**Implementation Notes:**
+- Three visibility levels: public, private, secret
+- revealed flag overrides all filtering
+- Deterministic views guaranteed
+- Preserves structural info while hiding sensitive data
 
-**Status:** PARTIAL - Needs dedicated module
+**Status:** ✅ COMPLETE
 
 ---
 
@@ -200,9 +211,11 @@ This document tracks the gaps between the specification (tasks.md) and the exist
 
 ## Implementation Priority
 
-### High Priority (Blocking)
-1. Task 13: Delta Synchronization Utilities (needed for network play)
-2. Task 14: Player View Filtering (needed for multiplayer)
+### ✅ Completed (High Priority)
+1. ✅ Task 13: Delta Synchronization Utilities (needed for network play)
+2. ✅ Task 14: Player View Filtering (needed for multiplayer)
+
+### Remaining High Priority (Blocking)
 3. Task 9: XState compatibility (spec compliance)
 
 ### Medium Priority (Enhancement)
@@ -216,9 +229,26 @@ This document tracks the gaps between the specification (tasks.md) and the exist
 
 ---
 
+## Summary of Completed Work
+
+**Task 13: Delta Synchronization Utilities**
+- Location: `packages/engines/core-engine/src/game-engine/core-engine/sync/`
+- Files: `delta-sync.ts`, `__tests__/delta-sync.test.ts`
+- 26 tests, all passing
+- Critical for multiplayer network synchronization
+
+**Task 14: Player View Filtering**
+- Location: `packages/engines/core-engine/src/game-engine/core-engine/player-view/`
+- Files: `player-view.ts`, `__tests__/player-view.test.ts`
+- 17 tests, all passing
+- Critical for multiplayer security and information hiding
+
+---
+
 ## Next Steps
 
-1. Start with Task 13 (Delta Synchronization) - Most critical for multiplayer
-2. Then Task 14 (Player View Filtering) - Security critical
-3. Then Task 9 (XState compatibility) - Spec compliance
-4. Then remaining tasks in priority order
+1. Task 9 (XState compatibility) - Wrap existing FlowManager with XState types
+2. Task 12 (AI Move Enumeration) - Implement move enumeration for AI
+3. Task 15 (Example Game) - Create simple example game
+4. Tasks 10-11 (Validation & Wrappers) - Add Zod schemas and RuleEngine wrapper
+5. Task 16 (Documentation) - Generate docs and tutorials

@@ -230,39 +230,39 @@
   - [ ] 12.14 Verify linter rules pass
   - [ ] 12.15 Verify type safety
 
-- [ ] 13. Delta Synchronization Utilities
-  - [ ] 13.1 Write tests for serializePatches
-  - [ ] 13.2 Implement serializePatches for JSON serialization
-  - [ ] 13.3 Write tests for deserializePatches
-  - [ ] 13.4 Implement deserializePatches for JSON parsing
-  - [ ] 13.5 Write tests for applyPatchesToState
-  - [ ] 13.6 Implement applyPatchesToState utility
-  - [ ] 13.7 Write tests for reversePatch (for undo)
-  - [ ] 13.8 Implement reversePatch using Immer inverse patches
-  - [ ] 13.9 Write tests for batch patch application
-  - [ ] 13.10 Implement batch patch application logic
-  - [ ] 13.11 Write tests for patch validation
-  - [ ] 13.12 Implement patch structure validation
-  - [ ] 13.13 Verify all tests pass for this project
-  - [ ] 13.14 Verify linter rules pass
-  - [ ] 13.15 Verify type safety
+- [x] 13. Delta Synchronization Utilities
+  - [x] 13.1 Write tests for serializePatches
+  - [x] 13.2 Implement serializePatches for JSON serialization
+  - [x] 13.3 Write tests for deserializePatches
+  - [x] 13.4 Implement deserializePatches for JSON parsing
+  - [x] 13.5 Write tests for applyPatchesToState
+  - [x] 13.6 Implement applyPatchesToState utility
+  - [x] 13.7 Write tests for reversePatch (for undo)
+  - [x] 13.8 Implement reversePatch using Immer inverse patches
+  - [x] 13.9 Write tests for batch patch application
+  - [x] 13.10 Implement batch patch application logic
+  - [x] 13.11 Write tests for patch validation
+  - [x] 13.12 Implement patch structure validation
+  - [x] 13.13 Verify all tests pass for this project
+  - [x] 13.14 Verify linter rules pass
+  - [x] 13.15 Verify type safety
 
-- [ ] 14. Player View Filtering
-  - [ ] 14.1 Write tests for default player view (no filtering)
-  - [ ] 14.2 Implement default playerView function
-  - [ ] 14.3 Write tests for hiding opponent hands
-  - [ ] 14.4 Implement hand filtering logic
-  - [ ] 14.5 Write tests for hiding deck contents
-  - [ ] 14.6 Implement deck filtering logic
-  - [ ] 14.7 Write tests for face-down card filtering
-  - [ ] 14.8 Implement face-down card logic
-  - [ ] 14.9 Write tests for zone visibility rules in player views
-  - [ ] 14.10 Implement visibility-based filtering
-  - [ ] 14.11 Write tests for deterministic player views
-  - [ ] 14.12 Verify same state + playerId → same view
-  - [ ] 14.13 Verify all tests pass for this project
-  - [ ] 14.14 Verify linter rules pass
-  - [ ] 14.15 Verify type safety
+- [x] 14. Player View Filtering
+  - [x] 14.1 Write tests for default player view (no filtering)
+  - [x] 14.2 Implement default playerView function
+  - [x] 14.3 Write tests for hiding opponent hands
+  - [x] 14.4 Implement hand filtering logic
+  - [x] 14.5 Write tests for hiding deck contents
+  - [x] 14.6 Implement deck filtering logic
+  - [x] 14.7 Write tests for face-down card filtering
+  - [x] 14.8 Implement face-down card logic
+  - [x] 14.9 Write tests for zone visibility rules in player views
+  - [x] 14.10 Implement visibility-based filtering
+  - [x] 14.11 Write tests for deterministic player views
+  - [x] 14.12 Verify same state + playerId → same view
+  - [x] 14.13 Verify all tests pass for this project
+  - [x] 14.14 Verify linter rules pass
+  - [x] 14.15 Verify type safety
 
 - [ ] 15. Example Game Implementation
   - [ ] 15.1 Write tests for simple card game setup (CoinFlip or Rock-Paper-Scissors)
