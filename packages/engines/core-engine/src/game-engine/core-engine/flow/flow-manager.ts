@@ -236,10 +236,62 @@ export class FlowManager<G> implements FlowInterface<G> {
   }
 
   /**
-   * Get move function by name (replaces Flow.getMove)
+   * Get move function by name with automatic timing enforcement
+   *
+   * Enforces that moves are only available during their declared timing:
+   * - Step-level moves: Only available during that specific step
+   * - Phase-level moves: Available during any step of that phase
+   * - Segment-level moves: Available during any phase/step of that segment
+   * - Global moves: Available anywhere
+   *
+   * This makes the GameDefinition structure the source of truth for move timing.
    */
   getMove(ctx: CoreCtx, name: string, playerID: PlayerID): Move<G> | null {
-    return this.moveMap[name] || null;
+    // Priority order (most specific to least specific):
+    // 1. Step-level moves (most restrictive)
+    // 2. Phase-level moves
+    // 3. Segment-level moves
+    // 4. Global moves (least restrictive)
+
+    // 1. Check step-level moves (only available in specific step)
+    if (ctx.currentSegment && ctx.currentPhase && ctx.currentStep) {
+      const stepConfig = this.getStepConfig(
+        ctx.currentSegment,
+        ctx.currentPhase,
+        ctx.currentStep,
+      );
+      if (stepConfig?.moves?.[name]) {
+        return stepConfig.moves[name];
+      }
+    }
+
+    // 2. Check phase-level moves (available in any step of this phase)
+    if (ctx.currentSegment && ctx.currentPhase) {
+      const phaseConfig = this.getPhaseConfig(
+        ctx.currentSegment,
+        ctx.currentPhase,
+      );
+      if (phaseConfig?.moves?.[name]) {
+        return phaseConfig.moves[name];
+      }
+    }
+
+    // 3. Check segment-level moves (available in any phase/step of this segment)
+    if (ctx.currentSegment) {
+      const segmentConfig = this.getSegmentConfig(ctx.currentSegment);
+      const segmentMoves = segmentConfig?.turn?.moves || {};
+      if (segmentMoves[name]) {
+        return segmentMoves[name];
+      }
+    }
+
+    // 4. Check global moves (available anywhere)
+    if (this.gameDefinition.moves?.[name]) {
+      return this.gameDefinition.moves[name];
+    }
+
+    // Move not available in current timing context
+    return null;
   }
 
   getCurrentPhase(state: CoreEngineState<G>): FlowPhase<G> | null {

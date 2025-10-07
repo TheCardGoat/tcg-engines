@@ -4,6 +4,8 @@
  * A declarative, type-safe framework for building trading card game engines.
  */
 
+export * from "./actions/action-definition";
+export * from "./actions/action-timing";
 export * from "./cards/card-definition";
 export * from "./cards/card-instance";
 export * from "./cards/computed-properties";
