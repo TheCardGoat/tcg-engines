@@ -19,7 +19,7 @@ export const genieWishFulfilled: LorcanaCharacterCardDefinition = {
       name: "What Comes Next?",
       text: "When you play this character, you may draw a card.",
       optional: false,
-    },
+    } as any, // Legacy: spreading function instead of object
   ],
   inkwell: false,
   colors: ["amethyst"],
