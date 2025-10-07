@@ -122,3 +122,7 @@ export function whileYouHaveNoCardsInHandThisCharacterCanChallengeReadyChars(
 ): LorcanaStaticAbility {
   return config as LorcanaStaticAbility;
 }
+
+// Legacy aliases
+export const whileThisCharacterHasNoDamageGains =
+  whileThisCharacterHasNoDamageGets;

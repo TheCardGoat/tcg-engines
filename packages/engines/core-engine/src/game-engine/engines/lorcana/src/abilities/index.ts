@@ -81,3 +81,4 @@ export const metaAbility: any = () => ({});
 export const chosenExertedCharacterCantReadyWhileThisIsInPlace: any =
   () => ({});
 export const duringYourTurnWheneverBanishesItem: any = () => ({});
+export const targetCharacterGains: any = () => ({});

@@ -26,9 +26,7 @@ describe("Rhino - One-Sixteenth Wolf", () => {
     );
 
     const cardToTest = testEngine.getCardModel(rhinoOnesixteenthWolf);
-    const targetCard: CardModel = testEngine.getCardModel(
-      lafayetteSleepyDachshund,
-    );
+    const targetCard = testEngine.getCardModel(lafayetteSleepyDachshund);
 
     await testEngine.playCard(cardToTest);
     await testEngine.resolveTopOfStack({ targets: [targetCard] });

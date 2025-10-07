@@ -1,9 +1,6 @@
-import type {
-  AbilityEffect,
-  LorcanitoCharacterCard,
-} from "@lorcanito/lorcana-engine";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const arthurKingVictorious: LorcanaCharacterCardDefinition = {
   id: "l90",
@@ -27,7 +24,7 @@ export const arthurKingVictorious: LorcanaCharacterCardDefinition = {
           duration: "turn",
           until: true,
           target: chosenCharacter,
-        } as AbilityEffect,
+        },
         {
           type: "ability",
           ability: "resist",
@@ -36,7 +33,7 @@ export const arthurKingVictorious: LorcanaCharacterCardDefinition = {
           duration: "turn",
           until: true,
           target: chosenCharacter,
-        } as AbilityEffect,
+        },
         {
           type: "ability",
           ability: "challenge_ready_chars",
@@ -44,7 +41,7 @@ export const arthurKingVictorious: LorcanaCharacterCardDefinition = {
           duration: "turn",
           until: true,
           target: chosenCharacter,
-        } as AbilityEffect,
+        },
       ],
     },
   ],

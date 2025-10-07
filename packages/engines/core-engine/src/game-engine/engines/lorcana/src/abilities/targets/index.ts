@@ -87,13 +87,21 @@ export const chosenDamagedCharacterTarget: any = {
   status: "damaged",
 };
 
-// Legacy aliases for target variations
-export const chosenDamagedCharacter = chosenDamagedCharacterTarget;
-export const anotherChosenCharacterOfYours = anotherChosenCharOfYours;
-
 // More legacy target aliases
 export const chosenCharacterOrLocation = chosenCharacterOrLocationTarget;
 export const yourCharacters = allYourCharacters;
+
+// Legacy aliases for target variations
+export const chosenDamagedCharacter = chosenDamagedCharacterTarget;
+export const anotherChosenCharacterOfYours = anotherChosenCharOfYours;
+export const yourCharactersNamed = yourCharacters;
+export const eachOfYourCharacters = yourCharacters;
+export const allCharacters = allYourCharacters;
+export const chosenYourDamagedCharacter = chosenDamagedCharacterTarget;
+export const chosenOpposingReadyCharacter = chosenOpposingCharacter;
+export const chosenAlienCharacter = chosenCharacter;
+export const sourceTarget = sourceCardTarget;
+export const chosenYourExertedCharacter = chosenExertedCharacterTarget;
 export const thisCard = self;
 export const chosenPirateCharacter: any = {
   type: "card",

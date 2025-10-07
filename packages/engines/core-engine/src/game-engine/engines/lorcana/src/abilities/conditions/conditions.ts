@@ -124,3 +124,6 @@ export function whileYouHaveCharacterWithAbility(ability: string): Condition {
 export function ifThereIsACardUnder(): Condition {
   return { type: "ifThereIsACardUnder" };
 }
+
+// Legacy alias
+export const ifYouHaveACharacterHere = ifYouHaveCharacterNamed;

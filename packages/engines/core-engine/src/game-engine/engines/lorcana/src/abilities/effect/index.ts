@@ -102,3 +102,17 @@ export const theyGainEvasive: any = () => ({});
 export const theyGainReckless: any = () => ({});
 export const theyGainRush: any = () => ({});
 export const yourOpponentGainLore: any = () => ({});
+
+// Legacy effect aliases
+export const exertAllOpposingCharacters = exertChosenOpposingCharacter;
+export const banishChosenOpposingCharacter = banishChosenCharacter;
+export const putChosenCardFromYourHandIntoYourInkwellExerted =
+  putTopCardOfYourDeckIntoYourInkwellExerted;
+export const returnToHand = returnCardToHand;
+export const readyAnotherChosenCharacter = readyChosenCharacter;
+export const chosenCharacterGainsRecklessDuringNextTurn =
+  chosenOpposingCharacterGainsRecklessDuringNextTurn;
+export const chosenCharacterGainsRush = chosenCharacterGainsResist;
+export const banishThisCharacter = banishChosenCharacter;
+export const chosenCharacterGainsSupport = chosenCharacterGainsResist;
+export const enterPlaysExerted = entersPlayExerted;

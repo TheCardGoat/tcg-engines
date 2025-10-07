@@ -24,3 +24,6 @@ export function atTheEndOfEachOpponentsTurn(
 export function atTheStartOfYourTurn(config: any): LorcanaTriggeredAbility {
   return config as LorcanaTriggeredAbility;
 }
+
+// Legacy aliases
+export const atTheEndOfOpponentTurn = atTheEndOfEachOpponentsTurn;

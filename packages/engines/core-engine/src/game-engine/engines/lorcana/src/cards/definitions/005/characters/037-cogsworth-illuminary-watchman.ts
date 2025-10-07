@@ -1,8 +1,5 @@
-import type {
-  AbilityEffect,
-  LorcanitoCharacterCard,
-} from "@lorcanito/lorcana-engine";
 import { chosenCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const cogsworthIlluminaryWatchman: LorcanaCharacterCardDefinition = {
   id: "xha",
@@ -25,7 +22,7 @@ export const cogsworthIlluminaryWatchman: LorcanaCharacterCardDefinition = {
           modifier: "add",
           duration: "turn",
           target: chosenCharacter,
-        } as AbilityEffect,
+        },
       ],
     },
   ],

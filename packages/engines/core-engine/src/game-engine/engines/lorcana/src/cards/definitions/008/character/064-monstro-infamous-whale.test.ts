@@ -39,7 +39,7 @@ describe("Monstro - Infamous Whale", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(monstroInfamousWhale);
-    const target: CardModel = testEngine.getCardModel(deweyLovableShowoff);
+    const target = testEngine.getCardModel(deweyLovableShowoff);
 
     cardUnderTest.exert();
     expect(cardUnderTest.exerted).toEqual(true);

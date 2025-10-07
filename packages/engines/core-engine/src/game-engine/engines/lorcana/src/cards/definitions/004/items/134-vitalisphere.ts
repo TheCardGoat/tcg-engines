@@ -33,7 +33,7 @@ export const vitalisphere: LorcanaItemCardDefinition = {
               { filter: "zone", value: "play" },
             ],
           },
-        } as AbilityEffect,
+        },
         {
           type: "attribute",
           modifier: "add",

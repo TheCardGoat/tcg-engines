@@ -28,7 +28,7 @@ export const fortisphere: LorcanaItemCardDefinition = {
           duration: "next_turn",
           until: true,
           target: chosenCharacter,
-        } as AbilityEffect,
+        },
       ],
     } as ActivatedAbility,
   ],

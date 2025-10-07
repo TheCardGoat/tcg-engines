@@ -143,10 +143,6 @@ export function wheneverOneOfYourCharsQuests(
   return config as LorcanaTriggeredAbility;
 }
 
-export function wheneverThisCharSings(config: any): LorcanaTriggeredAbility {
-  return config as LorcanaTriggeredAbility;
-}
-
 export function wheneverOneOfYourCharactersSings(
   config: any,
 ): LorcanaTriggeredAbility {
@@ -210,3 +206,5 @@ export const wheneverIsExerted = (config: any): LorcanaTriggeredAbility =>
   config as LorcanaTriggeredAbility;
 export const wheneverIsBanished = (config: any): LorcanaTriggeredAbility =>
   config as LorcanaTriggeredAbility;
+export const wheneverACharNamedXChallengesAnotherChar =
+  wheneverChallengesAnotherChar;
