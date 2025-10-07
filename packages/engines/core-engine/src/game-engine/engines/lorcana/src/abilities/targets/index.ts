@@ -124,6 +124,11 @@ export const chosenCharacterWithStrengthXorLess = chosenCharacter;
 export const thisCard = self;
 export const chosenItemOrLocation = chosenLocation;
 export const eachOpposingReadyCharacter = eachOpposingCharacter;
+export const eachOpposingDamagedCharacter = chosenOpposingDamagedCharacter;
+export const readyItemsYouControl = itemsYouControl;
+export const chosenYourDamagedCharacter = chosenDamagedCharacter;
+export const chosenOpposingReadyCharacter = chosenOpposingCharacter;
+export const chosenAlienCharacter = chosenCharacter;
 export const chosenPirateCharacter: any = {
   type: "card",
   characteristics: ["pirate"],
