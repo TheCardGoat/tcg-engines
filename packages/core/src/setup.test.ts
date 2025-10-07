@@ -6,7 +6,8 @@ describe("Project Setup", () => {
   const packageRoot = join(__dirname, "..");
   const packageJsonPath = join(packageRoot, "package.json");
   const tsconfigPath = join(packageRoot, "tsconfig.json");
-  const biomeConfigPath = join(packageRoot, "biome.json");
+  // Biome config is at monorepo root
+  const biomeConfigPath = join(packageRoot, "../../biome.json");
 
   describe("package.json", () => {
     it("should exist", () => {
@@ -87,11 +88,11 @@ describe("Project Setup", () => {
   });
 
   describe("biome.json", () => {
-    it("should exist", () => {
+    it("should exist at root level", () => {
       expect(existsSync(biomeConfigPath)).toBe(true);
     });
 
-    it("should have valid configuration", () => {
+    it("should have valid configuration at root level", () => {
       const biomeConfig = JSON.parse(readFileSync(biomeConfigPath, "utf-8"));
       expect(biomeConfig.$schema).toBeDefined();
     });
