@@ -4,6 +4,18 @@ This is the technical specification for the spec detailed in @.agent-os/packages
 
 ## Technical Requirements
 
+### Core Engine Architecture
+
+The engine is composed of several interconnected systems:
+1. **Rule Engine Core** - Main engine managing state and moves
+2. **Zone Management** - Card zone abstraction with visibility rules
+3. **Card System** - Card state management and filtering DSL
+4. **Flow Manager** - XState-based turn/phase orchestration
+5. **RNG System** - Seeded random number generation
+6. **AI Enumeration** - Valid move and target enumeration
+
+See @sub-specs/tcg-features-spec.md for detailed specifications of zones, cards, filtering, RNG, and flow management.
+
 ### 1. GameDefinition Type System
 
 **Type Structure:**
@@ -210,18 +222,45 @@ export function reversePatch(patch: Patch): Patch;
 - Patch application must validate state structure
 - Support batch application of multiple patches
 
-**Network Synchronization Pattern:**
+**Network Synchronization Pattern (Server-Authoritative):**
 ```typescript
-// Client side
-const result = engine.executeMove(move);
-socket.send(JSON.stringify(result.patches));
+// Client side - sends MOVE to server
+const move = { name: 'playCard', args: { cardId: '123' }, playerId: myId };
+socket.send(JSON.stringify({ type: 'MOVE', move }));
 
-// Server side
-socket.on('message', (patchesJson) => {
+// Client receives patches from server
+socket.on('patches', (patchesJson) => {
   const patches = deserializePatches(patchesJson);
-  engine.applyPatches(patches);
-  broadcast(patchesJson); // to other clients
+  clientEngine.applyPatches(patches); // Update client state
+  updateUI(clientEngine.getPlayerView(myId));
 });
+
+// Server side - receives MOVE, executes, broadcasts patches
+socket.on('message', (message) => {
+  const { type, move } = JSON.parse(message);
+  
+  if (type === 'MOVE') {
+    // Server executes move (authoritative)
+    const result = serverEngine.executeMove(move);
+    
+    if (result.success) {
+      // Broadcast patches to all clients
+      const patchesJson = serializePatches(result.patches);
+      broadcast({ type: 'patches', patches: patchesJson });
+    } else {
+      // Send error back to client
+      socket.send(JSON.stringify({ type: 'ERROR', error: result.error }));
+    }
+  }
+});
+
+// Optional: Client-side optimistic updates
+const optimisticResult = clientEngine.executeMove(move); // Predict outcome
+if (optimisticResult.success) {
+  updateUI(optimisticResult.state); // Show immediately
+}
+socket.send(JSON.stringify({ type: 'MOVE', move }));
+// Server patches will reconcile if prediction was wrong
 ```
 
 ### 7. Player View Filtering
@@ -416,13 +455,23 @@ describe('GameEngine move execution', () => {
 - **immer** (^10.0.0) - Immutable state updates and patch generation
   - **Justification:** Core to framework architecture, provides automatic delta generation and type-safe "mutable" API
   
-- **nanoid** (^5.0.0) - Unique ID generation for games, players, moves
+- **xstate** (^5.0.0) - State machine for game flow orchestration
+  - **Justification:** Provides visualizable, type-safe turn/phase/step management with guards and actions
+  
+- **zod** (^3.22.0) - Runtime validation and card filtering DSL
+  - **Justification:** Type-safe schema validation for GameDefinition and foundation for card filtering query language
+  
+- **seedrandom** (^3.0.5) - Seeded random number generation
+  - **Justification:** Deterministic RNG essential for replay consistency and testing
+  
+- **nanoid** (^5.0.0) - Unique ID generation for games, players, cards
   - **Justification:** Lightweight, secure, URL-safe IDs for tracking entities
 
 ### Dev Dependencies
 
 - **typescript** (^5.5.0) - Type system and compiler
 - **@types/node** (^22.0.0) - Node.js type definitions
+- **@types/seedrandom** (^3.0.0) - Type definitions for seedrandom
 - **biome** (^2.0.4) - Linting and formatting
 - **bun-types** (latest) - Bun runtime types
 
