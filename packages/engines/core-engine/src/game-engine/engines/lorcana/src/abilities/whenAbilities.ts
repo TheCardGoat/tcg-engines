@@ -86,5 +86,19 @@ export function whenYouPlayThis(config: any): LorcanaTriggeredAbility {
   return config as LorcanaTriggeredAbility;
 }
 
+export function whenYouMoveACharacterHere(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenThisIsTargeted(config: any): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenPlayOnThisCard(config: any): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
 // Legacy alias
 export const whenYouPlayThisCharacter = whenYouPlayThisCharAbility;

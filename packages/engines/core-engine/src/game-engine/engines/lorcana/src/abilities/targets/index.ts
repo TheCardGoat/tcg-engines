@@ -104,3 +104,54 @@ export const yourOtherLocations: any = {
   cardType: "location",
   owner: "self",
 };
+
+// Additional legacy targets
+export const chosenCardFromYourHand: any = {
+  type: "card",
+  zone: "hand",
+  owner: "self",
+};
+export const chosenPlayer: any = { type: "player" };
+export const anyTarget: any = { type: "card" };
+export const oneOfYourOpponentsCharactersItemsOrLocations: any = {
+  type: "card",
+  owner: "opponent",
+};
+export const anyCardTargetYouOwn: any = { type: "card", owner: "self" };
+export const actionCardsInHand: any = {
+  type: "card",
+  cardType: "action",
+  zone: "hand",
+};
+export const chosenCharacterCharacteristic: any = { type: "card" };
+export const topCardOfYourDeck: any = {
+  type: "card",
+  zone: "deck",
+  owner: "self",
+};
+export const yourFloodbornCharsThatHaveACardUnder: any = {
+  type: "card",
+  owner: "self",
+};
+export const eachCharacterInPlay: any = { type: "card", zone: "play" };
+export const withStrengthXorMore: any = { type: "card" };
+export const allYourCharacteristicCharacters: any = {
+  type: "card",
+  owner: "self",
+};
+export const allYourCharactersWithAnSpecificAbility: any = {
+  type: "card",
+  owner: "self",
+};
+export const parentsTarget: any = { type: "card" };
+export const eachOtherCharacterInPlay: any = { type: "card", zone: "play" };
+export const allOpposingItems: any = {
+  type: "card",
+  cardType: "item",
+  owner: "opponent",
+};
+export const allOpposingLocations: any = {
+  type: "card",
+  cardType: "location",
+  owner: "opponent",
+};
