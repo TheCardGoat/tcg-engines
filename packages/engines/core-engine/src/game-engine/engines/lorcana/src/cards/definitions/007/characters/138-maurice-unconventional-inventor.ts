@@ -1,8 +1,3 @@
-import type {
-  BanishEffect,
-  CreateLayerBasedOnTarget,
-  TargetConditionalEffect,
-} from "@lorcanito/lorcana-engine/effects/effectTypes";
 import {
   drawACard,
   mayBanish,
@@ -14,7 +9,7 @@ import {
 import { whenYouPlayThisCharacter } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-const afterEffect: CreateLayerBasedOnTarget = {
+const afterEffect = {
   type: "create-layer-based-on-target",
   effects: [mayBanish(chosenCharacterWithStrengthXorLess(2))],
   target: {
@@ -32,7 +27,7 @@ const afterEffect: CreateLayerBasedOnTarget = {
   },
 };
 
-const targetingMauricesMachine: BanishEffect = {
+const targetingMauricesMachine = {
   type: "banish",
   target: {
     type: "card",
@@ -51,13 +46,13 @@ const targetingMauricesMachine: BanishEffect = {
   afterEffect: [afterEffect],
 };
 
-const notTargettingMauricesMachine: BanishEffect = {
+const notTargettingMauricesMachine = {
   type: "banish",
   target: chosenItemOfYours,
   forEach: [drawACard],
 };
 
-const newVar: TargetConditionalEffect = {
+const newVar = {
   type: "target-conditional",
   // move condition to a separate object, so the filter is the same
   effects: [targetingMauricesMachine],
