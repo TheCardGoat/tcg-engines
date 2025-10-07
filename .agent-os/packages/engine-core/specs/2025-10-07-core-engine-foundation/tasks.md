@@ -30,22 +30,22 @@
   - [x] 2.12 Verify linter rules pass
   - [x] 2.13 Verify type safety
 
-- [ ] 3. Card Instance Model & Computed Properties
-  - [ ] 3.1 Write tests for CardInstanceBase type
-  - [ ] 3.2 Implement CardInstanceBase with mandatory fields
-  - [ ] 3.3 Write tests for generic CardInstance<TCustomState> type
-  - [ ] 3.4 Implement generic CardInstance type
-  - [ ] 3.5 Write tests for Modifier system
-  - [ ] 3.6 Implement Modifier type and modifier operations
-  - [ ] 3.7 Write tests for computed properties (getCardPower, getCardToughness, getCardCost)
-  - [ ] 3.8 Implement computed property pure functions
-  - [ ] 3.9 Write tests for conditional modifiers
-  - [ ] 3.10 Implement conditional modifier evaluation
-  - [ ] 3.11 Write tests for CardDefinition (static data)
-  - [ ] 3.12 Implement CardDefinition type and getCardDefinition utility
-  - [ ] 3.13 Verify all tests pass for this project
-  - [ ] 3.14 Verify linter rules pass
-  - [ ] 3.15 Verify type safety
+- [x] 3. Card Instance Model & Computed Properties
+  - [x] 3.1 Write tests for CardInstanceBase type
+  - [x] 3.2 Implement CardInstanceBase with mandatory fields
+  - [x] 3.3 Write tests for generic CardInstance<TCustomState> type
+  - [x] 3.4 Implement generic CardInstance type
+  - [x] 3.5 Write tests for Modifier system
+  - [x] 3.6 Implement Modifier type and modifier operations
+  - [x] 3.7 Write tests for computed properties (getCardPower, getCardToughness, getCardCost)
+  - [x] 3.8 Implement computed property pure functions
+  - [x] 3.9 Write tests for conditional modifiers
+  - [x] 3.10 Implement conditional modifier evaluation
+  - [x] 3.11 Write tests for CardDefinition (static data)
+  - [x] 3.12 Implement CardDefinition type and getCardDefinition utility
+  - [x] 3.13 Verify all tests pass for this project
+  - [x] 3.14 Verify linter rules pass
+  - [x] 3.15 Verify type safety
 
 - [ ] 4. Card Filtering DSL
   - [ ] 4.1 Write tests for CardFilter type (zone, owner, type, state filters)
