@@ -444,7 +444,7 @@ export const spaghettiDinnerAbility: ActivatedAbility = {
   effects: [youGainLore(1)],
 };
 export const kanineKrunchiesAbility = {
-  type: "static",
+  type: "static" as const,
   ability: "effects",
   name: "You Can Be A Champion, Too",
   text: "Your Puppy characters get +1 {W}.",
@@ -622,7 +622,7 @@ export const trainingStaffAbility: ActivatedAbility = {
 };
 
 export const hiddenAwayAbility = {
-  type: "static",
+  type: "static" as const,
   ability: "effects",
   name: "HIDDEN AWAY",
   text: "This character can't be challenged.",
@@ -688,7 +688,7 @@ export const midnightFestivitiesAbility = {
 };
 
 export const madGrinAbility = {
-  type: "resolution",
+  type: "resolution" as const,
   name: "MAD GRIN",
   text: "When you play this character, you may deal 2 damage to chosen damaged character.",
   optional: true,

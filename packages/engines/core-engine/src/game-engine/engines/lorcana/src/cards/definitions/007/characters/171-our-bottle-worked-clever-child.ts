@@ -16,7 +16,7 @@ const filterCondition = {
   },
 };
 const ourBottleWorked = {
-  type: "static",
+  type: "static" as const,
   ability: "gain-ability",
   name: "OUR BOTTLE WORKED!",
   text: "While you have a Hero character in play, this character gains Ward. (Opponents can't choose them except to challenge.)",
