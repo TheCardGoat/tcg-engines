@@ -15,11 +15,25 @@ export type NumberFilter =
   | { between: [number, number] }; // range [min, max]
 
 /**
- * Card filter for declarative card selection
+ * String filter for text comparisons
+ */
+export type StringFilter = string | RegExp | string[];
+
+/**
+ * Generic property filter that can match any value type
+ */
+export type PropertyFilter<T = any> =
+  | T // exact match
+  | { eq: T } // equal
+  | (T extends number ? NumberFilter : never) // numeric operations only for numbers
+  | (T extends string ? StringFilter : never); // string operations only for strings
+
+/**
+ * Core card filter - only properties ALL cards have
  * All filter properties are optional and combined with AND logic
  */
 export type CardFilter<TGameState = unknown> = {
-  // Zone filtering
+  // Universal card properties (all TCGs have these)
   /** Filter by zone(s) where the card is located */
   zone?: ZoneId | ZoneId[];
 
@@ -29,38 +43,34 @@ export type CardFilter<TGameState = unknown> = {
   /** Filter by card controller(s) */
   controller?: PlayerId | PlayerId[];
 
-  // Card properties (from definition)
-  /** Filter by card type(s) (e.g., 'creature', 'instant', 'sorcery') */
+  /** Filter by card type(s) - all games have card types */
   type?: string | string[];
-
-  /** Filter by card subtype(s) (e.g., 'dragon', 'elf', 'goblin') */
-  subtype?: string | string[];
 
   /** Filter by card name (exact string or regex pattern) */
   name?: string | RegExp;
 
-  /** Filter by card cost */
-  cost?: NumberFilter;
-
-  // Game-specific properties (computed from card + state)
-  /** Filter by card power (for creatures) */
-  power?: NumberFilter;
-
-  /** Filter by card toughness (for creatures) */
-  toughness?: NumberFilter;
-
-  /** Filter by loyalty (for planeswalkers) */
-  loyalty?: NumberFilter;
-
-  // State filtering
-  /** Filter by tapped state */
+  // State filtering (from CardInstanceBase)
+  /** Filter by tapped/exhausted state */
   tapped?: boolean;
 
   /** Filter by revealed state */
   revealed?: boolean;
 
-  /** Filter cards that have specific counter type */
-  hasCounters?: string;
+  /** Filter by flipped/face-down state */
+  flipped?: boolean;
+
+  /** Filter by phased state */
+  phased?: boolean;
+
+  // Extensible property filtering
+  /**
+   * Filter by properties from the card definition
+   * Allows filtering on any game-specific property like:
+   * - MTG: { basePower: 5, baseToughness: { gte: 3 } }
+   * - Pokemon: { hp: { gte: 100 }, weakness: "Fire" }
+   * - Lorcana: { inkCost: { lte: 3 }, strength: 2 }
+   */
+  properties?: Record<string, PropertyFilter>;
 
   // Composite filters
   /** All filters must match (AND logic) */

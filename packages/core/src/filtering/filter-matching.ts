@@ -1,12 +1,7 @@
 import type { DefinitionRegistry } from "../cards/card-definition";
 import { getCardDefinition } from "../cards/card-definition";
 import type { CardInstance } from "../cards/card-instance";
-import {
-  getCardCost,
-  getCardPower,
-  getCardToughness,
-} from "../cards/computed-properties";
-import type { CardFilter, NumberFilter } from "./card-filter";
+import type { CardFilter, NumberFilter, PropertyFilter } from "./card-filter";
 
 /**
  * Checks if a number matches a NumberFilter
@@ -47,6 +42,58 @@ export function matchesNumberFilter(
   if ("between" in filter) {
     const [min, max] = filter.between;
     return value >= min && value <= max;
+  }
+
+  return false;
+}
+
+/**
+ * Checks if a value matches a PropertyFilter
+ * @param filter - Property filter to match against
+ * @param value - Value to check
+ * @returns true if value matches the filter
+ */
+export function matchesPropertyFilter(
+  filter: PropertyFilter,
+  value: any,
+): boolean {
+  // Direct value comparison (exact match)
+  if (typeof filter !== "object" || filter === null) {
+    // Handle RegExp
+    if (filter instanceof RegExp && typeof value === "string") {
+      return filter.test(value);
+    }
+    // Handle array of values (OR logic)
+    if (Array.isArray(filter)) {
+      return filter.includes(value);
+    }
+    // Exact match
+    return value === filter;
+  }
+
+  // Object-based filters
+  if ("eq" in filter) {
+    return value === filter.eq;
+  }
+
+  // Numeric filters
+  if (typeof value === "number") {
+    if ("gte" in filter) {
+      return value >= (filter as any).gte;
+    }
+    if ("lte" in filter) {
+      return value <= (filter as any).lte;
+    }
+    if ("gt" in filter) {
+      return value > (filter as any).gt;
+    }
+    if ("lt" in filter) {
+      return value < (filter as any).lt;
+    }
+    if ("between" in filter) {
+      const [min, max] = (filter as any).between;
+      return value >= min && value <= max;
+    }
   }
 
   return false;
@@ -112,12 +159,6 @@ export function matchesFilter<TGameState>(
     }
   }
 
-  // Subtype filtering (not implemented in current CardDefinition, reserved for future)
-  if (filter.subtype !== undefined) {
-    // When subtype is added to CardDefinition, implement here
-    return false;
-  }
-
   // Name filtering
   if (filter.name !== undefined && definition) {
     if (typeof filter.name === "string") {
@@ -131,49 +172,43 @@ export function matchesFilter<TGameState>(
     }
   }
 
-  // Cost filtering
-  if (filter.cost !== undefined && definition) {
-    const cardWithModifiers = card as unknown as CardInstance<{
-      modifiers: never[];
-    }>;
-    const cost = getCardCost(cardWithModifiers, state, registry);
-    if (!matchesNumberFilter(filter.cost, cost)) {
-      return false;
+  // Generic property filtering - works for ANY card property
+  if (filter.properties !== undefined && definition) {
+    for (const [propName, propFilter] of Object.entries(filter.properties)) {
+      const propValue = (definition as any)[propName];
+
+      // Property doesn't exist on card
+      if (propValue === undefined) {
+        return false;
+      }
+
+      if (!matchesPropertyFilter(propFilter, propValue)) {
+        return false;
+      }
     }
   }
 
-  // Power filtering
-  if (filter.power !== undefined && definition) {
-    const cardWithModifiers = card as unknown as CardInstance<{
-      modifiers: never[];
-    }>;
-    const power = getCardPower(cardWithModifiers, state, registry);
-    if (!matchesNumberFilter(filter.power, power)) {
-      return false;
-    }
-  }
-
-  // Toughness filtering
-  if (filter.toughness !== undefined && definition) {
-    const cardWithModifiers = card as unknown as CardInstance<{
-      modifiers: never[];
-    }>;
-    const toughness = getCardToughness(cardWithModifiers, state, registry);
-    if (!matchesNumberFilter(filter.toughness, toughness)) {
-      return false;
-    }
-  }
-
-  // Tapped state filtering
+  // State filtering (from CardInstanceBase)
   if (filter.tapped !== undefined) {
     if (card.tapped !== filter.tapped) {
       return false;
     }
   }
 
-  // Revealed state filtering
   if (filter.revealed !== undefined) {
     if (card.revealed !== filter.revealed) {
+      return false;
+    }
+  }
+
+  if (filter.flipped !== undefined) {
+    if (card.flipped !== filter.flipped) {
+      return false;
+    }
+  }
+
+  if (filter.phased !== undefined) {
+    if (card.phased !== filter.phased) {
       return false;
     }
   }

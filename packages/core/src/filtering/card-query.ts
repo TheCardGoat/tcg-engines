@@ -1,7 +1,7 @@
 import type { DefinitionRegistry } from "../cards/card-definition";
 import type { CardInstance } from "../cards/card-instance";
 import type { PlayerId, ZoneId } from "../types";
-import type { CardFilter, NumberFilter } from "./card-filter";
+import type { CardFilter, PropertyFilter } from "./card-filter";
 import { anyCard, countCards, selectCards } from "./filter-matching";
 
 /**
@@ -71,16 +71,6 @@ export class CardQuery<
   }
 
   /**
-   * Filter by card subtype(s)
-   * @param subtype - Single subtype or array of subtypes
-   * @returns this for chaining
-   */
-  ofSubtype(subtype: string | string[]): this {
-    this.filter.subtype = subtype;
-    return this;
-  }
-
-  /**
    * Filter by exact card name
    * @param name - Card name
    * @returns this for chaining
@@ -101,47 +91,25 @@ export class CardQuery<
   }
 
   /**
-   * Filter by cost
-   * @param cost - Number filter for cost
+   * Filter by a generic card property from the definition
+   * Works for any game-specific property:
+   * - MTG: .withProperty("basePower", { gte: 3 })
+   * - Pokemon: .withProperty("hp", { gte: 100 })
+   * - Lorcana: .withProperty("inkCost", { lte: 3 })
+   * @param propertyName - Name of the property on the card definition
+   * @param filter - Filter to apply to the property value
    * @returns this for chaining
    */
-  withCost(cost: NumberFilter): this {
-    this.filter.cost = cost;
+  withProperty(propertyName: string, filter: PropertyFilter): this {
+    if (!this.filter.properties) {
+      this.filter.properties = {};
+    }
+    this.filter.properties[propertyName] = filter;
     return this;
   }
 
   /**
-   * Filter by power
-   * @param power - Number filter for power
-   * @returns this for chaining
-   */
-  withPower(power: NumberFilter): this {
-    this.filter.power = power;
-    return this;
-  }
-
-  /**
-   * Filter by toughness
-   * @param toughness - Number filter for toughness
-   * @returns this for chaining
-   */
-  withToughness(toughness: NumberFilter): this {
-    this.filter.toughness = toughness;
-    return this;
-  }
-
-  /**
-   * Filter by loyalty
-   * @param loyalty - Number filter for loyalty
-   * @returns this for chaining
-   */
-  withLoyalty(loyalty: NumberFilter): this {
-    this.filter.loyalty = loyalty;
-    return this;
-  }
-
-  /**
-   * Filter for tapped cards
+   * Filter for tapped/exhausted cards
    * @returns this for chaining
    */
   tapped(): this {
@@ -177,12 +145,38 @@ export class CardQuery<
   }
 
   /**
-   * Filter by cards with specific counters
-   * @param counterType - Type of counter
+   * Filter for flipped/face-down cards
    * @returns this for chaining
    */
-  withCounters(counterType: string): this {
-    this.filter.hasCounters = counterType;
+  flipped(): this {
+    this.filter.flipped = true;
+    return this;
+  }
+
+  /**
+   * Filter for face-up cards
+   * @returns this for chaining
+   */
+  faceUp(): this {
+    this.filter.flipped = false;
+    return this;
+  }
+
+  /**
+   * Filter for phased cards
+   * @returns this for chaining
+   */
+  phased(): this {
+    this.filter.phased = true;
+    return this;
+  }
+
+  /**
+   * Filter for non-phased cards
+   * @returns this for chaining
+   */
+  notPhased(): this {
+    this.filter.phased = false;
     return this;
   }
 

@@ -422,8 +422,8 @@ describe("CardQuery Builder", () => {
     });
   });
 
-  describe("Numeric Filters", () => {
-    it("should filter by cost", () => {
+  describe("Property Filters", () => {
+    it("should filter by baseCost property", () => {
       const player1 = createPlayerId("player-1");
       const playZone = createZoneId("play");
 
@@ -459,14 +459,14 @@ describe("CardQuery Builder", () => {
       };
 
       const result = CardQuery.create(state, registry)
-        .withCost({ lte: 3 })
+        .withProperty("baseCost", { lte: 3 })
         .execute();
 
       expect(result).toHaveLength(1);
       expect(result[0].definitionId).toBe("bear");
     });
 
-    it("should filter by power", () => {
+    it("should filter by basePower property", () => {
       const player1 = createPlayerId("player-1");
       const playZone = createZoneId("play");
 
@@ -502,14 +502,14 @@ describe("CardQuery Builder", () => {
       };
 
       const result = CardQuery.create(state, registry)
-        .withPower({ gte: 4 })
+        .withProperty("basePower", { gte: 4 })
         .execute();
 
       expect(result).toHaveLength(1);
       expect(result[0].definitionId).toBe("dragon");
     });
 
-    it("should filter by toughness", () => {
+    it("should filter by baseToughness property", () => {
       const player1 = createPlayerId("player-1");
       const playZone = createZoneId("play");
 
@@ -545,7 +545,65 @@ describe("CardQuery Builder", () => {
       };
 
       const result = CardQuery.create(state, registry)
-        .withToughness({ eq: 2 })
+        .withProperty("baseToughness", { eq: 2 })
+        .execute();
+
+      expect(result).toHaveLength(1);
+      expect(result[0].definitionId).toBe("bear");
+    });
+
+    it("should filter by multiple properties", () => {
+      const player1 = createPlayerId("player-1");
+      const playZone = createZoneId("play");
+
+      const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
+        {
+          id: createCardId("card-1"),
+          definitionId: "bear",
+          owner: player1,
+          controller: player1,
+          zone: playZone,
+          tapped: false,
+          flipped: false,
+          revealed: false,
+          phased: false,
+          modifiers: [],
+        },
+        {
+          id: createCardId("card-2"),
+          definitionId: "dragon",
+          owner: player1,
+          controller: player1,
+          zone: playZone,
+          tapped: false,
+          flipped: false,
+          revealed: false,
+          phased: false,
+          modifiers: [],
+        },
+        {
+          id: createCardId("card-3"),
+          definitionId: "bolt",
+          owner: player1,
+          controller: player1,
+          zone: playZone,
+          tapped: false,
+          flipped: false,
+          revealed: false,
+          phased: false,
+          modifiers: [],
+        },
+      ];
+
+      const state: TestGameState = {
+        cards: Object.fromEntries(cards.map((c) => [String(c.id), c])),
+      };
+
+      // Find creatures with baseCost 2 and basePower 2
+      const result = CardQuery.create(state, registry)
+        .ofType("creature")
+        .withProperty("baseCost", 2)
+        .withProperty("basePower", 2)
         .execute();
 
       expect(result).toHaveLength(1);

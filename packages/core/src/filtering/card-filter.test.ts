@@ -65,14 +65,6 @@ describe("Card Filter Types", () => {
       expect(filter.type).toHaveLength(2);
     });
 
-    it("should support subtype filtering", () => {
-      const filter: CardFilter = {
-        subtype: "dragon",
-      };
-
-      expect(filter.subtype).toBe("dragon");
-    });
-
     it("should support name filtering with string", () => {
       const filter: CardFilter = {
         name: "Lightning Bolt",
@@ -89,28 +81,17 @@ describe("Card Filter Types", () => {
       expect(filter.name).toBeInstanceOf(RegExp);
     });
 
-    it("should support cost filtering with NumberFilter", () => {
+    it("should support generic property filtering", () => {
       const filter: CardFilter = {
-        cost: { gte: 3 },
+        properties: {
+          baseCost: { gte: 3 },
+          basePower: { gt: 5 },
+        },
       };
 
-      expect(filter.cost).toEqual({ gte: 3 });
-    });
-
-    it("should support power filtering", () => {
-      const filter: CardFilter = {
-        power: { gt: 5 },
-      };
-
-      expect(filter.power).toEqual({ gt: 5 });
-    });
-
-    it("should support toughness filtering", () => {
-      const filter: CardFilter = {
-        toughness: { lte: 2 },
-      };
-
-      expect(filter.toughness).toEqual({ lte: 2 });
+      expect(filter.properties).toBeDefined();
+      expect(filter.properties?.baseCost).toEqual({ gte: 3 });
+      expect(filter.properties?.basePower).toEqual({ gt: 5 });
     });
 
     it("should support tapped state filtering", () => {
@@ -127,6 +108,22 @@ describe("Card Filter Types", () => {
       };
 
       expect(filter.revealed).toBe(true);
+    });
+
+    it("should support flipped state filtering", () => {
+      const filter: CardFilter = {
+        flipped: true,
+      };
+
+      expect(filter.flipped).toBe(true);
+    });
+
+    it("should support phased state filtering", () => {
+      const filter: CardFilter = {
+        phased: false,
+      };
+
+      expect(filter.phased).toBe(false);
     });
 
     it("should support composite AND filters", () => {
@@ -173,14 +170,16 @@ describe("Card Filter Types", () => {
         type: "creature",
         controller: createPlayerId("player-1"),
         tapped: false,
-        power: { gte: 3 },
+        properties: {
+          basePower: { gte: 3 },
+        },
       };
 
       expect(filter.zone).toBeDefined();
       expect(filter.type).toBe("creature");
       expect(filter.controller).toBeDefined();
       expect(filter.tapped).toBe(false);
-      expect(filter.power).toEqual({ gte: 3 });
+      expect(filter.properties?.basePower).toEqual({ gte: 3 });
     });
   });
 
