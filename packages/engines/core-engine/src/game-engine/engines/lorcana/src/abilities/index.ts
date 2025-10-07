@@ -38,6 +38,9 @@ export type RestrictionStaticAbility = any;
 export type EffectStaticAbility = any;
 export type StaticAbilityWithEffect = any;
 export type ResolutionAbility = any;
+export type StaticAbility = any;
+export type MetaAbility = any;
+export type PlayConditionAbility = any;
 
 // Legacy ability constructor
 export const yourCharactersNamedGain: any = () => ({});
@@ -70,3 +73,11 @@ export const whenThisIsBanished: any = () => ({});
 export const duringYourTurnThisCharacterGains: any = () => ({});
 export const duringOpponentsTurn: any = () => ({});
 export const yourCharactersNamed: any = () => ({});
+
+// Additional missing ability exports
+export const vanishAbility: any = { type: "keyword", keyword: "vanish" };
+export const voicelessAbility: any = { type: "keyword", keyword: "voiceless" };
+export const metaAbility: any = () => ({});
+export const chosenExertedCharacterCantReadyWhileThisIsInPlace: any =
+  () => ({});
+export const duringYourTurnWheneverBanishesItem: any = () => ({});

@@ -113,6 +113,10 @@ export function whileYouHaveMoreItemsInPlayThanEachOpponentThisCharacterGets(
   return config as LorcanaStaticAbility;
 }
 
+export function whileYouHaveCharactersHere(config: any): LorcanaStaticAbility {
+  return config as LorcanaStaticAbility;
+}
+
 export function whileYouHaveNoCardsInHandThisCharacterCanChallengeReadyChars(
   config: any,
 ): LorcanaStaticAbility {

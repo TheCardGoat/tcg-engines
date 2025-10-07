@@ -35,12 +35,6 @@ export function wheneverBanishesAnotherCharacterInChallenge(
   return config as LorcanaTriggeredAbility;
 }
 
-export function wheneverThisCharacterQuests(
-  config: any,
-): LorcanaTriggeredAbility {
-  return config as LorcanaTriggeredAbility;
-}
-
 export function wheneverThisCharSings(config: any): LorcanaTriggeredAbility {
   return config as LorcanaTriggeredAbility;
 }
@@ -212,3 +206,7 @@ export const wheneverThisCharacterQuests = wheneverQuests;
 export const wheneverACardIsPutIntoYourInkwell = (
   config: any,
 ): LorcanaTriggeredAbility => config as LorcanaTriggeredAbility;
+export const wheneverIsExerted = (config: any): LorcanaTriggeredAbility =>
+  config as LorcanaTriggeredAbility;
+export const wheneverIsBanished = (config: any): LorcanaTriggeredAbility =>
+  config as LorcanaTriggeredAbility;
