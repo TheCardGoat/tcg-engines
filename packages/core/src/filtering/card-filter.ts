@@ -31,6 +31,7 @@ export type PropertyFilter<T = any> =
 /**
  * Core card filter - only properties ALL cards have
  * All filter properties are optional and combined with AND logic
+ * @template TGameState - The game state type
  */
 export type CardFilter<TGameState = unknown> = {
   // Universal card properties (all TCGs have these)
@@ -84,5 +85,7 @@ export type CardFilter<TGameState = unknown> = {
 
   // Custom predicates
   /** Custom filter function for complex logic */
-  where?: (card: CardInstance, state: TGameState) => boolean;
+  where?: TGameState extends { cards: Record<string, infer TCard> }
+    ? (card: TCard, state: TGameState) => boolean
+    : (card: CardInstance<unknown>, state: TGameState) => boolean;
 };
