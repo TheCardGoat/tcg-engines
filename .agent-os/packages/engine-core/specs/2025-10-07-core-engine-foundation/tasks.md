@@ -15,20 +15,20 @@
   - [x] 1.10 Verify type safety (`tsc --noEmit`)
   - [x] 1.11 Setup Turborepo boundaries https://turborepo.com/docs/reference/boundaries the package should NOT depend on any other package in the monorepo.
 
-- [ ] 2. Zone Management System
-  - [ ] 2.1 Write tests for Zone type definitions and ZoneConfig
-  - [ ] 2.2 Implement Zone type and ZoneConfig interfaces
-  - [ ] 2.3 Write tests for zone creation (createZone factory)
-  - [ ] 2.4 Implement createZone factory with validation
-  - [ ] 2.5 Write tests for zone operations (moveCard, draw, shuffle, search, peek, mill, reveal)
-  - [ ] 2.6 Implement zone operation functions
-  - [ ] 2.7 Write tests for zone visibility rules (public, private, secret)
-  - [ ] 2.8 Implement zone visibility logic
-  - [ ] 2.9 Write tests for zone queries (getZoneSize, getCardsInZone, getTopCard, getBottomCard)
-  - [ ] 2.10 Implement zone query functions
-  - [ ] 2.11 Verify all tests pass for this project
-  - [ ] 2.12 Verify linter rules pass
-  - [ ] 2.13 Verify type safety
+- [x] 2. Zone Management System
+  - [x] 2.1 Write tests for Zone type definitions and ZoneConfig
+  - [x] 2.2 Implement Zone type and ZoneConfig interfaces
+  - [x] 2.3 Write tests for zone creation (createZone factory)
+  - [x] 2.4 Implement createZone factory with validation
+  - [x] 2.5 Write tests for zone operations (moveCard, draw, shuffle, search, peek, mill, reveal)
+  - [x] 2.6 Implement zone operation functions (with Immer)
+  - [x] 2.7 Write tests for zone visibility rules (public, private, secret)
+  - [x] 2.8 Implement zone visibility logic (with Immer)
+  - [x] 2.9 Write tests for zone queries (getZoneSize, getCardsInZone, getTopCard, getBottomCard)
+  - [x] 2.10 Implement zone query functions
+  - [x] 2.11 Verify all tests pass for this project
+  - [x] 2.12 Verify linter rules pass
+  - [x] 2.13 Verify type safety
 
 - [ ] 3. Card Instance Model & Computed Properties
   - [ ] 3.1 Write tests for CardInstanceBase type
