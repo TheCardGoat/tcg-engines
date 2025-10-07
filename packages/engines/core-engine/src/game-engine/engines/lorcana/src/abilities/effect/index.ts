@@ -121,3 +121,5 @@ export const returnLocationFromDiscardToHand = returnCharacterFromDiscardToHand;
 export const revealTopOfDeckPutInPlayOrDeck = revealTopOfDeckPutInHandOrDeck;
 export const exertedItemCantReadyNextTurn = exertedCharCantReadyNextTurn;
 export const chosenCharacterGainsEvasive = chosenCharacterGainsResist;
+export const damageDealtRestrictionEffect = damageRemovalRestrictionEffect;
+export const dealDamageToChosenOpposingCharacter = dealDamageToChosenCharacter;

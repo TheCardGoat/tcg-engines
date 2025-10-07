@@ -209,3 +209,10 @@ export const wheneverIsBanished = (config: any): LorcanaTriggeredAbility =>
 export const wheneverACharNamedXChallengesAnotherChar =
   wheneverChallengesAnotherChar;
 export const wheneverYouPlayAnItem = wheneverYouPlayASong;
+export const wheneverYouHealAnyCharacter = wheneverYouPlayACharacter;
+export const wheneverOneOfYourCharChallengesAnotherCharOrLocation =
+  wheneverOneOfYourCharChallengesAnotherChar;
+export const wheneverAnotherCharIsBanishedInChallenge =
+  wheneverAnotherCharIsBanished;
+export const wheneverACharChallengesAnotherChar = wheneverChallengesAnotherChar;
+export const wheneverYouPlayAnAction = wheneverYouPlayALocation;

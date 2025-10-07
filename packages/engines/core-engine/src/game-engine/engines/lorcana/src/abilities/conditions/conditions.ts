@@ -129,3 +129,4 @@ export function ifThereIsACardUnder(): Condition {
 export const ifYouHaveACharacterHere = ifYouHaveCharacterNamed;
 export const ifThisCharacterIsAtALocation = whileCharacterIsAtLocation;
 export const dontHaveCaptainInPlay = haveCaptainInPlay;
+export const notHaveCharacterNamed = ifYouHaveCharacterNamed;

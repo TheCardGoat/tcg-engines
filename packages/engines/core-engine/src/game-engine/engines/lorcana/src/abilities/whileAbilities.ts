@@ -126,3 +126,5 @@ export function whileYouHaveNoCardsInHandThisCharacterCanChallengeReadyChars(
 // Legacy aliases
 export const whileThisCharacterHasNoDamageGains =
   whileThisCharacterHasNoDamageGets;
+export const whileYouHaveAnotherXCharacteristicInPlayThisCharacterGains =
+  whileYouHaveAnotherCharacterInPlayThisCharacterGets;
