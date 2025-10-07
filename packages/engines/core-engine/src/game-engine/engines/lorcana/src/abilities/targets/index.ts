@@ -97,19 +97,33 @@ export const anotherChosenCharacterOfYours = anotherChosenCharOfYours;
 export const yourCharactersNamed = yourCharacters;
 export const eachOfYourCharacters = yourCharacters;
 export const allCharacters = allYourCharacters;
-export const chosenYourDamagedCharacter = chosenDamagedCharacterTarget;
-export const chosenOpposingReadyCharacter = chosenOpposingCharacter;
-export const chosenAlienCharacter = chosenCharacter;
-export const sourceTarget = sourceCardTarget;
-export const chosenYourExertedCharacter = chosenExertedCharacterTarget;
-export const anyNumberOfYourCharacters = anyNumberOfChosenCharacters;
+// Legacy aliases with corrected mappings
+export const sourceCardTarget = self;
+export const sourceTarget = self;
+export const chosenExertedCharacterTarget: any = {
+  type: "card",
+  status: "exerted",
+};
+export const chosenYourExertedCharacter: any = {
+  type: "card",
+  status: "exerted",
+  owner: "self",
+};
+export const anyNumberOfYourCharacters = allYourCharacters;
+export const yourDamagedCharactersFilter: any = {
+  type: "card",
+  owner: "self",
+  status: "damaged",
+};
+export const yourDamagedCharacters: any = {
+  type: "card",
+  owner: "self",
+  status: "damaged",
+};
+export const chosenCharacterWithStrengthXorLess = chosenCharacter;
+export const thisCard = self;
 export const chosenItemOrLocation = chosenLocation;
 export const eachOpposingReadyCharacter = eachOpposingCharacter;
-export const yourDamagedCharacters = yourDamagedCharactersFilter;
-export const eachOpposingDamagedCharacter = chosenOpposingDamagedCharacter;
-export const chosenCharacterWithStrengthXorLess = chosenCharacterWithTarget;
-export const readyItemsYouControl = itemsYouControl;
-export const thisCard = self;
 export const chosenPirateCharacter: any = {
   type: "card",
   characteristics: ["pirate"],
