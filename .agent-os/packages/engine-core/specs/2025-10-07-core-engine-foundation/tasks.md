@@ -213,22 +213,22 @@
   - [ ] 11.30 Verify linter rules pass
   - [ ] 11.31 Verify type safety
 
-- [ ] 12. AI Move Enumeration
-  - [ ] 12.1 Write tests for EnumeratedMove type
-  - [ ] 12.2 Implement EnumeratedMove type with evaluation score
-  - [ ] 12.3 Write tests for enumerateValidMoves
-  - [ ] 12.4 Implement enumerateValidMoves with target combinations
-  - [ ] 12.5 Write tests for enumerateValidTargets
-  - [ ] 12.6 Implement enumerateValidTargets for partial move
-  - [ ] 12.7 Write tests for isValidMove check
-  - [ ] 12.8 Implement isValidMove validation
-  - [ ] 12.9 Write tests for countValidMoves (without full enumeration)
-  - [ ] 12.10 Implement countValidMoves optimization
-  - [ ] 12.11 Write tests for move priority/ranking
-  - [ ] 12.12 Implement move priority system for AI heuristics
-  - [ ] 12.13 Verify all tests pass for this project
-  - [ ] 12.14 Verify linter rules pass
-  - [ ] 12.15 Verify type safety
+- [x] 12. AI Move Enumeration
+  - [x] 12.1 Write tests for EnumeratedMove type
+  - [x] 12.2 Implement EnumeratedMove type with evaluation score
+  - [x] 12.3 Write tests for enumerateValidMoves
+  - [x] 12.4 Implement enumerateValidMoves with target combinations
+  - [x] 12.5 Write tests for enumerateValidTargets
+  - [x] 12.6 Implement enumerateValidTargets for partial move
+  - [x] 12.7 Write tests for isValidMove check
+  - [x] 12.8 Implement isValidMove validation
+  - [x] 12.9 Write tests for countValidMoves (without full enumeration)
+  - [x] 12.10 Implement countValidMoves optimization
+  - [x] 12.11 Write tests for move priority/ranking
+  - [x] 12.12 Implement move priority system for AI heuristics
+  - [x] 12.13 Verify all tests pass for this project
+  - [x] 12.14 Verify linter rules pass
+  - [x] 12.15 Verify type safety
 
 - [x] 13. Delta Synchronization Utilities
   - [x] 13.1 Write tests for serializePatches

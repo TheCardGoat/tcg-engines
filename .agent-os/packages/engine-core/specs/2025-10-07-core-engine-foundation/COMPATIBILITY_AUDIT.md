@@ -87,15 +87,23 @@ This document tracks the gaps between the specification (tasks.md) and the exist
 - Move priority/ranking system
 
 **Current Implementation:**
-- ❓ Unknown if exists
-- Need to search for move enumeration code
+- ✅ Complete implementation in `ai/move-enumeration.ts`
+- ✅ EnumeratedMove type with moveName, playerId, targets, priority, score
+- ✅ enumerateValidMoves: Enumerate all valid moves with targets
+- ✅ enumerateValidTargets: Get valid targets for specific move
+- ✅ isValidMove: Validate move legality
+- ✅ countValidMoves: Efficient counting without full enumeration
+- ✅ 19 comprehensive tests, all passing
+- ✅ Linting clean, types verified
 
-**Compatibility Layer Needed:**
-- [ ] Audit existing move enumeration
-- [ ] Create missing enumeration functions
-- [ ] Add AI evaluation scoring
+**Implementation Notes:**
+- Game-agnostic context interface for flexibility
+- Pluggable priority and scoring functions
+- Automatic sorting by priority and score
+- Performance optimized counting
+- Supports custom AI heuristics
 
-**Status:** UNKNOWN - Needs audit
+**Status:** ✅ COMPLETE
 
 ---
 
@@ -211,17 +219,14 @@ This document tracks the gaps between the specification (tasks.md) and the exist
 
 ## Implementation Priority
 
-### ✅ Completed (High Priority)
+### ✅ Completed
 1. ✅ Task 13: Delta Synchronization Utilities (needed for network play)
 2. ✅ Task 14: Player View Filtering (needed for multiplayer)
+3. ✅ Task 12: AI Move Enumeration (needed for AI)
 
-### Remaining High Priority (Blocking)
-3. Task 9: XState compatibility (spec compliance)
-
-### Medium Priority (Enhancement)
-4. Task 12: AI Move Enumeration (needed for AI)
-5. Task 15: Example Game (validates framework)
-6. Task 10: Validation (hardening)
+### Remaining Medium Priority (Enhancement)
+4. Task 15: Example Game (validates framework)
+5. Task 10: Validation (hardening)
 
 ### Low Priority (Polish)
 7. Task 11: RuleEngine wrapper (syntactic)
@@ -242,6 +247,12 @@ This document tracks the gaps between the specification (tasks.md) and the exist
 - Files: `player-view.ts`, `__tests__/player-view.test.ts`
 - 17 tests, all passing
 - Critical for multiplayer security and information hiding
+
+**Task 12: AI Move Enumeration**
+- Location: `packages/engines/core-engine/src/game-engine/core-engine/ai/`
+- Files: `move-enumeration.ts`, `__tests__/move-enumeration.test.ts`
+- 19 tests, all passing
+- Critical for AI player implementation
 
 ---
 
