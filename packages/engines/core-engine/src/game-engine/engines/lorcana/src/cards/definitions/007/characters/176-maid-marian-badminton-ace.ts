@@ -36,7 +36,7 @@ export const maidMarianBadmintonAce: LorcanaCharacterCardDefinition = {
         optional: false,
         effects: [dealDamageToChosenOpposingCharacter(1)],
       } as ResolutionAbility, // Something funky going on with TS
-    },
+    } as any, // Legacy triggered ability format
     {
       type: "static",
       ability: "gain-ability",
