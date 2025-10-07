@@ -13,7 +13,10 @@ export const theDodoOutlandishStoryteller: LorcanaCharacterCardDefinition = {
       type: "static",
       ability: "effects",
       effects: [
-        thisCharacterGetsStrength({ dynamic: true, sourceAttribute: "damage" }),
+        thisCharacterGetsStrength({
+          dynamic: true,
+          sourceAttribute: "damage",
+        } as any), // Legacy: dynamic object
       ],
     },
   ],

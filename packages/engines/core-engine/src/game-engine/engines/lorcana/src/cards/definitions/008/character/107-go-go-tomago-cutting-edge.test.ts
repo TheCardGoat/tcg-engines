@@ -26,7 +26,6 @@ describe("Go Go Tomago - Cutting Edge", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(goGoTomagoCuttingEdge);
-    console.log(JSON.stringify(cardUnderTest.nativeAbilities()));
     expect(cardUnderTest.hasEvasive).toBe(true);
   });
 
@@ -42,7 +41,6 @@ describe("Go Go Tomago - Cutting Edge", () => {
       shifted: goGoTomagoDartingDynamo,
     });
     const cardUnderTest = testEngine.getCardModel(goGoTomagoCuttingEdge);
-    console.log(JSON.stringify(cardUnderTest.nativeAbilities()));
 
     await testEngine.resolveOptionalAbility();
     await testEngine.resolveTopOfStack({ targets: [goGoTomagoCuttingEdge] });

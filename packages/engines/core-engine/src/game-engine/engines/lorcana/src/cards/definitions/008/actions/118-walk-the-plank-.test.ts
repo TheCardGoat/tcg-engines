@@ -19,7 +19,7 @@ const billyBonesPirate: LorcanaCharacterCardDefinition = {
   lore: 1,
   illustrator: "Test",
   number: 1,
-  set: "TEST",
+  set: "008",
   rarity: "common",
 };
 
@@ -37,7 +37,7 @@ const mrSmeePirate: LorcanaCharacterCardDefinition = {
   lore: 1,
   illustrator: "Test",
   number: 2,
-  set: "TEST",
+  set: "008",
   rarity: "common",
 };
 

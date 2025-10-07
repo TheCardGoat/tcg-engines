@@ -24,7 +24,7 @@ export const ursulaEricsBride: LorcanaCharacterCardDefinition = {
             { filter: "type", value: "action" },
             { filter: "characteristics", value: ["song"] },
           ],
-        },
+        } as any,
       ],
       "ursula",
       "**Shift: Discard a song card**",

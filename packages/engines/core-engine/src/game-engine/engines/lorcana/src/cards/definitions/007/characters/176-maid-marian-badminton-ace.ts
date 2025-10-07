@@ -16,11 +16,10 @@ export const maidMarianBadmintonAce: LorcanaCharacterCardDefinition = {
   type: "character",
   abilities: [
     {
-      type: "static-triggered",
+      type: "triggered",
       optional: false,
       name: "Good Shot",
-      text: "During an opponent’s turn, whenever one of your Ally characters is damaged, deal 1 damage to chosen opposing character.",
-      conditions: [duringOpponentsTurn],
+      text: "During an opponent's turn, whenever one of your Ally characters is damaged, deal 1 damage to chosen opposing character.",
       trigger: {
         on: "damage",
         filters: [
@@ -37,7 +36,7 @@ export const maidMarianBadmintonAce: LorcanaCharacterCardDefinition = {
         optional: false,
         effects: [dealDamageToChosenOpposingCharacter(1)],
       } as ResolutionAbility, // Something funky going on with TS
-    },
+    } as any, // Legacy triggered ability format
     {
       type: "static",
       ability: "gain-ability",
@@ -61,8 +60,6 @@ export const maidMarianBadmintonAce: LorcanaCharacterCardDefinition = {
     },
   ],
   inkwell: true,
-  // @ts-expect-error
-  color: "",
   colors: ["sapphire", "steel"],
   cost: 4,
   strength: 3,

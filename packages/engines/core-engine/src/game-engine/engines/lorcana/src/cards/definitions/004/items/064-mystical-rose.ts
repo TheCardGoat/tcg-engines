@@ -41,7 +41,7 @@ export const mysticalRose: LorcanaItemCardDefinition = {
           from: chosenCharacter,
           to: chosenOpposingCharacter,
           conditions: [ifYouHaveCharacterNamed("belle")],
-        }),
+        } as any), // Legacy: conditions property
       ],
     },
   ],

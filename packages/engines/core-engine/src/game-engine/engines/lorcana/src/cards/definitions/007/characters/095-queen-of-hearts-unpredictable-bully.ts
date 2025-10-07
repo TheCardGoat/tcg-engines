@@ -19,13 +19,12 @@ export const queenOfHeartsUnpredictableBully: LorcanaCharacterCardDefinition = {
       triggerTarget: {
         type: "card",
         excludeSelf: true,
-        value: 1,
+        count: 1,
         filters: [{ filter: "type", value: "character" }],
       },
       effects: [
         putDamageEffect(1, {
           type: "card",
-          value: "all",
           filters: [{ filter: "trigger", value: "target" }],
         }),
       ],

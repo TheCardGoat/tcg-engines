@@ -1,8 +1,4 @@
-import type {
-  AbilityEffect,
-  LorcanaItemCardDefinition,
-  LorcanitoItemCard,
-} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const vitalisphere: LorcanaItemCardDefinition = {
   id: "x1o",
@@ -37,7 +33,7 @@ export const vitalisphere: LorcanaItemCardDefinition = {
               { filter: "zone", value: "play" },
             ],
           },
-        } as AbilityEffect,
+        },
         {
           type: "attribute",
           modifier: "add",

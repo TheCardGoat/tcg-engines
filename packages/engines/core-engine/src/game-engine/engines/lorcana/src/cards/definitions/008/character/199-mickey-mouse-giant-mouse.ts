@@ -18,7 +18,6 @@ export const mickeyMouseGiantMouse: LorcanaCharacterCardDefinition = {
       effects: [
         dealDamageEffect(5, {
           type: "card",
-          value: "all",
           filters: [
             {
               filter: "owner",

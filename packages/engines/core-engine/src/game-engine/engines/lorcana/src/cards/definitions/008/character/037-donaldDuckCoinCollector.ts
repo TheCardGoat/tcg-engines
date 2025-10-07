@@ -1,11 +1,10 @@
-import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import type { ResolutionAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import { drawACard } from "~/game-engine/engines/lorcana/src/abilities/effect";
 import { yourCharacters } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenYouPlayThisForEachYouPayLess } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-const gainAbilityEffect: AbilityEffect = {
+const gainAbilityEffect: any = {
   type: "ability",
   ability: "custom",
   modifier: "add",

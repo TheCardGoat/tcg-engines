@@ -41,8 +41,8 @@ export const mulanEliteArcher: LorcanaCharacterCardDefinition = {
           {
             dynamic: true,
             getAmountFromTrigger: true,
-          },
-          { ...chosenCharacter, value: 2, upTo: true },
+          } as any, // Legacy: getAmountFromTrigger property
+          { ...chosenCharacter, value: 2, upTo: true } as any, // Legacy: upTo property
         ),
       ],
     }),

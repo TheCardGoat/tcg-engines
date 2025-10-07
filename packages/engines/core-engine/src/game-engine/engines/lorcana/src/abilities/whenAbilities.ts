@@ -61,6 +61,9 @@ export function whenThisCharacterBanished(
   return config as LorcanaTriggeredAbility;
 }
 
+// Legacy alias
+export const whenThisIsBanished = whenThisCharacterBanished;
+
 export function whenPlayAndWhenLeaves(config: any): LorcanaTriggeredAbility[] {
   return [config as LorcanaTriggeredAbility];
 }
@@ -80,6 +83,20 @@ export function whenMovesToALocation(config: any): LorcanaTriggeredAbility {
 }
 
 export function whenYouPlayThis(config: any): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenYouMoveACharacterHere(
+  config: any,
+): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenThisIsTargeted(config: any): LorcanaTriggeredAbility {
+  return config as LorcanaTriggeredAbility;
+}
+
+export function whenPlayOnThisCard(config: any): LorcanaTriggeredAbility {
   return config as LorcanaTriggeredAbility;
 }
 

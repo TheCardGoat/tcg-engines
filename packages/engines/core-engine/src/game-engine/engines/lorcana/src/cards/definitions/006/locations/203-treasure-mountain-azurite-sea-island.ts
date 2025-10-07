@@ -19,7 +19,7 @@ export const treasureMountainAzuriteSeaIsland: LorcanaLocationCardDefinition = {
           {
             dynamic: true,
             sourceAttribute: "chars-at-location",
-          },
+          } as any, // Legacy: sourceAttribute property
           chosenCharacterOrLocation,
         ),
       ],

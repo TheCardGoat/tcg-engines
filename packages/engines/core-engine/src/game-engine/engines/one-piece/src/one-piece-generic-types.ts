@@ -150,7 +150,7 @@ export type { OnePieceCard } from "./cards/definitions/cardTypes";
 export interface OnePieceCardFilter {
   // Basic filters
   id?: string;
-  name?: string;
+  name?: import("~/game-engine/core-engine/types/game-specific-types").StringComparison;
   category?: CardCategory;
   colors?: CardColor[];
   cost?: {

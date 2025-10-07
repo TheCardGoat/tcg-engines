@@ -33,7 +33,7 @@ export const paniqueTenseImp: LorcanaCharacterCardDefinition = {
           from: chosenCharacter,
           to: chosenOpposingCharacter,
           upTo: true,
-        }),
+        } as any), // Legacy: upTo property
       ],
     }),
   ],

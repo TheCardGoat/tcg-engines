@@ -12,15 +12,9 @@ export const chichaDedicatedMother: LorcanaCharacterCardDefinition = {
   abilities: [
     supportAbility,
     {
-      type: "static-triggered",
+      type: "triggered",
       name: "On the way",
-      text: "During your turn, when you put a card into your inkwell, if it’s the second card you’ve put into your inkwell this turn, you may draw a card.",
-      conditions: [
-        {
-          type: "during-turn",
-          value: "self",
-        },
-      ],
+      text: "During your turn, when you put a card into your inkwell, if it's the second card you've put into your inkwell this turn, you may draw a card.",
       trigger: {
         on: "inkwell",
         target: {
@@ -40,11 +34,11 @@ export const chichaDedicatedMother: LorcanaCharacterCardDefinition = {
       layer: {
         type: "resolution",
         name: "On the way",
-        text: "During your turn, when you put a card into your inkwell, if it’s the second card you’ve put into your inkwell this turn, you may draw a card.",
+        text: "During your turn, when you put a card into your inkwell, if it's the second card you've put into your inkwell this turn, you may draw a card.",
         optional: true,
         effects: [drawACard],
       },
-    },
+    } as any, // Legacy triggered ability format
   ],
   colors: ["sapphire"],
   cost: 2,

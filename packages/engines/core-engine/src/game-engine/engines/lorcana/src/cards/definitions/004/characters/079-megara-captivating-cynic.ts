@@ -28,7 +28,7 @@ export const megaraCaptivatingCynic: LorcanaCharacterCardDefinition = {
           },
         ],
       },
-    },
+    } as any, // Legacy: onCancelLayer property
   ],
   flavour: "With love, there's always a catch.",
   colors: ["emerald"],

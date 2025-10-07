@@ -3,7 +3,6 @@
  */
 
 import { describe, expect, it } from "@jest/globals";
-import { testCharacterCard } from "@lorcanito/lorcana-engine/__mocks__/createGameMock";
 import {
   cinderellaTheRightOne,
   theGlassSlipper,
@@ -19,7 +18,7 @@ describe("Cinderella - The Right One", () => {
       const testEngine = new TestEngine({
         inkwell: cinderellaTheRightOne.cost,
         hand: [cinderellaTheRightOne],
-        deck: [testCharacterCard],
+        deck: [cinderellaTheRightOne],
         discard: [theGlassSlipper],
       });
 
@@ -41,7 +40,7 @@ describe("Cinderella - The Right One", () => {
       const testEngine = new TestEngine({
         inkwell: cinderellaTheRightOne.cost,
         hand: [cinderellaTheRightOne],
-        deck: [testCharacterCard],
+        deck: [cinderellaTheRightOne],
         discard: [theGlassSlipper],
       });
 

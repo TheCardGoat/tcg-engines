@@ -28,9 +28,6 @@ export const magicBroomIlluminaryKeeper: LorcanaCharacterCardDefinition = {
         },
       ],
     }),
-    {
-      name: "**NICE AND TIDY** Whenever you play another character, you man banish this character to draw a card.",
-    },
   ],
   flavour: "Just a few barnacles away from retirement...",
   inkwell: true,

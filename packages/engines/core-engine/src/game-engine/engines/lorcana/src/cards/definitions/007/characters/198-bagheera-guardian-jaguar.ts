@@ -19,7 +19,6 @@ export const bagheeraGuardianJaguar: LorcanaCharacterCardDefinition = {
       effects: [
         dealDamageEffect(2, {
           type: "card",
-          value: "all",
           filters: [
             {
               filter: "owner",

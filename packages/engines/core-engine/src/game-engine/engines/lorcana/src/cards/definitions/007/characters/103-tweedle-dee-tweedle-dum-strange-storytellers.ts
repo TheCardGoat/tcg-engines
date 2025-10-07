@@ -1,7 +1,7 @@
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-export const tweedleDeeAndTweedleDumStrangeStorytellers: LorcanitoCharacterCard =
+export const tweedleDeeAndTweedleDumStrangeStorytellers: LorcanaCharacterCardDefinition =
   {
     id: "fkm",
     name: "Tweedle Dee & Tweedle Dum",
@@ -32,8 +32,6 @@ export const tweedleDeeAndTweedleDumStrangeStorytellers: LorcanitoCharacterCard 
       }),
     ],
     inkwell: true,
-    // @ts-expect-error
-    color: "",
     colors: ["emerald", "ruby"],
     cost: 5,
     strength: 4,

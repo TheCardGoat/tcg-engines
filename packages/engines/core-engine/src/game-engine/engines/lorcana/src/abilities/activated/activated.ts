@@ -30,6 +30,7 @@ export interface LorcanaActivatedAbility extends LorcanaBaseAbility {
   oncePerTurn?: boolean; // Legacy: once per turn flag
   resolveEffectsIndividually?: boolean; // Legacy: resolve effects one at a time
   nameACard?: boolean; // Legacy: requires naming a card
+  dependentEffects?: boolean; // Legacy: effects depend on previous effect outcomes
 }
 
 export const isActivatedAbility = (

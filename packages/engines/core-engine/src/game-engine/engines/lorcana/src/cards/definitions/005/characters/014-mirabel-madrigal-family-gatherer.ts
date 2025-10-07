@@ -9,7 +9,7 @@ export const mirabelMadrigalFamilyGatherer: LorcanaCharacterCardDefinition = {
   type: "character",
   abilities: [
     {
-      type: "play-condition",
+      type: "static",
       name: "NOT WITHOUT MY FAMILY",
       text: "You can’t play this character unless you have 5 or more characters in play.",
       conditions: [

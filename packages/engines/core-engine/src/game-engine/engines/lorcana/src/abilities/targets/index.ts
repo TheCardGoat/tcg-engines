@@ -87,14 +87,48 @@ export const chosenDamagedCharacterTarget: any = {
   status: "damaged",
 };
 
-// Legacy aliases for target variations
-export const chosenDamagedCharacter = chosenDamagedCharacterTarget;
-export const anotherChosenCharacterOfYours = anotherChosenCharOfYours;
-
 // More legacy target aliases
 export const chosenCharacterOrLocation = chosenCharacterOrLocationTarget;
 export const yourCharacters = allYourCharacters;
+
+// Legacy aliases for target variations
+export const chosenDamagedCharacter = chosenDamagedCharacterTarget;
+export const anotherChosenCharacterOfYours = anotherChosenCharOfYours;
+export const yourCharactersNamed = yourCharacters;
+export const eachOfYourCharacters = yourCharacters;
+export const allCharacters = allYourCharacters;
+// Legacy aliases with corrected mappings
+export const sourceCardTarget = self;
+export const sourceTarget = self;
+export const chosenExertedCharacterTarget: any = {
+  type: "card",
+  status: "exerted",
+};
+export const chosenYourExertedCharacter: any = {
+  type: "card",
+  status: "exerted",
+  owner: "self",
+};
+export const anyNumberOfYourCharacters = allYourCharacters;
+export const yourDamagedCharactersFilter: any = {
+  type: "card",
+  owner: "self",
+  status: "damaged",
+};
+export const yourDamagedCharacters: any = {
+  type: "card",
+  owner: "self",
+  status: "damaged",
+};
+export const chosenCharacterWithStrengthXorLess = chosenCharacter;
 export const thisCard = self;
+export const chosenItemOrLocation = chosenLocation;
+export const eachOpposingReadyCharacter = eachOpposingCharacter;
+export const eachOpposingDamagedCharacter = chosenOpposingDamagedCharacter;
+export const readyItemsYouControl = itemsYouControl;
+export const chosenYourDamagedCharacter = chosenDamagedCharacter;
+export const chosenOpposingReadyCharacter = chosenOpposingCharacter;
+export const chosenAlienCharacter = chosenCharacter;
 export const chosenPirateCharacter: any = {
   type: "card",
   characteristics: ["pirate"],
@@ -103,4 +137,55 @@ export const yourOtherLocations: any = {
   type: "card",
   cardType: "location",
   owner: "self",
+};
+
+// Additional legacy targets
+export const chosenCardFromYourHand: any = {
+  type: "card",
+  zone: "hand",
+  owner: "self",
+};
+export const chosenPlayer: any = { type: "player" };
+export const anyTarget: any = { type: "card" };
+export const oneOfYourOpponentsCharactersItemsOrLocations: any = {
+  type: "card",
+  owner: "opponent",
+};
+export const anyCardTargetYouOwn: any = { type: "card", owner: "self" };
+export const actionCardsInHand: any = {
+  type: "card",
+  cardType: "action",
+  zone: "hand",
+};
+export const chosenCharacterCharacteristic: any = { type: "card" };
+export const topCardOfYourDeck: any = {
+  type: "card",
+  zone: "deck",
+  owner: "self",
+};
+export const yourFloodbornCharsThatHaveACardUnder: any = {
+  type: "card",
+  owner: "self",
+};
+export const eachCharacterInPlay: any = { type: "card", zone: "play" };
+export const withStrengthXorMore: any = { type: "card" };
+export const allYourCharacteristicCharacters: any = {
+  type: "card",
+  owner: "self",
+};
+export const allYourCharactersWithAnSpecificAbility: any = {
+  type: "card",
+  owner: "self",
+};
+export const parentsTarget: any = { type: "card" };
+export const eachOtherCharacterInPlay: any = { type: "card", zone: "play" };
+export const allOpposingItems: any = {
+  type: "card",
+  cardType: "item",
+  owner: "opponent",
+};
+export const allOpposingLocations: any = {
+  type: "card",
+  cardType: "location",
+  owner: "opponent",
 };

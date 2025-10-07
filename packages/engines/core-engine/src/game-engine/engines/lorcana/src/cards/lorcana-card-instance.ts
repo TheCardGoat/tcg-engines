@@ -192,7 +192,7 @@ export class LorcanaCardInstance extends CoreCardInstance<
   // STUB METHODS - Runtime API stubs for test compatibility during migration
   // These throw "not implemented" errors to clearly indicate they need actual implementation
 
-  playFromHand(): void {
+  playFromHand(_opts?: any): void {
     throw new Error("playFromHand() not implemented");
   }
 
@@ -212,7 +212,7 @@ export class LorcanaCardInstance extends CoreCardInstance<
     throw new Error("shift() not implemented");
   }
 
-  activate(ability?: any): void {
+  activate(ability?: any, _opts?: any): void {
     throw new Error("activate() not implemented");
   }
 
@@ -256,8 +256,8 @@ export class LorcanaCardInstance extends CoreCardInstance<
     throw new Error("hasShift() not implemented");
   }
 
-  hasEvasive(): boolean {
-    throw new Error("hasEvasive() not implemented");
+  get hasEvasive(): boolean {
+    throw new Error("hasEvasive not implemented");
   }
 
   get hasChallenger(): boolean {
@@ -318,7 +318,7 @@ export class LorcanaCardInstance extends CoreCardInstance<
     throw new Error("isRevealed() not implemented");
   }
 
-  moveCostToEnterLocation(): number {
+  moveCostToEnterLocation(_character?: LorcanaCardInstance): number {
     throw new Error("moveCostToEnterLocation() not implemented");
   }
 

@@ -4,17 +4,13 @@ import {
   damageRemovalRestrictionEffect,
   youGainLore,
 } from "~/game-engine/engines/lorcana/src/abilities/effect";
+import type { CardTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
 import { targetCardsGains } from "~/game-engine/engines/lorcana/src/abilities/whileAbilities";
-import type {
-  CardEffectTarget,
-  LorcanaItemCardDefinition,
-  LorcanitoItemCard,
-} from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
+import type { LorcanaItemCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-const cardsInPlay: CardEffectTarget = {
+const cardsInPlay: CardTarget = {
   type: "card",
-  value: "all",
-  filters: [{ filter: "zone", value: "play" }],
+  zone: "play",
 };
 
 const damageCountersCannotBeRemovedAbility: StaticAbilityWithEffect = {

@@ -1,11 +1,4 @@
-import type {
-  DamageEffect,
-  ExertEffect,
-  LorcanitoLocationCard,
-} from "@lorcanito/lorcana-engine";
-import type { MoveToLocationEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
-
-const exertEffect: ExertEffect = {
+const exertEffect = {
   type: "exert",
   exert: true,
   target: {
@@ -21,7 +14,7 @@ const exertEffect: ExertEffect = {
     ],
   },
 };
-const damageEffect: DamageEffect = {
+const damageEffect = {
   type: "damage",
   amount: 1,
   target: {
@@ -32,7 +25,7 @@ const damageEffect: DamageEffect = {
     ],
   },
 };
-const moveToLocationEffect: MoveToLocationEffect = {
+const moveToLocationEffect = {
   type: "move-to-location",
   target: {
     type: "card",
@@ -76,11 +69,10 @@ const moveToLocationEffect: MoveToLocationEffect = {
     //     },
     //   ],
     // },
-    // @ts-expect-error
     damageEffect,
   ],
 };
-export const sugarRushSpeedwayStartingLine: LorcanaLocationCardDefinition = {
+export const sugarRushSpeedwayStartingLine = {
   id: "vy0",
   name: "Sugar Rush Speedway",
   title: "Starting Line",

@@ -16,7 +16,7 @@ export const tipoGrowingSon: LorcanaCharacterCardDefinition = {
       optional: true,
       isPrivate: true,
       effects: [putChosenCardFromYourHandIntoYourInkwellExerted],
-    },
+    } as any, // Legacy: isPrivate property
   ],
   flavour: '"Mom, Mom! I think I’m still growing!"',
   inkwell: true,

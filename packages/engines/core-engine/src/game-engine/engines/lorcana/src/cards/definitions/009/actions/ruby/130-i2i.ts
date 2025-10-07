@@ -1,4 +1,3 @@
-import type { CreateLayerBasedOnCondition } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import { xOrMoreCharsSangThisSongCondition } from "~/game-engine/engines/lorcana/src/abilities/conditions/conditions";
 import {
   drawXCards,
@@ -11,7 +10,7 @@ import {
 } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaActionCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-const conditionalEffects: CreateLayerBasedOnCondition = {
+const conditionalEffects = {
   type: "create-layer-based-on-condition",
   // TODO: Target not needed
   target: self,

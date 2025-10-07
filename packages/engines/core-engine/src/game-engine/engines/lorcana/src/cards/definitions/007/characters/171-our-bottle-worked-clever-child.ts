@@ -1,9 +1,8 @@
-import type { FilterCondition } from "@lorcanito/lorcana-engine/store/resolvers/conditionResolver";
 import { wardAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/wardAbility";
 import { thisCard } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-const filterCondition: FilterCondition = {
+const filterCondition = {
   type: "filter",
   filters: [
     { filter: "owner", value: "self" },
@@ -17,7 +16,7 @@ const filterCondition: FilterCondition = {
   },
 };
 const ourBottleWorked = {
-  type: "static",
+  type: "static" as const,
   ability: "gain-ability",
   name: "OUR BOTTLE WORKED!",
   text: "While you have a Hero character in play, this character gains Ward. (Opponents can't choose them except to challenge.)",

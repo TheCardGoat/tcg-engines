@@ -20,7 +20,7 @@ export const liShangValorousGeneral: LorcanaCharacterCardDefinition = {
             { filter: "owner", value: "self" },
             { filter: "type", value: "character" },
           ],
-        },
+        } as any,
       ],
       "Li Shang",
       "**Shift: Discard a character card**",

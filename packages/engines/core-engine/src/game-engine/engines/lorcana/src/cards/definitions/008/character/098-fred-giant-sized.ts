@@ -1,20 +1,17 @@
-import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
-import type { RevealFromTopUntilCardEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
 import { shiftAbility } from "~/game-engine/engines/lorcana/src/abilities/keyword/shiftAbility";
 import { self } from "~/game-engine/engines/lorcana/src/abilities/targets";
+import type { CardTarget } from "~/game-engine/engines/lorcana/src/abilities/targets/targets";
 import { wheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/wheneverAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
-const floodBornCharInYourDeck: CardEffectTarget = {
+const floodBornCharInYourDeck: CardTarget = {
   type: "card",
-  value: "all",
-  filters: [
-    { filter: "type", value: "character" },
-    { filter: "characteristics", value: ["floodborn"] },
-  ],
+  cardType: "character",
+  withClassification: "floodborn",
+  zone: "deck",
 };
 
-const revealTopCardEffect: RevealFromTopUntilCardEffect = {
+const revealTopCardEffect = {
   type: "reveal-from-top-until",
   target: floodBornCharInYourDeck,
   onTargetMatchEffects: [
