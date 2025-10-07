@@ -61,7 +61,7 @@ jobs:
           github.event.review.author_association == 'COLLABORATOR'
         )
       )
-    timeout-minutes: 5
+    timeout-minutes: 8
     runs-on: 'ubuntu-latest'
 
     steps:
@@ -162,7 +162,7 @@ jobs:
           use_gemini_code_assist: '${{ vars.GOOGLE_GENAI_USE_GCA }}'
           settings: |-
             {
-              "maxSessionTurns": 20,
+              "maxSessionTurns": 10,
               "mcpServers": {
                 "github": {
                   "command": "docker",
