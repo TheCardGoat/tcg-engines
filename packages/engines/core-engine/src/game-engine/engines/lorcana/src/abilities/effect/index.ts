@@ -70,3 +70,35 @@ export const targetCardGainsResist: any = () => ({});
 export const chosenCharacterGainsChallenger: any = () => ({});
 export const chosenCharacterOfYoursGainsWhenBanishedReturnToHand: any =
   () => ({});
+
+// Additional missing legacy effects
+export const untilTheEndOfYourNextTurn: any = () => ({});
+export const readyAndCantQuestOrChallenge: any = () => ({});
+export const opponentDiscardsARandomCard: any = () => ({});
+export const dealDamageToChosenCharacter: any = () => ({});
+export const banishChosenItemOrLocation: any = () => ({});
+export const chosenOpposingCharacterCantQuestNextTurn: any = () => ({});
+export const chosenOpposingCharacterCantReadyNextTurn: any = () => ({});
+export const chosenPlayerMillXCards: any = () => ({});
+export const drawCardsUntilYouHaveSameNumberOfCardsAsOpponent: any = () => ({});
+export const drawCardsUntilYouHaveXCardsInHand: any = () => ({});
+export const exertChosenCharacterWithCharacteristics: any = () => ({});
+export const exertChosenItem: any = () => ({});
+export const getStrengthThisChallenge: any = () => ({});
+export const millOpponentXCards: any = () => ({});
+export const millOwnXCards: any = () => ({});
+export const opponentAsResponderExertOneOfTheirReadyCharacters: any =
+  () => ({});
+export const opponentDiscardsACard: any = () => ({});
+export const opponentDrawXCards: any = () => ({});
+export const putAllCardsFromDiscardToInkwellFaceDownAndExerted: any =
+  () => ({});
+export const putCardFromDiscardToInkwellFaceDownAndExerted: any = () => ({});
+export const putTopCardOfOpponentDeckIntoTheirInkwell: any = () => ({});
+export const readyChosenCharacterWithCharacteristics: any = () => ({});
+export const readyYourOtherCharacters: any = () => ({});
+export const returnChosenCharacterToHand: any = () => ({});
+export const theyGainEvasive: any = () => ({});
+export const theyGainReckless: any = () => ({});
+export const theyGainRush: any = () => ({});
+export const yourOpponentGainLore: any = () => ({});
