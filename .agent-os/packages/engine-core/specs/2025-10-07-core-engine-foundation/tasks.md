@@ -2,18 +2,18 @@
 
 ## Tasks
 
-- [ ] 1. Project Setup & Type System Foundation
-  - [ ] 1.1 Write tests for project initialization (package.json, tsconfig.json, biome.json)
-  - [ ] 1.2 Create package.json with dependencies (immer, xstate, zod, seedrandom, nanoid)
-  - [ ] 1.3 Configure TypeScript strict mode in tsconfig.json
-  - [ ] 1.4 Configure Biome for linting and formatting
-  - [ ] 1.5 Create base type definitions (CardId, PlayerId, GameId, ZoneId branded types)
-  - [ ] 1.6 Write tests for branded type utilities
-  - [ ] 1.7 Implement branded type creation utilities (createCardId, createPlayerId, etc.)
-  - [ ] 1.8 Verify all tests pass for this project (`bun test`)
-  - [ ] 1.9 Verify linter rules pass (`biome check`)
-  - [ ] 1.10 Verify type safety (`tsc --noEmit`)
-  - [ ] 1.11 Setup Turborepo boundaries https://turborepo.com/docs/reference/boundaries the package should NOT depend on any other package in the monorepo.
+- [x] 1. Project Setup & Type System Foundation
+  - [x] 1.1 Write tests for project initialization (package.json, tsconfig.json, biome.json)
+  - [x] 1.2 Create package.json with dependencies (immer, xstate, zod, seedrandom, nanoid)
+  - [x] 1.3 Configure TypeScript strict mode in tsconfig.json
+  - [x] 1.4 Configure Biome for linting and formatting
+  - [x] 1.5 Create base type definitions (CardId, PlayerId, GameId, ZoneId branded types)
+  - [x] 1.6 Write tests for branded type utilities
+  - [x] 1.7 Implement branded type creation utilities (createCardId, createPlayerId, etc.)
+  - [x] 1.8 Verify all tests pass for this project (`bun test`)
+  - [x] 1.9 Verify linter rules pass (`biome check`)
+  - [x] 1.10 Verify type safety (`tsc --noEmit`)
+  - [x] 1.11 Setup Turborepo boundaries https://turborepo.com/docs/reference/boundaries the package should NOT depend on any other package in the monorepo.
 
 - [ ] 2. Zone Management System
   - [ ] 2.1 Write tests for Zone type definitions and ZoneConfig
