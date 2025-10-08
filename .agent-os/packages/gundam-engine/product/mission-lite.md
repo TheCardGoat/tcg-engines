@@ -1,4 +1,3 @@
 # Product Mission (Lite)
 
-`@tcg/gundam` is a reference implementation of the Bandai Gundam Card Game using the `@tcg/core` framework, demonstrating how to build production-ready trading card game engines with declarative game definitions, type-safe move systems, and deterministic state management. It serves as both a playable Gundam Card Game engine and a blueprint for implementing other TCGs with the framework.
-
+`@tcg/gundam` is a complete, production-ready implementation of the Gundam Card Game using the `@tcg/core` framework, serving as a reference implementation and validation test bed for the framework's extensibility and design patterns. It demonstrates how to handle complex card game mechanics including multi-zone combat, G-order system, and intricate ability timing while maintaining type safety and deterministic gameplay.

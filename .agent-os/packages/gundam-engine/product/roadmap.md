@@ -1,167 +1,217 @@
 # Product Roadmap
 
-## Phase 1: Foundation (Current Phase)
+## Phase 1: Core Game Loop Implementation (Current Phase)
 
 ### Scope
-Initial package setup and scaffolding complete. Structure established, ready for game logic implementation.
+Establish foundational gameplay structure and basic turn flow without complex mechanics.
 
 ### Deliverables
 - [x] Package structure and configuration
-- [x] Agent OS documentation setup
 - [x] TypeScript, Biome, and Turbo configuration
 - [x] Turborepo boundaries enforcement
-- [x] Integration documentation for `@tcg/core`
-- [x] Documented folder structure with placeholder files
-- [ ] Formal specification documents
-- [ ] Initial test infrastructure validation
+- [ ] Game state definition (GundamState type)
+- [ ] Zone configurations (Hand, Deck, G-Zone, Junk Yard, Battle Area)
+- [ ] Turn/phase/step flow (Set, Draw, Deploy, Battle, End)
+- [ ] Basic moves: Deploy Unit, Pass Turn, Draw Card
+- [ ] Setup and initialization functions
+- [ ] Simple unit deployment without abilities
+- [ ] Resource system (cost calculation and payment)
 
 ### Success Criteria
-- Package builds and type-checks
-- Configuration files validated
-- Clear integration patterns documented
-- Ready for game logic implementation
-
----
-
-## Phase 2: Core Game Mechanics (Future)
-
-### Scope
-Implement fundamental Gundam Card Game mechanics using `@tcg/core` framework.
-
-### Deliverables
-- Game state definition
-- Zone configurations (Deck, Hand, Battle Area, Shield Area, Resource Area, Trash, Removal)
-- Turn/phase flow (Start, Draw, Resource, Main, End)
-- Core moves: Play Resource, Deploy Unit, Pair Pilot, Attack, End Turn
-- Basic move validation
-- Setup and initialization (shield placement, EX Base, mulligan)
-
-### Success Criteria
-- Complete turn cycle playable
-- Core mechanics tested with behavior tests
+- Complete turn cycle playable end-to-end
+- Units can be deployed to battle area
+- Basic resource management functional
+- Turn phases transition correctly
 - Deterministic game state management
 - Integration with RuleEngine successful
+- Core mechanics tested with behavior tests
+
+### Testing Focus
+- Turn flow transitions
+- Zone management
+- Basic deployment rules
+- Resource payment validation
 
 ---
 
-## Phase 3: Card System (Future)
+## Phase 2: Keyword Effects & Basic Abilities
 
 ### Scope
-Implement card types, properties, and basic mechanics.
+Implement fundamental keyword abilities and simple triggered effects that don't require complex timing.
 
 ### Deliverables
-- Card type definitions (Unit, Pilot, Command, Base, Resource)
-- Card instance management
-- Card properties (Level, Cost, AP, HP, Keywords)
-- Card filtering and queries
-- Basic keyword abilities (Blocker, First Strike, Repair)
-- Unit/Pilot pairing system
+- Keyword abilities: Double Attack, Intercept, Shield, Burst
+- Simple triggered abilities (on deploy, on destroy)
+- Ability registration system
+- Basic effect resolution
+- Ability validation and cost checking
+- Static abilities (continuous effects)
 
 ### Success Criteria
-- All card types representable
-- Card instances properly managed in zones
-- Keyword abilities functional
-- Card queries working correctly
-- Pairing mechanics implemented
+- All basic keywords functional
+- Simple triggered abilities work correctly
+- Effect resolution deterministic
+- Abilities properly validated
+- No complex timing interactions yet
+
+### Testing Focus
+- Each keyword ability in isolation
+- Simple ability chains
+- Effect ordering for simple scenarios
 
 ---
 
-## Phase 4: Advanced Abilities (Future)
+## Phase 3: Complex Card Abilities & Effects
 
 ### Scope
-Implement complex card abilities and interactions.
+Implement sophisticated card abilities with complex timing, targeting, and multi-step resolution.
 
 ### Deliverables
-- Triggered abilities (When/Whenever)
-- Activated abilities
-- Static abilities
+- Activated abilities with costs
+- Complex triggered abilities (multiple conditions)
+- Ability targeting system
 - Replacement effects
-- Effect resolution system
-- Ability targeting
-- Link conditions system
+- Priority and timing windows
+- Effect stack management
+- Counter abilities and responses
+- Card draw and deck manipulation effects
+- Search and tutor effects
 
 ### Success Criteria
 - Complex abilities work correctly
 - Proper timing and priority handling
-- Effect resolution system functional
-- All ability types supported
+- Multiple simultaneous triggers resolved correctly
+- Targeting validation comprehensive
+- Effect stack properly managed
+
+### Testing Focus
+- Complex ability interactions
+- Priority passing scenarios
+- Simultaneous triggers
+- Response windows
 
 ---
 
-## Phase 5: Complete Card Sets (Future)
+## Phase 4: Card Set Implementations
 
 ### Scope
-Define all cards from released Gundam Card Game sets.
+Define cards from official Gundam Card Game sets with all abilities and effects.
 
 ### Deliverables
-- Starter Set 01 (ST-01)
-- Starter Set 02 (ST-02)
-- Booster Set GD-01
-- Additional sets as released
+- Booster Set 001 cards (initial release cards)
+- Booster Set 002 cards
 - Card ability DSL/builder patterns
-- Card definition tests
+- Card definition validation
+- Comprehensive card tests
+- Card database structure
+- Set-specific mechanics
 
 ### Success Criteria
 - All cards from target sets defined
 - Complex card interactions working
 - Card definitions type-safe
 - Comprehensive ability coverage
+- Cards match official text and rulings
+
+### Testing Focus
+- Individual card functionality
+- Cross-card interactions
+- Set-specific mechanics
+- Edge cases for complex cards
 
 ---
 
-## Phase 6: Advanced Features (Future)
+## Phase 5: Advanced Mechanics
 
 ### Scope
-Implement specialized mechanics and edge cases.
+Implement combat system, G-orders, and other advanced game mechanics.
 
 ### Deliverables
-- Shield damage resolution
-- Combat damage calculation
-- Multiple attackers/blockers
-- Link bonus mechanics
-- Cost reduction effects
-- Complex timing interactions
-- Edge case handling
+- **Combat System:**
+  - Attack declaration and validation
+  - Block declaration and assignment
+  - Multi-block support
+  - Damage assignment and resolution
+  - Combat damage triggers
+  - Combat state tracking
+- **G-Order System:**
+  - G-Zone management
+  - G-Order deployment and timing
+  - G-Order limit tracking
+  - Special G-Order mechanics
+- **Advanced Mechanics:**
+  - Pilot cards and attachment
+  - Position-based effects
+  - Multi-zone card interactions
+  - Chain abilities
+  - Combo mechanics
 
 ### Success Criteria
+- Full combat system functional
+- All combat scenarios properly handled
+- G-Orders work according to official rules
+- Pilot attachment system complete
+- Complex multi-card combos work
 - All official mechanics implemented
-- Edge cases properly handled
-- Rules verified against official rulings
-- Comprehensive test coverage
+
+### Testing Focus
+- Combat resolution scenarios
+- Multi-attacker/multi-blocker scenarios
+- G-Order timing and limits
+- Pilot attachment interactions
+- Complex combo sequences
 
 ---
 
-## Phase 7: Optimization & Polish (Future)
+## Phase 6: Optimization & Production Readiness
 
 ### Scope
-Performance optimization and production readiness.
+Performance optimization, comprehensive testing, and production hardening.
 
 ### Deliverables
-- Performance profiling
-- Optimization of hot paths
+- Performance profiling and optimization
 - Memory usage optimization
-- Move enumeration for AI
+- Move enumeration for AI support
+- State evaluation functions
 - Comprehensive documentation
 - Example integrations
+- Edge case handling
+- Error recovery mechanisms
+- Replay system validation
+- API stabilization
 
 ### Success Criteria
-- Performance suitable for real-time play
-- Efficient state management
+- Performance suitable for real-time multiplayer
+- Efficient combat resolution
+- Memory usage optimized
+- 100% test coverage maintained
+- All edge cases handled
 - Clear API documentation
 - Reference examples available
 - Production-ready quality
+- No known critical bugs
+
+### Testing Focus
+- Performance benchmarks
+- Stress testing with complex board states
+- Edge case scenarios
+- Integration testing
+- Replay consistency
 
 ---
 
 ## Future Considerations
 
 ### Potential Additions
-- **AI Support:** Pre-built evaluation functions and move selection helpers
-- **Simulation Tools:** Batch game simulation for card balancing
-- **Rule Debugger:** Visual tool for understanding game state changes
-- **Card DSL:** Higher-level language for defining card abilities
+- **AI Support:** Pre-built evaluation functions for combat and card value
+- **Simulation Tools:** Batch game simulation for deck testing
+- **Rule Debugger:** Visual tool for understanding combat and ability resolution
+- **Card DSL:** Higher-level language for defining complex card abilities
 - **Performance Dashboard:** Real-time metrics for engine performance
 - **Multiplayer Extensions:** Support for multiplayer formats beyond 2-player
+- **Draft Mode:** Support for limited formats and draft mechanics
+- **Deck Validation:** Pre-built deck validation rules
+- **Official Rulings Database:** Integration with official card rulings
 
 ### Community Contributions
 - Card set contributions from community
@@ -169,6 +219,7 @@ Performance optimization and production readiness.
 - Additional game modes
 - Performance improvements
 - Bug reports and edge cases
+- Translation support for card text
 
 ---
 
@@ -176,6 +227,8 @@ Performance optimization and production readiness.
 
 - Roadmap is subject to change based on `@tcg/core` framework evolution
 - Phases may overlap or be adjusted based on priorities
+- Each phase builds incrementally on previous phases
+- Combat system (Phase 5) is critical and may require framework enhancements
 - Community feedback will influence feature prioritization
 - Each phase includes comprehensive testing and documentation
-
+- Focus on validating `@tcg/core` framework capabilities throughout
