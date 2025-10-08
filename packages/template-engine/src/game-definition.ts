@@ -64,29 +64,23 @@ const moves: GameMoveDefinitions<TemplateGameState, TemplateGameMoves> = {
     condition: (state, context) => {
       if (state.phase !== "main") return false;
 
-      const attackerId = String(context.data?.attackerId);
-      const attacker = Object.values(state.cards).find(
-        (c) => String(c.id) === attackerId,
-      );
+      const attackerId = context.data?.attackerId as string;
+      const attacker = state.cards[attackerId];
 
       return attacker !== undefined && !attacker.tapped;
     },
     reducer: (draft, context) => {
-      const attackerId = String(context.data?.attackerId);
-      const targetId = String(context.data?.targetId);
+      const attackerId = context.data?.attackerId as string;
+      const targetId = context.data?.targetId as string;
 
       // Tap attacker
-      const attacker = Object.values(draft.cards).find(
-        (c) => String(c.id) === attackerId,
-      );
+      const attacker = draft.cards[attackerId];
       if (attacker) {
         attacker.tapped = true;
       }
 
       // Deal damage
-      const target = Object.values(draft.cards).find(
-        (c) => String(c.id) === targetId,
-      );
+      const target = draft.cards[targetId];
       if (attacker && target) {
         target.damage += 1;
       }

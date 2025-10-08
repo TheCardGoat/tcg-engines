@@ -138,8 +138,10 @@ export class RuleEngine<TState, TMoves extends Record<string, any>> {
    * @returns Current game state (immutable)
    */
   getState(): TState {
-    // Return a frozen copy to ensure immutability
-    return JSON.parse(JSON.stringify(this.currentState)) as TState;
+    // Use structuredClone for deep cloning with better performance and type safety
+    // than JSON serialization. Note: structuredClone preserves more types (Date, Map, Set, etc.)
+    // but still creates a deep copy to ensure immutability
+    return structuredClone(this.currentState);
   }
 
   /**
@@ -159,7 +161,8 @@ export class RuleEngine<TState, TMoves extends Record<string, any>> {
         this.currentState,
         playerId,
       );
-      return JSON.parse(JSON.stringify(filteredState)) as TState;
+      // Use structuredClone for deep cloning filtered state
+      return structuredClone(filteredState);
     }
 
     // No filter defined, return full state
