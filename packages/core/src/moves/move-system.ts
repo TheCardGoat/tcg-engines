@@ -1,4 +1,5 @@
 import type { Draft } from "immer";
+import type { SeededRNG } from "../rng/seeded-rng";
 import type { CardId, PlayerId } from "../types";
 
 /**
@@ -10,6 +11,7 @@ import type { CardId, PlayerId } from "../types";
  * - Selected targets
  * - Additional move-specific data
  * - Timestamp for deterministic ordering
+ * - RNG for deterministic randomness
  */
 export type MoveContext = {
   /** Player performing this move */
@@ -26,6 +28,9 @@ export type MoveContext = {
 
   /** Timestamp when move was initiated (for deterministic ordering) */
   timestamp?: number;
+
+  /** Seeded RNG for deterministic randomness (provided by engine) */
+  rng?: SeededRNG;
 };
 
 /**

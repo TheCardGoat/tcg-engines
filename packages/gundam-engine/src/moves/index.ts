@@ -4,99 +4,82 @@
  * This directory contains all move implementations for the Gundam Card Game.
  * Each move represents a possible player action that can modify game state.
  *
- * Moves follow the @tcg/core move pattern:
- * 1. Define move parameters (type-safe)
- * 2. Implement validation logic
- * 3. Implement execution logic (immutable state update)
- * 4. Optionally implement enumeration (for AI/UI)
+ * Moves follow the @tcg/core move pattern using GameMoveDefinitions type:
+ * 1. Define move shape in GundamGameMoves type (in types.ts)
+ * 2. Implement condition function for validation
+ * 3. Implement reducer function with Immer draft (mutate directly)
+ * 4. Add to GameMoveDefinitions object
  *
  * @example Move Implementation
  * ```typescript
- * import { defineMove } from "@tcg/core";
- * import type { GundamGameState } from "../types";
+ * import type { GameMoveDefinitions } from "@tcg/core";
+ * import type { GundamGameState, GundamGameMoves } from "../types";
  *
- * type PlayResourceParams = {
- *   playerId: PlayerId;
+ * const moves: GameMoveDefinitions<GundamGameState, GundamGameMoves> = {
+ *   playResource: {
+ *     condition: (state, context) => {
+ *       const { playerId } = context;
+ *
+ *       // Check if it's the player's turn
+ *       if (state.currentPlayer !== playerId) {
+ *         return false;
+ *       }
+ *
+ *       // Check if in Resource Phase
+ *       if (state.phase !== "resource") {
+ *         return false;
+ *       }
+ *
+ *       // Check if already played resource this turn
+ *       if (state.gundam.playedResourceThisTurn[playerId]) {
+ *         return false;
+ *       }
+ *
+ *       // Check resource deck has cards
+ *       const resourceDeck = state.zones.resourceDeck[playerId];
+ *       return resourceDeck && resourceDeck.length > 0;
+ *     },
+ *
+ *     reducer: (draft, context) => {
+ *       const { playerId } = context;
+ *       const resourceDeck = draft.zones.resourceDeck[playerId];
+ *       const resourceArea = draft.zones.resourceArea[playerId];
+ *
+ *       if (resourceDeck && resourceArea) {
+ *         // Take top card from resource deck (mutate draft directly with Immer)
+ *         const topCard = resourceDeck.pop();
+ *         if (topCard) {
+ *           resourceArea.push(topCard);
+ *         }
+ *
+ *         // Update gundam-specific state
+ *         draft.gundam.playedResourceThisTurn[playerId] = true;
+ *         draft.gundam.activeResources[playerId] += 1;
+ *       }
+ *     },
+ *   },
+ *
+ *   // Add more moves here
+ *   deployUnit: {
+ *     condition: (state, context) => {
+ *       // Validation logic
+ *       return true;
+ *     },
+ *     reducer: (draft, context) => {
+ *       // Mutate draft directly
+ *     },
+ *   },
  * };
  *
- * export const PlayResourceMove = defineMove<
- *   GundamGameState,
- *   PlayResourceParams
- * >({
- *   type: "PLAY_RESOURCE",
- *
- *   validate: (state, params) => {
- *     const { playerId } = params;
- *
- *     // Check if it's the player's turn
- *     if (state.currentPlayer !== playerId) {
- *       return { valid: false, error: "Not your turn" };
- *     }
- *
- *     // Check if in Resource Phase
- *     if (state.phase !== "resource") {
- *       return { valid: false, error: "Not in Resource Phase" };
- *     }
- *
- *     // Check if already played resource this turn
- *     if (state.gundam.playedResourceThisTurn[playerId]) {
- *       return { valid: false, error: "Already played resource" };
- *     }
- *
- *     // Check resource deck has cards
- *     const resourceDeck = state.zones.resourceDeck[playerId];
- *     if (resourceDeck.length === 0) {
- *       return { valid: false, error: "No resources remaining" };
- *     }
- *
- *     return { valid: true };
- *   },
- *
- *   execute: (state, params) => {
- *     const { playerId } = params;
- *     const resourceDeck = state.zones.resourceDeck[playerId];
- *     const resourceArea = state.zones.resourceArea[playerId];
- *
- *     // Take top card from resource deck
- *     const [topCard, ...remainingDeck] = resourceDeck;
- *
- *     // Immutably update state
- *     return {
- *       ...state,
- *       zones: {
- *         ...state.zones,
- *         resourceDeck: {
- *           ...state.zones.resourceDeck,
- *           [playerId]: remainingDeck,
- *         },
- *         resourceArea: {
- *           ...state.zones.resourceArea,
- *           [playerId]: [...resourceArea, topCard],
- *         },
- *       },
- *       gundam: {
- *         ...state.gundam,
- *         playedResourceThisTurn: {
- *           ...state.gundam.playedResourceThisTurn,
- *           [playerId]: true,
- *         },
- *         activeResources: {
- *           ...state.gundam.activeResources,
- *           [playerId]: state.gundam.activeResources[playerId] + 1,
- *         },
- *       },
- *     };
- *   },
- *
- *   // Optional: for AI and move enumeration
- *   enumerate: (state, playerId) => {
- *     const validation = PlayResourceMove.validate(state, { playerId });
- *     if (!validation.valid) return [];
- *
- *     return [{ type: "PLAY_RESOURCE", playerId }];
- *   },
- * });
+ * export { moves as gundamMoves };
  * ```
+ *
+ * Key Points:
+ * - NO defineMove() helper - use GameMoveDefinitions type directly
+ * - condition: returns boolean (true = can execute)
+ * - reducer: receives Immer draft, mutate it directly
+ * - context includes { playerId, sourceCardId?, targets?, data?, rng? }
+ * - All moves added to one GameMoveDefinitions object
  *
  * Move Categories:
  * - Resource Management: playResource
@@ -108,10 +91,5 @@
  * - Special: concede
  */
 
-// Move implementations will go here
-// export { PlayResourceMove } from "./play-resource";
-// export { DeployUnitMove } from "./deploy-unit";
-// export { PairPilotMove } from "./pair-pilot";
-// export { AttackMove } from "./attack";
-// export { ActivateAbilityMove } from "./activate-ability";
-
+// Move implementations will go here once game-specific types are defined
+// See template-engine package for working examples

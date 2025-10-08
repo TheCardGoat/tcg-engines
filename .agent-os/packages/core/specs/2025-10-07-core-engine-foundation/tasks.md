@@ -180,38 +180,38 @@
   - [x] 10.16 Verify linter rules pass
   - [x] 10.17 Verify type safety
 
-- [ ] 11. Rule Engine Core
-  - [ ] 11.1 Write tests for RuleEngine class constructor with GameDefinition
-  - [ ] 11.2 Implement RuleEngine class skeleton with initialization
-  - [ ] 11.3 Write tests for getState method
-  - [ ] 11.4 Implement getState to return current state
-  - [ ] 11.5 Write tests for getPlayerView with filtering
-  - [ ] 11.6 Implement getPlayerView using playerView function from definition
-  - [ ] 11.7 Write tests for executeMove with success case
-  - [ ] 11.8 Implement executeMove with move validation and execution
-  - [ ] 11.9 Write tests for executeMove with failure cases (invalid move, condition failed, execution error)
-  - [ ] 11.10 Implement error handling in executeMove
-  - [ ] 11.11 Write tests for canExecuteMove
-  - [ ] 11.12 Implement canExecuteMove without side effects
-  - [ ] 11.13 Write tests for getValidMoves enumeration
-  - [ ] 11.14 Implement getValidMoves (framework hook for game-specific logic)
-  - [ ] 11.15 Write tests for undo/redo integration with StateManager
-  - [ ] 11.16 Implement undo and redo methods
-  - [ ] 11.17 Write tests for getHistory
-  - [ ] 11.18 Implement getHistory to expose action log
-  - [ ] 11.19 Write tests for replay with action log
-  - [ ] 11.20 Implement replay function with deterministic execution
-  - [ ] 11.21 Write tests for getPatches
-  - [ ] 11.22 Implement getPatches to return accumulated patches
-  - [ ] 11.23 Write tests for applyPatches (network sync)
-  - [ ] 11.24 Implement applyPatches for client state updates
-  - [ ] 11.25 Write tests for RNG integration in move context
-  - [ ] 11.26 Implement RNG context passing to move reducers
-  - [ ] 11.27 Write tests for XState flow integration
-  - [ ] 11.28 Implement flow service management in engine
-  - [ ] 11.29 Verify all tests pass for this project
-  - [ ] 11.30 Verify linter rules pass
-  - [ ] 11.31 Verify type safety
+- [x] 11. Rule Engine Core
+  - [x] 11.1 Write tests for RuleEngine class constructor with GameDefinition
+  - [x] 11.2 Implement RuleEngine class skeleton with initialization
+  - [x] 11.3 Write tests for getState method
+  - [x] 11.4 Implement getState to return current state
+  - [x] 11.5 Write tests for getPlayerView with filtering
+  - [x] 11.6 Implement getPlayerView using playerView function from definition
+  - [x] 11.7 Write tests for executeMove with success case
+  - [x] 11.8 Implement executeMove with move validation and execution
+  - [x] 11.9 Write tests for executeMove with failure cases (invalid move, condition failed, execution error)
+  - [x] 11.10 Implement error handling in executeMove
+  - [x] 11.11 Write tests for canExecuteMove
+  - [x] 11.12 Implement canExecuteMove without side effects
+  - [x] 11.13 Write tests for getValidMoves enumeration
+  - [x] 11.14 Implement getValidMoves (framework hook for game-specific logic)
+  - [x] 11.15 Write tests for undo/redo integration with StateManager
+  - [x] 11.16 Implement undo and redo methods
+  - [x] 11.17 Write tests for getHistory
+  - [x] 11.18 Implement getHistory to expose action log
+  - [x] 11.19 Write tests for replay with action log
+  - [x] 11.20 Implement replay function with deterministic execution
+  - [x] 11.21 Write tests for getPatches
+  - [x] 11.22 Implement getPatches to return accumulated patches
+  - [x] 11.23 Write tests for applyPatches (network sync)
+  - [x] 11.24 Implement applyPatches for client state updates
+  - [x] 11.25 Write tests for RNG integration in move context
+  - [x] 11.26 Implement RNG context passing to move reducers
+  - [x] 11.27 Write tests for Flow Manager integration
+  - [x] 11.28 Implement flow service management in engine
+  - [x] 11.29 Verify all tests pass for this project
+  - [x] 11.30 Verify linter rules pass
+  - [x] 11.31 Verify type safety
 
 - [x] 12. AI Move Enumeration
   - [x] 12.1 Write tests for EnumeratedMove type
@@ -264,38 +264,38 @@
   - [x] 14.14 Verify linter rules pass
   - [x] 14.15 Verify type safety
 
-- [ ] 15. Example Game Implementation
-  - [ ] 15.1 Write tests for simple card game setup (CoinFlip or Rock-Paper-Scissors)
-  - [ ] 15.2 Implement game definition for simple game
-  - [ ] 15.3 Write tests for game moves (flip, draw, play)
-  - [ ] 15.4 Implement game move reducers
-  - [ ] 15.5 Write tests for game flow (turns, phases)
-  - [ ] 15.6 Implement game flow machine
-  - [ ] 15.7 Write tests for end conditions
-  - [ ] 15.8 Implement end condition logic
-  - [ ] 15.9 Write tests for complete game playthrough
-  - [ ] 15.10 Verify game can be played end-to-end
-  - [ ] 15.11 Write tests for replay of example game
-  - [ ] 15.12 Verify deterministic replay
-  - [ ] 15.13 Verify all tests pass for this project
-  - [ ] 15.14 Verify linter rules pass
-  - [ ] 15.15 Verify type safety
+- [x] 15. Example Game Implementation
+  - [x] 15.1 Write tests for simple card game setup (CoinFlip or Rock-Paper-Scissors)
+  - [x] 15.2 Implement game definition for simple game
+  - [x] 15.3 Write tests for game moves (flip, draw, play)
+  - [x] 15.4 Implement game move reducers
+  - [x] 15.5 Write tests for game flow (turns, phases)
+  - [x] 15.6 Implement game flow machine
+  - [x] 15.7 Write tests for end conditions
+  - [x] 15.8 Implement end condition logic
+  - [x] 15.9 Write tests for complete game playthrough
+  - [x] 15.10 Verify game can be played end-to-end
+  - [x] 15.11 Write tests for replay of example game
+  - [x] 15.12 Verify deterministic replay
+  - [x] 15.13 Verify all tests pass for this project
+  - [x] 15.14 Verify linter rules pass
+  - [x] 15.15 Verify type safety
 
-- [ ] 16. Integration & Documentation
-  - [ ] 16.1 Write integration tests for server-authoritative pattern (client sends move, server broadcasts patches)
-  - [ ] 16.2 Verify network synchronization pattern works
-  - [ ] 16.3 Write integration tests for complete game flow (setup → moves → end)
-  - [ ] 16.4 Verify all systems work together
-  - [ ] 16.5 Create API documentation with TypeDoc
-  - [ ] 16.6 Generate TypeDoc output
-  - [ ] 16.7 Write README.md with quick start guide
-  - [ ] 16.8 Write core concepts guide (GameDefinition, moves, zones, cards, flow)
-  - [ ] 16.9 Write tutorial for building simple TCG
-  - [ ] 16.10 Add code examples to documentation
-  - [ ] 16.11 Verify all tests pass for the entire project
-  - [ ] 16.12 Verify linter rules pass for the entire project
-  - [ ] 16.13 Verify type safety for the entire project
-  - [ ] 16.14 Run final code review
+- [x] 16. Integration & Documentation
+  - [x] 16.1 Write integration tests for server-authoritative pattern (client sends move, server broadcasts patches)
+  - [x] 16.2 Verify network synchronization pattern works
+  - [x] 16.3 Write integration tests for complete game flow (setup → moves → end)
+  - [x] 16.4 Verify all systems work together
+  - [x] 16.5 Create API documentation with TypeDoc
+  - [x] 16.6 Generate TypeDoc output
+  - [x] 16.7 Write README.md with quick start guide
+  - [x] 16.8 Write core concepts guide (GameDefinition, moves, zones, cards, flow)
+  - [x] 16.9 Write tutorial for building simple TCG
+  - [x] 16.10 Add code examples to documentation
+  - [x] 16.11 Verify all tests pass for the entire project
+  - [x] 16.12 Verify linter rules pass for the entire project
+  - [x] 16.13 Verify type safety for the entire project
+  - [x] 16.14 Run final code review
 
 ## Notes
 

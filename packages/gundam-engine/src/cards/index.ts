@@ -2,7 +2,7 @@
  * Gundam Card Game - Card Definitions
  *
  * This directory contains all card definitions for the Gundam Card Game.
- * Cards are defined declaratively using the @tcg/core card definition system.
+ * In @tcg/core, cards are plain data objects - no helper functions needed.
  *
  * Organization:
  * - sets/           - Cards organized by set (ST01, ST02, GD01, etc.)
@@ -11,10 +11,43 @@
  *
  * @example Unit Card Definition
  * ```typescript
- * import { defineCard } from "@tcg/core";
- * import type { UnitCard } from "./card-types";
+ * import type { CardId } from "@tcg/core";
  *
- * export const RX78_2Gundam: UnitCard = defineCard({
+ * // Card definition type (static data)
+ * type UnitCardDefinition = {
+ *   id: string;
+ *   name: string;
+ *   setCode: string;
+ *   cardNumber: string;
+ *   cardType: "UNIT";
+ *
+ *   // Base stats
+ *   level: number;
+ *   cost: number;
+ *   ap: number;
+ *   hp: number;
+ *
+ *   // Keyword abilities
+ *   keywords: string[];
+ *
+ *   // Triggered/Activated abilities
+ *   abilities: Array<{
+ *     trigger?: "ON_DEPLOY" | "ON_ATTACK" | "ON_DEFENSE";
+ *     activated?: { cost: string };
+ *     description: string;
+ *     effect: {
+ *       type: string;
+ *       // ... effect data
+ *     };
+ *   }>;
+ *
+ *   // Flavor and metadata
+ *   flavor?: string;
+ *   illustrator?: string;
+ * };
+ *
+ * // Card definition (plain object)
+ * export const RX78_2Gundam: UnitCardDefinition = {
  *   id: "gd01-001",
  *   name: "RX-78-2 Gundam",
  *   setCode: "GD01",
@@ -47,93 +80,59 @@
  *   // Flavor and metadata
  *   flavor: "The legendary mobile suit that changed the course of the One Year War.",
  *   illustrator: "Hajime Katoki",
- * });
+ * };
+ *
+ * // Card lookup table
+ * export const GUNDAM_CARDS = {
+ *   "gd01-001": RX78_2Gundam,
+ *   // ... more cards
+ * };
  * ```
  *
- * @example Pilot Card Definition
+ * @example Card Instance in Game State
  * ```typescript
- * export const AmuroRay: PilotCard = defineCard({
- *   id: "gd01-050",
- *   name: "Amuro Ray",
- *   cardType: "PILOT",
+ * import type { CardId, PlayerId } from "@tcg/core";
  *
- *   level: 2,
- *   cost: 1,
- *   apBonus: 2,
- *   hpBonus: 1,
+ * // Card instance (runtime state)
+ * type UnitCardInstance = {
+ *   id: CardId;                    // Unique instance ID
+ *   definitionId: string;          // References card definition ("gd01-001")
+ *   ownerId: PlayerId;             // Current owner
+ *   tapped: boolean;               // Tapped state
+ *   damage: number;                // Damage counters
+ *   counters: Record<string, number>; // Custom counters
+ *   pairedPilotId?: CardId;        // Paired pilot (Gundam-specific)
+ * };
  *
- *   // Link conditions for becoming a Link Unit
- *   linkConditions: [
- *     { type: "UNIT_NAME", value: "RX-78-2 Gundam" },
- *   ],
+ * // In game state:
+ * type GundamGameState = {
+ *   // ... other state
+ *   cards: Record<CardId, UnitCardInstance>;
+ * };
  *
- *   abilities: [
- *     {
- *       trigger: "WHEN_ATTACKING",
- *       condition: { type: "IS_LINK_UNIT" },
- *       effect: { type: "DRAW_CARD", count: 1 },
- *     },
- *   ],
- * });
+ * // Helper to get card definition
+ * function getCardDefinition(instance: UnitCardInstance) {
+ *   return GUNDAM_CARDS[instance.definitionId];
+ * }
+ *
+ * // Usage in move reducer
+ * reducer: (draft, context) => {
+ *   const cardInstance = draft.cards[cardId];
+ *   if (cardInstance) {
+ *     const definition = GUNDAM_CARDS[cardInstance.definitionId];
+ *     // Check definition.cost, etc.
+ *   }
+ * }
  * ```
  *
- * @example Command Card Definition
- * ```typescript
- * export const BeamRifle: CommandCard = defineCard({
- *   id: "gd01-100",
- *   name: "Beam Rifle",
- *   cardType: "COMMAND",
- *   timing: "[Action]",
+ * Key Points:
+ * - NO defineCard() helper - cards are plain objects
+ * - Card definitions = static data (name, cost, abilities)
+ * - Card instances = runtime state (tapped, damage, owner)
+ * - Store definitions in a lookup object
+ * - Reference definitions from instances via definitionId
  *
- *   level: 1,
- *   cost: 1,
- *
- *   effect: {
- *     type: "DAMAGE",
- *     target: { type: "OPPONENT_UNIT" },
- *     amount: 3,
- *   },
- *
- *   // Alternative use
- *   burstEffect: {
- *     description: "[Burst] Deal 2 damage to target Unit.",
- *     effect: {
- *       type: "DAMAGE",
- *       target: { type: "ANY_UNIT" },
- *       amount: 2,
- *     },
- *   },
- * });
- * ```
- *
- * @example Base Card Definition
- * ```typescript
- * export const NahelArgama: BaseCard = defineCard({
- *   id: "gd01-123",
- *   name: "Nahel Argama",
- *   cardType: "BASE",
- *
- *   level: 2,
- *   cost: 1,
- *   hp: 8,
- *
- *   abilities: [
- *     {
- *       trigger: "CONSTANT",
- *       effect: {
- *         type: "MODIFY_STATS",
- *         target: { type: "YOUR_UNITS", filter: { color: "GREEN" } },
- *         modification: { ap: 1 },
- *       },
- *     },
- *   ],
- * });
- * ```
+ * See template-engine package for examples.
  */
 
-// Card definitions will go here
-// export * from "./sets/st01";
-// export * from "./sets/st02";
-// export * from "./sets/gd01";
-// export * from "./tokens";
-
+// Card definitions will go here once card types are defined

@@ -61,8 +61,6 @@ describe("GameDefinition - Type System", () => {
 
       const definition: GameDefinition<TestGameState, TestMoves> = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: (players) => ({
           players: players.map((p, i) => ({
             id: p.id,
@@ -76,8 +74,6 @@ describe("GameDefinition - Type System", () => {
       };
 
       expect(definition.name).toBe("Test Game");
-      expect(definition.minPlayers).toBe(2);
-      expect(definition.maxPlayers).toBe(4);
       expect(definition.setup).toBeFunction();
       expect(definition.moves).toEqual(moves);
     });
@@ -85,8 +81,6 @@ describe("GameDefinition - Type System", () => {
     it("should work with optional endIf field", () => {
       const definition: GameDefinition<TestGameState, TestMoves> = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({
           players: [],
           currentPlayerIndex: 0,
@@ -110,8 +104,6 @@ describe("GameDefinition - Type System", () => {
     it("should work with optional playerView field", () => {
       const definition: GameDefinition<TestGameState, TestMoves> = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({
           players: [],
           currentPlayerIndex: 0,
@@ -139,8 +131,6 @@ describe("GameDefinition - Type System", () => {
     it("should enforce state type in setup function", () => {
       const definition: GameDefinition<TestGameState, TestMoves> = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 2,
         setup: (players) => {
           // TypeScript should enforce return type
           const state: TestGameState = {
@@ -203,8 +193,6 @@ describe("GameDefinition - Type System", () => {
     it("should enforce state type in endIf function", () => {
       const definition: GameDefinition<TestGameState, TestMoves> = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({
           players: [],
           currentPlayerIndex: 0,
@@ -237,8 +225,6 @@ describe("GameDefinition - Type System", () => {
     it("should enforce state type in playerView function", () => {
       const definition: GameDefinition<TestGameState, TestMoves> = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({
           players: [],
           currentPlayerIndex: 0,
@@ -276,8 +262,6 @@ describe("GameDefinition - Type System", () => {
     it("should be deterministic (same players -> same state)", () => {
       const definition: GameDefinition<TestGameState, TestMoves> = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 2,
         setup: (players) => ({
           players: players.map((p, i) => ({
             id: p.id,
@@ -302,23 +286,6 @@ describe("GameDefinition - Type System", () => {
     });
   });
 
-  describe("player count validation", () => {
-    it("should specify valid player count range", () => {
-      const definition: GameDefinition<TestGameState, TestMoves> = {
-        name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
-        setup: () => ({
-          players: [],
-          currentPlayerIndex: 0,
-          phase: "setup",
-        }),
-        moves: {} as GameMoveDefinitions<TestGameState, TestMoves>,
-      };
-
-      expect(definition.minPlayers).toBe(2);
-      expect(definition.maxPlayers).toBe(4);
-      expect(definition.minPlayers).toBeLessThanOrEqual(definition.maxPlayers);
-    });
-  });
+  // Note: minPlayers and maxPlayers are not part of GameDefinition spec
+  // Player count validation is handled at the application level, not in the core engine
 });

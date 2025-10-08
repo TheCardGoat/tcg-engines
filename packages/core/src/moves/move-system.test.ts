@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { produce } from "immer";
 import type { CardId, PlayerId } from "../types";
-import { createCardId, createPlayerId, createZoneId } from "../types";
+import { createCardId, createPlayerId } from "../types";
 import type {
   MoveCondition,
   MoveContext,
@@ -164,7 +164,7 @@ describe("Move System with Validation", () => {
     });
 
     it("should validate based on targets", () => {
-      const condition: MoveCondition<TestGameState> = (state, context) => {
+      const condition: MoveCondition<TestGameState> = (_state, context) => {
         if (!context.targets?.[0]) return false;
         const targetId = context.targets[0][0] as PlayerId;
         return targetId !== context.playerId; // Can't target self
@@ -329,7 +329,7 @@ describe("Move System with Validation", () => {
       const moveDef: MoveDefinition<TestGameState> = {
         id: "pass",
         name: "Pass",
-        reducer: (draft) => {
+        reducer: (_draft) => {
           // No-op move
         },
       };

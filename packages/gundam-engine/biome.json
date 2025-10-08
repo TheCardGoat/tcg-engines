@@ -1,0 +1,14 @@
+{
+  "root": false,
+  "extends": ["../../biome.json"],
+  "formatter": {
+    "lineWidth": 80
+  },
+  "linter": {
+    "rules": {
+      "suspicious": {
+        "noExplicitAny": "error"
+      }
+    }
+  }
+}
