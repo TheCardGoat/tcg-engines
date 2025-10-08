@@ -142,24 +142,24 @@
   - [x] 8.16 Verify linter rules pass
   - [x] 8.17 Verify type safety
 
-- [] 9. XState Flow Manager
-  - [] 9.1 Write tests for FlowDefinition type
-  - [] 9.2 Implement FlowDefinition with XState integration
-  - [] 9.3 Write tests for turn/phase/step state machine
-  - [] 9.4 Implement XState machine for game flow
-  - [] 9.5 Write tests for lifecycle hooks (onBegin, onEnd)
-  - [] 9.6 Implement lifecycle hook execution in Immer context
-  - [] 9.7 Write tests for endIf conditions and automatic transitions
-  - [] 9.8 Implement guard conditions for phase/step transitions
-  - [] 9.9 Write tests for FlowContext and state synchronization
-  - [] 9.10 Implement getFlowContext and applyFlowContext
-  - [] 9.11 Write tests for flow event handling (NEXT_PHASE, PASS_PRIORITY, EXECUTE_MOVE, END_TURN)
-  - [] 9.12 Implement flow event dispatching
-  - [] 9.13 Write tests for hierarchical states (nested phases/steps)
-  - [] 9.14 Implement nested state support
-  - [] 9.15 Verify all tests pass for this project
-  - [] 9.16 Verify linter rules pass
-  - [] 9.17 Verify type safety
+- [x] 9. XState Flow Manager
+  - [x] 9.1 Write tests for FlowDefinition type
+  - [x] 9.2 Implement FlowDefinition with XState integration
+  - [x] 9.3 Write tests for turn/phase/step state machine
+  - [x] 9.4 Implement XState machine for game flow
+  - [x] 9.5 Write tests for lifecycle hooks (onBegin, onEnd)
+  - [x] 9.6 Implement lifecycle hook execution in Immer context
+  - [x] 9.7 Write tests for endIf conditions and automatic transitions
+  - [x] 9.8 Implement guard conditions for phase/step transitions
+  - [x] 9.9 Write tests for FlowContext and state synchronization
+  - [x] 9.10 Implement getFlowContext and applyFlowContext
+  - [x] 9.11 Write tests for flow event handling (NEXT_PHASE, PASS_PRIORITY, EXECUTE_MOVE, END_TURN)
+  - [x] 9.12 Implement flow event dispatching
+  - [x] 9.13 Write tests for hierarchical states (nested phases/steps)
+  - [x] 9.14 Implement nested state support
+  - [x] 9.15 Verify all tests pass for this project
+  - [x] 9.16 Verify linter rules pass
+  - [x] 9.17 Verify type safety
 
 - [x] 10. GameDefinition Type System
   - [x] 10.1 Write tests for GameDefinition type with generics

@@ -1,3 +1,4 @@
+import type { FlowDefinition } from "../flow";
 import type { GameMoveDefinitions } from "./move-definitions";
 
 /**
@@ -140,26 +141,4 @@ export type GameDefinition<TState, TMoves extends Record<string, any>> = {
    * @returns Filtered state for this player
    */
   playerView?: (state: TState, playerId: string) => TState;
-};
-
-/**
- * Flow Definition (placeholder for XState integration)
- *
- * Task 10.7, 10.8: Flow configuration validation
- *
- * This is a placeholder type. The actual implementation will come from
- * the XState Flow Manager (Task 9) once it's integrated.
- *
- * TODO: Replace with actual FlowDefinition from flow system
- */
-export type FlowDefinition<TState> = {
-  /** Initial phase/step */
-  initial: string;
-  /** Phase/step definitions */
-  states: Record<string, unknown>;
-  /** Lifecycle hooks */
-  hooks?: {
-    onBegin?: (state: TState) => void;
-    onEnd?: (state: TState) => void;
-  };
 };
