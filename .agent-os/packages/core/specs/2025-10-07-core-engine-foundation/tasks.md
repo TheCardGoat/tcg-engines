@@ -161,24 +161,24 @@
   - [x] 9.16 Verify linter rules pass
   - [x] 9.17 Verify type safety
 
-- [ ] 10. GameDefinition Type System
-  - [ ] 10.1 Write tests for GameDefinition type with generics
-  - [ ] 10.2 Implement GameDefinition<TState, TMoves> type
-  - [ ] 10.3 Write tests for setup function validation
-  - [ ] 10.4 Implement setup function signature and validation
-  - [ ] 10.5 Write tests for moves mapping (MoveDefinitions)
-  - [ ] 10.6 Implement MoveDefinitions type with exhaustive mapping
-  - [ ] 10.7 Write tests for flow configuration
-  - [ ] 10.8 Implement flow configuration validation
-  - [ ] 10.9 Write tests for endIf game end condition
-  - [ ] 10.10 Implement endIf evaluation logic
-  - [ ] 10.11 Write tests for playerView filtering function
-  - [ ] 10.12 Implement playerView function signature
-  - [ ] 10.13 Write tests for GameDefinition validation (Zod schema)
-  - [ ] 10.14 Implement Zod schema for GameDefinition validation
-  - [ ] 10.15 Verify all tests pass for this project
-  - [ ] 10.16 Verify linter rules pass
-  - [ ] 10.17 Verify type safety
+- [x] 10. GameDefinition Type System
+  - [x] 10.1 Write tests for GameDefinition type with generics
+  - [x] 10.2 Implement GameDefinition<TState, TMoves> type
+  - [x] 10.3 Write tests for setup function validation
+  - [x] 10.4 Implement setup function signature and validation
+  - [x] 10.5 Write tests for moves mapping (GameMoveDefinitions)
+  - [x] 10.6 Implement GameMoveDefinitions type with exhaustive mapping
+  - [x] 10.7 Write tests for flow configuration
+  - [x] 10.8 Implement flow configuration validation
+  - [x] 10.9 Write tests for endIf game end condition
+  - [x] 10.10 Implement endIf evaluation logic
+  - [x] 10.11 Write tests for playerView filtering function
+  - [x] 10.12 Implement playerView function signature
+  - [x] 10.13 Write tests for GameDefinition validation (Zod schema)
+  - [x] 10.14 Implement Zod schema for GameDefinition validation
+  - [x] 10.15 Verify all tests pass for this project
+  - [x] 10.16 Verify linter rules pass
+  - [x] 10.17 Verify type safety
 
 - [ ] 11. Rule Engine Core
   - [ ] 11.1 Write tests for RuleEngine class constructor with GameDefinition
