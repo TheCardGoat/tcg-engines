@@ -29,7 +29,6 @@
     "immer": "^10.0.0",
     "nanoid": "^5.0.0",
     "seedrandom": "^3.0.5",
-    "xstate": "^5.0.0",
     "zod": "^3.22.0"
   },
   "devDependencies": {
