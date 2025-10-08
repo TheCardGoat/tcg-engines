@@ -12,7 +12,6 @@
  */
 
 export type {
-  FlowDefinition,
   GameDefinition,
   GameEndResult,
   Player,

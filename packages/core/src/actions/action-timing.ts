@@ -7,7 +7,6 @@ import {
 import type {
   ActionDefinition,
   ActionInstance,
-  ActionTiming,
   ActionValidationResult,
 } from "./action-definition";
 

@@ -20,7 +20,6 @@
         "immer": "^10.0.0",
         "nanoid": "^5.0.0",
         "seedrandom": "^3.0.5",
-        "xstate": "^5.0.0",
         "zod": "^3.22.0",
       },
       "devDependencies": {
@@ -51,6 +50,36 @@
         "setimmediate": "^1.0.5",
         "ts-morph": "^26.0.0",
         "ts-toolbelt": "^6.3.6",
+      },
+      "devDependencies": {
+        "@biomejs/biome": "2.0.4",
+        "@types/bun": "1.2.14",
+        "typescript": "5.8.3",
+      },
+      "peerDependencies": {
+        "typescript": "5.8.3",
+      },
+    },
+    "packages/gundam-engine": {
+      "name": "@tcg/gundam",
+      "version": "0.1.0",
+      "dependencies": {
+        "@tcg/core": "workspace:*",
+      },
+      "devDependencies": {
+        "@biomejs/biome": "2.0.4",
+        "@types/bun": "1.2.14",
+        "typescript": "5.8.3",
+      },
+      "peerDependencies": {
+        "typescript": "5.8.3",
+      },
+    },
+    "packages/lorcana-engine": {
+      "name": "@tcg/lorcana",
+      "version": "0.1.0",
+      "dependencies": {
+        "@tcg/core": "workspace:*",
       },
       "devDependencies": {
         "@biomejs/biome": "2.0.4",
@@ -117,6 +146,10 @@
     "@tanstack/store": ["@tanstack/store@0.7.0", "", {}, "sha512-CNIhdoUsmD2NolYuaIs8VfWM467RK6oIBAW4nPEKZhg1smZ+/CwtCdpURgp7nxSqOaV9oKkzdWD80+bC66F/Jg=="],
 
     "@tcg/core": ["@tcg/core@workspace:packages/core"],
+
+    "@tcg/gundam": ["@tcg/gundam@workspace:packages/gundam-engine"],
+
+    "@tcg/lorcana": ["@tcg/lorcana@workspace:packages/lorcana-engine"],
 
     "@ts-morph/common": ["@ts-morph/common@0.27.0", "", { "dependencies": { "fast-glob": "^3.3.3", "minimatch": "^10.0.1", "path-browserify": "^1.0.1" } }, "sha512-Wf29UqxWDpc+i61k3oIOzcUfQt79PIT9y/MWfAGlrkjg6lBC1hwDECLXPVJAhWjiGbfBCxZd65F/LIZF3+jeJQ=="],
 
@@ -279,8 +312,6 @@
     "undici-types": ["undici-types@7.8.0", "", {}, "sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw=="],
 
     "wrappy": ["wrappy@1.0.2", "", {}, "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ=="],
-
-    "xstate": ["xstate@5.19.2", "", {}, "sha512-B8fL2aP0ogn5aviAXFzI5oZseAMqN00fg/TeDa3ZtatyDcViYLIfuQl4y8qmHCiKZgGEzmnTyNtNQL9oeJE2gw=="],
 
     "zod": ["zod@3.25.76", "", {}, "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ=="],
 

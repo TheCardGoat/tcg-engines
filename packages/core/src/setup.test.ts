@@ -27,7 +27,7 @@ describe("Project Setup", () => {
       };
 
       expect(deps.immer).toBeDefined();
-      expect(deps.xstate).toBeDefined();
+      // xstate removed in Task 9 - using simple explicit state machine instead
       expect(deps.zod).toBeDefined();
       expect(deps.seedrandom).toBeDefined();
       expect(deps.nanoid).toBeDefined();
