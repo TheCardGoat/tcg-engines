@@ -142,11 +142,11 @@
   - [x] 8.16 Verify linter rules pass
   - [x] 8.17 Verify type safety
 
-- [x] 9. XState Flow Manager
+- [x] 9. Flow Manager
   - [x] 9.1 Write tests for FlowDefinition type
-  - [x] 9.2 Implement FlowDefinition with XState integration
+  - [x] 9.2 Implement FlowDefinition
   - [x] 9.3 Write tests for turn/phase/step state machine
-  - [x] 9.4 Implement XState machine for game flow
+  - [x] 9.4 Implement state machine for game flow
   - [x] 9.5 Write tests for lifecycle hooks (onBegin, onEnd)
   - [x] 9.6 Implement lifecycle hook execution in Immer context
   - [x] 9.7 Write tests for endIf conditions and automatic transitions

@@ -1,5 +1,5 @@
 /**
- * Task 9: XState Flow Manager
+ * Task 9: Flow Manager
  *
  * Flow orchestration system for turn/phase/segment management.
  *
@@ -9,6 +9,9 @@
  * - Configurable progression logic
  * - Hierarchical states (turn → phases → segments)
  * - Lifecycle hooks at all levels
+ *
+ * Note: Originally planned to use XState, but a simple state machine
+ * proved more appropriate. No external dependencies needed.
  *
  * @module flow
  */
@@ -23,4 +26,9 @@ export type {
   TurnDefinition,
 } from "./flow-definition";
 
-export { FlowManager } from "./flow-manager";
+export {
+  FlowManager,
+  type FlowManagerOptions,
+  type FlowStateSnapshot,
+  type SerializedFlowState,
+} from "./flow-manager";

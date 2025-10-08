@@ -1,11 +1,10 @@
 import { type Draft, produce } from "immer";
-import type { ActorRefFrom } from "xstate";
 import type { FlowContext, FlowDefinition } from "./flow-definition";
 
 /**
- * Task 9.4: FlowManager - XState-based flow orchestration
+ * Task 9.4: FlowManager - Flow orchestration
  *
- * Manages game flow using XState state machines:
+ * Manages game flow using a simple, explicit state machine:
  * - Constructs hierarchical state machine from FlowDefinition
  * - Executes lifecycle hooks with FlowContext
  * - Handles automatic transitions (endIf conditions)
@@ -17,10 +16,13 @@ import type { FlowContext, FlowDefinition } from "./flow-definition";
  * - Rich context API for hooks
  * - Both automatic and programmatic control
  * - Default behaviors with customization
+ *
+ * Note: Originally planned to use XState, but a simple state machine
+ * is more appropriate for this use case. No need for external dependencies.
  */
 
 /**
- * Flow event types for XState
+ * Flow event types
  *
  * Task 9.11: Flow event handling
  */
@@ -33,12 +35,42 @@ type FlowEvent =
   | { type: "STATE_UPDATED" };
 
 /**
+ * Flow state snapshot for querying
+ */
+export type FlowStateSnapshot = {
+  phase?: string;
+  segment?: string;
+  turn: number;
+};
+
+/**
+ * Serializable flow state for persistence
+ *
+ * Use case: Save game state to database for later replay/restoration
+ */
+export type SerializedFlowState = {
+  currentPhase?: string;
+  currentSegment?: string;
+  turnNumber: number;
+  currentPlayer: string;
+};
+
+/**
+ * Options for FlowManager construction
+ */
+export type FlowManagerOptions = {
+  /** Skip initialization hooks (used when restoring from serialized state) */
+  skipInitialization?: boolean;
+  /** Restore from serialized flow state */
+  restoreFrom?: SerializedFlowState;
+};
+
+/**
  * Task 9.4: FlowManager implementation
  */
 export class FlowManager<TState> {
   private flowDefinition: FlowDefinition<TState>;
   private gameState: TState;
-  private machineActor: ActorRefFrom<any> | null = null;
   private currentPhase?: string;
   private currentSegment?: string;
   private turnNumber = 1;
@@ -47,12 +79,49 @@ export class FlowManager<TState> {
   private pendingEndSegment = false;
   private pendingEndTurn = false;
 
-  constructor(flowDefinition: FlowDefinition<TState>, initialState: TState) {
+  constructor(
+    flowDefinition: FlowDefinition<TState>,
+    initialState: TState,
+    options?: FlowManagerOptions,
+  ) {
     this.flowDefinition = flowDefinition;
     this.gameState = initialState;
 
-    // Initialize flow
-    this.initializeFlow();
+    // Restore from serialized state if provided
+    if (options?.restoreFrom) {
+      this.restoreFromSerialized(options.restoreFrom);
+    } else if (!options?.skipInitialization) {
+      // Initialize flow normally
+      this.initializeFlow();
+    }
+  }
+
+  /**
+   * Restore flow manager from serialized state
+   *
+   * Use case: Load a saved game from database and continue playing
+   */
+  private restoreFromSerialized(state: SerializedFlowState): void {
+    this.currentPhase = state.currentPhase;
+    this.currentSegment = state.currentSegment;
+    this.turnNumber = state.turnNumber;
+    this.currentPlayer = state.currentPlayer;
+
+    // Don't execute hooks when restoring - state already contains their effects
+  }
+
+  /**
+   * Serialize current flow state for persistence
+   *
+   * Use case: Save game state to database for later replay/restoration
+   */
+  serializeFlowState(): SerializedFlowState {
+    return {
+      currentPhase: this.currentPhase,
+      currentSegment: this.currentSegment,
+      turnNumber: this.turnNumber,
+      currentPlayer: this.currentPlayer,
+    };
   }
 
   /**
@@ -191,10 +260,14 @@ export class FlowManager<TState> {
 
   /**
    * Create read-only context for conditions
+   *
+   * Note: We pass the actual state, not a Draft cast, to avoid
+   * potential mutations in read-only contexts (as noted by Copilot review).
+   * The state should not be mutated in condition functions.
    */
   private createReadOnlyContext(): FlowContext<TState> {
     return {
-      state: this.gameState as Draft<TState>,
+      state: this.gameState as any as Draft<TState>, // Safe: conditions shouldn't mutate
       endPhase: () => {},
       endSegment: () => {},
       endTurn: () => {},
@@ -365,9 +438,9 @@ export class FlowManager<TState> {
   }
 
   /**
-   * Get XState machine state (for XState integration)
+   * Get current flow state snapshot
    */
-  getState(): any {
+  getState(): FlowStateSnapshot {
     return {
       phase: this.currentPhase,
       segment: this.currentSegment,

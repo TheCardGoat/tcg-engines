@@ -11,7 +11,7 @@ import type {
 /**
  * Task 9.1: Write tests for FlowDefinition type
  *
- * Tests verify the structure and behavior of FlowDefinition with XState integration.
+ * Tests verify the structure and behavior of FlowDefinition.
  * Following the user's requirements for flexible turn/phase/segment progression.
  */
 

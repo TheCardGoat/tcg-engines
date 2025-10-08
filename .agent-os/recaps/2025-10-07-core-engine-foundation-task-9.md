@@ -1,10 +1,10 @@
-# [2025-10-07] Recap: XState Flow Manager (Task 9)
+# [2025-10-07] Recap: Flow Manager (Task 9)
 
 This recaps what was built for packages/core spec documented at `.agent-os/packages/core/specs/2025-10-07-core-engine-foundation/tasks.md`.
 
 ## Recap
 
-Implemented Task 9: XState Flow Manager - a flexible, hierarchical flow orchestration system for turn-based card games. The system provides comprehensive game flow management through a rich API that addresses all the user requirements for flexible turn/phase/segment progression.
+Implemented Task 9: Flow Manager - a flexible, hierarchical flow orchestration system for turn-based card games. The system provides comprehensive game flow management through a rich API that addresses all the user requirements for flexible turn/phase/segment progression.
 
 ### What Was Built
 
@@ -40,7 +40,7 @@ External event handling for flow control:
 - `STATE_UPDATED`: Re-check endIf conditions
 
 **6. FlowManager Implementation** (`/packages/core/src/flow/flow-manager.ts`)
-Complete XState-compatible flow orchestration:
+Complete flow orchestration with simple, explicit state machine:
 - Constructs hierarchical state machine from FlowDefinition
 - Executes lifecycle hooks with Immer integration
 - Handles automatic transitions via endIf conditions

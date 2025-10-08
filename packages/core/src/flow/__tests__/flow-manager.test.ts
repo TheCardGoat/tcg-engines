@@ -3,7 +3,7 @@ import type { FlowDefinition } from "../flow-definition";
 import { FlowManager } from "../flow-manager";
 
 /**
- * Task 9.3, 9.4: Tests for XState-based FlowManager
+ * Task 9.3, 9.4: Tests for FlowManager
  *
  * Tests verify:
  * - Turn/phase/segment state machine construction
