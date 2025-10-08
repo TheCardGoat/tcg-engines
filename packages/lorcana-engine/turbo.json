@@ -1,0 +1,15 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tags": ["game-engine"],
+  "boundaries": {
+    "tags": {
+      "game-engine": {
+        "dependencies": {
+          "allow": ["@tcg/core"]
+        }
+      }
+    }
+  }
+}
+
