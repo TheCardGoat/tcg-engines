@@ -9,10 +9,10 @@
 - **Monorepo Orchestration:** Turbo Repo with boundaries enforcement
 
 ### Language & Type System
-- **Language:** TypeScript 5.8+
+- **Language:** TypeScript 5.5+
 - **Target:** ES2022
 - **Type Checking:** Strict mode enabled
-- **Type Strategy:** Branded types for domain IDs (CardId, PlayerId, ZoneId)
+- **Type Strategy:** Branded types for domain IDs (CardId, PlayerId, ZoneId, UnitId)
 
 ## Development Tools
 
@@ -45,50 +45,64 @@
 ```
 packages/gundam-engine/
 ├── src/
-│   ├── game-definition.ts        # Main GameDefinition
-│   ├── types.ts                  # Gundam-specific state types
-│   ├── index.ts                  # Main entry point
+│   ├── game-definition/
+│   │   ├── gundam-game-definition.ts     # Main GameDefinition
+│   │   ├── state-shape.ts                # Gundam-specific state types
+│   │   ├── zones.ts                      # Zone configurations
+│   │   ├── flow.ts                       # Turn/phase/step flow
+│   │   └── index.ts                      # Exports
 │   ├── moves/
-│   │   ├── play-resource.ts      # Resource placement move handler
-│   │   ├── deploy-unit.ts        # Unit deployment move handler
-│   │   ├── pair-pilot.ts         # Pilot pairing move handler
-│   │   ├── attack.ts             # Attack sequence move handler
-│   │   ├── activate-ability.ts   # Activate ability move handler
-│   │   └── index.ts              # Move registry
-│   ├── phases/
-│   │   ├── start-phase.ts        # Start phase logic
-│   │   ├── draw-phase.ts         # Draw phase logic
-│   │   ├── resource-phase.ts     # Resource phase logic
-│   │   ├── main-phase.ts         # Main phase logic
-│   │   ├── end-phase.ts          # End phase logic
-│   │   └── index.ts              # Phase registry
-│   ├── zones/
-│   │   ├── deck-zone.ts          # Deck zone config
-│   │   ├── hand-zone.ts          # Hand zone config
-│   │   ├── battle-area-zone.ts   # Battle area config
-│   │   ├── shield-zone.ts        # Shield area config
-│   │   ├── resource-zone.ts      # Resource area config
-│   │   ├── trash-zone.ts         # Trash zone config
-│   │   └── index.ts              # Zone registry
+│   │   ├── deploy-unit.ts                # Deploy unit move handler
+│   │   ├── declare-attack.ts             # Declare attack move handler
+│   │   ├── declare-block.ts              # Declare block move handler
+│   │   ├── activate-ability.ts           # Activate ability move handler
+│   │   ├── use-g-order.ts                # Use G-order move handler
+│   │   ├── pass-priority.ts              # Pass priority move handler
+│   │   ├── pass-turn.ts                  # Pass turn move handler
+│   │   └── index.ts                      # Move registry
 │   ├── cards/
-│   │   ├── card-types.ts         # Card type definitions
-│   │   ├── sets/                 # Organized by set
-│   │   │   ├── st01/             # Starter Set 01
-│   │   │   ├── st02/             # Starter Set 02
-│   │   │   └── gd01/             # Booster Set GD01
-│   │   ├── tokens/               # Token cards
-│   │   │   └── ex-base.ts
-│   │   └── index.ts              # Card registry
-│   └── __tests__/
-│       ├── game-definition.test.ts
-│       ├── integration/          # Full game scenarios
-│       └── moves/                # Move-specific tests
+│   │   ├── card-definitions/             # Card data by set
+│   │   │   ├── booster-001/              # Initial booster set
+│   │   │   └── index.ts                  # Card registry
+│   │   ├── abilities/                    # Ability definitions
+│   │   │   ├── keywords/                 # Keyword abilities
+│   │   │   ├── triggered/                # Triggered abilities
+│   │   │   ├── activated/                # Activated abilities
+│   │   │   └── index.ts                  # Ability registry
+│   │   ├── card-types.ts                 # Gundam card type definitions
+│   │   └── index.ts                      # Exports
+│   ├── rules/
+│   │   ├── validators/                   # Move validation rules
+│   │   │   ├── deploy-validator.ts
+│   │   │   ├── attack-validator.ts
+│   │   │   ├── block-validator.ts
+│   │   │   └── index.ts
+│   │   ├── combat/                       # Combat resolution
+│   │   │   ├── damage-assignment.ts
+│   │   │   ├── combat-resolution.ts
+│   │   │   └── index.ts
+│   │   ├── costs/                        # Cost calculation
+│   │   │   ├── deploy-cost.ts
+│   │   │   ├── ability-cost.ts
+│   │   │   └── index.ts
+│   │   └── effects/                      # Effect resolution
+│   │       └── index.ts
+│   ├── queries/                          # State queries
+│   │   ├── card-queries.ts               # Query cards in zones
+│   │   ├── combat-queries.ts             # Query combat state
+│   │   ├── game-queries.ts               # Query game state
+│   │   └── index.ts                      # Exports
+│   ├── types/                            # Type definitions
+│   │   ├── gundam-state.ts               # Game state types
+│   │   ├── gundam-moves.ts               # Move types
+│   │   ├── gundam-cards.ts               # Card types
+│   │   └── index.ts                      # Exports
+│   └── index.ts                          # Main entry point
 ├── package.json
 ├── tsconfig.json
 ├── biome.json
-├── turbo.json                    # Boundaries configuration
-├── README.md
-└── ARCHITECTURE.md
+├── turbo.json                            # Boundaries configuration
+└── README.md
 ```
 
 ## Architecture Patterns
@@ -100,6 +114,7 @@ packages/gundam-engine/
 - **Query-Based State Access:** Read state through query functions
 - **Pure Functions:** Deterministic move handlers and validators
 - **Type Safety:** Strict TypeScript with branded types for IDs
+- **Combat State Machine:** Explicit combat phases with clear transitions
 
 ### Integration with @tcg/core
 
@@ -107,34 +122,46 @@ packages/gundam-engine/
 // 1. Define game-specific state shape
 type GundamState = GameState & {
   gundam: {
-    shields: Record<PlayerId, CardId[]>;
-    bases: Record<PlayerId, CardId | null>;
-    battlePositions: Record<PlayerId, BattlePosition[]>;
-    activeResources: Record<PlayerId, number>;
+    battleArea: {
+      units: UnitInstance[];
+      positions: Record<UnitId, Position>;
+    };
+    combat: {
+      attackers: UnitId[];
+      blockers: Record<UnitId, UnitId>; // blocker -> attacker
+      damage: Record<UnitId, number>;
+    };
+    gZone: {
+      cards: CardInstance[];
+      usedThisTurn: CardId[];
+    };
+    resources: Record<PlayerId, number>;
   };
 };
 
 // 2. Create GameDefinition
 const gundamGame = createGameDefinition<GundamState>({
-  id: "gundam-card-game",
+  id: "gundam",
   name: "Gundam Card Game",
   players: { min: 2, max: 2 },
-  
+
   // Register moves
   moves: {
-    playResource: playResourceMove,
     deployUnit: deployUnitMove,
-    pairPilot: pairPilotMove,
-    attack: attackMove,
+    declareAttack: declareAttackMove,
+    declareBlock: declareBlockMove,
     activateAbility: activateAbilityMove,
+    useGOrder: useGOrderMove,
+    passPriority: passPriorityMove,
+    passTurn: passTurnMove,
   },
-  
+
   // Configure zones
   zones: gundamZones,
-  
+
   // Define flow
   flow: gundamFlow,
-  
+
   // Setup function
   setup: setupGundamGame,
 });
@@ -153,6 +180,7 @@ const engine = new RuleEngine(gundamGame, {
 - **Type Safety:** Strict TypeScript, no `any` types
 - **Separation of Concerns:** Game logic separate from presentation
 - **Testability:** Every feature covered by behavior tests
+- **Combat Clarity:** Explicit combat state tracking with clear transitions
 
 ## Build & Deployment
 
@@ -204,6 +232,7 @@ This ensures `@tcg/gundam` only depends on `@tcg/core`, preventing:
 - All core mechanics use `@tcg/core` APIs
 - No circumventing framework abstractions
 - Report gaps/issues to core framework team
+- Combat system built on framework's state management
 
 ## Testing Strategy
 
@@ -214,25 +243,28 @@ src/
 │   ├── integration/                  # Full game scenarios
 │   │   ├── complete-game.test.ts
 │   │   ├── combat-scenarios.test.ts
-│   │   └── pilot-pairing.test.ts
-│   └── moves/                        # Specific move tests
-│       ├── deploy-unit.test.ts
-│       ├── attack.test.ts
-│       └── play-resource.test.ts
+│   │   ├── g-order-scenarios.test.ts
+│   │   └── multi-block-scenarios.test.ts
+│   └── rules/                        # Specific rule tests
+│       ├── deploy-rules.test.ts
+│       ├── attack-rules.test.ts
+│       ├── block-rules.test.ts
+│       └── damage-rules.test.ts
 ```
 
 ### Test Approach
 - **Behavior-Driven:** Test through public engine API
 - **Scenario-Based:** Test complete game scenarios
 - **No Mocking:** Use real engine instances
-- **Comprehensive:** Cover all official Gundam rules
+- **Comprehensive:** Cover all official Gundam Card Game rules
 - **Deterministic:** Use seeded RNG for reproducibility
+- **Combat-Focused:** Extensive testing of combat resolution
 
 ## Future Considerations
 
 ### Potential Additions
-- **Performance Profiling:** Benchmarking tools for move execution
-- **Rule Engine Debugger:** Visual tool for debugging game state
+- **Performance Profiling:** Benchmarking tools for complex combat resolution
+- **Rule Engine Debugger:** Visual tool for debugging combat state
 - **Card Definition DSL:** Higher-level abstraction for card abilities
-- **AI Support Library:** Helper functions for AI development
-
+- **AI Support Library:** Helper functions for combat evaluation
+- **Combat Visualizer:** Tool for understanding damage assignment
