@@ -1,8 +1,8 @@
 /**
- * Gundam Card Game - Zone Configurations
+ * Gundam Card Game - Zone Definitions
  *
- * This directory contains zone configurations for all game zones in the Gundam Card Game.
- * Zones define where cards can be during the game and the rules for moving cards between zones.
+ * This file defines the zone structure for the Gundam Card Game.
+ * In @tcg/core, zones are simple state properties - arrays of card IDs per player.
  *
  * Gundam Card Game Zones (per player):
  * 1. Deck Area - Main deck (50 cards, face-down, private)
@@ -16,106 +16,92 @@
  * 7. Trash - Discard pile (face-up, public)
  * 8. Removal Area - Removed from game (public)
  *
- * @example Zone Configuration
+ * @example Zone Definition in State
  * ```typescript
- * import { defineZone } from "@tcg/core";
+ * import type { CardId, PlayerId } from "@tcg/core";
  *
- * export const BattleAreaZone = defineZone({
- *   id: "battle-area",
- *   name: "Battle Area",
+ * type GundamGameState = {
+ *   // ... other state
  *
- *   // Visibility rules
- *   visibility: {
- *     owner: "public",      // Owner can see all cards
- *     opponent: "public",   // Opponent can see all cards
- *     spectator: "public",  // Spectators can see all cards
- *   },
- *
- *   // Zone properties
- *   ordered: true,          // Card order matters (positions)
- *   maxCards: 6,            // Max 6 units
- *
- *   // Validation: can this card be added to this zone?
- *   canAddCard: (zone, card, state) => {
- *     // Check if zone is full
- *     if (zone.cards.length >= 6) {
- *       return { allowed: false, reason: "Battle area full" };
- *     }
- *
- *     // Check if card is a Unit
- *     if (card.cardType !== "UNIT") {
- *       return { allowed: false, reason: "Only units can be in battle area" };
- *     }
- *
- *     return { allowed: true };
- *   },
- *
- *   // Hook: when a card enters this zone
- *   onCardEnter: (zone, card, state) => {
- *     // Trigger [Deploy] effects
- *     const deployAbilities = card.abilities.filter(
- *       (a) => a.trigger === "ON_DEPLOY"
- *     );
- *
- *     // Execute deploy effects
- *     let newState = state;
- *     for (const ability of deployAbilities) {
- *       newState = executeAbility(newState, ability, card);
- *     }
- *
- *     return newState;
- *   },
- *
- *   // Hook: when a card leaves this zone
- *   onCardLeave: (zone, card, state) => {
- *     // If card has paired pilot, also remove pilot
- *     const pairedPilot = findPairedPilot(state, card.id);
- *     if (pairedPilot) {
- *       return removeCardFromZone(state, pairedPilot.id, zone.id);
- *     }
- *
- *     return state;
- *   },
- * });
+ *   zones: {
+ *     deck: Record<PlayerId, CardId[]>;
+ *     resourceDeck: Record<PlayerId, CardId[]>;
+ *     hand: Record<PlayerId, CardId[]>;
+ *     battleArea: Record<PlayerId, CardId[]>;
+ *     shieldSection: Record<PlayerId, CardId[]>;
+ *     baseSection: Record<PlayerId, CardId[]>;
+ *     resourceArea: Record<PlayerId, CardId[]>;
+ *     trash: Record<PlayerId, CardId[]>;
+ *     removal: Record<PlayerId, CardId[]>;
+ *   };
+ * };
  * ```
  *
- * @example Shield Zone (Special Rules)
+ * @example Zone Operations in Moves
  * ```typescript
- * export const ShieldZone = defineZone({
- *   id: "shield-section",
- *   name: "Shield Section",
+ * // In move reducer (using Immer draft):
+ * reducer: (draft, context) => {
+ *   const { playerId } = context;
  *
- *   // Shields are face-down but count is public
- *   visibility: {
- *     owner: "count-only",    // Owner knows count but not cards
- *     opponent: "count-only",  // Opponent knows count but not cards
- *   },
+ *   // Draw from deck
+ *   const card = draft.zones.deck[playerId]?.pop();
+ *   if (card) {
+ *     draft.zones.hand[playerId]?.push(card);
+ *   }
  *
- *   ordered: true,
- *   maxCards: 6,
- *
- *   onCardLeave: (zone, card, state) => {
- *     // When a shield is destroyed, check for [Burst] effect
- *     const burstEffect = card.burstEffect;
- *     if (burstEffect) {
- *       // Owner may activate burst effect
- *       return promptBurstActivation(state, card, burstEffect);
+ *   // Move to battle area
+ *   const hand = draft.zones.hand[playerId];
+ *   const battleArea = draft.zones.battleArea[playerId];
+ *   if (hand && battleArea) {
+ *     const index = hand.findIndex(c => String(c) === cardId);
+ *     if (index >= 0) {
+ *       const [card] = hand.splice(index, 1);
+ *       if (card) {
+ *         battleArea.push(card);
+ *       }
  *     }
- *
- *     return state;
- *   },
- * });
+ *   }
+ * }
  * ```
+ *
+ * @example Visibility in playerView
+ * ```typescript
+ * playerView: (state, playerId) => ({
+ *   ...state,
+ *   zones: {
+ *     ...state.zones,
+ *     // Hide opponent's hand and decks
+ *     hand: Object.fromEntries(
+ *       Object.entries(state.zones.hand).map(([pid, cards]) => [
+ *         pid,
+ *         pid === playerId ? cards : []
+ *       ])
+ *     ),
+ *     deck: Object.fromEntries(
+ *       Object.entries(state.zones.deck).map(([pid, cards]) => [
+ *         pid,
+ *         pid === playerId ? cards : []
+ *       ])
+ *     ),
+ *     // Shield section shows count but not actual cards for opponent
+ *     shieldSection: Object.fromEntries(
+ *       Object.entries(state.zones.shieldSection).map(([pid, cards]) => [
+ *         pid,
+ *         pid === playerId ? cards : [] // Opponent sees empty array
+ *       ])
+ *     ),
+ *   },
+ * })
+ * ```
+ *
+ * Key Points:
+ * - NO defineZone() helper - zones are just state arrays
+ * - Zones are Record<PlayerId, CardId[]> in your state
+ * - Zone operations use array methods in Immer reducers
+ * - Visibility rules implemented in playerView function
+ * - Validation logic goes in move conditions
+ *
+ * See template-engine package for working examples.
  */
 
-// Zone configurations will go here
-// export { DeckZone } from "./deck-zone";
-// export { ResourceDeckZone } from "./resource-deck-zone";
-// export { HandZone } from "./hand-zone";
-// export { BattleAreaZone } from "./battle-area-zone";
-// export { ShieldZone } from "./shield-zone";
-// export { BaseZone } from "./base-zone";
-// export { ResourceAreaZone } from "./resource-area-zone";
-// export { TrashZone } from "./trash-zone";
-// export { RemovalZone } from "./removal-zone";
-
+// Zone types will be defined in types.ts as part of GundamGameState

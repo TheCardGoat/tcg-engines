@@ -31,8 +31,6 @@ describe("GameDefinition - Validation", () => {
     it("should validate that setup function exists", () => {
       const definition = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: (players: Array<{ id: string; name?: string }>) => ({
           value: players.length,
           phase: "start",
@@ -47,8 +45,6 @@ describe("GameDefinition - Validation", () => {
     it("should reject definition without setup function", () => {
       const definition = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         moves: {} as GameMoveDefinitions<SimpleGameState, SimpleMoves>,
       } as unknown as GameDefinition<SimpleGameState, SimpleMoves>;
 
@@ -62,8 +58,6 @@ describe("GameDefinition - Validation", () => {
     it("should validate that setup function is callable", () => {
       const definition = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: "not a function" as unknown,
         moves: {} as GameMoveDefinitions<SimpleGameState, SimpleMoves>,
       } as GameDefinition<SimpleGameState, SimpleMoves>;
@@ -81,8 +75,6 @@ describe("GameDefinition - Validation", () => {
     it("should validate that moves object exists", () => {
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({ value: 0, phase: "start" }),
         moves: {
           increment: {
@@ -105,8 +97,6 @@ describe("GameDefinition - Validation", () => {
     it("should reject definition without moves", () => {
       const definition = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({ value: 0, phase: "start" }),
       };
 
@@ -120,8 +110,6 @@ describe("GameDefinition - Validation", () => {
     it("should validate that each move has a reducer", () => {
       const definition = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({ value: 0, phase: "start" }),
         moves: {
           increment: {}, // Missing reducer
@@ -141,8 +129,6 @@ describe("GameDefinition - Validation", () => {
     it("should accept optional endIf function", () => {
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({ value: 0, phase: "start" }),
         moves: {
           increment: {
@@ -171,8 +157,6 @@ describe("GameDefinition - Validation", () => {
     it("should work without endIf function", () => {
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({ value: 0, phase: "start" }),
         moves: {
           increment: {
@@ -195,8 +179,6 @@ describe("GameDefinition - Validation", () => {
     it("should reject non-function endIf", () => {
       const definition = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({ value: 0, phase: "start" }),
         moves: {
           increment: {
@@ -226,8 +208,6 @@ describe("GameDefinition - Validation", () => {
     it("should accept optional playerView function", () => {
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({ value: 0, phase: "start" }),
         moves: {
           increment: {
@@ -254,8 +234,6 @@ describe("GameDefinition - Validation", () => {
     it("should work without playerView function", () => {
       const definition: GameDefinition<SimpleGameState, SimpleMoves> = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({ value: 0, phase: "start" }),
         moves: {
           increment: {
@@ -278,8 +256,6 @@ describe("GameDefinition - Validation", () => {
     it("should reject non-function playerView", () => {
       const definition = {
         name: "Test Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({ value: 0, phase: "start" }),
         moves: {
           increment: {
@@ -309,8 +285,6 @@ describe("GameDefinition - Validation", () => {
     it("should require a non-empty name", () => {
       const definition = {
         name: "",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: () => ({ value: 0, phase: "start" }),
         moves: {
           increment: {
@@ -334,69 +308,13 @@ describe("GameDefinition - Validation", () => {
     });
   });
 
-  describe("player count validation", () => {
-    it("should require minPlayers <= maxPlayers", () => {
-      const definition = {
-        name: "Test Game",
-        minPlayers: 4,
-        maxPlayers: 2, // Invalid: min > max
-        setup: () => ({ value: 0, phase: "start" }),
-        moves: {
-          increment: {
-            reducer: (draft: SimpleGameState) => {
-              draft.value += 1;
-            },
-          },
-          decrement: {
-            reducer: (draft: SimpleGameState) => {
-              draft.value -= 1;
-            },
-          },
-        },
-      };
-
-      const result = validateGameDefinition(definition as any);
-      expect(result.success).toBe(false);
-      if (!result.success) {
-        expect(result.error).toContain("minPlayers");
-        expect(result.error).toContain("maxPlayers");
-      }
-    });
-
-    it("should require positive player counts", () => {
-      const definition = {
-        name: "Test Game",
-        minPlayers: 0,
-        maxPlayers: 4,
-        setup: () => ({ value: 0, phase: "start" }),
-        moves: {
-          increment: {
-            reducer: (draft: SimpleGameState) => {
-              draft.value += 1;
-            },
-          },
-          decrement: {
-            reducer: (draft: SimpleGameState) => {
-              draft.value -= 1;
-            },
-          },
-        },
-      };
-
-      const result = validateGameDefinition(definition as any);
-      expect(result.success).toBe(false);
-      if (!result.success) {
-        expect(result.error).toContain("minPlayers");
-      }
-    });
-  });
+  // Note: minPlayers and maxPlayers are not part of GameDefinition spec
+  // Player count validation is handled at the application level, not in the core engine
 
   describe("comprehensive validation (Task 10.13)", () => {
     it("should validate all fields together", () => {
       const validDefinition: GameDefinition<SimpleGameState, SimpleMoves> = {
         name: "Complete Game",
-        minPlayers: 2,
-        maxPlayers: 4,
         setup: (players) => ({
           value: players.length,
           phase: "start",
@@ -429,8 +347,6 @@ describe("GameDefinition - Validation", () => {
     it("should provide detailed error messages for multiple errors", () => {
       const invalidDefinition = {
         name: "",
-        minPlayers: -1,
-        maxPlayers: 0,
         setup: "not a function",
         moves: null,
       };

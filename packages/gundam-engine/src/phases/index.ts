@@ -1,174 +1,104 @@
 /**
- * Gundam Card Game - Phase Definitions
+ * Gundam Card Game - Phase/Flow Definitions
  *
- * This directory contains all phase definitions for the Gundam Card Game turn structure.
- * Each turn consists of five phases executed in order.
+ * This file defines the turn structure and phase flow for the Gundam Card Game.
+ * In @tcg/core, flow is managed through FlowDefinition (optional) or simple state tracking.
  *
- * Turn Structure:
- * 1. Start Phase
- *    - Active Step: Untap all cards
- *    - Start Step: Trigger "at start of turn" effects
+ * Gundam Turn Structure:
+ * 1. Setup Phase (turn 1 only) - Draw initial hand, deploy base, shuffle shields
+ * 2. Refresh Phase - Untap units, reset abilities
+ * 3. Draw Phase - Draw 1 card from deck
+ * 4. Resource Phase - Play 1 resource (optional)
+ * 5. Main Phase - Deploy units/bases, activate abilities, declare attacks
+ * 6. End Phase - Discard to hand limit, end-of-turn effects
  *
- * 2. Draw Phase
- *    - Draw one card from deck
- *    - (If deck is empty, player loses)
- *
- * 3. Resource Phase
- *    - Place one resource card from resource deck
- *
- * 4. Main Phase
- *    - Play cards from hand
- *    - Activate abilities
- *    - Attack with units
- *    - Declare end of main phase
- *
- * 5. End Phase
- *    - Action Step: Both players can play [Action] cards
- *    - End Step: Trigger "at end of turn" effects (e.g., <Repair>)
- *    - Hand Step: Discard down to 10 cards if over limit
- *    - Cleanup Step: End "during this turn" effects
- *
- * @example Phase Definition
+ * @example Simple Phase Tracking (Recommended)
  * ```typescript
- * import { definePhase } from "@tcg/core";
- * import type { GundamGameState } from "../types";
+ * type GundamGameState = {
+ *   // ... other state
+ *   phase: "setup" | "refresh" | "draw" | "resource" | "main" | "end";
+ *   turnNumber: number;
+ *   currentPlayerIndex: number;
+ * };
  *
- * export const DrawPhase = definePhase<GundamGameState>({
- *   id: "draw",
- *   name: "Draw Phase",
+ * // In move reducer:
+ * const moves: GameMoveDefinitions<GundamGameState, GundamGameMoves> = {
+ *   endPhase: {
+ *     reducer: (draft) => {
+ *       const phaseOrder = ["setup", "refresh", "draw", "resource", "main", "end"] as const;
+ *       const currentIndex = phaseOrder.indexOf(draft.phase);
  *
- *   // Called when entering this phase
- *   onEnter: (state) => {
- *     const currentPlayer = state.currentPlayer;
- *     const deck = state.zones.deck[currentPlayer];
+ *       if (currentIndex === phaseOrder.length - 1) {
+ *         // End turn - move to next player
+ *         draft.currentPlayerIndex = (draft.currentPlayerIndex + 1) % draft.players.length;
+ *         draft.turnNumber += 1;
+ *         draft.phase = draft.turnNumber === 1 ? "setup" : "refresh";
+ *       } else {
+ *         draft.phase = phaseOrder[currentIndex + 1];
+ *       }
+ *     },
+ *   },
+ * };
+ * ```
  *
- *     // Check if deck is empty (lose condition)
- *     if (deck.length === 0) {
- *       return {
- *         ...state,
- *         winner: getOpponent(currentPlayer),
- *         gameOver: true,
- *         gameOverReason: "DECK_OUT",
- *       };
- *     }
+ * @example Advanced Flow with FlowDefinition (Optional)
+ * ```typescript
+ * import type { FlowDefinition } from "@tcg/core";
  *
- *     // Draw top card
- *     const [topCard, ...remainingDeck] = deck;
- *     const hand = state.zones.hand[currentPlayer];
- *
- *     return {
- *       ...state,
- *       zones: {
- *         ...state.zones,
- *         deck: {
- *           ...state.zones.deck,
- *           [currentPlayer]: remainingDeck,
- *         },
- *         hand: {
- *           ...state.zones.hand,
- *           [currentPlayer]: [...hand, topCard],
+ * const flow: FlowDefinition<GundamGameState> = {
+ *   turn: {
+ *     onBegin: (context) => {
+ *       // Start of turn actions
+ *       context.state.phase = "refresh";
+ *     },
+ *     onEnd: (context) => {
+ *       // End of turn cleanup
+ *       context.state.currentPlayerIndex =
+ *         (context.state.currentPlayerIndex + 1) % context.state.players.length;
+ *     },
+ *     phases: {
+ *       refresh: {
+ *         order: 0,
+ *         next: "draw",
+ *         onBegin: (context) => {
+ *           // Untap all units
+ *           for (const card of Object.values(context.state.cards)) {
+ *             if (card.tapped) {
+ *               card.tapped = false;
+ *             }
+ *           }
  *         },
  *       },
- *     };
- *   },
- *
- *   // What moves are valid during this phase?
- *   validMoves: [],  // Draw is automatic, no player actions
- *
- *   // Called when exiting this phase
- *   onExit: (state) => {
- *     // No cleanup needed for draw phase
- *     return state;
- *   },
- *
- *   // Determine next phase
- *   nextPhase: (state) => {
- *     // Always proceed to Resource Phase
- *     return "resource";
- *   },
- * });
- * ```
- *
- * @example Main Phase (Complex)
- * ```typescript
- * export const MainPhase = definePhase<GundamGameState>({
- *   id: "main",
- *   name: "Main Phase",
- *
- *   onEnter: (state) => {
- *     // Reset main phase flags
- *     return {
- *       ...state,
- *       gundam: {
- *         ...state.gundam,
- *         mainPhaseEnded: false,
+ *       draw: {
+ *         order: 1,
+ *         next: "resource",
  *       },
- *     };
+ *       resource: {
+ *         order: 2,
+ *         next: "main",
+ *       },
+ *       main: {
+ *         order: 3,
+ *         next: "end",
+ *       },
+ *       end: {
+ *         order: 4,
+ *         next: undefined, // End turn
+ *       },
+ *     },
  *   },
- *
- *   // All possible actions in main phase
- *   validMoves: [
- *     "DEPLOY_UNIT",
- *     "PAIR_PILOT",
- *     "DEPLOY_BASE",
- *     "PLAY_COMMAND",
- *     "ACTIVATE_ABILITY",
- *     "ATTACK",
- *     "END_MAIN_PHASE",
- *   ],
- *
- *   onExit: (state) => {
- *     // Clear any temporary main phase state
- *     return state;
- *   },
- *
- *   nextPhase: (state) => {
- *     // Proceed to End Phase
- *     return "end";
- *   },
- * });
+ * };
  * ```
  *
- * @example Start Phase (Multiple Steps)
- * ```typescript
- * export const StartPhase = definePhase<GundamGameState>({
- *   id: "start",
- *   name: "Start Phase",
+ * Key Points:
+ * - NO definePhase() helper - use FlowDefinition type or simple state
+ * - Simple approach: track phase as string in state, progress in moves
+ * - Advanced approach: use FlowDefinition with lifecycle hooks
+ * - Phase validation done in move conditions
+ * - FlowDefinition is optional - only use if you need complex flow
  *
- *   onEnter: (state) => {
- *     const currentPlayer = state.currentPlayer;
- *
- *     // Active Step: Untap all cards
- *     let newState = untapAllCards(state, currentPlayer);
- *
- *     // Start Step: Trigger "at start of turn" effects
- *     const startTriggers = collectTriggeredAbilities(
- *       newState,
- *       "START_OF_TURN",
- *       currentPlayer
- *     );
- *
- *     // Execute all triggered abilities
- *     for (const trigger of startTriggers) {
- *       newState = executeAbility(newState, trigger);
- *     }
- *
- *     return newState;
- *   },
- *
- *   validMoves: [],  // Start phase is automatic
- *
- *   onExit: (state) => state,
- *
- *   nextPhase: (state) => "draw",
- * });
- * ```
+ * See template-engine package for simple phase management example.
+ * See core integration tests for FlowDefinition examples.
  */
 
-// Phase implementations will go here
-// export { StartPhase } from "./start-phase";
-// export { DrawPhase } from "./draw-phase";
-// export { ResourcePhase } from "./resource-phase";
-// export { MainPhase } from "./main-phase";
-// export { EndPhase } from "./end-phase";
-
+// Flow will be defined in game-definition.ts as part of GameDefinition
