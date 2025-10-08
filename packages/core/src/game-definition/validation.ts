@@ -26,7 +26,7 @@ const GameDefinitionSchema = z.object({
   name: z.string().min(1, "Game name must not be empty"),
 
   // Setup function validation
-  setup: z.function().args(z.array(z.any())).returns(z.any()),
+  setup: z.function().args(z.array(z.string())).returns(z.record(z.any())),
 
   // Moves validation
   moves: z.record(
@@ -78,7 +78,6 @@ const GameDefinitionSchema = z.object({
  *
  * Performs comprehensive validation:
  * 1. Schema validation (types, required fields)
- * 2. Constraint validation (minPlayers <= maxPlayers)
  * 3. Move definition validation (each move has reducer)
  * 4. Function signature validation
  *
@@ -104,11 +103,6 @@ export function validateGameDefinition<
     } else {
       errors.push("Unknown validation error");
     }
-  }
-
-  // Additional constraint validation
-  if (definition.minPlayers > definition.maxPlayers) {
-    errors.push("minPlayers must be less than or equal to maxPlayers");
   }
 
   // Validate that setup is a function
