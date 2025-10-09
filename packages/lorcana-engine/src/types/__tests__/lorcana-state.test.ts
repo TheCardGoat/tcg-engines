@@ -20,63 +20,60 @@ import type { LorcanaState } from "../lorcana-state";
  * - Rule 9 (Damage counters)
  */
 
+// Test helper to create base Lorcana state
+function createBaseLorcanaState(
+  players: string[],
+  overrides?: Partial<LorcanaState>,
+): LorcanaState {
+  const playerIds = players.map((p) => createPlayerId(p));
+  const lore: Record<string, number> = {};
+  const available: Record<string, number> = {};
+  const total: Record<string, number> = {};
+
+  for (const pid of playerIds) {
+    lore[pid] = 0;
+    available[pid] = 0;
+    total[pid] = 0;
+  }
+
+  return {
+    players: playerIds,
+    currentPlayerIndex: 0,
+    turnNumber: 1,
+    phase: "beginning",
+    lorcana: {
+      lore,
+      ink: { available, total },
+      turnMetadata: {
+        cardsPlayedThisTurn: [],
+        charactersQuesting: [],
+        inkedThisTurn: false,
+      },
+      characterStates: {},
+      permanentStates: {},
+    },
+    ...overrides,
+  };
+}
+
 describe("LorcanaState Type Structure", () => {
   it("should have lore tracking for each player", () => {
-    const player1 = createPlayerId("player1");
-    const player2 = createPlayerId("player2");
-
-    const state: LorcanaState = {
-      players: [player1, player2],
-      currentPlayerIndex: 0,
-      turnNumber: 1,
-      phase: "beginning",
-      lorcana: {
-        lore: {
-          [player1]: 0,
-          [player2]: 0,
-        },
-        ink: {
-          available: { [player1]: 0, [player2]: 0 },
-          total: { [player1]: 0, [player2]: 0 },
-        },
-        turnMetadata: {
-          cardsPlayedThisTurn: [],
-          charactersQuesting: [],
-          inkedThisTurn: false,
-        },
-        characterStates: {},
-        permanentStates: {},
-      },
-    };
+    const state = createBaseLorcanaState(["player1", "player2"]);
+    const [player1, player2] = state.players;
 
     expect(state.lorcana.lore[player1]).toBe(0);
     expect(state.lorcana.lore[player2]).toBe(0);
   });
 
   it("should track ink separately for each player", () => {
-    const player1 = createPlayerId("player1");
-    const player2 = createPlayerId("player2");
+    const state = createBaseLorcanaState(["player1", "player2"]);
+    const [player1, player2] = state.players;
 
-    const state: LorcanaState = {
-      players: [player1, player2],
-      currentPlayerIndex: 0,
-      turnNumber: 1,
-      phase: "beginning",
-      lorcana: {
-        lore: { [player1]: 0, [player2]: 0 },
-        ink: {
-          available: { [player1]: 3, [player2]: 2 },
-          total: { [player1]: 5, [player2]: 4 },
-        },
-        turnMetadata: {
-          cardsPlayedThisTurn: [],
-          charactersQuesting: [],
-          inkedThisTurn: false,
-        },
-        characterStates: {},
-        permanentStates: {},
-      },
-    };
+    // Set ink values
+    state.lorcana.ink.available[player1] = 3;
+    state.lorcana.ink.available[player2] = 2;
+    state.lorcana.ink.total[player1] = 5;
+    state.lorcana.ink.total[player2] = 4;
 
     // Available ink is what can be spent this turn
     expect(state.lorcana.ink.available[player1]).toBe(3);
@@ -85,34 +82,13 @@ describe("LorcanaState Type Structure", () => {
   });
 
   it("should track character states including drying status", () => {
-    const player1 = createPlayerId("player1");
+    const state = createBaseLorcanaState(["player1"], { phase: "main" });
     const cardId = "card-character-1";
 
-    const state: LorcanaState = {
-      players: [player1],
-      currentPlayerIndex: 0,
-      turnNumber: 1,
-      phase: "main",
-      lorcana: {
-        lore: { [player1]: 0 },
-        ink: {
-          available: { [player1]: 0 },
-          total: { [player1]: 0 },
-        },
-        turnMetadata: {
-          cardsPlayedThisTurn: [],
-          charactersQuesting: [],
-          inkedThisTurn: false,
-        },
-        characterStates: {
-          [cardId]: {
-            playedThisTurn: true, // "drying" character (Rule 4.2.2.1)
-            damage: 0,
-            exerted: false,
-          },
-        },
-        permanentStates: {},
-      },
+    state.lorcana.characterStates[cardId] = {
+      playedThisTurn: true, // "drying" character (Rule 4.2.2.1)
+      damage: 0,
+      exerted: false,
     };
 
     const charState = state.lorcana.characterStates[cardId];
@@ -122,63 +98,27 @@ describe("LorcanaState Type Structure", () => {
   });
 
   it("should track damage on characters", () => {
-    const player1 = createPlayerId("player1");
+    const state = createBaseLorcanaState(["player1"], { phase: "main" });
     const cardId = "card-character-1";
 
-    const state: LorcanaState = {
-      players: [player1],
-      currentPlayerIndex: 0,
-      turnNumber: 1,
-      phase: "main",
-      lorcana: {
-        lore: { [player1]: 0 },
-        ink: {
-          available: { [player1]: 0 },
-          total: { [player1]: 0 },
-        },
-        turnMetadata: {
-          cardsPlayedThisTurn: [],
-          charactersQuesting: [],
-          inkedThisTurn: false,
-        },
-        characterStates: {
-          [cardId]: {
-            playedThisTurn: false,
-            damage: 3, // Has 3 damage counters (Rule 9)
-            exerted: true,
-          },
-        },
-        permanentStates: {},
-      },
+    state.lorcana.characterStates[cardId] = {
+      playedThisTurn: false,
+      damage: 3, // Has 3 damage counters (Rule 9)
+      exerted: true,
     };
 
     expect(state.lorcana.characterStates[cardId].damage).toBe(3);
   });
 
   it("should track turn metadata including cards played and characters questing", () => {
-    const player1 = createPlayerId("player1");
+    const state = createBaseLorcanaState(["player1"], { phase: "main" });
     const card1 = "card-1";
     const card2 = "card-2";
 
-    const state: LorcanaState = {
-      players: [player1],
-      currentPlayerIndex: 0,
-      turnNumber: 1,
-      phase: "main",
-      lorcana: {
-        lore: { [player1]: 0 },
-        ink: {
-          available: { [player1]: 0 },
-          total: { [player1]: 0 },
-        },
-        turnMetadata: {
-          cardsPlayedThisTurn: [card1],
-          charactersQuesting: [card2],
-          inkedThisTurn: true, // Already inked this turn (Rule 4.3.3)
-        },
-        characterStates: {},
-        permanentStates: {},
-      },
+    state.lorcana.turnMetadata = {
+      cardsPlayedThisTurn: [card1],
+      charactersQuesting: [card2],
+      inkedThisTurn: true, // Already inked this turn (Rule 4.3.3)
     };
 
     expect(state.lorcana.turnMetadata.cardsPlayedThisTurn).toContain(card1);
@@ -187,35 +127,15 @@ describe("LorcanaState Type Structure", () => {
   });
 
   it("should optionally track challenge state during challenges", () => {
-    const player1 = createPlayerId("player1");
+    const state = createBaseLorcanaState(["player1"], { phase: "main" });
     const attacker = "card-attacker";
     const defender = "card-defender";
 
-    const state: LorcanaState = {
-      players: [player1],
-      currentPlayerIndex: 0,
-      turnNumber: 1,
-      phase: "main",
-      lorcana: {
-        lore: { [player1]: 0 },
-        ink: {
-          available: { [player1]: 0 },
-          total: { [player1]: 0 },
-        },
-        turnMetadata: {
-          cardsPlayedThisTurn: [],
-          charactersQuesting: [],
-          inkedThisTurn: false,
-        },
-        characterStates: {},
-        permanentStates: {},
-        challengeState: {
-          attacker,
-          defender,
-          attackerDamage: 5,
-          defenderDamage: 3,
-        },
-      },
+    state.lorcana.challengeState = {
+      attacker,
+      defender,
+      attackerDamage: 5,
+      defenderDamage: 3,
     };
 
     expect(state.lorcana.challengeState).toBeDefined();
@@ -225,61 +145,19 @@ describe("LorcanaState Type Structure", () => {
   });
 
   it("should track location and item states separately from characters", () => {
-    const player1 = createPlayerId("player1");
+    const state = createBaseLorcanaState(["player1"], { phase: "main" });
     const locationId = "card-location-1";
 
-    const state: LorcanaState = {
-      players: [player1],
-      currentPlayerIndex: 0,
-      turnNumber: 1,
-      phase: "main",
-      lorcana: {
-        lore: { [player1]: 0 },
-        ink: {
-          available: { [player1]: 0 },
-          total: { [player1]: 0 },
-        },
-        turnMetadata: {
-          cardsPlayedThisTurn: [],
-          charactersQuesting: [],
-          inkedThisTurn: false,
-        },
-        characterStates: {},
-        permanentStates: {
-          [locationId]: {
-            damage: 2, // Locations can take damage
-          },
-        },
-      },
+    state.lorcana.permanentStates[locationId] = {
+      damage: 2, // Locations can take damage
     };
 
     expect(state.lorcana.permanentStates[locationId].damage).toBe(2);
   });
 
   it("should have required base game properties", () => {
-    const player1 = createPlayerId("player1");
-    const player2 = createPlayerId("player2");
-
-    const state: LorcanaState = {
-      players: [player1, player2],
-      currentPlayerIndex: 0,
-      turnNumber: 1,
-      phase: "beginning",
-      lorcana: {
-        lore: { [player1]: 0, [player2]: 0 },
-        ink: {
-          available: { [player1]: 0, [player2]: 0 },
-          total: { [player1]: 0, [player2]: 0 },
-        },
-        turnMetadata: {
-          cardsPlayedThisTurn: [],
-          charactersQuesting: [],
-          inkedThisTurn: false,
-        },
-        characterStates: {},
-        permanentStates: {},
-      },
-    };
+    const state = createBaseLorcanaState(["player1", "player2"]);
+    const [player1, player2] = state.players;
 
     // Verify base game properties exist
     expect(state.players).toEqual([player1, player2]);

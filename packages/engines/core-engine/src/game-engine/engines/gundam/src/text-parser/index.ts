@@ -34,6 +34,8 @@ export {
   createSearchEffect,
   createTimingEffect,
 } from "./effect-factory";
+// Core integration exports
+export { createGundamTextParser, GundamTextParser } from "./gundam-text-parser";
 // Parser core exports
 export {
   analyzeTextStructure,

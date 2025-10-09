@@ -5,4 +5,17 @@
  */
 
 export * from "./zone-operations";
-export * from "./zones";
+export type {
+  LorcanaZoneConfig,
+  LorcanaZoneId,
+  LorcanaZoneVisibility,
+} from "./zones";
+export {
+  getZoneConfig,
+  isFacedownZone,
+  isLorcanaZoneId,
+  isOrderedZone,
+  isPrivateZone,
+  isPublicZone,
+  lorcanaZones,
+} from "./zones";

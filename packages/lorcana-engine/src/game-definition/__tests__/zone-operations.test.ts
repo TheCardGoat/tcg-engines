@@ -25,11 +25,20 @@ import {
  * - Rule 8.1.5 (Cards entering private zones lose all info)
  */
 
+// Test helper to create test players
+function createTestPlayers(...names: string[]) {
+  return names.map((name) => createPlayerId(name));
+}
+
+// Test helper to create test cards
+function createTestCards(...names: string[]) {
+  return names.map((name) => createCardId(name));
+}
+
 describe("Zone Operations", () => {
   describe("createZoneState", () => {
     it("should create empty zone state for all players", () => {
-      const player1 = createPlayerId("player1");
-      const player2 = createPlayerId("player2");
+      const [player1, player2] = createTestPlayers("player1", "player2");
 
       const zoneState = createZoneState([player1, player2]);
 
@@ -40,9 +49,8 @@ describe("Zone Operations", () => {
 
   describe("addCardToZone", () => {
     it("should add card to player's zone", () => {
-      const player1 = createPlayerId("player1");
-      const player2 = createPlayerId("player2");
-      const card1 = createCardId("card-1");
+      const [player1, player2] = createTestPlayers("player1", "player2");
+      const [card1] = createTestCards("card-1");
 
       const zoneState: ZoneState = {
         [player1]: [],
@@ -56,10 +64,12 @@ describe("Zone Operations", () => {
     });
 
     it("should add multiple cards maintaining order", () => {
-      const player1 = createPlayerId("player1");
-      const card1 = createCardId("card-1");
-      const card2 = createCardId("card-2");
-      const card3 = createCardId("card-3");
+      const [player1] = createTestPlayers("player1");
+      const [card1, card2, card3] = createTestCards(
+        "card-1",
+        "card-2",
+        "card-3",
+      );
 
       const zoneState: ZoneState = {
         [player1]: [],
@@ -75,9 +85,8 @@ describe("Zone Operations", () => {
 
   describe("removeCardFromZone", () => {
     it("should remove card from player's zone", () => {
-      const player1 = createPlayerId("player1");
-      const card1 = createCardId("card-1");
-      const card2 = createCardId("card-2");
+      const [player1] = createTestPlayers("player1");
+      const [card1, card2] = createTestCards("card-1", "card-2");
 
       const zoneState: ZoneState = {
         [player1]: [card1, card2],
@@ -89,10 +98,12 @@ describe("Zone Operations", () => {
     });
 
     it("should maintain order when removing from middle", () => {
-      const player1 = createPlayerId("player1");
-      const card1 = createCardId("card-1");
-      const card2 = createCardId("card-2");
-      const card3 = createCardId("card-3");
+      const [player1] = createTestPlayers("player1");
+      const [card1, card2, card3] = createTestCards(
+        "card-1",
+        "card-2",
+        "card-3",
+      );
 
       const zoneState: ZoneState = {
         [player1]: [card1, card2, card3],
@@ -104,9 +115,8 @@ describe("Zone Operations", () => {
     });
 
     it("should do nothing if card not in zone", () => {
-      const player1 = createPlayerId("player1");
-      const card1 = createCardId("card-1");
-      const card2 = createCardId("card-2");
+      const [player1] = createTestPlayers("player1");
+      const [card1, card2] = createTestCards("card-1", "card-2");
 
       const zoneState: ZoneState = {
         [player1]: [card1],
@@ -120,8 +130,8 @@ describe("Zone Operations", () => {
 
   describe("moveCardBetweenZones", () => {
     it("should move card from one zone to another", () => {
-      const player1 = createPlayerId("player1");
-      const card1 = createCardId("card-1");
+      const [player1] = createTestPlayers("player1");
+      const [card1] = createTestCards("card-1");
 
       const handZone: ZoneState = {
         [player1]: [card1],
@@ -138,9 +148,8 @@ describe("Zone Operations", () => {
     });
 
     it("should handle moving between zones of different players", () => {
-      const player1 = createPlayerId("player1");
-      const player2 = createPlayerId("player2");
-      const card1 = createCardId("card-1");
+      const [player1, player2] = createTestPlayers("player1", "player2");
+      const [card1] = createTestCards("card-1");
 
       const player1Hand: ZoneState = {
         [player1]: [card1],
@@ -159,10 +168,12 @@ describe("Zone Operations", () => {
     });
 
     it("should maintain card order in destination zone", () => {
-      const player1 = createPlayerId("player1");
-      const card1 = createCardId("card-1");
-      const card2 = createCardId("card-2");
-      const card3 = createCardId("card-3");
+      const [player1] = createTestPlayers("player1");
+      const [card1, card2, card3] = createTestCards(
+        "card-1",
+        "card-2",
+        "card-3",
+      );
 
       const sourceZone: ZoneState = {
         [player1]: [card2],
@@ -181,8 +192,8 @@ describe("Zone Operations", () => {
 
   describe("isCardInZone", () => {
     it("should return true if card is in player's zone", () => {
-      const player1 = createPlayerId("player1");
-      const card1 = createCardId("card-1");
+      const [player1] = createTestPlayers("player1");
+      const [card1] = createTestCards("card-1");
 
       const zoneState: ZoneState = {
         [player1]: [card1],
@@ -192,9 +203,8 @@ describe("Zone Operations", () => {
     });
 
     it("should return false if card is not in player's zone", () => {
-      const player1 = createPlayerId("player1");
-      const card1 = createCardId("card-1");
-      const card2 = createCardId("card-2");
+      const [player1] = createTestPlayers("player1");
+      const [card1, card2] = createTestCards("card-1", "card-2");
 
       const zoneState: ZoneState = {
         [player1]: [card1],
@@ -204,9 +214,8 @@ describe("Zone Operations", () => {
     });
 
     it("should return false if player has no zone", () => {
-      const player1 = createPlayerId("player1");
-      const player2 = createPlayerId("player2");
-      const card1 = createCardId("card-1");
+      const [player1, player2] = createTestPlayers("player1", "player2");
+      const [card1] = createTestCards("card-1");
 
       const zoneState: ZoneState = {
         [player1]: [card1],
@@ -218,10 +227,12 @@ describe("Zone Operations", () => {
 
   describe("getCardsInZone", () => {
     it("should return all cards in player's zone", () => {
-      const player1 = createPlayerId("player1");
-      const card1 = createCardId("card-1");
-      const card2 = createCardId("card-2");
-      const card3 = createCardId("card-3");
+      const [player1] = createTestPlayers("player1");
+      const [card1, card2, card3] = createTestCards(
+        "card-1",
+        "card-2",
+        "card-3",
+      );
 
       const zoneState: ZoneState = {
         [player1]: [card1, card2, card3],
@@ -233,7 +244,7 @@ describe("Zone Operations", () => {
     });
 
     it("should return empty array if player has no cards", () => {
-      const player1 = createPlayerId("player1");
+      const [player1] = createTestPlayers("player1");
 
       const zoneState: ZoneState = {
         [player1]: [],
@@ -245,7 +256,7 @@ describe("Zone Operations", () => {
     });
 
     it("should return empty array if player has no zone", () => {
-      const player1 = createPlayerId("player1");
+      const [player1] = createTestPlayers("player1");
 
       const zoneState: ZoneState = {};
 
@@ -255,8 +266,8 @@ describe("Zone Operations", () => {
     });
 
     it("should return copy of array (not mutate original)", () => {
-      const player1 = createPlayerId("player1");
-      const card1 = createCardId("card-1");
+      const [player1] = createTestPlayers("player1");
+      const [card1] = createTestCards("card-1");
 
       const zoneState: ZoneState = {
         [player1]: [card1],
@@ -272,11 +283,15 @@ describe("Zone Operations", () => {
 
   describe("Zone Transition Scenarios", () => {
     it("should handle draw card scenario (deck -> hand)", () => {
-      const player1 = createPlayerId("player1");
-      const topCard = createCardId("top-card");
+      const [player1] = createTestPlayers("player1");
+      const [topCard, card2, card3] = createTestCards(
+        "top-card",
+        "card-2",
+        "card-3",
+      );
 
       const deckZone: ZoneState = {
-        [player1]: [topCard, createCardId("card-2"), createCardId("card-3")],
+        [player1]: [topCard, card2, card3],
       };
 
       const handZone: ZoneState = {
@@ -291,8 +306,8 @@ describe("Zone Operations", () => {
     });
 
     it("should handle play card scenario (hand -> play)", () => {
-      const player1 = createPlayerId("player1");
-      const card = createCardId("character-1");
+      const [player1] = createTestPlayers("player1");
+      const [card] = createTestCards("character-1");
 
       const handZone: ZoneState = {
         [player1]: [card],
@@ -309,8 +324,8 @@ describe("Zone Operations", () => {
     });
 
     it("should handle banish scenario (play -> discard)", () => {
-      const player1 = createPlayerId("player1");
-      const character = createCardId("character-1");
+      const [player1] = createTestPlayers("player1");
+      const [character] = createTestCards("character-1");
 
       const playZone: ZoneState = {
         [player1]: [character],
@@ -327,8 +342,8 @@ describe("Zone Operations", () => {
     });
 
     it("should handle ink card scenario (hand -> inkwell)", () => {
-      const player1 = createPlayerId("player1");
-      const inkableCard = createCardId("inkable-1");
+      const [player1] = createTestPlayers("player1");
+      const [inkableCard] = createTestCards("inkable-1");
 
       const handZone: ZoneState = {
         [player1]: [inkableCard],
