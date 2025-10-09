@@ -1,5 +1,7 @@
 # Gundam Card Game Rules Summary
 
+For the full version consult ./RULES.md
+
 ## 1. Game Overview
 - Competitive game between two players
 - Win condition: Defeat opponent (opponent has no shields and takes damage, or runs out of cards in deck)
