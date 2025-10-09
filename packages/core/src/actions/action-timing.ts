@@ -179,6 +179,15 @@ export function validateAction<
       };
 
       // Validate target selection using @tcg/core's targeting system
+      if (!targetDef) {
+        return {
+          valid: false,
+          error: `Target definition at index ${i} is undefined`,
+          reason: "targets",
+          invalidTargets: [i],
+        };
+      }
+
       const validationResult = validateTargetSelection(
         targetCards,
         targetDef,

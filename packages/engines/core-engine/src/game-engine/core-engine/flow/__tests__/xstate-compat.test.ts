@@ -108,7 +108,10 @@ describe("XState Flow Manager Compatibility", () => {
       const transition = flowDef.states.waiting.on?.ADVANCE as FlowTransition<{
         canAdvance: boolean;
       }>;
-      expect(transition.guard).toBeDefined();
+      expect(typeof transition).toBe("object");
+      if (typeof transition !== "string") {
+        expect(transition.guard).toBeDefined();
+      }
     });
   });
 

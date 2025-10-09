@@ -66,6 +66,7 @@ Use the file-creator subagent to create file: tasks.md inside of the current fea
     - [ ] 1.6 Verify linter rules pass, for the given project.
     - [ ] 1.7 Verify type safety, run typecheck and iterate until it passes
     - [ ] 1.8 Use the code-reviewer subagent to review the code
+    - [ ] 1.9 Find tasks.md file and update it so the task is marked as complete.
 
   - [ ] 2. [MAJOR_TASK_DESCRIPTION]
     - [ ] 2.1 Write tests for [COMPONENT]

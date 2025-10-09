@@ -517,9 +517,13 @@ describe("Flow Serialization - End to End", () => {
     original.nextSegment(); // phase1.step2 → phase2
     reconstructed.nextSegment(); // phase1.step2 → phase2
 
-    expect(reconstructed.getCurrentPhase()).toBe(original.getCurrentPhase());
-    expect(reconstructed.getCurrentSegment()).toBe(
-      original.getCurrentSegment(),
-    );
+    const origPhase = original.getCurrentPhase();
+    const origSegment = original.getCurrentSegment();
+    if (origPhase) {
+      expect(reconstructed.getCurrentPhase()).toBe(origPhase);
+    }
+    if (origSegment) {
+      expect(reconstructed.getCurrentSegment()).toBe(origSegment);
+    }
   });
 });

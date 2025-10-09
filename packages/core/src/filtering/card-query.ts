@@ -218,10 +218,9 @@ export class CardQuery<
    * @returns this for chaining
    */
   where(
-    predicate: (
-      card: TGameState["cards"][string],
-      state: TGameState,
-    ) => boolean,
+    predicate: TGameState extends { cards: Record<string, infer TCard> }
+      ? (card: TCard, state: TGameState) => boolean
+      : (card: CardInstance<unknown>, state: TGameState) => boolean,
   ): this {
     this.filter.where = predicate;
     return this;

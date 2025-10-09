@@ -145,14 +145,15 @@ export function validateGameDefinition<
     if (typeof definition.flow !== "object") {
       errors.push("flow must be an object");
     } else {
-      if (!definition.flow.initial) {
-        errors.push("flow must have an initial state");
-      }
-      if (
-        !definition.flow.states ||
-        typeof definition.flow.states !== "object"
+      // Flow validation - check that turn is defined
+      // FlowDefinition has a 'turn' property with phases
+      if (!definition.flow.turn || typeof definition.flow.turn !== "object") {
+        errors.push("flow must have turn object");
+      } else if (
+        !definition.flow.turn.phases ||
+        typeof definition.flow.turn.phases !== "object"
       ) {
-        errors.push("flow must have states object");
+        errors.push("flow.turn must have phases object");
       }
     }
   }

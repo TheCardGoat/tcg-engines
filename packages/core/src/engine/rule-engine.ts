@@ -11,6 +11,7 @@ import type {
 } from "../game-definition/game-definition";
 import type { MoveContext } from "../moves/move-system";
 import { SeededRNG } from "../rng/seeded-rng";
+import type { PlayerId } from "../types/branded";
 
 // Enable Immer patches for state tracking
 enablePatches();
@@ -313,7 +314,7 @@ export class RuleEngine<TState, TMoves extends Record<string, any>> {
    * @param playerId - Player to get moves for
    * @returns Array of valid move IDs
    */
-  getValidMoves(playerId: string): string[] {
+  getValidMoves(playerId: PlayerId): string[] {
     const validMoves: string[] = [];
 
     for (const moveId of Object.keys(this.gameDefinition.moves)) {
@@ -393,7 +394,11 @@ export class RuleEngine<TState, TMoves extends Record<string, any>> {
    */
   applyPatches(patches: Patch[]): void {
     // Use Immer's built-in applyPatches for correct patch application
-    this.currentState = immerApplyPatches(this.currentState, patches);
+    // Type assertion is safe here because Immer patches preserve the type
+    this.currentState = immerApplyPatches(
+      this.currentState as object,
+      patches,
+    ) as TState;
   }
 
   /**
@@ -417,10 +422,11 @@ export class RuleEngine<TState, TMoves extends Record<string, any>> {
     }
 
     // Apply inverse patches to revert the move using Immer's applyPatches
+    // Type assertion is safe here because Immer patches preserve the type
     this.currentState = immerApplyPatches(
-      this.currentState,
+      this.currentState as object,
       entry.inversePatches,
-    );
+    ) as TState;
 
     this.historyIndex--;
     return true;
@@ -446,7 +452,11 @@ export class RuleEngine<TState, TMoves extends Record<string, any>> {
     }
 
     // Apply forward patches to redo the move using Immer's applyPatches
-    this.currentState = immerApplyPatches(this.currentState, entry.patches);
+    // Type assertion is safe here because Immer patches preserve the type
+    this.currentState = immerApplyPatches(
+      this.currentState as object,
+      entry.patches,
+    ) as TState;
 
     this.historyIndex++;
     return true;

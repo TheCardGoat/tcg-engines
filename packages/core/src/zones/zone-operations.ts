@@ -120,7 +120,12 @@ export function shuffle(zone: Zone, seed: string): Zone {
     // Fisher-Yates shuffle with seeded RNG
     for (let i = draft.cards.length - 1; i > 0; i--) {
       const j = Math.floor(rng() * (i + 1));
-      [draft.cards[i], draft.cards[j]] = [draft.cards[j], draft.cards[i]];
+      const cardI = draft.cards[i];
+      const cardJ = draft.cards[j];
+      if (cardI !== undefined && cardJ !== undefined) {
+        draft.cards[i] = cardJ;
+        draft.cards[j] = cardI;
+      }
     }
   });
 }
@@ -220,4 +225,82 @@ export function getTopCard(zone: Zone): CardId | undefined {
  */
 export function getBottomCard(zone: Zone): CardId | undefined {
   return zone.cards[zone.cards.length - 1];
+}
+
+/**
+ * Checks if a card is in a zone
+ * @param zone - Zone to check
+ * @param cardId - Card to look for
+ * @returns True if card is in zone
+ */
+export function isCardInZone(zone: Zone, cardId: CardId): boolean {
+  return zone.cards.includes(cardId);
+}
+
+/**
+ * Adds a card to the top of a zone
+ * @param zone - Target zone
+ * @param cardId - Card to add
+ * @returns Updated zone
+ * @throws Error if zone is at maximum size
+ */
+export function addCardToTop(zone: Zone, cardId: CardId): Zone {
+  if (
+    zone.config.maxSize !== undefined &&
+    zone.cards.length >= zone.config.maxSize
+  ) {
+    throw new Error(
+      `Cannot add card: zone is at maximum size (${zone.config.maxSize})`,
+    );
+  }
+
+  return produce(zone, (draft) => {
+    draft.cards.unshift(cardId);
+  });
+}
+
+/**
+ * Adds a card to the bottom of a zone
+ * @param zone - Target zone
+ * @param cardId - Card to add
+ * @returns Updated zone
+ * @throws Error if zone is at maximum size
+ */
+export function addCardToBottom(zone: Zone, cardId: CardId): Zone {
+  if (
+    zone.config.maxSize !== undefined &&
+    zone.cards.length >= zone.config.maxSize
+  ) {
+    throw new Error(
+      `Cannot add card: zone is at maximum size (${zone.config.maxSize})`,
+    );
+  }
+
+  return produce(zone, (draft) => {
+    draft.cards.push(cardId);
+  });
+}
+
+/**
+ * Clears all cards from a zone
+ * @param zone - Zone to clear
+ * @returns Updated zone with no cards
+ */
+export function clearZone(zone: Zone): Zone {
+  return produce(zone, (draft) => {
+    draft.cards = [];
+  });
+}
+
+/**
+ * Finds the first zone containing a card
+ * @param cardId - Card to find
+ * @param zones - Zones to search
+ * @returns First zone containing the card, or undefined if not found
+ */
+export function findCardInZones(
+  cardId: CardId,
+  zones: Zone[],
+): Zone | undefined {
+  return zones.find((zone) => isCardInZone(zone, cardId));
 }

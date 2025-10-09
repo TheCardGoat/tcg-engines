@@ -55,10 +55,10 @@ jobs:
         run: bun install --backend=hardlink --frozen-lockfile
 
       - name: Run format
-        run: bun run format --summarize
+        run: bun run format
 
       - name: Run type checking
-        run: bun run check-types --summarize
+        run: bun run check-types
 
       - name: Run tests
-        run: bun run test --summarize
+        run: bun run test

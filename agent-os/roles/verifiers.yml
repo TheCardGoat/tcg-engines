@@ -1,0 +1,20 @@
+verifiers:
+  - id: backend-verifier
+    name: Backend Verifier
+    description: Verifies database and API implementations, including testing infrastructure
+    responsibilities:
+      - Verify API endpoints functionality
+      - Verify business logic correctness
+      - Verify database schema integrity
+      - Verify test coverage and quality
+      - Verify backend code standards compliance
+
+  - id: frontend-verifier
+    name: Frontend Verifier
+    description: Verifies UI components, styling, responsive design, user experience
+    responsibilities:
+      - Verify UI component functionality
+      - Verify styling consistency
+      - Verify responsive design
+      - Verify accessibility
+      - Verify frontend code standards compliance
