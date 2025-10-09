@@ -1,5 +1,175 @@
 # Implementation Logs
 
+## 2025-10-09: Gundam Engine - Task 3: Resource Management System (COMPLETE ✅)
+
+### Session Summary
+
+**Status**: ✅ **COMPLETE** - Task 3.1-3.11 all passing
+
+**Objective**: Implement Resource Management System for Gundam Card Game engine per spec at `.agent-os/packages/gundam-engine/specs/2025-10-08-core-game-loop/spec.md`
+
+#### What Was Accomplished
+
+**Implemented: Resource Pool Management with Active/Rested States**
+- **Files Created**:
+  - `src/game-engine/engines/gundam/src/resources/resource-management.ts` (237 lines)
+  - `src/game-engine/engines/gundam/src/resources/resource-management.spec.ts` (402 lines)
+
+- **Implementation**: Complete resource management system with:
+  - ResourcePool type: `{ resources, activeResources, restedResources }` (Rule 3-4-2)
+  - Result type pattern for explicit error handling (5 error types)
+  - Resource placement from deck (Rule 6-4-1)
+  - Cost payment by resting active resources (Rule 2-9-1)
+  - Resource activation (turn end reset)
+  - Immutable state updates with clonePool helper
+  - Comprehensive validation (empty IDs, duplicates, capacity, negative costs)
+
+- **Test Coverage**: 34 comprehensive tests (100% coverage)
+  - Resource pool creation (2 tests)
+  - Resource placement with validation (5 tests)
+  - Cost payment with active/rested tracking (6 tests)
+  - Cost validation helpers (4 tests)
+  - Resource reset/activation (4 tests)
+  - Resource counting utilities (4 tests)
+  - Edge cases including new validations (7 tests)
+  - Type safety verification (2 tests)
+
+#### Implementation Details
+
+**Core Types**:
+```typescript
+export type ResourcePool = {
+  resources: string[];
+  activeResources: string[];
+  restedResources: string[];
+};
+
+export type ResourceError =
+  | { type: "resourceAreaFull"; currentCount: number; maxCapacity: number; }
+  | { type: "insufficientResources"; required: number; available: number; }
+  | { type: "invalidCost"; cost: number; }
+  | { type: "invalidResourceId"; resourceId: string; }
+  | { type: "duplicateResource"; resourceId: string; };
+```
+
+**Core Functions**:
+```typescript
+export const createResourcePool = (initialCount = 0): ResourcePool
+export const placeResource = (pool: ResourcePool, resourceId: string): Result<ResourcePool, ResourceError>
+export const payResourceCost = (pool: ResourcePool, cost: number): Result<ResourcePool, ResourceError>
+export const canPayCost = (pool: ResourcePool, cost: number): boolean
+export const activateAllResources = (pool: ResourcePool): ResourcePool
+export const getTotalResourceCount = (pool: ResourcePool): number
+export const getActiveResourceCount = (pool: ResourcePool): number
+export const getRestedResourceCount = (pool: ResourcePool): number
+```
+
+**Game Rules Implemented**:
+- Rule 3-4-2: Maximum 15 Resources in resource area
+- Rule 4-4-4: Cards placed into resource area in active state
+- Rule 6-4-1: Place one Resource from resource deck into resource area
+- Rule 2-9-1: Pay cost by resting necessary number of active Resources
+
+**Verification**:
+- ✅ All 34 resource management tests passing
+- ✅ All 89 gundam engine tests passing (28 zone + 27 position + 34 resource)
+- ✅ Type safety verified (0 type errors in resource files)
+- ✅ Code review completed with all critical issues resolved
+
+#### Architecture Decisions
+
+1. **Immutability Helper**: Created `clonePool()` helper function
+   - Ensures consistent immutability across all operations
+   - Even zero-cost operations return new objects
+   - Single source of truth for pool cloning
+
+2. **Comprehensive Error Types**: Five distinct error types
+   - `resourceAreaFull` - Exceeds 15 resource capacity
+   - `insufficientResources` - Not enough active resources to pay cost
+   - `invalidCost` - Negative cost value
+   - `invalidResourceId` - Empty or whitespace-only resource ID
+   - `duplicateResource` - Resource ID already exists in pool
+
+3. **Validation Order**: Early validation prevents invalid state
+   - Empty/whitespace check first (invalid input)
+   - Duplicate check second (programming error)
+   - Capacity check third (game rule)
+   - Provides most specific error first
+
+4. **Separate Active/Rested Tracking**: Three arrays in ResourcePool
+   - `resources` - All resource IDs (source of truth)
+   - `activeResources` - Ready to use (vertical orientation)
+   - `restedResources` - Already used (horizontal orientation)
+   - Enables efficient queries and clear game state
+
+#### Challenges & Solutions
+
+**Challenge 1**: Immutability Edge Cases
+- **Issue**: Zero-cost payment initially returned same pool reference
+- **Solution**: Created clonePool helper, used for all operations including zero-cost
+- **Impact**: Consistent immutability guarantees across all code paths
+
+**Challenge 2**: Resource ID Validation
+- **Issue**: No validation for empty strings or duplicates
+- **Solution**: Added empty/whitespace check and duplicate detection
+- **Impact**: Prevents ghost resources and duplication exploits
+
+**Challenge 3**: Code Review Feedback
+- **Issue**: Multiple SHOULD FIX items identified by reviewer
+- **Solution**: Addressed all validation issues immediately
+- **Impact**: Production-ready code with robust error handling
+
+#### Code Review Summary
+
+**Review Result**: All critical and should-fix issues resolved
+
+**Critical Issues (Fixed)**:
+1. ✅ ResourcePool invariant violation risk - Added comprehensive validation
+2. ✅ Zero-cost immutability - Created clonePool helper
+3. ✅ Empty resource ID validation - Added invalidResourceId error type
+4. ✅ Duplicate resource detection - Added duplicateResource error type
+
+**Tests Added for New Validations**:
+- Empty string resource ID rejection
+- Whitespace-only resource ID rejection
+- Duplicate resource ID rejection
+- Zero-cost immutability verification
+
+#### Progress Update
+
+**Task 3 Completion**:
+- ✅ 3.1 Write tests for resource pool creation
+- ✅ 3.2 Write tests for resource placement
+- ✅ 3.3 Write tests for resource spending
+- ✅ 3.4 Implement ResourcePool type
+- ✅ 3.5 Implement resource placement functions
+- ✅ 3.6 Implement resource spending functions
+- ✅ 3.7 Implement resource validation helpers
+- ✅ 3.8 Verify all gundam-engine tests pass (89/89)
+- ✅ 3.9 Verify linter rules pass
+- ✅ 3.10 Verify type safety
+- ✅ 3.11 Code review and refactor
+
+**Cumulative Stats**:
+- Total tests: 89 (28 zone + 27 position + 34 resource)
+- Total lines implemented: ~1,440 lines (including tests)
+- Code coverage: 100% on gundam engine modules
+
+**Next Steps**:
+- Task 4: Cost System & Payment Integration
+- Integrate ResourcePool with card play actions
+- Implement cost checking before card play
+- Add resource generation during turn phases
+
+#### Key Learnings
+
+1. **Immutability Helpers**: Extract cloning logic to helper functions for consistency
+2. **Validation Order Matters**: Most specific errors first, game rules last
+3. **Test-Driven Validation**: Adding tests after implementation caught edge cases
+4. **Code Review Value**: Identified 4 critical issues before production deployment
+
+---
+
 ## 2025-10-08: Gundam Engine - Task 2: Card Position & Orientation System (COMPLETE ✅)
 
 ### Session Summary
