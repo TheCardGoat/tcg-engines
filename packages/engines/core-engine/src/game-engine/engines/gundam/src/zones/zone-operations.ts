@@ -1,11 +1,5 @@
 import type { PlayerState, ZoneType } from "../gundam-engine-types";
-
-/**
- * Result type for explicit error handling
- */
-export type Result<T, E = Error> =
-  | { success: true; data: T }
-  | { success: false; error: E };
+import type { Result } from "../shared/result";
 
 /**
  * Zone operation error types

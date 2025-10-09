@@ -1,11 +1,11 @@
 import { describe, expect, it } from "bun:test";
 import type { PlayerState } from "../gundam-engine-types";
+import type { Result } from "../shared/result";
 import {
   addCardToZone,
   getCardsInZone,
   getZoneCount,
   moveCardBetweenZones,
-  type Result,
   removeCardFromZone,
   validateZoneCapacity,
   type ZoneOperationError,
