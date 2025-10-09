@@ -81,7 +81,12 @@ export class SeededRNG {
 
     for (let i = result.length - 1; i > 0; i--) {
       const j = this.randomInt(0, i);
-      [result[i], result[j]] = [result[j], result[i]];
+      const itemI = result[i];
+      const itemJ = result[j];
+      if (itemI !== undefined && itemJ !== undefined) {
+        result[i] = itemJ;
+        result[j] = itemI;
+      }
     }
 
     return result;

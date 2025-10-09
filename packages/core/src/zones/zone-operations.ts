@@ -120,7 +120,12 @@ export function shuffle(zone: Zone, seed: string): Zone {
     // Fisher-Yates shuffle with seeded RNG
     for (let i = draft.cards.length - 1; i > 0; i--) {
       const j = Math.floor(rng() * (i + 1));
-      [draft.cards[i], draft.cards[j]] = [draft.cards[j], draft.cards[i]];
+      const cardI = draft.cards[i];
+      const cardJ = draft.cards[j];
+      if (cardI !== undefined && cardJ !== undefined) {
+        draft.cards[i] = cardJ;
+        draft.cards[j] = cardI;
+      }
     }
   });
 }

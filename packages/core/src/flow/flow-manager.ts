@@ -137,12 +137,18 @@ export class FlowManager<TState> {
       this.currentPhase = sortedPhases[0]?.[0];
 
       // Check for segments in initial phase
-      const initialPhaseDef = phases[this.currentPhase];
-      if (initialPhaseDef?.segments) {
-        const sortedSegments = Object.entries(initialPhaseDef.segments).sort(
-          ([, a], [, b]) => a.order - b.order,
-        );
-        this.currentSegment = sortedSegments[0]?.[0];
+      if (this.currentPhase) {
+        const initialPhaseDef = phases[this.currentPhase];
+        if (initialPhaseDef?.segments) {
+          const sortedSegments = Object.entries(initialPhaseDef.segments).sort(
+            ([, a], [, b]) => {
+              const aOrder = a?.order ?? 0;
+              const bOrder = b?.order ?? 0;
+              return aOrder - bOrder;
+            },
+          );
+          this.currentSegment = sortedSegments[0]?.[0];
+        }
       }
     }
 

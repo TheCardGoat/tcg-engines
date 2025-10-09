@@ -167,6 +167,13 @@ export function validateTargetSelection<
   // Validate each target individually
   for (let i = 0; i < targets.length; i++) {
     const target = targets[i];
+    if (!target) {
+      return {
+        valid: false,
+        error: `Target at index ${i} is undefined`,
+      };
+    }
+
     const previousTargets = targets.slice(0, i);
 
     const fullContext: TargetContext<TCustomState> = {
@@ -242,6 +249,9 @@ export function enumerateTargetCombinations<
 
     for (let i = start; i < legalTargets.length; i++) {
       const candidate = legalTargets[i];
+      if (!candidate) {
+        continue;
+      }
 
       // Check if this candidate is legal given previous selections
       const updatedContext: TargetContext<TCustomState> = {
