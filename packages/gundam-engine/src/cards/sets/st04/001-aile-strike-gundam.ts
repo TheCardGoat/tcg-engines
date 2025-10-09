@@ -10,24 +10,15 @@ export const AileStrikeGundam: UnitCardDefinition = {
   color: "white",
   level: 5,
   cost: 4,
-  text: "&lt;Blocker&gt; (Rest this Unit to change the attack target to it.)
-【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.
-",
-  imageUrl: "../images/cards/card/ST04-001.webp?2510031",
+  text: "<Blocker> (Rest this Unit to change the attack target to it.)\n【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST04-001.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   ap: 4,
   hp: 4,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "earth",
-    "alliance",
-  ],
-  linkRequirements: [
-    "kira-yamato",
-  ],
+  zones: ["space", "earth"],
+  traits: ["earth", "alliance"],
+  linkRequirements: ["kira-yamato"],
   keywords: [
     {
       keyword: "Blocker",
@@ -35,10 +26,12 @@ export const AileStrikeGundam: UnitCardDefinition = {
   ],
   abilities: [
     {
-      description: "<Blocker> (Rest this Unit to change the attack target to it.) 【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
+      description:
+        "<Blocker> (Rest this Unit to change the attack target to it.) 【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
       effect: {
         type: "UNKNOWN",
-        rawText: "<Blocker> (Rest this Unit to change the attack target to it.) 【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
+        rawText:
+          "<Blocker> (Rest this Unit to change the attack target to it.) 【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
       },
     },
   ],

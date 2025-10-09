@@ -10,28 +10,22 @@ export const Gallussk: UnitCardDefinition = {
   color: "red",
   level: 3,
   cost: 2,
-  text: "【Activate･Action】【Once per Turn】①：Choose 1 Unit that is Lv.4 or higher. It gets AP+1 during this battle.
-",
-  imageUrl: "../images/cards/card/GD01-058.webp?2510031",
+  text: "【Activate･Action】【Once per Turn】①：Choose 1 Unit that is Lv.4 or higher. It gets AP+1 during this battle.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-058.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   ap: 3,
   hp: 2,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "zeon",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space", "earth"],
+  traits: ["zeon"],
+  linkRequirements: ["-"],
   abilities: [
     {
       activated: {
         timing: "ACTION",
       },
-      description: "【Activate･Action】 【Once per Turn】①：Choose 1 Unit that is Lv.4 or higher. It gets AP+1 during this battle.",
+      description:
+        "【Activate･Action】 【Once per Turn】①：Choose 1 Unit that is Lv.4 or higher. It gets AP+1 during this battle.",
       effect: {
         type: "MODIFY_STATS",
         attribute: "ap",

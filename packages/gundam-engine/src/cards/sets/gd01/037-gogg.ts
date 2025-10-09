@@ -11,19 +11,14 @@ export const Gogg: UnitCardDefinition = {
   level: 2,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/GD01-037.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-037.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 2,
   hp: 3,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "zeon",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["earth"],
+  traits: ["zeon"],
+  linkRequirements: ["-"],
   abilities: [
     {
       description: "-",

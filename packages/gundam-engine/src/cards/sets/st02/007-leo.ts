@@ -11,20 +11,14 @@ export const Leo: UnitCardDefinition = {
   level: 2,
   cost: 2,
   text: "-",
-  imageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-007.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST02-007.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 2,
   hp: 2,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "oz",
-  ],
-  linkRequirements: [
-    "(oz)-trait",
-  ],
+  zones: ["space", "earth"],
+  traits: ["oz"],
+  linkRequirements: ["(oz)-trait"],
   abilities: [
     {
       description: "-",

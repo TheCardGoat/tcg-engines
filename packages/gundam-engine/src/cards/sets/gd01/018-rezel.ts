@@ -11,21 +11,14 @@ export const Rezel: UnitCardDefinition = {
   level: 3,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/GD01-018.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-018.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   ap: 4,
   hp: 3,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "earth",
-    "federation",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space", "earth"],
+  traits: ["earth", "federation"],
+  linkRequirements: ["-"],
   abilities: [
     {
       description: "-",

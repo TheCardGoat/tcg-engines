@@ -10,23 +10,21 @@ export const AssaultOnTorringtonBase: CommandCardDefinition = {
   color: "red",
   level: 1,
   cost: 1,
-  text: "【Action】Choose 2 friendly Units. They get AP+1 during this turn.
-【Pilot】[Yonem Kirks]
-",
-  imageUrl: "../images/cards/card/GD01-114.webp?2510031",
+  text: "【Action】Choose 2 friendly Units. They get AP+1 during this turn.\n【Pilot】[Yonem Kirks]",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-114.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   timing: "ACTION",
   pilotProperties: {
     name: "Yonem Kirks",
-    traits: [
-      "zeon",
-    ],
+    traits: ["zeon"],
     apModifier: 1,
     hpModifier: 0,
   },
   abilities: [
     {
-      description: "【Action】Choose 2 friendly Units. They get AP+1 during this turn. 【Pilot】[Yonem Kirks]",
+      description:
+        "【Action】Choose 2 friendly Units. They get AP+1 during this turn. 【Pilot】[Yonem Kirks]",
       effect: {
         type: "MODIFY_STATS",
         attribute: "ap",

@@ -10,22 +10,15 @@ export const Gyan: UnitCardDefinition = {
   color: "green",
   level: 4,
   cost: 3,
-  text: "【When Paired･(Zeon) Pilot】Choose 1 enemy Unit with &lt;Blocker&gt; that is Lv.2 or lower. Destroy it.
-",
-  imageUrl: "../images/cards/card/GD01-032.webp?2510031",
+  text: "【When Paired･(Zeon) Pilot】Choose 1 enemy Unit with <Blocker> that is Lv.2 or lower. Destroy it.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-032.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 4,
   hp: 3,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "zeon",
-  ],
-  linkRequirements: [
-    "m&#039;quve",
-  ],
+  zones: ["space", "earth"],
+  traits: ["zeon"],
+  linkRequirements: ["m&#039;quve"],
   keywords: [
     {
       keyword: "Blocker",
@@ -33,10 +26,12 @@ export const Gyan: UnitCardDefinition = {
   ],
   abilities: [
     {
-      description: "【When Paired･(Zeon) Pilot】Choose 1 enemy Unit with <Blocker> that is Lv.2 or lower. Destroy it.",
+      description:
+        "【When Paired･(Zeon) Pilot】Choose 1 enemy Unit with <Blocker> that is Lv.2 or lower. Destroy it.",
       effect: {
         type: "UNKNOWN",
-        rawText: "【When Paired･(Zeon) Pilot】Choose 1 enemy Unit with <Blocker> that is Lv.2 or lower. Destroy it.",
+        rawText:
+          "【When Paired･(Zeon) Pilot】Choose 1 enemy Unit with <Blocker> that is Lv.2 or lower. Destroy it.",
       },
     },
   ],

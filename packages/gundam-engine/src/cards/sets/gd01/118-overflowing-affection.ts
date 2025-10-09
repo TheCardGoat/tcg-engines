@@ -10,9 +10,9 @@ export const OverflowingAffection: CommandCardDefinition = {
   color: "white",
   level: 2,
   cost: 1,
-  text: "【Main】Draw 2. Then, discard 1.
-",
-  imageUrl: "../images/cards/card/GD01-118.webp?2510031",
+  text: "【Main】Draw 2. Then, discard 1.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-118.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   timing: "MAIN",
   abilities: [

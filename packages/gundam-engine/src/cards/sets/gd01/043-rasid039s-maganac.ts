@@ -10,30 +10,24 @@ export const Rasid039sMaganac: UnitCardDefinition = {
   color: "green",
   level: 3,
   cost: 2,
-  text: "【Deploy】Choose 1 of your green Units. During this turn, it may choose an active enemy Unit with 4 or less AP as its attack target.
-",
-  imageUrl: "../images/cards/card/GD01-043.webp?2510031",
+  text: "【Deploy】Choose 1 of your green Units. During this turn, it may choose an active enemy Unit with 4 or less AP as its attack target.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-043.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 2,
   hp: 3,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "maganac",
-    "corps",
-  ],
-  linkRequirements: [
-    "(maganac-corps)-trait",
-  ],
+  zones: ["space", "earth"],
+  traits: ["maganac", "corps"],
+  linkRequirements: ["(maganac-corps)-trait"],
   abilities: [
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 Choose 1 of your green Units. During this turn, it may choose an active enemy Unit with 4 or less AP as its attack target.",
+      description:
+        "【Deploy】 Choose 1 of your green Units. During this turn, it may choose an active enemy Unit with 4 or less AP as its attack target.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Choose 1 of your green Units. During this turn, it may choose an active enemy Unit with 4 or less AP as its attack target.",
+        rawText:
+          "Choose 1 of your green Units. During this turn, it may choose an active enemy Unit with 4 or less AP as its attack target.",
       },
     },
   ],

@@ -1,6 +1,6 @@
 import type { UnitCardDefinition } from "../../card-types";
 
-export const GundamDeathscythe: UnitCardDefinition = {
+export const GundamDeathscythe_GD01_033: UnitCardDefinition = {
   id: "gd01-033",
   name: "Gundam Deathscythe",
   cardNumber: "GD01-033",
@@ -10,22 +10,15 @@ export const GundamDeathscythe: UnitCardDefinition = {
   color: "green",
   level: 4,
   cost: 2,
-  text: "&lt;Repair 1&gt; (At the end of your turn, this Unit recovers the specified number of HP.)
-",
-  imageUrl: "../images/cards/card/GD01-033.webp?2510031",
+  text: "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-033.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 4,
   hp: 3,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "operation",
-    "meteor",
-  ],
-  linkRequirements: [
-    "duo-maxwell",
-  ],
+  zones: ["earth"],
+  traits: ["operation", "meteor"],
+  linkRequirements: ["duo-maxwell"],
   keywords: [
     {
       keyword: "Repair",
@@ -34,10 +27,12 @@ export const GundamDeathscythe: UnitCardDefinition = {
   ],
   abilities: [
     {
-      description: "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)",
+      description:
+        "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)",
       effect: {
         type: "UNKNOWN",
-        rawText: "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)",
+        rawText:
+          "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)",
       },
     },
   ],

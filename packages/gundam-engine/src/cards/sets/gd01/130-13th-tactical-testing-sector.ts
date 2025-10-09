@@ -1,6 +1,6 @@
 import type { BaseCardDefinition_Structure } from "../../card-types";
 
-export const 13thTacticalTestingSector: BaseCardDefinition_Structure = {
+export const ThirteenthTacticalTestingSector: BaseCardDefinition_Structure = {
   id: "gd01-130",
   name: "13th Tactical Testing Sector",
   cardNumber: "GD01-130",
@@ -10,21 +10,14 @@ export const 13thTacticalTestingSector: BaseCardDefinition_Structure = {
   color: "white",
   level: 3,
   cost: 1,
-  text: "【Burst】Deploy this card.
-【Deploy】Add 1 of your Shields to your hand.<br />
-【Activate･Main】Rest this Base：If a friendly (Academy) Unit is in play, choose 1 enemy Unit. It gets AP-1 during this turn.
-",
-  imageUrl: "../images/cards/card/GD01-130.webp?2510031",
+  text: "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\n【Activate･Main】Rest this Base：If a friendly (Academy) Unit is in play, choose 1 enemy Unit. It gets AP-1 during this turn.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-130.webp?2510031",
   sourceTitle: "Mobile Suit Gundam the Witch from Mercury",
-  ap: NaN,
+  ap: Number.NaN,
   hp: 5,
-  zones: [
-    "space",
-  ],
-  traits: [
-    "academy",
-    "stronghold",
-  ],
+  zones: ["space"],
+  traits: ["academy", "stronghold"],
   abilities: [
     {
       trigger: "ON_BURST",
@@ -36,17 +29,18 @@ export const 13thTacticalTestingSector: BaseCardDefinition_Structure = {
     },
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 Add 1 of your Shields to your hand.<br />",
+      description: "【Deploy】 Add 1 of your Shields to your hand.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Add 1 of your Shields to your hand.<br />",
+        rawText: "Add 1 of your Shields to your hand.",
       },
     },
     {
       activated: {
         timing: "MAIN",
       },
-      description: "【Activate･Main】 Rest this Base：If a friendly (Academy) Unit is in play, choose 1 enemy Unit. It gets AP-1 during this turn.",
+      description:
+        "【Activate･Main】 Rest this Base：If a friendly (Academy) Unit is in play, choose 1 enemy Unit. It gets AP-1 during this turn.",
       effect: {
         type: "MODIFY_STATS",
         attribute: "ap",

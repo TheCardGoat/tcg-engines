@@ -10,22 +10,14 @@ export const NahelArgama: BaseCardDefinition_Structure = {
   color: "blue",
   level: 3,
   cost: 2,
-  text: "【Burst】Deploy this card.
-【Deploy】Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 3 or less HP. Rest it.
-",
-  imageUrl: "../images/cards/card/GD01-123.webp?2510031",
+  text: "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 3 or less HP. Rest it.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-123.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
-  ap: NaN,
+  ap: Number.NaN,
   hp: 5,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "earth",
-    "federation",
-    "warship",
-  ],
+  zones: ["space", "earth"],
+  traits: ["earth", "federation", "warship"],
   abilities: [
     {
       trigger: "ON_BURST",
@@ -37,10 +29,12 @@ export const NahelArgama: BaseCardDefinition_Structure = {
     },
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 3 or less HP. Rest it.",
+      description:
+        "【Deploy】 Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 3 or less HP. Rest it.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 3 or less HP. Rest it.",
+        rawText:
+          "Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 3 or less HP. Rest it.",
       },
     },
   ],

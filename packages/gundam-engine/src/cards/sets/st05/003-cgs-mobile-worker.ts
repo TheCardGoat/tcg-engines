@@ -9,27 +9,22 @@ export const CgsMobileWorker: UnitCardDefinition = {
   rarity: "common",
   level: 1,
   cost: 1,
-  text: "【Activate･Main】Rest this Unit：Choose 1 of your Units. Deal 1 damage to it. It gets AP+1 during this turn.
-",
-  imageUrl: "../images/cards/card/ST05-003.webp?2510031",
+  text: "【Activate･Main】Rest this Unit：Choose 1 of your Units. Deal 1 damage to it. It gets AP+1 during this turn.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST05-003.webp?2510031",
   sourceTitle: "Mobile Suit Gundam IRON-BLOODED ORPHANS",
-  ap: NaN,
+  ap: Number.NaN,
   hp: 2,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "tekkadan",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["earth"],
+  traits: ["tekkadan"],
+  linkRequirements: ["-"],
   abilities: [
     {
       activated: {
         timing: "MAIN",
       },
-      description: "【Activate･Main】 Rest this Unit：Choose 1 of your Units. Deal 1 damage to it. It gets AP+1 during this turn.",
+      description:
+        "【Activate･Main】 Rest this Unit：Choose 1 of your Units. Deal 1 damage to it. It gets AP+1 during this turn.",
       effect: {
         type: "DAMAGE",
         amount: 1,

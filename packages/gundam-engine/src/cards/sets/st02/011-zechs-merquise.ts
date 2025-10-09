@@ -11,20 +11,21 @@ export const ZechsMerquise: PilotCardDefinition = {
   level: 5,
   cost: 1,
   text: "【Burst】Add this card to your hand.\n【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, draw 1.",
-  imageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-011.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST02-011.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
-  traits: [
-    "oz",
-  ],
+  traits: ["oz"],
   apModifier: 2,
   hpModifier: 1,
   abilities: [
     {
       trigger: "ON_BURST",
-      description: "【Burst】 Add this card to your hand. 【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, draw 1.",
+      description:
+        "【Burst】 Add this card to your hand. 【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, draw 1.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Add this card to your hand. 【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, draw 1.",
+        rawText:
+          "Add this card to your hand. 【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, draw 1.",
       },
     },
   ],

@@ -10,29 +10,24 @@ export const Cagalli039sSkygrasper: UnitCardDefinition = {
   color: "white",
   level: 2,
   cost: 2,
-  text: "【Destroyed】Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner&#039;s hand.
-",
-  imageUrl: "../images/cards/card/GD01-080.webp?2510031",
+  text: "【Destroyed】Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner&#039;s hand.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-080.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   ap: 2,
   hp: 1,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "earth",
-    "alliance",
-  ],
-  linkRequirements: [
-    "cagalli-yula-athha",
-  ],
+  zones: ["earth"],
+  traits: ["earth", "alliance"],
+  linkRequirements: ["cagalli-yula-athha"],
   abilities: [
     {
       trigger: "ON_DESTROY",
-      description: "【Destroyed】 Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner&#039;s hand.",
+      description:
+        "【Destroyed】 Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner&#039;s hand.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner&#039;s hand.",
+        rawText:
+          "Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner&#039;s hand.",
       },
     },
   ],

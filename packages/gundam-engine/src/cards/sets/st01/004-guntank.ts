@@ -10,26 +10,15 @@ export const Guntank: UnitCardDefinition = {
   color: "blue",
   level: 3,
   cost: 2,
-  text: "【Deploy】Choose 1 enemy Unit with 2 or less HP. Rest it.
-",
-  imageUrl: "../images/cards/card/ST01-004.webp?2510031",
+  text: "【Deploy】Choose 1 enemy Unit with 2 or less HP. Rest it.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST01-004.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 2,
   hp: 3,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "earth",
-    "federation",
-    "white",
-    "base",
-    "team",
-  ],
-  linkRequirements: [
-    "hayato-kobayashi",
-  ],
+  zones: ["space", "earth"],
+  traits: ["earth", "federation", "white", "base", "team"],
+  linkRequirements: ["hayato-kobayashi"],
   abilities: [
     {
       trigger: "ON_DEPLOY",

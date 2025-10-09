@@ -11,20 +11,14 @@ export const Zaku: UnitCardDefinition = {
   level: 2,
   cost: 1,
   text: "-",
-  imageUrl: "../images/cards/card/GD01-035.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-035.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 2,
   hp: 2,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "zeon",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space", "earth"],
+  traits: ["zeon"],
+  linkRequirements: ["-"],
   abilities: [
     {
       description: "-",

@@ -10,16 +10,11 @@ export const MaridaCruz: PilotCardDefinition = {
   color: "red",
   level: 4,
   cost: 1,
-  text: "【Burst】Add this card to your hand.
-【During Link】【Attack】Choose 1 enemy Unit whose Lv. is equal to or lower than this Unit. Deal 1 damage to it.
-",
-  imageUrl: "../images/cards/card/GD01-093.webp?2510031",
+  text: "【Burst】Add this card to your hand.\n【During Link】【Attack】Choose 1 enemy Unit whose Lv. is equal to or lower than this Unit. Deal 1 damage to it.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-093.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
-  traits: [
-    "neo",
-    "zeon",
-    "cyber-newtype",
-  ],
+  traits: ["neo", "zeon", "cyber-newtype"],
   apModifier: 2,
   hpModifier: 1,
   abilities: [
@@ -33,7 +28,8 @@ export const MaridaCruz: PilotCardDefinition = {
     },
     {
       trigger: "ON_ATTACK",
-      description: "【Attack】 Choose 1 enemy Unit whose Lv. is equal to or lower than this Unit. Deal 1 damage to it.",
+      description:
+        "【Attack】 Choose 1 enemy Unit whose Lv. is equal to or lower than this Unit. Deal 1 damage to it.",
       effect: {
         type: "DAMAGE",
         amount: 1,

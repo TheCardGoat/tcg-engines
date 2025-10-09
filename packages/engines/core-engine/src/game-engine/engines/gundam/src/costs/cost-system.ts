@@ -1,9 +1,9 @@
-import type { Result } from "../shared/result";
 import type { ResourcePool } from "../resources/resource-management";
 import {
-	canPayCost as canPayResourceCost,
-	payResourceCost,
+  canPayCost as canPayResourceCost,
+  payResourceCost,
 } from "../resources/resource-management";
+import type { Result } from "../shared/result";
 
 /**
  * Represents a cost that must be paid to perform an action
@@ -12,10 +12,10 @@ import {
  * Rule 9-1-7-3: Some effects specify additional costs (①, ②, etc.)
  */
 export type Cost = {
-	/** Number of resources to rest (Rule 2-9-1) */
-	resourceCost: number;
-	/** Additional costs like discarding cards, removing counters, etc. */
-	additionalCosts: readonly AdditionalCost[];
+  /** Number of resources to rest (Rule 2-9-1) */
+  resourceCost: number;
+  /** Additional costs like discarding cards, removing counters, etc. */
+  additionalCosts: readonly AdditionalCost[];
 };
 
 /**
@@ -23,10 +23,10 @@ export type Cost = {
  * Examples: Discard cards, remove counters, specific requirements
  */
 export type AdditionalCost = {
-	type: "discard" | "removeCounter" | "custom";
-	description: string;
-	/** Optional validation function for complex requirements */
-	validate?: (context: PaymentContext) => boolean;
+  type: "discard" | "removeCounter" | "custom";
+  description: string;
+  /** Optional validation function for complex requirements */
+  validate?: (context: PaymentContext) => boolean;
 };
 
 /**
@@ -34,50 +34,50 @@ export type AdditionalCost = {
  * Contains all information needed to validate and execute payment
  */
 export type PaymentContext = {
-	resourcePool: ResourcePool;
-	/** Hand cards available for discard costs */
-	hand?: readonly string[];
-	/** Counters available for removal costs */
-	counters?: Record<string, number>;
-	/** Additional context for custom costs */
-	[key: string]: unknown;
+  resourcePool: ResourcePool;
+  /** Hand cards available for discard costs */
+  hand?: readonly string[];
+  /** Counters available for removal costs */
+  counters?: Record<string, number>;
+  /** Additional context for custom costs */
+  [key: string]: unknown;
 };
 
 /**
  * Result of cost payment operation
  */
 export type PaymentResult = {
-	updatedResourcePool: ResourcePool;
-	/** IDs of cards discarded as part of payment */
-	discardedCards?: readonly string[];
-	/** Counters removed as part of payment */
-	removedCounters?: Record<string, number>;
+  updatedResourcePool: ResourcePool;
+  /** IDs of cards discarded as part of payment */
+  discardedCards?: readonly string[];
+  /** Counters removed as part of payment */
+  removedCounters?: Record<string, number>;
 };
 
 /**
  * Cost operation error types
  */
 export type CostError =
-	| {
-			type: "insufficientResources";
-			required: number;
-			available: number;
-	  }
-	| {
-			type: "invalidCost";
-			cost: number;
-	  }
-	| {
-			type: "additionalCostNotMet";
-			costDescription: string;
-	  };
+  | {
+      type: "insufficientResources";
+      required: number;
+      available: number;
+    }
+  | {
+      type: "invalidCost";
+      cost: number;
+    }
+  | {
+      type: "additionalCostNotMet";
+      costDescription: string;
+    };
 
 /**
  * Options for cost calculation
  */
 export type CostCalculationOptions = {
-	/** Total cost reduction to apply (cannot reduce below 0) */
-	costReduction?: number;
+  /** Total cost reduction to apply (cannot reduce below 0) */
+  costReduction?: number;
 };
 
 /**
@@ -92,19 +92,19 @@ export type CostCalculationOptions = {
  * @returns Cost object with resource cost and additional costs
  */
 export const calculateDeploymentCost = (
-	card: { cost?: number },
-	options: CostCalculationOptions = {},
+  card: { cost?: number },
+  options: CostCalculationOptions = {},
 ): Cost => {
-	const baseCost = card.cost ?? 0;
-	const costReduction = options.costReduction ?? 0;
+  const baseCost = card.cost ?? 0;
+  const costReduction = options.costReduction ?? 0;
 
-	// Apply cost reduction, cannot go below zero
-	const resourceCost = Math.max(0, baseCost - costReduction);
+  // Apply cost reduction, cannot go below zero
+  const resourceCost = Math.max(0, baseCost - costReduction);
 
-	return {
-		resourceCost,
-		additionalCosts: [],
-	};
+  return {
+    resourceCost,
+    additionalCosts: [],
+  };
 };
 
 /**
@@ -118,33 +118,33 @@ export const calculateDeploymentCost = (
  * @returns Cost object
  */
 export const calculateAbilityCost = (
-	costSymbol: string,
-	options: CostCalculationOptions = {},
+  costSymbol: string,
+  options: CostCalculationOptions = {},
 ): Cost => {
-	// Map circled numbers to costs: ① = 1, ② = 2, etc.
-	const costMap: Record<string, number> = {
-		"①": 1,
-		"②": 2,
-		"③": 3,
-		"④": 4,
-		"⑤": 5,
-		"⑥": 6,
-		"⑦": 7,
-		"⑧": 8,
-		"⑨": 9,
-		"⑩": 10,
-	};
+  // Map circled numbers to costs: ① = 1, ② = 2, etc.
+  const costMap: Record<string, number> = {
+    "①": 1,
+    "②": 2,
+    "③": 3,
+    "④": 4,
+    "⑤": 5,
+    "⑥": 6,
+    "⑦": 7,
+    "⑧": 8,
+    "⑨": 9,
+    "⑩": 10,
+  };
 
-	const baseCost = costMap[costSymbol] ?? 0;
-	const costReduction = options.costReduction ?? 0;
+  const baseCost = costMap[costSymbol] ?? 0;
+  const costReduction = options.costReduction ?? 0;
 
-	// Apply cost reduction, cannot go below zero
-	const resourceCost = Math.max(0, baseCost - costReduction);
+  // Apply cost reduction, cannot go below zero
+  const resourceCost = Math.max(0, baseCost - costReduction);
 
-	return {
-		resourceCost,
-		additionalCosts: [],
-	};
+  return {
+    resourceCost,
+    additionalCosts: [],
+  };
 };
 
 /**
@@ -155,15 +155,15 @@ export const calculateAbilityCost = (
  * @returns True if player can pay cost
  */
 export const canPayCost = (cost: Cost, resourcePool: ResourcePool): boolean => {
-	// Check resource cost
-	if (!canPayResourceCost(resourcePool, cost.resourceCost)) {
-		return false;
-	}
+  // Check resource cost
+  if (!canPayResourceCost(resourcePool, cost.resourceCost)) {
+    return false;
+  }
 
-	// Additional costs validation would go here
-	// For now, we only validate resource costs
+  // Additional costs validation would go here
+  // For now, we only validate resource costs
 
-	return true;
+  return true;
 };
 
 /**
@@ -174,57 +174,57 @@ export const canPayCost = (cost: Cost, resourcePool: ResourcePool): boolean => {
  * @returns Result with updated state or error
  */
 export const payCost = (
-	cost: Cost,
-	context: PaymentContext,
+  cost: Cost,
+  context: PaymentContext,
 ): Result<PaymentResult, CostError> => {
-	// Validate cost is non-negative
-	if (cost.resourceCost < 0) {
-		return {
-			success: false,
-			error: {
-				type: "invalidCost",
-				cost: cost.resourceCost,
-			},
-		};
-	}
+  // Validate cost is non-negative
+  if (cost.resourceCost < 0) {
+    return {
+      success: false,
+      error: {
+        type: "invalidCost",
+        cost: cost.resourceCost,
+      },
+    };
+  }
 
-	// Pay resource cost
-	const resourcePaymentResult = payResourceCost(
-		context.resourcePool,
-		cost.resourceCost,
-	);
+  // Pay resource cost
+  const resourcePaymentResult = payResourceCost(
+    context.resourcePool,
+    cost.resourceCost,
+  );
 
-	// Check for resource payment failure
-	if (resourcePaymentResult.success === false) {
-		// Map resource error to cost error
-		const resourceError = resourcePaymentResult.error;
-		if (resourceError.type === "insufficientResources") {
-			return {
-				success: false,
-				error: {
-					type: "insufficientResources",
-					required: resourceError.required,
-					available: resourceError.available,
-				},
-			};
-		}
-		// Invalid cost from resource system
-		return {
-			success: false,
-			error: {
-				type: "invalidCost",
-				cost: cost.resourceCost,
-			},
-		};
-	}
+  // Check for resource payment failure
+  if (resourcePaymentResult.success === false) {
+    // Map resource error to cost error
+    const resourceError = resourcePaymentResult.error;
+    if (resourceError.type === "insufficientResources") {
+      return {
+        success: false,
+        error: {
+          type: "insufficientResources",
+          required: resourceError.required,
+          available: resourceError.available,
+        },
+      };
+    }
+    // Invalid cost from resource system
+    return {
+      success: false,
+      error: {
+        type: "invalidCost",
+        cost: cost.resourceCost,
+      },
+    };
+  }
 
-	// Additional costs payment would go here
-	// For now, we only handle resource costs
+  // Additional costs payment would go here
+  // For now, we only handle resource costs
 
-	return {
-		success: true,
-		data: {
-			updatedResourcePool: resourcePaymentResult.data,
-		},
-	};
+  return {
+    success: true,
+    data: {
+      updatedResourcePool: resourcePaymentResult.data,
+    },
+  };
 };

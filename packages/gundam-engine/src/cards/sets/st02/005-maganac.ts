@@ -11,21 +11,14 @@ export const Maganac: UnitCardDefinition = {
   level: 2,
   cost: 2,
   text: "-",
-  imageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-005.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST02-005.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 3,
   hp: 2,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "maganac",
-    "corps",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space", "earth"],
+  traits: ["maganac", "corps"],
+  linkRequirements: ["-"],
   abilities: [
     {
       description: "-",

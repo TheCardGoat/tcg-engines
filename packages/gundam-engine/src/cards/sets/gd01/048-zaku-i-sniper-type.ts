@@ -10,23 +10,15 @@ export const ZakuISniperType: UnitCardDefinition = {
   color: "red",
   level: 2,
   cost: 2,
-  text: "【Activate･Main】&lt;Support 1&gt; (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)
-【Deploy】Look at the top card of your deck. If it is a (Zeon)/(Neo Zeon) Unit card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.
-",
-  imageUrl: "../images/cards/card/GD01-048.webp?2510031",
+  text: "【Activate･Main】<Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)\n【Deploy】Look at the top card of your deck. If it is a (Zeon)/(Neo Zeon) Unit card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-048.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
-  ap: NaN,
+  ap: Number.NaN,
   hp: 1,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "zeon",
-  ],
-  linkRequirements: [
-    "(zeon)-trait",
-  ],
+  zones: ["space", "earth"],
+  traits: ["zeon"],
+  linkRequirements: ["(zeon)-trait"],
   keywords: [
     {
       keyword: "Support",
@@ -38,18 +30,22 @@ export const ZakuISniperType: UnitCardDefinition = {
       activated: {
         timing: "MAIN",
       },
-      description: "【Activate･Main】 <Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+      description:
+        "【Activate･Main】 <Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
       effect: {
         type: "UNKNOWN",
-        rawText: "<Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+        rawText:
+          "<Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
       },
     },
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 Look at the top card of your deck. If it is a (Zeon)/(Neo Zeon) Unit card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.",
+      description:
+        "【Deploy】 Look at the top card of your deck. If it is a (Zeon)/(Neo Zeon) Unit card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Look at the top card of your deck. If it is a (Zeon)/(Neo Zeon) Unit card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.",
+        rawText:
+          "Look at the top card of your deck. If it is a (Zeon)/(Neo Zeon) Unit card, you may reveal it and add it to your hand. Return any remaining card to the bottom of your deck.",
       },
     },
   ],

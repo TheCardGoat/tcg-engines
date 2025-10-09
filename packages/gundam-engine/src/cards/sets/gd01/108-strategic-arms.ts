@@ -10,9 +10,9 @@ export const StrategicArms: CommandCardDefinition = {
   color: "green",
   level: 6,
   cost: 6,
-  text: "【Main】Deal 2 damage to all Units with &lt;Blocker&gt;.
-",
-  imageUrl: "../images/cards/card/GD01-108.webp?2510031",
+  text: "【Main】Deal 2 damage to all Units with <Blocker>.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-108.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   timing: "MAIN",
   abilities: [

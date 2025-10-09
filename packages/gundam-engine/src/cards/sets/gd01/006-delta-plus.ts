@@ -10,24 +10,15 @@ export const DeltaPlus: UnitCardDefinition = {
   color: "blue",
   level: 4,
   cost: 3,
-  text: "&lt;Repair 1&gt; (At the end of your turn, this Unit recovers the specified number of HP.)
-【During Link】This Unit gets HP+1.
-",
-  imageUrl: "../images/cards/card/GD01-006.webp?2510031",
+  text: "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)\n【During Link】This Unit gets HP+1.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-006.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   ap: 4,
   hp: 3,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "earth",
-    "federation",
-  ],
-  linkRequirements: [
-    "(earth-federation)-trait",
-  ],
+  zones: ["space", "earth"],
+  traits: ["earth", "federation"],
+  linkRequirements: ["(earth-federation)-trait"],
   keywords: [
     {
       keyword: "Repair",
@@ -36,7 +27,8 @@ export const DeltaPlus: UnitCardDefinition = {
   ],
   abilities: [
     {
-      description: "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.) 【During Link】This Unit gets HP+1.",
+      description:
+        "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.) 【During Link】This Unit gets HP+1.",
       effect: {
         type: "MODIFY_STATS",
         attribute: "hp",

@@ -11,20 +11,14 @@ export const GundamAerialBitOnForm: UnitCardDefinition = {
   level: 4,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/ST01-007.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST01-007.webp?2510031",
   sourceTitle: "Mobile Suit Gundam the Witch from Mercury",
   ap: 3,
   hp: 4,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "academy",
-  ],
-  linkRequirements: [
-    "suletta-mercury",
-  ],
+  zones: ["space", "earth"],
+  traits: ["academy"],
+  linkRequirements: ["suletta-mercury"],
   abilities: [
     {
       description: "-",

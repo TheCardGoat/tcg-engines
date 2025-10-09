@@ -1,6 +1,6 @@
 import type { UnitCardDefinition } from "../../card-types";
 
-export const Zaku: UnitCardDefinition = {
+export const Zaku_ST03_008: UnitCardDefinition = {
   id: "st03-008",
   name: "Zaku Ⅱ",
   cardNumber: "ST03-008",
@@ -10,22 +10,15 @@ export const Zaku: UnitCardDefinition = {
   color: "green",
   level: 2,
   cost: 1,
-  text: "【Attack】This Unit gets AP+2 during this turn.
-",
-  imageUrl: "../images/cards/card/ST03-008.webp?2510031",
+  text: "【Attack】This Unit gets AP+2 during this turn.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST03-008.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 1,
   hp: 2,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "zeon",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space", "earth"],
+  traits: ["zeon"],
+  linkRequirements: ["-"],
   abilities: [
     {
       trigger: "ON_ATTACK",

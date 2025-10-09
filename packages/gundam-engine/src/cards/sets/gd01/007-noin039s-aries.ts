@@ -10,25 +10,20 @@ export const Noin039sAries: UnitCardDefinition = {
   color: "blue",
   level: 3,
   cost: 3,
-  text: "【Destroyed】If you have another (OZ) Unit in play, draw 1.
-",
-  imageUrl: "../images/cards/card/GD01-007.webp?2510031",
+  text: "【Destroyed】If you have another (OZ) Unit in play, draw 1.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-007.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 2,
   hp: 3,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "oz",
-  ],
-  linkRequirements: [
-    "lucrezia-noin",
-  ],
+  zones: ["earth"],
+  traits: ["oz"],
+  linkRequirements: ["lucrezia-noin"],
   abilities: [
     {
       trigger: "ON_DESTROY",
-      description: "【Destroyed】 If you have another (OZ) Unit in play, draw 1.",
+      description:
+        "【Destroyed】 If you have another (OZ) Unit in play, draw 1.",
       effect: {
         type: "UNKNOWN",
         rawText: "If you have another (OZ) Unit in play, draw 1.",

@@ -10,28 +10,25 @@ export const TheMagicBulletOfDusk: CommandCardDefinition = {
   color: "red",
   level: 3,
   cost: 1,
-  text: "【Main】/【Action】Choose 1 friendly Unit that is Lv.2 or lower. It gains &lt;First Strike&gt; during this turn.<br />
-(While this Unit is attacking, it deals damage before the enemy Unit.)
-【Pilot】[Miguel Ayman]
-",
-  imageUrl: "../images/cards/card/ST04-014.webp?2510031",
+  text: "【Main】/【Action】Choose 1 friendly Unit that is Lv.2 or lower. It gains <First Strike> during this turn.\n\n(While this Unit is attacking, it deals damage before the enemy Unit.)\n【Pilot】[Miguel Ayman]",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST04-014.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   timing: "MAIN",
   pilotProperties: {
     name: "Miguel Ayman",
-    traits: [
-      "zaft",
-      "coordinator",
-    ],
+    traits: ["zaft", "coordinator"],
     apModifier: 0,
     hpModifier: 1,
   },
   abilities: [
     {
-      description: "【Main】/【Action】Choose 1 friendly Unit that is Lv.2 or lower. It gains <First Strike> during this turn.<br /> (While this Unit is attacking, it deals damage before the enemy Unit.) 【Pilot】[Miguel Ayman]",
+      description:
+        "【Main】/【Action】Choose 1 friendly Unit that is Lv.2 or lower. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.) 【Pilot】[Miguel Ayman]",
       effect: {
         type: "UNKNOWN",
-        rawText: "【Main】/【Action】Choose 1 friendly Unit that is Lv.2 or lower. It gains <First Strike> during this turn.<br /> (While this Unit is attacking, it deals damage before the enemy Unit.) 【Pilot】[Miguel Ayman]",
+        rawText:
+          "【Main】/【Action】Choose 1 friendly Unit that is Lv.2 or lower. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.) 【Pilot】[Miguel Ayman]",
       },
     },
   ],

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "bun:test";
+import { createCardId, createPlayerId } from "../../types/branded-types";
 import {
   addCardToZone,
   createZoneState,
@@ -8,17 +9,16 @@ import {
   removeCardFromZone,
   type ZoneState,
 } from "../zone-operations";
-import { createCardId, createPlayerId } from "../../types/branded-types";
 
 /**
  * Task 1.5, 1.6: Tests for Zone Transition Operations
- * 
+ *
  * Validates helper functions for managing cards in zones:
  * - Adding cards to zones
  * - Removing cards from zones
  * - Moving cards between zones
  * - Querying cards in zones
- * 
+ *
  * References:
  * - Rule 8.1 (Zones are separate)
  * - Rule 8.4.4 (Leaving play triggers abilities)
@@ -345,4 +345,3 @@ describe("Zone Operations", () => {
     });
   });
 });
-

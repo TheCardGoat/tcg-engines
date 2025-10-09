@@ -10,26 +10,20 @@ export const Mistral: UnitCardDefinition = {
   color: "white",
   level: 1,
   cost: 1,
-  text: "【Deploy】Choose 1 enemy Unit. It gets AP-1 during this turn.
-",
-  imageUrl: "../images/cards/card/GD01-078.webp?2510031",
+  text: "【Deploy】Choose 1 enemy Unit. It gets AP-1 during this turn.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-078.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   ap: 1,
   hp: 1,
-  zones: [
-    "space",
-  ],
-  traits: [
-    "earth",
-    "alliance",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space"],
+  traits: ["earth", "alliance"],
+  linkRequirements: ["-"],
   abilities: [
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 Choose 1 enemy Unit. It gets AP-1 during this turn.",
+      description:
+        "【Deploy】 Choose 1 enemy Unit. It gets AP-1 during this turn.",
       effect: {
         type: "MODIFY_STATS",
         attribute: "ap",

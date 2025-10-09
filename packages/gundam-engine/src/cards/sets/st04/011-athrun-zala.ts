@@ -10,24 +10,22 @@ export const AthrunZala: PilotCardDefinition = {
   color: "red",
   level: 4,
   cost: 1,
-  text: "【Burst】Add this card to your hand.
-【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.
-",
-  imageUrl: "../images/cards/card/ST04-011.webp?2510031",
+  text: "【Burst】Add this card to your hand.\n【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST04-011.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
-  traits: [
-    "zaft",
-    "coordinator",
-  ],
+  traits: ["zaft", "coordinator"],
   apModifier: 1,
   hpModifier: 2,
   abilities: [
     {
       trigger: "ON_BURST",
-      description: "【Burst】 Add this card to your hand. 【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
+      description:
+        "【Burst】 Add this card to your hand. 【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Add this card to your hand. 【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
+        rawText:
+          "Add this card to your hand. 【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
       },
     },
   ],

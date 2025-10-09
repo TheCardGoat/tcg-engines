@@ -1,6 +1,6 @@
 /**
  * ST01 Card Definitions
- * 
+ *
  * Auto-generated card exports for set ST01.
  */
 

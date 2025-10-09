@@ -10,23 +10,15 @@ export const GearaZuluGuardsType: UnitCardDefinition = {
   color: "red",
   level: 4,
   cost: 3,
-  text: "【Deploy】Choose 1 enemy Unit. Deal 1 damage to it.
-",
-  imageUrl: "../images/cards/card/GD01-052.webp?2510031",
+  text: "【Deploy】Choose 1 enemy Unit. Deal 1 damage to it.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-052.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   ap: 2,
   hp: 4,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "neo",
-    "zeon",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space", "earth"],
+  traits: ["neo", "zeon"],
+  linkRequirements: ["-"],
   abilities: [
     {
       trigger: "ON_DEPLOY",

@@ -11,19 +11,14 @@ export const Goohn: UnitCardDefinition = {
   level: 1,
   cost: 1,
   text: "-",
-  imageUrl: "../images/cards/card/GD01-062.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-062.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   ap: 1,
   hp: 2,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "zaft",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["earth"],
+  traits: ["zaft"],
+  linkRequirements: ["-"],
   abilities: [
     {
       description: "-",

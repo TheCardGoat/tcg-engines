@@ -1,6 +1,6 @@
 /**
  * Gundam Card Scraper
- * 
+ *
  * Fetches card data from the official Gundam Card Game website.
  */
 
@@ -25,12 +25,14 @@ export type ScrapedCardData = {
 /**
  * Scrapes a single card from the official website
  */
-export async function scrapeCard(cardNumber: string): Promise<ScrapedCardData | null> {
+export async function scrapeCard(
+  cardNumber: string,
+): Promise<ScrapedCardData | null> {
   const url = `https://www.gundam-gcg.com/en/cards/detail.php?detailSearch=${cardNumber}`;
 
   try {
     const response = await fetch(url);
-    
+
     if (!response.ok) {
       console.error(`HTTP error! status: ${response.status}`);
       return null;
@@ -44,7 +46,9 @@ export async function scrapeCard(cardNumber: string): Promise<ScrapedCardData | 
         response.url.endsWith("/en") ||
         !response.url.includes("detail.php")
       ) {
-        console.log(`Card ${cardNumber} does not exist (redirected to homepage)`);
+        console.log(
+          `Card ${cardNumber} does not exist (redirected to homepage)`,
+        );
         return null;
       }
     }
@@ -76,7 +80,9 @@ function isValidCardPage(html: string): boolean {
   const isLogoOnly =
     html.includes("/en/images/common/logo.png") && !hasCardNumber;
 
-  return hasCardNumber && hasCardName && hasDataBoxes && !isHomepage && !isLogoOnly;
+  return (
+    hasCardNumber && hasCardName && hasDataBoxes && !isHomepage && !isLogoOnly
+  );
 }
 
 /**
@@ -89,7 +95,9 @@ export function parseCardHTML(html: string): ScrapedCardData | null {
     }
 
     // Extract card number
-    const cardNumberMatch = html.match(/<div class="cardNo">\s*([^<]+)\s*<\/div>/);
+    const cardNumberMatch = html.match(
+      /<div class="cardNo">\s*([^<]+)\s*<\/div>/,
+    );
     const cardNumber = cardNumberMatch?.[1]?.trim() || "";
 
     // Extract rarity
@@ -105,7 +113,7 @@ export function parseCardHTML(html: string): ScrapedCardData | null {
       /<div class="cardImage">\s*<img src=\s*"([^"]+)"[^>]*>/,
     );
     let imageUrl = cardImageMatch?.[1]?.trim() || "";
-    
+
     // Convert relative URL to absolute URL
     if (imageUrl && imageUrl.startsWith("../")) {
       imageUrl = `https://www.gundam-gcg.com/en/${imageUrl.replace(/^\.\.\//, "")}`;
@@ -127,8 +135,16 @@ export function parseCardHTML(html: string): ScrapedCardData | null {
     const effectMatch = html.match(
       /<div class="cardDataRow overview">\s*<div class="dataTxt isRegular">\s*(.*?)\s*<\/div>/s,
     );
-    let effectText = effectMatch?.[1]?.trim().replace(/<br>/g, "\n") || "";
-    
+    let effectText =
+      effectMatch?.[1]
+        ?.trim()
+        .replace(/<br\s*\/?>/gi, "\n") // Replace <br>, <br/>, <br />, etc.
+        .replace(/&lt;/g, "<") // Decode HTML entities
+        .replace(/&gt;/g, ">")
+        .replace(/&amp;/g, "&")
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'") || "";
+
     // Remove trailing line breaks
     effectText = effectText.replace(/\n+$/, "");
 
@@ -172,7 +188,7 @@ export async function scrapeSet(setCode: string): Promise<ScrapedCardData[]> {
     console.log(`\n🔍 Attempting: ${cardNumber}`);
 
     const card = await scrapeCard(cardNumber);
-    
+
     if (card) {
       cards.push(card);
       consecutiveFailures = 0;
@@ -195,4 +211,3 @@ export async function scrapeSet(setCode: string): Promise<ScrapedCardData[]> {
 
   return cards;
 }
-

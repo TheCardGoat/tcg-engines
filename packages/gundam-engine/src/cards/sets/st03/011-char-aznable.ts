@@ -10,16 +10,11 @@ export const CharAznable: PilotCardDefinition = {
   color: "green",
   level: 3,
   cost: 1,
-  text: "【Burst】Add this card to your hand.
-【Attack】During this turn, this Unit gets AP+1 and, if it is a Link Unit, it gains &lt;High-Maneuver&gt;.<br />
-(This Unit can't be blocked.)
-",
-  imageUrl: "../images/cards/card/ST03-011.webp?2510031",
+  text: "【Burst】Add this card to your hand.\n【Attack】During this turn, this Unit gets AP+1 and, if it is a Link Unit, it gains <High-Maneuver>.\n\r\n(This Unit can't be blocked.)",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST03-011.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
-  traits: [
-    "zeon",
-    "newtype",
-  ],
+  traits: ["zeon", "newtype"],
   apModifier: 1,
   hpModifier: 1,
   abilities: [
@@ -33,7 +28,8 @@ export const CharAznable: PilotCardDefinition = {
     },
     {
       trigger: "ON_ATTACK",
-      description: "【Attack】 During this turn, this Unit gets AP+1 and, if it is a Link Unit, it gains <High-Maneuver>.<br /> (This Unit can't be blocked.)",
+      description:
+        "【Attack】 During this turn, this Unit gets AP+1 and, if it is a Link Unit, it gains <High-Maneuver>. (This Unit can't be blocked.)",
       effect: {
         type: "MODIFY_STATS",
         attribute: "ap",

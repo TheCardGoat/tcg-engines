@@ -10,21 +10,18 @@ export const BanagherLinks: PilotCardDefinition = {
   color: "blue",
   level: 5,
   cost: 1,
-  text: "【Burst】Add this card to your hand.
-【When Linked】Draw 1.
-",
-  imageUrl: "../images/cards/card/GD01-088.webp?2510031",
+  text: "【Burst】Add this card to your hand.\n【When Linked】Draw 1.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-088.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
-  traits: [
-    "civilian",
-    "newtype",
-  ],
+  traits: ["civilian", "newtype"],
   apModifier: 2,
   hpModifier: 2,
   abilities: [
     {
       trigger: "ON_BURST",
-      description: "【Burst】 Add this card to your hand. 【When Linked】Draw 1.",
+      description:
+        "【Burst】 Add this card to your hand. 【When Linked】Draw 1.",
       effect: {
         type: "UNKNOWN",
         rawText: "Add this card to your hand. 【When Linked】Draw 1.",

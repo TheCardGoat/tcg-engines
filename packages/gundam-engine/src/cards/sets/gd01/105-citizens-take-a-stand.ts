@@ -10,16 +10,16 @@ export const CitizensTakeAStand: CommandCardDefinition = {
   color: "green",
   level: 4,
   cost: 1,
-  text: "【Burst】Add this card to your hand.
-【Main】All your Units get AP+2 during this turn.
-",
-  imageUrl: "../images/cards/card/GD01-105.webp?2510031",
+  text: "【Burst】Add this card to your hand.\n【Main】All your Units get AP+2 during this turn.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-105.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   timing: "MAIN",
   abilities: [
     {
       trigger: "ON_BURST",
-      description: "【Burst】 Add this card to your hand. 【Main】All your Units get AP+2 during this turn.",
+      description:
+        "【Burst】 Add this card to your hand. 【Main】All your Units get AP+2 during this turn.",
       effect: {
         type: "MODIFY_STATS",
         attribute: "ap",

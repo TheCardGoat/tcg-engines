@@ -9,15 +9,11 @@ export const MikazukiAugus: PilotCardDefinition = {
   rarity: "common",
   level: 4,
   cost: 1,
-  text: "【Burst】Add this card to your hand.
-【When Paired】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.
-",
-  imageUrl: "../images/cards/card/ST05-010.webp?2510031",
+  text: "【Burst】Add this card to your hand.\n【When Paired】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST05-010.webp?2510031",
   sourceTitle: "Mobile Suit Gundam IRON-BLOODED ORPHANS",
-  traits: [
-    "tekkadan",
-    "alaya-vijnana",
-  ],
+  traits: ["tekkadan", "alaya-vijnana"],
   apModifier: 2,
   hpModifier: 1,
   abilities: [
@@ -31,7 +27,8 @@ export const MikazukiAugus: PilotCardDefinition = {
     },
     {
       trigger: "WHEN_PAIRED",
-      description: "【When Paired】 Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+      description:
+        "【When Paired】 Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
       effect: {
         type: "DAMAGE",
         amount: 1,

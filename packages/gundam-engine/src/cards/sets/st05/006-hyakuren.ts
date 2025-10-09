@@ -10,20 +10,14 @@ export const Hyakuren: UnitCardDefinition = {
   level: 3,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/ST05-006.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST05-006.webp?2510031",
   sourceTitle: "Mobile Suit Gundam IRON-BLOODED ORPHANS",
   ap: 4,
   hp: 3,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "teiwaz",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space", "earth"],
+  traits: ["teiwaz"],
+  linkRequirements: ["-"],
   abilities: [
     {
       description: "-",

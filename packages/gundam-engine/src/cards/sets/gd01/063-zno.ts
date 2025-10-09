@@ -10,22 +10,15 @@ export const Zno: UnitCardDefinition = {
   color: "red",
   level: 2,
   cost: 2,
-  text: "During your turn, while this Unit is battling an enemy Unit that is Lv.2 or lower, it gains &lt;First Strike&gt;.<br />
-(While this Unit is attacking, it deals damage before the enemy Unit.)
-",
-  imageUrl: "../images/cards/card/GD01-063.webp?2510031",
+  text: "During your turn, while this Unit is battling an enemy Unit that is Lv.2 or lower, it gains <First Strike>.\n\n(While this Unit is attacking, it deals damage before the enemy Unit.)",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-063.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   ap: 2,
   hp: 1,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "zaft",
-  ],
-  linkRequirements: [
-    "(zaft)-trait",
-  ],
+  zones: ["earth"],
+  traits: ["zaft"],
+  linkRequirements: ["(zaft)-trait"],
   keywords: [
     {
       keyword: "First-Strike",
@@ -33,10 +26,12 @@ export const Zno: UnitCardDefinition = {
   ],
   abilities: [
     {
-      description: "During your turn, while this Unit is battling an enemy Unit that is Lv.2 or lower, it gains <First Strike>.<br /> (While this Unit is attacking, it deals damage before the enemy Unit.)",
+      description:
+        "During your turn, while this Unit is battling an enemy Unit that is Lv.2 or lower, it gains <First Strike>. (While this Unit is attacking, it deals damage before the enemy Unit.)",
       effect: {
         type: "UNKNOWN",
-        rawText: "During your turn, while this Unit is battling an enemy Unit that is Lv.2 or lower, it gains <First Strike>.<br /> (While this Unit is attacking, it deals damage before the enemy Unit.)",
+        rawText:
+          "During your turn, while this Unit is battling an enemy Unit that is Lv.2 or lower, it gains <First Strike>. (While this Unit is attacking, it deals damage before the enemy Unit.)",
       },
     },
   ],

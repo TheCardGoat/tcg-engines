@@ -10,19 +10,11 @@ export const AmuroRay: PilotCardDefinition = {
   color: "blue",
   level: 4,
   cost: 1,
-  text: "【Burst】Add this card to your hand.
-【When Paired】Choose 1 enemy Unit with 5 or less HP. Rest it.
-",
-  imageUrl: "../images/cards/card/ST01-010.webp?2510031",
+  text: "【Burst】Add this card to your hand.\n【When Paired】Choose 1 enemy Unit with 5 or less HP. Rest it.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST01-010.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
-  traits: [
-    "earth",
-    "federation",
-    "white",
-    "base",
-    "team",
-    "newtype",
-  ],
+  traits: ["earth", "federation", "white", "base", "team", "newtype"],
   apModifier: 2,
   hpModifier: 1,
   abilities: [
@@ -36,7 +28,8 @@ export const AmuroRay: PilotCardDefinition = {
     },
     {
       trigger: "WHEN_PAIRED",
-      description: "【When Paired】 Choose 1 enemy Unit with 5 or less HP. Rest it.",
+      description:
+        "【When Paired】 Choose 1 enemy Unit with 5 or less HP. Rest it.",
       effect: {
         type: "UNKNOWN",
         rawText: "Choose 1 enemy Unit with 5 or less HP. Rest it.",

@@ -11,19 +11,14 @@ export const Pisces: UnitCardDefinition = {
   level: 1,
   cost: 1,
   text: "-",
-  imageUrl: "../images/cards/card/GD01-021.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-021.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 1,
   hp: 2,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "oz",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["earth"],
+  traits: ["oz"],
+  linkRequirements: ["-"],
   abilities: [
     {
       description: "-",

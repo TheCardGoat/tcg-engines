@@ -10,23 +10,15 @@ export const BigZam: UnitCardDefinition = {
   color: "green",
   level: 7,
   cost: 5,
-  text: "&lt;Breach 4&gt; (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)
-【Deploy】If there are 10 or more (Zeon)/(Neo Zeon) Unit cards in your trash, deal 4 damage to all Units with &lt;Blocker&gt;.
-",
-  imageUrl: "../images/cards/card/GD01-027.webp?2510031",
+  text: "<Breach 4> (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)\n【Deploy】If there are 10 or more (Zeon)/(Neo Zeon) Unit cards in your trash, deal 4 damage to all Units with <Blocker>.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-027.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 5,
   hp: 6,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "zeon",
-  ],
-  linkRequirements: [
-    "dozle-zabi",
-  ],
+  zones: ["space", "earth"],
+  traits: ["zeon"],
+  linkRequirements: ["dozle-zabi"],
   keywords: [
     {
       keyword: "Breach",
@@ -39,7 +31,8 @@ export const BigZam: UnitCardDefinition = {
   abilities: [
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 If there are 10 or more (Zeon)/(Neo Zeon) Unit cards in your trash, deal 4 damage to all Units with <Blocker>.",
+      description:
+        "【Deploy】 If there are 10 or more (Zeon)/(Neo Zeon) Unit cards in your trash, deal 4 damage to all Units with <Blocker>.",
       effect: {
         type: "DAMAGE",
         amount: 4,

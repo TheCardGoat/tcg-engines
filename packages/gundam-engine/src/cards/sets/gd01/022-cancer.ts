@@ -11,19 +11,14 @@ export const Cancer: UnitCardDefinition = {
   level: 2,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/GD01-022.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-022.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 2,
   hp: 3,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "oz",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["earth"],
+  traits: ["oz"],
+  linkRequirements: ["-"],
   abilities: [
     {
       description: "-",

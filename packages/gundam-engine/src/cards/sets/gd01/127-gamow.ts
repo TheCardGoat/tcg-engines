@@ -10,22 +10,14 @@ export const Gamow: BaseCardDefinition_Structure = {
   color: "red",
   level: 2,
   cost: 1,
-  text: "【Burst】Deploy this card.
-【Deploy】Add 1 of your Shields to your hand.<br />
-【Activate･Action】Rest this Base：Choose 1 friendly (ZAFT) Unit with 5 or more AP. It gains &lt;Breach 3&gt; during this battle.<br />
-(When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)
-",
-  imageUrl: "../images/cards/card/GD01-127.webp?2510031",
+  text: "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\n【Activate･Action】Rest this Base：Choose 1 friendly (ZAFT) Unit with 5 or more AP. It gains <Breach 3> during this battle.\n\n(When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-127.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
-  ap: NaN,
+  ap: Number.NaN,
   hp: 5,
-  zones: [
-    "space",
-  ],
-  traits: [
-    "zaft",
-    "warship",
-  ],
+  zones: ["space"],
+  traits: ["zaft", "warship"],
   abilities: [
     {
       trigger: "ON_BURST",
@@ -37,20 +29,22 @@ export const Gamow: BaseCardDefinition_Structure = {
     },
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 Add 1 of your Shields to your hand.<br />",
+      description: "【Deploy】 Add 1 of your Shields to your hand.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Add 1 of your Shields to your hand.<br />",
+        rawText: "Add 1 of your Shields to your hand.",
       },
     },
     {
       activated: {
         timing: "ACTION",
       },
-      description: "【Activate･Action】 Rest this Base：Choose 1 friendly (ZAFT) Unit with 5 or more AP. It gains <Breach 3> during this battle.<br /> (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+      description:
+        "【Activate･Action】 Rest this Base：Choose 1 friendly (ZAFT) Unit with 5 or more AP. It gains <Breach 3> during this battle. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
       effect: {
         type: "UNKNOWN",
-        rawText: "Rest this Base：Choose 1 friendly (ZAFT) Unit with 5 or more AP. It gains <Breach 3> during this battle.<br /> (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+        rawText:
+          "Rest this Base：Choose 1 friendly (ZAFT) Unit with 5 or more AP. It gains <Breach 3> during this battle. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
       },
     },
   ],

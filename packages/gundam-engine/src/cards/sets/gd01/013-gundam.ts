@@ -1,6 +1,6 @@
 import type { UnitCardDefinition } from "../../card-types";
 
-export const Gundam: UnitCardDefinition = {
+export const Gundam_GD01_013: UnitCardDefinition = {
   id: "gd01-013",
   name: "Gundam",
   cardNumber: "GD01-013",
@@ -11,24 +11,14 @@ export const Gundam: UnitCardDefinition = {
   level: 4,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/GD01-013.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-013.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 3,
   hp: 4,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "earth",
-    "federation",
-    "white",
-    "base",
-    "team",
-  ],
-  linkRequirements: [
-    "amuro-ray",
-  ],
+  zones: ["space", "earth"],
+  traits: ["earth", "federation", "white", "base", "team"],
+  linkRequirements: ["amuro-ray"],
   abilities: [
     {
       description: "-",

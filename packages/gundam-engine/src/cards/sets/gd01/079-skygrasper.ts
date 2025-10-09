@@ -11,20 +11,14 @@ export const Skygrasper: UnitCardDefinition = {
   level: 2,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/GD01-079.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-079.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   ap: 2,
   hp: 2,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "earth",
-    "alliance",
-  ],
-  linkRequirements: [
-    "(earth-alliance)-trait",
-  ],
+  zones: ["earth"],
+  traits: ["earth", "alliance"],
+  linkRequirements: ["(earth-alliance)-trait"],
   abilities: [
     {
       description: "-",

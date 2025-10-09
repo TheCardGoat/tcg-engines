@@ -9,24 +9,22 @@ export const AkihiroAltland: PilotCardDefinition = {
   rarity: "common",
   level: 3,
   cost: 1,
-  text: "【Burst】Add this card to your hand.
-【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, choose 1 (Tekkadan) Unit card that is Lv.2 or lower from your trash. Add it to your hand.
-",
-  imageUrl: "../images/cards/card/ST05-011.webp?2510031",
+  text: "【Burst】Add this card to your hand.\n【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, choose 1 (Tekkadan) Unit card that is Lv.2 or lower from your trash. Add it to your hand.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST05-011.webp?2510031",
   sourceTitle: "Mobile Suit Gundam IRON-BLOODED ORPHANS",
-  traits: [
-    "tekkadan",
-    "alaya-vijnana",
-  ],
+  traits: ["tekkadan", "alaya-vijnana"],
   apModifier: 1,
   hpModifier: 1,
   abilities: [
     {
       trigger: "ON_BURST",
-      description: "【Burst】 Add this card to your hand. 【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, choose 1 (Tekkadan) Unit card that is Lv.2 or lower from your trash. Add it to your hand.",
+      description:
+        "【Burst】 Add this card to your hand. 【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, choose 1 (Tekkadan) Unit card that is Lv.2 or lower from your trash. Add it to your hand.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Add this card to your hand. 【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, choose 1 (Tekkadan) Unit card that is Lv.2 or lower from your trash. Add it to your hand.",
+        rawText:
+          "Add this card to your hand. 【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, choose 1 (Tekkadan) Unit card that is Lv.2 or lower from your trash. Add it to your hand.",
       },
     },
   ],

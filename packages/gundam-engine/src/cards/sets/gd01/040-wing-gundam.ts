@@ -11,21 +11,14 @@ export const WingGundam: UnitCardDefinition = {
   level: 5,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/GD01-040.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-040.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 4,
   hp: 3,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "operation",
-    "meteor",
-  ],
-  linkRequirements: [
-    "heero-yuy",
-  ],
+  zones: ["space", "earth"],
+  traits: ["operation", "meteor"],
+  linkRequirements: ["heero-yuy"],
   abilities: [
     {
       description: "-",

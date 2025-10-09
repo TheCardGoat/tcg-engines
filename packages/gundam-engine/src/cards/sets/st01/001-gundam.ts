@@ -10,27 +10,15 @@ export const Gundam: UnitCardDefinition = {
   color: "blue",
   level: 4,
   cost: 3,
-  text: "&lt;Repair 2&gt; (At the end of your turn, this Unit recovers the specified number of HP.)
-【During Pair】During your turn, all your Units get AP+1.
-",
-  imageUrl: "../images/cards/card/ST01-001.webp?2510031",
+  text: "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\n【During Pair】During your turn, all your Units get AP+1.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST01-001.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 3,
   hp: 4,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "earth",
-    "federation",
-    "white",
-    "base",
-    "team",
-  ],
-  linkRequirements: [
-    "amuro-ray",
-  ],
+  zones: ["space", "earth"],
+  traits: ["earth", "federation", "white", "base", "team"],
+  linkRequirements: ["amuro-ray"],
   keywords: [
     {
       keyword: "Repair",

@@ -10,24 +10,22 @@ export const DearkaElthman: PilotCardDefinition = {
   color: "red",
   level: 3,
   cost: 1,
-  text: "【Burst】Add this card to your hand.
-【When Linked】Discard 1. If you do, draw 1.
-",
-  imageUrl: "../images/cards/card/GD01-095.webp?2510031",
+  text: "【Burst】Add this card to your hand.\n【When Linked】Discard 1. If you do, draw 1.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-095.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
-  traits: [
-    "zaft",
-    "coordinator",
-  ],
+  traits: ["zaft", "coordinator"],
   apModifier: 1,
   hpModifier: 1,
   abilities: [
     {
       trigger: "ON_BURST",
-      description: "【Burst】 Add this card to your hand. 【When Linked】Discard 1. If you do, draw 1.",
+      description:
+        "【Burst】 Add this card to your hand. 【When Linked】Discard 1. If you do, draw 1.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Add this card to your hand. 【When Linked】Discard 1. If you do, draw 1.",
+        rawText:
+          "Add this card to your hand. 【When Linked】Discard 1. If you do, draw 1.",
       },
     },
   ],

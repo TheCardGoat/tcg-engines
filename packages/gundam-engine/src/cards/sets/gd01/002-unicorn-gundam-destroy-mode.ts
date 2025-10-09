@@ -10,23 +10,15 @@ export const UnicornGundamDestroyMode: UnitCardDefinition = {
   color: "blue",
   level: 7,
   cost: 6,
-  text: "When playing this card from your hand, you may destroy 1 of your Link Units with &quot;Unicorn Mode&quot; in its card name that is Lv.5. If you do, play this card as if it has 0 Lv. and cost.
-【Attack】Choose 1 enemy Unit. Rest it.
-",
-  imageUrl: "../images/cards/card/GD01-002.webp?2510031",
+  text: 'When playing this card from your hand, you may destroy 1 of your Link Units with "Unicorn Mode" in its card name that is Lv.5. If you do, play this card as if it has 0 Lv. and cost.\n【Attack】Choose 1 enemy Unit. Rest it.',
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-002.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   ap: 5,
   hp: 4,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "civilian",
-  ],
-  linkRequirements: [
-    "banagher-links",
-  ],
+  zones: ["space", "earth"],
+  traits: ["civilian"],
+  linkRequirements: ["banagher-links"],
   abilities: [
     {
       trigger: "ON_ATTACK",

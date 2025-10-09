@@ -1,16 +1,16 @@
 import { describe, expect, it } from "bun:test";
-import { lorcanaZones, type LorcanaZoneId } from "../zones";
+import { type LorcanaZoneId, lorcanaZones } from "../zones";
 
 /**
  * Task 1.3: Tests for Zone Configurations
- * 
+ *
  * Validates zone configurations match Lorcana Comprehensive Rules Section 8:
  * - Deck (Rule 8.2): Private, ordered, facedown
  * - Hand (Rule 8.3): Private, can rearrange
  * - Play (Rule 8.4): Public, all can see
  * - Discard (Rule 8.6): Public, ordered, faceup
  * - Inkwell (Rule 8.5): Private, facedown
- * 
+ *
  * References:
  * - Rule 8.1.2 (Public zones)
  * - Rule 8.1.3 (Private zones)
@@ -24,7 +24,7 @@ import { lorcanaZones, type LorcanaZoneId } from "../zones";
 describe("Lorcana Zone Configurations", () => {
   it("should have all 5 required zones", () => {
     const zoneIds = Object.keys(lorcanaZones);
-    
+
     expect(zoneIds).toContain("deck");
     expect(zoneIds).toContain("hand");
     expect(zoneIds).toContain("play");
@@ -106,28 +106,28 @@ describe("Lorcana Zone Configurations", () => {
   describe("Zone Properties Validation", () => {
     it("should have exactly 2 private zones", () => {
       const privateZones = Object.values(lorcanaZones).filter(
-        (zone) => zone.visibility === "owner"
+        (zone) => zone.visibility === "owner",
       );
       expect(privateZones).toHaveLength(3); // deck, hand, inkwell
     });
 
     it("should have exactly 2 public zones", () => {
       const publicZones = Object.values(lorcanaZones).filter(
-        (zone) => zone.visibility === "all"
+        (zone) => zone.visibility === "all",
       );
       expect(publicZones).toHaveLength(2); // play, discard
     });
 
     it("should have exactly 2 facedown zones", () => {
       const facedownZones = Object.values(lorcanaZones).filter(
-        (zone) => zone.facedown === true
+        (zone) => zone.facedown === true,
       );
       expect(facedownZones).toHaveLength(2); // deck, inkwell
     });
 
     it("should have exactly 2 ordered zones", () => {
       const orderedZones = Object.values(lorcanaZones).filter(
-        (zone) => zone.ordered === true
+        (zone) => zone.ordered === true,
       );
       expect(orderedZones).toHaveLength(2); // deck, discard
     });
@@ -135,8 +135,14 @@ describe("Lorcana Zone Configurations", () => {
 
   describe("Zone Type Safety", () => {
     it("should type-check valid zone IDs", () => {
-      const validIds: LorcanaZoneId[] = ["deck", "hand", "play", "discard", "inkwell"];
-      
+      const validIds: LorcanaZoneId[] = [
+        "deck",
+        "hand",
+        "play",
+        "discard",
+        "inkwell",
+      ];
+
       for (const id of validIds) {
         expect(lorcanaZones[id]).toBeDefined();
       }
@@ -146,10 +152,9 @@ describe("Lorcana Zone Configurations", () => {
       // This test validates TypeScript type checking at compile time
       const zoneId: LorcanaZoneId = "deck";
       expect(zoneId).toBe("deck");
-      
+
       // TypeScript should prevent this:
       // const invalid: LorcanaZoneId = "invalid"; // Type error
     });
   });
 });
-

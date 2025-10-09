@@ -11,24 +11,14 @@ export const Guncannon: UnitCardDefinition = {
   level: 3,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/ST01-003.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST01-003.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 2,
   hp: 4,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "earth",
-    "federation",
-    "white",
-    "base",
-    "team",
-  ],
-  linkRequirements: [
-    "kai-shiden",
-  ],
+  zones: ["space", "earth"],
+  traits: ["earth", "federation", "white", "base", "team"],
+  linkRequirements: ["kai-shiden"],
   abilities: [
     {
       description: "-",

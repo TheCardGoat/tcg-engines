@@ -10,22 +10,15 @@ export const Chuchu039sDemiTrainer: UnitCardDefinition = {
   color: "white",
   level: 2,
   cost: 2,
-  text: "【Attack】Draw 1. Then, discard 1.
-",
-  imageUrl: "../images/cards/card/GD01-074.webp?2510031",
+  text: "【Attack】Draw 1. Then, discard 1.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-074.webp?2510031",
   sourceTitle: "Mobile Suit Gundam the Witch from Mercury",
   ap: 3,
   hp: 1,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "academy",
-  ],
-  linkRequirements: [
-    "chuatury-panlunch",
-  ],
+  zones: ["space", "earth"],
+  traits: ["academy"],
+  linkRequirements: ["chuatury-panlunch"],
   abilities: [
     {
       trigger: "ON_ATTACK",

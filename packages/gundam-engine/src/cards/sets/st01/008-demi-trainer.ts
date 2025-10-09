@@ -10,22 +10,15 @@ export const DemiTrainer: UnitCardDefinition = {
   color: "white",
   level: 1,
   cost: 1,
-  text: "&lt;Blocker&gt; (Rest this Unit to change the attack target to it.)
-",
-  imageUrl: "../images/cards/card/ST01-008.webp?2510031",
+  text: "<Blocker> (Rest this Unit to change the attack target to it.)",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST01-008.webp?2510031",
   sourceTitle: "Mobile Suit Gundam the Witch from Mercury",
   ap: 1,
   hp: 1,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "academy",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space", "earth"],
+  traits: ["academy"],
+  linkRequirements: ["-"],
   keywords: [
     {
       keyword: "Blocker",
@@ -33,10 +26,12 @@ export const DemiTrainer: UnitCardDefinition = {
   ],
   abilities: [
     {
-      description: "<Blocker> (Rest this Unit to change the attack target to it.)",
+      description:
+        "<Blocker> (Rest this Unit to change the attack target to it.)",
       effect: {
         type: "UNKNOWN",
-        rawText: "<Blocker> (Rest this Unit to change the attack target to it.)",
+        rawText:
+          "<Blocker> (Rest this Unit to change the attack target to it.)",
       },
     },
   ],

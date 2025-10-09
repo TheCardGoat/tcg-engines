@@ -11,21 +11,14 @@ export const WingGundamBirdMode: UnitCardDefinition = {
   level: 3,
   cost: 3,
   text: "【Deploy】Place 1 EX Resource.",
-  imageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-002.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST02-002.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 2,
   hp: 2,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "operation",
-    "meteor",
-  ],
-  linkRequirements: [
-    "heero-yuy",
-  ],
+  zones: ["space", "earth"],
+  traits: ["operation", "meteor"],
+  linkRequirements: ["heero-yuy"],
   abilities: [
     {
       trigger: "ON_DEPLOY",

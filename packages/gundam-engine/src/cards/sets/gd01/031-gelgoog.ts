@@ -11,20 +11,14 @@ export const Gelgoog: UnitCardDefinition = {
   level: 4,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/GD01-031.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-031.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 4,
   hp: 3,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "zeon",
-  ],
-  linkRequirements: [
-    "(zeon)-trait",
-  ],
+  zones: ["space", "earth"],
+  traits: ["zeon"],
+  linkRequirements: ["(zeon)-trait"],
   abilities: [
     {
       description: "-",

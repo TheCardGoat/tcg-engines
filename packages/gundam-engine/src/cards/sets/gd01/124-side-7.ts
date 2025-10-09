@@ -10,22 +10,14 @@ export const Side7: BaseCardDefinition_Structure = {
   color: "blue",
   level: 1,
   cost: 1,
-  text: "【Burst】Deploy this card.
-【Deploy】Add 1 of your Shields to your hand.<br />
-【Activate･Main】Rest this Base：Choose 1 friendly Unit. It recovers 1 HP.
-",
-  imageUrl: "../images/cards/card/GD01-124.webp?2510031",
+  text: "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\n【Activate･Main】Rest this Base：Choose 1 friendly Unit. It recovers 1 HP.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-124.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
-  ap: NaN,
+  ap: Number.NaN,
   hp: 4,
-  zones: [
-    "space",
-  ],
-  traits: [
-    "earth",
-    "federation",
-    "stronghold",
-  ],
+  zones: ["space"],
+  traits: ["earth", "federation", "stronghold"],
   abilities: [
     {
       trigger: "ON_BURST",
@@ -37,17 +29,18 @@ export const Side7: BaseCardDefinition_Structure = {
     },
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 Add 1 of your Shields to your hand.<br />",
+      description: "【Deploy】 Add 1 of your Shields to your hand.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Add 1 of your Shields to your hand.<br />",
+        rawText: "Add 1 of your Shields to your hand.",
       },
     },
     {
       activated: {
         timing: "MAIN",
       },
-      description: "【Activate･Main】 Rest this Base：Choose 1 friendly Unit. It recovers 1 HP.",
+      description:
+        "【Activate･Main】 Rest this Base：Choose 1 friendly Unit. It recovers 1 HP.",
       effect: {
         type: "RECOVER_HP",
         amount: 1,

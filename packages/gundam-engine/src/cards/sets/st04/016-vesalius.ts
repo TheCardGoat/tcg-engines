@@ -10,21 +10,14 @@ export const Vesalius: BaseCardDefinition_Structure = {
   color: "red",
   level: 3,
   cost: 1,
-  text: "【Burst】Deploy this card.
-【Deploy】Add 1 of your Shields to your hand.<br />
-【Activate･Main】Rest this Base：Choose 1 friendly Unit. It gets AP+1 during this turn.
-",
-  imageUrl: "../images/cards/card/ST04-016.webp?2510031",
+  text: "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\n【Activate･Main】Rest this Base：Choose 1 friendly Unit. It gets AP+1 during this turn.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST04-016.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
-  ap: NaN,
+  ap: Number.NaN,
   hp: 5,
-  zones: [
-    "space",
-  ],
-  traits: [
-    "zaft",
-    "warship",
-  ],
+  zones: ["space"],
+  traits: ["zaft", "warship"],
   abilities: [
     {
       trigger: "ON_BURST",
@@ -36,17 +29,18 @@ export const Vesalius: BaseCardDefinition_Structure = {
     },
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 Add 1 of your Shields to your hand.<br />",
+      description: "【Deploy】 Add 1 of your Shields to your hand.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Add 1 of your Shields to your hand.<br />",
+        rawText: "Add 1 of your Shields to your hand.",
       },
     },
     {
       activated: {
         timing: "MAIN",
       },
-      description: "【Activate･Main】 Rest this Base：Choose 1 friendly Unit. It gets AP+1 during this turn.",
+      description:
+        "【Activate･Main】 Rest this Base：Choose 1 friendly Unit. It gets AP+1 during this turn.",
       effect: {
         type: "MODIFY_STATS",
         attribute: "ap",

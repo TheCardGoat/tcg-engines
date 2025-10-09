@@ -10,23 +10,14 @@ export const Archangel: BaseCardDefinition_Structure = {
   color: "white",
   level: 3,
   cost: 1,
-  text: "【Burst】Deploy this card.
-【Deploy】Add 1 of your Shields to your hand.<br />
-【Activate･Main】【Once per Turn】②：Choose 1 friendly Unit with &lt;Blocker&gt;. Set it as active. It can't attack during this turn.
-",
-  imageUrl: "../images/cards/card/ST04-015.webp?2510031",
+  text: "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\n【Activate･Main】【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST04-015.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
-  ap: NaN,
+  ap: Number.NaN,
   hp: 5,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "earth",
-    "alliance",
-    "warship",
-  ],
+  zones: ["space", "earth"],
+  traits: ["earth", "alliance", "warship"],
   abilities: [
     {
       trigger: "ON_BURST",
@@ -38,20 +29,22 @@ export const Archangel: BaseCardDefinition_Structure = {
     },
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 Add 1 of your Shields to your hand.<br />",
+      description: "【Deploy】 Add 1 of your Shields to your hand.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Add 1 of your Shields to your hand.<br />",
+        rawText: "Add 1 of your Shields to your hand.",
       },
     },
     {
       activated: {
         timing: "MAIN",
       },
-      description: "【Activate･Main】 【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
+      description:
+        "【Activate･Main】 【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
       effect: {
         type: "UNKNOWN",
-        rawText: "【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
+        rawText:
+          "【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
       },
     },
   ],

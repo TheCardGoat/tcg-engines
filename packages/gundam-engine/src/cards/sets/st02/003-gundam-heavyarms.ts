@@ -11,24 +11,19 @@ export const GundamHeavyarms: UnitCardDefinition = {
   level: 5,
   cost: 3,
   text: "【During Pair】During your turn, when this Unit destroys an enemy Unit with battle damage, deal 1 damage to all enemy Units that are Lv.3 or lower.",
-  imageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-003.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST02-003.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 3,
   hp: 4,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "operation",
-    "meteor",
-  ],
-  linkRequirements: [
-    "trowa-barton",
-  ],
+  zones: ["earth"],
+  traits: ["operation", "meteor"],
+  linkRequirements: ["trowa-barton"],
   abilities: [
     {
       trigger: "DURING_PAIR",
-      description: "【During Pair】 During your turn, when this Unit destroys an enemy Unit with battle damage, deal 1 damage to all enemy Units that are Lv.3 or lower.",
+      description:
+        "【During Pair】 During your turn, when this Unit destroys an enemy Unit with battle damage, deal 1 damage to all enemy Units that are Lv.3 or lower.",
       effect: {
         type: "DAMAGE",
         amount: 1,

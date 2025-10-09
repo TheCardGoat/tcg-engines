@@ -10,23 +10,15 @@ export const LauncherStrikeGundam: UnitCardDefinition = {
   color: "white",
   level: 4,
   cost: 3,
-  text: "&lt;Blocker&gt; (Rest this Unit to change the attack target to it.)
-",
-  imageUrl: "../images/cards/card/GD01-072.webp?2510031",
+  text: "<Blocker> (Rest this Unit to change the attack target to it.)",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-072.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   ap: 3,
   hp: 4,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "earth",
-    "alliance",
-  ],
-  linkRequirements: [
-    "(earth-alliance)-trait",
-  ],
+  zones: ["space", "earth"],
+  traits: ["earth", "alliance"],
+  linkRequirements: ["(earth-alliance)-trait"],
   keywords: [
     {
       keyword: "Blocker",
@@ -34,10 +26,12 @@ export const LauncherStrikeGundam: UnitCardDefinition = {
   ],
   abilities: [
     {
-      description: "<Blocker> (Rest this Unit to change the attack target to it.)",
+      description:
+        "<Blocker> (Rest this Unit to change the attack target to it.)",
       effect: {
         type: "UNKNOWN",
-        rawText: "<Blocker> (Rest this Unit to change the attack target to it.)",
+        rawText:
+          "<Blocker> (Rest this Unit to change the attack target to it.)",
       },
     },
   ],

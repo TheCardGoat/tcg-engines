@@ -10,21 +10,14 @@ export const MiningAsteroidPalau: BaseCardDefinition_Structure = {
   color: "red",
   level: 2,
   cost: 1,
-  text: "【Burst】Deploy this card.
-【Deploy】Add 1 of your Shields to your hand.
-",
-  imageUrl: "../images/cards/card/GD01-128.webp?2510031",
+  text: "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-128.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
-  ap: NaN,
+  ap: Number.NaN,
   hp: 6,
-  zones: [
-    "space",
-  ],
-  traits: [
-    "neo",
-    "zeon",
-    "stronghold",
-  ],
+  zones: ["space"],
+  traits: ["neo", "zeon", "stronghold"],
   abilities: [
     {
       trigger: "ON_BURST",

@@ -10,16 +10,11 @@ export const KiraYamato: PilotCardDefinition = {
   color: "white",
   level: 4,
   cost: 1,
-  text: "【Burst】Add this card to your hand.
-【Attack】Choose 1 enemy Unit. It gets AP-2 during this battle.
-",
-  imageUrl: "../images/cards/card/ST04-010.webp?2510031",
+  text: "【Burst】Add this card to your hand.\n【Attack】Choose 1 enemy Unit. It gets AP-2 during this battle.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST04-010.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
-  traits: [
-    "earth",
-    "alliance",
-    "coordinator",
-  ],
+  traits: ["earth", "alliance", "coordinator"],
   apModifier: 2,
   hpModifier: 1,
   abilities: [
@@ -33,7 +28,8 @@ export const KiraYamato: PilotCardDefinition = {
     },
     {
       trigger: "ON_ATTACK",
-      description: "【Attack】 Choose 1 enemy Unit. It gets AP-2 during this battle.",
+      description:
+        "【Attack】 Choose 1 enemy Unit. It gets AP-2 during this battle.",
       effect: {
         type: "MODIFY_STATS",
         attribute: "ap",

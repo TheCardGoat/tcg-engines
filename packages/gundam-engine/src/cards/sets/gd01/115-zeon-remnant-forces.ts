@@ -10,14 +10,15 @@ export const ZeonRemnantForces: CommandCardDefinition = {
   color: "red",
   level: 2,
   cost: 1,
-  text: "【Main】/【Action】Choose 1 enemy Unit. Deal 1 damage to it.
-",
-  imageUrl: "../images/cards/card/GD01-115.webp?2510031",
+  text: "【Main】/【Action】Choose 1 enemy Unit. Deal 1 damage to it.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-115.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   timing: "MAIN",
   abilities: [
     {
-      description: "【Main】/【Action】Choose 1 enemy Unit. Deal 1 damage to it.",
+      description:
+        "【Main】/【Action】Choose 1 enemy Unit. Deal 1 damage to it.",
       effect: {
         type: "DAMAGE",
         amount: 1,

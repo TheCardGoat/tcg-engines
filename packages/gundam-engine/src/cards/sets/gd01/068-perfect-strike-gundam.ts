@@ -10,25 +10,15 @@ export const PerfectStrikeGundam: UnitCardDefinition = {
   color: "white",
   level: 5,
   cost: 3,
-  text: "&lt;Blocker&gt; (Rest this Unit to change the attack target to it.)
-【Deploy】Choose 1 enemy Unit with 1 HP. Return it to its owner&#039;s hand.
-",
-  imageUrl: "../images/cards/card/GD01-068.webp?2510031",
+  text: "<Blocker> (Rest this Unit to change the attack target to it.)\n【Deploy】Choose 1 enemy Unit with 1 HP. Return it to its owner&#039;s hand.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-068.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   ap: 4,
   hp: 4,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "triple",
-    "ship",
-    "alliance",
-  ],
-  linkRequirements: [
-    "(earth-alliance)-trait",
-  ],
+  zones: ["space", "earth"],
+  traits: ["triple", "ship", "alliance"],
+  linkRequirements: ["(earth-alliance)-trait"],
   keywords: [
     {
       keyword: "Blocker",
@@ -37,10 +27,12 @@ export const PerfectStrikeGundam: UnitCardDefinition = {
   abilities: [
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 Choose 1 enemy Unit with 1 HP. Return it to its owner&#039;s hand.",
+      description:
+        "【Deploy】 Choose 1 enemy Unit with 1 HP. Return it to its owner&#039;s hand.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Choose 1 enemy Unit with 1 HP. Return it to its owner&#039;s hand.",
+        rawText:
+          "Choose 1 enemy Unit with 1 HP. Return it to its owner&#039;s hand.",
       },
     },
   ],

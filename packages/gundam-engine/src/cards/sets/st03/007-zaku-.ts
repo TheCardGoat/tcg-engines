@@ -1,6 +1,6 @@
 import type { UnitCardDefinition } from "../../card-types";
 
-export const Zaku: UnitCardDefinition = {
+export const Zaku_ST03_007: UnitCardDefinition = {
   id: "st03-007",
   name: "Zaku Ⅰ",
   cardNumber: "ST03-007",
@@ -11,20 +11,14 @@ export const Zaku: UnitCardDefinition = {
   level: 1,
   cost: 1,
   text: "-",
-  imageUrl: "../images/cards/card/ST03-007.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST03-007.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 1,
   hp: 2,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "zeon",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space", "earth"],
+  traits: ["zeon"],
+  linkRequirements: ["-"],
   abilities: [
     {
       description: "-",

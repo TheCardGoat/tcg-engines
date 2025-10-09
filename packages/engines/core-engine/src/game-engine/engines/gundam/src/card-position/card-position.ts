@@ -12,42 +12,42 @@ export type CardPosition = "active" | "rested";
  * Minimal card instance for position tracking
  */
 export type CardInstance = {
-	id: string;
-	cardType: CardType;
-	position: CardPosition;
-	zone: ZoneType;
-	ownerId: string;
+  id: string;
+  cardType: CardType;
+  position: CardPosition;
+  zone: ZoneType;
+  ownerId: string;
 };
 
 /**
  * Position operation error types
  */
 export type CardPositionError = {
-	type: "alreadyInPosition";
-	currentPosition: CardPosition;
-	targetPosition: CardPosition;
-	cardId: string;
+  type: "alreadyInPosition";
+  currentPosition: CardPosition;
+  targetPosition: CardPosition;
+  cardId: string;
 };
 
 /**
  * Get the current position of a card
  */
 export const getCardPosition = (card: CardInstance): CardPosition => {
-	return card.position;
+  return card.position;
 };
 
 /**
  * Check if a card is in active position
  */
 export const isCardActive = (card: CardInstance): boolean => {
-	return card.position === "active";
+  return card.position === "active";
 };
 
 /**
  * Check if a card is in rested position
  */
 export const isCardRested = (card: CardInstance): boolean => {
-	return card.position === "rested";
+  return card.position === "rested";
 };
 
 /**
@@ -55,7 +55,7 @@ export const isCardRested = (card: CardInstance): boolean => {
  * Rule 1-3-2-1: Cannot rest a card that is already rested
  */
 export const canRestCard = (card: CardInstance): boolean => {
-	return card.position === "active";
+  return card.position === "active";
 };
 
 /**
@@ -63,7 +63,7 @@ export const canRestCard = (card: CardInstance): boolean => {
  * Rule 1-3-2-1: Cannot activate a card that is already active
  */
 export const canActivateCard = (card: CardInstance): boolean => {
-	return card.position === "rested";
+  return card.position === "rested";
 };
 
 /**
@@ -76,29 +76,29 @@ export const canActivateCard = (card: CardInstance): boolean => {
  * @returns Result containing new card state on success, or error if already rested
  */
 export const restCard = (
-	card: CardInstance,
+  card: CardInstance,
 ): Result<CardInstance, CardPositionError> => {
-	// Rule 1-3-2-1: Cannot rest an already rested card
-	if (card.position === "rested") {
-		return {
-			success: false,
-			error: {
-				type: "alreadyInPosition",
-				currentPosition: "rested",
-				targetPosition: "rested",
-				cardId: card.id,
-			},
-		};
-	}
+  // Rule 1-3-2-1: Cannot rest an already rested card
+  if (card.position === "rested") {
+    return {
+      success: false,
+      error: {
+        type: "alreadyInPosition",
+        currentPosition: "rested",
+        targetPosition: "rested",
+        cardId: card.id,
+      },
+    };
+  }
 
-	// Create new card with rested position (immutable update)
-	return {
-		success: true,
-		data: {
-			...card,
-			position: "rested",
-		},
-	};
+  // Create new card with rested position (immutable update)
+  return {
+    success: true,
+    data: {
+      ...card,
+      position: "rested",
+    },
+  };
 };
 
 /**
@@ -110,27 +110,27 @@ export const restCard = (
  * @returns Result containing new card state on success, or error if already active
  */
 export const activateCard = (
-	card: CardInstance,
+  card: CardInstance,
 ): Result<CardInstance, CardPositionError> => {
-	// Rule 1-3-2-1: Cannot activate an already active card
-	if (card.position === "active") {
-		return {
-			success: false,
-			error: {
-				type: "alreadyInPosition",
-				currentPosition: "active",
-				targetPosition: "active",
-				cardId: card.id,
-			},
-		};
-	}
+  // Rule 1-3-2-1: Cannot activate an already active card
+  if (card.position === "active") {
+    return {
+      success: false,
+      error: {
+        type: "alreadyInPosition",
+        currentPosition: "active",
+        targetPosition: "active",
+        cardId: card.id,
+      },
+    };
+  }
 
-	// Create new card with active position (immutable update)
-	return {
-		success: true,
-		data: {
-			...card,
-			position: "active",
-		},
-	};
+  // Create new card with active position (immutable update)
+  return {
+    success: true,
+    data: {
+      ...card,
+      position: "active",
+    },
+  };
 };

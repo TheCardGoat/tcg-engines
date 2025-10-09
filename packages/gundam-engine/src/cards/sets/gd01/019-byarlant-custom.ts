@@ -10,24 +10,15 @@ export const ByarlantCustom: UnitCardDefinition = {
   color: "blue",
   level: 4,
   cost: 2,
-  text: "While 4 or more enemy Units are in play, this Unit gains &lt;Blocker&gt;.<br />
-(Rest this Unit to change the attack target to it.)
-",
-  imageUrl: "../images/cards/card/GD01-019.webp?2510031",
+  text: "While 4 or more enemy Units are in play, this Unit gains <Blocker>.\n\n(Rest this Unit to change the attack target to it.)",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-019.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   ap: 3,
   hp: 4,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "earth",
-    "federation",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space", "earth"],
+  traits: ["earth", "federation"],
+  linkRequirements: ["-"],
   keywords: [
     {
       keyword: "Blocker",
@@ -35,10 +26,12 @@ export const ByarlantCustom: UnitCardDefinition = {
   ],
   abilities: [
     {
-      description: "While 4 or more enemy Units are in play, this Unit gains <Blocker>.<br /> (Rest this Unit to change the attack target to it.)",
+      description:
+        "While 4 or more enemy Units are in play, this Unit gains <Blocker>. (Rest this Unit to change the attack target to it.)",
       effect: {
         type: "UNKNOWN",
-        rawText: "While 4 or more enemy Units are in play, this Unit gains <Blocker>.<br /> (Rest this Unit to change the attack target to it.)",
+        rawText:
+          "While 4 or more enemy Units are in play, this Unit gains <Blocker>. (Rest this Unit to change the attack target to it.)",
       },
     },
   ],

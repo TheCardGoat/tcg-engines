@@ -10,20 +10,14 @@ export const Falmel: BaseCardDefinition_Structure = {
   color: "green",
   level: 3,
   cost: 2,
-  text: "【Burst】Deploy this card.
-【Deploy】Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.
-",
-  imageUrl: "../images/cards/card/ST03-016.webp?2510031",
+  text: "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST03-016.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
-  ap: NaN,
+  ap: Number.NaN,
   hp: 5,
-  zones: [
-    "space",
-  ],
-  traits: [
-    "zeon",
-    "warship",
-  ],
+  zones: ["space"],
+  traits: ["zeon", "warship"],
   abilities: [
     {
       trigger: "ON_BURST",
@@ -35,10 +29,12 @@ export const Falmel: BaseCardDefinition_Structure = {
     },
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+      description:
+        "【Deploy】 Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+        rawText:
+          "Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
       },
     },
   ],

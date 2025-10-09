@@ -1,6 +1,6 @@
 /**
  * File Writer Utilities
- * 
+ *
  * Handles writing card definition files to disk.
  */
 
@@ -14,23 +14,23 @@ import { generateCardFile, generateFilename } from "./card-generator";
  */
 export async function saveCardFile(
   card: CardDefinition,
-  baseDir: string = "packages/gundam-engine/src/cards/sets",
+  baseDir = "src/cards/sets",
 ): Promise<string> {
   const setDir = join(baseDir, card.setCode.toLowerCase());
   const filename = generateFilename(card);
   const filepath = join(setDir, filename);
-  
+
   // Ensure directory exists
   await mkdir(setDir, { recursive: true });
-  
+
   // Generate file content
   const content = generateCardFile(card);
-  
+
   // Write file
   await writeFile(filepath, content, "utf-8");
-  
+
   console.log(`💾 Saved: ${filepath}`);
-  
+
   return filepath;
 }
 
@@ -40,11 +40,11 @@ export async function saveCardFile(
 export async function generateSetIndex(
   setCode: string,
   cards: CardDefinition[],
-  baseDir: string = "packages/gundam-engine/src/cards/sets",
+  baseDir = "src/cards/sets",
 ): Promise<void> {
   const setDir = join(baseDir, setCode.toLowerCase());
   const indexPath = join(setDir, "index.ts");
-  
+
   // Generate exports
   const exports = cards
     .map((card) => {
@@ -53,7 +53,7 @@ export async function generateSetIndex(
       return `export { ${variableName} } from "./${filename}";`;
     })
     .join("\n");
-  
+
   const content = `/**
  * ${setCode} Card Definitions
  * 
@@ -62,7 +62,7 @@ export async function generateSetIndex(
 
 ${exports}
 `;
-  
+
   await writeFile(indexPath, content, "utf-8");
   console.log(`📝 Generated index: ${indexPath}`);
 }
@@ -72,14 +72,14 @@ ${exports}
  */
 export async function generateMasterIndex(
   setCodes: string[],
-  baseDir: string = "packages/gundam-engine/src/cards",
+  baseDir = "src/cards",
 ): Promise<void> {
   const indexPath = join(baseDir, "index.ts");
-  
+
   const exports = setCodes
     .map((setCode) => `export * from "./sets/${setCode.toLowerCase()}";`)
     .join("\n");
-  
+
   const content = `/**
  * Gundam Card Definitions
  * 
@@ -89,7 +89,7 @@ export async function generateMasterIndex(
 export * from "./card-types";
 ${exports}
 `;
-  
+
   await writeFile(indexPath, content, "utf-8");
   console.log(`📝 Generated master index: ${indexPath}`);
 }
@@ -106,4 +106,3 @@ function generateVariableName(name: string): string {
     })
     .join("");
 }
-

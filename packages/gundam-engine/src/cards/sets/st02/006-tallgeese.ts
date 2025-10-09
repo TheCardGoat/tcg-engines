@@ -11,26 +11,21 @@ export const Tallgeese: UnitCardDefinition = {
   level: 5,
   cost: 4,
   text: "【Activate･Main】【Once per Turn】④：Set this Unit as active.",
-  imageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-006.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST02-006.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 4,
   hp: 4,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "oz",
-  ],
-  linkRequirements: [
-    "zechs-merquise",
-  ],
+  zones: ["space", "earth"],
+  traits: ["oz"],
+  linkRequirements: ["zechs-merquise"],
   abilities: [
     {
       activated: {
         timing: "MAIN",
       },
-      description: "【Activate･Main】 【Once per Turn】④：Set this Unit as active.",
+      description:
+        "【Activate･Main】 【Once per Turn】④：Set this Unit as active.",
       effect: {
         type: "UNKNOWN",
         rawText: "【Once per Turn】④：Set this Unit as active.",

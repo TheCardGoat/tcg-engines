@@ -11,21 +11,14 @@ export const GearaZulu: UnitCardDefinition = {
   level: 3,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/ST03-003.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST03-003.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   ap: 3,
   hp: 2,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "neo",
-    "zeon",
-  ],
-  linkRequirements: [
-    "(neo-zeon)-trait",
-  ],
+  zones: ["space", "earth"],
+  traits: ["neo", "zeon"],
+  linkRequirements: ["(neo-zeon)-trait"],
   abilities: [
     {
       description: "-",

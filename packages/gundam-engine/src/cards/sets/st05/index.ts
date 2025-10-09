@@ -1,6 +1,6 @@
 /**
  * ST05 Card Definitions
- * 
+ *
  * Auto-generated card exports for set ST05.
  */
 

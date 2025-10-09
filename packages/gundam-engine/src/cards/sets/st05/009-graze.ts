@@ -11,20 +11,14 @@ export const Graze: UnitCardDefinition = {
   level: 2,
   cost: 1,
   text: "-",
-  imageUrl: "../images/cards/card/ST05-009.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST05-009.webp?2510031",
   sourceTitle: "Mobile Suit Gundam IRON-BLOODED ORPHANS",
   ap: 2,
   hp: 2,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "gjallarhorn",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space", "earth"],
+  traits: ["gjallarhorn"],
+  linkRequirements: ["-"],
   abilities: [
     {
       description: "-",

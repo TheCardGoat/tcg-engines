@@ -10,14 +10,11 @@ export const SulettaMercury: PilotCardDefinition = {
   color: "white",
   level: 4,
   cost: 1,
-  text: "【Burst】Add this card to your hand.
-【Attack】【Once per Turn】Choose 1 of your Resources. Set it as active.
-",
-  imageUrl: "../images/cards/card/ST01-011.webp?2510031",
+  text: "【Burst】Add this card to your hand.\n【Attack】【Once per Turn】Choose 1 of your Resources. Set it as active.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST01-011.webp?2510031",
   sourceTitle: "Mobile Suit Gundam the Witch from Mercury",
-  traits: [
-    "academy",
-  ],
+  traits: ["academy"],
   apModifier: 1,
   hpModifier: 2,
   abilities: [
@@ -31,10 +28,12 @@ export const SulettaMercury: PilotCardDefinition = {
     },
     {
       trigger: "ON_ATTACK",
-      description: "【Attack】 【Once per Turn】Choose 1 of your Resources. Set it as active.",
+      description:
+        "【Attack】 【Once per Turn】Choose 1 of your Resources. Set it as active.",
       effect: {
         type: "UNKNOWN",
-        rawText: "【Once per Turn】Choose 1 of your Resources. Set it as active.",
+        rawText:
+          "【Once per Turn】Choose 1 of your Resources. Set it as active.",
       },
     },
   ],

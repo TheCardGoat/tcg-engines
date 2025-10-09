@@ -10,28 +10,24 @@ export const Dopp: UnitCardDefinition = {
   color: "green",
   level: 1,
   cost: 1,
-  text: "【Deploy】Look at the top card of your deck. Return it to the top or bottom of your deck.
-",
-  imageUrl: "../images/cards/card/GD01-039.webp?2510031",
+  text: "【Deploy】Look at the top card of your deck. Return it to the top or bottom of your deck.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-039.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 1,
   hp: 1,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "zeon",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["earth"],
+  traits: ["zeon"],
+  linkRequirements: ["-"],
   abilities: [
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 Look at the top card of your deck. Return it to the top or bottom of your deck.",
+      description:
+        "【Deploy】 Look at the top card of your deck. Return it to the top or bottom of your deck.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Look at the top card of your deck. Return it to the top or bottom of your deck.",
+        rawText:
+          "Look at the top card of your deck. Return it to the top or bottom of your deck.",
       },
     },
   ],

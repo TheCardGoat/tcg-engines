@@ -10,26 +10,20 @@ export const Zechs039Leo: UnitCardDefinition = {
   color: "blue",
   level: 3,
   cost: 2,
-  text: "【When Paired】Choose 1 enemy Unit with 3 or less HP. Rest it.
-",
-  imageUrl: "../images/cards/card/GD01-012.webp?2510031",
+  text: "【When Paired】Choose 1 enemy Unit with 3 or less HP. Rest it.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-012.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 3,
   hp: 2,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "oz",
-  ],
-  linkRequirements: [
-    "(oz)-trait",
-  ],
+  zones: ["space", "earth"],
+  traits: ["oz"],
+  linkRequirements: ["(oz)-trait"],
   abilities: [
     {
       trigger: "WHEN_PAIRED",
-      description: "【When Paired】 Choose 1 enemy Unit with 3 or less HP. Rest it.",
+      description:
+        "【When Paired】 Choose 1 enemy Unit with 3 or less HP. Rest it.",
       effect: {
         type: "UNKNOWN",
         rawText: "Choose 1 enemy Unit with 3 or less HP. Rest it.",

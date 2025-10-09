@@ -10,14 +10,11 @@ export const GuelJeturk: PilotCardDefinition = {
   color: "white",
   level: 3,
   cost: 1,
-  text: "【Burst】Add this card to your hand.
-【Activate･Main】【Once per Turn】If your opponent has 8 or more cards in their hand, set this Unit as active. It can&#039;t attack during this turn.
-",
-  imageUrl: "../images/cards/card/GD01-097.webp?2510031",
+  text: "【Burst】Add this card to your hand.\n【Activate･Main】【Once per Turn】If your opponent has 8 or more cards in their hand, set this Unit as active. It can&#039;t attack during this turn.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-097.webp?2510031",
   sourceTitle: "Mobile Suit Gundam the Witch from Mercury",
-  traits: [
-    "academy",
-  ],
+  traits: ["academy"],
   apModifier: 1,
   hpModifier: 1,
   abilities: [
@@ -33,10 +30,12 @@ export const GuelJeturk: PilotCardDefinition = {
       activated: {
         timing: "MAIN",
       },
-      description: "【Activate･Main】 【Once per Turn】If your opponent has 8 or more cards in their hand, set this Unit as active. It can&#039;t attack during this turn.",
+      description:
+        "【Activate･Main】 【Once per Turn】If your opponent has 8 or more cards in their hand, set this Unit as active. It can&#039;t attack during this turn.",
       effect: {
         type: "UNKNOWN",
-        rawText: "【Once per Turn】If your opponent has 8 or more cards in their hand, set this Unit as active. It can&#039;t attack during this turn.",
+        rawText:
+          "【Once per Turn】If your opponent has 8 or more cards in their hand, set this Unit as active. It can&#039;t attack during this turn.",
       },
     },
   ],

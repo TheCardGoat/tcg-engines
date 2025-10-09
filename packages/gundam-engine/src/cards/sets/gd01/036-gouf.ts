@@ -11,19 +11,14 @@ export const Gouf: UnitCardDefinition = {
   level: 2,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/GD01-036.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-036.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 3,
   hp: 2,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "zeon",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["earth"],
+  traits: ["zeon"],
+  linkRequirements: ["-"],
   abilities: [
     {
       description: "-",

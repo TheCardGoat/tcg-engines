@@ -10,25 +10,20 @@ export const Adzam: UnitCardDefinition = {
   color: "green",
   level: 5,
   cost: 4,
-  text: "【Deploy】If 5 or more enemy Units are in play, deal 1 damage to all enemy Units.
-",
-  imageUrl: "../images/cards/card/GD01-038.webp?2510031",
+  text: "【Deploy】If 5 or more enemy Units are in play, deal 1 damage to all enemy Units.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-038.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 2,
   hp: 5,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "zeon",
-  ],
-  linkRequirements: [
-    "(zeon)-trait",
-  ],
+  zones: ["earth"],
+  traits: ["zeon"],
+  linkRequirements: ["(zeon)-trait"],
   abilities: [
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 If 5 or more enemy Units are in play, deal 1 damage to all enemy Units.",
+      description:
+        "【Deploy】 If 5 or more enemy Units are in play, deal 1 damage to all enemy Units.",
       effect: {
         type: "DAMAGE",
         amount: 1,

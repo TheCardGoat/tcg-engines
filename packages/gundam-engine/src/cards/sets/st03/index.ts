@@ -1,6 +1,6 @@
 /**
  * ST03 Card Definitions
- * 
+ *
  * Auto-generated card exports for set ST03.
  */
 
@@ -10,8 +10,8 @@ export { GearaZulu } from "./003-geara-zulu";
 export { GazaDSleeves } from "./004-gaza-d-sleeves";
 export { DracSleeves } from "./005-dra-c-sleeves";
 export { CharsZaku } from "./006-chars-zaku-";
-export { Zaku } from "./007-zaku-";
-export { Zaku } from "./008-zaku-";
+export { Zaku_ST03_007 } from "./007-zaku-";
+export { Zaku_ST03_008 } from "./008-zaku-";
 export { Gouf } from "./009-gouf";
 export { FullFrontal } from "./010-full-frontal";
 export { CharAznable } from "./011-char-aznable";

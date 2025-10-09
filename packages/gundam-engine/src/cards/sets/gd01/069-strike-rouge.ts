@@ -10,24 +10,15 @@ export const StrikeRouge: UnitCardDefinition = {
   color: "white",
   level: 3,
   cost: 2,
-  text: "【Activate･Main】【Once per Turn】①：Choose 1 of your rested white Units with &lt;Blocker&gt;. Set it as active. It can&#039;t attack during this turn.
-",
-  imageUrl: "../images/cards/card/GD01-069.webp?2510031",
+  text: "【Activate･Main】【Once per Turn】①：Choose 1 of your rested white Units with <Blocker>. Set it as active. It can&#039;t attack during this turn.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-069.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   ap: 3,
   hp: 2,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "triple",
-    "ship",
-    "alliance",
-  ],
-  linkRequirements: [
-    "(orb)-trait",
-  ],
+  zones: ["space", "earth"],
+  traits: ["triple", "ship", "alliance"],
+  linkRequirements: ["(orb)-trait"],
   keywords: [
     {
       keyword: "Blocker",
@@ -38,10 +29,12 @@ export const StrikeRouge: UnitCardDefinition = {
       activated: {
         timing: "MAIN",
       },
-      description: "【Activate･Main】 【Once per Turn】①：Choose 1 of your rested white Units with <Blocker>. Set it as active. It can&#039;t attack during this turn.",
+      description:
+        "【Activate･Main】 【Once per Turn】①：Choose 1 of your rested white Units with <Blocker>. Set it as active. It can&#039;t attack during this turn.",
       effect: {
         type: "UNKNOWN",
-        rawText: "【Once per Turn】①：Choose 1 of your rested white Units with <Blocker>. Set it as active. It can&#039;t attack during this turn.",
+        rawText:
+          "【Once per Turn】①：Choose 1 of your rested white Units with <Blocker>. Set it as active. It can&#039;t attack during this turn.",
       },
     },
   ],

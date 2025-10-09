@@ -1,17 +1,17 @@
 import { describe, expect, it } from "bun:test";
-import type { LorcanaState } from "../lorcana-state";
 import { createPlayerId } from "../branded-types";
+import type { LorcanaState } from "../lorcana-state";
 
 /**
  * Task 1.1: Tests for LorcanaState type structure
- * 
+ *
  * Validates the complete Lorcana game state type definition:
  * - Lore tracking (Rule 3.1.4 - starts at 0)
  * - Ink management (total and available)
  * - Character states (drying, damage, exerted)
  * - Turn metadata
  * - Challenge state
- * 
+ *
  * References:
  * - Rule 1.9.1.1 (Win at 20 lore)
  * - Rule 4.2.2.1 (Drying characters)
@@ -24,7 +24,7 @@ describe("LorcanaState Type Structure", () => {
   it("should have lore tracking for each player", () => {
     const player1 = createPlayerId("player1");
     const player2 = createPlayerId("player2");
-    
+
     const state: LorcanaState = {
       players: [player1, player2],
       currentPlayerIndex: 0,
@@ -288,4 +288,3 @@ describe("LorcanaState Type Structure", () => {
     expect(state.phase).toBe("beginning");
   });
 });
-

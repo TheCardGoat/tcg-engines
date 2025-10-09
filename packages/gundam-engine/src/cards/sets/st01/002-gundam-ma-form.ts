@@ -10,25 +10,15 @@ export const GundamMaForm: UnitCardDefinition = {
   color: "blue",
   level: 5,
   cost: 3,
-  text: "【When Paired･(White Base Team) Pilot】Draw 1.
-",
-  imageUrl: "../images/cards/card/ST01-002.webp?2510031",
+  text: "【When Paired･(White Base Team) Pilot】Draw 1.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST01-002.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 4,
   hp: 3,
-  zones: [
-    "space",
-  ],
-  traits: [
-    "earth",
-    "federation",
-    "white",
-    "base",
-    "team",
-  ],
-  linkRequirements: [
-    "amuro-ray",
-  ],
+  zones: ["space"],
+  traits: ["earth", "federation", "white", "base", "team"],
+  linkRequirements: ["amuro-ray"],
   abilities: [
     {
       description: "【When Paired･(White Base Team) Pilot】Draw 1.",

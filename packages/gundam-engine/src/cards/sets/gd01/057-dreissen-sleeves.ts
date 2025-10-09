@@ -11,21 +11,14 @@ export const DreissenSleeves: UnitCardDefinition = {
   level: 2,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/GD01-057.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-057.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   ap: 2,
   hp: 3,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "neo",
-    "zeon",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space", "earth"],
+  traits: ["neo", "zeon"],
+  linkRequirements: ["-"],
   abilities: [
     {
       description: "-",

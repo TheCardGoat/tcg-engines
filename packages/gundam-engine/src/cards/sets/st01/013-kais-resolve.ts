@@ -10,27 +10,21 @@ export const KaisResolve: CommandCardDefinition = {
   color: "blue",
   level: 3,
   cost: 1,
-  text: "【Main】Choose 1 friendly Unit. It recovers 3 HP.
-【Pilot】[Kai Shiden]
-",
-  imageUrl: "../images/cards/card/ST01-013.webp?2510031",
+  text: "【Main】Choose 1 friendly Unit. It recovers 3 HP.\n【Pilot】[Kai Shiden]",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST01-013.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   timing: "MAIN",
   pilotProperties: {
     name: "Kai Shiden",
-    traits: [
-      "earth",
-      "federation",
-      "white",
-      "base",
-      "team",
-    ],
+    traits: ["earth", "federation", "white", "base", "team"],
     apModifier: 1,
     hpModifier: 0,
   },
   abilities: [
     {
-      description: "【Main】Choose 1 friendly Unit. It recovers 3 HP. 【Pilot】[Kai Shiden]",
+      description:
+        "【Main】Choose 1 friendly Unit. It recovers 3 HP. 【Pilot】[Kai Shiden]",
       effect: {
         type: "RECOVER_HP",
         amount: 3,

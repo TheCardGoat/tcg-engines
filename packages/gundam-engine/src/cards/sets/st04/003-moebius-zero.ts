@@ -11,20 +11,14 @@ export const MoebiusZero: UnitCardDefinition = {
   level: 3,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/ST04-003.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST04-003.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   ap: 2,
   hp: 4,
-  zones: [
-    "space",
-  ],
-  traits: [
-    "earth",
-    "alliance",
-  ],
-  linkRequirements: [
-    "mu-la-flaga",
-  ],
+  zones: ["space"],
+  traits: ["earth", "alliance"],
+  linkRequirements: ["mu-la-flaga"],
   abilities: [
     {
       description: "-",

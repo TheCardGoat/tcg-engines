@@ -1,13 +1,13 @@
 /**
  * Lorcana Zone Configurations
- * 
+ *
  * Task 1.4: Define all 5 zones for Disney Lorcana
- * 
+ *
  * Zone properties follow Comprehensive Rules Section 8:
  * - visibility: "owner" (private) or "all" (public)
  * - ordered: true if card order matters, false if can rearrange
  * - facedown: true if cards not visible even to owner
- * 
+ *
  * References:
  * - Rule 8.1.2 (Public zones - all can see/count)
  * - Rule 8.1.3 (Private zones - only owner can see)
@@ -20,7 +20,7 @@
 
 /**
  * Zone visibility types
- * 
+ *
  * - "owner": Private zone - only owner can see cards (Rule 8.1.3)
  * - "all": Public zone - all players can see cards (Rule 8.1.2)
  */
@@ -28,13 +28,13 @@ export type ZoneVisibility = "owner" | "all";
 
 /**
  * Zone configuration
- * 
+ *
  * Defines properties for each zone type in Lorcana
  */
 export type ZoneConfig = {
   /**
    * Who can see cards in this zone
-   * 
+   *
    * - "owner": Only the owner can see (private)
    * - "all": All players can see (public)
    */
@@ -42,7 +42,7 @@ export type ZoneConfig = {
 
   /**
    * Whether card order matters
-   * 
+   *
    * - true: Order is significant (e.g., deck, discard)
    * - false: Can rearrange freely (e.g., hand, play)
    */
@@ -50,7 +50,7 @@ export type ZoneConfig = {
 
   /**
    * Whether cards are facedown
-   * 
+   *
    * - true: Cards not visible even to owner (e.g., deck, inkwell)
    * - false: Cards are visible to appropriate players
    */
@@ -59,23 +59,23 @@ export type ZoneConfig = {
 
 /**
  * Lorcana zone identifiers
- * 
+ *
  * The 5 zones in Disney Lorcana (Rule 8)
  */
 export type LorcanaZoneId = "deck" | "hand" | "play" | "discard" | "inkwell";
 
 /**
  * Lorcana Zone Configurations
- * 
+ *
  * Complete zone definitions for Disney Lorcana following Comprehensive Rules Section 8.
- * 
+ *
  * @example
  * ```typescript
  * // Check if deck is private
  * if (lorcanaZones.deck.visibility === "owner") {
  *   // Only owner can see deck cards
  * }
- * 
+ *
  * // Check if discard maintains order
  * if (lorcanaZones.discard.ordered) {
  *   // Card order matters in discard
@@ -85,12 +85,12 @@ export type LorcanaZoneId = "deck" | "hand" | "play" | "discard" | "inkwell";
 export const lorcanaZones: Record<LorcanaZoneId, ZoneConfig> = {
   /**
    * Deck Zone
-   * 
+   *
    * Rule 8.2: Player's deck of cards to draw from
    * - Private zone (Rule 8.2.2)
    * - Ordered (cards remain in sequence)
    * - Facedown (cannot look at)
-   * 
+   *
    * Key Rules:
    * - 8.2.2: Cards remain facedown at all times
    * - 8.2.2: Players can count cards but not see them
@@ -105,12 +105,12 @@ export const lorcanaZones: Record<LorcanaZoneId, ZoneConfig> = {
 
   /**
    * Hand Zone
-   * 
+   *
    * Rule 8.3: Where drawn cards are held
    * - Private zone (Rule 8.3.2)
    * - Unordered (can rearrange freely)
    * - Not facedown (owner can see)
-   * 
+   *
    * Key Rules:
    * - 8.3.2: Can't look at opponent's hand
    * - 8.3.2: Can rearrange your own hand
@@ -125,12 +125,12 @@ export const lorcanaZones: Record<LorcanaZoneId, ZoneConfig> = {
 
   /**
    * Play Zone
-   * 
+   *
    * Rule 8.4: Where characters, items, and locations are played
    * - Public zone (Rule 8.4.3)
    * - Unordered (no specific arrangement)
    * - Not facedown (all can see)
-   * 
+   *
    * Key Rules:
    * - 8.4.1: Only characters, items, locations can be here
    * - 8.4.2: Only cards here are "in play"
@@ -145,12 +145,12 @@ export const lorcanaZones: Record<LorcanaZoneId, ZoneConfig> = {
 
   /**
    * Discard Zone
-   * 
+   *
    * Rule 8.6: Where banished cards and resolved actions go
    * - Public zone (Rule 8.6.3)
    * - Ordered (maintain sequence)
    * - Not facedown (all can see)
-   * 
+   *
    * Key Rules:
    * - 8.6.2: Banished cards and actions go here
    * - 8.6.3: Cards remain faceup
@@ -166,12 +166,12 @@ export const lorcanaZones: Record<LorcanaZoneId, ZoneConfig> = {
 
   /**
    * Inkwell Zone
-   * 
+   *
    * Rule 8.5: Where ink cards are placed to generate resources
    * - Private zone (Rule 8.5.3)
    * - Unordered (can arrange as convenient)
    * - Facedown (cannot look at)
-   * 
+   *
    * Key Rules:
    * - 8.5.1: Each card represents 1 ink
    * - 8.5.2: Cards enter facedown and ready
@@ -190,7 +190,7 @@ export const lorcanaZones: Record<LorcanaZoneId, ZoneConfig> = {
 
 /**
  * Type guard to check if a string is a valid Lorcana zone ID
- * 
+ *
  * @param value - Value to check
  * @returns True if value is a valid LorcanaZoneId
  */
@@ -203,7 +203,7 @@ export const isLorcanaZoneId = (value: unknown): value is LorcanaZoneId => {
 
 /**
  * Get zone configuration by ID
- * 
+ *
  * @param zoneId - The zone identifier
  * @returns Zone configuration
  * @throws Error if zoneId is invalid
@@ -217,7 +217,7 @@ export const getZoneConfig = (zoneId: string): ZoneConfig => {
 
 /**
  * Check if zone is public (all players can see)
- * 
+ *
  * @param zoneId - The zone identifier
  * @returns True if zone is public
  */
@@ -227,7 +227,7 @@ export const isPublicZone = (zoneId: LorcanaZoneId): boolean => {
 
 /**
  * Check if zone is private (only owner can see)
- * 
+ *
  * @param zoneId - The zone identifier
  * @returns True if zone is private
  */
@@ -237,7 +237,7 @@ export const isPrivateZone = (zoneId: LorcanaZoneId): boolean => {
 
 /**
  * Check if zone maintains card order
- * 
+ *
  * @param zoneId - The zone identifier
  * @returns True if zone is ordered
  */
@@ -247,11 +247,10 @@ export const isOrderedZone = (zoneId: LorcanaZoneId): boolean => {
 
 /**
  * Check if zone cards are facedown
- * 
+ *
  * @param zoneId - The zone identifier
  * @returns True if zone is facedown
  */
 export const isFacedownZone = (zoneId: LorcanaZoneId): boolean => {
   return lorcanaZones[zoneId].facedown;
 };
-

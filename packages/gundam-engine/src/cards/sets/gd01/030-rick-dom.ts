@@ -10,21 +10,15 @@ export const RickDom: UnitCardDefinition = {
   color: "green",
   level: 3,
   cost: 2,
-  text: "&lt;Breach 2&gt; (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)
-",
-  imageUrl: "../images/cards/card/GD01-030.webp?2510031",
+  text: "<Breach 2> (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-030.webp?2510031",
   sourceTitle: "Mobile Suit Gundam",
   ap: 3,
   hp: 3,
-  zones: [
-    "space",
-  ],
-  traits: [
-    "zeon",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space"],
+  traits: ["zeon"],
+  linkRequirements: ["-"],
   keywords: [
     {
       keyword: "Breach",
@@ -33,10 +27,12 @@ export const RickDom: UnitCardDefinition = {
   ],
   abilities: [
     {
-      description: "<Breach 2> (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+      description:
+        "<Breach 2> (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
       effect: {
         type: "UNKNOWN",
-        rawText: "<Breach 2> (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+        rawText:
+          "<Breach 2> (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
       },
     },
   ],

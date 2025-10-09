@@ -10,26 +10,20 @@ export const GundamAerialPermetScoreSix: UnitCardDefinition = {
   color: "white",
   level: 5,
   cost: 4,
-  text: "【When Paired】Choose 1 enemy Unit that is Lv.5 or lower. It gets AP-3 during this turn.
-",
-  imageUrl: "../images/cards/card/ST01-006.webp?2510031",
+  text: "【When Paired】Choose 1 enemy Unit that is Lv.5 or lower. It gets AP-3 during this turn.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST01-006.webp?2510031",
   sourceTitle: "Mobile Suit Gundam the Witch from Mercury",
   ap: 4,
   hp: 4,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "academy",
-  ],
-  linkRequirements: [
-    "suletta-mercury",
-  ],
+  zones: ["space", "earth"],
+  traits: ["academy"],
+  linkRequirements: ["suletta-mercury"],
   abilities: [
     {
       trigger: "WHEN_PAIRED",
-      description: "【When Paired】 Choose 1 enemy Unit that is Lv.5 or lower. It gets AP-3 during this turn.",
+      description:
+        "【When Paired】 Choose 1 enemy Unit that is Lv.5 or lower. It gets AP-3 during this turn.",
       effect: {
         type: "MODIFY_STATS",
         attribute: "ap",

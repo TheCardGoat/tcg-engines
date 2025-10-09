@@ -10,26 +10,25 @@ export const CovertOperative: CommandCardDefinition = {
   color: "white",
   level: 3,
   cost: 1,
-  text: "【Main】Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand. If you have a Link Unit in play, choose 1 enemy Unit with 4 or less HP instead.
-【Pilot】[Shaddiq Zenelli]
-",
-  imageUrl: "../images/cards/card/GD01-122.webp?2510031",
+  text: "【Main】Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand. If you have a Link Unit in play, choose 1 enemy Unit with 4 or less HP instead.\n【Pilot】[Shaddiq Zenelli]",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-122.webp?2510031",
   sourceTitle: "Mobile Suit Gundam the Witch from Mercury",
   timing: "MAIN",
   pilotProperties: {
     name: "Shaddiq Zenelli",
-    traits: [
-      "academy",
-    ],
+    traits: ["academy"],
     apModifier: 1,
     hpModifier: 0,
   },
   abilities: [
     {
-      description: "【Main】Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand. If you have a Link Unit in play, choose 1 enemy Unit with 4 or less HP instead. 【Pilot】[Shaddiq Zenelli]",
+      description:
+        "【Main】Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand. If you have a Link Unit in play, choose 1 enemy Unit with 4 or less HP instead. 【Pilot】[Shaddiq Zenelli]",
       effect: {
         type: "UNKNOWN",
-        rawText: "【Main】Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand. If you have a Link Unit in play, choose 1 enemy Unit with 4 or less HP instead. 【Pilot】[Shaddiq Zenelli]",
+        rawText:
+          "【Main】Choose 1 enemy Unit with 2 or less HP. Return it to its owner&#039;s hand. If you have a Link Unit in play, choose 1 enemy Unit with 4 or less HP instead. 【Pilot】[Shaddiq Zenelli]",
       },
     },
   ],

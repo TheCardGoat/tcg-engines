@@ -10,23 +10,15 @@ export const GundamHeavyarms: UnitCardDefinition = {
   color: "green",
   level: 4,
   cost: 2,
-  text: "【During Pair】This Unit gains &lt;Breach 3&gt;.<br />
-(When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)
-",
-  imageUrl: "../images/cards/card/GD01-034.webp?2510031",
+  text: "【During Pair】This Unit gains <Breach 3>.\n\n(When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-034.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 3,
   hp: 4,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "operation",
-    "meteor",
-  ],
-  linkRequirements: [
-    "trowa-barton",
-  ],
+  zones: ["earth"],
+  traits: ["operation", "meteor"],
+  linkRequirements: ["trowa-barton"],
   keywords: [
     {
       keyword: "Breach",
@@ -36,10 +28,12 @@ export const GundamHeavyarms: UnitCardDefinition = {
   abilities: [
     {
       trigger: "DURING_PAIR",
-      description: "【During Pair】 This Unit gains <Breach 3>.<br /> (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+      description:
+        "【During Pair】 This Unit gains <Breach 3>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
       effect: {
         type: "UNKNOWN",
-        rawText: "This Unit gains <Breach 3>.<br /> (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
+        rawText:
+          "This Unit gains <Breach 3>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
       },
     },
   ],

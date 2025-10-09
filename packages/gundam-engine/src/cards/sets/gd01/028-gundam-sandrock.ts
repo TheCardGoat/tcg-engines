@@ -10,26 +10,20 @@ export const GundamSandrock: UnitCardDefinition = {
   color: "green",
   level: 5,
   cost: 3,
-  text: "【Deploy】You may deploy 1 (Maganac Corps) Unit card from your hand.
-",
-  imageUrl: "../images/cards/card/GD01-028.webp?2510031",
+  text: "【Deploy】You may deploy 1 (Maganac Corps) Unit card from your hand.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-028.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 4,
   hp: 4,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "operation",
-    "meteor",
-  ],
-  linkRequirements: [
-    "quatre-raberba-winner",
-  ],
+  zones: ["earth"],
+  traits: ["operation", "meteor"],
+  linkRequirements: ["quatre-raberba-winner"],
   abilities: [
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 You may deploy 1 (Maganac Corps) Unit card from your hand.",
+      description:
+        "【Deploy】 You may deploy 1 (Maganac Corps) Unit card from your hand.",
       effect: {
         type: "UNKNOWN",
         rawText: "You may deploy 1 (Maganac Corps) Unit card from your hand.",

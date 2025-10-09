@@ -11,20 +11,14 @@ export const Guel039sDilanza: UnitCardDefinition = {
   level: 2,
   cost: 2,
   text: "-",
-  imageUrl: "../images/cards/card/GD01-083.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-083.webp?2510031",
   sourceTitle: "Mobile Suit Gundam the Witch from Mercury",
   ap: 2,
   hp: 2,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "academy",
-  ],
-  linkRequirements: [
-    "(academy)-trait",
-  ],
+  zones: ["space", "earth"],
+  traits: ["academy"],
+  linkRequirements: ["(academy)-trait"],
   abilities: [
     {
       description: "-",

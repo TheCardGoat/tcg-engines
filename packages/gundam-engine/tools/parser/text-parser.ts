@@ -1,6 +1,6 @@
 /**
  * Gundam Card Text Parser
- * 
+ *
  * Converts card effect text into structured ability format.
  */
 
@@ -29,7 +29,10 @@ const KEYWORD_PATTERNS: Record<string, KeywordAbility["keyword"]> = {
 // TRIGGER PATTERNS
 // ============================================================================
 
-const TRIGGER_PATTERNS: Record<string, ParsedAbility["trigger"] | "ACTIVATED_MAIN" | "ACTIVATED_ACTION"> = {
+const TRIGGER_PATTERNS: Record<
+  string,
+  ParsedAbility["trigger"] | "ACTIVATED_MAIN" | "ACTIVATED_ACTION"
+> = {
   "【Deploy】": "ON_DEPLOY",
   "【Attack】": "ON_ATTACK",
   "【When Paired】": "WHEN_PAIRED",
@@ -49,16 +52,16 @@ const TRIGGER_PATTERNS: Record<string, ParsedAbility["trigger"] | "ACTIVATED_MAI
  */
 export function parseCardText(text: string): ParseResult {
   const warnings: string[] = [];
-  
+
   // Clean and normalize text
   const cleanText = cleanCardText(text);
-  
+
   // Extract keywords
   const keywords = extractKeywords(cleanText);
-  
+
   // Extract abilities
   const abilities = parseAbilityText(cleanText, warnings);
-  
+
   return {
     keywords,
     abilities,
@@ -75,17 +78,17 @@ export function parseCardText(text: string): ParseResult {
  */
 export function extractKeywords(text: string): KeywordAbility[] {
   const keywords: KeywordAbility[] = [];
-  
+
   for (const [pattern, keyword] of Object.entries(KEYWORD_PATTERNS)) {
     const regex = new RegExp(pattern, "gi");
     const matches = text.matchAll(regex);
-    
+
     for (const match of matches) {
-      const value = match[1] ? parseInt(match[1], 10) : undefined;
+      const value = match[1] ? Number.parseInt(match[1], 10) : undefined;
       keywords.push({ keyword, value });
     }
   }
-  
+
   return keywords;
 }
 
@@ -96,31 +99,36 @@ export function extractKeywords(text: string): KeywordAbility[] {
 /**
  * Parses ability text into structured abilities
  */
-export function parseAbilityText(text: string, warnings: string[]): ParsedAbility[] {
+export function parseAbilityText(
+  text: string,
+  warnings: string[],
+): ParsedAbility[] {
   const abilities: ParsedAbility[] = [];
-  
+
   // Split by timing markers
   const segments = splitByTimingMarkers(text);
-  
+
   for (const segment of segments) {
     const ability = parseAbilitySegment(segment, warnings);
     if (ability) {
       abilities.push(ability);
     }
   }
-  
+
   return abilities;
 }
 
 /**
  * Splits text by timing markers
  */
-function splitByTimingMarkers(text: string): Array<{ trigger: string; text: string }> {
+function splitByTimingMarkers(
+  text: string,
+): Array<{ trigger: string; text: string }> {
   const segments: Array<{ trigger: string; text: string }> = [];
-  
+
   // Find all timing markers and their positions
   const markerPositions: Array<{ marker: string; pos: number }> = [];
-  
+
   for (const marker of Object.keys(TRIGGER_PATTERNS)) {
     let pos = text.indexOf(marker);
     while (pos !== -1) {
@@ -128,30 +136,30 @@ function splitByTimingMarkers(text: string): Array<{ trigger: string; text: stri
       pos = text.indexOf(marker, pos + 1);
     }
   }
-  
+
   // Sort by position
   markerPositions.sort((a, b) => a.pos - b.pos);
-  
+
   // Extract segments
   for (let i = 0; i < markerPositions.length; i++) {
     const current = markerPositions[i];
     const next = markerPositions[i + 1];
-    
+
     const segmentText = next
       ? text.substring(current.pos, next.pos)
       : text.substring(current.pos);
-    
+
     segments.push({
       trigger: current.marker,
       text: segmentText.replace(current.marker, "").trim(),
     });
   }
-  
+
   // If no markers found, treat whole text as one segment
   if (segments.length === 0 && text.trim()) {
     segments.push({ trigger: "", text: text.trim() });
   }
-  
+
   return segments;
 }
 
@@ -165,14 +173,14 @@ function parseAbilitySegment(
   if (!segment.text.trim()) {
     return null;
   }
-  
+
   const triggerType = TRIGGER_PATTERNS[segment.trigger];
-  
+
   // Handle activated abilities
   if (triggerType === "ACTIVATED_MAIN" || triggerType === "ACTIVATED_ACTION") {
     const timing = triggerType === "ACTIVATED_MAIN" ? "MAIN" : "ACTION";
     const cost = extractActivationCost(segment.text);
-    
+
     return {
       activated: {
         timing,
@@ -182,16 +190,20 @@ function parseAbilitySegment(
       effect: parseEffect(segment.text, triggerType, warnings),
     };
   }
-  
+
   // Handle triggered abilities
-  if (triggerType && triggerType !== "ACTIVATED_MAIN" && triggerType !== "ACTIVATED_ACTION") {
+  if (
+    triggerType &&
+    triggerType !== "ACTIVATED_MAIN" &&
+    triggerType !== "ACTIVATED_ACTION"
+  ) {
     return {
       trigger: triggerType,
       description: `${segment.trigger} ${segment.text}`,
       effect: parseEffect(segment.text, triggerType, warnings),
     };
   }
-  
+
   // No recognized trigger - treat as continuous or unknown
   warnings.push(`Unknown trigger pattern: ${segment.trigger || "(none)"}`);
   return {
@@ -213,27 +225,27 @@ function parseEffect(
   warnings: string[],
 ): ParsedAbility["effect"] {
   // Try to match common patterns
-  
+
   // Draw pattern
   const drawMatch = text.match(/draw (\d+) cards?/i);
   if (drawMatch) {
     return {
       type: "DRAW",
-      amount: parseInt(drawMatch[1], 10),
+      amount: Number.parseInt(drawMatch[1], 10),
       player: "self",
     };
   }
-  
+
   // Damage pattern
   const damageMatch = text.match(/deal (\d+) damage to (.+?)(?:\.|$)/i);
   if (damageMatch) {
     return {
       type: "DAMAGE",
-      amount: parseInt(damageMatch[1], 10),
+      amount: Number.parseInt(damageMatch[1], 10),
       target: parseTarget(damageMatch[2]),
     };
   }
-  
+
   // Search pattern
   const searchMatch = text.match(/search (?:your )?deck for (.+?)(?:\.|$)/i);
   if (searchMatch) {
@@ -244,28 +256,28 @@ function parseEffect(
       count: 1,
     };
   }
-  
+
   // HP recovery pattern
   const recoverMatch = text.match(/(?:recovers?|gains?) (\d+) HP/i);
   if (recoverMatch) {
     return {
       type: "RECOVER_HP",
-      amount: parseInt(recoverMatch[1], 10),
+      amount: Number.parseInt(recoverMatch[1], 10),
       target: { type: "self" },
     };
   }
-  
+
   // Stat modification pattern
   const statMatch = text.match(/(AP|HP)([+-]\d+)/i);
   if (statMatch) {
     return {
       type: "MODIFY_STATS",
       attribute: statMatch[1].toLowerCase(),
-      modifier: parseInt(statMatch[2], 10),
+      modifier: Number.parseInt(statMatch[2], 10),
       duration: "turn",
     };
   }
-  
+
   // Default: unknown effect
   warnings.push(`Could not parse effect: ${text}`);
   return {
@@ -287,7 +299,7 @@ function extractActivationCost(text: string): string | undefined {
  */
 function parseTarget(targetText: string): unknown {
   const lowerText = targetText.toLowerCase();
-  
+
   if (lowerText.includes("enemy") && lowerText.includes("unit")) {
     return {
       type: "unit",
@@ -295,7 +307,7 @@ function parseTarget(targetText: string): unknown {
       filter: { zone: "battle-area" },
     };
   }
-  
+
   if (lowerText.includes("friendly") || lowerText.includes("your")) {
     return {
       type: "unit",
@@ -303,14 +315,14 @@ function parseTarget(targetText: string): unknown {
       filter: { zone: "battle-area" },
     };
   }
-  
+
   if (lowerText.includes("opponent")) {
     return {
       type: "player",
       controller: "opponent",
     };
   }
-  
+
   return {
     type: "unknown",
     rawText: targetText,
@@ -322,26 +334,26 @@ function parseTarget(targetText: string): unknown {
  */
 function parseSearchFilter(filterText: string): unknown {
   const filter: Record<string, unknown> = {};
-  
+
   // Extract card type
   if (filterText.includes("Pilot")) {
     filter.cardType = "PILOT";
   } else if (filterText.includes("Unit")) {
     filter.cardType = "UNIT";
   }
-  
+
   // Extract card name
   const nameMatch = filterText.match(/named ['"]([^'"]+)['"]/);
   if (nameMatch) {
     filter.name = nameMatch[1];
   }
-  
+
   // Extract level
   const levelMatch = filterText.match(/(?:level|Lv\.?) (\d+)/i);
   if (levelMatch) {
-    filter.level = parseInt(levelMatch[1], 10);
+    filter.level = Number.parseInt(levelMatch[1], 10);
   }
-  
+
   return filter;
 }
 
@@ -357,9 +369,9 @@ export function cleanCardText(text: string): string {
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&amp;/g, "&")
-    .replace(/<br>/g, "\n")
-    .replace(/<\/br>/g, "\n")
-    .replace(/\s+/g, " ")
+    .replace(/<br\s*\/?>/gi, "<!BR!>") // Temporary placeholder
+    .replace(/<\/br>/g, "<!BR!>")
+    .replace(/\s+/g, " ") // Collapse all whitespace
+    .replace(/<!BR!>/g, "\n\n") // Restore intentional line breaks
     .trim();
 }
-

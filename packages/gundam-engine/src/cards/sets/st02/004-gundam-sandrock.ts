@@ -11,20 +11,14 @@ export const GundamSandrock: UnitCardDefinition = {
   level: 4,
   cost: 2,
   text: "-",
-  imageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-004.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST02-004.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 4,
   hp: 3,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "operation",
-    "meteor",
-  ],
-  linkRequirements: [
-    "quatre-raberba-winner",
-  ],
+  zones: ["earth"],
+  traits: ["operation", "meteor"],
+  linkRequirements: ["quatre-raberba-winner"],
   abilities: [
     {
       description: "-",

@@ -10,29 +10,24 @@ export const DuelGundamAssaultShroud: UnitCardDefinition = {
   color: "red",
   level: 5,
   cost: 4,
-  text: "【When Paired】Look at the top 3 cards of your deck. You may deploy 1 (ZAFT) Unit card that is Lv.4 or lower among them. Return the remaining cards randomly to the bottom of your deck.
-",
-  imageUrl: "../images/cards/card/GD01-045.webp?2510031",
+  text: "【When Paired】Look at the top 3 cards of your deck. You may deploy 1 (ZAFT) Unit card that is Lv.4 or lower among them. Return the remaining cards randomly to the bottom of your deck.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-045.webp?2510031",
   sourceTitle: "Mobile Suit Gundam SEED",
   ap: 4,
   hp: 4,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "zaft",
-  ],
-  linkRequirements: [
-    "yzak-jule",
-  ],
+  zones: ["space", "earth"],
+  traits: ["zaft"],
+  linkRequirements: ["yzak-jule"],
   abilities: [
     {
       trigger: "WHEN_PAIRED",
-      description: "【When Paired】 Look at the top 3 cards of your deck. You may deploy 1 (ZAFT) Unit card that is Lv.4 or lower among them. Return the remaining cards randomly to the bottom of your deck.",
+      description:
+        "【When Paired】 Look at the top 3 cards of your deck. You may deploy 1 (ZAFT) Unit card that is Lv.4 or lower among them. Return the remaining cards randomly to the bottom of your deck.",
       effect: {
         type: "UNKNOWN",
-        rawText: "Look at the top 3 cards of your deck. You may deploy 1 (ZAFT) Unit card that is Lv.4 or lower among them. Return the remaining cards randomly to the bottom of your deck.",
+        rawText:
+          "Look at the top 3 cards of your deck. You may deploy 1 (ZAFT) Unit card that is Lv.4 or lower among them. Return the remaining cards randomly to the bottom of your deck.",
       },
     },
   ],

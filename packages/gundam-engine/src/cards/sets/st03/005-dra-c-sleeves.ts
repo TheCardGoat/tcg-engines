@@ -11,20 +11,14 @@ export const DracSleeves: UnitCardDefinition = {
   level: 1,
   cost: 1,
   text: "-",
-  imageUrl: "../images/cards/card/ST03-005.webp?2510031",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST03-005.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   ap: 1,
   hp: 2,
-  zones: [
-    "space",
-  ],
-  traits: [
-    "neo",
-    "zeon",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["space"],
+  traits: ["neo", "zeon"],
+  linkRequirements: ["-"],
   abilities: [
     {
       description: "-",

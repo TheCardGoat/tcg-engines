@@ -10,24 +10,15 @@ export const WingGundamZero: UnitCardDefinition = {
   color: "green",
   level: 8,
   cost: 8,
-  text: "&lt;High-Maneuver&gt; (This Unit can&#039;t be blocked.)
-【Deploy】Deal 3 damage to all Units that are Lv.5 or lower.
-",
-  imageUrl: "../images/cards/card/GD01-024.webp?2510031",
+  text: "<High-Maneuver> (This Unit can&#039;t be blocked.)\n【Deploy】Deal 3 damage to all Units that are Lv.5 or lower.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-024.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 5,
   hp: 7,
-  zones: [
-    "space",
-    "earth",
-  ],
-  traits: [
-    "g",
-    "team",
-  ],
-  linkRequirements: [
-    "heero-yuy",
-  ],
+  zones: ["space", "earth"],
+  traits: ["g", "team"],
+  linkRequirements: ["heero-yuy"],
   keywords: [
     {
       keyword: "High-Maneuver",
@@ -36,7 +27,8 @@ export const WingGundamZero: UnitCardDefinition = {
   abilities: [
     {
       trigger: "ON_DEPLOY",
-      description: "【Deploy】 Deal 3 damage to all Units that are Lv.5 or lower.",
+      description:
+        "【Deploy】 Deal 3 damage to all Units that are Lv.5 or lower.",
       effect: {
         type: "DAMAGE",
         amount: 3,

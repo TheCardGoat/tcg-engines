@@ -10,20 +10,15 @@ export const Aries: UnitCardDefinition = {
   color: "blue",
   level: 2,
   cost: 2,
-  text: "&lt;Blocker&gt; (Rest this Unit to change the attack target to it.)",
-  imageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-008.webp?2510031",
+  text: "<Blocker> (Rest this Unit to change the attack target to it.)",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/ST02-008.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Wing",
   ap: 2,
   hp: 1,
-  zones: [
-    "earth",
-  ],
-  traits: [
-    "oz",
-  ],
-  linkRequirements: [
-    "-",
-  ],
+  zones: ["earth"],
+  traits: ["oz"],
+  linkRequirements: ["-"],
   keywords: [
     {
       keyword: "Blocker",
@@ -31,10 +26,12 @@ export const Aries: UnitCardDefinition = {
   ],
   abilities: [
     {
-      description: "<Blocker> (Rest this Unit to change the attack target to it.)",
+      description:
+        "<Blocker> (Rest this Unit to change the attack target to it.)",
       effect: {
         type: "UNKNOWN",
-        rawText: "<Blocker> (Rest this Unit to change the attack target to it.)",
+        rawText:
+          "<Blocker> (Rest this Unit to change the attack target to it.)",
       },
     },
   ],

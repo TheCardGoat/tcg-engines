@@ -10,9 +10,9 @@ export const AShowOfResolve: CommandCardDefinition = {
   color: "blue",
   level: 4,
   cost: 3,
-  text: "【Main】Draw 2.
-",
-  imageUrl: "../images/cards/card/GD01-100.webp?2510031",
+  text: "【Main】Draw 2.",
+  imageUrl:
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-100.webp?2510031",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   timing: "MAIN",
   abilities: [
