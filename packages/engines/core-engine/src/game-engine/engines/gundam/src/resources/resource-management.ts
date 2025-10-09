@@ -48,15 +48,6 @@ export type ResourceError =
  */
 const MAX_RESOURCE_CAPACITY = 15;
 
-/**
- * Create a deep clone of a resource pool (maintains immutability)
- * @internal
- */
-const clonePool = (pool: ResourcePool): ResourcePool => ({
-	resources: [...pool.resources],
-	activeResources: [...pool.activeResources],
-	restedResources: [...pool.restedResources],
-});
 
 /**
  * Create a new resource pool
@@ -153,11 +144,15 @@ export const payResourceCost = (
 		};
 	}
 
-	// Cost of 0 requires no payment (but still return new object for immutability)
+	// Cost of 0 requires no payment - return new pool object to maintain immutability
 	if (cost === 0) {
 		return {
 			success: true,
-			data: clonePool(pool),
+			data: {
+				resources: [...pool.resources],
+				activeResources: [...pool.activeResources],
+				restedResources: [...pool.restedResources],
+			},
 		};
 	}
 

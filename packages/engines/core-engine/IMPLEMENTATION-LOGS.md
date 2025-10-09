@@ -1,5 +1,135 @@
 # Implementation Logs
 
+## 2025-10-09: Gundam Engine - Task 4: Cost System & Payment (COMPLETE ✅)
+
+### Session Summary
+
+**Status**: ✅ **COMPLETE** - Task 4.1-4.11 all passing, critical code review issues resolved
+
+**Objective**: Implement Cost System & Payment for Gundam Card Game engine per spec at `.agent-os/packages/gundam-engine/specs/2025-10-08-core-game-loop/spec.md`
+
+#### What Was Accomplished
+
+**Implemented: Cost Calculation and Payment System**
+- **Files Created**:
+  - `src/game-engine/engines/gundam/src/costs/cost-system.ts` (219 lines)
+  - `src/game-engine/engines/gundam/src/costs/cost-system.spec.ts` (253 lines)
+
+- **Implementation**: Complete cost system with:
+  - Cost type: `{ resourceCost, additionalCosts }` for extensibility
+  - Deployment cost calculation with cost reduction support
+  - Ability cost symbol parsing (①=1, ②=2, ... ⑩=10) per Rule 9-1-7-3
+  - Cost validation (canPayCost)
+  - Cost payment execution via resource resting
+  - Result type pattern with 3 error types
+  - Integration with ResourcePool from Task 3
+
+- **Test Coverage**: 23 comprehensive tests (100% coverage)
+  - Cost calculation with reductions (12 tests)
+  - Cost validation (4 tests)
+  - Cost payment execution (5 tests)
+  - Type safety verification (2 tests)
+
+#### Implementation Details
+
+**Core Types**:
+```typescript
+export type Cost = {
+  resourceCost: number;
+  additionalCosts: readonly AdditionalCost[];
+};
+
+export type CostError =
+  | { type: "insufficientResources"; required: number; available: number; }
+  | { type: "invalidCost"; cost: number; }
+  | { type: "additionalCostNotMet"; costDescription: string; };
+
+export type PaymentContext = {
+  resourcePool: ResourcePool;
+  hand?: readonly string[];
+  counters?: Record<string, number>;
+  [key: string]: unknown;
+};
+```
+
+**Core Functions**:
+```typescript
+export const calculateDeploymentCost = (card: { cost?: number }, options?: CostCalculationOptions): Cost
+export const calculateAbilityCost = (costSymbol: string, options?: CostCalculationOptions): Cost
+export const canPayCost = (cost: Cost, resourcePool: ResourcePool): boolean
+export const payCost = (cost: Cost, context: PaymentContext): Result<PaymentResult, CostError>
+```
+
+**Game Rules Implemented**:
+- Rule 2-9-1: Pay cost by resting necessary number of active Resources
+- Rule 2-9-2: All cards except Resources and tokens have a cost
+- Rule 2-9-3: Tokens have cost zero
+- Rule 9-1-7-3: Symbol "①" means paying cost equal to number in symbol
+
+**Verification**:
+- ✅ All 23 cost system tests passing
+- ✅ All 112 gundam engine tests passing (28 zone + 27 position + 34 resource + 23 cost)
+- ✅ Type safety verified (0 type errors)
+- ✅ Code review completed with all CRITICAL issues resolved
+
+#### Code Review & Fixes
+
+**Code Review Result**: All 3 CRITICAL issues resolved
+
+**CRITICAL Issues Fixed**:
+1. ✅ Implemented `calculateAbilityCost` symbol parsing (①-⑩)
+   - Was stub returning 0, now fully functional
+   - Added cost map for all circled number symbols
+2. ✅ Added 7 comprehensive tests for `calculateAbilityCost`
+   - Symbol parsing validation
+   - Cost reduction application
+   - Edge cases (empty string, unknown symbols)
+3. ✅ Removed `as any` type assertions
+   - Used proper TypeScript control flow narrowing
+   - `if (result.success === false)` pattern for type safety
+
+**Architecture Decisions**:
+- Extended PaymentContext to support future additional costs
+- AdditionalCost type prepared for discard, counter removal, etc.
+- Cost reduction applied before payment
+- Integration with ResourcePool maintains immutability
+
+#### Progress Update
+
+**Task 4 Completion**:
+- ✅ 4.1 Write tests for cost calculation
+- ✅ 4.2 Write tests for cost reduction
+- ✅ 4.3 Write tests for cost payment
+- ✅ 4.4 Implement Cost type
+- ✅ 4.5 Implement calculateDeploymentCost & calculateAbilityCost
+- ✅ 4.6 Implement canPayCost validation
+- ✅ 4.7 Implement payCost execution
+- ✅ 4.8 Verify all gundam tests pass (112/112)
+- ✅ 4.9 Verify linter rules pass
+- ✅ 4.10 Verify type safety
+- ✅ 4.11 Code review and fixes
+
+**Cumulative Stats**:
+- Total tests: 112 (28 zone + 27 position + 34 resource + 23 cost)
+- Total lines implemented: ~2,112 lines (including tests)
+- Code coverage: 100% on gundam engine modules
+- Tasks completed: 4/20 (20%)
+
+**Next Steps**:
+- Task 5: Draw Move Implementation
+- Implement draw from deck to hand
+- Handle deck depletion win condition
+- Draw count validation
+
+#### Key Learnings
+
+1. **Symbol Parsing**: Japanese circled numbers (①-⑩) work directly in TypeScript
+2. **Code Review Value**: Caught incomplete implementation before merge
+3. **Type Narrowing**: `if (result.success === false)` pattern works for discriminated unions
+4. **Extensibility**: AdditionalCost structure ready for future expansion
+
+---
+
 ## 2025-10-09: Gundam Engine - Task 3: Resource Management System (COMPLETE ✅)
 
 ### Session Summary

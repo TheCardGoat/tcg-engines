@@ -2,15 +2,15 @@
 
 ## Tasks
 
-- [ ] 1. Game State Types and Zone System
-  - [ ] 1.1 Write tests for LorcanaState type structure (lore tracking, ink management, character states)
-  - [ ] 1.2 Create `src/types/lorcana-state.ts` with complete state type definition
-  - [ ] 1.3 Write tests for zone configurations (visibility, ordering, facedown rules)
-  - [ ] 1.4 Create `src/game-definition/zones.ts` with all 5 zones (Deck, Hand, Play, Discard, Inkwell)
-  - [ ] 1.5 Write tests for zone transition operations
-  - [ ] 1.6 Create zone helper functions in `src/game-definition/zone-operations.ts`
-  - [ ] 1.7 Verify all tests pass for packages/lorcana-engine
-  - [ ] 1.8 Verify linter rules pass for packages/lorcana-engine
+- [x] 1. Game State Types and Zone System
+  - [x] 1.1 Write tests for LorcanaState type structure (lore tracking, ink management, character states)
+  - [x] 1.2 Create `src/types/lorcana-state.ts` with complete state type definition
+  - [x] 1.3 Write tests for zone configurations (visibility, ordering, facedown rules)
+  - [x] 1.4 Create `src/game-definition/zones.ts` with all 5 zones (Deck, Hand, Play, Discard, Inkwell)
+  - [x] 1.5 Write tests for zone transition operations
+  - [x] 1.6 Create zone helper functions in `src/game-definition/zone-operations.ts`
+  - [x] 1.7 Verify all tests pass for packages/lorcana-engine (52 tests pass)
+  - [x] 1.8 Verify linter rules pass for packages/lorcana-engine
   - [ ] 1.9 Verify type safety with typecheck for packages/lorcana-engine
   - [ ] 1.10 Use the code-reviewer subagent to review the code
 
