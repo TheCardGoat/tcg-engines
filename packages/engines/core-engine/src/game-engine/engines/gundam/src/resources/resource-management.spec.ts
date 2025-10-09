@@ -59,11 +59,14 @@ describe("Resource Management System", () => {
       const pool = createResourcePool(15);
       const result = placeResource(pool, "res16");
 
-      if (result.success) throw new Error("Expected error result");
       expect(result.success).toBe(false);
-      expect(result.error.type).toBe("resourceAreaFull");
-      expect(result.error.currentCount).toBe(15);
-      expect(result.error.maxCapacity).toBe(15);
+      if (result.success === false) {
+        expect(result.error.type).toBe("resourceAreaFull");
+        if (result.error.type === "resourceAreaFull") {
+          expect(result.error.currentCount).toBe(15);
+          expect(result.error.maxCapacity).toBe(15);
+        }
+      }
     });
 
     it("allows placing resource at capacity minus one", () => {
@@ -108,11 +111,14 @@ describe("Resource Management System", () => {
       const pool = createResourcePool(2);
       const result = payResourceCost(pool, 5);
 
-      if (result.success) throw new Error("Expected error result");
       expect(result.success).toBe(false);
-      expect(result.error.type).toBe("insufficientResources");
-      expect(result.error.required).toBe(5);
-      expect(result.error.available).toBe(2);
+      if (result.success === false) {
+        expect(result.error.type).toBe("insufficientResources");
+        if (result.error.type === "insufficientResources") {
+          expect(result.error.required).toBe(5);
+          expect(result.error.available).toBe(2);
+        }
+      }
     });
 
     it("allows paying cost of 0", () => {
@@ -161,10 +167,13 @@ describe("Resource Management System", () => {
         // Try to pay 3 more (only 2 active remaining)
         const result = payResourceCost(paidResult.data, 3);
 
-        if (result.success) throw new Error("Expected error result");
         expect(result.success).toBe(false);
-        expect(result.error.type).toBe("insufficientResources");
-        expect(result.error.available).toBe(2);
+        if (result.success === false) {
+          expect(result.error.type).toBe("insufficientResources");
+          if (result.error.type === "insufficientResources") {
+            expect(result.error.available).toBe(2);
+          }
+        }
       }
     });
   });
@@ -317,9 +326,10 @@ describe("Resource Management System", () => {
       const pool = createResourcePool(3);
       const result = payResourceCost(pool, -1);
 
-      if (result.success) throw new Error("Expected error result");
       expect(result.success).toBe(false);
-      expect(result.error.type).toBe("invalidCost");
+      if (result.success === false) {
+        expect(result.error.type).toBe("invalidCost");
+      }
     });
 
     it("handles multiple place operations correctly", () => {
@@ -341,19 +351,23 @@ describe("Resource Management System", () => {
       const pool = createResourcePool(0);
       const result = placeResource(pool, "");
 
-      if (result.success) throw new Error("Expected error result");
       expect(result.success).toBe(false);
-      expect(result.error.type).toBe("invalidResourceId");
-      expect(result.error.resourceId).toBe("");
+      if (result.success === false) {
+        expect(result.error.type).toBe("invalidResourceId");
+        if (result.error.type === "invalidResourceId") {
+          expect(result.error.resourceId).toBe("");
+        }
+      }
     });
 
     it("rejects placing resource with whitespace-only ID", () => {
       const pool = createResourcePool(0);
       const result = placeResource(pool, "   ");
 
-      if (result.success) throw new Error("Expected error result");
       expect(result.success).toBe(false);
-      expect(result.error.type).toBe("invalidResourceId");
+      if (result.success === false) {
+        expect(result.error.type).toBe("invalidResourceId");
+      }
     });
 
     it("rejects placing duplicate resource ID", () => {
@@ -364,10 +378,13 @@ describe("Resource Management System", () => {
 
       const result2 = placeResource(result1.data, "res1");
 
-      if (result2.success) throw new Error("Expected error result");
       expect(result2.success).toBe(false);
-      expect(result2.error.type).toBe("duplicateResource");
-      expect(result2.error.resourceId).toBe("res1");
+      if (result2.success === false) {
+        expect(result2.error.type).toBe("duplicateResource");
+        if (result2.error.type === "duplicateResource") {
+          expect(result2.error.resourceId).toBe("res1");
+        }
+      }
     });
 
     it("maintains immutability when paying zero cost", () => {
@@ -403,11 +420,12 @@ describe("Resource Management System", () => {
       const pool = createResourcePool(2);
       const result = payResourceCost(pool, 5);
 
+      expect(result.success).toBe(false);
       // TypeScript should know this is an error result
-      if (!result.success) {
-        const errorType: "insufficientResources" | "invalidCost" =
-          result.error.type;
-        expect(["insufficientResources", "invalidCost"]).toContain(errorType);
+      if (result.success === false) {
+        expect(["insufficientResources", "invalidCost"]).toContain(
+          result.error.type,
+        );
       }
     });
   });

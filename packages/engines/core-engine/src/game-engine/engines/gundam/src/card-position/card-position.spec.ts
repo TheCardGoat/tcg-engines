@@ -79,11 +79,12 @@ describe("Card Position System", () => {
         const card = createTestCard({ position: "rested" });
         const result = restCard(card);
 
-        if (result.success) throw new Error("Expected error result");
         expect(result.success).toBe(false);
-        expect(result.error.type).toBe("alreadyInPosition");
-        expect(result.error.currentPosition).toBe("rested");
-        expect(result.error.targetPosition).toBe("rested");
+        if (result.success === false) {
+          expect(result.error.type).toBe("alreadyInPosition");
+          expect(result.error.currentPosition).toBe("rested");
+          expect(result.error.targetPosition).toBe("rested");
+        }
       });
 
       it("creates new object maintaining immutability", () => {
@@ -116,11 +117,12 @@ describe("Card Position System", () => {
         const card = createTestCard({ position: "active" });
         const result = activateCard(card);
 
-        if (result.success) throw new Error("Expected error result");
         expect(result.success).toBe(false);
-        expect(result.error.type).toBe("alreadyInPosition");
-        expect(result.error.currentPosition).toBe("active");
-        expect(result.error.targetPosition).toBe("active");
+        if (result.success === false) {
+          expect(result.error.type).toBe("alreadyInPosition");
+          expect(result.error.currentPosition).toBe("active");
+          expect(result.error.targetPosition).toBe("active");
+        }
       });
 
       it("creates new object maintaining immutability", () => {
@@ -290,8 +292,9 @@ describe("Card Position System", () => {
       const card = createTestCard({ position: "active" });
       const result = activateCard(card);
 
+      expect(result.success).toBe(false);
       // TypeScript should know this is an error result
-      if (!result.success) {
+      if (result.success === false) {
         const errorType: "alreadyInPosition" = result.error.type;
         expect(errorType).toBe("alreadyInPosition");
       }

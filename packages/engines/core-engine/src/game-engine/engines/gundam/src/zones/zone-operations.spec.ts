@@ -36,11 +36,14 @@ describe("Zone Operations (with Result types)", () => {
         const player = createTestPlayerState();
         const result = removeCardFromZone(player, "deck", "nonexistent");
 
-        if (result.success) throw new Error("Expected error result");
         expect(result.success).toBe(false);
-        expect(result.error.type).toBe("cardNotFound");
-        expect(result.error.cardId).toBe("nonexistent");
-        expect(result.error.zone).toBe("deck");
+        if (result.success === false) {
+          expect(result.error.type).toBe("cardNotFound");
+          if (result.error.type === "cardNotFound") {
+            expect(result.error.cardId).toBe("nonexistent");
+            expect(result.error.zone).toBe("deck");
+          }
+        }
       });
 
       it("returns success when card found and removed", () => {
@@ -64,10 +67,13 @@ describe("Zone Operations (with Result types)", () => {
           "nonexistent",
         );
 
-        if (result.success) throw new Error("Expected error result");
         expect(result.success).toBe(false);
-        expect(result.error.type).toBe("cardNotFound");
-        expect(result.error.zone).toBe("deck");
+        if (result.success === false) {
+          expect(result.error.type).toBe("cardNotFound");
+          if (result.error.type === "cardNotFound") {
+            expect(result.error.zone).toBe("deck");
+          }
+        }
       });
 
       it("returns success when card moved", () => {
@@ -96,11 +102,14 @@ describe("Zone Operations (with Result types)", () => {
 
         const result = addCardToZone(player, "battleArea", "u7");
 
-        if (result.success) throw new Error("Expected error result");
         expect(result.success).toBe(false);
-        expect(result.error.type).toBe("capacityExceeded");
-        expect(result.error.zone).toBe("battleArea");
-        expect(result.error.capacity).toBe(6);
+        if (result.success === false) {
+          expect(result.error.type).toBe("capacityExceeded");
+          if (result.error.type === "capacityExceeded") {
+            expect(result.error.zone).toBe("battleArea");
+            expect(result.error.capacity).toBe(6);
+          }
+        }
       });
 
       it("returns error when adding to full shieldBase (1 max)", () => {
@@ -114,11 +123,14 @@ describe("Zone Operations (with Result types)", () => {
 
         const result = addCardToZone(player, "shieldBase", "base2");
 
-        if (result.success) throw new Error("Expected error result");
         expect(result.success).toBe(false);
-        expect(result.error.type).toBe("capacityExceeded");
-        expect(result.error.zone).toBe("shieldBase");
-        expect(result.error.capacity).toBe(1);
+        if (result.success === false) {
+          expect(result.error.type).toBe("capacityExceeded");
+          if (result.error.type === "capacityExceeded") {
+            expect(result.error.zone).toBe("shieldBase");
+            expect(result.error.capacity).toBe(1);
+          }
+        }
       });
 
       it("returns error when adding to full hand (10 max)", () => {
@@ -132,9 +144,10 @@ describe("Zone Operations (with Result types)", () => {
 
         const result = addCardToZone(player, "hand", "card11");
 
-        if (result.success) throw new Error("Expected error result");
         expect(result.success).toBe(false);
-        expect(result.error.type).toBe("capacityExceeded");
+        if (result.success === false) {
+          expect(result.error.type).toBe("capacityExceeded");
+        }
       });
 
       it("returns error when adding to full resourceArea (15 max)", () => {
@@ -148,9 +161,10 @@ describe("Zone Operations (with Result types)", () => {
 
         const result = addCardToZone(player, "resourceArea", "res16");
 
-        if (result.success) throw new Error("Expected error result");
         expect(result.success).toBe(false);
-        expect(result.error.type).toBe("capacityExceeded");
+        if (result.success === false) {
+          expect(result.error.type).toBe("capacityExceeded");
+        }
       });
 
       it("succeeds when adding to zone under capacity", () => {
@@ -196,10 +210,13 @@ describe("Zone Operations (with Result types)", () => {
           "uniqueCard",
         );
 
-        if (result.success) throw new Error("Expected error result");
         expect(result.success).toBe(false);
-        expect(result.error.type).toBe("capacityExceeded");
-        expect(result.error.zone).toBe("hand");
+        if (result.success === false) {
+          expect(result.error.type).toBe("capacityExceeded");
+          if (result.error.type === "capacityExceeded") {
+            expect(result.error.zone).toBe("hand");
+          }
+        }
       });
 
       it("succeeds when destination has space", () => {
@@ -224,11 +241,14 @@ describe("Zone Operations (with Result types)", () => {
 
         const result = addCardToZone(player, "hand", "card1");
 
-        if (result.success) throw new Error("Expected error result");
         expect(result.success).toBe(false);
-        expect(result.error.type).toBe("duplicateCard");
-        expect(result.error.cardId).toBe("card1");
-        expect(result.error.zone).toBe("hand");
+        if (result.success === false) {
+          expect(result.error.type).toBe("duplicateCard");
+          if (result.error.type === "duplicateCard") {
+            expect(result.error.cardId).toBe("card1");
+            expect(result.error.zone).toBe("hand");
+          }
+        }
       });
 
       it("succeeds when card is unique in zone", () => {
@@ -259,9 +279,10 @@ describe("Zone Operations (with Result types)", () => {
 
         const result = moveCardBetweenZones(player, "deck", "hand", "card1");
 
-        if (result.success) throw new Error("Expected error result");
         expect(result.success).toBe(false);
-        expect(result.error.type).toBe("duplicateCard");
+        if (result.success === false) {
+          expect(result.error.type).toBe("duplicateCard");
+        }
       });
 
       it("allows moving card within same zone (reordering)", () => {
