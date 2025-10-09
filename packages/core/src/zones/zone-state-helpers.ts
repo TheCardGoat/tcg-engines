@@ -74,6 +74,12 @@ export function moveCardInState<
   const fromZone = state[fromZoneKey];
   const toZone = state[toZoneKey];
 
+  if (!(fromZone && toZone)) {
+    throw new Error(
+      `Zone not found: ${fromZone ? String(toZoneKey) : String(fromZoneKey)}`,
+    );
+  }
+
   const { fromZone: updatedFrom, toZone: updatedTo } = moveCard(
     fromZone,
     toZone,
@@ -113,7 +119,8 @@ export function getCardZone<TState extends Record<string, Zone>>(
   cardId: CardId,
 ): keyof TState | undefined {
   for (const key in state) {
-    if (state[key].cards.includes(cardId)) {
+    const zone = state[key];
+    if (zone && zone.cards.includes(cardId)) {
       return key;
     }
   }

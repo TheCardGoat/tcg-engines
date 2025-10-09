@@ -5,8 +5,8 @@
  * the core CardParser class and integrates with core tooling utilities.
  */
 
+import { describe, expect, it } from "bun:test";
 import type { ParserResult } from "@tcg/core/tooling";
-import { describe, expect, it } from "vitest";
 import { parseGundamText } from "../parser";
 import type { GundamParseResult } from "../types";
 
