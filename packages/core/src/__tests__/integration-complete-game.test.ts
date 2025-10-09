@@ -3,7 +3,7 @@ import { RuleEngine } from "../engine/rule-engine";
 import type { FlowDefinition } from "../flow/flow-definition";
 import type { GameDefinition } from "../game-definition/game-definition";
 import type { GameMoveDefinitions } from "../game-definition/move-definitions";
-import { createPlayerId } from "../types";
+import { createPlayerId, type PlayerId } from "../types";
 
 /**
  * Task 16.3, 16.4: Integration Tests - Complete Game Flow
@@ -21,7 +21,7 @@ import { createPlayerId } from "../types";
 
 type CompleteGameState = {
   players: Array<{
-    id: string;
+    id: PlayerId;
     name: string;
     health: number;
     hand: string[];
@@ -31,13 +31,13 @@ type CompleteGameState = {
   currentPlayerIndex: number;
   turnNumber: number;
   phase: "draw" | "main" | "end" | "gameover";
-  winner?: string;
+  winner?: PlayerId;
 };
 
 type CompleteGameMoves = {
   drawCard: Record<string, never>;
   playCard: { cardId: string };
-  attackPlayer: { targetPlayerId: string };
+  attackPlayer: { targetPlayerId: PlayerId };
   endPhase: Record<string, never>;
 };
 
@@ -138,12 +138,12 @@ describe("Integration - Complete Game Flow", () => {
         name: "Complete Game Test",
         setup: (players) => ({
           players: players.map((p) => ({
-            id: p.id,
+            id: p.id as PlayerId,
             name: p.name || "Player",
             health: 3,
-            hand: [],
-            deck: ["card1", "card2", "card3"],
-            field: [],
+            hand: [] as string[],
+            deck: ["card1", "card2", "card3"] as string[],
+            field: [] as string[],
           })),
           currentPlayerIndex: 0,
           turnNumber: 1,
@@ -298,12 +298,12 @@ describe("Integration - Complete Game Flow", () => {
         name: "Integration Test",
         setup: (players) => ({
           players: players.map((p) => ({
-            id: p.id,
+            id: p.id as PlayerId,
             name: p.name || "Player",
             health: 5,
-            hand: [],
-            deck: ["A", "B", "C", "D", "E"],
-            field: [],
+            hand: [] as string[],
+            deck: ["A", "B", "C", "D", "E"] as string[],
+            field: [] as string[],
           })),
           currentPlayerIndex: 0,
           turnNumber: 1,
@@ -418,12 +418,12 @@ describe("Integration - Complete Game Flow", () => {
         name: "Complex State Test",
         setup: (players) => ({
           players: players.map((p) => ({
-            id: p.id,
+            id: p.id as PlayerId,
             name: p.name || "Player",
             health: 10,
-            hand: [],
-            deck: Array.from({ length: 20 }, (_, i) => `card${i}`),
-            field: [],
+            hand: [] as string[],
+            deck: Array.from({ length: 20 }, (_, i) => `card${i}`) as string[],
+            field: [] as string[],
           })),
           currentPlayerIndex: 0,
           turnNumber: 1,

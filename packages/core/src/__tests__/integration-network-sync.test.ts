@@ -199,9 +199,11 @@ describe("Integration - Network Synchronization", () => {
       // Server rejects move
       expect(result.success).toBe(false);
 
-      // No patches to broadcast
-      if (!result.success) {
-        expect(result.patches).toBeUndefined();
+      // No patches to broadcast - invalid moves don't have patches
+      // Type guard: when success is false, patches property doesn't exist
+      if (result.success === false) {
+        // patches property doesn't exist on error result
+        expect("patches" in result).toBe(false);
       }
 
       // Client state unchanged
