@@ -15,6 +15,10 @@
 - **📊 Flow Orchestration** - Optional turn/phase/segment management
 - **🎯 Type Safety** - Full TypeScript support with branded types
 - **🧪 Test-Driven** - 95%+ test coverage with real engine instances
+- **🏗️ Zone Management** - Comprehensive zone operations for card locations
+- **🔍 Testing Utilities** - Complete TDD toolkit with assertions and factories
+- **🛠️ Card Tooling** - Reusable infrastructure for parsers, generators, and validators
+- **✅ Validation System** - Type guards and runtime validators for data integrity
 
 ## Quick Start
 
@@ -415,6 +419,165 @@ const isValid = validateTargetSelection(
 );
 ```
 
+## Testing Utilities
+
+Comprehensive testing utilities for TDD workflow:
+
+```typescript
+import {
+  createTestEngine,
+  expectMoveSuccess,
+  expectStateProperty,
+  createTestCard,
+  withSeed,
+} from '@tcg/core/testing';
+
+// Create test engine with deterministic seed
+const engine = createTestEngine(gameDefinition, players, { seed: 'test' });
+
+// Test move execution
+expectMoveSuccess(engine, 'playCard', {
+  playerId: 'p1',
+  data: { cardId: 'card-123' }
+});
+
+// Verify state changes
+expectStateProperty(engine, 'players[0].hand.length', 6);
+expectStateProperty(engine, 'field.length', 1);
+
+// Test with deterministic RNG
+const shuffled = withSeed('test-seed', (rng) => {
+  return rng.shuffle([1, 2, 3, 4, 5]);
+});
+
+// Create test data
+const card = createTestCard({ type: 'creature', basePower: 3 });
+const deck = createTestDeck(['card1', 'card2', 'card3'], 'player1');
+```
+
+**Learn more:** [Testing Utilities Guide](./docs/guides/testing-utilities.md)
+
+## Card Tooling
+
+Build card management pipelines with reusable infrastructure:
+
+```typescript
+import {
+  CardParser,
+  CardGenerator,
+  FileWriter,
+  formatTypeScript,
+  generateVariableName,
+} from '@tcg/core/tooling';
+
+// Extend CardParser for game-specific parsing
+class MyCardParser extends CardParser<string, MyCard> {
+  protected doParse(text: string): ParserResult<MyCard> {
+    // Parse logic here
+    return { success: true, data: card, warnings: [] };
+  }
+}
+
+// Extend CardGenerator for code generation
+class MyCardGenerator extends CardGenerator<MyCard> {
+  protected generateContent(card: MyCard): string {
+    return `export const ${generateVariableName(card.name)} = ${JSON.stringify(card)};`;
+  }
+
+  protected generateFileName(card: MyCard): string {
+    return `${card.name.toLowerCase()}.ts`;
+  }
+}
+
+// Use file utilities
+const writer = new FileWriter('./cards');
+const formatted = await formatTypeScript(code);
+await writer.write('card.ts', formatted);
+```
+
+**Learn more:** [Card Tooling Guide](./docs/guides/card-tooling.md)
+
+## Validation Utilities
+
+Type-safe runtime validation with type guards and validators:
+
+```typescript
+import {
+  createTypeGuard,
+  isCardOfType,
+  ValidatorBuilder,
+  combineTypeGuards,
+} from '@tcg/core/validation';
+
+// Type guards for filtering
+const isCreature = isCardOfType('creature');
+const creatures = cards.filter(isCreature);
+
+// Complex filtering
+const isRareLegendary = combineTypeGuards([
+  isCardOfType('creature'),
+  isCardWithField('rarity', 'rare'),
+  isCardWithField('legendary', true),
+]);
+
+// Runtime validation
+const validator = new ValidatorBuilder<CardData>()
+  .required('name', 'Name is required')
+  .type('cost', 'number', 'Cost must be a number')
+  .min('cost', 0, 'Cost must be non-negative')
+  .max('cost', 10, 'Cost cannot exceed 10')
+  .custom('power', (power) => power > 0, 'Power must be positive')
+  .build();
+
+const result = validator.validate(cardData);
+if (!result.success) {
+  console.error('Validation errors:', result.errors);
+}
+```
+
+**Learn more:** [Validation Guide](./docs/guides/validation.md)
+
+## Comprehensive Zone Operations
+
+Complete zone management utilities:
+
+```typescript
+import {
+  createZone,
+  addCard,
+  removeCard,
+  moveCard,
+  draw,
+  shuffle,
+  mill,
+  search,
+  peek,
+  findCardInZones,
+  createPlayerZones,
+  moveCardInState,
+} from '@tcg/core';
+
+// Basic operations
+let deck = createZone(config, [card1, card2, card3]);
+deck = addCardToTop(deck, card4);
+deck = shuffle(deck, 'game-seed-123');
+
+// Draw cards
+const { fromZone, toZone, drawnCards } = draw(deck, hand, 3);
+
+// Search zones
+const creatures = search(zone, (cardId) => {
+  const card = getCard(cardId);
+  return card.type === 'creature';
+});
+
+// State helpers
+const hands = createPlayerZones(playerIds, () => createZone(handConfig));
+const newState = moveCardInState(state, 'hand', 'graveyard', cardId);
+```
+
+**Learn more:** [Zone Operations Guide](./docs/guides/zone-operations.md)
+
 ## API Reference
 
 ### RuleEngine
@@ -516,8 +679,27 @@ bun test --watch
 ├── targeting/       # Targeting system
 ├── rng/             # Seeded random number generation
 ├── delta-sync/      # Patch utilities
+├── testing/         # Testing utilities (@tcg/core/testing)
+├── tooling/         # Card tooling infrastructure (@tcg/core/tooling)
+├── validation/      # Type guards and validators (@tcg/core/validation)
 └── types/           # Branded types and utilities
 ```
+
+## Documentation
+
+### Guides
+
+- **[Zone Operations Guide](./docs/guides/zone-operations.md)** - Comprehensive zone management utilities
+- **[Testing Utilities Guide](./docs/guides/testing-utilities.md)** - TDD workflow and test patterns
+- **[Card Tooling Guide](./docs/guides/card-tooling.md)** - Building card management pipelines
+- **[Validation Guide](./docs/guides/validation.md)** - Type guards and runtime validation
+
+### Examples
+
+- **[Zone Management Examples](./docs/examples/zone-management.ts)** - Runnable zone operation examples
+- **[Test Patterns Examples](./docs/examples/test-patterns.ts)** - Complete testing examples
+- **[Card Parser Extension](./docs/examples/card-parser-extension.ts)** - Extending CardParser
+- **[Custom Validator](./docs/examples/custom-validator.ts)** - Building validators
 
 ## Performance
 

@@ -1,0 +1,44 @@
+task_assignments:
+  - task_group: "Task Group 1: Zone Operations Enhancement & Consolidation"
+    assigned_subagent: "api-engineer"
+    rationale: "Zone operations are core utilities that need implementation of business logic and helper functions"
+
+  - task_group: "Task Group 2: Testing Utilities - Test Builders"
+    assigned_subagent: "testing-engineer"
+    rationale: "Test builders are testing infrastructure components that fall under testing engineer's specialization"
+
+  - task_group: "Task Group 3: Testing Utilities - Assertions & Factories"
+    assigned_subagent: "testing-engineer"
+    rationale: "Test assertions and factories are testing utilities that fall under testing engineer's specialization"
+
+  - task_group: "Task Group 4: Card Tooling Foundation"
+    assigned_subagent: "api-engineer"
+    rationale: "Card tooling involves infrastructure and utilities for parsing, generation, and validation"
+
+  - task_group: "Task Group 5: Validation Utilities"
+    assigned_subagent: "api-engineer"
+    rationale: "Validation utilities involve type guards and validator builders which are utility/API layer concerns"
+
+  - task_group: "Task Group 6: Documentation - Guides & Examples"
+    assigned_subagent: "api-engineer"
+    rationale: "Documentation for core utilities should be handled by the engineer who understands the implementation patterns"
+
+  - task_group: "Task Group 7: Lorcana Migration - Zone Operations"
+    assigned_subagent: "api-engineer"
+    rationale: "Zone operations migration involves refactoring core utilities usage"
+
+  - task_group: "Task Group 8: Lorcana Migration - Testing Utilities"
+    assigned_subagent: "testing-engineer"
+    rationale: "Migration of testing utilities should be handled by testing engineer"
+
+  - task_group: "Task Group 9: Gundam Migration - Card Tooling"
+    assigned_subagent: "api-engineer"
+    rationale: "Card tooling migration involves refactoring infrastructure utilities"
+
+  - task_group: "Task Group 10: Gundam Migration - Zone Operations & Testing"
+    assigned_subagent: "api-engineer"
+    rationale: "This task group combines zone operations and type guards, primarily API/utility work"
+
+  - task_group: "Task Group 11: Final Validation & Verification"
+    assigned_subagent: "testing-engineer"
+    rationale: "Final validation involves running test suites, analyzing coverage, and benchmarking"

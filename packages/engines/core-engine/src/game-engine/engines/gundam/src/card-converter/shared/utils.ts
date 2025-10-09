@@ -147,31 +147,14 @@ export const combineValidationResults = (
 // STRING UTILITIES
 // ============================================================================
 
-/**
- * Converts a string to kebab-case
- */
-export const toKebabCase = (str: string): string =>
-  str
-    .replace(/([a-z])([A-Z])/g, "$1-$2")
-    .replace(/[\s_]+/g, "-")
-    .replace(/[^\w-]/g, "")
-    .toLowerCase();
-
-/**
- * Converts a string to camelCase
- */
-export const toCamelCase = (str: string): string =>
-  str
-    .replace(/[-_\s]+(.)?/g, (_, char) => (char ? char.toUpperCase() : ""))
-    .replace(/^[A-Z]/, (char) => char.toLowerCase());
-
-/**
- * Converts a string to PascalCase
- */
-export const toPascalCase = (str: string): string => {
-  const camelCase = toCamelCase(str);
-  return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
-};
+// Re-export naming utilities from core
+export {
+  generateVariableName,
+  toCamelCase,
+  toKebabCase,
+  toPascalCase,
+  toSnakeCase,
+} from "@tcg/core/tooling";
 
 /**
  * Sanitizes a string for use as a filename

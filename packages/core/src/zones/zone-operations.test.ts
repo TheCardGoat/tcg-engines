@@ -3,11 +3,16 @@ import { createCardId, createZoneId } from "../types";
 import { createZone } from "./zone-factory";
 import {
   addCard,
+  addCardToBottom,
+  addCardToTop,
+  clearZone,
   draw,
+  findCardInZones,
   getBottomCard,
   getCardsInZone,
   getTopCard,
   getZoneSize,
+  isCardInZone,
   mill,
   moveCard,
   peek,
@@ -474,6 +479,322 @@ describe("Zone Operations", () => {
 
         expect(getBottomCard(zone)).toBeUndefined();
       });
+    });
+  });
+
+  describe("isCardInZone", () => {
+    it("should return true when card is in zone", () => {
+      const cardId = createCardId("card-1");
+      const zone = createZone(
+        {
+          id: createZoneId("hand"),
+          name: "Hand",
+          visibility: "private",
+          ordered: false,
+        },
+        [cardId, createCardId("card-2")],
+      );
+
+      expect(isCardInZone(zone, cardId)).toBe(true);
+    });
+
+    it("should return false when card is not in zone", () => {
+      const zone = createZone(
+        {
+          id: createZoneId("hand"),
+          name: "Hand",
+          visibility: "private",
+          ordered: false,
+        },
+        [createCardId("card-1"), createCardId("card-2")],
+      );
+
+      expect(isCardInZone(zone, createCardId("card-3"))).toBe(false);
+    });
+
+    it("should return false for empty zone", () => {
+      const zone = createZone({
+        id: createZoneId("hand"),
+        name: "Hand",
+        visibility: "private",
+        ordered: false,
+      });
+
+      expect(isCardInZone(zone, createCardId("card-1"))).toBe(false);
+    });
+  });
+
+  describe("addCardToTop", () => {
+    it("should add card to top of ordered zone", () => {
+      const zone = createZone(
+        {
+          id: createZoneId("deck"),
+          name: "Deck",
+          visibility: "secret",
+          ordered: true,
+        },
+        [createCardId("card-2"), createCardId("card-3")],
+      );
+
+      const newCard = createCardId("card-1");
+      const updated = addCardToTop(zone, newCard);
+
+      expect(updated.cards[0]).toBe(newCard);
+      expect(updated.cards).toHaveLength(3);
+      expect(updated.cards[1]).toBe(createCardId("card-2"));
+    });
+
+    it("should add card to empty zone", () => {
+      const zone = createZone({
+        id: createZoneId("deck"),
+        name: "Deck",
+        visibility: "secret",
+        ordered: true,
+      });
+
+      const newCard = createCardId("card-1");
+      const updated = addCardToTop(zone, newCard);
+
+      expect(updated.cards[0]).toBe(newCard);
+      expect(updated.cards).toHaveLength(1);
+    });
+
+    it("should throw error if zone is at maxSize", () => {
+      const zone = createZone(
+        {
+          id: createZoneId("hand"),
+          name: "Hand",
+          visibility: "private",
+          ordered: false,
+          maxSize: 1,
+        },
+        [createCardId("card-1")],
+      );
+
+      expect(() => addCardToTop(zone, createCardId("card-2"))).toThrow(
+        "Cannot add card: zone is at maximum size (1)",
+      );
+    });
+  });
+
+  describe("addCardToBottom", () => {
+    it("should add card to bottom of ordered zone", () => {
+      const zone = createZone(
+        {
+          id: createZoneId("deck"),
+          name: "Deck",
+          visibility: "secret",
+          ordered: true,
+        },
+        [createCardId("card-1"), createCardId("card-2")],
+      );
+
+      const newCard = createCardId("card-3");
+      const updated = addCardToBottom(zone, newCard);
+
+      expect(updated.cards[2]).toBe(newCard);
+      expect(updated.cards).toHaveLength(3);
+      expect(updated.cards[0]).toBe(createCardId("card-1"));
+    });
+
+    it("should add card to empty zone", () => {
+      const zone = createZone({
+        id: createZoneId("deck"),
+        name: "Deck",
+        visibility: "secret",
+        ordered: true,
+      });
+
+      const newCard = createCardId("card-1");
+      const updated = addCardToBottom(zone, newCard);
+
+      expect(updated.cards[0]).toBe(newCard);
+      expect(updated.cards).toHaveLength(1);
+    });
+
+    it("should throw error if zone is at maxSize", () => {
+      const zone = createZone(
+        {
+          id: createZoneId("hand"),
+          name: "Hand",
+          visibility: "private",
+          ordered: false,
+          maxSize: 1,
+        },
+        [createCardId("card-1")],
+      );
+
+      expect(() => addCardToBottom(zone, createCardId("card-2"))).toThrow(
+        "Cannot add card: zone is at maximum size (1)",
+      );
+    });
+  });
+
+  describe("clearZone", () => {
+    it("should remove all cards from zone", () => {
+      const zone = createZone(
+        {
+          id: createZoneId("hand"),
+          name: "Hand",
+          visibility: "private",
+          ordered: false,
+        },
+        [
+          createCardId("card-1"),
+          createCardId("card-2"),
+          createCardId("card-3"),
+        ],
+      );
+
+      const updated = clearZone(zone);
+
+      expect(updated.cards).toHaveLength(0);
+      expect(updated.cards).toEqual([]);
+    });
+
+    it("should handle empty zone", () => {
+      const zone = createZone({
+        id: createZoneId("hand"),
+        name: "Hand",
+        visibility: "private",
+        ordered: false,
+      });
+
+      const updated = clearZone(zone);
+
+      expect(updated.cards).toHaveLength(0);
+    });
+
+    it("should preserve zone config", () => {
+      const zone = createZone(
+        {
+          id: createZoneId("hand"),
+          name: "Hand",
+          visibility: "private",
+          ordered: false,
+          maxSize: 10,
+        },
+        [createCardId("card-1")],
+      );
+
+      const updated = clearZone(zone);
+
+      expect(updated.config).toEqual(zone.config);
+      expect(updated.config.maxSize).toBe(10);
+    });
+  });
+
+  describe("findCardInZones", () => {
+    it("should find card in first zone", () => {
+      const cardId = createCardId("card-1");
+      const zone1 = createZone(
+        {
+          id: createZoneId("hand"),
+          name: "Hand",
+          visibility: "private",
+          ordered: false,
+        },
+        [cardId, createCardId("card-2")],
+      );
+      const zone2 = createZone(
+        {
+          id: createZoneId("deck"),
+          name: "Deck",
+          visibility: "secret",
+          ordered: true,
+        },
+        [createCardId("card-3")],
+      );
+
+      const found = findCardInZones(cardId, [zone1, zone2]);
+
+      expect(found).toBeDefined();
+      expect(found?.config.id).toBe(createZoneId("hand"));
+    });
+
+    it("should find card in later zone", () => {
+      const cardId = createCardId("card-3");
+      const zone1 = createZone(
+        {
+          id: createZoneId("hand"),
+          name: "Hand",
+          visibility: "private",
+          ordered: false,
+        },
+        [createCardId("card-1")],
+      );
+      const zone2 = createZone(
+        {
+          id: createZoneId("deck"),
+          name: "Deck",
+          visibility: "secret",
+          ordered: true,
+        },
+        [createCardId("card-2"), cardId],
+      );
+
+      const found = findCardInZones(cardId, [zone1, zone2]);
+
+      expect(found).toBeDefined();
+      expect(found?.config.id).toBe(createZoneId("deck"));
+    });
+
+    it("should return undefined when card not in any zone", () => {
+      const zone1 = createZone(
+        {
+          id: createZoneId("hand"),
+          name: "Hand",
+          visibility: "private",
+          ordered: false,
+        },
+        [createCardId("card-1")],
+      );
+      const zone2 = createZone(
+        {
+          id: createZoneId("deck"),
+          name: "Deck",
+          visibility: "secret",
+          ordered: true,
+        },
+        [createCardId("card-2")],
+      );
+
+      const found = findCardInZones(createCardId("card-3"), [zone1, zone2]);
+
+      expect(found).toBeUndefined();
+    });
+
+    it("should return undefined for empty zones array", () => {
+      const found = findCardInZones(createCardId("card-1"), []);
+
+      expect(found).toBeUndefined();
+    });
+
+    it("should return first zone if card exists in multiple zones", () => {
+      const cardId = createCardId("card-1");
+      const zone1 = createZone(
+        {
+          id: createZoneId("hand"),
+          name: "Hand",
+          visibility: "private",
+          ordered: false,
+        },
+        [cardId],
+      );
+      const zone2 = createZone(
+        {
+          id: createZoneId("deck"),
+          name: "Deck",
+          visibility: "secret",
+          ordered: true,
+        },
+        [cardId],
+      );
+
+      const found = findCardInZones(cardId, [zone1, zone2]);
+
+      expect(found).toBeDefined();
+      expect(found?.config.id).toBe(createZoneId("hand"));
     });
   });
 });

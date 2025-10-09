@@ -19,26 +19,29 @@
  */
 
 /**
- * Zone visibility types
+ * Lorcana Zone visibility types
  *
  * - "owner": Private zone - only owner can see cards (Rule 8.1.3)
  * - "all": Public zone - all players can see cards (Rule 8.1.2)
+ *
+ * Note: This is different from core's ZoneVisibility which uses "private"/"public"/"secret"
  */
-export type ZoneVisibility = "owner" | "all";
+export type LorcanaZoneVisibility = "owner" | "all";
 
 /**
- * Zone configuration
+ * Lorcana Zone configuration
  *
- * Defines properties for each zone type in Lorcana
+ * Defines properties for each zone type in Lorcana.
+ * This is a simpler version of core's ZoneConfig, tailored to Lorcana's rule structure.
  */
-export type ZoneConfig = {
+export type LorcanaZoneConfig = {
   /**
    * Who can see cards in this zone
    *
    * - "owner": Only the owner can see (private)
    * - "all": All players can see (public)
    */
-  visibility: ZoneVisibility;
+  visibility: LorcanaZoneVisibility;
 
   /**
    * Whether card order matters
@@ -82,7 +85,7 @@ export type LorcanaZoneId = "deck" | "hand" | "play" | "discard" | "inkwell";
  * }
  * ```
  */
-export const lorcanaZones: Record<LorcanaZoneId, ZoneConfig> = {
+export const lorcanaZones: Record<LorcanaZoneId, LorcanaZoneConfig> = {
   /**
    * Deck Zone
    *
@@ -208,7 +211,7 @@ export const isLorcanaZoneId = (value: unknown): value is LorcanaZoneId => {
  * @returns Zone configuration
  * @throws Error if zoneId is invalid
  */
-export const getZoneConfig = (zoneId: string): ZoneConfig => {
+export const getZoneConfig = (zoneId: string): LorcanaZoneConfig => {
   if (!isLorcanaZoneId(zoneId)) {
     throw new Error(`Invalid zone ID: ${zoneId}`);
   }

@@ -211,28 +211,51 @@ export type CardDefinition =
 // TYPE GUARDS
 // ============================================================================
 
-export function isUnitCard(card: CardDefinition): card is UnitCardDefinition {
-  return card.cardType === "UNIT";
-}
+import { createTypeGuard } from "@tcg/core/validation";
 
-export function isPilotCard(card: CardDefinition): card is PilotCardDefinition {
-  return card.cardType === "PILOT";
-}
+/**
+ * Type guard for Unit cards
+ * Built using @tcg/core's createTypeGuard utility
+ */
+export const isUnitCard = createTypeGuard<CardDefinition, "cardType", "UNIT">(
+  "cardType",
+  "UNIT",
+);
 
-export function isCommandCard(
-  card: CardDefinition,
-): card is CommandCardDefinition {
-  return card.cardType === "COMMAND";
-}
+/**
+ * Type guard for Pilot cards
+ * Built using @tcg/core's createTypeGuard utility
+ */
+export const isPilotCard = createTypeGuard<CardDefinition, "cardType", "PILOT">(
+  "cardType",
+  "PILOT",
+);
 
-export function isBaseCard(
-  card: CardDefinition,
-): card is BaseCardDefinition_Structure {
-  return card.cardType === "BASE";
-}
+/**
+ * Type guard for Command cards
+ * Built using @tcg/core's createTypeGuard utility
+ */
+export const isCommandCard = createTypeGuard<
+  CardDefinition,
+  "cardType",
+  "COMMAND"
+>("cardType", "COMMAND");
 
-export function isResourceCard(
-  card: CardDefinition,
-): card is ResourceCardDefinition {
-  return card.cardType === "RESOURCE";
-}
+/**
+ * Type guard for Base cards
+ * Built using @tcg/core's createTypeGuard utility
+ */
+export const isBaseCard = createTypeGuard<CardDefinition, "cardType", "BASE">(
+  "cardType",
+  "BASE",
+);
+
+/**
+ * Type guard for Resource cards
+ * Built using @tcg/core's createTypeGuard utility
+ */
+export const isResourceCard = createTypeGuard<
+  CardDefinition,
+  "cardType",
+  "RESOURCE"
+>("cardType", "RESOURCE");

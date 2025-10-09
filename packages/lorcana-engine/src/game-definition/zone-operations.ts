@@ -1,24 +1,58 @@
 /**
  * Zone Operations
  *
- * Task 1.6: Helper functions for managing cards in zones
+ * Task 7.3, 7.4: Migrated to use @tcg/core zone utilities
  *
- * Provides utilities for:
- * - Adding/removing cards from zones
- * - Moving cards between zones
- * - Querying cards in zones
- * - Creating zone state
+ * This module provides zone operations for Lorcana. It includes:
+ * 1. Flat ZoneState helpers (Record<PlayerId, CardId[]>) - mutable, for simple cases
+ * 2. Core Zone re-exports - immutable Zone objects from @tcg/core (recommended)
+ *
+ * For new code, prefer using core Zone objects for immutability and advanced features.
+ * The flat ZoneState pattern is maintained for backward compatibility.
  *
  * All operations follow Comprehensive Rules Section 8 (Zones)
  */
 
 import type { CardId, PlayerId } from "../types/branded-types";
 
+// Re-export core zone utilities for direct use (recommended for new code)
+// These work with immutable Zone objects from @tcg/core
+// Re-export with aliases to avoid conflicts with flat ZoneState helpers
+export {
+  addCard,
+  addCardToBottom as addCardToBottomZone,
+  addCardToTop as addCardToTopZone,
+  clearZone as clearZoneImmutable,
+  createPlayerZones,
+  createZone,
+  draw,
+  filterZoneByVisibility,
+  findCardInZones,
+  getBottomCard,
+  getCardsInZone as getCardsInZoneImmutable,
+  getTopCard as getTopCardFromZone,
+  getZoneSize as getZoneSizeImmutable,
+  isCardInZone as isCardInZoneImmutable,
+  mill,
+  moveCard,
+  peek,
+  removeCard,
+  reveal,
+  search,
+  shuffle,
+  type Zone,
+  type ZoneConfig,
+  type ZoneVisibility,
+} from "@tcg/core";
+
 /**
  * Zone State
  *
  * Maps each player to their array of cards in a zone.
  * Card order is significant for ordered zones (deck, discard).
+ *
+ * This is a simplified zone representation. For more advanced features,
+ * consider using @tcg/core's Zone objects directly with zone-factory.
  */
 export type ZoneState = Record<PlayerId, CardId[]>;
 
@@ -38,13 +72,11 @@ export type ZoneState = Record<PlayerId, CardId[]>;
  * ```
  */
 export const createZoneState = (players: PlayerId[]): ZoneState => {
-  const zoneState: ZoneState = {} as ZoneState;
-
+  const result: ZoneState = {};
   for (const player of players) {
-    zoneState[player] = [];
+    result[player] = [];
   }
-
-  return zoneState;
+  return result;
 };
 
 /**
@@ -52,6 +84,9 @@ export const createZoneState = (players: PlayerId[]): ZoneState => {
  *
  * Adds a card to the end of the player's zone array.
  * For ordered zones (deck, discard), this maintains sequence.
+ *
+ * Note: This mutates the zone state. For immutable operations,
+ * consider using @tcg/core's addCard with Zone objects.
  *
  * @param zoneState - The zone state to modify
  * @param playerId - The player whose zone to add to
@@ -79,6 +114,9 @@ export const addCardToZone = (
  *
  * Removes the first occurrence of a card from the player's zone.
  * Maintains order for ordered zones.
+ *
+ * Note: This mutates the zone state. For immutable operations,
+ * consider using @tcg/core's removeCard with Zone objects.
  *
  * @param zoneState - The zone state to modify
  * @param playerId - The player whose zone to remove from
@@ -113,6 +151,9 @@ export const removeCardFromZone = (
  * Rule 8.1: Zones are separate from one another
  * Rule 8.1.5: Cards entering private zones lose all info
  *
+ * Note: This mutates both zone states. For immutable operations,
+ * consider using @tcg/core's moveCard with Zone objects.
+ *
  * @param sourceZone - Zone to remove card from
  * @param destZone - Zone to add card to
  * @param playerId - The player whose zones to use
@@ -142,6 +183,9 @@ export const moveCardBetweenZones = (
 
 /**
  * Check if card is in player's zone
+ *
+ * Uses array.includes which is optimized by JavaScript engines.
+ * For checking across multiple zones, see @tcg/core's findCardInZones.
  *
  * @param zoneState - The zone state to check
  * @param playerId - The player whose zone to check
@@ -253,6 +297,9 @@ export const getTopCard = (
  *
  * Used for game cleanup or reset scenarios.
  *
+ * Note: This mutates the zone state. For immutable operations,
+ * consider using @tcg/core's clearZone with Zone objects.
+ *
  * @param zoneState - The zone state to modify
  * @param playerId - The player whose zone to clear
  *
@@ -273,6 +320,9 @@ export const clearZone = (zoneState: ZoneState, playerId: PlayerId): void => {
  * For zones like deck where adding to top matters.
  *
  * Rule 8.2.4: Cards added to top/bottom in known order
+ *
+ * Note: This mutates the zone state. For immutable operations,
+ * consider using @tcg/core's addCardToTop with Zone objects.
  *
  * @param zoneState - The zone state to modify
  * @param playerId - The player whose zone to add to
@@ -304,6 +354,9 @@ export const addCardToTop = (
  * Rule 8.2.4: Cards added to top/bottom in known order
  * Rule 3.1.6.1: Mulligan cards go to bottom
  *
+ * Note: This mutates the zone state. For immutable operations,
+ * consider using @tcg/core's addCardToBottom with Zone objects.
+ *
  * @param zoneState - The zone state to modify
  * @param playerId - The player whose zone to add to
  * @param cardId - The card to add
@@ -325,3 +378,28 @@ export const addCardToBottom = (
 
   zoneState[playerId].push(cardId); // Add to end
 };
+
+/**
+ * Migration Note
+ *
+ * The flat ZoneState helpers above (createZoneState, addCardToZone, etc.) are maintained
+ * for backward compatibility. They use mutable operations suitable for use with Immer.
+ *
+ * For new code, prefer the immutable Zone objects from @tcg/core (re-exported above).
+ * Core Zone objects provide:
+ * - Immutability by default
+ * - Rich zone operations (shuffle, draw, mill, peek, search)
+ * - Visibility filtering
+ * - Better type safety
+ *
+ * Example migration:
+ * ```typescript
+ * // Old (flat ZoneState - mutable)
+ * const handZone: ZoneState = { [player1]: [], [player2]: [] };
+ * addCardToZone(handZone, player1, cardId);
+ *
+ * // New (core Zone - immutable)
+ * let handZone = createZone({ id: "hand", name: "Hand", visibility: "private", owner: player1 });
+ * handZone = addCard(handZone, cardId);
+ * ```
+ */
