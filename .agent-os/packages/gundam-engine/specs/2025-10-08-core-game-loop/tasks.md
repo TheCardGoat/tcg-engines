@@ -9,25 +9,25 @@ These are the tasks to be completed for the spec detailed in @.agent-os/packages
 
 ### Phase 1: Foundation - Zone Management System
 
-- [ ] 1. Implement Zone Management System
-  - [ ] 1.1 Write tests for zone initialization and state management
-  - [ ] 1.2 Write tests for zone capacity rules (Mobile Suit Zone max 5, G Zone max 10)
-  - [ ] 1.3 Implement ZoneType enum and Zone interface with all 9 zones
-  - [ ] 1.4 Implement zone state containers (cards array, metadata)
-  - [ ] 1.5 Implement zone validators (capacity checks, card type restrictions)
-  - [ ] 1.6 Implement zone query functions (getCardsInZone, getZoneCount)
-  - [ ] 1.7 Implement zone mutation functions (addToZone, removeFromZone, moveCard)
-  - [ ] 1.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
-  - [ ] 1.9 Verify linter rules pass for gundam-engine
-  - [ ] 1.10 Verify type safety (run typecheck, iterate until passes)
-  - [ ] 1.11 Use code-reviewer subagent to review the code
+- [x] 1. Implement Zone Management System ✅ (Already implemented - using @tcg/core framework)
+  - [x] 1.1 Write tests for zone initialization and state management
+  - [x] 1.2 Write tests for zone capacity rules (battleArea max 6, resourceArea max 15, shieldBase max 1, hand max 10, shieldSection max 10)
+  - [x] 1.3 Implement ZoneType enum and Zone interface with all 10 zones (deck, resourceDeck, resourceArea, battleArea, shieldBase, shieldSection, removalArea, hand, trash, sideboard)
+  - [x] 1.4 Implement zone state containers using @tcg/core cardZones (cards array, metadata)
+  - [x] 1.5 Implement zone validators using @tcg/core (capacity checks via sizeLimit)
+  - [x] 1.6 Implement zone query functions (getZone, getZoneCount, getCardsByZone)
+  - [x] 1.7 Leverage @tcg/core zone mutation functions (moveCard operations via coreOps)
+  - [x] 1.8 Verify all tests for gundam-engine pass (4/4 tests passing in gundam-engine.test.ts)
+  - [x] 1.9 Verify linter rules pass for gundam-engine
+  - [x] 1.10 Verify type safety (TypeScript strict mode enabled)
+  - [x] 1.11 Use code-reviewer subagent to review the code
 
 - [ ] 2. Implement Card Position & Orientation System
-  - [ ] 2.1 Write tests for card position changes (deployed/set/exhausted states)
-  - [ ] 2.2 Write tests for position validation rules (can't attack when exhausted, etc.)
-  - [ ] 2.3 Implement CardPosition enum (deployed, set, exhausted, ready)
-  - [ ] 2.4 Implement position state tracking on card instances
-  - [ ] 2.5 Implement position transition functions (exhaust, ready, flip)
+  - [ ] 2.1 Write tests for card position changes (active/rested states, face-down/face-up)
+  - [ ] 2.2 Write tests for position validation rules (can't attack when rested, can't rest already rested)
+  - [ ] 2.3 Leverage @tcg/core card state tracking (position, faceUp, etc.)
+  - [ ] 2.4 Implement position state tracking on card instances via core framework
+  - [ ] 2.5 Implement position transition functions (rest, activate, flip)
   - [ ] 2.6 Implement position validators for game actions
   - [ ] 2.7 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
   - [ ] 2.8 Verify linter rules pass for gundam-engine
@@ -37,26 +37,26 @@ These are the tasks to be completed for the spec detailed in @.agent-os/packages
 ### Phase 2: Resource & Cost System
 
 - [ ] 3. Implement Resource Management System
-  - [ ] 3.1 Write tests for resource generation (roll dice, +1 per main/hangar card)
-  - [ ] 3.2 Write tests for resource spending and validation
+  - [ ] 3.1 Write tests for resource placement (one per turn from resourceDeck to resourceArea)
+  - [ ] 3.2 Write tests for resource resting and activation
   - [ ] 3.3 Write tests for insufficient resource error handling
-  - [ ] 3.4 Implement ResourcePool state container (available, spent, sources)
-  - [ ] 3.5 Implement resource generation logic (dice roll + card bonuses)
-  - [ ] 3.6 Implement resource spending functions (spendResources, validateCost)
-  - [ ] 3.7 Implement resource reset for turn end
+  - [ ] 3.4 Implement resource state tracking (active vs rested resources in resourceArea)
+  - [ ] 3.5 Implement resource placement logic (Rule 6-4-1: place one resource per turn)
+  - [ ] 3.6 Implement resource resting functions (restResource for cost payment)
+  - [ ] 3.7 Implement resource activation for turn start (activateAllResources)
   - [ ] 3.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
   - [ ] 3.9 Verify linter rules pass for gundam-engine
   - [ ] 3.10 Verify type safety (run typecheck, iterate until passes)
   - [ ] 3.11 Use code-reviewer subagent to review the code
 
 - [ ] 4. Implement Cost System & Payment
-  - [ ] 4.1 Write tests for cost calculation (deployment costs, ability costs)
-  - [ ] 4.2 Write tests for G cost payment from G Zone
+  - [ ] 4.1 Write tests for cost calculation (deployment costs with ①-⑩ symbols)
+  - [ ] 4.2 Write tests for cost payment (resting N resources where N = cost)
   - [ ] 4.3 Write tests for cost reduction effects
-  - [ ] 4.4 Implement Cost type (resource amount, G requirements, additional costs)
+  - [ ] 4.4 Implement Cost type (resourceCost: number, additionalCosts?: any[])
   - [ ] 4.5 Implement cost calculation functions (calculateDeploymentCost, calculateAbilityCost)
-  - [ ] 4.6 Implement payment validation (canPayCost)
-  - [ ] 4.7 Implement payment execution (payCost with resource + G Zone discard)
+  - [ ] 4.6 Implement payment validation (canPayCost - check active resources >= cost)
+  - [ ] 4.7 Implement payment execution (payCost - rest N resources)
   - [ ] 4.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
   - [ ] 4.9 Verify linter rules pass for gundam-engine
   - [ ] 4.10 Verify type safety (run typecheck, iterate until passes)
@@ -77,26 +77,26 @@ These are the tasks to be completed for the spec detailed in @.agent-os/packages
   - [ ] 5.10 Use code-reviewer subagent to review the code
 
 - [ ] 6. Implement Deploy Move
-  - [ ] 6.1 Write tests for deploy move (pilot, mobile suit, to main/hangar)
-  - [ ] 6.2 Write tests for deploy validators (cost, zone capacity, card type)
-  - [ ] 6.3 Write tests for Set deployment (face-down, reveal on battle)
-  - [ ] 6.4 Implement DeployMove type (card, targetZone, position, faceDown)
-  - [ ] 6.5 Implement deploy validators (validateDeploymentTarget)
-  - [ ] 6.6 Implement deploy execution (pay cost, move card, set position)
-  - [ ] 6.7 Implement Set deployment logic (face-down state, reveal mechanism)
+  - [ ] 6.1 Write tests for deploy move (unit, pilot, base, command to battleArea/shieldBase)
+  - [ ] 6.2 Write tests for deploy validators (cost, level requirement, zone capacity, card type)
+  - [ ] 6.3 Write tests for level validation (total resources >= card level)
+  - [ ] 6.4 Implement DeployMove type (card, targetZone, position)
+  - [ ] 6.5 Implement deploy validators (validateDeploymentTarget, validateLevel, validateCost)
+  - [ ] 6.6 Implement deploy execution (pay cost, move card to zone, set to active)
+  - [ ] 6.7 Implement zone capacity handling (battleArea max 6, must choose which to trash)
   - [ ] 6.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
   - [ ] 6.9 Verify linter rules pass for gundam-engine
   - [ ] 6.10 Verify type safety (run typecheck, iterate until passes)
   - [ ] 6.11 Use code-reviewer subagent to review the code
 
 - [ ] 7. Implement Attack Move
-  - [ ] 7.1 Write tests for attack declaration (valid attackers, targets)
-  - [ ] 7.2 Write tests for attack validators (exhausted units can't attack, etc.)
+  - [ ] 7.1 Write tests for attack declaration (valid attackers must be active, targets)
+  - [ ] 7.2 Write tests for attack validators (rested units can't attack, summoning sickness)
   - [ ] 7.3 Write tests for direct attack vs unit attack
   - [ ] 7.4 Implement AttackMove type (attacker, target, isDirectAttack)
   - [ ] 7.5 Implement attack validators (canAttack, validateTarget)
-  - [ ] 7.6 Implement attack declaration (exhaust attacker, mark target)
-  - [ ] 7.7 Implement attack state setup for battle resolution
+  - [ ] 7.6 Implement attack declaration (rest attacker, mark target)
+  - [ ] 7.7 Implement attack state setup for 5-step battle resolution
   - [ ] 7.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
   - [ ] 7.9 Verify linter rules pass for gundam-engine
   - [ ] 7.10 Verify type safety (run typecheck, iterate until passes)
@@ -118,26 +118,26 @@ These are the tasks to be completed for the spec detailed in @.agent-os/packages
 ### Phase 4: Turn Flow & Phase Management
 
 - [ ] 9. Implement Phase System
-  - [ ] 9.1 Write tests for phase definitions (all 6 phases with rules)
-  - [ ] 9.2 Write tests for phase transitions (linear order, no skipping)
+  - [ ] 9.1 Write tests for phase definitions (all 5 phases: startPhase, drawPhase, resourcePhase, mainPhase, endPhase)
+  - [ ] 9.2 Write tests for phase transitions (linear order via @tcg/core segments/phases)
   - [ ] 9.3 Write tests for phase-specific validators (moves allowed per phase)
-  - [ ] 9.4 Implement Phase enum (build, deploy, battle, main, end, opponent-turn)
-  - [ ] 9.5 Implement phase state tracking (currentPhase, phaseHistory)
-  - [ ] 9.6 Implement phase transition logic (advancePhase, validatePhaseTransition)
-  - [ ] 9.7 Implement phase-specific move validators (canPerformMoveInPhase)
+  - [ ] 9.4 Leverage @tcg/core Phase system (already defined in gundam-engine-types.ts)
+  - [ ] 9.5 Implement phase state tracking via @tcg/core (ctx.currentPhase, ctx.currentStep)
+  - [ ] 9.6 Implement phase transition logic using @tcg/core hooks (onBegin, onEnd, endIf)
+  - [ ] 9.7 Implement phase-specific move validators (moves registered per phase)
   - [ ] 9.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
   - [ ] 9.9 Verify linter rules pass for gundam-engine
   - [ ] 9.10 Verify type safety (run typecheck, iterate until passes)
   - [ ] 9.11 Use code-reviewer subagent to review the code
 
 - [ ] 10. Implement Turn Management System
-  - [ ] 10.1 Write tests for turn initialization (ready all units, resource generation)
-  - [ ] 10.2 Write tests for turn progression (phase sequence, player switching)
+  - [ ] 10.1 Write tests for turn initialization (activate all units, place resource)
+  - [ ] 10.2 Write tests for turn progression (phase sequence: start→draw→resource→main→end)
   - [ ] 10.3 Write tests for turn counters and history
-  - [ ] 10.4 Implement TurnState type (turnNumber, activePlayer, phase)
-  - [ ] 10.5 Implement turn initialization (readyAllUnits, generateResources, draw)
-  - [ ] 10.6 Implement turn progression (advanceTurn, switchActivePlayer)
-  - [ ] 10.7 Implement turn cleanup (discard excess hand cards, reset temporary effects)
+  - [ ] 10.4 Leverage @tcg/core turn management (turnNumber via ctx, activePlayer tracking)
+  - [ ] 10.5 Implement turn initialization hooks (activateAllUnits, placeResource, draw in startPhase)
+  - [ ] 10.6 Implement turn progression via @tcg/core phase flow
+  - [ ] 10.7 Implement turn cleanup (discard excess hand cards >10 in endPhase)
   - [ ] 10.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
   - [ ] 10.9 Verify linter rules pass for gundam-engine
   - [ ] 10.10 Verify type safety (run typecheck, iterate until passes)
@@ -146,12 +146,12 @@ These are the tasks to be completed for the spec detailed in @.agent-os/packages
 ### Phase 5: Battle System
 
 - [ ] 11. Implement Battle Step 1: Declare Attack
-  - [ ] 11.1 Write tests for attack declaration validation
-  - [ ] 11.2 Write tests for attacker exhaustion
+  - [ ] 11.1 Write tests for attack declaration validation (attacker must be active)
+  - [ ] 11.2 Write tests for attacker resting
   - [ ] 11.3 Write tests for direct attack vs unit attack targeting
   - [ ] 11.4 Implement BattleState type (attacker, defender, step, context)
   - [ ] 11.5 Implement attack declaration logic (validateAttack, initiateBattle)
-  - [ ] 11.6 Implement attacker exhaustion
+  - [ ] 11.6 Implement attacker resting (use core framework)
   - [ ] 11.7 Implement battle state initialization
   - [ ] 11.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
   - [ ] 11.9 Verify linter rules pass for gundam-engine
@@ -159,54 +159,54 @@ These are the tasks to be completed for the spec detailed in @.agent-os/packages
   - [ ] 11.11 Use code-reviewer subagent to review the code
 
 - [ ] 12. Implement Battle Step 2: Declare Block
-  - [ ] 12.1 Write tests for block declaration (valid blockers, must be ready)
-  - [ ] 12.2 Write tests for no-block scenarios (direct attack proceeds)
-  - [ ] 12.3 Write tests for blocker exhaustion
-  - [ ] 12.4 Implement block validation (canBlock, validateBlocker)
+  - [ ] 12.1 Write tests for block declaration (valid blockers with <Blocker> ability, must be active)
+  - [ ] 12.2 Write tests for no-block scenarios (direct attack proceeds to shields/base)
+  - [ ] 12.3 Write tests for blocker resting
+  - [ ] 12.4 Implement block validation (canBlock, validateBlocker, check <Blocker> keyword)
   - [ ] 12.5 Implement block declaration (declareBlock, assignBlocker)
-  - [ ] 12.6 Implement blocker exhaustion
-  - [ ] 12.7 Implement no-block path (direct attack to base)
+  - [ ] 12.6 Implement blocker resting
+  - [ ] 12.7 Implement no-block path (direct attack to shieldSection or shieldBase)
   - [ ] 12.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
   - [ ] 12.9 Verify linter rules pass for gundam-engine
   - [ ] 12.10 Verify type safety (run typecheck, iterate until passes)
   - [ ] 12.11 Use code-reviewer subagent to review the code
 
-- [ ] 13. Implement Battle Step 3: G Assist
-  - [ ] 13.1 Write tests for G assist declaration (cost, timing, buffs)
-  - [ ] 13.2 Write tests for both attacker and defender G assist
-  - [ ] 13.3 Write tests for power/critical modifications from G cards
-  - [ ] 13.4 Implement G assist validation (canAssist, hasSufficientG)
-  - [ ] 13.5 Implement G assist declaration window (both players)
-  - [ ] 13.6 Implement G assist cost payment (discard from G Zone)
-  - [ ] 13.7 Implement G assist stat modifications (power, critical, abilities)
+- [ ] 13. Implement Battle Step 3: Action Step
+  - [ ] 13.1 Write tests for action step (players can activate 【Action】 effects)
+  - [ ] 13.2 Write tests for priority system during action step
+  - [ ] 13.3 Write tests for "during battle" modifier effects
+  - [ ] 13.4 Implement action step priority window (both players can respond)
+  - [ ] 13.5 Implement 【Action】 command activation during battle
+  - [ ] 13.6 Implement temporary battle modifiers (power/AP changes)
+  - [ ] 13.7 Implement pass/continue logic for action step
   - [ ] 13.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
   - [ ] 13.9 Verify linter rules pass for gundam-engine
   - [ ] 13.10 Verify type safety (run typecheck, iterate until passes)
   - [ ] 13.11 Use code-reviewer subagent to review the code
 
 - [ ] 14. Implement Battle Step 4: Damage Calculation
-  - [ ] 14.1 Write tests for power comparison (attacker vs defender)
-  - [ ] 14.2 Write tests for destruction determination (loser destroyed)
-  - [ ] 14.3 Write tests for critical damage calculation
-  - [ ] 14.4 Write tests for base damage when attack is unblocked
-  - [ ] 14.5 Implement power comparison logic (comparePower)
-  - [ ] 14.6 Implement destruction determination (determineDestroyedUnits)
-  - [ ] 14.7 Implement critical damage calculation (calculateCriticalDamage)
-  - [ ] 14.8 Implement base damage for direct attacks
+  - [ ] 14.1 Write tests for AP comparison (attacker AP vs defender HP)
+  - [ ] 14.2 Write tests for destruction determination (HP <= 0 destroyed)
+  - [ ] 14.3 Write tests for simultaneous damage (both attacker and defender)
+  - [ ] 14.4 Write tests for shield damage when attack is unblocked
+  - [ ] 14.5 Implement AP/HP comparison logic (compareAPtoHP)
+  - [ ] 14.6 Implement destruction determination (checkHP, determineDestroyedUnits)
+  - [ ] 14.7 Implement simultaneous damage application
+  - [ ] 14.8 Implement shield damage for direct attacks (destroy top shield, check for 【Burst】)
   - [ ] 14.9 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
   - [ ] 14.10 Verify linter rules pass for gundam-engine
   - [ ] 14.11 Verify type safety (run typecheck, iterate until passes)
   - [ ] 14.12 Use code-reviewer subagent to review the code
 
-- [ ] 15. Implement Battle Step 5: Damage Resolution
-  - [ ] 15.1 Write tests for unit destruction (move to junk pile)
-  - [ ] 15.2 Write tests for base damage application (deck milling to damage zone)
-  - [ ] 15.3 Write tests for triggered abilities on destruction
+- [ ] 15. Implement Battle Step 5: Battle End & Damage Resolution
+  - [ ] 15.1 Write tests for unit destruction (move to trash)
+  - [ ] 15.2 Write tests for shield destruction (reveal for 【Burst】, then trash)
+  - [ ] 15.3 Write tests for base damage application (deal damage to base)
   - [ ] 15.4 Write tests for battle state cleanup
-  - [ ] 15.5 Implement unit destruction (moveToJunkPile)
-  - [ ] 15.6 Implement base damage resolution (millCardsToDamageZone)
-  - [ ] 15.7 Implement destruction trigger system (on-destroy abilities)
-  - [ ] 15.8 Implement battle cleanup (clearBattleState)
+  - [ ] 15.5 Implement unit destruction (moveToTrash)
+  - [ ] 15.6 Implement shield damage resolution (reveal, trigger 【Burst】, trash)
+  - [ ] 15.7 Implement base damage resolution (apply damage counters)
+  - [ ] 15.8 Implement battle cleanup (clearBattleState, clear temp modifiers)
   - [ ] 15.9 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
   - [ ] 15.10 Verify linter rules pass for gundam-engine
   - [ ] 15.11 Verify type safety (run typecheck, iterate until passes)
@@ -215,17 +215,18 @@ These are the tasks to be completed for the spec detailed in @.agent-os/packages
 ### Phase 6: Win/Loss Conditions & Rules Management
 
 - [ ] 16. Implement Win/Loss Condition System
-  - [ ] 16.1 Write tests for Base destruction win condition (7+ damage to damage zone)
-  - [ ] 16.2 Write tests for Deck-out loss condition (can't draw when required)
-  - [ ] 16.3 Write tests for game state when win/loss occurs
-  - [ ] 16.4 Implement win condition checkers (checkBaseDestruction, checkDeckOut)
-  - [ ] 16.5 Implement game end state (GameResult type, winner, reason)
-  - [ ] 16.6 Implement win/loss evaluation on state changes
-  - [ ] 16.7 Implement game termination logic (stopGame, recordResult)
-  - [ ] 16.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
-  - [ ] 16.9 Verify linter rules pass for gundam-engine
-  - [ ] 16.10 Verify type safety (run typecheck, iterate until passes)
-  - [ ] 16.11 Use code-reviewer subagent to review the code
+  - [ ] 16.1 Write tests for Base destruction win condition (opponent's base HP <= 0)
+  - [ ] 16.2 Write tests for Shield depletion win condition (no shields + no base + direct attack)
+  - [ ] 16.3 Write tests for Deck-out loss condition (can't draw when required from empty deck)
+  - [ ] 16.4 Write tests for Concede action
+  - [ ] 16.5 Implement win condition checkers (checkBaseDestruction, checkShieldDepletion, checkDeckOut)
+  - [ ] 16.6 Implement game end state (winner field in GameState, reason tracking)
+  - [ ] 16.7 Implement win/loss evaluation hooks (check after every draw, after every damage event)
+  - [ ] 16.8 Implement game termination logic (set winner, prevent further moves)
+  - [ ] 16.9 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
+  - [ ] 16.10 Verify linter rules pass for gundam-engine
+  - [ ] 16.11 Verify type safety (run typecheck, iterate until passes)
+  - [ ] 16.12 Use code-reviewer subagent to review the code
 
 - [ ] 17. Implement Game Rules Manager
   - [ ] 17.1 Write tests for move validation orchestration
