@@ -1,12 +1,12 @@
 /**
  * Gundam Card Definition Generator
- * 
+ *
  * Generates TypeScript card definition files.
  */
 
-import type { ScrapedCardData } from "../scraper/card-scraper";
-import type { ParseResult } from "../parser/text-parser";
 import type { CardDefinition } from "../../src/cards/card-types";
+import type { ParseResult } from "../parser/text-parser";
+import type { ScrapedCardData } from "../scraper/card-scraper";
 
 /**
  * Converts scraped data and parsed abilities to a card definition
@@ -18,7 +18,7 @@ export function createCardDefinition(
   const cardType = normalizeCardType(scraped.cardType);
   const setCode = extractSetCode(scraped.cardNumber);
   const id = generateCardId(scraped.cardNumber);
-  
+
   const baseCard = {
     id,
     name: scraped.name,
@@ -27,8 +27,8 @@ export function createCardDefinition(
     cardType,
     rarity: normalizeRarity(scraped.rarity),
     color: normalizeColor(scraped.color),
-    level: scraped.level ? parseInt(scraped.level, 10) : undefined,
-    cost: scraped.cost ? parseInt(scraped.cost, 10) : undefined,
+    level: scraped.level ? Number.parseInt(scraped.level, 10) : undefined,
+    cost: scraped.cost ? Number.parseInt(scraped.cost, 10) : undefined,
     text: scraped.effectText,
     imageUrl: scraped.imageUrl,
     sourceTitle: scraped.sourceTitle,
@@ -39,8 +39,8 @@ export function createCardDefinition(
       return {
         ...baseCard,
         cardType: "UNIT",
-        ap: parseInt(scraped.ap || "0", 10),
-        hp: parseInt(scraped.hp || "0", 10),
+        ap: Number.parseInt(scraped.ap || "0", 10),
+        hp: Number.parseInt(scraped.hp || "0", 10),
         zones: parseZones(scraped.zone),
         traits: parseTraits(scraped.trait),
         linkRequirements: parseLinkRequirements(scraped.link),
@@ -71,8 +71,8 @@ export function createCardDefinition(
       return {
         ...baseCard,
         cardType: "BASE",
-        ap: parseInt(scraped.ap || "0", 10),
-        hp: parseInt(scraped.hp || "0", 10),
+        ap: Number.parseInt(scraped.ap || "0", 10),
+        hp: Number.parseInt(scraped.hp || "0", 10),
         zones: parseZones(scraped.zone),
         traits: parseTraits(scraped.trait),
         abilities: parsed.abilities.length > 0 ? parsed.abilities : undefined,
@@ -102,13 +102,13 @@ export function createCardDefinition(
 export function generateCardFile(card: CardDefinition): string {
   const variableName = generateVariableName(card.name);
   const typeName = getTypeImportName(card.cardType);
-  
+
   // Generate imports
   const imports = `import type { ${typeName} } from "../../card-types";\n\n`;
-  
+
   // Generate card definition
   const cardDef = `export const ${variableName}: ${typeName} = ${formatCardObject(card, 0)};\n`;
-  
+
   return imports + cardDef;
 }
 
@@ -119,47 +119,47 @@ function formatCardObject(obj: unknown, indent: number): string {
   if (obj === null || obj === undefined) {
     return "undefined";
   }
-  
+
   if (typeof obj === "string") {
     // Escape special characters in strings
     const escaped = obj
-      .replace(/\\/g, "\\\\")   // Escape backslashes first
-      .replace(/"/g, '\\"')      // Escape quotes
-      .replace(/\n/g, "\\n")     // Escape newlines
-      .replace(/\r/g, "\\r")     // Escape carriage returns
-      .replace(/\t/g, "\\t");    // Escape tabs
+      .replace(/\\/g, "\\\\") // Escape backslashes first
+      .replace(/"/g, '\\"') // Escape quotes
+      .replace(/\n/g, "\\n") // Escape newlines
+      .replace(/\r/g, "\\r") // Escape carriage returns
+      .replace(/\t/g, "\\t"); // Escape tabs
     return `"${escaped}"`;
   }
-  
+
   if (typeof obj === "number" || typeof obj === "boolean") {
     return String(obj);
   }
-  
+
   if (Array.isArray(obj)) {
     if (obj.length === 0) {
       return "[]";
     }
-    
+
     const items = obj.map((item) => formatCardObject(item, indent + 1));
     const indentStr = "  ".repeat(indent + 1);
     return `[\n${indentStr}${items.join(`,\n${indentStr}`)},\n${"  ".repeat(indent)}]`;
   }
-  
+
   if (typeof obj === "object") {
     const entries = Object.entries(obj).filter(([_, v]) => v !== undefined);
-    
+
     if (entries.length === 0) {
       return "{}";
     }
-    
+
     const indentStr = "  ".repeat(indent + 1);
     const lines = entries.map(([key, value]) => {
       return `${indentStr}${key}: ${formatCardObject(value, indent + 1)}`;
     });
-    
+
     return `{\n${lines.join(",\n")},\n${"  ".repeat(indent)}}`;
   }
-  
+
   return String(obj);
 }
 
@@ -186,7 +186,9 @@ function normalizeRarity(rarity: string): CardDefinition["rarity"] {
   return map[rarity.toUpperCase()] || "common";
 }
 
-function normalizeColor(color?: string): "blue" | "red" | "green" | "white" | undefined {
+function normalizeColor(
+  color?: string,
+): "blue" | "red" | "green" | "white" | undefined {
   if (!color) return undefined;
   const normalized = color.toLowerCase();
   if (["blue", "red", "green", "white"].includes(normalized)) {
@@ -215,7 +217,7 @@ function parseTraits(traitText?: string): string[] {
 function parseLinkRequirements(linkText?: string): string[] | undefined {
   if (!linkText) return undefined;
   return linkText
-    .replace(/[\[\]]/g, "")
+    .replace(/[[\]]/g, "")
     .split(",")
     .map((link) => link.trim().toLowerCase().replace(/\s+/g, "-"))
     .filter((link) => link.length > 0);
@@ -223,7 +225,7 @@ function parseLinkRequirements(linkText?: string): string[] | undefined {
 
 function parseModifier(modText?: string): number {
   if (!modText) return 0;
-  return parseInt(modText.replace("+", ""), 10) || 0;
+  return Number.parseInt(modText.replace("+", ""), 10) || 0;
 }
 
 function detectCommandTiming(effectText: string): "MAIN" | "ACTION" | "BURST" {
@@ -236,7 +238,7 @@ function detectCommandTiming(effectText: string): "MAIN" | "ACTION" | "BURST" {
 function detectPilotProperties(scraped: ScrapedCardData): any {
   const pilotMatch = scraped.effectText.match(/【Pilot】\[([^\]]+)\]/);
   if (!pilotMatch) return undefined;
-  
+
   return {
     name: pilotMatch[1],
     traits: parseTraits(scraped.trait),
@@ -295,4 +297,3 @@ export function generateFilename(card: CardDefinition): string {
   const name = toKebabCase(card.name);
   return `${number}-${name}.ts`;
 }
-
