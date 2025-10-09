@@ -1,0 +1,43 @@
+import type { UnitCardDefinition } from "../../card-types";
+
+export const Gyan: UnitCardDefinition = {
+  id: "gd01-032",
+  name: "Gyan",
+  cardNumber: "GD01-032",
+  setCode: "GD01",
+  cardType: "UNIT",
+  rarity: "rare",
+  color: "green",
+  level: 4,
+  cost: 3,
+  text: "【When Paired･(Zeon) Pilot】Choose 1 enemy Unit with &lt;Blocker&gt; that is Lv.2 or lower. Destroy it.
+",
+  imageUrl: "../images/cards/card/GD01-032.webp?2510031",
+  sourceTitle: "Mobile Suit Gundam",
+  ap: 4,
+  hp: 3,
+  zones: [
+    "space",
+    "earth",
+  ],
+  traits: [
+    "zeon",
+  ],
+  linkRequirements: [
+    "m&#039;quve",
+  ],
+  keywords: [
+    {
+      keyword: "Blocker",
+    },
+  ],
+  abilities: [
+    {
+      description: "【When Paired･(Zeon) Pilot】Choose 1 enemy Unit with <Blocker> that is Lv.2 or lower. Destroy it.",
+      effect: {
+        type: "UNKNOWN",
+        rawText: "【When Paired･(Zeon) Pilot】Choose 1 enemy Unit with <Blocker> that is Lv.2 or lower. Destroy it.",
+      },
+    },
+  ],
+};

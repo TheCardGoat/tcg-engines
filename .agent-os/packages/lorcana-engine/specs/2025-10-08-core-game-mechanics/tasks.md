@@ -1,0 +1,144 @@
+# Spec Tasks
+
+## Tasks
+
+- [x] 1. Game State Types and Zone System
+  - [x] 1.1 Write tests for LorcanaState type structure (lore tracking, ink management, character states)
+  - [x] 1.2 Create `src/types/lorcana-state.ts` with complete state type definition
+  - [x] 1.3 Write tests for zone configurations (visibility, ordering, facedown rules)
+  - [x] 1.4 Create `src/game-definition/zones.ts` with all 5 zones (Deck, Hand, Play, Discard, Inkwell)
+  - [x] 1.5 Write tests for zone transition operations
+  - [x] 1.6 Create zone helper functions in `src/game-definition/zone-operations.ts`
+  - [x] 1.7 Verify all tests pass for packages/lorcana-engine (52 tests pass)
+  - [x] 1.8 Verify linter rules pass for packages/lorcana-engine
+  - [ ] 1.9 Verify type safety with typecheck for packages/lorcana-engine
+  - [ ] 1.10 Use the code-reviewer subagent to review the code
+
+- [ ] 2. Game Setup and Initialization
+  - [ ] 2.1 Write tests for game setup (deck shuffling, hand dealing, mulligan, starting player)
+  - [ ] 2.2 Create `src/game-definition/setup.ts` with setupLorcanaGame function
+  - [ ] 2.3 Write tests for seeded RNG determinism
+  - [ ] 2.4 Implement deck shuffling with seeded randomization
+  - [ ] 2.5 Write tests for mulligan (alter hands) system
+  - [ ] 2.6 Implement mulligan logic following Rule 3.1.6
+  - [ ] 2.7 Write tests for initial state creation (lore at 0, ink at 0)
+  - [ ] 2.8 Implement complete setup sequence
+  - [ ] 2.9 Verify all tests pass for packages/lorcana-engine
+  - [ ] 2.10 Verify linter rules pass for packages/lorcana-engine
+  - [ ] 2.11 Verify type safety with typecheck for packages/lorcana-engine
+  - [ ] 2.12 Use the code-reviewer subagent to review the code
+
+- [ ] 3. Turn Structure and Phase Flow
+  - [ ] 3.1 Write tests for Beginning Phase Ready step (ready all cards, start-of-turn effects)
+  - [ ] 3.2 Write tests for Beginning Phase Set step (characters stop drying, location lore)
+  - [ ] 3.3 Write tests for Beginning Phase Draw step (draw card, skip first turn)
+  - [ ] 3.4 Create `src/game-definition/flow.ts` with three-phase turn structure
+  - [ ] 3.5 Implement Beginning Phase with Ready/Set/Draw steps
+  - [ ] 3.6 Write tests for Main Phase (turn actions available, proper sequencing)
+  - [ ] 3.7 Implement Main Phase logic
+  - [ ] 3.8 Write tests for End of Turn Phase (triggers, effect cleanup, turn advance)
+  - [ ] 3.9 Implement End of Turn Phase
+  - [ ] 3.10 Write integration test for complete turn cycle
+  - [ ] 3.11 Verify all tests pass for packages/lorcana-engine
+  - [ ] 3.12 Verify linter rules pass for packages/lorcana-engine
+  - [ ] 3.13 Verify type safety with typecheck for packages/lorcana-engine
+  - [ ] 3.14 Use the code-reviewer subagent to review the code
+
+- [ ] 4. Core Moves - Ink Card and Play Card
+  - [ ] 4.1 Write tests for Ink Card move validation (inkwell symbol, once per turn, in hand)
+  - [ ] 4.2 Write tests for Ink Card move execution (move to inkwell, increment ink)
+  - [ ] 4.3 Create `src/moves/ink-card.ts` with complete move implementation
+  - [ ] 4.4 Write tests for Play Card move validation (cost, Main Phase, in hand)
+  - [ ] 4.5 Write tests for cost calculation (base cost, modifiers, alternate costs)
+  - [ ] 4.6 Write tests for Play Card execution (characters to Play, actions resolve and discard)
+  - [ ] 4.7 Write tests for "drying" character mechanic
+  - [ ] 4.8 Create `src/moves/play-card.ts` with complete move implementation
+  - [ ] 4.9 Create `src/rules/costs.ts` with cost calculation logic
+  - [ ] 4.10 Verify all tests pass for packages/lorcana-engine
+  - [ ] 4.11 Verify linter rules pass for packages/lorcana-engine
+  - [ ] 4.12 Verify type safety with typecheck for packages/lorcana-engine
+  - [ ] 4.13 Use the code-reviewer subagent to review the code
+
+- [ ] 5. Core Moves - Quest and Challenge
+  - [ ] 5.1 Write tests for Quest move validation (ready, dry, not Reckless)
+  - [ ] 5.2 Write tests for Quest execution (exert, gain lore, track questing)
+  - [ ] 5.3 Create `src/moves/quest.ts` with complete move implementation
+  - [ ] 5.4 Write tests for Challenge validation (attacker dry/ready, defender exerted)
+  - [ ] 5.5 Write tests for Challenge restrictions (Bodyguard, Evasive)
+  - [ ] 5.6 Write tests for Challenge damage calculation (Strength, Challenger bonus, Resist)
+  - [ ] 5.7 Write tests for Challenge execution (exert, deal damage, banishment)
+  - [ ] 5.8 Write tests for challenging locations
+  - [ ] 5.9 Create `src/moves/challenge.ts` with complete move implementation
+  - [ ] 5.10 Verify all tests pass for packages/lorcana-engine
+  - [ ] 5.11 Verify linter rules pass for packages/lorcana-engine
+  - [ ] 5.12 Verify type safety with typecheck for packages/lorcana-engine
+  - [ ] 5.13 Use the code-reviewer subagent to review the code
+
+- [ ] 6. Pass Turn Move and Game State Checks
+  - [ ] 6.1 Write tests for Pass Turn validation (Main Phase, no pending abilities, Reckless requirement)
+  - [ ] 6.2 Create `src/moves/pass-turn.ts` with complete move implementation
+  - [ ] 6.3 Write tests for game state check win condition (20 lore)
+  - [ ] 6.4 Write tests for game state check loss condition (empty deck draw)
+  - [ ] 6.5 Write tests for game state check banishment (damage >= Willpower)
+  - [ ] 6.6 Write tests for repeated game state checks
+  - [ ] 6.7 Create `src/game-definition/game-state-check.ts` with complete implementation
+  - [ ] 6.8 Integrate game state checks after steps, actions, and abilities
+  - [ ] 6.9 Verify all tests pass for packages/lorcana-engine
+  - [ ] 6.10 Verify linter rules pass for packages/lorcana-engine
+  - [ ] 6.11 Verify type safety with typecheck for packages/lorcana-engine
+  - [ ] 6.12 Use the code-reviewer subagent to review the code
+
+- [ ] 7. Triggered Ability System (The Bag)
+  - [ ] 7.1 Write tests for adding abilities to the bag
+  - [ ] 7.2 Write tests for active player priority resolution
+  - [ ] 7.3 Write tests for opponent resolution in turn order
+  - [ ] 7.4 Write tests for abilities triggering during resolution
+  - [ ] 7.5 Create `src/game-definition/bag.ts` with triggered ability queue system
+  - [ ] 7.6 Write tests for "when played" triggers
+  - [ ] 7.7 Write tests for "whenever quests" triggers
+  - [ ] 7.8 Write tests for challenge-related triggers
+  - [ ] 7.9 Implement trigger helper functions
+  - [ ] 7.10 Verify all tests pass for packages/lorcana-engine
+  - [ ] 7.11 Verify linter rules pass for packages/lorcana-engine
+  - [ ] 7.12 Verify type safety with typecheck for packages/lorcana-engine
+  - [ ] 7.13 Use the code-reviewer subagent to review the code
+
+- [ ] 8. Game Definition Integration and Move Registry
+  - [ ] 8.1 Write tests for complete game definition structure
+  - [ ] 8.2 Create `src/game-definition/lorcana-game-definition.ts` integrating all components
+  - [ ] 8.3 Create `src/moves/index.ts` with move registry exporting all 5 moves
+  - [ ] 8.4 Write tests for RuleEngine integration
+  - [ ] 8.5 Create `src/index.ts` with public API exports
+  - [ ] 8.6 Write tests for move execution through RuleEngine
+  - [ ] 8.7 Verify all tests pass for packages/lorcana-engine
+  - [ ] 8.8 Verify linter rules pass for packages/lorcana-engine
+  - [ ] 8.9 Verify type safety with typecheck for packages/lorcana-engine
+  - [ ] 8.10 Use the code-reviewer subagent to review the code
+
+- [ ] 9. Integration Tests - Complete Game Scenarios
+  - [ ] 9.1 Write integration test for complete turn cycle (Beginning → Main → End → next player)
+  - [ ] 9.2 Write integration test for quest to 20 lore victory
+  - [ ] 9.3 Write integration test for deck-out loss condition
+  - [ ] 9.4 Write integration test for challenge with character banishment
+  - [ ] 9.5 Write integration test for triggered ability priority resolution
+  - [ ] 9.6 Write integration test for complete game from setup to win
+  - [ ] 9.7 Write integration test for "drying" character restrictions
+  - [ ] 9.8 Write integration test for ink management (generation and spending)
+  - [ ] 9.9 Verify all integration tests pass
+  - [ ] 9.10 Verify all tests pass for packages/lorcana-engine
+  - [ ] 9.11 Verify linter rules pass for packages/lorcana-engine
+  - [ ] 9.12 Verify type safety with typecheck for packages/lorcana-engine
+  - [ ] 9.13 Use the code-reviewer subagent to review the code
+
+- [ ] 10. Documentation and Final Verification
+  - [ ] 10.1 Update README.md with usage examples
+  - [ ] 10.2 Add code comments referencing Comprehensive Rules sections
+  - [ ] 10.3 Create example game scenario in documentation
+  - [ ] 10.4 Verify all tests pass with `bun test` for packages/lorcana-engine
+  - [ ] 10.5 Verify type checking passes with `tsc --noEmit` for packages/lorcana-engine
+  - [ ] 10.6 Verify linting passes with `biome check` for packages/lorcana-engine
+  - [ ] 10.7 Run full `bun run check` for packages/lorcana-engine
+  - [ ] 10.8 Review test coverage for all implemented features
+  - [ ] 10.9 Use the code-reviewer subagent for final review
+  - [ ] 10.10 Confirm all 6 Expected Deliverables from spec.md are met
+

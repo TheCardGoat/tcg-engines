@@ -9,58 +9,58 @@ These are the tasks to be completed for the spec detailed in @.agent-os/packages
 
 ### Phase 1: Foundation - Zone Management System
 
-- [ ] 1. Implement Zone Management System
-  - [ ] 1.1 Write tests for zone initialization and state management
-  - [ ] 1.2 Write tests for zone capacity rules (Mobile Suit Zone max 5, G Zone max 10)
-  - [ ] 1.3 Implement ZoneType enum and Zone interface with all 9 zones
-  - [ ] 1.4 Implement zone state containers (cards array, metadata)
-  - [ ] 1.5 Implement zone validators (capacity checks, card type restrictions)
-  - [ ] 1.6 Implement zone query functions (getCardsInZone, getZoneCount)
-  - [ ] 1.7 Implement zone mutation functions (addToZone, removeFromZone, moveCard)
-  - [ ] 1.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
-  - [ ] 1.9 Verify linter rules pass for gundam-engine
-  - [ ] 1.10 Verify type safety (run typecheck, iterate until passes)
-  - [ ] 1.11 Use code-reviewer subagent to review the code
+- [x] 1. Implement Zone Management System ✅ (2025-10-08)
+  - [x] 1.1 Write tests for zone initialization and state management
+  - [x] 1.2 Write tests for zone capacity rules (battleArea max 6, resourceArea max 15, hand max 10)
+  - [x] 1.3 Implement ZoneType enum and Zone interface with all zones
+  - [x] 1.4 Implement zone state containers (cards array, metadata)
+  - [x] 1.5 Implement zone validators (capacity checks, card type restrictions)
+  - [x] 1.6 Implement zone query functions (getCardsInZone, getZoneCount)
+  - [x] 1.7 Implement zone mutation functions (addToZone, removeFromZone, moveCard)
+  - [x] 1.8 Verify all tests for gundam-engine pass (28/28 tests)
+  - [x] 1.9 Verify linter rules pass for gundam-engine
+  - [x] 1.10 Verify type safety (run typecheck, iterate until passes)
+  - [x] 1.11 Use code-reviewer subagent to review the code
 
-- [ ] 2. Implement Card Position & Orientation System
-  - [ ] 2.1 Write tests for card position changes (deployed/set/exhausted states)
-  - [ ] 2.2 Write tests for position validation rules (can't attack when exhausted, etc.)
-  - [ ] 2.3 Implement CardPosition enum (deployed, set, exhausted, ready)
-  - [ ] 2.4 Implement position state tracking on card instances
-  - [ ] 2.5 Implement position transition functions (exhaust, ready, flip)
-  - [ ] 2.6 Implement position validators for game actions
-  - [ ] 2.7 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
-  - [ ] 2.8 Verify linter rules pass for gundam-engine
-  - [ ] 2.9 Verify type safety (run typecheck, iterate until passes)
-  - [ ] 2.10 Use code-reviewer subagent to review the code
+- [x] 2. Implement Card Position & Orientation System ✅ (2025-10-08)
+  - [x] 2.1 Write tests for card position changes (active/rested states)
+  - [x] 2.2 Write tests for position validation rules (can't rest already rested, etc.)
+  - [x] 2.3 Implement CardPosition enum (active, rested)
+  - [x] 2.4 Implement position state tracking on card instances
+  - [x] 2.5 Implement position transition functions (rest, activate)
+  - [x] 2.6 Implement position validators for game actions
+  - [x] 2.7 Verify all tests for gundam-engine pass (55/55 tests)
+  - [x] 2.8 Verify linter rules pass for gundam-engine
+  - [x] 2.9 Verify type safety (run typecheck, iterate until passes)
+  - [x] 2.10 Use code-reviewer subagent to review the code
 
 ### Phase 2: Resource & Cost System
 
-- [ ] 3. Implement Resource Management System
-  - [ ] 3.1 Write tests for resource generation (roll dice, +1 per main/hangar card)
-  - [ ] 3.2 Write tests for resource spending and validation
-  - [ ] 3.3 Write tests for insufficient resource error handling
-  - [ ] 3.4 Implement ResourcePool state container (available, spent, sources)
-  - [ ] 3.5 Implement resource generation logic (dice roll + card bonuses)
-  - [ ] 3.6 Implement resource spending functions (spendResources, validateCost)
-  - [ ] 3.7 Implement resource reset for turn end
-  - [ ] 3.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
-  - [ ] 3.9 Verify linter rules pass for gundam-engine
-  - [ ] 3.10 Verify type safety (run typecheck, iterate until passes)
-  - [ ] 3.11 Use code-reviewer subagent to review the code
+- [x] 3. Implement Resource Management System ✅ (2025-10-09)
+  - [x] 3.1 Write tests for resource pool creation and placement
+  - [x] 3.2 Write tests for resource spending and validation
+  - [x] 3.3 Write tests for insufficient resource error handling
+  - [x] 3.4 Implement ResourcePool state container (resources, activeResources, restedResources)
+  - [x] 3.5 Implement resource placement logic (Rule 6-4-1)
+  - [x] 3.6 Implement resource spending functions (payResourceCost, canPayCost)
+  - [x] 3.7 Implement resource reset for turn end (activateAllResources)
+  - [x] 3.8 Verify all tests for gundam-engine pass (89/89 tests)
+  - [x] 3.9 Verify linter rules pass for gundam-engine
+  - [x] 3.10 Verify type safety (run typecheck, iterate until passes)
+  - [x] 3.11 Use code-reviewer subagent to review the code
 
-- [ ] 4. Implement Cost System & Payment
-  - [ ] 4.1 Write tests for cost calculation (deployment costs, ability costs)
-  - [ ] 4.2 Write tests for G cost payment from G Zone
-  - [ ] 4.3 Write tests for cost reduction effects
-  - [ ] 4.4 Implement Cost type (resource amount, G requirements, additional costs)
-  - [ ] 4.5 Implement cost calculation functions (calculateDeploymentCost, calculateAbilityCost)
-  - [ ] 4.6 Implement payment validation (canPayCost)
-  - [ ] 4.7 Implement payment execution (payCost with resource + G Zone discard)
-  - [ ] 4.8 Verify all tests for gundam-engine pass (monorepo - don't run full suite)
-  - [ ] 4.9 Verify linter rules pass for gundam-engine
-  - [ ] 4.10 Verify type safety (run typecheck, iterate until passes)
-  - [ ] 4.11 Use code-reviewer subagent to review the code
+- [x] 4. Implement Cost System & Payment ✅ (2025-10-09)
+  - [x] 4.1 Write tests for cost calculation (deployment costs, ability costs)
+  - [x] 4.2 Write tests for cost reduction effects
+  - [x] 4.3 Write tests for cost payment and validation
+  - [x] 4.4 Implement Cost type (resourceCost, additionalCosts)
+  - [x] 4.5 Implement cost calculation functions (calculateDeploymentCost, calculateAbilityCost with ①-⑩ symbols)
+  - [x] 4.6 Implement payment validation (canPayCost)
+  - [x] 4.7 Implement payment execution (payCost with resource resting)
+  - [x] 4.8 Verify all tests for gundam-engine pass (112/112 tests)
+  - [x] 4.9 Verify linter rules pass for gundam-engine
+  - [x] 4.10 Verify type safety (run typecheck, iterate until passes)
+  - [x] 4.11 Use code-reviewer subagent to review the code
 
 ### Phase 3: Core Move Implementations
 
