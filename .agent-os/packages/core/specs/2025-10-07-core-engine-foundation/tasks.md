@@ -1,0 +1,310 @@
+# Spec Tasks
+
+## Tasks
+
+- [x] 1. Project Setup & Type System Foundation
+  - [x] 1.1 Write tests for project initialization (package.json, tsconfig.json, biome.json)
+  - [x] 1.2 Create package.json with dependencies (immer, xstate, zod, seedrandom, nanoid)
+  - [x] 1.3 Configure TypeScript strict mode in tsconfig.json
+  - [x] 1.4 Configure Biome for linting and formatting
+  - [x] 1.5 Create base type definitions (CardId, PlayerId, GameId, ZoneId branded types)
+  - [x] 1.6 Write tests for branded type utilities
+  - [x] 1.7 Implement branded type creation utilities (createCardId, createPlayerId, etc.)
+  - [x] 1.8 Verify all tests pass for this project (`bun test`)
+  - [x] 1.9 Verify linter rules pass (`biome check`)
+  - [x] 1.10 Verify type safety (`tsc --noEmit`)
+  - [x] 1.11 Setup Turborepo boundaries https://turborepo.com/docs/reference/boundaries the package should NOT depend on any other package in the monorepo.
+
+- [x] 2. Zone Management System
+  - [x] 2.1 Write tests for Zone type definitions and ZoneConfig
+  - [x] 2.2 Implement Zone type and ZoneConfig interfaces
+  - [x] 2.3 Write tests for zone creation (createZone factory)
+  - [x] 2.4 Implement createZone factory with validation
+  - [x] 2.5 Write tests for zone operations (moveCard, draw, shuffle, search, peek, mill, reveal)
+  - [x] 2.6 Implement zone operation functions (with Immer)
+  - [x] 2.7 Write tests for zone visibility rules (public, private, secret)
+  - [x] 2.8 Implement zone visibility logic (with Immer)
+  - [x] 2.9 Write tests for zone queries (getZoneSize, getCardsInZone, getTopCard, getBottomCard)
+  - [x] 2.10 Implement zone query functions
+  - [x] 2.11 Verify all tests pass for this project
+  - [x] 2.12 Verify linter rules pass
+  - [x] 2.13 Verify type safety
+
+- [x] 3. Card Instance Model & Computed Properties
+  - [x] 3.1 Write tests for CardInstanceBase type
+  - [x] 3.2 Implement CardInstanceBase with mandatory fields
+  - [x] 3.3 Write tests for generic CardInstance<TCustomState> type
+  - [x] 3.4 Implement generic CardInstance type
+  - [x] 3.5 Write tests for Modifier system
+  - [x] 3.6 Implement Modifier type and modifier operations
+  - [x] 3.7 Write tests for computed properties (getCardPower, getCardToughness, getCardCost)
+  - [x] 3.8 Implement computed property pure functions
+  - [x] 3.9 Write tests for conditional modifiers
+  - [x] 3.10 Implement conditional modifier evaluation
+  - [x] 3.11 Write tests for CardDefinition (static data)
+  - [x] 3.12 Implement CardDefinition type and getCardDefinition utility
+  - [x] 3.13 Verify all tests pass for this project
+  - [x] 3.14 Verify linter rules pass
+  - [x] 3.15 Verify type safety
+
+- [x] 4. Card Filtering DSL
+  - [x] 4.1 Write tests for CardFilter type (zone, owner, type, state filters)
+  - [x] 4.2 Implement CardFilter type definition
+  - [x] 4.3 Write tests for NumberFilter (eq, gte, lte, gt, lt, between)
+  - [x] 4.4 Implement NumberFilter type and matching logic
+  - [x] 4.5 Write tests for composite filters (and, or, not)
+  - [x] 4.6 Implement composite filter evaluation
+  - [x] 4.7 Write tests for selectCards function
+  - [x] 4.8 Implement selectCards function
+  - [x] 4.9 Write tests for countCards and anyCard functions
+  - [x] 4.10 Implement countCards and anyCard functions
+  - [x] 4.11 Write tests for CardQuery builder API
+  - [x] 4.12 Implement CardQuery fluent builder
+  - [x] 4.13 Verify all tests pass for this project
+  - [x] 4.14 Verify linter rules pass
+  - [x] 4.15 Verify type safety
+
+- [x] 5. Seeded RNG System
+  - [x] 5.1 Write tests for SeededRNG interface
+  - [x] 5.2 Implement SeededRNG class wrapping seedrandom
+  - [x] 5.3 Write tests for getSeed and setSeed
+  - [x] 5.4 Implement seed management
+  - [x] 5.5 Write tests for random number generation (random, randomInt)
+  - [x] 5.6 Implement random number generation methods
+  - [x] 5.7 Write tests for array operations (pick, shuffle)
+  - [x] 5.8 Implement pick and shuffle using seeded RNG
+  - [x] 5.9 Write tests for dice and coin flip (rollDice, flipCoin)
+  - [x] 5.10 Implement rollDice and flipCoin
+  - [x] 5.11 Write tests for child RNG creation
+  - [x] 5.12 Implement createChild for sub-operations
+  - [x] 5.13 Write tests for deterministic behavior (same seed → same output)
+  - [x] 5.14 Verify deterministic test cases pass
+  - [x] 5.15 Verify all tests pass for this project
+  - [x] 5.16 Verify linter rules pass
+  - [x] 5.17 Verify type safety
+
+- [x] 6. Targeting System
+  - [x] 6.1 Write tests for TargetDefinition type
+  - [x] 6.2 Implement TargetDefinition and TargetRestriction types
+  - [x] 6.3 Write tests for target validation (isLegalTarget)
+  - [x] 6.4 Implement isLegalTarget function with filter and restriction checks
+  - [x] 6.5 Write tests for getLegalTargets
+  - [x] 6.6 Implement getLegalTargets function
+  - [x] 6.7 Write tests for validateTargetSelection
+  - [x] 6.8 Implement validateTargetSelection function
+  - [x] 6.9 Write tests for target enumeration (enumerateTargetCombinations)
+  - [x] 6.10 Implement enumerateTargetCombinations for AI
+  - [x] 6.11 Write tests for targeting restrictions (not-self, not-controller, not-owner, different-targets)
+  - [x] 6.12 Implement restriction validation logic
+  - [x] 6.13 Write tests for optional vs required targets
+  - [x] 6.14 Implement optional target handling
+  - [x] 6.15 Write tests for target re-validation
+  - [x] 6.16 Implement target re-validation before move execution
+  - [x] 6.17 Verify all tests pass for this project
+  - [x] 6.18 Verify linter rules pass
+  - [x] 6.19 Verify type safety
+
+- [x] 7. Move/Action System
+  - [x] 7.1 Write tests for Action system initialization
+  - [x] 7.2 Implement Action system with core-engine integration
+  - [x] 7.3 Write tests for action execution
+  - [x] 7.4 Implement action execution with move delegation
+  - [x] 7.5 Write tests for action validation
+  - [x] 7.6 Implement action validation logic
+  - [x] 7.7 Write tests for action context
+  - [x] 7.8 Implement action context passing
+  - [x] 7.9 Write tests for action results
+  - [x] 7.10 Implement action result handling
+  - [x] 7.11 Write tests for action metadata
+  - [x] 7.12 Implement action metadata system
+  - [x] 7.13 Write tests for action integration with move system
+  - [x] 7.14 Implement move system integration
+  - [x] 7.15 Verify all tests pass for this project
+  - [x] 7.16 Verify linter rules pass
+  - [x] 7.17 Verify type safety
+
+- [x] 8. Move System with Validation
+  - [x] 8.1 Write tests for MoveDefinition type
+  - [x] 8.2 Implement MoveDefinition with move reducer, condition, and metadata
+  - [x] 8.3 Write tests for Move type and move structure validation
+  - [x] 8.4 Implement Move type and validation
+  - [x] 8.5 Write tests for move condition evaluation
+  - [x] 8.6 Implement condition checking logic
+  - [x] 8.7 Write tests for move reducer execution with Immer draft
+  - [x] 8.8 Implement move reducer execution in produce context
+  - [x] 8.9 Write tests for MoveResult (success/failure)
+  - [x] 8.10 Implement MoveResult type with error handling
+  - [x] 8.11 Write tests for move validation flow (name → structure → condition → execution)
+  - [x] 8.12 Implement complete move validation pipeline
+  - [x] 8.13 Write tests for MoveContext (playerId, sourceCard, targets, rng)
+  - [x] 8.14 Implement MoveContext type and context passing
+  - [x] 8.15 Verify all tests pass for this project
+  - [x] 8.16 Verify linter rules pass
+  - [x] 8.17 Verify type safety
+
+- [x] 9. Flow Manager
+  - [x] 9.1 Write tests for FlowDefinition type
+  - [x] 9.2 Implement FlowDefinition
+  - [x] 9.3 Write tests for turn/phase/step state machine
+  - [x] 9.4 Implement state machine for game flow
+  - [x] 9.5 Write tests for lifecycle hooks (onBegin, onEnd)
+  - [x] 9.6 Implement lifecycle hook execution in Immer context
+  - [x] 9.7 Write tests for endIf conditions and automatic transitions
+  - [x] 9.8 Implement guard conditions for phase/step transitions
+  - [x] 9.9 Write tests for FlowContext and state synchronization
+  - [x] 9.10 Implement getFlowContext and applyFlowContext
+  - [x] 9.11 Write tests for flow event handling (NEXT_PHASE, PASS_PRIORITY, EXECUTE_MOVE, END_TURN)
+  - [x] 9.12 Implement flow event dispatching
+  - [x] 9.13 Write tests for hierarchical states (nested phases/steps)
+  - [x] 9.14 Implement nested state support
+  - [x] 9.15 Verify all tests pass for this project
+  - [x] 9.16 Verify linter rules pass
+  - [x] 9.17 Verify type safety
+
+- [x] 10. GameDefinition Type System
+  - [x] 10.1 Write tests for GameDefinition type with generics
+  - [x] 10.2 Implement GameDefinition<TState, TMoves> type
+  - [x] 10.3 Write tests for setup function validation
+  - [x] 10.4 Implement setup function signature and validation
+  - [x] 10.5 Write tests for moves mapping (GameMoveDefinitions)
+  - [x] 10.6 Implement GameMoveDefinitions type with exhaustive mapping
+  - [x] 10.7 Write tests for flow configuration
+  - [x] 10.8 Implement flow configuration validation
+  - [x] 10.9 Write tests for endIf game end condition
+  - [x] 10.10 Implement endIf evaluation logic
+  - [x] 10.11 Write tests for playerView filtering function
+  - [x] 10.12 Implement playerView function signature
+  - [x] 10.13 Write tests for GameDefinition validation (Zod schema)
+  - [x] 10.14 Implement Zod schema for GameDefinition validation
+  - [x] 10.15 Verify all tests pass for this project
+  - [x] 10.16 Verify linter rules pass
+  - [x] 10.17 Verify type safety
+
+- [x] 11. Rule Engine Core
+  - [x] 11.1 Write tests for RuleEngine class constructor with GameDefinition
+  - [x] 11.2 Implement RuleEngine class skeleton with initialization
+  - [x] 11.3 Write tests for getState method
+  - [x] 11.4 Implement getState to return current state
+  - [x] 11.5 Write tests for getPlayerView with filtering
+  - [x] 11.6 Implement getPlayerView using playerView function from definition
+  - [x] 11.7 Write tests for executeMove with success case
+  - [x] 11.8 Implement executeMove with move validation and execution
+  - [x] 11.9 Write tests for executeMove with failure cases (invalid move, condition failed, execution error)
+  - [x] 11.10 Implement error handling in executeMove
+  - [x] 11.11 Write tests for canExecuteMove
+  - [x] 11.12 Implement canExecuteMove without side effects
+  - [x] 11.13 Write tests for getValidMoves enumeration
+  - [x] 11.14 Implement getValidMoves (framework hook for game-specific logic)
+  - [x] 11.15 Write tests for undo/redo integration with StateManager
+  - [x] 11.16 Implement undo and redo methods
+  - [x] 11.17 Write tests for getHistory
+  - [x] 11.18 Implement getHistory to expose action log
+  - [x] 11.19 Write tests for replay with action log
+  - [x] 11.20 Implement replay function with deterministic execution
+  - [x] 11.21 Write tests for getPatches
+  - [x] 11.22 Implement getPatches to return accumulated patches
+  - [x] 11.23 Write tests for applyPatches (network sync)
+  - [x] 11.24 Implement applyPatches for client state updates
+  - [x] 11.25 Write tests for RNG integration in move context
+  - [x] 11.26 Implement RNG context passing to move reducers
+  - [x] 11.27 Write tests for Flow Manager integration
+  - [x] 11.28 Implement flow service management in engine
+  - [x] 11.29 Verify all tests pass for this project
+  - [x] 11.30 Verify linter rules pass
+  - [x] 11.31 Verify type safety
+
+- [x] 12. AI Move Enumeration
+  - [x] 12.1 Write tests for EnumeratedMove type
+  - [x] 12.2 Implement EnumeratedMove type with evaluation score
+  - [x] 12.3 Write tests for enumerateValidMoves
+  - [x] 12.4 Implement enumerateValidMoves with target combinations
+  - [x] 12.5 Write tests for enumerateValidTargets
+  - [x] 12.6 Implement enumerateValidTargets for partial move
+  - [x] 12.7 Write tests for isValidMove check
+  - [x] 12.8 Implement isValidMove validation
+  - [x] 12.9 Write tests for countValidMoves (without full enumeration)
+  - [x] 12.10 Implement countValidMoves optimization
+  - [x] 12.11 Write tests for move priority/ranking
+  - [x] 12.12 Implement move priority system for AI heuristics
+  - [x] 12.13 Verify all tests pass for this project
+  - [x] 12.14 Verify linter rules pass
+  - [x] 12.15 Verify type safety
+
+- [x] 13. Delta Synchronization Utilities
+  - [x] 13.1 Write tests for serializePatches
+  - [x] 13.2 Implement serializePatches for JSON serialization
+  - [x] 13.3 Write tests for deserializePatches
+  - [x] 13.4 Implement deserializePatches for JSON parsing
+  - [x] 13.5 Write tests for applyPatchesToState
+  - [x] 13.6 Implement applyPatchesToState utility
+  - [x] 13.7 Write tests for reversePatch (for undo)
+  - [x] 13.8 Implement reversePatch using Immer inverse patches
+  - [x] 13.9 Write tests for batch patch application
+  - [x] 13.10 Implement batch patch application logic
+  - [x] 13.11 Write tests for patch validation
+  - [x] 13.12 Implement patch structure validation
+  - [x] 13.13 Verify all tests pass for this project
+  - [x] 13.14 Verify linter rules pass
+  - [x] 13.15 Verify type safety
+
+- [x] 14. Player View Filtering
+  - [x] 14.1 Write tests for default player view (no filtering)
+  - [x] 14.2 Implement default playerView function
+  - [x] 14.3 Write tests for hiding opponent hands
+  - [x] 14.4 Implement hand filtering logic
+  - [x] 14.5 Write tests for hiding deck contents
+  - [x] 14.6 Implement deck filtering logic
+  - [x] 14.7 Write tests for face-down card filtering
+  - [x] 14.8 Implement face-down card logic
+  - [x] 14.9 Write tests for zone visibility rules in player views
+  - [x] 14.10 Implement visibility-based filtering
+  - [x] 14.11 Write tests for deterministic player views
+  - [x] 14.12 Verify same state + playerId → same view
+  - [x] 14.13 Verify all tests pass for this project
+  - [x] 14.14 Verify linter rules pass
+  - [x] 14.15 Verify type safety
+
+- [x] 15. Example Game Implementation
+  - [x] 15.1 Write tests for simple card game setup (CoinFlip or Rock-Paper-Scissors)
+  - [x] 15.2 Implement game definition for simple game
+  - [x] 15.3 Write tests for game moves (flip, draw, play)
+  - [x] 15.4 Implement game move reducers
+  - [x] 15.5 Write tests for game flow (turns, phases)
+  - [x] 15.6 Implement game flow machine
+  - [x] 15.7 Write tests for end conditions
+  - [x] 15.8 Implement end condition logic
+  - [x] 15.9 Write tests for complete game playthrough
+  - [x] 15.10 Verify game can be played end-to-end
+  - [x] 15.11 Write tests for replay of example game
+  - [x] 15.12 Verify deterministic replay
+  - [x] 15.13 Verify all tests pass for this project
+  - [x] 15.14 Verify linter rules pass
+  - [x] 15.15 Verify type safety
+
+- [x] 16. Integration & Documentation
+  - [x] 16.1 Write integration tests for server-authoritative pattern (client sends move, server broadcasts patches)
+  - [x] 16.2 Verify network synchronization pattern works
+  - [x] 16.3 Write integration tests for complete game flow (setup → moves → end)
+  - [x] 16.4 Verify all systems work together
+  - [x] 16.5 Create API documentation with TypeDoc
+  - [x] 16.6 Generate TypeDoc output
+  - [x] 16.7 Write README.md with quick start guide
+  - [x] 16.8 Write core concepts guide (GameDefinition, moves, zones, cards, flow)
+  - [x] 16.9 Write tutorial for building simple TCG
+  - [x] 16.10 Add code examples to documentation
+  - [x] 16.11 Verify all tests pass for the entire project
+  - [x] 16.12 Verify linter rules pass for the entire project
+  - [x] 16.13 Verify type safety for the entire project
+  - [x] 16.14 Run final code review
+
+## Notes
+
+- Follow **strict TDD**: Write tests first, implement to pass tests, refactor if valuable
+- Each major task builds on previous tasks (dependencies respected)
+- Use **real engine instances** in tests, no mocking
+- Tests document **expected behavior**, not implementation details
+- **95%+ behavior coverage** is the goal
+- All code must pass: tests, linter, type checker
+- Example game (Task 15) validates the entire framework
+- Integration tests (Task 16) verify systems work together
+
