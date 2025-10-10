@@ -1,4 +1,5 @@
 import type { FlowDefinition } from "../flow";
+import type { CardZoneConfig } from "../zones";
 import type { GameMoveDefinitions } from "./move-definitions";
 
 /**
@@ -32,8 +33,10 @@ export type GameEndResult = {
  *
  * The core declarative game definition with full type safety.
  * Generic over:
- * - TState: Game state shape
+ * - TState: Game state shape (game-specific logic state)
  * - TMoves: Available moves (record of move names to move arg types)
+ * - TCardDefinition: Static card definition type
+ * - TCardMeta: Dynamic card metadata type
  *
  * @example
  * ```typescript
@@ -47,10 +50,23 @@ export type GameEndResult = {
  *   pass: {};
  * };
  *
- * const game: GameDefinition<MyGameState, MyMoves> = {
+ * type MyCardDef = {
+ *   id: string;
+ *   name: string;
+ *   cost: number;
+ * };
+ *
+ * type MyCardMeta = {
+ *   damage?: number;
+ *   tapped?: boolean;
+ * };
+ *
+ * const game: GameDefinition<MyGameState, MyMoves, MyCardDef, MyCardMeta> = {
  *   name: 'My Card Game',
- *   minPlayers: 2,
- *   maxPlayers: 4,
+ *   zones: {
+ *     hand: { id: 'hand', name: 'Hand', visibility: 'private', ordered: false },
+ *     deck: { id: 'deck', name: 'Deck', visibility: 'secret', ordered: true },
+ *   },
  *   setup: (players) => ({
  *     players,
  *     currentPlayer: 0,
@@ -67,13 +83,55 @@ export type GameEndResult = {
  * };
  * ```
  */
-export type GameDefinition<TState, TMoves extends Record<string, any>> = {
+export type GameDefinition<
+  TState,
+  TMoves extends Record<string, any>,
+  TCardDefinition = any,
+  TCardMeta = any,
+> = {
   /**
    * Game name for identification and display
    *
    * Task 10.2: Required field
    */
   name: string;
+
+  /**
+   * Zone configuration (optional, but recommended for card games)
+   *
+   * Defines all zones used in the game.
+   * The framework will manage card locations and zone state internally.
+   *
+   * If zones are not provided, games must manage their own zone/card logic.
+   * This field enables the framework's internal zone management system.
+   *
+   * @example
+   * ```typescript
+   * zones: {
+   *   hand: { id: 'hand', name: 'Hand', visibility: 'private', ordered: false },
+   *   deck: { id: 'deck', name: 'Deck', visibility: 'secret', ordered: true },
+   *   play: { id: 'play', name: 'Play Area', visibility: 'public', ordered: false },
+   *   graveyard: { id: 'graveyard', name: 'Graveyard', visibility: 'public', ordered: false },
+   * }
+   * ```
+   */
+  zones?: Record<string, CardZoneConfig>;
+
+  /**
+   * Card definitions (optional)
+   *
+   * Map of card definition ID -> card data.
+   * Can be loaded dynamically or provided upfront.
+   *
+   * @example
+   * ```typescript
+   * cards: {
+   *   'pikachu': { id: 'pikachu', name: 'Pikachu', hp: 60, type: 'electric' },
+   *   'charizard': { id: 'charizard', name: 'Charizard', hp: 150, type: 'fire' },
+   * }
+   * ```
+   */
+  cards?: Record<string, TCardDefinition>;
 
   /**
    * Setup function - creates initial game state
@@ -97,8 +155,10 @@ export type GameDefinition<TState, TMoves extends Record<string, any>> = {
    *
    * Each key in TMoves must have a corresponding GameMoveDefinition.
    * Type system enforces this at compile time.
+   *
+   * Moves receive context with zones, cards operations API, and card registry.
    */
-  moves: GameMoveDefinitions<TState, TMoves>;
+  moves: GameMoveDefinitions<TState, TMoves, TCardMeta, TCardDefinition>;
 
   /**
    * Flow definition (optional) - XState-based turn/phase/step orchestration

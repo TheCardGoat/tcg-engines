@@ -110,7 +110,7 @@ export type LorcanaCardFilter = ExtendCardFilter<{
     | "action"
     | "item"
     | "location"
-    | ("character" | "action" | "item" | "location")[];
+    | Array<"character" | "action" | "item" | "location">;
 
   // Keyword filtering
   hasKeyword?: string[];

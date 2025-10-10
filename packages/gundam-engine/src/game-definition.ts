@@ -10,62 +10,162 @@
  * - Execute game flow
  * - Manage zones
  * - Enforce rules
- *
- * @example
- * ```typescript
- * import { defineGame } from "@tcg/core";
- * import { GundamGameState, GundamMove } from "./types";
- * import * as moves from "./moves";
- * import * as phases from "./phases";
- * import * as zones from "./zones";
- *
- * export const gundamGame = defineGame<GundamGameState, GundamMove>({
- *   id: "gundam-card-game",
- *   name: "Gundam Card Game",
- *
- *   // Initial state configuration
- *   initialState: {
- *     // ... state setup
- *   },
- *
- *   // Register all available moves
- *   moves: {
- *     playResource: moves.PlayResourceMove,
- *     deployUnit: moves.DeployUnitMove,
- *     pairPilot: moves.PairPilotMove,
- *     attack: moves.AttackMove,
- *     // ... other moves
- *   },
- *
- *   // Define game flow (phases and turn structure)
- *   flow: {
- *     phases: [
- *       phases.StartPhase,
- *       phases.DrawPhase,
- *       phases.ResourcePhase,
- *       phases.MainPhase,
- *       phases.EndPhase,
- *     ],
- *   },
- *
- *   // Configure zones
- *   zones: {
- *     deck: zones.DeckZone,
- *     hand: zones.HandZone,
- *     battleArea: zones.BattleAreaZone,
- *     shieldArea: zones.ShieldAreaZone,
- *     resourceArea: zones.ResourceAreaZone,
- *     trash: zones.TrashZone,
- *     removal: zones.RemovalZone,
- *   },
- *
- *   // Validation rules
- *   validation: {
- *     // ... validation configuration
- *   },
- * });
- * ```
  */
 
-// Implementation will go here
+import type {
+  GameDefinition,
+  GameEndResult,
+  GameMoveDefinitions,
+  Player,
+} from "@tcg/core";
+import { createPlayerId, createZoneId } from "@tcg/core";
+import {
+  attackMove,
+  deployBaseMove,
+  deployUnitMove,
+  drawMove,
+  passMove,
+  playResourceMove,
+} from "./moves";
+import type { GundamGameState, GundamMoves } from "./types";
+import {
+  createBaseSectionZone,
+  createBattleAreaZone,
+  createDeckZone,
+  createHandZone,
+  createRemovalZone,
+  createResourceAreaZone,
+  createResourceDeckZone,
+  createShieldSectionZone,
+  createTrashZone,
+} from "./zones";
 
+/**
+ * Setup function - creates initial game state
+ *
+ * TODO: Implement proper game setup with:
+ * - Deck shuffling
+ * - Initial hand draw
+ * - Shield placement
+ * - EX Base and EX Resource setup
+ */
+function setup(players: Player[]): GundamGameState {
+  const [player1Id, player2Id] = players.map((p) => createPlayerId(p.id));
+
+  // Create empty zones for each player
+  // TODO: Initialize with actual cards from decks
+  const zones = {
+    deck: {
+      [player1Id]: createDeckZone(player1Id, []),
+      [player2Id]: createDeckZone(player2Id, []),
+    },
+    resourceDeck: {
+      [player1Id]: createResourceDeckZone(player1Id, []),
+      [player2Id]: createResourceDeckZone(player2Id, []),
+    },
+    hand: {
+      [player1Id]: createHandZone(player1Id, []),
+      [player2Id]: createHandZone(player2Id, []),
+    },
+    battleArea: {
+      [player1Id]: createBattleAreaZone(player1Id, []),
+      [player2Id]: createBattleAreaZone(player2Id, []),
+    },
+    shieldSection: {
+      [player1Id]: createShieldSectionZone(player1Id, []),
+      [player2Id]: createShieldSectionZone(player2Id, []),
+    },
+    baseSection: {
+      [player1Id]: createBaseSectionZone(player1Id),
+      [player2Id]: createBaseSectionZone(player2Id),
+    },
+    resourceArea: {
+      [player1Id]: createResourceAreaZone(player1Id, []),
+      [player2Id]: createResourceAreaZone(player2Id, []),
+    },
+    trash: {
+      [player1Id]: createTrashZone(player1Id, []),
+      [player2Id]: createTrashZone(player2Id, []),
+    },
+    removal: {
+      [player1Id]: createRemovalZone(player1Id, []),
+      [player2Id]: createRemovalZone(player2Id, []),
+    },
+  };
+
+  return {
+    players: [player1Id, player2Id],
+    currentPlayer: player1Id,
+    turn: 1,
+    phase: "setup",
+    zones,
+    gundam: {
+      activeResources: {
+        [player1Id]: 0,
+        [player2Id]: 0,
+      },
+      cardPositions: {},
+      attackedThisTurn: [],
+      hasPlayedResourceThisTurn: {
+        [player1Id]: false,
+        [player2Id]: false,
+      },
+    },
+  };
+}
+
+/**
+ * Game end condition check
+ *
+ * Checks if the game has ended and returns the result.
+ */
+function endIf(state: GundamGameState): GameEndResult | undefined {
+  if (state.gundam.winner && state.gundam.loser) {
+    return {
+      winner: state.gundam.winner,
+      reason: state.gundam.gameEndReason ?? "Game ended",
+    };
+  }
+  return undefined;
+}
+
+/**
+ * Move Definitions
+ *
+ * Maps move names to their GameMoveDefinition implementations.
+ * Type-safe mapping ensures all moves in GundamMoves are defined.
+ */
+const moves: GameMoveDefinitions<GundamGameState, GundamMoves> = {
+  draw: drawMove,
+  deployUnit: deployUnitMove,
+  deployBase: deployBaseMove,
+  playResource: playResourceMove,
+  attack: attackMove,
+  pass: passMove,
+
+  concede: {
+    reducer: (draft, context) => {
+      const { playerId } = context;
+      // Concede: current player loses
+      draft.gundam.loser = playerId;
+      draft.gundam.winner = draft.players.find((p) => p !== playerId);
+      draft.gundam.gameEndReason = "Player conceded";
+      draft.phase = "gameOver";
+    },
+  },
+};
+
+/**
+ * Gundam Card Game Definition
+ *
+ * Complete game definition using @tcg/core framework.
+ * Provides type-safe, declarative game configuration.
+ */
+export const gundamGame: GameDefinition<GundamGameState, GundamMoves> = {
+  name: "Gundam Card Game",
+  setup,
+  moves,
+  endIf,
+  // TODO: Add flow definition for turn/phase management
+  // TODO: Add playerView for hiding private information
+};

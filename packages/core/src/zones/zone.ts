@@ -12,7 +12,7 @@ export type ZoneVisibility = "public" | "private" | "secret";
 /**
  * Zone configuration defining the properties and rules of a zone
  */
-export type ZoneConfig = {
+export type CardZoneConfig = {
   /**
    * Unique identifier for the zone
    */
@@ -57,7 +57,7 @@ export type Zone = {
   /**
    * Zone configuration
    */
-  config: ZoneConfig;
+  config: CardZoneConfig;
 
   /**
    * Cards currently in the zone

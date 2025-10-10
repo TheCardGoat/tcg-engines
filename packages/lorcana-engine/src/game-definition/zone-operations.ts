@@ -22,6 +22,7 @@ export {
   addCard,
   addCardToBottom as addCardToBottomZone,
   addCardToTop as addCardToTopZone,
+  type CardZoneConfig,
   clearZone as clearZoneImmutable,
   createPlayerZones,
   createZone,
@@ -41,7 +42,6 @@ export {
   search,
   shuffle,
   type Zone,
-  type ZoneConfig,
   type ZoneVisibility,
 } from "@tcg/core";
 

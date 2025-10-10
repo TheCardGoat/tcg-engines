@@ -150,6 +150,14 @@ export type SegmentDefinition<TState> = {
  */
 export type PhaseDefinition<TState> = {
   /**
+   * Initial segment name (optional)
+   *
+   * If specified and current phase has segments, begins at this segment.
+   * If not specified, uses first segment by order.
+   */
+  initialSegment?: string;
+
+  /**
    * Order/sequence number for this phase
    *
    * Used for default sequential progression.
@@ -200,6 +208,13 @@ export type PhaseDefinition<TState> = {
  * When turn ends, next player starts their turn.
  */
 export type TurnDefinition<TState> = {
+  /**
+   * Initial phase name (optional)
+   *
+   * If specified, turn begins at this phase.
+   * If not specified, uses first phase by order.
+   */
+  initialPhase?: string;
   /**
    * Task 9.5: Lifecycle hook called when turn begins
    *
@@ -270,20 +285,4 @@ export type FlowDefinition<TState> = {
    * When turn ends, next player starts their turn (default behavior).
    */
   turn: TurnDefinition<TState>;
-
-  /**
-   * Initial phase name (optional)
-   *
-   * If specified, turn begins at this phase.
-   * If not specified, uses first phase by order.
-   */
-  initialPhase?: string;
-
-  /**
-   * Initial segment name (optional)
-   *
-   * If specified and current phase has segments, begins at this segment.
-   * If not specified, uses first segment by order.
-   */
-  initialSegment?: string;
 };

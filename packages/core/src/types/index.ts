@@ -5,3 +5,4 @@ export {
   createPlayerId,
   createZoneId,
 } from "./branded-utils";
+export type { IState } from "./state";

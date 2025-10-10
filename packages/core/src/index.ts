@@ -18,6 +18,7 @@ export * from "./flow";
 export * from "./game-definition";
 export * from "./moves/move-executor";
 export * from "./moves/move-system";
+export * from "./operations";
 export * from "./rng/seeded-rng";
 export * from "./targeting/target-definition";
 export * from "./targeting/target-validation";

@@ -1,4 +1,4 @@
-export type { Zone, ZoneConfig, ZoneVisibility } from "./zone";
+export type { CardZoneConfig, Zone, ZoneVisibility } from "./zone";
 export { createZone } from "./zone-factory";
 export {
   addCard,

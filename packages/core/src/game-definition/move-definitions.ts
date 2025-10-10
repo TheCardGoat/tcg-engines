@@ -11,8 +11,16 @@ import type { MoveContext } from "../moves/move-system";
  * - A reducer function (required) - executes the move
  * - An optional condition function - validates if move is legal
  * - Optional metadata - for categorization, UI, etc.
+ *
+ * @template TState - Game state type
+ * @template TCardMeta - Card metadata type (for zone/card operations)
+ * @template TCardDefinition - Card definition type (for registry access)
  */
-export type GameMoveDefinition<TState> = {
+export type GameMoveDefinition<
+  TState,
+  TCardMeta = any,
+  TCardDefinition = any,
+> = {
   /**
    * Move reducer - executes the move using Immer draft
    *
@@ -22,9 +30,12 @@ export type GameMoveDefinition<TState> = {
    * Immer converts mutations into immutable updates.
    *
    * @param draft - Immer draft (mutable proxy) of game state
-   * @param context - Move context (player, targets, data, timestamp)
+   * @param context - Move context (player, targets, data, timestamp, zones, cards, registry)
    */
-  reducer: (draft: Draft<TState>, context: MoveContext) => void;
+  reducer: (
+    draft: Draft<TState>,
+    context: MoveContext<TCardMeta, TCardDefinition>,
+  ) => void;
 
   /**
    * Move condition - validates if move is legal
@@ -35,10 +46,13 @@ export type GameMoveDefinition<TState> = {
    * If returns false, move is rejected without state changes.
    *
    * @param state - Current game state (readonly)
-   * @param context - Move context (player, targets, data, timestamp)
+   * @param context - Move context (player, targets, data, timestamp, zones, cards, registry)
    * @returns True if move is legal, false otherwise
    */
-  condition?: (state: TState, context: MoveContext) => boolean;
+  condition?: (
+    state: TState,
+    context: MoveContext<TCardMeta, TCardDefinition>,
+  ) => boolean;
 
   /**
    * Optional metadata
@@ -85,6 +99,11 @@ export type GameMoveDefinition<TState> = {
  * };
  * ```
  */
-export type GameMoveDefinitions<TState, TMoves extends Record<string, any>> = {
-  [K in keyof TMoves]: GameMoveDefinition<TState>;
+export type GameMoveDefinitions<
+  TState,
+  TMoves extends Record<string, any>,
+  TCardMeta = any,
+  TCardDefinition = any,
+> = {
+  [K in keyof TMoves]: GameMoveDefinition<TState, TCardMeta, TCardDefinition>;
 };

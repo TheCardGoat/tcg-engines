@@ -18,7 +18,8 @@
     "lint": "turbo run lint",
     "format": "turbo run format",
     "check-types": "turbo run check-types",
-    "ci-check": "turbo run format lint check-types test"
+    "ci-check": "turbo run format lint check-types test",
+    "boundaries": "turbo boundaries"
   },
   "devDependencies": {
     "@biomejs/biome": "2.0.4",

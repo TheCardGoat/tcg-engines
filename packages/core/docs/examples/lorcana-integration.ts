@@ -1,35 +1,27 @@
 /**
  * Lorcana Integration Example
  *
- * Demonstrates how to build a Lorcana engine using @tcg/core types.
- * This example shows proper extension patterns and type usage.
+ * Demonstrates how to build a Lorcana engine using @tcg/core framework.
+ * This example shows:
+ * - Using the new Operations API (zones, cards, registry)
+ * - Framework-managed zone and card state
+ * - Card definitions with registry access
+ * - Proper type safety with generics
  */
 
 import type {
-  AbilityId,
-  CardDefinition,
   CardId,
-  CardInstance,
+  CardZoneConfig,
   FlowDefinition,
   GameDefinition,
-  GameState,
   MoveContext,
   PlayerId,
-  ZoneConfig,
-  ZoneId,
-  ZoneState,
 } from "@tcg/core";
 
-import {
-  addCardToZone,
-  createCardId,
-  createPlayerId,
-  createZoneId,
-  createZoneState,
-  getTopCard,
-  moveCardBetweenZones,
-  RuleEngine,
-} from "@tcg/core";
+import { createCardId, createPlayerId, RuleEngine } from "@tcg/core";
+
+// Define AbilityId locally (game-specific type)
+export type AbilityId = string;
 
 // ============================================================================
 // ZONE CONFIGURATION
@@ -45,41 +37,43 @@ export type LorcanaZoneId = "deck" | "hand" | "play" | "discard" | "inkwell";
 /**
  * Lorcana Zone Configurations
  *
- * Uses core's ZoneConfig with 3-tier visibility model:
+ * Framework-managed zones with 3-tier visibility model:
  * - "secret": Nobody can see (deck, inkwell)
  * - "private": Only owner can see (hand)
  * - "public": Everyone can see (play, discard)
+ *
+ * The framework manages zone state internally. Games just provide configuration.
  */
-export const lorcanaZones: Record<LorcanaZoneId, ZoneConfig> = {
+export const lorcanaZones: Record<LorcanaZoneId, CardZoneConfig> = {
   deck: {
-    id: createZoneId("deck"),
+    id: "deck" as any, // Framework manages zone IDs
     name: "Deck",
-    visibility: "secret", // Core's 3-tier model
+    visibility: "secret",
     ordered: true,
     faceDown: true,
   },
   hand: {
-    id: createZoneId("hand"),
+    id: "hand" as any,
     name: "Hand",
-    visibility: "private", // Only owner can see
+    visibility: "private",
     ordered: false,
   },
   play: {
-    id: createZoneId("play"),
+    id: "play" as any,
     name: "Play",
-    visibility: "public", // Everyone can see
+    visibility: "public",
     ordered: false,
   },
   discard: {
-    id: createZoneId("discard"),
+    id: "discard" as any,
     name: "Discard",
-    visibility: "public", // Everyone can see
+    visibility: "public",
     ordered: true,
   },
   inkwell: {
-    id: createZoneId("inkwell"),
+    id: "inkwell" as any,
     name: "Inkwell",
-    visibility: "secret", // Nobody can see
+    visibility: "secret",
     ordered: false,
     faceDown: true,
   },
@@ -108,11 +102,17 @@ export type LorcanaColor =
 /**
  * Lorcana Card Definition
  *
- * Extends core's CardDefinition with Lorcana-specific properties.
- * Uses intersection type for clean extension.
+ * Static card properties (immutable definition data).
+ * Accessed via context.registry in moves.
  */
-export type LorcanaCard = CardDefinition & {
-  /** Card type (overrides core's generic string) */
+export type LorcanaCard = {
+  /** Unique card ID */
+  id: string;
+
+  /** Card name */
+  name: string;
+
+  /** Card type */
   type: LorcanaCardType;
 
   /** Ink cost to play */
@@ -135,70 +135,83 @@ export type LorcanaCard = CardDefinition & {
 
   /** Ability text */
   abilities?: AbilityId[];
+
+  /** Card rarity */
+  rarity?: string;
+
+  /** Set code */
+  setCode?: string;
+
+  /** Card number */
+  cardNumber?: string;
 };
 
 /**
- * Example card definition
+ * Example card definitions
+ *
+ * These are stored in the GameDefinition and accessed via context.registry
  */
-export const mickeyMouseBraveLittleTailor: LorcanaCard = {
-  // Core properties
-  id: "tfc-001",
-  name: "Mickey Mouse - Brave Little Tailor",
-  type: "character",
-  baseCost: 5,
-
-  // Lorcana-specific properties
-  cost: 5,
-  color: "steel",
-  inkwell: true,
-  lore: 2,
-  strength: 3,
-  willpower: 4,
-  abilities: [],
-
-  // Optional metadata from core
-  rarity: "common",
-  setCode: "TFC",
-  cardNumber: "001",
+export const lorcanaCardDefinitions: Record<string, LorcanaCard> = {
+  "tfc-001": {
+    id: "tfc-001",
+    name: "Mickey Mouse - Brave Little Tailor",
+    type: "character",
+    cost: 5,
+    color: "steel",
+    inkwell: true,
+    lore: 2,
+    strength: 3,
+    willpower: 4,
+    abilities: [],
+    rarity: "common",
+    setCode: "TFC",
+    cardNumber: "001",
+  },
+  "tfc-002": {
+    id: "tfc-002",
+    name: "Elsa - Snow Queen",
+    type: "character",
+    cost: 8,
+    color: "sapphire",
+    inkwell: true,
+    lore: 3,
+    strength: 4,
+    willpower: 6,
+    abilities: [],
+    rarity: "legendary",
+    setCode: "TFC",
+    cardNumber: "002",
+  },
 };
 
 // ============================================================================
-// CARD INSTANCES
+// CARD METADATA
 // ============================================================================
 
 /**
- * Character State
+ * Card Metadata
  *
- * Runtime state for character cards in play.
- * Extends core's CardInstance with Lorcana-specific state.
- */
-export type CharacterState = {
-  /** Damage counters on this character */
-  damage: number;
-
-  /** Whether character is exerted (turned sideways) */
-  exerted: boolean;
-
-  /** Whether character was played this turn ("drying") */
-  playedThisTurn: boolean;
-};
-
-/**
- * Lorcana Character Instance
+ * Dynamic state for cards (managed by framework via context.cards).
+ * Separate from static card definitions (accessed via context.registry).
  *
- * Combines core's CardInstance with character-specific state.
+ * The framework tracks:
+ * - Which zone each card is in (via internal state)
+ * - Card ownership (via internal state)
+ * - Dynamic metadata (via context.cards.getCardMeta / updateCardMeta)
  */
-export type LorcanaCharacter = CardInstance<CharacterState>;
+export type LorcanaCardMeta = {
+  /** Damage counters on this card */
+  damage?: number;
 
-/**
- * Permanent State (items, locations)
- */
-export type PermanentState = {
-  /** Damage counters (for locations) */
-  damage: number;
+  /** Whether card is exerted (turned sideways) */
+  exerted?: boolean;
+
+  /** Whether card was played this turn ("drying") */
+  playedThisTurn?: boolean;
+
+  /** Additional modifiers or temporary effects */
+  modifiers?: string[];
 };
-
-export type LorcanaPermanent = CardInstance<PermanentState>;
 
 // ============================================================================
 // GAME STATE
@@ -237,51 +250,42 @@ export type ChallengeState = {
 /**
  * Lorcana Game State
  *
- * Extends core's GameState with Lorcana-specific properties.
+ * Only contains game-specific logic state.
+ * Framework manages zones, cards, and card metadata internally.
  *
  * Key patterns:
- * 1. Extends GameState via intersection
- * 2. Overrides 'phase' with specific type
- * 3. Nests game-specific state under 'lorcana' property
+ * 1. Only game logic state (lore, ink, turns)
+ * 2. No zone management (framework handles it)
+ * 3. No card metadata storage (framework handles via context.cards)
  * 4. Uses Record<PlayerId, T> for per-player data
- * 5. Uses Record<CardId, T> for per-card data
  */
-export type LorcanaState = GameState & {
-  /** Override phase with specific type */
+export type LorcanaState = {
+  /** Players in the game */
+  players: PlayerId[];
+
+  /** Current player index */
+  currentPlayerIndex: number;
+
+  /** Turn number */
+  turnNumber: number;
+
+  /** Current phase */
   phase: LorcanaPhase;
 
-  /** Game-specific state nested under 'lorcana' */
-  lorcana: {
-    /** Lore totals for each player */
-    lore: Record<PlayerId, number>;
+  /** Lore totals for each player */
+  lore: Record<PlayerId, number>;
 
-    /** Ink management */
-    ink: {
-      available: Record<PlayerId, number>;
-      total: Record<PlayerId, number>;
-    };
-
-    /** Turn metadata (reset each turn) */
-    turnMetadata: TurnMetadata;
-
-    /** Character runtime state */
-    characterStates: Record<CardId, CharacterState>;
-
-    /** Permanent runtime state (items, locations) */
-    permanentStates: Record<CardId, PermanentState>;
-
-    /** Challenge state (only during challenge) */
-    challengeState?: ChallengeState;
-
-    /** Zone states (using core's ZoneState utility) */
-    zones: {
-      deck: ZoneState;
-      hand: ZoneState;
-      play: ZoneState;
-      discard: ZoneState;
-      inkwell: ZoneState;
-    };
+  /** Ink management */
+  ink: {
+    available: Record<PlayerId, number>;
+    total: Record<PlayerId, number>;
   };
+
+  /** Turn metadata (reset each turn) */
+  turnMetadata: TurnMetadata;
+
+  /** Challenge state (only during challenge) */
+  challengeState?: ChallengeState;
 };
 
 // ============================================================================
@@ -333,30 +337,26 @@ export type LorcanaMoves = {
 /**
  * Lorcana Flow Definition
  *
- * Uses core's FlowDefinition to define Lorcana's turn structure:
- * - Beginning phase (3 steps: Ready, Set, Draw)
- * - Main phase (player actions)
- * - End phase (cleanup)
+ * Defines Lorcana's turn structure using the framework's FlowDefinition.
+ * Note: Flow hooks don't have access to Operations API yet (future enhancement).
+ * Complex turn logic should be handled in moves or with manual context updates.
  */
 export const lorcanaFlow: FlowDefinition<LorcanaState> = {
   turn: {
     onBegin: (context) => {
-      // Ready step: Ready all cards, replenish ink
+      // Ready step: Ready all cards (via card metadata), replenish ink
       const currentPlayer =
         context.state.players[context.state.currentPlayerIndex];
 
-      // Ready all characters
-      for (const cardId in context.state.lorcana.characterStates) {
-        context.state.lorcana.characterStates[cardId].exerted = false;
-        context.state.lorcana.characterStates[cardId].playedThisTurn = false;
-      }
+      // Note: In a real implementation, you'd use a move to handle ready step
+      // since moves have access to context.cards for metadata updates
 
       // Replenish ink
-      context.state.lorcana.ink.available[currentPlayer] =
-        context.state.lorcana.ink.total[currentPlayer];
+      context.state.ink.available[currentPlayer] =
+        context.state.ink.total[currentPlayer];
 
       // Reset turn metadata
-      context.state.lorcana.turnMetadata = {
+      context.state.turnMetadata = {
         cardsPlayedThisTurn: [],
         charactersQuesting: [],
         inkedThisTurn: false,
@@ -373,7 +373,8 @@ export const lorcanaFlow: FlowDefinition<LorcanaState> = {
             order: 0,
             next: "set",
             onBegin: (context) => {
-              // Ready step logic (already done in turn.onBegin)
+              // Ready step: Exert all cards
+              // In a real implementation, use a move to access context.cards
             },
           },
           set: {
@@ -387,29 +388,8 @@ export const lorcanaFlow: FlowDefinition<LorcanaState> = {
             order: 2,
             onBegin: (context) => {
               // Draw step: Draw a card
-              const currentPlayer =
-                context.state.players[context.state.currentPlayerIndex];
-
-              // Skip draw on first turn for starting player
-              if (
-                context.state.turnNumber === 1 &&
-                context.state.currentPlayerIndex === 0
-              ) {
-                return;
-              }
-
-              const topCard = getTopCard(
-                context.state.lorcana.zones.deck,
-                currentPlayer,
-              );
-              if (topCard) {
-                moveCardBetweenZones(
-                  context.state.lorcana.zones.deck,
-                  context.state.lorcana.zones.hand,
-                  currentPlayer,
-                  topCard,
-                );
-              }
+              // In a real implementation, use a move to access context.zones
+              // Example: engine.executeMove('drawCard', { playerId: currentPlayer })
             },
           },
         },
@@ -438,56 +418,69 @@ export const lorcanaFlow: FlowDefinition<LorcanaState> = {
 /**
  * Lorcana Game Definition
  *
- * Complete game definition using core's GameDefinition type.
- * Shows how all pieces come together.
+ * Complete game definition using framework's GameDefinition with generics:
+ * - TState: LorcanaState (game logic state)
+ * - TMoves: LorcanaMoves (available moves)
+ * - TCardDefinition: LorcanaCard (static card data)
+ * - TCardMeta: LorcanaCardMeta (dynamic card state)
  */
-export const lorcanaGame: GameDefinition<LorcanaState, LorcanaMoves> = {
+export const lorcanaGame: GameDefinition<
+  LorcanaState,
+  LorcanaMoves,
+  LorcanaCard,
+  LorcanaCardMeta
+> = {
   name: "Disney Lorcana",
+
+  /**
+   * Zone configurations
+   *
+   * Framework manages zone state internally. Games just provide config.
+   */
+  zones: lorcanaZones,
+
+  /**
+   * Card definitions
+   *
+   * Static card data accessed via context.registry in moves.
+   */
+  cards: lorcanaCardDefinitions,
 
   /**
    * Setup function
    *
-   * Creates initial game state from player list.
+   * Creates initial game state (game logic only, no zones/cards).
+   * Framework handles zone/card initialization automatically.
    */
   setup: (players) => {
     const playerIds = players.map((p) => createPlayerId(p.id));
 
     return {
-      // Core state properties
+      // Player management
       players: playerIds,
       currentPlayerIndex: 0,
       turnNumber: 1,
       phase: "beginning" as LorcanaPhase,
 
-      // Lorcana-specific state
-      lorcana: {
-        lore: Object.fromEntries(playerIds.map((id) => [id, 0])) as Record<
+      // Game-specific state only
+      lore: Object.fromEntries(playerIds.map((id) => [id, 0])) as Record<
+        PlayerId,
+        number
+      >,
+      ink: {
+        available: Object.fromEntries(playerIds.map((id) => [id, 0])) as Record<
           PlayerId,
           number
         >,
-        ink: {
-          available: Object.fromEntries(
-            playerIds.map((id) => [id, 0]),
-          ) as Record<PlayerId, number>,
-          total: Object.fromEntries(playerIds.map((id) => [id, 0])) as Record<
-            PlayerId,
-            number
-          >,
-        },
-        turnMetadata: {
-          cardsPlayedThisTurn: [],
-          charactersQuesting: [],
-          inkedThisTurn: false,
-        },
-        characterStates: {},
-        permanentStates: {},
-        zones: {
-          deck: createZoneState(playerIds),
-          hand: createZoneState(playerIds),
-          play: createZoneState(playerIds),
-          discard: createZoneState(playerIds),
-          inkwell: createZoneState(playerIds),
-        },
+        total: Object.fromEntries(playerIds.map((id) => [id, 0])) as Record<
+          PlayerId,
+          number
+        >,
+      },
+      turnMetadata: {
+        cardsPlayedThisTurn: [],
+        charactersQuesting: [],
+        inkedThisTurn: false,
       },
     };
   },
@@ -495,7 +488,10 @@ export const lorcanaGame: GameDefinition<LorcanaState, LorcanaMoves> = {
   /**
    * Move definitions
    *
-   * Each move has condition (validation) and reducer (execution).
+   * Each move uses Operations API:
+   * - context.zones: Zone management (moveCard, getCardsInZone, etc.)
+   * - context.cards: Card metadata (getCardMeta, updateCardMeta, etc.)
+   * - context.registry: Card definitions (getCard, queryCards, etc.)
    */
   moves: {
     playCard: {
@@ -505,13 +501,26 @@ export const lorcanaGame: GameDefinition<LorcanaState, LorcanaMoves> = {
           return false;
         }
 
-        // Check if card is in hand
+        // Check if card is in hand using zones API
         const cardId = context.data?.cardId as CardId;
-        if (!state.lorcana.zones.hand[currentPlayer]?.includes(cardId)) {
+        const handCards = context.zones?.getCardsInZone(
+          "hand" as any,
+          currentPlayer,
+        );
+        if (!handCards?.includes(cardId)) {
           return false;
         }
 
-        // TODO: Check ink cost, etc.
+        // Get card definition to check cost
+        const cardDef = context.registry?.getCard(cardId as string);
+        if (!cardDef) {
+          return false;
+        }
+
+        // Check if player has enough ink
+        if (state.ink.available[currentPlayer] < cardDef.cost) {
+          return false;
+        }
 
         return true;
       },
@@ -520,33 +529,46 @@ export const lorcanaGame: GameDefinition<LorcanaState, LorcanaMoves> = {
         const currentPlayer = draft.players[draft.currentPlayerIndex];
         const cardId = context.data?.cardId as CardId;
 
-        // Move card from hand to play
-        moveCardBetweenZones(
-          draft.lorcana.zones.hand,
-          draft.lorcana.zones.play,
-          currentPlayer,
-          cardId,
-        );
+        // Get card definition for cost
+        const cardDef = context.registry?.getCard(cardId as string);
+        if (!cardDef) return;
 
-        // Initialize character state if needed
-        draft.lorcana.characterStates[cardId] = {
+        // Move card from hand to play using zones API
+        context.zones?.moveCard({
+          cardId,
+          targetZoneId: "play" as any,
+        });
+
+        // Initialize card metadata using cards API
+        context.cards?.setCardMeta(cardId, {
           damage: 0,
           exerted: false,
           playedThisTurn: true, // "Drying"
-        };
+        });
+
+        // Spend ink
+        draft.ink.available[currentPlayer] -= cardDef.cost;
 
         // Track card played this turn
-        draft.lorcana.turnMetadata.cardsPlayedThisTurn.push(cardId);
+        draft.turnMetadata.cardsPlayedThisTurn.push(cardId);
       },
     },
 
     quest: {
       condition: (state, context) => {
         const characterId = context.data?.characterId as CardId;
-        const characterState = state.lorcana.characterStates[characterId];
+
+        // Get card metadata using cards API
+        const cardMeta = context.cards?.getCardMeta(characterId);
 
         // Can't quest if drying or exerted
-        if (characterState?.playedThisTurn || characterState?.exerted) {
+        if (cardMeta?.playedThisTurn || cardMeta?.exerted) {
+          return false;
+        }
+
+        // Get card definition to check if it can quest
+        const cardDef = context.registry?.getCard(characterId as string);
+        if (!(cardDef && cardDef.lore)) {
           return false;
         }
 
@@ -557,14 +579,18 @@ export const lorcanaGame: GameDefinition<LorcanaState, LorcanaMoves> = {
         const currentPlayer = draft.players[draft.currentPlayerIndex];
         const characterId = context.data?.characterId as CardId;
 
-        // Exert character
-        draft.lorcana.characterStates[characterId].exerted = true;
+        // Get card definition to get lore value
+        const cardDef = context.registry?.getCard(characterId as string);
+        if (!cardDef) return;
 
-        // Gain lore (TODO: get from card definition)
-        draft.lorcana.lore[currentPlayer] += 2;
+        // Exert character using cards API
+        context.cards?.updateCardMeta(characterId, { exerted: true });
+
+        // Gain lore
+        draft.lore[currentPlayer] += cardDef.lore ?? 0;
 
         // Track questing character
-        draft.lorcana.turnMetadata.charactersQuesting.push(characterId);
+        draft.turnMetadata.charactersQuesting.push(characterId);
       },
     },
 
@@ -582,37 +608,47 @@ export const lorcanaGame: GameDefinition<LorcanaState, LorcanaMoves> = {
     inkCard: {
       condition: (state, context) => {
         // Can only ink once per turn
-        if (state.lorcana.turnMetadata.inkedThisTurn) {
+        if (state.turnMetadata.inkedThisTurn) {
           return false;
         }
 
         const cardId = context.data?.cardId as CardId;
         const currentPlayer = state.players[state.currentPlayerIndex];
 
-        // Card must be in hand
-        return (
-          state.lorcana.zones.hand[currentPlayer]?.includes(cardId) ?? false
+        // Card must be in hand (check using zones API)
+        const handCards = context.zones?.getCardsInZone(
+          "hand" as any,
+          currentPlayer,
         );
+        if (!handCards?.includes(cardId)) {
+          return false;
+        }
+
+        // Card must be inkable (check card definition)
+        const cardDef = context.registry?.getCard(cardId as string);
+        if (!(cardDef && cardDef.inkwell)) {
+          return false;
+        }
+
+        return true;
       },
 
       reducer: (draft, context) => {
         const currentPlayer = draft.players[draft.currentPlayerIndex];
         const cardId = context.data?.cardId as CardId;
 
-        // Move card to inkwell
-        moveCardBetweenZones(
-          draft.lorcana.zones.hand,
-          draft.lorcana.zones.inkwell,
-          currentPlayer,
+        // Move card to inkwell using zones API
+        context.zones?.moveCard({
           cardId,
-        );
+          targetZoneId: "inkwell" as any,
+        });
 
         // Increase ink totals
-        draft.lorcana.ink.total[currentPlayer] += 1;
-        draft.lorcana.ink.available[currentPlayer] += 1;
+        draft.ink.total[currentPlayer] += 1;
+        draft.ink.available[currentPlayer] += 1;
 
         // Mark as inked this turn
-        draft.lorcana.turnMetadata.inkedThisTurn = true;
+        draft.turnMetadata.inkedThisTurn = true;
       },
     },
 
@@ -646,7 +682,7 @@ export const lorcanaGame: GameDefinition<LorcanaState, LorcanaMoves> = {
    */
   endIf: (state) => {
     for (const playerId of state.players) {
-      if (state.lorcana.lore[playerId] >= 20) {
+      if (state.lore[playerId] >= 20) {
         return {
           winner: playerId,
           reason: "Reached 20 lore",
@@ -699,29 +735,32 @@ export function exampleUsage() {
   if (result.success) {
     console.log("Card played successfully!");
   } else {
-    console.error("Move failed:", result.error);
+    console.error(
+      "Move failed:",
+      "error" in result ? result.error : "Unknown error",
+    );
   }
 
   // Get current state
   const state = engine.getState();
-  console.log("Current lore:", state.lorcana.lore);
+  console.log("Current lore:", state.lore);
 
   // Get player-specific view
-  const playerView = engine.getPlayerView(createPlayerId("player1"));
+  const playerView = engine.getPlayerView("player1");
   console.log("Player 1's view:", playerView);
 }
 
 /**
  * Key Takeaways:
  *
- * 1. ✅ All branded types from @tcg/core
- * 2. ✅ Zone system uses core's 3-tier visibility
- * 3. ✅ ZoneState utility from core
- * 4. ✅ Game state extends core's GameState
- * 5. ✅ Card definitions extend core's CardDefinition
- * 6. ✅ Card instances extend core's CardInstance
- * 7. ✅ Move system uses core's MoveContext
- * 8. ✅ Flow system uses core's FlowDefinition
- * 9. ✅ No type redefinitions
- * 10. ✅ Clear extension patterns via intersection types
+ * 1. ✅ Framework manages zones and cards internally
+ * 2. ✅ Operations API (zones, cards, registry) in move context
+ * 3. ✅ Static card definitions separate from dynamic card state
+ * 4. ✅ Game state only contains game logic (no zone/card management)
+ * 5. ✅ Type-safe generics: TState, TMoves, TCardDefinition, TCardMeta
+ * 6. ✅ Move conditions check card state via context.cards
+ * 7. ✅ Move reducers modify card state via context.cards
+ * 8. ✅ Card definitions accessed via context.registry
+ * 9. ✅ Zone operations via context.zones (moveCard, getCardsInZone, etc.)
+ * 10. ✅ Clean separation of concerns: game logic vs infrastructure
  */
