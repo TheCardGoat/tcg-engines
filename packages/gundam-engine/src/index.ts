@@ -23,24 +23,21 @@
  * ```
  */
 
+// Card types (for deck building)
+export * from "./cards/card-types";
 // Main game definition
-// export { gundamGame } from "./game-definition";
-
-// Type definitions
-// export type * from "./types";
+export { gundamGame } from "./game-definition";
 
 // Moves
-// export * from "./moves";
-
-// Cards
-// export * from "./cards";
-
-// Zones
-// export * from "./zones";
-
-// Phases
-// export * from "./phases";
-
-// Utilities
-// export * from "./utils";
-
+export {
+  attackMove,
+  deployBaseMove,
+  deployUnitMove,
+  drawMove,
+  passMove,
+  playResourceMove,
+} from "./moves";
+// Type definitions
+export type { CardPosition, GundamGameState, GundamMoves } from "./types";
+// Zone utilities
+export * from "./zones";

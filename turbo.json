@@ -42,5 +42,19 @@
       "cache": false,
       "persistent": true
     }
+  },
+  "boundaries": {
+    "tags": {
+      "game-engine": {
+        "dependencies": {
+          "allow": ["@tcg/core", "@jest/globals", "immer"]
+        }
+      },
+      "independent": {
+        "dependencies": {
+          "allow": ["@tcg/core", "@jest/globals", "immer"]
+        }
+      }
+    }
   }
 }

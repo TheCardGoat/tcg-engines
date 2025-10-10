@@ -1,5 +1,7 @@
 # Lorcana Rules Summary
 
+For full rules consult ./RULES.md
+
 ## 1. CONCEPTS
 
 ### 1.1. General

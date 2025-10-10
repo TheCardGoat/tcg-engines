@@ -1,5 +1,5 @@
 import type { CardId } from "../types";
-import type { Zone, ZoneConfig, ZoneVisibility } from "./zone";
+import type { CardZoneConfig, Zone, ZoneVisibility } from "./zone";
 
 const VALID_VISIBILITIES: ZoneVisibility[] = ["public", "private", "secret"];
 
@@ -11,7 +11,7 @@ const VALID_VISIBILITIES: ZoneVisibility[] = ["public", "private", "secret"];
  * @throws Error if configuration is invalid or initial cards exceed maxSize
  */
 export function createZone(
-  config: ZoneConfig,
+  config: CardZoneConfig,
   initialCards: CardId[] = [],
 ): Zone {
   // Validate required fields

@@ -1,8 +1,10 @@
-/**
- * Engine Module
- *
- * Core RuleEngine that integrates all game systems
- */
+export {
+  type ClientState,
+  MultiplayerEngine,
+  type MultiplayerEngineOptions,
+  type MultiplayerMode,
+  type PatchBroadcast,
+} from "./multiplayer-engine";
 
 export {
   type HistoryEntry,

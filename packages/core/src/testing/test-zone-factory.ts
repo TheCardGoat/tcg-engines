@@ -1,6 +1,6 @@
 import type { CardId, PlayerId } from "../types";
 import { createZoneId } from "../types";
-import type { Zone, ZoneConfig } from "../zones/zone";
+import type { CardZoneConfig, Zone } from "../zones/zone";
 
 /**
  * Test Zone Factory
@@ -40,12 +40,12 @@ let zoneCounter = 0;
  * ```
  */
 export function createTestZone(
-  configOverrides?: Partial<ZoneConfig>,
+  configOverrides?: Partial<CardZoneConfig>,
   cards: CardId[] = [],
 ): Zone {
   const id = createZoneId(`test-zone-${zoneCounter++}`);
 
-  const config: ZoneConfig = {
+  const config: CardZoneConfig = {
     id,
     name: `Test Zone ${zoneCounter}`,
     visibility: "public",

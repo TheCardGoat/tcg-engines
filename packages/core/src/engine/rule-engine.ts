@@ -10,11 +10,15 @@ import type {
   Player,
 } from "../game-definition/game-definition";
 import type { MoveContext } from "../moves/move-system";
+import type { CardRegistry } from "../operations/card-registry";
+import { createCardRegistry } from "../operations/card-registry-impl";
+import {
+  createCardOperations,
+  createZoneOperations,
+} from "../operations/operations-impl";
 import { SeededRNG } from "../rng/seeded-rng";
 import type { PlayerId } from "../types/branded";
-
-// Enable Immer patches for state tracking
-enablePatches();
+import type { InternalState } from "../types/state";
 
 /**
  * RuleEngine Options
@@ -69,6 +73,7 @@ export type HistoryEntry = {
  * - Patch generation (delta sync)
  * - RNG for determinism
  * - Player view filtering
+ * - Internal state management (zones/cards)
  *
  * @example
  * ```typescript
@@ -87,14 +92,26 @@ export type HistoryEntry = {
  * const gameEnd = engine.checkGameEnd();
  * ```
  */
-export class RuleEngine<TState, TMoves extends Record<string, any>> {
+export class RuleEngine<
+  TState,
+  TMoves extends Record<string, any>,
+  TCardDefinition = any,
+  TCardMeta = any,
+> {
   private currentState: TState;
-  private readonly gameDefinition: GameDefinition<TState, TMoves>;
+  private readonly gameDefinition: GameDefinition<
+    TState,
+    TMoves,
+    TCardDefinition,
+    TCardMeta
+  >;
   private readonly rng: SeededRNG;
   private readonly history: HistoryEntry[] = [];
   private historyIndex = -1;
   private flowManager?: FlowManager<TState>;
   private readonly initialPlayers: Player[]; // Store for replay
+  private internalState: InternalState<TCardDefinition, TCardMeta>;
+  private readonly cardRegistry: CardRegistry<TCardDefinition>;
 
   /**
    * Create a new RuleEngine instance
@@ -106,15 +123,41 @@ export class RuleEngine<TState, TMoves extends Record<string, any>> {
    * @param options - Optional configuration (seed, patches)
    */
   constructor(
-    gameDefinition: GameDefinition<TState, TMoves>,
+    gameDefinition: GameDefinition<TState, TMoves, TCardDefinition, TCardMeta>,
     players: Player[],
     options?: RuleEngineOptions,
   ) {
+    // Enable Immer patches for state tracking
+    enablePatches();
+
     this.gameDefinition = gameDefinition;
     this.initialPlayers = players;
 
     // Initialize RNG with optional seed
     this.rng = new SeededRNG(options?.seed);
+
+    // Initialize card registry from game definition
+    this.cardRegistry = createCardRegistry(gameDefinition.cards);
+
+    // Initialize internal state with zones from game definition
+    this.internalState = {
+      zones: {},
+      cards: {},
+      cardMetas: {},
+    };
+
+    // Create zone instances from zone configs (if provided)
+    if (gameDefinition.zones) {
+      for (const zoneId in gameDefinition.zones) {
+        const zoneConfig = gameDefinition.zones[zoneId];
+        if (zoneConfig) {
+          this.internalState.zones[zoneId] = {
+            config: zoneConfig,
+            cardIds: [],
+          };
+        }
+      }
+    }
 
     // Call setup to create initial state
     this.currentState = gameDefinition.setup(players);
@@ -203,23 +246,27 @@ export class RuleEngine<TState, TMoves extends Record<string, any>> {
       };
     }
 
-    // Task 11.25, 11.26: Add RNG to context for deterministic randomness
-    const contextWithRNG: MoveContext = {
-      ...context,
-      rng: this.rng,
-    };
-
     // Task 11.8: Check move condition
-    if (
-      moveDef.condition &&
-      !moveDef.condition(this.currentState, contextWithRNG)
-    ) {
+    if (!this.canExecuteMove(moveId, context)) {
       return {
         success: false,
         error: `Move '${moveId}' condition not met`,
         errorCode: "CONDITION_FAILED",
       };
     }
+
+    // Task 11.25, 11.26: Add RNG to context for deterministic randomness
+    // Also add operations API for zone and card management
+    const zoneOps = createZoneOperations(this.internalState);
+    const cardOps = createCardOperations(this.internalState);
+
+    const contextWithOperations: MoveContext<TCardMeta, TCardDefinition> = {
+      ...context,
+      rng: this.rng,
+      zones: zoneOps,
+      cards: cardOps,
+      registry: this.cardRegistry,
+    };
 
     // Task 11.9: Execute reducer with Immer and capture patches
     let patches: Patch[] = [];
@@ -229,7 +276,7 @@ export class RuleEngine<TState, TMoves extends Record<string, any>> {
       this.currentState = produce(
         this.currentState,
         (draft) => {
-          moveDef.reducer(draft, contextWithRNG);
+          moveDef.reducer(draft, contextWithOperations);
         },
         (p, ip) => {
           patches = p;
@@ -283,15 +330,21 @@ export class RuleEngine<TState, TMoves extends Record<string, any>> {
       return false;
     }
 
-    // Add RNG to context
-    const contextWithRNG: MoveContext = {
+    // Add RNG and operations to context
+    const zoneOps = createZoneOperations(this.internalState);
+    const cardOps = createCardOperations(this.internalState);
+
+    const contextWithOperations: MoveContext<TCardMeta, TCardDefinition> = {
       ...context,
       rng: this.rng,
+      zones: zoneOps,
+      cards: cardOps,
+      registry: this.cardRegistry,
     };
 
     if (
       moveDef.condition &&
-      !moveDef.condition(this.currentState, contextWithRNG)
+      !moveDef.condition(this.currentState, contextWithOperations)
     ) {
       return false;
     }

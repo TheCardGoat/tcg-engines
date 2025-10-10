@@ -1,4 +1,7 @@
 import type { Draft } from "immer";
+import type { CardOperations } from "../operations/card-operations";
+import type { CardRegistry } from "../operations/card-registry";
+import type { ZoneOperations } from "../operations/zone-operations";
 import type { SeededRNG } from "../rng/seeded-rng";
 import type { CardId, PlayerId } from "../types";
 
@@ -12,8 +15,14 @@ import type { CardId, PlayerId } from "../types";
  * - Additional move-specific data
  * - Timestamp for deterministic ordering
  * - RNG for deterministic randomness
+ * - Zone operations API (for framework-managed zones)
+ * - Card operations API (for framework-managed card metadata)
+ * - Card registry API (for static card definitions)
+ *
+ * @template TCardMeta - Game-specific card metadata type
+ * @template TCardDefinition - Game-specific card definition type
  */
-export type MoveContext = {
+export type MoveContext<TCardMeta = any, TCardDefinition = any> = {
   /** Player performing this move */
   playerId: PlayerId;
 
@@ -31,6 +40,57 @@ export type MoveContext = {
 
   /** Seeded RNG for deterministic randomness (provided by engine) */
   rng?: SeededRNG;
+
+  /**
+   * Zone operations API (provided by RuleEngine)
+   *
+   * Provides methods to interact with the framework's zone management:
+   * - moveCard: Move cards between zones
+   * - getCardsInZone: Query cards in a zone
+   * - shuffleZone: Shuffle a zone
+   * - getCardZone: Find which zone contains a card
+   *
+   * This is the ONLY way moves can modify zone state.
+   *
+   * Optional for backward compatibility and testing. In production,
+   * this is always provided by RuleEngine.
+   */
+  zones?: ZoneOperations;
+
+  /**
+   * Card operations API (provided by RuleEngine)
+   *
+   * Provides methods to interact with the framework's card metadata:
+   * - getCardMeta: Get dynamic card properties
+   * - updateCardMeta: Merge metadata updates
+   * - setCardMeta: Replace metadata completely
+   * - getCardOwner: Get card's owner
+   * - queryCards: Find cards by predicate
+   *
+   * This is the ONLY way moves can modify card metadata.
+   *
+   * Optional for backward compatibility and testing. In production,
+   * this is always provided by RuleEngine.
+   */
+  cards?: CardOperations<TCardMeta>;
+
+  /**
+   * Card registry API (provided by RuleEngine)
+   *
+   * Provides read-only access to static card definitions:
+   * - getCard: Get a card definition by ID
+   * - hasCard: Check if a card definition exists
+   * - getAllCards: Get all card definitions
+   * - queryCards: Find cards by predicate
+   * - getCardCount: Get total number of card definitions
+   *
+   * Use this to access static card properties (name, cost, abilities, etc).
+   * For dynamic card state (damage, tapped, etc), use the cards API.
+   *
+   * Optional for backward compatibility and testing. In production,
+   * this is always provided by RuleEngine when card definitions are configured.
+   */
+  registry?: CardRegistry<TCardDefinition>;
 };
 
 /**
@@ -53,9 +113,9 @@ export type MoveContext = {
  * };
  * ```
  */
-export type MoveReducer<TGameState> = (
+export type MoveReducer<TGameState, TCardMeta = any, TCardDefinition = any> = (
   draft: Draft<TGameState>,
-  context: MoveContext,
+  context: MoveContext<TCardMeta, TCardDefinition>,
 ) => void;
 
 /**
@@ -77,9 +137,13 @@ export type MoveReducer<TGameState> = (
  * };
  * ```
  */
-export type MoveCondition<TGameState> = (
+export type MoveCondition<
+  TGameState,
+  TCardMeta = any,
+  TCardDefinition = any,
+> = (
   state: TGameState,
-  context: MoveContext,
+  context: MoveContext<TCardMeta, TCardDefinition>,
 ) => boolean;
 
 /**
@@ -110,7 +174,11 @@ export type MoveCondition<TGameState> = (
  * };
  * ```
  */
-export type MoveDefinition<TGameState> = {
+export type MoveDefinition<
+  TGameState,
+  TCardMeta = any,
+  TCardDefinition = any,
+> = {
   /** Unique identifier for this move */
   id: string;
 
@@ -121,10 +189,10 @@ export type MoveDefinition<TGameState> = {
   description?: string;
 
   /** Condition that must be true for move to be legal */
-  condition?: MoveCondition<TGameState>;
+  condition?: MoveCondition<TGameState, TCardMeta, TCardDefinition>;
 
   /** Reducer function that executes the move */
-  reducer: MoveReducer<TGameState>;
+  reducer: MoveReducer<TGameState, TCardMeta, TCardDefinition>;
 
   /** Optional metadata for categorization */
   metadata?: {
@@ -195,4 +263,8 @@ export type MoveResult<TGameState> =
  * };
  * ```
  */
-export type MoveMap<TGameState> = Record<string, MoveDefinition<TGameState>>;
+export type MoveMap<
+  TGameState,
+  TCardMeta = any,
+  TCardDefinition = any,
+> = Record<string, MoveDefinition<TGameState, TCardMeta, TCardDefinition>>;

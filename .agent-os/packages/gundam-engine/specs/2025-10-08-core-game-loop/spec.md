@@ -6,7 +6,7 @@
 
 ## Overview
 
-Implement the complete turn-based game loop for Gundam Card Game, focusing on basic playable functionality without complex card abilities/effects. This phase establishes the foundational gameplay mechanics and validates the @tcg/core framework's segment/phase/step architecture while identifying areas for framework improvement.
+Implement the complete turn-based game loop for Gundam Card Game, using @tgc/core,  focusing on basic playable functionality without complex card abilities/effects. This phase establishes the foundational gameplay mechanics and validates the @tcg/core framework's segment/phase/step architecture while identifying areas for framework improvement.
 
 ## User Stories
 

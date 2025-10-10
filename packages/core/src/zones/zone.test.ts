@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import type { CardId, PlayerId, ZoneId } from "../types";
-import type { Zone, ZoneConfig, ZoneVisibility } from "./zone";
+import type { CardZoneConfig, Zone, ZoneVisibility } from "./zone";
 
 describe("Zone Type Definitions", () => {
   describe("ZoneVisibility", () => {
@@ -22,7 +22,7 @@ describe("Zone Type Definitions", () => {
 
   describe("ZoneConfig", () => {
     it("should define valid zone configuration structure", () => {
-      const config: ZoneConfig = {
+      const config: CardZoneConfig = {
         id: "deck" as ZoneId,
         name: "Deck",
         visibility: "secret",
@@ -38,7 +38,7 @@ describe("Zone Type Definitions", () => {
     });
 
     it("should support optional owner property", () => {
-      const configWithOwner: ZoneConfig = {
+      const configWithOwner: CardZoneConfig = {
         id: "hand" as ZoneId,
         name: "Hand",
         visibility: "private",
@@ -51,7 +51,7 @@ describe("Zone Type Definitions", () => {
     });
 
     it("should support optional maxSize property", () => {
-      const configWithMaxSize: ZoneConfig = {
+      const configWithMaxSize: CardZoneConfig = {
         id: "hand" as ZoneId,
         name: "Hand",
         visibility: "private",
@@ -63,7 +63,7 @@ describe("Zone Type Definitions", () => {
     });
 
     it("should work without optional properties", () => {
-      const minimalConfig: ZoneConfig = {
+      const minimalConfig: CardZoneConfig = {
         id: "play" as ZoneId,
         name: "Play Area",
         visibility: "public",
@@ -139,7 +139,7 @@ describe("Zone Type Definitions", () => {
   describe("Zone Type Safety", () => {
     it("should enforce ZoneId type for zone config id", () => {
       const zoneId = "deck" as ZoneId;
-      const config: ZoneConfig = {
+      const config: CardZoneConfig = {
         id: zoneId,
         name: "Deck",
         visibility: "secret",
@@ -169,7 +169,7 @@ describe("Zone Type Definitions", () => {
 
     it("should enforce PlayerId type for owner", () => {
       const playerId = "player-1" as PlayerId;
-      const config: ZoneConfig = {
+      const config: CardZoneConfig = {
         id: "hand" as ZoneId,
         name: "Hand",
         visibility: "private",
