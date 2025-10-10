@@ -61,8 +61,8 @@ describe("Integration - Complete Game Flow", () => {
           condition: (state) => state.phase === "main",
           reducer: (draft, context) => {
             const player = draft.players[draft.currentPlayerIndex];
-            if (player && context.data?.cardId) {
-              const cardId = context.data.cardId as string;
+            if (player && context.params?.cardId) {
+              const cardId = context.params.cardId as string;
               const cardIndex = player.hand.indexOf(cardId);
               if (cardIndex >= 0) {
                 player.hand.splice(cardIndex, 1);
@@ -74,9 +74,9 @@ describe("Integration - Complete Game Flow", () => {
         attackPlayer: {
           condition: (state) => state.phase === "main",
           reducer: (draft, context) => {
-            if (context.data?.targetPlayerId) {
+            if (context.params?.targetPlayerId) {
               const target = draft.players.find(
-                (p) => p.id === context.data?.targetPlayerId,
+                (p) => p.id === context.params?.targetPlayerId,
               );
               if (target) {
                 target.health -= 1;
@@ -180,33 +180,45 @@ describe("Integration - Complete Game Flow", () => {
 
       // Play through a complete turn sequence
       // Turn 1 - Player 1
-      engine.executeMove("drawCard", { playerId: createPlayerId("p1") });
+      engine.executeMove("drawCard", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
       state = engine.getState();
       expect(state.players[0]?.hand.length).toBe(1);
 
-      engine.executeMove("endPhase", { playerId: createPlayerId("p1") }); // draw -> main
+      engine.executeMove("endPhase", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      }); // draw -> main
       state = engine.getState();
       expect(state.phase).toBe("main");
 
       engine.executeMove("playCard", {
         playerId: createPlayerId("p1"),
-        data: { cardId: "card3" },
+        params: { cardId: "card3" },
       });
       state = engine.getState();
       expect(state.players[0]?.field.length).toBe(1);
 
       engine.executeMove("attackPlayer", {
         playerId: createPlayerId("p1"),
-        data: { targetPlayerId: createPlayerId("p2") },
+        params: { targetPlayerId: createPlayerId("p2") },
       });
       state = engine.getState();
       expect(state.players[1]?.health).toBe(2);
 
-      engine.executeMove("endPhase", { playerId: createPlayerId("p1") }); // main -> end
+      engine.executeMove("endPhase", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      }); // main -> end
       state = engine.getState();
       expect(state.phase).toBe("end");
 
-      engine.executeMove("endPhase", { playerId: createPlayerId("p1") }); // end -> next turn
+      engine.executeMove("endPhase", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      }); // end -> next turn
       state = engine.getState();
       expect(state.phase).toBe("draw");
       expect(state.turnNumber).toBe(2);
@@ -222,9 +234,15 @@ describe("Integration - Complete Game Flow", () => {
 
         // Draw phase
         if (state.phase === "draw" && currentPlayer.deck.length > 0) {
-          engine.executeMove("drawCard", { playerId: currentPlayer.id });
+          engine.executeMove("drawCard", {
+            playerId: currentPlayer.id,
+            params: {},
+          });
         }
-        engine.executeMove("endPhase", { playerId: currentPlayer.id });
+        engine.executeMove("endPhase", {
+          playerId: currentPlayer.id,
+          params: {},
+        });
 
         // Main phase - attack if possible
         state = engine.getState();
@@ -235,16 +253,22 @@ describe("Integration - Complete Game Flow", () => {
           if (opponent) {
             engine.executeMove("attackPlayer", {
               playerId: currentPlayer.id,
-              data: { targetPlayerId: opponent.id },
+              params: { targetPlayerId: opponent.id },
             });
           }
         }
-        engine.executeMove("endPhase", { playerId: currentPlayer.id });
+        engine.executeMove("endPhase", {
+          playerId: currentPlayer.id,
+          params: {},
+        });
 
         // End phase
         state = engine.getState();
         if (state.phase === "end") {
-          engine.executeMove("endPhase", { playerId: currentPlayer.id });
+          engine.executeMove("endPhase", {
+            playerId: currentPlayer.id,
+            params: {},
+          });
         }
 
         state = engine.getState();
@@ -332,12 +356,18 @@ describe("Integration - Complete Game Flow", () => {
       });
 
       // Test RNG integration
-      engine.executeMove("drawCard", { playerId: createPlayerId("p1") });
+      engine.executeMove("drawCard", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
       const state1 = engine.getState();
       expect(state1.players[0]?.hand.length).toBe(1);
 
       // Test history tracking
-      engine.executeMove("drawCard", { playerId: createPlayerId("p1") });
+      engine.executeMove("drawCard", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
       const history = engine.getHistory();
       expect(history.length).toBe(2);
 
@@ -392,13 +422,13 @@ describe("Integration - Complete Game Flow", () => {
         playCard: {
           condition: (state, context) => {
             const player = state.players[state.currentPlayerIndex];
-            if (!(player && context.data?.cardId)) return false;
-            return player.hand.includes(context.data.cardId as string);
+            if (!(player && context.params?.cardId)) return false;
+            return player.hand.includes(context.params.cardId as string);
           },
           reducer: (draft, context) => {
             const player = draft.players[draft.currentPlayerIndex];
-            if (player && context.data?.cardId) {
-              const cardId = context.data.cardId as string;
+            if (player && context.params?.cardId) {
+              const cardId = context.params.cardId as string;
               const index = player.hand.indexOf(cardId);
               if (index >= 0) {
                 player.hand.splice(index, 1);
@@ -443,6 +473,7 @@ describe("Integration - Complete Game Flow", () => {
       for (let i = 0; i < 5; i++) {
         const result = engine.executeMove("drawCard", {
           playerId: createPlayerId("p1"),
+          params: {},
         });
         expect(result.success).toBe(true);
       }
@@ -454,14 +485,14 @@ describe("Integration - Complete Game Flow", () => {
       // Try invalid move
       const invalidResult = engine.executeMove("playCard", {
         playerId: createPlayerId("p1"),
-        data: { cardId: "nonexistent" },
+        params: { cardId: "nonexistent" },
       });
       expect(invalidResult.success).toBe(false);
 
       // Valid move
       const validResult = engine.executeMove("playCard", {
         playerId: createPlayerId("p1"),
-        data: { cardId: state.players[0]?.hand[0] },
+        params: { cardId: state.players[0]?.hand[0] },
       });
       expect(validResult.success).toBe(true);
 

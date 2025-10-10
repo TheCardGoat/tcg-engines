@@ -36,8 +36,8 @@ describe("test-replay-assertions", () => {
       incrementScore: {
         reducer: (draft, context) => {
           const player = draft.players.find((p) => p.id === context.playerId);
-          if (player && context.data?.amount) {
-            player.score += context.data.amount as number;
+          if (player && context.params?.amount) {
+            player.score += context.params.amount as number;
           }
         },
       },
@@ -72,14 +72,15 @@ describe("test-replay-assertions", () => {
       // Execute some moves
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 5 },
+        params: { amount: 5 },
       });
       engine.executeMove("addRandom", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p2"),
-        data: { amount: 3 },
+        params: { amount: 3 },
       });
 
       // Should not throw
@@ -93,6 +94,7 @@ describe("test-replay-assertions", () => {
       for (let i = 0; i < 10; i++) {
         engine.executeMove("addRandom", {
           playerId: createPlayerId("p1"),
+          params: {},
         });
       }
 
@@ -106,21 +108,23 @@ describe("test-replay-assertions", () => {
       // Complex sequence
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 1 },
+        params: { amount: 1 },
       });
       engine.executeMove("addRandom", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p2"),
-        data: { amount: 2 },
+        params: { amount: 2 },
       });
       engine.executeMove("addRandom", {
         playerId: createPlayerId("p2"),
+        params: {},
       });
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 3 },
+        params: { amount: 3 },
       });
 
       expectDeterministicReplay(engine);
@@ -162,7 +166,10 @@ describe("test-replay-assertions", () => {
         { seed: "non-deterministic" },
       );
 
-      engine.executeMove("addRandom", { playerId: createPlayerId("p1") });
+      engine.executeMove("addRandom", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
 
       // Should throw because replay will have different state
       expect(() => {
@@ -182,7 +189,7 @@ describe("test-replay-assertions", () => {
 
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 10 },
+        params: { amount: 10 },
       });
 
       expectDeterministicReplay(engine);
@@ -227,7 +234,10 @@ describe("test-replay-assertions", () => {
         { seed: "mismatch" },
       );
 
-      engine.executeMove("addRandom", { playerId: createPlayerId("p1") });
+      engine.executeMove("addRandom", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
 
       expect(() => {
         expectDeterministicReplay(engine);
@@ -275,9 +285,18 @@ describe("test-replay-assertions", () => {
       );
 
       // Shuffle multiple times
-      engine.executeMove("shuffle", { playerId: createPlayerId("p1") });
-      engine.executeMove("shuffle", { playerId: createPlayerId("p1") });
-      engine.executeMove("shuffle", { playerId: createPlayerId("p1") });
+      engine.executeMove("shuffle", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
+      engine.executeMove("shuffle", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
+      engine.executeMove("shuffle", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
 
       // Replay should produce same sequence of shuffles
       expectDeterministicReplay(engine);
@@ -324,7 +343,10 @@ describe("test-replay-assertions", () => {
 
       // Roll dice multiple times
       for (let i = 0; i < 20; i++) {
-        engine.executeMove("roll", { playerId: createPlayerId("p1") });
+        engine.executeMove("roll", {
+          playerId: createPlayerId("p1"),
+          params: {},
+        });
       }
 
       // Replay should produce same dice rolls

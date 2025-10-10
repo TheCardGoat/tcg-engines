@@ -55,8 +55,8 @@ describe("Integration - Network Synchronization", () => {
           playCard: {
             reducer: (draft, context) => {
               const player = draft.players[draft.currentPlayerIndex];
-              if (player && context.data?.cardId) {
-                const cardId = context.data.cardId as string;
+              if (player && context.params?.cardId) {
+                const cardId = context.params.cardId as string;
                 const cardIndex = player.hand.indexOf(cardId);
                 if (cardIndex >= 0) {
                   player.hand.splice(cardIndex, 1);
@@ -119,6 +119,7 @@ describe("Integration - Network Synchronization", () => {
       // Client 1 sends move to server
       const moveContext = {
         playerId: createPlayerId("p1"),
+        params: {},
       };
 
       // Server executes move
@@ -194,6 +195,7 @@ describe("Integration - Network Synchronization", () => {
       // Client attempts invalid move
       const result = server.executeMove("drawCard", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       // Server rejects move
@@ -229,8 +231,8 @@ describe("Integration - Network Synchronization", () => {
           playCard: {
             reducer: (draft, context) => {
               const player = draft.players[draft.currentPlayerIndex];
-              if (player && context.data?.cardId) {
-                const cardId = context.data.cardId as string;
+              if (player && context.params?.cardId) {
+                const cardId = context.params.cardId as string;
                 const cardIndex = player.hand.indexOf(cardId);
                 if (cardIndex >= 0) {
                   player.hand.splice(cardIndex, 1);
@@ -278,15 +280,15 @@ describe("Integration - Network Synchronization", () => {
 
       // Simulate 3 moves with incremental synchronization
       const moves_to_execute = [
-        { move: "drawCard", data: {} },
-        { move: "playCard", data: { cardId: "card3" } }, // card3 was drawn
-        { move: "endTurn", data: {} },
+        { move: "drawCard", params: {} },
+        { move: "playCard", params: { cardId: "card3" } }, // card3 was drawn
+        { move: "endTurn", params: {} },
       ];
 
       for (const moveToExecute of moves_to_execute) {
         const result = server.executeMove(moveToExecute.move, {
           playerId: createPlayerId("p1"),
-          data: moveToExecute.data,
+          params: moveToExecute.params,
         });
 
         if (result.success) {
@@ -358,9 +360,18 @@ describe("Integration - Network Synchronization", () => {
       const server = new RuleEngine(gameDefinition, players);
 
       // Execute 3 moves on server while client is disconnected
-      server.executeMove("drawCard", { playerId: createPlayerId("p1") });
-      server.executeMove("endTurn", { playerId: createPlayerId("p1") });
-      server.executeMove("drawCard", { playerId: createPlayerId("p2") });
+      server.executeMove("drawCard", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
+      server.executeMove("endTurn", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
+      server.executeMove("drawCard", {
+        playerId: createPlayerId("p2"),
+        params: {},
+      });
 
       // Client reconnects and needs to catch up
       const disconnectedClient = new RuleEngine(gameDefinition, players);
@@ -438,6 +449,7 @@ describe("Integration - Network Synchronization", () => {
       // Execute move on server
       const result = server.executeMove("drawCard", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       if (result.success) {

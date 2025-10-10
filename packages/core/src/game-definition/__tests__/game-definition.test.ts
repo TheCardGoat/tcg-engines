@@ -38,8 +38,8 @@ describe("GameDefinition - Type System", () => {
         incrementScore: {
           reducer: (draft, context) => {
             const player = draft.players.find((p) => p.id === context.playerId);
-            if (player && context.data?.amount) {
-              player.score += context.data.amount as number;
+            if (player && context.params?.amount) {
+              player.score += context.params.amount as number;
             }
           },
         },
@@ -52,8 +52,8 @@ describe("GameDefinition - Type System", () => {
         endGame: {
           reducer: (draft, context) => {
             draft.phase = "ended";
-            if (context.data?.winnerId) {
-              draft.winner = context.data.winnerId as string;
+            if (context.params?.winnerId) {
+              draft.winner = context.params.winnerId as string;
             }
           },
         },
@@ -162,8 +162,8 @@ describe("GameDefinition - Type System", () => {
       const moves: GameMoveDefinitions<TestGameState, TestMoves> = {
         incrementScore: {
           reducer: (draft: Draft<TestGameState>, context) => {
-            // context.data should be type-checked
-            const amount = context.data?.amount as number;
+            // context.params should be type-checked
+            const amount = context.params?.amount as number;
             const player = draft.players[0];
             if (player) {
               player.score += amount;
@@ -178,7 +178,7 @@ describe("GameDefinition - Type System", () => {
         endGame: {
           reducer: (draft: Draft<TestGameState>, context) => {
             draft.phase = "ended";
-            draft.winner = context.data?.winnerId as string;
+            draft.winner = context.params?.winnerId as string;
           },
         },
       };

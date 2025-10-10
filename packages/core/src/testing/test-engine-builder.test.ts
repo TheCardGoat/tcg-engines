@@ -162,6 +162,7 @@ describe("createTestEngine", () => {
 
       const result = engine.executeMove("incrementScore", {
         playerId: createPlayerId("test-p1"),
+        params: {},
       });
 
       expect(result.success).toBe(true);
@@ -200,9 +201,11 @@ describe("createTestEngine", () => {
 
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("test-p1"),
+        params: {},
       });
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("test-p1"),
+        params: {},
       });
 
       const history = engine.getHistory();
@@ -239,6 +242,7 @@ describe("createTestEngine", () => {
 
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("test-p1"),
+        params: {},
       });
       expect(engine.getState().players[0]?.score).toBe(1);
 

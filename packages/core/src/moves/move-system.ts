@@ -6,34 +6,58 @@ import type { SeededRNG } from "../rng/seeded-rng";
 import type { CardId, PlayerId } from "../types";
 
 /**
+ * Helper type to normalize move parameters
+ *
+ * Converts void/undefined to empty object type for moves without parameters.
+ * This ensures consistent typing across all moves.
+ *
+ * @template T - Raw parameter type from TMoves
+ */
+export type NormalizeParams<T> = T extends void | undefined
+  ? Record<string, never>
+  : T;
+
+/**
  * Context provided to move reducers and conditions
  *
  * Contains all information needed to execute a move:
  * - Player performing the move
+ * - Move-specific parameters (fully typed)
  * - Source card (if applicable)
  * - Selected targets
- * - Additional move-specific data
  * - Timestamp for deterministic ordering
  * - RNG for deterministic randomness
  * - Zone operations API (for framework-managed zones)
  * - Card operations API (for framework-managed card metadata)
  * - Card registry API (for static card definitions)
  *
+ * @template TParams - Move-specific parameter type (from TMoves[MoveName])
  * @template TCardMeta - Game-specific card metadata type
  * @template TCardDefinition - Game-specific card definition type
  */
-export type MoveContext<TCardMeta = any, TCardDefinition = any> = {
+export type MoveContext<
+  TParams = any,
+  TCardMeta = any,
+  TCardDefinition = any,
+> = {
   /** Player performing this move */
   playerId: PlayerId;
+
+  /**
+   * Move-specific parameters (fully typed)
+   *
+   * Type-safe parameters for this specific move.
+   * For example, playCard receives { cardId: string; alternativeCost?: AlternativeCost }
+   *
+   * For moves without parameters (passTurn: void), this is an empty object {}.
+   */
+  params: TParams;
 
   /** Source card for this move (e.g., card being played or ability source) */
   sourceCardId?: CardId;
 
   /** Selected targets (array of arrays for multi-target moves) */
   targets?: string[][];
-
-  /** Additional move-specific data (choices, amounts, etc.) */
-  data?: Record<string, unknown>;
 
   /** Timestamp when move was initiated (for deterministic ordering) */
   timestamp?: number;
@@ -99,23 +123,35 @@ export type MoveContext<TCardMeta = any, TCardDefinition = any> = {
  * Pure function that updates game state in response to a move.
  * Operates on Immer draft for immutable updates.
  *
+ * @template TGameState - Game state type
+ * @template TParams - Move-specific parameter type (from TMoves[MoveName])
+ * @template TCardMeta - Card metadata type
+ * @template TCardDefinition - Card definition type
+ *
  * @param draft - Immer draft of game state (mutable proxy)
- * @param context - Move context with player, targets, etc.
+ * @param context - Move context with player, typed params, targets, etc.
  *
  * @example
  * ```typescript
- * const drawCardReducer: MoveReducer<GameState> = (draft, context) => {
+ * type DrawCardParams = { count: number };
+ * const drawCardReducer: MoveReducer<GameState, DrawCardParams> = (draft, context) => {
+ *   const { count } = context.params; // ✅ Fully typed!
  *   const player = draft.players[context.playerId];
- *   const card = draft.deck.pop();
- *   if (card) {
- *     player.hand.push(card);
+ *   for (let i = 0; i < count; i++) {
+ *     const card = draft.deck.pop();
+ *     if (card) player.hand.push(card);
  *   }
  * };
  * ```
  */
-export type MoveReducer<TGameState, TCardMeta = any, TCardDefinition = any> = (
+export type MoveReducer<
+  TGameState,
+  TParams = any,
+  TCardMeta = any,
+  TCardDefinition = any,
+> = (
   draft: Draft<TGameState>,
-  context: MoveContext<TCardMeta, TCardDefinition>,
+  context: MoveContext<TParams, TCardMeta, TCardDefinition>,
 ) => void;
 
 /**
@@ -124,26 +160,34 @@ export type MoveReducer<TGameState, TCardMeta = any, TCardDefinition = any> = (
  * Pure predicate that determines if a move is legal given current game state.
  * Called BEFORE reducer execution to validate move.
  *
+ * @template TGameState - Game state type
+ * @template TParams - Move-specific parameter type (from TMoves[MoveName])
+ * @template TCardMeta - Card metadata type
+ * @template TCardDefinition - Card definition type
+ *
  * @param state - Current game state (readonly)
- * @param context - Move context with player, targets, etc.
+ * @param context - Move context with player, typed params, targets, etc.
  * @returns True if move is legal, false otherwise
  *
  * @example
  * ```typescript
- * const canPlayCardCondition: MoveCondition<GameState> = (state, context) => {
+ * type PlayCardParams = { cardId: string; cost?: number };
+ * const canPlayCardCondition: MoveCondition<GameState, PlayCardParams> = (state, context) => {
+ *   const { cardId, cost } = context.params; // ✅ Fully typed!
  *   const player = state.players[context.playerId];
- *   const card = context.sourceCardId && state.cards[context.sourceCardId];
- *   return card && player.mana >= card.cost;
+ *   const card = state.cards[cardId];
+ *   return card && player.mana >= (cost ?? card.cost);
  * };
  * ```
  */
 export type MoveCondition<
   TGameState,
+  TParams = any,
   TCardMeta = any,
   TCardDefinition = any,
 > = (
   state: TGameState,
-  context: MoveContext<TCardMeta, TCardDefinition>,
+  context: MoveContext<TParams, TCardMeta, TCardDefinition>,
 ) => boolean;
 
 /**
@@ -156,26 +200,37 @@ export type MoveCondition<
  * - Execution (reducer)
  * - Metadata (description)
  *
+ * @template TGameState - Game state type
+ * @template TParams - Move-specific parameter type
+ * @template TCardMeta - Card metadata type
+ * @template TCardDefinition - Card definition type
+ *
  * @example
  * ```typescript
- * const drawCardMove: MoveDefinition<GameState> = {
+ * type DrawCardParams = { count?: number };
+ * const drawCardMove: MoveDefinition<GameState, DrawCardParams> = {
  *   id: 'draw-card',
  *   name: 'Draw Card',
- *   description: 'Draw a card from your deck',
+ *   description: 'Draw cards from your deck',
  *   condition: (state, context) => {
+ *     const { count = 1 } = context.params; // ✅ Typed params!
  *     const player = state.players[context.playerId];
- *     return player.deck.length > 0;
+ *     return player.deck.length >= count;
  *   },
  *   reducer: (draft, context) => {
+ *     const { count = 1 } = context.params; // ✅ Typed params!
  *     const player = draft.players[context.playerId];
- *     const card = player.deck.pop();
- *     if (card) player.hand.push(card);
+ *     for (let i = 0; i < count; i++) {
+ *       const card = player.deck.pop();
+ *       if (card) player.hand.push(card);
+ *     }
  *   }
  * };
  * ```
  */
 export type MoveDefinition<
   TGameState,
+  TParams = any,
   TCardMeta = any,
   TCardDefinition = any,
 > = {
@@ -189,10 +244,10 @@ export type MoveDefinition<
   description?: string;
 
   /** Condition that must be true for move to be legal */
-  condition?: MoveCondition<TGameState, TCardMeta, TCardDefinition>;
+  condition?: MoveCondition<TGameState, TParams, TCardMeta, TCardDefinition>;
 
   /** Reducer function that executes the move */
-  reducer: MoveReducer<TGameState, TCardMeta, TCardDefinition>;
+  reducer: MoveReducer<TGameState, TParams, TCardMeta, TCardDefinition>;
 
   /** Optional metadata for categorization */
   metadata?: {
@@ -253,6 +308,9 @@ export type MoveResult<TGameState> =
  * Collection of move definitions keyed by move ID.
  * Used to define all available moves in a game.
  *
+ * Note: This is a legacy type for backward compatibility.
+ * For type-safe moves, use GameMoveDefinitions from game-definition/move-definitions.ts
+ *
  * @example
  * ```typescript
  * const moves: MoveMap<GameState> = {
@@ -265,6 +323,10 @@ export type MoveResult<TGameState> =
  */
 export type MoveMap<
   TGameState,
+  TParams = any,
   TCardMeta = any,
   TCardDefinition = any,
-> = Record<string, MoveDefinition<TGameState, TCardMeta, TCardDefinition>>;
+> = Record<
+  string,
+  MoveDefinition<TGameState, TParams, TCardMeta, TCardDefinition>
+>;

@@ -41,8 +41,8 @@ describe("test-assertions", () => {
       addScore: {
         reducer: (draft, context) => {
           const player = draft.players[draft.currentPlayerIndex];
-          if (player && context.data?.amount) {
-            player.score += context.data.amount as number;
+          if (player && context.params?.amount) {
+            player.score += context.params.amount as number;
           }
         },
       },
@@ -96,7 +96,7 @@ describe("test-assertions", () => {
       // Should not throw
       expectMoveSuccess(engine, "addScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 5 },
+        params: { amount: 5 },
       });
     });
 
@@ -107,6 +107,7 @@ describe("test-assertions", () => {
       expect(() => {
         expectMoveSuccess(engine, "invalidMove", {
           playerId: createPlayerId("p1"),
+          params: {},
         });
       }).toThrow();
     });
@@ -116,7 +117,7 @@ describe("test-assertions", () => {
 
       const result = expectMoveSuccess(engine, "addScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 5 },
+        params: { amount: 5 },
       });
 
       expect(result.success).toBe(true);
@@ -131,6 +132,7 @@ describe("test-assertions", () => {
       expect(() => {
         expectMoveSuccess(engine, "invalidMove", {
           playerId: createPlayerId("p1"),
+          params: {},
         });
       }).toThrow(/Expected move 'invalidMove' to succeed/);
     });
@@ -143,6 +145,7 @@ describe("test-assertions", () => {
       // Should not throw
       expectMoveFailure(engine, "invalidMove", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
     });
 
@@ -153,7 +156,7 @@ describe("test-assertions", () => {
       expect(() => {
         expectMoveFailure(engine, "addScore", {
           playerId: createPlayerId("p1"),
-          data: { amount: 5 },
+          params: { amount: 5 },
         });
       }).toThrow();
     });
@@ -163,6 +166,7 @@ describe("test-assertions", () => {
 
       const result = expectMoveFailure(engine, "invalidMove", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       expect(result.success).toBe(false);
@@ -179,7 +183,7 @@ describe("test-assertions", () => {
       expectMoveFailure(
         engine,
         "invalidMove",
-        { playerId: createPlayerId("p1") },
+        { playerId: createPlayerId("p1"), params: {} },
         "CONDITION_FAILED",
       );
     });
@@ -191,7 +195,7 @@ describe("test-assertions", () => {
         expectMoveFailure(
           engine,
           "invalidMove",
-          { playerId: createPlayerId("p1") },
+          { playerId: createPlayerId("p1"), params: {} },
           "WRONG_CODE",
         );
       }).toThrow(/Expected error code 'WRONG_CODE'/);
@@ -203,7 +207,7 @@ describe("test-assertions", () => {
       expect(() => {
         expectMoveFailure(engine, "addScore", {
           playerId: createPlayerId("p1"),
-          data: { amount: 5 },
+          params: { amount: 5 },
         });
       }).toThrow(/Expected move 'addScore' to fail/);
     });
@@ -262,7 +266,7 @@ describe("test-assertions", () => {
       const engine = createTestEngine();
       engine.executeMove("addScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 5 },
+        params: { amount: 5 },
       });
 
       // Non-existent property should be undefined
@@ -282,7 +286,7 @@ describe("test-assertions", () => {
 
       engine.executeMove("addScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 10 },
+        params: { amount: 10 },
       });
 
       expectStateProperty(engine, "players[0].score", 10);
@@ -292,8 +296,14 @@ describe("test-assertions", () => {
       const engine = createTestEngine();
 
       // Draw some cards
-      engine.executeMove("drawCard", { playerId: createPlayerId("p1") });
-      engine.executeMove("drawCard", { playerId: createPlayerId("p1") });
+      engine.executeMove("drawCard", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
+      engine.executeMove("drawCard", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
 
       expectStateProperty(engine, "players[0].hand.length", 2);
       expectStateProperty(engine, "players[0].hand[0]", "card");
@@ -311,7 +321,7 @@ describe("test-assertions", () => {
       // Execute and verify success
       expectMoveSuccess(engine, "addScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 5 },
+        params: { amount: 5 },
       });
 
       // Verify state changed
@@ -320,6 +330,7 @@ describe("test-assertions", () => {
       // Verify invalid move fails
       expectMoveFailure(engine, "invalidMove", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       // State should be unchanged after failed move

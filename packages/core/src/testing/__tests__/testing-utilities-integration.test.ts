@@ -120,13 +120,14 @@ describe("Testing Utilities Integration", () => {
 
     expectMoveSuccess(engine, "drawCard", {
       playerId: createPlayerId("p1"),
+      params: {},
     });
     expectStateProperty(engine, "players[0].hand.length", 1);
 
     expectPhaseTransition(
       engine,
       "endPhase",
-      { playerId: createPlayerId("p1") },
+      { playerId: createPlayerId("p1"), params: {} },
       "draw",
       "main",
     );
@@ -134,7 +135,7 @@ describe("Testing Utilities Integration", () => {
     expectMoveFailure(
       engine,
       "drawCard",
-      { playerId: createPlayerId("p1") },
+      { playerId: createPlayerId("p1"), params: {} },
       "CONDITION_FAILED",
     );
 
@@ -143,12 +144,15 @@ describe("Testing Utilities Integration", () => {
     // Attack to end game
     expectMoveSuccess(engine, "attack", {
       playerId: createPlayerId("p1"),
+      params: {},
     });
     expectMoveSuccess(engine, "attack", {
       playerId: createPlayerId("p1"),
+      params: {},
     });
     expectMoveSuccess(engine, "attack", {
       playerId: createPlayerId("p1"),
+      params: {},
     });
 
     expectGameEnd(engine, createPlayerId("p1"));

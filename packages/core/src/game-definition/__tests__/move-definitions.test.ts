@@ -36,7 +36,7 @@ describe("GameMoveDefinitions - Type System", () => {
     it("should create a valid GameMoveDefinition with reducer only", () => {
       const incrementMove: GameMoveDefinition<CounterState> = {
         reducer: (draft, context) => {
-          const amount = (context.data?.amount as number) || 1;
+          const amount = (context.params?.amount as number) || 1;
           draft.count += amount;
         },
       };
@@ -49,7 +49,7 @@ describe("GameMoveDefinitions - Type System", () => {
       const incrementMove: GameMoveDefinition<CounterState> = {
         condition: (state) => !state.locked,
         reducer: (draft, context) => {
-          const amount = (context.data?.amount as number) || 1;
+          const amount = (context.params?.amount as number) || 1;
           draft.count += amount;
         },
       };
@@ -64,13 +64,13 @@ describe("GameMoveDefinitions - Type System", () => {
       const moves: GameMoveDefinitions<CounterState, CounterMoves> = {
         increment: {
           reducer: (draft, context) => {
-            const amount = (context.data?.amount as number) || 1;
+            const amount = (context.params?.amount as number) || 1;
             draft.count += amount;
           },
         },
         decrement: {
           reducer: (draft, context) => {
-            const amount = (context.data?.amount as number) || 1;
+            const amount = (context.params?.amount as number) || 1;
             draft.count -= amount;
           },
         },
@@ -81,7 +81,7 @@ describe("GameMoveDefinitions - Type System", () => {
         },
         setPlayer: {
           reducer: (draft, context) => {
-            draft.player = (context.data?.playerId as string) || "";
+            draft.player = (context.params?.playerId as string) || "";
           },
         },
       };
@@ -131,7 +131,7 @@ describe("GameMoveDefinitions - Type System", () => {
     it("should execute reducer with Immer draft", () => {
       const incrementMove: GameMoveDefinition<CounterState> = {
         reducer: (draft, context) => {
-          const amount = (context.data?.amount as number) || 1;
+          const amount = (context.params?.amount as number) || 1;
           draft.count += amount;
         },
       };
@@ -144,7 +144,7 @@ describe("GameMoveDefinitions - Type System", () => {
 
       const context: MoveContext = {
         playerId: "p1" as any,
-        data: { amount: 3 },
+        params: { amount: 3 },
       };
 
       const newState = produce(initialState, (draft) => {
@@ -172,6 +172,7 @@ describe("GameMoveDefinitions - Type System", () => {
 
       const context: MoveContext = {
         playerId: "p1" as any,
+        params: {},
       };
 
       const newState = produce(initialState, (draft) => {
@@ -207,7 +208,7 @@ describe("GameMoveDefinitions - Type System", () => {
         locked: true,
       };
 
-      const context: MoveContext = { playerId: "p1" as any };
+      const context: MoveContext = { playerId: "p1" as any, params: {} };
 
       // Should pass condition
       expect(lockedMove.condition?.(unlockedState, context)).toBe(true);
@@ -236,7 +237,7 @@ describe("GameMoveDefinitions - Type System", () => {
         locked: false,
       };
 
-      const context: MoveContext = { playerId: "p1" as any };
+      const context: MoveContext = { playerId: "p1" as any, params: {} };
 
       expect(conditionalMove.condition?.(validState, context)).toBe(true);
 
@@ -244,6 +245,7 @@ describe("GameMoveDefinitions - Type System", () => {
       expect(
         conditionalMove.condition?.(validState, {
           playerId: "p2" as any,
+          params: {},
         }),
       ).toBe(false);
 

@@ -47,8 +47,8 @@ describe("MultiplayerEngine", () => {
       playCard: {
         reducer: (draft, context) => {
           const player = draft.players[draft.currentPlayerIndex];
-          if (player && context.data?.cardId) {
-            const cardId = context.data.cardId as string;
+          if (player && context.params?.cardId) {
+            const cardId = context.params.cardId as string;
             const cardIndex = player.hand.indexOf(cardId);
             if (cardIndex >= 0) {
               player.hand.splice(cardIndex, 1);
@@ -118,6 +118,7 @@ describe("MultiplayerEngine", () => {
 
       const result = server.executeMove("drawCard", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       expect(result.success).toBe(true);
@@ -159,6 +160,7 @@ describe("MultiplayerEngine", () => {
 
       const result = server.executeMove("drawCard", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       expect(result.success).toBe(false);
@@ -174,12 +176,18 @@ describe("MultiplayerEngine", () => {
       });
 
       // Execute 3 moves
-      server.executeMove("drawCard", { playerId: createPlayerId("p1") });
+      server.executeMove("drawCard", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
       server.executeMove("playCard", {
         playerId: createPlayerId("p1"),
-        data: { cardId: "card5" },
+        params: { cardId: "card5" },
       });
-      server.executeMove("endTurn", { playerId: createPlayerId("p1") });
+      server.executeMove("endTurn", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
 
       // Get all patches
       const allPatches = server.getCatchupPatches(0);
@@ -227,10 +235,16 @@ describe("MultiplayerEngine", () => {
 
       expect(server.getCurrentHistoryIndex()).toBe(-1); // No moves yet
 
-      server.executeMove("drawCard", { playerId: createPlayerId("p1") });
+      server.executeMove("drawCard", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
       expect(server.getCurrentHistoryIndex()).toBe(0);
 
-      server.executeMove("endTurn", { playerId: createPlayerId("p1") });
+      server.executeMove("endTurn", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
       expect(server.getCurrentHistoryIndex()).toBe(1);
     });
 
@@ -243,7 +257,10 @@ describe("MultiplayerEngine", () => {
       });
 
       expect(() =>
-        client.executeMove("drawCard", { playerId: createPlayerId("p1") }),
+        client.executeMove("drawCard", {
+          playerId: createPlayerId("p1"),
+          params: {},
+        }),
       ).toThrow("Only server can execute moves");
 
       expect(() => client.getCatchupPatches()).toThrow(
@@ -297,6 +314,7 @@ describe("MultiplayerEngine", () => {
 
       const result = server.executeMove("drawCard", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       if (result.success) {
@@ -354,6 +372,7 @@ describe("MultiplayerEngine", () => {
       // Execute move on server
       const result = server.executeMove("drawCard", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       if (result.success) {
@@ -383,15 +402,15 @@ describe("MultiplayerEngine", () => {
       });
 
       const moves = [
-        { move: "drawCard", data: {} },
-        { move: "playCard", data: { cardId: "card5" } },
-        { move: "endTurn", data: {} },
+        { move: "drawCard", params: {} },
+        { move: "playCard", params: { cardId: "card5" } },
+        { move: "endTurn", params: {} },
       ];
 
       for (const moveData of moves) {
         const result = server.executeMove(moveData.move, {
           playerId: createPlayerId("p1"),
-          data: moveData.data,
+          params: moveData.params,
         });
 
         if (result.success) {
@@ -416,8 +435,14 @@ describe("MultiplayerEngine", () => {
       });
 
       // Execute moves while client is disconnected
-      server.executeMove("drawCard", { playerId: createPlayerId("p1") });
-      server.executeMove("endTurn", { playerId: createPlayerId("p1") });
+      server.executeMove("drawCard", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
+      server.executeMove("endTurn", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
 
       // Client reconnects
       const reconnectedClient = new MultiplayerEngine(gameDefinition, players, {
@@ -483,10 +508,12 @@ describe("MultiplayerEngine", () => {
 
       const canExecuteServer = server.canExecuteMove("drawCard", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       const canExecuteClient = client.canExecuteMove("drawCard", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       expect(canExecuteServer).toBe(true);

@@ -54,13 +54,13 @@ function createCardGame(): GameDefinition<CardGameState, CardGameMoves> {
       condition: (state, context) => {
         const player = state.players[state.currentPlayerIndex];
         return player
-          ? player.hand.includes(context.data?.cardId as string)
+          ? player.hand.includes(context.params?.cardId as string)
           : false;
       },
       reducer: (draft, context) => {
         const player = draft.players[draft.currentPlayerIndex];
-        if (player && context.data?.cardId) {
-          const cardId = context.data.cardId as string;
+        if (player && context.params?.cardId) {
+          const cardId = context.params.cardId as string;
           const index = player.hand.indexOf(cardId);
           if (index >= 0) {
             player.hand.splice(index, 1);
@@ -187,12 +187,12 @@ class GameServer {
     };
   }
 
-  handleClientMove(clientId: string, moveId: string, data: any) {
+  handleClientMove(clientId: string, moveId: string, params: any) {
     console.log(`[Server] Client ${clientId} attempting move ${moveId}`);
 
     const result = this.engine.executeMove(moveId, {
       playerId: createPlayerId(clientId),
-      data,
+      params,
     });
 
     if (!result.success) {
@@ -344,7 +344,7 @@ class GameClient {
   }
 
   // Client-side move request (sends to server)
-  requestMove(moveId: string, data?: any) {
+  requestMove(moveId: string, params?: any) {
     if (!this.websocket) {
       console.error("[Client] Not connected to server");
       return;
@@ -354,7 +354,7 @@ class GameClient {
     // This provides immediate UI feedback
     const canExecute = this.engine.canExecuteMove(moveId, {
       playerId: createPlayerId(this.playerId),
-      data,
+      params,
     });
 
     if (!canExecute) {
@@ -367,7 +367,7 @@ class GameClient {
       JSON.stringify({
         type: "MOVE",
         moveId,
-        data,
+        params,
       }),
     );
 
@@ -461,16 +461,19 @@ function simulateMultiplayerGame() {
 
   // Simulate game flow
   console.log("\nPlayer 1 draws a card:");
-  server.executeMove("drawCard", { playerId: createPlayerId("p1") });
+  server.executeMove("drawCard", {
+    playerId: createPlayerId("p1"),
+    params: {},
+  });
 
   console.log("\nPlayer 1 plays a card:");
   server.executeMove("playCard", {
     playerId: createPlayerId("p1"),
-    data: { cardId: "card-20" },
+    params: { cardId: "card-20" },
   });
 
   console.log("\nPlayer 1 ends turn:");
-  server.executeMove("endTurn", { playerId: createPlayerId("p1") });
+  server.executeMove("endTurn", { playerId: createPlayerId("p1"), params: {} });
 
   console.log("\nVerifying all clients are synchronized:");
   const serverState = server.getState();
@@ -515,9 +518,15 @@ function demonstrateReconnection() {
 
   // Execute some moves while client is disconnected
   console.log("Executing moves while client is offline:");
-  server.executeMove("drawCard", { playerId: createPlayerId("p1") });
-  server.executeMove("endTurn", { playerId: createPlayerId("p1") });
-  server.executeMove("drawCard", { playerId: createPlayerId("p2") });
+  server.executeMove("drawCard", {
+    playerId: createPlayerId("p1"),
+    params: {},
+  });
+  server.executeMove("endTurn", { playerId: createPlayerId("p1"), params: {} });
+  server.executeMove("drawCard", {
+    playerId: createPlayerId("p2"),
+    params: {},
+  });
 
   const serverState = server.getState();
   console.log("Server state:", {

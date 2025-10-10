@@ -219,8 +219,8 @@ describe("RuleEngine - Flow Integration", () => {
         incrementScore: {
           reducer: (draft, context) => {
             const player = draft.players[draft.currentPlayerIndex];
-            if (player && context.data?.amount) {
-              player.score += context.data.amount as number;
+            if (player && context.params?.amount) {
+              player.score += context.params.amount as number;
             }
           },
         },
@@ -286,8 +286,8 @@ describe("RuleEngine - Flow Integration", () => {
         incrementScore: {
           reducer: (draft, context) => {
             const player = draft.players[draft.currentPlayerIndex];
-            if (player && context.data?.amount) {
-              player.score += context.data.amount as number;
+            if (player && context.params?.amount) {
+              player.score += context.params.amount as number;
             }
           },
         },
@@ -335,7 +335,7 @@ describe("RuleEngine - Flow Integration", () => {
       // Execute move to reach winning score
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 10 },
+        params: { amount: 10 },
       });
 
       // Game should be ended now
