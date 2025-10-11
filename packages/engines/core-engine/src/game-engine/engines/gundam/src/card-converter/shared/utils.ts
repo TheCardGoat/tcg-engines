@@ -148,13 +148,14 @@ export const combineValidationResults = (
 // ============================================================================
 
 // Re-export naming utilities from core
-export {
-  generateVariableName,
-  toCamelCase,
-  toKebabCase,
-  toPascalCase,
-  toSnakeCase,
-} from "@tcg/core/tooling";
+// TODO: Implement @tcg/core/tooling module
+// export {
+//   generateVariableName,
+//   toCamelCase,
+//   toKebabCase,
+//   toPascalCase,
+//   toSnakeCase,
+// } from "@tcg/core/tooling";
 
 /**
  * Sanitizes a string for use as a filename

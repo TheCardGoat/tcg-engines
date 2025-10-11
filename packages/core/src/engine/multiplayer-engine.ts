@@ -138,23 +138,25 @@ export class MultiplayerEngine<TState, TMoves extends Record<string, any>> {
 
     const result = this.engine.executeMove(moveId, contextInput);
 
-    if (result.success) {
-      // Broadcast patches to clients
-      if (this.options.onPatchBroadcast) {
-        const historyIndex = this.engine.getHistory().length - 1;
-        this.options.onPatchBroadcast({
-          patches: result.patches,
-          inversePatches: result.inversePatches,
-          historyIndex,
-          moveId,
-          context: contextInput as MoveContext,
-        });
-      }
-    } else {
+    // Handle failure case
+    if (result.success === false) {
       // Notify about rejected move
       if (this.options.onMoveRejected) {
         this.options.onMoveRejected(moveId, result.error, result.errorCode);
       }
+      return result;
+    }
+
+    // Handle success case - broadcast patches to clients
+    if (this.options.onPatchBroadcast) {
+      const historyIndex = this.engine.getHistory().length - 1;
+      this.options.onPatchBroadcast({
+        patches: result.patches,
+        inversePatches: result.inversePatches,
+        historyIndex,
+        moveId,
+        context: contextInput as MoveContext,
+      });
     }
 
     return result;
