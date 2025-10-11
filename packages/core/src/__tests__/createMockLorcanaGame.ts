@@ -7,6 +7,18 @@ import type { CardZoneConfig } from "../zones";
 type TestGameState = {
   effects: unknown[];
   bag: unknown[];
+  players: Array<{
+    id: string;
+    lore: number;
+    zones: {
+      hand: Array<{ id: string; meta: unknown }>;
+      deck: Array<{ id: string; meta: unknown }>;
+    };
+  }>;
+  activePlayerId: string | null;
+  turnNumber: number;
+  gamePhase: "setup" | "active";
+  firstPlayerDetermined: boolean;
 };
 
 type AlternativeCost = {
@@ -18,6 +30,7 @@ type TestMoves = {
   concede: void;
   chooseWhoGoesFirstMove: { playerId: string };
   alterHand: { playerId: string; cards: string[] };
+  drawCards: { playerId: string; count: number };
   putACardIntoTheInkwell: { cardId: string };
   playCard: {
     cardId: string;
@@ -60,14 +73,42 @@ const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
     reducer: (draft, context) => {
       // ✅ context.params is typed as { playerId: string }
       const { playerId } = context.params;
-      console.log("Player chosen to go first:", playerId);
+      draft.activePlayerId = playerId;
+      draft.firstPlayerDetermined = true;
+      draft.gamePhase = "active";
+      draft.turnNumber = 1;
     },
   },
   alterHand: {
     reducer: (draft, context) => {
       // ✅ context.params is typed as { playerId: string; cards: string[] }
-      const { playerId, cards } = context.params;
-      console.log(`Altering hand for ${playerId} with cards:`, cards);
+      const { playerId } = context.params;
+      const player = draft.players.find((p) => p.id === playerId);
+      if (!player) return;
+
+      // Return hand to deck (mulligan)
+      player.zones.deck = [...player.zones.hand, ...player.zones.deck];
+      player.zones.hand = [];
+
+      // Shuffle (simplified - just reverse for testing)
+      player.zones.deck.reverse();
+
+      // Draw new hand
+      player.zones.hand = player.zones.deck.slice(0, 7);
+      player.zones.deck = player.zones.deck.slice(7);
+    },
+  },
+  drawCards: {
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { playerId: string; count: number }
+      const { playerId, count } = context.params;
+      const player = draft.players.find((p) => p.id === playerId);
+      if (!player) return;
+
+      // Draw cards from top of deck
+      const drawnCards = player.zones.deck.slice(0, count);
+      player.zones.hand = [...player.zones.hand, ...drawnCards];
+      player.zones.deck = player.zones.deck.slice(count);
     },
   },
   putACardIntoTheInkwell: {
@@ -303,9 +344,23 @@ export function createMockLorcanaGame(): GameDefinition<
     zones: lorcanaZones,
     flow: lorcanaFlow,
     moves: lorcanaMoves,
-    setup: () => ({
+    setup: (players) => ({
       effects: [],
       bag: [],
+      players: players.map((player, index) => ({
+        id: player.id,
+        lore: 0,
+        zones: {
+          hand: [],
+          deck: Array(60)
+            .fill(null)
+            .map((_, i) => ({ id: `${player.id}-card-${i}`, meta: {} })),
+        },
+      })),
+      activePlayerId: null,
+      turnNumber: 0,
+      gamePhase: "setup",
+      firstPlayerDetermined: false,
     }),
   };
 }
