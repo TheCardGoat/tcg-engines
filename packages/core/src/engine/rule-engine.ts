@@ -9,7 +9,7 @@ import type {
   GameDefinition,
   Player,
 } from "../game-definition/game-definition";
-import type { MoveContext } from "../moves/move-system";
+import type { MoveContext, MoveContextInput } from "../moves/move-system";
 import type { CardRegistry } from "../operations/card-registry";
 import { createCardRegistry } from "../operations/card-registry-impl";
 import {
@@ -17,9 +17,9 @@ import {
   createZoneOperations,
 } from "../operations/operations-impl";
 import { SeededRNG } from "../rng/seeded-rng";
-import { TrackerSystem } from "./tracker-system";
 import type { PlayerId } from "../types/branded";
 import type { InternalState } from "../types/state";
+import { TrackerSystem } from "./tracker-system";
 
 /**
  * RuleEngine Options
@@ -281,7 +281,7 @@ export class RuleEngine<
    */
   executeMove(
     moveId: string,
-    context: MoveContext<any, TCardMeta, TCardDefinition>,
+    contextInput: MoveContextInput<any>,
   ): MoveExecutionResult {
     // Task 11.7: Validate move exists
     const moveDef = this.gameDefinition.moves[moveId as keyof TMoves];
@@ -293,8 +293,8 @@ export class RuleEngine<
       };
     }
 
-    // Task 11.8: Check move condition
-    if (!this.canExecuteMove(moveId, context)) {
+    // Task 11.8: Check move condition (before building full context)
+    if (!this.canExecuteMove(moveId, contextInput)) {
       return {
         success: false,
         error: `Move '${moveId}' condition not met`,
@@ -374,10 +374,10 @@ export class RuleEngine<
       // We don't need to sync it back after every move
       // The flow manager will update state through its own lifecycle hooks
 
-      // Task 11.10: Update history
+      // Task 11.10: Update history (store full context for replay)
       this.addToHistory({
         moveId,
-        context,
+        context: contextWithOperations,
         patches,
         inversePatches,
         timestamp: Date.now(),
@@ -409,22 +409,19 @@ export class RuleEngine<
    * @param context - Move context with typed params
    * @returns True if move can be executed, false otherwise
    */
-  canExecuteMove(
-    moveId: string,
-    context: MoveContext<any, TCardMeta, TCardDefinition>,
-  ): boolean {
+  canExecuteMove(moveId: string, contextInput: MoveContextInput<any>): boolean {
     const moveDef = this.gameDefinition.moves[moveId as keyof TMoves];
     if (!moveDef) {
       return false;
     }
 
-    // Add RNG and operations to context
+    // Build full context with engine-provided services
     const zoneOps = createZoneOperations(this.internalState);
     const cardOps = createCardOperations(this.internalState);
 
     const contextWithOperations: MoveContext<any, TCardMeta, TCardDefinition> =
       {
-        ...context,
+        ...contextInput,
         rng: this.rng,
         zones: zoneOps,
         cards: cardOps,
