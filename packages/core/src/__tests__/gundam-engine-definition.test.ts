@@ -185,10 +185,10 @@ describe("Gundam Game - Setup Moves", () => {
     });
 
     const state = engine.getState();
-    
+
     // Verify setup step progressed
     expect(state.setupStep).toBe("shields");
-    
+
     // Verify deck sizes (50 main + 10 resource)
     // Note: We can't directly inspect zones without engine API,
     // but the move should execute without errors
@@ -217,7 +217,7 @@ describe("Gundam Game - Setup Moves", () => {
     });
 
     const state = engine.getState();
-    
+
     // Verify setup step progressed to tokens
     expect(state.setupStep).toBe("tokens");
   });
@@ -247,7 +247,7 @@ describe("Gundam Game - Setup Moves", () => {
     });
 
     const state = engine.getState();
-    
+
     // Verify setup step progressed to draw
     expect(state.setupStep).toBe("draw");
   });
@@ -262,7 +262,7 @@ describe("Gundam Game - Setup Moves", () => {
     // Setup for Player 1 (should NOT get EX Resource)
     const player1Id = players[0]?.id;
     const player2Id = players[1]?.id;
-    if (!player1Id || !player2Id) throw new Error("Player IDs not found");
+    if (!(player1Id && player2Id)) throw new Error("Player IDs not found");
 
     engine.executeMove("initializeDecks", {
       playerId: player1Id,
@@ -274,7 +274,7 @@ describe("Gundam Game - Setup Moves", () => {
     });
     engine.executeMove("createTokens", {
       playerId: player1Id,
-      params: { playerId: String(player1Id) },
+      params: { playerId: String(player1Id), playerIndex: 0 },
     });
 
     // Setup for Player 2 (should get EX Resource)
@@ -288,11 +288,11 @@ describe("Gundam Game - Setup Moves", () => {
     });
     engine.executeMove("createTokens", {
       playerId: player2Id,
-      params: { playerId: String(player2Id) },
+      params: { playerId: String(player2Id), playerIndex: 1 },
     });
 
     const state = engine.getState();
-    
+
     // Both players should be at draw step
     expect(state.setupStep).toBe("draw");
   });
@@ -320,7 +320,7 @@ describe("Gundam Game - Setup Moves", () => {
       playerId,
       params: { playerId: String(playerId) },
     });
-    
+
     // Draw initial hand
     engine.executeMove("drawInitialHand", {
       playerId,
@@ -328,10 +328,10 @@ describe("Gundam Game - Setup Moves", () => {
     });
 
     const state = engine.getState();
-    
+
     // Verify setup step progressed to mulligan
     expect(state.setupStep).toBe("mulligan");
-    
+
     // Verify mulligan was offered to this player
     expect(state.mulliganOffered[playerId]).toBe(true);
   });
@@ -350,12 +350,12 @@ describe("Gundam Game - Setup Moves", () => {
     engine.executeMove("placeShields", { playerId });
     engine.executeMove("createTokens", { playerId });
     engine.executeMove("drawInitialHand", { playerId });
-    
+
     // Player decides to keep hand
     engine.executeMove("decideMulligan", { playerId, redraw: false });
 
     const state = engine.getState();
-    
+
     // Verify mulligan completed
     expect(state.mulliganOffered[playerId]).toBe(false);
   });
@@ -374,15 +374,15 @@ describe("Gundam Game - Setup Moves", () => {
     engine.executeMove("placeShields", { playerId });
     engine.executeMove("createTokens", { playerId });
     engine.executeMove("drawInitialHand", { playerId });
-    
+
     // Player decides to mulligan (redraw hand)
     engine.executeMove("decideMulligan", { playerId, redraw: true });
 
     const state = engine.getState();
-    
+
     // Verify mulligan completed
     expect(state.mulliganOffered[playerId]).toBe(false);
-    
+
     // Hand should still have 5 cards (reshuffled and redrawn)
   });
 
@@ -401,12 +401,12 @@ describe("Gundam Game - Setup Moves", () => {
     engine.executeMove("createTokens", { playerId });
     engine.executeMove("drawInitialHand", { playerId });
     engine.executeMove("decideMulligan", { playerId, redraw: false });
-    
+
     // Transition to play
     engine.executeMove("transitionToPlay", {});
 
     const state = engine.getState();
-    
+
     // Verify phase changed to start
     expect(state.phase).toBe("start");
     expect(state.setupStep).toBe("complete");
@@ -425,14 +425,17 @@ describe("Gundam Game - Setup Moves", () => {
     // Player 1 setup
     engine.executeMove("initializeDecks", { playerId: player1Id });
     engine.executeMove("placeShields", { playerId: player1Id });
-    engine.executeMove("createTokens", { playerId: player1Id });
+    engine.executeMove("createTokens", { playerId: player1Id, playerIndex: 0 });
     engine.executeMove("drawInitialHand", { playerId: player1Id });
-    engine.executeMove("decideMulligan", { playerId: player1Id, redraw: false });
+    engine.executeMove("decideMulligan", {
+      playerId: player1Id,
+      redraw: false,
+    });
 
     // Player 2 setup
     engine.executeMove("initializeDecks", { playerId: player2Id });
     engine.executeMove("placeShields", { playerId: player2Id });
-    engine.executeMove("createTokens", { playerId: player2Id });
+    engine.executeMove("createTokens", { playerId: player2Id, playerIndex: 1 });
     engine.executeMove("drawInitialHand", { playerId: player2Id });
     engine.executeMove("decideMulligan", { playerId: player2Id, redraw: true });
 
@@ -440,11 +443,11 @@ describe("Gundam Game - Setup Moves", () => {
     engine.executeMove("transitionToPlay", {});
 
     const state = engine.getState();
-    
+
     // Verify game is ready to start
     expect(state.phase).toBe("start");
     expect(state.setupStep).toBe("complete");
-    
+
     // Both players should have completed mulligan
     expect(state.mulliganOffered[player1Id]).toBe(false);
     expect(state.mulliganOffered[player2Id]).toBe(false);
@@ -465,11 +468,20 @@ describe("Gundam Game - Setup Moves", () => {
 
     // Execute same setup sequence on both engines
     const setupSequence = [
-      { move: "initializeDecks", params: { playerId: players1[0]?.id || "p1" } },
+      {
+        move: "initializeDecks",
+        params: { playerId: players1[0]?.id || "p1" },
+      },
       { move: "placeShields", params: { playerId: players1[0]?.id || "p1" } },
       { move: "createTokens", params: { playerId: players1[0]?.id || "p1" } },
-      { move: "drawInitialHand", params: { playerId: players1[0]?.id || "p1" } },
-      { move: "decideMulligan", params: { playerId: players1[0]?.id || "p1", redraw: true } },
+      {
+        move: "drawInitialHand",
+        params: { playerId: players1[0]?.id || "p1" },
+      },
+      {
+        move: "decideMulligan",
+        params: { playerId: players1[0]?.id || "p1", redraw: true },
+      },
     ];
 
     for (const { move, params } of setupSequence) {

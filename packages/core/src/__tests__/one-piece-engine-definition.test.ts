@@ -1,8 +1,27 @@
 import { describe, expect, it } from "bun:test";
+import type { RuleEngine } from "../engine/rule-engine";
 import { createTestEngine } from "../testing/test-engine-builder";
 import { createTestPlayers } from "../testing/test-player-builder";
 import { createPlayerId } from "../types";
 import { createMockOnePieceGame } from "./createMockOnePieceGame";
+
+/**
+ * Helper function to execute a move with proper player ID formatting
+ */
+function executeMoveWithParams<
+  TGameState,
+  TMoves extends Record<string, unknown>,
+>(
+  engine: RuleEngine<TGameState, TMoves>,
+  moveName: string,
+  playerId: string,
+  params: Record<string, unknown>,
+) {
+  return engine.executeMove(moveName, {
+    playerId: createPlayerId(playerId),
+    params,
+  });
+}
 
 /**
  * One Piece Card Game - Beginning of Game Test
@@ -200,10 +219,7 @@ describe("One Piece Game - Setup Moves", () => {
     if (!playerId) throw new Error("Player ID not found");
 
     // Execute initializeDecks for Player 1
-    engine.executeMove("initializeDecks", {
-      playerId: createPlayerId(playerId),
-      params: { playerId },
-    });
+    executeMoveWithParams(engine, "initializeDecks", playerId, { playerId });
 
     const state = engine.getState();
 
@@ -226,16 +242,13 @@ describe("One Piece Game - Setup Moves", () => {
     if (!playerId) throw new Error("Player ID not found");
 
     // Initialize decks first
-    engine.executeMove("initializeDecks", {
-      playerId: createPlayerId(playerId),
-      params: { playerId },
-    });
+    executeMoveWithParams(engine, "initializeDecks", playerId, { playerId });
 
     // Place Leader
     const leaderId = `${playerId}-leader-001`;
-    engine.executeMove("placeLeader", {
-      playerId: createPlayerId(playerId),
-      params: { playerId, leaderId },
+    executeMoveWithParams(engine, "placeLeader", playerId, {
+      playerId,
+      leaderId,
     });
 
     const state = engine.getState();
@@ -810,4 +823,3 @@ describe("One Piece Game - Core Gameplay Moves", () => {
     expect(state.phase).toBe("gameOver");
   });
 });
-

@@ -25,7 +25,7 @@ type TestMoves = {
   // Setup moves
   initializeDecks: { playerId: string };
   placeShields: { playerId: string };
-  createTokens: { playerId: string };
+  createTokens: { playerId: string; playerIndex?: number };
   drawInitialHand: { playerId: string };
   decideMulligan: { playerId: string; redraw: boolean };
   transitionToPlay: Record<string, never>;
@@ -113,6 +113,7 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
       }
 
       const playerId = context.params.playerId as PlayerId;
+      const playerIndex = context.params.playerIndex;
 
       // Create EX Base token for this player
       const baseTokenId = `${playerId}-token-ex-base` as CardId;
@@ -122,11 +123,11 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
         position: "bottom",
       });
 
-      // Create EX Resource token only for Player 2
-      // Assuming player IDs follow a pattern where Player 2 can be identified
-      // For this test, we check if it's the second player in the list
-      const isPlayer2 = playerId.includes("1") || playerId === "p2"; // Simple heuristic
-      if (isPlayer2) {
+      // Create EX Resource token only for Player 2 (second player)
+      // According to Gundam rules, the second player gets an EX Resource token
+      // to balance the first-player advantage
+      const isSecondPlayer = playerIndex === 1;
+      if (isSecondPlayer) {
         const resourceTokenId = `${playerId}-token-ex-resource` as CardId;
         zones.moveCard({
           cardId: resourceTokenId,

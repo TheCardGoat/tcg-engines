@@ -202,7 +202,7 @@ describe("Riftbound Game - Setup Moves", () => {
 
     // Execute initializeDecks for Player 1
     const result = engine.executeMove("initializeDecks", {
-      playerId: playerId as any,
+      playerId: playerId as string,
       params: { playerId },
     });
 
@@ -642,4 +642,3 @@ describe("Riftbound Game - Turn Structure", () => {
     // In full implementation, would verify spell is in trash
   });
 });
-

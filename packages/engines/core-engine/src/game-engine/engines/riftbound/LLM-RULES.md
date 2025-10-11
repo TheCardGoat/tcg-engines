@@ -1,6 +1,6 @@
 # Riftbound Core Rules
 
-For full context, refer to the RULES.md file.
+For full context, refer to [RULES.md](./RULES.md).
 
 Last Updated: 2025-06-02
 
