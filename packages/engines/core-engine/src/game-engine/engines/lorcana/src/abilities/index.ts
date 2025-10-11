@@ -43,7 +43,7 @@ export const ifThisCharacterIsExerted: any = () => ({});
 export const duringYourTurn: any = () => ({});
 export const thisMissionIsCursed: any = () => ({});
 export const unlessItIsAtALocation: any = () => ({});
-export const singerAbility: any = { type: "keyword", keyword: "singer" };
+// NOTE: singerAbility is exported from keyword/keyword - do not override here
 export const moveDamageAbility: any = () => ({});
 export const yourOtherCharactersGet: any = () => ({});
 export const otherCharacterGains: any = () => ({});
@@ -57,8 +57,7 @@ export const duringOpponentsTurn: any = () => ({});
 export const yourCharactersNamed: any = () => ({});
 
 // Additional missing ability exports
-export const vanishAbility: any = { type: "keyword", keyword: "vanish" };
-export const voicelessAbility: any = { type: "keyword", keyword: "voiceless" };
+// NOTE: vanishAbility and voicelessAbility are exported from keyword/keyword - do not override here
 export const metaAbility: any = () => ({});
 export const chosenExertedCharacterCantReadyWhileThisIsInPlace: any =
   () => ({});
