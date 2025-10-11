@@ -54,12 +54,12 @@ describe("RuleEngine - Constructor", () => {
         playCard: {
           condition: (state, context) => {
             const player = state.players[state.currentPlayerIndex];
-            const cardId = context.data?.cardId as string;
+            const cardId = context.params?.cardId as string;
             return player?.hand.includes(cardId) ?? false;
           },
           reducer: (draft, context) => {
             const player = draft.players[draft.currentPlayerIndex];
-            const cardId = context.data?.cardId as string;
+            const cardId = context.params?.cardId as string;
             if (player && cardId) {
               const index = player.hand.indexOf(cardId);
               if (index >= 0) {
@@ -79,7 +79,7 @@ describe("RuleEngine - Constructor", () => {
         endGame: {
           reducer: (draft, context) => {
             draft.phase = "ended";
-            draft.winner = context.data?.winnerId as string;
+            draft.winner = context.params?.winnerId as string;
           },
         },
       };

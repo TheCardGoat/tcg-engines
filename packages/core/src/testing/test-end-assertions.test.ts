@@ -28,16 +28,16 @@ describe("test-end-assertions", () => {
     const moves: GameMoveDefinitions<EndTestState, EndTestMoves> = {
       damagePlayer: {
         reducer: (draft, context) => {
-          if (context.data?.targetId && context.data?.amount) {
+          if (context.params?.targetId && context.params?.amount) {
             const target = draft.players.find(
-              (p) => p.id === context.data?.targetId,
+              (p) => p.id === context.params?.targetId,
             );
             if (target) {
-              target.health -= context.data.amount as number;
+              target.health -= context.params.amount as number;
               if (target.health <= 0) {
                 // Set winner to the other player
                 const winner = draft.players.find(
-                  (p) => p.id !== context.data?.targetId,
+                  (p) => p.id !== context.params?.targetId,
                 );
                 if (winner) {
                   draft.winner = winner.id;
@@ -49,8 +49,8 @@ describe("test-end-assertions", () => {
       },
       setWinner: {
         reducer: (draft, context) => {
-          if (context.data?.winnerId) {
-            draft.winner = context.data.winnerId as PlayerId;
+          if (context.params?.winnerId) {
+            draft.winner = context.params.winnerId as PlayerId;
           }
         },
       },
@@ -93,7 +93,7 @@ describe("test-end-assertions", () => {
       // Set winner
       engine.executeMove("setWinner", {
         playerId: createPlayerId("p1"),
-        data: { winnerId: createPlayerId("p1") },
+        params: { winnerId: createPlayerId("p1") },
       });
 
       // Should not throw
@@ -113,7 +113,7 @@ describe("test-end-assertions", () => {
 
       engine.executeMove("setWinner", {
         playerId: createPlayerId("p1"),
-        data: { winnerId: createPlayerId("p1") },
+        params: { winnerId: createPlayerId("p1") },
       });
 
       expect(() => {
@@ -126,7 +126,7 @@ describe("test-end-assertions", () => {
 
       engine.executeMove("setWinner", {
         playerId: createPlayerId("p1"),
-        data: { winnerId: createPlayerId("p1") },
+        params: { winnerId: createPlayerId("p1") },
       });
 
       // Should not throw - just checks that game ended
@@ -138,7 +138,7 @@ describe("test-end-assertions", () => {
 
       engine.executeMove("setWinner", {
         playerId: createPlayerId("p1"),
-        data: { winnerId: createPlayerId("p1") },
+        params: { winnerId: createPlayerId("p1") },
       });
 
       // Should not throw
@@ -150,7 +150,7 @@ describe("test-end-assertions", () => {
 
       engine.executeMove("setWinner", {
         playerId: createPlayerId("p1"),
-        data: { winnerId: createPlayerId("p1") },
+        params: { winnerId: createPlayerId("p1") },
       });
 
       expect(() => {
@@ -163,7 +163,7 @@ describe("test-end-assertions", () => {
 
       engine.executeMove("setWinner", {
         playerId: createPlayerId("p1"),
-        data: { winnerId: createPlayerId("p1") },
+        params: { winnerId: createPlayerId("p1") },
       });
 
       const result = expectGameEnd(engine);
@@ -177,14 +177,14 @@ describe("test-end-assertions", () => {
       // Damage player 2 until they lose
       engine.executeMove("damagePlayer", {
         playerId: createPlayerId("p1"),
-        data: { targetId: createPlayerId("p2"), amount: 5 },
+        params: { targetId: createPlayerId("p2"), amount: 5 },
       });
 
       expectGameNotEnded(engine); // Game should still be ongoing
 
       engine.executeMove("damagePlayer", {
         playerId: createPlayerId("p1"),
-        data: { targetId: createPlayerId("p2"), amount: 5 },
+        params: { targetId: createPlayerId("p2"), amount: 5 },
       });
 
       // Game should have ended
@@ -205,7 +205,7 @@ describe("test-end-assertions", () => {
 
       engine.executeMove("setWinner", {
         playerId: createPlayerId("p1"),
-        data: { winnerId: createPlayerId("p1") },
+        params: { winnerId: createPlayerId("p1") },
       });
 
       expect(() => {
@@ -218,7 +218,7 @@ describe("test-end-assertions", () => {
 
       engine.executeMove("setWinner", {
         playerId: createPlayerId("p1"),
-        data: { winnerId: createPlayerId("p1") },
+        params: { winnerId: createPlayerId("p1") },
       });
 
       expect(() => {
@@ -237,7 +237,7 @@ describe("test-end-assertions", () => {
       // Do some damage but not enough to end game
       engine.executeMove("damagePlayer", {
         playerId: createPlayerId("p1"),
-        data: { targetId: createPlayerId("p2"), amount: 3 },
+        params: { targetId: createPlayerId("p2"), amount: 3 },
       });
 
       expectGameNotEnded(engine);
@@ -245,7 +245,7 @@ describe("test-end-assertions", () => {
       // More damage
       engine.executeMove("damagePlayer", {
         playerId: createPlayerId("p1"),
-        data: { targetId: createPlayerId("p2"), amount: 3 },
+        params: { targetId: createPlayerId("p2"), amount: 3 },
       });
 
       expectGameNotEnded(engine);
@@ -253,7 +253,7 @@ describe("test-end-assertions", () => {
       // Final damage should end game
       engine.executeMove("damagePlayer", {
         playerId: createPlayerId("p1"),
-        data: { targetId: createPlayerId("p2"), amount: 4 },
+        params: { targetId: createPlayerId("p2"), amount: 4 },
       });
 
       expectGameEnd(engine, createPlayerId("p1"));

@@ -92,7 +92,7 @@ describe("test-flow-assertions", () => {
       expectPhaseTransition(
         engine,
         "nextPhase",
-        { playerId: createPlayerId("p1") },
+        { playerId: createPlayerId("p1"), params: {} },
         "draw",
         "main",
       );
@@ -105,7 +105,7 @@ describe("test-flow-assertions", () => {
         expectPhaseTransition(
           engine,
           "nextPhase",
-          { playerId: createPlayerId("p1") },
+          { playerId: createPlayerId("p1"), params: {} },
           "main", // Wrong initial phase
           "end",
         );
@@ -119,7 +119,7 @@ describe("test-flow-assertions", () => {
         expectPhaseTransition(
           engine,
           "nextPhase",
-          { playerId: createPlayerId("p1") },
+          { playerId: createPlayerId("p1"), params: {} },
           "draw",
           "end", // Wrong final phase (should be 'main')
         );
@@ -132,7 +132,7 @@ describe("test-flow-assertions", () => {
       expectPhaseTransition(
         engine,
         "nextPhase",
-        { playerId: createPlayerId("p1") },
+        { playerId: createPlayerId("p1"), params: {} },
         "draw",
         "main",
       );
@@ -140,7 +140,7 @@ describe("test-flow-assertions", () => {
       expectPhaseTransition(
         engine,
         "nextPhase",
-        { playerId: createPlayerId("p1") },
+        { playerId: createPlayerId("p1"), params: {} },
         "main",
         "end",
       );
@@ -148,7 +148,7 @@ describe("test-flow-assertions", () => {
       expectPhaseTransition(
         engine,
         "nextPhase",
-        { playerId: createPlayerId("p1") },
+        { playerId: createPlayerId("p1"), params: {} },
         "end",
         "draw",
       );
@@ -196,7 +196,7 @@ describe("test-flow-assertions", () => {
         expectPhaseTransition(
           failEngine,
           "nextPhase",
-          { playerId: createPlayerId("p1") },
+          { playerId: createPlayerId("p1"), params: {} },
           "draw",
           "main",
         );
@@ -214,7 +214,7 @@ describe("test-flow-assertions", () => {
       expectPhaseTransition(
         engine,
         "nextPhase",
-        { playerId: createPlayerId("p1") },
+        { playerId: createPlayerId("p1"), params: {} },
         "draw",
         "main",
       );
@@ -274,7 +274,7 @@ describe("test-flow-assertions", () => {
       expectPhaseTransition(
         nestedEngine,
         "advance",
-        { playerId: createPlayerId("p1") },
+        { playerId: createPlayerId("p1"), params: {} },
         "start",
         "middle",
         "gameState.currentPhase",

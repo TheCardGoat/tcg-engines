@@ -4,11 +4,21 @@ This directory contains tools for scraping, parsing, and generating Gundam Card 
 
 ## Overview
 
-The tooling pipeline consists of three main components:
+The tooling pipeline is split into two phases:
 
+### Phase 1: Scrape to JSON
 1. **Scraper** - Fetches card data from the official Gundam Card Game website
-2. **Parser** - Converts card text into structured ability format
-3. **Generator** - Creates TypeScript card definition files
+2. **Storage** - Saves raw scraped data to JSON files
+
+### Phase 2: JSON to TypeScript
+1. **Parser** - Converts card text into structured ability format
+2. **Generator** - Creates TypeScript card definition files
+
+This separation allows you to:
+- Scrape once, regenerate many times
+- Manually fix scraped data before generation
+- Version control raw card data
+- Test parsers and generators independently
 
 ## Directory Structure
 
@@ -17,38 +27,75 @@ tools/
 ├── scraper/
 │   ├── card-scraper.ts         # HTML scraping logic
 │   └── __tests__/              # Scraper tests
+├── storage/
+│   └── json-storage.ts         # JSON data storage/loading
 ├── parser/
 │   ├── text-parser.ts          # Text parsing logic
 │   └── __tests__/              # Parser tests
-└── generator/
-    ├── card-generator.ts       # Card definition generation
-    ├── file-writer.ts          # File I/O operations
-    └── __tests__/              # Generator tests
+├── generator/
+│   ├── card-generator.ts       # Card definition generation
+│   ├── file-writer.ts          # File I/O operations
+│   └── __tests__/              # Generator tests
+├── data/
+│   └── scraped/                # JSON files with scraped data
+│       ├── st01.json           # Set ST01 scraped data
+│       ├── gd01.json           # Set GD01 scraped data
+│       └── ...
+└── scripts/
+    ├── scrape-to-json.ts       # Scrape → JSON
+    ├── generate-from-json.ts   # JSON → TypeScript
+    └── regenerate-all-from-json.ts # Regenerate all sets
 ```
 
 ## Usage
 
-### Scrape a Single Card
+### Two-Phase Workflow (Recommended)
 
+#### Phase 1: Scrape to JSON
+
+**Scrape a single card:**
 ```bash
-bun run scripts/scrape-card.ts ST01-001
+bun run scripts/scrape-to-json.ts ST01-001
+```
+
+**Scrape an entire set:**
+```bash
+bun run scripts/scrape-to-json.ts ST01
 ```
 
 This will:
 1. Fetch card data from https://www.gundam-gcg.com
-2. Parse the card's effect text into structured abilities
-3. Generate a TypeScript file at `src/cards/sets/st01/001-card-name.ts`
+2. Save raw scraped data to `tools/data/scraped/{setcode}.json`
 
-### Scrape an Entire Set
+#### Phase 2: Generate TypeScript from JSON
 
+**Generate cards for one set:**
 ```bash
-bun run scripts/scrape-set.ts ST01
+bun run scripts/generate-from-json.ts ST01
+```
+
+**Regenerate all sets at once:**
+```bash
+bun run scripts/regenerate-all-from-json.ts
 ```
 
 This will:
-1. Scrape all cards in the set (sequential from 001 until failures)
-2. Parse and generate each card
-3. Create a set index file at `src/cards/sets/st01/index.ts`
+1. Load scraped data from JSON files
+2. Parse card text into structured abilities
+3. Generate TypeScript files at `src/cards/sets/{setcode}/`
+4. Create set index files
+
+### Legacy Workflow (One-Step)
+
+The original scripts still work for convenience:
+
+```bash
+# Single card (scrape + generate in one step)
+bun run scripts/scrape-card.ts ST01-001
+
+# Entire set (scrape + generate in one step)
+bun run scripts/scrape-set.ts ST01
+```
 
 ### Generate Master Index
 
@@ -75,6 +122,24 @@ The scraper fetches card data from the official website and extracts:
 - `scrapeCard(cardNumber)` - Scrape a single card
 - `scrapeSet(setCode)` - Scrape all cards in a set
 - `parseCardHTML(html)` - Parse HTML to extract card data
+
+### Storage
+
+The storage module handles saving and loading scraped data to/from JSON files:
+
+**Features:**
+- Save scraped data to JSON with nice formatting
+- Load scraped data from JSON
+- Update or append individual cards
+- Get all available set codes
+- Load all scraped data at once
+
+**Key Functions:**
+- `saveScrapedDataToJson(cards, setCode)` - Save full set to JSON
+- `saveScrapedCardToJson(card, setCode)` - Save/update single card
+- `loadScrapedDataFromJson(setCode)` - Load set from JSON
+- `getAvailableSetCodes()` - Get all available sets
+- `loadAllScrapedData()` - Load all sets
 
 ### Parser
 
@@ -186,6 +251,15 @@ const KEYWORD_PATTERNS: Record<string, KeywordAbility["keyword"]> = {
 3. **English Only**: Currently only supports English card text
 4. **Rate Limiting**: Add delays between requests to avoid server issues
 
+## Benefits of Two-Phase Workflow
+
+✅ **Separation of concerns** - Scraping decoupled from generation
+✅ **Iterate on parsing** - Regenerate cards without re-scraping
+✅ **Version control** - JSON data can be committed and tracked
+✅ **Testing** - Easier to test with fixture data
+✅ **Manual editing** - Can manually fix scraped data before generation
+✅ **Faster iterations** - Improve parser/generator without network requests
+
 ## Future Improvements
 
 - [ ] Add retry logic for failed scrapes
@@ -194,4 +268,5 @@ const KEYWORD_PATTERNS: Record<string, KeywordAbility["keyword"]> = {
 - [ ] Automatic image downloading
 - [ ] Validation against game rules
 - [ ] Interactive card builder UI
+- [x] Separate scraping from generation (JSON intermediate step)
 

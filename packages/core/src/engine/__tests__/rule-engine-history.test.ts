@@ -34,8 +34,8 @@ describe("RuleEngine - History & Replay", () => {
         incrementScore: {
           reducer: (draft, context) => {
             const player = draft.players[draft.currentPlayerIndex];
-            if (player && context.data?.amount) {
-              player.score += context.data.amount as number;
+            if (player && context.params?.amount) {
+              player.score += context.params.amount as number;
             }
           },
         },
@@ -66,21 +66,21 @@ describe("RuleEngine - History & Replay", () => {
       // Execute some moves
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 5 },
+        params: { amount: 5 },
       });
 
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 3 },
+        params: { amount: 3 },
       });
 
       const history = engine.getHistory();
 
       expect(history).toHaveLength(2);
       expect(history[0]?.moveId).toBe("incrementScore");
-      expect(history[0]?.context.data?.amount).toBe(5);
+      expect(history[0]?.context.params?.amount).toBe(5);
       expect(history[1]?.moveId).toBe("incrementScore");
-      expect(history[1]?.context.data?.amount).toBe(3);
+      expect(history[1]?.context.params?.amount).toBe(3);
     });
 
     it("should include patches in history", () => {
@@ -88,8 +88,8 @@ describe("RuleEngine - History & Replay", () => {
         incrementScore: {
           reducer: (draft, context) => {
             const player = draft.players[draft.currentPlayerIndex];
-            if (player && context.data?.amount) {
-              player.score += context.data.amount as number;
+            if (player && context.params?.amount) {
+              player.score += context.params.amount as number;
             }
           },
         },
@@ -119,7 +119,7 @@ describe("RuleEngine - History & Replay", () => {
 
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 5 },
+        params: { amount: 5 },
       });
 
       const history = engine.getHistory();
@@ -137,8 +137,8 @@ describe("RuleEngine - History & Replay", () => {
         incrementScore: {
           reducer: (draft, context) => {
             const player = draft.players[draft.currentPlayerIndex];
-            if (player && context.data?.amount) {
-              player.score += context.data.amount as number;
+            if (player && context.params?.amount) {
+              player.score += context.params.amount as number;
             }
           },
         },
@@ -169,7 +169,7 @@ describe("RuleEngine - History & Replay", () => {
       // Execute a move
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 5 },
+        params: { amount: 5 },
       });
 
       let state = engine.getState();
@@ -188,8 +188,8 @@ describe("RuleEngine - History & Replay", () => {
         incrementScore: {
           reducer: (draft, context) => {
             const player = draft.players[draft.currentPlayerIndex];
-            if (player && context.data?.amount) {
-              player.score += context.data.amount as number;
+            if (player && context.params?.amount) {
+              player.score += context.params.amount as number;
             }
           },
         },
@@ -220,7 +220,7 @@ describe("RuleEngine - History & Replay", () => {
       // Execute, undo, redo
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 5 },
+        params: { amount: 5 },
       });
 
       engine.undo();
@@ -298,8 +298,8 @@ describe("RuleEngine - History & Replay", () => {
         incrementScore: {
           reducer: (draft, context) => {
             const player = draft.players[draft.currentPlayerIndex];
-            if (player && context.data?.amount) {
-              player.score += context.data.amount as number;
+            if (player && context.params?.amount) {
+              player.score += context.params.amount as number;
             }
           },
         },
@@ -330,12 +330,12 @@ describe("RuleEngine - History & Replay", () => {
       // Execute two moves
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 5 },
+        params: { amount: 5 },
       });
 
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 3 },
+        params: { amount: 3 },
       });
 
       // Undo one
@@ -344,7 +344,7 @@ describe("RuleEngine - History & Replay", () => {
       // Execute new move
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 7 },
+        params: { amount: 7 },
       });
 
       // Should not be able to redo (history was truncated)
@@ -362,8 +362,8 @@ describe("RuleEngine - History & Replay", () => {
         incrementScore: {
           reducer: (draft, context) => {
             const player = draft.players[draft.currentPlayerIndex];
-            if (player && context.data?.amount) {
-              player.score += context.data.amount as number;
+            if (player && context.params?.amount) {
+              player.score += context.params.amount as number;
             }
           },
         },
@@ -394,17 +394,17 @@ describe("RuleEngine - History & Replay", () => {
       // Execute three moves
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 5 },
+        params: { amount: 5 },
       });
 
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 3 },
+        params: { amount: 3 },
       });
 
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 2 },
+        params: { amount: 2 },
       });
 
       // Get patches since move 1
@@ -419,8 +419,8 @@ describe("RuleEngine - History & Replay", () => {
         incrementScore: {
           reducer: (draft, context) => {
             const player = draft.players[draft.currentPlayerIndex];
-            if (player && context.data?.amount) {
-              player.score += context.data.amount as number;
+            if (player && context.params?.amount) {
+              player.score += context.params.amount as number;
             }
           },
         },
@@ -450,7 +450,7 @@ describe("RuleEngine - History & Replay", () => {
 
       engine.executeMove("incrementScore", {
         playerId: createPlayerId("p1"),
-        data: { amount: 5 },
+        params: { amount: 5 },
       });
 
       const patches = engine.getPatches();

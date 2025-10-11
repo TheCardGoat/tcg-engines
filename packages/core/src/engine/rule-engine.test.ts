@@ -80,7 +80,7 @@ describe("RuleEngine - Operations Integration", () => {
         playCard: {
           condition: (state, context) => {
             const playerId = context.playerId as string;
-            const cardId = context.data?.cardId as CardId;
+            const cardId = context.params?.cardId as CardId;
 
             // Check zones API is available
             if (!context.zones) {
@@ -99,7 +99,7 @@ describe("RuleEngine - Operations Integration", () => {
             return true;
           },
           reducer: (draft, context) => {
-            const cardId = context.data?.cardId as CardId;
+            const cardId = context.params?.cardId as CardId;
 
             // Operations should be available in reducer
             if (!(context.zones && context.cards)) {
@@ -163,6 +163,7 @@ describe("RuleEngine - Operations Integration", () => {
       // (the move just won't do anything)
       const result = engine.executeMove("draw", {
         playerId: "player-1" as unknown as PlayerId,
+        params: {},
       });
 
       // The move should execute successfully even with no cards
@@ -184,7 +185,7 @@ describe("RuleEngine - Operations Integration", () => {
       // Execute playCard move - this should use card operations
       const result = engine.executeMove("playCard", {
         playerId: "player-1" as unknown as PlayerId,
-        data: { cardId: "card-1" },
+        params: { cardId: "card-1" },
       });
 
       // Will fail initially since we haven't populated cards, but tests the API
@@ -203,7 +204,7 @@ describe("RuleEngine - Operations Integration", () => {
       // canExecuteMove should have access to operations
       const canPlay = engine.canExecuteMove("playCard", {
         playerId: "player-1" as unknown as PlayerId,
-        data: { cardId: "card-1" },
+        params: { cardId: "card-1" },
       });
 
       expect(typeof canPlay).toBe("boolean");
@@ -224,6 +225,7 @@ describe("RuleEngine - Operations Integration", () => {
       // We can verify this by executing a move that uses zones
       const result = engine.executeMove("draw", {
         playerId: "player-1" as unknown as PlayerId,
+        params: {},
       });
 
       // Move should execute successfully (zones are accessible)
@@ -242,10 +244,12 @@ describe("RuleEngine - Operations Integration", () => {
       // Execute draw multiple times
       engine.executeMove("draw", {
         playerId: "player-1" as unknown as PlayerId,
+        params: {},
       });
 
       engine.executeMove("draw", {
         playerId: "player-1" as unknown as PlayerId,
+        params: {},
       });
 
       // Internal state should be tracking card movements
@@ -267,6 +271,7 @@ describe("RuleEngine - Operations Integration", () => {
 
       const result = engine.executeMove("draw", {
         playerId: "player-1" as unknown as PlayerId,
+        params: {},
       });
 
       // Move should execute successfully

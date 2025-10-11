@@ -54,9 +54,13 @@ export type MoveExecutionResult =
  *
  * Record of a move execution for replay/undo
  */
-export type HistoryEntry = {
+export type HistoryEntry<
+  TParams = any,
+  TCardMeta = any,
+  TCardDefinition = any,
+> = {
   moveId: string;
-  context: MoveContext;
+  context: MoveContext<TParams, TCardMeta, TCardDefinition>;
   patches: Patch[];
   inversePatches: Patch[];
   timestamp: number;
@@ -106,7 +110,8 @@ export class RuleEngine<
     TCardMeta
   >;
   private readonly rng: SeededRNG;
-  private readonly history: HistoryEntry[] = [];
+  private readonly history: HistoryEntry<any, TCardMeta, TCardDefinition>[] =
+    [];
   private historyIndex = -1;
   private flowManager?: FlowManager<TState>;
   private readonly initialPlayers: Player[]; // Store for replay
@@ -232,10 +237,13 @@ export class RuleEngine<
    * 7. Check game end condition
    *
    * @param moveId - Name of move to execute
-   * @param context - Move context (player, targets, data)
+   * @param context - Move context (player, typed params, targets)
    * @returns Execution result with patches or error
    */
-  executeMove(moveId: string, context: MoveContext): MoveExecutionResult {
+  executeMove(
+    moveId: string,
+    context: MoveContext<any, TCardMeta, TCardDefinition>,
+  ): MoveExecutionResult {
     // Task 11.7: Validate move exists
     const moveDef = this.gameDefinition.moves[moveId as keyof TMoves];
     if (!moveDef) {
@@ -260,13 +268,14 @@ export class RuleEngine<
     const zoneOps = createZoneOperations(this.internalState);
     const cardOps = createCardOperations(this.internalState);
 
-    const contextWithOperations: MoveContext<TCardMeta, TCardDefinition> = {
-      ...context,
-      rng: this.rng,
-      zones: zoneOps,
-      cards: cardOps,
-      registry: this.cardRegistry,
-    };
+    const contextWithOperations: MoveContext<any, TCardMeta, TCardDefinition> =
+      {
+        ...context,
+        rng: this.rng,
+        zones: zoneOps,
+        cards: cardOps,
+        registry: this.cardRegistry,
+      };
 
     // Task 11.9: Execute reducer with Immer and capture patches
     let patches: Patch[] = [];
@@ -321,10 +330,13 @@ export class RuleEngine<
    * Used for UI state (enable/disable buttons) and AI move filtering.
    *
    * @param moveId - Name of move to check
-   * @param context - Move context
+   * @param context - Move context with typed params
    * @returns True if move can be executed, false otherwise
    */
-  canExecuteMove(moveId: string, context: MoveContext): boolean {
+  canExecuteMove(
+    moveId: string,
+    context: MoveContext<any, TCardMeta, TCardDefinition>,
+  ): boolean {
     const moveDef = this.gameDefinition.moves[moveId as keyof TMoves];
     if (!moveDef) {
       return false;
@@ -334,13 +346,14 @@ export class RuleEngine<
     const zoneOps = createZoneOperations(this.internalState);
     const cardOps = createCardOperations(this.internalState);
 
-    const contextWithOperations: MoveContext<TCardMeta, TCardDefinition> = {
-      ...context,
-      rng: this.rng,
-      zones: zoneOps,
-      cards: cardOps,
-      registry: this.cardRegistry,
-    };
+    const contextWithOperations: MoveContext<any, TCardMeta, TCardDefinition> =
+      {
+        ...context,
+        rng: this.rng,
+        zones: zoneOps,
+        cards: cardOps,
+        registry: this.cardRegistry,
+      };
 
     if (
       moveDef.condition &&
@@ -371,7 +384,11 @@ export class RuleEngine<
     const validMoves: string[] = [];
 
     for (const moveId of Object.keys(this.gameDefinition.moves)) {
-      const context: MoveContext = { playerId };
+      // Create a minimal context for validation (params will be empty object for moves requiring no params)
+      const context: MoveContext<any, TCardMeta, TCardDefinition> = {
+        playerId,
+        params: {}, // Empty params - moves with required params won't validate with empty context
+      };
 
       if (this.canExecuteMove(moveId, context)) {
         validMoves.push(moveId);
@@ -407,7 +424,7 @@ export class RuleEngine<
    *
    * @returns Array of history entries
    */
-  getHistory(): readonly HistoryEntry[] {
+  getHistory(): readonly HistoryEntry<any, TCardMeta, TCardDefinition>[] {
     return this.history;
   }
 

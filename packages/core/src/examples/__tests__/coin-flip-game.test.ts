@@ -175,6 +175,7 @@ describe("Coin Flip Game - Setup", () => {
 
       const result = engine.executeMove("flipCoin", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       expect(result.success).toBe(true);
@@ -220,7 +221,10 @@ describe("Coin Flip Game - Setup", () => {
 
       expect(engine.getState().currentPlayerIndex).toBe(0);
 
-      engine.executeMove("endTurn", { playerId: createPlayerId("p1") });
+      engine.executeMove("endTurn", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
 
       const state = engine.getState();
       expect(state.currentPlayerIndex).toBe(1);
@@ -385,9 +389,18 @@ describe("Coin Flip Game - Setup", () => {
       const engine = new RuleEngine(gameDefinition, players);
 
       // Flip 3 times to win
-      engine.executeMove("flipCoin", { playerId: createPlayerId("p1") });
-      engine.executeMove("flipCoin", { playerId: createPlayerId("p1") });
-      engine.executeMove("flipCoin", { playerId: createPlayerId("p1") });
+      engine.executeMove("flipCoin", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
+      engine.executeMove("flipCoin", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
+      engine.executeMove("flipCoin", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
 
       const gameEnd = engine.checkGameEnd();
       expect(gameEnd).toBeDefined();
@@ -469,11 +482,13 @@ describe("Coin Flip Game - Setup", () => {
         if (currentPlayer?.id) {
           engine.executeMove("flipCoin", {
             playerId: currentPlayer.id,
+            params: {},
           });
 
           // End turn
           engine.executeMove("endTurn", {
             playerId: currentPlayer.id,
+            params: {},
           });
         }
 
@@ -539,9 +554,18 @@ describe("Coin Flip Game - Setup", () => {
       const engine = new RuleEngine(gameDefinition, players);
 
       // Execute some moves
-      engine.executeMove("flipCoin", { playerId: createPlayerId("p1") });
-      engine.executeMove("endTurn", { playerId: createPlayerId("p1") });
-      engine.executeMove("flipCoin", { playerId: createPlayerId("p2") });
+      engine.executeMove("flipCoin", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
+      engine.executeMove("endTurn", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
+      engine.executeMove("flipCoin", {
+        playerId: createPlayerId("p2"),
+        params: {},
+      });
 
       expect(engine.getState().players[0]?.score).toBe(1);
       expect(engine.getState().players[1]?.score).toBe(1);
@@ -598,6 +622,7 @@ describe("Coin Flip Game - Setup", () => {
       // Execute move and capture patches
       const result = engine.executeMove("flipCoin", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       expect(result.success).toBe(true);

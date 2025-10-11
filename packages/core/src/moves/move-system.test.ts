@@ -89,6 +89,7 @@ describe("Move System with Validation", () => {
 
       const context: MoveContext = {
         playerId: player1,
+        params: {},
       };
 
       const nextState = produce(initialState, (draft) => {
@@ -109,6 +110,7 @@ describe("Move System with Validation", () => {
 
       const context: MoveContext = {
         playerId: player1,
+        params: {},
         targets: [[player2]],
       };
 
@@ -129,6 +131,7 @@ describe("Move System with Validation", () => {
 
       const context: MoveContext = {
         playerId: player1,
+        params: {},
         sourceCardId: card1,
       };
 
@@ -146,12 +149,16 @@ describe("Move System with Validation", () => {
         return state.players[context.playerId].mana >= 2;
       };
 
-      expect(condition(initialState, { playerId: player1 })).toBe(true);
+      expect(condition(initialState, { playerId: player1, params: {} })).toBe(
+        true,
+      );
 
       const lowManaState = produce(initialState, (draft) => {
         draft.players[player1].mana = 1;
       });
-      expect(condition(lowManaState, { playerId: player1 })).toBe(false);
+      expect(condition(lowManaState, { playerId: player1, params: {} })).toBe(
+        false,
+      );
     });
 
     it("should access context in condition check", () => {
@@ -159,8 +166,12 @@ describe("Move System with Validation", () => {
         return state.currentPlayer === context.playerId;
       };
 
-      expect(condition(initialState, { playerId: player1 })).toBe(true);
-      expect(condition(initialState, { playerId: player2 })).toBe(false);
+      expect(condition(initialState, { playerId: player1, params: {} })).toBe(
+        true,
+      );
+      expect(condition(initialState, { playerId: player2, params: {} })).toBe(
+        false,
+      );
     });
 
     it("should validate based on targets", () => {
@@ -173,6 +184,7 @@ describe("Move System with Validation", () => {
       expect(
         condition(initialState, {
           playerId: player1,
+          params: {},
           targets: [[player2]],
         }),
       ).toBe(true);
@@ -180,6 +192,7 @@ describe("Move System with Validation", () => {
       expect(
         condition(initialState, {
           playerId: player1,
+          params: {},
           targets: [[player1]],
         }),
       ).toBe(false);
@@ -229,6 +242,7 @@ describe("Move System with Validation", () => {
     it("should provide player ID to move", () => {
       const context: MoveContext = {
         playerId: player1,
+        params: {},
       };
 
       expect(context.playerId).toBe(player1);
@@ -237,6 +251,7 @@ describe("Move System with Validation", () => {
     it("should provide source card ID", () => {
       const context: MoveContext = {
         playerId: player1,
+        params: {},
         sourceCardId: card1,
       };
 
@@ -246,6 +261,7 @@ describe("Move System with Validation", () => {
     it("should provide target selections", () => {
       const context: MoveContext = {
         playerId: player1,
+        params: {},
         targets: [[card1], [player2]],
       };
 
@@ -257,20 +273,21 @@ describe("Move System with Validation", () => {
     it("should provide additional data", () => {
       const context: MoveContext = {
         playerId: player1,
-        data: {
+        params: {
           choiceIndex: 2,
           amount: 5,
         },
       };
 
-      expect(context.data?.choiceIndex).toBe(2);
-      expect(context.data?.amount).toBe(5);
+      expect(context.params?.choiceIndex).toBe(2);
+      expect(context.params?.amount).toBe(5);
     });
 
     it("should provide timestamp", () => {
       const now = Date.now();
       const context: MoveContext = {
         playerId: player1,
+        params: {},
         timestamp: now,
       };
 
@@ -290,7 +307,7 @@ describe("Move System with Validation", () => {
         },
       };
 
-      const context: MoveContext = { playerId: player1 };
+      const context: MoveContext = { playerId: player1, params: {} };
 
       // Check condition
       const isValid = moveDef.condition?.(initialState, context);
@@ -317,7 +334,7 @@ describe("Move System with Validation", () => {
         },
       };
 
-      const context: MoveContext = { playerId: player1 };
+      const context: MoveContext = { playerId: player1, params: {} };
 
       const isValid = moveDef.condition?.(initialState, context);
       expect(isValid).toBe(false);
@@ -334,7 +351,7 @@ describe("Move System with Validation", () => {
         },
       };
 
-      const context: MoveContext = { playerId: player1 };
+      const context: MoveContext = { playerId: player1, params: {} };
 
       // No condition means always valid
       const isValid = moveDef.condition?.(initialState, context) ?? true;

@@ -75,6 +75,7 @@ describe("RuleEngine - Move Execution", () => {
       const engine = new RuleEngine(gameDef, players);
       const result = engine.executeMove("drawCard", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       expect(result.success).toBe(true);
@@ -121,6 +122,7 @@ describe("RuleEngine - Move Execution", () => {
       const engine = new RuleEngine(gameDef, players);
       const result = engine.executeMove("unknownMove" as any, {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       expect(result.success).toBe(false);
@@ -136,12 +138,12 @@ describe("RuleEngine - Move Execution", () => {
         playCard: {
           condition: (state, context) => {
             const player = state.players[state.currentPlayerIndex];
-            const cardId = context.data?.cardId as string;
+            const cardId = context.params?.cardId as string;
             return player?.hand.includes(cardId) ?? false;
           },
           reducer: (draft, context) => {
             const player = draft.players[draft.currentPlayerIndex];
-            const cardId = context.data?.cardId as string;
+            const cardId = context.params?.cardId as string;
             if (player && cardId) {
               const index = player.hand.indexOf(cardId);
               if (index >= 0) {
@@ -179,7 +181,7 @@ describe("RuleEngine - Move Execution", () => {
       const engine = new RuleEngine(gameDef, players);
       const result = engine.executeMove("playCard", {
         playerId: createPlayerId("p1"),
-        data: { cardId: "card-not-in-hand" },
+        params: { cardId: "card-not-in-hand" },
       });
 
       expect(result.success).toBe(false);
@@ -232,6 +234,7 @@ describe("RuleEngine - Move Execution", () => {
       const engine = new RuleEngine(gameDef, players);
       const result = engine.executeMove("drawCard", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       expect(result.success).toBe(true);
@@ -284,6 +287,7 @@ describe("RuleEngine - Move Execution", () => {
       const engine = new RuleEngine(gameDef, players);
       const canDraw = engine.canExecuteMove("drawCard", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       expect(canDraw).toBe(true);
@@ -325,6 +329,7 @@ describe("RuleEngine - Move Execution", () => {
       const engine = new RuleEngine(gameDef, players);
       const canDraw = engine.canExecuteMove("drawCard", {
         playerId: createPlayerId("p1"),
+        params: {},
       });
 
       expect(canDraw).toBe(false);
@@ -366,7 +371,10 @@ describe("RuleEngine - Move Execution", () => {
       ];
 
       const engine = new RuleEngine(gameDef, players);
-      engine.canExecuteMove("drawCard", { playerId: createPlayerId("p1") });
+      engine.canExecuteMove("drawCard", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
 
       // State should be unchanged
       const state = engine.getState();

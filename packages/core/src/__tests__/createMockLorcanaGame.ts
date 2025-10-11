@@ -41,52 +41,135 @@ type TestMoves = {
   manualExert: { cardId: string };
 };
 
-// This is a mock move set, only to validate if typescripts works properly for Lorcana game
+// This is a mock move set, demonstrating type safety for Lorcana game moves
 const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   passTurn: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is {} (empty object for void moves)
+      // No parameters to destructure
+      console.log("Turn passed by player", context.playerId);
+    },
   },
   concede: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is {} (empty object for void moves)
+      console.log("Player conceded", context.playerId);
+    },
   },
   chooseWhoGoesFirstMove: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { playerId: string }
+      const { playerId } = context.params;
+      console.log("Player chosen to go first:", playerId);
+    },
   },
   alterHand: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { playerId: string; cards: string[] }
+      const { playerId, cards } = context.params;
+      console.log(`Altering hand for ${playerId} with cards:`, cards);
+    },
   },
   putACardIntoTheInkwell: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { cardId: string }
+      const { cardId } = context.params;
+      console.log("Card added to inkwell:", cardId);
+    },
   },
   playCard: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { cardId: string; alternativeCost?: AlternativeCost }
+      const { cardId, alternativeCost } = context.params;
+
+      if (alternativeCost) {
+        // ✅ TypeScript knows alternativeCost has type, targetInstanceId
+        console.log(
+          `Playing card ${cardId} with alternative cost: ${alternativeCost.type}`,
+        );
+
+        if (alternativeCost.type === "shift") {
+          console.log("Shift targets:", alternativeCost.targetInstanceId);
+        }
+      } else {
+        console.log(`Playing card ${cardId} with normal cost`);
+      }
+    },
   },
   quest: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { cardId: string }
+      const { cardId } = context.params;
+      console.log("Card questing:", cardId);
+    },
   },
   challenge: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { attackerId: string; defenderId: string }
+      const { attackerId, defenderId } = context.params;
+      console.log(`Challenge: ${attackerId} attacks ${defenderId}`);
+    },
   },
   sing: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { singerId: string; songId: string }
+      const { singerId, songId } = context.params;
+      console.log(`${singerId} sings ${songId}`);
+    },
   },
   singTogether: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { singersIds: string[]; songId: string }
+      const { singersIds, songId } = context.params;
+      console.log(`${singersIds.join(", ")} sing together: ${songId}`);
+    },
   },
   moveCharacterToLocation: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { characterId: string; locationId: string }
+      const { characterId, locationId } = context.params;
+      console.log(`Moving ${characterId} to ${locationId}`);
+    },
   },
   activateAbility: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { cardId: string; opts?: { abilityIndex?: number; abilityText?: string; alternativeCost?: AlternativeCost } }
+      const { cardId, opts } = context.params;
+
+      if (opts) {
+        // ✅ TypeScript knows opts structure
+        console.log(
+          `Activating ability on ${cardId}, index: ${opts.abilityIndex}`,
+        );
+
+        if (opts.alternativeCost) {
+          console.log("With alternative cost:", opts.alternativeCost.type);
+        }
+      } else {
+        console.log(`Activating ability on ${cardId}`);
+      }
+    },
   },
   resolveBag: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { bagId: string; params: unknown }
+      const { bagId, params } = context.params;
+      console.log(`Resolving bag ${bagId} with params:`, params);
+    },
   },
   resolveEffect: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { effectId: string; params: unknown }
+      const { effectId, params } = context.params;
+      console.log(`Resolving effect ${effectId} with params:`, params);
+    },
   },
   manualExert: {
-    reducer: () => {},
+    reducer: (draft, context) => {
+      // ✅ context.params is typed as { cardId: string }
+      const { cardId } = context.params;
+      console.log("Manually exerting card:", cardId);
+    },
   },
 };
 

@@ -23,7 +23,7 @@ import type { GundamGameState } from "../types";
  * Extracts and validates card ID from move context
  */
 function getCardId(context: MoveContext): CardId {
-  const cardId = context.data?.cardId;
+  const cardId = context.params?.cardId;
 
   if (!cardId || typeof cardId !== "string") {
     throw new Error(`Invalid card ID: ${cardId}`);
