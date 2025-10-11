@@ -490,7 +490,7 @@ function updateInitialState(
     deck: 15,
     resourceDeck:
       state.resourceArea && !Number.isNaN(state.resourceArea)
-        ? 10 - Number(state.resourceArea)
+        ? Math.max(0, 10 - Number(state.resourceArea))
         : 10,
     resourceArea: 0,
     shieldSection: 6, // Default to 6 cards for normal tests
