@@ -14,87 +14,87 @@ import { createMockLorcanaGame } from "./createMockLorcanaGame";
  * ✅ Simplified state (8 fields → 3 fields)
  */
 describe("Lorcana Game - Refactored Engine Features", () => {
-	it("should initialize game with ONLY game-specific state", () => {
-		const gameDefinition = createMockLorcanaGame();
-		const players = createTestPlayers(2);
-		const engine = createTestEngine(gameDefinition, players);
+  it("should initialize game with ONLY game-specific state", () => {
+    const gameDefinition = createMockLorcanaGame();
+    const players = createTestPlayers(2);
+    const engine = createTestEngine(gameDefinition, players);
 
-		const state = engine.getState();
+    const state = engine.getState();
 
-		// ✅ NEW: Only game-specific data
-		expect(state.effects).toBeDefined();
-		expect(state.bag).toBeDefined();
-		expect(state.loreScores).toBeDefined();
+    // ✅ NEW: Only game-specific data
+    expect(state.effects).toBeDefined();
+    expect(state.bag).toBeDefined();
+    expect(state.loreScores).toBeDefined();
 
-		// ✅ REMOVED: No manual tracking
-		// @ts-expect-error
-		expect(state.activePlayerId).toBeUndefined();
-		// @ts-expect-error
-		expect(state.turnNumber).toBeUndefined();
-		// @ts-expect-error
-		expect(state.gamePhase).toBeUndefined();
-		// @ts-expect-error
-		expect(state.firstPlayerDetermined).toBeUndefined();
-	});
+    // ✅ REMOVED: No manual tracking
+    // @ts-expect-error
+    expect(state.activePlayerId).toBeUndefined();
+    // @ts-expect-error
+    expect(state.turnNumber).toBeUndefined();
+    // @ts-expect-error
+    expect(state.gamePhase).toBeUndefined();
+    // @ts-expect-error
+    expect(state.firstPlayerDetermined).toBeUndefined();
+  });
 
-	it("should have proper zone configuration", () => {
-		const gameDefinition = createMockLorcanaGame();
-		const zones = gameDefinition.zones;
+  it("should have proper zone configuration", () => {
+    const gameDefinition = createMockLorcanaGame();
+    const zones = gameDefinition.zones;
 
-		expect(zones?.deck).toBeDefined();
-		expect(zones?.hand).toBeDefined();
-		expect(zones?.inkwell).toBeDefined();
-		expect(zones?.play).toBeDefined();
-		expect(zones?.discard).toBeDefined();
+    expect(zones?.deck).toBeDefined();
+    expect(zones?.hand).toBeDefined();
+    expect(zones?.inkwell).toBeDefined();
+    expect(zones?.play).toBeDefined();
+    expect(zones?.discard).toBeDefined();
 
-		expect(zones?.deck?.maxSize).toBe(60);
-		expect(zones?.inkwell?.faceDown).toBe(true);
-	});
+    expect(zones?.deck?.maxSize).toBe(60);
+    expect(zones?.inkwell?.faceDown).toBe(true);
+  });
 
-	it("should use high-level zone utilities", () => {
-		// ✅ NEW: zones.mulligan() for alterHand
-		// ✅ NEW: zones.drawCards() for drawing
+  it("should use high-level zone utilities", () => {
+    // ✅ NEW: zones.mulligan() for alterHand
+    // ✅ NEW: zones.drawCards() for drawing
 
-		const gameDefinition = createMockLorcanaGame();
-		expect(gameDefinition.moves.alterHand).toBeDefined();
-		expect(gameDefinition.moves.drawCards).toBeDefined();
-	});
+    const gameDefinition = createMockLorcanaGame();
+    expect(gameDefinition.moves.alterHand).toBeDefined();
+    expect(gameDefinition.moves.drawCards).toBeDefined();
+  });
 
-	it("should configure tracker system for inking", () => {
-		const gameDefinition = createMockLorcanaGame();
+  it("should configure tracker system for inking", () => {
+    const gameDefinition = createMockLorcanaGame();
 
-		expect(gameDefinition.trackers).toBeDefined();
-		expect(gameDefinition.trackers?.perTurn).toContain("hasInked");
-		expect(gameDefinition.trackers?.perPlayer).toBe(true);
-	});
+    expect(gameDefinition.trackers).toBeDefined();
+    expect(gameDefinition.trackers?.perTurn).toContain("hasInked");
+    expect(gameDefinition.trackers?.perPlayer).toBe(true);
+  });
 
-	it("should use tracker system for ink and quest actions", () => {
-		const gameDefinition = createMockLorcanaGame();
+  it("should use tracker system for ink and quest actions", () => {
+    const gameDefinition = createMockLorcanaGame();
 
-		// Inking uses hasInked tracker
-		const putInkwell = gameDefinition.moves.putACardIntoTheInkwell;
-		expect(putInkwell.condition).toBeDefined();
+    // Inking uses hasInked tracker
+    const putInkwell = gameDefinition.moves.putACardIntoTheInkwell;
+    expect(putInkwell.condition).toBeDefined();
 
-		// Questing uses per-card trackers
-		const quest = gameDefinition.moves.quest;
-		expect(quest.condition).toBeDefined();
-	});
+    // Questing uses per-card trackers
+    const quest = gameDefinition.moves.quest;
+    expect(quest.condition).toBeDefined();
+  });
 
-	it("should use standard moves", () => {
-		const gameDefinition = createMockLorcanaGame();
+  it("should use standard moves", () => {
+    const gameDefinition = createMockLorcanaGame();
 
-		expect(gameDefinition.moves.passTurn).toBeDefined();
-		expect(gameDefinition.moves.concede).toBeDefined();
-	});
+    expect(gameDefinition.moves.passTurn).toBeDefined();
+    expect(gameDefinition.moves.concede).toBeDefined();
+  });
 
-	it("should demonstrate boilerplate reduction", () => {
-		// State fields: 8 → 3 (-62%)
-		// Eliminated player zones from state (engine manages)
+  it("should demonstrate boilerplate reduction", () => {
+    // State fields: 8 → 3 (-62%)
+    // Eliminated player zones from state (engine manages)
 
-		const gameDefinition = createMockLorcanaGame();
-		const players = createTestPlayers(2);
-		const state = gameDefinition.setup(players);
+    const gameDefinition = createMockLorcanaGame();
+    const players = createTestPlayers(2);
+    const state = gameDefinition.setup(players);
 
-		expect(Object.keys(state).length).toBe(3);
-	});
+    expect(Object.keys(state).length).toBe(3);
+  });
 });

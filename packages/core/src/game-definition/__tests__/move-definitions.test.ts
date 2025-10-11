@@ -209,7 +209,10 @@ describe("GameMoveDefinitions - Type System", () => {
         locked: true,
       };
 
-      const context: MoveContext = createMockContext({ playerId: "p1" as any, params: {} });
+      const context: MoveContext = createMockContext({
+        playerId: "p1" as any,
+        params: {},
+      });
 
       // Should pass condition
       expect(lockedMove.condition?.(unlockedState, context)).toBe(true);
@@ -238,16 +241,22 @@ describe("GameMoveDefinitions - Type System", () => {
         locked: false,
       };
 
-      const context: MoveContext = createMockContext({ playerId: "p1" as any, params: {} });
+      const context: MoveContext = createMockContext({
+        playerId: "p1" as any,
+        params: {},
+      });
 
       expect(conditionalMove.condition?.(validState, context)).toBe(true);
 
       // Wrong player
       expect(
-        conditionalMove.condition?.(validState, createMockContext({
-          playerId: "p2" as any,
-          params: {},
-        })),
+        conditionalMove.condition?.(
+          validState,
+          createMockContext({
+            playerId: "p2" as any,
+            params: {},
+          }),
+        ),
       ).toBe(false);
 
       // Locked
