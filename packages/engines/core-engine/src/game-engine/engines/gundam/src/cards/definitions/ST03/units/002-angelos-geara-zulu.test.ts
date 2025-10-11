@@ -156,7 +156,7 @@ describe("ST03-002: Angelo's Geara Zulu", () => {
       // Angelo's Geara Zulu with Support 2 can boost another unit's AP
       const engine = new GundamTestEngine(
         {
-          battleArea: [angelosGearaZulu, 1], // Angelo's Geara Zulu + another unit
+          battleArea: 2, // Angelo's Geara Zulu + another unit
           hand: 5,
           resourceArea: 4,
           deck: 30,
@@ -221,7 +221,7 @@ describe("ST03-002: Angelo's Geara Zulu", () => {
       // During Main Phase, can activate ability to rest and boost another unit
       const engine = new GundamTestEngine(
         {
-          battleArea: [angelosGearaZulu, 1], // Angelo's Geara Zulu + target unit
+          battleArea: 2, // Angelo's Geara Zulu + target unit
           hand: 5,
           resourceArea: 4,
           deck: 30,
@@ -290,7 +290,7 @@ describe("ST03-002: Angelo's Geara Zulu", () => {
       // Angelo's Geara Zulu is designed to boost other units
       const engine = new GundamTestEngine(
         {
-          battleArea: [angelosGearaZulu, 1], // Angelo's Geara Zulu + ally
+          battleArea: 2, // Angelo's Geara Zulu + ally
           resourceArea: 4,
           deck: 30,
         },

@@ -156,7 +156,7 @@ describe("ST03-004: Gaza D (Sleeves)", () => {
       // Gaza D (Sleeves) with Support 2 can boost another unit's AP
       const engine = new GundamTestEngine(
         {
-          battleArea: [gazaDSleeves, 1], // Gaza D + another unit
+          battleArea: 2, // Gaza D + another unit
           hand: 5,
           resourceArea: 3,
           deck: 30,
@@ -199,7 +199,7 @@ describe("ST03-004: Gaza D (Sleeves)", () => {
       // During Main Phase, can activate ability to rest and boost another unit
       const engine = new GundamTestEngine(
         {
-          battleArea: [gazaDSleeves, 1], // Gaza D + target unit
+          battleArea: 2, // Gaza D + target unit
           hand: 5,
           resourceArea: 3,
           deck: 30,
@@ -290,7 +290,7 @@ describe("ST03-004: Gaza D (Sleeves)", () => {
       // Gaza D (Sleeves) is a low-cost support unit for boosting attackers
       const engine = new GundamTestEngine(
         {
-          battleArea: [gazaDSleeves, 1], // Gaza D + ally
+          battleArea: 2, // Gaza D + ally
           resourceArea: 3,
           deck: 30,
         },

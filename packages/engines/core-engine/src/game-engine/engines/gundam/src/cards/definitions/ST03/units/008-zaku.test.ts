@@ -4,7 +4,7 @@ import {
   assertZoneCount,
 } from "../../../../../__tests__/helpers/assertion-helpers";
 import { GundamTestEngine } from "../../../../testing/gundam-test-engine";
-import { zaku } from "./008-zaku";
+import { zaku as zakuII } from "./008-zaku";
 
 /**
  * Tests for ST03-008: Zaku Ⅱ
@@ -29,49 +29,49 @@ import { zaku } from "./008-zaku";
 describe("ST03-008: Zaku Ⅱ", () => {
   describe("Card Definition", () => {
     it("should have correct basic properties", () => {
-      expect(zaku.id).toBe("ST03-008");
-      expect(zaku.name).toBe("Zaku Ⅱ");
-      expect(zaku.number).toBe(8);
-      expect(zaku.set).toBe("ST03");
-      expect(zaku.type).toBe("unit");
-      expect(zaku.rarity).toBe("common");
+      expect(zakuII.id).toBe("ST03-008");
+      expect(zakuII.name).toBe("Zaku Ⅱ");
+      expect(zakuII.number).toBe(8);
+      expect(zakuII.set).toBe("ST03");
+      expect(zakuII.type).toBe("unit");
+      expect(zakuII.rarity).toBe("common");
     });
 
     it("should have correct stats", () => {
-      expect(zaku.cost).toBe(1);
-      expect(zaku.level).toBe(2);
-      expect(zaku.ap).toBe(1);
-      expect(zaku.hp).toBe(2);
+      expect(zakuII.cost).toBe(1);
+      expect(zakuII.level).toBe(2);
+      expect(zakuII.ap).toBe(1);
+      expect(zakuII.hp).toBe(2);
     });
 
     it("should have correct color and traits", () => {
-      expect(zaku.color).toBe("green");
-      expect(zaku.traits).toEqual(["zeon"]);
+      expect(zakuII.color).toBe("green");
+      expect(zakuII.traits).toEqual(["zeon"]);
     });
 
     it("should have correct zones", () => {
-      expect(zaku.zones).toEqual(["space", "earth"]);
+      expect(zakuII.zones).toEqual(["space", "earth"]);
     });
 
     it("should have no specific link requirement", () => {
-      expect(zaku.linkRequirement).toEqual(["-"]);
+      expect(zakuII.linkRequirement).toEqual(["-"]);
     });
 
     it("should have text describing Attack ability", () => {
-      expect(zaku.text).toContain("Attack");
-      expect(zaku.text).toContain("AP+2");
-      expect(zaku.text).toContain("during this turn");
+      expect(zakuII.text).toContain("Attack");
+      expect(zakuII.text).toContain("AP+2");
+      expect(zakuII.text).toContain("during this turn");
     });
   });
 
   describe("Abilities Definition", () => {
     it("should have one ability", () => {
-      expect(zaku.abilities).toBeDefined();
-      expect(zaku.abilities.length).toBe(1);
+      expect(zakuII.abilities).toBeDefined();
+      expect(zakuII.abilities.length).toBe(1);
     });
 
     it("should have triggered Attack ability", () => {
-      const ability = zaku.abilities[0];
+      const ability = zakuII.abilities[0];
       expect(ability.type).toBe("triggered");
       expect(ability.text).toBe(
         "【Attack】 This Unit gets AP+2 during this turn.",
@@ -81,7 +81,7 @@ describe("ST03-008: Zaku Ⅱ", () => {
     });
 
     it("should have attribute boost effect", () => {
-      const ability = zaku.abilities[0];
+      const ability = zakuII.abilities[0];
       expect(ability.effects).toBeDefined();
       expect(ability.effects.length).toBeGreaterThanOrEqual(1);
 
@@ -94,7 +94,7 @@ describe("ST03-008: Zaku Ⅱ", () => {
     });
 
     it("should target self for AP boost", () => {
-      const ability = zaku.abilities[0];
+      const ability = zakuII.abilities[0];
       const boostEffect = ability.effects.find(
         (e) =>
           e.type === "attribute-boost" || e.type === "attribute-modification",
@@ -111,7 +111,7 @@ describe("ST03-008: Zaku Ⅱ", () => {
       // Zaku Ⅱ costs 1, so need 1 resource
       const engine = new GundamTestEngine(
         {
-          hand: [zaku],
+          hand: [zakuII],
           resourceArea: 2,
           battleArea: 0,
           deck: 30,
@@ -133,7 +133,7 @@ describe("ST03-008: Zaku Ⅱ", () => {
       // Zaku Ⅱ with Attack trigger ability on the field
       const engine = new GundamTestEngine(
         {
-          battleArea: [zaku],
+          battleArea: [zakuII],
           hand: 5,
           resourceArea: 2,
           deck: 30,
@@ -155,7 +155,7 @@ describe("ST03-008: Zaku Ⅱ", () => {
       // Zaku Ⅱ gets +2 AP when attacking
       const engine = new GundamTestEngine(
         {
-          battleArea: [zaku],
+          battleArea: [zakuII],
           hand: 5,
           resourceArea: 2,
           deck: 30,
@@ -177,7 +177,7 @@ describe("ST03-008: Zaku Ⅱ", () => {
       // Zaku Ⅱ can be deployed in space or earth zones
       const engine = new GundamTestEngine(
         {
-          hand: [zaku],
+          hand: [zakuII],
           resourceArea: 2,
           battleArea: 0,
           deck: 30,
@@ -190,18 +190,18 @@ describe("ST03-008: Zaku Ⅱ", () => {
       );
 
       // Zaku Ⅱ supports both deployment zones
-      expect(zaku.zones).toContain("space");
-      expect(zaku.zones).toContain("earth");
+      expect(zakuII.zones).toContain("space");
+      expect(zakuII.zones).toContain("earth");
       assertZoneCount(engine, "hand", 1, "player_one");
     });
 
     it("should work with no pilot link requirement", () => {
       // Zaku Ⅱ has no specific pilot requirement - flexible pairing
-      expect(zaku.linkRequirement).toEqual(["-"]);
+      expect(zakuII.linkRequirement).toEqual(["-"]);
 
       const engine = new GundamTestEngine(
         {
-          battleArea: [zaku],
+          battleArea: [zakuII],
           hand: 5,
           resourceArea: 2,
           deck: 30,
@@ -221,27 +221,27 @@ describe("ST03-008: Zaku Ⅱ", () => {
   describe("Card Implementation Status", () => {
     it("should track implementation status", () => {
       // Card definition tracks whether card is fully implemented
-      expect(zaku).toHaveProperty("implemented");
-      expect(zaku).toHaveProperty("missingTestCase");
+      expect(zakuII).toHaveProperty("implemented");
+      expect(zakuII).toHaveProperty("missingTestCase");
     });
   });
 
   describe("Card Stats and Combat", () => {
     it("should have level 2 stats appropriate for cost 1", () => {
       // Level 2 unit with 1 cost is an efficient early game unit
-      expect(zaku.level).toBe(2);
-      expect(zaku.cost).toBe(1);
-      expect(zaku.ap).toBe(1);
-      expect(zaku.hp).toBe(2);
+      expect(zakuII.level).toBe(2);
+      expect(zakuII.cost).toBe(1);
+      expect(zakuII.ap).toBe(1);
+      expect(zakuII.hp).toBe(2);
     });
 
     it("should have defensive base stats with offensive ability", () => {
       // Zaku Ⅱ has 1 AP and 2 HP base, but +2 AP when attacking
-      const totalStats = zaku.ap + zaku.hp;
+      const totalStats = zakuII.ap + zakuII.hp;
       expect(totalStats).toBe(3); // 1 + 2
 
       // Attack ability provides +2 AP boost
-      const ability = zaku.abilities[0];
+      const ability = zakuII.abilities[0];
       const boostEffect = ability.effects.find((e) => e.amount === 2);
       expect(boostEffect?.amount).toBe(2);
     });
@@ -250,7 +250,7 @@ describe("ST03-008: Zaku Ⅱ", () => {
       // Zaku Ⅱ with 1 AP attacking (becomes 3 AP with Attack trigger)
       const engine = new GundamTestEngine(
         {
-          battleArea: [zaku],
+          battleArea: [zakuII],
           resourceArea: 2,
           deck: 30,
         },
@@ -268,21 +268,21 @@ describe("ST03-008: Zaku Ⅱ", () => {
 
     it("should be an efficient aggressive unit when attacking", () => {
       // Zaku Ⅱ becomes 3 AP when attacking, efficient for cost 1
-      expect(zaku.cost).toBe(1);
-      expect(zaku.ap).toBe(1);
+      expect(zakuII.cost).toBe(1);
+      expect(zakuII.ap).toBe(1);
 
       // Attack ability makes it 3 AP when attacking
-      const ability = zaku.abilities[0];
+      const ability = zakuII.abilities[0];
       expect(ability.trigger.event).toBe("attack");
     });
 
     it("should work well in Zeon tribal strategies", () => {
       // Zaku Ⅱ has Zeon trait for tribal synergies
-      expect(zaku.traits).toContain("zeon");
+      expect(zakuII.traits).toContain("zeon");
 
       const engine = new GundamTestEngine(
         {
-          battleArea: [zaku],
+          battleArea: [zakuII],
           resourceArea: 2,
           deck: 30,
         },
