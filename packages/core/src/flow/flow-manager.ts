@@ -63,6 +63,10 @@ export type FlowManagerOptions = {
   skipInitialization?: boolean;
   /** Restore from serialized flow state */
   restoreFrom?: SerializedFlowState;
+  /** Callback invoked at turn end (before transition) */
+  onTurnEnd?: () => void;
+  /** Callback invoked at phase end (before transition) */
+  onPhaseEnd?: (phaseName: string) => void;
 };
 
 /**
@@ -78,6 +82,8 @@ export class FlowManager<TState> {
   private pendingEndPhase = false;
   private pendingEndSegment = false;
   private pendingEndTurn = false;
+  private onTurnEndCallback?: () => void;
+  private onPhaseEndCallback?: (phaseName: string) => void;
 
   constructor(
     flowDefinition: FlowDefinition<TState>,
@@ -86,6 +92,8 @@ export class FlowManager<TState> {
   ) {
     this.flowDefinition = flowDefinition;
     this.gameState = initialState;
+    this.onTurnEndCallback = options?.onTurnEnd;
+    this.onPhaseEndCallback = options?.onPhaseEnd;
 
     // Restore from serialized state if provided
     if (options?.restoreFrom) {
@@ -321,9 +329,15 @@ export class FlowManager<TState> {
     if (!(this.currentPhase && phases)) return;
 
     const phaseDef = phases[this.currentPhase];
+    const previousPhase = this.currentPhase;
 
     // Execute phase onEnd
     this.executeHook(phaseDef?.onEnd);
+
+    // Invoke tracker reset callback for the ending phase
+    if (this.onPhaseEndCallback && previousPhase) {
+      this.onPhaseEndCallback(previousPhase);
+    }
 
     // Determine next phase
     const nextPhase = phaseDef?.next;
@@ -376,6 +390,11 @@ export class FlowManager<TState> {
 
     // Execute turn onEnd
     this.executeHook(this.flowDefinition.turn.onEnd);
+
+    // Invoke tracker reset callback at turn end
+    if (this.onTurnEndCallback) {
+      this.onTurnEndCallback();
+    }
 
     // Increment turn number
     this.turnNumber += 1;
@@ -452,6 +471,27 @@ export class FlowManager<TState> {
       segment: this.currentSegment,
       turn: this.turnNumber,
     };
+  }
+
+  /**
+   * Get current turn number (1-indexed)
+   */
+  getTurnNumber(): number {
+    return this.turnNumber;
+  }
+
+  /**
+   * Get current player ID
+   */
+  getCurrentPlayer(): string {
+    return this.currentPlayer;
+  }
+
+  /**
+   * Check if this is the first turn of the game
+   */
+  isFirstTurn(): boolean {
+    return this.turnNumber === 1;
   }
 
   /**

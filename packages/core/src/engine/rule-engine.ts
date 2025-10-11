@@ -17,6 +17,7 @@ import {
   createZoneOperations,
 } from "../operations/operations-impl";
 import { SeededRNG } from "../rng/seeded-rng";
+import { TrackerSystem } from "./tracker-system";
 import type { PlayerId } from "../types/branded";
 import type { InternalState } from "../types/state";
 
@@ -117,6 +118,13 @@ export class RuleEngine<
   private readonly initialPlayers: Player[]; // Store for replay
   private internalState: InternalState<TCardDefinition, TCardMeta>;
   private readonly cardRegistry: CardRegistry<TCardDefinition>;
+  private trackerSystem: TrackerSystem;
+  private gameEnded = false;
+  private gameEndResult?: {
+    winner?: PlayerId;
+    reason: string;
+    metadata?: Record<string, unknown>;
+  };
 
   /**
    * Create a new RuleEngine instance
@@ -143,6 +151,9 @@ export class RuleEngine<
 
     // Initialize card registry from game definition
     this.cardRegistry = createCardRegistry(gameDefinition.cards);
+
+    // Initialize tracker system from game definition
+    this.trackerSystem = new TrackerSystem(gameDefinition.trackers);
 
     // Initialize internal state with zones from game definition
     this.internalState = {
@@ -172,6 +183,10 @@ export class RuleEngine<
       this.flowManager = new FlowManager(
         gameDefinition.flow,
         this.currentState,
+        {
+          onTurnEnd: () => this.trackerSystem.resetTurn(),
+          onPhaseEnd: (phaseName) => this.trackerSystem.resetPhase(phaseName),
+        },
       );
     }
   }
@@ -219,6 +234,30 @@ export class RuleEngine<
   }
 
   /**
+   * Check if the game has ended
+   *
+   * @returns True if game has ended via endGame() call
+   */
+  hasGameEnded(): boolean {
+    return this.gameEnded;
+  }
+
+  /**
+   * Get the game end result
+   *
+   * @returns Game end result if game has ended, undefined otherwise
+   */
+  getGameEndResult():
+    | {
+        winner?: PlayerId;
+        reason: string;
+        metadata?: Record<string, unknown>;
+      }
+    | undefined {
+    return this.gameEndResult;
+  }
+
+  /**
    * Execute a move
    *
    * Task 11.7, 11.8, 11.9, 11.10: executeMove with validation
@@ -263,10 +302,40 @@ export class RuleEngine<
       };
     }
 
+    // Check if game has already ended
+    if (this.gameEnded) {
+      return {
+        success: false,
+        error: "Game has already ended",
+        errorCode: "GAME_ENDED",
+      };
+    }
+
     // Task 11.25, 11.26: Add RNG to context for deterministic randomness
     // Also add operations API for zone and card management
     const zoneOps = createZoneOperations(this.internalState);
     const cardOps = createCardOperations(this.internalState);
+
+    // Inject flow state from FlowManager if available
+    const flowState = this.flowManager
+      ? {
+          currentPhase: this.flowManager.getCurrentPhase(),
+          currentSegment: this.flowManager.getCurrentSegment(),
+          turn: this.flowManager.getTurnNumber(),
+          currentPlayer: this.flowManager.getCurrentPlayer() as PlayerId,
+          isFirstTurn: this.flowManager.isFirstTurn(),
+        }
+      : undefined;
+
+    // Create endGame function to allow moves to end the game
+    const endGame = (result: {
+      winner?: PlayerId;
+      reason: string;
+      metadata?: Record<string, unknown>;
+    }) => {
+      this.gameEnded = true;
+      this.gameEndResult = result;
+    };
 
     const contextWithOperations: MoveContext<any, TCardMeta, TCardDefinition> =
       {
@@ -275,6 +344,13 @@ export class RuleEngine<
         zones: zoneOps,
         cards: cardOps,
         registry: this.cardRegistry,
+        flow: flowState,
+        endGame,
+        trackers: {
+          check: (name, playerId) => this.trackerSystem.check(name, playerId),
+          mark: (name, playerId) => this.trackerSystem.mark(name, playerId),
+          unmark: (name, playerId) => this.trackerSystem.unmark(name, playerId),
+        },
       };
 
     // Task 11.9: Execute reducer with Immer and capture patches
@@ -382,12 +458,18 @@ export class RuleEngine<
    */
   getValidMoves(playerId: PlayerId): string[] {
     const validMoves: string[] = [];
+    const zoneOps = createZoneOperations(this.internalState);
+    const cardOps = createCardOperations(this.internalState);
 
     for (const moveId of Object.keys(this.gameDefinition.moves)) {
       // Create a minimal context for validation (params will be empty object for moves requiring no params)
       const context: MoveContext<any, TCardMeta, TCardDefinition> = {
         playerId,
         params: {}, // Empty params - moves with required params won't validate with empty context
+        rng: this.rng,
+        zones: zoneOps,
+        cards: cardOps,
+        registry: this.cardRegistry,
       };
 
       if (this.canExecuteMove(moveId, context)) {

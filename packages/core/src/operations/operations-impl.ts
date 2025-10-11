@@ -12,7 +12,7 @@ import type { ZoneOperations } from "./zone-operations";
 export const createZoneOperations = <TCardDef, TCardMeta>(
   state: InternalState<TCardDef, TCardMeta>,
 ): ZoneOperations => {
-  return {
+  const zoneOps: ZoneOperations = {
     moveCard: ({ cardId, targetZoneId, position = "bottom" }) => {
       // Find current zone and remove card
       let sourceZoneId: string | undefined;
@@ -145,7 +145,97 @@ export const createZoneOperations = <TCardDef, TCardMeta>(
       const card = state.cards[cardId as string];
       return card?.zoneId;
     },
+
+    drawCards: ({ from, to, count, playerId }) => {
+      const sourceCards = zoneOps.getCardsInZone(from, playerId);
+      const drawnCards: CardId[] = [];
+
+      for (let i = 0; i < count && i < sourceCards.length; i++) {
+        const cardId = sourceCards[i];
+        if (cardId) {
+          zoneOps.moveCard({
+            cardId,
+            targetZoneId: to,
+            position: "bottom",
+          });
+          drawnCards.push(cardId);
+        }
+      }
+
+      return drawnCards;
+    },
+
+    mulligan: ({ hand, deck, drawCount, playerId }) => {
+      const handCards = zoneOps.getCardsInZone(hand, playerId);
+
+      // Move all hand cards back to deck
+      for (const cardId of handCards) {
+        zoneOps.moveCard({
+          cardId,
+          targetZoneId: deck,
+          position: "bottom",
+        });
+      }
+
+      // Shuffle deck
+      zoneOps.shuffleZone(deck, playerId);
+
+      // Draw new hand
+      zoneOps.drawCards({ from: deck, to: hand, count: drawCount, playerId });
+    },
+
+    bulkMove: ({ from, to, count, playerId, position = "bottom" }) => {
+      const sourceCards = zoneOps.getCardsInZone(from, playerId);
+      const movedCards: CardId[] = [];
+
+      for (let i = 0; i < count && i < sourceCards.length; i++) {
+        const cardId = sourceCards[i];
+        if (cardId) {
+          zoneOps.moveCard({
+            cardId,
+            targetZoneId: to,
+            position,
+          });
+          movedCards.push(cardId);
+        }
+      }
+
+      return movedCards;
+    },
+
+    createDeck: ({ zoneId, playerId, cardCount, shuffle = false }) => {
+      const createdCards: CardId[] = [];
+
+      // Create card instances
+      for (let i = 0; i < cardCount; i++) {
+        const cardId = `${playerId}-${zoneId}-${i}` as CardId;
+        createdCards.push(cardId);
+
+        // Add card to internal state
+        state.cards[cardId as string] = {
+          definitionId: "placeholder", // Games can customize this
+          ownerId: playerId,
+          zoneId,
+          position: i,
+        };
+
+        // Add to zone
+        const zone = state.zones[zoneId as string];
+        if (zone) {
+          zone.cardIds.push(cardId);
+        }
+      }
+
+      // Shuffle if requested
+      if (shuffle) {
+        zoneOps.shuffleZone(zoneId, playerId);
+      }
+
+      return createdCards;
+    },
   };
+
+  return zoneOps;
 };
 
 /**
