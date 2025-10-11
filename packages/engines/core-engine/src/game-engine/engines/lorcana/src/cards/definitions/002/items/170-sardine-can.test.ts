@@ -29,12 +29,12 @@ describe("Sardine Can", () => {
     );
 
     [target, anotherTarget].forEach((character) => {
-      expect(character.hasWard).toBe(false);
+      expect(character.hasWard()).toBe(false);
     });
 
     [target, anotherTarget].forEach((character) => {
       character.updateCardMeta({ exerted: true });
-      expect(character.hasWard).toBe(true);
+      expect(character.hasWard()).toBe(true);
     });
   });
 });

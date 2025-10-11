@@ -35,7 +35,7 @@ describe("Lyle Tiberius Rourke - Cunning Mercenary", () => {
 
     testStore.passTurn();
 
-    expect(target.hasReckless).toEqual(true);
+    expect(target.hasReckless()).toEqual(true);
   });
 
   describe("**THANKS FOR VOLUNTEERING**", () => {

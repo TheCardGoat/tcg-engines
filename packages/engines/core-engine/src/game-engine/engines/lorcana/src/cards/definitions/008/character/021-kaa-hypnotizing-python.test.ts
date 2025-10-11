@@ -26,7 +26,9 @@ describe("Kaa - Hypnotizing Python", () => {
     await testEngine.passTurn();
 
     expect(testEngine.getCardModel(balooFunLovingBear).strength).toBe(2);
-    expect(testEngine.getCardModel(balooFunLovingBear).hasReckless).toBe(true);
+    expect(testEngine.getCardModel(balooFunLovingBear).hasReckless()).toBe(
+      true,
+    );
     await testEngine.challenge({
       attacker: balooFunLovingBear,
       defender: kaaHypnotizingPython,
@@ -35,6 +37,8 @@ describe("Kaa - Hypnotizing Python", () => {
     await testEngine.passTurn();
 
     expect(testEngine.getCardModel(balooFunLovingBear).strength).toBe(4);
-    expect(testEngine.getCardModel(balooFunLovingBear).hasReckless).toBe(false);
+    expect(testEngine.getCardModel(balooFunLovingBear).hasReckless()).toBe(
+      false,
+    );
   });
 });

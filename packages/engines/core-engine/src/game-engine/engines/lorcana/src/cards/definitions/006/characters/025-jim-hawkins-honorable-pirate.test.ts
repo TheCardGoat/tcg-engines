@@ -12,6 +12,6 @@ describe("Jim Hawkins - Honorable Pirate", () => {
     });
 
     const cardUnderTest = testStore.getCard(jimHawkinsHonorablePirate);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

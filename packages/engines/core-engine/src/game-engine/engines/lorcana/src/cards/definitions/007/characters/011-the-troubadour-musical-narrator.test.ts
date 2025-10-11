@@ -29,7 +29,7 @@ describe("The Troubadour - Musical Narrator", () => {
     );
 
     const cardUnderTest = testEngine.getCardModel(theTroubadourMusicalNarrator);
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
 
     await testEngine.singSong({
       singer: theTroubadourMusicalNarrator,

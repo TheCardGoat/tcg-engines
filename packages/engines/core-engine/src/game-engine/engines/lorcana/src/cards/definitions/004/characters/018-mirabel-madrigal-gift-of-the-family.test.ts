@@ -15,7 +15,7 @@ describe("Mirabel Madrigal - Gift of the Family", () => {
       "play",
       mirabelMadrigalGiftOfTheFamily.id,
     );
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 
   it.skip("**SAVING THE MIRACLE** Whenever this character quests, your other Madrigal characters get +1 {L} this turn.", () => {

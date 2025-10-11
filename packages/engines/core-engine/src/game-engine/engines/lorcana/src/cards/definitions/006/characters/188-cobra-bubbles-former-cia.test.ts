@@ -12,7 +12,7 @@ describe("Cobra Bubbles - Former CIA", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(cobraBubblesFormerCia);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it.skip("THINK ABOUT WHAT'S BEST 2 {I} – Draw a card, then choose and discard a card.", async () => {

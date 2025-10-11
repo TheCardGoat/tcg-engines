@@ -15,6 +15,6 @@ describe("Mickey Mouse - Musketeer Captain", () => {
       "play",
       mickeyMouseMusketeerCaptain.id,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });

@@ -19,7 +19,7 @@ describe("Jafar - Striking Illusionist", () => {
       jafarStrikingIllusionist.id,
     );
 
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("_**Evasive** _(Only characters with Evasive can challenge this character.)", () => {

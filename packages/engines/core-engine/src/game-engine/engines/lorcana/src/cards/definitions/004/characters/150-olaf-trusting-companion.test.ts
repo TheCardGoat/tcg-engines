@@ -15,6 +15,6 @@ describe("Olaf - Trusting Companion", () => {
       "play",
       olafTrustingCompanion.id,
     );
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

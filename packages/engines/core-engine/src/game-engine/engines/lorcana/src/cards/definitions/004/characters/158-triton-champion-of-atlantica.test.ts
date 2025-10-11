@@ -15,6 +15,6 @@ describe("Triton - Champion of Atlantica", () => {
       "play",
       tritonChampionOfAtlantica.id,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });

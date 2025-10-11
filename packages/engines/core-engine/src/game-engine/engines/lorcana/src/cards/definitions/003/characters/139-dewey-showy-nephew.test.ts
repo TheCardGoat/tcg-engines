@@ -12,6 +12,6 @@ describe("Dewey - Showy Nephew", () => {
     });
 
     const cardUnderTest = testStore.getByZoneAndId("play", deweyShowyNephew.id);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

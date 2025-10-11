@@ -20,7 +20,7 @@ describe("Cinderella- Stouthearted", () => {
       cinderellaStouthearted.id,
     );
 
-    expect(cardUnderTest.hasShift).toBeTruthy();
+    expect(cardUnderTest.hasShift()).toBeTruthy();
   });
 
   it("Resist", () => {

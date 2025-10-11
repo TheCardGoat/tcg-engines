@@ -19,7 +19,7 @@ describe("Yzma - Above It All", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(yzmaAboveItAll);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {

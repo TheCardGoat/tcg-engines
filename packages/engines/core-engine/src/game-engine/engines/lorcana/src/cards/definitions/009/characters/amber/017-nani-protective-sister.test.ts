@@ -12,6 +12,6 @@ describe("Nani - Protective Sister", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(naniProtectiveSister);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

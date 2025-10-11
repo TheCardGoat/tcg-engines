@@ -12,6 +12,6 @@ describe("Bobby - Purple Pigeon", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(bobbyPurplePigeon);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

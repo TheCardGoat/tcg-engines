@@ -19,8 +19,8 @@ describe("Hera - Queen of the Gods", () => {
     const zeusCard = testStore.getCard(zeusGodOfLightning);
     const herculesCard = testStore.getCard(herculesBelovedHero);
 
-    expect(cardUnderTest.hasWard).toBe(true);
-    expect(zeusCard.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
+    expect(zeusCard.hasWard()).toBe(true);
     expect(herculesCard.hasEvasive).toBe(true);
   });
 });

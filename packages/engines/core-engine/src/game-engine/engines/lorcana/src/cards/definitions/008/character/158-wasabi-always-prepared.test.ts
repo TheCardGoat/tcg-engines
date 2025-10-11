@@ -12,6 +12,6 @@ describe("Wasabi - Always Prepared", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(wasabiAlwaysPrepared);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

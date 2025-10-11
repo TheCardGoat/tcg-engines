@@ -13,7 +13,7 @@ describe("Kronk - Relaxed", () => {
       play: [kronkRelaxed],
     });
 
-    expect(testEngine.getCardModel(kronkRelaxed).hasWard).toBe(true);
+    expect(testEngine.getCardModel(kronkRelaxed).hasWard()).toBe(true);
   });
 
   it("I LOVE IT If an effect would make you discard one or more cards, don't discard any.", async () => {

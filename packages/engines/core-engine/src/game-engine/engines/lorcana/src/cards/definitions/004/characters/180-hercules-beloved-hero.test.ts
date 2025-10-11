@@ -15,6 +15,6 @@ describe("Hercules - Beloved Hero", () => {
       "play",
       herculesBelovedHero.id,
     );
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

@@ -12,7 +12,7 @@ describe("Kida - Creative Thinker", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(kidaCreativeThinker);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 
   it.skip("KEY TO THE PUZZLE {E} – Look at the top 2 cards of your deck. Put one into your ink supply, face down and exerted, and the other on top of your deck.", async () => {

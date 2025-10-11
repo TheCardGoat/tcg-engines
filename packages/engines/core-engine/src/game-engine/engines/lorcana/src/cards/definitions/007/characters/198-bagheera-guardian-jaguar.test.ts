@@ -25,7 +25,7 @@ describe("Bagheera - Guardian Jaguar", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(bagheeraGuardianJaguar);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
   describe("YOU’VE GOT TO BE BRAVE When this character is banished during an opponent's turn, deal 2 damage to each opposing character.", () => {
     it.skip("deals 2 damage to each opposing character when Bagheera is banished on the opponent's turn", async () => {

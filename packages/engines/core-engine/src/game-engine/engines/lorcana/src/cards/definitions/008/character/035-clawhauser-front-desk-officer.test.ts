@@ -12,7 +12,7 @@ describe("Clawhauser - Front Desk Officer", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(clawhauserFrontDeskOfficer);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it.skip("Singer 4 (This character counts as cost 4 to sing songs.)", async () => {
@@ -21,6 +21,6 @@ describe("Clawhauser - Front Desk Officer", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(clawhauserFrontDeskOfficer);
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 });

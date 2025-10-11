@@ -12,7 +12,7 @@ describe("Hercules - Baby Demigod", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(herculesBabyDemigod);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 
   it.skip("STRONG LIKE HIS DAD 3 {I} - Deal 1 damage to chosen damaged character.", async () => {

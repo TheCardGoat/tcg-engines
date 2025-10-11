@@ -31,8 +31,8 @@ describe("DRAW THEM OUT Whenever this character quests, opposing damaged charact
       true,
     );*/
 
-    expect(testEngine.getCardModel(beastTragicHero).hasReckless).toBe(false);
-    expect(testEngine.getCardModel(tinkerBellGiantFairy).hasReckless).toBe(
+    expect(testEngine.getCardModel(beastTragicHero).hasReckless()).toBe(false);
+    expect(testEngine.getCardModel(tinkerBellGiantFairy).hasReckless()).toBe(
       false,
     );
 
@@ -44,8 +44,8 @@ describe("DRAW THEM OUT Whenever this character quests, opposing damaged charact
 
     await testEngine.passTurn();
 
-    expect(testEngine.getCardModel(beastTragicHero).hasReckless).toBe(true);
-    expect(testEngine.getCardModel(tinkerBellGiantFairy).hasReckless).toBe(
+    expect(testEngine.getCardModel(beastTragicHero).hasReckless()).toBe(true);
+    expect(testEngine.getCardModel(tinkerBellGiantFairy).hasReckless()).toBe(
       false,
     );
   });

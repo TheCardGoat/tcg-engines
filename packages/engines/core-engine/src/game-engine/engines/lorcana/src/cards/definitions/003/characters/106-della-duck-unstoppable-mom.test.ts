@@ -15,6 +15,6 @@ describe("Della Duck - Unstoppable Mom", () => {
       "play",
       dellaDuckUnstoppableMom.id,
     );
-    expect(cardUnderTest.hasReckless).toBe(true);
+    expect(cardUnderTest.hasReckless()).toBe(true);
   });
 });

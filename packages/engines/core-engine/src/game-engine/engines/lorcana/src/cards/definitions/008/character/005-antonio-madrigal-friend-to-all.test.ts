@@ -38,6 +38,8 @@ describe("Antonio Madrigal - Friend to All", () => {
 
     expect(testEngine.getCardModel(louieOneCoolDuck).zone).toEqual("hand");
 
-    expect(testEngine.getCardModel(louieOneCoolDuck).isRevealed).toEqual(true);
+    expect(testEngine.getCardModel(louieOneCoolDuck).isRevealed()).toEqual(
+      true,
+    );
   });
 });

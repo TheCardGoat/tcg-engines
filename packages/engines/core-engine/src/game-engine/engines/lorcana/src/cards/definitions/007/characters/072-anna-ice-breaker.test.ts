@@ -17,7 +17,7 @@ describe("Anna - Ice Breaker", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(annaIceBreaker);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 
   it("WINTER AMBUSH When you play this character, chosen opposing character can’t ready at the start of their next turn.", async () => {

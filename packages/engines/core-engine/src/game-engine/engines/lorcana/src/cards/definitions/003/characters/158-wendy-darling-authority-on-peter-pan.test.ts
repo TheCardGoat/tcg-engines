@@ -17,7 +17,7 @@ describe("Wendy Darling - Authority on Peter Pan", () => {
       wendyDarlingAuthorityOnPeterPan.id,
     );
 
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 
   it("**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_", () => {
@@ -31,6 +31,6 @@ describe("Wendy Darling - Authority on Peter Pan", () => {
       wendyDarlingAuthorityOnPeterPan.id,
     );
 
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

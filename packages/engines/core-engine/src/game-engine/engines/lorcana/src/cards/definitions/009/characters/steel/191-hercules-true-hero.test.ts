@@ -12,6 +12,6 @@ describe("Hercules - True Hero", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(herculesTrueHero);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

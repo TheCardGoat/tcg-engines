@@ -12,6 +12,6 @@ describe("Rolly - Hungry Pup", () => {
     });
 
     const cardUnderTest = testStore.getByZoneAndId("play", rollyHungryPup.id);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

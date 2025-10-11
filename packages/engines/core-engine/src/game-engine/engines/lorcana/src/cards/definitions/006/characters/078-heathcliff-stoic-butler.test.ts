@@ -12,6 +12,6 @@ describe("Heathcliff - Stoic Butler", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(heathcliffStoicButler);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

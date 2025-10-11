@@ -19,7 +19,7 @@ describe("Rapunzel - Appreciative Artist", () => {
     const rapunzelCard = testEngine.getCardModel(rapunzelAppreciativeArtist);
 
     // Test initial state (without Pascal)
-    expect(rapunzelCard.hasWard).toBe(false);
+    expect(rapunzelCard.hasWard()).toBe(false);
 
     // Setup test with both Rapunzel and Pascal in play
     const testEngineWithPascal = new TestEngine({
@@ -32,6 +32,6 @@ describe("Rapunzel - Appreciative Artist", () => {
     );
 
     // Test state with Pascal in play
-    expect(rapunzelCardWithPascal.hasWard).toBe(true);
+    expect(rapunzelCardWithPascal.hasWard()).toBe(true);
   });
 });

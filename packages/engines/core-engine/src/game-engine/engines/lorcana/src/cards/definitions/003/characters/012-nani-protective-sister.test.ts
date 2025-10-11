@@ -15,6 +15,6 @@ describe("Nani - Protective Sister", () => {
       "play",
       naniProtectiveSister.id,
     );
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

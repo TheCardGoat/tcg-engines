@@ -19,7 +19,7 @@ describe("Noi - Orphaned Thief", () => {
       );
 
       expect(cardUnderTest.hasResist).toBe(true);
-      expect(cardUnderTest.hasWard).toBe(true);
+      expect(cardUnderTest.hasWard()).toBe(true);
     });
 
     it("NO item in play", () => {
@@ -33,7 +33,7 @@ describe("Noi - Orphaned Thief", () => {
       );
 
       expect(cardUnderTest.hasResist).toBe(false);
-      expect(cardUnderTest.hasWard).toBe(false);
+      expect(cardUnderTest.hasWard()).toBe(false);
     });
   });
 });

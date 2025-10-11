@@ -15,6 +15,6 @@ describe("Prince Phillip - Vanquisher of Foes", () => {
       "play",
       princePhillipVanquisherOfFoes.id,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });

@@ -12,6 +12,6 @@ describe("Robin Hood - Eye for Detail", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(robinHoodEyeForDetail);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

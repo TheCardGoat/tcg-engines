@@ -28,6 +28,6 @@ describe("Nani - Heist Mastermind", () => {
       hand: [],
     });
 
-    expect(testEngine.getCardModel(liloEscapeArtist).hasSupport).toBe(true);
+    expect(testEngine.getCardModel(liloEscapeArtist).hasSupport()).toBe(true);
   });
 });

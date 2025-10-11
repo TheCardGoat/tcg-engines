@@ -15,6 +15,6 @@ describe("Prince Eric - Seafaring Prince", () => {
       "play",
       princeEricSeafaringPrince.id,
     );
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

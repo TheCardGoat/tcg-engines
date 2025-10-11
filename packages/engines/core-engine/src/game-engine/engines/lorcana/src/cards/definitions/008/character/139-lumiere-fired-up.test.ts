@@ -18,7 +18,7 @@ describe("Lumiere - Fired Up", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(lumiereFiredUp);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("Evasive", async () => {

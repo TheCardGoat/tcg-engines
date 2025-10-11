@@ -14,7 +14,7 @@ describe("Rhino - Power Hamster", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(rhinoPowerHamster);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("EPIC BALL OF AWESOME While this character has no damage, he gains Resist +2. (Damage dealt to them is reduced by 2.)", async () => {

@@ -17,11 +17,11 @@ describe("Fang - River City", () => {
       const cardUnderTest = testStore.getCard(fangRiverCity);
       const targetCard = testStore.getCard(goofyKnightForADay);
 
-      expect(targetCard.hasWard).toBe(false);
+      expect(targetCard.hasWard()).toBe(false);
 
       targetCard.enterLocation(cardUnderTest);
 
-      expect(targetCard.hasWard).toBe(true);
+      expect(targetCard.hasWard()).toBe(true);
     });
 
     it("Characters gain **Evasive** while here.", () => {

@@ -12,7 +12,7 @@ describe("Genie - Wonderful Trickster", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(genieWonderfulTrickster);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("YOUR REWARD AWAITS Whenever you play a card, draw a card.", async () => {

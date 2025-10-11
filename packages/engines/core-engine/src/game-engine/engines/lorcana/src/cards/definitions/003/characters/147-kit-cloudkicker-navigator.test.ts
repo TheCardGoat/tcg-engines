@@ -12,6 +12,6 @@ describe("Kit Cloudkicker - Navigator", () => {
     });
 
     const cardUnderTest = testStore.getCard(kitCloudkickerNavigator);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });

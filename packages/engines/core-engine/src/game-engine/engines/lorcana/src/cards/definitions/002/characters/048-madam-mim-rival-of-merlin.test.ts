@@ -45,6 +45,8 @@ describe("Madam Mim - Rival of Merlin", () => {
       play: [madamMimRivalOfMerlin],
     });
 
-    expect(testEngine.getCardModel(madamMimRivalOfMerlin).hasShift).toBe(true);
+    expect(testEngine.getCardModel(madamMimRivalOfMerlin).hasShift()).toBe(
+      true,
+    );
   });
 });

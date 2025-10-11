@@ -43,6 +43,6 @@ describe("Cruella De Vil - Perfectly Wretched", () => {
       cruellaDeVilPerfectlyWretched.id,
     );
 
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });

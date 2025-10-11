@@ -15,6 +15,6 @@ describe("Aurora - Tranquil Princess", () => {
       "play",
       auroraTranquilPrincess.id,
     );
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

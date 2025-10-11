@@ -12,6 +12,6 @@ describe("Huey - Savvy Nephew", () => {
     });
 
     const cardUnderTest = testStore.getByZoneAndId("play", hueySavvyNephew.id);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

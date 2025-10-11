@@ -23,7 +23,7 @@ describe("Prince John - Greediest of All", () => {
       princeJohnGreediestOfAll.id,
     );
 
-    expect(cardUnderTest.hasWard).toEqual(true);
+    expect(cardUnderTest.hasWard()).toEqual(true);
   });
 
   describe("**I SENTENCE YOU** Whenever your opponent discards 1 or more cards, you may draw a card for each card discarded.", () => {

@@ -25,7 +25,7 @@ describe("Television Set", () => {
     expect(testEngine.getCardModel(televisionSet).exerted).toBe(true);
     expect(testEngine.getCardModel(luckyThe_15thPuppy).zone).toBe("deck");
     expect(testEngine.getCardModel(dalmatianPuppyTailWagger).zone).toBe("hand");
-    expect(testEngine.getCardModel(dalmatianPuppyTailWagger).isRevealed).toBe(
+    expect(testEngine.getCardModel(dalmatianPuppyTailWagger).isRevealed()).toBe(
       true,
     );
   });
@@ -46,7 +46,7 @@ describe("Television Set", () => {
 
     expect(testEngine.getCardModel(televisionSet).exerted).toBe(true);
     expect(testEngine.getCardModel(dalmatianPuppyTailWagger).zone).toBe("deck");
-    expect(testEngine.getCardModel(dalmatianPuppyTailWagger).isRevealed).toBe(
+    expect(testEngine.getCardModel(dalmatianPuppyTailWagger).isRevealed()).toBe(
       false,
     );
   });

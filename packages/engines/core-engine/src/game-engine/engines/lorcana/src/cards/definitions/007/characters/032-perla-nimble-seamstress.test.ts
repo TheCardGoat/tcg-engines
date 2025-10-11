@@ -21,6 +21,6 @@ describe("Perla - Nimble Seamstress", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(perlaNimbleSeamstress);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

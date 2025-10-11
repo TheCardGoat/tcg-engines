@@ -17,7 +17,7 @@ describe("Hercules - Daring Demigod", () => {
       herculesDaringDemigod.id,
     );
     expect(cardUnderTest.hasRush).toBe(true);
-    expect(cardUnderTest.hasReckless).toBe(true);
+    expect(cardUnderTest.hasReckless()).toBe(true);
   });
 });
 

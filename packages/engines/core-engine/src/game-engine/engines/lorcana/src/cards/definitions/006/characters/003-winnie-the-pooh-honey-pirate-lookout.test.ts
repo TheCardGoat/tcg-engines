@@ -14,7 +14,7 @@ describe("Winnie the Pooh - Honey Pirate Lookout", () => {
     const cardUnderTest = testEngine.getCardModel(
       winnieThePoohHoneyPirateLookout,
     );
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 
   it.skip("WE'RE PIRATES, YOU SEE Whenever this character quests, the next Pirate character you play this turn costs 1 {I} less.", async () => {

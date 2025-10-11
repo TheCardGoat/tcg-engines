@@ -16,7 +16,7 @@ describe("Mickey Mouse - Pirate Captain", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(mickeyMousePirateCaptain);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("MARINER’S MIGHT Whenever this character quests, chosen Pirate character gets +2 {S} and gains 'This character takes no damage from challenges' this turn.", async () => {

@@ -89,7 +89,7 @@ describe("Regression", () => {
     });
 
     expect(testEngine.getCardModel(princeJohnGreediestOfAll).zone).toBe("hand");
-    expect(testEngine.getCardModel(princeJohnGreediestOfAll).isRevealed).toBe(
+    expect(testEngine.getCardModel(princeJohnGreediestOfAll).isRevealed()).toBe(
       true,
     );
     expect(testEngine.getZonesCardCount("player_two")).toEqual(

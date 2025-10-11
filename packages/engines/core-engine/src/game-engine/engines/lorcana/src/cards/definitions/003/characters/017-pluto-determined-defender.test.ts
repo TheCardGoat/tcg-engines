@@ -15,6 +15,6 @@ describe("Pluto - Determined Defender", () => {
       "play",
       plutoDeterminedDefender.id,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });

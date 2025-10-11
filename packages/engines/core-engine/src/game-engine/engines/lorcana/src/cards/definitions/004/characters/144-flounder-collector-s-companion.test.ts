@@ -15,6 +15,6 @@ describe("Flounder - Collector's Companion", () => {
       "play",
       flounderCollectorsCompanion.id,
     );
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

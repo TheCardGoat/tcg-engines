@@ -18,7 +18,7 @@ describe("Mickey Mouse - Giant Mouse", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(mickeyMouseGiantMouse);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it("THE BIGGEST STAR EVER When this character is banished, deal 5 damage to each opposing character.", async () => {

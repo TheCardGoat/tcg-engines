@@ -15,6 +15,6 @@ describe("Little John - Robin's Companion", () => {
       "play",
       littleJohnRobinsCompanion.id,
     );
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

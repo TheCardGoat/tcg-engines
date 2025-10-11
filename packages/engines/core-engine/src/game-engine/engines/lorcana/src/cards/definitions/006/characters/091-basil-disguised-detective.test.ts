@@ -17,7 +17,7 @@ describe("Basil - Disguised Detective", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(basilDisguisedDetective);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("TWISTS AND TURNS During your turn, whenever a card is put into your inkwell, you may pay 1 {I} to have chosen opponent choose and discard a card.", async () => {

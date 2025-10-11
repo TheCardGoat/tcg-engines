@@ -12,7 +12,7 @@ describe("Nani - Caring Sister", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(naniCaringSister);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 
   it.skip("I AM SO SORRY 2 {I} - Chosen character gets -1 {S} until the start of your next turn.", async () => {

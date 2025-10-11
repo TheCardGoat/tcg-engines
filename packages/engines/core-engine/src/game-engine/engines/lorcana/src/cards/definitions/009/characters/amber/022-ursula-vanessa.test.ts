@@ -12,6 +12,6 @@ describe("Ursula - Vanessa", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(ursulaVanessa);
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 });

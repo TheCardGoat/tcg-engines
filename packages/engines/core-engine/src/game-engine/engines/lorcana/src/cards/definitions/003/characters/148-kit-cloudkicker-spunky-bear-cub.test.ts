@@ -12,6 +12,6 @@ describe("Kit Cloudkicker - Spunky Bear Cub", () => {
     });
 
     const cardUnderTest = testStore.getCard(kitCloudkickerSpunkyBearCub);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

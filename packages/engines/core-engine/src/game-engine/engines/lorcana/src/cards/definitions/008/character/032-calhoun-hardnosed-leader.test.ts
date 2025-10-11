@@ -12,7 +12,7 @@ describe("Calhoun - Hard-Nosed Leader", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(calhounHardnosedLeader);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it("LOOT DROP When this character is banished, gain 1 lore.", async () => {

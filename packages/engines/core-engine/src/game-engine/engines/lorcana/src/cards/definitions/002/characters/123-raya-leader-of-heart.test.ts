@@ -17,7 +17,7 @@ describe("Raya - Leader of Heart", () => {
       rayaLeaderOfHeart.id,
     );
 
-    expect(cardUnderTest.hasShift).toEqual(true);
+    expect(cardUnderTest.hasShift()).toEqual(true);
   });
 
   it("**CHAMPION OF KUMANDRA** Whenever this character challenges a damaged character, she takes no damage from the challenge.", () => {

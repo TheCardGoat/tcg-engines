@@ -42,11 +42,11 @@ describe("Louis - Endearing Alligator", () => {
     await testEngine.acceptOptionalLayer();
     await testEngine.resolveTopOfStack({ targets: [target] });
 
-    expect(target.hasReckless).toEqual(false);
+    expect(target.hasReckless()).toEqual(false);
 
     await testEngine.passTurn();
 
-    expect(target.hasReckless).toEqual(true);
+    expect(target.hasReckless()).toEqual(true);
   });
 
   it("Future effect flag is set", async () => {

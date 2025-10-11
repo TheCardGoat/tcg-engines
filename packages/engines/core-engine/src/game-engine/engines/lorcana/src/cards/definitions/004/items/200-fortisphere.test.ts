@@ -43,19 +43,19 @@ describe("Fortisphere", () => {
 
       const cardUnderTest = testStore.getByZoneAndId("play", fortisphere.id);
       const target = testStore.getByZoneAndId("play", peteRottenGuy.id);
-      expect(target.hasBodyguard).toBeFalsy();
+      expect(target.hasBodyguard()).toBeFalsy();
 
       cardUnderTest.activate();
       testStore.resolveTopOfStack({ targets: [target] });
 
       expect(cardUnderTest.zone).toEqual("discard");
-      expect(target.hasBodyguard).toBeTruthy();
+      expect(target.hasBodyguard()).toBeTruthy();
 
       testStore.passTurn();
-      expect(target.hasBodyguard).toBeTruthy();
+      expect(target.hasBodyguard()).toBeTruthy();
 
       testStore.passTurn();
-      expect(target.hasBodyguard).toBeFalsy();
+      expect(target.hasBodyguard()).toBeFalsy();
     });
   });
 });

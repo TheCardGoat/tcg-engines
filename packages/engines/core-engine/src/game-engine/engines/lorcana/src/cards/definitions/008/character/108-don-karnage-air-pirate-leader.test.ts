@@ -36,7 +36,7 @@ describe("Don Karnage - Air Pirate Leader", () => {
     const action = testEngine.getCardModel(brawl);
     const target = testEngine.getCardModel(deweyLovableShowoff);
 
-    expect(target.hasReckless).toEqual(false);
+    expect(target.hasReckless()).toEqual(false);
 
     await testEngine.playCard(action);
     await testEngine.resolveOptionalAbility();
@@ -45,6 +45,6 @@ describe("Don Karnage - Air Pirate Leader", () => {
 
     await testEngine.passTurn();
     testEngine.changeActivePlayer();
-    expect(target.hasReckless).toEqual(true);
+    expect(target.hasReckless()).toEqual(true);
   });
 });

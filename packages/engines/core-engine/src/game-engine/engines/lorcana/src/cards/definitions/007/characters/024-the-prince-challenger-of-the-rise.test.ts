@@ -12,6 +12,6 @@ describe("The Prince - Challenger of the Rise", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(thePrinceChallengerOfTheRise);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

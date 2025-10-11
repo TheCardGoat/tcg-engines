@@ -16,6 +16,6 @@ describe("Felicia - Always Hungry", () => {
       feliciaAlwaysHungry.id,
     );
 
-    expect(cardUnderTest.hasReckless).toBe(true);
+    expect(cardUnderTest.hasReckless()).toBe(true);
   });
 });

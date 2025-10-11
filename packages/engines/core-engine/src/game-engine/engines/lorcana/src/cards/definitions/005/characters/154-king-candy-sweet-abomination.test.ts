@@ -20,7 +20,7 @@ describe("King Candy - Sweet Abomination", () => {
 
     const cardUnderTest = testStore.getCard(kingCandySweetAbomination);
 
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("**CHANGING THE CODE** When you play this character, you may draw 2 cards, then put a card from your hand on the bottom of your deck.", () => {

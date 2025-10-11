@@ -13,7 +13,7 @@ describe("Go Go Tomago - Cutting Edge", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(goGoTomagoCuttingEdge);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {

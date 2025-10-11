@@ -21,7 +21,7 @@ describe("Mittens - Sassy Street Cat", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(mittensSassyStreetCat);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   describe("NO THANKS NECESSARY", () => {

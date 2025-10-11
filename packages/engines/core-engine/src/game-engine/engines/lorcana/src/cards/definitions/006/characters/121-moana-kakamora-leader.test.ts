@@ -18,7 +18,7 @@ describe("Moana - Kakamora Leader", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(moanaKakamoraLeader);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("GATHERING FORCES When you play this character, you may move any number of your characters to the same location for free. Gain 1 lore for each character you moved.", async () => {

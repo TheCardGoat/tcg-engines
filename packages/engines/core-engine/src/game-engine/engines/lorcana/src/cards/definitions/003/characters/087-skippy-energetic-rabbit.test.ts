@@ -15,6 +15,6 @@ describe("Skippy - Energetic Rabbit", () => {
       "play",
       skippyEnergeticRabbit.id,
     );
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

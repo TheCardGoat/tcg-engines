@@ -12,6 +12,6 @@ describe("Louie - Chill Nephew", () => {
     });
 
     const cardUnderTest = testStore.getByZoneAndId("play", louieChillNephew.id);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

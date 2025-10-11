@@ -30,7 +30,7 @@ describe("We Know The Way", () => {
       );
 
       const topDeckCard = testEngine.store.topDeckCard("player_one");
-      expect(topDeckCard?.isRevealed).toEqual(true);
+      expect(topDeckCard?.isRevealed()).toEqual(true);
 
       expect(topDeckCard?.zone).toEqual("deck");
       await testEngine.acceptOptionalLayer();
@@ -73,7 +73,7 @@ describe("We Know The Way", () => {
         );
       }
 
-      expect(topDeckCard?.isRevealed).toEqual(true);
+      expect(topDeckCard?.isRevealed()).toEqual(true);
 
       expect(topDeckCard?.zone).toEqual("deck");
       await testEngine.acceptOptionalLayer();

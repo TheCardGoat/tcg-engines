@@ -12,7 +12,7 @@ describe("Denahi - Impatient Hunter", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(denahiImpatientHunter);
-    expect(cardUnderTest.hasReckless).toBe(true);
+    expect(cardUnderTest.hasReckless()).toBe(true);
   });
 
   it.skip("Resist +2 (Damage dealt to this character is reduced by 2.)", async () => {

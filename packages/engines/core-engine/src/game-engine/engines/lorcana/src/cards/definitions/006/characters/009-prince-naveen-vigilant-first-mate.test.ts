@@ -14,7 +14,7 @@ describe("Prince Naveen - Vigilant First Mate", () => {
     const cardUnderTest = testEngine.getCardModel(
       princeNaveenVigilantFirstMate,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)", async () => {
@@ -25,6 +25,6 @@ describe("Prince Naveen - Vigilant First Mate", () => {
     const cardUnderTest = testEngine.getCardModel(
       princeNaveenVigilantFirstMate,
     );
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

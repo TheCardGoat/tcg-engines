@@ -12,7 +12,7 @@ describe("Rafiki - Ethereal Guide", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(rafikiEtherealGuide);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("ASTRAL ATTUNEMENT During your turn, whenever a card is put into your inkwell, you may draw a card.", async () => {

@@ -12,6 +12,6 @@ describe("B.E.N. - Eccentric Robot", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(benEccentricRobot);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

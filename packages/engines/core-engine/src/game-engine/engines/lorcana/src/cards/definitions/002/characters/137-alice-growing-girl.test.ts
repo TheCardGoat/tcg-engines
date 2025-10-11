@@ -38,9 +38,9 @@ describe("Alice - Growing Girl", () => {
     const target3 = testStore.getByZoneAndId("play", grumpyBadTempered.id);
     const target4 = testStore.getByZoneAndId("play", happyGoodNatured.id);
 
-    expect(cardUnderTest.hasSupport).toBe(false);
+    expect(cardUnderTest.hasSupport()).toBe(false);
     [target, target2, target3, target4].forEach((char) => {
-      expect(char.hasSupport).toBe(true);
+      expect(char.hasSupport()).toBe(true);
     });
   });
 
@@ -68,7 +68,7 @@ describe("Alice - Growing Girl", () => {
     expect(cardUnderTest.lore).toBe(1);
 
     [target, target2, target3, target4].forEach((char) => {
-      expect(char.hasSupport).toBe(true);
+      expect(char.hasSupport()).toBe(true);
       char.quest();
       testStore.resolveOptionalAbility();
       testStore.resolveTopOfStack({ targets: [cardUnderTest] });

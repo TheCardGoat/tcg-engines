@@ -15,7 +15,7 @@ describe("Max Goof - Rockin' Teen", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(maxGoofRockinTeen);
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 
   it("I JUST WANNA STAY HOME This character can't move to locations.", async () => {

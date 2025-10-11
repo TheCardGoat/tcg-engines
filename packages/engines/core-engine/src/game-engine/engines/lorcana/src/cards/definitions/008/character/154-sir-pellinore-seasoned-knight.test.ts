@@ -19,19 +19,19 @@ describe("Sir Pellinore - Seasoned Knight", () => {
         goGoTomagoMechanicalEngineer,
       ],
     });
-    expect(testEngine.getCardModel(patchPlayfulPup).hasSupport).toBe(false);
+    expect(testEngine.getCardModel(patchPlayfulPup).hasSupport()).toBe(false);
     expect(
-      testEngine.getCardModel(goGoTomagoMechanicalEngineer).hasSupport,
+      testEngine.getCardModel(goGoTomagoMechanicalEngineer).hasSupport(),
     ).toBe(false);
     await testEngine.questCard(sirPellinoreSeasonedKnight);
-    expect(testEngine.getCardModel(patchPlayfulPup).hasSupport).toBe(true);
+    expect(testEngine.getCardModel(patchPlayfulPup).hasSupport()).toBe(true);
     expect(
-      testEngine.getCardModel(goGoTomagoMechanicalEngineer).hasSupport,
+      testEngine.getCardModel(goGoTomagoMechanicalEngineer).hasSupport(),
     ).toBe(true);
     testEngine.passTurn();
-    expect(testEngine.getCardModel(patchPlayfulPup).hasSupport).toBe(false);
+    expect(testEngine.getCardModel(patchPlayfulPup).hasSupport()).toBe(false);
     expect(
-      testEngine.getCardModel(goGoTomagoMechanicalEngineer).hasSupport,
+      testEngine.getCardModel(goGoTomagoMechanicalEngineer).hasSupport(),
     ).toBe(false);
   });
 });

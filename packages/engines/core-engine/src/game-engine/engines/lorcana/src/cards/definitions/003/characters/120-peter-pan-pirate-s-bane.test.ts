@@ -15,6 +15,6 @@ describe("Peter Pan - Pirate’s Bane", () => {
       "play",
       peterPanPiratesBane.id,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });

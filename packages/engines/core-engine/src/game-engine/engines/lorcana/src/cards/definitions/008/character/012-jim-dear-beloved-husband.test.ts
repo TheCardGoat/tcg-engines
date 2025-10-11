@@ -12,6 +12,6 @@ describe("Jim Dear - Beloved Husband", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(jimDearBelovedHusband);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

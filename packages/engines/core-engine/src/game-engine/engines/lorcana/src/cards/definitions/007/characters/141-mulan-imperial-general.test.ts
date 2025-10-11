@@ -16,7 +16,7 @@ describe("Mulan - Imperial General", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(mulanImperialGeneral);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {

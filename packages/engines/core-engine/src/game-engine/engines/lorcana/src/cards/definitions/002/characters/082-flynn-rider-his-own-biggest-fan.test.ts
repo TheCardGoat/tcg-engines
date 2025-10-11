@@ -16,7 +16,7 @@ describe("Flynn Rider - His Own Biggest Fan", () => {
       flynnRiderHisOwnBiggestFan.id,
     );
 
-    expect(cardUnderTest.hasShift).toEqual(true);
+    expect(cardUnderTest.hasShift()).toEqual(true);
   });
 
   it("Evasive", () => {

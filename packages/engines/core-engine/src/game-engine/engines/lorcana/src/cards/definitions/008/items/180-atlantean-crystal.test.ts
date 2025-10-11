@@ -19,7 +19,7 @@ describe("Atlantean Crystal", () => {
       testEngine.getCardModel(goGoTomagoMechanicalEngineer).hasResist,
     ).toBe(false);
     expect(
-      testEngine.getCardModel(goGoTomagoMechanicalEngineer).hasSupport,
+      testEngine.getCardModel(goGoTomagoMechanicalEngineer).hasSupport(),
     ).toBe(false);
 
     await testEngine.activateCard(atlanteanCrystal, {
@@ -30,7 +30,7 @@ describe("Atlantean Crystal", () => {
       testEngine.getCardModel(goGoTomagoMechanicalEngineer).hasResist,
     ).toBe(true);
     expect(
-      testEngine.getCardModel(goGoTomagoMechanicalEngineer).hasSupport,
+      testEngine.getCardModel(goGoTomagoMechanicalEngineer).hasSupport(),
     ).toBe(true);
   });
 });

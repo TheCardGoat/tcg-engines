@@ -19,7 +19,7 @@ describe("Bashful - Adoring Knight", () => {
     const bashfulCard = testEngine.getCardModel(bashfulAdoringKnight);
 
     // Test initial state (without Snow White)
-    expect(bashfulCard.hasBodyguard).toBe(false);
+    expect(bashfulCard.hasBodyguard()).toBe(false);
 
     // Setup test with both Bashful and Snow White in play
     const testEngineWithSnowWhite = new TestEngine({
@@ -31,6 +31,6 @@ describe("Bashful - Adoring Knight", () => {
       testEngineWithSnowWhite.getCardModel(bashfulAdoringKnight);
 
     // Test state with Snow White in play
-    expect(bashfulCardWithSnowWhite.hasBodyguard).toBe(true);
+    expect(bashfulCardWithSnowWhite.hasBodyguard()).toBe(true);
   });
 });
