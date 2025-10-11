@@ -59,6 +59,9 @@ if (isTest) {
     silent: console.log,
     fatal: console.error,
     level: "debug",
+    group: console.group,
+    groupEnd: console.groupEnd,
+    log: console.log,
   } as any;
 }
 
@@ -72,6 +75,9 @@ if (!isLoggerEnabled) {
     fatal: () => {},
     silent: () => {},
     level: "silent",
+    group: () => {},
+    groupEnd: () => {},
+    log: () => {},
   } as any;
 }
 

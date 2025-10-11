@@ -1,34 +1,16 @@
-// STUB: Legacy exports for test compatibility during migration
+// Core ability exports
 export * from "./ability-types";
 export * from "./duration";
 export * from "./effect-types";
+// Keyword abilities - export from keyword module
+export * from "./keyword/keyword";
 // Note: player-effect has duplicate exports (DiscardEffect) so we import specifically
 export type { PlayerEffect } from "./player-effect";
 export * from "./should-auto-resolve-layer";
 export * from "./trigger-resolver";
 
-// Legacy ability exports
-export const bodyguardAbility: any = { type: "keyword", keyword: "bodyguard" };
-export const supportAbility: any = { type: "keyword", keyword: "support" };
-export const SingerAbility: any = { type: "keyword", keyword: "singer" };
-export type SingerAbility = any; // Legacy: export as type too
-export const ChallengerAbility: any = {
-  type: "keyword",
-  keyword: "challenger",
-};
-export type ChallengerAbility = any; // Legacy: export as type too
-export const rushAbility: any = { type: "keyword", keyword: "rush" };
-export const challengerAbility: any = {
-  type: "keyword",
-  keyword: "challenger",
-};
-export const evasiveAbility: any = { type: "keyword", keyword: "evasive" };
-export const recklessAbility: any = { type: "keyword", keyword: "reckless" };
-export const wardAbility: any = { type: "keyword", keyword: "ward" };
-export const shiftAbility: any = { type: "keyword", keyword: "shift" };
-export const ShiftAbility: any = { type: "keyword", keyword: "shift" };
-export const resistAbility: any = { type: "keyword", keyword: "resist" };
-export const protectorAbility: any = { type: "keyword", keyword: "protector" };
+// Legacy alias exports for backward compatibility
+export const protectorAbility: any = { type: "keyword", keyword: "bodyguard" }; // bodyguard was renamed to protector in some contexts
 
 // Legacy type aliases for abilities
 export type ActivatedAbility = any;
