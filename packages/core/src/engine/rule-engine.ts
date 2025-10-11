@@ -339,7 +339,7 @@ export class RuleEngine<
 
     const contextWithOperations: MoveContext<any, TCardMeta, TCardDefinition> =
       {
-        ...context,
+        ...contextInput,
         rng: this.rng,
         zones: zoneOps,
         cards: cardOps,
@@ -455,18 +455,12 @@ export class RuleEngine<
    */
   getValidMoves(playerId: PlayerId): string[] {
     const validMoves: string[] = [];
-    const zoneOps = createZoneOperations(this.internalState);
-    const cardOps = createCardOperations(this.internalState);
 
     for (const moveId of Object.keys(this.gameDefinition.moves)) {
       // Create a minimal context for validation (params will be empty object for moves requiring no params)
-      const context: MoveContext<any, TCardMeta, TCardDefinition> = {
+      const context: MoveContextInput<any> = {
         playerId,
         params: {}, // Empty params - moves with required params won't validate with empty context
-        rng: this.rng,
-        zones: zoneOps,
-        cards: cardOps,
-        registry: this.cardRegistry,
       };
 
       if (this.canExecuteMove(moveId, context)) {

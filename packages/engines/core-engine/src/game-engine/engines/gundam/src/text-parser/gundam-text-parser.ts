@@ -6,8 +6,9 @@
  * parsing logic while integrating with the core tooling infrastructure.
  */
 
-import type { ParserResult } from "@tcg/core/tooling";
-import { CardParser } from "@tcg/core/tooling";
+// TODO: Implement @tcg/core/tooling module
+// import type { ParserResult } from "@tcg/core/tooling";
+// import { CardParser } from "@tcg/core/tooling";
 import {
   analyzeTextStructure,
   cleanCardText,
@@ -16,12 +17,26 @@ import {
 import type { GundamParseResult, GundamParserConfig } from "./types";
 
 /**
- * Gundam text parser that extends core CardParser infrastructure
- *
- * This parser transforms Gundam card text into structured ability definitions
- * using the core CardParser base class for consistency across engines.
+ * Parser result type (temporary until @tcg/core/tooling is implemented)
  */
-export class GundamTextParser extends CardParser<string, GundamParseResult> {
+type ParserResult<T> =
+  | {
+      success: true;
+      data: T;
+      warnings?: string[];
+    }
+  | {
+      success: false;
+      errors: string[];
+    };
+
+/**
+ * Gundam text parser that provides Gundam-specific parsing
+ *
+ * This parser transforms Gundam card text into structured ability definitions.
+ * TODO: Extend core CardParser when @tcg/core/tooling is implemented
+ */
+export class GundamTextParser {
   private readonly config: GundamParserConfig;
 
   /**
@@ -30,7 +45,6 @@ export class GundamTextParser extends CardParser<string, GundamParseResult> {
    * @param config - Optional parser configuration
    */
   constructor(config: GundamParserConfig = {}) {
-    super();
     this.config = config;
   }
 
@@ -40,7 +54,7 @@ export class GundamTextParser extends CardParser<string, GundamParseResult> {
    * @param input - Card text to parse
    * @returns Parser result with abilities or errors
    */
-  protected doParse(input: string): ParserResult<GundamParseResult> {
+  public parse(input: string): ParserResult<GundamParseResult> {
     const result = parseGundamTextLegacy(input, this.config);
 
     // Convert GundamParseResult to ParserResult format
@@ -56,6 +70,29 @@ export class GundamTextParser extends CardParser<string, GundamParseResult> {
       data: result,
       warnings: result.warnings,
     };
+  }
+
+  /**
+   * Parse multiple card texts in batch
+   *
+   * @param inputs - Array of card texts to parse
+   * @returns Array of parser results
+   */
+  public parseBatch(inputs: string[]): ParserResult<GundamParseResult>[] {
+    return inputs.map((input) => this.parse(input));
+  }
+
+  /**
+   * Parse multiple texts and return only successful results
+   *
+   * @param inputs - Array of card texts to parse
+   * @returns Array of successful parse results
+   */
+  public parseSuccessful(inputs: string[]): GundamParseResult[] {
+    const results = this.parseBatch(inputs);
+    return results
+      .filter((r): r is Extract<typeof r, { success: true }> => r.success)
+      .map((r) => r.data);
   }
 
   /**

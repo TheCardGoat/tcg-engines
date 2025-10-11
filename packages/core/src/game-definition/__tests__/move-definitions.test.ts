@@ -1,6 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { produce } from "immer";
 import type { MoveContext } from "../../moves/move-system";
+import { createMockContext } from "../../testing/test-context-factory";
 import type {
   GameMoveDefinition,
   GameMoveDefinitions,
@@ -142,10 +143,10 @@ describe("GameMoveDefinitions - Type System", () => {
         locked: false,
       };
 
-      const context: MoveContext = {
+      const context: MoveContext = createMockContext({
         playerId: "p1" as any,
         params: { amount: 3 },
-      };
+      });
 
       const newState = produce(initialState, (draft) => {
         incrementMove.reducer(draft, context);
@@ -170,10 +171,10 @@ describe("GameMoveDefinitions - Type System", () => {
         locked: false,
       };
 
-      const context: MoveContext = {
+      const context: MoveContext = createMockContext({
         playerId: "p1" as any,
         params: {},
-      };
+      });
 
       const newState = produce(initialState, (draft) => {
         complexMove.reducer(draft, context);
@@ -208,7 +209,7 @@ describe("GameMoveDefinitions - Type System", () => {
         locked: true,
       };
 
-      const context: MoveContext = { playerId: "p1" as any, params: {} };
+      const context: MoveContext = createMockContext({ playerId: "p1" as any, params: {} });
 
       // Should pass condition
       expect(lockedMove.condition?.(unlockedState, context)).toBe(true);
@@ -237,16 +238,16 @@ describe("GameMoveDefinitions - Type System", () => {
         locked: false,
       };
 
-      const context: MoveContext = { playerId: "p1" as any, params: {} };
+      const context: MoveContext = createMockContext({ playerId: "p1" as any, params: {} });
 
       expect(conditionalMove.condition?.(validState, context)).toBe(true);
 
       // Wrong player
       expect(
-        conditionalMove.condition?.(validState, {
+        conditionalMove.condition?.(validState, createMockContext({
           playerId: "p2" as any,
           params: {},
-        }),
+        })),
       ).toBe(false);
 
       // Locked

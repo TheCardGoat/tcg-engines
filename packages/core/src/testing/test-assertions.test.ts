@@ -3,6 +3,7 @@ import { RuleEngine } from "../engine/rule-engine";
 import type { GameDefinition } from "../game-definition/game-definition";
 import type { GameMoveDefinitions } from "../game-definition/move-definitions";
 import { createPlayerId, type PlayerId } from "../types";
+import { createMockContext } from "./test-context-factory";
 import {
   expectMoveFailure,
   expectMoveSuccess,

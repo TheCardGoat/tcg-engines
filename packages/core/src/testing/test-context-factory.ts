@@ -66,10 +66,10 @@ export function createMockContext<TParams = any>(
     getCardsInZone: () => [],
     shuffleZone: () => {},
     getCardZone: () => undefined,
-    drawCards: () => {},
+    drawCards: () => [],
     mulligan: () => {},
-    bulkMove: () => {},
-    createDeck: () => {},
+    bulkMove: () => [],
+    createDeck: () => [],
     ...options?.zones,
   };
 
@@ -131,10 +131,10 @@ export function createMockZoneOperations(
     getCardsInZone: () => [],
     shuffleZone: () => {},
     getCardZone: () => undefined,
-    drawCards: () => {},
+    drawCards: () => [],
     mulligan: () => {},
-    bulkMove: () => {},
-    createDeck: () => {},
+    bulkMove: () => [],
+    createDeck: () => [],
     ...overrides,
   };
 }
