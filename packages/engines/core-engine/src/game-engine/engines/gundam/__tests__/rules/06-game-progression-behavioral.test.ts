@@ -23,7 +23,9 @@ describe("BEHAVIORAL: Game Progression Phase Transitions", () => {
     it.todo(
       "should automatically progress from start phase to draw phase",
       () => {
-        const engine = buildGameStartScenario();
+        const engine = buildGameStartScenario({
+          skipPreGame: false,
+        });
 
         // Verify starting in start phase
         assertGamePhase(engine, "startPhase");
@@ -145,7 +147,9 @@ describe("BEHAVIORAL: Game Progression Phase Transitions", () => {
 
     it.todo("should not draw on first turn for player one", () => {
       // Rule clarification: Does player one draw on their first turn?
-      const engine = buildGameStartScenario();
+      const engine = buildGameStartScenario({
+        skipPreGame: false,
+      });
 
       const _initialHandSize = engine.getZone("hand", "player_one").length;
 
@@ -239,7 +243,10 @@ describe("BEHAVIORAL: Game Progression Phase Transitions", () => {
     });
 
     it.todo("should place EX Resource token for player two on turn 1", () => {
-      const _engine = buildGameStartScenario();
+      const _engine = buildGameStartScenario({
+        skipPreGame: false,
+        playerTwoStarts: false,
+      });
 
       // TODO: Verify EX Resource placement logic
       // Player Two should start with EX Resource in resource area
@@ -520,7 +527,9 @@ describe("BEHAVIORAL: Game Progression Phase Transitions", () => {
     it.todo(
       "should complete player one's turn 1 with expected state changes",
       () => {
-        const engine = buildGameStartScenario();
+        const engine = buildGameStartScenario({
+          skipPreGame: false,
+        });
 
         const _initialState = {
           turn: engine.getNumTurns(),
@@ -585,7 +594,9 @@ describe("BEHAVIORAL: Game Progression Phase Transitions", () => {
     });
 
     it.todo("should handle complete game from start to finish", () => {
-      const _engine = buildGameStartScenario();
+      const _engine = buildGameStartScenario({
+        skipPreGame: false,
+      });
 
       // TODO: Implement full game simulation
       // Play turns until win condition

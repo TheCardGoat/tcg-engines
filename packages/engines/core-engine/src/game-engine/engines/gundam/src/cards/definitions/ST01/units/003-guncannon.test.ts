@@ -64,7 +64,7 @@ describe("ST01-003: Guncannon", () => {
 
   describe("Abilities Definition", () => {
     it("should have no abilities", () => {
-      expect(guncannon.abilities).toBeDefined();
+      expect(guncannon.abilities).toBeDunter();
       expect(guncannon.abilities.length).toBe(0);
     });
   });

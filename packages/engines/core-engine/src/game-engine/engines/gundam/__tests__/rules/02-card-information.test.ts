@@ -286,7 +286,7 @@ describe("LLM-RULES Section 2: Card Information", () => {
   describe("Rule 2-4: Card Colors", () => {
     describe("Rule 2-4-2: Four card colors", () => {
       it("should have cards in blue, green, red, and white colors", () => {
-        const colors = ["blue", "green", "red", "white"] as const;
+        const colors: CardColor[] = ["blue", "green", "red", "white"];
 
         for (const color of colors) {
           const cardsOfColor = getCardsByColor(color);
