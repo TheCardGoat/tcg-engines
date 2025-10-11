@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { pigletVerySmallAnimal } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { robinHoodDaydreamer } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import { robinsBow } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";

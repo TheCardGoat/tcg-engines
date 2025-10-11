@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { suddenChill } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { kronkRelaxed } from "~/game-engine/engines/lorcana/src/cards/definitions/007";

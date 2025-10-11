@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, it } from "@jest/globals";
+import { describe, it } from "bun:test";
 import {
   TestEngine,
   TestStore,

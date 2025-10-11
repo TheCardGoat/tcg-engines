@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "bun:test";
 import st02Cards from "../../cards/imports/st02.json";
 import { parseGundamText } from "../index";
 import type { GundamCardTestCase } from "./test-data-extractor";

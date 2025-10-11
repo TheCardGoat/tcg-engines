@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import { magicaDeSpellTheMidasTouch } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import { luckyDime } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";

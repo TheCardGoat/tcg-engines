@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "bun:test";
 import betaCards from "../../cards/imports/beta.json";
 import {
   CARD_TYPES,

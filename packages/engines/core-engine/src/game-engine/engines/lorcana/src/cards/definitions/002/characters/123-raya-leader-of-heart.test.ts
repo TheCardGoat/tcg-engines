@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { rayaLeaderOfHeart } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import { deweyLovableShowoff } from "~/game-engine/engines/lorcana/src/cards/definitions/008/character";
 import {

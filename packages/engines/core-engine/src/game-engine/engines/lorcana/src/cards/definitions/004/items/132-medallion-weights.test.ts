@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { mulanImperialSoldier } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { scuttleExpertOnHumans } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { medallionWeights } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/index";

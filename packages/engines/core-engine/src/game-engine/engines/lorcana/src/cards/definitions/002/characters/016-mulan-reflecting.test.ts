@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { fourDozenEggs } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import { mulanReflecting } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {

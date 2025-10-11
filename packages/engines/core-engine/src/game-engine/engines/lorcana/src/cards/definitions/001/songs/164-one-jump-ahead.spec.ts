@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { dingleHopper } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import { oneJumpAhead } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/index";
 import {

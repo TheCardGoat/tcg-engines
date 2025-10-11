@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { cleansingRainwater } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
 import { agrabahMarketplace } from "~/game-engine/engines/lorcana/src/cards/definitions/003/locations";
 import {

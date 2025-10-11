@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { scroogeMcduckRichestDuckInTheWorld } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import { luckyDime } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
 import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";

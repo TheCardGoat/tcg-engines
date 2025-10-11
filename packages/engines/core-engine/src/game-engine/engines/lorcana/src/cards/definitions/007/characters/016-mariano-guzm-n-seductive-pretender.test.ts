@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { doloresMadrigalEasyListener } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { marianoGuzmanSeductivePretender } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {

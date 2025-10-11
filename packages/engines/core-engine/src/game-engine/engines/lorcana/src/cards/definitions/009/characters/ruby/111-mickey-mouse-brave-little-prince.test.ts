@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { mickeyMouseTrueFriend } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/012-mickey-mouse-true-friend";
 import { mickeyMouseBraveLittlePrince } from "~/game-engine/engines/lorcana/src/cards/definitions/009/characters/ruby/111-mickey-mouse-brave-little-prince";
 import {
