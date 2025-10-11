@@ -113,7 +113,10 @@ const grandArchiveMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
       const playerId = context.params.playerId as PlayerId;
       const count = context.params.count;
-      const mainDeckCards = zones.getCardsInZone("mainDeck" as ZoneId, playerId);
+      const mainDeckCards = zones.getCardsInZone(
+        "mainDeck" as ZoneId,
+        playerId,
+      );
 
       // Draw cards from main deck to hand
       for (let i = 0; i < count && i < mainDeckCards.length; i++) {
@@ -347,7 +350,10 @@ export function createMockGrandArchiveGame(): GameDefinition<
     setup: (players) => {
       // Initialize player-specific data
       const playerIds = players.map((p) => p.id);
-      const champions: Record<string, { id: string; level: number; damage: number }> = {};
+      const champions: Record<
+        string,
+        { id: string; level: number; damage: number }
+      > = {};
       const hasDrawnThisTurn: Record<string, boolean> = {};
       const hasMaterializedThisTurn: Record<string, boolean> = {};
 
@@ -373,4 +379,3 @@ export function createMockGrandArchiveGame(): GameDefinition<
     },
   };
 }
-

@@ -44,7 +44,10 @@ type TestMoves = {
   playAction: { playerId: string; cardId: string };
   setTrap: { playerId: string; cardId: string };
   initiateClash: { playerId: string; attackerIds: string[] };
-  declareObstructors: { playerId: string; obstructorAssignments: Record<string, string> };
+  declareObstructors: {
+    playerId: string;
+    obstructorAssignments: Record<string, string>;
+  };
   playClashBuff: { playerId: string; cardId: string };
   pass: { playerId: string };
   concede: { playerId: string };
@@ -436,4 +439,3 @@ export function createMockAlphaClashGame(): GameDefinition<
     },
   };
 }
-

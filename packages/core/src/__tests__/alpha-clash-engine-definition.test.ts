@@ -553,4 +553,3 @@ describe("Alpha Clash Game - Setup Moves", () => {
     // This would be handled in the move implementation logic
   });
 });
-

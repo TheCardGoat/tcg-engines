@@ -155,7 +155,7 @@ describe("Lorcana Game Beginning Procedure", () => {
     }
 
     expect(flow.turn.initialPhase).toBe("beginningPhase");
-    
+
     if (!flow.turn.phases) {
       throw new Error("Turn phases are not defined");
     }
@@ -273,7 +273,9 @@ describe("Lorcana Game Beginning Procedure", () => {
     expect(chooseFirstResult.success).toBe(true);
 
     const stateAfterFirstPlayer = engine.getState();
-    expect(stateAfterFirstPlayer.activePlayerId).toBe(player1Id as unknown as string);
+    expect(stateAfterFirstPlayer.activePlayerId).toBe(
+      player1Id as unknown as string,
+    );
     expect(stateAfterFirstPlayer.firstPlayerDetermined).toBe(true);
     expect(stateAfterFirstPlayer.gamePhase).toBe("active");
     expect(stateAfterFirstPlayer.turnNumber).toBe(1);
@@ -322,7 +324,9 @@ describe("Lorcana Game Beginning Procedure", () => {
     expect(player2AfterMulligan?.zones.deck.length).toBe(53);
 
     // Final validation: Game is ready to start
-    expect(stateAfterMulligan.activePlayerId).toBe(player1Id as unknown as string);
+    expect(stateAfterMulligan.activePlayerId).toBe(
+      player1Id as unknown as string,
+    );
     expect(stateAfterMulligan.gamePhase).toBe("active");
     expect(stateAfterMulligan.turnNumber).toBe(1);
     for (const player of stateAfterMulligan.players) {
