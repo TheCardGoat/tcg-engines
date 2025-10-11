@@ -101,7 +101,7 @@ describe("ZoneOperations Interface", () => {
             if (cardId) {
               moved.push(cardId as CardId);
               if (!zones[to]) zones[to] = { cardIds: [] };
-              if (position === 'top') {
+              if (position === "top") {
                 zones[to].cardIds.unshift(cardId);
               } else {
                 zones[to].cardIds.push(cardId);
