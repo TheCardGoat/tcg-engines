@@ -1,5 +1,5 @@
 import type { RuleEngine } from "../engine/rule-engine";
-import type { MoveContext } from "../moves/move-system";
+import type { MoveContext, MoveContextInput } from "../moves/move-system";
 
 /**
  * Test Flow Assertions
@@ -49,7 +49,7 @@ export function expectPhaseTransition<
 >(
   engine: RuleEngine<TState, TMoves>,
   moveId: string,
-  context: MoveContext,
+  context: MoveContextInput,
   fromPhase: string,
   toPhase: string,
   phasePath = "phase",

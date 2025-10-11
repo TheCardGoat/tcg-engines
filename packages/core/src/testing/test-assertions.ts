@@ -1,5 +1,5 @@
 import type { MoveExecutionResult, RuleEngine } from "../engine/rule-engine";
-import type { MoveContext } from "../moves/move-system";
+import type { MoveContext, MoveContextInput } from "../moves/move-system";
 
 /**
  * Test Assertions
@@ -31,7 +31,7 @@ import type { MoveContext } from "../moves/move-system";
 export function expectMoveSuccess<TState, TMoves extends Record<string, any>>(
   engine: RuleEngine<TState, TMoves>,
   moveId: string,
-  context: MoveContext,
+  context: MoveContextInput,
 ): Extract<MoveExecutionResult, { success: true }> {
   const result = engine.executeMove(moveId, context);
 
@@ -69,7 +69,7 @@ export function expectMoveSuccess<TState, TMoves extends Record<string, any>>(
 export function expectMoveFailure<TState, TMoves extends Record<string, any>>(
   engine: RuleEngine<TState, TMoves>,
   moveId: string,
-  context: MoveContext,
+  context: MoveContextInput,
   expectedErrorCode?: string,
 ): Extract<MoveExecutionResult, { success: false }> {
   const result = engine.executeMove(moveId, context);

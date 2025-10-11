@@ -501,7 +501,7 @@ export const DeployUnitMove = defineMove<DeployUnitParams>({
 
 ## Related Documentation
 
-- [packages/core/INTEGRATION.md](../core/INTEGRATION.md) - Detailed integration guide
+- [../../core/docs/INTEGRATION.md](../../core/docs/INTEGRATION.md) - Detailed integration guide
 - [README.md](./README.md) - Package overview and usage
-- [../engines/core-engine/CLAUDE.md](../engines/core-engine/CLAUDE.md) - Development guidelines
+- [../../engines/core-engine/CLAUDE.md](../../engines/core-engine/CLAUDE.md) - Development guidelines
 

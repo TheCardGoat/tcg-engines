@@ -6,7 +6,8 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type { ParserResult } from "@tcg/core/tooling";
+// TODO: Implement @tcg/core/tooling module
+// import type { ParserResult } from "@tcg/core/tooling";
 import { parseGundamText } from "../parser";
 import type { GundamParseResult } from "../types";
 

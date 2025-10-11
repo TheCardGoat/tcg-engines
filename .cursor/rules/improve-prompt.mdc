@@ -1,9 +1,6 @@
 ---
-description:
-globs:
-alwaysApply: true
+alwaysApply: false
 ---
-
 # Improve the User's Prompt Following the Patterns Below
 
 When crafting prompts for AI assistance, follow these patterns to improve clarity and effectiveness:

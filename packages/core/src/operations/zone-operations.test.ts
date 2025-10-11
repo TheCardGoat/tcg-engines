@@ -55,6 +55,77 @@ describe("ZoneOperations Interface", () => {
         }
         return undefined;
       },
+
+      drawCards: (params) => {
+        const { from, to, count, playerId } = params;
+        const drawn: CardId[] = [];
+        const sourceZone = zones[from];
+        if (sourceZone) {
+          for (let i = 0; i < count; i++) {
+            const cardId = sourceZone.cardIds.shift();
+            if (cardId) {
+              drawn.push(cardId as CardId);
+              if (!zones[to]) zones[to] = { cardIds: [] };
+              zones[to].cardIds.push(cardId);
+            }
+          }
+        }
+        return drawn;
+      },
+
+      mulligan: (params) => {
+        const { hand, deck, drawCount, playerId } = params;
+        // Move all cards from hand to deck
+        if (zones[hand]) {
+          zones[deck].cardIds.push(...zones[hand].cardIds);
+          zones[hand].cardIds = [];
+        }
+        // Shuffle (reverse for testing)
+        zones[deck].cardIds.reverse();
+        // Draw new cards
+        for (let i = 0; i < drawCount; i++) {
+          const cardId = zones[deck].cardIds.shift();
+          if (cardId) {
+            zones[hand].cardIds.push(cardId);
+          }
+        }
+      },
+
+      bulkMove: (params) => {
+        const { from, to, count, playerId, position } = params;
+        const moved: CardId[] = [];
+        const sourceZone = zones[from];
+        if (sourceZone) {
+          for (let i = 0; i < count; i++) {
+            const cardId = sourceZone.cardIds.shift();
+            if (cardId) {
+              moved.push(cardId as CardId);
+              if (!zones[to]) zones[to] = { cardIds: [] };
+              if (position === "top") {
+                zones[to].cardIds.unshift(cardId);
+              } else {
+                zones[to].cardIds.push(cardId);
+              }
+            }
+          }
+        }
+        return moved;
+      },
+
+      createDeck: (params) => {
+        const { zoneId, playerId, cardCount, shuffle } = params;
+        const created: CardId[] = [];
+        if (!zones[zoneId]) zones[zoneId] = { cardIds: [] };
+        for (let i = 0; i < cardCount; i++) {
+          const cardId = `card-${Date.now()}-${i}` as CardId;
+          created.push(cardId);
+          zones[zoneId].cardIds.push(cardId);
+        }
+        if (shuffle) {
+          zones[zoneId].cardIds.reverse(); // Mock shuffle
+        }
+        return created;
+      },
     };
   };
 

@@ -8,6 +8,7 @@ import {
   expectMoveSuccess,
   expectStateProperty,
 } from "./test-assertions";
+import { createMockContext } from "./test-context-factory";
 
 /**
  * Test state for assertions

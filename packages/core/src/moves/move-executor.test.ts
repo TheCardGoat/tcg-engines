@@ -1,4 +1,5 @@
 import { describe, expect, it } from "bun:test";
+import { createMockContext } from "../testing/test-context-factory";
 import type { PlayerId } from "../types";
 import { createPlayerId } from "../types";
 import {
@@ -63,7 +64,10 @@ describe("Move Executor", () => {
 
   describe("executeMove", () => {
     it("should execute valid move successfully", () => {
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
       const result = executeMove(
         initialState,
         "spend-mana",
@@ -87,7 +91,10 @@ describe("Move Executor", () => {
         },
       };
 
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
       const result = executeMove(
         lowManaState,
         "spend-mana",
@@ -103,7 +110,10 @@ describe("Move Executor", () => {
     });
 
     it("should reject non-existent move", () => {
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
       const result = executeMove(
         initialState,
         "nonexistent",
@@ -119,7 +129,10 @@ describe("Move Executor", () => {
     });
 
     it("should execute move without condition", () => {
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
       const result = executeMove(initialState, "next-turn", context, testMoves);
 
       expect(result.success).toBe(true);
@@ -129,11 +142,11 @@ describe("Move Executor", () => {
     });
 
     it("should execute move with targets", () => {
-      const context: MoveContext = {
+      const context: MoveContext = createMockContext({
         playerId: player1,
         params: {},
         targets: [[player2]],
-      };
+      });
       const result = executeMove(
         initialState,
         "deal-damage",
@@ -158,7 +171,10 @@ describe("Move Executor", () => {
       };
 
       const moves = { ...testMoves, broken: brokenMove };
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
       const result = executeMove(initialState, "broken", context, moves);
 
       expect(result.success).toBe(false);
@@ -178,7 +194,10 @@ describe("Move Executor", () => {
       };
 
       const moves = { ...testMoves, "broken-reducer": brokenMove };
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
       const result = executeMove(
         initialState,
         "broken-reducer",
@@ -194,7 +213,10 @@ describe("Move Executor", () => {
     });
 
     it("should not mutate original state", () => {
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
       executeMove(initialState, "spend-mana", context, testMoves);
 
       // Original state should be unchanged
@@ -204,7 +226,10 @@ describe("Move Executor", () => {
 
   describe("canExecuteMove", () => {
     it("should return true for valid move", () => {
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
       const canExecute = canExecuteMove(
         initialState,
         "spend-mana",
@@ -224,7 +249,10 @@ describe("Move Executor", () => {
         },
       };
 
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
       const canExecute = canExecuteMove(
         lowManaState,
         "spend-mana",
@@ -236,7 +264,10 @@ describe("Move Executor", () => {
     });
 
     it("should return false for non-existent move", () => {
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
       const canExecute = canExecuteMove(
         initialState,
         "nonexistent",
@@ -248,7 +279,10 @@ describe("Move Executor", () => {
     });
 
     it("should return true for move without condition", () => {
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
       const canExecute = canExecuteMove(
         initialState,
         "next-turn",
@@ -260,7 +294,10 @@ describe("Move Executor", () => {
     });
 
     it("should not execute the move (dry run)", () => {
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
       canExecuteMove(initialState, "spend-mana", context, testMoves);
 
       // State should be unchanged
@@ -278,7 +315,10 @@ describe("Move Executor", () => {
       };
 
       const moves = { ...testMoves, broken: brokenMove };
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
       const canExecute = canExecuteMove(initialState, "broken", context, moves);
 
       expect(canExecute).toBe(false);
@@ -331,7 +371,10 @@ describe("Move Executor", () => {
 
   describe("Integration: Validation Pipeline", () => {
     it("should follow full validation pipeline", () => {
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
 
       // 1. Check if move can be executed
       const canExecute = canExecuteMove(
@@ -376,7 +419,10 @@ describe("Move Executor", () => {
         },
       };
 
-      const context: MoveContext = { playerId: player1, params: {} };
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
 
       // Pre-check prevents unnecessary execution
       if (canExecuteMove(lowManaState, "spend-mana", context, testMoves)) {

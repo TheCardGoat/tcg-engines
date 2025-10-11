@@ -171,6 +171,32 @@ export type GameDefinition<
   flow?: FlowDefinition<TState>;
 
   /**
+   * Tracker configuration (optional)
+   *
+   * Defines boolean flags that auto-reset at turn/phase boundaries.
+   * Eliminates boilerplate for "hasDrawnThisTurn", "hasPlayedResourceThisTurn", etc.
+   *
+   * @example
+   * ```typescript
+   * trackers: {
+   *   perTurn: ['hasDrawn', 'hasPlayedResource', 'hasAttacked'],
+   *   perPhase: {
+   *     main: ['hasPlayedCard']
+   *   },
+   *   perPlayer: true // Default: true
+   * }
+   * ```
+   */
+  trackers?: {
+    /** Trackers that reset at the end of each turn */
+    perTurn?: string[];
+    /** Trackers that reset at the end of specific phases */
+    perPhase?: Record<string, string[]>;
+    /** Whether trackers are per-player or global (default: true) */
+    perPlayer?: boolean;
+  };
+
+  /**
    * Game end condition (optional)
    *
    * Task 10.10: EndIf evaluation logic

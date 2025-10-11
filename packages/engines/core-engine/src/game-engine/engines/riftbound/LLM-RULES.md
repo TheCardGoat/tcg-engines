@@ -1,5 +1,7 @@
 # Riftbound Core Rules
 
+For full context, refer to [RULES.md](./RULES.md).
+
 Last Updated: 2025-06-02
 
 ## Golden and Silver Rules
