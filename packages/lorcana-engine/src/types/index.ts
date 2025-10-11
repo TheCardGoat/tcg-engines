@@ -6,3 +6,4 @@
 
 export * from "./branded-types";
 export * from "./lorcana-state";
+export * from "./move-params";

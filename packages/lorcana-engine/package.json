@@ -26,7 +26,8 @@
     "check": "turbo format lint check-types test"
   },
   "dependencies": {
-    "@tcg/core": "workspace:*"
+    "@tcg/core": "workspace:*",
+    "immer": "^10.1.1"
   },
   "devDependencies": {
     "@biomejs/biome": "2.0.4",
@@ -37,4 +38,3 @@
     "typescript": "5.8.3"
   }
 }
-
