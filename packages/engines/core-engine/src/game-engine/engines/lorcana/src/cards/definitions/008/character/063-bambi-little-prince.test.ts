@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { sisuDaringVisitor } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/123-sisu-daring-visitor";
 import {
   bambiLittlePrince,

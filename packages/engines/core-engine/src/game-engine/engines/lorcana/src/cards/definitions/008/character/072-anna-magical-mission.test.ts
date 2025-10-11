@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { elsaQueenRegent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { annaMagicalMission } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {

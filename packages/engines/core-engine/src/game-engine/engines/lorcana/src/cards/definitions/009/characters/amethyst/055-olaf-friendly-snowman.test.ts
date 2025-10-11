@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 
 describe("Olaf - Friendly Snowman", () => {
   it("reprint", async () => {

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 
 describe("The Queen - Wicked and Vain", () => {
   it("reprint", async () => {

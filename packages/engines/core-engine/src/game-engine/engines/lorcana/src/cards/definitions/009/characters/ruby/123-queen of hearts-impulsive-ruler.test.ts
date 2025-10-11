@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 
 describe("Queen of Hearts - Impulsive Ruler", () => {
   it("reprint", async () => {

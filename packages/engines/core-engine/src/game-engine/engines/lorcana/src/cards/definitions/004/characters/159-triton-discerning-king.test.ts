@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { luckyDime } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
 import { tritonDiscerningKing } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {

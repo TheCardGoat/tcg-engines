@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { vanellopeVonSchweetzSugarRushChamp } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { sugarRushSpeedwayStartingLine } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations";
 import { sugarRushSpeedwayFinishLine } from "~/game-engine/engines/lorcana/src/cards/definitions/006/locations/index";

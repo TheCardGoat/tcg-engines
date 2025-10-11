@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "bun:test";
 import st03Cards from "../../cards/imports/st03.json";
 import {
   CARD_TYPES,

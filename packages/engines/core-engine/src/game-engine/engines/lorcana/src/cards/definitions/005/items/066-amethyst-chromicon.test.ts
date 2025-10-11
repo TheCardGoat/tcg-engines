@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { amethystChromicon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/index";
 import {
   TestEngine,

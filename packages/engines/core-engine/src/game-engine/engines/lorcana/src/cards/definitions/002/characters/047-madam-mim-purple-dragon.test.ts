@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it, test } from "@jest/globals";
+import { describe, expect, it, test } from "bun:test";
 import {
   madamMimPurpleDragon,
   pinocchioStarAttraction,

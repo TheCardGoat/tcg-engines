@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { captainHooksRapier } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";
 import { captainHookUnderhanded } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { deweyLovableShowoff } from "~/game-engine/engines/lorcana/src/cards/definitions/008";

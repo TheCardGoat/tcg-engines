@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { theLibraryAGiftForBelle } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/068-the-library-a-gift-for-belle";
 import { deweyLovableShowoff } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import { goofySetForAdventure } from "~/game-engine/engines/lorcana/src/cards/definitions/009";

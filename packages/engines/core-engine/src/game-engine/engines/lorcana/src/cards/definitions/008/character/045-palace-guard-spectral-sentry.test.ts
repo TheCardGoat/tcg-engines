@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, it } from "@jest/globals";
+import { describe, it } from "bun:test";
 import { palaceGuardSpectralSentry } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { iagoGiantSpectralParrot } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import { magicCarpetPhantomRug } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {

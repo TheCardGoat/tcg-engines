@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { captainHookCaptainOfTheJollyRoger } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { beastTragicHero } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { theBareNecessities } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";

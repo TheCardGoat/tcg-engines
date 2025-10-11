@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 // Legacy import removed - types available via local definitions
 import type { GenerateOnDemandLayerMove } from "@lorcanito/shared";
 import { weKnowTheWay } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";

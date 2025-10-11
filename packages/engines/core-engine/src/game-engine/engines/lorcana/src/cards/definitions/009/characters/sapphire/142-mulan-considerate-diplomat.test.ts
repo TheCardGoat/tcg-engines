@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { heiheiBoatSnack } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/007-heihei-boat-snack";
 import { shieldOfVirtue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/135-shield-of-virtue";
 import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/149-hiram-flaversham-toymaker";

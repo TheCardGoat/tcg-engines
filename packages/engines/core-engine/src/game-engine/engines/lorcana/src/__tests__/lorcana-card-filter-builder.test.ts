@@ -1,9 +1,8 @@
-import { beforeEach, describe, expect, it } from "bun:test";
-
 /**
  * Comprehensive test suite for LorcanaCardFilterBuilder
  */
 
+import { beforeEach, describe, expect, it } from "bun:test";
 import {
   LorcanaCardFilterBuilder,
   type LorcanaCardFilterExtended,
