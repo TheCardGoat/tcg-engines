@@ -63,7 +63,7 @@ export type MoveContext<
   timestamp?: number;
 
   /** Seeded RNG for deterministic randomness (provided by engine) */
-  rng?: SeededRNG;
+  rng: SeededRNG;
 
   /**
    * Zone operations API (provided by RuleEngine)
@@ -75,11 +75,9 @@ export type MoveContext<
    * - getCardZone: Find which zone contains a card
    *
    * This is the ONLY way moves can modify zone state.
-   *
-   * Optional for backward compatibility and testing. In production,
-   * this is always provided by RuleEngine.
+   * Always provided by RuleEngine when zones are configured.
    */
-  zones?: ZoneOperations;
+  zones: ZoneOperations;
 
   /**
    * Card operations API (provided by RuleEngine)
@@ -92,11 +90,9 @@ export type MoveContext<
    * - queryCards: Find cards by predicate
    *
    * This is the ONLY way moves can modify card metadata.
-   *
-   * Optional for backward compatibility and testing. In production,
-   * this is always provided by RuleEngine.
+   * Always provided by RuleEngine.
    */
-  cards?: CardOperations<TCardMeta>;
+  cards: CardOperations<TCardMeta>;
 
   /**
    * Card registry API (provided by RuleEngine)
@@ -115,6 +111,85 @@ export type MoveContext<
    * this is always provided by RuleEngine when card definitions are configured.
    */
   registry?: CardRegistry<TCardDefinition>;
+
+  /**
+   * Flow state (provided by RuleEngine)
+   *
+   * Provides access to engine-managed flow state:
+   * - currentPhase: Current phase name (from flow definition)
+   * - currentSegment: Current segment name within phase (if applicable)
+   * - turn: Current turn number (1-indexed)
+   * - currentPlayer: Player ID of the active player
+   * - isFirstTurn: True if this is turn 1 of the game
+   *
+   * Games should NOT duplicate this state in their own game state.
+   * Access flow information via context.flow instead.
+   *
+   * Optional for backward compatibility. In production with flow configured,
+   * this is always provided by RuleEngine.
+   */
+  flow?: {
+    currentPhase?: string;
+    currentSegment?: string;
+    turn: number;
+    currentPlayer: PlayerId;
+    isFirstTurn: boolean;
+  };
+
+  /**
+   * End the game with a result
+   *
+   * Call this method to signal game completion. The engine will handle
+   * setting the game-ended state and preventing further moves.
+   *
+   * @param result - Game end result with winner and reason
+   *
+   * @example
+   * ```typescript
+   * // In a concede move:
+   * context.endGame({
+   *   winner: otherPlayerId,
+   *   reason: 'concede',
+   *   metadata: { concedeBy: context.playerId }
+   * });
+   * ```
+   */
+  endGame?: (result: {
+    winner?: PlayerId;
+    reason: string;
+    metadata?: Record<string, unknown>;
+  }) => void;
+
+  /**
+   * Tracker operations (provided by RuleEngine)
+   *
+   * Provides API for boolean flags that auto-reset at turn/phase boundaries.
+   * Eliminates boilerplate for "hasDrawnThisTurn", "hasPlayedResourceThisTurn", etc.
+   *
+   * Operations:
+   * - check(name, playerId?): Check if tracker is marked
+   * - mark(name, playerId?): Mark tracker as true
+   * - unmark(name, playerId?): Mark tracker as false
+   *
+   * Trackers auto-reset based on game definition config.
+   *
+   * Optional for backward compatibility. In production with trackers configured,
+   * this is always provided by RuleEngine.
+   *
+   * @example
+   * ```typescript
+   * // Check if player has drawn this turn
+   * if (!context.trackers.check('hasDrawn', context.playerId)) {
+   *   // Draw a card
+   *   context.trackers.mark('hasDrawn', context.playerId);
+   * }
+   * ```
+   */
+  trackers?: {
+    check(name: string, playerId?: PlayerId): boolean;
+    mark(name: string, playerId?: PlayerId): void;
+    unmark(name: string, playerId?: PlayerId): void;
+  };
 };
 
 /**
