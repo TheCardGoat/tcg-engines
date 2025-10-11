@@ -347,16 +347,6 @@ const gundamFlow: FlowDefinition<TestGameState> = {
   },
 };
 
-/**
- * Create minimal Gundam game definition for testing
- *
- * REFACTORED to showcase new engine features:
- * ✨ 120+ lines of boilerplate ELIMINATED!
- * ✅ No manual phase/turn/player tracking
- * ✅ High-level zone utilities (createDeck, drawCards, mulligan, bulkMove)
- * ✅ Tracker system for per-turn flags (hasPlayedResource)
- * ✅ Standard moves library (pass, concede)
- */
 export function createMockGundamGame(): GameDefinition<
   TestGameState,
   TestMoves
@@ -367,18 +357,11 @@ export function createMockGundamGame(): GameDefinition<
     flow: gundamFlow,
     moves: gundamMoves,
 
-    // Configure engine's tracker system
     trackers: {
       perTurn: ["hasPlayedResource"],
       perPlayer: true,
     },
 
-    /**
-     * Setup function - MASSIVELY SIMPLIFIED!
-     *
-     * BEFORE: 80+ lines tracking phase, turn, currentPlayer, setupStep, mulliganOffered, hasPlayedResourceThisTurn
-     * AFTER: 15 lines - just initialize game-specific data!
-     */
     setup: (players) => {
       const playerIds = players.map((p) => p.id);
       const activeResources: Record<string, number> = {};

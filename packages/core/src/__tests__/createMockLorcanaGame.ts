@@ -288,16 +288,6 @@ const lorcanaFlow: FlowDefinition<TestGameState> = {
   },
 };
 
-/**
- * Create minimal Lorcana game definition for testing
- *
- * REFACTORED to showcase new engine features:
- * ✨ 90+ lines of boilerplate ELIMINATED!
- * ✅ No manual phase/turn/player tracking
- * ✅ High-level zone utilities (drawCards, mulligan)
- * ✅ Tracker system for per-turn flags (hasInked, quested)
- * ✅ Standard moves library (passTurn, concede)
- */
 export function createMockLorcanaGame(): GameDefinition<
   TestGameState,
   TestMoves

@@ -8,7 +8,7 @@ These are the tasks to be completed for the spec detailed in @agent-os/specs/202
 ## Progress Tracker
 
 - [x] **Phase 1: Foundation Setup** - COMPLETED
-- [ ] Phase 2: High-Complexity Sections with Subsections
+- [x] **Phase 2: High-Complexity Sections with Subsections** - COMPLETED
 - [ ] Phase 3: Simple Sections (light.md + full.md)
 - [ ] Phase 4: Moderate-Complexity Sections (Evaluate for Subsections)
 - [ ] Phase 5: Cross-Reference Conversion and Linking
@@ -76,7 +76,7 @@ These are the tasks to be completed for the spec detailed in @agent-os/specs/202
 
 ---
 
-### Phase 2: High-Complexity Sections with Subsections
+### Phase 2: High-Complexity Sections with Subsections ✓ COMPLETED
 
 **Task 2.1: Create Section 7 (Attacking and Battles) Documentation**
 - Read Section 7 from original RULES.md (lines covering attacking and battles)
