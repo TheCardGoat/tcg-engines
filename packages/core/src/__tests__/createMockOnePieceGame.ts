@@ -92,7 +92,6 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
         throw new Error("Zone operations not available");
       }
 
-      const playerId = context.params.playerId as PlayerId;
       const leaderId = context.params.leaderId as CardId;
 
       // Place Leader card in leader area
@@ -228,7 +227,7 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
 
   // Core game moves
   draw: {
-    reducer: (draft, context) => {
+    reducer: (_draft, context) => {
       const { zones } = context;
       if (!zones) {
         throw new Error("Zone operations not available");
@@ -281,7 +280,7 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   },
 
   playCharacter: {
-    reducer: (draft, context) => {
+    reducer: (_draft, context) => {
       const { zones } = context;
       if (!zones) {
         throw new Error("Zone operations not available");
@@ -299,7 +298,7 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   },
 
   playEvent: {
-    reducer: (draft, context) => {
+    reducer: (_draft, context) => {
       const { zones } = context;
       if (!zones) {
         throw new Error("Zone operations not available");
@@ -317,7 +316,7 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   },
 
   playStage: {
-    reducer: (draft, context) => {
+    reducer: (_draft, context) => {
       const { zones } = context;
       if (!zones) {
         throw new Error("Zone operations not available");
@@ -335,28 +334,28 @@ const onePieceMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
   },
 
   giveDon: {
-    reducer: () => {
+    reducer: (_draft, _context) => {
       // Attach DON!! card to character for +1000 power
       // In full implementation, would modify card metadata
     },
   },
 
   attack: {
-    reducer: () => {
+    reducer: (_draft, _context) => {
       // Declare attack with Leader or Character
       // In full implementation, would initiate battle sequence
     },
   },
 
   activateAbility: {
-    reducer: () => {
+    reducer: (_draft, _context) => {
       // Activate card ability
       // In full implementation, would resolve ability effects
     },
   },
 
   pass: {
-    reducer: () => {
+    reducer: (_draft, _context) => {
       // Pass priority or end phase
     },
   },
