@@ -18,6 +18,46 @@ export type NormalizeParams<T> = T extends void | undefined
   : T;
 
 /**
+ * Move Context Input
+ *
+ * The context that callers provide when executing a move via engine.executeMove().
+ * This is a subset of MoveContext containing only the fields the caller provides.
+ * The engine fills in the remaining fields (rng, zones, cards, etc.).
+ *
+ * @template TParams - Move-specific parameter type (from TMoves[MoveName])
+ *
+ * @example
+ * ```typescript
+ * // Execute a move by providing only playerId and params
+ * engine.executeMove('playCard', {
+ *   playerId: 'p1',
+ *   params: { cardId: 'card-123' }
+ * });
+ * ```
+ */
+export type MoveContextInput<TParams = any> = {
+  /** Player performing this move */
+  playerId: PlayerId;
+
+  /**
+   * Move-specific parameters (fully typed)
+   *
+   * Type-safe parameters for this specific move.
+   * For moves without parameters (passTurn: void), this is an empty object {}.
+   */
+  params: TParams;
+
+  /** Source card for this move (e.g., card being played or ability source) */
+  sourceCardId?: CardId;
+
+  /** Selected targets (array of arrays for multi-target moves) */
+  targets?: string[][];
+
+  /** Timestamp when move was initiated (for deterministic ordering) */
+  timestamp?: number;
+};
+
+/**
  * Context provided to move reducers and conditions
  *
  * Contains all information needed to execute a move:
