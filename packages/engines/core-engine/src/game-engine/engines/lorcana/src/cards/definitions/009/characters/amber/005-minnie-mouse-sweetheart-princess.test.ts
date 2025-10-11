@@ -18,7 +18,7 @@ describe("Minnie Mouse - Sweetheart Princess", () => {
 
     const mickeyMouse = testEngine.getCardModel(mickeyMouseArtfulRogue);
 
-    expect(mickeyMouse.hasSupport).toBe(true);
+    expect(mickeyMouse.hasSupport()).toBe(true);
   });
 
   it("BYE BYE, NOW Whenever this character quests, you may banish chosen exerted character with 5 {S} or more.", async () => {

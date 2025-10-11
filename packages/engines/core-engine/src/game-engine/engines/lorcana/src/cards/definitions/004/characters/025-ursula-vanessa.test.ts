@@ -12,6 +12,6 @@ describe("Ursula - Vanessa", () => {
     });
 
     const cardUnderTest = testStore.getByZoneAndId("play", ursulaVanessa.id);
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 });

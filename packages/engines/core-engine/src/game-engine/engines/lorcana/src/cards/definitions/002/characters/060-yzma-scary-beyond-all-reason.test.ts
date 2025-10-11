@@ -99,7 +99,7 @@ describe.skip("Yzma - Scary Beyond All Reason", () => {
       yzmaScaryBeyondAllReason.id,
     );
 
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });
 

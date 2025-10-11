@@ -12,7 +12,7 @@ describe("Calhoun - Courageous Rescuer", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(calhounCourageousRescuer);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("BACK TO START POSITIONS! Whenever this character challenges another character, you may return a Racer character card from your discard to your hand.", async () => {

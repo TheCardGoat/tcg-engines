@@ -20,7 +20,7 @@ describe("Te Kā - Elemental Terror", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(teKaElementalTerror);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
 
     await testEngine.shiftCard({
       shifted: teKaTheBurningOne,

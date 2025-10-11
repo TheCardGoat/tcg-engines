@@ -13,7 +13,7 @@ describe("Mickey Mouse - Brave Little Prince", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(mickeyMouseBraveLittlePrince);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {

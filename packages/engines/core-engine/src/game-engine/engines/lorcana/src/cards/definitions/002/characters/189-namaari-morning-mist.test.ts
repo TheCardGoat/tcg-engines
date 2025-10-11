@@ -19,7 +19,7 @@ describe("Namaari- Morning Mist", () => {
       namaariMorningMist.id,
     );
 
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it("**BLADES** This character can challenge ready characters.", () => {

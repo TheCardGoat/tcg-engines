@@ -23,7 +23,7 @@ describe("Tiana - Natural Talent", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(tianaNaturalTalent);
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 
   it("CAPTIVATING MELODY Whenever you play a song, each opposing character gets -1 {S} until the start of your next turn.", async () => {

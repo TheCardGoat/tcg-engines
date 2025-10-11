@@ -16,7 +16,7 @@ describe("Donald Duck - Perfect Gentleman", () => {
       donaldDuckPerfectGentleman.id,
     );
 
-    expect(cardUnderTest.hasShift).toEqual(true);
+    expect(cardUnderTest.hasShift()).toEqual(true);
   });
 
   it("**ALLOW ME** At the start of your turn, each player may draw a card.", async () => {

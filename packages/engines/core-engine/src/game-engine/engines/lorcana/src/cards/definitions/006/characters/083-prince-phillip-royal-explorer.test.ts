@@ -12,6 +12,6 @@ describe("Prince Phillip - Royal Explorer", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(princePhillipRoyalExplorer);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

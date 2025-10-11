@@ -40,6 +40,8 @@
   "dependencies": {
     "immer": "^10.0.0",
     "nanoid": "^5.0.0",
+    "pino": "^10.0.0",
+    "pino-pretty": "^13.1.2",
     "seedrandom": "^3.0.5",
     "zod": "^3.22.0"
   },

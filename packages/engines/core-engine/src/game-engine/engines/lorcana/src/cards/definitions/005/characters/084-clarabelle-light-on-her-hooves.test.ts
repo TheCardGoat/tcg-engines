@@ -12,7 +12,7 @@ describe("Clarabelle - Light on Her Hooves", () => {
     });
 
     const cardUnderTest = testStore.getCard(clarabelleLightOnHerHooves);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   describe("**KEEP IN STEP** At the end of your turn, if chosen opponent has more cards in their hand than you, you may draw cards until you have the same number.", () => {

@@ -12,7 +12,7 @@ describe("Belle - Accomplished Mystic", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(belleAccomplishedMystic);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("**ENHANCED HEALING** When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.", async () => {

@@ -20,7 +20,7 @@ describe("Fred - Giant-Sized", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(fredGiantsized);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   describe("I LIKE WHERE THIS IS HEADING Whenever this character quests, reveal cards from the top of your deck until you reveal a Floodborn character card. Put that card into your hand and shuffle the rest into your deck.", () => {
@@ -32,7 +32,7 @@ describe("Fred - Giant-Sized", () => {
 
       await testEngine.questCard(fredGiantsized);
       expect(testEngine.getCardModel(stitchAlienBuccaneer).zone).toBe("hand");
-      expect(testEngine.getCardModel(stitchAlienBuccaneer).isRevealed).toBe(
+      expect(testEngine.getCardModel(stitchAlienBuccaneer).isRevealed()).toBe(
         true,
       );
     });
@@ -46,7 +46,9 @@ describe("Fred - Giant-Sized", () => {
       await testEngine.questCard(fredGiantsized);
 
       expect(testEngine.getCardModel(sisuInHerElement).zone).toBe("deck");
-      expect(testEngine.getCardModel(sisuInHerElement).isRevealed).toBe(false);
+      expect(testEngine.getCardModel(sisuInHerElement).isRevealed()).toBe(
+        false,
+      );
     });
 
     it("Mixed", async () => {
@@ -69,11 +71,11 @@ describe("Fred - Giant-Sized", () => {
 
       for (const card of [...beforeElements, ...afterElements]) {
         expect(testEngine.getCardModel(card).zone).toBe("deck");
-        expect(testEngine.getCardModel(card).isRevealed).toBe(false);
+        expect(testEngine.getCardModel(card).isRevealed()).toBe(false);
       }
 
       expect(testEngine.getCardModel(stitchAlienBuccaneer).zone).toBe("hand");
-      expect(testEngine.getCardModel(stitchAlienBuccaneer).isRevealed).toBe(
+      expect(testEngine.getCardModel(stitchAlienBuccaneer).isRevealed()).toBe(
         true,
       );
 
@@ -81,7 +83,7 @@ describe("Fred - Giant-Sized", () => {
         "deck",
       );
       expect(
-        testEngine.getCardModel(gadgetHackwrenchBrilliantBosun).isRevealed,
+        testEngine.getCardModel(gadgetHackwrenchBrilliantBosun).isRevealed(),
       ).toBe(false);
     });
   });

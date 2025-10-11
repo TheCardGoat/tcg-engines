@@ -20,7 +20,7 @@ describe("Basil - Great Mouse Detective", () => {
       basilGreatMouseDetective.id,
     );
 
-    expect(cardUnderTest.hasShift).toEqual(true);
+    expect(cardUnderTest.hasShift()).toEqual(true);
   });
 
   describe("**THERE'S ALWAYS A CHANCE** If you used **Shift** to play this character, you may draw 2 cards when he enters play.", () => {

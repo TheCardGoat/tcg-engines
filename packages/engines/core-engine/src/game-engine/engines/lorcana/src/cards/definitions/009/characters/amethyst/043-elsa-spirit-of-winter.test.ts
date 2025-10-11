@@ -12,7 +12,7 @@ describe("Elsa - Spirit of Winter", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(elsaSpiritOfWinter);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("**DEEP FREEZE** When you play this character, exert up to 2 chosen characters. They can't ready at the start of their next turn.", async () => {

@@ -13,7 +13,7 @@ describe("Mushu - Your Worst Nightmare", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(mushuYourWorstNightmare);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("ALL FIRED UP Whenever you play another character, they gain Rush, Reckless, and Evasive this turn.", async () => {
@@ -26,7 +26,7 @@ describe("Mushu - Your Worst Nightmare", () => {
     const sourceCard = testEngine.getCardModel(mushuYourWorstNightmare);
 
     expect(targetCard.hasRush).toBe(false);
-    expect(targetCard.hasReckless).toBe(false);
+    expect(targetCard.hasReckless()).toBe(false);
     expect(targetCard.hasEvasive).toBe(false);
 
     await testEngine.playCard(mushuYourWorstNightmare);
@@ -34,15 +34,15 @@ describe("Mushu - Your Worst Nightmare", () => {
 
     expect(sourceCard.hasRush).toBe(false);
     expect(sourceCard.hasEvasive).toBe(false);
-    expect(sourceCard.hasReckless).toBe(false);
+    expect(sourceCard.hasReckless()).toBe(false);
     expect(targetCard.hasRush).toBe(true);
     expect(targetCard.hasEvasive).toBe(true);
-    expect(targetCard.hasReckless).toBe(true);
+    expect(targetCard.hasReckless()).toBe(true);
 
     await testEngine.passTurn();
 
     expect(targetCard.hasRush).toBe(false);
-    expect(targetCard.hasReckless).toBe(false);
+    expect(targetCard.hasReckless()).toBe(false);
     expect(targetCard.hasEvasive).toBe(false);
   });
 });

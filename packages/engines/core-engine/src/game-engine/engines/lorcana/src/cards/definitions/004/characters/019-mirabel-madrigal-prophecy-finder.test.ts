@@ -15,6 +15,6 @@ describe("Mirabel Madrigal - Prophecy Finder", () => {
       "play",
       mirabelMadrigalProphecyFinder.id,
     );
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

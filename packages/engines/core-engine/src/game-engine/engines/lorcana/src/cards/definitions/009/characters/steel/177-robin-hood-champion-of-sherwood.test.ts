@@ -12,7 +12,7 @@ describe("Robin Hood - Champion of Sherwood", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(robinHoodChampionOfSherwood);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("**SKILLED COMBATANT** During your turn, whenever this character banishes another character in a challenge, gain 2 lore.", async () => {

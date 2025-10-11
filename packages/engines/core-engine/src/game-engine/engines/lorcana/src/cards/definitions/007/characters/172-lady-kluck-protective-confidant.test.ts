@@ -12,7 +12,7 @@ describe("Lady Kluck - Protective Confidant", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(ladyKluckProtectiveConfidant);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it.skip("Ward (Opponents can’t choose this character except to challenge.)", async () => {
@@ -21,6 +21,6 @@ describe("Lady Kluck - Protective Confidant", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(ladyKluckProtectiveConfidant);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

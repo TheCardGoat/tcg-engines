@@ -15,6 +15,6 @@ describe("Milo Thatch - King of Atlantis", () => {
       "play",
       miloThatchKingOfAtlantis.id,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });

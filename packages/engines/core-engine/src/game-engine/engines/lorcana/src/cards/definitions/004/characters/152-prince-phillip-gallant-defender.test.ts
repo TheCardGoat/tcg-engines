@@ -15,6 +15,6 @@ describe("Prince Phillip - Gallant Defender", () => {
       "play",
       princePhillipGallantDefender.id,
     );
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

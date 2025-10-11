@@ -14,7 +14,7 @@ describe("Tinker Bell - Queen of the Azurite Fairies", () => {
     const cardUnderTest = testEngine.getCardModel(
       tinkerBellQueenOfTheAzuriteFairies,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {

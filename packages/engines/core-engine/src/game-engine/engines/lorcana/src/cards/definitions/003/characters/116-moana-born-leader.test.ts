@@ -18,7 +18,7 @@ describe("Moana - Born Leader", () => {
     });
 
     const cardUnderTest = testStore.getByZoneAndId("play", moanaBornLeader.id);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("**WELCOME TO MY BOAT** Whenever this character quests while at a location, ready all other characters here. They can't quest for the rest of this turn.", async () => {

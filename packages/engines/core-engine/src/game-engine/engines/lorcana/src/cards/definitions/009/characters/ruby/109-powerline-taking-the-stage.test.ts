@@ -12,6 +12,6 @@ describe("Powerline - Taking the Stage", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(powerlineTakingTheStage);
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 });

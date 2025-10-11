@@ -12,6 +12,6 @@ describe("Thomas O'malley - Feline Charmer", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(thomasOmalleyFelineCharmer);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

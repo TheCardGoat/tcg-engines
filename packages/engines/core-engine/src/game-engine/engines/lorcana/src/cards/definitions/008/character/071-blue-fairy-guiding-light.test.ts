@@ -21,6 +21,6 @@ describe("Blue Fairy - Guiding Light", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(blueFairyGuidingLight);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

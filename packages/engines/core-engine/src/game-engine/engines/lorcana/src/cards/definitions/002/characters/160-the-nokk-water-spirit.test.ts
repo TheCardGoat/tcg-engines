@@ -16,6 +16,6 @@ describe("The Nokk - Water Spirit", () => {
       theNokkWaterSpirit.id,
     );
 
-    expect(cardUnderTest.hasWard).toEqual(true);
+    expect(cardUnderTest.hasWard()).toEqual(true);
   });
 });

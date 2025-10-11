@@ -15,7 +15,7 @@ describe("Ariel - Sonic Warrior", () => {
       "play",
       arielSonicWarrior.id,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("**AMPLIFIED VOICE** Whenever you play a song, you may pay {I} to deal 3 daamge to chosen character.", () => {

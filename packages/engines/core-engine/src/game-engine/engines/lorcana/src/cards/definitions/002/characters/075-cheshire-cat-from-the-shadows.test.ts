@@ -20,7 +20,7 @@ describe("Cheshire Cat - From the Shadows", () => {
       cheshireCatFromTheShadows.id,
     );
 
-    expect(cardUnderTest.hasShift).toBeTruthy();
+    expect(cardUnderTest.hasShift()).toBeTruthy();
   });
 
   it("Evasive", () => {

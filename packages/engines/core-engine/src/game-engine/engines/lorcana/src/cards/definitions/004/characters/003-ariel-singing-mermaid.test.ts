@@ -15,6 +15,6 @@ describe("Ariel - Singing Mermaid", () => {
       "play",
       arielSingingMermaid.id,
     );
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 });

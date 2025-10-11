@@ -12,7 +12,7 @@ describe("Pluto - Guard Dog", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(plutoGuardDog);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it.skip("BRAVO While this character has no damage, he gets +4 {S}.", async () => {

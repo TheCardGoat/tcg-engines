@@ -15,6 +15,6 @@ describe("Joshua Sweet - The Doctor", () => {
       "play",
       joshuaSweetTheDoctor.id,
     );
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

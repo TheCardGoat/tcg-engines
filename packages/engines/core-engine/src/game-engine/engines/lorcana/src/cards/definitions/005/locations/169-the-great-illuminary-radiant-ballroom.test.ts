@@ -36,7 +36,7 @@ describe("The Great Illuminary - Radiant Ballroom", () => {
       item.activate();
       testStore.resolveTopOfStack({ targets: [target] });
 
-      expect(target.hasSupport).toEqual(true);
+      expect(target.hasSupport()).toEqual(true);
       expect(target.willpower).toEqual(liloMakingAWish.willpower + 2);
       expect(target.lore).toEqual(liloMakingAWish.lore + 1);
       expect(cardUnderTest.willpower).toEqual(

@@ -20,7 +20,7 @@ describe("Fairy Godmother - Mystic Armorer", () => {
       fairyGodmotherMysticArmorer.id,
     );
 
-    expect(cardUnderTest.hasShift).toEqual(true);
+    expect(cardUnderTest.hasShift()).toEqual(true);
   });
 
   describe("**FORGET THE COACH, HERE'S A SWORD** Whenever this character quests, your characters gain **Challenger** +3 and When this character is banished in a challenge, return this card to your hand this turn.", () => {

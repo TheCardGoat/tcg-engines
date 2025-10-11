@@ -13,6 +13,6 @@ describe("Happy - Good-Natured", () => {
 
     const cardUnderTest = testStore.getByZoneAndId("play", happyGoodNatured.id);
 
-    expect(cardUnderTest.hasSupport).toEqual(true);
+    expect(cardUnderTest.hasSupport()).toEqual(true);
   });
 });

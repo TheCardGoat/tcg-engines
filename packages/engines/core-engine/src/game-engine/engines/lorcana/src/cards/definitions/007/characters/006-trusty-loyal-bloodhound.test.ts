@@ -12,6 +12,6 @@ describe("Trusty - Loyal Bloodhound", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(trustyLoyalBloodhound);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

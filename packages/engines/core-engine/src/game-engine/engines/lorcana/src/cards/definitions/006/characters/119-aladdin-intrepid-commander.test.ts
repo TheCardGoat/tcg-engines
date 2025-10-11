@@ -12,7 +12,7 @@ describe("Aladdin - Intrepid Commander", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(aladdinIntrepidCommander);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("REMEMBER YOUR TRAINING When you play this character, your characters get +2 {S} this turn.", async () => {

@@ -12,6 +12,6 @@ describe("Monterey Jack - Defiant Protector", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(montereyJackDefiantProtector);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

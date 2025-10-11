@@ -26,7 +26,7 @@ describe("Miss Bianca - International Rescue Aid Society Agent", () => {
     const song = testEngine.getCardModel(andThenAlongCameZeus);
     const target = testEngine.getCardModel(hiramFlavershamToymaker);
 
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
 
     cardUnderTest.sing(song);
     await testEngine.resolveTopOfStack({ targets: [target] }, true);

@@ -16,7 +16,7 @@ describe("The Prince- Never Gives Up", () => {
       thePrinceNeverGivesUp.id,
     );
 
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it("Resist 1", () => {

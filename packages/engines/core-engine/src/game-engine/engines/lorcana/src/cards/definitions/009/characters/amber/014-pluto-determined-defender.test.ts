@@ -12,7 +12,7 @@ describe("Pluto - Determined Defender", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(plutoDeterminedDefender);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_", async () => {
@@ -21,7 +21,7 @@ describe("Pluto - Determined Defender", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(plutoDeterminedDefender);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it.skip("**GUARD DOG** At the start of your turn, remove up to 3 damage from this character.", async () => {

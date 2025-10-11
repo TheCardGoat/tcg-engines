@@ -12,7 +12,7 @@ describe("Pua - Protective Pig", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(puaProtectivePig);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it("FREE FRUIT When this character is banished, you may draw a card.", async () => {

@@ -14,12 +14,12 @@ describe("Penny The Orphan - Clever Child", () => {
       hand: [herculesBabyDemigod],
     });
 
-    expect(testEngine.getCardModel(pennyTheOrphanCleverChild).hasWard).toBe(
+    expect(testEngine.getCardModel(pennyTheOrphanCleverChild).hasWard()).toBe(
       false,
     );
     await testEngine.playCard(herculesBabyDemigod);
     expect(testEngine.getCardModel(herculesBabyDemigod).zone).toBe("play");
-    expect(testEngine.getCardModel(pennyTheOrphanCleverChild).hasWard).toBe(
+    expect(testEngine.getCardModel(pennyTheOrphanCleverChild).hasWard()).toBe(
       true,
     );
   });

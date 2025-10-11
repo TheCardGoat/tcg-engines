@@ -12,7 +12,7 @@ describe("Jasmine - Royal Commodore", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(jasmineRoyalCommodore);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("RULER OF THE SEAS When you play this character, if you used Shift to play her, return all other exerted characters to their players’ hands.", async () => {

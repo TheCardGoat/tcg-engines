@@ -17,6 +17,6 @@ describe("Gaston - Baritone Bully", () => {
       gastonBaritoneBully.id,
     );
 
-    expect(cardUnderTest.hasSinger).toEqual(true);
+    expect(cardUnderTest.hasSinger()).toEqual(true);
   });
 });

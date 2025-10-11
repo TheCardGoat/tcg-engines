@@ -17,7 +17,7 @@ describe("Jasmine - Steady Strategist", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(jasmineSteadyStrategist);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("ALWAYS PLANNING Whenever this character quests, look at the top 3 cards of your deck. You may reveal an Ally character card and put it into your hand. Put the rest on the bottom of your deck in any order.", async () => {

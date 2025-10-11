@@ -14,7 +14,7 @@ describe("Jebidiah Farnsworth - Expedition Cook", () => {
     const cardUnderTest = testEngine.getCardModel(
       jebidiahFarnsworthExpeditionCook,
     );
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 
   it.skip("I GOT YOUR FOUR BASIC FOOD GROUPS When you play this character, chosen character gains Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {

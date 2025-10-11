@@ -12,7 +12,7 @@ describe("Zipper - Astute Decoy", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(zipperAstuteDecoy);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 
   it.skip("RUN INTERFERENCE During your turn, whenever a card is put into your inkwell, another chosen character gains Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {

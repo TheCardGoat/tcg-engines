@@ -20,7 +20,7 @@ describe("Bolt - Superdog", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(boltSuperdog);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   describe("MARK OF POWER", () => {

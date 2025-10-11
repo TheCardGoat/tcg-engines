@@ -12,6 +12,6 @@ describe("Tong - Survivor", () => {
     });
 
     const cardUnderTest = testStore.getByZoneAndId("play", tongSurvivor.id);
-    expect(cardUnderTest.hasReckless).toBe(true);
+    expect(cardUnderTest.hasReckless()).toBe(true);
   });
 });

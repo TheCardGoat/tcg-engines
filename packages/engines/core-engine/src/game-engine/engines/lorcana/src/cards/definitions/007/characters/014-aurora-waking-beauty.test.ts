@@ -133,7 +133,7 @@ describe("Aurora - Waking Beauty", () => {
 
       const cardUnderTest = testEngine.getCardModel(auroraWakingBeauty);
       const song = testEngine.getCardModel(theFamilyMadrigal);
-      expect(cardUnderTest.hasSinger).toBe(true);
+      expect(cardUnderTest.hasSinger()).toBe(true);
 
       await testEngine.singSong({
         singer: auroraWakingBeauty,

@@ -12,6 +12,6 @@ describe("Kida - Royal Warrior", () => {
     });
 
     const cardUnderTest = testStore.getByZoneAndId("play", kidaRoyalWarrior.id);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

@@ -13,7 +13,7 @@ describe("Mulan - Charging Ahead", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(mulanChargingAhead);
-    expect(cardUnderTest.hasReckless).toBe(true);
+    expect(cardUnderTest.hasReckless()).toBe(true);
   });
 
   it("BURST OF SPEED During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {

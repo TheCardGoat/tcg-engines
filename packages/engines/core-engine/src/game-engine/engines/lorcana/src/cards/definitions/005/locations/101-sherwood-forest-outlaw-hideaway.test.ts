@@ -64,9 +64,9 @@ describe("Sherwood Forest - Outlaw Hideaway", () => {
       const cardUnderTest = testStore.getCard(sherwoodForestOutlawHideaway);
       const attacker = testStore.getCard(liloMakingAWish);
 
-      expect(attacker.hasWard).toBeFalsy();
+      expect(attacker.hasWard()).toBeFalsy();
       attacker.enterLocation(cardUnderTest);
-      expect(attacker.hasWard).toBeTruthy();
+      expect(attacker.hasWard()).toBeTruthy();
     });
   });
 });

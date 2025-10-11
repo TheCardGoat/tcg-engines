@@ -51,7 +51,6 @@ if (isDevelopment) {
 
 if (isTest) {
   internalLogger = {
-    // @ts-expect-error TODO: find a better way to disable pino
     group: console.group,
     groupEnd: console.groupEnd,
     trace: console.trace,
@@ -75,7 +74,6 @@ if (!isLoggerEnabled) {
     error: () => {},
     fatal: () => {},
     silent: () => {},
-    // @ts-expect-error TODO: find a better way to disable pino
     log: () => {},
     level: "silent",
   };

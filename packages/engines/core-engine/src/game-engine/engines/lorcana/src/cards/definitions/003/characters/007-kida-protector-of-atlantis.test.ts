@@ -18,7 +18,7 @@ describe("Kida - Protector of Atlantis", () => {
       "play",
       kidaProtectorOfAtlantis.id,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("**PERHAPS WE CAN SAVE OUR FUTURE** When you play this character, all characters get -3 {S} until the start of your next turn.", () => {

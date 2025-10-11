@@ -16,7 +16,7 @@ describe("Nick Wilde - Clever Fox", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(nickWildeCleverFox);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("CAN'T TOUCH ME While you have an item in play, this character can't be challenged.", async () => {

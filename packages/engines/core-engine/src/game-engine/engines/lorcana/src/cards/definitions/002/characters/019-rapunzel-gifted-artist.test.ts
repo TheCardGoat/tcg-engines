@@ -57,7 +57,7 @@ describe("Rapunzel - Gifted Artist", () => {
       rapunzelGiftedArtist.id,
     );
 
-    expect(cardUnderTest.hasShift).toEqual(true);
+    expect(cardUnderTest.hasShift()).toEqual(true);
   });
 });
 

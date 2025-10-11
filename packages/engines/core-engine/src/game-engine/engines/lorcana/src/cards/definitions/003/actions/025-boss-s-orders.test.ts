@@ -17,10 +17,10 @@ describe("Boss's Orders", () => {
     cardUnderTest.playFromHand();
     testStore.resolveTopOfStack({ targets: [target] });
 
-    expect(target.hasSupport).toBe(true);
+    expect(target.hasSupport()).toBe(true);
 
     testStore.passTurn();
 
-    expect(target.hasSupport).toBe(false);
+    expect(target.hasSupport()).toBe(false);
   });
 });

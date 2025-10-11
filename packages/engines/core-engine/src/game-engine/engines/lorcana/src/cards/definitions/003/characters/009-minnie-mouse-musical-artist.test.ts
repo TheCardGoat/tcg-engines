@@ -23,7 +23,7 @@ describe("Minnie Mouse - Musical Artist", () => {
     const cardUnderTest = testEngine.getCardModel(minnieMouseMusicalArtist);
     const song = testEngine.getCardModel(friendsOnTheOtherSide);
 
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
 
     cardUnderTest.sing(song);
 

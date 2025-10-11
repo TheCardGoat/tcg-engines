@@ -12,7 +12,7 @@ describe("Goofy - Expert Shipwright", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(goofyExpertShipwright);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 
   it.skip("CLEVER DESIGN Whenever this character quests, chosen character gains Ward until the start of your next turn.", async () => {

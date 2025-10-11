@@ -14,7 +14,7 @@ describe("Mulan - Reflecting", () => {
 
     const cardUnderTest = testStore.getByZoneAndId("play", mulanReflecting.id);
 
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("**HONOR TO THE ANCESTORS** Whenever this character quests, you may reveal the top card of your deck. If it's a song card, you may play it for free. Otherwise, put it on the top of your deck.", () => {

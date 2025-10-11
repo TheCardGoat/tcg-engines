@@ -15,6 +15,6 @@ describe("Helga Sinclair - Femme Fatale", () => {
       "play",
       helgaSinclairFemmeFatale.id,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });

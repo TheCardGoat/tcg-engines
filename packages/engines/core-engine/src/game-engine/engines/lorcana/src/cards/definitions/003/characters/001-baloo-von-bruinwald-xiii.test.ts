@@ -12,6 +12,6 @@ describe("Baloo - von Bruinwald XIII", () => {
     });
 
     const cardUnderTest = testStore.getCard(balooVonBruinwaldXiii);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

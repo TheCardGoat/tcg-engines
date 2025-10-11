@@ -21,7 +21,7 @@ describe("The Queen - Commanding Presence", () => {
       theQueenCommandingPresence.id,
     );
 
-    expect(cardUnderTest.hasShift).toEqual(true);
+    expect(cardUnderTest.hasShift()).toEqual(true);
   });
 
   it("**WHO IS THE FAIREST?** Whenever this character quests, chosen opposing character gets -4 {S} this turn and chosen character gets +4 {S} this turn.", () => {

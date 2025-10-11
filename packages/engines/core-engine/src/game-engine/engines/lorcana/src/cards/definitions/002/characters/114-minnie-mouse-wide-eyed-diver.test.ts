@@ -19,7 +19,7 @@ describe("Minnie Mouse - Wide-Eyed Diver", () => {
       minnieMouseWideEyedDiver.id,
     );
 
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("Evasive", () => {

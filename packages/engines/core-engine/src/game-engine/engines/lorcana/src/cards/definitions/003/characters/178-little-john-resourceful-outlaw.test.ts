@@ -15,6 +15,6 @@ describe("Little John - Resourceful Outlaw", () => {
       "play",
       littleJohnResourcefulOutlaw.id,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });

@@ -28,10 +28,10 @@ describe("Chaca - Junior Chipmunk", () => {
 
     await testEngine.resolveTopOfStack({ targets: [targetReckless] });
 
-    expect(targetReckless.hasReckless).toBe(false);
+    expect(targetReckless.hasReckless()).toBe(false);
 
     await testEngine.passTurn();
 
-    expect(targetReckless.hasReckless).toBe(true);
+    expect(targetReckless.hasReckless()).toBe(true);
   });
 });

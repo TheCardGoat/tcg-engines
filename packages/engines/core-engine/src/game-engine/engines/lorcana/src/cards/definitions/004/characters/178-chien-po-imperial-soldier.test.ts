@@ -15,6 +15,6 @@ describe("Chien-Po - Imperial Soldier", () => {
       "play",
       chienPoImperialSoldier.id,
     );
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

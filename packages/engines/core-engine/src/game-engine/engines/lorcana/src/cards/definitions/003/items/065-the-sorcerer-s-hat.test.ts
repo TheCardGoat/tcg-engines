@@ -58,7 +58,7 @@ describe("The Sorcerer's Hat", () => {
         nameACard: bottomCard.name,
       });
 
-      expect(topCard.isRevealed).toBe(true);
+      expect(topCard.isRevealed()).toBe(true);
       expect(topCard.zone).toBe("deck");
       expect(bottomCard.zone).toBe("deck");
     });

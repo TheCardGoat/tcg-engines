@@ -12,7 +12,7 @@ describe("Cinderella - Gentle and Kind", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(cinderellaGentleAndKind);
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 
   it.skip("**A WONDERFUL DREAM** {E}− Remove up to 3 damage from chosen Princess character.", async () => {

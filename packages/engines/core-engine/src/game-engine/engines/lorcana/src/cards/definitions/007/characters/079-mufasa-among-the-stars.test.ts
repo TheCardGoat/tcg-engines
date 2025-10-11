@@ -12,7 +12,7 @@ describe("Mufasa - Among the Stars", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(mufasaAmongTheStars);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {

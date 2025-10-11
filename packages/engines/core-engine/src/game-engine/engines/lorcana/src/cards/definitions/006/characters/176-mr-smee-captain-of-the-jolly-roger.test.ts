@@ -12,7 +12,7 @@ describe("Mr. Smee - Captain of the Jolly Roger", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(mrSmeeCaptainOfTheJollyRoger);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("RAISE THE COLORS When you play this character, you may deal damage to chosen character equal to the number of your other Pirate characters in play.", async () => {

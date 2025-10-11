@@ -12,6 +12,6 @@ describe("Jetsam - Riffraff", () => {
     });
 
     const cardUnderTest = testStore.getByZoneAndId("play", jetsamRiffraff.id);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

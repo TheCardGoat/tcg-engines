@@ -17,7 +17,7 @@ describe("Belle - Mechanic Extraordinaire", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(belleMechanicExtraordinaire);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("SALVAGE For each item card in your discard, you pay 1 {I} less to play this character using her Shift ability.", async () => {

@@ -12,7 +12,7 @@ describe("Yokai - Scientific Supervillain", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(yokaiScientificSupervillain);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("NEUROTRANSMITTER You may play items named Microbots for free.", async () => {
