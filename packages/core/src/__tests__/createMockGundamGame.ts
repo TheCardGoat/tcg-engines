@@ -1,19 +1,35 @@
 import type { FlowDefinition } from "../flow";
 import type { GameDefinition, GameMoveDefinitions } from "../game-definition";
-import type { ZoneId } from "../types";
+import type { CardId, PlayerId, ZoneId } from "../types";
 import type { CardZoneConfig } from "../zones";
 
 // Mock Gundam game state
 type TestGameState = {
   phase: "setup" | "start" | "draw" | "resource" | "main" | "end" | "gameOver";
+  setupStep?:
+    | "initializing"
+    | "shields"
+    | "tokens"
+    | "draw"
+    | "mulligan"
+    | "complete";
   turn: number;
   currentPlayer: string;
   activeResources: Record<string, number>;
   attackedThisTurn: string[];
   hasPlayedResourceThisTurn: Record<string, boolean>;
+  mulliganOffered: Record<string, boolean>;
 };
 
 type TestMoves = {
+  // Setup moves
+  initializeDecks: { playerId: string };
+  placeShields: { playerId: string };
+  createTokens: { playerId: string };
+  drawInitialHand: { playerId: string };
+  decideMulligan: { playerId: string; redraw: boolean };
+  transitionToPlay: Record<string, never>;
+  // Regular game moves
   draw: { playerId: string; count: number };
   deployUnit: { playerId: string; cardId: string; position?: number };
   deployBase: { playerId: string; cardId: string };
@@ -25,6 +41,184 @@ type TestMoves = {
 
 // Gundam move definitions
 const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
+  // Setup moves
+  initializeDecks: {
+    reducer: (draft, context) => {
+      const { zones } = context;
+      if (!zones) {
+        throw new Error("Zone operations not available");
+      }
+
+      const playerId = context.params.playerId as PlayerId;
+
+      // Create 50 main deck cards
+      for (let i = 0; i < 50; i++) {
+        const cardId = `${playerId}-deck-${i}` as CardId;
+        zones.moveCard({
+          cardId,
+          targetZoneId: "deck" as ZoneId,
+          position: "bottom",
+        });
+      }
+
+      // Create 10 resource deck cards
+      for (let i = 0; i < 10; i++) {
+        const cardId = `${playerId}-resource-${i}` as CardId;
+        zones.moveCard({
+          cardId,
+          targetZoneId: "resourceDeck" as ZoneId,
+          position: "bottom",
+        });
+      }
+
+      // Shuffle both decks
+      zones.shuffleZone("deck" as ZoneId, playerId);
+      zones.shuffleZone("resourceDeck" as ZoneId, playerId);
+
+      draft.setupStep = "shields";
+    },
+  },
+
+  placeShields: {
+    reducer: (draft, context) => {
+      const { zones } = context;
+      if (!zones) {
+        throw new Error("Zone operations not available");
+      }
+
+      const playerId = context.params.playerId as PlayerId;
+      const deckCards = zones.getCardsInZone("deck" as ZoneId, playerId);
+
+      // Move 6 cards from top of deck to shield section
+      for (let i = 0; i < 6; i++) {
+        const cardId = deckCards[i];
+        if (cardId) {
+          zones.moveCard({
+            cardId,
+            targetZoneId: "shieldSection" as ZoneId,
+            position: "bottom",
+          });
+        }
+      }
+
+      draft.setupStep = "tokens";
+    },
+  },
+
+  createTokens: {
+    reducer: (draft, context) => {
+      const { zones } = context;
+      if (!zones) {
+        throw new Error("Zone operations not available");
+      }
+
+      const playerId = context.params.playerId as PlayerId;
+
+      // Create EX Base token for this player
+      const baseTokenId = `${playerId}-token-ex-base` as CardId;
+      zones.moveCard({
+        cardId: baseTokenId,
+        targetZoneId: "baseSection" as ZoneId,
+        position: "bottom",
+      });
+
+      // Create EX Resource token only for Player 2
+      // Assuming player IDs follow a pattern where Player 2 can be identified
+      // For this test, we check if it's the second player in the list
+      const isPlayer2 = playerId.includes("1") || playerId === "p2"; // Simple heuristic
+      if (isPlayer2) {
+        const resourceTokenId = `${playerId}-token-ex-resource` as CardId;
+        zones.moveCard({
+          cardId: resourceTokenId,
+          targetZoneId: "resourceArea" as ZoneId,
+          position: "bottom",
+        });
+      }
+
+      draft.setupStep = "draw";
+    },
+  },
+
+  drawInitialHand: {
+    reducer: (draft, context) => {
+      const { zones } = context;
+      if (!zones) {
+        throw new Error("Zone operations not available");
+      }
+
+      const playerId = context.params.playerId;
+      const deckCards = zones.getCardsInZone("deck" as ZoneId, playerId);
+
+      // Draw 5 cards from deck to hand
+      for (let i = 0; i < 5; i++) {
+        const cardId = deckCards[i];
+        if (cardId) {
+          zones.moveCard({
+            cardId,
+            targetZoneId: "hand" as ZoneId,
+            position: "bottom",
+          });
+        }
+      }
+
+      draft.setupStep = "mulligan";
+      draft.mulliganOffered[playerId] = true;
+    },
+  },
+
+  decideMulligan: {
+    reducer: (draft, context) => {
+      const { zones } = context;
+      if (!zones) {
+        throw new Error("Zone operations not available");
+      }
+
+      const playerId = context.params.playerId;
+      const redraw = context.params.redraw;
+
+      if (redraw) {
+        // Get all cards in hand
+        const handCards = zones.getCardsInZone("hand" as ZoneId, playerId);
+
+        // Move all hand cards back to deck
+        for (const cardId of handCards) {
+          zones.moveCard({
+            cardId,
+            targetZoneId: "deck" as ZoneId,
+            position: "bottom",
+          });
+        }
+
+        // Shuffle deck
+        zones.shuffleZone("deck" as ZoneId, playerId);
+
+        // Draw 5 new cards
+        const deckCards = zones.getCardsInZone("deck" as ZoneId, playerId);
+        for (let i = 0; i < 5; i++) {
+          const cardId = deckCards[i];
+          if (cardId) {
+            zones.moveCard({
+              cardId,
+              targetZoneId: "hand" as ZoneId,
+              position: "bottom",
+            });
+          }
+        }
+      }
+
+      // Mark mulligan as complete for this player
+      draft.mulliganOffered[playerId] = false;
+    },
+  },
+
+  transitionToPlay: {
+    reducer: (draft) => {
+      draft.setupStep = "complete";
+      draft.phase = "start";
+    },
+  },
+
+  // Regular game moves
   draw: {
     reducer: () => {},
   },
@@ -188,6 +382,15 @@ const gundamFlow: FlowDefinition<TestGameState> = {
   },
 };
 
+/**
+ * Create minimal Gundam game definition for testing
+ *
+ * This demonstrates how the core engine handles Gundam's unique game start:
+ * - Dual deck system (main deck + resource deck)
+ * - Shield placement (6 face-down cards)
+ * - Token creation (EX Base, EX Resource for P2)
+ * - Initial hand draw (5 cards with mulligan option)
+ */
 export function createMockGundamGame(): GameDefinition<
   TestGameState,
   TestMoves
@@ -197,13 +400,43 @@ export function createMockGundamGame(): GameDefinition<
     zones: gundamZones,
     flow: gundamFlow,
     moves: gundamMoves,
-    setup: () => ({
-      phase: "setup",
-      turn: 1,
-      currentPlayer: "p1",
-      activeResources: { p1: 0, p2: 0 },
-      attackedThisTurn: [],
-      hasPlayedResourceThisTurn: { p1: false, p2: false },
-    }),
+    /**
+     * Setup function - called once at game initialization
+     *
+     * In a full implementation, this would:
+     * 1. Create and shuffle both decks (50 main cards, 10 resource cards)
+     * 2. Place 6 shields from deck to shieldSection (face-down)
+     * 3. Create EX Base token in baseSection
+     * 4. If Player 2, create EX Resource token in resourceArea
+     * 5. Draw 5 cards to each player's hand
+     * 6. Offer mulligan (shuffle hand back, draw 5 new cards)
+     * 7. Transition to "start" phase for first turn
+     *
+     * For this minimal test, we just set the initial game state.
+     */
+    setup: (players) => {
+      // Initialize player-specific data
+      const playerIds = players.map((p) => p.id);
+      const activeResources: Record<string, number> = {};
+      const hasPlayedResourceThisTurn: Record<string, boolean> = {};
+      const mulliganOffered: Record<string, boolean> = {};
+
+      for (const playerId of playerIds) {
+        activeResources[playerId] = 0;
+        hasPlayedResourceThisTurn[playerId] = false;
+        mulliganOffered[playerId] = false;
+      }
+
+      return {
+        phase: "setup",
+        setupStep: "initializing",
+        turn: 1,
+        currentPlayer: playerIds[0] || "p1",
+        activeResources,
+        attackedThisTurn: [],
+        hasPlayedResourceThisTurn,
+        mulliganOffered,
+      };
+    },
   };
 }

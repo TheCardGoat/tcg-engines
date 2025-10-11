@@ -36,8 +36,5 @@ Don't ask the user to verify implementations that are visible in the provided co
 ## No Unnecessary Updates
 Don't suggest updates or changes to files when there are no actual modifications needed.
 
-## Provide Real File Links
-Always provide links to the real files, not x.md.
-
 ## No Current Implementation
 Don't show or discuss the current implementation unless specifically requested.
