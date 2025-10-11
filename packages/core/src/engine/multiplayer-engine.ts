@@ -3,7 +3,7 @@ import type {
   GameDefinition,
   Player,
 } from "../game-definition/game-definition";
-import type { MoveContext } from "../moves/move-system";
+import type { MoveContext, MoveContextInput } from "../moves/move-system";
 import type { PlayerId } from "../types/branded";
 import type { MoveExecutionResult, RuleEngineOptions } from "./rule-engine";
 import { RuleEngine } from "./rule-engine";
@@ -128,12 +128,15 @@ export class MultiplayerEngine<TState, TMoves extends Record<string, any>> {
    * @returns Move execution result
    * @throws Error if called on client
    */
-  executeMove(moveId: string, context: MoveContext): MoveExecutionResult {
+  executeMove(
+    moveId: string,
+    contextInput: MoveContextInput,
+  ): MoveExecutionResult {
     if (this.mode !== "server") {
       throw new Error("Only server can execute moves");
     }
 
-    const result = this.engine.executeMove(moveId, context);
+    const result = this.engine.executeMove(moveId, contextInput);
 
     if (result.success) {
       // Broadcast patches to clients
@@ -144,7 +147,7 @@ export class MultiplayerEngine<TState, TMoves extends Record<string, any>> {
           inversePatches: result.inversePatches,
           historyIndex,
           moveId,
-          context,
+          context: contextInput as MoveContext,
         });
       }
     } else {
@@ -319,8 +322,8 @@ export class MultiplayerEngine<TState, TMoves extends Record<string, any>> {
    * @param context - Move context
    * @returns True if move can be executed
    */
-  canExecuteMove(moveId: string, context: MoveContext): boolean {
-    return this.engine.canExecuteMove(moveId, context);
+  canExecuteMove(moveId: string, contextInput: MoveContextInput): boolean {
+    return this.engine.canExecuteMove(moveId, contextInput);
   }
 
   /**

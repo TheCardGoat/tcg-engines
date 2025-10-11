@@ -214,7 +214,7 @@ When contributing to the type system:
 ## Related Documentation
 
 - [packages/core/README.md](../../README.md) - Core framework overview
-- [packages/core/ENGINE_INTEGRATION.md](../ENGINE_INTEGRATION.md) - Integration guide
+- [packages/core/ENGINE_INTEGRATION.md](ENGINE_INTEGRATION.md) - Integration guide
 - [packages/lorcana-engine/](../../lorcana-engine/) - Lorcana implementation
 - [packages/gundam-engine/](../../gundam-engine/) - Gundam implementation
 

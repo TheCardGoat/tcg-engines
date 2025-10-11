@@ -5,10 +5,12 @@
       "name": "TheCardGoat",
       "dependencies": {
         "object-hash": "3.0.0",
+        "seedrandom": "^3.0.5",
       },
       "devDependencies": {
         "@biomejs/biome": "2.0.4",
         "@evilmartians/lefthook": "1.11.2",
+        "@types/seedrandom": "^3.0.8",
         "turbo": "2.5.5",
         "typescript": "5.8.3",
       },
