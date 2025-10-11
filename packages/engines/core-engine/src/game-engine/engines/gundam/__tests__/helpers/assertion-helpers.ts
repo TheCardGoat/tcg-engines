@@ -43,6 +43,71 @@ export const assertZoneCount = (
 };
 
 /**
+ * Assert that a zone is at its maximum capacity.
+ *
+ * Encodes domain knowledge of zone limits from LLM-RULES Section 3:
+ * - Battle area: 6 units max
+ * - Hand: 10 cards max (enforced during end phase)
+ * - Resource area: 15 resources max
+ * - Shield section: 6 shields (starting amount)
+ * - Shield base: 1 base max
+ *
+ * This helper reduces magic numbers in tests by encoding game rule knowledge.
+ * Instead of `assertZoneCount(engine, "battleArea", 6)`, use
+ * `assertZoneAtCapacity(engine, "battleArea")` for more semantic assertions.
+ *
+ * @param engine - The GundamTestEngine instance to query
+ * @param zone - The zone to check capacity for
+ * @param playerId - The player ID to check (defaults to "player_one")
+ *
+ * @throws {Error} If zone doesn't have defined capacity or is not at capacity
+ *
+ * @example
+ * ```typescript
+ * // Check if battle area is at maximum (6 units)
+ * assertZoneAtCapacity(engine, "battleArea", "player_one");
+ *
+ * // Check if hand is at maximum (10 cards)
+ * assertZoneAtCapacity(engine, "hand");
+ *
+ * // Check if resource area is at maximum (15 resources)
+ * assertZoneAtCapacity(engine, "resourceArea");
+ *
+ * // More semantic than magic numbers
+ * // Before: assertZoneCount(engine, "battleArea", 6, "player_one")
+ * // After:  assertZoneAtCapacity(engine, "battleArea", "player_one")
+ * ```
+ *
+ * @see LLM-RULES Section 3: Game Locations
+ * @see assertZoneCount for checking specific counts
+ */
+export const assertZoneAtCapacity = (
+  engine: GundamTestEngine,
+  zone: ZoneType,
+  playerId = "player_one",
+): void => {
+  // Zone capacity limits from LLM-RULES Section 3
+  const zoneCapacities: Partial<Record<ZoneType, number>> = {
+    battleArea: 6, // Max 6 units in battle area
+    hand: 10, // Max 10 cards in hand (end phase limit)
+    resourceArea: 15, // Max 15 resources
+    shieldSection: 6, // 6 shields at game start
+    shieldBase: 1, // Max 1 base in shield base section
+  };
+
+  const capacity = zoneCapacities[zone];
+
+  if (capacity === undefined) {
+    throw new Error(
+      `Zone "${zone}" does not have a defined maximum capacity. ` +
+        `Zones with capacity limits: ${Object.keys(zoneCapacities).join(", ")}`,
+    );
+  }
+
+  assertZoneCount(engine, zone, capacity, playerId);
+};
+
+/**
  * Assert that the game is in a specific phase.
  *
  * Validates the current game phase for testing phase progression rules:
@@ -188,6 +253,73 @@ export const assertPriorityPlayer = (
     throw new Error(
       `Expected priority player to be "${expectedPlayer}", but found "${priorityPlayers[0]}"`,
     );
+  }
+};
+
+/**
+ * Assert that priority order matches expected player sequence.
+ *
+ * Validates the complete priority queue for testing complex priority scenarios.
+ * This is useful for validating:
+ * - Action step priority (standby player → active player)
+ * - Effect resolution priority (active player → standby player)
+ * - Multiple trigger resolution order
+ * - Priority passing mechanics
+ *
+ * Unlike `assertPriorityPlayer` which only checks the first player with priority,
+ * this helper validates the entire priority sequence, ensuring all players are
+ * in the correct order.
+ *
+ * @param engine - The GundamTestEngine instance to query
+ * @param expectedOrder - Array of player IDs in expected priority order
+ *
+ * @throws {Error} If priority order doesn't match expected sequence
+ *
+ * @example
+ * ```typescript
+ * // During action step in combat (standby player has priority first)
+ * assertPriorityOrder(engine, ["player_two", "player_one"]);
+ *
+ * // During effect resolution (active player resolves first)
+ * assertPriorityOrder(engine, ["player_one", "player_two"]);
+ *
+ * // After standby player passes in action step
+ * engine.passActionPriority();
+ * assertPriorityOrder(engine, ["player_one"]); // Only active player left
+ *
+ * // More comprehensive than assertPriorityPlayer
+ * // Before: assertPriorityPlayer(engine, "player_two")
+ * // After:  assertPriorityOrder(engine, ["player_two", "player_one"])
+ * ```
+ *
+ * @see LLM-RULES Section 8: Action Steps
+ * @see LLM-RULES Section 9: Effect System
+ * @see assertPriorityPlayer for checking only the first player
+ */
+export const assertPriorityOrder = (
+  engine: GundamTestEngine,
+  expectedOrder: string[],
+): void => {
+  const actualPriority = engine.getPriorityPlayers();
+
+  if (actualPriority.length !== expectedOrder.length) {
+    throw new Error(
+      `Expected priority order with ${expectedOrder.length} player(s), ` +
+        `but found ${actualPriority.length} player(s). ` +
+        `Expected: [${expectedOrder.join(", ")}], ` +
+        `Actual: [${actualPriority.join(", ")}]`,
+    );
+  }
+
+  for (let i = 0; i < expectedOrder.length; i++) {
+    if (actualPriority[i] !== expectedOrder[i]) {
+      throw new Error(
+        `Expected player at priority position ${i} to be "${expectedOrder[i]}", ` +
+          `but found "${actualPriority[i]}". ` +
+          `Full expected order: [${expectedOrder.join(", ")}], ` +
+          `Actual order: [${actualPriority.join(", ")}]`,
+      );
+    }
   }
 };
 

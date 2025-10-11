@@ -46,12 +46,16 @@ export {
   assertGamePhase,
   /** Assert that the game is in a specific segment */
   assertGameSegment,
+  /** Assert that priority order matches expected player sequence */
+  assertPriorityOrder,
   /** Assert that a specific player has priority */
   assertPriorityPlayer,
   /** Assert that a specific player is the turn player */
   assertTurnPlayer,
   /** Assert that a unit has specific stats */
   assertUnitHasStats,
+  /** Assert that a zone is at its maximum capacity */
+  assertZoneAtCapacity,
   /** Assert that a zone contains an expected number of cards */
   assertZoneCount,
 } from "./assertion-helpers";

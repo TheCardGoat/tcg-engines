@@ -245,10 +245,12 @@ it.todo("should execute combat damage after move API is implemented");
 Located in `helpers/assertion-helpers.ts`:
 
 - `assertZoneCount(engine, zone, expectedCount, playerId?)` - Verify zone has expected number of cards
+- `assertZoneAtCapacity(engine, zone, playerId?)` - Verify zone is at maximum capacity (encodes zone limits)
 - `assertGamePhase(engine, expectedPhase)` - Verify current game phase
 - `assertGameSegment(engine, expectedSegment)` - Verify current game segment
 - `assertTurnPlayer(engine, expectedPlayer)` - Verify current turn player
-- `assertPriorityPlayer(engine, expectedPlayer)` - Verify player with priority
+- `assertPriorityPlayer(engine, expectedPlayer)` - Verify player with priority (first in queue)
+- `assertPriorityOrder(engine, expectedOrder)` - Verify complete priority sequence (all players in order)
 - `assertCardInZone(engine, cardInstanceId, expectedZone, playerId?)` - Verify card location
 - `assertUnitHasStats(engine, unitInstanceId, expectedStats)` - Verify unit statistics
 
