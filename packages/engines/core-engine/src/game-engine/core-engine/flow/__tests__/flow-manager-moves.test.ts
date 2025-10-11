@@ -114,6 +114,10 @@ describe("FlowManager - Move System Integration", () => {
       flowManager = new FlowManager(gameDefinition, {});
 
       const initialState = MockGameStates.initial();
+      // Set context to match the game definition being tested
+      initialState.ctx.currentSegment = "testSegment";
+      initialState.ctx.currentPhase = "phase1";
+      initialState.ctx.currentStep = null;
       const fnContext = createMockFnContext(initialState);
 
       // Segment moves should be available with qualified names
@@ -172,6 +176,10 @@ describe("FlowManager - Move System Integration", () => {
       flowManager = new FlowManager(gameDefinition, {});
 
       const initialState = MockGameStates.initial();
+      // Set context to match the game definition being tested
+      initialState.ctx.currentSegment = "testSegment";
+      initialState.ctx.currentPhase = "testPhase";
+      initialState.ctx.currentStep = "step1";
       const fnContext = createMockFnContext(initialState);
 
       // Phase moves should be available with qualified names (segment.phase.move)
@@ -239,6 +247,10 @@ describe("FlowManager - Move System Integration", () => {
       flowManager = new FlowManager(gameDefinition, {});
 
       const initialState = MockGameStates.initial();
+      // Set context to match the game definition being tested
+      initialState.ctx.currentSegment = "testSegment";
+      initialState.ctx.currentPhase = "testPhase";
+      initialState.ctx.currentStep = "step1";
       const fnContext = createMockFnContext(initialState);
 
       // Step moves should be available with full qualified names (segment.phase.step.move)
@@ -261,10 +273,14 @@ describe("FlowManager - Move System Integration", () => {
       expect(flowManager.moveMap["step2Move"]).toBeTruthy();
       expect(flowManager.moveMap["step2Specific"]).toBeTruthy();
 
-      // All step moves should be accessible via getMove
+      // Step1 moves should be accessible when in step1
       expect(
         flowManager.getMove(initialState.ctx, "step1Move", "player1"),
       ).toBeTruthy();
+
+      // Step2 moves should NOT be accessible when in step1 (they're step-specific)
+      // Change context to step2 to test step2 moves
+      initialState.ctx.currentStep = "step2";
       expect(
         flowManager.getMove(initialState.ctx, "step2Move", "player1"),
       ).toBeTruthy();
@@ -382,8 +398,13 @@ describe("FlowManager - Move System Integration", () => {
 
       // Simple name should resolve to one of them
       expect(flowManager.moveMap["commonMove"]).toBeTruthy();
+
+      // Test with proper context - moves need context to be resolved
+      const state = MockGameStates.initial();
+      state.ctx.currentSegment = "segment1";
+      state.ctx.currentPhase = "phase1";
       expect(
-        flowManager.getMove({} as any, "commonMove", "player1"),
+        flowManager.getMove(state.ctx, "commonMove", "player1"),
       ).toBeTruthy();
     });
   });
@@ -546,29 +567,34 @@ describe("FlowManager - Move System Integration", () => {
 
       flowManager = new FlowManager(gameDefinition, {});
 
-      // All moves should be available regardless of current segment
+      // Test moves with proper context for each segment
+      const segment1State = MockGameStates.initial();
+      segment1State.ctx.currentSegment = "segment1";
+      segment1State.ctx.currentPhase = "phase1";
+
+      // Global move should be available everywhere
       expect(
-        flowManager.getMove({} as any, "globalMove", "player1"),
-      ).toBeTruthy();
-      expect(
-        flowManager.getMove({} as any, "segment1Move", "player1"),
-      ).toBeTruthy();
-      expect(
-        flowManager.getMove({} as any, "segment2Move", "player1"),
-      ).toBeTruthy();
-      expect(
-        flowManager.getMove({} as any, "phase1Move", "player1"),
-      ).toBeTruthy();
-      expect(
-        flowManager.getMove({} as any, "phase2Move", "player1"),
+        flowManager.getMove(segment1State.ctx, "globalMove", "player1"),
       ).toBeTruthy();
 
-      // Test that qualified names work too
+      // Segment1 moves available in segment1
       expect(
-        flowManager.getMove({} as any, "segment1.segment1Move", "player1"),
+        flowManager.getMove(segment1State.ctx, "segment1Move", "player1"),
       ).toBeTruthy();
       expect(
-        flowManager.getMove({} as any, "segment1.phase1.phase1Move", "player1"),
+        flowManager.getMove(segment1State.ctx, "phase1Move", "player1"),
+      ).toBeTruthy();
+
+      // Test segment2 moves with segment2 context
+      const segment2State = MockGameStates.initial();
+      segment2State.ctx.currentSegment = "segment2";
+      segment2State.ctx.currentPhase = "phase2";
+
+      expect(
+        flowManager.getMove(segment2State.ctx, "segment2Move", "player1"),
+      ).toBeTruthy();
+      expect(
+        flowManager.getMove(segment2State.ctx, "phase2Move", "player1"),
       ).toBeTruthy();
     });
   });

@@ -1,14 +1,18 @@
-import type { FlowDefinition } from "../flow";
-import type { GameDefinition, GameMoveDefinitions } from "../game-definition";
-import { standardMoves } from "../moves/standard-moves";
-import type { CardId, PlayerId, ZoneId } from "../types";
-import type { CardZoneConfig } from "../zones";
+import type {
+  CardId,
+  CardZoneConfig,
+  FlowDefinition,
+  GameDefinition,
+  GameMoveDefinitions,
+  PlayerId,
+  ZoneId,
+} from "@tcg/core";
+import { standardMoves } from "@tcg/core";
 
-// Mock Lorcana game state - SIMPLIFIED!
 type TestGameState = {
   effects: unknown[];
   bag: unknown[];
-  loreScores: Record<string, number>;
+  loreScores: Record<PlayerId, number>;
 };
 
 type AlternativeCost = {
@@ -288,41 +292,30 @@ const lorcanaFlow: FlowDefinition<TestGameState> = {
   },
 };
 
-export function createMockLorcanaGame(): GameDefinition<
-  TestGameState,
-  TestMoves
-> {
-  return {
-    name: "Test Lorcana Game",
-    zones: lorcanaZones,
-    flow: lorcanaFlow,
-    moves: lorcanaMoves,
+export const lorcanaGameDefinition: GameDefinition<TestGameState, TestMoves> = {
+  name: "Test Lorcana Game",
+  zones: lorcanaZones,
+  flow: lorcanaFlow,
+  moves: lorcanaMoves,
 
-    // Configure engine's tracker system
-    trackers: {
-      perTurn: ["hasInked"],
-      perPlayer: true,
-    },
+  // Configure engine's tracker system
+  trackers: {
+    perTurn: ["hasInked"],
+    perPlayer: true,
+  },
 
-    /**
-     * Setup function - MASSIVELY SIMPLIFIED!
-     *
-     * BEFORE: 70+ lines tracking activePlayerId, turnNumber, gamePhase, firstPlayerDetermined, player zones
-     * AFTER: 15 lines - just initialize game-specific data!
-     */
-    setup: (players) => {
-      const playerIds = players.map((p) => p.id);
-      const loreScores: Record<string, number> = {};
+  setup: (players) => {
+    const playerIds = players.map((p) => p.id);
+    const loreScores: Record<string, number> = {};
 
-      for (const playerId of playerIds) {
-        loreScores[playerId] = 0;
-      }
+    for (const playerId of playerIds) {
+      loreScores[playerId] = 0;
+    }
 
-      return {
-        effects: [],
-        bag: [],
-        loreScores,
-      };
-    },
-  };
-}
+    return {
+      effects: [],
+      bag: [],
+      loreScores,
+    };
+  },
+};
