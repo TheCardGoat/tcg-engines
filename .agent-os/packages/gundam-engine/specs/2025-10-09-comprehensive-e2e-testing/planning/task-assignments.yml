@@ -1,0 +1,69 @@
+task_assignments:
+  - task_group: "Task Group 1: Setup Test Infrastructure and Helper Utilities"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 2: Implement Game Overview Rules Tests (LLM-RULES Section 1)"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 3: Implement Card Information Rules Tests (LLM-RULES Section 2)"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 4: Implement Game Locations Rules Tests (LLM-RULES Section 3)"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 5: Implement Essential Terminology Rules Tests (LLM-RULES Section 4)"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 6: Implement Preparing to Play Rules Tests (LLM-RULES Section 5)"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 7: Implement Game Progression Rules Tests (LLM-RULES Section 6)"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 8: Implement Combat Rules Tests (LLM-RULES Section 7)"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 9: Implement Action Steps Rules Tests (LLM-RULES Section 8)"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 10: Implement Effect System Rules Tests (LLM-RULES Section 9)"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 11: Implement Rules Management Tests (LLM-RULES Section 10)"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 12: Implement Keyword Effects Tests (LLM-RULES Section 11)"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 13: Implement ST01 Card Tests - Units"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 14: Implement ST01 Card Tests - Pilots and Commands"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 15: Implement ST01 Card Tests - Bases and Complete Set"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 16: Implement ST02 Card Tests"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 17: Implement ST03 Card Tests"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 18: Implement ST04 Card Tests"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 19: Implement GD01 Card Tests"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 20: Implement Integration Tests - Complex Combat Scenarios"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 21: Implement Integration Tests - Complete Game Flows"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 22: Implement Integration Tests - Edge Cases and Multi-Player Priority"
+    assigned_subagent: "testing-engineer"
+
+  - task_group: "Task Group 23: Create Test Documentation and Final Verification"
+    assigned_subagent: "testing-engineer"
