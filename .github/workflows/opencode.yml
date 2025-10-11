@@ -26,4 +26,4 @@ jobs:
         env:
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
         with:
-          model: opencode/grok-code
+          model: opencode/qwen3-coder
