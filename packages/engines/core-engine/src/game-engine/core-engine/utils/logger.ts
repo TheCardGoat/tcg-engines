@@ -51,8 +51,6 @@ if (isDevelopment) {
 
 if (isTest) {
   internalLogger = {
-    group: console.group,
-    groupEnd: console.groupEnd,
     trace: console.trace,
     warn: console.log,
     info: console.info,
@@ -60,9 +58,8 @@ if (isTest) {
     error: console.error,
     silent: console.log,
     fatal: console.error,
-    log: console.log,
     level: "debug",
-  };
+  } as any;
 }
 
 if (!isLoggerEnabled) {
@@ -74,9 +71,8 @@ if (!isLoggerEnabled) {
     error: () => {},
     fatal: () => {},
     silent: () => {},
-    log: () => {},
     level: "silent",
-  };
+  } as any;
 }
 
 export const debuggers = isLoggerEnabled
@@ -99,11 +95,26 @@ export const debuggers = isLoggerEnabled
       zoneOperations: false,
     } as const);
 
-export const logger: Logger & {
+// Augment the logger type to fix pino 10.x type compatibility issues
+// This is a workaround for breaking changes in pino's type definitions
+// Supports both pino's (obj, msg) and console's (msg, ...data) patterns
+type LogMethod = (...args: any[]) => void;
+
+type AugmentedLogger = {
+  trace: LogMethod;
+  debug: LogMethod;
+  info: LogMethod;
+  warn: LogMethod;
+  error: LogMethod;
+  fatal: LogMethod;
+  silent: LogMethod;
+  level: string;
   group?: (...data: any[]) => void;
   groupEnd?: (...data: any[]) => void;
   log?: (...data: any[]) => void;
-} = internalLogger;
+};
+
+export const logger: AugmentedLogger = internalLogger as any;
 
 export type EngineLogger = typeof logger;
 
