@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   argesTheCyclops,
   arielSonicWarrior,
@@ -21,7 +17,7 @@ describe("Li Shang - Valorous General", () => {
     });
 
     const cardUnderTest = testStore.getCard(liShangValorousGeneral);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("LEAD THE CHARGE: Your characters with 4 {S} or more get +1 {L}", () => {

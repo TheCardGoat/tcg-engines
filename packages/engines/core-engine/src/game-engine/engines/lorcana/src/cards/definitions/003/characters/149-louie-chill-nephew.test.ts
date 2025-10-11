@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { louieChillNephew } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
@@ -16,6 +12,6 @@ describe("Louie - Chill Nephew", () => {
     });
 
     const cardUnderTest = testStore.getByZoneAndId("play", louieChillNephew.id);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

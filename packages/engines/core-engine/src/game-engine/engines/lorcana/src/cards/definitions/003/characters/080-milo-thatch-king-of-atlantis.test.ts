@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { miloThatchKingOfAtlantis } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
@@ -19,6 +15,6 @@ describe("Milo Thatch - King of Atlantis", () => {
       "play",
       miloThatchKingOfAtlantis.id,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });

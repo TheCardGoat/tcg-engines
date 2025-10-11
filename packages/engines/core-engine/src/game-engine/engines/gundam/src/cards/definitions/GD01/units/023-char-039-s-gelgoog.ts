@@ -1,6 +1,6 @@
-import type { GundamitoCard } from "../../cardTypes";
+import type { GundamitoUnitCard } from "../../cardTypes";
 
-export const card: GundamitoCard = {
+export const card: GundamitoUnitCard = {
   id: "GD01-023",
   implemented: false,
   missingTestCase: true,

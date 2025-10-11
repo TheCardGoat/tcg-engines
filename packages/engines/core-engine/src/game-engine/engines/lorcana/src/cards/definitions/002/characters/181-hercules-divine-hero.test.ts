@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, it } from "@jest/globals";
+import { describe, it } from "bun:test";
 import { herculesDivineHero } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,

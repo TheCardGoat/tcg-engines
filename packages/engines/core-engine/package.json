@@ -40,7 +40,9 @@
   },
   "dependencies": {
     "@lorcanito/typescript-config": "workspace:*",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@tanstack/store": "0.7.0",
+    "chalk": "^5.6.2",
     "flatted": "^3.2.1",
     "immer": "^9.0.5",
     "lodash.isplainobject": "^4.0.6",

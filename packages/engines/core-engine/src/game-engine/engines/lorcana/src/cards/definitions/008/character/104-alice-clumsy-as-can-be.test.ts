@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   aliceClumsyAsCanBe,
   daleBumbler,
@@ -20,7 +16,7 @@ describe("Alice - Clumsy as Can Be", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(aliceClumsyAsCanBe);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("ACCIDENT PRONE Whenever this character quests, put 1 damage counter on each other character.", async () => {

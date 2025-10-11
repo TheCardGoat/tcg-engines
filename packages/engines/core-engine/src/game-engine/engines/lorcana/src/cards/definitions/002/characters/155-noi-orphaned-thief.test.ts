@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { noiOrphanedThief } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import { pawpsicle } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import {
@@ -23,7 +19,7 @@ describe("Noi - Orphaned Thief", () => {
       );
 
       expect(cardUnderTest.hasResist).toBe(true);
-      expect(cardUnderTest.hasWard).toBe(true);
+      expect(cardUnderTest.hasWard()).toBe(true);
     });
 
     it("NO item in play", () => {
@@ -37,7 +33,7 @@ describe("Noi - Orphaned Thief", () => {
       );
 
       expect(cardUnderTest.hasResist).toBe(false);
-      expect(cardUnderTest.hasWard).toBe(false);
+      expect(cardUnderTest.hasWard()).toBe(false);
     });
   });
 });

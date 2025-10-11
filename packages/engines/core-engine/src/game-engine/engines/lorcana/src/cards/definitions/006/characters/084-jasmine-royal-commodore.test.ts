@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { jasmineRoyalCommodore } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
@@ -16,7 +12,7 @@ describe("Jasmine - Royal Commodore", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(jasmineRoyalCommodore);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("RULER OF THE SEAS When you play this character, if you used Shift to play her, return all other exerted characters to their players’ hands.", async () => {

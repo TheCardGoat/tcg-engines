@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { tukTukDisarminglyCute } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,
@@ -16,7 +12,7 @@ describe("Tuk Tuk - Disarmingly Cute", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(tukTukDisarminglyCute);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it.skip("Resist +2 (Damage dealt to this character is reduced by 2.)", async () => {

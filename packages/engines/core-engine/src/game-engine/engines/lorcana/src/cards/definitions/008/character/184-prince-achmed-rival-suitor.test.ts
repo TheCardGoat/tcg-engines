@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { jasmineDesertWarrior } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { princeAchmedRivalSuitor } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {

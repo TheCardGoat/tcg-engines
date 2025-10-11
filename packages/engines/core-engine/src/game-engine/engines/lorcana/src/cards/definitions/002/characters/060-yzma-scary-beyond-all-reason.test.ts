@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { mauiDemiGod } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   goofyKnightForADay,
@@ -103,7 +99,7 @@ describe.skip("Yzma - Scary Beyond All Reason", () => {
       yzmaScaryBeyondAllReason.id,
     );
 
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });
 

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { blueFairyGuidingLight } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,
@@ -25,6 +21,6 @@ describe("Blue Fairy - Guiding Light", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(blueFairyGuidingLight);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

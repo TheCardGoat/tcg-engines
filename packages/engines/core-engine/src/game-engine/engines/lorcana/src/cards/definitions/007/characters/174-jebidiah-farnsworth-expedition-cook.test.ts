@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { jebidiahFarnsworthExpeditionCook } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,
@@ -18,7 +14,7 @@ describe("Jebidiah Farnsworth - Expedition Cook", () => {
     const cardUnderTest = testEngine.getCardModel(
       jebidiahFarnsworthExpeditionCook,
     );
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 
   it.skip("I GOT YOUR FOUR BASIC FOOD GROUPS When you play this character, chosen character gains Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {

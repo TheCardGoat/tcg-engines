@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "bun:test";
 import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import { gumboPot } from "~/game-engine/engines/lorcana/src/cards/definitions/002/items";
 import {

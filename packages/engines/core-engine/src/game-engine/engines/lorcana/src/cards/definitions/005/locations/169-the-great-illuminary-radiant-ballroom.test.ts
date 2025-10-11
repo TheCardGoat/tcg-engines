@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { scepterOfArendelle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items";
 import { theGreatIlluminaryRadiantBallroom } from "~/game-engine/engines/lorcana/src/cards/definitions/005/locations/index";
@@ -40,7 +36,7 @@ describe("The Great Illuminary - Radiant Ballroom", () => {
       item.activate();
       testStore.resolveTopOfStack({ targets: [target] });
 
-      expect(target.hasSupport).toEqual(true);
+      expect(target.hasSupport()).toEqual(true);
       expect(target.willpower).toEqual(liloMakingAWish.willpower + 2);
       expect(target.lore).toEqual(liloMakingAWish.lore + 1);
       expect(cardUnderTest.willpower).toEqual(

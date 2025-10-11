@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   chacaJuniorChipmunk,
@@ -32,10 +28,10 @@ describe("Chaca - Junior Chipmunk", () => {
 
     await testEngine.resolveTopOfStack({ targets: [targetReckless] });
 
-    expect(targetReckless.hasReckless).toBe(false);
+    expect(targetReckless.hasReckless()).toBe(false);
 
     await testEngine.passTurn();
 
-    expect(targetReckless.hasReckless).toBe(true);
+    expect(targetReckless.hasReckless()).toBe(true);
   });
 });

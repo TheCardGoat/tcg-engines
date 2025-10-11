@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { robinHoodEyeForDetail } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,
@@ -16,6 +12,6 @@ describe("Robin Hood - Eye for Detail", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(robinHoodEyeForDetail);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

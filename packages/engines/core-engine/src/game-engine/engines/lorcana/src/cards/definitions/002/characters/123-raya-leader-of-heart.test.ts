@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { rayaLeaderOfHeart } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import { deweyLovableShowoff } from "~/game-engine/engines/lorcana/src/cards/definitions/008/character";
 import {
@@ -21,7 +17,7 @@ describe("Raya - Leader of Heart", () => {
       rayaLeaderOfHeart.id,
     );
 
-    expect(cardUnderTest.hasShift).toEqual(true);
+    expect(cardUnderTest.hasShift()).toEqual(true);
   });
 
   it("**CHAMPION OF KUMANDRA** Whenever this character challenges a damaged character, she takes no damage from the challenge.", () => {

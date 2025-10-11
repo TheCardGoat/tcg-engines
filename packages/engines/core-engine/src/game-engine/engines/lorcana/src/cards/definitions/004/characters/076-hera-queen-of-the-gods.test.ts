@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { zeusGodOfLightning } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import {
   heraQueenOfTheGods,
@@ -23,8 +19,8 @@ describe("Hera - Queen of the Gods", () => {
     const zeusCard = testStore.getCard(zeusGodOfLightning);
     const herculesCard = testStore.getCard(herculesBelovedHero);
 
-    expect(cardUnderTest.hasWard).toBe(true);
-    expect(zeusCard.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
+    expect(zeusCard.hasWard()).toBe(true);
     expect(herculesCard.hasEvasive).toBe(true);
   });
 });

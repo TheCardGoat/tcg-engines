@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   drFacilierSavvyOpportunist,
   madamMimRivalOfMerlin,
@@ -49,6 +45,8 @@ describe("Madam Mim - Rival of Merlin", () => {
       play: [madamMimRivalOfMerlin],
     });
 
-    expect(testEngine.getCardModel(madamMimRivalOfMerlin).hasShift).toBe(true);
+    expect(testEngine.getCardModel(madamMimRivalOfMerlin).hasShift()).toBe(
+      true,
+    );
   });
 });

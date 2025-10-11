@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { theSorcerersHat } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items/index";
 import {
@@ -62,7 +58,7 @@ describe("The Sorcerer's Hat", () => {
         nameACard: bottomCard.name,
       });
 
-      expect(topCard.isRevealed).toBe(true);
+      expect(topCard.isRevealed()).toBe(true);
       expect(topCard.zone).toBe("deck");
       expect(bottomCard.zone).toBe("deck");
     });

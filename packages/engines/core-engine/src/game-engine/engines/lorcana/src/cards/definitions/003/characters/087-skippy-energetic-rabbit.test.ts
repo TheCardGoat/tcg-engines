@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { skippyEnergeticRabbit } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
@@ -19,6 +15,6 @@ describe("Skippy - Energetic Rabbit", () => {
       "play",
       skippyEnergeticRabbit.id,
     );
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

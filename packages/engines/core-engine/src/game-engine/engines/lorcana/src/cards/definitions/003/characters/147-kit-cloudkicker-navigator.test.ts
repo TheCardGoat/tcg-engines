@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { kitCloudkickerNavigator } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
@@ -16,6 +12,6 @@ describe("Kit Cloudkicker - Navigator", () => {
     });
 
     const cardUnderTest = testStore.getCard(kitCloudkickerNavigator);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });

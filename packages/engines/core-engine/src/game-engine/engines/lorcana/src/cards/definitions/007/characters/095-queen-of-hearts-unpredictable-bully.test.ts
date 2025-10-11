@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   drCalicoGreeneyedMan,
   queenOfHeartsUnpredictableBully,
@@ -22,7 +18,7 @@ describe("Queen Of Hearts - Unpredictable Bully", () => {
     const cardUnderTest = testEngine.getCardModel(
       queenOfHeartsUnpredictableBully,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("IF I LOSE MY TEMPER… Whenever another character is played, put a damage counter on them.", async () => {

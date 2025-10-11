@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { ladyKluckProtectiveConfidant } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,
@@ -16,7 +12,7 @@ describe("Lady Kluck - Protective Confidant", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(ladyKluckProtectiveConfidant);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it.skip("Ward (Opponents can’t choose this character except to challenge.)", async () => {
@@ -25,6 +21,6 @@ describe("Lady Kluck - Protective Confidant", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(ladyKluckProtectiveConfidant);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

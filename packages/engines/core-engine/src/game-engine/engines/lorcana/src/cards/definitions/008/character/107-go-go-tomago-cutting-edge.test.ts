@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { goGoTomagoDartingDynamo } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { goGoTomagoCuttingEdge } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
 import {
@@ -17,7 +13,7 @@ describe("Go Go Tomago - Cutting Edge", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(goGoTomagoCuttingEdge);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {

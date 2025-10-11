@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { naniCaringSister } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
@@ -16,7 +12,7 @@ describe("Nani - Caring Sister", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(naniCaringSister);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 
   it.skip("I AM SO SORRY 2 {I} - Chosen character gets -1 {S} until the start of your next turn.", async () => {

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   deweyLovableShowoff,
   kuzcoImpulsiveLlama,
@@ -19,7 +15,7 @@ describe("Kuzco - Impulsive Llama", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(kuzcoImpulsiveLlama);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("WHAT DOES THIS DO? When you play this character, each opponent chooses one of their characters and puts that card on the bottom of their deck. Then, each opponent may draw a card.", async () => {

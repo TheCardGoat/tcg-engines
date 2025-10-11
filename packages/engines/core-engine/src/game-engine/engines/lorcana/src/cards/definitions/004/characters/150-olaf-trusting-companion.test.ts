@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { olafTrustingCompanion } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
@@ -19,6 +15,6 @@ describe("Olaf - Trusting Companion", () => {
       "play",
       olafTrustingCompanion.id,
     );
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

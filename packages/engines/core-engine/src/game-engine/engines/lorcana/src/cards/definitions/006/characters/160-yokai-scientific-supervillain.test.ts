@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { yokaiScientificSupervillain } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
@@ -16,7 +12,7 @@ describe("Yokai - Scientific Supervillain", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(yokaiScientificSupervillain);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("NEUROTRANSMITTER You may play items named Microbots for free.", async () => {

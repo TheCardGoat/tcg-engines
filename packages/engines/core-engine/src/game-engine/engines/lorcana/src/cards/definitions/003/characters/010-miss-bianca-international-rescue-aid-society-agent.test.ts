@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { hiramFlavershamToymaker } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { missBiancaInternationalRescueAidSocietyAgent } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
@@ -30,7 +26,7 @@ describe("Miss Bianca - International Rescue Aid Society Agent", () => {
     const song = testEngine.getCardModel(andThenAlongCameZeus);
     const target = testEngine.getCardModel(hiramFlavershamToymaker);
 
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
 
     cardUnderTest.sing(song);
     await testEngine.resolveTopOfStack({ targets: [target] }, true);

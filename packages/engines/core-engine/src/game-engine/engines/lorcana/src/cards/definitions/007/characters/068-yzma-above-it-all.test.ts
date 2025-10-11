@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   belleMechanicExtraordinaire,
   cybugInvasiveEnemy,
@@ -23,7 +19,7 @@ describe("Yzma - Above It All", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(yzmaAboveItAll);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {

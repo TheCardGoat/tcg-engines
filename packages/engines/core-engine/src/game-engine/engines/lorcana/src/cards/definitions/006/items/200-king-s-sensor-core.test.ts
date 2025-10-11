@@ -1,4 +1,4 @@
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { goonsMaleficent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { kingCandySovereignOfSugar } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { kingsSensorCore } from "~/game-engine/engines/lorcana/src/cards/definitions/006";

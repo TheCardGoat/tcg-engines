@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   perditaDeterminedMother,
   rollyChubbyPuppy,
@@ -19,7 +15,7 @@ describe("Rolly - Chubby Puppy", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(rollyChubbyPuppy);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 
   it("ADORABLE ANTICS When you play this character, you may put a character card from your discard in your inkwell facedown and exerted.", async () => {

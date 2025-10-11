@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { calhounHardnosedLeader } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,
@@ -16,7 +12,7 @@ describe("Calhoun - Hard-Nosed Leader", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(calhounHardnosedLeader);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it("LOOT DROP When this character is banished, gain 1 lore.", async () => {

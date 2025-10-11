@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { hadesInfernalSchemer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
@@ -27,7 +23,7 @@ describe("Tiana - Natural Talent", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(tianaNaturalTalent);
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 
   it("CAPTIVATING MELODY Whenever you play a song, each opposing character gets -1 {S} until the start of your next turn.", async () => {

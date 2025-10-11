@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { grabYourSword } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import {
   christopherRobinAdventurer,
@@ -24,7 +20,7 @@ describe("Cinderella- Stouthearted", () => {
       cinderellaStouthearted.id,
     );
 
-    expect(cardUnderTest.hasShift).toBeTruthy();
+    expect(cardUnderTest.hasShift()).toBeTruthy();
   });
 
   it("Resist", () => {

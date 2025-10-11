@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   megaraPullingTheStrings,
   mickeyMouseTrueFriend,
@@ -31,7 +27,7 @@ describe("Cogsworth - Grandfather Clock", () => {
       cogsworthGrandfatherClock.id,
     );
 
-    expect(cardUnderTest.hasShift).toBeTruthy();
+    expect(cardUnderTest.hasShift()).toBeTruthy();
   });
 
   it("Ward", () => {
@@ -44,7 +40,7 @@ describe("Cogsworth - Grandfather Clock", () => {
       cogsworthGrandfatherClock.id,
     );
 
-    expect(cardUnderTest.hasWard).toBeTruthy();
+    expect(cardUnderTest.hasWard()).toBeTruthy();
   });
 
   describe("**UNWIND** Your other characters gain **Resist** +1 _(Damage dealt to them is reduced by 1.)_", () => {

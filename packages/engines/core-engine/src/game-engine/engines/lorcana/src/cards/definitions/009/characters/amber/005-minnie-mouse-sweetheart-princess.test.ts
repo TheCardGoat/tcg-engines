@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { mickeyMouseArtfulRogue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/088-mickey-mouse-artful-rogue";
 import { cobraBubblesSimpleEducator } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/004-cobra-bubbles-just-a-social-worker";
 import {
@@ -22,7 +18,7 @@ describe("Minnie Mouse - Sweetheart Princess", () => {
 
     const mickeyMouse = testEngine.getCardModel(mickeyMouseArtfulRogue);
 
-    expect(mickeyMouse.hasSupport).toBe(true);
+    expect(mickeyMouse.hasSupport()).toBe(true);
   });
 
   it("BYE BYE, NOW Whenever this character quests, you may banish chosen exerted character with 5 {S} or more.", async () => {

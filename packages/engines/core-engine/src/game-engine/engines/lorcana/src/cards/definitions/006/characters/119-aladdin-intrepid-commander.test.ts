@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { aladdinIntrepidCommander } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
@@ -16,7 +12,7 @@ describe("Aladdin - Intrepid Commander", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(aladdinIntrepidCommander);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("REMEMBER YOUR TRAINING When you play this character, your characters get +2 {S} this turn.", async () => {

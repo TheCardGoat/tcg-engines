@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { rafikiEtherealGuide } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
@@ -16,7 +12,7 @@ describe("Rafiki - Ethereal Guide", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(rafikiEtherealGuide);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("ASTRAL ATTUNEMENT During your turn, whenever a card is put into your inkwell, you may draw a card.", async () => {

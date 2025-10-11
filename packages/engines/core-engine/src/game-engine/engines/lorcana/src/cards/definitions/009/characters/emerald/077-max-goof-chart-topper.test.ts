@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { thisIsMyFamily } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
 import {
   charlotteLaBouffMardiGrasPrincess,
@@ -21,7 +17,7 @@ describe("Max Goof - Chart Topper", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(maxGoofChartTopper);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("NUMBER ONE HIT Whenever this character quests, you may play a song card with cost 4 or less from your discard for free, then put it on the bottom of your deck instead of into your discard.", async () => {

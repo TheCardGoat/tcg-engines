@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { owlIslandSecludedEntrance } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { jimHawkinsRiggerSpecialist } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
@@ -17,7 +13,7 @@ describe("Jim Hawkins - Rigger Specialist", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(jimHawkinsRiggerSpecialist);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("BATTLE STATION When you play this character, you may deal 1 damage to chosen character or location.", async () => {

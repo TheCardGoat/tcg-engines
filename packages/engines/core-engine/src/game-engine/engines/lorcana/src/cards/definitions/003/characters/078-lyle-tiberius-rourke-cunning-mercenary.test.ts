@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import {
   liloGalacticHero,
@@ -39,7 +35,7 @@ describe("Lyle Tiberius Rourke - Cunning Mercenary", () => {
 
     testStore.passTurn();
 
-    expect(target.hasReckless).toEqual(true);
+    expect(target.hasReckless()).toEqual(true);
   });
 
   describe("**THANKS FOR VOLUNTEERING**", () => {

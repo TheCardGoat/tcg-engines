@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   belleHiddenArcher,
   pinocchioStarAttraction,
@@ -23,7 +19,7 @@ describe("Belle - Hidden Archer", () => {
       belleHiddenArcher.id,
     );
 
-    expect(cardUnderTest.hasShift).toBeTruthy();
+    expect(cardUnderTest.hasShift()).toBeTruthy();
   });
 
   describe("**THORNY ARROWS** Whenever this character is challenged, the challenging character’s player discards all cards in their hand.", () => {

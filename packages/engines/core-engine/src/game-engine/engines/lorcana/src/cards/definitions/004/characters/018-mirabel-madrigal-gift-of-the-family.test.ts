@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { mirabelMadrigalGiftOfTheFamily } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
@@ -19,7 +15,7 @@ describe("Mirabel Madrigal - Gift of the Family", () => {
       "play",
       mirabelMadrigalGiftOfTheFamily.id,
     );
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 
   it.skip("**SAVING THE MIRACLE** Whenever this character quests, your other Madrigal characters get +1 {L} this turn.", () => {

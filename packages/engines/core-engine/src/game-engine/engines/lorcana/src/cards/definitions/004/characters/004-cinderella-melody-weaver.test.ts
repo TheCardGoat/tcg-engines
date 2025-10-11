@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   rafikiMysterious,
   rapunzelGiftedWithHealing,
@@ -47,7 +43,7 @@ describe("Cinderella - Melody Weaver", () => {
     const song = testStore.getByZoneAndId("hand", underTheSea.id);
 
     // Check if the card has the singer trait
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
 
     // Sing the song
     cardUnderTest.sing(song);

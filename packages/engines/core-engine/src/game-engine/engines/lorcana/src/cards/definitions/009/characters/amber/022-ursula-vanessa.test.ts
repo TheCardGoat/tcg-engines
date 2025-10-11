@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { ursulaVanessa } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
@@ -16,6 +12,6 @@ describe("Ursula - Vanessa", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(ursulaVanessa);
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 });

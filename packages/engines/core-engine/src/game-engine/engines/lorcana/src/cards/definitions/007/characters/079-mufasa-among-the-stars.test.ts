@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { mufasaAmongTheStars } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,
@@ -16,7 +12,7 @@ describe("Mufasa - Among the Stars", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(mufasaAmongTheStars);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("Evasive (Only characters with Evasive can challenge this character.)", async () => {

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   arielSpectacularSinger,
   mickeyBraveLittleTailor,
@@ -24,7 +20,7 @@ describe("Bolt - Superdog", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(boltSuperdog);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   describe("MARK OF POWER", () => {

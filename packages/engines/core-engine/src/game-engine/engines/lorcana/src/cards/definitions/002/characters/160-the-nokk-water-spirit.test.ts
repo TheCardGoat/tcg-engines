@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { theNokkWaterSpirit } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
@@ -20,6 +16,6 @@ describe("The Nokk - Water Spirit", () => {
       theNokkWaterSpirit.id,
     );
 
-    expect(cardUnderTest.hasWard).toEqual(true);
+    expect(cardUnderTest.hasWard()).toEqual(true);
   });
 });

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { perlaNimbleSeamstress } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,
@@ -25,6 +21,6 @@ describe("Perla - Nimble Seamstress", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(perlaNimbleSeamstress);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

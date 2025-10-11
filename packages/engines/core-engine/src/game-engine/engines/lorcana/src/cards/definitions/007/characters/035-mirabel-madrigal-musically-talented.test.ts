@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   mirabelMadrigalMusicallyTalented,
   soMuchToGive,
@@ -21,7 +17,7 @@ describe("Mirabel Madrigal - Musically Talented", () => {
     const cardUnderTest = testEngine.getCardModel(
       mirabelMadrigalMusicallyTalented,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("HER OWN SPECIAL GIFT Whenever this character quests, you may return a song card with cost 3 or less from your discard to your hand.", async () => {

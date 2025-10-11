@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   madHattersTeapot,
@@ -20,7 +16,7 @@ describe("Nick Wilde - Clever Fox", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(nickWildeCleverFox);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("CAN'T TOUCH ME While you have an item in play, this character can't be challenged.", async () => {

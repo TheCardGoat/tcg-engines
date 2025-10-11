@@ -50,9 +50,9 @@ jobs:
       #     restore-keys: |
       #       ${{ runner.os }}-turbo-
 
-      # Use hardlink backend for faster installation
+      # Use hardlink backend for faster installation, isolated and frozen-lockfile for better determinism
       - name: Install dependencies
-        run: bun install --backend=hardlink --frozen-lockfile
+        run: bun install --backend=hardlink --linker isolated --frozen-lockfile
 
       - name: Run format
         run: bun run format

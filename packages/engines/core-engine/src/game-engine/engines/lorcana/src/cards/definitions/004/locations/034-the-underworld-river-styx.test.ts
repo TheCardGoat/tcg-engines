@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { stichtNewDog } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { theUnderworldRiverStyx } from "~/game-engine/engines/lorcana/src/cards/definitions/004/locations/index";
 import { stitchLittleTrickster } from "~/game-engine/engines/lorcana/src/cards/definitions/006";

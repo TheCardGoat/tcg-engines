@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { jimDearBelovedHusband } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,
@@ -16,6 +12,6 @@ describe("Jim Dear - Beloved Husband", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(jimDearBelovedHusband);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

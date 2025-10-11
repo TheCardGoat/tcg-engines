@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { pigletPoohPirateCaptain } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
 import { daisyDuckDonaldsDate } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { ladyMissParkAvenue } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
@@ -18,7 +14,7 @@ describe("Lady - Miss Park Avenue", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(ladyMissParkAvenue);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("SOMETHING WONDERFUL When you play this character, you may return up to 2 character cards with cost 2 or less each from your discard to your hand.", async () => {

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   captainHookForcefulDuelist,
   hadesInfernalSchemer,
@@ -25,7 +21,7 @@ describe("Mittens - Sassy Street Cat", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(mittensSassyStreetCat);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   describe("NO THANKS NECESSARY", () => {

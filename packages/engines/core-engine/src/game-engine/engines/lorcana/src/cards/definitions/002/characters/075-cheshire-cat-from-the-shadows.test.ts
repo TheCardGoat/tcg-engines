@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   cheshireCatFromTheShadows,
   goofyKnightForADay,
@@ -24,7 +20,7 @@ describe("Cheshire Cat - From the Shadows", () => {
       cheshireCatFromTheShadows.id,
     );
 
-    expect(cardUnderTest.hasShift).toBeTruthy();
+    expect(cardUnderTest.hasShift()).toBeTruthy();
   });
 
   it("Evasive", () => {

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { liShangNewlyPromoted } from "~/game-engine/engines/lorcana/src/cards/definitions/007/characters";
 import { mulanChargingAhead } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
@@ -17,7 +13,7 @@ describe("Mulan - Charging Ahead", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(mulanChargingAhead);
-    expect(cardUnderTest.hasReckless).toBe(true);
+    expect(cardUnderTest.hasReckless()).toBe(true);
   });
 
   it("BURST OF SPEED During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { thomasOmalleyFelineCharmer } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
   TestEngine,
@@ -16,6 +12,6 @@ describe("Thomas O'malley - Feline Charmer", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(thomasOmalleyFelineCharmer);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

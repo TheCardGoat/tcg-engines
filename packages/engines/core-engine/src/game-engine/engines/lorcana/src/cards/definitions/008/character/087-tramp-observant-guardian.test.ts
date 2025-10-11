@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   deweyLovableShowoff,
   trampObservantGuardian,
@@ -26,14 +22,14 @@ describe("Tramp - Observant Guardian", () => {
     // await testEngine.acceptOptionalLayer();
     await testEngine.resolveTopOfStack({ targets: [target] });
 
-    expect(target.hasWard).toBe(true);
+    expect(target.hasWard()).toBe(true);
 
     testEngine.passTurn();
 
-    expect(target.hasWard).toBe(true);
+    expect(target.hasWard()).toBe(true);
 
     testEngine.passTurn();
 
-    expect(target.hasWard).toBe(false);
+    expect(target.hasWard()).toBe(false);
   });
 });

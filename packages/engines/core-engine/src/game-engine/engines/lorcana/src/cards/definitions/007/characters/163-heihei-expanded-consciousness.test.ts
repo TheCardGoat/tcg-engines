@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   dawsonPuzzlingSleuth,
   heiheiExpandedConsciousness,
@@ -20,7 +16,7 @@ describe("Heihei - Expanded Consciousness", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(heiheiExpandedConsciousness);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("Resist +1 (Damage dealt to this character is reduced by 1.)", async () => {

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   aladdinCorneredSwordman,
   maleficentBinding,
@@ -21,7 +17,7 @@ describe("Simba - Pride Protector", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(simbaPrideProtector);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("UNDERSTAND THE BALANCE At the end of your turn, if this character is exerted, you may ready your other characters.", async () => {

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "bun:test";
 import { logger } from "../../../../../../shared/logger";
 import betaCards from "../../cards/imports/beta.json";
 import gd01Cards from "../../cards/imports/gd01.json";

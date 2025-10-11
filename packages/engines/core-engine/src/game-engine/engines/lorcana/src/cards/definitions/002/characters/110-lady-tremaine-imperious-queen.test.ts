@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   fidgetRatigansHenchman,
   ladyTremaineImperiousQueen,
@@ -24,7 +20,7 @@ describe("Lady Tremaine - Imperious Queen", () => {
       ladyTremaineImperiousQueen.id,
     );
 
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("**POWER TO RULE AT LAST** When you play this character, each opponent chooses and banishes one of their characters.", () => {

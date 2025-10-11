@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   atlanteanCrystal,
   bellesFavoriteBook,
@@ -22,7 +18,7 @@ describe("Lumiere - Fired Up", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(lumiereFiredUp);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("Evasive", async () => {

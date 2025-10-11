@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { hadesInfernalSchemer } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { andThenAlongCameZeus } from "~/game-engine/engines/lorcana/src/cards/definitions/003/actions";
 import { theTroubadourMusicalNarrator } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
@@ -33,7 +29,7 @@ describe("The Troubadour - Musical Narrator", () => {
     );
 
     const cardUnderTest = testEngine.getCardModel(theTroubadourMusicalNarrator);
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
 
     await testEngine.singSong({
       singer: theTroubadourMusicalNarrator,

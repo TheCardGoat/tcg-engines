@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { herculesTrueHero } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { theQueenCruelestOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { queensSensorCoreItem } from "~/game-engine/engines/lorcana/src/cards/definitions/005/items/index";

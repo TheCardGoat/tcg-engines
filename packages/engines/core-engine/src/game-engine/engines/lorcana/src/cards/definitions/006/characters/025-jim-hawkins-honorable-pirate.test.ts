@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { jimHawkinsHonorablePirate } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
@@ -16,6 +12,6 @@ describe("Jim Hawkins - Honorable Pirate", () => {
     });
 
     const cardUnderTest = testStore.getCard(jimHawkinsHonorablePirate);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

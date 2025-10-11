@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { herculesBabyDemigod } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
@@ -16,7 +12,7 @@ describe("Hercules - Baby Demigod", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(herculesBabyDemigod);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 
   it.skip("STRONG LIKE HIS DAD 3 {I} - Deal 1 damage to chosen damaged character.", async () => {

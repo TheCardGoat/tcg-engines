@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { plutoTriedAndTrue } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,
@@ -18,11 +14,11 @@ describe("Pluto - Tried and True", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(plutoTriedAndTrue);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
     expect(cardUnderTest.strength).toBe(4);
 
     testEngine.setCardDamage(cardUnderTest, 1);
-    expect(cardUnderTest.hasSupport).toBe(false);
+    expect(cardUnderTest.hasSupport()).toBe(false);
     expect(cardUnderTest.strength).toBe(2);
   });
 });

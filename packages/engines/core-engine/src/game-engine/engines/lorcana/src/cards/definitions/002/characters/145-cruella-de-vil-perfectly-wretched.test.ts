@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { mickeyMouseTrueFriend } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { cruellaDeVilPerfectlyWretched } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
@@ -47,6 +43,6 @@ describe("Cruella De Vil - Perfectly Wretched", () => {
       cruellaDeVilPerfectlyWretched.id,
     );
 
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 });

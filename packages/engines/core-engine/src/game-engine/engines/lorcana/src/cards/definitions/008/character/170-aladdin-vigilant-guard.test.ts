@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   aladdinVigilantGuard,
   jimDearBelovedHusband,
@@ -19,7 +15,7 @@ describe("Aladdin - Vigilant Guard", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(aladdinVigilantGuard);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it("SAFE PASSAGE Whenever one of your Ally characters quests, you may remove up to 2 damage from this character.", async () => {

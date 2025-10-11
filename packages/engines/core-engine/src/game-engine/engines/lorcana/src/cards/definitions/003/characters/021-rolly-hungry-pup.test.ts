@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { rollyHungryPup } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
@@ -16,6 +12,6 @@ describe("Rolly - Hungry Pup", () => {
     });
 
     const cardUnderTest = testStore.getByZoneAndId("play", rollyHungryPup.id);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

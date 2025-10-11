@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { tongSurvivor } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
@@ -16,6 +12,6 @@ describe("Tong - Survivor", () => {
     });
 
     const cardUnderTest = testStore.getByZoneAndId("play", tongSurvivor.id);
-    expect(cardUnderTest.hasReckless).toBe(true);
+    expect(cardUnderTest.hasReckless()).toBe(true);
   });
 });

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, it } from "@jest/globals";
+import { describe, it } from "bun:test";
 import { robinHoodSneakySleuth } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/index";
 import {
   TestEngine,

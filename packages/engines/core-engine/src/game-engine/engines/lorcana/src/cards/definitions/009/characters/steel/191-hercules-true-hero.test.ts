@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { herculesTrueHero } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
@@ -16,6 +12,6 @@ describe("Hercules - True Hero", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(herculesTrueHero);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

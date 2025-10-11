@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { peteRottenGuy } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { fortisphere } from "~/game-engine/engines/lorcana/src/cards/definitions/004/items/index";
 import {
@@ -47,19 +43,19 @@ describe("Fortisphere", () => {
 
       const cardUnderTest = testStore.getByZoneAndId("play", fortisphere.id);
       const target = testStore.getByZoneAndId("play", peteRottenGuy.id);
-      expect(target.hasBodyguard).toBeFalsy();
+      expect(target.hasBodyguard()).toBeFalsy();
 
       cardUnderTest.activate();
       testStore.resolveTopOfStack({ targets: [target] });
 
       expect(cardUnderTest.zone).toEqual("discard");
-      expect(target.hasBodyguard).toBeTruthy();
+      expect(target.hasBodyguard()).toBeTruthy();
 
       testStore.passTurn();
-      expect(target.hasBodyguard).toBeTruthy();
+      expect(target.hasBodyguard()).toBeTruthy();
 
       testStore.passTurn();
-      expect(target.hasBodyguard).toBeFalsy();
+      expect(target.hasBodyguard()).toBeFalsy();
     });
   });
 });

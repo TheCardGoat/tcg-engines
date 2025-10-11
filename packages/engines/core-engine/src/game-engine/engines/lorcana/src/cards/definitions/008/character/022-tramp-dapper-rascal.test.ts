@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { monstroWhaleOfAWhale } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
   deweyLovableShowoff,
@@ -20,7 +16,7 @@ describe("Tramp - Dapper Rascal", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(trampDapperRascal);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("PLAY IT COOL During an opponent’s turn, whenever one of your characters is banished, you may draw a card.", async () => {

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { elsaQueenRegent } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { annaMagicalMission } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
@@ -17,7 +13,7 @@ describe("Anna - Magical Mission", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(annaMagicalMission);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("Support (Whenever this character quests, you may add their {S} to another chosen character’s {S} this turn.)", async () => {
@@ -26,7 +22,7 @@ describe("Anna - Magical Mission", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(annaMagicalMission);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 
   it("COORDINATED PLAN Whenever this character quests, if you have a character named Elsa in play, you may draw a card.", async () => {

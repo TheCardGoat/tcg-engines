@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   heiheiAccidentalExplorer,
   mauiWingedDemigod,
@@ -24,7 +20,7 @@ describe("Maui - Winged Demigod", () => {
       "play",
       mauiWingedDemigod.id,
     );
-    expect(cardUnderTest.hasReckless).toBe(true);
+    expect(cardUnderTest.hasReckless()).toBe(true);
   });
 
   it("**IN MY STOMACH** Whenever one of your characters named Heihei quests, this character gets +1 {L} and loses **Reckless** for this turn.", async () => {
@@ -41,14 +37,14 @@ describe("Maui - Winged Demigod", () => {
 
     await testEngine.questCard(stitchTeamUnderdog);
     expect(cardUnderTest.lore).toBe(mauiWingedDemigod.lore);
-    expect(cardUnderTest.hasReckless).toBe(true);
+    expect(cardUnderTest.hasReckless()).toBe(true);
 
     await testEngine.questCard(heiheiBumblingRooster);
     expect(cardUnderTest.lore).toBe(mauiWingedDemigod.lore + 1);
-    // expect(cardUnderTest.hasReckless).toBe(false);
+    // expect(cardUnderTest.hasReckless()).toBe(false);
 
     await testEngine.questCard(heiheiAccidentalExplorer);
     expect(cardUnderTest.lore).toBe(mauiWingedDemigod.lore + 2);
-    // expect(cardUnderTest.hasReckless).toBe(false);
+    // expect(cardUnderTest.hasReckless()).toBe(false);
   });
 });

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { cinderellaBallroomSensation } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
@@ -20,6 +16,6 @@ describe("Cinderella - Ballroom Sensation", () => {
       cinderellaBallroomSensation.id,
     );
 
-    expect(cardUnderTest.hasSinger).toEqual(true);
+    expect(cardUnderTest.hasSinger()).toEqual(true);
   });
 });

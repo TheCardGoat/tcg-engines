@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { vanellopeVonSchweetzCandyMechanic } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import { wreckitRalphBigLug } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
@@ -17,7 +13,7 @@ describe("Wreck-it Ralph - Big Lug", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(wreckitRalphBigLug);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("BACK ON TRACK When you play this character you may return a Racer character card with cost 6 or less from your discard to your hand. If you do, gain 1 lore.", async () => {

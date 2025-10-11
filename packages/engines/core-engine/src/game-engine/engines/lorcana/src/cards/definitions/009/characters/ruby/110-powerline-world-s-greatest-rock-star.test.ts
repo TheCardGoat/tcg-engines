@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { aPiratesLife } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import {
@@ -25,7 +21,7 @@ describe("Powerline - World's Greatest Rock Star", () => {
     const cardUnderTest = testEngine.getCardModel(
       powerlineWorldsGreatestRockStar,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("Singer 9", async () => {
@@ -36,7 +32,7 @@ describe("Powerline - World's Greatest Rock Star", () => {
     const cardUnderTest = testEngine.getCardModel(
       powerlineWorldsGreatestRockStar,
     );
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 
   it("MASH-UP Once during your turn, whenever this character sings a song, look at the top 4 cards of your deck. You may reveal a song card with cost 9 or less and play it for free. Put the rest on the bottom of your deck in any order.", async () => {

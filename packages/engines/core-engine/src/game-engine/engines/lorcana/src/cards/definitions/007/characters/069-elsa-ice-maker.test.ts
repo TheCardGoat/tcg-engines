@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   annaIceBreaker,
   elsaIceMaker,
@@ -20,7 +16,7 @@ describe("Elsa - Ice Maker", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(elsaIceMaker);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   describe("WINTER WALL Whenever this character quests, you may exert chosen character. If you do and you have a character named Anna in play, the chosen character can’t ready at the start of their next turn.", () => {

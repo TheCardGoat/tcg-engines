@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { donaldDuckPerfectGentleman } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
@@ -20,7 +16,7 @@ describe("Donald Duck - Perfect Gentleman", () => {
       donaldDuckPerfectGentleman.id,
     );
 
-    expect(cardUnderTest.hasShift).toEqual(true);
+    expect(cardUnderTest.hasShift()).toEqual(true);
   });
 
   it("**ALLOW ME** At the start of your turn, each player may draw a card.", async () => {

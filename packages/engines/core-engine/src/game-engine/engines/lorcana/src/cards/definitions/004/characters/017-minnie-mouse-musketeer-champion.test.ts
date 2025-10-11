@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   minnieMouseMusketeerChampion,
   sisuEmpoweredSibling,
@@ -22,7 +18,7 @@ describe("Minnie Mouse - Musketeer Champion", () => {
       "play",
       minnieMouseMusketeerChampion.id,
     );
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it("**DRAMATIC ENTERANCE** When you play this character, banish chosen opposing character with 5  {S} or more.", () => {

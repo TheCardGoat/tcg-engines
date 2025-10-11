@@ -1,8 +1,5 @@
-/**
- * @jest-environment node
- */
 
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 
 describe("Philoctetes - No‐Nonsense Instructor", () => {
   it("reprint", async () => {

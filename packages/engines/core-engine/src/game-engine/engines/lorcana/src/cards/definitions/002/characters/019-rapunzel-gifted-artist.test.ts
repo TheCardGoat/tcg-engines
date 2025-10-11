@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   goofyKnightForADay,
   rapunzelGiftedArtist,
@@ -61,7 +57,7 @@ describe("Rapunzel - Gifted Artist", () => {
       rapunzelGiftedArtist.id,
     );
 
-    expect(cardUnderTest.hasShift).toEqual(true);
+    expect(cardUnderTest.hasShift()).toEqual(true);
   });
 });
 

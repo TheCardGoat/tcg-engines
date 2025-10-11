@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { balooFunLovingBear } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { kaaHypnotizingPython } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
@@ -30,7 +26,9 @@ describe("Kaa - Hypnotizing Python", () => {
     await testEngine.passTurn();
 
     expect(testEngine.getCardModel(balooFunLovingBear).strength).toBe(2);
-    expect(testEngine.getCardModel(balooFunLovingBear).hasReckless).toBe(true);
+    expect(testEngine.getCardModel(balooFunLovingBear).hasReckless()).toBe(
+      true,
+    );
     await testEngine.challenge({
       attacker: balooFunLovingBear,
       defender: kaaHypnotizingPython,
@@ -39,6 +37,8 @@ describe("Kaa - Hypnotizing Python", () => {
     await testEngine.passTurn();
 
     expect(testEngine.getCardModel(balooFunLovingBear).strength).toBe(4);
-    expect(testEngine.getCardModel(balooFunLovingBear).hasReckless).toBe(false);
+    expect(testEngine.getCardModel(balooFunLovingBear).hasReckless()).toBe(
+      false,
+    );
   });
 });

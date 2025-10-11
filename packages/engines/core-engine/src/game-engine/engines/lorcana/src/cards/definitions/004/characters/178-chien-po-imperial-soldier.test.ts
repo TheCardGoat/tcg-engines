@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { chienPoImperialSoldier } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters/index";
 import {
   TestEngine,
@@ -19,6 +15,6 @@ describe("Chien-Po - Imperial Soldier", () => {
       "play",
       chienPoImperialSoldier.id,
     );
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { liloMakingAWish } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { goofyKnightForADay } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { robinHoodBelovedOutlaw } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
@@ -68,9 +64,9 @@ describe("Sherwood Forest - Outlaw Hideaway", () => {
       const cardUnderTest = testStore.getCard(sherwoodForestOutlawHideaway);
       const attacker = testStore.getCard(liloMakingAWish);
 
-      expect(attacker.hasWard).toBeFalsy();
+      expect(attacker.hasWard()).toBeFalsy();
       attacker.enterLocation(cardUnderTest);
-      expect(attacker.hasWard).toBeTruthy();
+      expect(attacker.hasWard()).toBeTruthy();
     });
   });
 });

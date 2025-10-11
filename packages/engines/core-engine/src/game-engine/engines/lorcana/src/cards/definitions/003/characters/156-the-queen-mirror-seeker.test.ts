@@ -1,7 +1,4 @@
-/**
- * @jest-environment node
- */
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 
 // Legacy import - using any type for CardModel during migration
 type CardModel = any;

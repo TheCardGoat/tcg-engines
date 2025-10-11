@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { suddenChill } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { kronkRelaxed } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
@@ -17,7 +13,7 @@ describe("Kronk - Relaxed", () => {
       play: [kronkRelaxed],
     });
 
-    expect(testEngine.getCardModel(kronkRelaxed).hasWard).toBe(true);
+    expect(testEngine.getCardModel(kronkRelaxed).hasWard()).toBe(true);
   });
 
   it("I LOVE IT If an effect would make you discard one or more cards, don't discard any.", async () => {

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it, test } from "@jest/globals";
+import { describe, expect, it, test } from "bun:test";
 import { magicBroomIlluminaryKeeper } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import {
   duchessElegantFeline,

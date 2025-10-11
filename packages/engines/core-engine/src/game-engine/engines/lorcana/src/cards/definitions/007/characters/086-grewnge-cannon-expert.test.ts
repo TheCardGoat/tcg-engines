@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { hypnotize } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import { dodge } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions";
 import { grewngeCannonExpert } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";

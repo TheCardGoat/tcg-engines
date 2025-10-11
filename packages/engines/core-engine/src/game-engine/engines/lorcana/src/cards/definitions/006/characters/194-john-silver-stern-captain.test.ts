@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { johnSilverSternCaptain } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
@@ -16,7 +12,7 @@ describe("John Silver - Stern Captain", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(johnSilverSternCaptain);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it.skip("Resist +2 (Damage dealt to this character is reduced by 2.)", async () => {

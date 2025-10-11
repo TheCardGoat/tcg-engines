@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { letTheStormRageOn } from "~/game-engine/engines/lorcana/src/cards/definitions/002/actions";
 import { sisuEmpoweredSibling } from "~/game-engine/engines/lorcana/src/cards/definitions/004/characters";
 import { tweedleDeeAndTweedleDumStrangeStorytellers } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   chipRangerLeader,
   daleFriendInNeed,
@@ -21,7 +17,7 @@ describe("Chip - Ranger Leader", () => {
 
       const cardUnderTest = testEngine.getCardModel(chipRangerLeader);
 
-      expect(cardUnderTest.hasSupport).toBe(true);
+      expect(cardUnderTest.hasSupport()).toBe(true);
     });
 
     it("should not have support when Dale is not in play", async () => {
@@ -31,7 +27,7 @@ describe("Chip - Ranger Leader", () => {
 
       const cardUnderTest = testEngine.getCardModel(chipRangerLeader);
 
-      expect(cardUnderTest.hasSupport).toBe(false);
+      expect(cardUnderTest.hasSupport()).toBe(false);
     });
   });
 });

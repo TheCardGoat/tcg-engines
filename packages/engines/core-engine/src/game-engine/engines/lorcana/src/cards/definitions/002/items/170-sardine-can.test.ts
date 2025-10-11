@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   cruellaDeVilPerfectlyWretched,
   gastonIntellectualPowerhouse,
@@ -33,12 +29,12 @@ describe("Sardine Can", () => {
     );
 
     [target, anotherTarget].forEach((character) => {
-      expect(character.hasWard).toBe(false);
+      expect(character.hasWard()).toBe(false);
     });
 
     [target, anotherTarget].forEach((character) => {
       character.updateCardMeta({ exerted: true });
-      expect(character.hasWard).toBe(true);
+      expect(character.hasWard()).toBe(true);
     });
   });
 });

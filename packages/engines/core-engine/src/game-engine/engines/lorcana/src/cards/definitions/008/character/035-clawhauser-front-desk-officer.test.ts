@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { clawhauserFrontDeskOfficer } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,
@@ -16,7 +12,7 @@ describe("Clawhauser - Front Desk Officer", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(clawhauserFrontDeskOfficer);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it.skip("Singer 4 (This character counts as cost 4 to sing songs.)", async () => {
@@ -25,6 +21,6 @@ describe("Clawhauser - Front Desk Officer", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(clawhauserFrontDeskOfficer);
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 });

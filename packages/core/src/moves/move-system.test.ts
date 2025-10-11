@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import { produce } from "immer";
+import { createMockContext } from "../testing/test-context-factory";
 import type { CardId, PlayerId } from "../types";
 import { createCardId, createPlayerId } from "../types";
-import { createMockContext } from "../testing/test-context-factory";
 import type {
   MoveCondition,
   MoveContext,
@@ -150,16 +150,22 @@ describe("Move System with Validation", () => {
         return state.players[context.playerId].mana >= 2;
       };
 
-      expect(condition(initialState, createMockContext({ playerId: player1, params: {} }))).toBe(
-        true,
-      );
+      expect(
+        condition(
+          initialState,
+          createMockContext({ playerId: player1, params: {} }),
+        ),
+      ).toBe(true);
 
       const lowManaState = produce(initialState, (draft) => {
         draft.players[player1].mana = 1;
       });
-      expect(condition(lowManaState, createMockContext({ playerId: player1, params: {} }))).toBe(
-        false,
-      );
+      expect(
+        condition(
+          lowManaState,
+          createMockContext({ playerId: player1, params: {} }),
+        ),
+      ).toBe(false);
     });
 
     it("should access context in condition check", () => {
@@ -167,12 +173,18 @@ describe("Move System with Validation", () => {
         return state.currentPlayer === context.playerId;
       };
 
-      expect(condition(initialState, createMockContext({ playerId: player1, params: {} }))).toBe(
-        true,
-      );
-      expect(condition(initialState, createMockContext({ playerId: player2, params: {} }))).toBe(
-        false,
-      );
+      expect(
+        condition(
+          initialState,
+          createMockContext({ playerId: player1, params: {} }),
+        ),
+      ).toBe(true);
+      expect(
+        condition(
+          initialState,
+          createMockContext({ playerId: player2, params: {} }),
+        ),
+      ).toBe(false);
     });
 
     it("should validate based on targets", () => {
@@ -183,19 +195,25 @@ describe("Move System with Validation", () => {
       };
 
       expect(
-        condition(initialState, createMockContext({
-          playerId: player1,
-          params: {},
-          targets: [[player2]],
-        })),
+        condition(
+          initialState,
+          createMockContext({
+            playerId: player1,
+            params: {},
+            targets: [[player2]],
+          }),
+        ),
       ).toBe(true);
 
       expect(
-        condition(initialState, createMockContext({
-          playerId: player1,
-          params: {},
-          targets: [[player1]],
-        })),
+        condition(
+          initialState,
+          createMockContext({
+            playerId: player1,
+            params: {},
+            targets: [[player1]],
+          }),
+        ),
       ).toBe(false);
     });
   });
@@ -308,7 +326,10 @@ describe("Move System with Validation", () => {
         },
       };
 
-      const context: MoveContext = createMockContext({ playerId: player1, params: {} });
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
 
       // Check condition
       const isValid = moveDef.condition?.(initialState, context);
@@ -335,7 +356,10 @@ describe("Move System with Validation", () => {
         },
       };
 
-      const context: MoveContext = createMockContext({ playerId: player1, params: {} });
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
 
       const isValid = moveDef.condition?.(initialState, context);
       expect(isValid).toBe(false);
@@ -352,7 +376,10 @@ describe("Move System with Validation", () => {
         },
       };
 
-      const context: MoveContext = createMockContext({ playerId: player1, params: {} });
+      const context: MoveContext = createMockContext({
+        playerId: player1,
+        params: {},
+      });
 
       // No condition means always valid
       const isValid = moveDef.condition?.(initialState, context) ?? true;

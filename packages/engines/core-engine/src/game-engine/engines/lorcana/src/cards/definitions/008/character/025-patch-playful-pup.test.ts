@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   dalmatianPuppyTailWagger,
   patchPlayfulPup,
@@ -19,7 +15,7 @@ describe("Patch - Playful Pup", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(patchPlayfulPup);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 
   it("PUPPY BARKING While you have another Puppy character in play, this character gets +1 {L}.", async () => {

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, it } from "@jest/globals";
+import { describe, it } from "bun:test";
 import { baymaxsHealthcareChip } from "~/game-engine/engines/lorcana/src/cards/definitions/006/items/index";
 import {
   TestEngine,

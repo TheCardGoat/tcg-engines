@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { kitCloudkickerSpunkyBearCub } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
 import {
   TestEngine,
@@ -16,6 +12,6 @@ describe("Kit Cloudkicker - Spunky Bear Cub", () => {
     });
 
     const cardUnderTest = testStore.getCard(kitCloudkickerSpunkyBearCub);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

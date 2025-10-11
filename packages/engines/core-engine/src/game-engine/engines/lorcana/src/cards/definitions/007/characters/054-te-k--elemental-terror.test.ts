@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { teKaTheBurningOne } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { annaMysticalMajesty } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters";
 import {
@@ -24,7 +20,7 @@ describe("Te Kā - Elemental Terror", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(teKaElementalTerror);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
 
     await testEngine.shiftCard({
       shifted: teKaTheBurningOne,

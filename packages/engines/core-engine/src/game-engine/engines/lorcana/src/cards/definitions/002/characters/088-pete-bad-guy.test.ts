@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   nothingToHide,
   zeroToHero,
@@ -20,7 +16,7 @@ describe("Pete - Bad Guy", () => {
     });
 
     const cardUnderTest = testStore.getByZoneAndId("play", peteBadGuy.id);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 
   it("**TAKE THAT!** Whenever you play an action, this character gets +2 {S} this turn.", () => {

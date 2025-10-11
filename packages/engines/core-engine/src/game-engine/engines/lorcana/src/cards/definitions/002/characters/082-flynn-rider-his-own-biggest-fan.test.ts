@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { flynnRiderHisOwnBiggestFan } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/index";
 import {
   TestEngine,
@@ -20,7 +16,7 @@ describe("Flynn Rider - His Own Biggest Fan", () => {
       flynnRiderHisOwnBiggestFan.id,
     );
 
-    expect(cardUnderTest.hasShift).toEqual(true);
+    expect(cardUnderTest.hasShift()).toEqual(true);
   });
 
   it("Evasive", () => {

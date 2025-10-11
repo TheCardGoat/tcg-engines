@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { mauisFishHook } from "~/game-engine/engines/lorcana/src/cards/definitions/003/items";
 import { fredMajorScienceEnthusiast } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {

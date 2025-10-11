@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   charlotteLaBouffMardiGrasPrincess,
   deweyLovableShowoff,
@@ -20,7 +16,7 @@ describe("The Queen - Conceited Ruler", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(theQueenConceitedRuler);
-    expect(cardUnderTest.hasSupport).toBe(true);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 
   it("ROYAL SUMMONS At the start of your turn, you may choose and discard a Princess or Queen character card to return a character card from your discard to your hand.", async () => {

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { princeJohnGreediestOfAll } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import { breakFree } from "~/game-engine/engines/lorcana/src/cards/definitions/005/actions";
 import {
@@ -93,7 +89,7 @@ describe("Regression", () => {
     });
 
     expect(testEngine.getCardModel(princeJohnGreediestOfAll).zone).toBe("hand");
-    expect(testEngine.getCardModel(princeJohnGreediestOfAll).isRevealed).toBe(
+    expect(testEngine.getCardModel(princeJohnGreediestOfAll).isRevealed()).toBe(
       true,
     );
     expect(testEngine.getZonesCardCount("player_two")).toEqual(

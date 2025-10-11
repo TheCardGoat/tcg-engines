@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   caterpillarCalmAndCollected,
   hiramFlavershamToymaker,
@@ -27,7 +23,7 @@ describe("Queen of Hearts - Sensing Weakness", () => {
       queenOfHeartsSensingWeakness.id,
     );
 
-    expect(cardUnderTest.hasShift).toEqual(true);
+    expect(cardUnderTest.hasShift()).toEqual(true);
   });
 
   describe("**LET THE GAME BEGIN** Whenever one of your characters challenges another character, you may draw a card.", () => {

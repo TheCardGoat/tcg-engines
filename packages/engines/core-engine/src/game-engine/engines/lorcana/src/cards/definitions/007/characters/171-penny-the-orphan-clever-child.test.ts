@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { herculesBabyDemigod } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
 import { pennyTheOrphanCleverChild } from "~/game-engine/engines/lorcana/src/cards/definitions/007/index";
 import {
@@ -18,12 +14,12 @@ describe("Penny The Orphan - Clever Child", () => {
       hand: [herculesBabyDemigod],
     });
 
-    expect(testEngine.getCardModel(pennyTheOrphanCleverChild).hasWard).toBe(
+    expect(testEngine.getCardModel(pennyTheOrphanCleverChild).hasWard()).toBe(
       false,
     );
     await testEngine.playCard(herculesBabyDemigod);
     expect(testEngine.getCardModel(herculesBabyDemigod).zone).toBe("play");
-    expect(testEngine.getCardModel(pennyTheOrphanCleverChild).hasWard).toBe(
+    expect(testEngine.getCardModel(pennyTheOrphanCleverChild).hasWard()).toBe(
       true,
     );
   });

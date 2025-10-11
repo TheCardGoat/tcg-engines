@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import {
   brunoMadrigalSingingSeer,
@@ -21,7 +17,7 @@ describe("Bruno Madrigal - Singing Seer", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(brunoMadrigalSingingSeer);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("BRIGHT FUTURE Whenever this character sings a song, you may draw a card for each character you have in play.", async () => {

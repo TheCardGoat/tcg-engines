@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { tinkerBellQueenOfTheAzuriteFairies } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
@@ -18,7 +14,7 @@ describe("Tinker Bell - Queen of the Azurite Fairies", () => {
     const cardUnderTest = testEngine.getCardModel(
       tinkerBellQueenOfTheAzuriteFairies,
     );
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {

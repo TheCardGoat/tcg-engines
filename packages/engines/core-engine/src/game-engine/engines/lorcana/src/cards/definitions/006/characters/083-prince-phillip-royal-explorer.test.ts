@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { princePhillipRoyalExplorer } from "~/game-engine/engines/lorcana/src/cards/definitions/006/characters/index";
 import {
   TestEngine,
@@ -16,6 +12,6 @@ describe("Prince Phillip - Royal Explorer", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(princePhillipRoyalExplorer);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

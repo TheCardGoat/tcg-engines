@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { powerlineTakingTheStage } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
@@ -16,6 +12,6 @@ describe("Powerline - Taking the Stage", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(powerlineTakingTheStage);
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 });

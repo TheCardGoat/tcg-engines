@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { expect, it } from "@jest/globals";
+import { expect, it } from "bun:test";
 import {
   mauiDemiGod,
   princePhillipDragonSlayer,

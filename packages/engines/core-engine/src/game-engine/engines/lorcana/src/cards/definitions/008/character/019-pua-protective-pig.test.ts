@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { puaProtectivePig } from "~/game-engine/engines/lorcana/src/cards/definitions/008/index";
 import {
   TestEngine,
@@ -16,7 +12,7 @@ describe("Pua - Protective Pig", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(puaProtectivePig);
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it("FREE FRUIT When this character is banished, you may draw a card.", async () => {

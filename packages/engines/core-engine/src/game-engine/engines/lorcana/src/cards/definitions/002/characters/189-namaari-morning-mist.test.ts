@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   namaariMorningMist,
   robinHoodCapableFighter,
@@ -23,7 +19,7 @@ describe("Namaari- Morning Mist", () => {
       namaariMorningMist.id,
     );
 
-    expect(cardUnderTest.hasBodyguard).toBe(true);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 
   it("**BLADES** This character can challenge ready characters.", () => {

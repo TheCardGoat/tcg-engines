@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { mickeyBraveLittleTailor } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { friendsOnTheOtherSide } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs";
 import { minnieMouseMusicalArtist } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
@@ -27,7 +23,7 @@ describe("Minnie Mouse - Musical Artist", () => {
     const cardUnderTest = testEngine.getCardModel(minnieMouseMusicalArtist);
     const song = testEngine.getCardModel(friendsOnTheOtherSide);
 
-    expect(cardUnderTest.hasSinger).toBe(true);
+    expect(cardUnderTest.hasSinger()).toBe(true);
 
     cardUnderTest.sing(song);
 

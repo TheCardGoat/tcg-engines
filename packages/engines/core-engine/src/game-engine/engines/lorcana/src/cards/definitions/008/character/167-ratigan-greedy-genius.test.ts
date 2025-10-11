@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   ratiganGreedyGenius,
   theWardrobePerceptiveFriend,
@@ -19,7 +15,7 @@ describe("Ratigan - Greedy Genius", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(ratiganGreedyGenius);
-    expect(cardUnderTest.hasWard).toBe(true);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 
   describe("TIME RUNS OUT At the end of your turn, if you didn't put any cards into your inkwell this turn, banish this character.", () => {

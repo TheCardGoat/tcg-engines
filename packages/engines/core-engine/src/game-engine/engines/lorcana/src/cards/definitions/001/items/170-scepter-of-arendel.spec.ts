@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters";
 import { scepterOfArendelle } from "~/game-engine/engines/lorcana/src/cards/definitions/001/items/index";
 import {

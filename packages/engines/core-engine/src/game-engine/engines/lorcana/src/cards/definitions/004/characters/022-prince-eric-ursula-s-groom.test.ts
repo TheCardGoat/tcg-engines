@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import {
   princeEricUrsulasGroom,
   ursulaVanessa,
@@ -23,7 +19,7 @@ describe("Prince Eric - Ursula's Groom", () => {
     const ericCard = testEngine.getCardModel(princeEricUrsulasGroom);
 
     // Test initial state (without Ursula)
-    expect(ericCard.hasBodyguard).toBe(false);
+    expect(ericCard.hasBodyguard()).toBe(false);
     expect(ericCard.willpower).toBe(princeEricUrsulasGroom.willpower);
 
     // Setup test with both Prince Eric and Ursula in play
@@ -37,7 +33,7 @@ describe("Prince Eric - Ursula's Groom", () => {
     );
 
     // Test state with Ursula in play
-    expect(ericCardWithUrsula.hasBodyguard).toBe(true);
+    expect(ericCardWithUrsula.hasBodyguard()).toBe(true);
     expect(ericCardWithUrsula.willpower).toBe(
       princeEricUrsulasGroom.willpower + 2,
     );

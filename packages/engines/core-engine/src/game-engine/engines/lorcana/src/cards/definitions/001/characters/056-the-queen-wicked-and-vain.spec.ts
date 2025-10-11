@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { youHaveForgottenMe } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions";
 import { theQueenWickedAndVain } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/index";
 import {

@@ -1,8 +1,4 @@
-/**
- * @jest-environment node
- */
-
-import { describe, expect, it } from "@jest/globals";
+import { describe, expect, it } from "bun:test";
 import { cruellaDeVilFashionableCruiser } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters";
 import {
   dalmatianPuppyTailWagger,
@@ -22,7 +18,7 @@ describe("Perdita - Determined Mother", () => {
     });
 
     const cardUnderTest = testEngine.getCardModel(perditaDeterminedMother);
-    expect(cardUnderTest.hasShift).toBe(true);
+    expect(cardUnderTest.hasShift()).toBe(true);
   });
 
   it("QUICK, EVERYONE HIDE When you play this character, you may put all Puppy character cards from your discard into your inkwell facedown and exerted.", async () => {
