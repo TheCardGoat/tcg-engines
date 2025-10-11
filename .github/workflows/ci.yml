@@ -52,7 +52,7 @@ jobs:
 
       # Use hardlink backend for faster installation
       - name: Install dependencies
-        run: bun install --backend=hardlink --frozen-lockfile
+        run: bun install --backend=hardlink --linker isolated --frozen-lockfile
 
       - name: Run format
         run: bun run format

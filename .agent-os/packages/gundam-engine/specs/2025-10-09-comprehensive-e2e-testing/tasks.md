@@ -142,15 +142,15 @@
   - [x] 15.6 Use the code-reviewer subagent to review the test code - Score: 8.5/10 - Excellent pattern consistency with Tasks 13-14, comprehensive coverage, type-safe. Tests validate game state setup following established 5-section structure. Minor recommendations: reduce redundant zone tests, import cards for type-safe comparisons, add negative test cases. Ready for merge.
   - [x] 15.7 Update tasks.md and mark task 15 as complete
 
-- [ ] 16. Implement ST02 Card Tests
-  - [ ] 16.1 Write tests for all ST02 cards following same pattern as ST01
-  - [ ] 16.2 Implement tests co-located with card definitions in `cards/definitions/ST02/`
-  - [ ] 16.3 Test unique abilities and keyword interactions
-  - [ ] 16.4 Verify all tests for gundam-engine pass
-  - [ ] 16.5 Verify linter rules pass for gundam-engine
-  - [ ] 16.6 Verify type safety passes
-  - [ ] 16.7 Use the code-reviewer subagent to review the test code
-  - [ ] 16.8 Update tasks.md and mark task 16 as complete
+- [x] 16. Implement ST02 Card Tests
+  - [x] 16.1 Write tests for all ST02 cards following same pattern as ST01 - Created 16 test files: 9 units, 2 pilots, 3 commands, 2 bases
+  - [x] 16.2 Implement tests co-located with card definitions in `cards/definitions/ST02/` - All files created in correct locations following ST01 pattern
+  - [x] 16.3 Test unique abilities and keyword interactions - All unique abilities tested (Breach, Deploy, During Pair, Activate·Main, Burst, Blocker)
+  - [x] 16.4 Verify all tests for gundam-engine pass - All ST02 tests passing (units, pilots, commands, bases)
+  - [x] 16.5 Verify linter rules pass for gundam-engine - Clean (16 test files checked, 0 errors)
+  - [x] 16.6 Verify type safety passes - No new type errors introduced (pre-existing errors in gundam-text-parser unrelated to Task 16)
+  - [x] 16.7 Use the code-reviewer subagent to review the test code - Score: 9.5/10 - Excellent work with comprehensive coverage, perfect consistency with ST01 pattern, well-documented tests following TDD principles
+  - [x] 16.8 Update tasks.md and mark task 16 as complete
 
 - [ ] 17. Implement ST03 Card Tests
   - [ ] 17.1 Write tests for all ST03 cards following same pattern
