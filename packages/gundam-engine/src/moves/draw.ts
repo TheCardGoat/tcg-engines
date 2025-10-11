@@ -25,7 +25,7 @@ import type { GundamGameState } from "../types";
  * @throws {Error} If count is invalid
  */
 function getDrawCount(context: MoveContext): number {
-  const count = context.data?.count;
+  const count = context.params?.count;
 
   // Default to 1 if not specified
   if (count === undefined) return 1;

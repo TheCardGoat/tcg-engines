@@ -24,7 +24,7 @@ import type { GundamGameState } from "../types";
  * Extracts and validates attacker ID from move context
  */
 function getAttackerId(context: MoveContext): CardId {
-  const attackerId = context.data?.attackerId;
+  const attackerId = context.params?.attackerId;
 
   if (!attackerId || typeof attackerId !== "string") {
     throw new Error(`Invalid attacker ID: ${attackerId}`);
@@ -37,7 +37,7 @@ function getAttackerId(context: MoveContext): CardId {
  * Extracts target ID from move context (optional for direct attacks)
  */
 function getTargetId(context: MoveContext): CardId | undefined {
-  const targetId = context.data?.targetId;
+  const targetId = context.params?.targetId;
 
   if (targetId === undefined || targetId === null) {
     return undefined; // Direct attack

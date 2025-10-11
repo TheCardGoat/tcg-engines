@@ -18,6 +18,7 @@ export const createZoneOperations = <TCardDef, TCardMeta>(
       let sourceZoneId: string | undefined;
       for (const zoneId in state.zones) {
         const zone = state.zones[zoneId];
+        if (!zone) continue;
         const index = zone.cardIds.indexOf(cardId);
         if (index !== -1) {
           zone.cardIds.splice(index, 1);
@@ -26,7 +27,8 @@ export const createZoneOperations = <TCardDef, TCardMeta>(
           // Update positions in source zone if ordered
           if (zone.config.ordered) {
             for (let i = index; i < zone.cardIds.length; i++) {
-              const cid = zone.cardIds[i] as string;
+              const cid = zone.cardIds[i];
+              if (!cid) continue;
               if (state.cards[cid]) {
                 state.cards[cid].position = i;
               }
@@ -118,7 +120,12 @@ export const createZoneOperations = <TCardDef, TCardMeta>(
       const cards = [...zone.cardIds];
       for (let i = cards.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [cards[i], cards[j]] = [cards[j], cards[i]];
+        const temp = cards[i];
+        const swapCard = cards[j];
+        if (temp && swapCard) {
+          cards[i] = swapCard;
+          cards[j] = temp;
+        }
       }
 
       zone.cardIds = cards;
