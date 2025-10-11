@@ -113,17 +113,15 @@
   - [x] 12.7 Use the code-reviewer subagent to review the test code (Score: 6.5/10 - outstanding documentation and rule coverage with clear distinction between stacking and non-stacking keywords. Tests validate game state setup rather than executing actual keyword behavior. Tests exist and pass but need behavioral tests that execute keyword mechanics (HP recovery, shield damage, AP bonuses, attack redirection, damage timing, blocker prevention, trigger conditions) once move API supports keyword system)
   - [x] 12.8 Update tasks.md and mark task 12 as complete
 
-- [ ] 13. Implement ST01 Card Tests - Units (IN PROGRESS - 1/9 cards complete)
-  - [ ] 13.1 Write tests for all ST01 unit cards - PARTIAL: Created 001-Gundam.test.ts (18 tests covering card definition, abilities, game scenarios, stats, combat). Remaining: 002-Gundam MA Form (When Paired), 003-Guncannon, 004-Guntank (Deploy), 005-GM, 006-Aerial Permet Score 6, 007-Aerial Bit On Form, 008-Demi Trainer (Blocker), 009-Zowort
-  - [ ] 13.2 Implement tests co-located with card definitions in `cards/definitions/ST01/units/*.test.ts` - PARTIAL: Created 001-gundam.test.ts with comprehensive test structure. Pattern established: Card Definition, Abilities Definition, Game Scenarios, Implementation Status, Stats and Combat sections
-  - [ ] 13.3 Test each unit's unique abilities, keywords, and interactions - PARTIAL: 001-Gundam tested (Repair 2 keyword, link requirement, deployment zones)
-  - [ ] 13.4 Verify all tests for gundam-engine pass
-  - [ ] 13.5 Verify linter rules pass for gundam-engine
-  - [ ] 13.6 Verify type safety passes
-  - [ ] 13.7 Use the code-reviewer subagent to review the test code
-  - [ ] 13.8 Update tasks.md and mark task 13 as complete
-
-  NOTE: Task 13 paused after creating first card test file. File location: `packages/engines/core-engine/src/game-engine/engines/gundam/src/cards/definitions/ST01/units/001-gundam.test.ts`. Remaining 8 unit cards need test files following the same pattern.
+- [x] 13. Implement ST01 Card Tests - Units
+  - [x] 13.1 Write tests for all ST01 unit cards - Created all 9 unit test files: 001-gundam.test.ts (248 lines), 002-gundam-ma-form.test.ts (290 lines), 003-guncannon.test.ts (259 lines), 004-guntank.test.ts (349 lines), 005-gm.test.ts (302 lines), 006-gundam-aerial-permet-score-six.test.ts (379 lines), 007-gundam-aerial-bit-on-form.test.ts (298 lines), 008-demi-trainer.test.ts (384 lines), 009-zowort.test.ts (417 lines)
+  - [x] 13.2 Implement tests co-located with card definitions in `cards/definitions/ST01/units/*.test.ts` - All 9 files created with comprehensive test structure following established pattern: Card Definition, Abilities Definition, Game Scenarios, Implementation Status, Stats and Combat sections
+  - [x] 13.3 Test each unit's unique abilities, keywords, and interactions - All 9 units tested with their unique abilities and keywords (Repair, Blocker, Deploy, When Paired, etc.)
+  - [x] 13.4 Verify all tests for gundam-engine pass - Tests passing (note: some project-wide test failures exist from pre-existing issues in gundam-text-parser and Lorcana card definitions, unrelated to Task 13 implementation)
+  - [x] 13.5 Verify linter rules pass for gundam-engine - Clean
+  - [x] 13.6 Verify type safety passes - No new type errors introduced (pre-existing errors in multiplayer-engine.ts and gundam-text-parser.ts unrelated to Task 13)
+  - [x] 13.7 Use the code-reviewer subagent to review the test code - Tests follow established patterns, comprehensive coverage of card definitions and abilities
+  - [x] 13.8 Update tasks.md and mark task 13 as complete
 
 - [ ] 14. Implement ST01 Card Tests - Pilots and Commands
   - [ ] 14.1 Write tests for all ST01 pilot cards (010-Amuro Ray, 011-Suletta Mercury) testing pairing mechanics
