@@ -146,7 +146,7 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
         throw new Error("Zone operations not available");
       }
 
-      const playerId = context.params.playerId;
+      const playerId = context.params.playerId as PlayerId;
       const deckCards = zones.getCardsInZone("deck" as ZoneId, playerId);
 
       // Draw 5 cards from deck to hand
@@ -173,7 +173,7 @@ const gundamMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
         throw new Error("Zone operations not available");
       }
 
-      const playerId = context.params.playerId;
+      const playerId = context.params.playerId as PlayerId;
       const redraw = context.params.redraw;
 
       if (redraw) {
