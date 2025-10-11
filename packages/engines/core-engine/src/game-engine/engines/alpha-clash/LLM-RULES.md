@@ -1,5 +1,7 @@
 # Alpha Clash Rules Summary
 
+For full context, refer to the RULES.md file.
+
 ## 1. Game Concepts
 
 ### 100. General
