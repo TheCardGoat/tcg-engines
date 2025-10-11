@@ -1,4 +1,6 @@
 // Re-export all cards from the original structure to maintain compatibility
+import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
+
 export * from "./actions";
 export * from "./character";
 export { moneyEverywhere } from "./character/037-donaldDuckCoinCollector";

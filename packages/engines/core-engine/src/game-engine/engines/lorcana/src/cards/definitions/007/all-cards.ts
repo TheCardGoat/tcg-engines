@@ -1,6 +1,8 @@
-export * from "~/game-engine/engines/lorcana/src/cards/definitions/007/actions";
-export * from "~/game-engine/engines/lorcana/src/cards/definitions/007/characters";
-export * from "~/game-engine/engines/lorcana/src/cards/definitions/007/items";
+import type { LorcanaCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
+
+export * from "./actions";
+export * from "./characters";
+export * from "./items";
 
 import {
   allIsFound,
@@ -20,7 +22,7 @@ import {
   wakeUpAlice,
   waterHasMemory,
   weveGotCompany,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/007/actions";
+} from "./actions";
 
 import {
   akelaWolfPackElder,
@@ -196,7 +198,7 @@ import {
   yzmaAboveItAll,
   yzmaChangedIntoAKitten,
   yzmaExasperatedSchemer,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/007/characters";
+} from "./characters";
 
 import {
   amberCoil,
@@ -213,7 +215,7 @@ import {
   theGlassSlipper,
   trainingStaff,
   unconventionalTool,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/007/items";
+} from "./items";
 
 export const all007Cards: LorcanaCardDefinition[] = [
   akelaWolfPackElder,
