@@ -1,9 +1,11 @@
 import type {
   CardId,
   CardZoneConfig,
+  FlowContext,
   FlowDefinition,
   GameDefinition,
   GameMoveDefinitions,
+  MoveContext,
   PlayerId,
   ZoneId,
 } from "@tcg/core";
