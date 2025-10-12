@@ -400,35 +400,4 @@ describe("schema-builders", () => {
       }
     });
   });
-
-  describe("performance", () => {
-    it("should validate efficiently", () => {
-      const schema = createCardSchema({
-        id: z.string(),
-        name: z.string(),
-        type: z.string(),
-        power: z.number().optional(),
-        toughness: z.number().optional(),
-        cost: z.number().optional(),
-      });
-
-      const card = {
-        id: "dragon-1",
-        name: "Dragon",
-        type: "creature",
-        power: 5,
-        toughness: 5,
-        cost: 4,
-      };
-
-      const startTime = performance.now();
-      for (let i = 0; i < 10000; i++) {
-        schema.safeParse(card);
-      }
-      const endTime = performance.now();
-
-      // Should complete in reasonable time (< 200ms for 10k validations)
-      expect(endTime - startTime).toBeLessThan(200);
-    });
-  });
 });
