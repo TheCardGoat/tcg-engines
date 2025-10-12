@@ -20,12 +20,12 @@ type GameState = {
   players: Array<{ id: string; name: string; score: number }>;
   turnCount: number;
   phase?: string;
-  segment?: string;
+  step?: string;
   log: string[];
   // Flow state that needs to be preserved
   flowState?: {
     currentPhase?: string;
-    currentSegment?: string;
+    currentStep?: string;
     turnNumber: number;
   };
 };
@@ -34,38 +34,43 @@ describe("Flow Serialization - End to End", () => {
   it("should serialize and deserialize complete game state with flow position", () => {
     // Setup: Create a game with flow
     const flow: FlowDefinition<GameState> = {
-      turn: {
-        onBegin: (context) => {
-          context.state.turnCount += 1;
-          context.state.log.push(`turn-${context.state.turnCount}-begin`);
-        },
-        phases: {
-          ready: {
-            order: 0,
-            next: "draw",
+      gameSegments: {
+        mainGame: {
+          order: 1,
+          turn: {
             onBegin: (context) => {
-              context.state.log.push("ready-phase");
+              context.state.turnCount += 1;
+              context.state.log.push(`turn-${context.state.turnCount}-begin`);
             },
-          },
-          draw: {
-            order: 1,
-            next: "main",
-            onBegin: (context) => {
-              context.state.log.push("draw-phase");
-            },
-          },
-          main: {
-            order: 2,
-            next: "end",
-            onBegin: (context) => {
-              context.state.log.push("main-phase");
-            },
-          },
-          end: {
-            order: 3,
-            next: undefined,
-            onBegin: (context) => {
-              context.state.log.push("end-phase");
+            phases: {
+              ready: {
+                order: 0,
+                next: "draw",
+                onBegin: (context) => {
+                  context.state.log.push("ready-phase");
+                },
+              },
+              draw: {
+                order: 1,
+                next: "main",
+                onBegin: (context) => {
+                  context.state.log.push("draw-phase");
+                },
+              },
+              main: {
+                order: 2,
+                next: "end",
+                onBegin: (context) => {
+                  context.state.log.push("main-phase");
+                },
+              },
+              end: {
+                order: 3,
+                next: undefined,
+                onBegin: (context) => {
+                  context.state.log.push("end-phase");
+                },
+              },
             },
           },
         },
@@ -113,15 +118,20 @@ describe("Flow Serialization - End to End", () => {
 
   it("should restore flow manager from serialized state and continue playing", () => {
     const flow: FlowDefinition<GameState> = {
-      turn: {
-        onBegin: (context) => {
-          context.state.turnCount += 1;
-        },
-        phases: {
-          ready: { order: 0, next: "draw" },
-          draw: { order: 1, next: "main" },
-          main: { order: 2, next: "end" },
-          end: { order: 3, next: undefined },
+      gameSegments: {
+        mainGame: {
+          order: 1,
+          turn: {
+            onBegin: (context) => {
+              context.state.turnCount += 1;
+            },
+            phases: {
+              ready: { order: 0, next: "draw" },
+              draw: { order: 1, next: "main" },
+              main: { order: 2, next: "end" },
+              end: { order: 3, next: undefined },
+            },
+          },
         },
       },
     };
@@ -176,33 +186,38 @@ describe("Flow Serialization - End to End", () => {
     expect(restoredManager.getGameState().turnCount).toBeGreaterThan(1);
   });
 
-  it("should preserve segment state during serialization", () => {
+  it("should preserve step state during serialization", () => {
     const flow: FlowDefinition<GameState> = {
-      turn: {
-        phases: {
-          combat: {
-            order: 0,
-            next: undefined,
-            segments: {
-              declare: {
+      gameSegments: {
+        mainGame: {
+          order: 1,
+          turn: {
+            phases: {
+              combat: {
                 order: 0,
-                next: "target",
-                onBegin: (context) => {
-                  context.state.log.push("declare-attackers");
-                },
-              },
-              target: {
-                order: 1,
-                next: "damage",
-                onBegin: (context) => {
-                  context.state.log.push("declare-targets");
-                },
-              },
-              damage: {
-                order: 2,
                 next: undefined,
-                onBegin: (context) => {
-                  context.state.log.push("deal-damage");
+                steps: {
+                  declare: {
+                    order: 0,
+                    next: "target",
+                    onBegin: (context) => {
+                      context.state.log.push("declare-attackers");
+                    },
+                  },
+                  target: {
+                    order: 1,
+                    next: "damage",
+                    onBegin: (context) => {
+                      context.state.log.push("declare-targets");
+                    },
+                  },
+                  damage: {
+                    order: 2,
+                    next: undefined,
+                    onBegin: (context) => {
+                      context.state.log.push("deal-damage");
+                    },
+                  },
                 },
               },
             },
@@ -221,9 +236,9 @@ describe("Flow Serialization - End to End", () => {
     const manager = new FlowManager(flow, initialState);
 
     // Progress to middle of combat
-    manager.nextSegment(); // declare → target
+    manager.nextStep(); // declare → target
 
-    // Serialize with segment information
+    // Serialize with step information
     const snapshot = {
       game: manager.getGameState(),
       flow: manager.serializeFlowState(),
@@ -232,9 +247,9 @@ describe("Flow Serialization - End to End", () => {
     const serialized = JSON.stringify(snapshot);
     const restored = JSON.parse(serialized);
 
-    // Verify segment was preserved
+    // Verify step was preserved
     expect(restored.flow.currentPhase).toBe("combat");
-    expect(restored.flow.currentSegment).toBe("target");
+    expect(restored.flow.currentStep).toBe("target");
     expect(restored.game.log).toContain("declare-attackers");
     expect(restored.game.log).toContain("declare-targets");
 
@@ -244,28 +259,34 @@ describe("Flow Serialization - End to End", () => {
     });
 
     // Continue from where we left off
-    restoredManager.nextSegment(); // target → damage
+    restoredManager.nextStep(); // target → damage
 
-    expect(restoredManager.getCurrentSegment()).toBe("damage");
+    expect(restoredManager.getCurrentStep()).toBe("damage");
     expect(restoredManager.getGameState().log).toContain("deal-damage");
   });
 
   it("should handle replay scenario: deserialize multiple snapshots in sequence", () => {
     const flow: FlowDefinition<GameState> = {
-      turn: {
-        onBegin: (context) => {
-          context.state.turnCount += 1;
-          context.state.currentPlayer =
-            (context.state.currentPlayer + 1) % context.state.players.length;
-        },
-        phases: {
-          main: {
-            order: 0,
-            next: undefined,
+      gameSegments: {
+        mainGame: {
+          order: 1,
+          turn: {
             onBegin: (context) => {
-              context.state.log.push(
-                `player-${context.state.currentPlayer}-main`,
-              );
+              context.state.turnCount += 1;
+              context.state.currentPlayer =
+                (context.state.currentPlayer + 1) %
+                context.state.players.length;
+            },
+            phases: {
+              main: {
+                order: 0,
+                next: undefined,
+                onBegin: (context) => {
+                  context.state.log.push(
+                    `player-${context.state.currentPlayer}-main`,
+                  );
+                },
+              },
             },
           },
         },
@@ -339,19 +360,24 @@ describe("Flow Serialization - End to End", () => {
     };
 
     const flow: FlowDefinition<ComplexGameState> = {
-      turn: {
-        phases: {
-          main: {
-            order: 0,
-            next: undefined,
-            onBegin: (context) => {
-              // Modify nested structures
-              context.state.cards.card1 = {
-                id: "card1",
-                owner: "p1",
-                zone: "hand",
-              };
-              context.state.zones.hand = ["card1"];
+      gameSegments: {
+        mainGame: {
+          order: 1,
+          turn: {
+            phases: {
+              main: {
+                order: 0,
+                next: undefined,
+                onBegin: (context) => {
+                  // Modify nested structures
+                  context.state.cards.card1 = {
+                    id: "card1",
+                    owner: "p1",
+                    zone: "hand",
+                  };
+                  context.state.zones.hand = ["card1"];
+                },
+              },
             },
           },
         },
@@ -395,24 +421,29 @@ describe("Flow Serialization - End to End", () => {
 
   it("should handle serialization with automatic transitions (endIf)", () => {
     const flow: FlowDefinition<GameState> = {
-      turn: {
-        phases: {
-          waiting: {
-            order: 0,
-            next: "ready",
-            endIf: (context) => {
-              // Auto-transition when all players ready
-              return context.state.players.every((p) => p.score > 0);
-            },
-            onBegin: (context) => {
-              context.state.log.push("waiting-for-players");
-            },
-          },
-          ready: {
-            order: 1,
-            next: undefined,
-            onBegin: (context) => {
-              context.state.log.push("all-players-ready");
+      gameSegments: {
+        mainGame: {
+          order: 1,
+          turn: {
+            phases: {
+              waiting: {
+                order: 0,
+                next: "ready",
+                endIf: (context) => {
+                  // Auto-transition when all players ready
+                  return context.state.players.every((p) => p.score > 0);
+                },
+                onBegin: (context) => {
+                  context.state.log.push("waiting-for-players");
+                },
+              },
+              ready: {
+                order: 1,
+                next: undefined,
+                onBegin: (context) => {
+                  context.state.log.push("all-players-ready");
+                },
+              },
             },
           },
         },
@@ -463,22 +494,27 @@ describe("Flow Serialization - End to End", () => {
     // with the exact same state and continue from any point
 
     const flow: FlowDefinition<GameState> = {
-      turn: {
-        onBegin: (context) => {
-          context.state.turnCount += 1;
-        },
-        phases: {
-          phase1: {
-            order: 0,
-            next: "phase2",
-            segments: {
-              step1: { order: 0, next: "step2" },
-              step2: { order: 1, next: undefined },
+      gameSegments: {
+        mainGame: {
+          order: 1,
+          turn: {
+            onBegin: (context) => {
+              context.state.turnCount += 1;
             },
-          },
-          phase2: {
-            order: 1,
-            next: undefined,
+            phases: {
+              phase1: {
+                order: 0,
+                next: "phase2",
+                steps: {
+                  step1: { order: 0, next: "step2" },
+                  step2: { order: 1, next: undefined },
+                },
+              },
+              phase2: {
+                order: 1,
+                next: undefined,
+              },
+            },
           },
         },
       },
@@ -493,7 +529,7 @@ describe("Flow Serialization - End to End", () => {
 
     // Original manager at specific state
     const original = new FlowManager(flow, initialState);
-    original.nextSegment(); // phase1.step1 → phase1.step2
+    original.nextStep(); // phase1.step1 → phase1.step2
 
     // Capture full state
     const fullState = {
@@ -514,16 +550,16 @@ describe("Flow Serialization - End to End", () => {
     expect(reconstructed.getGameState()).toEqual(original.getGameState());
 
     // Both managers should be able to continue identically
-    original.nextSegment(); // phase1.step2 → phase2
-    reconstructed.nextSegment(); // phase1.step2 → phase2
+    original.nextStep(); // phase1.step2 → phase2
+    reconstructed.nextStep(); // phase1.step2 → phase2
 
     const origPhase = original.getCurrentPhase();
-    const origSegment = original.getCurrentSegment();
+    const origStep = original.getCurrentStep();
     if (origPhase) {
       expect(reconstructed.getCurrentPhase()).toBe(origPhase);
     }
-    if (origSegment) {
-      expect(reconstructed.getCurrentSegment()).toBe(origSegment);
+    if (origStep) {
+      expect(reconstructed.getCurrentStep()).toBe(origStep);
     }
   });
 });
