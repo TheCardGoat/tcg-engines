@@ -25,57 +25,119 @@ describe("Move: Choose First Player", () => {
   });
 
   it("Choosing player_one as first player", () => {
-    testEngine.chooseWhoGoesFirst(PLAYER_ONE);
     const ctx = testEngine.getCtx();
+    const choosingPlayer = ctx.choosingFirstPlayer;
+
+    // Execute the move as the designated choosing player
+    testEngine.changeActivePlayer(choosingPlayer || PLAYER_ONE);
+    testEngine.chooseWhoGoesFirst(PLAYER_ONE);
+    const updatedCtx = testEngine.getCtx();
 
     // Verify OTP is set
-    expect(ctx.otp).toBe(PLAYER_ONE);
+    expect(updatedCtx.otp).toBe(PLAYER_ONE);
 
     // Verify pending mulligan is set for both players
-    expect(ctx.pendingMulligan?.length).toBe(2);
-    expect(ctx.pendingMulligan?.map((p) => String(p))).toContain(PLAYER_ONE);
-    expect(ctx.pendingMulligan?.map((p) => String(p))).toContain(PLAYER_TWO);
+    expect(updatedCtx.pendingMulligan?.length).toBe(2);
+    expect(updatedCtx.pendingMulligan?.map((p) => String(p))).toContain(
+      PLAYER_ONE,
+    );
+    expect(updatedCtx.pendingMulligan?.map((p) => String(p))).toContain(
+      PLAYER_TWO,
+    );
 
     // Verify phase transition occurred
     expect(testEngine.getGamePhase()).toBe("mulligan");
   });
 
   it("Choosing player_two as first player", () => {
-    testEngine.changeActivePlayer(PLAYER_ONE);
-    testEngine.chooseWhoGoesFirst(PLAYER_TWO);
     const ctx = testEngine.getCtx();
+    const choosingPlayer = ctx.choosingFirstPlayer;
+
+    // Execute the move as the designated choosing player
+    testEngine.changeActivePlayer(choosingPlayer || PLAYER_ONE);
+    testEngine.chooseWhoGoesFirst(PLAYER_TWO);
+    const updatedCtx = testEngine.getCtx();
 
     // Verify OTP is set
-    expect(ctx.otp).toBe(PLAYER_TWO);
+    expect(updatedCtx.otp).toBe(PLAYER_TWO);
 
     // Verify pending mulligan is set for both players
-    expect(ctx.pendingMulligan?.length).toBe(2);
-    expect(ctx.pendingMulligan?.map((p) => String(p))).toContain(PLAYER_ONE);
-    expect(ctx.pendingMulligan?.map((p) => String(p))).toContain(PLAYER_TWO);
+    expect(updatedCtx.pendingMulligan?.length).toBe(2);
+    expect(updatedCtx.pendingMulligan?.map((p) => String(p))).toContain(
+      PLAYER_ONE,
+    );
+    expect(updatedCtx.pendingMulligan?.map((p) => String(p))).toContain(
+      PLAYER_TWO,
+    );
 
     // Verify phase transition occurred
     expect(testEngine.getGamePhase()).toBe("mulligan");
   });
 
-  it("Allows any player to choose first player (no priority check in this phase)", () => {
-    // In the startingAGame/chooseFirstPlayer phase, either player can make the choice
-    // This is similar to how rock-paper-scissors works in real games
+  it("Only the designated player can choose first player", () => {
+    // Rule 3.1.2: First, use a method for randomly determining WHO CHOOSES who is the starting player
+    // One player is randomly designated to make the choice (like winning a coin flip)
 
-    // Player_one makes the choice
-    testEngine.chooseWhoGoesFirst(PLAYER_ONE);
     const ctx = testEngine.getCtx();
+    const choosingPlayer = ctx.choosingFirstPlayer;
 
-    // Verify the choice was recorded
-    expect(ctx.otp).toBe(PLAYER_ONE);
+    // Verify that a choosing player was randomly designated
+    expect(choosingPlayer).toBeDefined();
+    expect([PLAYER_ONE, PLAYER_TWO]).toContain(choosingPlayer);
+
+    // The designated player should be able to choose
+    if (choosingPlayer === PLAYER_ONE) {
+      testEngine.changeActivePlayer(PLAYER_ONE);
+      testEngine.chooseWhoGoesFirst(PLAYER_TWO); // Can choose either player
+      expect(testEngine.getCtx().otp).toBe(PLAYER_TWO);
+    } else {
+      testEngine.changeActivePlayer(PLAYER_TWO);
+      testEngine.chooseWhoGoesFirst(PLAYER_ONE); // Can choose either player
+      expect(testEngine.getCtx().otp).toBe(PLAYER_ONE);
+    }
+
     expect(testEngine.getGamePhase()).toBe("mulligan");
+  });
+
+  it("Non-designated player cannot choose first player", () => {
+    // Check who is the designated chooser
+    const ctx = testEngine.getCtx();
+    const choosingPlayer = ctx.choosingFirstPlayer;
+    const otherPlayer = choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
+
+    // Try to have the OTHER player choose - should fail
+    testEngine.changeActivePlayer(otherPlayer);
+    const result = testEngine.engine.executeMove("chooseWhoGoesFirstMove", {
+      playerId: createPlayerId(otherPlayer),
+      params: { playerId: createPlayerId(PLAYER_ONE) },
+    });
+
+    // Should fail with detailed error information
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.errorCode).toBe("NOT_CHOOSING_PLAYER");
+      expect(result.error).toContain("can choose the first player");
+      expect(result.error).toContain(String(choosingPlayer));
+      expect(result.error).toContain(String(otherPlayer));
+      expect(result.errorContext?.choosingPlayer).toBe(choosingPlayer);
+      expect(result.errorContext?.executingPlayer).toBe(otherPlayer);
+    }
+
+    // Verify OTP was not set
+    expect(testEngine.getCtx().otp).toBeUndefined();
+    expect(testEngine.getGamePhase()).toBe("chooseFirstPlayer");
   });
 
   // ========== Invalid Move Tests ==========
 
   it("should reject invalid player ID", () => {
-    // Attempt to choose an invalid player ID
+    // Get the designated chooser so we can execute as them
+    const ctx = testEngine.getCtx();
+    const choosingPlayer = ctx.choosingFirstPlayer;
+
+    // Attempt to choose an invalid player ID as the designated chooser
     const result = testEngine.engine.executeMove("chooseWhoGoesFirstMove", {
-      playerId: createPlayerId(PLAYER_ONE),
+      playerId: createPlayerId(choosingPlayer || PLAYER_ONE),
       params: { playerId: createPlayerId("invalid_player_id") },
     });
 
@@ -93,13 +155,18 @@ describe("Move: Choose First Player", () => {
     }
 
     // Verify OTP was not set
-    const ctx = testEngine.getCtx();
-    expect(ctx.otp).toBeUndefined();
+    const updatedCtx = testEngine.getCtx();
+    expect(updatedCtx.otp).toBeUndefined();
     expect(testEngine.getGamePhase()).toBe("chooseFirstPlayer");
   });
 
   it("should reject choosing first player twice", () => {
-    // Choose first player successfully
+    // Get the designated chooser
+    const ctx = testEngine.getCtx();
+    const choosingPlayer = ctx.choosingFirstPlayer;
+
+    // Choose first player successfully as the designated chooser
+    testEngine.changeActivePlayer(choosingPlayer || PLAYER_ONE);
     testEngine.chooseWhoGoesFirst(PLAYER_ONE);
     const ctxAfterFirst = testEngine.getCtx();
     expect(ctxAfterFirst.otp).toBe(PLAYER_ONE);
@@ -117,10 +184,13 @@ describe("Move: Choose First Player", () => {
       { skipPreGame: false },
     );
 
-    // Manually set OTP without going through the move (simulating the state after first choice)
-    // We'll execute the move directly on the engine to check the condition
+    // Get the designated chooser for the new engine
+    const ctx2 = testEngine2.getCtx();
+    const choosingPlayer2 = ctx2.choosingFirstPlayer;
+
+    // Execute the move as the designated chooser
     const result = testEngine2.engine.executeMove("chooseWhoGoesFirstMove", {
-      playerId: createPlayerId(PLAYER_ONE),
+      playerId: createPlayerId(choosingPlayer2 || PLAYER_ONE),
       params: { playerId: createPlayerId(PLAYER_ONE) },
     });
     expect(result.success).toBe(true);
@@ -129,7 +199,7 @@ describe("Move: Choose First Player", () => {
     // Note: The move transitions to mulligan phase after successful execution,
     // so the wrong phase error takes precedence over OTP already being set
     const result2 = testEngine2.engine.executeMove("chooseWhoGoesFirstMove", {
-      playerId: createPlayerId(PLAYER_ONE),
+      playerId: createPlayerId(choosingPlayer2 || PLAYER_ONE),
       params: { playerId: createPlayerId(PLAYER_TWO) },
     });
 
@@ -146,13 +216,18 @@ describe("Move: Choose First Player", () => {
   });
 
   it("should reject choosing first player during wrong phase", () => {
+    // Get the designated chooser
+    const ctx = testEngine.getCtx();
+    const choosingPlayer = ctx.choosingFirstPlayer;
+
     // Choose first player successfully - this transitions to mulligan phase
+    testEngine.changeActivePlayer(choosingPlayer || PLAYER_ONE);
     testEngine.chooseWhoGoesFirst(PLAYER_ONE);
     expect(testEngine.getGamePhase()).toBe("mulligan");
 
     // Try to choose first player again while in mulligan phase
     const result = testEngine.engine.executeMove("chooseWhoGoesFirstMove", {
-      playerId: createPlayerId(PLAYER_ONE),
+      playerId: createPlayerId(choosingPlayer || PLAYER_ONE),
       params: { playerId: createPlayerId(PLAYER_TWO) },
     });
 
@@ -169,7 +244,7 @@ describe("Move: Choose First Player", () => {
     }
 
     // Verify OTP hasn't changed
-    const ctx = testEngine.getCtx();
-    expect(ctx.otp).toBe(PLAYER_ONE); // Still player_one, not player_two
+    const updatedCtx = testEngine.getCtx();
+    expect(updatedCtx.otp).toBe(PLAYER_ONE); // Still player_one, not player_two
   });
 });

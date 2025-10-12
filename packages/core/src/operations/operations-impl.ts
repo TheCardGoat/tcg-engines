@@ -302,6 +302,14 @@ export const createGameOperations = <TCardDef, TCardMeta>(
       return state.otp;
     },
 
+    setChoosingFirstPlayer: (playerId: PlayerId) => {
+      state.choosingFirstPlayer = playerId;
+    },
+
+    getChoosingFirstPlayer: () => {
+      return state.choosingFirstPlayer;
+    },
+
     setPendingMulligan: (playerIds: PlayerId[]) => {
       state.pendingMulligan = playerIds;
     },

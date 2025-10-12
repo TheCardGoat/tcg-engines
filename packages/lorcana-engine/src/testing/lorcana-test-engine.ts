@@ -177,6 +177,7 @@ export class LorcanaTestEngine {
       turnNumber: flowManager.getTurnNumber(),
       currentPlayer: flowManager.getCurrentPlayer(),
       otp: internalState?.otp,
+      choosingFirstPlayer: internalState?.choosingFirstPlayer,
       pendingMulligan: internalState?.pendingMulligan,
     };
   }

@@ -195,7 +195,7 @@ export type MoveContext<
     turn: number;
     currentPlayer: PlayerId;
     isFirstTurn: boolean;
-    endPhase: () => void;
+    endPhase: (phaseName?: string) => void;
     endSegment: () => void;
     endTurn: () => void;
   };

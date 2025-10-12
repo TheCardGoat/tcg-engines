@@ -23,6 +23,7 @@ import {
 } from "../operations/operations-impl";
 import { SeededRNG } from "../rng/seeded-rng";
 import type { PlayerId } from "../types/branded";
+import { createPlayerId } from "../types/branded-utils";
 import type { InternalState } from "../types/state";
 import { TrackerSystem } from "./tracker-system";
 
@@ -178,6 +179,20 @@ export class RuleEngine<
             cardIds: [],
           };
         }
+      }
+    }
+
+    // Randomly select which player gets to choose who goes first
+    // This follows TCG rules where one player is randomly designated to make the choice
+    // (e.g., via coin flip, dice roll, or rock-paper-scissors)
+    // IMPORTANT: This must happen BEFORE setup to ensure deterministic replay
+    if (players.length > 0) {
+      const randomIndex = Math.floor(this.rng.random() * players.length);
+      const choosingPlayer = players[randomIndex];
+      if (choosingPlayer) {
+        this.internalState.choosingFirstPlayer = createPlayerId(
+          choosingPlayer.id,
+        );
       }
     }
 
@@ -748,12 +763,46 @@ export class RuleEngine<
    * @returns Final state after replay
    */
   replay(upToIndex?: number): TState {
-    // Reset to initial state
-    this.currentState = this.gameDefinition.setup(this.initialPlayers);
-
     // Reset RNG to initial seed for deterministic replay
     const originalSeed = this.rng.getSeed();
     this.rng.setSeed(originalSeed);
+
+    // Reset internal state (zones, cards, choosingFirstPlayer, etc.)
+    this.internalState = {
+      zones: {},
+      cards: {},
+      cardMetas: {},
+    };
+
+    // Recreate zones from game definition
+    if (this.gameDefinition.zones) {
+      for (const zoneId in this.gameDefinition.zones) {
+        const zoneConfig = this.gameDefinition.zones[zoneId];
+        if (zoneConfig) {
+          this.internalState.zones[zoneId] = {
+            config: zoneConfig,
+            cardIds: [],
+          };
+        }
+      }
+    }
+
+    // Randomly select which player gets to choose who goes first
+    // This must match the original constructor behavior for deterministic replay
+    if (this.initialPlayers.length > 0) {
+      const randomIndex = Math.floor(
+        this.rng.random() * this.initialPlayers.length,
+      );
+      const choosingPlayer = this.initialPlayers[randomIndex];
+      if (choosingPlayer) {
+        this.internalState.choosingFirstPlayer = createPlayerId(
+          choosingPlayer.id,
+        );
+      }
+    }
+
+    // Reset to initial state
+    this.currentState = this.gameDefinition.setup(this.initialPlayers);
 
     const endIndex = upToIndex ?? this.history.length;
 

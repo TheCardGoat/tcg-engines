@@ -45,7 +45,21 @@ export const chooseWhoGoesFirstMove = createMove<
       };
     }
 
-    // 2. Check OTP hasn't been set yet (prevent choosing twice)
+    // 2. Check that the executing player is the one designated to choose
+    // Rule 3.1.2: One player is randomly determined to choose who is the starting player
+    const choosingPlayer = context.game.getChoosingFirstPlayer();
+    if (choosingPlayer && context.playerId !== choosingPlayer) {
+      return {
+        reason: `Only ${String(choosingPlayer)} can choose the first player. You are ${String(context.playerId)}.`,
+        errorCode: "NOT_CHOOSING_PLAYER",
+        context: {
+          choosingPlayer: String(choosingPlayer),
+          executingPlayer: String(context.playerId),
+        },
+      };
+    }
+
+    // 3. Check OTP hasn't been set yet (prevent choosing twice)
     const currentOTP = context.game.getOTP();
     if (currentOTP) {
       return {
@@ -57,7 +71,7 @@ export const chooseWhoGoesFirstMove = createMove<
       };
     }
 
-    // 3. Validate player exists in the game
+    // 4. Validate player exists in the game
     const validPlayers = Object.keys(state.loreScores) as PlayerId[];
     if (!validPlayers.includes(playerId)) {
       return {
@@ -84,9 +98,8 @@ export const chooseWhoGoesFirstMove = createMove<
       Object.keys(draft.loreScores) as PlayerId[],
     );
 
-    // Transition to mulligan phase
     if (context.flow) {
-      context.flow.endPhase();
+      context.flow.endPhase("chooseFirstPlayer");
     }
   },
 });

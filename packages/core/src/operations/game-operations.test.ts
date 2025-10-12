@@ -190,6 +190,46 @@ describe("GameOperations", () => {
     });
   });
 
+  describe("Choosing First Player Operations", () => {
+    it("should set choosing first player", () => {
+      const state = createTestState();
+      const ops = createGameOperations(state);
+
+      ops.setChoosingFirstPlayer(playerId("player-1"));
+
+      expect(state.choosingFirstPlayer).toBe(playerId("player-1"));
+    });
+
+    it("should get choosing first player", () => {
+      const state = createTestState();
+      state.choosingFirstPlayer = playerId("player-2");
+      const ops = createGameOperations(state);
+
+      const chooser = ops.getChoosingFirstPlayer();
+
+      expect(chooser).toBe(playerId("player-2"));
+    });
+
+    it("should return undefined when choosing first player not set", () => {
+      const state = createTestState();
+      const ops = createGameOperations(state);
+
+      const chooser = ops.getChoosingFirstPlayer();
+
+      expect(chooser).toBeUndefined();
+    });
+
+    it("should overwrite existing choosing first player", () => {
+      const state = createTestState();
+      state.choosingFirstPlayer = playerId("player-1");
+      const ops = createGameOperations(state);
+
+      ops.setChoosingFirstPlayer(playerId("player-2"));
+
+      expect(state.choosingFirstPlayer).toBe(playerId("player-2"));
+    });
+  });
+
   describe("Integration", () => {
     it("should handle typical game setup flow", () => {
       const state = createTestState();
@@ -215,6 +255,26 @@ describe("GameOperations", () => {
       // Player 2 decides to keep
       ops.removePendingMulligan(playerId("player-2"));
       expect(ops.getPendingMulligan()).toEqual([]);
+    });
+
+    it("should handle complete first player selection flow", () => {
+      const state = createTestState();
+      const ops = createGameOperations(state);
+
+      // 1. Randomly pick who gets to choose (simulated)
+      ops.setChoosingFirstPlayer(playerId("player-1"));
+      expect(ops.getChoosingFirstPlayer()).toBe(playerId("player-1"));
+
+      // 2. That player chooses who goes first
+      ops.setOTP(playerId("player-2"));
+      expect(ops.getOTP()).toBe(playerId("player-2"));
+
+      // 3. All players mulligan
+      ops.setPendingMulligan([playerId("player-1"), playerId("player-2")]);
+      expect(ops.getPendingMulligan()).toEqual([
+        playerId("player-1"),
+        playerId("player-2"),
+      ]);
     });
   });
 });

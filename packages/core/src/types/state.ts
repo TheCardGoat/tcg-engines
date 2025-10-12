@@ -80,6 +80,17 @@ export type InternalState<TCardDefinition = any, TCardMeta = any> = {
   otp?: PlayerId;
 
   /**
+   * Choosing First Player - Player designated to choose who goes first
+   *
+   * In TCGs like Lorcana, one player is randomly selected to choose
+   * who will be the starting player (OTP). This field tracks which
+   * player has that privilege.
+   *
+   * Typically set during game initialization and cleared after OTP is chosen.
+   */
+  choosingFirstPlayer?: PlayerId;
+
+  /**
    * Players pending mulligan decision
    *
    * Tracks which players still need to decide whether to mulligan.

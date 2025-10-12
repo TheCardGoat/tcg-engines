@@ -43,6 +43,39 @@ export type GameOperations = {
   getOTP(): PlayerId | undefined;
 
   /**
+   * Set the player who gets to choose the first player
+   *
+   * In games like Lorcana, one player is randomly designated to choose
+   * who will be the starting player (OTP). This is distinct from OTP itself.
+   *
+   * @param playerId - Player designated to make the choice
+   *
+   * @example
+   * ```typescript
+   * // In game setup, randomly choose who gets to pick:
+   * const chooser = context.rng.choice(['player-1', 'player-2']);
+   * context.game.setChoosingFirstPlayer(chooser);
+   * ```
+   */
+  setChoosingFirstPlayer(playerId: PlayerId): void;
+
+  /**
+   * Get the player designated to choose the first player
+   *
+   * @returns Player ID of chooser, or undefined if not yet set
+   *
+   * @example
+   * ```typescript
+   * // In chooseFirstPlayer move condition:
+   * const chooser = context.game.getChoosingFirstPlayer();
+   * if (context.playerId !== chooser) {
+   *   return { reason: "Only the designated player can choose", errorCode: "NOT_CHOOSER" };
+   * }
+   * ```
+   */
+  getChoosingFirstPlayer(): PlayerId | undefined;
+
+  /**
    * Set the list of players who need to decide on mulligan
    *
    * Replaces the entire pending mulligan list.

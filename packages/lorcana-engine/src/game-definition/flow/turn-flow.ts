@@ -49,7 +49,7 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
             next: "mulligan",
             // Manual transition via move - always return false
             // The move itself calls context.flow.endPhase()
-            endIf: () => false,
+            endIf: (context) => context.game.getOTP() !== undefined,
           },
 
           /**
@@ -67,7 +67,13 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
             // Advance when all players have completed mulligan
             // The move itself will call context.flow.endPhase()
             // So this always returns false to wait for manual transition
-            endIf: () => false,
+            endIf: (context) => {
+              if (context.getCurrentPhase() === "mulligan") {
+                return context.game.getPendingMulligan().length === 0;
+              }
+
+              return false;
+            },
             // When this phase ends, transition to mainGame segment
             onEnd: (context) => {
               context.endGameSegment();
