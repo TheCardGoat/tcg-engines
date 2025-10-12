@@ -36,6 +36,31 @@ describe("FlowDefinition Type", () => {
 
       const mockContext: FlowContext<TestGameState> = {
         state: {} as Draft<TestGameState>,
+        game: {
+          setOTP: () => {},
+          getOTP: () => undefined,
+          setPendingMulligan: () => {},
+          getPendingMulligan: () => [],
+          addPendingMulligan: () => {},
+          removePendingMulligan: () => {},
+        },
+        zones: {
+          moveCard: () => {},
+          getCardsInZone: () => [],
+          shuffleZone: () => {},
+          getCardZone: () => undefined,
+          drawCards: () => [],
+          mulligan: () => {},
+          bulkMove: () => [],
+          createDeck: () => [],
+        },
+        cards: {
+          getCardMeta: () => ({}),
+          updateCardMeta: () => {},
+          setCardMeta: () => {},
+          getCardOwner: () => undefined,
+          queryCards: () => [],
+        },
         endGameSegment: () => {},
         endPhase: () => {},
         endStep: () => {},

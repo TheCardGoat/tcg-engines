@@ -7,6 +7,7 @@
 
 import type { MoveContext, MoveContextInput } from "../moves/move-system";
 import type { CardOperations } from "../operations/card-operations";
+import type { GameOperations } from "../operations/game-operations";
 import type { ZoneOperations } from "../operations/zone-operations";
 import { SeededRNG } from "../rng/seeded-rng";
 import type { CardId, PlayerId, ZoneId } from "../types";
@@ -41,6 +42,7 @@ export function createMockContext<TParams = any>(
     rng?: SeededRNG;
     zones?: Partial<ZoneOperations>;
     cards?: Partial<CardOperations<any>>;
+    game?: Partial<GameOperations>;
     registry?: any;
     flow?: {
       currentPhase?: string;
@@ -48,6 +50,9 @@ export function createMockContext<TParams = any>(
       turn: number;
       currentPlayer: PlayerId;
       isFirstTurn: boolean;
+      endPhase?: () => void;
+      endSegment?: () => void;
+      endTurn?: () => void;
     };
     endGame?: (result: {
       winner?: PlayerId;
@@ -82,13 +87,31 @@ export function createMockContext<TParams = any>(
     ...options?.cards,
   };
 
+  const mockGame: GameOperations = {
+    setOTP: () => {},
+    getOTP: () => undefined,
+    setPendingMulligan: () => {},
+    getPendingMulligan: () => [],
+    addPendingMulligan: () => {},
+    removePendingMulligan: () => {},
+    ...options?.game,
+  };
+
   return {
     ...input,
     rng: options?.rng || new SeededRNG("test-seed"),
     zones: mockZones,
     cards: mockCards,
+    game: mockGame,
     registry: options?.registry,
-    flow: options?.flow,
+    flow: options?.flow
+      ? {
+          ...options.flow,
+          endPhase: options.flow.endPhase || (() => {}),
+          endSegment: options.flow.endSegment || (() => {}),
+          endTurn: options.flow.endTurn || (() => {}),
+        }
+      : undefined,
     endGame: options?.endGame || (() => {}),
     trackers: options?.trackers || {
       check: () => false,

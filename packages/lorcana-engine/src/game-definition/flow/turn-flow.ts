@@ -1,5 +1,8 @@
 import type { FlowDefinition } from "@tcg/core";
-import type { LorcanaGameState } from "../../types/move-params";
+import type {
+  LorcanaCardMeta,
+  LorcanaGameState,
+} from "../../types/move-params";
 
 /**
  * Lorcana Turn Flow
@@ -17,7 +20,8 @@ import type { LorcanaGameState } from "../../types/move-params";
  *
  * The engine automatically handles phase transitions and turn management.
  */
-export const lorcanaFlow: FlowDefinition<LorcanaGameState> = {
+export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
+  initialGameSegment: "startingAGame",
   gameSegments: {
     /**
      * Starting a Game Segment
@@ -37,17 +41,14 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState> = {
            *
            * Rule 3.1.1: First player determined randomly
            * In practice, decided by players (rock-paper-scissors, dice roll, etc.)
+           *
+           * Manual transition: The move itself will call context.flow.endPhase()
            */
           chooseFirstPlayer: {
             order: 1,
             next: "mulligan",
-            onBegin: (_context) => {
-              // Priority goes to a designated player to choose
-              // In tests, we typically let player_one choose
-            },
-            // Advance when OTP (On The Play) is set
-            // The move itself will call context.flow.endPhase()
-            // So this always returns false to wait for manual transition
+            // Manual transition via move - always return false
+            // The move itself calls context.flow.endPhase()
             endIf: () => false,
           },
 
@@ -133,5 +134,4 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState> = {
       },
     },
   },
-  initialGameSegment: "startingAGame",
 };

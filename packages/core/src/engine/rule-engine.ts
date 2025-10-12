@@ -115,7 +115,7 @@ export class RuleEngine<
   private readonly history: HistoryEntry<any, TCardMeta, TCardDefinition>[] =
     [];
   private historyIndex = -1;
-  private flowManager?: FlowManager<TState>;
+  private flowManager?: FlowManager<TState, TCardMeta>;
   private readonly initialPlayers: Player[]; // Store for replay
   private internalState: InternalState<TCardDefinition, TCardMeta>;
   private readonly cardRegistry: CardRegistry<TCardDefinition>;
@@ -181,12 +181,22 @@ export class RuleEngine<
 
     // Initialize flow manager if flow definition exists
     if (gameDefinition.flow) {
+      // Create operations for flow manager
+      const zoneOps = createZoneOperations(this.internalState);
+      const cardOps = createCardOperations<TCardDefinition, TCardMeta>(
+        this.internalState,
+      );
+      const gameOps = createGameOperations(this.internalState);
+
       this.flowManager = new FlowManager(
         gameDefinition.flow,
         this.currentState,
         {
           onTurnEnd: () => this.trackerSystem.resetTurn(),
           onPhaseEnd: (phaseName) => this.trackerSystem.resetPhase(phaseName),
+          gameOperations: gameOps,
+          zoneOperations: zoneOps,
+          cardOperations: cardOps,
         },
       );
     }
@@ -332,9 +342,15 @@ export class RuleEngine<
           currentPlayer: this.flowManager.getCurrentPlayer() as PlayerId,
           isFirstTurn: this.flowManager.isFirstTurn(),
           // Provide flow control methods (deferred until after move completes)
-          endPhase: () => { pendingPhaseEnd = true; },
-          endSegment: () => { pendingSegmentEnd = true; },
-          endTurn: () => { pendingTurnEnd = true; },
+          endPhase: () => {
+            pendingPhaseEnd = true;
+          },
+          endSegment: () => {
+            pendingSegmentEnd = true;
+          },
+          endTurn: () => {
+            pendingTurnEnd = true;
+          },
         }
       : undefined;
 
@@ -445,6 +461,22 @@ export class RuleEngine<
     const cardOps = createCardOperations(this.internalState);
     const gameOps = createGameOperations(this.internalState);
 
+    // Add flow state for condition checks
+    const flowState = this.flowManager
+      ? {
+          currentPhase: this.flowManager.getCurrentPhase(),
+          currentSegment: this.flowManager.getCurrentSegment(),
+          turn: this.flowManager.getTurnNumber(),
+          currentPlayer: this.flowManager.getCurrentPlayer() as PlayerId,
+          isFirstTurn: this.flowManager.getTurnNumber() === 1,
+          // Condition doesn't need control methods (endPhase, endSegment, endTurn)
+          // as conditions should be side-effect free
+          endPhase: () => {},
+          endSegment: () => {},
+          endTurn: () => {},
+        }
+      : undefined;
+
     const contextWithOperations: MoveContext<any, TCardMeta, TCardDefinition> =
       {
         ...contextInput,
@@ -453,6 +485,7 @@ export class RuleEngine<
         cards: cardOps,
         game: gameOps,
         registry: this.cardRegistry,
+        flow: flowState,
       };
 
     if (

@@ -1,4 +1,7 @@
 import { type Draft, produce } from "immer";
+import type { CardOperations } from "../operations/card-operations";
+import type { GameOperations } from "../operations/game-operations";
+import type { ZoneOperations } from "../operations/zone-operations";
 import type {
   FlowContext,
   FlowDefinition,
@@ -66,7 +69,7 @@ export type SerializedFlowState = {
 /**
  * Options for FlowManager construction
  */
-export type FlowManagerOptions = {
+export type FlowManagerOptions<TCardMeta = any> = {
   /** Skip initialization hooks (used when restoring from serialized state) */
   skipInitialization?: boolean;
   /** Restore from serialized flow state */
@@ -75,14 +78,23 @@ export type FlowManagerOptions = {
   onTurnEnd?: () => void;
   /** Callback invoked at phase end (before transition) */
   onPhaseEnd?: (phaseName: string) => void;
+  /** Game operations API (required for flow hooks) */
+  gameOperations?: GameOperations;
+  /** Zone operations API (required for flow hooks) */
+  zoneOperations?: ZoneOperations;
+  /** Card operations API (required for flow hooks) */
+  cardOperations?: CardOperations<TCardMeta>;
 };
 
 /**
  * Task 9.4: FlowManager implementation
  */
-export class FlowManager<TState> {
-  private flowDefinition: FlowDefinition<TState>;
-  private normalizedGameSegments: Record<string, GameSegmentDefinition<TState>>;
+export class FlowManager<TState, TCardMeta = any> {
+  private flowDefinition: FlowDefinition<TState, TCardMeta>;
+  private normalizedGameSegments: Record<
+    string,
+    GameSegmentDefinition<TState, TCardMeta>
+  >;
   private initialGameSegment?: string;
   private gameState: TState;
   private currentGameSegment?: string;
@@ -96,16 +108,22 @@ export class FlowManager<TState> {
   private pendingEndTurn = false;
   private onTurnEndCallback?: () => void;
   private onPhaseEndCallback?: (phaseName: string) => void;
+  private gameOperations?: GameOperations;
+  private zoneOperations?: ZoneOperations;
+  private cardOperations?: CardOperations<TCardMeta>;
 
   constructor(
-    flowDefinition: FlowDefinition<TState>,
+    flowDefinition: FlowDefinition<TState, TCardMeta>,
     initialState: TState,
-    options?: FlowManagerOptions,
+    options?: FlowManagerOptions<TCardMeta>,
   ) {
     this.flowDefinition = flowDefinition;
     this.gameState = initialState;
     this.onTurnEndCallback = options?.onTurnEnd;
     this.onPhaseEndCallback = options?.onPhaseEnd;
+    this.gameOperations = options?.gameOperations;
+    this.zoneOperations = options?.zoneOperations;
+    this.cardOperations = options?.cardOperations;
 
     // Normalize flow definition (handle both simplified and full syntax)
     const normalized = this.normalizeFlowDefinition(flowDefinition);
@@ -127,8 +145,8 @@ export class FlowManager<TState> {
    * If flow uses simplified syntax (just `turn`), convert it to a single
    * "mainGame" segment.
    */
-  private normalizeFlowDefinition(flowDef: FlowDefinition<TState>): {
-    gameSegments: Record<string, GameSegmentDefinition<TState>>;
+  private normalizeFlowDefinition(flowDef: FlowDefinition<TState, TCardMeta>): {
+    gameSegments: Record<string, GameSegmentDefinition<TState, TCardMeta>>;
     initialGameSegment?: string;
   } {
     // Check if it's the simplified syntax (has `turn` property)
@@ -288,9 +306,43 @@ export class FlowManager<TState> {
   /**
    * Task 9.9: Create FlowContext for hooks
    */
-  private createFlowContext(draft: Draft<TState>): FlowContext<TState> {
+  private createFlowContext(
+    draft: Draft<TState>,
+  ): FlowContext<TState, TCardMeta> {
+    // Create stub operations if not provided (for backward compatibility)
+    const stubGameOperations: GameOperations = {
+      setOTP: () => {},
+      getOTP: () => undefined,
+      setPendingMulligan: () => {},
+      getPendingMulligan: () => [],
+      addPendingMulligan: () => {},
+      removePendingMulligan: () => {},
+    };
+
+    const stubZoneOperations: ZoneOperations = {
+      moveCard: () => {},
+      getCardsInZone: () => [],
+      shuffleZone: () => {},
+      getCardZone: () => undefined,
+      drawCards: () => [],
+      mulligan: () => {},
+      bulkMove: () => [],
+      createDeck: () => [],
+    };
+
+    const stubCardOperations: CardOperations<TCardMeta> = {
+      getCardMeta: () => ({}) as TCardMeta,
+      updateCardMeta: () => {},
+      setCardMeta: () => {},
+      getCardOwner: () => undefined,
+      queryCards: () => [],
+    };
+
     return {
       state: draft,
+      game: this.gameOperations || stubGameOperations,
+      zones: this.zoneOperations || stubZoneOperations,
+      cards: this.cardOperations || stubCardOperations,
       endGameSegment: () => {
         this.pendingEndGameSegment = true;
       },
@@ -375,9 +427,41 @@ export class FlowManager<TState> {
    * potential mutations in read-only contexts (as noted by Copilot review).
    * The state should not be mutated in condition functions.
    */
-  private createReadOnlyContext(): FlowContext<TState> {
+  private createReadOnlyContext(): FlowContext<TState, TCardMeta> {
+    // Create stub operations if not provided (for backward compatibility)
+    const stubGameOperations: GameOperations = {
+      setOTP: () => {},
+      getOTP: () => undefined,
+      setPendingMulligan: () => {},
+      getPendingMulligan: () => [],
+      addPendingMulligan: () => {},
+      removePendingMulligan: () => {},
+    };
+
+    const stubZoneOperations: ZoneOperations = {
+      moveCard: () => {},
+      getCardsInZone: () => [],
+      shuffleZone: () => {},
+      getCardZone: () => undefined,
+      drawCards: () => [],
+      mulligan: () => {},
+      bulkMove: () => [],
+      createDeck: () => [],
+    };
+
+    const stubCardOperations: CardOperations<TCardMeta> = {
+      getCardMeta: () => ({}) as TCardMeta,
+      updateCardMeta: () => {},
+      setCardMeta: () => {},
+      getCardOwner: () => undefined,
+      queryCards: () => [],
+    };
+
     return {
       state: this.gameState as any as Draft<TState>, // Safe: conditions shouldn't mutate
+      game: this.gameOperations || stubGameOperations,
+      zones: this.zoneOperations || stubZoneOperations,
+      cards: this.cardOperations || stubCardOperations,
       endGameSegment: () => {},
       endPhase: () => {},
       endStep: () => {},
