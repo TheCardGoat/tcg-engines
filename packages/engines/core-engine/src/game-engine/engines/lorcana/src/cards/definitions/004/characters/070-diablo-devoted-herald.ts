@@ -16,18 +16,7 @@ export const diabloDevotedHerald: LorcanaCharacterCardDefinition = {
   abilities: [
     evasiveAbility,
     shiftAbility(
-      [
-        {
-          type: "card",
-          action: "discard",
-          amount: 1,
-          filters: [
-            { filter: "zone", value: "hand" },
-            { filter: "owner", value: "self" },
-            { filter: "type", value: "action" },
-          ],
-        },
-      ],
+      [{ discard: { type: "action", count: 1 } }],
       "Diablo",
       "**Shift: Discard an action card** _(You may discard an action card to play this on top of one of your characters named Diablo.)_",
     ),

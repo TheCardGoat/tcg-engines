@@ -20,9 +20,10 @@ export type {
   EndCondition,
   FlowContext,
   FlowDefinition,
+  GameSegmentDefinition,
   LifecycleHook,
   PhaseDefinition,
-  SegmentDefinition,
+  StepDefinition,
   TurnDefinition,
 } from "./flow-definition";
 

@@ -3,8 +3,9 @@ import type { Draft } from "immer";
 import type {
   FlowContext,
   FlowDefinition,
+  GameSegmentDefinition,
   PhaseDefinition,
-  SegmentDefinition,
+  StepDefinition,
   TurnDefinition,
 } from "../flow-definition";
 
@@ -12,7 +13,7 @@ import type {
  * Task 9.1: Write tests for FlowDefinition type
  *
  * Tests verify the structure and behavior of FlowDefinition.
- * Following the user's requirements for flexible turn/phase/segment progression.
+ * Following the user's requirements for flexible turn/phase/step progression.
  */
 
 type TestGameState = {
@@ -20,9 +21,9 @@ type TestGameState = {
   players: Array<{ id: string; ready: boolean }>;
   turnCount: number;
   phase: string;
-  segment?: string;
+  step?: string;
   phaseCount: number;
-  segmentCount: number;
+  stepCount: number;
 };
 
 describe("FlowDefinition Type", () => {
@@ -30,24 +31,28 @@ describe("FlowDefinition Type", () => {
     it("should provide rich context beyond just state", () => {
       // Task 9.1: FlowContext should provide:
       // - state access (draft for mutations)
-      // - flow control methods (endPhase, endSegment, endTurn)
-      // - current flow information (current phase, segment, turn, player)
+      // - flow control methods (endPhase, endStep, endTurn, endGameSegment)
+      // - current flow information (current phase, step, turn, player, game segment)
 
       const mockContext: FlowContext<TestGameState> = {
         state: {} as Draft<TestGameState>,
+        endGameSegment: () => {},
         endPhase: () => {},
-        endSegment: () => {},
+        endStep: () => {},
         endTurn: () => {},
+        getCurrentGameSegment: () => "mainGame",
         getCurrentPhase: () => "main",
-        getCurrentSegment: () => undefined,
+        getCurrentStep: () => undefined,
         getCurrentPlayer: () => "player-1",
         getTurnNumber: () => 1,
       };
 
+      expect(mockContext.endGameSegment).toBeDefined();
       expect(mockContext.endPhase).toBeDefined();
-      expect(mockContext.endSegment).toBeDefined();
+      expect(mockContext.endStep).toBeDefined();
       expect(mockContext.endTurn).toBeDefined();
       expect(mockContext.getCurrentPhase()).toBe("main");
+      expect(mockContext.getCurrentGameSegment()).toBe("mainGame");
     });
   });
 
@@ -170,11 +175,11 @@ describe("FlowDefinition Type", () => {
       expect(phaseDef.onBegin).toBeDefined();
     });
 
-    it("should define segments/steps with custom progression", () => {
+    it("should define steps with custom progression", () => {
       // User requirement: "For steps, it's a bit different... combat has different steps"
       const phaseDef: PhaseDefinition<TestGameState> = {
         order: 2,
-        segments: {
+        steps: {
           declare: {
             order: 0,
             next: "target",
@@ -190,141 +195,160 @@ describe("FlowDefinition Type", () => {
         },
       };
 
-      expect(phaseDef.segments).toBeDefined();
-      expect(phaseDef.segments?.declare.next).toBe("target");
+      expect(phaseDef.steps).toBeDefined();
+      expect(phaseDef.steps?.declare.next).toBe("target");
     });
   });
 
-  describe("SegmentDefinition", () => {
+  describe("StepDefinition", () => {
     it("should support lifecycle hooks", () => {
-      const segmentDef: SegmentDefinition<TestGameState> = {
+      const stepDef: StepDefinition<TestGameState> = {
         order: 0,
         onBegin: (context) => {
-          context.state.segmentCount += 1;
+          context.state.stepCount += 1;
         },
         onEnd: (context) => {
-          context.state.segment = undefined;
+          context.state.step = undefined;
         },
       };
 
-      expect(segmentDef.onBegin).toBeDefined();
-      expect(segmentDef.onEnd).toBeDefined();
+      expect(stepDef.onBegin).toBeDefined();
+      expect(stepDef.onEnd).toBeDefined();
     });
 
-    it("should support automatic segment end", () => {
-      const segmentDef: SegmentDefinition<TestGameState> = {
+    it("should support automatic step end", () => {
+      const stepDef: StepDefinition<TestGameState> = {
         order: 0,
         endIf: (context) => {
-          return context.state.segmentCount >= 3;
+          return context.state.stepCount >= 3;
         },
       };
 
-      expect(segmentDef.endIf).toBeDefined();
+      expect(stepDef.endIf).toBeDefined();
     });
 
-    it("should support programmatic segment end", () => {
-      const segmentDef: SegmentDefinition<TestGameState> = {
+    it("should support programmatic step end", () => {
+      const stepDef: StepDefinition<TestGameState> = {
         order: 0,
         onBegin: (context) => {
           if (context.state.players.length === 0) {
-            context.endSegment();
+            context.endStep();
           }
         },
       };
 
-      expect(segmentDef.onBegin).toBeDefined();
+      expect(stepDef.onBegin).toBeDefined();
     });
   });
 
   describe("FlowDefinition", () => {
     it("should define complete game flow", () => {
       const flow: FlowDefinition<TestGameState> = {
-        turn: {
-          onBegin: (context) => {
-            context.state.currentPlayer =
-              (context.state.currentPlayer + 1) % context.state.players.length;
-          },
-          phases: {
-            ready: {
-              order: 0,
-              next: "draw",
-            },
-            draw: {
-              order: 1,
-              next: "main",
-            },
-            main: {
-              order: 2,
-              next: "end",
-            },
-            end: {
-              order: 3,
-              next: undefined,
+        gameSegments: {
+          mainGame: {
+            order: 1,
+            turn: {
+              onBegin: (context) => {
+                context.state.currentPlayer =
+                  (context.state.currentPlayer + 1) %
+                  context.state.players.length;
+              },
+              phases: {
+                ready: {
+                  order: 0,
+                  next: "draw",
+                },
+                draw: {
+                  order: 1,
+                  next: "main",
+                },
+                main: {
+                  order: 2,
+                  next: "end",
+                },
+                end: {
+                  order: 3,
+                  next: undefined,
+                },
+              },
             },
           },
         },
       };
 
-      expect(flow.turn).toBeDefined();
-      expect(flow.turn.phases).toBeDefined();
+      expect(flow.gameSegments).toBeDefined();
+      expect(flow.gameSegments.mainGame).toBeDefined();
+      expect(flow.gameSegments.mainGame.turn.phases).toBeDefined();
     });
 
     it("should support default progression behavior", () => {
       // User requirement: "We should have defaults, but we should also be able to customize them"
       const flowWithDefaults: FlowDefinition<TestGameState> = {
-        turn: {
-          // Uses default: when turn ends, next player starts their turn
-          phases: {
-            main: {
-              order: 0,
-              // Uses default: phases progress sequentially by order
-              next: undefined,
+        gameSegments: {
+          mainGame: {
+            order: 1,
+            turn: {
+              // Uses default: when turn ends, next player starts their turn
+              phases: {
+                main: {
+                  order: 0,
+                  // Uses default: phases progress sequentially by order
+                  next: undefined,
+                },
+              },
             },
           },
         },
       };
 
-      expect(flowWithDefaults.turn).toBeDefined();
+      expect(flowWithDefaults.gameSegments.mainGame.turn).toBeDefined();
     });
 
     it("should support custom progression behavior", () => {
       const flowWithCustom: FlowDefinition<TestGameState> = {
-        turn: {
-          onEnd: (context) => {
-            // Custom logic: maybe skip players, go back to first player, etc.
-            context.state.currentPlayer = 0;
-          },
-          phases: {
-            main: {
-              order: 0,
-              next: "combat",
-              segments: {
-                declare: {
+        gameSegments: {
+          mainGame: {
+            order: 1,
+            turn: {
+              onEnd: (context) => {
+                // Custom logic: maybe skip players, go back to first player, etc.
+                context.state.currentPlayer = 0;
+              },
+              phases: {
+                main: {
                   order: 0,
-                  next: "resolve",
-                  onEnd: (context) => {
-                    // Custom segment transition logic
-                    if (context.state.segmentCount > 5) {
-                      context.endPhase(); // Skip remaining segments
-                    }
+                  next: "combat",
+                  steps: {
+                    declare: {
+                      order: 0,
+                      next: "resolve",
+                      onEnd: (context) => {
+                        // Custom step transition logic
+                        if (context.state.stepCount > 5) {
+                          context.endPhase(); // Skip remaining steps
+                        }
+                      },
+                    },
+                    resolve: {
+                      order: 1,
+                      next: undefined,
+                    },
                   },
                 },
-                resolve: {
+                combat: {
                   order: 1,
                   next: undefined,
                 },
               },
             },
-            combat: {
-              order: 1,
-              next: undefined,
-            },
           },
         },
       };
 
-      expect(flowWithCustom.turn.onEnd).toBeDefined();
-      expect(flowWithCustom.turn.phases?.main.segments).toBeDefined();
+      expect(flowWithCustom.gameSegments.mainGame.turn.onEnd).toBeDefined();
+      expect(
+        flowWithCustom.gameSegments.mainGame.turn.phases?.main.steps,
+      ).toBeDefined();
     });
   });
 
@@ -332,13 +356,18 @@ describe("FlowDefinition Type", () => {
     it("should enforce correct generic state type", () => {
       // TypeScript compile-time test
       const flow: FlowDefinition<TestGameState> = {
-        turn: {
-          onBegin: (context) => {
-            // context.state should be Draft<TestGameState>
-            context.state.turnCount += 1;
-            context.state.currentPlayer = 0;
-            // @ts-expect-error - nonexistent property should error
-            context.state.nonExistent = true;
+        gameSegments: {
+          mainGame: {
+            order: 1,
+            turn: {
+              onBegin: (context) => {
+                // context.state should be Draft<TestGameState>
+                context.state.turnCount += 1;
+                context.state.currentPlayer = 0;
+                // @ts-expect-error - nonexistent property should error
+                context.state.nonExistent = true;
+              },
+            },
           },
         },
       };

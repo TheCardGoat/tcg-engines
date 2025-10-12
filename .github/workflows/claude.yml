@@ -35,7 +35,7 @@ jobs:
         with:
           bun-version-file: ".bun-version"
 
-      - name: Create MCP Config
+      - name: Create MCP Config Z.ai
         run: |
           cat > /tmp/mcp-config.json << 'EOF'
           {

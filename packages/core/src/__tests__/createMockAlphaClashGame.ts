@@ -362,7 +362,7 @@ const alphaClashFlow: FlowDefinition<TestGameState> = {
       expansion: {
         order: 1,
         next: "primary",
-        segments: {
+        steps: {
           readyStep: {
             order: 1,
             next: "drawStep",

@@ -52,13 +52,8 @@ jobs:
 
       # Use hardlink backend for faster installation, isolated and frozen-lockfile for better determinism
       - name: Install dependencies
-        run: bun install --backend=hardlink --linker isolated --frozen-lockfile
+#        run: bun install --backend=hardlink --linker isolated --frozen-lockfile
+        run: bun install
 
-      - name: Run format
-        run: bun run format
-
-      - name: Run type checking
-        run: bun run check-types
-
-      - name: Run tests
-        run: bun run test
+      - name: Run Continuous Integration
+        run: bun run ci-check

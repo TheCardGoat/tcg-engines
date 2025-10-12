@@ -98,7 +98,10 @@ describe("Riftbound Game - Refactored Engine Features", () => {
 
     // ending phase uses context.getCurrentPlayer()
     expect(flow).toBeDefined();
-    expect(flow?.turn.phases?.ending).toBeDefined();
+    if (!(flow && "turn" in flow)) {
+      throw new Error("Expected simplified flow definition with turn property");
+    }
+    expect(flow.turn.phases?.ending).toBeDefined();
   });
 
   it("should use standard moves", () => {

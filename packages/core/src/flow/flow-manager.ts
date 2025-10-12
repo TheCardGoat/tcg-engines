@@ -1,5 +1,9 @@
 import { type Draft, produce } from "immer";
-import type { FlowContext, FlowDefinition } from "./flow-definition";
+import type {
+  FlowContext,
+  FlowDefinition,
+  GameSegmentDefinition,
+} from "./flow-definition";
 
 /**
  * Task 9.4: FlowManager - Flow orchestration
@@ -27,19 +31,22 @@ import type { FlowContext, FlowDefinition } from "./flow-definition";
  * Task 9.11: Flow event handling
  */
 type FlowEvent =
+  | { type: "NEXT_GAME_SEGMENT" }
   | { type: "NEXT_PHASE" }
-  | { type: "NEXT_SEGMENT" }
+  | { type: "NEXT_STEP" }
   | { type: "END_TURN" }
-  | { type: "END_SEGMENT" }
+  | { type: "END_STEP" }
   | { type: "END_PHASE" }
+  | { type: "END_GAME_SEGMENT" }
   | { type: "STATE_UPDATED" };
 
 /**
  * Flow state snapshot for querying
  */
 export type FlowStateSnapshot = {
+  gameSegment?: string;
   phase?: string;
-  segment?: string;
+  step?: string;
   turn: number;
 };
 
@@ -49,8 +56,9 @@ export type FlowStateSnapshot = {
  * Use case: Save game state to database for later replay/restoration
  */
 export type SerializedFlowState = {
+  currentGameSegment?: string;
   currentPhase?: string;
-  currentSegment?: string;
+  currentStep?: string;
   turnNumber: number;
   currentPlayer: string;
 };
@@ -74,13 +82,17 @@ export type FlowManagerOptions = {
  */
 export class FlowManager<TState> {
   private flowDefinition: FlowDefinition<TState>;
+  private normalizedGameSegments: Record<string, GameSegmentDefinition<TState>>;
+  private initialGameSegment?: string;
   private gameState: TState;
+  private currentGameSegment?: string;
   private currentPhase?: string;
-  private currentSegment?: string;
+  private currentStep?: string;
   private turnNumber = 1;
   private currentPlayer = "";
+  private pendingEndGameSegment = false;
   private pendingEndPhase = false;
-  private pendingEndSegment = false;
+  private pendingEndStep = false;
   private pendingEndTurn = false;
   private onTurnEndCallback?: () => void;
   private onPhaseEndCallback?: (phaseName: string) => void;
@@ -95,6 +107,11 @@ export class FlowManager<TState> {
     this.onTurnEndCallback = options?.onTurnEnd;
     this.onPhaseEndCallback = options?.onPhaseEnd;
 
+    // Normalize flow definition (handle both simplified and full syntax)
+    const normalized = this.normalizeFlowDefinition(flowDefinition);
+    this.normalizedGameSegments = normalized.gameSegments;
+    this.initialGameSegment = normalized.initialGameSegment;
+
     // Restore from serialized state if provided
     if (options?.restoreFrom) {
       this.restoreFromSerialized(options.restoreFrom);
@@ -105,13 +122,45 @@ export class FlowManager<TState> {
   }
 
   /**
+   * Normalize flow definition to always use gameSegments structure
+   *
+   * If flow uses simplified syntax (just `turn`), convert it to a single
+   * "mainGame" segment.
+   */
+  private normalizeFlowDefinition(flowDef: FlowDefinition<TState>): {
+    gameSegments: Record<string, GameSegmentDefinition<TState>>;
+    initialGameSegment?: string;
+  } {
+    // Check if it's the simplified syntax (has `turn` property)
+    if ("turn" in flowDef) {
+      // Create implicit mainGame segment
+      return {
+        gameSegments: {
+          mainGame: {
+            order: 0,
+            turn: flowDef.turn,
+          },
+        },
+        initialGameSegment: "mainGame",
+      };
+    }
+
+    // It's the full syntax with gameSegments
+    return {
+      gameSegments: flowDef.gameSegments,
+      initialGameSegment: flowDef.initialGameSegment,
+    };
+  }
+
+  /**
    * Restore flow manager from serialized state
    *
    * Use case: Load a saved game from database and continue playing
    */
   private restoreFromSerialized(state: SerializedFlowState): void {
+    this.currentGameSegment = state.currentGameSegment;
     this.currentPhase = state.currentPhase;
-    this.currentSegment = state.currentSegment;
+    this.currentStep = state.currentStep;
     this.turnNumber = state.turnNumber;
     this.currentPlayer = state.currentPlayer;
 
@@ -125,8 +174,9 @@ export class FlowManager<TState> {
    */
   serializeFlowState(): SerializedFlowState {
     return {
+      currentGameSegment: this.currentGameSegment,
       currentPhase: this.currentPhase,
-      currentSegment: this.currentSegment,
+      currentStep: this.currentStep,
       turnNumber: this.turnNumber,
       currentPlayer: this.currentPlayer,
     };
@@ -136,43 +186,65 @@ export class FlowManager<TState> {
    * Task 9.3: Initialize the flow state machine
    */
   private initializeFlow(): void {
-    // Determine initial phase
-    const phases = this.flowDefinition.turn.phases;
+    const gameSegments = this.normalizedGameSegments;
+
+    // Determine initial game segment
+    const sortedGameSegments = Object.entries(gameSegments).sort(
+      ([, a], [, b]) => a.order - b.order,
+    );
+    this.currentGameSegment =
+      this.initialGameSegment ?? sortedGameSegments[0]?.[0];
+
+    if (!this.currentGameSegment) {
+      throw new Error("No game segments defined in flow definition");
+    }
+
+    const gameSegmentDef = gameSegments[this.currentGameSegment];
+    if (!gameSegmentDef) {
+      throw new Error(`Game segment "${this.currentGameSegment}" not found`);
+    }
+
+    // Execute game segment onBegin
+    this.executeHook(gameSegmentDef.onBegin);
+
+    // Initialize turn structure for this game segment
+    const phases = gameSegmentDef.turn.phases;
     if (phases) {
       const sortedPhases = Object.entries(phases).sort(
         ([, a], [, b]) => a.order - b.order,
       );
-      this.currentPhase = sortedPhases[0]?.[0];
+      this.currentPhase =
+        gameSegmentDef.turn.initialPhase ?? sortedPhases[0]?.[0];
 
-      // Check for segments in initial phase
+      // Check for steps in initial phase
       if (this.currentPhase) {
         const initialPhaseDef = phases[this.currentPhase];
-        if (initialPhaseDef?.segments) {
-          const sortedSegments = Object.entries(initialPhaseDef.segments).sort(
+        if (initialPhaseDef?.steps) {
+          const sortedSteps = Object.entries(initialPhaseDef.steps).sort(
             ([, a], [, b]) => {
               const aOrder = a?.order ?? 0;
               const bOrder = b?.order ?? 0;
               return aOrder - bOrder;
             },
           );
-          this.currentSegment = sortedSegments[0]?.[0];
+          this.currentStep = initialPhaseDef.initialStep ?? sortedSteps[0]?.[0];
         }
       }
     }
 
     // Execute turn onBegin
-    this.executeHook(this.flowDefinition.turn.onBegin);
+    this.executeHook(gameSegmentDef.turn.onBegin);
 
     // Execute phase onBegin
     if (this.currentPhase && phases) {
       this.executeHook(phases[this.currentPhase]?.onBegin);
     }
 
-    // Execute segment onBegin
-    if (this.currentPhase && this.currentSegment && phases) {
+    // Execute step onBegin
+    if (this.currentPhase && this.currentStep && phases) {
       const phaseDef = phases[this.currentPhase];
-      if (phaseDef?.segments) {
-        this.executeHook(phaseDef.segments[this.currentSegment]?.onBegin);
+      if (phaseDef?.steps) {
+        this.executeHook(phaseDef.steps[this.currentStep]?.onBegin);
       }
     }
 
@@ -194,9 +266,10 @@ export class FlowManager<TState> {
     });
 
     // Handle pending programmatic transitions OUTSIDE of produce
-    if (this.pendingEndSegment) {
-      this.pendingEndSegment = false;
-      this.transitionToNextSegment();
+    // Order matters: step → phase → turn → game segment
+    if (this.pendingEndStep) {
+      this.pendingEndStep = false;
+      this.transitionToNextStep();
     }
     if (this.pendingEndPhase) {
       this.pendingEndPhase = false;
@@ -206,6 +279,10 @@ export class FlowManager<TState> {
       this.pendingEndTurn = false;
       this.transitionToNextTurn();
     }
+    if (this.pendingEndGameSegment) {
+      this.pendingEndGameSegment = false;
+      this.transitionToNextGameSegment();
+    }
   }
 
   /**
@@ -214,17 +291,21 @@ export class FlowManager<TState> {
   private createFlowContext(draft: Draft<TState>): FlowContext<TState> {
     return {
       state: draft,
+      endGameSegment: () => {
+        this.pendingEndGameSegment = true;
+      },
       endPhase: () => {
         this.pendingEndPhase = true;
       },
-      endSegment: () => {
-        this.pendingEndSegment = true;
+      endStep: () => {
+        this.pendingEndStep = true;
       },
       endTurn: () => {
         this.pendingEndTurn = true;
       },
+      getCurrentGameSegment: () => this.currentGameSegment,
       getCurrentPhase: () => this.currentPhase,
-      getCurrentSegment: () => this.currentSegment,
+      getCurrentStep: () => this.currentStep,
       getCurrentPlayer: () => this.currentPlayer,
       getTurnNumber: () => this.turnNumber,
     };
@@ -234,17 +315,23 @@ export class FlowManager<TState> {
    * Task 9.7: Check and execute endIf conditions
    */
   private checkEndConditions(): void {
-    const phases = this.flowDefinition.turn.phases;
+    if (!this.currentGameSegment) return;
 
-    // Check segment endIf
-    if (this.currentPhase && this.currentSegment && phases) {
+    const gameSegments = this.normalizedGameSegments;
+    const gameSegmentDef = gameSegments[this.currentGameSegment];
+    if (!gameSegmentDef) return;
+
+    const phases = gameSegmentDef.turn.phases;
+
+    // Check step endIf
+    if (this.currentPhase && this.currentStep && phases) {
       const phaseDef = phases[this.currentPhase];
-      if (phaseDef?.segments) {
-        const segmentDef = phaseDef.segments[this.currentSegment];
-        if (segmentDef?.endIf) {
+      if (phaseDef?.steps) {
+        const stepDef = phaseDef.steps[this.currentStep];
+        if (stepDef?.endIf) {
           const context = this.createReadOnlyContext();
-          if (segmentDef.endIf(context)) {
-            this.nextSegment();
+          if (stepDef.endIf(context)) {
+            this.nextStep();
             return;
           }
         }
@@ -264,10 +351,19 @@ export class FlowManager<TState> {
     }
 
     // Check turn endIf
-    if (this.flowDefinition.turn.endIf) {
+    if (gameSegmentDef.turn.endIf) {
       const context = this.createReadOnlyContext();
-      if (this.flowDefinition.turn.endIf(context)) {
+      if (gameSegmentDef.turn.endIf(context)) {
         this.nextTurn();
+        return;
+      }
+    }
+
+    // Check game segment endIf
+    if (gameSegmentDef.endIf) {
+      const context = this.createReadOnlyContext();
+      if (gameSegmentDef.endIf(context)) {
+        this.nextGameSegment();
       }
     }
   }
@@ -282,41 +378,49 @@ export class FlowManager<TState> {
   private createReadOnlyContext(): FlowContext<TState> {
     return {
       state: this.gameState as any as Draft<TState>, // Safe: conditions shouldn't mutate
+      endGameSegment: () => {},
       endPhase: () => {},
-      endSegment: () => {},
+      endStep: () => {},
       endTurn: () => {},
+      getCurrentGameSegment: () => this.currentGameSegment,
       getCurrentPhase: () => this.currentPhase,
-      getCurrentSegment: () => this.currentSegment,
+      getCurrentStep: () => this.currentStep,
       getCurrentPlayer: () => this.currentPlayer,
       getTurnNumber: () => this.turnNumber,
     };
   }
 
   /**
-   * Task 9.13: Transition to next segment
+   * Task 9.13: Transition to next step
    */
-  private transitionToNextSegment(): void {
-    const phases = this.flowDefinition.turn.phases;
-    if (!(this.currentPhase && this.currentSegment && phases)) return;
+  private transitionToNextStep(): void {
+    if (!this.currentGameSegment) return;
+
+    const gameSegments = this.normalizedGameSegments;
+    const gameSegmentDef = gameSegments[this.currentGameSegment];
+    if (!gameSegmentDef) return;
+
+    const phases = gameSegmentDef.turn.phases;
+    if (!(this.currentPhase && this.currentStep && phases)) return;
 
     const phaseDef = phases[this.currentPhase];
-    if (!phaseDef?.segments) return;
+    if (!phaseDef?.steps) return;
 
-    const segmentDef = phaseDef.segments[this.currentSegment];
+    const stepDef = phaseDef.steps[this.currentStep];
 
-    // Execute segment onEnd
-    this.executeHook(segmentDef?.onEnd);
+    // Execute step onEnd
+    this.executeHook(stepDef?.onEnd);
 
-    // Determine next segment
-    const nextSegment = segmentDef?.next;
+    // Determine next step
+    const nextStep = stepDef?.next;
 
-    if (nextSegment && phaseDef.segments[nextSegment]) {
-      this.currentSegment = nextSegment;
-      // Execute new segment onBegin
-      this.executeHook(phaseDef.segments[nextSegment]?.onBegin);
+    if (nextStep && phaseDef.steps[nextStep]) {
+      this.currentStep = nextStep;
+      // Execute new step onBegin
+      this.executeHook(phaseDef.steps[nextStep]?.onBegin);
     } else {
-      // No more segments, end phase
-      this.currentSegment = undefined;
+      // No more steps, end phase
+      this.currentStep = undefined;
       this.transitionToNextPhase();
     }
   }
@@ -325,7 +429,13 @@ export class FlowManager<TState> {
    * Task 9.13: Transition to next phase
    */
   private transitionToNextPhase(): void {
-    const phases = this.flowDefinition.turn.phases;
+    if (!this.currentGameSegment) return;
+
+    const gameSegments = this.normalizedGameSegments;
+    const gameSegmentDef = gameSegments[this.currentGameSegment];
+    if (!gameSegmentDef) return;
+
+    const phases = gameSegmentDef.turn.phases;
     if (!(this.currentPhase && phases)) return;
 
     const phaseDef = phases[this.currentPhase];
@@ -346,16 +456,16 @@ export class FlowManager<TState> {
       this.currentPhase = nextPhase;
       const nextPhaseDef = phases[nextPhase];
 
-      // Initialize segments if any
-      if (nextPhaseDef.segments) {
-        const sortedSegments = Object.entries(nextPhaseDef.segments).sort(
+      // Initialize steps if any
+      if (nextPhaseDef.steps) {
+        const sortedSteps = Object.entries(nextPhaseDef.steps).sort(
           ([, a], [, b]) => a.order - b.order,
         );
-        this.currentSegment = sortedSegments[0]?.[0];
+        this.currentStep = nextPhaseDef.initialStep ?? sortedSteps[0]?.[0];
 
-        // Execute segment onBegin
-        if (this.currentSegment) {
-          this.executeHook(nextPhaseDef.segments[this.currentSegment]?.onBegin);
+        // Execute step onBegin
+        if (this.currentStep) {
+          this.executeHook(nextPhaseDef.steps[this.currentStep]?.onBegin);
         }
       }
 
@@ -371,14 +481,20 @@ export class FlowManager<TState> {
    * Transition to next turn
    */
   private transitionToNextTurn(): void {
-    const phases = this.flowDefinition.turn.phases;
+    if (!this.currentGameSegment) return;
 
-    // Execute segment onEnd if in segment
-    if (this.currentPhase && this.currentSegment && phases) {
+    const gameSegments = this.normalizedGameSegments;
+    const gameSegmentDef = gameSegments[this.currentGameSegment];
+    if (!gameSegmentDef) return;
+
+    const phases = gameSegmentDef.turn.phases;
+
+    // Execute step onEnd if in step
+    if (this.currentPhase && this.currentStep && phases) {
       const phaseDef = phases[this.currentPhase];
-      if (phaseDef?.segments) {
-        const segmentDef = phaseDef.segments[this.currentSegment];
-        this.executeHook(segmentDef?.onEnd);
+      if (phaseDef?.steps) {
+        const stepDef = phaseDef.steps[this.currentStep];
+        this.executeHook(stepDef?.onEnd);
       }
     }
 
@@ -389,7 +505,7 @@ export class FlowManager<TState> {
     }
 
     // Execute turn onEnd
-    this.executeHook(this.flowDefinition.turn.onEnd);
+    this.executeHook(gameSegmentDef.turn.onEnd);
 
     // Invoke tracker reset callback at turn end
     if (this.onTurnEndCallback) {
@@ -404,36 +520,129 @@ export class FlowManager<TState> {
       const sortedPhases = Object.entries(phases).sort(
         ([, a], [, b]) => a.order - b.order,
       );
-      this.currentPhase = sortedPhases[0]?.[0];
+      this.currentPhase =
+        gameSegmentDef.turn.initialPhase ?? sortedPhases[0]?.[0];
 
-      // Initialize segments
+      // Initialize steps
       if (this.currentPhase) {
         const phaseDef = phases[this.currentPhase];
-        if (phaseDef?.segments) {
-          const sortedSegments = Object.entries(phaseDef.segments).sort(
+        if (phaseDef?.steps) {
+          const sortedSteps = Object.entries(phaseDef.steps).sort(
             ([, a], [, b]) => a.order - b.order,
           );
-          this.currentSegment = sortedSegments[0]?.[0];
+          this.currentStep = phaseDef.initialStep ?? sortedSteps[0]?.[0];
         } else {
-          this.currentSegment = undefined;
+          this.currentStep = undefined;
         }
       }
     }
 
     // Execute turn onBegin
-    this.executeHook(this.flowDefinition.turn.onBegin);
+    this.executeHook(gameSegmentDef.turn.onBegin);
 
     // Execute phase onBegin
     if (this.currentPhase && phases) {
       this.executeHook(phases[this.currentPhase]?.onBegin);
 
-      // Execute segment onBegin
-      if (this.currentSegment) {
+      // Execute step onBegin
+      if (this.currentStep) {
         const phaseDef = phases[this.currentPhase];
-        if (phaseDef?.segments) {
-          this.executeHook(phaseDef.segments[this.currentSegment]?.onBegin);
+        if (phaseDef?.steps) {
+          this.executeHook(phaseDef.steps[this.currentStep]?.onBegin);
         }
       }
+    }
+  }
+
+  /**
+   * Transition to next game segment
+   */
+  private transitionToNextGameSegment(): void {
+    if (!this.currentGameSegment) return;
+
+    const gameSegments = this.normalizedGameSegments;
+    const gameSegmentDef = gameSegments[this.currentGameSegment];
+    if (!gameSegmentDef) return;
+
+    const phases = gameSegmentDef.turn.phases;
+
+    // Execute step onEnd if in step
+    if (this.currentPhase && this.currentStep && phases) {
+      const phaseDef = phases[this.currentPhase];
+      if (phaseDef?.steps) {
+        const stepDef = phaseDef.steps[this.currentStep];
+        this.executeHook(stepDef?.onEnd);
+      }
+    }
+
+    // Execute phase onEnd if in phase
+    if (this.currentPhase && phases) {
+      const phaseDef = phases[this.currentPhase];
+      this.executeHook(phaseDef?.onEnd);
+    }
+
+    // Execute turn onEnd
+    this.executeHook(gameSegmentDef.turn.onEnd);
+
+    // Execute game segment onEnd
+    this.executeHook(gameSegmentDef.onEnd);
+
+    // Determine next game segment
+    const nextGameSegment = gameSegmentDef.next;
+
+    if (nextGameSegment && gameSegments[nextGameSegment]) {
+      this.currentGameSegment = nextGameSegment;
+      const nextGameSegmentDef = gameSegments[nextGameSegment];
+
+      // Reset turn number for new game segment (optional - depends on game rules)
+      // this.turnNumber = 1;
+
+      // Execute game segment onBegin
+      this.executeHook(nextGameSegmentDef.onBegin);
+
+      // Initialize turn structure for new game segment
+      const nextPhases = nextGameSegmentDef.turn.phases;
+      if (nextPhases) {
+        const sortedPhases = Object.entries(nextPhases).sort(
+          ([, a], [, b]) => a.order - b.order,
+        );
+        this.currentPhase =
+          nextGameSegmentDef.turn.initialPhase ?? sortedPhases[0]?.[0];
+
+        // Initialize steps
+        if (this.currentPhase) {
+          const phaseDef = nextPhases[this.currentPhase];
+          if (phaseDef?.steps) {
+            const sortedSteps = Object.entries(phaseDef.steps).sort(
+              ([, a], [, b]) => a.order - b.order,
+            );
+            this.currentStep = phaseDef.initialStep ?? sortedSteps[0]?.[0];
+          } else {
+            this.currentStep = undefined;
+          }
+        }
+      }
+
+      // Execute turn onBegin
+      this.executeHook(nextGameSegmentDef.turn.onBegin);
+
+      // Execute phase onBegin
+      if (this.currentPhase && nextPhases) {
+        this.executeHook(nextPhases[this.currentPhase]?.onBegin);
+
+        // Execute step onBegin
+        if (this.currentStep) {
+          const phaseDef = nextPhases[this.currentPhase];
+          if (phaseDef?.steps) {
+            this.executeHook(phaseDef.steps[this.currentStep]?.onBegin);
+          }
+        }
+      }
+    } else {
+      // No more game segments, game ends
+      this.currentGameSegment = undefined;
+      this.currentPhase = undefined;
+      this.currentStep = undefined;
     }
   }
 
@@ -449,10 +658,24 @@ export class FlowManager<TState> {
   }
 
   /**
-   * Get current segment name
+   * Get current step name
+   */
+  getCurrentStep(): string | undefined {
+    return this.currentStep;
+  }
+
+  /**
+   * Get current game segment name
+   */
+  getCurrentGameSegment(): string | undefined {
+    return this.currentGameSegment;
+  }
+
+  /**
+   * Get current segment name (alias for getCurrentGameSegment)
    */
   getCurrentSegment(): string | undefined {
-    return this.currentSegment;
+    return this.currentGameSegment;
   }
 
   /**
@@ -467,8 +690,9 @@ export class FlowManager<TState> {
    */
   getState(): FlowStateSnapshot {
     return {
+      gameSegment: this.currentGameSegment,
       phase: this.currentPhase,
-      segment: this.currentSegment,
+      step: this.currentStep,
       turn: this.turnNumber,
     };
   }
@@ -503,10 +727,18 @@ export class FlowManager<TState> {
   }
 
   /**
-   * Transition to next segment
+   * Transition to next step
    */
-  nextSegment(): void {
-    this.transitionToNextSegment();
+  nextStep(): void {
+    this.transitionToNextStep();
+    this.checkEndConditions();
+  }
+
+  /**
+   * Transition to next game segment
+   */
+  nextGameSegment(): void {
+    this.transitionToNextGameSegment();
     this.checkEndConditions();
   }
 
@@ -523,18 +755,20 @@ export class FlowManager<TState> {
    */
   send(event: FlowEvent): void {
     switch (event.type) {
+      case "NEXT_GAME_SEGMENT":
+      case "END_GAME_SEGMENT":
+        this.nextGameSegment();
+        break;
       case "NEXT_PHASE":
+      case "END_PHASE":
         this.nextPhase();
         break;
-      case "END_SEGMENT":
-      case "NEXT_SEGMENT":
-        this.nextSegment();
+      case "END_STEP":
+      case "NEXT_STEP":
+        this.nextStep();
         break;
       case "END_TURN":
         this.nextTurn();
-        break;
-      case "END_PHASE":
-        this.nextPhase();
         break;
       case "STATE_UPDATED":
         this.checkEndConditions();

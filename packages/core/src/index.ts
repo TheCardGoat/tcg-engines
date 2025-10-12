@@ -17,6 +17,7 @@ export * from "./filtering/card-query";
 export * from "./filtering/filter-matching";
 export * from "./flow";
 export * from "./game-definition";
+export * from "./moves/create-move";
 export * from "./moves/move-executor";
 export * from "./moves/move-system";
 export * from "./moves/standard-moves";
