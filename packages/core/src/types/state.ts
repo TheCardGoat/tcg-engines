@@ -70,6 +70,22 @@ export type InternalState<TCardDefinition = any, TCardMeta = any> = {
   cardMetas: {
     [cardId: string]: TCardMeta;
   };
+
+  /**
+   * On The Play (OTP) - Player who goes first
+   *
+   * Universal TCG concept. The OTP player typically goes first
+   * and may have different rules (e.g., no draw on first turn).
+   */
+  otp?: PlayerId;
+
+  /**
+   * Players pending mulligan decision
+   *
+   * Tracks which players still need to decide whether to mulligan.
+   * Typically initialized with all players at game start.
+   */
+  pendingMulligan?: PlayerId[];
 };
 
 /**

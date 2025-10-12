@@ -1,6 +1,7 @@
 import type { Draft } from "immer";
 import type { CardOperations } from "../operations/card-operations";
 import type { CardRegistry } from "../operations/card-registry";
+import type { GameOperations } from "../operations/game-operations";
 import type { ZoneOperations } from "../operations/zone-operations";
 import type { SeededRNG } from "../rng/seeded-rng";
 import type { CardId, PlayerId } from "../types";
@@ -133,6 +134,23 @@ export type MoveContext<
    * Always provided by RuleEngine.
    */
   cards: CardOperations<TCardMeta>;
+
+  /**
+   * Game operations API (provided by RuleEngine)
+   *
+   * Provides methods to interact with game-level state:
+   * - setOTP: Mark player as on the play (goes first)
+   * - getOTP: Get the OTP player
+   * - setPendingMulligan: Set players pending mulligan
+   * - getPendingMulligan: Get players pending mulligan
+   * - addPendingMulligan: Add player to mulligan list
+   * - removePendingMulligan: Remove player from mulligan list
+   *
+   * These are universal TCG concepts that apply across all card games.
+   * This is the ONLY way moves can modify game-level internal state.
+   * Always provided by RuleEngine.
+   */
+  game: GameOperations;
 
   /**
    * Card registry API (provided by RuleEngine)

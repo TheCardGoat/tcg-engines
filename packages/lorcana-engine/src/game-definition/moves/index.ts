@@ -3,7 +3,7 @@ import type {
   LorcanaCardMeta,
   LorcanaGameState,
   LorcanaMoveParams,
-} from "../../types/move-params";
+} from "../../types";
 // Ability moves
 import { activateAbility } from "./abilities/activate-ability";
 import { challenge } from "./core/challenge";

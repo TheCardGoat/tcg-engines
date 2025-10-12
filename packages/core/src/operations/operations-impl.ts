@@ -1,6 +1,7 @@
-import type { CardId, PlayerId, ZoneId } from "../types";
+import type { CardId, PlayerId } from "../types";
 import type { InternalState } from "../types/state";
 import type { CardOperations } from "./card-operations";
+import type { GameOperations } from "./game-operations";
 import type { ZoneOperations } from "./zone-operations";
 
 /**
@@ -279,6 +280,53 @@ export const createCardOperations = <TCardDef, TCardMeta>(
         }
       }
       return results;
+    },
+  };
+};
+
+/**
+ * Create a GameOperations implementation backed by InternalState
+ *
+ * @param state - Internal state to operate on (will be mutated)
+ * @returns GameOperations implementation
+ */
+export const createGameOperations = <TCardDef, TCardMeta>(
+  state: InternalState<TCardDef, TCardMeta>,
+): GameOperations => {
+  return {
+    setOTP: (playerId: PlayerId) => {
+      state.otp = playerId;
+    },
+
+    getOTP: () => {
+      return state.otp;
+    },
+
+    setPendingMulligan: (playerIds: PlayerId[]) => {
+      state.pendingMulligan = playerIds;
+    },
+
+    getPendingMulligan: () => {
+      // Return copy to prevent external mutation
+      return state.pendingMulligan ? [...state.pendingMulligan] : [];
+    },
+
+    addPendingMulligan: (playerId: PlayerId) => {
+      if (!state.pendingMulligan) {
+        state.pendingMulligan = [playerId];
+      } else if (!state.pendingMulligan.includes(playerId)) {
+        state.pendingMulligan.push(playerId);
+      }
+    },
+
+    removePendingMulligan: (playerId: PlayerId) => {
+      if (!state.pendingMulligan) {
+        return;
+      }
+      const index = state.pendingMulligan.indexOf(playerId);
+      if (index !== -1) {
+        state.pendingMulligan.splice(index, 1);
+      }
     },
   };
 };

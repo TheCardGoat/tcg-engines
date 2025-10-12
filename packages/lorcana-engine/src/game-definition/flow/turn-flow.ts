@@ -4,7 +4,13 @@ import type { LorcanaGameState } from "../../types/move-params";
 /**
  * Lorcana Turn Flow
  *
- * Defines the sequence of phases in a Lorcana turn:
+ * Defines the sequence of game segments and phases:
+ *
+ * Game Segments:
+ * 1. Starting a Game - Choose first player and mulligan
+ * 2. Main Game - Normal gameplay with turns
+ *
+ * Turn Phases (Main Game):
  * 1. Beginning Phase - Start of turn, ready all cards
  * 2. Main Phase - Play cards, quest, challenge
  * 3. End Phase - End of turn cleanup
@@ -14,13 +20,66 @@ import type { LorcanaGameState } from "../../types/move-params";
 export const lorcanaFlow: FlowDefinition<LorcanaGameState> = {
   gameSegments: {
     /**
+     * Starting a Game Segment
+     *
+     * Rule 3.1: Starting a game
+     * - Choose who goes first (Rule 3.1.1)
+     * - Mulligan phase (Rule 3.1.6)
+     */
+    startingAGame: {
+      order: 0,
+      next: "mainGame",
+      turn: {
+        initialPhase: "chooseFirstPlayer",
+        phases: {
+          /**
+           * Choose First Player Phase
+           *
+           * Rule 3.1.1: First player determined randomly
+           * In practice, decided by players (rock-paper-scissors, dice roll, etc.)
+           */
+          chooseFirstPlayer: {
+            order: 1,
+            next: "mulligan",
+            onBegin: (_context) => {
+              // Priority goes to a designated player to choose
+              // In tests, we typically let player_one choose
+            },
+            // Advance when OTP (On The Play) is set
+            // The move itself will call context.flow.endPhase()
+            // So this always returns false to wait for manual transition
+            endIf: () => false,
+          },
+
+          /**
+           * Mulligan Phase
+           *
+           * Rule 3.1.6: Players may mulligan by putting cards
+           * on bottom of deck and redrawing
+           */
+          mulligan: {
+            order: 2,
+            next: undefined, // Transitions to mainGame segment
+            onBegin: (_context) => {
+              // Each player can mulligan once
+            },
+            // Advance when all players have completed mulligan
+            // The move itself will call context.flow.endPhase()
+            // So this always returns false to wait for manual transition
+            endIf: () => false,
+            // When this phase ends, transition to mainGame segment
+            onEnd: (context) => {
+              context.endGameSegment();
+            },
+          },
+        },
+      },
+    },
+
+    /**
      * Main Game Segment
      *
-     * Lorcana is a simple game with only one segment - the main game.
-     * More complex games could have additional segments like:
-     * - setup: Initial game preparation
-     * - draft: Card drafting phase
-     * - sideboard: Between-game card swapping
+     * Normal gameplay with beginning, main, and end phases.
      */
     mainGame: {
       order: 1,
@@ -74,5 +133,5 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState> = {
       },
     },
   },
-  initialGameSegment: "mainGame",
+  initialGameSegment: "startingAGame",
 };

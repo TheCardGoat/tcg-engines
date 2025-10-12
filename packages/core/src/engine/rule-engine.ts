@@ -14,6 +14,7 @@ import type { CardRegistry } from "../operations/card-registry";
 import { createCardRegistry } from "../operations/card-registry-impl";
 import {
   createCardOperations,
+  createGameOperations,
   createZoneOperations,
 } from "../operations/operations-impl";
 import { SeededRNG } from "../rng/seeded-rng";
@@ -315,6 +316,12 @@ export class RuleEngine<
     // Also add operations API for zone and card management
     const zoneOps = createZoneOperations(this.internalState);
     const cardOps = createCardOperations(this.internalState);
+    const gameOps = createGameOperations(this.internalState);
+
+    // Track pending flow transitions
+    let pendingPhaseEnd = false;
+    let pendingSegmentEnd = false;
+    let pendingTurnEnd = false;
 
     // Inject flow state from FlowManager if available
     const flowState = this.flowManager
@@ -324,6 +331,10 @@ export class RuleEngine<
           turn: this.flowManager.getTurnNumber(),
           currentPlayer: this.flowManager.getCurrentPlayer() as PlayerId,
           isFirstTurn: this.flowManager.isFirstTurn(),
+          // Provide flow control methods (deferred until after move completes)
+          endPhase: () => { pendingPhaseEnd = true; },
+          endSegment: () => { pendingSegmentEnd = true; },
+          endTurn: () => { pendingTurnEnd = true; },
         }
       : undefined;
 
@@ -343,6 +354,7 @@ export class RuleEngine<
         rng: this.rng,
         zones: zoneOps,
         cards: cardOps,
+        game: gameOps,
         registry: this.cardRegistry,
         flow: flowState,
         endGame,
@@ -383,6 +395,19 @@ export class RuleEngine<
         timestamp: Date.now(),
       });
 
+      // Execute any pending flow transitions after move completes
+      if (this.flowManager) {
+        if (pendingPhaseEnd) {
+          this.flowManager.nextPhase();
+        }
+        if (pendingSegmentEnd) {
+          this.flowManager.nextGameSegment();
+        }
+        if (pendingTurnEnd) {
+          this.flowManager.nextTurn();
+        }
+      }
+
       return {
         success: true,
         patches,
@@ -418,6 +443,7 @@ export class RuleEngine<
     // Build full context with engine-provided services
     const zoneOps = createZoneOperations(this.internalState);
     const cardOps = createCardOperations(this.internalState);
+    const gameOps = createGameOperations(this.internalState);
 
     const contextWithOperations: MoveContext<any, TCardMeta, TCardDefinition> =
       {
@@ -425,6 +451,7 @@ export class RuleEngine<
         rng: this.rng,
         zones: zoneOps,
         cards: cardOps,
+        game: gameOps,
         registry: this.cardRegistry,
       };
 
