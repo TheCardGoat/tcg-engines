@@ -35,6 +35,15 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
       next: "mainGame",
       turn: {
         initialPhase: "chooseFirstPlayer",
+        onBegin: (context) => {
+          // Set currentPlayer to choosingFirstPlayer for priority
+          // During startingAGame, there is no "turn player" yet
+          // but there IS a priority player who can take actions
+          const chooser = context.game.getChoosingFirstPlayer();
+          if (chooser) {
+            context.setCurrentPlayer(String(chooser));
+          }
+        },
         phases: {
           /**
            * Choose First Player Phase
@@ -50,6 +59,13 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
             // Manual transition via move - always return false
             // The move itself calls context.flow.endPhase()
             endIf: (context) => context.game.getOTP() !== undefined,
+            onEnd: (context) => {
+              // After OTP is chosen, set currentPlayer to OTP for mulligan phase
+              const otp = context.game.getOTP();
+              if (otp) {
+                context.setCurrentPlayer(String(otp));
+              }
+            },
           },
 
           /**
@@ -61,8 +77,13 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
           mulligan: {
             order: 2,
             next: undefined, // Transitions to mainGame segment
-            onBegin: (_context) => {
-              // Each player can mulligan once
+            onBegin: (context) => {
+              // Priority starts with OTP for mulligan
+              // Each player will mulligan in turn order
+              const otp = context.game.getOTP();
+              if (otp) {
+                context.setCurrentPlayer(String(otp));
+              }
             },
             // Advance when all players have completed mulligan
             // The move itself will call context.flow.endPhase()
@@ -76,7 +97,7 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
             },
             // When this phase ends, transition to mainGame segment
             onEnd: (context) => {
-              context.endGameSegment();
+              context.endGameSegment("startingAGame");
             },
           },
         },

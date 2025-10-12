@@ -368,6 +368,9 @@ export class RuleEngine<
           endTurn: () => {
             pendingTurnEnd = true;
           },
+          setCurrentPlayer: (playerId?: PlayerId) => {
+            this.flowManager?.setCurrentPlayer(playerId);
+          },
         }
       : undefined;
 
@@ -485,6 +488,7 @@ export class RuleEngine<
           endPhase: () => {},
           endSegment: () => {},
           endTurn: () => {},
+          setCurrentPlayer: () => {},
         }
       : undefined;
 

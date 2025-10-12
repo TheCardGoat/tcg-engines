@@ -193,11 +193,12 @@ export type MoveContext<
     currentPhase?: string;
     currentSegment?: string;
     turn: number;
-    currentPlayer: PlayerId;
+    currentPlayer?: PlayerId;
     isFirstTurn: boolean;
     endPhase: (phaseName?: string) => void;
     endSegment: () => void;
     endTurn: () => void;
+    setCurrentPlayer?: (playerId?: PlayerId) => void;
   };
 
   /**

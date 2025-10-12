@@ -498,6 +498,12 @@ describe("FlowManager - State Machine", () => {
                   order: 0,
                   next: undefined,
                   onBegin: (context) => {
+                    // For games that don't have special setup, we should set currentPlayer
+                    // in the turn onBegin. For testing, we'll set it here.
+                    if (!context.getCurrentPlayer()) {
+                      context.setCurrentPlayer("p1");
+                    }
+
                     // Access flow information
                     const phase = context.getCurrentPhase();
                     const turn = context.getTurnNumber();

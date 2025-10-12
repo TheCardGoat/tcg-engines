@@ -89,7 +89,7 @@ export type FlowContext<TState, TCardMeta = any> = {
    * When called, the current game segment will end and transition to the next segment.
    * Game segments are high-level divisions (e.g., sideboarding, draft, main game).
    */
-  endGameSegment: () => void;
+  endGameSegment: (segmentName?: string) => void;
 
   /**
    * Programmatically end the current turn
@@ -135,6 +135,17 @@ export type FlowContext<TState, TCardMeta = any> = {
    * @returns Current turn number (1-indexed)
    */
   getTurnNumber: () => number;
+
+  /**
+   * Set the current player ID
+   *
+   * Allows explicit control over which player is "active" or has "priority".
+   * Useful for game segments where priority doesn't follow standard turn order
+   * (e.g., during game setup, mulligan phases, or special action sequences).
+   *
+   * @param playerId - Player ID to set as current, or undefined to clear
+   */
+  setCurrentPlayer: (playerId?: string) => void;
 };
 
 /**

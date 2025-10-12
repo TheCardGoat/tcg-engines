@@ -128,6 +128,49 @@ describe("Move: Choose First Player", () => {
     expect(testEngine.getGamePhase()).toBe("chooseFirstPlayer");
   });
 
+  // ========== Turn Player and Priority Tests ==========
+
+  it("should have no turn player but priority during chooseFirstPlayer phase", () => {
+    // Before choosing, turn player should be undefined
+    expect(testEngine.getTurnPlayer()).toBeUndefined();
+
+    // But priority should be the choosingFirstPlayer
+    const ctx = testEngine.getCtx();
+    expect(testEngine.getPriorityPlayers()).toContain(ctx.choosingFirstPlayer);
+  });
+
+  it("should set turn player after OTP is chosen", () => {
+    const ctx = testEngine.getCtx();
+    const choosingPlayer = ctx.choosingFirstPlayer;
+
+    testEngine.changeActivePlayer(choosingPlayer || PLAYER_ONE);
+    testEngine.chooseWhoGoesFirst(PLAYER_ONE);
+
+    // After choosing, turn player should be set to OTP
+    expect(testEngine.getTurnPlayer()).toBe(PLAYER_ONE);
+
+    // And priority should also be OTP (for mulligan)
+    expect(testEngine.getPriorityPlayers()).toContain(PLAYER_ONE);
+  });
+
+  it("should switch priority after each player mulligans", () => {
+    const ctx = testEngine.getCtx();
+    const choosingPlayer = ctx.choosingFirstPlayer;
+
+    testEngine.changeActivePlayer(choosingPlayer || PLAYER_ONE);
+    testEngine.chooseWhoGoesFirst(PLAYER_ONE);
+
+    // OTP has priority first
+    expect(testEngine.getPriorityPlayers()).toContain(PLAYER_ONE);
+
+    testEngine.changeActivePlayer(PLAYER_ONE);
+    testEngine.alterHand([]);
+
+    // After OTP mulligans, priority switches to other player
+    expect(testEngine.getPriorityPlayers()).toContain(PLAYER_TWO);
+    expect(testEngine.getPriorityPlayers()).not.toContain(PLAYER_ONE);
+  });
+
   // ========== Invalid Move Tests ==========
 
   it("should reject invalid player ID", () => {

@@ -51,6 +51,7 @@ export type FlowStateSnapshot = {
   phase?: string;
   step?: string;
   turn: number;
+  currentPlayer?: string;
 };
 
 /**
@@ -101,7 +102,7 @@ export class FlowManager<TState, TCardMeta = any> {
   private currentPhase?: string;
   private currentStep?: string;
   private turnNumber = 1;
-  private currentPlayer = "";
+  private currentPlayer?: string = undefined;
   private pendingEndGameSegment = false;
   private pendingEndPhase = false;
   private pendingEndStep = false;
@@ -395,6 +396,9 @@ export class FlowManager<TState, TCardMeta = any> {
       getCurrentStep: () => this.currentStep,
       getCurrentPlayer: () => this.currentPlayer,
       getTurnNumber: () => this.turnNumber,
+      setCurrentPlayer: (playerId?: string) => {
+        this.currentPlayer = playerId;
+      },
     };
   }
 
@@ -479,6 +483,9 @@ export class FlowManager<TState, TCardMeta = any> {
       getCurrentStep: () => this.currentStep,
       getCurrentPlayer: () => this.currentPlayer,
       getTurnNumber: () => this.turnNumber,
+      setCurrentPlayer: (playerId?: string) => {
+        this.currentPlayer = playerId;
+      },
     };
   }
 
@@ -799,8 +806,21 @@ export class FlowManager<TState, TCardMeta = any> {
   /**
    * Get current player ID
    */
-  getCurrentPlayer(): string {
+  getCurrentPlayer(): string | undefined {
     return this.currentPlayer;
+  }
+
+  /**
+   * Set current player ID
+   *
+   * This allows explicit control over which player is "active" or has "priority".
+   * Useful for game segments where priority doesn't follow standard turn order
+   * (e.g., during game setup, mulligan phases, or special action sequences).
+   *
+   * @param playerId - Player ID to set as current, or undefined to clear
+   */
+  setCurrentPlayer(playerId?: string): void {
+    this.currentPlayer = playerId;
   }
 
   /**

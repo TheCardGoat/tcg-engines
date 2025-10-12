@@ -198,9 +198,20 @@ export class LorcanaTestEngine {
 
   /**
    * Get current turn player
+   *
+   * During startingAGame segment, there is NO turn player until OTP is chosen.
+   * During mainGame segment, turn player is the currentPlayer from flow.
    */
-  getTurnPlayer(): string {
-    return this.engine.getFlowManager()?.getCurrentPlayer() || "";
+  getTurnPlayer(): string | undefined {
+    const segment = this.getGameSegment();
+    if (segment === "startingAGame") {
+      // No turn player during startingAGame until OTP is chosen
+      const otp = this.getCtx().otp;
+      return otp;
+    }
+
+    // During mainGame, turn player is the currentPlayer
+    return this.engine.getFlowManager()?.getCurrentPlayer() || undefined;
   }
 
   /**
@@ -212,11 +223,22 @@ export class LorcanaTestEngine {
 
   /**
    * Get priority players
-   * Note: This is a placeholder - actual priority logic depends on flow/phase
+   *
+   * Priority player is who can currently take actions.
+   * During startingAGame, priority = currentPlayer (choosingFirstPlayer or OTP for mulligan)
+   * During mainGame, priority = turn player
    */
   getPriorityPlayers(): string[] {
-    // In Lorcana, priority usually belongs to the active player
-    // This is a simplified implementation
+    const segment = this.getGameSegment();
+    const currentPlayer = this.engine.getFlowManager()?.getCurrentPlayer();
+
+    if (segment === "startingAGame") {
+      // During startingAGame, priority = currentPlayer
+      // (which is set to choosingFirstPlayer, then OTP for mulligan)
+      return currentPlayer ? [currentPlayer] : [];
+    }
+
+    // During mainGame, priority = turn player
     const turnPlayer = this.getTurnPlayer();
     return turnPlayer ? [turnPlayer] : [];
   }
