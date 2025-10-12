@@ -331,19 +331,30 @@ export class FlowManager<TState, TCardMeta = any> {
         console.log("stub called");
       },
       getCardsInZone: () => [],
-      shuffleZone: () => {},
+      shuffleZone: () => {
+        console.log("stub called");
+      },
       getCardZone: () => undefined,
       drawCards: () => [],
-      mulligan: () => {},
+      mulligan: () => {
+        console.log("stub called");
+      },
       bulkMove: () => [],
       createDeck: () => [],
     };
 
     const stubCardOperations: CardOperations<TCardMeta> = {
       getCardMeta: () => ({}) as TCardMeta,
-      updateCardMeta: () => {},
-      setCardMeta: () => {},
-      getCardOwner: () => undefined,
+      updateCardMeta: () => {
+        console.log("stub called");
+      },
+      setCardMeta: () => {
+        console.log("stub called");
+      },
+      getCardOwner: () => {
+        console.log("stub called");
+        return undefined;
+      },
       queryCards: () => [],
     };
 
