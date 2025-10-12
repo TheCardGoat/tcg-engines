@@ -415,7 +415,7 @@ export class RuleEngine<
       });
 
       // Emit telemetry event for failed move
-      this.telemetry.emit({
+      this.telemetry.emitEvent({
         type: "playerAction",
         moveId,
         playerId: contextInput.playerId,
@@ -565,7 +565,7 @@ export class RuleEngine<
       });
 
       // Emit telemetry events for successful move
-      this.telemetry.emit({
+      this.telemetry.emitEvent({
         type: "playerAction",
         moveId,
         playerId: contextInput.playerId,
@@ -575,7 +575,7 @@ export class RuleEngine<
         timestamp: startTime,
       });
 
-      this.telemetry.emit({
+      this.telemetry.emitEvent({
         type: "stateChange",
         patches,
         inversePatches,
@@ -600,7 +600,7 @@ export class RuleEngine<
       });
 
       // Emit telemetry error event
-      this.telemetry.emit({
+      this.telemetry.emitEvent({
         type: "engineError",
         error: errorMessage,
         stack: error instanceof Error ? error.stack : undefined,

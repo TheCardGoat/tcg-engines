@@ -19,6 +19,8 @@
 - **🔍 Testing Utilities** - Complete TDD toolkit with assertions and factories
 - **🛠️ Card Tooling** - Reusable infrastructure for parsers, generators, and validators
 - **✅ Validation System** - Type guards and runtime validators for data integrity
+- **📝 Logging System** - Structured logging with configurable verbosity levels
+- **📡 Telemetry System** - Event-based telemetry for analytics and debugging
 
 ## Quick Start
 
@@ -419,6 +421,86 @@ const isValid = validateTargetSelection(
 );
 ```
 
+## Logging & Telemetry
+
+Production-grade logging and telemetry for debugging, transparency, and analytics.
+
+### Logging System
+
+Structured logging with zero-overhead SILENT mode:
+
+```typescript
+import { RuleEngine, LogLevel } from '@tcg/core';
+
+const engine = new RuleEngine(gameDefinition, players, {
+  seed: 'game-123',
+  logger: {
+    level: 'DEVELOPER',  // SILENT, NORMAL_PLAYER, ADVANCED_PLAYER, DEVELOPER
+    pretty: true         // Human-readable output
+  }
+});
+
+// Access logger for custom logging
+const logger = engine.getLogger();
+logger.info('Custom event', { eventId: 'custom-123', data: { value: 42 } });
+
+// Create child loggers for subsystems
+const aiLogger = logger.child('ai');
+aiLogger.debug('Evaluating move options', { count: 12 });
+```
+
+**Verbosity Levels:**
+- `SILENT` (0): No logging - zero overhead
+- `NORMAL_PLAYER` (INFO): Basic game events
+- `ADVANCED_PLAYER` (DEBUG): Detailed game mechanics
+- `DEVELOPER` (TRACE): Full internal details
+
+**Learn more:** [Logging Guide](./docs/LOGGING.md)
+
+### Telemetry System
+
+Event-based telemetry for tracking player actions and engine events:
+
+```typescript
+const engine = new RuleEngine(gameDefinition, players, {
+  seed: 'game-123',
+  telemetry: {
+    enabled: true,
+    hooks: {
+      onPlayerAction: (event) => {
+        analytics.track('game.move', {
+          moveId: event.moveId,
+          playerId: event.playerId,
+          duration: event.duration
+        });
+      },
+      onStateChange: (event) => {
+        database.savePatches(event.patches);
+      },
+      onEngineError: (event) => {
+        errorReporter.captureException(event.error, event.context);
+      }
+    }
+  }
+});
+
+// EventEmitter style
+const telemetry = engine.getTelemetry();
+telemetry.on('playerAction', (event) => {
+  console.log(`Move: ${event.moveId}, Result: ${event.result}`);
+});
+```
+
+**Event Types:**
+- `PlayerActionEvent`: Move execution tracking
+- `StateChangeEvent`: State mutations with patches
+- `RuleEvaluationEvent`: Condition checks
+- `FlowTransitionEvent`: Phase/turn/segment changes
+- `EngineErrorEvent`: Error tracking
+- `PerformanceEvent`: Performance metrics
+
+**Learn more:** [Telemetry Guide](./docs/TELEMETRY.md)
+
 ## Testing Utilities
 
 Comprehensive testing utilities for TDD workflow:
@@ -678,6 +760,8 @@ bun test --watch
 ├── filtering/       # Card query DSL
 ├── targeting/       # Targeting system
 ├── rng/             # Seeded random number generation
+├── logging/         # Structured logging system
+├── telemetry/       # Event-based telemetry
 ├── delta-sync/      # Patch utilities
 ├── testing/         # Testing utilities (@tcg/core/testing)
 ├── tooling/         # Card tooling infrastructure (@tcg/core/tooling)
@@ -689,6 +773,8 @@ bun test --watch
 
 ### Guides
 
+- **[Logging Guide](./docs/LOGGING.md)** - Structured logging system
+- **[Telemetry Guide](./docs/TELEMETRY.md)** - Event-based telemetry
 - **[Zone Operations Guide](./docs/guides/zone-operations.md)** - Comprehensive zone management utilities
 - **[Testing Utilities Guide](./docs/guides/testing-utilities.md)** - TDD workflow and test patterns
 - **[Card Tooling Guide](./docs/guides/card-tooling.md)** - Building card management pipelines

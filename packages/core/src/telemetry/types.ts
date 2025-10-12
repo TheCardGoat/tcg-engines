@@ -20,15 +20,6 @@ import type {
  *
  * Generic callback type for handling telemetry events.
  * All hooks receive a single event parameter and return void.
- *
- * @example
- * ```typescript
- * const hook: TelemetryHook = (event: TelemetryEvent) => {
- *   if (event.type === 'playerAction') {
- *     analytics.track('game.move', event);
- *   }
- * };
- * ```
  */
 export type TelemetryHook = (event: TelemetryEvent) => void;
 
@@ -37,22 +28,6 @@ export type TelemetryHook = (event: TelemetryEvent) => void;
  *
  * Object defining callbacks for specific event types.
  * Each hook is optional and receives only events of its type.
- *
- * Hooks vs EventEmitter:
- * - Hooks: Registered at initialization, type-safe callbacks
- * - EventEmitter: Dynamic subscription via .on(), flexible at runtime
- *
- * @example
- * ```typescript
- * const hooks: TelemetryHooks = {
- *   onPlayerAction: (event) => {
- *     console.log(`Move: ${event.moveId}`);
- *   },
- *   onEngineError: (event) => {
- *     errorReporter.capture(event.error, event.context);
- *   }
- * };
- * ```
  */
 export type TelemetryHooks = {
   /** Called when a player executes a move */
@@ -73,22 +48,6 @@ export type TelemetryHooks = {
  * Telemetry Options
  *
  * Configuration for TelemetryManager instances.
- *
- * @example
- * ```typescript
- * const options: TelemetryOptions = {
- *   enabled: true,
- *   hooks: {
- *     onPlayerAction: (event) => {
- *       analytics.track('game.move', {
- *         moveId: event.moveId,
- *         playerId: event.playerId,
- *         duration: event.duration
- *       });
- *     }
- *   }
- * };
- * ```
  */
 export type TelemetryOptions = {
   /**

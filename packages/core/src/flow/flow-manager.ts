@@ -1,7 +1,9 @@
 import { type Draft, produce } from "immer";
+import type { Logger } from "../logging";
 import type { CardOperations } from "../operations/card-operations";
 import type { GameOperations } from "../operations/game-operations";
 import type { ZoneOperations } from "../operations/zone-operations";
+import type { TelemetryManager } from "../telemetry";
 import type {
   FlowContext,
   FlowDefinition,
@@ -64,7 +66,7 @@ export type SerializedFlowState = {
   currentPhase?: string;
   currentStep?: string;
   turnNumber: number;
-  currentPlayer: string;
+  currentPlayer?: string;
 };
 
 /**
@@ -85,6 +87,10 @@ export type FlowManagerOptions<TCardMeta = any> = {
   zoneOperations?: ZoneOperations;
   /** Card operations API (required for flow hooks) */
   cardOperations?: CardOperations<TCardMeta>;
+  /** Logger instance for structured logging */
+  logger?: Logger;
+  /** Telemetry manager for event tracking */
+  telemetry?: TelemetryManager;
 };
 
 /**
@@ -112,6 +118,8 @@ export class FlowManager<TState, TCardMeta = any> {
   private gameOperations?: GameOperations;
   private zoneOperations?: ZoneOperations;
   private cardOperations?: CardOperations<TCardMeta>;
+  private logger?: Logger;
+  private telemetry?: TelemetryManager;
 
   constructor(
     flowDefinition: FlowDefinition<TState, TCardMeta>,
@@ -125,6 +133,8 @@ export class FlowManager<TState, TCardMeta = any> {
     this.gameOperations = options?.gameOperations;
     this.zoneOperations = options?.zoneOperations;
     this.cardOperations = options?.cardOperations;
+    this.logger = options?.logger;
+    this.telemetry = options?.telemetry;
 
     // Normalize flow definition (handle both simplified and full syntax)
     const normalized = this.normalizeFlowDefinition(flowDefinition);
@@ -315,6 +325,8 @@ export class FlowManager<TState, TCardMeta = any> {
     const stubGameOperations: GameOperations = {
       setOTP: () => {},
       getOTP: () => undefined,
+      setChoosingFirstPlayer: () => {},
+      getChoosingFirstPlayer: () => undefined,
       setPendingMulligan: () => {
         console.log("stub called");
       },
@@ -394,7 +406,7 @@ export class FlowManager<TState, TCardMeta = any> {
       getCurrentGameSegment: () => this.currentGameSegment,
       getCurrentPhase: () => this.currentPhase,
       getCurrentStep: () => this.currentStep,
-      getCurrentPlayer: () => this.currentPlayer,
+      getCurrentPlayer: () => this.currentPlayer ?? "",
       getTurnNumber: () => this.turnNumber,
       setCurrentPlayer: (playerId?: string) => {
         this.currentPlayer = playerId;
@@ -481,7 +493,7 @@ export class FlowManager<TState, TCardMeta = any> {
       getCurrentGameSegment: () => this.currentGameSegment,
       getCurrentPhase: () => this.currentPhase,
       getCurrentStep: () => this.currentStep,
-      getCurrentPlayer: () => this.currentPlayer,
+      getCurrentPlayer: () => this.currentPlayer ?? "",
       getTurnNumber: () => this.turnNumber,
       setCurrentPlayer: (playerId?: string) => {
         this.currentPlayer = playerId;
@@ -555,6 +567,23 @@ export class FlowManager<TState, TCardMeta = any> {
       this.currentPhase = nextPhase;
       const nextPhaseDef = phases[nextPhase];
 
+      // Log phase transition (INFO level)
+      this.logger?.info("Phase transition", {
+        from: previousPhase,
+        to: this.currentPhase,
+        turn: this.turnNumber,
+      });
+
+      // Emit telemetry event
+      this.telemetry?.emitEvent({
+        type: "flowTransition",
+        transitionType: "phase",
+        from: previousPhase,
+        to: this.currentPhase,
+        turn: this.turnNumber,
+        timestamp: Date.now(),
+      });
+
       // Initialize steps if any
       if (nextPhaseDef.steps) {
         const sortedSteps = Object.entries(nextPhaseDef.steps).sort(
@@ -612,7 +641,24 @@ export class FlowManager<TState, TCardMeta = any> {
     }
 
     // Increment turn number
+    const previousTurn = this.turnNumber;
     this.turnNumber += 1;
+
+    // Log turn transition (INFO level)
+    this.logger?.info("Turn transition", {
+      turn: previousTurn,
+      nextTurn: this.turnNumber,
+    });
+
+    // Emit telemetry event
+    this.telemetry?.emitEvent({
+      type: "flowTransition",
+      transitionType: "turn",
+      from: `turn-${previousTurn}`,
+      to: `turn-${this.turnNumber}`,
+      turn: this.turnNumber,
+      timestamp: Date.now(),
+    });
 
     // Reset to first phase
     if (phases) {
@@ -688,10 +734,28 @@ export class FlowManager<TState, TCardMeta = any> {
 
     // Determine next game segment
     const nextGameSegment = gameSegmentDef.next;
+    const previousSegment = this.currentGameSegment;
 
     if (nextGameSegment && gameSegments[nextGameSegment]) {
       this.currentGameSegment = nextGameSegment;
       const nextGameSegmentDef = gameSegments[nextGameSegment];
+
+      // Log game segment transition (INFO level)
+      this.logger?.info("Game segment transition", {
+        from: previousSegment,
+        to: this.currentGameSegment,
+        turn: this.turnNumber,
+      });
+
+      // Emit telemetry event
+      this.telemetry?.emitEvent({
+        type: "flowTransition",
+        transitionType: "segment",
+        from: previousSegment || "none",
+        to: this.currentGameSegment || "none",
+        turn: this.turnNumber,
+        timestamp: Date.now(),
+      });
 
       // Reset turn number for new game segment (optional - depends on game rules)
       // this.turnNumber = 1;

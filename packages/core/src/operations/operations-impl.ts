@@ -1,4 +1,5 @@
-import type { PlayerId } from "../types";
+import type { Logger } from "../logging";
+import type { CardId, PlayerId } from "../types";
 import type { InternalState } from "../types/state";
 import type { CardOperations } from "./card-operations";
 import type { GameOperations } from "./game-operations";
@@ -8,13 +9,16 @@ import type { ZoneOperations } from "./zone-operations";
  * Create a ZoneOperations implementation backed by InternalState
  *
  * @param state - Internal state to operate on (will be mutated)
+ * @param logger - Optional logger for TRACE-level logging
  * @returns ZoneOperations implementation
  */
 export const createZoneOperations = <TCardDef, TCardMeta>(
   state: InternalState<TCardDef, TCardMeta>,
+  logger?: Logger,
 ): ZoneOperations => {
   const zoneOps: ZoneOperations = {
     moveCard: ({ cardId, targetZoneId, position = "bottom" }) => {
+      logger?.trace("Moving card", { cardId, targetZoneId, position });
       // Find current zone and remove card
       let sourceZoneId: string | undefined;
       for (const zoneId in state.zones) {
@@ -243,17 +247,21 @@ export const createZoneOperations = <TCardDef, TCardMeta>(
  * Create a CardOperations implementation backed by InternalState
  *
  * @param state - Internal state to operate on (will be mutated)
+ * @param logger - Optional logger for TRACE-level logging
  * @returns CardOperations implementation
  */
 export const createCardOperations = <TCardDef, TCardMeta>(
   state: InternalState<TCardDef, TCardMeta>,
+  logger?: Logger,
 ): CardOperations<TCardMeta> => {
   return {
     getCardMeta: (cardId) => {
+      logger?.trace("Getting card meta", { cardId });
       return (state.cardMetas[cardId as string] || {}) as Partial<TCardMeta>;
     },
 
     updateCardMeta: (cardId, meta) => {
+      logger?.trace("Updating card meta", { cardId, updates: meta });
       const existing = state.cardMetas[cardId as string];
       if (existing) {
         Object.assign(existing, meta);
@@ -263,6 +271,7 @@ export const createCardOperations = <TCardDef, TCardMeta>(
     },
 
     setCardMeta: (cardId, meta) => {
+      logger?.trace("Setting card meta", { cardId });
       state.cardMetas[cardId as string] = meta;
     },
 
@@ -288,13 +297,16 @@ export const createCardOperations = <TCardDef, TCardMeta>(
  * Create a GameOperations implementation backed by InternalState
  *
  * @param state - Internal state to operate on (will be mutated)
+ * @param logger - Optional logger for TRACE-level logging
  * @returns GameOperations implementation
  */
 export const createGameOperations = <TCardDef, TCardMeta>(
   state: InternalState<TCardDef, TCardMeta>,
+  logger?: Logger,
 ): GameOperations => {
   return {
     setOTP: (playerId: PlayerId) => {
+      logger?.trace("Setting OTP", { playerId });
       state.otp = playerId;
     },
 

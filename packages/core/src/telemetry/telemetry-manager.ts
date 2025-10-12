@@ -14,45 +14,11 @@ import type { TelemetryHooks, TelemetryOptions } from "./types";
  *
  * Manages telemetry events and hooks for the engine.
  * Provides dual API: EventEmitter style and callback hooks.
- *
- * Features:
- * - Event emission with type safety
- * - Dynamic hook registration/unregistration
- * - Enable/disable toggle
- * - EventEmitter API for runtime subscriptions
- *
- * @example
- * ```typescript
- * // Initialize with hooks
- * const telemetry = new TelemetryManager({
- *   enabled: true,
- *   hooks: {
- *     onPlayerAction: (event) => console.log(event.moveId)
- *   }
- * });
- *
- * // EventEmitter style (runtime subscription)
- * telemetry.on('playerAction', (event) => {
- *   analytics.track('move', event);
- * });
- *
- * // Emit events
- * telemetry.emit({
- *   type: 'playerAction',
- *   moveId: 'playCard',
- *   // ...
- * });
- * ```
  */
 export class TelemetryManager extends EventEmitter {
   private enabled: boolean;
   private registeredHooks: TelemetryHooks;
 
-  /**
-   * Create a new TelemetryManager
-   *
-   * @param options - Telemetry configuration
-   */
   constructor(options: TelemetryOptions) {
     super();
     this.enabled = options.enabled;
@@ -94,21 +60,8 @@ export class TelemetryManager extends EventEmitter {
    *
    * @param event - Telemetry event to emit
    * @returns True if emitted, false if disabled
-   *
-   * @example
-   * ```typescript
-   * telemetry.emit({
-   *   type: 'playerAction',
-   *   moveId: 'drawCard',
-   *   playerId: 'player-1',
-   *   params: {},
-   *   result: 'success',
-   *   duration: 15,
-   *   timestamp: Date.now()
-   * });
-   * ```
    */
-  emit(event: TelemetryEvent): boolean {
+  emitEvent(event: TelemetryEvent): boolean {
     if (!this.enabled) {
       return false;
     }
@@ -123,19 +76,6 @@ export class TelemetryManager extends EventEmitter {
    * Register a single telemetry hook
    *
    * Allows external systems to subscribe to specific event types.
-   * Hook is invoked synchronously when matching events are emitted.
-   *
-   * @param eventType - Event type to hook into
-   * @param handler - Callback function
-   *
-   * @example
-   * ```typescript
-   * telemetry.registerHook('onPlayerAction', (event) => {
-   *   if (event.result === 'failure') {
-   *     errorTracker.log(event.error);
-   *   }
-   * });
-   * ```
    */
   registerHook<K extends keyof TelemetryHooks>(
     eventType: K,
@@ -154,20 +94,6 @@ export class TelemetryManager extends EventEmitter {
 
   /**
    * Unregister a telemetry hook
-   *
-   * Removes a specific handler from the event type.
-   *
-   * @param eventType - Event type to unhook from
-   * @param handler - Specific handler to remove
-   *
-   * @example
-   * ```typescript
-   * const handler = (event) => console.log(event);
-   * telemetry.registerHook('onPlayerAction', handler);
-   *
-   * // Later...
-   * telemetry.unregisterHook('onPlayerAction', handler);
-   * ```
    */
   unregisterHook<K extends keyof TelemetryHooks>(
     eventType: K,
@@ -187,18 +113,6 @@ export class TelemetryManager extends EventEmitter {
 
   /**
    * Set enabled state
-   *
-   * Dynamically enable or disable telemetry at runtime.
-   *
-   * @param enabled - True to enable, false to disable
-   *
-   * @example
-   * ```typescript
-   * // Disable telemetry in production
-   * if (process.env.NODE_ENV === 'production') {
-   *   telemetry.setEnabled(false);
-   * }
-   * ```
    */
   setEnabled(enabled: boolean): void {
     this.enabled = enabled;
@@ -206,8 +120,6 @@ export class TelemetryManager extends EventEmitter {
 
   /**
    * Check if telemetry is enabled
-   *
-   * @returns True if enabled, false otherwise
    */
   isEnabled(): boolean {
     return this.enabled;

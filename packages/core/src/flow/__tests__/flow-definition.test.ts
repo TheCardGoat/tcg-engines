@@ -39,6 +39,8 @@ describe("FlowDefinition Type", () => {
         game: {
           setOTP: () => {},
           getOTP: () => undefined,
+          setChoosingFirstPlayer: () => {},
+          getChoosingFirstPlayer: () => undefined,
           setPendingMulligan: () => {},
           getPendingMulligan: () => [],
           addPendingMulligan: () => {},
@@ -70,6 +72,7 @@ describe("FlowDefinition Type", () => {
         getCurrentStep: () => undefined,
         getCurrentPlayer: () => "player-1",
         getTurnNumber: () => 1,
+        setCurrentPlayer: () => {},
       };
 
       expect(mockContext.endGameSegment).toBeDefined();
