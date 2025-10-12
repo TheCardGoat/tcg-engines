@@ -1,4 +1,4 @@
-import type { ChallengerAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const jafarWicked: LorcanaCharacterCardDefinition = {
@@ -8,14 +8,7 @@ export const jafarWicked: LorcanaCharacterCardDefinition = {
   characteristics: ["dreamborn", "sorcerer", "villain"],
   text: "**Challenger** +3 (_When challenging, this character get +3 {S}._)",
   type: "character",
-  abilities: [
-    {
-      type: "static",
-      ability: "challenger",
-      value: 3,
-      text: "**Challenger** +3 (_When challenging, this character get +3 {S}._)",
-    } as ChallengerAbility,
-  ],
+  abilities: [challengerAbility(3)],
   flavour:
     "Enough skulking about. It’s time to show that \rsniveling sultan what a sorcerer can do.",
   inkwell: true,

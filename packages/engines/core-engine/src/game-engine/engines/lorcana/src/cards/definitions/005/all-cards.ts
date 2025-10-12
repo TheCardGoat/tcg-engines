@@ -44,7 +44,6 @@ import {
   banzaiVoraciousPredator,
   bashfulAdoringKnight,
   basilPracticedDetective,
-  basilsMagnifyingGlass,
   belleOfTheBall,
   bruniFireSalamander,
   camiloMadrigalFamilyCopycat,
@@ -181,6 +180,7 @@ import {
 import {
   amberChromiconItem,
   amethystChromicon,
+  basilsMagnifyingGlass,
   emeraldChromiconItem,
   halfHexwellCrown,
   healingDecanterItem,

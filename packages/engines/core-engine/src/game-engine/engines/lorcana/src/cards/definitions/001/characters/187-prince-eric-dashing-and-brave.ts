@@ -1,4 +1,4 @@
-import type { ChallengerAbility } from "~/game-engine/engines/lorcana/src/abilities";
+import { challengerAbility } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
 export const priceEricDashingAndBrave: LorcanaCharacterCardDefinition = {
@@ -10,14 +10,7 @@ export const priceEricDashingAndBrave: LorcanaCharacterCardDefinition = {
   characteristics: ["hero", "storyborn", "prince"],
   text: "**Challenger** +2 _(While challenging, this character gets +2 {S}.)_",
   type: "character",
-  abilities: [
-    {
-      type: "static",
-      ability: "challenger",
-      value: 2,
-      text: "**Challenger** +2 (_When challenging, this character get +2 {S}._)",
-    } as ChallengerAbility,
-  ],
+  abilities: [challengerAbility(2)],
   flavour: "I lost her once! I'm not gonna lose her again!",
   inkwell: true,
   colors: ["steel"],
