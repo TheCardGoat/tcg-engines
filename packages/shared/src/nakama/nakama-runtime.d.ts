@@ -108,7 +108,12 @@ declare namespace nkruntime {
      * @throws {TypeError}
      * @returns A response payload or error if one occurred.
      */
-    (ctx: Context, logger: Logger, nk: Nakama, payload: string): string | void;
+    (
+      ctx: Context,
+      logger: Logger,
+      nk: Nakama,
+      payload: string,
+    ): string | undefined;
   }
 
   /**
@@ -128,7 +133,7 @@ declare namespace nkruntime {
      * @param data - The input data to the function call.
      * @returns The escaped JSON payload.
      */
-    (ctx: Context, logger: Logger, nk: Nakama, data: T): T | void;
+    (ctx: Context, logger: Logger, nk: Nakama, data: T): T | undefined;
   }
 
   /**
@@ -162,7 +167,7 @@ declare namespace nkruntime {
      * @param nk - The Nakama server APIs.
      * @param envelope - The Envelope message received by the function.
      */
-    (ctx: Context, logger: Logger, nk: Nakama, envelope: T): T | void;
+    (ctx: Context, logger: Logger, nk: Nakama, envelope: T): T | undefined;
   }
 
   /**
@@ -207,7 +212,7 @@ declare namespace nkruntime {
       logger: Logger,
       nk: Nakama,
       matches: MatchmakerResult[],
-    ): string | void;
+    ): string | undefined;
   }
 
   /**
