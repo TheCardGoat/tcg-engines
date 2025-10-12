@@ -3,16 +3,27 @@
 These are the tasks to be completed for the spec detailed in @agent-os/specs/2025-10-11-gundam-engine/spec.md
 
 > Created: 2025-10-11
+<<<<<<< HEAD
 > Status: ✅ COMPLETED
+=======
+> Status: In Progress
+>>>>>>> origin/main
 
 ## Progress Tracker
 
 - [x] **Phase 1: Foundation Setup** - COMPLETED
 - [x] **Phase 2: High-Complexity Sections with Subsections** - COMPLETED
+<<<<<<< HEAD
 - [x] **Phase 3: Simple Sections (light.md + full.md)** - COMPLETED
 - [x] **Phase 4: Moderate-Complexity Sections (Evaluate for Subsections)** - COMPLETED
 - [x] **Phase 5: Cross-Reference Conversion and Linking** - COMPLETED
 - [x] **Phase 6: Verification and Quality Assurance** - COMPLETED
+=======
+- [ ] Phase 3: Simple Sections (light.md + full.md)
+- [ ] Phase 4: Moderate-Complexity Sections (Evaluate for Subsections)
+- [ ] Phase 5: Cross-Reference Conversion and Linking
+- [ ] Phase 6: Verification and Quality Assurance
+>>>>>>> origin/main
 
 ## Tasks
 
@@ -130,7 +141,11 @@ These are the tasks to be completed for the spec detailed in @agent-os/specs/202
 
 ---
 
+<<<<<<< HEAD
 ### Phase 3: Simple Sections (light.md + full.md) ✓ COMPLETED
+=======
+### Phase 3: Simple Sections (light.md + full.md)
+>>>>>>> origin/main
 
 **Task 3.1: Create Section 1 (Game Overview) Documentation**
 - Read Section 1 from original RULES.md
@@ -218,7 +233,11 @@ These are the tasks to be completed for the spec detailed in @agent-os/specs/202
 
 ---
 
+<<<<<<< HEAD
 ### Phase 4: Moderate-Complexity Sections (Evaluate for Subsections) ✓ COMPLETED
+=======
+### Phase 4: Moderate-Complexity Sections (Evaluate for Subsections)
+>>>>>>> origin/main
 
 **Task 4.1: Create Section 2 (Card Information) Documentation**
 - Read Section 2 from original RULES.md
@@ -273,7 +292,11 @@ These are the tasks to be completed for the spec detailed in @agent-os/specs/202
 
 ---
 
+<<<<<<< HEAD
 ### Phase 5: Cross-Reference Conversion and Linking ✓ COMPLETED
+=======
+### Phase 5: Cross-Reference Conversion and Linking
+>>>>>>> origin/main
 
 **Task 5.1: Audit All Cross-References in Original RULES.md**
 - Search original RULES.md for all instances matching pattern `(See X-Y` or `(See X-Y-Z`
@@ -343,7 +366,11 @@ These are the tasks to be completed for the spec detailed in @agent-os/specs/202
 
 ---
 
+<<<<<<< HEAD
 ### Phase 6: Verification and Quality Assurance ✓ COMPLETED
+=======
+### Phase 6: Verification and Quality Assurance
+>>>>>>> origin/main
 
 **Task 6.1: Verify Content Completeness**
 - Compare original RULES.md line count (1,145 lines) with sum of all full.md and subsection files
