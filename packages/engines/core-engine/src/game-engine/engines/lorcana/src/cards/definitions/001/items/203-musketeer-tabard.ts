@@ -11,8 +11,8 @@ export const musketeerTabard: LorcanaItemCardDefinition = {
   type: "item",
   abilities: [
     {
-      type: "static-triggered",
-      optional: false,
+      type: "resolution",
+      optional: true,
       trigger: {
         on: "banish",
         filters: [
@@ -21,21 +21,17 @@ export const musketeerTabard: LorcanaItemCardDefinition = {
           { filter: "ability", value: "bodyguard" },
         ],
       } as BanishTrigger,
-      layer: {
-        type: "resolution",
-        optional: true,
-        effects: [
-          {
-            type: "draw",
-            amount: 1,
-            target: {
-              type: "player",
-              value: "self",
-            },
+      effects: [
+        {
+          type: "draw",
+          amount: 1,
+          target: {
+            type: "player",
+            value: "self",
           },
-        ],
-      },
-    } as TriggeredAbility,
+        },
+      ],
+    } as any,
   ],
   flavour: "There's no such thing as a lone musketeer.",
   colors: ["steel"],

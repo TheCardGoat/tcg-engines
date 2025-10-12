@@ -3676,7 +3676,7 @@ export const grammaTalaSpiritOfTheOcean: LorcanaCharacterCardDefinition = {
   abilities: [
     shiftAbility(5, "gramma tala"),
     {
-      type: "static-triggered",
+      type: "resolution",
       name: "DO YOU KNOW WHO YOU ARE?",
       text: "Whenever a card is put into your inkwell, gain 1 lore.",
       trigger: {
@@ -3687,13 +3687,8 @@ export const grammaTalaSpiritOfTheOcean: LorcanaCharacterCardDefinition = {
           filters: [{ filter: "owner", value: "self" }],
         },
       },
-      layer: {
-        type: "resolution",
-        name: "DO YOU KNOW WHO YOU ARE?",
-        text: "Whenever a card is put into your inkwell, gain 1 lore.",
-        effects: [youGainLore(1)],
-      },
-    },
+      effects: [youGainLore(1)],
+    } as any,
   ],
   flavour:
     "She will always be with you, no matter how far your journey takes you.",

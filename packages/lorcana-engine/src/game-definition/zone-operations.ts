@@ -13,7 +13,7 @@
  * All operations follow Comprehensive Rules Section 8 (Zones)
  */
 
-import type { CardId, PlayerId } from "../types/branded-types";
+import type { CardId, PlayerId } from "@tcg/core";
 
 // Re-export core zone utilities for direct use (recommended for new code)
 // These work with immutable Zone objects from @tcg/core

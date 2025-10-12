@@ -8,65 +8,60 @@ import type {
   ZoneId,
 } from "@tcg/core";
 import { standardMoves } from "@tcg/core";
+import { useLorcanaOps } from "../operations";
+import type {
+  LorcanaCardMeta,
+  LorcanaGameState,
+  LorcanaMoveParams,
+} from "../types/move-params";
+import {
+  and,
+  canChallenge,
+  canQuest,
+  cardInHand,
+  cardInPlay,
+  cardOwnedByPlayer,
+  hasNotUsedAction,
+  isMainPhase,
+} from "../validators";
 
-type TestGameState = {
-  effects: unknown[];
-  bag: unknown[];
-  loreScores: Record<PlayerId, number>;
-};
+/**
+ * Lorcana Move Definitions
+ *
+ * Improved design with:
+ * - Composable validators
+ * - Domain-specific operations
+ * - Type-safe parameters
+ * - Concise implementation
+ */
+const lorcanaMoves: GameMoveDefinitions<
+  LorcanaGameState,
+  LorcanaMoveParams,
+  LorcanaCardMeta
+> = {
+  // ===== Setup Moves =====
 
-type AlternativeCost = {
-  type: "shift" | "sing" | "sing-together";
-  targetInstanceId: CardId[];
-};
-
-type TestMoves = {
-  // Setup moves
-  chooseWhoGoesFirstMove: { playerId: PlayerId };
-  alterHand: { playerId: PlayerId; cards: CardId[] };
-  drawCards: { playerId: PlayerId; count: number };
-  // Game moves
-  putACardIntoTheInkwell: { cardId: CardId };
-  playCard: { cardId: CardId; alternativeCost?: AlternativeCost };
-  quest: { cardId: CardId };
-  challenge: { attackerId: CardId; defenderId: CardId };
-  sing: { singerId: CardId; songId: CardId };
-  singTogether: { singersIds: CardId[]; songId: CardId };
-  moveCharacterToLocation: { characterId: CardId; locationId: CardId };
-  activateAbility: {
-    cardId: CardId;
-    opts?: {
-      abilityIndex?: number;
-      abilityText?: string;
-      alternativeCost?: AlternativeCost;
-    };
-  };
-  resolveBag: { bagId: string; params: unknown };
-  resolveEffect: { effectId: string; params: unknown };
-  manualExert: { cardId: CardId };
-  // Standard moves
-  passTurn: { playerId: PlayerId };
-  concede: { playerId: PlayerId };
-};
-
-// Lorcana move definitions
-const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
-  // Setup moves using engine features
+  /**
+   * Choose who goes first
+   * Rule 3.1.1: First player determined randomly
+   */
   chooseWhoGoesFirstMove: {
     reducer: (_draft, _context) => {
-      // NO MORE: draft.activePlayerId, draft.firstPlayerDetermined, draft.gamePhase, draft.turnNumber
-      // Engine handles this!
+      // Engine handles activePlayer, turn, and phase transitions
+      // No manual state management needed
     },
   },
 
+  /**
+   * Alter hand (mulligan)
+   * Rule 3.1.6: Players may mulligan by putting cards on bottom of deck
+   */
   alterHand: {
     reducer: (_draft, context) => {
-      const { zones } = context;
-      const playerId = context.params.playerId;
+      const { playerId, cardsToMulligan } = context.params;
 
-      // BEFORE: Manual array manipulation (11 lines)
-      // AFTER: Use mulligan utility!
-      zones.mulligan({
+      // Put selected cards on bottom of deck, then shuffle and draw 7
+      context.zones.mulligan({
         hand: "hand" as ZoneId,
         deck: "deck" as ZoneId,
         drawCount: 7,
@@ -75,14 +70,14 @@ const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
     },
   },
 
+  /**
+   * Draw cards (utility for effects/testing)
+   */
   drawCards: {
     reducer: (_draft, context) => {
-      const { zones } = context;
-      const playerId = context.params.playerId;
-      const count = context.params.count;
+      const { playerId, count } = context.params;
 
-      // Use engine's drawCards utility
-      zones.drawCards({
+      context.zones.drawCards({
         from: "deck" as ZoneId,
         to: "hand" as ZoneId,
         count,
@@ -91,15 +86,22 @@ const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
     },
   },
 
+  // ===== Resource Moves =====
+
+  /**
+   * Put a card into the inkwell
+   * Rule 4.3.3: Once per turn, put an inkable card into inkwell
+   */
   putACardIntoTheInkwell: {
-    condition: (state, context) => {
-      const playerId = context.playerId;
-      // Use tracker system!
-      return !context.trackers?.check("hasInked", playerId);
-    },
+    condition: and(
+      isMainPhase(),
+      (state, context) => cardInHand(context.params.cardId)(state, context),
+      (state, context) =>
+        cardOwnedByPlayer(context.params.cardId)(state, context),
+      hasNotUsedAction("hasInked"),
+    ),
     reducer: (_draft, context) => {
-      const cardId = context.params.cardId;
-      const playerId = context.playerId;
+      const { cardId } = context.params;
 
       // Move card to inkwell
       context.zones.moveCard({
@@ -107,112 +109,256 @@ const lorcanaMoves: GameMoveDefinitions<TestGameState, TestMoves> = {
         targetZoneId: "inkwell" as ZoneId,
       });
 
-      // Mark as inked
-      context.trackers?.mark("hasInked", playerId);
+      // Mark action as used
+      context.trackers?.mark("hasInked", context.playerId);
     },
   },
 
-  playCard: {
-    reducer: (_draft, context) => {
-      const cardId = context.params.cardId;
+  // ===== Core Game Moves =====
 
-      // Play card to play area
+  /**
+   * Play a card from hand
+   * Rule 4.3.4: Pay cost and put card into play
+   */
+  playCard: {
+    condition: and(
+      isMainPhase(),
+      (state, context) => cardInHand(context.params.cardId)(state, context),
+      (state, context) =>
+        cardOwnedByPlayer(context.params.cardId)(state, context),
+    ),
+    reducer: (draft, context) => {
+      const { cardId, cost } = context.params;
+      const ops = useLorcanaOps(context);
+
+      // Handle alternative costs
+      if (cost === "shift") {
+        // Shift: Banish target character
+        const { shiftTarget } = context.params;
+        context.zones.moveCard({
+          cardId: shiftTarget,
+          targetZoneId: "discard" as ZoneId,
+        });
+      } else if (cost === "sing") {
+        // Sing: Exert singer
+        const { singer } = context.params;
+        ops.exertCard(singer);
+      } else if (cost === "singTogether") {
+        // Sing Together: Exert all singers
+        const { singers } = context.params;
+        for (const singer of singers) {
+          ops.exertCard(singer);
+        }
+      }
+      // "standard" and "free" costs don't require special handling here
+
+      // Determine target zone (actions go to discard, others to play)
+      const cardType = ops.getCardType(cardId);
+      const targetZone =
+        cardType === "action" ? ("discard" as ZoneId) : ("play" as ZoneId);
+
+      // Move card
       context.zones.moveCard({
         cardId,
-        targetZoneId: "play" as ZoneId,
+        targetZoneId: targetZone,
       });
+
+      // Mark characters as drying
+      if (cardType === "character") {
+        ops.markAsDrying(cardId);
+      }
     },
   },
 
+  /**
+   * Quest with a character
+   * Rule 4.3.5: Exert character to gain lore
+   */
   quest: {
-    condition: (state, context) => {
-      const cardId = context.params.cardId;
-      // Card hasn't quested this turn
-      return !context.trackers?.check(`quested:${cardId}`, context.playerId);
-    },
+    condition: and(isMainPhase(), (state, context) =>
+      canQuest(context.params.cardId)(state, context),
+    ),
     reducer: (draft, context) => {
-      const cardId = context.params.cardId;
-      const playerId = context.playerId;
+      const { cardId } = context.params;
+      const ops = useLorcanaOps(context);
 
-      // Increment lore (simplified - assume 1 lore per quest)
-      draft.loreScores[playerId] = (draft.loreScores[playerId] || 0) + 1;
+      // Exert the character
+      ops.exertCard(cardId);
+
+      // Add lore (simplified - assume 1 lore per quest)
+      // In full implementation, would read Lore value from card definition
+      ops.addLore(draft, context.playerId, 1);
 
       // Mark as quested
-      context.trackers?.mark(`quested:${cardId}`, playerId);
+      context.trackers?.mark(`quested:${cardId}`, context.playerId);
     },
   },
 
+  /**
+   * Challenge with a character
+   * Rule 4.3.6: Attack another character or location
+   */
   challenge: {
-    reducer: (_draft, _context) => {
-      // Challenge logic
+    condition: and(
+      isMainPhase(),
+      (state, context) =>
+        canChallenge(context.params.attackerId)(state, context),
+      (state, context) => cardInPlay(context.params.defenderId)(state, context),
+    ),
+    reducer: (_draft, context) => {
+      const { attackerId, defenderId } = context.params;
+      const ops = useLorcanaOps(context);
+
+      // Exert attacker
+      ops.exertCard(attackerId);
+
+      // Deal damage (simplified - assume 1 damage)
+      // In full implementation, would calculate based on Strength
+      ops.addDamage(attackerId, 1);
+      ops.addDamage(defenderId, 1);
+
+      // TODO: Check if characters should be banished (damage >= Willpower)
+      // TODO: Add to bag for triggered effects
     },
   },
 
+  /**
+   * Sing a song (legacy - prefer playCard with "sing" cost)
+   * Rule 6.3.3: Exert character to play song for free
+   */
   sing: {
-    reducer: (_draft, context) => {
-      const singerId = context.params.singerId;
-      const songId = context.params.songId;
+    condition: and(
+      isMainPhase(),
+      (state, context) => cardInHand(context.params.songId)(state, context),
+      (state, context) => cardInPlay(context.params.singerId)(state, context),
+      (state, context) =>
+        cardOwnedByPlayer(context.params.singerId)(state, context),
+    ),
+    reducer: (draft, context) => {
+      const { singerId, songId } = context.params;
+      const ops = useLorcanaOps(context);
 
-      // Exert singer, play song
+      // Exert singer
+      ops.exertCard(singerId);
+
+      // Play song to discard (actions go to discard)
       context.zones.moveCard({
         cardId: songId,
-        targetZoneId: "play" as ZoneId,
+        targetZoneId: "discard" as ZoneId,
       });
     },
   },
 
+  /**
+   * Sing Together (legacy - prefer playCard with "singTogether" cost)
+   * Rule 10.10: Multiple characters exert to sing together
+   */
   singTogether: {
-    reducer: (_draft, context) => {
-      const songId = context.params.songId;
+    condition: and(isMainPhase(), (state, context) =>
+      cardInHand(context.params.songId)(state, context),
+    ),
+    reducer: (draft, context) => {
+      const { singersIds, songId } = context.params;
+      const ops = useLorcanaOps(context);
 
-      // Play song via sing together
+      // Exert all singers
+      for (const singerId of singersIds) {
+        ops.exertCard(singerId);
+      }
+
+      // Play song to discard
       context.zones.moveCard({
         cardId: songId,
-        targetZoneId: "play" as ZoneId,
+        targetZoneId: "discard" as ZoneId,
       });
     },
   },
 
+  /**
+   * Move a character to a location
+   * Rule 6.5: Characters can move to locations
+   */
   moveCharacterToLocation: {
-    reducer: (_draft, _context) => {
-      // Move character logic
+    condition: and(
+      isMainPhase(),
+      (state, context) =>
+        cardInPlay(context.params.characterId)(state, context),
+      (state, context) => cardInPlay(context.params.locationId)(state, context),
+    ),
+    reducer: (_draft, context) => {
+      const { characterId, locationId } = context.params;
+      const ops = useLorcanaOps(context);
+
+      ops.moveToLocation(characterId, locationId);
     },
   },
 
+  /**
+   * Activate an ability
+   * Rule 7: Abilities with costs can be activated
+   */
   activateAbility: {
+    condition: and(isMainPhase()),
     reducer: (_draft, _context) => {
-      // Ability activation logic
+      // TODO: Implement ability activation logic
+      // This would require:
+      // 1. Looking up the ability from card definition
+      // 2. Paying the cost
+      // 3. Executing the effect
     },
   },
 
+  // ===== Effect Resolution =====
+
+  /**
+   * Resolve an effect from the bag
+   * Rule 8.7: Bag system for triggered effects
+   */
   resolveBag: {
     reducer: (draft, context) => {
-      const bagId = context.params.bagId;
-      // Remove bag after resolution
-      draft.bag = draft.bag.filter((b: any) => b.id !== bagId);
+      const { bagId } = context.params;
+      draft.bag = draft.bag.filter((b) => b.id !== bagId);
     },
   },
 
+  /**
+   * Resolve an effect
+   */
   resolveEffect: {
     reducer: (draft, context) => {
-      const effectId = context.params.effectId;
-      // Remove effect after resolution
-      draft.effects = draft.effects.filter((e: any) => e.id !== effectId);
+      const { effectId } = context.params;
+      draft.effects = draft.effects.filter((e) => e.id !== effectId);
     },
   },
 
+  // ===== Manual Actions (Testing/Debug) =====
+
+  /**
+   * Manually exert a card (for testing)
+   */
   manualExert: {
-    reducer: (_draft, _context) => {
-      // Exert card logic
+    reducer: (_draft, context) => {
+      const { cardId } = context.params;
+      const ops = useLorcanaOps(context);
+      ops.exertCard(cardId);
     },
   },
 
-  // Standard moves from engine
-  passTurn: standardMoves<TestGameState>({
+  // ===== Standard Moves =====
+
+  /**
+   * Pass turn to next player
+   * Rule 4.1.2: Player completes their turn
+   */
+  passTurn: standardMoves<LorcanaGameState>({
     include: ["pass"],
   }).pass!,
 
-  concede: standardMoves<TestGameState>({
+  /**
+   * Concede the game
+   * Rule 1.9.1.2: Player can concede at any time
+   */
+  concede: standardMoves<LorcanaGameState>({
     include: ["concede"],
   }).concede!,
 };
@@ -267,7 +413,7 @@ const lorcanaZones: Record<string, CardZoneConfig> = {
 };
 
 // Lorcana flow (simplified)
-const lorcanaFlow: FlowDefinition<TestGameState> = {
+const lorcanaFlow: FlowDefinition<LorcanaGameState> = {
   turn: {
     initialPhase: "beginning",
     phases: {
@@ -292,30 +438,76 @@ const lorcanaFlow: FlowDefinition<TestGameState> = {
   },
 };
 
-export const lorcanaGameDefinition: GameDefinition<TestGameState, TestMoves> = {
-  name: "Test Lorcana Game",
+/**
+ * Complete Lorcana Game Definition
+ *
+ * Leverages new architecture:
+ * - Engine manages zones, flow, turn/phase state
+ * - Trackers auto-reset per-turn actions
+ * - Simplified game state (only Lorcana-specific data)
+ * - Composable validators and domain operations
+ */
+export const lorcanaGameDefinition: GameDefinition<
+  LorcanaGameState,
+  LorcanaMoveParams,
+  unknown, // Card definitions (to be added)
+  LorcanaCardMeta
+> = {
+  name: "Disney Lorcana TCG",
   zones: lorcanaZones,
   flow: lorcanaFlow,
   moves: lorcanaMoves,
 
-  // Configure engine's tracker system
+  /**
+   * Tracker Configuration
+   *
+   * Auto-reset boolean flags for turn actions:
+   * - hasInked: Player can only ink once per turn
+   * - quested:{cardId}: Each character can only quest once per turn
+   */
   trackers: {
-    perTurn: ["hasInked"],
-    perPlayer: true,
+    perTurn: ["hasInked"], // Auto-reset at turn end
+    perPlayer: true, // Tracked per-player
   },
 
+  /**
+   * Game Setup
+   *
+   * MASSIVELY SIMPLIFIED from old approach:
+   * - No manual activePlayerId, turnNumber, gamePhase (engine handles)
+   * - No manual zone management (engine handles)
+   * - Only Lorcana-specific state initialization
+   */
   setup: (players) => {
     const playerIds = players.map((p) => p.id);
-    const loreScores: Record<string, number> = {};
+    const loreScores: Record<PlayerId, number> = {};
 
     for (const playerId of playerIds) {
-      loreScores[playerId] = 0;
+      loreScores[playerId as PlayerId] = 0;
     }
 
     return {
+      loreScores,
       effects: [],
       bag: [],
-      loreScores,
     };
+  },
+
+  /**
+   * Win Condition
+   *
+   * Rule 1.9.1.1: First player to 20 lore wins
+   */
+  endIf: (state) => {
+    for (const [playerId, lore] of Object.entries(state.loreScores)) {
+      if (lore >= 20) {
+        return {
+          winner: playerId,
+          reason: "lore_victory",
+          metadata: { finalLore: lore },
+        };
+      }
+    }
+    return undefined;
   },
 };

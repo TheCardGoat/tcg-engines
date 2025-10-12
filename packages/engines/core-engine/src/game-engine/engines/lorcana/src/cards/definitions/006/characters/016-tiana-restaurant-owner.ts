@@ -14,7 +14,7 @@ export const tianaRestaurantOwner: LorcanaCharacterCardDefinition = {
   type: "character",
   abilities: [
     {
-      type: "static-triggered",
+      type: "resolution",
       name: "Special Reservation",
       text: "Whenever a character of yours is challenged while this character is exerted, the challenging character gets -3 {S} this turn unless their player pays 3 {I}.",
       conditions: [{ type: "exerted" }],
@@ -30,35 +30,29 @@ export const tianaRestaurantOwner: LorcanaCharacterCardDefinition = {
           ],
         },
       },
-      layer: {
+      responder: "opponent",
+      optional: true,
+      unless: true,
+      costs: [{ type: "ink", amount: 3 }],
+      effects: [],
+      onCancelLayer: {
         type: "resolution",
-        responder: "opponent",
-        name: "Special Reservation",
-        text: "Whenever a character of yours is challenged while this character is exerted, the challenging character gets -3 {S} this turn unless their player pays 3 {I}.",
-        optional: true,
-
-        unless: true,
-        costs: [{ type: "ink", amount: 3 }],
-        effects: [],
-        onCancelLayer: {
-          type: "resolution",
-          effects: [
-            {
-              type: "attribute",
-              attribute: "strength",
-              amount: 3,
-              modifier: "subtract",
-              duration: "turn",
-              target: {
-                type: "card",
-                value: "all",
-                filters: [{ filter: "challenge", value: "attacker" }],
-              },
+        effects: [
+          {
+            type: "attribute",
+            attribute: "strength",
+            amount: 3,
+            modifier: "subtract",
+            duration: "turn",
+            target: {
+              type: "card",
+              value: "all",
+              filters: [{ filter: "challenge", value: "attacker" }],
             },
-          ],
-        },
+          },
+        ],
       },
-    } as TriggeredAbility,
+    } as any,
   ],
   inkwell: false,
   colors: ["amber"],

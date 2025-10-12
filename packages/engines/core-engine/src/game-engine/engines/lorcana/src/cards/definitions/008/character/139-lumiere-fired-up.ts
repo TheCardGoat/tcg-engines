@@ -16,7 +16,7 @@ export const lumiereFiredUp: LorcanaCharacterCardDefinition = {
     shiftAbility(3, "Lumiere"),
     evasiveAbility,
     {
-      type: "static-triggered",
+      type: "resolution",
       name: "SACREBLEU!",
       text: "Whenever one of your items is banished, this character gets +1 {L} this turn.",
       trigger: {
@@ -26,12 +26,8 @@ export const lumiereFiredUp: LorcanaCharacterCardDefinition = {
           { filter: "owner", value: "self" },
         ],
       },
-      layer: {
-        type: "resolution",
-        name: "SACREBLEU!",
-        effects: [thisCharacterGetsLore(1)],
-      },
-    },
+      effects: [thisCharacterGetsLore(1)],
+    } as any,
   ],
   inkwell: true,
   colors: ["ruby", "sapphire"],

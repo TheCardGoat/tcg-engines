@@ -4,6 +4,8 @@ import {
   addCardToBottom,
   addCardToTop,
   clearZone,
+  createCardId,
+  createPlayerId,
   createPlayerZones,
   createZone,
   getCardsInZone,
@@ -13,7 +15,6 @@ import {
   moveCard,
   removeCard,
 } from "@tcg/core";
-import { createCardId, createPlayerId } from "../../types/branded-types";
 
 /**
  * Task 7.2: Tests verifying lorcana zone operations work with core utilities

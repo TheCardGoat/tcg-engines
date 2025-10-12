@@ -1,5 +1,5 @@
 import {
-  type ChallengerAbility,
+  challengerAbility,
   rushAbility,
 } from "~/game-engine/engines/lorcana/src/abilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
@@ -12,15 +12,7 @@ export const zeusGodOfLightning: LorcanaCharacterCardDefinition = {
   text: "**Rush** _(This character can challenge the turn they're played.)_\n**Challenger** +4 (_When challenging, this character get +4 {S}._)",
   type: "character",
   strength: 0,
-  abilities: [
-    {
-      type: "static",
-      ability: "challenger",
-      value: 4,
-      text: "**Challenger** +4 (_When challenging, this character get +4 {S}._)",
-    } as ChallengerAbility,
-    rushAbility,
-  ],
+  abilities: [challengerAbility(4), rushAbility],
   flavour: "A little lightning solves a whole lot of problems.",
   colors: ["amethyst"],
   cost: 4,

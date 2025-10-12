@@ -19,7 +19,7 @@
  * - Rule 9 (Damage counters)
  */
 
-import type { CardId, PlayerId } from "./branded-types";
+import type { CardId, PlayerId } from "@tcg/core";
 
 /**
  * Lorcana Phase
