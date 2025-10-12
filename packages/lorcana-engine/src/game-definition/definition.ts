@@ -1,5 +1,4 @@
 import type {
-  CardId,
   CardZoneConfig,
   FlowDefinition,
   GameDefinition,
