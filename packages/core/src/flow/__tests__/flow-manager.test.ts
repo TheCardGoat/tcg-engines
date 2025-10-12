@@ -6,7 +6,7 @@ import { FlowManager } from "../flow-manager";
  * Task 9.3, 9.4: Tests for FlowManager
  *
  * Tests verify:
- * - Turn/phase/segment state machine construction
+ * - Turn/phase/step state machine construction
  * - Lifecycle hook execution
  * - Automatic and programmatic transitions
  * - Hierarchical state management
@@ -18,7 +18,7 @@ type GameState = {
   players: Array<{ id: string; ready: boolean }>;
   turnCount: number;
   phase?: string;
-  segment?: string;
+  step?: string;
   log: string[];
 };
 

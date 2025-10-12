@@ -28,14 +28,24 @@ export type FlowContext<TState> = {
   endPhase: () => void;
 
   /**
-   * Programmatically end the current segment/step
+   * Programmatically end the current step
    *
-   * User requirement: "We should be able to end the segment programmatically"
+   * User requirement: "We should be able to end the step programmatically"
    *
-   * When called, the current segment will end and transition to the next segment.
-   * If no next segment is defined, the phase ends.
+   * When called, the current step will end and transition to the next step.
+   * If no next step is defined, the phase ends.
    */
-  endSegment: () => void;
+  endStep: () => void;
+
+  /**
+   * Programmatically end the current game segment
+   *
+   * User requirement: "We should be able to end the game segment programmatically"
+   *
+   * When called, the current game segment will end and transition to the next segment.
+   * Game segments are high-level divisions (e.g., sideboarding, draft, main game).
+   */
+  endGameSegment: () => void;
 
   /**
    * Programmatically end the current turn
@@ -55,11 +65,18 @@ export type FlowContext<TState> = {
   getCurrentPhase: () => string | undefined;
 
   /**
-   * Get the current segment name
+   * Get the current step name
    *
-   * @returns Current segment name, or undefined if no segment is active
+   * @returns Current step name, or undefined if no step is active
    */
-  getCurrentSegment: () => string | undefined;
+  getCurrentStep: () => string | undefined;
+
+  /**
+   * Get the current game segment name
+   *
+   * @returns Current game segment name, or undefined if no game segment is active
+   */
+  getCurrentGameSegment: () => string | undefined;
 
   /**
    * Get the current player ID
@@ -96,17 +113,17 @@ export type LifecycleHook<TState> = (context: FlowContext<TState>) => void;
 export type EndCondition<TState> = (context: FlowContext<TState>) => boolean;
 
 /**
- * Task 9.13: SegmentDefinition - Steps/Segments within phases
+ * Task 9.13: StepDefinition - Steps within phases
  *
  * User requirement: "For steps, it's a bit different... combat has different steps"
  *
- * Segments (or steps) are sub-divisions within a phase.
+ * Steps are sub-divisions within a phase.
  * Example: Combat phase has declare, target, damage steps.
  * Once all steps are over, the phase ends.
  */
-export type SegmentDefinition<TState> = {
+export type StepDefinition<TState> = {
   /**
-   * Order/sequence number for this segment
+   * Order/sequence number for this step
    *
    * Used for default sequential progression.
    * Lower numbers execute first.
@@ -114,27 +131,27 @@ export type SegmentDefinition<TState> = {
   order: number;
 
   /**
-   * Next segment name
+   * Next step name
    *
-   * When this segment ends, transition to the named segment.
+   * When this step ends, transition to the named step.
    * If undefined, the phase ends.
    */
   next?: string;
 
   /**
-   * Task 9.5: Lifecycle hook called when segment begins
+   * Task 9.5: Lifecycle hook called when step begins
    */
   onBegin?: LifecycleHook<TState>;
 
   /**
-   * Task 9.5: Lifecycle hook called when segment ends
+   * Task 9.5: Lifecycle hook called when step ends
    */
   onEnd?: LifecycleHook<TState>;
 
   /**
    * Task 9.7: Automatic end condition
    *
-   * When returns true, segment automatically ends and transitions to next.
+   * When returns true, step automatically ends and transitions to next.
    */
   endIf?: EndCondition<TState>;
 };
@@ -150,12 +167,12 @@ export type SegmentDefinition<TState> = {
  */
 export type PhaseDefinition<TState> = {
   /**
-   * Initial segment name (optional)
+   * Initial step name (optional)
    *
-   * If specified and current phase has segments, begins at this segment.
-   * If not specified, uses first segment by order.
+   * If specified and current phase has steps, begins at this step.
+   * If not specified, uses first step by order.
    */
-  initialSegment?: string;
+  initialStep?: string;
 
   /**
    * Order/sequence number for this phase
@@ -191,16 +208,16 @@ export type PhaseDefinition<TState> = {
   endIf?: EndCondition<TState>;
 
   /**
-   * Task 9.13: Optional segments/steps within this phase
+   * Task 9.13: Optional steps within this phase
    *
-   * If defined, phase will progress through segments before ending.
-   * Segments execute in order, then phase ends.
+   * If defined, phase will progress through steps before ending.
+   * Steps execute in order, then phase ends.
    */
-  segments?: Record<string, SegmentDefinition<TState>>;
+  steps?: Record<string, StepDefinition<TState>>;
 };
 
 /**
- * Task 9.2: TurnDefinition - Defines turn structure
+ * Task 9.2: TurnDefinition - Defines turn structure within a game segment
  *
  * User requirement: "When a turn ends, the next player starts their turn"
  *
@@ -253,36 +270,110 @@ export type TurnDefinition<TState> = {
 };
 
 /**
+ * GameSegmentDefinition - High-level game segments
+ *
+ * User requirement: "Segments should be higher than Turns. Segments are used to
+ * segment a game, for example Sideboarding segment, preparing the game segment,
+ * draft segment, etc..."
+ *
+ * Game segments are the highest level of game flow organization.
+ * Each segment can have completely different turn structures.
+ *
+ * Examples:
+ * - Setup/Preparation segment: Initial game setup before main game
+ * - Draft segment: Card drafting with unique turn structure
+ * - Sideboarding segment: Between-game card swapping
+ * - Main game segment: Primary gameplay
+ * - Overtime segment: Extra turns or special win conditions
+ */
+export type GameSegmentDefinition<TState> = {
+  /**
+   * Order/sequence number for this game segment
+   *
+   * Used for default sequential progression.
+   * Lower numbers execute first.
+   */
+  order: number;
+
+  /**
+   * Next game segment name
+   *
+   * When this game segment ends, transition to the named segment.
+   * If undefined, the game ends.
+   */
+  next?: string;
+
+  /**
+   * Lifecycle hook called when game segment begins
+   */
+  onBegin?: LifecycleHook<TState>;
+
+  /**
+   * Lifecycle hook called when game segment ends
+   */
+  onEnd?: LifecycleHook<TState>;
+
+  /**
+   * Automatic end condition
+   *
+   * When returns true, game segment automatically ends and transitions to next.
+   */
+  endIf?: EndCondition<TState>;
+
+  /**
+   * Turn structure for this game segment
+   *
+   * Each game segment defines its own turn structure.
+   * This allows different segments (draft vs. main game) to have
+   * completely different turn mechanics.
+   */
+  turn: TurnDefinition<TState>;
+};
+
+/**
  * Task 9.1, 9.2: FlowDefinition - Complete flow orchestration
  *
  * User requirements:
  * - "The GameEngine should pass a consistent API to all moves and flow hooks"
  * - "We should have defaults, but we should also be able to customize them"
  * - "The flow mechanism needs to be aware that the way we break down a turn may differ"
+ * - "Segments should be higher than Turns"
  *
  * Defines the complete game flow structure:
- * - Turn definition (phases)
- * - Phase definitions (segments)
- * - Segment definitions (atomic steps)
+ * - Game segment definitions (high-level game phases)
+ * - Turn definitions (within segments)
+ * - Phase definitions (within turns)
+ * - Step definitions (within phases)
  *
- * Hierarchy: Turn → Phases → Segments
+ * Hierarchy: GameSegments → Turns → Phases → Steps
  *
  * Default behaviors:
+ * - Game Segments: Progress sequentially by order
  * - Turns: Next player starts their turn
  * - Phases: Progress sequentially by order
- * - Segments: Progress sequentially by order
+ * - Steps: Progress sequentially by order
  *
  * All behaviors can be customized via:
  * - onBegin/onEnd hooks
  * - endIf conditions
- * - Programmatic control (endPhase/endSegment/endTurn)
+ * - Programmatic control (endGameSegment/endTurn/endPhase/endStep)
  */
 export type FlowDefinition<TState> = {
   /**
-   * Turn definition
+   * Game segments
    *
-   * Defines the structure of a single turn.
-   * When turn ends, next player starts their turn (default behavior).
+   * High-level divisions of the game (e.g., setup, draft, main game, sideboarding).
+   * Each segment can have its own turn structure.
+   *
+   * For simple games with only one segment, define a single "mainGame" segment.
    */
-  turn: TurnDefinition<TState>;
+  gameSegments: Record<string, GameSegmentDefinition<TState>>;
+
+  /**
+   * Initial game segment name (optional)
+   *
+   * If specified, game begins at this segment.
+   * If not specified, uses first segment by order.
+   */
+  initialGameSegment?: string;
 };

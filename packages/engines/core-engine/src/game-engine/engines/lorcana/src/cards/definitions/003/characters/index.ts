@@ -2820,9 +2820,6 @@ export const arielAdventurousCollector: LorcanaCharacterCardDefinition = {
         },
       ],
     }),
-    {
-      name: "**Evasive** _(Only characters with Evasive can challenge this character.)_\n\n\n**INSPIRING VOICE** Whenever you play a song, chosen character of yours gains **Evasive** until the start of your next turn.",
-    },
   ],
   flavour: "Shipwrecks are great places to find lore – and hide from sharks!",
   inkwell: true,
@@ -3757,9 +3754,6 @@ export const hueySavvyNephew: LorcanaCharacterCardDefinition = {
   type: "character",
   abilities: [
     supportAbility,
-    {
-      name: "**THREE NEPHEWS** Whenever this character quests, if you have characters named Dewey and Louie in play, you may draw 3 cards.",
-    },
     wheneverQuests({
       name: "Three Nephews",
       text: "Whenever this character quests, if you have characters named Dewey and Louie in play, you may draw 3 cards.",
