@@ -1,4 +1,4 @@
-import { createMove, type PlayerId } from "@tcg/core";
+import { type ConditionFailure, createMove, type PlayerId } from "@tcg/core";
 import type {
   LorcanaCardMeta,
   LorcanaGameState,
@@ -18,6 +18,11 @@ import type {
  * - Setting activePlayer
  * - Initializing turn counter
  * - Transitioning to first phase
+ *
+ * Validation:
+ * - Player ID must be valid (exists in game)
+ * - OTP must not be already set (can't choose twice)
+ * - Must be in chooseFirstPlayer phase
  */
 export const chooseWhoGoesFirstMove = createMove<
   LorcanaGameState,
@@ -25,6 +30,49 @@ export const chooseWhoGoesFirstMove = createMove<
   "chooseWhoGoesFirstMove",
   LorcanaCardMeta
 >({
+  condition: (state, context): true | ConditionFailure => {
+    const { playerId } = context.params;
+
+    // 1. Check we're in the correct phase (most fundamental constraint)
+    if (context.flow?.currentPhase !== "chooseFirstPlayer") {
+      return {
+        reason: `Cannot choose first player during ${context.flow?.currentPhase || "unknown"} phase. Must be in chooseFirstPlayer phase.`,
+        errorCode: "WRONG_PHASE",
+        context: {
+          currentPhase: context.flow?.currentPhase,
+          requiredPhase: "chooseFirstPlayer",
+        },
+      };
+    }
+
+    // 2. Check OTP hasn't been set yet (prevent choosing twice)
+    const currentOTP = context.game.getOTP();
+    if (currentOTP) {
+      return {
+        reason: "First player has already been chosen",
+        errorCode: "FIRST_PLAYER_ALREADY_CHOSEN",
+        context: {
+          currentOTP: String(currentOTP),
+        },
+      };
+    }
+
+    // 3. Validate player exists in the game
+    const validPlayers = Object.keys(state.loreScores) as PlayerId[];
+    if (!validPlayers.includes(playerId)) {
+      return {
+        reason: `Invalid player ID: ${playerId}. Valid players: ${validPlayers.join(", ")}`,
+        errorCode: "INVALID_PLAYER_ID",
+        context: {
+          playerId: String(playerId),
+          validPlayers: validPlayers.map((p) => String(p)),
+        },
+      };
+    }
+
+    return true;
+  },
+
   reducer: (draft, context) => {
     const { playerId } = context.params;
 

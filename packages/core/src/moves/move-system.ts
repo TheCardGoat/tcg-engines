@@ -179,6 +179,9 @@ export type MoveContext<
    * - turn: Current turn number (1-indexed)
    * - currentPlayer: Player ID of the active player
    * - isFirstTurn: True if this is turn 1 of the game
+   * - endPhase: Trigger phase transition (deferred until after move completes)
+   * - endSegment: Trigger segment transition (deferred until after move completes)
+   * - endTurn: Trigger turn transition (deferred until after move completes)
    *
    * Games should NOT duplicate this state in their own game state.
    * Access flow information via context.flow instead.
@@ -192,6 +195,9 @@ export type MoveContext<
     turn: number;
     currentPlayer: PlayerId;
     isFirstTurn: boolean;
+    endPhase: () => void;
+    endSegment: () => void;
+    endTurn: () => void;
   };
 
   /**
@@ -288,6 +294,33 @@ export type MoveReducer<
 ) => void;
 
 /**
+ * Condition Failure Result
+ *
+ * Detailed information about why a move condition failed.
+ * Returned by conditions to provide meaningful error messages to players.
+ *
+ * @example
+ * ```typescript
+ * // In a move condition:
+ * if (player.mana < card.cost) {
+ *   return {
+ *     reason: `Not enough mana. Required: ${card.cost}, Available: ${player.mana}`,
+ *     errorCode: "INSUFFICIENT_MANA",
+ *     context: { required: card.cost, available: player.mana },
+ *   };
+ * }
+ * ```
+ */
+export type ConditionFailure = {
+  /** Human-readable explanation of why the move failed */
+  reason: string;
+  /** Machine-readable error code for categorization */
+  errorCode: string;
+  /** Optional additional context for debugging/logging */
+  context?: Record<string, unknown>;
+};
+
+/**
  * Move Condition Function
  *
  * Pure predicate that determines if a move is legal given current game state.
@@ -300,17 +333,30 @@ export type MoveReducer<
  *
  * @param state - Current game state (readonly)
  * @param context - Move context with player, typed params, targets, etc.
- * @returns True if move is legal, false otherwise
+ * @returns True if legal, false for generic failure, or ConditionFailure for detailed error
  *
  * @example
  * ```typescript
- * type PlayCardParams = { cardId: string; cost?: number };
- * const canPlayCardCondition: MoveCondition<GameState, PlayCardParams> = (state, context) => {
- *   const { cardId, cost } = context.params; // ✅ Fully typed!
+ * // Simple boolean validation (backward compatible)
+ * condition: (state, context) => {
+ *   return state.players[context.playerId].mana >= 5;
+ * }
+ *
+ * // Detailed failure information (recommended)
+ * condition: (state, context) => {
  *   const player = state.players[context.playerId];
- *   const card = state.cards[cardId];
- *   return card && player.mana >= (cost ?? card.cost);
- * };
+ *   const cost = 5;
+ *
+ *   if (player.mana < cost) {
+ *     return {
+ *       reason: `Not enough mana. Required: ${cost}, Available: ${player.mana}`,
+ *       errorCode: "INSUFFICIENT_MANA",
+ *       context: { required: cost, available: player.mana },
+ *     };
+ *   }
+ *
+ *   return true;
+ * }
  * ```
  */
 export type MoveCondition<
@@ -321,7 +367,7 @@ export type MoveCondition<
 > = (
   state: TGameState,
   context: MoveContext<TParams, TCardMeta, TCardDefinition>,
-) => boolean;
+) => boolean | ConditionFailure;
 
 /**
  * Move Definition

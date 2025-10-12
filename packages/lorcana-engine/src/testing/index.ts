@@ -8,7 +8,6 @@ export {
   LorcanaTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
-  type TestInitialState,
   type TestEngineOptions,
+  type TestInitialState,
 } from "./lorcana-test-engine";
-

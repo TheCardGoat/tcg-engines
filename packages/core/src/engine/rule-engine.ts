@@ -48,7 +48,8 @@ export type MoveExecutionResult =
   | {
       success: false;
       error: string;
-      errorCode?: string;
+      errorCode: string;
+      errorContext?: Record<string, unknown>;
     };
 
 /**
@@ -304,13 +305,10 @@ export class RuleEngine<
       };
     }
 
-    // Task 11.8: Check move condition (before building full context)
-    if (!this.canExecuteMove(moveId, contextInput)) {
-      return {
-        success: false,
-        error: `Move '${moveId}' condition not met`,
-        errorCode: "CONDITION_FAILED",
-      };
+    // Task 11.8: Check move condition with detailed failure information
+    const conditionResult = this.checkMoveCondition(moveId, contextInput);
+    if (!conditionResult.success) {
+      return conditionResult;
     }
 
     // Check if game has already ended
@@ -439,24 +437,18 @@ export class RuleEngine<
   }
 
   /**
-   * Check if a move can be executed
+   * Build full move context with engine-provided services
    *
-   * Task 11.11, 11.12: canExecuteMove without side effects
+   * Centralizes context building logic used by condition checks and move execution.
+   * Includes RNG, operations APIs, and flow state.
    *
-   * Validates move without actually executing it.
-   * Used for UI state (enable/disable buttons) and AI move filtering.
-   *
-   * @param moveId - Name of move to check
-   * @param context - Move context with typed params
-   * @returns True if move can be executed, false otherwise
+   * @param contextInput - Base context from caller
+   * @returns Full context with all engine services
+   * @private
    */
-  canExecuteMove(moveId: string, contextInput: MoveContextInput<any>): boolean {
-    const moveDef = this.gameDefinition.moves[moveId as keyof TMoves];
-    if (!moveDef) {
-      return false;
-    }
-
-    // Build full context with engine-provided services
+  private buildMoveContext(
+    contextInput: MoveContextInput<any>,
+  ): MoveContext<any, TCardMeta, TCardDefinition> {
     const zoneOps = createZoneOperations(this.internalState);
     const cardOps = createCardOperations(this.internalState);
     const gameOps = createGameOperations(this.internalState);
@@ -477,25 +469,100 @@ export class RuleEngine<
         }
       : undefined;
 
-    const contextWithOperations: MoveContext<any, TCardMeta, TCardDefinition> =
-      {
-        ...contextInput,
-        rng: this.rng,
-        zones: zoneOps,
-        cards: cardOps,
-        game: gameOps,
-        registry: this.cardRegistry,
-        flow: flowState,
-      };
+    return {
+      ...contextInput,
+      rng: this.rng,
+      zones: zoneOps,
+      cards: cardOps,
+      game: gameOps,
+      registry: this.cardRegistry,
+      flow: flowState,
+    };
+  }
 
-    if (
-      moveDef.condition &&
-      !moveDef.condition(this.currentState, contextWithOperations)
-    ) {
+  /**
+   * Check move condition and return detailed failure information
+   *
+   * Evaluates move condition and returns either success or detailed failure info.
+   * Supports both legacy boolean conditions and new ConditionFailure returns.
+   *
+   * @param moveId - Name of move to check
+   * @param contextInput - Move context with typed params
+   * @returns Success indicator or detailed failure information
+   * @private
+   */
+  private checkMoveCondition(
+    moveId: string,
+    contextInput: MoveContextInput<any>,
+  ):
+    | { success: true }
+    | {
+        success: false;
+        error: string;
+        errorCode: string;
+        errorContext?: Record<string, unknown>;
+      } {
+    const moveDef = this.gameDefinition.moves[moveId as keyof TMoves];
+
+    if (!(moveDef && moveDef.condition)) {
+      return { success: true };
+    }
+
+    const contextWithOperations = this.buildMoveContext(contextInput);
+    const result = moveDef.condition(this.currentState, contextWithOperations);
+
+    if (result === true) {
+      return { success: true };
+    }
+
+    if (result === false) {
+      // Legacy boolean false - return generic error for backward compatibility
+      return {
+        success: false,
+        error: `Move '${moveId}' condition not met`,
+        errorCode: "CONDITION_FAILED",
+      };
+    }
+
+    // Detailed ConditionFailure object (result must be ConditionFailure here)
+    const failure = result as import("../moves/move-system").ConditionFailure; // TypeScript narrowing
+    return {
+      success: false,
+      error: failure.reason,
+      errorCode: failure.errorCode,
+      errorContext: failure.context,
+    };
+  }
+
+  /**
+   * Check if a move can be executed
+   *
+   * Task 11.11, 11.12: canExecuteMove without side effects
+   *
+   * Validates move without actually executing it.
+   * Used for UI state (enable/disable buttons) and AI move filtering.
+   *
+   * @param moveId - Name of move to check
+   * @param context - Move context with typed params
+   * @returns True if move can be executed, false otherwise
+   */
+  canExecuteMove(moveId: string, contextInput: MoveContextInput<any>): boolean {
+    const moveDef = this.gameDefinition.moves[moveId as keyof TMoves];
+    if (!moveDef) {
       return false;
     }
 
-    return true;
+    // Build full context with engine-provided services
+    const contextWithOperations = this.buildMoveContext(contextInput);
+
+    if (!moveDef.condition) {
+      return true;
+    }
+
+    const result = moveDef.condition(this.currentState, contextWithOperations);
+
+    // Support both boolean and ConditionFailure returns
+    return result === true;
   }
 
   /**

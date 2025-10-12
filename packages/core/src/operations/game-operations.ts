@@ -105,4 +105,3 @@ export type GameOperations = {
    */
   removePendingMulligan(playerId: PlayerId): void;
 };
-

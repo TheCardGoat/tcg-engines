@@ -76,7 +76,7 @@ export type GameMoveDefinition<
   condition?: (
     state: TState,
     context: MoveContext<NormalizeParams<TParams>, TCardMeta, TCardDefinition>,
-  ) => boolean;
+  ) => boolean | import("../moves/move-system").ConditionFailure;
 
   /**
    * Optional metadata

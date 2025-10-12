@@ -12,11 +12,13 @@
  * - Automatic state synchronization checks
  */
 
-import { RuleEngine, type RuleEngineOptions, createPlayerId } from "@tcg/core";
+import { createPlayerId, RuleEngine, type RuleEngineOptions } from "@tcg/core";
 import { lorcanaGameDefinition } from "../game-definition/definition";
-import type { LorcanaGameState } from "../types/move-params";
-import type { LorcanaMoveParams } from "../types/move-params";
-import type { LorcanaCardMeta } from "../types/move-params";
+import type {
+  LorcanaCardMeta,
+  LorcanaGameState,
+  LorcanaMoveParams,
+} from "../types/move-params";
 
 // Export player ID constants for tests
 export const PLAYER_ONE = "player_one";
@@ -98,7 +100,7 @@ export class LorcanaTestEngine {
   constructor(
     _playerOneState: TestInitialState = {},
     _playerTwoState: TestInitialState = {},
-    _opts: TestEngineOptions = { skipPreGame: true }
+    _opts: TestEngineOptions = { skipPreGame: true },
   ) {
     // Create players
     const players = [
@@ -112,11 +114,7 @@ export class LorcanaTestEngine {
     };
 
     // Create single engine instance
-    this.engine = new RuleEngine(
-      lorcanaGameDefinition,
-      players,
-      engineOptions
-    );
+    this.engine = new RuleEngine(lorcanaGameDefinition, players, engineOptions);
 
     // Aliases point to same engine
     this.authoritativeEngine = this.engine;
@@ -274,4 +272,3 @@ export class LorcanaTestEngine {
     // No cleanup needed for now
   }
 }
-
