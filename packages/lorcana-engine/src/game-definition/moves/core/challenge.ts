@@ -1,4 +1,4 @@
-import { createMove } from "@tcg/core";
+import { createMove, createZoneId } from "@tcg/core";
 import { useLorcanaOps } from "../../../operations";
 import type {
   LorcanaCardMeta,
@@ -42,15 +42,40 @@ export const challenge = createMove<
     const { attackerId, defenderId } = context.params;
     const ops = useLorcanaOps(context);
 
+    // Get card definitions to access Strength values
+    const attackerCard = context.registry?.getCard(attackerId);
+    const defenderCard = context.registry?.getCard(defenderId);
+
+    if (!(attackerCard && defenderCard)) {
+      throw new Error("Card not found in registry");
+    }
+
     // Exert attacker
     ops.exertCard(attackerId);
 
-    // Deal damage (simplified - assume 1 damage)
-    // In full implementation, would calculate based on Strength
-    ops.addDamage(attackerId, 1);
-    ops.addDamage(defenderId, 1);
+    // Deal damage based on Strength
+    const attackerStrength = attackerCard.strength ?? 0;
+    const defenderStrength = defenderCard.strength ?? 0;
 
-    // TODO: Check if characters should be banished (damage >= Willpower)
-    // TODO: Add to bag for triggered effects
+    const attackerNewDamage = ops.addDamage(attackerId, defenderStrength);
+    const defenderNewDamage = ops.addDamage(defenderId, attackerStrength);
+
+    // Check if characters should be banished (damage >= Willpower)
+    const attackerWillpower = attackerCard.willpower ?? 0;
+    const defenderWillpower = defenderCard.willpower ?? 0;
+
+    if (attackerNewDamage >= attackerWillpower) {
+      context.zones.moveCard({
+        cardId: attackerId,
+        targetZoneId: createZoneId("discard"),
+      });
+    }
+
+    if (defenderNewDamage >= defenderWillpower) {
+      context.zones.moveCard({
+        cardId: defenderId,
+        targetZoneId: createZoneId("discard"),
+      });
+    }
   },
 });

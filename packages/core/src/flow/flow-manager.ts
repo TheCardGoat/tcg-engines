@@ -1,5 +1,9 @@
 import { type Draft, produce } from "immer";
-import type { FlowContext, FlowDefinition } from "./flow-definition";
+import type {
+  FlowContext,
+  FlowDefinition,
+  GameSegmentDefinition,
+} from "./flow-definition";
 
 /**
  * Task 9.4: FlowManager - Flow orchestration
@@ -78,6 +82,8 @@ export type FlowManagerOptions = {
  */
 export class FlowManager<TState> {
   private flowDefinition: FlowDefinition<TState>;
+  private normalizedGameSegments: Record<string, GameSegmentDefinition<TState>>;
+  private initialGameSegment?: string;
   private gameState: TState;
   private currentGameSegment?: string;
   private currentPhase?: string;
@@ -101,6 +107,11 @@ export class FlowManager<TState> {
     this.onTurnEndCallback = options?.onTurnEnd;
     this.onPhaseEndCallback = options?.onPhaseEnd;
 
+    // Normalize flow definition (handle both simplified and full syntax)
+    const normalized = this.normalizeFlowDefinition(flowDefinition);
+    this.normalizedGameSegments = normalized.gameSegments;
+    this.initialGameSegment = normalized.initialGameSegment;
+
     // Restore from serialized state if provided
     if (options?.restoreFrom) {
       this.restoreFromSerialized(options.restoreFrom);
@@ -108,6 +119,37 @@ export class FlowManager<TState> {
       // Initialize flow normally
       this.initializeFlow();
     }
+  }
+
+  /**
+   * Normalize flow definition to always use gameSegments structure
+   *
+   * If flow uses simplified syntax (just `turn`), convert it to a single
+   * "mainGame" segment.
+   */
+  private normalizeFlowDefinition(flowDef: FlowDefinition<TState>): {
+    gameSegments: Record<string, GameSegmentDefinition<TState>>;
+    initialGameSegment?: string;
+  } {
+    // Check if it's the simplified syntax (has `turn` property)
+    if ("turn" in flowDef) {
+      // Create implicit mainGame segment
+      return {
+        gameSegments: {
+          mainGame: {
+            order: 0,
+            turn: flowDef.turn,
+          },
+        },
+        initialGameSegment: "mainGame",
+      };
+    }
+
+    // It's the full syntax with gameSegments
+    return {
+      gameSegments: flowDef.gameSegments,
+      initialGameSegment: flowDef.initialGameSegment,
+    };
   }
 
   /**
@@ -144,14 +186,14 @@ export class FlowManager<TState> {
    * Task 9.3: Initialize the flow state machine
    */
   private initializeFlow(): void {
-    const gameSegments = this.flowDefinition.gameSegments;
+    const gameSegments = this.normalizedGameSegments;
 
     // Determine initial game segment
     const sortedGameSegments = Object.entries(gameSegments).sort(
       ([, a], [, b]) => a.order - b.order,
     );
     this.currentGameSegment =
-      this.flowDefinition.initialGameSegment ?? sortedGameSegments[0]?.[0];
+      this.initialGameSegment ?? sortedGameSegments[0]?.[0];
 
     if (!this.currentGameSegment) {
       throw new Error("No game segments defined in flow definition");
@@ -275,7 +317,7 @@ export class FlowManager<TState> {
   private checkEndConditions(): void {
     if (!this.currentGameSegment) return;
 
-    const gameSegments = this.flowDefinition.gameSegments;
+    const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
     if (!gameSegmentDef) return;
 
@@ -354,7 +396,7 @@ export class FlowManager<TState> {
   private transitionToNextStep(): void {
     if (!this.currentGameSegment) return;
 
-    const gameSegments = this.flowDefinition.gameSegments;
+    const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
     if (!gameSegmentDef) return;
 
@@ -389,7 +431,7 @@ export class FlowManager<TState> {
   private transitionToNextPhase(): void {
     if (!this.currentGameSegment) return;
 
-    const gameSegments = this.flowDefinition.gameSegments;
+    const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
     if (!gameSegmentDef) return;
 
@@ -441,7 +483,7 @@ export class FlowManager<TState> {
   private transitionToNextTurn(): void {
     if (!this.currentGameSegment) return;
 
-    const gameSegments = this.flowDefinition.gameSegments;
+    const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
     if (!gameSegmentDef) return;
 
@@ -518,7 +560,7 @@ export class FlowManager<TState> {
   private transitionToNextGameSegment(): void {
     if (!this.currentGameSegment) return;
 
-    const gameSegments = this.flowDefinition.gameSegments;
+    const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
     if (!gameSegmentDef) return;
 
@@ -626,6 +668,13 @@ export class FlowManager<TState> {
    * Get current game segment name
    */
   getCurrentGameSegment(): string | undefined {
+    return this.currentGameSegment;
+  }
+
+  /**
+   * Get current segment name (alias for getCurrentGameSegment)
+   */
+  getCurrentSegment(): string | undefined {
     return this.currentGameSegment;
   }
 

@@ -137,22 +137,25 @@ describe("Alpha Clash Game - Refactored Engine Features", () => {
     const flow = gameDefinition.flow;
 
     expect(flow).toBeDefined();
-    expect(flow?.turn).toBeDefined();
-    expect(flow?.turn.phases).toBeDefined();
+    if (!(flow && "turn" in flow)) {
+      throw new Error("Expected simplified flow definition with turn property");
+    }
+    expect(flow.turn).toBeDefined();
+    expect(flow.turn.phases).toBeDefined();
 
     // Verify Alpha Clash phases
-    const phases = flow?.turn.phases;
+    const phases = flow.turn.phases;
     expect(phases?.startOfTurn).toBeDefined();
     expect(phases?.expansion).toBeDefined();
     expect(phases?.primary).toBeDefined();
     expect(phases?.endOfTurn).toBeDefined();
 
-    // Verify expansion phase has segments
+    // Verify expansion phase has steps
     const expansion = phases?.expansion;
-    expect(expansion?.segments).toBeDefined();
-    expect(expansion?.segments?.readyStep).toBeDefined();
-    expect(expansion?.segments?.drawStep).toBeDefined();
-    expect(expansion?.segments?.resourceStep).toBeDefined();
+    expect(expansion?.steps).toBeDefined();
+    expect(expansion?.steps?.readyStep).toBeDefined();
+    expect(expansion?.steps?.drawStep).toBeDefined();
+    expect(expansion?.steps?.resourceStep).toBeDefined();
 
     // Verify phase ordering
     expect(phases?.startOfTurn?.order).toBe(0);

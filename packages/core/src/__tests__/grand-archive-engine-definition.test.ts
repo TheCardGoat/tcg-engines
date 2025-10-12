@@ -84,9 +84,12 @@ describe("Grand Archive Game - Refactored Engine Features", () => {
 
     // ✅ NEW: Phase hooks use context.getCurrentPlayer()
     expect(flow).toBeDefined();
-    expect(flow?.turn.phases?.recollection).toBeDefined();
-    expect(flow?.turn.phases?.main).toBeDefined();
-    expect(flow?.turn.phases?.end).toBeDefined();
+    if (!(flow && "turn" in flow)) {
+      throw new Error("Expected simplified flow definition with turn property");
+    }
+    expect(flow.turn.phases?.recollection).toBeDefined();
+    expect(flow.turn.phases?.main).toBeDefined();
+    expect(flow.turn.phases?.end).toBeDefined();
   });
 
   it("should use tracker system for materialize action", () => {

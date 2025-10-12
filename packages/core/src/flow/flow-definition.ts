@@ -357,23 +357,37 @@ export type GameSegmentDefinition<TState> = {
  * - onBegin/onEnd hooks
  * - endIf conditions
  * - Programmatic control (endGameSegment/endTurn/endPhase/endStep)
+ *
+ * For simple single-segment games, you can use the simplified syntax:
+ * { turn: TurnDefinition }
+ *
+ * For multi-segment games, use the full syntax:
+ * { gameSegments: { segment1: {...}, segment2: {...} } }
  */
-export type FlowDefinition<TState> = {
-  /**
-   * Game segments
-   *
-   * High-level divisions of the game (e.g., setup, draft, main game, sideboarding).
-   * Each segment can have its own turn structure.
-   *
-   * For simple games with only one segment, define a single "mainGame" segment.
-   */
-  gameSegments: Record<string, GameSegmentDefinition<TState>>;
+export type FlowDefinition<TState> =
+  | {
+      /**
+       * Simplified single-segment game flow (most common case)
+       *
+       * Use this for games that don't need multiple segments.
+       * This creates an implicit "mainGame" segment.
+       */
+      turn: TurnDefinition<TState>;
+    }
+  | {
+      /**
+       * Multi-segment game flow (advanced use case)
+       *
+       * High-level divisions of the game (e.g., setup, draft, main game, sideboarding).
+       * Each segment can have its own turn structure.
+       */
+      gameSegments: Record<string, GameSegmentDefinition<TState>>;
 
-  /**
-   * Initial game segment name (optional)
-   *
-   * If specified, game begins at this segment.
-   * If not specified, uses first segment by order.
-   */
-  initialGameSegment?: string;
-};
+      /**
+       * Initial game segment name (optional)
+       *
+       * If specified, game begins at this segment.
+       * If not specified, uses first segment by order.
+       */
+      initialGameSegment?: string;
+    };

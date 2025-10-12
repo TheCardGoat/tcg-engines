@@ -145,16 +145,28 @@ export function validateGameDefinition<
     if (typeof definition.flow !== "object") {
       errors.push("flow must be an object");
     } else {
-      // Flow validation - check that turn is defined
-      // FlowDefinition has a 'turn' property with phases
-      if (!definition.flow.turn || typeof definition.flow.turn !== "object") {
-        errors.push("flow must have turn object");
-      } else if (
-        !definition.flow.turn.phases ||
-        typeof definition.flow.turn.phases !== "object"
-      ) {
-        errors.push("flow.turn must have phases object");
+      // Flow validation - supports both simplified (turn) and full (gameSegments) syntax
+      const flow = definition.flow as any;
+
+      // Check for simplified syntax (turn property)
+      const hasSimplifiedSyntax = "turn" in flow && flow.turn;
+
+      // Check for full syntax (gameSegments property)
+      const hasFullSyntax = "gameSegments" in flow && flow.gameSegments;
+
+      if (!(hasSimplifiedSyntax || hasFullSyntax)) {
+        errors.push(
+          "flow must have either 'turn' property (simplified) or 'gameSegments' property (full syntax)",
+        );
+      } else if (hasSimplifiedSyntax) {
+        // Validate simplified syntax
+        if (typeof flow.turn !== "object") {
+          errors.push("flow.turn must be an object");
+        } else if (!flow.turn.phases || typeof flow.turn.phases !== "object") {
+          errors.push("flow.turn must have phases object");
+        }
       }
+      // Full syntax validation could be added here if needed
     }
   }
 
