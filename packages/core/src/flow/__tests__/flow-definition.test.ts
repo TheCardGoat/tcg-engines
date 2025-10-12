@@ -36,6 +36,33 @@ describe("FlowDefinition Type", () => {
 
       const mockContext: FlowContext<TestGameState> = {
         state: {} as Draft<TestGameState>,
+        game: {
+          setOTP: () => {},
+          getOTP: () => undefined,
+          setChoosingFirstPlayer: () => {},
+          getChoosingFirstPlayer: () => undefined,
+          setPendingMulligan: () => {},
+          getPendingMulligan: () => [],
+          addPendingMulligan: () => {},
+          removePendingMulligan: () => {},
+        },
+        zones: {
+          moveCard: () => {},
+          getCardsInZone: () => [],
+          shuffleZone: () => {},
+          getCardZone: () => undefined,
+          drawCards: () => [],
+          mulligan: () => {},
+          bulkMove: () => [],
+          createDeck: () => [],
+        },
+        cards: {
+          getCardMeta: () => ({}),
+          updateCardMeta: () => {},
+          setCardMeta: () => {},
+          getCardOwner: () => undefined,
+          queryCards: () => [],
+        },
         endGameSegment: () => {},
         endPhase: () => {},
         endStep: () => {},
@@ -45,6 +72,7 @@ describe("FlowDefinition Type", () => {
         getCurrentStep: () => undefined,
         getCurrentPlayer: () => "player-1",
         getTurnNumber: () => 1,
+        setCurrentPlayer: () => {},
       };
 
       expect(mockContext.endGameSegment).toBeDefined();

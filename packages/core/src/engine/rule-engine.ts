@@ -9,15 +9,23 @@ import type {
   GameDefinition,
   Player,
 } from "../game-definition/game-definition";
-import type { MoveContext, MoveContextInput } from "../moves/move-system";
+import { Logger, type LoggerOptions } from "../logging";
+import type {
+  ConditionFailure,
+  MoveContext,
+  MoveContextInput,
+} from "../moves/move-system";
 import type { CardRegistry } from "../operations/card-registry";
 import { createCardRegistry } from "../operations/card-registry-impl";
 import {
   createCardOperations,
+  createGameOperations,
   createZoneOperations,
 } from "../operations/operations-impl";
 import { SeededRNG } from "../rng/seeded-rng";
+import { TelemetryManager, type TelemetryOptions } from "../telemetry";
 import type { PlayerId } from "../types/branded";
+import { createPlayerId } from "../types/branded-utils";
 import type { InternalState } from "../types/state";
 import { TrackerSystem } from "./tracker-system";
 
@@ -31,6 +39,12 @@ export type RuleEngineOptions = {
   seed?: string;
   /** Optional initial patches (for replay/restore) */
   initialPatches?: Patch[];
+  /** Optional logger configuration for structured logging */
+  logger?: LoggerOptions;
+  /** Optional telemetry configuration for event tracking */
+  telemetry?: TelemetryOptions;
+  /** Optional player ID to designate as the choosing player (e.g., loser of previous game in best-of-three). If not provided, randomly selected. */
+  choosingFirstPlayer?: string;
 };
 
 /**
@@ -47,7 +61,8 @@ export type MoveExecutionResult =
   | {
       success: false;
       error: string;
-      errorCode?: string;
+      errorCode: string;
+      errorContext?: Record<string, unknown>;
     };
 
 /**
@@ -114,11 +129,14 @@ export class RuleEngine<
   private readonly history: HistoryEntry<any, TCardMeta, TCardDefinition>[] =
     [];
   private historyIndex = -1;
-  private flowManager?: FlowManager<TState>;
+  private flowManager?: FlowManager<TState, TCardMeta>;
   private readonly initialPlayers: Player[]; // Store for replay
+  private readonly initialChoosingFirstPlayer?: string; // Store for replay
   private internalState: InternalState<TCardDefinition, TCardMeta>;
   private readonly cardRegistry: CardRegistry<TCardDefinition>;
   private trackerSystem: TrackerSystem;
+  private readonly logger: Logger;
+  private readonly telemetry: TelemetryManager;
   private gameEnded = false;
   private gameEndResult?: {
     winner?: PlayerId;
@@ -143,8 +161,15 @@ export class RuleEngine<
     // Enable Immer patches for state tracking
     enablePatches();
 
+    // Initialize logging and telemetry FIRST (before any other operations)
+    this.logger = new Logger(options?.logger ?? { level: "SILENT" });
+    this.telemetry = new TelemetryManager(
+      options?.telemetry ?? { enabled: false },
+    );
+
     this.gameDefinition = gameDefinition;
     this.initialPlayers = players;
+    this.initialChoosingFirstPlayer = options?.choosingFirstPlayer;
 
     // Initialize RNG with optional seed
     this.rng = new SeededRNG(options?.seed);
@@ -175,19 +200,93 @@ export class RuleEngine<
       }
     }
 
+    // Set which player gets to choose who goes first
+    // This follows TCG rules where one player is designated to make the choice
+    // (e.g., via coin flip, dice roll, rock-paper-scissors, or loser of previous game)
+    // IMPORTANT: This must happen BEFORE setup to ensure deterministic replay
+    if (players.length > 0) {
+      if (options?.choosingFirstPlayer) {
+        // Use explicitly specified choosing player (e.g., loser of previous game in best-of-three)
+        this.internalState.choosingFirstPlayer = createPlayerId(
+          options.choosingFirstPlayer,
+        );
+      } else {
+        // Randomly select if not specified
+        const randomIndex = Math.floor(this.rng.random() * players.length);
+        const choosingPlayer = players[randomIndex];
+        if (choosingPlayer) {
+          this.internalState.choosingFirstPlayer = createPlayerId(
+            choosingPlayer.id,
+          );
+        }
+      }
+    }
+
     // Call setup to create initial state
     this.currentState = gameDefinition.setup(players);
 
     // Initialize flow manager if flow definition exists
     if (gameDefinition.flow) {
+      // Create operations for flow manager
+      const zoneOps = createZoneOperations(this.internalState);
+      const cardOps = createCardOperations<TCardDefinition, TCardMeta>(
+        this.internalState,
+      );
+      const gameOps = createGameOperations(this.internalState);
+
       this.flowManager = new FlowManager(
         gameDefinition.flow,
         this.currentState,
         {
           onTurnEnd: () => this.trackerSystem.resetTurn(),
           onPhaseEnd: (phaseName) => this.trackerSystem.resetPhase(phaseName),
+          gameOperations: gameOps,
+          zoneOperations: zoneOps,
+          cardOperations: cardOps,
+          logger: this.logger.child("flow"),
+          telemetry: this.telemetry,
         },
       );
+    }
+
+    // Register telemetry hooks from game definition
+    if (gameDefinition.telemetryHooks) {
+      if (gameDefinition.telemetryHooks.onPlayerAction) {
+        this.telemetry.registerHook(
+          "onPlayerAction",
+          gameDefinition.telemetryHooks.onPlayerAction,
+        );
+      }
+      if (gameDefinition.telemetryHooks.onStateChange) {
+        this.telemetry.registerHook(
+          "onStateChange",
+          gameDefinition.telemetryHooks.onStateChange,
+        );
+      }
+      if (gameDefinition.telemetryHooks.onRuleEvaluation) {
+        this.telemetry.registerHook(
+          "onRuleEvaluation",
+          gameDefinition.telemetryHooks.onRuleEvaluation,
+        );
+      }
+      if (gameDefinition.telemetryHooks.onFlowTransition) {
+        this.telemetry.registerHook(
+          "onFlowTransition",
+          gameDefinition.telemetryHooks.onFlowTransition,
+        );
+      }
+      if (gameDefinition.telemetryHooks.onEngineError) {
+        this.telemetry.registerHook(
+          "onEngineError",
+          gameDefinition.telemetryHooks.onEngineError,
+        );
+      }
+      if (gameDefinition.telemetryHooks.onPerformance) {
+        this.telemetry.registerHook(
+          "onPerformance",
+          gameDefinition.telemetryHooks.onPerformance,
+        );
+      }
     }
   }
 
@@ -283,38 +382,84 @@ export class RuleEngine<
     moveId: string,
     contextInput: MoveContextInput<any>,
   ): MoveExecutionResult {
+    const startTime = Date.now();
+
+    // Log move execution start (INFO level)
+    this.logger.info(`Executing move: ${moveId}`, {
+      moveId,
+      playerId: contextInput.playerId,
+      params: contextInput.params as Record<string, unknown>,
+    });
+
     // Task 11.7: Validate move exists
     const moveDef = this.gameDefinition.moves[moveId as keyof TMoves];
     if (!moveDef) {
+      const error = `Move '${moveId}' not found`;
+      this.logger.error(error, { moveId });
       return {
         success: false,
-        error: `Move '${moveId}' not found`,
+        error,
         errorCode: "MOVE_NOT_FOUND",
       };
     }
 
-    // Task 11.8: Check move condition (before building full context)
-    if (!this.canExecuteMove(moveId, contextInput)) {
-      return {
-        success: false,
-        error: `Move '${moveId}' condition not met`,
-        errorCode: "CONDITION_FAILED",
-      };
+    // Task 11.8: Check move condition with detailed failure information
+    const conditionResult = this.checkMoveCondition(moveId, contextInput);
+    if (!conditionResult.success) {
+      // Log condition failure (WARN level)
+      this.logger.warn(`Move condition failed: ${moveId}`, {
+        moveId,
+        playerId: contextInput.playerId,
+        error: conditionResult.error,
+        errorCode: conditionResult.errorCode,
+      });
+
+      // Emit telemetry event for failed move
+      this.telemetry.emitEvent({
+        type: "playerAction",
+        moveId,
+        playerId: contextInput.playerId,
+        params: contextInput.params,
+        result: "failure",
+        error: conditionResult.error,
+        errorCode: conditionResult.errorCode,
+        duration: Date.now() - startTime,
+        timestamp: startTime,
+      });
+
+      return conditionResult;
     }
 
     // Check if game has already ended
     if (this.gameEnded) {
+      const error = "Game has already ended";
+      this.logger.warn(error, { moveId });
       return {
         success: false,
-        error: "Game has already ended",
+        error,
         errorCode: "GAME_ENDED",
       };
     }
 
     // Task 11.25, 11.26: Add RNG to context for deterministic randomness
     // Also add operations API for zone and card management
-    const zoneOps = createZoneOperations(this.internalState);
-    const cardOps = createCardOperations(this.internalState);
+    const zoneOps = createZoneOperations(
+      this.internalState,
+      this.logger.child("zones"),
+    );
+    const cardOps = createCardOperations(
+      this.internalState,
+      this.logger.child("cards"),
+    );
+    const gameOps = createGameOperations(
+      this.internalState,
+      this.logger.child("game"),
+    );
+
+    // Track pending flow transitions
+    let pendingPhaseEnd = false;
+    let pendingSegmentEnd = false;
+    let pendingTurnEnd = false;
 
     // Inject flow state from FlowManager if available
     const flowState = this.flowManager
@@ -324,6 +469,19 @@ export class RuleEngine<
           turn: this.flowManager.getTurnNumber(),
           currentPlayer: this.flowManager.getCurrentPlayer() as PlayerId,
           isFirstTurn: this.flowManager.isFirstTurn(),
+          // Provide flow control methods (deferred until after move completes)
+          endPhase: () => {
+            pendingPhaseEnd = true;
+          },
+          endSegment: () => {
+            pendingSegmentEnd = true;
+          },
+          endTurn: () => {
+            pendingTurnEnd = true;
+          },
+          setCurrentPlayer: (playerId?: PlayerId) => {
+            this.flowManager?.setCurrentPlayer(playerId);
+          },
         }
       : undefined;
 
@@ -343,6 +501,7 @@ export class RuleEngine<
         rng: this.rng,
         zones: zoneOps,
         cards: cardOps,
+        game: gameOps,
         registry: this.cardRegistry,
         flow: flowState,
         endGame,
@@ -383,18 +542,209 @@ export class RuleEngine<
         timestamp: Date.now(),
       });
 
+      // Execute any pending flow transitions after move completes
+      if (this.flowManager) {
+        if (pendingPhaseEnd) {
+          this.flowManager.nextPhase();
+        }
+        if (pendingSegmentEnd) {
+          this.flowManager.nextGameSegment();
+        }
+        if (pendingTurnEnd) {
+          this.flowManager.nextTurn();
+        }
+      }
+
+      // Log successful completion (DEBUG level)
+      const duration = Date.now() - startTime;
+      this.logger.debug(`Move completed: ${moveId}`, {
+        moveId,
+        playerId: contextInput.playerId,
+        duration,
+        patchCount: patches.length,
+      });
+
+      // Emit telemetry events for successful move
+      this.telemetry.emitEvent({
+        type: "playerAction",
+        moveId,
+        playerId: contextInput.playerId,
+        params: contextInput.params,
+        result: "success",
+        duration,
+        timestamp: startTime,
+      });
+
+      this.telemetry.emitEvent({
+        type: "stateChange",
+        patches,
+        inversePatches,
+        moveId,
+        timestamp: Date.now(),
+      });
+
       return {
         success: true,
         patches,
         inversePatches,
       };
     } catch (error) {
+      // Log error (ERROR level)
+      const errorMessage =
+        error instanceof Error ? error.message : "Move execution failed";
+      this.logger.error(`Move execution error: ${moveId}`, {
+        moveId,
+        playerId: contextInput.playerId,
+        error: errorMessage,
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      // Emit telemetry error event
+      this.telemetry.emitEvent({
+        type: "engineError",
+        error: errorMessage,
+        stack: error instanceof Error ? error.stack : undefined,
+        context: {
+          moveId,
+          playerId: contextInput.playerId,
+          params: contextInput.params,
+        },
+        moveId,
+        playerId: contextInput.playerId,
+        timestamp: Date.now(),
+      });
+
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Move execution failed",
+        error: errorMessage,
         errorCode: "EXECUTION_ERROR",
       };
     }
+  }
+
+  /**
+   * Build full move context with engine-provided services
+   *
+   * Centralizes context building logic used by condition checks and move execution.
+   * Includes RNG, operations APIs, and flow state.
+   *
+   * @param contextInput - Base context from caller
+   * @returns Full context with all engine services
+   * @private
+   */
+  private buildMoveContext(
+    contextInput: MoveContextInput<any>,
+  ): MoveContext<any, TCardMeta, TCardDefinition> {
+    const zoneOps = createZoneOperations(
+      this.internalState,
+      this.logger.child("zones"),
+    );
+    const cardOps = createCardOperations(
+      this.internalState,
+      this.logger.child("cards"),
+    );
+    const gameOps = createGameOperations(
+      this.internalState,
+      this.logger.child("game"),
+    );
+
+    // Add flow state for condition checks
+    const flowState = this.flowManager
+      ? {
+          currentPhase: this.flowManager.getCurrentPhase(),
+          currentSegment: this.flowManager.getCurrentSegment(),
+          turn: this.flowManager.getTurnNumber(),
+          currentPlayer: this.flowManager.getCurrentPlayer() as PlayerId,
+          isFirstTurn: this.flowManager.getTurnNumber() === 1,
+          // Condition doesn't need control methods (endPhase, endSegment, endTurn)
+          // as conditions should be side-effect free
+          endPhase: () => {},
+          endSegment: () => {},
+          endTurn: () => {},
+          setCurrentPlayer: () => {},
+        }
+      : undefined;
+
+    return {
+      ...contextInput,
+      rng: this.rng,
+      zones: zoneOps,
+      cards: cardOps,
+      game: gameOps,
+      registry: this.cardRegistry,
+      flow: flowState,
+    };
+  }
+
+  /**
+   * Check move condition and return detailed failure information
+   *
+   * Evaluates move condition and returns either success or detailed failure info.
+   * Supports both legacy boolean conditions and new ConditionFailure returns.
+   *
+   * @param moveId - Name of move to check
+   * @param contextInput - Move context with typed params
+   * @returns Success indicator or detailed failure information
+   * @private
+   */
+  private checkMoveCondition(
+    moveId: string,
+    contextInput: MoveContextInput<any>,
+  ):
+    | { success: true }
+    | {
+        success: false;
+        error: string;
+        errorCode: string;
+        errorContext?: Record<string, unknown>;
+      } {
+    const moveDef = this.gameDefinition.moves[moveId as keyof TMoves];
+
+    if (!(moveDef && moveDef.condition)) {
+      return { success: true };
+    }
+
+    // Log condition evaluation (DEBUG level)
+    this.logger.debug(`Evaluating move condition: ${moveId}`, {
+      moveId,
+      playerId: contextInput.playerId,
+    });
+
+    const contextWithOperations = this.buildMoveContext(contextInput);
+    const result = moveDef.condition(this.currentState, contextWithOperations);
+
+    if (result === true) {
+      // Log success (TRACE level)
+      this.logger.trace(`Condition passed: ${moveId}`, { moveId });
+      return { success: true };
+    }
+
+    if (result === false) {
+      // Legacy boolean false - return generic error for backward compatibility
+      this.logger.debug(`Condition failed: ${moveId}`, {
+        moveId,
+        reason: "Condition returned false",
+      });
+      return {
+        success: false,
+        error: `Move '${moveId}' condition not met`,
+        errorCode: "CONDITION_FAILED",
+      };
+    }
+
+    // Detailed ConditionFailure object (result must be ConditionFailure here)
+    const failure = result as ConditionFailure; // TypeScript narrowing
+    this.logger.debug(`Condition failed: ${moveId}`, {
+      moveId,
+      reason: failure.reason,
+      errorCode: failure.errorCode,
+    });
+    return {
+      success: false,
+      error: failure.reason,
+      errorCode: failure.errorCode,
+      errorContext: failure.context,
+    };
   }
 
   /**
@@ -416,26 +766,16 @@ export class RuleEngine<
     }
 
     // Build full context with engine-provided services
-    const zoneOps = createZoneOperations(this.internalState);
-    const cardOps = createCardOperations(this.internalState);
+    const contextWithOperations = this.buildMoveContext(contextInput);
 
-    const contextWithOperations: MoveContext<any, TCardMeta, TCardDefinition> =
-      {
-        ...contextInput,
-        rng: this.rng,
-        zones: zoneOps,
-        cards: cardOps,
-        registry: this.cardRegistry,
-      };
-
-    if (
-      moveDef.condition &&
-      !moveDef.condition(this.currentState, contextWithOperations)
-    ) {
-      return false;
+    if (!moveDef.condition) {
+      return true;
     }
 
-    return true;
+    const result = moveDef.condition(this.currentState, contextWithOperations);
+
+    // Support both boolean and ConditionFailure returns
+    return result === true;
   }
 
   /**
@@ -617,12 +957,54 @@ export class RuleEngine<
    * @returns Final state after replay
    */
   replay(upToIndex?: number): TState {
-    // Reset to initial state
-    this.currentState = this.gameDefinition.setup(this.initialPlayers);
-
     // Reset RNG to initial seed for deterministic replay
     const originalSeed = this.rng.getSeed();
     this.rng.setSeed(originalSeed);
+
+    // Reset internal state (zones, cards, choosingFirstPlayer, etc.)
+    this.internalState = {
+      zones: {},
+      cards: {},
+      cardMetas: {},
+    };
+
+    // Recreate zones from game definition
+    if (this.gameDefinition.zones) {
+      for (const zoneId in this.gameDefinition.zones) {
+        const zoneConfig = this.gameDefinition.zones[zoneId];
+        if (zoneConfig) {
+          this.internalState.zones[zoneId] = {
+            config: zoneConfig,
+            cardIds: [],
+          };
+        }
+      }
+    }
+
+    // Set which player gets to choose who goes first
+    // This must match the original constructor behavior for deterministic replay
+    if (this.initialPlayers.length > 0) {
+      if (this.initialChoosingFirstPlayer) {
+        // Use explicitly specified choosing player (stored from initial options)
+        this.internalState.choosingFirstPlayer = createPlayerId(
+          this.initialChoosingFirstPlayer,
+        );
+      } else {
+        // Randomly select if not specified (must match constructor)
+        const randomIndex = Math.floor(
+          this.rng.random() * this.initialPlayers.length,
+        );
+        const choosingPlayer = this.initialPlayers[randomIndex];
+        if (choosingPlayer) {
+          this.internalState.choosingFirstPlayer = createPlayerId(
+            choosingPlayer.id,
+          );
+        }
+      }
+    }
+
+    // Reset to initial state
+    this.currentState = this.gameDefinition.setup(this.initialPlayers);
 
     const endIndex = upToIndex ?? this.history.length;
 
@@ -663,6 +1045,52 @@ export class RuleEngine<
    */
   getFlowManager(): FlowManager<TState> | undefined {
     return this.flowManager;
+  }
+
+  /**
+   * Get logger instance
+   *
+   * Provides access to the engine's logger for custom logging.
+   * Useful for game-specific logging or debugging.
+   *
+   * @returns Logger instance
+   *
+   * @example
+   * ```typescript
+   * const engine = new RuleEngine(gameDefinition, players, {
+   *   logger: { level: 'DEVELOPER', pretty: true }
+   * });
+   *
+   * const logger = engine.getLogger();
+   * logger.info('Custom game event', { eventId: 'custom-123' });
+   * ```
+   */
+  getLogger(): Logger {
+    return this.logger;
+  }
+
+  /**
+   * Get telemetry manager instance
+   *
+   * Provides access to the telemetry system for custom event tracking.
+   * Useful for analytics, monitoring, and debugging integrations.
+   *
+   * @returns TelemetryManager instance
+   *
+   * @example
+   * ```typescript
+   * const engine = new RuleEngine(gameDefinition, players, {
+   *   telemetry: { enabled: true }
+   * });
+   *
+   * const telemetry = engine.getTelemetry();
+   * telemetry.on('playerAction', (event) => {
+   *   analytics.track('game.move', event);
+   * });
+   * ```
+   */
+  getTelemetry(): TelemetryManager {
+    return this.telemetry;
   }
 
   /**

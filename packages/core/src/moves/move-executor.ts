@@ -140,7 +140,8 @@ export function canExecuteMove<TGameState>(
   }
 
   try {
-    return moveDef.condition(state, context);
+    const result = moveDef.condition(state, context);
+    return result === true; // Support both boolean and ConditionFailure returns
   } catch {
     return false; // Condition error = invalid
   }

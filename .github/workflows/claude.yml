@@ -82,6 +82,7 @@ jobs:
             Use `gh pr comment` for top-level feedback.
             Use `mcp__github_inline_comment__create_inline_comment` to highlight specific code issues.
             Only post GitHub comments - don't submit review text as messages.
+            DO NOT comment on lines that you've already commented.
           claude_args: |
             --mcp-config /tmp/mcp-config.json
             --allowedTools "z.ai,mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"

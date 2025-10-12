@@ -5,6 +5,5 @@
  */
 
 export * from "./lorcana-engine";
-export * from "./nakama";
 export * from "./types";
 export * from "./utils";

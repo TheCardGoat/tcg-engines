@@ -1,4 +1,7 @@
 import type { Draft } from "immer";
+import type { CardOperations } from "../operations/card-operations";
+import type { GameOperations } from "../operations/game-operations";
+import type { ZoneOperations } from "../operations/zone-operations";
 
 /**
  * Task 9.9: FlowContext - Rich context API for flow hooks
@@ -9,13 +12,54 @@ import type { Draft } from "immer";
  * - State (as Immer draft for mutations)
  * - Flow control methods (endPhase, endSegment, endTurn)
  * - Current flow information (phase, segment, turn, player)
+ * - Game operations (OTP, mulligan, etc.)
+ * - Zone operations (move cards, query zones)
+ * - Card operations (metadata, queries)
  *
  * This replaces the simple (state: TState) => void pattern with a richer API
- * that allows programmatic control of flow progression.
+ * that allows programmatic control of flow progression and access to game operations.
  */
-export type FlowContext<TState> = {
+export type FlowContext<TState, TCardMeta = any> = {
   /** Immer draft of game state - can be mutated */
   state: Draft<TState>;
+
+  /**
+   * Game operations API
+   *
+   * Provides methods to interact with game-level state:
+   * - setOTP: Mark player as on the play (goes first)
+   * - getOTP: Get the OTP player
+   * - setPendingMulligan: Set players pending mulligan
+   * - getPendingMulligan: Get players pending mulligan
+   * - addPendingMulligan: Add player to mulligan list
+   * - removePendingMulligan: Remove player from mulligan list
+   *
+   * These are universal TCG concepts that apply across all card games.
+   */
+  game: GameOperations;
+
+  /**
+   * Zone operations API
+   *
+   * Provides methods to interact with the framework's zone management:
+   * - moveCard: Move cards between zones
+   * - getCardsInZone: Query cards in a zone
+   * - shuffleZone: Shuffle a zone
+   * - getCardZone: Find which zone contains a card
+   */
+  zones: ZoneOperations;
+
+  /**
+   * Card operations API
+   *
+   * Provides methods to interact with the framework's card metadata:
+   * - getCardMeta: Get dynamic card properties
+   * - updateCardMeta: Merge metadata updates
+   * - setCardMeta: Replace metadata completely
+   * - getCardOwner: Get card's owner
+   * - queryCards: Find cards by predicate
+   */
+  cards: CardOperations<TCardMeta>;
 
   /**
    * Programmatically end the current phase
@@ -45,7 +89,7 @@ export type FlowContext<TState> = {
    * When called, the current game segment will end and transition to the next segment.
    * Game segments are high-level divisions (e.g., sideboarding, draft, main game).
    */
-  endGameSegment: () => void;
+  endGameSegment: (segmentName?: string) => void;
 
   /**
    * Programmatically end the current turn
@@ -91,6 +135,17 @@ export type FlowContext<TState> = {
    * @returns Current turn number (1-indexed)
    */
   getTurnNumber: () => number;
+
+  /**
+   * Set the current player ID
+   *
+   * Allows explicit control over which player is "active" or has "priority".
+   * Useful for game segments where priority doesn't follow standard turn order
+   * (e.g., during game setup, mulligan phases, or special action sequences).
+   *
+   * @param playerId - Player ID to set as current, or undefined to clear
+   */
+  setCurrentPlayer: (playerId?: string) => void;
 };
 
 /**
@@ -101,8 +156,11 @@ export type FlowContext<TState> = {
  * - Mutate state
  * - Control flow progression
  * - Access flow information
+ * - Access game, zone, and card operations
  */
-export type LifecycleHook<TState> = (context: FlowContext<TState>) => void;
+export type LifecycleHook<TState, TCardMeta = any> = (
+  context: FlowContext<TState, TCardMeta>,
+) => void;
 
 /**
  * Task 9.7: End condition type
@@ -110,7 +168,9 @@ export type LifecycleHook<TState> = (context: FlowContext<TState>) => void;
  * Automatically triggers transition when condition returns true.
  * Checked after every state change.
  */
-export type EndCondition<TState> = (context: FlowContext<TState>) => boolean;
+export type EndCondition<TState, TCardMeta = any> = (
+  context: FlowContext<TState, TCardMeta>,
+) => boolean;
 
 /**
  * Task 9.13: StepDefinition - Steps within phases
@@ -121,7 +181,7 @@ export type EndCondition<TState> = (context: FlowContext<TState>) => boolean;
  * Example: Combat phase has declare, target, damage steps.
  * Once all steps are over, the phase ends.
  */
-export type StepDefinition<TState> = {
+export type StepDefinition<TState, TCardMeta = any> = {
   /**
    * Order/sequence number for this step
    *
@@ -141,19 +201,19 @@ export type StepDefinition<TState> = {
   /**
    * Task 9.5: Lifecycle hook called when step begins
    */
-  onBegin?: LifecycleHook<TState>;
+  onBegin?: LifecycleHook<TState, TCardMeta>;
 
   /**
    * Task 9.5: Lifecycle hook called when step ends
    */
-  onEnd?: LifecycleHook<TState>;
+  onEnd?: LifecycleHook<TState, TCardMeta>;
 
   /**
    * Task 9.7: Automatic end condition
    *
    * When returns true, step automatically ends and transitions to next.
    */
-  endIf?: EndCondition<TState>;
+  endIf?: EndCondition<TState, TCardMeta>;
 };
 
 /**
@@ -165,7 +225,7 @@ export type StepDefinition<TState> = {
  * Example: Disney Lorcana turn has ready, draw, main, end phases.
  * Phases progress sequentially for the same player.
  */
-export type PhaseDefinition<TState> = {
+export type PhaseDefinition<TState, TCardMeta = any> = {
   /**
    * Initial step name (optional)
    *
@@ -193,19 +253,19 @@ export type PhaseDefinition<TState> = {
   /**
    * Task 9.5: Lifecycle hook called when phase begins
    */
-  onBegin?: LifecycleHook<TState>;
+  onBegin?: LifecycleHook<TState, TCardMeta>;
 
   /**
    * Task 9.5: Lifecycle hook called when phase ends
    */
-  onEnd?: LifecycleHook<TState>;
+  onEnd?: LifecycleHook<TState, TCardMeta>;
 
   /**
    * Task 9.7: Automatic end condition
    *
    * When returns true, phase automatically ends and transitions to next.
    */
-  endIf?: EndCondition<TState>;
+  endIf?: EndCondition<TState, TCardMeta>;
 
   /**
    * Task 9.13: Optional steps within this phase
@@ -213,7 +273,7 @@ export type PhaseDefinition<TState> = {
    * If defined, phase will progress through steps before ending.
    * Steps execute in order, then phase ends.
    */
-  steps?: Record<string, StepDefinition<TState>>;
+  steps?: Record<string, StepDefinition<TState, TCardMeta>>;
 };
 
 /**
@@ -224,7 +284,7 @@ export type PhaseDefinition<TState> = {
  * A turn is owned by a single player and consists of phases.
  * When turn ends, next player starts their turn.
  */
-export type TurnDefinition<TState> = {
+export type TurnDefinition<TState, TCardMeta = any> = {
   /**
    * Initial phase name (optional)
    *
@@ -240,7 +300,7 @@ export type TurnDefinition<TState> = {
    * - Reset turn-based state
    * - Draw cards, ready resources, etc.
    */
-  onBegin?: LifecycleHook<TState>;
+  onBegin?: LifecycleHook<TState, TCardMeta>;
 
   /**
    * Task 9.5: Lifecycle hook called when turn ends
@@ -249,14 +309,14 @@ export type TurnDefinition<TState> = {
    * - Clean up turn state
    * - Trigger end-of-turn effects
    */
-  onEnd?: LifecycleHook<TState>;
+  onEnd?: LifecycleHook<TState, TCardMeta>;
 
   /**
    * Task 9.7: Automatic end condition
    *
    * When returns true, turn automatically ends and next player's turn begins.
    */
-  endIf?: EndCondition<TState>;
+  endIf?: EndCondition<TState, TCardMeta>;
 
   /**
    * Task 9.3: Phases within this turn
@@ -266,7 +326,7 @@ export type TurnDefinition<TState> = {
    * Phases progress sequentially for the same player.
    * Example: ready → draw → main → end
    */
-  phases?: Record<string, PhaseDefinition<TState>>;
+  phases?: Record<string, PhaseDefinition<TState, TCardMeta>>;
 };
 
 /**
@@ -286,7 +346,7 @@ export type TurnDefinition<TState> = {
  * - Main game segment: Primary gameplay
  * - Overtime segment: Extra turns or special win conditions
  */
-export type GameSegmentDefinition<TState> = {
+export type GameSegmentDefinition<TState, TCardMeta = any> = {
   /**
    * Order/sequence number for this game segment
    *
@@ -306,19 +366,19 @@ export type GameSegmentDefinition<TState> = {
   /**
    * Lifecycle hook called when game segment begins
    */
-  onBegin?: LifecycleHook<TState>;
+  onBegin?: LifecycleHook<TState, TCardMeta>;
 
   /**
    * Lifecycle hook called when game segment ends
    */
-  onEnd?: LifecycleHook<TState>;
+  onEnd?: LifecycleHook<TState, TCardMeta>;
 
   /**
    * Automatic end condition
    *
    * When returns true, game segment automatically ends and transitions to next.
    */
-  endIf?: EndCondition<TState>;
+  endIf?: EndCondition<TState, TCardMeta>;
 
   /**
    * Turn structure for this game segment
@@ -327,7 +387,7 @@ export type GameSegmentDefinition<TState> = {
    * This allows different segments (draft vs. main game) to have
    * completely different turn mechanics.
    */
-  turn: TurnDefinition<TState>;
+  turn: TurnDefinition<TState, TCardMeta>;
 };
 
 /**
@@ -364,7 +424,7 @@ export type GameSegmentDefinition<TState> = {
  * For multi-segment games, use the full syntax:
  * { gameSegments: { segment1: {...}, segment2: {...} } }
  */
-export type FlowDefinition<TState> =
+export type FlowDefinition<TState, TCardMeta = any> =
   | {
       /**
        * Simplified single-segment game flow (most common case)
@@ -372,7 +432,7 @@ export type FlowDefinition<TState> =
        * Use this for games that don't need multiple segments.
        * This creates an implicit "mainGame" segment.
        */
-      turn: TurnDefinition<TState>;
+      turn: TurnDefinition<TState, TCardMeta>;
     }
   | {
       /**
@@ -381,7 +441,7 @@ export type FlowDefinition<TState> =
        * High-level divisions of the game (e.g., setup, draft, main game, sideboarding).
        * Each segment can have its own turn structure.
        */
-      gameSegments: Record<string, GameSegmentDefinition<TState>>;
+      gameSegments: Record<string, GameSegmentDefinition<TState, TCardMeta>>;
 
       /**
        * Initial game segment name (optional)

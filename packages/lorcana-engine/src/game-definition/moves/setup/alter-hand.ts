@@ -3,7 +3,7 @@ import type {
   LorcanaCardMeta,
   LorcanaGameState,
   LorcanaMoveParams,
-} from "../../../types/move-params";
+} from "../../../types";
 
 /**
  * Alter Hand Move (Mulligan)
@@ -31,5 +31,21 @@ export const alterHand = createMove<
       drawCount: 7,
       playerId,
     });
+
+    // Remove player from pending mulligan list
+    context.game.removePendingMulligan(playerId);
+
+    // Switch priority to the next pending player
+    const pendingMulligan = context.game.getPendingMulligan();
+    if (pendingMulligan.length > 0 && context.flow?.setCurrentPlayer) {
+      // Set priority to the next player who needs to mulligan
+      context.flow.setCurrentPlayer(pendingMulligan[0]);
+    }
+
+    // If all players have completed mulligan, transition to main game
+    if (pendingMulligan.length === 0 && context.flow) {
+      // End the mulligan phase, which will trigger segment transition
+      context.flow.endPhase();
+    }
   },
 });

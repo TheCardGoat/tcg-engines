@@ -1,4 +1,5 @@
 import type { FlowDefinition } from "../flow";
+import type { TelemetryHooks } from "../telemetry";
 import type { CardZoneConfig } from "../zones";
 import type { GameMoveDefinitions } from "./move-definitions";
 
@@ -227,4 +228,34 @@ export type GameDefinition<
    * @returns Filtered state for this player
    */
   playerView?: (state: TState, playerId: string) => TState;
+
+  /**
+   * Telemetry hooks (optional)
+   *
+   * Callbacks for tracking game events and player actions.
+   * Hooks registered here are automatically subscribed when the engine starts.
+   *
+   * Use cases:
+   * - Analytics tracking
+   * - Error reporting
+   * - Custom logging
+   * - Performance monitoring
+   *
+   * @example
+   * ```typescript
+   * telemetryHooks: {
+   *   onPlayerAction: (event) => {
+   *     analytics.track('game.move', {
+   *       moveId: event.moveId,
+   *       playerId: event.playerId,
+   *       duration: event.duration
+   *     });
+   *   },
+   *   onEngineError: (event) => {
+   *     errorReporter.captureException(event.error, event.context);
+   *   }
+   * }
+   * ```
+   */
+  telemetryHooks?: TelemetryHooks;
 };

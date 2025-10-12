@@ -4,7 +4,7 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 const isTest = process.env.NODE_ENV === "test";
 
 // https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#logseverity
-const PinoLevelToSeverityLookup = {
+const _PinoLevelToSeverityLookup = {
   trace: "TRACE",
   debug: "DEBUG",
   info: "INFO",
