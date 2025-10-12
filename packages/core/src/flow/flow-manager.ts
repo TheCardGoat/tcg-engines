@@ -304,23 +304,32 @@ export class FlowManager<TState, TCardMeta = any> {
   }
 
   /**
-   * Task 9.9: Create FlowContext for hooks
+   * Create stub operations for backward compatibility
    */
-  private createFlowContext(
-    draft: Draft<TState>,
-  ): FlowContext<TState, TCardMeta> {
-    // Create stub operations if not provided (for backward compatibility)
+  private createStubOperations(): {
+    game: GameOperations;
+    zones: ZoneOperations;
+    cards: CardOperations<TCardMeta>;
+  } {
     const stubGameOperations: GameOperations = {
       setOTP: () => {},
       getOTP: () => undefined,
-      setPendingMulligan: () => {},
+      setPendingMulligan: () => {
+        console.log("stub called");
+      },
       getPendingMulligan: () => [],
-      addPendingMulligan: () => {},
-      removePendingMulligan: () => {},
+      addPendingMulligan: () => {
+        console.log("stub called");
+      },
+      removePendingMulligan: () => {
+        console.log("stub called");
+      },
     };
 
     const stubZoneOperations: ZoneOperations = {
-      moveCard: () => {},
+      moveCard: () => {
+        console.log("stub called");
+      },
       getCardsInZone: () => [],
       shuffleZone: () => {},
       getCardZone: () => undefined,
@@ -339,10 +348,25 @@ export class FlowManager<TState, TCardMeta = any> {
     };
 
     return {
+      game: stubGameOperations,
+      zones: stubZoneOperations,
+      cards: stubCardOperations,
+    };
+  }
+
+  /**
+   * Task 9.9: Create FlowContext for hooks
+   */
+  private createFlowContext(
+    draft: Draft<TState>,
+  ): FlowContext<TState, TCardMeta> {
+    const stubs = this.createStubOperations();
+
+    return {
       state: draft,
-      game: this.gameOperations || stubGameOperations,
-      zones: this.zoneOperations || stubZoneOperations,
-      cards: this.cardOperations || stubCardOperations,
+      game: this.gameOperations || stubs.game,
+      zones: this.zoneOperations || stubs.zones,
+      cards: this.cardOperations || stubs.cards,
       endGameSegment: () => {
         this.pendingEndGameSegment = true;
       },
@@ -428,40 +452,13 @@ export class FlowManager<TState, TCardMeta = any> {
    * The state should not be mutated in condition functions.
    */
   private createReadOnlyContext(): FlowContext<TState, TCardMeta> {
-    // Create stub operations if not provided (for backward compatibility)
-    const stubGameOperations: GameOperations = {
-      setOTP: () => {},
-      getOTP: () => undefined,
-      setPendingMulligan: () => {},
-      getPendingMulligan: () => [],
-      addPendingMulligan: () => {},
-      removePendingMulligan: () => {},
-    };
-
-    const stubZoneOperations: ZoneOperations = {
-      moveCard: () => {},
-      getCardsInZone: () => [],
-      shuffleZone: () => {},
-      getCardZone: () => undefined,
-      drawCards: () => [],
-      mulligan: () => {},
-      bulkMove: () => [],
-      createDeck: () => [],
-    };
-
-    const stubCardOperations: CardOperations<TCardMeta> = {
-      getCardMeta: () => ({}) as TCardMeta,
-      updateCardMeta: () => {},
-      setCardMeta: () => {},
-      getCardOwner: () => undefined,
-      queryCards: () => [],
-    };
+    const stubs = this.createStubOperations();
 
     return {
       state: this.gameState as any as Draft<TState>, // Safe: conditions shouldn't mutate
-      game: this.gameOperations || stubGameOperations,
-      zones: this.zoneOperations || stubZoneOperations,
-      cards: this.cardOperations || stubCardOperations,
+      game: this.gameOperations || stubs.game,
+      zones: this.zoneOperations || stubs.zones,
+      cards: this.cardOperations || stubs.cards,
       endGameSegment: () => {},
       endPhase: () => {},
       endStep: () => {},

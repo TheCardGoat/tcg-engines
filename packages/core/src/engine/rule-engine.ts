@@ -9,7 +9,11 @@ import type {
   GameDefinition,
   Player,
 } from "../game-definition/game-definition";
-import type { MoveContext, MoveContextInput } from "../moves/move-system";
+import type {
+  ConditionFailure,
+  MoveContext,
+  MoveContextInput,
+} from "../moves/move-system";
 import type { CardRegistry } from "../operations/card-registry";
 import { createCardRegistry } from "../operations/card-registry-impl";
 import {
@@ -525,7 +529,7 @@ export class RuleEngine<
     }
 
     // Detailed ConditionFailure object (result must be ConditionFailure here)
-    const failure = result as import("../moves/move-system").ConditionFailure; // TypeScript narrowing
+    const failure = result as ConditionFailure; // TypeScript narrowing
     return {
       success: false,
       error: failure.reason,

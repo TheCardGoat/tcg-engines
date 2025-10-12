@@ -1,4 +1,4 @@
-import type { CardId, PlayerId } from "../types";
+import type { PlayerId } from "../types";
 import type { InternalState } from "../types/state";
 import type { CardOperations } from "./card-operations";
 import type { GameOperations } from "./game-operations";
