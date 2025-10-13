@@ -72,11 +72,14 @@ export type MoveExecutionResult =
     };
 
 /**
- * History Entry
+ * Replay History Entry
  *
- * Record of a move execution for replay/undo
+ * Record of a move execution for replay/undo functionality.
+ * Contains full context, patches, and inverse patches for deterministic replay.
+ *
+ * Note: For user-facing history with localization, use HistoryEntry from @tcg/core/history
  */
-export type HistoryEntry<
+export type ReplayHistoryEntry<
   TParams = any,
   TCardMeta = any,
   TCardDefinition = any,
@@ -132,8 +135,11 @@ export class RuleEngine<
     TCardMeta
   >;
   private readonly rng: SeededRNG;
-  private readonly history: HistoryEntry<any, TCardMeta, TCardDefinition>[] =
-    [];
+  private readonly history: ReplayHistoryEntry<
+    any,
+    TCardMeta,
+    TCardDefinition
+  >[] = [];
   private historyIndex = -1;
   private readonly moveHistory: HistoryManager; // New move history system
   private flowManager?: FlowManager<TState, TCardMeta>;
@@ -448,12 +454,20 @@ export class RuleEngine<
     // Task 11.8: Check move condition with detailed failure information
     const conditionResult = this.checkMoveCondition(moveId, contextInput);
     if (!conditionResult.success) {
+      // Type narrow to failure case
+      const failure = conditionResult as {
+        success: false;
+        error: string;
+        errorCode: string;
+        errorContext?: Record<string, unknown>;
+      };
+
       // Log condition failure (WARN level)
       this.logger.warn(`Move condition failed: ${moveId}`, {
         moveId,
         playerId: contextInput.playerId,
-        error: conditionResult.error,
-        errorCode: conditionResult.errorCode,
+        error: failure.error,
+        errorCode: failure.errorCode,
       });
 
       // Add history entry for failed move
@@ -467,9 +481,9 @@ export class RuleEngine<
         segment: this.flowManager?.getCurrentSegment(),
         success: false,
         error: {
-          code: conditionResult.errorCode,
-          message: conditionResult.error,
-          context: conditionResult.errorContext,
+          code: failure.errorCode,
+          message: failure.error,
+          context: failure.errorContext,
         },
         messages: {
           visibility: "PUBLIC",
@@ -478,15 +492,15 @@ export class RuleEngine<
               key: `moves.${moveId}.failure`,
               values: {
                 playerId: contextInput.playerId,
-                error: conditionResult.error,
+                error: failure.error,
               },
             },
             advanced: {
               key: `moves.${moveId}.failure.detailed`,
               values: {
                 playerId: contextInput.playerId,
-                error: conditionResult.error,
-                errorCode: conditionResult.errorCode,
+                error: failure.error,
+                errorCode: failure.errorCode,
               },
             },
           },
@@ -500,13 +514,13 @@ export class RuleEngine<
         playerId: contextInput.playerId,
         params: contextInput.params,
         result: "failure",
-        error: conditionResult.error,
-        errorCode: conditionResult.errorCode,
+        error: failure.error,
+        errorCode: failure.errorCode,
         duration: Date.now() - startTime,
         timestamp: startTime,
       });
 
-      return conditionResult;
+      return failure;
     }
 
     // Check if game has already ended
@@ -962,7 +976,11 @@ export class RuleEngine<
    *
    * @returns Array of history entries with full context
    */
-  getReplayHistory(): readonly HistoryEntry<any, TCardMeta, TCardDefinition>[] {
+  getReplayHistory(): readonly ReplayHistoryEntry<
+    any,
+    TCardMeta,
+    TCardDefinition
+  >[] {
     return this.history;
   }
 
@@ -1224,7 +1242,7 @@ export class RuleEngine<
    * Internal method to manage history tracking.
    * Truncates forward history when new move is made after undo.
    */
-  private addToHistory(entry: HistoryEntry): void {
+  private addToHistory(entry: ReplayHistoryEntry): void {
     // Truncate forward history if we're not at the end
     if (this.historyIndex < this.history.length - 1) {
       this.history.splice(this.historyIndex + 1);
