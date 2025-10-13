@@ -5,6 +5,7 @@
  * Allows moves to log custom history entries with player-specific visibility.
  */
 
+import type { PlayerId } from "../types/branded";
 import type { HistoryManager } from "./history-manager";
 import type { HistoryMessages } from "./types";
 
@@ -106,7 +107,7 @@ export function createHistoryOperations(
     log(input) {
       manager.addEntry({
         moveId: context.moveId,
-        playerId: context.playerId as any,
+        playerId: context.playerId as PlayerId,
         params: context.params,
         timestamp: context.timestamp,
         turn: context.turn,

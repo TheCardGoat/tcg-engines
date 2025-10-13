@@ -971,10 +971,32 @@ export class RuleEngine<
    * Task 11.17, 11.18: getReplayHistory
    *
    * Returns full move history with context for replay and undo features.
+   * Contains complete move context, patches, and inverse patches for deterministic replay.
    *
-   * Note: For user-facing game history, use getHistory() instead.
+   * **Breaking Change**: This method was previously named `getHistory()`.
    *
-   * @returns Array of history entries with full context
+   * **Migration Guide**:
+   * - For replay/undo functionality: Use `getReplayHistory()` (this method)
+   * - For user-facing history display: Use `getHistory()` with query options
+   *
+   * @example
+   * ```typescript
+   * // Before (old API):
+   * const history = engine.getHistory();
+   *
+   * // After (new API):
+   * // For replay/undo:
+   * const replayHistory = engine.getReplayHistory();
+   *
+   * // For UI display:
+   * const displayHistory = engine.getHistory({
+   *   playerId: 'player_one',
+   *   verbosity: 'CASUAL',
+   *   includeFailures: false
+   * });
+   * ```
+   *
+   * @returns Array of history entries with full context, patches, and inverse patches
    */
   getReplayHistory(): readonly ReplayHistoryEntry<
     any,
