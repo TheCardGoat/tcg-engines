@@ -165,6 +165,11 @@ export class LorcanaEngine extends RuleEngine<
    * Executes move validation and returns structured error information
    * with context and suggestions. Returns null if the move is valid.
    *
+   * **Implementation Note**: This method uses `executeMove()` internally,
+   * which is safe because `@tcg/core`'s RuleEngine uses Immer for immutable
+   * state management. Failed move executions are automatically rolled back
+   * and do not modify game state.
+   *
    * @param moveId - Move to check
    * @param params - Parameters to use for the move
    * @returns Error information or null if move is valid
@@ -189,6 +194,7 @@ export class LorcanaEngine extends RuleEngine<
     params: any,
   ): MoveValidationError | null {
     // Attempt to execute the move to get detailed error information
+    // Safe: Failed executions are rolled back by Immer (no side effects)
     const result = this.executeMove(moveId, params);
 
     // If move succeeded, no error
@@ -401,30 +407,19 @@ export class LorcanaEngine extends RuleEngine<
    * @private
    */
   private enumeratePlayCardParams(
-    playerId: PlayerId,
+    _playerId: PlayerId,
   ): MoveParameterOptions | null {
-    // Check if move is available
-    const availableMoves = this.getAvailableMoves(playerId);
-    if (!availableMoves.includes("playCard")) {
-      return null;
-    }
-
-    // Get cards in hand
-    const handZone = this.zones.getZone({ zoneId: "hand" as any, playerId });
-    const cardsInHand = handZone?.cards || [];
-
-    // For now, return all cards in hand
-    // TODO: Filter by ink cost when card registry is available
-    return {
-      validCombinations: cardsInHand.map((cardId) => ({ cardId })),
-      parameterInfo: {
-        cardId: {
-          type: "cardId",
-          description: "Card to play from hand",
-          validValues: cardsInHand,
-        },
-      },
-    };
+    // TODO: Implement full enumeration with access to internal zone state
+    // Current limitation: Cannot access RuleEngine's internal zone state directly
+    //
+    // Full implementation requires:
+    // 1. Access to hand zone cards (currently via internal state)
+    // 2. Card registry access for ink cost filtering
+    // 3. Available ink calculation from game state
+    //
+    // Temporary workaround: Return null to indicate no enumeration available
+    // This moves parameter validation to execution time via whyCannotExecuteMove()
+    return null;
   }
 
   /**
@@ -435,30 +430,20 @@ export class LorcanaEngine extends RuleEngine<
    * @private
    */
   private enumerateQuestParams(
-    playerId: PlayerId,
+    _playerId: PlayerId,
   ): MoveParameterOptions | null {
-    // Check if move is available
-    const availableMoves = this.getAvailableMoves(playerId);
-    if (!availableMoves.includes("quest")) {
-      return null;
-    }
-
-    // Get characters in play
-    const playZone = this.zones.getZone({ zoneId: "play" as any, playerId });
-    const cardsInPlay = playZone?.cards || [];
-
-    // TODO: Filter by ready status and character type when card metadata is available
-    // For now, return all cards in play
-    return {
-      validCombinations: cardsInPlay.map((cardId) => ({ cardId })),
-      parameterInfo: {
-        cardId: {
-          type: "cardId",
-          description: "Character to quest with",
-          validValues: cardsInPlay,
-        },
-      },
-    };
+    // TODO: Implement full enumeration with access to internal zone and card state
+    // Current limitation: Cannot access RuleEngine's internal zone state directly
+    //
+    // Full implementation requires:
+    // 1. Access to play zone cards
+    // 2. Card metadata access for ready status (not exerted, not drying)
+    // 3. Card type filtering (only characters can quest)
+    // 4. Lore value calculation (from card registry)
+    //
+    // Temporary workaround: Return null to indicate no enumeration available
+    // This moves parameter validation to execution time via whyCannotExecuteMove()
+    return null;
   }
 
   /**
@@ -469,56 +454,20 @@ export class LorcanaEngine extends RuleEngine<
    * @private
    */
   private enumerateChallengeParams(
-    playerId: PlayerId,
+    _playerId: PlayerId,
   ): MoveParameterOptions | null {
-    // Check if move is available
-    const availableMoves = this.getAvailableMoves(playerId);
-    if (!availableMoves.includes("challenge")) {
-      return null;
-    }
-
-    // Get player's characters (potential attackers)
-    const playZone = this.zones.getZone({ zoneId: "play" as any, playerId });
-    const attackers = playZone?.cards || [];
-
-    // Get opponent's characters (potential defenders)
-    const state = this.getState();
-    const allPlayers = Object.keys(state.loreScores) as PlayerId[];
-    const opponents = allPlayers.filter((p) => p !== playerId);
-
-    const defenders: string[] = [];
-    for (const opponent of opponents) {
-      const opponentPlayZone = this.zones.getZone({
-        zoneId: "play" as any,
-        playerId: opponent,
-      });
-      defenders.push(...(opponentPlayZone?.cards || []));
-    }
-
-    // Generate all valid attacker-defender pairs
-    const validCombinations: Array<{ attackerId: string; defenderId: string }> =
-      [];
-    for (const attackerId of attackers) {
-      for (const defenderId of defenders) {
-        validCombinations.push({ attackerId, defenderId });
-      }
-    }
-
-    return {
-      validCombinations,
-      parameterInfo: {
-        attackerId: {
-          type: "cardId",
-          description: "Attacking character",
-          validValues: attackers,
-        },
-        defenderId: {
-          type: "cardId",
-          description: "Defending character or location",
-          validValues: defenders,
-        },
-      },
-    };
+    // TODO: Implement full enumeration with access to internal zone and card state
+    // Current limitation: Cannot access RuleEngine's internal zone state directly
+    //
+    // Full implementation requires:
+    // 1. Access to play zone cards for both player and opponents
+    // 2. Card metadata for ready status and character type
+    // 3. Valid attacker-defender pair generation (N x M combinations)
+    // 4. Evasive and Bodyguard ability filtering
+    //
+    // Temporary workaround: Return null to indicate no enumeration available
+    // This moves parameter validation to execution time via whyCannotExecuteMove()
+    return null;
   }
 
   /**
@@ -529,50 +478,22 @@ export class LorcanaEngine extends RuleEngine<
    * @private
    */
   private enumerateAlterHandParams(
-    playerId: PlayerId,
+    _playerId: PlayerId,
   ): MoveParameterOptions | null {
-    // Check if move is available
-    const availableMoves = this.getAvailableMoves(playerId);
-    if (!availableMoves.includes("alterHand")) {
-      return null;
-    }
-
-    // Get cards in hand
-    const handZone = this.zones.getZone({ zoneId: "hand" as any, playerId });
-    const cardsInHand = handZone?.cards || [];
-
-    // For mulligan, we want to return key options rather than full power set
-    // Include: keep all (empty array), mulligan all, and individual cards
-    const validCombinations: Array<{
-      playerId: PlayerId;
-      cardsToMulligan: string[];
-    }> = [
-      // Option 1: Keep all cards
-      { playerId, cardsToMulligan: [] },
-      // Option 2: Mulligan all cards
-      { playerId, cardsToMulligan: [...cardsInHand] },
-      // Options 3+: Mulligan individual cards
-      ...cardsInHand.map((cardId) => ({
-        playerId,
-        cardsToMulligan: [cardId],
-      })),
-    ];
-
-    return {
-      validCombinations,
-      parameterInfo: {
-        playerId: {
-          type: "playerId",
-          description: "Player mulliganing",
-          validValues: [playerId],
-        },
-        cardsToMulligan: {
-          type: "object",
-          description: "Array of card IDs to mulligan",
-          validValues: cardsInHand,
-        },
-      },
-    };
+    // TODO: Implement full enumeration with access to internal zone state
+    // Current limitation: Cannot access RuleEngine's internal zone state directly
+    //
+    // Full implementation requires:
+    // 1. Access to hand zone cards
+    // 2. Practical subset of mulligan options (avoid 2^n explosion)
+    //    - Keep all (empty array)
+    //    - Mulligan all
+    //    - Mulligan individual cards
+    // 3. Optional: Card quality heuristics for AI guidance
+    //
+    // Temporary workaround: Return null to indicate no enumeration available
+    // This moves parameter validation to execution time via whyCannotExecuteMove()
+    return null;
   }
 
   /**
@@ -583,29 +504,18 @@ export class LorcanaEngine extends RuleEngine<
    * @private
    */
   private enumerateInkwellParams(
-    playerId: PlayerId,
+    _playerId: PlayerId,
   ): MoveParameterOptions | null {
-    // Check if move is available
-    const availableMoves = this.getAvailableMoves(playerId);
-    if (!availableMoves.includes("putACardIntoTheInkwell")) {
-      return null;
-    }
-
-    // Get cards in hand
-    const handZone = this.zones.getZone({ zoneId: "hand" as any, playerId });
-    const cardsInHand = handZone?.cards || [];
-
-    // TODO: Filter by inkable property when card registry is available
-    // For now, return all cards in hand
-    return {
-      validCombinations: cardsInHand.map((cardId) => ({ cardId })),
-      parameterInfo: {
-        cardId: {
-          type: "cardId",
-          description: "Card to put into inkwell",
-          validValues: cardsInHand,
-        },
-      },
-    };
+    // TODO: Implement full enumeration with access to internal zone state
+    // Current limitation: Cannot access RuleEngine's internal zone state directly
+    //
+    // Full implementation requires:
+    // 1. Access to hand zone cards
+    // 2. Check if player has already inked this turn (turnMetadata)
+    // 3. Optional: Card registry access to prefer inkable cards
+    //
+    // Temporary workaround: Return null to indicate no enumeration available
+    // This moves parameter validation to execution time via whyCannotExecuteMove()
+    return null;
   }
 }
