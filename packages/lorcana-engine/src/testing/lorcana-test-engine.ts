@@ -125,15 +125,6 @@ export class LorcanaTestEngine {
     // This requires zone operations to be available after engine creation
   }
 
-  // ========== Engine Selection ==========
-
-  /**
-   * Get the currently active engine (always returns the same engine)
-   */
-  private get activeEngine() {
-    return this.engine;
-  }
-
   /**
    * Change the active player (for move execution)
    */
@@ -284,6 +275,57 @@ export class LorcanaTestEngine {
       playerId,
       cardsToMulligan,
     });
+  }
+
+  // ========== Move Enumeration ==========
+
+  /**
+   * Get available moves for a player
+   *
+   * @param playerId - Player to get moves for
+   * @returns Array of available move IDs
+   */
+  getAvailableMoves(playerId: string): string[] {
+    // TODO: Will be implemented when LorcanaEngine is used instead of RuleEngine
+    return this.engine.getValidMoves(createPlayerId(playerId));
+  }
+
+  /**
+   * Get detailed information about available moves
+   *
+   * @param playerId - Player to get moves for
+   * @returns Array of move information objects
+   */
+  getAvailableMovesDetailed(_playerId: string) {
+    // TODO: Will be implemented when LorcanaEngine is used instead of RuleEngine
+    // For now, return placeholder
+    return [];
+  }
+
+  /**
+   * Enumerate valid parameters for a move
+   *
+   * @param moveId - Move to enumerate parameters for
+   * @param playerId - Player attempting the move
+   * @returns Valid parameter combinations or null
+   */
+  enumerateMoveParameters(_moveId: string, _playerId: string) {
+    // TODO: Will be implemented when LorcanaEngine is used instead of RuleEngine
+    // For now, return placeholder
+    return null;
+  }
+
+  /**
+   * Get explanation of why a move cannot be executed
+   *
+   * @param moveId - Move to check
+   * @param params - Parameters to use for the move
+   * @returns Error information or null
+   */
+  whyCannotExecuteMove(_moveId: string, _params: any) {
+    // TODO: Will be implemented when LorcanaEngine is used instead of RuleEngine
+    // For now, return placeholder
+    return null;
   }
 
   // ========== Cleanup ==========

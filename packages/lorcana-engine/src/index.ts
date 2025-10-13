@@ -40,5 +40,17 @@ export type {
 // Type exports (to be implemented)
 // export * from "./types";
 
+// Engine exports
+export { LorcanaEngine } from "./engine/lorcana-engine";
+// Move enumeration type exports
+export type {
+  AvailableMoveInfo,
+  MoveParameterOptions,
+  MoveParamSchema,
+  MoveValidationError,
+  ParameterInfo,
+  ParamFieldSchema,
+} from "./types/move-enumeration";
+
 // Query exports (to be implemented)
 // export * from "./queries";
