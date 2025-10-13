@@ -501,8 +501,8 @@ describe("Integration - Complete Game Flow", () => {
       expect(finalState.players[0]?.field.length).toBe(1);
 
       // Verify history captured all successful moves
-      const history = engine.getHistory();
-      expect(history.length).toBe(6); // 5 draws + 1 successful play (failed moves don't add to history)
+      const history = engine.getHistory({ includeFailures: false });
+      expect(history.length).toBe(6); // 5 draws + 1 successful play (failed moves filtered out)
     });
   });
 });

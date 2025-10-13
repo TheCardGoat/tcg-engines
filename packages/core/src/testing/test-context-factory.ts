@@ -5,6 +5,7 @@
  * Provides mock implementations of engine services for unit testing.
  */
 
+import type { HistoryOperations } from "../history/history-operations";
 import type { MoveContext, MoveContextInput } from "../moves/move-system";
 import type { CardOperations } from "../operations/card-operations";
 import type { GameOperations } from "../operations/game-operations";
@@ -64,6 +65,7 @@ export function createMockContext<TParams = any>(
       mark(name: string, playerId?: PlayerId): void;
       unmark(name: string, playerId?: PlayerId): void;
     };
+    history?: Partial<HistoryOperations>;
   },
 ): MoveContext<TParams> {
   const mockZones: ZoneOperations = {
@@ -119,6 +121,10 @@ export function createMockContext<TParams = any>(
       check: () => false,
       mark: () => {},
       unmark: () => {},
+    },
+    history: {
+      log: () => {},
+      ...options?.history,
     },
   };
 }

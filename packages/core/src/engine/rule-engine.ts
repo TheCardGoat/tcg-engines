@@ -9,6 +9,12 @@ import type {
   GameDefinition,
   Player,
 } from "../game-definition/game-definition";
+import {
+  type FormattedHistoryEntry,
+  HistoryManager,
+  type HistoryQueryOptions,
+} from "../history";
+import { createHistoryOperations } from "../history/history-operations";
 import { Logger, type LoggerOptions } from "../logging";
 import type {
   ConditionFailure,
@@ -66,11 +72,14 @@ export type MoveExecutionResult =
     };
 
 /**
- * History Entry
+ * Replay History Entry
  *
- * Record of a move execution for replay/undo
+ * Record of a move execution for replay/undo functionality.
+ * Contains full context, patches, and inverse patches for deterministic replay.
+ *
+ * Note: For user-facing history with localization, use HistoryEntry from @tcg/core/history
  */
-export type HistoryEntry<
+export type ReplayHistoryEntry<
   TParams = any,
   TCardMeta = any,
   TCardDefinition = any,
@@ -126,9 +135,13 @@ export class RuleEngine<
     TCardMeta
   >;
   private readonly rng: SeededRNG;
-  private readonly history: HistoryEntry<any, TCardMeta, TCardDefinition>[] =
-    [];
+  private readonly history: ReplayHistoryEntry<
+    any,
+    TCardMeta,
+    TCardDefinition
+  >[] = [];
   private historyIndex = -1;
+  private readonly moveHistory: HistoryManager; // New move history system
   private flowManager?: FlowManager<TState, TCardMeta>;
   private readonly initialPlayers: Player[]; // Store for replay
   private readonly initialChoosingFirstPlayer?: string; // Store for replay
@@ -173,6 +186,9 @@ export class RuleEngine<
 
     // Initialize RNG with optional seed
     this.rng = new SeededRNG(options?.seed);
+
+    // Initialize move history manager
+    this.moveHistory = new HistoryManager();
 
     // Initialize card registry from game definition
     this.cardRegistry = createCardRegistry(gameDefinition.cards);
@@ -342,6 +358,38 @@ export class RuleEngine<
   }
 
   /**
+   * Get move history with player-aware filtering and verbosity levels
+   *
+   * Returns formatted history entries with player-specific visibility filtering
+   * and message formatting based on requested verbosity level.
+   *
+   * @param options - Query options for filtering and formatting
+   * @returns Array of formatted history entries
+   *
+   * @example
+   * ```typescript
+   * // Get all history for a specific player (casual verbosity)
+   * const history = engine.getHistory({
+   *   playerId: 'player_one',
+   *   verbosity: 'CASUAL'
+   * });
+   *
+   * // Get recent history (since timestamp)
+   * const recentHistory = engine.getHistory({
+   *   since: Date.now() - 60000 // Last minute
+   * });
+   *
+   * // Get technical details for debugging
+   * const debugHistory = engine.getHistory({
+   *   verbosity: 'DEVELOPER'
+   * });
+   * ```
+   */
+  getHistory(options?: HistoryQueryOptions): FormattedHistoryEntry[] {
+    return this.moveHistory.query(options ?? {});
+  }
+
+  /**
    * Get the game end result
    *
    * @returns Game end result if game has ended, undefined otherwise
@@ -406,12 +454,57 @@ export class RuleEngine<
     // Task 11.8: Check move condition with detailed failure information
     const conditionResult = this.checkMoveCondition(moveId, contextInput);
     if (!conditionResult.success) {
+      // Type narrow to failure case
+      const failure = conditionResult as {
+        success: false;
+        error: string;
+        errorCode: string;
+        errorContext?: Record<string, unknown>;
+      };
+
       // Log condition failure (WARN level)
       this.logger.warn(`Move condition failed: ${moveId}`, {
         moveId,
         playerId: contextInput.playerId,
-        error: conditionResult.error,
-        errorCode: conditionResult.errorCode,
+        error: failure.error,
+        errorCode: failure.errorCode,
+      });
+
+      // Add history entry for failed move
+      this.moveHistory.addEntry({
+        moveId,
+        playerId: contextInput.playerId,
+        params: contextInput.params,
+        timestamp: contextInput.timestamp ?? Date.now(),
+        turn: this.flowManager?.getTurnNumber(),
+        phase: this.flowManager?.getCurrentPhase(),
+        segment: this.flowManager?.getCurrentSegment(),
+        success: false,
+        error: {
+          code: failure.errorCode,
+          message: failure.error,
+          context: failure.errorContext,
+        },
+        messages: {
+          visibility: "PUBLIC",
+          messages: {
+            casual: {
+              key: `moves.${moveId}.failure`,
+              values: {
+                playerId: contextInput.playerId,
+                error: failure.error,
+              },
+            },
+            advanced: {
+              key: `moves.${moveId}.failure.detailed`,
+              values: {
+                playerId: contextInput.playerId,
+                error: failure.error,
+                errorCode: failure.errorCode,
+              },
+            },
+          },
+        },
       });
 
       // Emit telemetry event for failed move
@@ -421,13 +514,13 @@ export class RuleEngine<
         playerId: contextInput.playerId,
         params: contextInput.params,
         result: "failure",
-        error: conditionResult.error,
-        errorCode: conditionResult.errorCode,
+        error: failure.error,
+        errorCode: failure.errorCode,
         duration: Date.now() - startTime,
         timestamp: startTime,
       });
 
-      return conditionResult;
+      return failure;
     }
 
     // Check if game has already ended
@@ -495,6 +588,17 @@ export class RuleEngine<
       this.gameEndResult = result;
     };
 
+    // Create history operations for this move
+    const historyOps = createHistoryOperations(this.moveHistory, {
+      moveId,
+      playerId: contextInput.playerId,
+      params: contextInput.params,
+      timestamp: contextInput.timestamp ?? Date.now(),
+      turn: flowState?.turn,
+      phase: flowState?.currentPhase,
+      segment: flowState?.currentSegment,
+    });
+
     const contextWithOperations: MoveContext<any, TCardMeta, TCardDefinition> =
       {
         ...contextInput,
@@ -502,6 +606,7 @@ export class RuleEngine<
         zones: zoneOps,
         cards: cardOps,
         game: gameOps,
+        history: historyOps,
         registry: this.cardRegistry,
         flow: flowState,
         endGame,
@@ -540,6 +645,30 @@ export class RuleEngine<
         patches,
         inversePatches,
         timestamp: Date.now(),
+      });
+
+      // Add automatic base history entry for successful move
+      this.moveHistory.addEntry({
+        moveId,
+        playerId: contextInput.playerId,
+        params: contextInput.params,
+        timestamp: contextInput.timestamp ?? Date.now(),
+        turn: flowState?.turn,
+        phase: flowState?.currentPhase,
+        segment: flowState?.currentSegment,
+        success: true,
+        messages: {
+          visibility: "PUBLIC",
+          messages: {
+            casual: {
+              key: `moves.${moveId}.success`,
+              values: {
+                playerId: contextInput.playerId,
+                params: contextInput.params,
+              },
+            },
+          },
+        },
       });
 
       // Execute any pending flow transitions after move completes
@@ -665,12 +794,20 @@ export class RuleEngine<
         }
       : undefined;
 
+    // Create dummy history operations (conditions should be side-effect free)
+    const dummyHistoryOps = {
+      log: () => {
+        // No-op: conditions shouldn't add history entries
+      },
+    };
+
     return {
       ...contextInput,
       rng: this.rng,
       zones: zoneOps,
       cards: cardOps,
       game: gameOps,
+      history: dummyHistoryOps,
       registry: this.cardRegistry,
       flow: flowState,
     };
@@ -829,15 +966,43 @@ export class RuleEngine<
   }
 
   /**
-   * Get game history
+   * Get game history for replay and undo
    *
-   * Task 11.17, 11.18: getHistory
+   * Task 11.17, 11.18: getReplayHistory
    *
-   * Returns full move history for replay and analysis.
+   * Returns full move history with context for replay and undo features.
+   * Contains complete move context, patches, and inverse patches for deterministic replay.
    *
-   * @returns Array of history entries
+   * **Breaking Change**: This method was previously named `getHistory()`.
+   *
+   * **Migration Guide**:
+   * - For replay/undo functionality: Use `getReplayHistory()` (this method)
+   * - For user-facing history display: Use `getHistory()` with query options
+   *
+   * @example
+   * ```typescript
+   * // Before (old API):
+   * const history = engine.getHistory();
+   *
+   * // After (new API):
+   * // For replay/undo:
+   * const replayHistory = engine.getReplayHistory();
+   *
+   * // For UI display:
+   * const displayHistory = engine.getHistory({
+   *   playerId: 'player_one',
+   *   verbosity: 'CASUAL',
+   *   includeFailures: false
+   * });
+   * ```
+   *
+   * @returns Array of history entries with full context, patches, and inverse patches
    */
-  getHistory(): readonly HistoryEntry<any, TCardMeta, TCardDefinition>[] {
+  getReplayHistory(): readonly ReplayHistoryEntry<
+    any,
+    TCardMeta,
+    TCardDefinition
+  >[] {
     return this.history;
   }
 
@@ -1099,7 +1264,7 @@ export class RuleEngine<
    * Internal method to manage history tracking.
    * Truncates forward history when new move is made after undo.
    */
-  private addToHistory(entry: HistoryEntry): void {
+  private addToHistory(entry: ReplayHistoryEntry): void {
     // Truncate forward history if we're not at the end
     if (this.historyIndex < this.history.length - 1) {
       this.history.splice(this.historyIndex + 1);

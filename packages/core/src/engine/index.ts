@@ -7,8 +7,8 @@ export {
 } from "./multiplayer-engine";
 
 export {
-  type HistoryEntry,
   type MoveExecutionResult,
+  type ReplayHistoryEntry,
   RuleEngine,
   type RuleEngineOptions,
 } from "./rule-engine";

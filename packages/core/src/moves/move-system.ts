@@ -1,4 +1,5 @@
 import type { Draft } from "immer";
+import type { HistoryOperations } from "../history/history-operations";
 import type { CardOperations } from "../operations/card-operations";
 import type { CardRegistry } from "../operations/card-registry";
 import type { GameOperations } from "../operations/game-operations";
@@ -151,6 +152,22 @@ export type MoveContext<
    * Always provided by RuleEngine.
    */
   game: GameOperations;
+
+  /**
+   * History operations API (provided by RuleEngine)
+   *
+   * Provides methods to log custom history entries:
+   * - log: Add a history entry with custom messages and player-specific visibility
+   *
+   * Use this to add detailed logging for moves with private information
+   * (e.g., card draws, mulligans, hand reveals).
+   *
+   * Note: The engine automatically creates a base history entry for each move.
+   * Use this API to add additional context or player-specific details.
+   *
+   * Always provided by RuleEngine.
+   */
+  history: HistoryOperations;
 
   /**
    * Card registry API (provided by RuleEngine)

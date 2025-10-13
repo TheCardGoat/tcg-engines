@@ -74,7 +74,7 @@ describe("RuleEngine - History & Replay", () => {
         params: { amount: 3 },
       });
 
-      const history = engine.getHistory();
+      const history = engine.getReplayHistory();
 
       expect(history).toHaveLength(2);
       expect(history[0]?.moveId).toBe("incrementScore");
@@ -122,7 +122,7 @@ describe("RuleEngine - History & Replay", () => {
         params: { amount: 5 },
       });
 
-      const history = engine.getHistory();
+      const history = engine.getReplayHistory();
 
       expect(history[0]?.patches).toBeDefined();
       expect(history[0]?.patches.length).toBeGreaterThan(0);
