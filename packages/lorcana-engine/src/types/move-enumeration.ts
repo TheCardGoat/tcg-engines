@@ -73,7 +73,7 @@ export type AvailableMoveInfo = {
  */
 export type ParameterInfo = {
   /** Parameter type */
-  type: "cardId" | "playerId" | "number" | "boolean" | "object";
+  type: "cardId" | "playerId" | "number" | "boolean" | "object" | "string";
 
   /** Human-readable description */
   description: string;
