@@ -67,16 +67,20 @@ export class LorcanaEngine extends RuleEngine<
 
     // Check each registered move
     for (const moveId of Object.keys(this.gameDefinition.moves)) {
-      // Try to enumerate parameters - if we can get valid combinations, the move is available
-      const params = this.enumerateMoveParameters(
-        moveId as keyof LorcanaMoveParams,
-        playerId,
-      );
+      // Special case: For moves that require parameters to be valid,
+      // try to enumerate and check if we have any valid combinations
+      if (this.moveRequiresParameters(moveId)) {
+        const params = this.enumerateMoveParameters(
+          moveId as keyof LorcanaMoveParams,
+          playerId,
+        );
 
-      if (params !== null && params.validCombinations.length > 0) {
-        validMoves.push(moveId);
+        if (params !== null && params.validCombinations.length > 0) {
+          validMoves.push(moveId);
+        }
       } else {
-        // For moves without parameters or that don't enumerate, use base check
+        // For moves that work with empty params or are parameterless,
+        // use simple condition check
         const canExecute = this.canExecuteMove(moveId, {
           playerId,
           params: {},
@@ -89,6 +93,28 @@ export class LorcanaEngine extends RuleEngine<
     }
 
     return validMoves;
+  }
+
+  /**
+   * Check if a move requires parameters to be valid
+   *
+   * Some moves like chooseWhoGoesFirstMove must have parameters to pass validation.
+   * Others like passTurn and concede work with empty parameters.
+   *
+   * @param moveId - Move ID to check
+   * @returns True if move requires parameters
+   * @private
+   */
+  private moveRequiresParameters(moveId: string): boolean {
+    // Moves that MUST have parameters to be valid
+    const requiresParams = new Set([
+      "chooseWhoGoesFirstMove",
+      // Note: Other moves like playCard, quest, challenge, alterHand, putACardIntoTheInkwell
+      // are NOT in this list because their enumeration returns null (not yet implemented).
+      // They will be checked with empty params and conditions will handle validation.
+    ]);
+
+    return requiresParams.has(moveId);
   }
 
   /**
