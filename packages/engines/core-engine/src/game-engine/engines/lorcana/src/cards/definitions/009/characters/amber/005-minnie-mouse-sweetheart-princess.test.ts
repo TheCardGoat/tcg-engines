@@ -1,14 +1,8 @@
-import { describe, expect, it } from "bun:test";
-import { mickeyMouseArtfulRogue } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/088-mickey-mouse-artful-rogue";
-import { cobraBubblesSimpleEducator } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/004-cobra-bubbles-just-a-social-worker";
-import {
-  minnieMouseSweetheartPrincess,
-  powerlineWorldsGreatestRockStar,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/009";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { powerlineWorldsGreatestRockStar } from "../ruby/110-powerline-world-s-greatest-rock-star";
 
 describe("Minnie Mouse - Sweetheart Princess", () => {
   it("ROYAL FAVOR Your characters named Mickey Mouse gain Support. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)", async () => {

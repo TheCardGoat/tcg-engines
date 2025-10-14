@@ -1,12 +1,8 @@
-import { describe, expect, it } from "bun:test";
-import {
-  hiddenCoveTranquilHaven,
-  maxGoofRockinTeen,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/009";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { maxGoofRockinTeen } from "./112-max-goof-rockin-teen";
 
 describe("Max Goof - Rockin' Teen", () => {
   it("Singer 5 (This character counts as cost 5 to sing songs.)", async () => {

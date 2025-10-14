@@ -1,9 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { belleAccomplishedMystic } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { belleAccomplishedMystic } from "./040-belle-accomplished-mystic";
 
 describe("Belle - Accomplished Mystic", () => {
   it.skip("**Shift** 3", async () => {

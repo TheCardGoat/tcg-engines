@@ -1,9 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { plutoDeterminedDefender } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { plutoDeterminedDefender } from "./014-pluto-determined-defender";
 
 describe("Pluto - Determined Defender", () => {
   it.skip("**Shift** 5 _(You may pay 5 {I} to play this on top of one of your characters named Pluto.)_", async () => {

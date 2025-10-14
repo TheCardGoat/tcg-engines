@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { kuzcoWantedLlama } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { kuzcoWantedLlama } from "./049-kuzco-wanted-llama";
 
 describe("Kuzco - Wanted Llama", () => {
   it.skip("**OK, WHERE AM I?** When this character is banished, you may draw a card.", async () => {

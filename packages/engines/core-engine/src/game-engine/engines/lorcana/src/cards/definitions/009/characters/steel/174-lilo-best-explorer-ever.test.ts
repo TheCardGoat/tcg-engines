@@ -1,13 +1,9 @@
-import { describe, expect, it } from "bun:test";
-import {
-  beastGraciousPrince,
-  liloBestExplorerEver,
-  stitchRockStar,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/009";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { stitchRockStar } from "../amber/003-stitch-rock-star";
+import { liloBestExplorerEver } from "./174-lilo-best-explorer-ever";
 
 describe("Lilo - Best Explorer Ever", () => {
   it("COME ON, PEOPLE, LET'S MOVE When you play this character, your other characters gain Challenger +2 this turn. (They get +2 {S} while challenging.)", async () => {

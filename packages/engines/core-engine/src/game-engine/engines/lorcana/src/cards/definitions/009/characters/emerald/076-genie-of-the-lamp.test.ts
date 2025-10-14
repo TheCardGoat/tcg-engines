@@ -1,10 +1,10 @@
 import { describe, expect, it } from "bun:test";
 import { deweyLovableShowoff } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
-import { genieOfTheLamp } from "~/game-engine/engines/lorcana/src/cards/definitions/009";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { genieOfTheLamp } from "./076-genie-of-the-lamp";
 
 describe("Genie - Of the Lamp", () => {
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {

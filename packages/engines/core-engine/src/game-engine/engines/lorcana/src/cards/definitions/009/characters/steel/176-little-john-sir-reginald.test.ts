@@ -1,13 +1,13 @@
 import { describe, expect, it } from "bun:test";
 import { gastonBaritoneBully } from "~/game-engine/engines/lorcana/src/cards/definitions/002/characters/008-gaston-baritone-bully";
 import {
-  arielSingingMermaid,
-  littleJohnSirReginald,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
-import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import {
+  arielSingingMermaid,
+  littleJohnSirReginald,
+} from "./176-little-john-sir-reginald";
 
 describe("Little John - Sir Reginald", () => {
   it.skip("WHAT A BEAUTIFUL BRAWL! When you play this character, choose one:", async () => {

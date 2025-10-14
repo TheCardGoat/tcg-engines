@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { camiloMadrigalPrankster } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { camiloMadrigalPrankster } from "./052-camilo-madrigal-prankster";
 
 describe("Camilo Madrigal - Prankster", () => {
   it.skip("**MANY FORMS** At the start of your turn, you may chose one:", async () => {

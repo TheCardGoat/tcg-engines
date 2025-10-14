@@ -1,9 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { elsaSpiritOfWinter } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { elsaSpiritOfWinter } from "./043-elsa-spirit-of-winter";
 
 describe("Elsa - Spirit of Winter", () => {
   it.skip("**Shift** 6 _(You may pay 6 {I} to play this on top of one of your characters named Elsa.)_", async () => {
