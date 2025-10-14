@@ -12,7 +12,8 @@
  * - Automatic state synchronization checks
  */
 
-import { createPlayerId, RuleEngine, type RuleEngineOptions } from "@tcg/core";
+import { createPlayerId, type RuleEngineOptions } from "@tcg/core";
+import { LorcanaEngine } from "../engine/lorcana-engine";
 import { lorcanaGameDefinition } from "../game-definition/definition";
 import type {
   LorcanaCardMeta,
@@ -67,32 +68,12 @@ export type TestEngineOptions = {
  */
 export class LorcanaTestEngine {
   /** Single authoritative engine */
-  public readonly engine: RuleEngine<
-    LorcanaGameState,
-    LorcanaMoveParams,
-    unknown,
-    LorcanaCardMeta
-  >;
+  public readonly engine: LorcanaEngine;
 
   // Aliases for compatibility with legacy test patterns
-  public readonly authoritativeEngine: RuleEngine<
-    LorcanaGameState,
-    LorcanaMoveParams,
-    unknown,
-    LorcanaCardMeta
-  >;
-  public readonly playerOneEngine: RuleEngine<
-    LorcanaGameState,
-    LorcanaMoveParams,
-    unknown,
-    LorcanaCardMeta
-  >;
-  public readonly playerTwoEngine: RuleEngine<
-    LorcanaGameState,
-    LorcanaMoveParams,
-    unknown,
-    LorcanaCardMeta
-  >;
+  public readonly authoritativeEngine: LorcanaEngine;
+  public readonly playerOneEngine: LorcanaEngine;
+  public readonly playerTwoEngine: LorcanaEngine;
 
   /** Currently active player for move execution */
   private activePlayerEngine: string = PLAYER_ONE;
@@ -100,7 +81,7 @@ export class LorcanaTestEngine {
   constructor(
     _playerOneState: TestInitialState = {},
     _playerTwoState: TestInitialState = {},
-    _opts: TestEngineOptions = { skipPreGame: true },
+    opts: TestEngineOptions = { skipPreGame: true },
   ) {
     // Create players
     const players = [
@@ -110,11 +91,15 @@ export class LorcanaTestEngine {
 
     // Engine options
     const engineOptions: RuleEngineOptions = {
-      seed: _opts.seed || "test-seed-123",
+      seed: opts.seed || "test-seed-123",
     };
 
-    // Create single engine instance
-    this.engine = new RuleEngine(lorcanaGameDefinition, players, engineOptions);
+    // Create single LorcanaEngine instance
+    this.engine = new LorcanaEngine(
+      lorcanaGameDefinition,
+      players,
+      engineOptions,
+    );
 
     // Aliases point to same engine
     this.authoritativeEngine = this.engine;
@@ -123,6 +108,29 @@ export class LorcanaTestEngine {
 
     // TODO: Initialize zones based on playerOneState and playerTwoState
     // This requires zone operations to be available after engine creation
+
+    // If skipPreGame is true, fast-forward to main game
+    if (opts.skipPreGame) {
+      // Set OTP to skip chooseFirstPlayer phase
+      // @ts-expect-error - Accessing internal properties for testing setup
+      const internalState = this.engine.internalState;
+      if (internalState) {
+        internalState.otp = createPlayerId(PLAYER_ONE);
+        internalState.pendingMulligan = []; // Clear mulligan requirement
+      }
+
+      // Transition to main game segment by accessing flow manager's internal state
+      const flowManager = this.engine.getFlowManager();
+      if (flowManager) {
+        // @ts-expect-error - Accessing private property for testing setup
+        flowManager.currentGameSegment = "mainGame";
+        // @ts-expect-error - Accessing private property for testing setup
+        flowManager.currentPhase = "main";
+        // Set current player to PLAYER_ONE
+        // @ts-expect-error - Accessing private property for testing setup
+        flowManager.currentPlayer = createPlayerId(PLAYER_ONE);
+      }
+    }
   }
 
   /**
@@ -286,8 +294,7 @@ export class LorcanaTestEngine {
    * @returns Array of available move IDs
    */
   getAvailableMoves(playerId: string): string[] {
-    // TODO: Will be implemented when LorcanaEngine is used instead of RuleEngine
-    return this.engine.getValidMoves(createPlayerId(playerId));
+    return this.engine.getAvailableMoves(createPlayerId(playerId));
   }
 
   /**
@@ -296,10 +303,8 @@ export class LorcanaTestEngine {
    * @param playerId - Player to get moves for
    * @returns Array of move information objects
    */
-  getAvailableMovesDetailed(_playerId: string) {
-    // TODO: Will be implemented when LorcanaEngine is used instead of RuleEngine
-    // For now, return placeholder
-    return [];
+  getAvailableMovesDetailed(playerId: string) {
+    return this.engine.getAvailableMovesDetailed(createPlayerId(playerId));
   }
 
   /**
@@ -309,10 +314,11 @@ export class LorcanaTestEngine {
    * @param playerId - Player attempting the move
    * @returns Valid parameter combinations or null
    */
-  enumerateMoveParameters(_moveId: string, _playerId: string) {
-    // TODO: Will be implemented when LorcanaEngine is used instead of RuleEngine
-    // For now, return placeholder
-    return null;
+  enumerateMoveParameters(moveId: string, playerId: string) {
+    return this.engine.enumerateMoveParameters(
+      moveId as keyof LorcanaMoveParams,
+      createPlayerId(playerId),
+    );
   }
 
   /**
@@ -322,10 +328,40 @@ export class LorcanaTestEngine {
    * @param params - Parameters to use for the move
    * @returns Error information or null
    */
-  whyCannotExecuteMove(_moveId: string, _params: any) {
-    // TODO: Will be implemented when LorcanaEngine is used instead of RuleEngine
-    // For now, return placeholder
-    return null;
+  whyCannotExecuteMove(moveId: string, params: any) {
+    return this.engine.whyCannotExecuteMove(
+      moveId as keyof LorcanaMoveParams,
+      params,
+    );
+  }
+
+  // ========== Zone Access Helpers ==========
+
+  /**
+   * Get zone contents for a player
+   *
+   * @param zoneName - Name of the zone
+   * @param playerId - Player ID
+   * @returns Array of card IDs in zone or undefined
+   */
+  getZone(zoneName: string, playerId: string): string[] | undefined {
+    const state = this.engine.getState();
+    // @ts-expect-error - Accessing internal state for testing
+    const zones = state.zones?.[createPlayerId(playerId)];
+    return zones?.[zoneName]?.cards;
+  }
+
+  /**
+   * Move a card between zones (helper for testing)
+   *
+   * @param cardId - Card to move
+   * @param targetZone - Destination zone
+   * @param playerId - Player who owns the card
+   */
+  moveCard(_cardId: string, _targetZone: string, _playerId: string): void {
+    // TODO: Implement zone operations when available
+    // For now, this is a stub for tests that need it
+    throw new Error("moveCard not yet implemented - zone operations needed");
   }
 
   // ========== Cleanup ==========

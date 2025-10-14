@@ -21,6 +21,10 @@ export const alterHand = createMove<
   "alterHand",
   LorcanaCardMeta
 >({
+  condition: (_state, context) => {
+    // Only available during mulligan phase
+    return context.flow?.currentPhase === "mulligan";
+  },
   reducer: (_draft, context) => {
     const { playerId, cardsToMulligan } = context.params;
 

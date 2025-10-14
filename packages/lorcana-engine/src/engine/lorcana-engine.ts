@@ -63,9 +63,32 @@ export class LorcanaEngine extends RuleEngine<
    * ```
    */
   getAvailableMoves(playerId: PlayerId): string[] {
-    // Delegate to base RuleEngine implementation
-    // This provides condition-based move filtering
-    return this.getValidMoves(playerId);
+    const validMoves: string[] = [];
+
+    // Check each registered move
+    for (const moveId of Object.keys(this.gameDefinition.moves)) {
+      // Try to enumerate parameters - if we can get valid combinations, the move is available
+      const params = this.enumerateMoveParameters(
+        moveId as keyof LorcanaMoveParams,
+        playerId,
+      );
+
+      if (params !== null && params.validCombinations.length > 0) {
+        validMoves.push(moveId);
+      } else {
+        // For moves without parameters or that don't enumerate, use base check
+        const canExecute = this.canExecuteMove(moveId, {
+          playerId,
+          params: {},
+        });
+
+        if (canExecute) {
+          validMoves.push(moveId);
+        }
+      }
+    }
+
+    return validMoves;
   }
 
   /**
@@ -376,19 +399,31 @@ export class LorcanaEngine extends RuleEngine<
   private enumerateChooseFirstPlayerParams(
     playerId: PlayerId,
   ): MoveParameterOptions | null {
-    // Check if move is available for this player
-    const availableMoves = this.getAvailableMoves(playerId);
-    if (!availableMoves.includes("chooseWhoGoesFirstMove")) {
-      return null;
-    }
-
     // Get all valid player IDs from game state
     const state = this.getState();
     const validPlayers = Object.keys(state.loreScores) as PlayerId[];
 
-    // Return all valid player choices
+    // For each valid player choice, check if the move can be executed
+    const validCombinations: Array<{ playerId: PlayerId }> = [];
+    for (const targetPlayerId of validPlayers) {
+      const canExecute = this.canExecuteMove("chooseWhoGoesFirstMove", {
+        playerId,
+        params: { playerId: targetPlayerId },
+      });
+
+      if (canExecute) {
+        validCombinations.push({ playerId: targetPlayerId });
+      }
+    }
+
+    // If no valid combinations, move is not available
+    if (validCombinations.length === 0) {
+      return null;
+    }
+
+    // Return valid player choices
     return {
-      validCombinations: validPlayers.map((p) => ({ playerId: p })),
+      validCombinations,
       parameterInfo: {
         playerId: {
           type: "playerId",

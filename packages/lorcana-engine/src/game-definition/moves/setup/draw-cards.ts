@@ -20,6 +20,10 @@ export const drawCards = createMove<
   "drawCards",
   LorcanaCardMeta
 >({
+  condition: (_state, context) => {
+    // Not available during chooseFirstPlayer phase
+    return context.flow?.currentPhase !== "chooseFirstPlayer";
+  },
   reducer: (_draft, context) => {
     const { playerId, count } = context.params;
 
