@@ -79,6 +79,33 @@ export type GameMoveDefinition<
   ) => boolean | import("../moves/move-system").ConditionFailure;
 
   /**
+   * Parameter enumerator (for move enumeration system)
+   *
+   * Optional function to generate all valid parameter combinations.
+   * Used by RuleEngine.enumerateMoves() to discover available moves for AI/UI.
+   *
+   * If not provided, move will still appear in enumeration results
+   * but will indicate that parameters are required.
+   *
+   * @example
+   * ```typescript
+   * enumerator: (state, context) => {
+   *   // Get all cards in player's hand
+   *   const handCards = context.zones.getCardsInZone('hand', context.playerId);
+   *   // Generate parameter for each card
+   *   return handCards.map(cardId => ({ cardId }));
+   * }
+   * ```
+   */
+  enumerator?: (
+    state: TState,
+    context: import("../moves/move-enumeration").MoveEnumerationContext<
+      TCardMeta,
+      TCardDefinition
+    >,
+  ) => TParams[];
+
+  /**
    * Optional metadata
    *
    * For categorization, UI display, AI hints, etc.
