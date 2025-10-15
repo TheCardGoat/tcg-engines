@@ -24,6 +24,23 @@ export const passTurn = createMove<
   "passTurn",
   LorcanaCardMeta
 >({
+  condition: (state, context) => {
+    // Cannot pass turn during setup phases
+    const phase = context.flow?.currentPhase;
+    if (phase === "chooseFirstPlayer" || phase === "mulligan") {
+      return false;
+    }
+
+    // Can only pass turn if it's your turn
+    if (
+      context.flow?.currentPlayer &&
+      context.flow.currentPlayer !== context.playerId
+    ) {
+      return false;
+    }
+
+    return true;
+  },
   reducer: (_draft, _context) => {
     // Engine handles turn transitions automatically
     // No manual state management needed

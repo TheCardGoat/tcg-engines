@@ -23,6 +23,14 @@ export const concede = createMove<
   "concede",
   LorcanaCardMeta
 >({
+  condition: (_state, context) => {
+    // Cannot concede during setup phases
+    const phase = context.flow?.currentPhase;
+    if (phase === "chooseFirstPlayer" || phase === "mulligan") {
+      return false;
+    }
+    return true;
+  },
   reducer: (draft, context) => {
     // Signal game end via context
     context.endGame?.({
