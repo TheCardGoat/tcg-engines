@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { casaMadrigalCasita } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { casaMadrigalCasita } from "./068-casa-madrigal-casita";
 
 describe("Casa Madrigal - Casita", () => {
   it.skip("**OUR HOME** At the start of your turn, if you have a character here, gain 1 lore.", async () => {

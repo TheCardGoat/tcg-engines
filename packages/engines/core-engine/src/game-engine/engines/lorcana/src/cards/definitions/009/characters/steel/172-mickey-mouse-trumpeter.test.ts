@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { mickeyMouseTrumpeter } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { mickeyMouseTrumpeter } from "./172-mickey-mouse-trumpeter";
 
 describe("Mickey Mouse - Trumpeter", () => {
   it.skip("**BUGLE CALL** {E}, 2 {I} - Play a character for free.", async () => {

@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { shereKhanMenacingPredator } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { shereKhanMenacingPredator } from "./104-shere-khan-menacing-predator";
 
 describe("Shere Khan - Menacing Predator", () => {
   it.skip("**DON'T INSULT MY INTELLIGENCE** Whenever one of your characters challenges another character, gain 1 lore.", async () => {

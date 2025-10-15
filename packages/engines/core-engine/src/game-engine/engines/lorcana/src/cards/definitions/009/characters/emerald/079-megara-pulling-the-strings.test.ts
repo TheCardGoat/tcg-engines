@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { megaraPullingTheStrings } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { megaraPullingTheStrings } from "./079-megara-pulling-the-strings";
 
 describe("Megara - Pulling the Strings", () => {
   it.skip("WONDER BOY When you play this character, chosen character gets +2 {S} this turn.", async () => {

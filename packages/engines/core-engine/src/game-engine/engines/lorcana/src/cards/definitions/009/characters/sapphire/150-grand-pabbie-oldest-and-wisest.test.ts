@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { grandPabbieOldestAndWisest } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { grandPabbieOldestAndWisest } from "./150-grand-pabbie-oldest-and-wisest";
 
 describe("Grand Pabbie - Oldest and Wisest", () => {
   it.skip("**ANCIENT INSIGHT** Whenever you remove 1 or more damage from one of your characters, gain 2 lore.", async () => {

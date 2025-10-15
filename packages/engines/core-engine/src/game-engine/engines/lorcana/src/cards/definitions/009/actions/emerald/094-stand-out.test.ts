@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { standOut } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { standOut } from "./094-stand-out";
 
 describe("Stand Out", () => {
   it.skip("(A character with cost 3 or more can {E} to sing this song for free.)", async () => {

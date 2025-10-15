@@ -1,14 +1,8 @@
-import { describe, expect, it } from "bun:test";
-import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/157-tipo-growing-son";
-import { heiheiProtectiveRooster } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/179-heihei-protective-rooster";
-import {
-  nalaUndauntedLioness,
-  scarFinallyKing,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/009";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { scarFinallyKing } from "./175-scar-finally-king";
 
 describe("Scar - Finally King", () => {
   it("BE GRATEFUL Your Ally characters get +1 {S}.", async () => {

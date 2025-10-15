@@ -290,4 +290,162 @@ describe("Move: Choose First Player", () => {
     const updatedCtx = testEngine.getCtx();
     expect(updatedCtx.otp).toBe(PLAYER_ONE); // Still player_one, not player_two
   });
+
+  // ========== Move Enumeration Tests ==========
+
+  describe("Move Enumeration", () => {
+    it("should list chooseWhoGoesFirstMove as available for designated player", () => {
+      const ctx = testEngine.getCtx();
+      const choosingPlayer = ctx.choosingFirstPlayer;
+
+      // Get available moves for the designated chooser
+      const availableMoves = testEngine.getAvailableMoves(
+        choosingPlayer || PLAYER_ONE,
+      );
+
+      // Should include chooseWhoGoesFirstMove
+      expect(availableMoves).toContain("chooseWhoGoesFirstMove");
+    });
+
+    it("should NOT list chooseWhoGoesFirstMove for non-designated player", () => {
+      const ctx = testEngine.getCtx();
+      const choosingPlayer = ctx.choosingFirstPlayer;
+      const otherPlayer =
+        choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
+
+      // Get available moves for the OTHER player
+      const availableMoves = testEngine.getAvailableMoves(otherPlayer);
+
+      // Should NOT include chooseWhoGoesFirstMove
+      expect(availableMoves).not.toContain("chooseWhoGoesFirstMove");
+
+      // Should be empty (no moves available during this phase)
+      expect(availableMoves).toEqual([]);
+    });
+
+    it("should enumerate valid parameters for chooseWhoGoesFirstMove", () => {
+      const ctx = testEngine.getCtx();
+      const choosingPlayer = ctx.choosingFirstPlayer;
+
+      // Enumerate parameters
+      const params = testEngine.enumerateMoveParameters(
+        "chooseWhoGoesFirstMove",
+        choosingPlayer || PLAYER_ONE,
+      );
+
+      // Should have valid combinations for both players
+      expect(params).not.toBeNull();
+      expect(params?.validCombinations).toHaveLength(2);
+
+      // Should include both player IDs
+      const playerIds = params?.validCombinations.map((c: any) => c.playerId);
+      expect(playerIds).toContain(PLAYER_ONE);
+      expect(playerIds).toContain(PLAYER_TWO);
+
+      // Should have parameter info
+      expect(params?.parameterInfo.playerId).toBeDefined();
+      expect(params?.parameterInfo.playerId.type).toBe("playerId");
+      expect(params?.parameterInfo.playerId.validValues).toEqual([
+        PLAYER_ONE,
+        PLAYER_TWO,
+      ]);
+    });
+
+    it("should NOT enumerate parameters for non-designated player", () => {
+      const ctx = testEngine.getCtx();
+      const choosingPlayer = ctx.choosingFirstPlayer;
+      const otherPlayer =
+        choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
+
+      // Try to enumerate parameters as other player
+      const params = testEngine.enumerateMoveParameters(
+        "chooseWhoGoesFirstMove",
+        otherPlayer,
+      );
+
+      // Should return null (move not available)
+      expect(params).toBeNull();
+    });
+
+    it("should provide detailed move information", () => {
+      const ctx = testEngine.getCtx();
+      const choosingPlayer = ctx.choosingFirstPlayer;
+
+      // Get detailed move info
+      const moves = testEngine.getAvailableMovesDetailed(
+        choosingPlayer || PLAYER_ONE,
+      );
+
+      // Should have one move
+      expect(moves).toHaveLength(1);
+
+      const moveInfo = moves[0];
+      expect(moveInfo.moveId).toBe("chooseWhoGoesFirstMove");
+      expect(moveInfo.displayName).toBe("Choose First Player");
+      expect(moveInfo.description).toContain("first");
+      expect(moveInfo.paramSchema).toBeDefined();
+      expect(moveInfo.paramSchema?.required).toHaveLength(1);
+    });
+
+    it("should explain why non-designated player cannot choose", () => {
+      const ctx = testEngine.getCtx();
+      const choosingPlayer = ctx.choosingFirstPlayer;
+      const otherPlayer =
+        choosingPlayer === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
+
+      // Try to execute as other player
+      const error = testEngine.whyCannotExecuteMove("chooseWhoGoesFirstMove", {
+        playerId: createPlayerId(otherPlayer),
+        params: { playerId: createPlayerId(PLAYER_ONE) },
+      });
+
+      // Should have error
+      expect(error).not.toBeNull();
+      expect(error?.errorCode).toBe("NOT_CHOOSING_PLAYER");
+      expect(error?.reason).toContain("can choose the first player");
+      expect(error?.context?.choosingPlayer).toBe(choosingPlayer);
+    });
+
+    it("should remove chooseWhoGoesFirstMove after OTP is set", () => {
+      const ctx = testEngine.getCtx();
+      const choosingPlayer = ctx.choosingFirstPlayer;
+
+      // Choose first player
+      testEngine.changeActivePlayer(choosingPlayer || PLAYER_ONE);
+      testEngine.chooseWhoGoesFirst(PLAYER_ONE);
+
+      // Get available moves - should NOT include chooseWhoGoesFirstMove
+      const availableMoves = testEngine.getAvailableMoves(
+        choosingPlayer || PLAYER_ONE,
+      );
+
+      expect(availableMoves).not.toContain("chooseWhoGoesFirstMove");
+
+      // Should now include alterHand (mulligan phase)
+      expect(availableMoves).toContain("alterHand");
+    });
+
+    it("should transition to mulligan moves after choosing first player", () => {
+      const ctx = testEngine.getCtx();
+      const choosingPlayer = ctx.choosingFirstPlayer;
+
+      // Before choosing, should have chooseWhoGoesFirstMove
+      let availableMoves = testEngine.getAvailableMoves(
+        choosingPlayer || PLAYER_ONE,
+      );
+      expect(availableMoves).toContain("chooseWhoGoesFirstMove");
+
+      // Choose first player
+      testEngine.changeActivePlayer(choosingPlayer || PLAYER_ONE);
+      testEngine.chooseWhoGoesFirst(PLAYER_ONE);
+
+      // After choosing, OTP should have alterHand available
+      availableMoves = testEngine.getAvailableMoves(PLAYER_ONE);
+      expect(availableMoves).toContain("alterHand");
+
+      // Other player should also have alterHand available
+      availableMoves = testEngine.getAvailableMoves(PLAYER_TWO);
+      expect(availableMoves).toContain("alterHand");
+    });
+  });
 });

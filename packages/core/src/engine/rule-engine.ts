@@ -128,7 +128,7 @@ export class RuleEngine<
   TCardMeta = any,
 > {
   private currentState: TState;
-  private readonly gameDefinition: GameDefinition<
+  protected readonly gameDefinition: GameDefinition<
     TState,
     TMoves,
     TCardDefinition,

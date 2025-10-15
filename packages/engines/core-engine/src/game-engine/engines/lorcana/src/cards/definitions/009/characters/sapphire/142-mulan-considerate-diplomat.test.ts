@@ -7,11 +7,11 @@ import {
   charlotteLaBouffMardiGrasPrincess,
   deweyLovableShowoff,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
-import { mulanConsiderateDiplomat } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { mulanConsiderateDiplomat } from "./142-mulan-considerate-diplomat";
 
 describe("Mulan - Considerate Diplomat", () => {
   it("IMPERIAL INVITATION Whenever this character quests, look at the top 4 cards of your deck. You may reveal a Princess character card and put it into your hand. Put the rest on the bottom of your deck in any order.", async () => {

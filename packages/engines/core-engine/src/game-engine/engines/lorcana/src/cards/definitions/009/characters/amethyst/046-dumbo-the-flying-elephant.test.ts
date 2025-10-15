@@ -1,10 +1,10 @@
 import { describe, expect, it } from "bun:test";
 import { deweyLovableShowoff } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
-import { dumboTheFlyingElephant } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { dumboTheFlyingElephant } from "./046-dumbo-the-flying-elephant";
 
 describe("Dumbo - The Flying Elephant", () => {
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {

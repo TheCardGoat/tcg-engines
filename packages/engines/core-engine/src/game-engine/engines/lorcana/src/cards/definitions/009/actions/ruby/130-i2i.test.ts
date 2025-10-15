@@ -1,19 +1,13 @@
-import { describe, expect, it } from "bun:test";
-import { goofyDaredevil } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/111-goofy-daredevil";
-import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/027-hakuna-matata";
-import {
-  i2i,
-  maxGoofRockinTeen,
-  powerlineWorldsGreatestRockStar,
-  rapunzelSunshine,
-  roxannePowerlineFan,
-  stitchRockStar,
-  theQueenRegalMonarch,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/009";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { stitchRockStar } from "../../characters/amber/003-stitch-rock-star";
+import { theQueenRegalMonarch } from "../../characters/amber/007-the-queen-regal-monarch";
+import { rapunzelSunshine } from "../../characters/amber/008-rapunzel-sunshine";
+import { powerlineWorldsGreatestRockStar } from "../../characters/ruby/110-powerline-world-s-greatest-rock-star";
+import { maxGoofRockinTeen } from "../../characters/ruby/112-max-goof-rockin-teen";
+import { roxannePowerlineFan } from "../../characters/ruby/113-roxanne-powerline-fan";
 
 describe("I2I", () => {
   it("Sing Together 9 (Any number of your or your teammates’ characters with total cost 9 or more may {E} to sing this song for free.)", async () => {

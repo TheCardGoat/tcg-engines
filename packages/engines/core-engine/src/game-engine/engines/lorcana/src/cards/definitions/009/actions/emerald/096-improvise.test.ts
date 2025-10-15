@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { improvise } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { improvise } from "./096-improvise";
 
 describe("Improvise", () => {
   it.skip("Chosen character gets +1 {S} this turn. Draw a card.", async () => {

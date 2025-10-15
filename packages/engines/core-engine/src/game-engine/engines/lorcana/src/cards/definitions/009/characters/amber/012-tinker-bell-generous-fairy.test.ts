@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { tinkerBellGenerousFairy } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { tinkerBellGenerousFairy } from "./012-tinker-bell-generous-fairy";
 
 describe("Tinker Bell - Generous Fairy", () => {
   it.skip("MAKE A NEW FRIEND When you play this character, look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.", async () => {

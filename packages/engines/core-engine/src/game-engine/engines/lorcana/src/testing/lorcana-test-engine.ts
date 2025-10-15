@@ -15,8 +15,16 @@ import {
   createShortAndUniqueIds,
 } from "~/game-engine/core-engine/utils/id-utils";
 import { debuggers, logger } from "~/game-engine/core-engine/utils/logger";
-import { allCardsById } from "~/game-engine/engines/lorcana/src/cards/definitions/cards";
 import { mockCharacterCard } from "~/game-engine/engines/lorcana/src/testing/mockCards";
+
+// Lazy load to avoid circular dependency
+function getAllCardsById() {
+  const {
+    allCardsById,
+  } = require("~/game-engine/engines/lorcana/src/cards/definitions/cards");
+  return allCardsById;
+}
+
 import { LorcanaCardInstance } from "../cards/lorcana-card-instance";
 import {
   type LorcanaCardDefinition,
@@ -36,11 +44,12 @@ function createTestCardRepository(
   dictionary: Record<string, Record<string, string>>,
   testCards: LorcanaCardDefinition[],
 ): LorcanaCardRepository {
+  const allCardsById = getAllCardsById();
   for (const card of testCards) {
     allCardsById[card.id] = card;
   }
 
-  return new LorcanaCardRepository(dictionary);
+  return new LorcanaCardRepository(dictionary, allCardsById);
 }
 
 export const testCharacterCard: LorcanaCharacterCardDefinition = {

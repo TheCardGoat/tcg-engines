@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { secondStarToTheRight } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { secondStarToTheRight } from "./060-second-star-to-the-right";
 
 describe("Second Star To The Right", () => {
   it.skip("Sing Together 10 (Any number of your or your teammates’ characters with total cost 10 or more may {E} to sing this song for free.)", async () => {

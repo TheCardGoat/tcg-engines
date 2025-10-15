@@ -1,4 +1,4 @@
-type Zones = "hand" | "play" | "discard" | "inkwell" | "deck";
+export type Zones = "hand" | "play" | "discard" | "inkwell" | "deck";
 
 export type MatchMove =
   | ChangeGameModeMove

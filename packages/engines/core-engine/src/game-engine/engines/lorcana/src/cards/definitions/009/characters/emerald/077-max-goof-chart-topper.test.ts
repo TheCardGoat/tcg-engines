@@ -4,11 +4,11 @@ import {
   charlotteLaBouffMardiGrasPrincess,
   deweyLovableShowoff,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
-import { maxGoofChartTopper } from "~/game-engine/engines/lorcana/src/cards/definitions/009";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { maxGoofChartTopper } from "./077-max-goof-chart-topper";
 
 describe("Max Goof - Chart Topper", () => {
   it("Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Max Goof.)", async () => {

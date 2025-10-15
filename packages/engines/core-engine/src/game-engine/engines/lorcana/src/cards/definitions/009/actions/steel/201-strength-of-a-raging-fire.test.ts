@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { strengthOfARagingFire } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { strengthOfARagingFire } from "./201-strength-of-a-raging-fire";
 
 describe("Strength of a Raging Fire", () => {
   it.skip("_A character with cost 3 or more can {E} to sing this song for free.)_", async () => {

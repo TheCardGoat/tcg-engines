@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { oneJumpAhead } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { oneJumpAhead } from "./165-one-jump-ahead";
 
 describe("One Jump Ahead", () => {
   it.skip("_(A character with cost 2 or more can {E} to sing this song for free.)_", async () => {

@@ -1,9 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { rafikiMysticalFighter } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { rafikiMysticalFighter } from "./036-rafiki-mystical-fighter";
 
 describe("Rafiki - Mystical Fighter", () => {
   it.skip("**Challenger** +3 _(While challenging, this character gets +3 {S}.)_", async () => {

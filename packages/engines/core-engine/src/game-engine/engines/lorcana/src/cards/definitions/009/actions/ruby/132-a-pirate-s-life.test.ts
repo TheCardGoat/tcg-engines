@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { aPiratesLife } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { aPiratesLife } from "./132-a-pirate-s-life";
 
 describe("A Pirate's Life", () => {
   it.skip("SING TOGETHER 6 (Any number of your or your teammates’ characters with total cost 6 or more may {E} to sing this song for free.)", async () => {

@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { underTheSea } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { underTheSea } from "./097-under-the-sea";
 
 describe("Under The Sea", () => {
   it.skip("Sing Together 8 (Any number of your or your teammates’ characters with total cost 8 or more may {E} to sing this song for free.)", async () => {

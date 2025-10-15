@@ -1,9 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { robinHoodChampionOfSherwood } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { robinHoodChampionOfSherwood } from "./177-robin-hood-champion-of-sherwood";
 
 describe("Robin Hood - Champion of Sherwood", () => {
   it.skip("**Shift** 3 _(You may pay 3 {I} to play this on top of one of your characters named Robin Hood.)_", async () => {

@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { theQueenMirrorSeeker } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { theQueenMirrorSeeker } from "./149-the-queen-mirror-seeker";
 
 describe("The Queen - Mirror Seeker", () => {
   it.skip("**CALCULATING AND VAIN** Whenever this character quests, you may look at the top 3 cards of your deck and put them back in any order.", async () => {

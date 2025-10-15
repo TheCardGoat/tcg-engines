@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { bobbyZimuruskiSprayCheeseKid } from "~/game-engine/engines/lorcana/src/cards/definitions/009";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { bobbyZimuruskiSprayCheeseKid } from "./078-bobby-zimuruski-spray-cheese-kid";
 
 describe("Bobby Zimuruski - Spray Cheese Kid", () => {
   it.skip("SO CHEESY When you play this character, you may draw a card, then choose and discard a card.", async () => {

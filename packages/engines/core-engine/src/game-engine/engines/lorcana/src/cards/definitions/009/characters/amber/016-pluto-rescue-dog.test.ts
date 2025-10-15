@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { plutoRescueDog } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { plutoRescueDog } from "./016-pluto-rescue-dog";
 
 describe("Pluto - Rescue Dog", () => {
   it.skip("**TO THE RESCUE** When you play this character, you may remove up to 3 damage from chosen character.", async () => {

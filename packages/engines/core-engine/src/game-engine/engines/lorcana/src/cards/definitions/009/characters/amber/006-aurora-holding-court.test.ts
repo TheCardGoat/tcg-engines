@@ -1,14 +1,9 @@
-import { describe, expect, it } from "bun:test";
-import { tianaRestaurantOwner } from "~/game-engine/engines/lorcana/src/cards/definitions/006";
-import {
-  auroraHoldingCourt,
-  mulanConsiderateDiplomat,
-  theQueenWickedAndVain,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/009";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { theQueenWickedAndVain } from "../amethyst/035-the-queen-wicked-and-vain";
+import { mulanConsiderateDiplomat } from "../sapphire/142-mulan-considerate-diplomat";
 
 describe("Aurora - Holding Court", () => {
   it("[QUEEN] ROYAL WELCOME Whenever this character quests, you pay 1 {I} less for the next Princess or Queen character you play this turn.", async () => {

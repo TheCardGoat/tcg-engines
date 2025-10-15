@@ -1,9 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { cinderellaGentleAndKind } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { cinderellaGentleAndKind } from "./019-cinderella-gentle-and-kind";
 
 describe("Cinderella - Gentle and Kind", () => {
   it.skip("**Singer** 4 _(This character counts as cost 4 to sing songs.)_", async () => {

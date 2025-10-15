@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { fourDozenEggs } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { fourDozenEggs } from "./164-four-dozen-eggs";
 
 describe("Four Dozen Eggs", () => {
   it.skip("_(A character with cost 4 or more can {E} to sing this", async () => {

@@ -1,9 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { brunoMadrigalUndetectedUncle } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { brunoMadrigalUndetectedUncle } from "./000-bruno-madrigal-undetected-uncle";
 
 describe("Bruno Madrigal - Undetected Uncle", () => {
   it.skip("**Evasive** _(Only characters with Evasive can challenge this character.)_", async () => {
