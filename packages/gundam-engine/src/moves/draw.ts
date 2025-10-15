@@ -49,6 +49,37 @@ function getDrawCount(context: MoveContext): number {
  */
 export const drawMove: GameMoveDefinition<GundamGameState> = {
   /**
+   * Enumerator: Generate possible draw actions
+   *
+   * Typically draws 1 card during draw phase.
+   * Effects may allow drawing multiple cards.
+   */
+  enumerator: (state: GundamGameState, context) => {
+    const { playerId } = context;
+    const deck = state.zones.deck[playerId];
+
+    if (!deck) return [];
+
+    const deckSize = getZoneSize(deck);
+
+    // Generate options for drawing 1 to deckSize cards
+    // In normal gameplay, typically just draw 1
+    const options = [];
+
+    // Standard draw (1 card)
+    if (deckSize >= 1) {
+      options.push({ count: 1 });
+    }
+
+    // Effect-based draws (2-5 cards) - less common
+    for (let count = 2; count <= Math.min(deckSize, 5); count++) {
+      options.push({ count });
+    }
+
+    return options;
+  },
+
+  /**
    * Condition: Can draw if deck has sufficient cards
    *
    * @param state - Current game state (readonly)

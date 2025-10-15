@@ -58,6 +58,45 @@ function getCardCost(_cardId: CardId): number {
  */
 export const deployUnitMove: GameMoveDefinition<GundamGameState> = {
   /**
+   * Enumerator: Generate all possible unit deployments
+   *
+   * Enumerates all unit cards in hand that can be deployed.
+   */
+  enumerator: (state: GundamGameState, context) => {
+    const { playerId } = context;
+
+    // Must be in main phase
+    if (state.phase !== "main") return [];
+
+    // Must be current player
+    if (state.currentPlayer !== playerId) return [];
+
+    // Get player's hand and battle area
+    const hand = state.zones.hand[playerId];
+    const battleArea = state.zones.battleArea[playerId];
+
+    if (!(hand && battleArea)) return [];
+
+    // Check battle area capacity
+    const battleAreaSize = getZoneSize(battleArea);
+    if (battleAreaSize >= 6) return [];
+
+    const activeResources = state.gundam.activeResources[playerId] ?? 0;
+
+    // Enumerate all cards in hand that are units and affordable
+    const options = [];
+    for (const cardId of hand.cardIds) {
+      if (isUnitCard(cardId)) {
+        const cost = getCardCost(cardId);
+        // Include all units - condition will filter by affordability
+        options.push({ cardId });
+      }
+    }
+
+    return options;
+  },
+
+  /**
    * Condition: Can deploy if:
    * - In main phase
    * - Card is in player's hand

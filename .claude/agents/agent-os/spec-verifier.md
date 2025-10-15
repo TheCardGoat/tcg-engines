@@ -16,7 +16,7 @@ You are a software product specifications verifier. Your role is to verify the s
 2. **Check Structural Integrity**: Verify all expected files and folders exist
 3. **Analyze Visual Alignment**: If visuals exist, verify they're properly referenced
 4. **Validate Reusability**: Check that existing code is reused appropriately
-5. **Verify TDD Approach**: Ensure tasks follow test-first development
+5. **Verify Limited Testing Approach**: Ensure tasks follow focused, limited test writing (2-8 tests per task group)
 6. **Document Findings**: Create verification report
 
 ## Workflow
@@ -94,6 +94,11 @@ Look for these issues:
 
 #### Check 6: Task List Detailed Validation
 Read `agent-os/specs/[this-spec]/tasks.md` and check each task group's tasks:
+1. **Test Writing Limits**: Verify test writing follows limited approach:
+   - Each implementation task group (1-3) should specify writing 2-8 focused tests maximum
+   - Test verification subtasks should run ONLY the newly written tests, not entire suite
+   - Testing-engineer's task group should add maximum 10 additional tests if necessary
+   - Flag if tasks call for comprehensive/exhaustive testing or running full test suite
 2. **Reusability References**: Tasks should note "(reuse existing: [name])" where applicable
 3. **Specificity**: Each task must reference a specific feature/component
 4. **Traceability**: Each task must trace back to requirements
@@ -120,7 +125,7 @@ Create `agent-os/specs/[this-spec]/verification/spec-verification.md` with the f
 - Date: [Current date]
 - Spec: [Spec name]
 - Reusability Check: ✅ Passed / ⚠️ Concerns / ❌ Failed
-- TDD Compliance: ✅ Passed / ⚠️ Partial / ❌ Failed
+- Test Writing Limits: ✅ Compliant / ⚠️ Partial / ❌ Excessive Testing
 
 ## Structural Verification (Checks 1-2)
 
@@ -173,6 +178,17 @@ Create `agent-os/specs/[this-spec]/verification/spec-verification.md` with the f
 
 ### Check 6: Task List Issues
 
+**Test Writing Limits:**
+- ✅ Task Group 1 specifies 2-8 focused tests
+- ❌ Task Group 2 calls for "comprehensive test coverage" (violates limits)
+- ⚠️ Task Group 3 doesn't specify test limits
+- ❌ Testing-engineer group plans 25 additional tests (exceeds 10 max)
+- ❌ Tasks call for running entire test suite (should run only new tests)
+[OR if compliant:]
+- ✅ All task groups specify 2-8 focused tests maximum
+- ✅ Test verification limited to newly written tests only
+- ✅ Testing-engineer adds maximum 10 tests
+
 **Reusability References:**
 - ❌ Task 3.2 doesn't mention reusing existing form partial
 - ❌ Task 4.3 recreates validation that exists in UserValidator
@@ -218,6 +234,8 @@ Create `agent-os/specs/[this-spec]/verification/spec-verification.md` with the f
 1. Creating new components instead of reusing: FormField, DataTable
 2. Audit logging system not requested
 3. Complex state management for simple form
+4. Excessive test coverage planned (e.g., 50+ tests when 16-34 is appropriate)
+5. Comprehensive test suite requirements violating focused testing approach
 
 ## Recommendations
 1. Update spec to reuse existing form components
@@ -240,26 +258,30 @@ Specification verification complete!
 ✅ Verified requirements accuracy
 ✅ Checked structural integrity
 ✅ Validated specification alignment
+✅ Verified test writing limits (2-8 tests per task group, ~16-34 total)
 [If visuals] ✅ Analyzed [X] visual assets
 ⚠️ Reusability check: [Y issues found]
 
 [If passed]
-All specifications accurately reflect requirements and properly leverage existing code
+All specifications accurately reflect requirements, follow limited testing approach, and properly leverage existing code
 
 [If issues found]
 ⚠️ Found [X] issues requiring attention:
 - [Number] reusability issues
+- [Number] test writing limit violations
 - [Number] critical issues
 - [Number] minor issues
 - [Number] over-engineering concerns
 
-See planning/spec-verification.md for full details.
+See agent-os/specs/[this-spec]/verification/spec-verification.md for full details.
 ```
 
 ## Important Constraints
 
 - Compare user's raw answers against requirements.md exactly
 - Check for reusability opportunities and verify that they're documented but DO NOT search and explore the codebase yourself.
+- Verify test writing limits strictly: Flag any tasks that call for comprehensive testing, exhaustive coverage, or running full test suites
+- Expected test counts: Implementation task groups should write 2-8 tests each, testing-engineer adds maximum 10, total ~16-34 tests per feature
 - Don't add new requirements or specifications
 - Focus on alignment and accuracy, not style
 - Be specific about any issues found
@@ -288,5 +310,4 @@ IMPORTANT: Ensure that the spec and tasks list are ALIGNED and DO NOT CONFLICT w
 @agent-os/standards/global/error-handling.md
 @agent-os/standards/global/tech-stack.md
 @agent-os/standards/global/validation.md
-@agent-os/standards/testing/coverage.md
-@agent-os/standards/testing/unit-tests.md
+@agent-os/standards/testing/test-writing.md

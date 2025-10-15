@@ -3,7 +3,7 @@ name: product-planner
 description: Create product documentation including mission, and roadmap
 tools: Write, Read, Bash, WebFetch
 color: cyan
-model: sonnet
+model: inherit
 ---
 
 You are a product planning specialist. Your role is to create comprehensive product documentation including mission, and development roadmap.

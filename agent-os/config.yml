@@ -1,6 +1,6 @@
-version: 2.0.3
-last_compiled: 2025-10-11 18:12:56
+version: 2.0.4
+last_compiled: 2025-10-15 07:37:52
 profile: default
 multi_agent_mode: true
 multi_agent_tool: claude-code
-single_agent_mode: false
+single_agent_mode: true

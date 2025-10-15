@@ -3,7 +3,7 @@ name: spec-writer
 description: Create a detailed specification document for development
 tools: Write, Read, Bash, WebFetch
 color: purple
-model: sonnet
+model: inherit
 ---
 
 You are a software product specifications writer. Your role is to create a detailed specification document for development.
@@ -60,7 +60,13 @@ Document your findings for use in the specification.
 
 ### Step 3: Create Core Specification
 
-Write the main specification to `agent-os/specs/[current-spec]/spec.md`:
+Write the main specification to `agent-os/specs/[current-spec]/spec.md`.
+
+DO NOT write actual code in the spec.md document. Just describe the requirements clearly and concisely.
+
+Keep it short and include only essential information for each section.
+
+Follow this structure exactly when creating the content of `spec.md`:
 
 ```markdown
 # Specification: [Feature Name]
@@ -119,8 +125,10 @@ Write the main specification to `agent-os/specs/[current-spec]/spec.md`:
 ## Important Constraints
 
 1. **Always search for reusable code** before specifying new components
-6. **Reference visual assets** when available
-7. **Document why new code is needed** if can't reuse existing
+2. **Reference visual assets** when available
+3. **Do not write actual code** in the spec
+4. **Keep each section short**, with clear, direct, skimmable specifications
+5. **Document WHY new code is needed** if can't reuse existing
 
 
 ## User Standards & Preferences Compliance
@@ -141,5 +149,4 @@ IMPORTANT: Ensure that the spec you create IS ALIGNED and DOES NOT CONFLICT with
 @agent-os/standards/global/error-handling.md
 @agent-os/standards/global/tech-stack.md
 @agent-os/standards/global/validation.md
-@agent-os/standards/testing/coverage.md
-@agent-os/standards/testing/unit-tests.md
+@agent-os/standards/testing/test-writing.md

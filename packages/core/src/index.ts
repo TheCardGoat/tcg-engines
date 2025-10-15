@@ -20,6 +20,7 @@ export * from "./game-definition";
 export * from "./history";
 export * from "./logging";
 export * from "./moves/create-move";
+export * from "./moves/move-enumeration";
 export * from "./moves/move-executor";
 export * from "./moves/move-system";
 export * from "./moves/standard-moves";

@@ -794,9 +794,67 @@ bun test --watch
 - **Deterministic**: Seeded RNG enables caching and replay
 - **Type Safety**: Zero runtime overhead for branded types
 
+## Move Enumeration
+
+Discover all available moves with their valid parameters for AI agents and UI components:
+
+```typescript
+// Get all valid moves with parameters
+const moves = engine.enumerateMoves(playerId, {
+  validOnly: true,
+  includeMetadata: true
+});
+
+for (const move of moves) {
+  console.log(`Move: ${move.metadata?.displayName}`);
+  console.log(`  Params:`, move.params);
+  
+  // Execute the move
+  if (move.isValid) {
+    engine.executeMove(move.moveId, {
+      playerId: move.playerId,
+      params: move.params
+    });
+  }
+}
+```
+
+**Define enumerators in move definitions:**
+
+```typescript
+const playCardMove: MoveDefinition<GameState, PlayCardParams> = {
+  id: 'play-card',
+  name: 'Play Card',
+  
+  // Enumerate all cards in hand
+  enumerator: (state, context) => {
+    const handCards = context.zones.getCardsInZone('hand', context.playerId);
+    return handCards.map(cardId => ({ cardId }));
+  },
+  
+  condition: (state, context) => {
+    // Validate the move
+    return isCardPlayable(state, context.params.cardId);
+  },
+  
+  reducer: (draft, context) => {
+    // Execute the move
+    playCard(draft, context.params.cardId);
+  }
+};
+```
+
+**Perfect for:**
+- 🤖 AI agents that need to explore all possible moves
+- 🎮 UI components building dynamic action menus
+- 📊 Game analysis and move tree exploration
+- 🔍 Debugging and testing game states
+
+**Learn more:** [Move Enumeration Guide](./docs/guides/move-enumeration.md)
+
 ## Roadmap
 
-- [ ] AI move enumeration utilities
+- [x] Move enumeration system for AI and UI
 - [ ] WebSocket transport layer
 - [ ] React hooks for UI integration
 - [ ] Vue composables

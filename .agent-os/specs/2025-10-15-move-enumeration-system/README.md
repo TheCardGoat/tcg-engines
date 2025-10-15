@@ -42,3 +42,5 @@ Read the [Full Specification](./spec.md) for complete details, then proceed with
 
 See [Requirements Summary](./planning/requirements-summary.md) for key decisions and rationale.
 
+
+

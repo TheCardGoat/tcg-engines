@@ -923,9 +923,9 @@ export class RuleEngine<
    * Framework hook that games can use to enumerate available moves.
    * Returns list of move IDs that pass their conditions.
    *
-   * Note: This is a basic implementation. Games may want to override
-   * this with more sophisticated move enumeration that includes
-   * target enumeration, action combinations, etc.
+   * Note: This is a basic implementation. Games may want to use
+   * enumerateMoves() for more sophisticated enumeration that includes
+   * parameter combinations and full validation.
    *
    * @param playerId - Player to get moves for
    * @returns Array of valid move IDs
@@ -946,6 +946,245 @@ export class RuleEngine<
     }
 
     return validMoves;
+  }
+
+  /**
+   * Enumerate all valid moves with parameters
+   *
+   * Discovers all possible moves for a given player by invoking
+   * each move's enumerator function (if provided). Each enumerated
+   * parameter set is then validated against the move's condition.
+   *
+   * This is the primary API for AI agents and UI components to discover
+   * available actions at any game state.
+   *
+   * @param playerId - Player to enumerate moves for
+   * @param options - Optional configuration for enumeration
+   * @returns Array of enumerated moves with parameters
+   *
+   * @example
+   * ```typescript
+   * // Get all valid moves with parameters
+   * const moves = engine.enumerateMoves(playerId, {
+   *   validOnly: true,  // Only return moves that pass condition
+   *   includeMetadata: true
+   * });
+   *
+   * for (const move of moves) {
+   *   console.log(`${move.moveId}:`, move.params);
+   *   if (move.isValid) {
+   *     // Can execute this move
+   *     engine.executeMove(move.moveId, {
+   *       playerId: move.playerId,
+   *       params: move.params,
+   *       targets: move.targets
+   *     });
+   *   }
+   * }
+   *
+   * // Enumerate specific moves only
+   * const attackMoves = engine.enumerateMoves(playerId, {
+   *   moveIds: ['attack', 'special-attack'],
+   *   validOnly: true
+   * });
+   * ```
+   */
+  enumerateMoves(
+    playerId: PlayerId,
+    options?: import("../moves/move-enumeration").MoveEnumerationOptions,
+  ): import("../moves/move-enumeration").EnumeratedMove<any>[] {
+    const results: import("../moves/move-enumeration").EnumeratedMove<any>[] =
+      [];
+    const validOnly = options?.validOnly ?? false;
+    const includeMetadata = options?.includeMetadata ?? false;
+    const moveIdsFilter = options?.moveIds;
+    const maxPerMove = options?.maxPerMove;
+
+    // Log enumeration start (DEBUG level)
+    this.logger.debug("Enumerating moves", {
+      playerId,
+      validOnly,
+      includeMetadata,
+      moveIdsFilter,
+    });
+
+    // Build enumeration context (similar to move execution context)
+    const context = this.buildEnumerationContext(playerId);
+
+    // Iterate through all moves
+    for (const [moveId, moveDef] of Object.entries(this.gameDefinition.moves)) {
+      // Filter by moveIds if specified
+      if (moveIdsFilter && !moveIdsFilter.includes(moveId)) {
+        continue;
+      }
+
+      // If move has no enumerator, add a placeholder result
+      if (!moveDef.enumerator) {
+        if (!validOnly) {
+          results.push({
+            moveId,
+            playerId,
+            params: {} as any,
+            isValid: false,
+            validationError: {
+              reason: "Move requires parameters but no enumerator provided",
+              errorCode: "NO_ENUMERATOR",
+            },
+          });
+        }
+        continue;
+      }
+
+      try {
+        // Invoke enumerator to get parameter combinations
+        const paramCombinations = moveDef.enumerator(
+          this.currentState,
+          context,
+        );
+
+        // Limit results per move if specified
+        const limitedCombinations = maxPerMove
+          ? paramCombinations.slice(0, maxPerMove)
+          : paramCombinations;
+
+        // Log parameter combinations (TRACE level)
+        this.logger.trace(
+          `Enumerated ${limitedCombinations.length} parameter combinations for ${moveId}`,
+          {
+            moveId,
+            count: limitedCombinations.length,
+          },
+        );
+
+        // Validate each parameter combination
+        for (const params of limitedCombinations) {
+          const contextInput: MoveContextInput<any> = {
+            playerId,
+            params,
+          };
+
+          // Check if this move is valid
+          const conditionResult = this.checkMoveCondition(moveId, contextInput);
+
+          const enumeratedMove: import("../moves/move-enumeration").EnumeratedMove<any> =
+            {
+              moveId,
+              playerId,
+              params,
+              isValid: conditionResult.success,
+            };
+
+          // Add validation error if failed
+          if (!conditionResult.success) {
+            enumeratedMove.validationError = {
+              reason: conditionResult.error,
+              errorCode: conditionResult.errorCode,
+              context: conditionResult.errorContext,
+            };
+          }
+
+          // Add metadata if requested
+          if (includeMetadata && moveDef.metadata) {
+            enumeratedMove.metadata = {
+              displayName: moveDef.name,
+              description: moveDef.description,
+              ...moveDef.metadata,
+            };
+          }
+
+          // Add to results (filter by validOnly)
+          if (!validOnly || enumeratedMove.isValid) {
+            results.push(enumeratedMove);
+          }
+        }
+      } catch (error) {
+        // Log enumerator error (ERROR level)
+        const errorMessage =
+          error instanceof Error
+            ? error.message
+            : "Enumerator function threw an error";
+        this.logger.error(`Enumerator error for move: ${moveId}`, {
+          moveId,
+          error: errorMessage,
+          stack: error instanceof Error ? error.stack : undefined,
+        });
+
+        // Add error result if not validOnly
+        if (!validOnly) {
+          results.push({
+            moveId,
+            playerId,
+            params: {} as any,
+            isValid: false,
+            validationError: {
+              reason: `Enumerator failed: ${errorMessage}`,
+              errorCode: "ENUMERATOR_ERROR",
+              context: { error: errorMessage },
+            },
+          });
+        }
+      }
+    }
+
+    // Log completion (DEBUG level)
+    this.logger.debug(`Enumeration complete: ${results.length} moves found`, {
+      playerId,
+      count: results.length,
+      validCount: results.filter((m) => m.isValid).length,
+    });
+
+    return results;
+  }
+
+  /**
+   * Build enumeration context for move enumerators
+   *
+   * Creates a context with all necessary operations for parameter discovery.
+   * Similar to buildMoveContext but focused on enumeration needs.
+   *
+   * @param playerId - Player to enumerate for
+   * @returns Enumeration context
+   * @private
+   */
+  private buildEnumerationContext(
+    playerId: PlayerId,
+  ): import("../moves/move-enumeration").MoveEnumerationContext<
+    TCardMeta,
+    TCardDefinition
+  > {
+    const zoneOps = createZoneOperations(
+      this.internalState,
+      this.logger.child("zones"),
+    );
+    const cardOps = createCardOperations(
+      this.internalState,
+      this.logger.child("cards"),
+    );
+    const gameOps = createGameOperations(
+      this.internalState,
+      this.logger.child("game"),
+    );
+
+    // Add flow state if available
+    const flowState = this.flowManager
+      ? {
+          currentPhase: this.flowManager.getCurrentPhase(),
+          currentSegment: this.flowManager.getCurrentSegment(),
+          turn: this.flowManager.getTurnNumber(),
+          currentPlayer: this.flowManager.getCurrentPlayer() as PlayerId,
+          isFirstTurn: this.flowManager.isFirstTurn(),
+        }
+      : undefined;
+
+    return {
+      playerId,
+      zones: zoneOps,
+      cards: cardOps,
+      game: gameOps,
+      registry: this.cardRegistry,
+      flow: flowState,
+      rng: this.rng,
+    };
   }
 
   /**
