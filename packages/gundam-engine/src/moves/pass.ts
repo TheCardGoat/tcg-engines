@@ -98,6 +98,24 @@ function refreshResources(
  */
 export const passMove: GameMoveDefinition<GundamGameState> = {
   /**
+   * Enumerator: Pass move has no parameters
+   *
+   * Always returns a single empty parameter set since pass has no options.
+   */
+  enumerator: (state: GundamGameState, context) => {
+    const { playerId } = context;
+
+    // Must be current player
+    if (state.currentPlayer !== playerId) return [];
+
+    // Cannot pass if game is over
+    if (state.phase === "gameOver") return [];
+
+    // Return single empty parameter set
+    return [{}];
+  },
+
+  /**
    * Condition: Current player can always pass
    */
   condition: (state: GundamGameState, context: MoveContext): boolean => {

@@ -1,4 +1,4 @@
-# Initial Context - Move Enumeration System
+ # Initial Context - Move Enumeration System
 
 ## Current State Analysis
 

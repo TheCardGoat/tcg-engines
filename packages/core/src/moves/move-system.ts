@@ -6,6 +6,7 @@ import type { GameOperations } from "../operations/game-operations";
 import type { ZoneOperations } from "../operations/zone-operations";
 import type { SeededRNG } from "../rng/seeded-rng";
 import type { CardId, PlayerId } from "../types";
+import type { MoveEnumerationContext } from "./move-enumeration";
 
 /**
  * Helper type to normalize move parameters
@@ -445,6 +446,31 @@ export type MoveDefinition<
 
   /** Reducer function that executes the move */
   reducer: MoveReducer<TGameState, TParams, TCardMeta, TCardDefinition>;
+
+  /**
+   * Parameter enumerator (for move enumeration system)
+   *
+   * Optional function to generate candidate parameter combinations.
+   * Used by RuleEngine.enumerateMoves() to discover available moves for AI/UI.
+   *
+   * Each parameter combination returned will be validated against the move's condition.
+   * If not provided, move will still appear in enumeration results
+   * but will indicate that parameters are required.
+   *
+   * @example
+   * ```typescript
+   * enumerator: (state, context) => {
+   *   // Get all cards in player's hand
+   *   const handCards = context.zones.getCardsInZone('hand', context.playerId);
+   *   // Generate parameter for each card
+   *   return handCards.map(cardId => ({ cardId }));
+   * }
+   * ```
+   */
+  enumerator?: (
+    state: TGameState,
+    context: MoveEnumerationContext<TCardMeta, TCardDefinition>,
+  ) => TParams[];
 
   /** Optional metadata for categorization */
   metadata?: {

@@ -33,11 +33,11 @@ export type StandardMoveName =
  * Type definition for standard moves
  */
 export type StandardMoves = {
-  pass?: { playerId: PlayerId };
-  concede?: { playerId: PlayerId };
-  draw?: { playerId: PlayerId; count?: number };
-  shuffle?: { playerId: PlayerId };
-  mulligan?: { playerId: PlayerId; keepCards?: string[] };
+  pass: { playerId: PlayerId };
+  concede: { playerId: PlayerId };
+  draw: { playerId: PlayerId; count?: number };
+  shuffle: { playerId: PlayerId };
+  mulligan: { playerId: PlayerId; keepCards?: string[] };
 };
 
 /**

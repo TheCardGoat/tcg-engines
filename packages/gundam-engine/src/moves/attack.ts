@@ -57,6 +57,52 @@ function getTargetId(context: MoveContext): CardId | undefined {
  */
 export const attackMove: GameMoveDefinition<GundamGameState> = {
   /**
+   * Enumerator: Generate all possible attacks
+   *
+   * Enumerates all active units that can attack with all valid targets.
+   */
+  enumerator: (state: GundamGameState, context) => {
+    const { playerId } = context;
+
+    // Must be in main phase
+    if (state.phase !== "main") return [];
+
+    // Must be current player
+    if (state.currentPlayer !== playerId) return [];
+
+    const options = [];
+    const battleArea = state.zones.battleArea[playerId];
+
+    if (!battleArea) return [];
+
+    // Get opponent
+    const opponentId = state.players.find((p) => p !== playerId);
+    if (!opponentId) return [];
+
+    const opponentBattleArea = state.zones.battleArea[opponentId];
+    if (!opponentBattleArea) return [];
+
+    // For each active unit in player's battle area
+    for (const attackerId of battleArea.cards) {
+      const position = state.gundam.cardPositions[attackerId];
+      const hasAttacked = state.gundam.attackedThisTurn.includes(attackerId);
+
+      // Skip if unit is rested or has already attacked
+      if (position !== "active" || hasAttacked) continue;
+
+      // Can attack each opponent unit
+      for (const targetId of opponentBattleArea.cards) {
+        options.push({ attackerId, targetId });
+      }
+
+      // Can also attack directly (no target)
+      options.push({ attackerId, targetId: undefined });
+    }
+
+    return options;
+  },
+
+  /**
    * Condition: Can attack if:
    * - In main phase
    * - Attacker is in player's battle area

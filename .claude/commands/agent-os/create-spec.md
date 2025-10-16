@@ -24,9 +24,11 @@ Provide the spec-writer with:
 
 The spec-writer will create `spec.md` inside the spec folder.
 
+Wait until the spec-writer has created `spec.md` before proceeding with PHASE 2 (delegating to task-list-creator).
+
 ### PHASE 2: Delegate to Tasks List Creator
 
-Use the **tasks-list-creator** subagent to break down the spec into an actionable tasks list with strategic grouping and ordering.
+Once `spec.md` has been created, use the **tasks-list-creator** subagent to break down the spec into an actionable tasks list with strategic grouping and ordering.
 
 Provide the tasks-list-creator:
 - The spec folder path (find the current one or the most recent in `agent-os/specs/*/`)
@@ -45,7 +47,7 @@ Provide the spec-verifier with:
 - ALL of the user's raw responses to those questions (from earlier in this conversation)
 - The spec folder path
 
-The spec-verifier will run its verifications and produce a report in `planning/spec-verification.md`
+The spec-verifier will run its verifications and produce a report in `verification/spec-verification.md`
 
 ### PHASE 4: Display Results
 

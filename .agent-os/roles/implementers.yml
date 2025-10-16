@@ -1,0 +1,30 @@
+implementers:
+  - id: testing-engineer
+    name: Testing Engineer
+    description: Implements unit tests, integration tests, and test infrastructure
+    agent_path: .claude/agents/agent-os/implementers/testing-engineer.md
+    verified_by:
+      - testing-verifier
+
+  - id: api-engineer
+    name: API Engineer
+    description: Implements core API types, interfaces, and system integrations
+    agent_path: .claude/agents/agent-os/implementers/api-engineer.md
+    verified_by:
+      - backend-verifier
+
+  - id: database-engineer
+    name: Database Engineer
+    description: Implements data models, persistence, and database operations
+    agent_path: .claude/agents/agent-os/implementers/database-engineer.md
+    verified_by:
+      - backend-verifier
+
+  - id: ui-designer
+    name: UI Designer
+    description: Implements UI components, documentation, and examples
+    agent_path: .claude/agents/agent-os/implementers/ui-designer.md
+    verified_by:
+      - frontend-verifier
+
+
