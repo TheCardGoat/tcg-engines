@@ -17,6 +17,10 @@ import {
 import { createHistoryOperations } from "../history/history-operations";
 import { Logger, type LoggerOptions } from "../logging";
 import type {
+  EnumeratedMove,
+  MoveEnumerationOptions,
+} from "../moves/move-enumeration";
+import type {
   ConditionFailure,
   MoveContext,
   MoveContextInput,
@@ -991,10 +995,9 @@ export class RuleEngine<
    */
   enumerateMoves(
     playerId: PlayerId,
-    options?: import("../moves/move-enumeration").MoveEnumerationOptions,
-  ): import("../moves/move-enumeration").EnumeratedMove<any>[] {
-    const results: import("../moves/move-enumeration").EnumeratedMove<any>[] =
-      [];
+    options?: MoveEnumerationOptions,
+  ): EnumeratedMove<unknown>[] {
+    const results: EnumeratedMove<unknown>[] = [];
     const validOnly = options?.validOnly ?? false;
     const includeMetadata = options?.includeMetadata ?? false;
     const moveIdsFilter = options?.moveIds;

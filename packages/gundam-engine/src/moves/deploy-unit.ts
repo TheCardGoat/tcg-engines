@@ -81,14 +81,14 @@ export const deployUnitMove: GameMoveDefinition<GundamGameState> = {
     const battleAreaSize = getZoneSize(battleArea);
     if (battleAreaSize >= 6) return [];
 
-    const activeResources = state.gundam.activeResources[playerId] ?? 0;
-
-    // Enumerate all cards in hand that are units and affordable
+    // Enumerate all cards in hand that are units
     const options = [];
-    for (const cardId of hand.cardIds) {
+    for (const cardId of hand.cards) {
       if (isUnitCard(cardId)) {
-        const cost = getCardCost(cardId);
-        // Include all units - condition will filter by affordability
+        // Include all units, even those the player cannot currently afford.
+        // Affordability filtering is deferred to the condition function rather than done here in the enumerator.
+        // This architectural decision ensures the enumerator generates all possible moves for UI/AI purposes,
+        // while the condition enforces game rules at validation time, maintaining separation of concerns.
         options.push({ cardId });
       }
     }

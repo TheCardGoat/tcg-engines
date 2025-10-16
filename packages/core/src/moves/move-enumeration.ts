@@ -38,7 +38,7 @@ import type { CardId, PlayerId } from "../types";
  * }
  * ```
  */
-export type EnumeratedMove<TParams = any> = {
+export type EnumeratedMove<TParams = unknown> = {
   /** Move identifier */
   moveId: string;
 
@@ -95,7 +95,10 @@ export type EnumeratedMove<TParams = any> = {
  * };
  * ```
  */
-export type MoveEnumerationContext<TCardMeta = any, TCardDefinition = any> = {
+export type MoveEnumerationContext<
+  TCardMeta = unknown,
+  TCardDefinition = unknown,
+> = {
   /** Player to enumerate moves for */
   playerId: PlayerId;
 
@@ -168,9 +171,9 @@ export type MoveEnumerationContext<TCardMeta = any, TCardDefinition = any> = {
  */
 export type MoveEnumerator<
   TGameState,
-  TParams = any,
-  TCardMeta = any,
-  TCardDefinition = any,
+  TParams = unknown,
+  TCardMeta = unknown,
+  TCardDefinition = unknown,
 > = (
   state: TGameState,
   context: MoveEnumerationContext<TCardMeta, TCardDefinition>,

@@ -83,7 +83,7 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
     if (!opponentBattleArea) return [];
 
     // For each active unit in player's battle area
-    for (const attackerId of battleArea.cardIds) {
+    for (const attackerId of battleArea.cards) {
       const position = state.gundam.cardPositions[attackerId];
       const hasAttacked = state.gundam.attackedThisTurn.includes(attackerId);
 
@@ -91,7 +91,7 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
       if (position !== "active" || hasAttacked) continue;
 
       // Can attack each opponent unit
-      for (const targetId of opponentBattleArea.cardIds) {
+      for (const targetId of opponentBattleArea.cards) {
         options.push({ attackerId, targetId });
       }
 

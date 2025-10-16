@@ -81,8 +81,9 @@ export type GameMoveDefinition<
   /**
    * Parameter enumerator (for move enumeration system)
    *
-   * Optional function to generate all valid parameter combinations.
+   * Optional function to generate candidate parameter combinations.
    * Used by RuleEngine.enumerateMoves() to discover available moves for AI/UI.
+   * Each parameter combination returned will be validated against the move's condition.
    *
    * If not provided, move will still appear in enumeration results
    * but will indicate that parameters are required.

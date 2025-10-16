@@ -6,6 +6,7 @@ import type { GameOperations } from "../operations/game-operations";
 import type { ZoneOperations } from "../operations/zone-operations";
 import type { SeededRNG } from "../rng/seeded-rng";
 import type { CardId, PlayerId } from "../types";
+import type { MoveEnumerationContext } from "./move-enumeration";
 
 /**
  * Helper type to normalize move parameters
@@ -449,9 +450,10 @@ export type MoveDefinition<
   /**
    * Parameter enumerator (for move enumeration system)
    *
-   * Optional function to generate all valid parameter combinations.
+   * Optional function to generate candidate parameter combinations.
    * Used by RuleEngine.enumerateMoves() to discover available moves for AI/UI.
    *
+   * Each parameter combination returned will be validated against the move's condition.
    * If not provided, move will still appear in enumeration results
    * but will indicate that parameters are required.
    *
@@ -467,10 +469,7 @@ export type MoveDefinition<
    */
   enumerator?: (
     state: TGameState,
-    context: import("./move-enumeration").MoveEnumerationContext<
-      TCardMeta,
-      TCardDefinition
-    >,
+    context: MoveEnumerationContext<TCardMeta, TCardDefinition>,
   ) => TParams[];
 
   /** Optional metadata for categorization */

@@ -121,13 +121,15 @@ describe("Move Enumeration System", () => {
 
       // Should have moves for: playCard (3 cards) + attack (0) + passTurn (1)
       const playCardMoves = moves.filter((m) => m.moveId === "playCard");
-      const passMovess = moves.filter((m) => m.moveId === "passTurn");
+      const passMoves = moves.filter((m) => m.moveId === "passTurn");
 
       expect(playCardMoves.length).toBe(3);
-      expect(passMovess.length).toBe(1);
+      expect(passMoves.length).toBe(1);
 
       // Check that all cards are enumerated
-      const cardIds = playCardMoves.map((m) => m.params.cardId);
+      const cardIds = playCardMoves.map(
+        (m) => (m.params as PlayCardParams).cardId,
+      );
       expect(cardIds).toContain("card1");
       expect(cardIds).toContain("card2");
       expect(cardIds).toContain("card3");
@@ -706,8 +708,8 @@ describe("Move Enumeration System", () => {
 
       // Check all combinations are present
       const combinations = attackMoves.map((m) => ({
-        attacker: m.params.attackerId,
-        target: m.params.targetId,
+        attacker: (m.params as AttackParams).attackerId,
+        target: (m.params as AttackParams).targetId,
       }));
 
       expect(combinations).toContainEqual({
