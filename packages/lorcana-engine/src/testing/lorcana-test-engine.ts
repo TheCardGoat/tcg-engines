@@ -12,7 +12,12 @@
  * - Automatic state synchronization checks
  */
 
-import { createPlayerId, RuleEngine, type RuleEngineOptions } from "@tcg/core";
+import {
+  createPlayerId,
+  createZoneOperations,
+  RuleEngine,
+  type RuleEngineOptions,
+} from "@tcg/core";
 import { lorcanaGameDefinition } from "../game-definition/definition";
 import type {
   LorcanaCardMeta,
@@ -121,8 +126,111 @@ export class LorcanaTestEngine {
     this.playerOneEngine = this.engine;
     this.playerTwoEngine = this.engine;
 
-    // TODO: Initialize zones based on playerOneState and playerTwoState
-    // This requires zone operations to be available after engine creation
+    // Initialize zones with test cards
+    this.initializeZones(_playerOneState, _playerTwoState);
+  }
+
+  /**
+   * Initialize zones with test cards
+   *
+   * BACKDOOR for testing: Accesses RuleEngine internal state to populate zones
+   * before any moves execute. This violates encapsulation but is necessary for
+   * AAA testing (Arrange-Act-Assert) where board state must be set up before moves.
+   *
+   * TODO: @tcg/core should expose a proper TestEngine base class with this capability
+   */
+  private initializeZones(
+    playerOneState: TestInitialState,
+    playerTwoState: TestInitialState,
+  ) {
+    // Access internal state directly (testing backdoor)
+    const internalState = (this.engine as any).internalState;
+
+    if (!internalState) {
+      throw new Error("Cannot access engine internal state for test setup");
+    }
+
+    // Add safety check for expected internal structure
+    if (!(internalState.zones && internalState.cards)) {
+      throw new Error("Engine internal state structure has changed");
+    }
+
+    // Create zone operations using internal state
+    const zoneOps = createZoneOperations(internalState);
+
+    // Create cards for player one
+    if (playerOneState.hand) {
+      zoneOps.createDeck({
+        zoneId: "hand" as any,
+        playerId: createPlayerId(PLAYER_ONE),
+        cardCount: playerOneState.hand,
+        shuffle: false,
+      });
+    }
+
+    if (playerOneState.deck) {
+      zoneOps.createDeck({
+        zoneId: "deck" as any,
+        playerId: createPlayerId(PLAYER_ONE),
+        cardCount: playerOneState.deck,
+        shuffle: true, // Shuffle deck by default
+      });
+    }
+
+    if (playerOneState.play) {
+      zoneOps.createDeck({
+        zoneId: "play" as any,
+        playerId: createPlayerId(PLAYER_ONE),
+        cardCount: playerOneState.play,
+        shuffle: false,
+      });
+    }
+
+    if (playerOneState.inkwell) {
+      zoneOps.createDeck({
+        zoneId: "inkwell" as any,
+        playerId: createPlayerId(PLAYER_ONE),
+        cardCount: playerOneState.inkwell,
+        shuffle: false,
+      });
+    }
+
+    // Create cards for player two
+    if (playerTwoState.hand) {
+      zoneOps.createDeck({
+        zoneId: "hand" as any,
+        playerId: createPlayerId(PLAYER_TWO),
+        cardCount: playerTwoState.hand,
+        shuffle: false,
+      });
+    }
+
+    if (playerTwoState.deck) {
+      zoneOps.createDeck({
+        zoneId: "deck" as any,
+        playerId: createPlayerId(PLAYER_TWO),
+        cardCount: playerTwoState.deck,
+        shuffle: true,
+      });
+    }
+
+    if (playerTwoState.play) {
+      zoneOps.createDeck({
+        zoneId: "play" as any,
+        playerId: createPlayerId(PLAYER_TWO),
+        cardCount: playerTwoState.play,
+        shuffle: false,
+      });
+    }
+
+    if (playerTwoState.inkwell) {
+      zoneOps.createDeck({
+        zoneId: "inkwell" as any,
+        playerId: createPlayerId(PLAYER_TWO),
+        cardCount: playerTwoState.inkwell,
+        shuffle: false,
+      });
+    }
   }
 
   // ========== Engine Selection ==========
@@ -284,6 +392,31 @@ export class LorcanaTestEngine {
       playerId,
       cardsToMulligan,
     });
+  }
+
+  // ========== Zone Access Helpers ==========
+
+  /**
+   * Get cards in a zone for a player
+   */
+  getZone(zoneId: string, playerId: string): string[] {
+    // Access internal state directly (testing backdoor)
+    const internalState = (this.engine as any).internalState;
+
+    if (!internalState) {
+      return [];
+    }
+
+    // Add safety check for expected internal structure
+    if (!(internalState.zones && internalState.cards)) {
+      console.warn("Engine internal state structure has changed");
+      return [];
+    }
+
+    // Create zone operations using internal state
+    const zoneOps = createZoneOperations(internalState);
+
+    return zoneOps.getCardsInZone(zoneId as any, createPlayerId(playerId));
   }
 
   // ========== Cleanup ==========
