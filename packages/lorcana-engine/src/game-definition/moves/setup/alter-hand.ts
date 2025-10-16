@@ -33,12 +33,21 @@ export const alterHand = createMove<
   // UI will present card selection interface: "Select 0-7 cards from your hand to mulligan"
   // AI can enumerate all valid combinations based on these constraints
   enumerator: (state, context) => {
+    // Get cards in hand for validation constraints
+    const handCards =
+      context.zones?.getCardsInZone("hand" as ZoneId, context.playerId) || [];
+
     // Return single parameter set with targeting information
     // The targeting system will handle enumerating card combinations
     return [
       {
         playerId: context.playerId,
         cardsToMulligan: [], // Default: keep all cards
+        // Include validation constraints for UI/AI
+        validation: {
+          maxCards: Math.min(7, handCards.length),
+          validCards: handCards,
+        },
         // TODO: Integrate with targeting system DSL
         // target: {
         //   filter: {
@@ -81,13 +90,13 @@ export const alterHand = createMove<
 
     // 3. Check player has priority (is current player)
     const currentPlayer = context.flow?.currentPlayer;
-    if (currentPlayer !== context.playerId) {
+    if (currentPlayer !== playerId) {
       return {
-        reason: `Only ${String(currentPlayer)} can mulligan right now. Current player: ${String(context.playerId)}.`,
+        reason: `Only ${String(currentPlayer)} can mulligan right now. You are ${String(playerId)}.`,
         errorCode: "NOT_PRIORITY_PLAYER",
         context: {
           currentPlayer: String(currentPlayer),
-          executingPlayer: String(context.playerId),
+          executingPlayer: String(playerId),
         },
       };
     }
@@ -169,6 +178,13 @@ export const alterHand = createMove<
         count: cardsToDraw,
         playerId,
       });
+
+      // Validate that we drew enough cards (deck exhaustion check)
+      if (drawnCards.length < cardsToDraw) {
+        throw new Error(
+          `Cannot complete mulligan: deck exhausted. Needed to draw ${cardsToDraw} cards but only drew ${drawnCards.length}. This violates Lorcana Rule 3.1.6.2 (must have exactly 7 cards after mulligan).`,
+        );
+      }
     }
 
     // Rule 3.1.6.4: Shuffle deck ONLY if 1 or more cards were altered

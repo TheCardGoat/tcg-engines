@@ -144,11 +144,15 @@ export class LorcanaTestEngine {
     playerTwoState: TestInitialState,
   ) {
     // Access internal state directly (testing backdoor)
-    // @ts-expect-error - Accessing private property for test setup
-    const internalState = this.engine.internalState;
+    const internalState = (this.engine as any).internalState;
 
     if (!internalState) {
       throw new Error("Cannot access engine internal state for test setup");
+    }
+
+    // Add safety check for expected internal structure
+    if (!(internalState.zones && internalState.cards)) {
+      throw new Error("Engine internal state structure has changed");
     }
 
     // Create zone operations using internal state
@@ -156,7 +160,7 @@ export class LorcanaTestEngine {
 
     // Create cards for player one
     if (playerOneState.hand) {
-      const handCards = zoneOps.createDeck({
+      zoneOps.createDeck({
         zoneId: "hand" as any,
         playerId: createPlayerId(PLAYER_ONE),
         cardCount: playerOneState.hand,
@@ -165,7 +169,7 @@ export class LorcanaTestEngine {
     }
 
     if (playerOneState.deck) {
-      const deckCards = zoneOps.createDeck({
+      zoneOps.createDeck({
         zoneId: "deck" as any,
         playerId: createPlayerId(PLAYER_ONE),
         cardCount: playerOneState.deck,
@@ -397,10 +401,15 @@ export class LorcanaTestEngine {
    */
   getZone(zoneId: string, playerId: string): string[] {
     // Access internal state directly (testing backdoor)
-    // @ts-expect-error - Accessing private property for testing
-    const internalState = this.engine.internalState;
+    const internalState = (this.engine as any).internalState;
 
     if (!internalState) {
+      return [];
+    }
+
+    // Add safety check for expected internal structure
+    if (!(internalState.zones && internalState.cards)) {
+      console.warn("Engine internal state structure has changed");
       return [];
     }
 
