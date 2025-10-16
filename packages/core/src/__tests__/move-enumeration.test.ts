@@ -358,6 +358,8 @@ describe("Move Enumeration System", () => {
             condition: () => true,
             reducer: () => {},
             metadata: {
+              displayName: "Play Card",
+              description: "Play a card from your hand",
               category: "action",
               tags: ["card", "play"],
               priority: 1,

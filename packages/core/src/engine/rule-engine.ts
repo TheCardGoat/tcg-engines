@@ -1085,11 +1085,7 @@ export class RuleEngine<
 
           // Add metadata if requested
           if (includeMetadata && moveDef.metadata) {
-            enumeratedMove.metadata = {
-              displayName: moveDef.name,
-              description: moveDef.description,
-              ...moveDef.metadata,
-            };
+            enumeratedMove.metadata = moveDef.metadata;
           }
 
           // Add to results (filter by validOnly)
