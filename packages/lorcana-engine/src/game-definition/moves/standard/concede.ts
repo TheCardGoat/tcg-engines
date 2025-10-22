@@ -1,9 +1,10 @@
-import { createMove, createPlayerId, type PlayerId } from "@tcg/core";
+import { createMove, type PlayerId, type ZoneId } from "@tcg/core";
 import type {
   LorcanaCardMeta,
   LorcanaGameState,
   LorcanaMoveParams,
 } from "../../../types/move-params";
+import { lorcanaZones } from "../../zones/zone-configs";
 
 /**
  * Concede
@@ -24,28 +25,26 @@ export const concede = createMove<
   LorcanaCardMeta
 >({
   reducer: (draft, context) => {
+    // Get all players from the game state
+    const allPlayers = Object.keys(draft.loreScores) as PlayerId[];
+
     // Determine winner: the opponent who is NOT conceding
-    // Try to find players by checking zones
+    // Try to find active players by checking zones
     const uniquePlayerIds = new Set<PlayerId>();
 
-    // Check common Lorcana zones for card owners
-    const zonesToCheck = ["deck", "hand", "play", "inkwell", "discard"];
+    // Get all zone IDs dynamically from zone configuration
+    const zoneIds = Object.keys(lorcanaZones) as ZoneId[];
 
-    for (const zoneId of zonesToCheck) {
-      // Try both players (we know Lorcana is 2-player)
-      const possiblePlayerIds = [
-        createPlayerId("player_one"),
-        createPlayerId("player_two"),
-      ];
-
-      for (const playerId of possiblePlayerIds) {
+    for (const zoneId of zoneIds) {
+      for (const playerId of allPlayers) {
         try {
-          const cards = context.zones.getCardsInZone(zoneId as any, playerId);
+          const cards = context.zones.getCardsInZone(zoneId, playerId);
           if (cards.length > 0) {
             uniquePlayerIds.add(playerId);
           }
         } catch {
-          // Zone might not exist for this player, continue
+          // Zone might not exist for this player or other errors
+          // Continue processing other zones/players
         }
       }
     }
@@ -55,6 +54,7 @@ export const concede = createMove<
     const winner = playerIds.find((id) => id !== context.playerId);
 
     // Signal game end via context
+    // Note: winner may be undefined if no other players have cards (edge case)
     context.endGame?.({
       winner,
       reason: "concede",

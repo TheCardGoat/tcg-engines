@@ -152,5 +152,34 @@ describe("Move: Concede", () => {
         expect(result.errorCode).toBe("GAME_ENDED");
       }
     });
+
+    it("should handle concede when player has no cards", () => {
+      // Setup: Create a game where player one has no cards in any zone
+      const emptyTestEngine = new LorcanaTestEngine(
+        { hand: 0, deck: 0 }, // Player one has no cards
+        { hand: 7, deck: 10 }, // Player two has cards
+        { skipPreGame: true },
+      );
+
+      // Player one (with no cards) concedes
+      emptyTestEngine.changeActivePlayer(PLAYER_ONE);
+      const result = emptyTestEngine.engine.executeMove("concede", {
+        playerId: createPlayerId(PLAYER_ONE),
+        params: {},
+      });
+
+      expect(result.success).toBe(true);
+
+      // Game should be ended
+      expect(emptyTestEngine.engine.hasGameEnded()).toBe(true);
+
+      // Winner should be player two (even though player one had no cards)
+      const gameEndResult = emptyTestEngine.engine.getGameEndResult();
+      expect(gameEndResult).toBeDefined();
+      expect(gameEndResult?.winner).toBe(PLAYER_TWO);
+      expect(gameEndResult?.reason).toBe("concede");
+
+      emptyTestEngine.dispose();
+    });
   });
 });
