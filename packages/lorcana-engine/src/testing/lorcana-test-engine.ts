@@ -409,6 +409,17 @@ export class LorcanaTestEngine {
     });
   }
 
+  // ========== Core Game Moves ==========
+
+  /**
+   * Quest with a character to gain lore
+   */
+  quest(cardId: string) {
+    return this.executeMove("quest", {
+      cardId,
+    });
+  }
+
   // ========== Standard Moves ==========
 
   /**
@@ -441,6 +452,14 @@ export class LorcanaTestEngine {
     const zoneOps = createZoneOperations(internalState);
 
     return zoneOps.getCardsInZone(zoneId as any, createPlayerId(playerId));
+  }
+
+  /**
+   * Get lore total for a player
+   */
+  getLore(playerId: string): number {
+    const state = this.getState();
+    return state.loreScores[createPlayerId(playerId)] || 0;
   }
 
   // ========== Cleanup ==========
