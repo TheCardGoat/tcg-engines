@@ -845,7 +845,7 @@ export class RuleEngine<
       } {
     const moveDef = this.gameDefinition.moves[moveId as keyof TMoves];
 
-    if (!(moveDef && moveDef.condition)) {
+    if (!moveDef?.condition) {
       return { success: true };
     }
 

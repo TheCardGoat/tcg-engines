@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test";
+import { describe, it } from "bun:test";
 import { createPlayerId } from "@tcg/core";
 import {
   LorcanaTestEngine,
