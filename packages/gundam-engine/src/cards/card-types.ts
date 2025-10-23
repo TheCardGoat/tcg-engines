@@ -29,6 +29,7 @@ export type ParsedAbility = {
     | "ON_DESTROYED"
     | "WHEN_PAIRED"
     | "DURING_PAIR"
+    | "WHEN_LINKED"
     | "ON_BURST";
 
   // Activated ability information

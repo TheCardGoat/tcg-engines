@@ -37,6 +37,7 @@ const TRIGGER_PATTERNS: Record<
   "【Attack】": "ON_ATTACK",
   "【When Paired】": "WHEN_PAIRED",
   "【During Pair】": "DURING_PAIR",
+  "【When Linked】": "WHEN_LINKED",
   "【Destroyed】": "ON_DESTROYED",
   "【Burst】": "ON_BURST",
   "【Activate･Main】": "ACTIVATED_MAIN",
