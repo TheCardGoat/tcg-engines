@@ -287,6 +287,10 @@ export class LorcanaTestEngine {
       otp: internalState?.otp,
       choosingFirstPlayer: internalState?.choosingFirstPlayer,
       pendingMulligan: internalState?.pendingMulligan,
+      trackers: internalState?.trackers,
+      flow: {
+        currentPhase: flowManager.getCurrentPhase(),
+      },
     };
   }
 
@@ -392,6 +396,26 @@ export class LorcanaTestEngine {
       playerId,
       cardsToMulligan,
     });
+  }
+
+  // ========== Resource Moves ==========
+
+  /**
+   * Put a card into the inkwell
+   */
+  putCardInInkwell(cardId: string) {
+    return this.executeMove("putACardIntoTheInkwell", {
+      cardId,
+    });
+  }
+
+  // ========== Standard Moves ==========
+
+  /**
+   * Pass turn to next player
+   */
+  passTurn() {
+    return this.executeMove("passTurn", {});
   }
 
   // ========== Zone Access Helpers ==========
