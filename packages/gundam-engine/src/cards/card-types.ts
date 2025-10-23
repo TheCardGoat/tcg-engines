@@ -20,17 +20,25 @@ export type KeywordAbility = {
   value?: number;
 };
 
+// Condition types (prerequisites for triggers)
+export type ConditionType = "DURING_LINK" | "DURING_PAIR";
+
+// Trigger types (actual events that can fire)
+export type TriggerType =
+  | "ON_DEPLOY"
+  | "ON_ATTACK"
+  | "ON_DESTROYED"
+  | "WHEN_PAIRED"
+  | "WHEN_LINKED"
+  | "ON_BURST";
+
 export type ParsedAbility = {
   // Timing/trigger information
   optional?: boolean;
-  trigger?:
-    | "ON_DEPLOY"
-    | "ON_ATTACK"
-    | "ON_DESTROYED"
-    | "WHEN_PAIRED"
-    | "DURING_PAIR"
-    | "WHEN_LINKED"
-    | "ON_BURST";
+
+  // Conditional trigger support
+  condition?: ConditionType;
+  trigger?: TriggerType;
 
   // Activated ability information
   activated?: {

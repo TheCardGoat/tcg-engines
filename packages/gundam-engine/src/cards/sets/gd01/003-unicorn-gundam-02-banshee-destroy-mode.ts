@@ -12,7 +12,7 @@ export const UnicornGundam02BansheeDestroyMode: UnitCardDefinition = {
   cost: 4,
   text: "【During Link】【Attack】Choose 12 cards from your trash. Return them to their owner&#039;s deck and shuffle it. If you do, set this Unit as active. It gains <First Strike> during this turn.\n\n(While this Unit is attacking, it deals damage before the enemy Unit.)",
   imageUrl:
-    "https://www.gundam-gcg.com/en/images/cards/card/GD01-003.webp?2510031",
+    "https://www.gundam-gcg.com/en/images/cards/card/GD01-003.webp?251014",
   sourceTitle: "Mobile Suit Gundam Unicorn",
   ap: 5,
   hp: 4,
@@ -26,9 +26,10 @@ export const UnicornGundam02BansheeDestroyMode: UnitCardDefinition = {
   ],
   abilities: [
     {
+      condition: "DURING_LINK",
       trigger: "ON_ATTACK",
       description:
-        "【Attack】 Choose 12 cards from your trash. Return them to their owner&#039;s deck and shuffle it. If you do, set this Unit as active. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+        "【During Link】 【Attack】 Choose 12 cards from your trash. Return them to their owner&#039;s deck and shuffle it. If you do, set this Unit as active. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
       effect: {
         type: "UNKNOWN",
         rawText:

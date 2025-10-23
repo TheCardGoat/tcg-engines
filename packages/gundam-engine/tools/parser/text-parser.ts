@@ -29,6 +29,12 @@ const KEYWORD_PATTERNS: Record<string, KeywordAbility["keyword"]> = {
 // TRIGGER PATTERNS
 // ============================================================================
 
+// Separate patterns for conditions and triggers
+const CONDITION_PATTERNS: Record<string, ParsedAbility["condition"]> = {
+  "【During Link】": "DURING_LINK",
+  "【During Pair】": "DURING_PAIR",
+};
+
 const TRIGGER_PATTERNS: Record<
   string,
   ParsedAbility["trigger"] | "ACTIVATED_MAIN" | "ACTIVATED_ACTION"
@@ -36,12 +42,17 @@ const TRIGGER_PATTERNS: Record<
   "【Deploy】": "ON_DEPLOY",
   "【Attack】": "ON_ATTACK",
   "【When Paired】": "WHEN_PAIRED",
-  "【During Pair】": "DURING_PAIR",
   "【When Linked】": "WHEN_LINKED",
   "【Destroyed】": "ON_DESTROYED",
   "【Burst】": "ON_BURST",
   "【Activate･Main】": "ACTIVATED_MAIN",
   "【Activate･Action】": "ACTIVATED_ACTION",
+};
+
+// Combined patterns for finding all timing markers
+const ALL_TIMING_PATTERNS = {
+  ...CONDITION_PATTERNS,
+  ...TRIGGER_PATTERNS,
 };
 
 // ============================================================================
@@ -124,13 +135,13 @@ export function parseAbilityText(
  */
 function splitByTimingMarkers(
   text: string,
-): Array<{ trigger: string; text: string }> {
-  const segments: Array<{ trigger: string; text: string }> = [];
+): Array<{ markers: string[]; text: string }> {
+  const segments: Array<{ markers: string[]; text: string }> = [];
 
   // Find all timing markers and their positions
   const markerPositions: Array<{ marker: string; pos: number }> = [];
 
-  for (const marker of Object.keys(TRIGGER_PATTERNS)) {
+  for (const marker of Object.keys(ALL_TIMING_PATTERNS)) {
     let pos = text.indexOf(marker);
     while (pos !== -1) {
       markerPositions.push({ marker, pos });
@@ -141,24 +152,76 @@ function splitByTimingMarkers(
   // Sort by position
   markerPositions.sort((a, b) => a.pos - b.pos);
 
-  // Extract segments
+  // Group consecutive markers to handle conditional triggers
+  const groupedMarkers: Array<{
+    markers: string[];
+    pos: number;
+    endPos: number;
+  }> = [];
+  let currentGroup: { markers: string[]; pos: number; endPos: number } | null =
+    null;
+
   for (let i = 0; i < markerPositions.length; i++) {
     const current = markerPositions[i];
     const next = markerPositions[i + 1];
+
+    if (currentGroup) {
+      // Check if this marker is immediately after the previous one (conditional trigger)
+      const prevEndPos =
+        currentGroup.pos +
+        currentGroup.markers[currentGroup.markers.length - 1].length;
+      if (current.pos <= prevEndPos + 10) {
+        // Allow small gaps between markers
+        currentGroup.markers.push(current.marker);
+      } else {
+        // Close current group and start a new one
+        currentGroup.endPos = current.pos;
+        groupedMarkers.push(currentGroup);
+        currentGroup = {
+          markers: [current.marker],
+          pos: current.pos,
+          endPos: -1,
+        };
+      }
+    } else {
+      currentGroup = {
+        markers: [current.marker],
+        pos: current.pos,
+        endPos: -1,
+      };
+    }
+  }
+
+  // Add the last group
+  if (currentGroup) {
+    currentGroup.endPos = text.length;
+    groupedMarkers.push(currentGroup);
+  }
+
+  // Extract segments based on grouped markers
+  for (let i = 0; i < groupedMarkers.length; i++) {
+    const current = groupedMarkers[i];
+    const next = groupedMarkers[i + 1];
 
     const segmentText = next
       ? text.substring(current.pos, next.pos)
       : text.substring(current.pos);
 
+    // Remove all markers from the text
+    let cleanText = segmentText;
+    for (const marker of current.markers) {
+      cleanText = cleanText.replace(marker, "").trim();
+    }
+
     segments.push({
-      trigger: current.marker,
-      text: segmentText.replace(current.marker, "").trim(),
+      markers: current.markers,
+      text: cleanText,
     });
   }
 
   // If no markers found, treat whole text as one segment
   if (segments.length === 0 && text.trim()) {
-    segments.push({ trigger: "", text: text.trim() });
+    segments.push({ markers: [], text: text.trim() });
   }
 
   return segments;
@@ -168,47 +231,80 @@ function splitByTimingMarkers(
  * Parses a single ability segment
  */
 function parseAbilitySegment(
-  segment: { trigger: string; text: string },
+  segment: { markers: string[]; text: string },
   warnings: string[],
 ): ParsedAbility | null {
   if (!segment.text.trim()) {
     return null;
   }
 
-  const triggerType = TRIGGER_PATTERNS[segment.trigger];
+  // Parse markers to identify conditions and triggers
+  let condition: ParsedAbility["condition"] | undefined;
+  let trigger: ParsedAbility["trigger"] | undefined;
+  let activatedTiming: "MAIN" | "ACTION" | undefined;
+  const unknownMarkers: string[] = [];
+
+  for (const marker of segment.markers) {
+    if (CONDITION_PATTERNS[marker]) {
+      condition = CONDITION_PATTERNS[marker];
+    } else if (TRIGGER_PATTERNS[marker]) {
+      const triggerType = TRIGGER_PATTERNS[marker];
+      if (triggerType === "ACTIVATED_MAIN") {
+        activatedTiming = "MAIN";
+      } else if (triggerType === "ACTIVATED_ACTION") {
+        activatedTiming = "ACTION";
+      } else {
+        trigger = triggerType;
+      }
+    } else {
+      unknownMarkers.push(marker);
+    }
+  }
+
+  // Handle unknown markers
+  if (unknownMarkers.length > 0) {
+    warnings.push(`Unknown trigger pattern(s): ${unknownMarkers.join(", ")}`);
+  }
+
+  const description = `${segment.markers.join(" ")} ${segment.text}`;
 
   // Handle activated abilities
-  if (triggerType === "ACTIVATED_MAIN" || triggerType === "ACTIVATED_ACTION") {
-    const timing = triggerType === "ACTIVATED_MAIN" ? "MAIN" : "ACTION";
+  if (activatedTiming) {
     const cost = extractActivationCost(segment.text);
 
     return {
+      condition,
       activated: {
-        timing,
+        timing: activatedTiming,
         cost,
       },
-      description: `${segment.trigger}${cost ? ` [${cost}] ` : " "}${segment.text}`,
-      effect: parseEffect(segment.text, triggerType, warnings),
+      description,
+      effect: parseEffect(segment.text, activatedTiming, warnings),
     };
   }
 
   // Handle triggered abilities
-  if (
-    triggerType &&
-    triggerType !== "ACTIVATED_MAIN" &&
-    triggerType !== "ACTIVATED_ACTION"
-  ) {
+  if (trigger) {
     return {
-      trigger: triggerType,
-      description: `${segment.trigger} ${segment.text}`,
-      effect: parseEffect(segment.text, triggerType, warnings),
+      condition,
+      trigger,
+      description,
+      effect: parseEffect(segment.text, trigger, warnings),
+    };
+  }
+
+  // Handle condition-only abilities (continuous effects during certain conditions)
+  if (condition) {
+    return {
+      condition,
+      description,
+      effect: parseEffect(segment.text, condition, warnings),
     };
   }
 
   // No recognized trigger - treat as continuous or unknown
-  warnings.push(`Unknown trigger pattern: ${segment.trigger || "(none)"}`);
   return {
-    description: segment.text,
+    description,
     effect: parseEffect(segment.text, undefined, warnings),
   };
 }
