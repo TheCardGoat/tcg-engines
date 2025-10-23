@@ -686,6 +686,10 @@ export class RuleEngine<
         if (pendingTurnEnd) {
           this.flowManager.nextTurn();
         }
+
+        // Check automatic endIf transitions after move execution
+        // This enables automatic phase/segment/turn transitions based on endIf conditions
+        this.flowManager.checkEndConditions();
       }
 
       // Log successful completion (DEBUG level)
