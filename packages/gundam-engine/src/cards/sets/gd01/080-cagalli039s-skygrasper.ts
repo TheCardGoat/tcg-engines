@@ -21,7 +21,7 @@ export const Cagalli039sSkygrasper: UnitCardDefinition = {
   linkRequirements: ["cagalli-yula-athha"],
   abilities: [
     {
-      trigger: "ON_DESTROY",
+      trigger: "ON_DESTROYED",
       description:
         "【Destroyed】 Choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner&#039;s hand.",
       effect: {

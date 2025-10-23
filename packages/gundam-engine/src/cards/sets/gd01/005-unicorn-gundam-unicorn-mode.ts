@@ -21,7 +21,7 @@ export const UnicornGundamUnicornMode: UnitCardDefinition = {
   linkRequirements: ["banagher-links"],
   abilities: [
     {
-      trigger: "ON_DESTROY",
+      trigger: "ON_DESTROYED",
       description:
         "【Destroyed】 Return this Unit&#039;s paired Pilot to its owner&#039;s hand. Then, discard 1.",
       effect: {

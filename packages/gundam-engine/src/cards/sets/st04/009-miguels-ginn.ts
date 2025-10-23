@@ -21,7 +21,7 @@ export const MiguelsGinn: UnitCardDefinition = {
   linkRequirements: ["miguel-ayman"],
   abilities: [
     {
-      trigger: "ON_DESTROY",
+      trigger: "ON_DESTROYED",
       description:
         "【Destroyed】 If you have another Link Unit in play, draw 1.",
       effect: {

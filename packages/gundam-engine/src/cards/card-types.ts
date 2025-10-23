@@ -22,10 +22,11 @@ export type KeywordAbility = {
 
 export type ParsedAbility = {
   // Timing/trigger information
+  optional?: boolean;
   trigger?:
     | "ON_DEPLOY"
     | "ON_ATTACK"
-    | "ON_DESTROY"
+    | "ON_DESTROYED"
     | "WHEN_PAIRED"
     | "DURING_PAIR"
     | "ON_BURST";
