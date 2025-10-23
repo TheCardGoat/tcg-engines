@@ -30,6 +30,11 @@ describe("Move: Put a Card Into The Inkwell", () => {
 
     // Now we should be in main game, player one's turn
     testEngine.changeActivePlayer(PLAYER_ONE);
+
+    // Pass turn to advance from beginning phase to main phase
+    testEngine.passTurn(); // Pass to player two
+    testEngine.passTurn(); // Pass back to player one
+    // Now we're in main phase and can ink cards
   });
 
   afterEach(() => {

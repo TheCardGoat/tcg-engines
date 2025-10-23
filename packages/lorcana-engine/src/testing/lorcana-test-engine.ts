@@ -303,6 +303,10 @@ export class LorcanaTestEngine {
     // @ts-expect-error - Accessing private property for testing
     const internalState = this.engine.internalState;
 
+    // Access tracker system for test purposes
+    // @ts-expect-error - Accessing private property for testing
+    const trackerSystem = this.engine.trackerSystem;
+
     return {
       currentPhase: flowManager.getCurrentPhase(),
       currentSegment: flowManager.getCurrentSegment(),
@@ -311,7 +315,16 @@ export class LorcanaTestEngine {
       otp: internalState?.otp,
       choosingFirstPlayer: internalState?.choosingFirstPlayer,
       pendingMulligan: internalState?.pendingMulligan,
-      trackers: internalState?.trackers,
+      trackers: trackerSystem
+        ? {
+            check: (name: string, playerId: any) =>
+              trackerSystem.check(name, playerId),
+            mark: (name: string, playerId: any) =>
+              trackerSystem.mark(name, playerId),
+            unmark: (name: string, playerId: any) =>
+              trackerSystem.unmark(name, playerId),
+          }
+        : undefined,
       flow: {
         currentPhase: flowManager.getCurrentPhase(),
       },
