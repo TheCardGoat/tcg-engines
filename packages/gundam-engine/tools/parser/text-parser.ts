@@ -55,6 +55,10 @@ const ALL_TIMING_PATTERNS = {
   ...TRIGGER_PATTERNS,
 };
 
+// Maximum allowed gap between consecutive timing markers (in characters)
+// This allows for small spaces or formatting between condition and trigger markers
+const MAX_MARKER_GAP = 10;
+
 // ============================================================================
 // MAIN PARSING FUNCTION
 // ============================================================================
@@ -170,7 +174,7 @@ function splitByTimingMarkers(
       const prevEndPos =
         currentGroup.pos +
         currentGroup.markers[currentGroup.markers.length - 1].length;
-      if (current.pos <= prevEndPos + 10) {
+      if (current.pos <= prevEndPos + MAX_MARKER_GAP) {
         // Allow small gaps between markers
         currentGroup.markers.push(current.marker);
       } else {
@@ -279,7 +283,7 @@ function parseAbilitySegment(
         cost,
       },
       description,
-      effect: parseEffect(segment.text, activatedTiming, warnings),
+      effect: parseEffect(segment.text, warnings),
     };
   }
 
@@ -289,7 +293,7 @@ function parseAbilitySegment(
       condition,
       trigger,
       description,
-      effect: parseEffect(segment.text, trigger, warnings),
+      effect: parseEffect(segment.text, warnings),
     };
   }
 
@@ -298,14 +302,14 @@ function parseAbilitySegment(
     return {
       condition,
       description,
-      effect: parseEffect(segment.text, condition, warnings),
+      effect: parseEffect(segment.text, warnings),
     };
   }
 
   // No recognized trigger - treat as continuous or unknown
   return {
     description,
-    effect: parseEffect(segment.text, undefined, warnings),
+    effect: parseEffect(segment.text, warnings),
   };
 }
 
@@ -318,7 +322,6 @@ function parseAbilitySegment(
  */
 function parseEffect(
   text: string,
-  trigger: string | undefined,
   warnings: string[],
 ): ParsedAbility["effect"] {
   // Try to match common patterns

@@ -27,7 +27,7 @@ export const Gundam: UnitCardDefinition = {
   ],
   abilities: [
     {
-      trigger: "DURING_PAIR",
+      condition: "DURING_PAIR",
       description: "【During Pair】 During your turn, all your Units get AP+1.",
       effect: {
         type: "MODIFY_STATS",

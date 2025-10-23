@@ -26,7 +26,7 @@ export const FreedomGundam: UnitCardDefinition = {
   ],
   abilities: [
     {
-      trigger: "DURING_PAIR",
+      condition: "DURING_PAIR",
       description:
         "【During Pair】 【Once per Turn】When you pair a Pilot with this Unit or one of your white Units, choose 1 enemy Unit. It gets AP-2 during this turn.",
       effect: {

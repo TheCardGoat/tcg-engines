@@ -21,7 +21,7 @@ export const GundamHeavyarms: UnitCardDefinition = {
   linkRequirements: ["trowa-barton"],
   abilities: [
     {
-      trigger: "DURING_PAIR",
+      condition: "DURING_PAIR",
       description:
         "【During Pair】 During your turn, when this Unit destroys an enemy Unit with battle damage, deal 1 damage to all enemy Units that are Lv.3 or lower.",
       effect: {
