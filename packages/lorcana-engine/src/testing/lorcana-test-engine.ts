@@ -50,6 +50,20 @@ export type TestInitialState = {
 };
 
 /**
+ * Test Card Definition
+ *
+ * Minimal card definition for testing combat and stats
+ */
+export type TestCardDefinition = {
+  id: string;
+  name?: string;
+  strength?: number;
+  willpower?: number;
+  lore?: number;
+  cost?: number;
+};
+
+/**
  * Test Engine Options
  */
 export type TestEngineOptions = {
@@ -59,6 +73,8 @@ export type TestEngineOptions = {
   seed?: string;
   /** Enable debug logging */
   debug?: boolean;
+  /** Optional card definitions for testing (with stats like strength, willpower) */
+  cardDefinitions?: Record<string, TestCardDefinition>;
 };
 
 /**
@@ -118,8 +134,16 @@ export class LorcanaTestEngine {
       seed: _opts.seed || "test-seed-123",
     };
 
+    // Create game definition with test card definitions (if provided)
+    const gameDefinition = _opts.cardDefinitions
+      ? {
+          ...lorcanaGameDefinition,
+          cards: _opts.cardDefinitions,
+        }
+      : lorcanaGameDefinition;
+
     // Create single engine instance
-    this.engine = new RuleEngine(lorcanaGameDefinition, players, engineOptions);
+    this.engine = new RuleEngine(gameDefinition, players, engineOptions);
 
     // Aliases point to same engine
     this.authoritativeEngine = this.engine;
@@ -420,6 +444,16 @@ export class LorcanaTestEngine {
     });
   }
 
+  /**
+   * Challenge another character (combat)
+   */
+  challenge(attackerId: string, defenderId: string) {
+    return this.executeMove("challenge", {
+      attackerId,
+      defenderId,
+    });
+  }
+
   // ========== Standard Moves ==========
 
   /**
@@ -460,6 +494,92 @@ export class LorcanaTestEngine {
   getLore(playerId: string): number {
     const state = this.getState();
     return state.loreScores[createPlayerId(playerId)] || 0;
+  }
+
+  /**
+   * Get damage on a card
+   */
+  getDamage(cardId: string): number {
+    // Access internal state directly (testing backdoor)
+    const internalState = (this.engine as any).internalState;
+
+    if (!internalState) {
+      return 0;
+    }
+
+    // Get card metadata which tracks damage
+    const cardMeta = internalState?.cards?.cardsMetadata?.get(cardId);
+    return cardMeta?.damage || 0;
+  }
+
+  /**
+   * Get card metadata (for testing)
+   */
+  getCardMeta(cardId: string): LorcanaCardMeta | undefined {
+    // Access internal state directly (testing backdoor)
+    const internalState = (this.engine as any).internalState;
+
+    if (!internalState) {
+      return undefined;
+    }
+
+    return internalState?.cards?.cardsMetadata?.get(cardId);
+  }
+
+  /**
+   * Create a test character in play with specific stats
+   *
+   * BACKDOOR for testing: Creates a character card with stats directly in play zone.
+   * Useful for testing combat mechanics that require strength/willpower.
+   *
+   * @param playerId - Player who owns the character
+   * @param stats - Character stats (strength, willpower, etc.)
+   * @returns Card ID of the created character
+   *
+   * @example
+   * ```typescript
+   * const strongChar = testEngine.createCharacterInPlay(PLAYER_ONE, {
+   *   strength: 5,
+   *   willpower: 7,
+   * });
+   * ```
+   */
+  createCharacterInPlay(
+    playerId: string,
+    stats: { strength?: number; willpower?: number; lore?: number } = {},
+  ): string {
+    // Access internal state directly (testing backdoor)
+    const internalState = (this.engine as any).internalState;
+
+    if (!internalState) {
+      throw new Error("Cannot access engine internal state for test setup");
+    }
+
+    // Create zone operations using internal state
+    const zoneOps = createZoneOperations(internalState);
+    const pid = createPlayerId(playerId);
+
+    // Create a single card in play zone using zone operations
+    const [cardId] = zoneOps.createDeck({
+      zoneId: "play" as any,
+      playerId: pid,
+      cardCount: 1,
+      shuffle: false,
+    });
+
+    // Add card definition to registry
+    const gameDefinition = (this.engine as any).definition;
+    if (gameDefinition && gameDefinition.cards) {
+      gameDefinition.cards[cardId] = {
+        id: cardId,
+        name: "Test Character",
+        strength: stats.strength ?? 1,
+        willpower: stats.willpower ?? 1,
+        lore: stats.lore ?? 1,
+      };
+    }
+
+    return cardId;
   }
 
   // ========== Cleanup ==========
