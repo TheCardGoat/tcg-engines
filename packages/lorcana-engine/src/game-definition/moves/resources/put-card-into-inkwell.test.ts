@@ -89,10 +89,9 @@ describe("Move: Put a Card Into The Inkwell", () => {
       // Ink first card
       testEngine.putCardInInkwell(firstCard);
 
-      // Pass turn and come back
-      testEngine.passTurn();
-      testEngine.passTurn(); // Player two's turn
-      // Now it's player one's turn again
+      // Pass turn and come back to player one
+      testEngine.passTurn(); // Pass to player two
+      testEngine.passTurn(); // Pass back to player one
 
       const newHand = testEngine.getZone("hand", PLAYER_ONE);
       const secondCard = newHand[0];
@@ -152,11 +151,9 @@ describe("Move: Put a Card Into The Inkwell", () => {
       // Ink first card
       testEngine.putCardInInkwell(firstCard);
 
-      // Pass turn
-      testEngine.passTurn();
-      testEngine.passTurn(); // Player two's turn passes
-
-      // Now player one's turn again
+      // Pass turn and come back to player one
+      testEngine.passTurn(); // Pass to player two
+      testEngine.passTurn(); // Pass back to player one
       const newHand = testEngine.getZone("hand", PLAYER_ONE);
       const secondCard = newHand[0];
 
