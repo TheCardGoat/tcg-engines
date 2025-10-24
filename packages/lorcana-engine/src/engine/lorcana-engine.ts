@@ -109,7 +109,8 @@ export class LorcanaEngine extends RuleEngine<
     // Moves that MUST have parameters to be valid
     const requiresParams = new Set([
       "chooseWhoGoesFirstMove",
-      // Note: Other moves like playCard, quest, challenge, alterHand, putACardIntoTheInkwell
+      "alterHand", // Has enumerator and requires cardsToMulligan parameter
+      // Note: Other moves like playCard, quest, challenge, putACardIntoTheInkwell
       // are NOT in this list because their enumeration returns null (not yet implemented).
       // They will be checked with empty params and conditions will handle validation.
     ]);
@@ -539,22 +540,30 @@ export class LorcanaEngine extends RuleEngine<
    * @private
    */
   private enumerateAlterHandParams(
-    _playerId: PlayerId,
+    playerId: PlayerId,
   ): MoveParameterOptions | null {
-    // TODO: Implement full enumeration with access to internal zone state
-    // Current limitation: Cannot access RuleEngine's internal zone state directly
-    //
-    // Full implementation requires:
-    // 1. Access to hand zone cards
-    // 2. Practical subset of mulligan options (avoid 2^n explosion)
-    //    - Keep all (empty array)
-    //    - Mulligan all
-    //    - Mulligan individual cards
-    // 3. Optional: Card quality heuristics for AI guidance
-    //
-    // Temporary workaround: Return null to indicate no enumeration available
-    // This moves parameter validation to execution time via whyCannotExecuteMove()
-    return null;
+    // Check if move is available (validates phase, pending mulligan status, etc.)
+    const canExecute = this.canExecuteMove("alterHand", {
+      playerId,
+      params: { playerId, cardsToMulligan: [] }, // Empty array = keep all cards
+    });
+
+    if (!canExecute) {
+      return null;
+    }
+
+    // Return a simple keep-all option
+    // The move's enumerator provides more detailed options, but for now
+    // we just provide the simplest valid option (keep all cards)
+    return {
+      validCombinations: [
+        {
+          playerId,
+          cardsToMulligan: [], // Keep all cards
+        },
+      ],
+      parameterInfo: {},
+    };
   }
 
   /**
