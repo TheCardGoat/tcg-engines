@@ -1,3 +1,6 @@
+import { describe, expect, it } from "bun:test";
+import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/027-hakuna-matata";
+import { aPiratesLife } from "~/game-engine/engines/lorcana/src/cards/definitions/009/actions/ruby/132-a-pirate-s-life";
 import {
   TestEngine,
   TestStore,
@@ -5,6 +8,7 @@ import {
 import { stitchRockStar } from "../amber/003-stitch-rock-star";
 import { theQueenRegalMonarch } from "../amber/007-the-queen-regal-monarch";
 import { rapunzelSunshine } from "../amber/008-rapunzel-sunshine";
+import { powerlineWorldsGreatestRockStar } from "./110-powerline-world-s-greatest-rock-star";
 
 describe("Powerline - World's Greatest Rock Star", () => {
   it("Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Powerline.)", async () => {

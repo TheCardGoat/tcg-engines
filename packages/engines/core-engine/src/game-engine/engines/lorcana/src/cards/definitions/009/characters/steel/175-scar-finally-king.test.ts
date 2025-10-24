@@ -1,7 +1,11 @@
+import { describe, expect, it } from "bun:test";
+import { tipoGrowingSon } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/157-tipo-growing-son";
+import { heiheiProtectiveRooster } from "~/game-engine/engines/lorcana/src/cards/definitions/005/characters/179-heihei-protective-rooster";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { nalaUndauntedLioness } from "./173-nala-undaunted-lioness";
 import { scarFinallyKing } from "./175-scar-finally-king";
 
 describe("Scar - Finally King", () => {

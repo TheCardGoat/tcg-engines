@@ -1,7 +1,9 @@
+import { describe, expect, it } from "bun:test";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { powerlineWorldsGreatestRockStar } from "./110-powerline-world-s-greatest-rock-star";
 import { roxannePowerlineFan } from "./113-roxanne-powerline-fan";
 
 describe("Roxanne - Powerline Fan", () => {

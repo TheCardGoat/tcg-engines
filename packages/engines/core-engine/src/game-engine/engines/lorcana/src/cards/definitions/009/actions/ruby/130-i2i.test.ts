@@ -1,3 +1,6 @@
+import { describe, expect, it } from "bun:test";
+import { goofyDaredevil } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/111-goofy-daredevil";
+import { hakunaMatata } from "~/game-engine/engines/lorcana/src/cards/definitions/001/songs/027-hakuna-matata";
 import {
   TestEngine,
   TestStore,
@@ -8,6 +11,7 @@ import { rapunzelSunshine } from "../../characters/amber/008-rapunzel-sunshine";
 import { powerlineWorldsGreatestRockStar } from "../../characters/ruby/110-powerline-world-s-greatest-rock-star";
 import { maxGoofRockinTeen } from "../../characters/ruby/112-max-goof-rockin-teen";
 import { roxannePowerlineFan } from "../../characters/ruby/113-roxanne-powerline-fan";
+import { i2i } from "./130-i2i";
 
 describe("I2I", () => {
   it("Sing Together 9 (Any number of your or your teammates’ characters with total cost 9 or more may {E} to sing this song for free.)", async () => {

@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test";
+import { beastGraciousPrince } from "~/game-engine/engines/lorcana/src/cards/definitions/009/characters/amber/004-beast-gracious-prince";
 import {
   TestEngine,
   TestStore,
