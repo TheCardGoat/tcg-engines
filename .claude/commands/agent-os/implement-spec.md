@@ -32,7 +32,7 @@ task_assignments:
 
 Ensure each assigned subagent exists in both of these locations:
 - In implementers.yml there must be an implementer with this role ID.
-- In `.claude/agents/agent-os/implementation` there must be a file named by this implementer ID.
+- In `.claude/agents/agent-os` there must be a file named by this implementer ID.
 
 ### PHASE 2: Delegate task groups implementations to assigned subagents
 

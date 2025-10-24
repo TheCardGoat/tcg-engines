@@ -12,7 +12,13 @@
  * - Automatic state synchronization checks
  */
 
-import { createPlayerId, type RuleEngineOptions } from "@tcg/core";
+import {
+  createCardId,
+  createCardOperations,
+  createPlayerId,
+  createZoneOperations,
+  type RuleEngineOptions,
+} from "@tcg/core";
 import { LorcanaEngine } from "../engine/lorcana-engine";
 import { lorcanaGameDefinition } from "../game-definition/definition";
 import type {
@@ -46,6 +52,20 @@ export type TestInitialState = {
 };
 
 /**
+ * Test Card Definition
+ *
+ * Minimal card definition for testing combat and stats
+ */
+export type TestCardDefinition = {
+  id: string;
+  name?: string;
+  strength?: number;
+  willpower?: number;
+  lore?: number;
+  cost?: number;
+};
+
+/**
  * Test Engine Options
  */
 export type TestEngineOptions = {
@@ -55,6 +75,8 @@ export type TestEngineOptions = {
   seed?: string;
   /** Enable debug logging */
   debug?: boolean;
+  /** Optional card definitions for testing (with stats like strength, willpower) */
+  cardDefinitions?: Record<string, TestCardDefinition>;
 };
 
 /**
@@ -78,6 +100,12 @@ export class LorcanaTestEngine {
   /** Currently active player for move execution */
   private activePlayerEngine: string = PLAYER_ONE;
 
+  /** Card definitions registry (mutable for dynamic card creation in tests) */
+  private cardDefinitions: Record<string, TestCardDefinition> = {};
+
+  /** Counter for generating unique card IDs */
+  private cardCounter = 0;
+
   constructor(
     _playerOneState: TestInitialState = {},
     _playerTwoState: TestInitialState = {},
@@ -94,20 +122,28 @@ export class LorcanaTestEngine {
       seed: opts.seed || "test-seed-123",
     };
 
-    // Create single LorcanaEngine instance
-    this.engine = new LorcanaEngine(
-      lorcanaGameDefinition,
-      players,
-      engineOptions,
-    );
+    // Initialize card definitions registry (mutable for dynamic card creation)
+    // Use provided definitions or empty object
+    this.cardDefinitions = opts.cardDefinitions || {};
+
+    // Create game definition with card definitions registry
+    // The registry will be a closure over this.cardDefinitions, so modifications
+    // to this.cardDefinitions will be visible to the registry
+    const gameDefinition = {
+      ...lorcanaGameDefinition,
+      cards: this.cardDefinitions,
+    };
+
+    // Create single engine instance
+    this.engine = new LorcanaEngine(gameDefinition, players, engineOptions);
 
     // Aliases point to same engine
     this.authoritativeEngine = this.engine;
     this.playerOneEngine = this.engine;
     this.playerTwoEngine = this.engine;
 
-    // TODO: Initialize zones based on playerOneState and playerTwoState
-    // This requires zone operations to be available after engine creation
+    // Initialize zones with test cards
+    this.initializeZones(_playerOneState, _playerTwoState);
 
     // If skipPreGame is true, fast-forward to main game
     if (opts.skipPreGame) {
@@ -130,6 +166,130 @@ export class LorcanaTestEngine {
         // @ts-expect-error - Accessing private property for testing setup
         flowManager.currentPlayer = createPlayerId(PLAYER_ONE);
       }
+    }
+  }
+
+  /**
+   * Initialize zones with test cards
+   *
+   * BACKDOOR for testing: Accesses RuleEngine internal state to populate zones
+   * before any moves execute. This violates encapsulation but is necessary for
+   * AAA testing (Arrange-Act-Assert) where board state must be set up before moves.
+   *
+   * TODO: @tcg/core should expose a proper TestEngine base class with this capability
+   */
+  private initializeZones(
+    playerOneState: TestInitialState,
+    playerTwoState: TestInitialState,
+  ) {
+    // Access internal state directly (testing backdoor)
+    const internalState = (this.engine as any).internalState;
+
+    if (!internalState) {
+      throw new Error("Cannot access engine internal state for test setup");
+    }
+
+    // Add safety check for expected internal structure
+    if (!(internalState.zones && internalState.cards)) {
+      throw new Error("Engine internal state structure has changed");
+    }
+
+    // Create zone operations and card operations using internal state
+    const zoneOps = createZoneOperations(internalState);
+    const cardOps = createCardOperations(internalState);
+
+    // Helper to initialize metadata for created cards
+    const initializeCardMetadata = (cardIds: string[]) => {
+      for (const cardId of cardIds) {
+        // Initialize with default Lorcana card metadata
+        cardOps.setCardMeta(createCardId(cardId), {
+          damage: 0,
+          isExerted: false,
+          playedThisTurn: true, // Characters start with summoning sickness (played this turn)
+        } as any);
+      }
+    };
+
+    // Create cards for player one
+    if (playerOneState.hand) {
+      const cardIds = zoneOps.createDeck({
+        zoneId: "hand" as any,
+        playerId: createPlayerId(PLAYER_ONE),
+        cardCount: playerOneState.hand,
+        shuffle: false,
+      });
+      initializeCardMetadata(cardIds);
+    }
+
+    if (playerOneState.deck) {
+      const cardIds = zoneOps.createDeck({
+        zoneId: "deck" as any,
+        playerId: createPlayerId(PLAYER_ONE),
+        cardCount: playerOneState.deck,
+        shuffle: true, // Shuffle deck by default
+      });
+      initializeCardMetadata(cardIds);
+    }
+
+    if (playerOneState.play) {
+      const cardIds = zoneOps.createDeck({
+        zoneId: "play" as any,
+        playerId: createPlayerId(PLAYER_ONE),
+        cardCount: playerOneState.play,
+        shuffle: false,
+      });
+      initializeCardMetadata(cardIds);
+    }
+
+    if (playerOneState.inkwell) {
+      const cardIds = zoneOps.createDeck({
+        zoneId: "inkwell" as any,
+        playerId: createPlayerId(PLAYER_ONE),
+        cardCount: playerOneState.inkwell,
+        shuffle: false,
+      });
+      initializeCardMetadata(cardIds);
+    }
+
+    // Create cards for player two
+    if (playerTwoState.hand) {
+      const cardIds = zoneOps.createDeck({
+        zoneId: "hand" as any,
+        playerId: createPlayerId(PLAYER_TWO),
+        cardCount: playerTwoState.hand,
+        shuffle: false,
+      });
+      initializeCardMetadata(cardIds);
+    }
+
+    if (playerTwoState.deck) {
+      const cardIds = zoneOps.createDeck({
+        zoneId: "deck" as any,
+        playerId: createPlayerId(PLAYER_TWO),
+        cardCount: playerTwoState.deck,
+        shuffle: true,
+      });
+      initializeCardMetadata(cardIds);
+    }
+
+    if (playerTwoState.play) {
+      const cardIds = zoneOps.createDeck({
+        zoneId: "play" as any,
+        playerId: createPlayerId(PLAYER_TWO),
+        cardCount: playerTwoState.play,
+        shuffle: false,
+      });
+      initializeCardMetadata(cardIds);
+    }
+
+    if (playerTwoState.inkwell) {
+      const cardIds = zoneOps.createDeck({
+        zoneId: "inkwell" as any,
+        playerId: createPlayerId(PLAYER_TWO),
+        cardCount: playerTwoState.inkwell,
+        shuffle: false,
+      });
+      initializeCardMetadata(cardIds);
     }
   }
 
@@ -170,6 +330,10 @@ export class LorcanaTestEngine {
     // @ts-expect-error - Accessing private property for testing
     const internalState = this.engine.internalState;
 
+    // Access tracker system for test purposes
+    // @ts-expect-error - Accessing private property for testing
+    const trackerSystem = this.engine.trackerSystem;
+
     return {
       currentPhase: flowManager.getCurrentPhase(),
       currentSegment: flowManager.getCurrentSegment(),
@@ -178,6 +342,19 @@ export class LorcanaTestEngine {
       otp: internalState?.otp,
       choosingFirstPlayer: internalState?.choosingFirstPlayer,
       pendingMulligan: internalState?.pendingMulligan,
+      trackers: trackerSystem
+        ? {
+            check: (name: string, playerId: any) =>
+              trackerSystem.check(name, playerId),
+            mark: (name: string, playerId: any) =>
+              trackerSystem.mark(name, playerId),
+            unmark: (name: string, playerId: any) =>
+              trackerSystem.unmark(name, playerId),
+          }
+        : undefined,
+      flow: {
+        currentPhase: flowManager.getCurrentPhase(),
+      },
     };
   }
 
@@ -285,6 +462,59 @@ export class LorcanaTestEngine {
     });
   }
 
+  // ========== Resource Moves ==========
+
+  /**
+   * Put a card into the inkwell
+   */
+  putCardInInkwell(cardId: string) {
+    return this.executeMove("putACardIntoTheInkwell", {
+      cardId,
+    });
+  }
+
+  // ========== Core Game Moves ==========
+
+  /**
+   * Quest with a character to gain lore
+   */
+  quest(cardId: string) {
+    return this.executeMove("quest", {
+      cardId,
+    });
+  }
+
+  /**
+   * Challenge another character (combat)
+   */
+  challenge(attackerId: string, defenderId: string) {
+    return this.executeMove("challenge", {
+      attackerId,
+      defenderId,
+    });
+  }
+
+  // ========== Standard Moves ==========
+
+  /**
+   * Pass turn to next player
+   *
+   * Automatically syncs activePlayerEngine with flow manager's current player
+   * after turn transition completes.
+   */
+  passTurn() {
+    const result = this.executeMove("passTurn", {});
+
+    // Sync activePlayerEngine with flow manager's current player
+    // This ensures subsequent moves execute as the correct player
+    const currentPlayer = this.engine.getFlowManager()?.getCurrentPlayer();
+    if (currentPlayer) {
+      this.activePlayerEngine = currentPlayer;
+    }
+
+    return result;
+  }
+
   // ========== Move Enumeration ==========
 
   /**
@@ -338,30 +568,133 @@ export class LorcanaTestEngine {
   // ========== Zone Access Helpers ==========
 
   /**
-   * Get zone contents for a player
-   *
-   * @param zoneName - Name of the zone
-   * @param playerId - Player ID
-   * @returns Array of card IDs in zone or undefined
+   * Get cards in a zone for a player
    */
-  getZone(zoneName: string, playerId: string): string[] | undefined {
-    const state = this.engine.getState();
-    // @ts-expect-error - Accessing internal state for testing
-    const zones = state.zones?.[createPlayerId(playerId)];
-    return zones?.[zoneName]?.cards;
+  getZone(zoneId: string, playerId: string): string[] {
+    // Access internal state directly (testing backdoor)
+    const internalState = (this.engine as any).internalState;
+
+    if (!internalState) {
+      return [];
+    }
+
+    // Add safety check for expected internal structure
+    if (!(internalState.zones && internalState.cards)) {
+      console.warn("Engine internal state structure has changed");
+      return [];
+    }
+
+    // Create zone operations using internal state
+    const zoneOps = createZoneOperations(internalState);
+
+    return zoneOps.getCardsInZone(zoneId as any, createPlayerId(playerId));
   }
 
   /**
-   * Move a card between zones (helper for testing)
-   *
-   * @param cardId - Card to move
-   * @param targetZone - Destination zone
-   * @param playerId - Player who owns the card
+   * Get lore total for a player
    */
-  moveCard(_cardId: string, _targetZone: string, _playerId: string): void {
-    // TODO: Implement zone operations when available
-    // For now, this is a stub for tests that need it
-    throw new Error("moveCard not yet implemented - zone operations needed");
+  getLore(playerId: string): number {
+    const state = this.getState();
+    return state.loreScores[createPlayerId(playerId)] || 0;
+  }
+
+  /**
+   * Get damage on a card
+   */
+  getDamage(cardId: string): number {
+    // Access internal state directly (testing backdoor)
+    const internalState = (this.engine as any).internalState;
+
+    if (!internalState) {
+      return 0;
+    }
+
+    // Get card metadata which tracks damage
+    const cardMeta = internalState?.cardMetas?.[cardId];
+    return cardMeta?.damage || 0;
+  }
+
+  /**
+   * Get card metadata (for testing)
+   */
+  getCardMeta(cardId: string): LorcanaCardMeta | undefined {
+    // Access internal state directly (testing backdoor)
+    const internalState = (this.engine as any).internalState;
+
+    if (!internalState) {
+      return undefined;
+    }
+
+    return internalState?.cardMetas?.[cardId];
+  }
+
+  /**
+   * Create a test character in play with specific stats
+   *
+   * BACKDOOR for testing: Creates a character card with stats directly in play zone.
+   * Useful for testing combat mechanics that require strength/willpower.
+   *
+   * @param playerId - Player who owns the character
+   * @param stats - Character stats (strength, willpower, etc.)
+   * @returns Card ID of the created character
+   *
+   * @example
+   * ```typescript
+   * const strongChar = testEngine.createCharacterInPlay(PLAYER_ONE, {
+   *   strength: 5,
+   *   willpower: 7,
+   * });
+   * ```
+   */
+  createCharacterInPlay(
+    playerId: string,
+    stats: { strength?: number; willpower?: number; lore?: number } = {},
+  ): string {
+    // Access internal state directly (testing backdoor)
+    const internalState = (this.engine as any).internalState;
+
+    if (!internalState) {
+      throw new Error("Cannot access engine internal state for test setup");
+    }
+
+    // Create zone operations using internal state
+    const zoneOps = createZoneOperations(internalState);
+    const pid = createPlayerId(playerId);
+
+    // Generate unique card ID using counter
+    const cardId = `test-character-${this.cardCounter++}`;
+
+    // Manually add card to zone (bypassing createDeck which generates deterministic IDs)
+    // Access internal state to directly add card
+    if (!internalState.zones["play"]) {
+      throw new Error("Play zone not found");
+    }
+    internalState.zones["play"].cardIds.push(cardId);
+    internalState.cards[cardId] = {
+      definitionId: "placeholder",
+      ownerId: pid,
+      zoneId: "play" as any,
+      position: internalState.zones["play"].cardIds.length - 1,
+    };
+
+    // Add card definition to registry (modifying this.cardDefinitions which the registry wraps)
+    this.cardDefinitions[cardId] = {
+      id: cardId,
+      name: "Test Character",
+      strength: stats.strength ?? 1,
+      willpower: stats.willpower ?? 1,
+      lore: stats.lore ?? 1,
+    };
+
+    // Initialize card metadata (ready to use, no summoning sickness)
+    const cardOps = createCardOperations(internalState);
+    cardOps.setCardMeta(createCardId(cardId), {
+      damage: 0,
+      isExerted: false,
+      playedThisTurn: false, // No summoning sickness - ready to use immediately
+    } as any);
+
+    return cardId;
   }
 
   // ========== Cleanup ==========

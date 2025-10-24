@@ -26,7 +26,7 @@ export const Sinanju: UnitCardDefinition = {
   ],
   abilities: [
     {
-      trigger: "DURING_PAIR",
+      condition: "DURING_PAIR",
       description:
         "【During Pair】 This Unit gains <High-Maneuver>. (This Unit can't be blocked.) During your turn, when this Unit destroys an enemy shield area card with battle damage, choose 1 enemy Unit. Deal 2 damage to it.",
       effect: {

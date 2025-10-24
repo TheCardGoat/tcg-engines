@@ -21,7 +21,7 @@ export const GearaDogaSleeves: UnitCardDefinition = {
   linkRequirements: ["-"],
   abilities: [
     {
-      trigger: "ON_DESTROY",
+      trigger: "ON_DESTROYED",
       description:
         "【Destroyed】 Choose 1 enemy Unit with 5 or less AP. Deal 1 damage to it.",
       effect: {

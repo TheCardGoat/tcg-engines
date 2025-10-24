@@ -21,7 +21,7 @@ export const Char039sZaku: UnitCardDefinition = {
   linkRequirements: ["char-aznable"],
   abilities: [
     {
-      trigger: "ON_DESTROY",
+      trigger: "ON_DESTROYED",
       description:
         "【Destroyed】 Deploy 1 rested [Char&#039;s Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
       effect: {

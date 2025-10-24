@@ -27,7 +27,7 @@ export const GundamHeavyarms: UnitCardDefinition = {
   ],
   abilities: [
     {
-      trigger: "DURING_PAIR",
+      condition: "DURING_PAIR",
       description:
         "【During Pair】 This Unit gains <Breach 3>. (When this Unit&#039;s attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent&#039;s shield area.)",
       effect: {

@@ -21,7 +21,7 @@ export const Noin039sAries: UnitCardDefinition = {
   linkRequirements: ["lucrezia-noin"],
   abilities: [
     {
-      trigger: "ON_DESTROY",
+      trigger: "ON_DESTROYED",
       description:
         "【Destroyed】 If you have another (OZ) Unit in play, draw 1.",
       effect: {

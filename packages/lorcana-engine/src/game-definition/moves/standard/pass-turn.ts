@@ -41,8 +41,9 @@ export const passTurn = createMove<
 
     return true;
   },
-  reducer: (_draft, _context) => {
-    // Engine handles turn transitions automatically
-    // No manual state management needed
+  reducer: (_draft, context) => {
+    // End the current phase
+    // Flow will automatically transition: main → end → next turn's beginning
+    context.flow?.endPhase();
   },
 });
