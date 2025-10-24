@@ -83,20 +83,52 @@ export class TrackerSystem {
 
   /**
    * Reset all turn-scoped trackers
+   * Supports wildcard patterns (e.g., "quested:*" matches "quested:card-123", "quested:card-456", etc.)
    */
   public resetTurn(): void {
-    for (const trackerName of this.config.perTurn ?? []) {
-      this.state.delete(trackerName);
+    for (const pattern of this.config.perTurn ?? []) {
+      if (pattern.endsWith("*")) {
+        // Wildcard pattern - delete all trackers matching the prefix
+        const prefix = pattern.slice(0, -1); // Remove the "*"
+        const keysToDelete: string[] = [];
+        for (const trackerName of this.state.keys()) {
+          if (trackerName.startsWith(prefix)) {
+            keysToDelete.push(trackerName);
+          }
+        }
+        for (const key of keysToDelete) {
+          this.state.delete(key);
+        }
+      } else {
+        // Exact match - delete specific tracker
+        this.state.delete(pattern);
+      }
     }
   }
 
   /**
    * Reset all trackers for a specific phase
+   * Supports wildcard patterns (e.g., "action:*" matches "action:move", "action:attack", etc.)
    */
   public resetPhase(phaseName: string): void {
     const phaseTrackers = this.config.perPhase?.[phaseName] ?? [];
-    for (const trackerName of phaseTrackers) {
-      this.state.delete(trackerName);
+    for (const pattern of phaseTrackers) {
+      if (pattern.endsWith("*")) {
+        // Wildcard pattern - delete all trackers matching the prefix
+        const prefix = pattern.slice(0, -1); // Remove the "*"
+        const keysToDelete: string[] = [];
+        for (const trackerName of this.state.keys()) {
+          if (trackerName.startsWith(prefix)) {
+            keysToDelete.push(trackerName);
+          }
+        }
+        for (const key of keysToDelete) {
+          this.state.delete(key);
+        }
+      } else {
+        // Exact match - delete specific tracker
+        this.state.delete(pattern);
+      }
     }
   }
 

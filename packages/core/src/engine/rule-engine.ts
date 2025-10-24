@@ -686,6 +686,10 @@ export class RuleEngine<
         if (pendingTurnEnd) {
           this.flowManager.nextTurn();
         }
+
+        // Check automatic endIf transitions after move execution
+        // This enables automatic phase/segment/turn transitions based on endIf conditions
+        this.flowManager.checkEndConditions();
       }
 
       // Log successful completion (DEBUG level)
@@ -814,6 +818,11 @@ export class RuleEngine<
       history: dummyHistoryOps,
       registry: this.cardRegistry,
       flow: flowState,
+      trackers: {
+        check: (name, playerId) => this.trackerSystem.check(name, playerId),
+        mark: (name, playerId) => this.trackerSystem.mark(name, playerId),
+        unmark: (name, playerId) => this.trackerSystem.unmark(name, playerId),
+      },
     };
   }
 
@@ -841,7 +850,7 @@ export class RuleEngine<
       } {
     const moveDef = this.gameDefinition.moves[moveId as keyof TMoves];
 
-    if (!(moveDef && moveDef.condition)) {
+    if (!moveDef?.condition) {
       return { success: true };
     }
 

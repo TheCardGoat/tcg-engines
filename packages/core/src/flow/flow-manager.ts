@@ -113,6 +113,7 @@ export class FlowManager<TState, TCardMeta = any> {
   private pendingEndPhase = false;
   private pendingEndStep = false;
   private pendingEndTurn = false;
+  private isTransitioning = false; // Guard against nested transitions
   private onTurnEndCallback?: () => void;
   private onPhaseEndCallback?: (phaseName: string) => void;
   private gameOperations?: GameOperations;
@@ -296,6 +297,12 @@ export class FlowManager<TState, TCardMeta = any> {
 
     // Handle pending programmatic transitions OUTSIDE of produce
     // Order matters: step → phase → turn → game segment
+    // Skip if we're already transitioning to avoid nested transitions
+    if (this.isTransitioning) {
+      // Pending flags remain set, will be processed after current transition
+      return;
+    }
+
     if (this.pendingEndStep) {
       this.pendingEndStep = false;
       this.transitionToNextStep();
@@ -311,6 +318,34 @@ export class FlowManager<TState, TCardMeta = any> {
     if (this.pendingEndGameSegment) {
       this.pendingEndGameSegment = false;
       this.transitionToNextGameSegment();
+    }
+  }
+
+  /**
+   * Process any pending transitions that accumulated during a transition
+   * Called after setting isTransitioning = false
+   */
+  private processPendingTransitions(): void {
+    // Process in order: step → phase → turn → segment
+    while (
+      this.pendingEndStep ||
+      this.pendingEndPhase ||
+      this.pendingEndTurn ||
+      this.pendingEndGameSegment
+    ) {
+      if (this.pendingEndStep) {
+        this.pendingEndStep = false;
+        this.transitionToNextStep();
+      } else if (this.pendingEndPhase) {
+        this.pendingEndPhase = false;
+        this.transitionToNextPhase();
+      } else if (this.pendingEndTurn) {
+        this.pendingEndTurn = false;
+        this.transitionToNextTurn();
+      } else if (this.pendingEndGameSegment) {
+        this.pendingEndGameSegment = false;
+        this.transitionToNextGameSegment();
+      }
     }
   }
 
@@ -417,7 +452,7 @@ export class FlowManager<TState, TCardMeta = any> {
   /**
    * Task 9.7: Check and execute endIf conditions
    */
-  private checkEndConditions(): void {
+  public checkEndConditions(): void {
     if (!this.currentGameSegment) return;
 
     const gameSegments = this.normalizedGameSegments;
@@ -434,7 +469,8 @@ export class FlowManager<TState, TCardMeta = any> {
         if (stepDef?.endIf) {
           const context = this.createReadOnlyContext();
           if (stepDef.endIf(context)) {
-            this.nextStep();
+            // Call private transition to avoid recursive checkEndConditions
+            this.transitionToNextStep();
             return;
           }
         }
@@ -447,7 +483,8 @@ export class FlowManager<TState, TCardMeta = any> {
       if (phaseDef?.endIf) {
         const context = this.createReadOnlyContext();
         if (phaseDef.endIf(context)) {
-          this.nextPhase();
+          // Call private transition to avoid recursive checkEndConditions
+          this.transitionToNextPhase();
           return;
         }
       }
@@ -457,7 +494,8 @@ export class FlowManager<TState, TCardMeta = any> {
     if (gameSegmentDef.turn.endIf) {
       const context = this.createReadOnlyContext();
       if (gameSegmentDef.turn.endIf(context)) {
-        this.nextTurn();
+        // Call private transition to avoid recursive checkEndConditions
+        this.transitionToNextTurn();
         return;
       }
     }
@@ -466,7 +504,8 @@ export class FlowManager<TState, TCardMeta = any> {
     if (gameSegmentDef.endIf) {
       const context = this.createReadOnlyContext();
       if (gameSegmentDef.endIf(context)) {
-        this.nextGameSegment();
+        // Call private transition to avoid recursive checkEndConditions
+        this.transitionToNextGameSegment();
       }
     }
   }
@@ -514,8 +553,14 @@ export class FlowManager<TState, TCardMeta = any> {
     const phases = gameSegmentDef.turn.phases;
     if (!(this.currentPhase && this.currentStep && phases)) return;
 
+    // Set guard to prevent nested transitions
+    this.isTransitioning = true;
+
     const phaseDef = phases[this.currentPhase];
-    if (!phaseDef?.steps) return;
+    if (!phaseDef?.steps) {
+      this.isTransitioning = false;
+      return;
+    }
 
     const stepDef = phaseDef.steps[this.currentStep];
 
@@ -534,6 +579,10 @@ export class FlowManager<TState, TCardMeta = any> {
       this.currentStep = undefined;
       this.transitionToNextPhase();
     }
+
+    // Clear guard and process any accumulated pending transitions
+    this.isTransitioning = false;
+    this.processPendingTransitions();
   }
 
   /**
@@ -548,6 +597,9 @@ export class FlowManager<TState, TCardMeta = any> {
 
     const phases = gameSegmentDef.turn.phases;
     if (!(this.currentPhase && phases)) return;
+
+    // Set guard to prevent nested transitions
+    this.isTransitioning = true;
 
     const phaseDef = phases[this.currentPhase];
     const previousPhase = this.currentPhase;
@@ -603,6 +655,10 @@ export class FlowManager<TState, TCardMeta = any> {
       // No more phases, end turn
       this.transitionToNextTurn();
     }
+
+    // Clear guard and process any accumulated pending transitions
+    this.isTransitioning = false;
+    this.processPendingTransitions();
   }
 
   /**
@@ -614,6 +670,9 @@ export class FlowManager<TState, TCardMeta = any> {
     const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
     if (!gameSegmentDef) return;
+
+    // Set guard to prevent nested transitions
+    this.isTransitioning = true;
 
     const phases = gameSegmentDef.turn.phases;
 
@@ -697,6 +756,10 @@ export class FlowManager<TState, TCardMeta = any> {
         }
       }
     }
+
+    // Clear guard and process any accumulated pending transitions
+    this.isTransitioning = false;
+    this.processPendingTransitions();
   }
 
   /**
@@ -708,6 +771,9 @@ export class FlowManager<TState, TCardMeta = any> {
     const gameSegments = this.normalizedGameSegments;
     const gameSegmentDef = gameSegments[this.currentGameSegment];
     if (!gameSegmentDef) return;
+
+    // Set guard to prevent nested transitions
+    this.isTransitioning = true;
 
     const phases = gameSegmentDef.turn.phases;
 
@@ -807,6 +873,10 @@ export class FlowManager<TState, TCardMeta = any> {
       this.currentPhase = undefined;
       this.currentStep = undefined;
     }
+
+    // Clear guard and process any accumulated pending transitions
+    this.isTransitioning = false;
+    this.processPendingTransitions();
   }
 
   /**

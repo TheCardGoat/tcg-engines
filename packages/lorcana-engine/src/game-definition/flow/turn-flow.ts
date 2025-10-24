@@ -1,4 +1,4 @@
-import type { FlowDefinition } from "@tcg/core";
+import { createPlayerId, type FlowDefinition } from "@tcg/core";
 import type {
   LorcanaCardMeta,
   LorcanaGameState,
@@ -114,6 +114,40 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
       // No next segment - game ends when this segment ends
       turn: {
         initialPhase: "beginning",
+        onBegin: (context) => {
+          // Switch to next player at start of each turn
+          // In a 2-player game, alternate between players
+          const currentPlayer = context.getCurrentPlayer();
+          const otp = context.game.getOTP();
+
+          if (currentPlayer && otp) {
+            // Alternate players (assumes 2-player game)
+            // TODO: Support N-player games with proper turn order
+            const playerIds = [String(otp)];
+            // Get the other player (not OTP)
+            // This is a simplification for 2-player games
+            // In production, you'd have a player list to iterate through
+            const otpStr = String(otp);
+            const currentIndex = playerIds.indexOf(currentPlayer);
+
+            // For now, just toggle between two players based on turn number
+            // If turn is odd, OTP plays; if even, other player plays
+            const turnNum = context.getTurnNumber();
+            // This assumes OTP is player_one - needs improvement for robustness
+            context.setCurrentPlayer(
+              turnNum % 2 === 1
+                ? otpStr
+                : otpStr === "player_one"
+                  ? "player_two"
+                  : "player_one",
+            );
+          } else {
+            // First turn - set to OTP
+            if (otp) {
+              context.setCurrentPlayer(String(otp));
+            }
+          }
+        },
         phases: {
           /**
            * Beginning Phase
@@ -124,8 +158,30 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
           beginning: {
             order: 1,
             next: "main",
-            onBegin: (_context) => {
-              // Engine handles readying cards and drawing
+            onBegin: (context) => {
+              // Ready all cards for the current player
+              const currentPlayer = context.getCurrentPlayer();
+              if (!currentPlayer) return;
+
+              // Get all cards owned by current player
+              const playZone = context.zones.getCardsInZone(
+                "play" as any,
+                createPlayerId(currentPlayer),
+              );
+
+              // Ready each card (clear exerted status and summoning sickness)
+              for (const cardId of playZone) {
+                const meta = context.cards.getCardMeta(cardId);
+                if (meta) {
+                  context.cards.updateCardMeta(cardId, {
+                    isExerted: false,
+                    playedThisTurn: false, // Clear summoning sickness
+                  });
+                }
+              }
+
+              // TODO: Draw a card (if not first turn)
+              // This requires checking if it's turn 1 and drawing from deck
             },
             endIf: () => true, // Auto-advance
           },
@@ -147,11 +203,11 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
           /**
            * End Phase
            * - Cleanup effects
-           * - Automatically advances to next player's beginning phase
+           * - Automatically advances to next turn (no next phase defined)
            */
           end: {
             order: 3,
-            next: "beginning",
+            // No 'next' defined - FlowManager will call transitionToNextTurn()
             onBegin: (_context) => {
               // Cleanup logic could go here
             },

@@ -296,9 +296,10 @@ describe("Move: Alter Hand (Mulligan)", () => {
 
       expect(result.success).toBe(false);
       if (!result.success) {
-        // Player has already mulliganed (not in pending list)
-        expect(result.errorCode).toBe("ALREADY_MULLIGANED");
-        expect(result.error).toContain("already mulliganed");
+        // Phase has ended (no longer in mulligan phase)
+        // After phase transition fix, game correctly advances to next phase
+        expect(result.errorCode).toBe("WRONG_PHASE");
+        expect(result.error).toContain("phase");
       }
     });
 
