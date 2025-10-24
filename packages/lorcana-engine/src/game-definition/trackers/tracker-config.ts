@@ -12,8 +12,9 @@
 export const trackerConfig = {
   /**
    * Actions that reset at the end of each turn
+   * Supports wildcards - "quested:*" matches all "quested:cardId" trackers
    */
-  perTurn: ["hasInked"],
+  perTurn: ["hasInked", "quested:*"],
 
   /**
    * Track actions separately for each player

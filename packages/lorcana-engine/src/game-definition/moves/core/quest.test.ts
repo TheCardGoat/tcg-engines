@@ -66,18 +66,14 @@ describe("Move: Quest", () => {
       const character = playZone[0];
 
       // Character should start ready (not exerted)
-      const ctx = testEngine.getCtx();
-      const internalState = (testEngine.engine as any).internalState;
-      const cardMeta = internalState?.cards?.cardsMetadata?.get(character);
+      const cardMeta = testEngine.getCardMeta(character);
       expect(cardMeta?.isExerted).toBeFalsy();
 
       // Quest with the character
       testEngine.quest(character);
 
       // Character should now be exerted
-      const newInternalState = (testEngine.engine as any).internalState;
-      const newCardMeta =
-        newInternalState?.cards?.cardsMetadata?.get(character);
+      const newCardMeta = testEngine.getCardMeta(character);
       expect(newCardMeta?.isExerted).toBe(true);
     });
 
@@ -405,6 +401,9 @@ describe("Move: Quest", () => {
             lore = testEngine.getLore(PLAYER_ONE);
           } catch {}
         }
+
+        // Stop if we've reached 20 lore (game ended)
+        if (lore >= 20) break;
 
         // Pass turns to reset characters
         testEngine.passTurn();

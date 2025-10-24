@@ -13,6 +13,7 @@
  */
 
 import {
+  createCardOperations,
   createPlayerId,
   createZoneOperations,
   RuleEngine,
@@ -118,6 +119,12 @@ export class LorcanaTestEngine {
   /** Currently active player for move execution */
   private activePlayerEngine: string = PLAYER_ONE;
 
+  /** Card definitions registry (mutable for dynamic card creation in tests) */
+  private cardDefinitions: Record<string, TestCardDefinition> = {};
+
+  /** Counter for generating unique card IDs */
+  private cardCounter = 0;
+
   constructor(
     _playerOneState: TestInitialState = {},
     _playerTwoState: TestInitialState = {},
@@ -134,13 +141,17 @@ export class LorcanaTestEngine {
       seed: _opts.seed || "test-seed-123",
     };
 
-    // Create game definition with test card definitions (if provided)
-    const gameDefinition = _opts.cardDefinitions
-      ? {
-          ...lorcanaGameDefinition,
-          cards: _opts.cardDefinitions,
-        }
-      : lorcanaGameDefinition;
+    // Initialize card definitions registry (mutable for dynamic card creation)
+    // Use provided definitions or empty object
+    this.cardDefinitions = _opts.cardDefinitions || {};
+
+    // Create game definition with card definitions registry
+    // The registry will be a closure over this.cardDefinitions, so modifications
+    // to this.cardDefinitions will be visible to the registry
+    const gameDefinition = {
+      ...lorcanaGameDefinition,
+      cards: this.cardDefinitions,
+    };
 
     // Create single engine instance
     this.engine = new RuleEngine(gameDefinition, players, engineOptions);
@@ -179,81 +190,102 @@ export class LorcanaTestEngine {
       throw new Error("Engine internal state structure has changed");
     }
 
-    // Create zone operations using internal state
+    // Create zone operations and card operations using internal state
     const zoneOps = createZoneOperations(internalState);
+    const cardOps = createCardOperations(internalState);
+
+    // Helper to initialize metadata for created cards
+    const initializeCardMetadata = (cardIds: string[]) => {
+      for (const cardId of cardIds) {
+        // Initialize with default Lorcana card metadata
+        cardOps.setCardMeta(cardId, {
+          damage: 0,
+          isExerted: false,
+          playedThisTurn: true, // Characters start with summoning sickness (played this turn)
+        } as any);
+      }
+    };
 
     // Create cards for player one
     if (playerOneState.hand) {
-      zoneOps.createDeck({
+      const cardIds = zoneOps.createDeck({
         zoneId: "hand" as any,
         playerId: createPlayerId(PLAYER_ONE),
         cardCount: playerOneState.hand,
         shuffle: false,
       });
+      initializeCardMetadata(cardIds);
     }
 
     if (playerOneState.deck) {
-      zoneOps.createDeck({
+      const cardIds = zoneOps.createDeck({
         zoneId: "deck" as any,
         playerId: createPlayerId(PLAYER_ONE),
         cardCount: playerOneState.deck,
         shuffle: true, // Shuffle deck by default
       });
+      initializeCardMetadata(cardIds);
     }
 
     if (playerOneState.play) {
-      zoneOps.createDeck({
+      const cardIds = zoneOps.createDeck({
         zoneId: "play" as any,
         playerId: createPlayerId(PLAYER_ONE),
         cardCount: playerOneState.play,
         shuffle: false,
       });
+      initializeCardMetadata(cardIds);
     }
 
     if (playerOneState.inkwell) {
-      zoneOps.createDeck({
+      const cardIds = zoneOps.createDeck({
         zoneId: "inkwell" as any,
         playerId: createPlayerId(PLAYER_ONE),
         cardCount: playerOneState.inkwell,
         shuffle: false,
       });
+      initializeCardMetadata(cardIds);
     }
 
     // Create cards for player two
     if (playerTwoState.hand) {
-      zoneOps.createDeck({
+      const cardIds = zoneOps.createDeck({
         zoneId: "hand" as any,
         playerId: createPlayerId(PLAYER_TWO),
         cardCount: playerTwoState.hand,
         shuffle: false,
       });
+      initializeCardMetadata(cardIds);
     }
 
     if (playerTwoState.deck) {
-      zoneOps.createDeck({
+      const cardIds = zoneOps.createDeck({
         zoneId: "deck" as any,
         playerId: createPlayerId(PLAYER_TWO),
         cardCount: playerTwoState.deck,
         shuffle: true,
       });
+      initializeCardMetadata(cardIds);
     }
 
     if (playerTwoState.play) {
-      zoneOps.createDeck({
+      const cardIds = zoneOps.createDeck({
         zoneId: "play" as any,
         playerId: createPlayerId(PLAYER_TWO),
         cardCount: playerTwoState.play,
         shuffle: false,
       });
+      initializeCardMetadata(cardIds);
     }
 
     if (playerTwoState.inkwell) {
-      zoneOps.createDeck({
+      const cardIds = zoneOps.createDeck({
         zoneId: "inkwell" as any,
         playerId: createPlayerId(PLAYER_TWO),
         cardCount: playerTwoState.inkwell,
         shuffle: false,
       });
+      initializeCardMetadata(cardIds);
     }
   }
 
@@ -471,9 +503,21 @@ export class LorcanaTestEngine {
 
   /**
    * Pass turn to next player
+   *
+   * Automatically syncs activePlayerEngine with flow manager's current player
+   * after turn transition completes.
    */
   passTurn() {
-    return this.executeMove("passTurn", {});
+    const result = this.executeMove("passTurn", {});
+
+    // Sync activePlayerEngine with flow manager's current player
+    // This ensures subsequent moves execute as the correct player
+    const currentPlayer = this.engine.getFlowManager()?.getCurrentPlayer();
+    if (currentPlayer) {
+      this.activePlayerEngine = currentPlayer;
+    }
+
+    return result;
   }
 
   // ========== Zone Access Helpers ==========
@@ -521,7 +565,7 @@ export class LorcanaTestEngine {
     }
 
     // Get card metadata which tracks damage
-    const cardMeta = internalState?.cards?.cardsMetadata?.get(cardId);
+    const cardMeta = internalState?.cardMetas?.[cardId];
     return cardMeta?.damage || 0;
   }
 
@@ -536,7 +580,7 @@ export class LorcanaTestEngine {
       return undefined;
     }
 
-    return internalState?.cards?.cardsMetadata?.get(cardId);
+    return internalState?.cardMetas?.[cardId];
   }
 
   /**
@@ -572,25 +616,38 @@ export class LorcanaTestEngine {
     const zoneOps = createZoneOperations(internalState);
     const pid = createPlayerId(playerId);
 
-    // Create a single card in play zone using zone operations
-    const [cardId] = zoneOps.createDeck({
-      zoneId: "play" as any,
-      playerId: pid,
-      cardCount: 1,
-      shuffle: false,
-    });
+    // Generate unique card ID using counter
+    const cardId = `test-character-${this.cardCounter++}`;
 
-    // Add card definition to registry
-    const gameDefinition = (this.engine as any).definition;
-    if (gameDefinition && gameDefinition.cards) {
-      gameDefinition.cards[cardId] = {
-        id: cardId,
-        name: "Test Character",
-        strength: stats.strength ?? 1,
-        willpower: stats.willpower ?? 1,
-        lore: stats.lore ?? 1,
-      };
+    // Manually add card to zone (bypassing createDeck which generates deterministic IDs)
+    // Access internal state to directly add card
+    if (!internalState.zones["play"]) {
+      throw new Error("Play zone not found");
     }
+    internalState.zones["play"].cardIds.push(cardId);
+    internalState.cards[cardId] = {
+      definitionId: "placeholder",
+      ownerId: pid,
+      zoneId: "play" as any,
+      position: internalState.zones["play"].cardIds.length - 1,
+    };
+
+    // Add card definition to registry (modifying this.cardDefinitions which the registry wraps)
+    this.cardDefinitions[cardId] = {
+      id: cardId,
+      name: "Test Character",
+      strength: stats.strength ?? 1,
+      willpower: stats.willpower ?? 1,
+      lore: stats.lore ?? 1,
+    };
+
+    // Initialize card metadata (ready to use, no summoning sickness)
+    const cardOps = createCardOperations(internalState);
+    cardOps.setCardMeta(cardId, {
+      damage: 0,
+      isExerted: false,
+      playedThisTurn: false, // No summoning sickness - ready to use immediately
+    } as any);
 
     return cardId;
   }

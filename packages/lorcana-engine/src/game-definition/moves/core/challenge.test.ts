@@ -46,10 +46,11 @@ describe("Move: Challenge", () => {
       willpower: 4,
     });
 
-    // Defender: 2 strength, 3 willpower (Player Two)
+    // Defender: 2 strength, 4 willpower (Player Two)
+    // Willpower 4 so it survives 3 damage in basic challenge test
     defender = testEngine.createCharacterInPlay(PLAYER_TWO, {
       strength: 2,
-      willpower: 3,
+      willpower: 4,
     });
   });
 
@@ -152,15 +153,21 @@ describe("Move: Challenge", () => {
     });
 
     it("should banish defender when damage >= Willpower", () => {
+      // Create a fragile defender with 3 willpower that will be banished
+      const fragileDefender = testEngine.createCharacterInPlay(PLAYER_TWO, {
+        strength: 2,
+        willpower: 3, // Will be banished by 3 damage from attacker
+      });
+
       // Defender: 2 str, 3 will - takes 3 damage from attacker (3 str)
       // 3 damage >= 3 willpower -> banished
-      testEngine.challenge(attacker, defender);
+      testEngine.challenge(attacker, fragileDefender);
 
       // Defender should be banished (moved to discard)
       const p2Play = testEngine.getZone("play", PLAYER_TWO);
       const p2Discard = testEngine.getZone("discard", PLAYER_TWO);
-      expect(p2Play).not.toContain(defender);
-      expect(p2Discard).toContain(defender);
+      expect(p2Play).not.toContain(fragileDefender);
+      expect(p2Discard).toContain(fragileDefender);
 
       // Attacker survives (2 damage < 4 willpower)
       const p1Play = testEngine.getZone("play", PLAYER_ONE);
@@ -485,11 +492,19 @@ describe("Move: Challenge", () => {
 
   describe("Integration Tests", () => {
     it("should handle realistic combat scenario over multiple turns", () => {
+      // Create a fragile defender with 3 willpower for this scenario
+      const fragileDefender = testEngine.createCharacterInPlay(PLAYER_TWO, {
+        strength: 2,
+        willpower: 3,
+      });
+
       // Turn 1: Player one challenges
-      testEngine.challenge(attacker, defender);
+      testEngine.challenge(attacker, fragileDefender);
 
       // Defender should be banished (3 damage >= 3 willpower)
-      expect(testEngine.getZone("discard", PLAYER_TWO)).toContain(defender);
+      expect(testEngine.getZone("discard", PLAYER_TWO)).toContain(
+        fragileDefender,
+      );
 
       // Attacker took 2 damage
       expect(testEngine.getDamage(attacker)).toBe(2);

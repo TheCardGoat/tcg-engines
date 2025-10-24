@@ -818,6 +818,11 @@ export class RuleEngine<
       history: dummyHistoryOps,
       registry: this.cardRegistry,
       flow: flowState,
+      trackers: {
+        check: (name, playerId) => this.trackerSystem.check(name, playerId),
+        mark: (name, playerId) => this.trackerSystem.mark(name, playerId),
+        unmark: (name, playerId) => this.trackerSystem.unmark(name, playerId),
+      },
     };
   }
 
