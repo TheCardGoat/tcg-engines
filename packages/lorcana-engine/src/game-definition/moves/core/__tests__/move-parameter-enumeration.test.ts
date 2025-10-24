@@ -256,13 +256,10 @@ describe("Core Move Parameter Enumeration", () => {
     });
 
     it("should return null if already inked this turn", () => {
-      // Execute ink move once
+      // Execute ink move once using the public helper
       const hand = testEngine.getZone("hand", PLAYER_ONE);
       if (hand && hand.length > 0) {
-        testEngine.executeMove("putACardIntoTheInkwell", {
-          playerId: createPlayerId(PLAYER_ONE),
-          params: { cardId: hand[0] },
-        });
+        testEngine.putCardInInkwell(hand[0]);
       }
 
       // Try to enumerate again - should return null (move not available)
@@ -272,9 +269,7 @@ describe("Core Move Parameter Enumeration", () => {
       );
 
       // Move should no longer be available after using once per turn
-      if (params === null) {
-        expect(params).toBeNull();
-      }
+      expect(params).toBeNull();
     });
   });
 

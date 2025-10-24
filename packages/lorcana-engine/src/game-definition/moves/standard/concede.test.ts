@@ -98,10 +98,14 @@ describe("Move: Concede", () => {
     it("should prevent further moves after concede", () => {
       // Player one concedes
       testEngine.changeActivePlayer(PLAYER_ONE);
-      testEngine.engine.executeMove("concede", {
+      const concedeResult = testEngine.engine.executeMove("concede", {
         playerId: createPlayerId(PLAYER_ONE),
         params: {},
       });
+
+      // Verify concede succeeded
+      expect(concedeResult.success).toBe(true);
+      expect(testEngine.engine.hasGameEnded()).toBe(true);
 
       // Try to execute another move
       testEngine.changeActivePlayer(PLAYER_TWO);

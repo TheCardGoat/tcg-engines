@@ -1029,4 +1029,16 @@ export class FlowManager<TState, TCardMeta = any> {
     this.gameState = produce(this.gameState, updater);
     this.checkEndConditions();
   }
+
+  /**
+   * Sync internal game state with external state
+   *
+   * Called by RuleEngine after move execution to ensure FlowManager
+   * has the latest state when checking endIf conditions.
+   *
+   * @param newState - The new game state after move execution
+   */
+  public syncState(newState: TState): void {
+    this.gameState = newState;
+  }
 }

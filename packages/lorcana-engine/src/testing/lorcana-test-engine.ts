@@ -697,6 +697,23 @@ export class LorcanaTestEngine {
     return cardId;
   }
 
+  // ========== Card Manipulation ==========
+
+  /**
+   * Move a card from one zone to another
+   * Useful for test setup
+   */
+  moveCard(cardId: string, targetZone: string, playerId?: string) {
+    const internalState = (this.engine as any).internalState;
+    const zoneOps = createZoneOperations(internalState);
+
+    zoneOps.moveCard({
+      cardId: createCardId(cardId),
+      targetZoneId: targetZone as any,
+      targetOwnerId: playerId ? createPlayerId(playerId) : undefined,
+    });
+  }
+
   // ========== Cleanup ==========
 
   /**

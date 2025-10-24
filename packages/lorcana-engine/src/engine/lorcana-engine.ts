@@ -552,17 +552,51 @@ export class LorcanaEngine extends RuleEngine<
       return null;
     }
 
-    // Return a simple keep-all option
-    // The move's enumerator provides more detailed options, but for now
-    // we just provide the simplest valid option (keep all cards)
+    // Get cards in hand to enumerate mulligan options
+    // Access internal state to get hand cards (testing backdoor similar to LorcanaTestEngine)
+    const internalState = (this as any).internalState;
+    if (!internalState) {
+      // Fallback to simple keep-all option if we can't access internal state
+      return {
+        validCombinations: [
+          {
+            playerId,
+            cardsToMulligan: [],
+          },
+        ],
+        parameterInfo: {},
+      };
+    }
+
+    const handCards =
+      internalState.zones?.hand?.cardIds.filter((cardId: string) => {
+        const card = internalState.cards?.[cardId];
+        return card && String(card.ownerId) === String(playerId);
+      }) || [];
+
+    // Generate combinations: keep all (empty array) and mulligan all (all cards)
+    // For efficiency, we only generate these two extreme options
+    // Full power-set enumeration (2^n combinations) would be too expensive for large hands
+    const validCombinations = [
+      {
+        playerId,
+        cardsToMulligan: [], // Keep all cards
+      },
+      {
+        playerId,
+        cardsToMulligan: handCards, // Mulligan all cards
+      },
+    ];
+
     return {
-      validCombinations: [
-        {
-          playerId,
-          cardsToMulligan: [], // Keep all cards
+      validCombinations,
+      parameterInfo: {
+        cardsToMulligan: {
+          type: "cardId[]",
+          description: "Cards to mulligan (put on bottom of deck)",
+          validValues: handCards,
         },
-      ],
-      parameterInfo: {},
+      },
     };
   }
 

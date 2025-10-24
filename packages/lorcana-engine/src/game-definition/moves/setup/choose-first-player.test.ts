@@ -414,15 +414,13 @@ describe("Move: Choose First Player", () => {
       testEngine.changeActivePlayer(choosingPlayer || PLAYER_ONE);
       testEngine.chooseWhoGoesFirst(PLAYER_ONE);
 
-      // Get available moves - should NOT include chooseWhoGoesFirstMove
-      const availableMoves = testEngine.getAvailableMoves(
-        choosingPlayer || PLAYER_ONE,
-      );
+      // Get available moves for OTP (who has priority in mulligan phase)
+      const otpMoves = testEngine.getAvailableMoves(PLAYER_ONE);
 
-      expect(availableMoves).not.toContain("chooseWhoGoesFirstMove");
+      expect(otpMoves).not.toContain("chooseWhoGoesFirstMove");
 
-      // Should now include alterHand (mulligan phase)
-      expect(availableMoves).toContain("alterHand");
+      // OTP should have alterHand available (mulligan phase, has priority)
+      expect(otpMoves).toContain("alterHand");
     });
 
     it("should transition to mulligan moves after choosing first player", () => {
@@ -439,13 +437,14 @@ describe("Move: Choose First Player", () => {
       testEngine.changeActivePlayer(choosingPlayer || PLAYER_ONE);
       testEngine.chooseWhoGoesFirst(PLAYER_ONE);
 
-      // After choosing, OTP should have alterHand available
+      // After choosing, OTP should have alterHand available (has priority)
       availableMoves = testEngine.getAvailableMoves(PLAYER_ONE);
       expect(availableMoves).toContain("alterHand");
 
-      // Other player should also have alterHand available
+      // Other player should NOT have alterHand yet (doesn't have priority)
+      // Priority passes to them after OTP completes their mulligan
       availableMoves = testEngine.getAvailableMoves(PLAYER_TWO);
-      expect(availableMoves).toContain("alterHand");
+      expect(availableMoves).not.toContain("alterHand");
     });
   });
 });

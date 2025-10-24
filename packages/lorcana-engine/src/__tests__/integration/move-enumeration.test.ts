@@ -93,12 +93,13 @@ describe("Move Enumeration Integration", () => {
       testEngine.changeActivePlayer(choosingPlayer || PLAYER_ONE);
       testEngine.chooseWhoGoesFirst(PLAYER_ONE);
 
-      // After choosing - both players should have mulligan move
+      // After choosing - OTP (player_one) should have mulligan move (has priority)
       const p1Moves = testEngine.getAvailableMoves(PLAYER_ONE);
       const p2Moves = testEngine.getAvailableMoves(PLAYER_TWO);
 
       expect(p1Moves).toContain("alterHand");
-      expect(p2Moves).toContain("alterHand");
+      // Player two doesn't have priority yet, so no alterHand
+      expect(p2Moves).not.toContain("alterHand");
     });
   });
 
