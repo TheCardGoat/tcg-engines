@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { moanaOfMotunui } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { moanaOfMotunui } from "./020-moana-of-motunui";
 
 describe("Moana - Of Motunui", () => {
   it.skip("**WE CAN FIX IT** Whenever this character quests, you may ready your other Princess characters. They can't quest for the rest of this turn.", async () => {

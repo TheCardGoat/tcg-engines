@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { annaTruehearted } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { annaTruehearted } from "./137-anna-true-hearted";
 
 describe("Anna - True-Hearted", () => {
   it.skip("**LET ME HELP YOU** Whenever this character quests, your other Hero characters get +1 {L} this turn.", async () => {

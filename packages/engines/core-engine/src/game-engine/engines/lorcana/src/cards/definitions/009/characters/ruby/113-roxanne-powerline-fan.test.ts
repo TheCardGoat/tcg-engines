@@ -1,12 +1,10 @@
 import { describe, expect, it } from "bun:test";
 import {
-  powerlineWorldsGreatestRockStar,
-  roxannePowerlineFan,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/009";
-import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { powerlineWorldsGreatestRockStar } from "./110-powerline-world-s-greatest-rock-star";
+import { roxannePowerlineFan } from "./113-roxanne-powerline-fan";
 
 describe("Roxanne - Powerline Fan", () => {
   it("CONCERT LOVER While you have a character with Singer in play, this character gets +1 {S} and +1 {L}.", async () => {

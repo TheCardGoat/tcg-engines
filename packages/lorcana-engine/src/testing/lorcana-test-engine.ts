@@ -17,9 +17,9 @@ import {
   createCardOperations,
   createPlayerId,
   createZoneOperations,
-  RuleEngine,
   type RuleEngineOptions,
 } from "@tcg/core";
+import { LorcanaEngine } from "../engine/lorcana-engine";
 import { lorcanaGameDefinition } from "../game-definition/definition";
 import type {
   LorcanaCardMeta,
@@ -90,32 +90,12 @@ export type TestEngineOptions = {
  */
 export class LorcanaTestEngine {
   /** Single authoritative engine */
-  public readonly engine: RuleEngine<
-    LorcanaGameState,
-    LorcanaMoveParams,
-    TestCardDefinition,
-    LorcanaCardMeta
-  >;
+  public readonly engine: LorcanaEngine;
 
   // Aliases for compatibility with legacy test patterns
-  public readonly authoritativeEngine: RuleEngine<
-    LorcanaGameState,
-    LorcanaMoveParams,
-    TestCardDefinition,
-    LorcanaCardMeta
-  >;
-  public readonly playerOneEngine: RuleEngine<
-    LorcanaGameState,
-    LorcanaMoveParams,
-    TestCardDefinition,
-    LorcanaCardMeta
-  >;
-  public readonly playerTwoEngine: RuleEngine<
-    LorcanaGameState,
-    LorcanaMoveParams,
-    TestCardDefinition,
-    LorcanaCardMeta
-  >;
+  public readonly authoritativeEngine: LorcanaEngine;
+  public readonly playerOneEngine: LorcanaEngine;
+  public readonly playerTwoEngine: LorcanaEngine;
 
   /** Currently active player for move execution */
   private activePlayerEngine: string = PLAYER_ONE;
@@ -129,7 +109,7 @@ export class LorcanaTestEngine {
   constructor(
     _playerOneState: TestInitialState = {},
     _playerTwoState: TestInitialState = {},
-    _opts: TestEngineOptions = { skipPreGame: true },
+    opts: TestEngineOptions = { skipPreGame: true },
   ) {
     // Create players
     const players = [
@@ -139,12 +119,12 @@ export class LorcanaTestEngine {
 
     // Engine options
     const engineOptions: RuleEngineOptions = {
-      seed: _opts.seed || "test-seed-123",
+      seed: opts.seed || "test-seed-123",
     };
 
     // Initialize card definitions registry (mutable for dynamic card creation)
     // Use provided definitions or empty object
-    this.cardDefinitions = _opts.cardDefinitions || {};
+    this.cardDefinitions = opts.cardDefinitions || {};
 
     // Create game definition with card definitions registry
     // The registry will be a closure over this.cardDefinitions, so modifications
@@ -155,7 +135,7 @@ export class LorcanaTestEngine {
     };
 
     // Create single engine instance
-    this.engine = new RuleEngine(gameDefinition, players, engineOptions);
+    this.engine = new LorcanaEngine(gameDefinition, players, engineOptions);
 
     // Aliases point to same engine
     this.authoritativeEngine = this.engine;
@@ -164,6 +144,29 @@ export class LorcanaTestEngine {
 
     // Initialize zones with test cards
     this.initializeZones(_playerOneState, _playerTwoState);
+
+    // If skipPreGame is true, fast-forward to main game
+    if (opts.skipPreGame) {
+      // Set OTP to skip chooseFirstPlayer phase
+      // @ts-expect-error - Accessing internal properties for testing setup
+      const internalState = this.engine.internalState;
+      if (internalState) {
+        internalState.otp = createPlayerId(PLAYER_ONE);
+        internalState.pendingMulligan = []; // Clear mulligan requirement
+      }
+
+      // Transition to main game segment by accessing flow manager's internal state
+      const flowManager = this.engine.getFlowManager();
+      if (flowManager) {
+        // @ts-expect-error - Accessing private property for testing setup
+        flowManager.currentGameSegment = "mainGame";
+        // @ts-expect-error - Accessing private property for testing setup
+        flowManager.currentPhase = "main";
+        // Set current player to PLAYER_ONE
+        // @ts-expect-error - Accessing private property for testing setup
+        flowManager.currentPlayer = createPlayerId(PLAYER_ONE);
+      }
+    }
   }
 
   /**
@@ -288,15 +291,6 @@ export class LorcanaTestEngine {
       });
       initializeCardMetadata(cardIds);
     }
-  }
-
-  // ========== Engine Selection ==========
-
-  /**
-   * Get the currently active engine (always returns the same engine)
-   */
-  private get activeEngine() {
-    return this.engine;
   }
 
   /**
@@ -521,6 +515,56 @@ export class LorcanaTestEngine {
     return result;
   }
 
+  // ========== Move Enumeration ==========
+
+  /**
+   * Get available moves for a player
+   *
+   * @param playerId - Player to get moves for
+   * @returns Array of available move IDs
+   */
+  getAvailableMoves(playerId: string): string[] {
+    return this.engine.getAvailableMoves(createPlayerId(playerId));
+  }
+
+  /**
+   * Get detailed information about available moves
+   *
+   * @param playerId - Player to get moves for
+   * @returns Array of move information objects
+   */
+  getAvailableMovesDetailed(playerId: string) {
+    return this.engine.getAvailableMovesDetailed(createPlayerId(playerId));
+  }
+
+  /**
+   * Enumerate valid parameters for a move
+   *
+   * @param moveId - Move to enumerate parameters for
+   * @param playerId - Player attempting the move
+   * @returns Valid parameter combinations or null
+   */
+  enumerateMoveParameters(moveId: string, playerId: string) {
+    return this.engine.enumerateMoveParameters(
+      moveId as keyof LorcanaMoveParams,
+      createPlayerId(playerId),
+    );
+  }
+
+  /**
+   * Get explanation of why a move cannot be executed
+   *
+   * @param moveId - Move to check
+   * @param params - Parameters to use for the move
+   * @returns Error information or null
+   */
+  whyCannotExecuteMove(moveId: string, params: any) {
+    return this.engine.whyCannotExecuteMove(
+      moveId as keyof LorcanaMoveParams,
+      params,
+    );
+  }
+
   // ========== Zone Access Helpers ==========
 
   /**
@@ -651,6 +695,22 @@ export class LorcanaTestEngine {
     } as any);
 
     return cardId;
+  }
+
+  // ========== Card Manipulation ==========
+
+  /**
+   * Move a card from one zone to another
+   * Useful for test setup
+   */
+  moveCard(cardId: string, targetZone: string, playerId?: string) {
+    const internalState = (this.engine as any).internalState;
+    const zoneOps = createZoneOperations(internalState);
+
+    zoneOps.moveCard({
+      cardId: createCardId(cardId),
+      targetZoneId: targetZone as any,
+    });
   }
 
   // ========== Cleanup ==========

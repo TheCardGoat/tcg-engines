@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { jafarKeeperOfSecrets } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { jafarKeeperOfSecrets } from "./038-jafar-keeper-of-secrets";
 
 describe("Jafar - Keeper of Secrets", () => {
   it.skip("**HIDDEN WONDERS** This character gets +1 {S} for each card in your hand.", async () => {

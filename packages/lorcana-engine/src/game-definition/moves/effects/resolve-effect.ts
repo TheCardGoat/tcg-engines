@@ -21,6 +21,10 @@ export const resolveEffect = createMove<
   "resolveEffect",
   LorcanaCardMeta
 >({
+  condition: (state, _context) => {
+    // Only available when there are effects to resolve
+    return state.effects && state.effects.length > 0;
+  },
   reducer: (draft, context) => {
     const { effectId } = context.params;
     draft.effects = draft.effects.filter((e) => e.id !== effectId);

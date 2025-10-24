@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { iFindEmIFlattenEm } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { iFindEmIFlattenEm } from "./199-i-find-em-i-flatten-em";
 
 describe("I Find 'Em, I Flatten 'Em", () => {
   it.skip("_(A character with cost 4 or more can {E} to sing this song for free.)_", async () => {

@@ -24,6 +24,10 @@ export const manualExert = createMove<
   "manualExert",
   LorcanaCardMeta
 >({
+  condition: (_state, context) => {
+    // Not available during chooseFirstPlayer phase
+    return context.flow?.currentPhase !== "chooseFirstPlayer";
+  },
   reducer: (_draft, context) => {
     const { cardId } = context.params;
     const ops = useLorcanaOps(context);

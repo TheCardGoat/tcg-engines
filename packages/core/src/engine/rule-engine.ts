@@ -132,7 +132,7 @@ export class RuleEngine<
   TCardMeta = any,
 > {
   private currentState: TState;
-  private readonly gameDefinition: GameDefinition<
+  protected readonly gameDefinition: GameDefinition<
     TState,
     TMoves,
     TCardDefinition,
@@ -455,6 +455,18 @@ export class RuleEngine<
       };
     }
 
+    // Check if game has already ended BEFORE checking move conditions
+    // This ensures GAME_ENDED error takes precedence over condition failures
+    if (this.gameEnded) {
+      const error = "Game has already ended";
+      this.logger.warn(error, { moveId });
+      return {
+        success: false,
+        error,
+        errorCode: "GAME_ENDED",
+      };
+    }
+
     // Task 11.8: Check move condition with detailed failure information
     const conditionResult = this.checkMoveCondition(moveId, contextInput);
     if (!conditionResult.success) {
@@ -525,17 +537,6 @@ export class RuleEngine<
       });
 
       return failure;
-    }
-
-    // Check if game has already ended
-    if (this.gameEnded) {
-      const error = "Game has already ended";
-      this.logger.warn(error, { moveId });
-      return {
-        success: false,
-        error,
-        errorCode: "GAME_ENDED",
-      };
     }
 
     // Task 11.25, 11.26: Add RNG to context for deterministic randomness
@@ -637,11 +638,6 @@ export class RuleEngine<
         },
       );
 
-      // Update flow manager state if it exists
-      // Note: Flow manager manages its own state copy for flow orchestration
-      // We don't need to sync it back after every move
-      // The flow manager will update state through its own lifecycle hooks
-
       // Task 11.10: Update history (store full context for replay)
       this.addToHistory({
         moveId,
@@ -677,6 +673,10 @@ export class RuleEngine<
 
       // Execute any pending flow transitions after move completes
       if (this.flowManager) {
+        // Sync FlowManager state with new state after move execution
+        // This ensures endIf conditions check against the latest state
+        this.flowManager.syncState(this.currentState);
+
         if (pendingPhaseEnd) {
           this.flowManager.nextPhase();
         }

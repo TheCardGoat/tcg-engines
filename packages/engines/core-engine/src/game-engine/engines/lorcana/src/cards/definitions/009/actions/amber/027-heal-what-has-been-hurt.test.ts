@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { healWhatHasBeenHurt } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { healWhatHasBeenHurt } from "./027-heal-what-has-been-hurt";
 
 describe("Heal What Has Been Hurt", () => {
   it.skip("(A character with cost 3 or more can {E} to sing this song for free.)", async () => {

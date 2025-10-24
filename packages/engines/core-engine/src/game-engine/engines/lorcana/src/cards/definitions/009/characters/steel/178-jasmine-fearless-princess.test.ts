@@ -1,10 +1,10 @@
 import { describe, expect, it } from "bun:test";
 import { jasmineDisguised } from "~/game-engine/engines/lorcana/src/cards/definitions/001/characters/148-jasmine-disguised";
-import { jasmineFearlessPrincess } from "~/game-engine/engines/lorcana/src/cards/definitions/009";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { jasmineFearlessPrincess } from "./178-jasmine-fearless-princess";
 
 describe("Jasmine - Fearless Princess", () => {
   it("TAKE THE LEAP During your turn, this character gains Evasive. (They can challenge characters with Evasive.)", async () => {

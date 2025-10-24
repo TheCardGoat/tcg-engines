@@ -28,13 +28,24 @@ describe("Move: Quest", () => {
     testEngine.changeActivePlayer(PLAYER_TWO);
     testEngine.alterHand([]);
 
-    // Now we should be in main game, player one's turn
-    testEngine.changeActivePlayer(PLAYER_ONE);
+    // After mulligans, game is in mainGame segment, turn 2, player_two's turn
+    // Need to pass turns to get to a stable state and clear summoning sickness
 
-    // IMPORTANT: Characters in play start as "drying" (summoning sick)
-    // Need to pass a turn to make them "dry" and questable
-    testEngine.passTurn(); // Pass to player two
-    testEngine.passTurn(); // Pass back to player one
+    // Player two takes their turn (beginning -> main -> end -> next turn)
+    testEngine.changeActivePlayer(PLAYER_TWO);
+    testEngine.passTurn(); // beginning -> main
+    testEngine.passTurn(); // main -> end -> turn 3 beginning -> main (player_one)
+
+    // Player one takes their turn
+    testEngine.changeActivePlayer(PLAYER_ONE);
+    testEngine.passTurn(); // main -> end -> turn 4 beginning -> main (player_two)
+
+    // Back to player two, now characters have been through a turn cycle
+    testEngine.changeActivePlayer(PLAYER_TWO);
+    testEngine.passTurn(); // main -> end -> turn 5 beginning -> main (player_one)
+
+    // Now on player_one's turn with characters no longer summoning sick
+    testEngine.changeActivePlayer(PLAYER_ONE);
     // Now characters are dry and can quest
   });
 

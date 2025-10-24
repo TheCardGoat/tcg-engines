@@ -1,14 +1,12 @@
 import { describe, expect, it } from "bun:test";
-import { iagoPrettyPolly } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters";
-import { aPiratesLife } from "~/game-engine/engines/lorcana/src/cards/definitions/004/actions/128-a-pirates-life";
-import {
-  dumboNinthWonderOfTheUniverse,
-  dumboTheFlyingElephant,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/009";
+import { iagoPrettyPolly } from "~/game-engine/engines/lorcana/src/cards/definitions/003/characters/index";
+import { aPiratesLife } from "~/game-engine/engines/lorcana/src/cards/definitions/009/actions/ruby/132-a-pirate-s-life";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { dumboNinthWonderOfTheUniverse } from "./045-dumbo-ninth-wonder-of-the-universe";
+import { dumboTheFlyingElephant } from "./046-dumbo-the-flying-elephant";
 
 describe("Dumbo - Ninth Wonder of the Universe", () => {
   it("Evasive (Only characters with Evasive can challenge this character.)", async () => {
