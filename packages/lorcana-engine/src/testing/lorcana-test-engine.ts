@@ -13,6 +13,7 @@
  */
 
 import {
+  createCardId,
   createCardOperations,
   createPlayerId,
   createZoneOperations,
@@ -92,7 +93,7 @@ export class LorcanaTestEngine {
   public readonly engine: RuleEngine<
     LorcanaGameState,
     LorcanaMoveParams,
-    unknown,
+    TestCardDefinition,
     LorcanaCardMeta
   >;
 
@@ -100,19 +101,19 @@ export class LorcanaTestEngine {
   public readonly authoritativeEngine: RuleEngine<
     LorcanaGameState,
     LorcanaMoveParams,
-    unknown,
+    TestCardDefinition,
     LorcanaCardMeta
   >;
   public readonly playerOneEngine: RuleEngine<
     LorcanaGameState,
     LorcanaMoveParams,
-    unknown,
+    TestCardDefinition,
     LorcanaCardMeta
   >;
   public readonly playerTwoEngine: RuleEngine<
     LorcanaGameState,
     LorcanaMoveParams,
-    unknown,
+    TestCardDefinition,
     LorcanaCardMeta
   >;
 
@@ -198,7 +199,7 @@ export class LorcanaTestEngine {
     const initializeCardMetadata = (cardIds: string[]) => {
       for (const cardId of cardIds) {
         // Initialize with default Lorcana card metadata
-        cardOps.setCardMeta(cardId, {
+        cardOps.setCardMeta(createCardId(cardId), {
           damage: 0,
           isExerted: false,
           playedThisTurn: true, // Characters start with summoning sickness (played this turn)
@@ -643,7 +644,7 @@ export class LorcanaTestEngine {
 
     // Initialize card metadata (ready to use, no summoning sickness)
     const cardOps = createCardOperations(internalState);
-    cardOps.setCardMeta(cardId, {
+    cardOps.setCardMeta(createCardId(cardId), {
       damage: 0,
       isExerted: false,
       playedThisTurn: false, // No summoning sickness - ready to use immediately

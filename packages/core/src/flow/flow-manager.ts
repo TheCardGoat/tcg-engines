@@ -452,7 +452,7 @@ export class FlowManager<TState, TCardMeta = any> {
   /**
    * Task 9.7: Check and execute endIf conditions
    */
-  private checkEndConditions(): void {
+  public checkEndConditions(): void {
     if (!this.currentGameSegment) return;
 
     const gameSegments = this.normalizedGameSegments;

@@ -1,4 +1,4 @@
-import type { FlowDefinition } from "@tcg/core";
+import { createPlayerId, type FlowDefinition } from "@tcg/core";
 import type {
   LorcanaCardMeta,
   LorcanaGameState,
@@ -166,7 +166,7 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
               // Get all cards owned by current player
               const playZone = context.zones.getCardsInZone(
                 "play" as any,
-                currentPlayer,
+                createPlayerId(currentPlayer),
               );
 
               // Ready each card (clear exerted status and summoning sickness)
