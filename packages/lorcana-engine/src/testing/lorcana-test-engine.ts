@@ -710,7 +710,6 @@ export class LorcanaTestEngine {
     zoneOps.moveCard({
       cardId: createCardId(cardId),
       targetZoneId: targetZone as any,
-      targetOwnerId: playerId ? createPlayerId(playerId) : undefined,
     });
   }
 

@@ -592,7 +592,7 @@ export class LorcanaEngine extends RuleEngine<
       validCombinations,
       parameterInfo: {
         cardsToMulligan: {
-          type: "cardId[]",
+          type: "cardId",
           description: "Cards to mulligan (put on bottom of deck)",
           validValues: handCards,
         },
