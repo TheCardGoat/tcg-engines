@@ -11,7 +11,7 @@
 
 ## Documentation
 - **Storybook v10**: Component documentation, interactive examples, and development environment
-- **MDX**: Rich documentation format with React components
+- **MDX**: Rich documentation format with Svelte components
 
 ## Testing
 - **Vitest**: Fast unit testing framework with Vite integration
