@@ -28,10 +28,10 @@
 - **Package name**: @tcg/component-library
 
 ## Development Tools
-- **ESLint**: Code linting and style enforcement
-- **Prettier**: Code formatting and consistency
-- **Husky**: Git hooks for code quality
-- **lint-staged**: Pre-commit linting and formatting
+- **Biome**: Code linting and style enforcement
+- **Biome**: Code formatting and consistency
+- **Lefthook**: Git hooks for code quality
+- **Lefthook**: Pre-commit linting and formatting
 
 ## Browser Support
 - Modern browsers with ES2020+ support
