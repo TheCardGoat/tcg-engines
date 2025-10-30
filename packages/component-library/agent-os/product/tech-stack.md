@@ -23,7 +23,7 @@
 - **Message Format**: ICU message formatting for complex translations
 
 ## Build and Distribution
-- **npm**: Package distribution and dependency management
+- **bun**: Package distribution and dependency management
 - **TypeScript Compiler**: Type checking and JavaScript transpilation
 - **Package name**: @tcg/component-library
 
@@ -35,4 +35,4 @@
 
 ## Browser Support
 - Modern browsers with ES2020+ support
-- Progressive enhancement for older browsers
+- Old browser not supported. We will stick to modern development practices.
