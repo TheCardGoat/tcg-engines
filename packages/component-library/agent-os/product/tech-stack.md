@@ -11,7 +11,7 @@
 
 ## Documentation
 - **Storybook v10**: Component documentation, interactive examples, and development environment
-- **MDX**: Rich documentation format with React components
+- **MDX**: Rich documentation format with Svelte components
 
 ## Testing
 - **Vitest**: Fast unit testing framework with Vite integration
@@ -23,16 +23,16 @@
 - **Message Format**: ICU message formatting for complex translations
 
 ## Build and Distribution
-- **npm**: Package distribution and dependency management
+- **bun**: Package distribution and dependency management
 - **TypeScript Compiler**: Type checking and JavaScript transpilation
 - **Package name**: @tcg/component-library
 
 ## Development Tools
-- **ESLint**: Code linting and style enforcement
-- **Prettier**: Code formatting and consistency
-- **Husky**: Git hooks for code quality
-- **lint-staged**: Pre-commit linting and formatting
+- **Biome**: Code linting and style enforcement
+- **Biome**: Code formatting and consistency
+- **Lefthook**: Git hooks for code quality
+- **Lefthook**: Pre-commit linting and formatting
 
 ## Browser Support
 - Modern browsers with ES2020+ support
-- Progressive enhancement for older browsers
+- Old browser not supported. We will stick to modern development practices.

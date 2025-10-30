@@ -1,11 +1,11 @@
-## General development conventions
+## Component library development conventions
 
-- **Consistent Project Structure**: Organize files and directories in a predictable, logical structure that team members can navigate easily
-- **Clear Documentation**: Maintain up-to-date README files with setup instructions, architecture overview, and contribution guidelines
-- **Version Control Best Practices**: Use clear commit messages, feature branches, and meaningful pull/merge requests with descriptions
-- **Environment Configuration**: Use environment variables for configuration; never commit secrets or API keys to version control
-- **Dependency Management**: Keep dependencies up-to-date and minimal; document why major dependencies are used
-- **Code Review Process**: Establish a consistent code review process with clear expectations for reviewers and authors
-- **Testing Requirements**: Define what level of testing is required before merging (unit tests, integration tests, etc.)
-- **Feature Flags**: Use feature flags for incomplete features rather than long-lived feature branches
-- **Changelog Maintenance**: Keep a changelog or release notes to track significant changes and improvements
+- **Consistent Project Structure**: Organize components in a predictable structure (components/, utils/, types/) that users can navigate easily
+- **Clear Documentation**: Maintain up-to-date component documentation with examples, prop interfaces, and usage guidelines
+- **Semantic Versioning**: Follow semantic versioning (semver) for releases to communicate breaking changes and new features
+- **Minimal Dependencies**: Keep dependencies minimal and well-documented; avoid heavy dependencies that bundle size
+- **Code Review Process**: Review components for API design, accessibility, and reusability before merging
+- **Component Testing**: Test components thoroughly with unit tests, visual tests, and interaction tests
+- **Storybook Coverage**: Ensure all components have Storybook stories with comprehensive examples
+- **Design System Consistency**: Maintain design tokens and component variants that work together cohesively
+- **Changelog Maintenance**: Keep a changelog to track breaking changes, new features, and improvements for users
