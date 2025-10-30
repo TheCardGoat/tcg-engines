@@ -3,29 +3,45 @@
 Define your technical stack below. This serves as a reference for all team members and helps maintain consistency across the project.
 
 ### Framework & Runtime
-- **Application Framework:** SvelteKit
+- **Application Framework:** SvelteKit with enhanced image processing
 - **Language/Runtime:** TypeScript/JavaScript (Node.js)
 - **Package Manager:** bun
 
-### Frontend
-- **JavaScript Framework:** Svelte 5
-- **CSS Framework:** TailwindCSS v4
-- **UI Components:** Custom TCG component library
+### Component Architecture
+- **Headless UI:** bits-ui (Radix UI principles)
+- **Component Pattern:** Render delegation with class props
+- **Accessibility:** WAI-ARIA compliant components
 
-### Database & Storage
-- **Database:** Not applicable (component library)
-- **ORM/Query Builder:** Not applicable
-- **Caching:** Not applicable
+### Frontend
+- **JavaScript Framework:** Svelte 5 with runes
+- **CSS Framework:** TailwindCSS v4 + @tailwindcss/typography
+- **Custom Components:** TCG-specific building blocks
+
+### Images & Media
+- **Image Optimization:** @sveltejs/enhanced-img (AVIF/WebP)
+- **Responsive Images:** @unpic/svelte (srcset/sizes)
+- **Icon System:** @iconify/svelte (275,+ icons)
+
+### Documentation
+- **Component Docs:** Storybook v10 with SvelteKit integration
+- **Rich Content:** MDX with Svelte components
+- **Interactive Examples:** Storybook stories and controls
 
 ### Testing & Quality
-- **Test Framework:** Vitest, Playwright
-- **Linting/Formatting:** ESLint, Prettier
+- **Unit Testing:** Vitest with browser support
+- **E2E Testing:** Playwright
+- **Browser Testing:** @vitest/browser + vitest-browser-svelte
 
-### Deployment & Infrastructure
-- **Hosting:** npm registry
-- **CI/CD:** GitHub Actions
+### Internationalization
+- **i18n Framework:** Paraglide.js (7 languages)
+- **Message Format:** ICU message formatting
 
-### Third-Party Services
-- **Authentication:** Not applicable
-- **Email:** Not applicable
-- **Monitoring:** Not applicable
+### Build & Distribution
+- **Package Builder:** svelte-package + publint
+- **Registry:** npm (@tcg/component-library)
+- **Development Tools:** vite-plugin-devtools-json, Lefthook
+
+### Third-Party Integrations
+- **Authentication:** Not applicable (component library)
+- **Backend APIs:** Not applicable (headless components)
+- **External Services:** Not applicable
