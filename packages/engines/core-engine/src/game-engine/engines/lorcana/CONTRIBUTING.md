@@ -3,64 +3,75 @@
 A high-level map of the `lorcana-engine` package for new contributors. It shows major components and how they interact. Use it to find the right home for new code (moves, abilities, operations, etc.).
 
 ```mermaid
+%%{init: {'flowchart': {'rankSpacing': 40, 'nodeSpacing': 20}}}%%
 flowchart LR
-  %% Left to right: base dependencies → high-level components
+  %% Base dependency
+  CORE["<b>@tcg/core - Core Engine</b><br/>(core-engine package)<br/><br/>• GameEngine & CoreOperation<br/>• Zone & Card operations<br/>• Flow manager (segments/turns/phases)<br/>• Immer-based state updates"]
+
+  %% Foundation Layer
+  subgraph FOUNDATION["🔷 Foundation Layer"]
+    direction TB
+    TYPES["<b>Types</b><br/>📁 lorcana-engine-types.ts<br/>📁 cards/lorcana-card-types.ts"]
+    CARDS["<b><a href='#card-system'>Card System</a></b><br/>📁 cards/**<br/>• LorcanaCardInstance<br/>• CardRepository<br/>• CardFilterBuilder"]
+    ABILITIES["<b><a href='#abilities-system'>Abilities</a></b><br/>📁 abilities/**<br/>• Activated/Triggered/Static<br/>• Keywords & Replacements<br/>• Targets & Effects"]
+    
+    TYPES --> CARDS
+    TYPES --> ABILITIES
+    CARDS --> ABILITIES
+  end
+
+  %% Game Logic Layer
+  subgraph LOGIC["🎮 Game Logic Layer"]
+    direction TB
+    OPS["<b><a href='#lorcanacoreoperations'>LorcanaCoreOperations</a></b><br/>📁 operations/**<br/>• Quest/Challenge logic<br/>• Ink management<br/>• Ability resolution (the Bag)<br/>• Game state checks"]
+    OPS_MOD["<b><a href='#operations-modules'>Operation Modules</a></b><br/>📁 operations/modules/**<br/>• challenge-character<br/>• quest-with-character<br/>• add-abilities-to-resolve<br/>• ready-all-characters"]
+    
+    OPS --> OPS_MOD
+  end
+
+  %% Player Actions Layer
+  subgraph ACTIONS["🎯 Player Actions & Flow"]
+    direction TB
+    MOVES["<b><a href='#moves'>Moves</a></b><br/>📁 moves/**<br/>• playCard, quest, challenge<br/>• sing, singTogether<br/>• putACardIntoTheInkwell<br/>• useActivatedAbility"]
+    SEGMENTS["<b><a href='#segments'>Segments</a></b><br/>📁 game-definition/segments/**<br/>• startingAGame<br/>• duringGame (phases/steps)<br/>• endGame"]
+    GAMEDEF["<b><a href='#game-definition'>Game Definition</a></b><br/>📄 lorcana-game-definition.ts<br/>• Bundles segments & moves"]
+    
+    MOVES --> SEGMENTS
+    SEGMENTS --> GAMEDEF
+  end
+
+  %% Top Layer
+  subgraph TOP["🚀 Engine & Testing"]
+    direction TB
+    ENGINE["<b><a href='#lorcanaengine'>LorcanaEngine</a></b><br/>📄 lorcana-engine.ts<br/>• Main engine class<br/>• Uses LorcanaCoreOperations<br/>• External API located here"]
+    TESTING["<b>Testing</b><br/>📁 testing/**<br/>• Test engine & mocks"]
+    
+    ENGINE --> TESTING
+  end
+
+  %% Cross-subgraph Dependencies (showing which subgraphs call functions in others)
+  CORE --> FOUNDATION
+  CORE --> LOGIC
+  CORE --> ACTIONS
+  CORE --> TOP
   
-  %% Base layer (leftmost)
-  CORE_RULE["<b>@tcg/core - Core Engine</b><br/>(core-engine package)<br/><br/><b>Provides to Lorcana:</b><br/>• GameEngine base class<br/>• Zone operations (move cards, draw, shuffle)<br/>• Card operations (metadata, ownership)<br/>• Flow manager (segments, turns, phases, steps)<br/>• Card registry (lookup definitions)<br/>• CoreOperation base class<br/>• Immer-based immutable updates"]
-
-  TYPES["<b>Types</b><br/>📁 src/lorcana-engine-types.ts<br/>📁 src/cards/lorcana-card-types.ts<br/><br/>LorcanaGameState, LorcanaPlayerState,<br/>LorcanaCardMeta, LorcanaZone"]
-
-  %% Card system layer
-  CARDS["<b>Card System</b><br/>📁 src/cards/**<br/><br/>• LorcanaCardInstance (extends CoreCardInstance)<br/>• LorcanaCardRepository<br/>• LorcanaCardFilterBuilder<br/>• Card definitions"]
-
-  ABILITIES["<b>Abilities System</b><br/>📁 src/abilities/**<br/><br/>• Activated abilities<br/>• Triggered abilities (when/whenever/at)<br/>• Static abilities (while)<br/>• Keyword abilities<br/>• Replacement effects<br/>• Ability targets & conditions<br/>• Effects & durations"]
-
-  %% Operations layer
-  OPS["<b>Operations</b><br/>📁 src/operations/**<br/>📄 lorcana-core-operations.ts<br/><br/>LorcanaCoreOperations (extends CoreOperation)<br/>Lorcana-specific game logic:<br/>• Quest/challenge helpers<br/>• Ink management<br/>• Ready/exert operations<br/>• Location operations<br/>• Ability resolution (the Bag)<br/>• Game state checks"]
-
-  OPS_MODULES["<b>Operation Modules</b><br/>📁 src/operations/modules/**<br/><br/>Complex operations (>5 lines):<br/>• challenge-character.ts<br/>• quest-with-character.ts<br/>• add-abilities-to-resolve.ts<br/>• resolve-layer-item.ts<br/>• ready-all-characters.ts<br/>• exert-ink-for-cost.ts"]
-
-  %% Game logic layer
-  MOVES["<b>Moves</b><br/>📁 src/moves/**<br/><br/>Player actions:<br/>• Core: playCard, quest, challenge<br/>• Resources: putACardIntoTheInkwell<br/>• Songs: sing, singTogether<br/>• Locations: moveCharacterToLocation<br/>• Abilities: useActivatedAbility<br/>• Setup: chooseFirstPlayer, alterHand<br/>• Flow: passTurn, resolveBag<br/>• Debug: concede, manualMoves"]
-
-  SEGMENTS["<b>Segments & Flow</b><br/>📁 src/game-definition/segments/**<br/><br/>• startingAGame: setup sequence<br/>• duringGame: turn/phase/step structure<br/>&nbsp;&nbsp;- beginningPhase (ready/set/draw)<br/>&nbsp;&nbsp;- mainPhase<br/>• endGame: win condition check"]
-
-  GAMEDEF["<b>Game Definition</b><br/>📄 src/game-definition/<br/>&nbsp;&nbsp;&nbsp;&nbsp;lorcana-game-definition.ts<br/><br/>Bundles rules config:<br/>• Segments (game flow)<br/>• Moves (player actions)<br/>• Setup function"]
-
-  %% Top layer (rightmost)
-  ENGINE["<b>LorcanaEngine</b><br/>📄 src/lorcana-engine.ts<br/><br/>Extends GameEngine with:<br/>• Lorcana-specific API<br/>• Card model initialization<br/>• Move availability<br/>• Parameter enumeration<br/>• Uses LorcanaCoreOperations"]
-
-  TESTING["<b>Testing Utils</b><br/>📁 src/testing/**<br/><br/>• lorcana-test-engine.ts<br/>• mockCards.ts<br/>Helper for test setup"]
-
-  %% Dependencies flow left → right
-  CORE_RULE --> TYPES
-  CORE_RULE --> CARDS
-  CORE_RULE --> OPS
-  TYPES --> CARDS
-  TYPES --> ABILITIES
+  %% Foundation provides types/cards/abilities to other layers
   TYPES --> OPS
-  TYPES --> MOVES
-  TYPES --> SEGMENTS
-  CARDS --> ABILITIES
-  CARDS --> ENGINE
+  CARDS --> TOP
   ABILITIES --> OPS
-  ABILITIES --> MOVES
-  OPS --> OPS_MODULES
-  OPS_MODULES --> OPS
-  OPS --> MOVES
-  OPS --> SEGMENTS
-  MOVES --> SEGMENTS
-  SEGMENTS --> GAMEDEF
-  MOVES --> GAMEDEF
-  GAMEDEF --> ENGINE
-  CORE_RULE --> ENGINE
-  ENGINE --> TESTING
+  
+  %% Actions call Logic (Moves and Segments call coreOps methods)
+  ACTIONS --> LOGIC
+  
+  %% Engine uses GameDefinition and calls Logic
+  GAMEDEF --> TOP
+  LOGIC   --> TOP
 
-  %% Styling: left-align text and top-align box content
-  classDef leftAlign text-align:left
-  classDef topAlign vertical-align:top
-  class CORE_RULE,ENGINE,GAMEDEF,MOVES,OPS,OPS_MODULES,TYPES,CARDS,ABILITIES,SEGMENTS,TESTING leftAlign,topAlign
+  %% Styling
+  classDef leftAlign text-align:left;
+  classDef subgraphStyle fill:#1a1a1a,stroke:#666,stroke-width:2px;
+  class CORE,TYPES,CARDS,ABILITIES,OPS,OPS_MOD,MOVES,SEGMENTS,GAMEDEF,ENGINE,TESTING leftAlign;
+  class FOUNDATION,LOGIC,ACTIONS,TOP subgraphStyle;
 ```
 
 ## Glossary
