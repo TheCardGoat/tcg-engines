@@ -11,7 +11,6 @@ export const banishChallengingCharacter: any = () => ({});
 export const putOneOnTheTopAndTheOtherOnTheBottomOfYourDeck: any = () => ({});
 export const chosenCharacterGetLoreThisTurn: any = () => ({});
 export const chosenCharacterCantChallengeDuringNextTurn: any = () => ({});
-export const readyAndCantQuest: any = () => ({});
 export const discardACard: any = () => ({});
 export const opponentLoseLore: any = () => ({});
 export const youGainLore: any = () => ({});

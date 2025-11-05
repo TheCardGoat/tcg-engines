@@ -1,4 +1,4 @@
-import { propertyStaticAbilities } from "~/game-engine/engines/lorcana/src/abilities/propertyStaticAbilities";
+import { thisCharacter } from "~/game-engine/engines/lorcana/src/abilities/targets";
 import { whenPlayAndWheneverQuests } from "~/game-engine/engines/lorcana/src/abilities/whenAbilities";
 import type { LorcanaCharacterCardDefinition } from "~/game-engine/engines/lorcana/src/cards/lorcana-card-repository";
 
@@ -10,19 +10,28 @@ export const tamatoaSoShiny: LorcanaCharacterCardDefinition = {
   text: "**WHAT HAVE WE HERE?** When you play this character and whenever he quests, you may return an item card from your discard to your hand.\n\n**GLAM** This character gets +1 {L} for each item you have in play.",
   type: "character",
   abilities: [
-    propertyStaticAbilities({
+    {
+      type: "static",
+      ability: "effects",
       name: "Glam",
       text: "This character gets +1 {L} for each item you have in play.",
-      attribute: "lore",
-      amount: {
-        dynamic: true,
-        filters: [
-          { filter: "zone", value: "play" },
-          { filter: "type", value: "item" },
-          { filter: "owner", value: "self" },
-        ],
-      },
-    }),
+      effects: [
+        {
+          type: "attribute",
+          attribute: "lore",
+          modifier: "add",
+          target: thisCharacter,
+          amount: {
+            dynamic: true,
+            filters: [
+              { filter: "zone", value: "play" },
+              { filter: "type", value: "item" },
+              { filter: "owner", value: "self" },
+            ],
+          },
+        },
+      ],
+    },
     ...whenPlayAndWheneverQuests({
       name: "What have we here?",
       text: "When you play this character and whenever he quests, you may return an item card from your discard to your hand.",
