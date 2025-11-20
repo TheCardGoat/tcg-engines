@@ -36,9 +36,14 @@
     "svelte": "5.0.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "4.1.2",
     "@inlang/paraglide-js": "2.3.2",
     "@playwright/test": "1.55.1",
+    "@storybook/addon-docs": "10.0.1",
+    "@storybook/addon-svelte-csf": "5.0.10",
+    "@storybook/sveltekit": "10.0.1",
     "@sveltejs/adapter-auto": "6.1.0",
+    "@sveltejs/enhanced-img": "^0.8.4",
     "@sveltejs/kit": "2.43.2",
     "@sveltejs/package": "2.5.4",
     "@sveltejs/vite-plugin-svelte": "6.2.0",
@@ -47,6 +52,7 @@
     "@vitest/browser": "3.2.4",
     "playwright": "1.55.1",
     "publint": "0.3.13",
+    "storybook": "10.0.1",
     "svelte": "5.39.5",
     "svelte-check": "4.3.2",
     "tailwindcss": "4.1.13",
@@ -54,14 +60,15 @@
     "vite": "7.1.7",
     "vite-plugin-devtools-json": "1.0.0",
     "vitest": "3.2.4",
-    "vitest-browser-svelte": "1.1.0",
-    "storybook": "10.0.1",
-    "@storybook/sveltekit": "10.0.1",
-    "@storybook/addon-svelte-csf": "5.0.10",
-    "@chromatic-com/storybook": "4.1.2",
-    "@storybook/addon-docs": "10.0.1"
+    "vitest-browser-svelte": "1.1.0"
   },
   "keywords": [
     "svelte"
-  ]
+  ],
+  "dependencies": {
+    "@iconify/svelte": "^5.0.2",
+    "@unpic/svelte": "^1.0.0",
+    "bits-ui": "^2.14.1",
+    "install": "^0.13.0"
+  }
 }
