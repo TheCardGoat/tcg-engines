@@ -380,6 +380,7 @@ All code follows strict standards documented in `agent-os/standards/`:
 
 - **[Product Mission](agent-os/product/mission.md)** - Full mission statement and vision
 - **[Design Philosophy](agent-os/product/philosophy.md)** - Core design principles and philosophy
+- **[Development Process](agent-os/product/development-process.md)** - Development approach and implementation strategy for contributors
 - **[Technical Stack](agent-os/product/tech-stack.md)** - Complete technical stack details
 - **[Roadmap](agent-os/product/roadmap.md)** - Development roadmap and phases
 
@@ -452,6 +453,7 @@ All code follows strict standards documented in `agent-os/standards/`:
 We welcome contributions! Here's how to get started:
 
 1. **Read the Documentation**
+   - Understand our [Development Process](agent-os/product/development-process.md) and approach
    - Review [Coding Standards](agent-os/standards/global/coding-style.md)
    - Understand [Testing Standards](agent-os/standards/testing/)
    - Check the [Roadmap](agent-os/product/roadmap.md) for priorities
