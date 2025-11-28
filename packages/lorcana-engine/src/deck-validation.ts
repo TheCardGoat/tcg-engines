@@ -1,0 +1,147 @@
+/**
+ * Deck Validation (Rule 2.1)
+ *
+ * Validates a deck against Lorcana deck building rules:
+ * - Minimum 60 cards (Rule 2.1.1.1)
+ * - Maximum 2 ink types (Rule 2.1.1.2)
+ * - Maximum 4 copies per full name (Rule 2.1.1.3)
+ */
+
+import type { LorcanaCardDefinition } from "./types/card-types";
+import { getFullName, getInkTypes } from "./types/card-types";
+import type {
+  DeckStats,
+  DeckValidationError,
+  DeckValidationResult,
+} from "./types/deck-validation";
+import {
+  MAX_COPIES_PER_CARD,
+  MAX_INK_TYPES,
+  MIN_DECK_SIZE,
+} from "./types/deck-validation";
+import type { InkType } from "./types/ink-types";
+
+/**
+ * Validate a deck against Lorcana rules
+ *
+ * @param cards - Array of card definitions in the deck
+ * @returns Validation result with any errors
+ */
+export function validateDeck(
+  cards: LorcanaCardDefinition[],
+): DeckValidationResult {
+  const errors: DeckValidationError[] = [];
+
+  // Rule 2.1.1.1: Minimum 60 cards
+  if (cards.length < MIN_DECK_SIZE) {
+    errors.push({
+      type: "TOO_FEW_CARDS",
+      count: cards.length,
+      minimum: MIN_DECK_SIZE,
+    });
+  }
+
+  // Rule 2.1.1.2: Maximum 2 ink types
+  const inkTypes = getUniqueInkTypes(cards);
+  if (inkTypes.length > MAX_INK_TYPES) {
+    errors.push({
+      type: "TOO_MANY_INK_TYPES",
+      inkTypes,
+      maximum: MAX_INK_TYPES,
+    });
+  }
+
+  // Rule 2.1.1.3: Maximum 4 copies per full name
+  const cardCounts = getCardCounts(cards);
+  for (const [fullName, count] of cardCounts.entries()) {
+    if (count > MAX_COPIES_PER_CARD) {
+      errors.push({
+        type: "TOO_MANY_COPIES",
+        fullName,
+        count,
+        maximum: MAX_COPIES_PER_CARD,
+      });
+    }
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors,
+  };
+}
+
+/**
+ * Get all unique ink types in a deck
+ */
+export function getUniqueInkTypes(cards: LorcanaCardDefinition[]): InkType[] {
+  const inkSet = new Set<InkType>();
+  for (const card of cards) {
+    for (const ink of getInkTypes(card)) {
+      inkSet.add(ink);
+    }
+  }
+  return Array.from(inkSet);
+}
+
+/**
+ * Count cards by full name
+ */
+export function getCardCounts(
+  cards: LorcanaCardDefinition[],
+): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const card of cards) {
+    const fullName = getFullName(card);
+    counts.set(fullName, (counts.get(fullName) ?? 0) + 1);
+  }
+  return counts;
+}
+
+/**
+ * Calculate deck statistics
+ */
+export function getDeckStats(cards: LorcanaCardDefinition[]): DeckStats {
+  const cardCounts = getCardCounts(cards);
+  const inkTypes = getUniqueInkTypes(cards);
+
+  const cardTypeBreakdown = {
+    characters: 0,
+    actions: 0,
+    items: 0,
+    locations: 0,
+  };
+
+  let inkableCards = 0;
+  let totalCost = 0;
+
+  for (const card of cards) {
+    switch (card.cardType) {
+      case "character":
+        cardTypeBreakdown.characters++;
+        break;
+      case "action":
+        cardTypeBreakdown.actions++;
+        break;
+      case "item":
+        cardTypeBreakdown.items++;
+        break;
+      case "location":
+        cardTypeBreakdown.locations++;
+        break;
+    }
+
+    if (card.inkable) {
+      inkableCards++;
+    }
+    totalCost += card.cost;
+  }
+
+  return {
+    totalCards: cards.length,
+    inkTypes,
+    cardCounts,
+    cardTypeBreakdown,
+    inkableCards,
+    averageCost: cards.length > 0 ? totalCost / cards.length : 0,
+  };
+}
