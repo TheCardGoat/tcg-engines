@@ -56,6 +56,8 @@ export {
 export * from "./deck-validation";
 // Engine exports
 export { LorcanaEngine } from "./engine/lorcana-engine";
+// Spec 3: Turn Structure & Flow
+export * from "./flow";
 // Type exports
 export * from "./types";
 // Move enumeration type exports
