@@ -44,6 +44,7 @@ function createMockCard(
     strength: 2,
     willpower: 3,
     lore: 1,
+    set: "TFC",
     ...overrides,
   };
 }
@@ -237,6 +238,77 @@ describe("Spec 1: Foundation & Types", () => {
       const result = validateDeck(deck);
       const copyErrors = result.errors.filter(
         (e) => e.type === "TOO_MANY_COPIES",
+      );
+
+      expect(copyErrors).toHaveLength(0);
+    });
+
+    it("allows unlimited copies when cardCopyLimit is 'no-limit'", () => {
+      const deck = createValidDeck();
+      // Replace 10 cards with Microbots (no limit)
+      for (let i = 0; i < 10; i++) {
+        deck[i] = createMockCard({
+          id: `microbots-${i}`,
+          name: "Microbots",
+          version: "Tiny Helpers",
+          fullName: "Microbots - Tiny Helpers",
+          cardCopyLimit: "no-limit",
+        });
+      }
+
+      const result = validateDeck(deck);
+      const copyErrors = result.errors.filter(
+        (e) => e.type === "TOO_MANY_COPIES",
+      );
+
+      expect(copyErrors).toHaveLength(0);
+    });
+
+    it("respects custom cardCopyLimit of 2 (Perfect Pair rule)", () => {
+      const deck = createValidDeck();
+      // Replace 3 cards with The Glass Slipper (limit 2)
+      for (let i = 0; i < 3; i++) {
+        deck[i] = createMockCard({
+          id: `glass-slipper-${i}`,
+          name: "The Glass Slipper",
+          version: "Perfect Fit",
+          fullName: "The Glass Slipper - Perfect Fit",
+          cardCopyLimit: 2,
+        });
+      }
+
+      const result = validateDeck(deck);
+
+      expect(result.valid).toBe(false);
+      expect(result.errors.some((e) => e.type === "TOO_MANY_COPIES")).toBe(
+        true,
+      );
+      const copyError = result.errors.find((e) => e.type === "TOO_MANY_COPIES");
+      if (copyError && copyError.type === "TOO_MANY_COPIES") {
+        expect(copyError.fullName).toBe("The Glass Slipper - Perfect Fit");
+        expect(copyError.count).toBe(3);
+        expect(copyError.maximum).toBe(2);
+      }
+    });
+
+    it("accepts exactly 2 copies when cardCopyLimit is 2", () => {
+      const deck = createValidDeck();
+      // Replace 2 cards with The Glass Slipper (limit 2)
+      for (let i = 0; i < 2; i++) {
+        deck[i] = createMockCard({
+          id: `glass-slipper-${i}`,
+          name: "The Glass Slipper",
+          version: "Perfect Fit",
+          fullName: "The Glass Slipper - Perfect Fit",
+          cardCopyLimit: 2,
+        });
+      }
+
+      const result = validateDeck(deck);
+      const copyErrors = result.errors.filter(
+        (e) =>
+          e.type === "TOO_MANY_COPIES" &&
+          e.fullName === "The Glass Slipper - Perfect Fit",
       );
 
       expect(copyErrors).toHaveLength(0);

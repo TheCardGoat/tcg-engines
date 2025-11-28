@@ -42,7 +42,7 @@ export interface TooManyCopiesError {
   type: "TOO_MANY_COPIES";
   fullName: string;
   count: number;
-  maximum: typeof MAX_COPIES_PER_CARD;
+  maximum: number;
 }
 
 /**

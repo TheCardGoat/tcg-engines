@@ -51,15 +51,25 @@ export function validateDeck(
     });
   }
 
-  // Rule 2.1.1.3: Maximum 4 copies per full name
+  // Rule 2.1.1.3: Maximum copies per full name (default 4, can be overridden)
   const cardCounts = getCardCounts(cards);
+  const copyLimits = getCardCopyLimits(cards);
+
   for (const [fullName, count] of cardCounts.entries()) {
-    if (count > MAX_COPIES_PER_CARD) {
+    const limit = copyLimits.get(fullName);
+
+    // Skip validation for cards with no limit
+    if (limit === "no-limit") {
+      continue;
+    }
+
+    const maxCopies = limit ?? MAX_COPIES_PER_CARD;
+    if (count > maxCopies) {
       errors.push({
         type: "TOO_MANY_COPIES",
         fullName,
         count,
-        maximum: MAX_COPIES_PER_CARD,
+        maximum: maxCopies,
       });
     }
   }
@@ -95,6 +105,23 @@ export function getCardCounts(
     counts.set(fullName, (counts.get(fullName) ?? 0) + 1);
   }
   return counts;
+}
+
+/**
+ * Get card copy limits by full name
+ * Returns undefined for default limit (4), number for custom limit, or "no-limit" for unlimited
+ */
+export function getCardCopyLimits(
+  cards: LorcanaCardDefinition[],
+): Map<string, number | "no-limit" | undefined> {
+  const limits = new Map<string, number | "no-limit" | undefined>();
+  for (const card of cards) {
+    const fullName = getFullName(card);
+    if (card.cardCopyLimit !== undefined && !limits.has(fullName)) {
+      limits.set(fullName, card.cardCopyLimit);
+    }
+  }
+  return limits;
 }
 
 /**

@@ -65,7 +65,13 @@ export type LorcanaZoneConfig = {
  *
  * The 5 zones in Disney Lorcana (Rule 8)
  */
-export type LorcanaZoneId = "deck" | "hand" | "play" | "discard" | "inkwell";
+export type LorcanaZoneId =
+  | "deck"
+  | "hand"
+  | "play"
+  | "discard"
+  | "inkwell"
+  | "limbo";
 
 /**
  * Lorcana Zone Configurations
@@ -189,6 +195,24 @@ export const lorcanaZones: Record<LorcanaZoneId, LorcanaZoneConfig> = {
     ordered: false,
     facedown: true,
   },
+
+  /**
+   * Limbo Zone (Phased Out)
+   *
+   * For cards temporarily out of play:
+   * - Shifted cards (the underlying card when another card shifts onto it)
+   * - Action cards while resolving their effects
+   * - Cards being processed by game mechanics
+   *
+   * - Private zone (not directly interactable)
+   * - Ordered (maintain sequence for stacking)
+   * - Not facedown (tracking purposes)
+   */
+  limbo: {
+    visibility: "owner",
+    ordered: true,
+    facedown: false,
+  },
 };
 
 /**
@@ -200,7 +224,7 @@ export const lorcanaZones: Record<LorcanaZoneId, LorcanaZoneConfig> = {
 export const isLorcanaZoneId = (value: unknown): value is LorcanaZoneId => {
   return (
     typeof value === "string" &&
-    ["deck", "hand", "play", "discard", "inkwell"].includes(value)
+    ["deck", "hand", "play", "discard", "inkwell", "limbo"].includes(value)
   );
 };
 

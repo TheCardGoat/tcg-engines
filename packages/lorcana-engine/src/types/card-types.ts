@@ -102,7 +102,7 @@ export interface LorcanaCardDefinition {
   flavorText?: string;
 
   /** Set information */
-  set?: string;
+  set: string;
 
   /** Card number in set */
   cardNumber?: string;
@@ -114,7 +114,17 @@ export interface LorcanaCardDefinition {
     | "rare"
     | "super_rare"
     | "legendary"
-    | "enchanted";
+    | "enchanted"
+    | "iconic"
+    | "promo";
+
+  /**
+   * Special card copy limit rules
+   * - "no-limit": Unlimited copies allowed (e.g., Microbots)
+   * - number: Custom limit (e.g., 99 for Dalmatian Puppy, 2 for The Glass Slipper)
+   * - undefined: Default 4 copies per full name
+   */
+  cardCopyLimit?: number | "no-limit";
 }
 
 /**

@@ -32,7 +32,6 @@
   "devDependencies": {
     "@biomejs/biome": "2.0.4",
     "@types/bun": "1.2.14",
-    "jscpd": "^4.0.5",
     "typescript": "5.8.3"
   },
   "peerDependencies": {
