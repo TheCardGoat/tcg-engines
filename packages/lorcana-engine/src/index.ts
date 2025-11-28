@@ -51,7 +51,8 @@ export {
   isLocation,
   isSong,
 } from "./card-utils";
-
+// Spec 5: Quest, Challenge & Locations
+export * from "./combat";
 // Spec 1: Foundation & Types
 export * from "./deck-validation";
 // Engine exports
