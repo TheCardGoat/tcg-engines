@@ -4,14 +4,7 @@
  * Core game state types for Lorcana engine.
  */
 
-/** Player identifier */
-export type PlayerId = string;
-
-/** Card instance identifier */
-export type CardId = string;
-
-/** Zone identifier */
-export type ZoneId = "deck" | "hand" | "play" | "inkwell" | "discard";
+import type { CardId, PlayerId, ZoneId } from "@tcg/core";
 
 /**
  * Character state tracking

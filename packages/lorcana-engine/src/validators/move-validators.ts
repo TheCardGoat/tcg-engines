@@ -12,7 +12,7 @@
  */
 
 import type { CardId, MoveContext, PlayerId, ZoneId } from "@tcg/core";
-import type { LorcanaCardMeta, LorcanaGameState } from "../types/move-params";
+import type { LorcanaCardMeta, LorcanaGameState } from "../types";
 
 /**
  * Validator function type
