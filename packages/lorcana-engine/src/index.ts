@@ -22,6 +22,8 @@ export type {
   RuleEngine,
   RuleEngineOptions,
 } from "@tcg/core";
+// Spec 7: Abilities System
+export * from "./abilities";
 // Export card-utils
 export {
   canInk,
