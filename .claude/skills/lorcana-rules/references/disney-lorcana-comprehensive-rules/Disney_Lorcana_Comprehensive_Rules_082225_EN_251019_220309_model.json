@@ -1,0 +1,3456 @@
+[
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.075],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "title",
+      "bbox": [0.246, 0.156, 0.756, 0.194],
+      "angle": 0,
+      "content": "COMPREHENSIVE RULES"
+    },
+    {
+      "type": "text",
+      "bbox": [0.417, 0.203, 0.584, 0.221],
+      "angle": 0,
+      "content": "Effective August 22, 2025"
+    },
+    {
+      "type": "title",
+      "bbox": [0.058, 0.284, 0.318, 0.305],
+      "angle": 0,
+      "content": "A NOTE FOR NEWER PLAYERS"
+    },
+    {
+      "type": "text",
+      "bbox": [0.055, 0.313, 0.918, 0.35],
+      "angle": 0,
+      "content": "Welcome! There are several ways to access the rules for the Disney Lorcana trading card game. The information outlined in this document is meant for high-level Disney Lorcana rules questions and not as a way to learn the game."
+    },
+    {
+      "type": "text",
+      "bbox": [0.055, 0.36, 0.915, 0.396],
+      "angle": 0,
+      "content": "If you're new to the Disney Lorcana TCG, we recommend you start with our introductory videos here or download the official Disney Lorcana Trading Card Game Companion app on Apple or Google Play."
+    },
+    {
+      "type": "title",
+      "bbox": [0.058, 0.462, 0.24, 0.485],
+      "angle": 0,
+      "content": "INTRODUCTION"
+    },
+    {
+      "type": "text",
+      "bbox": [0.055, 0.495, 0.94, 0.532],
+      "angle": 0,
+      "content": "This document covers the technical details of official Disney Lorcana gameplay. The rules described here are organized in a numbered format to make referencing and updating them easy and clear."
+    },
+    {
+      "type": "text",
+      "bbox": [0.056, 0.542, 0.808, 0.56],
+      "angle": 0,
+      "content": "The Comprehensive Rules are a living document. Go to the Disney Lorcana Resources page for the most current version."
+    },
+    {
+      "type": "title",
+      "bbox": [0.057, 0.634, 0.17, 0.656],
+      "angle": 0,
+      "content": "UPDATES"
+    },
+    {
+      "type": "text",
+      "bbox": [0.055, 0.666, 0.929, 0.703],
+      "angle": 0,
+      "content": "We've used colored text to make it easier to spot updates made to this document since its last publication. Text that is new or changed is in Sapphire. Text that has been moved is in Amber. For a list of revisions, see the Update Summary at the end of this document."
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.941, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.969],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.495, 0.956, 0.505, 0.968],
+      "angle": 0,
+      "content": "i"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.907, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.548, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "title",
+      "bbox": [0.056, 0.153, 0.185, 0.178],
+      "angle": 0,
+      "content": "CONTENTS"
+    },
+    {
+      "type": "title",
+      "bbox": [0.067, 0.194, 0.173, 0.212],
+      "angle": 0,
+      "content": "1. CONCEPTS"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.217, 0.489, 0.257],
+      "angle": 0,
+      "content": "1.1. General Languages, Official Text, Updates, Tournament Rules"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.259, 0.229, 0.296],
+      "angle": 0,
+      "content": "1.2. Golden Rules Choices"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.301, 0.228, 0.322],
+      "angle": 0,
+      "content": "1.3. Active Player"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.324, 0.208, 0.344],
+      "angle": 0,
+      "content": "1.4. Opponent"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.346, 0.232, 0.367],
+      "angle": 0,
+      "content": "1.5. Playing Cards"
+    },
+    {
+      "type": "text",
+      "bbox": [0.091, 0.369, 0.257, 0.39],
+      "angle": 0,
+      "content": "1.6. Types of Abilities"
+    },
+    {
+      "type": "text",
+      "bbox": [0.091, 0.392, 0.192, 0.412],
+      "angle": 0,
+      "content": "1.7. The Bag"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.414, 0.235, 0.435],
+      "angle": 0,
+      "content": "1.8. Players' Cards"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.437, 0.479, 0.494],
+      "angle": 0,
+      "content": "1.9. Game State Check Game State Conditions, Required Actions, Order of Completion"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.498, 0.27, 0.518],
+      "angle": 0,
+      "content": "1.10. Multiplayer Games"
+    },
+    {
+      "type": "list",
+      "bbox": [0.09, 0.217, 0.489, 0.518],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.067, 0.531, 0.236, 0.55],
+      "angle": 0,
+      "content": "2. BEFORE THE GAME"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.555, 0.215, 0.573],
+      "angle": 0,
+      "content": "2.1. Deck Rules"
+    },
+    {
+      "type": "title",
+      "bbox": [0.067, 0.588, 0.176, 0.607],
+      "angle": 0,
+      "content": "3. GAMEPLAY"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.612, 0.476, 0.666],
+      "angle": 0,
+      "content": "3.1. Starting a Game\nStarting Player, Randomize, Track Lore, Draw, Alter Hands"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.672, 0.347, 0.711],
+      "angle": 0,
+      "content": "3.2. Ending a Game Lore, Empty Deck, Last Player"
+    },
+    {
+      "type": "list",
+      "bbox": [0.09, 0.612, 0.476, 0.711],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.067, 0.725, 0.232, 0.743],
+      "angle": 0,
+      "content": "4. TURN STRUCTURE"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.748, 0.185, 0.766],
+      "angle": 0,
+      "content": "4.1. Phases"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.77, 0.266, 0.809],
+      "angle": 0,
+      "content": "4.2. Beginning Phase Ready, Set, Draw"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.813, 0.218, 0.83],
+      "angle": 0,
+      "content": "4.3. Main Phase"
+    },
+    {
+      "type": "list",
+      "bbox": [0.09, 0.748, 0.266, 0.83],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.155, 0.833, 0.477, 0.887],
+      "angle": 0,
+      "content": "Turn Actions, Inkwell, Play a Card, Play for Free, Quest, Challenge, Move a Character, Use Activated Abilities"
+    },
+    {
+      "type": "text",
+      "bbox": [0.09, 0.892, 0.263, 0.91],
+      "angle": 0,
+      "content": "4.4. End of Turn Phase"
+    },
+    {
+      "type": "title",
+      "bbox": [0.508, 0.194, 0.586, 0.212],
+      "angle": 0,
+      "content": "5. CARDS"
+    },
+    {
+      "type": "text",
+      "bbox": [0.53, 0.217, 0.895, 0.275],
+      "angle": 0,
+      "content": "5.1. Conditions Ready, Exerted, Damaged, Undamaged, Under, On Top, In a Stack"
+    },
+    {
+      "type": "title",
+      "bbox": [0.508, 0.289, 0.628, 0.308],
+      "angle": 0,
+      "content": "6. CARD TYPES"
+    },
+    {
+      "type": "text",
+      "bbox": [0.531, 0.313, 0.802, 0.35],
+      "angle": 0,
+      "content": "6.1. Characters Requirements to Be a Character"
+    },
+    {
+      "type": "text",
+      "bbox": [0.531, 0.354, 0.898, 0.393],
+      "angle": 0,
+      "content": "6.2. Parts of a Card Ink Key, Rarity Key, Characters with Two Names"
+    },
+    {
+      "type": "text",
+      "bbox": [0.531, 0.396, 0.695, 0.434],
+      "angle": 0,
+      "content": "6.3. Actions General, Songs"
+    },
+    {
+      "type": "text",
+      "bbox": [0.531, 0.438, 0.616, 0.455],
+      "angle": 0,
+      "content": "6.4. Items"
+    },
+    {
+      "type": "text",
+      "bbox": [0.531, 0.461, 0.695, 0.497],
+      "angle": 0,
+      "content": "6.5. Locations Parts of a Card"
+    },
+    {
+      "type": "list",
+      "bbox": [0.531, 0.313, 0.898, 0.497],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.508, 0.512, 0.604, 0.53],
+      "angle": 0,
+      "content": "7. ABILITIES"
+    },
+    {
+      "type": "text",
+      "bbox": [0.531, 0.536, 0.941, 0.612],
+      "angle": 0,
+      "content": "7.1. General Clauses, Multiple Effects in a Clause, \"May,\" \"Put into Hand,\" \"Other/Another,\" Playing Cards while Resolving Abilities, Loops, \"Up to,\" \"That,\" Revealing Cards"
+    },
+    {
+      "type": "text",
+      "bbox": [0.531, 0.616, 0.668, 0.633],
+      "angle": 0,
+      "content": "7.2. Action Cards"
+    },
+    {
+      "type": "text",
+      "bbox": [0.531, 0.638, 0.748, 0.676],
+      "angle": 0,
+      "content": "7.3. Keywords General, Reminder Text"
+    },
+    {
+      "type": "text",
+      "bbox": [0.531, 0.68, 0.889, 0.737],
+      "angle": 0,
+      "content": "7.4. Triggered Abilities\n- Abilities with Two Trigger Conditions, Floating Triggered Abilities, Delayed Triggered Abilities"
+    },
+    {
+      "type": "text",
+      "bbox": [0.531, 0.741, 0.767, 0.778],
+      "angle": 0,
+      "content": "7.5. Activated Abilities Paying Costs, Steps to Use"
+    },
+    {
+      "type": "text",
+      "bbox": [0.531, 0.782, 0.808, 0.821],
+      "angle": 0,
+      "content": "7.6. Static Abilities Duration, Timing, Outside of Play"
+    },
+    {
+      "type": "text",
+      "bbox": [0.531, 0.824, 0.725, 0.862],
+      "angle": 0,
+      "content": "7.7. Replacement Effects Skip"
+    },
+    {
+      "type": "text",
+      "bbox": [0.531, 0.865, 0.696, 0.885],
+      "angle": 0,
+      "content": "7.8. Ability Modifiers"
+    },
+    {
+      "type": "list",
+      "bbox": [0.531, 0.536, 0.941, 0.885],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.94, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.495, 0.956, 0.504, 0.968],
+      "angle": 0,
+      "content": "ii"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.907, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "title",
+      "bbox": [0.058, 0.195, 0.13, 0.211],
+      "angle": 0,
+      "content": "8. ZONES"
+    },
+    {
+      "type": "text",
+      "bbox": [0.079, 0.218, 0.179, 0.235],
+      "angle": 0,
+      "content": "8.1. General"
+    },
+    {
+      "type": "text",
+      "bbox": [0.144, 0.238, 0.315, 0.255],
+      "angle": 0,
+      "content": "Public, Private, Fail to Find"
+    },
+    {
+      "type": "text",
+      "bbox": [0.079, 0.26, 0.16, 0.277],
+      "angle": 0,
+      "content": "8.2. Deck"
+    },
+    {
+      "type": "text",
+      "bbox": [0.144, 0.28, 0.426, 0.298],
+      "angle": 0,
+      "content": "Private Zone, Adding Cards to Top or Bottom"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.301, 0.159, 0.318],
+      "angle": 0,
+      "content": "8.3. Hand"
+    },
+    {
+      "type": "text",
+      "bbox": [0.079, 0.324, 0.152, 0.343],
+      "angle": 0,
+      "content": "8.4. Play"
+    },
+    {
+      "type": "text",
+      "bbox": [0.144, 0.344, 0.354, 0.362],
+      "angle": 0,
+      "content": "In Play, Public Zone, Leaving Play"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.366, 0.174, 0.383],
+      "angle": 0,
+      "content": "8.5. Inkwell"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.388, 0.176, 0.406],
+      "angle": 0,
+      "content": "8.6. Discard"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.411, 0.149, 0.43],
+      "angle": 0,
+      "content": "8.7. Bag"
+    },
+    {
+      "type": "list",
+      "bbox": [0.079, 0.218, 0.426, 0.43],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.058, 0.445, 0.147, 0.461],
+      "angle": 0,
+      "content": "9. DAMAGE"
+    },
+    {
+      "type": "text",
+      "bbox": [0.079, 0.468, 0.314, 0.487],
+      "angle": 0,
+      "content": "9.1. Representation of Damage"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.49, 0.163, 0.508],
+      "angle": 0,
+      "content": "9.2. \"Put\""
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.513, 0.308, 0.533],
+      "angle": 0,
+      "content": "9.3. Moving Damage Counters"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.536, 0.212, 0.556],
+      "angle": 0,
+      "content": "9.4. Leaving Play"
+    },
+    {
+      "type": "list",
+      "bbox": [0.079, 0.468, 0.314, 0.556],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.058, 0.57, 0.173, 0.587],
+      "angle": 0,
+      "content": "10. KEYWORDS"
+    },
+    {
+      "type": "text",
+      "bbox": [0.079, 0.593, 0.178, 0.61],
+      "angle": 0,
+      "content": "10.1. General"
+    },
+    {
+      "type": "text",
+      "bbox": [0.144, 0.613, 0.438, 0.631],
+      "angle": 0,
+      "content": "Stacking, Technical Definitions, Reminder Text"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.635, 0.199, 0.654],
+      "angle": 0,
+      "content": "10.2. Bodyguard"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.657, 0.2, 0.676],
+      "angle": 0,
+      "content": "10.3. Challenger"
+    },
+    {
+      "type": "text",
+      "bbox": [0.144, 0.678, 0.201, 0.696],
+      "angle": 0,
+      "content": "Stacking"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.7, 0.174, 0.716],
+      "angle": 0,
+      "content": "10.4. Evasive"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.722, 0.185, 0.739],
+      "angle": 0,
+      "content": "10.5. Reckless"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.745, 0.166, 0.762],
+      "angle": 0,
+      "content": "10.6. Resist"
+    },
+    {
+      "type": "text",
+      "bbox": [0.144, 0.765, 0.273, 0.782],
+      "angle": 0,
+      "content": "Stacking, O Damage"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.786, 0.156, 0.803],
+      "angle": 0,
+      "content": "10.7. Rush"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.808, 0.157, 0.826],
+      "angle": 0,
+      "content": "10.8. Shift"
+    },
+    {
+      "type": "text",
+      "bbox": [0.144, 0.829, 0.487, 0.847],
+      "angle": 0,
+      "content": "Alternate Cost, State, Damaged, Leaving Play, Variants"
+    },
+    {
+      "type": "text",
+      "bbox": [0.08, 0.851, 0.168, 0.87],
+      "angle": 0,
+      "content": "10.9. Singer"
+    },
+    {
+      "type": "list",
+      "bbox": [0.079, 0.593, 0.487, 0.87],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.533, 0.195, 0.676, 0.215],
+      "angle": 0,
+      "content": "10.10. Sing Together"
+    },
+    {
+      "type": "text",
+      "bbox": [0.597, 0.216, 0.876, 0.233],
+      "angle": 0,
+      "content": "Alternate Cost, Resolving Triggered Abilities"
+    },
+    {
+      "type": "text",
+      "bbox": [0.533, 0.237, 0.633, 0.256],
+      "angle": 0,
+      "content": "10.11. Support"
+    },
+    {
+      "type": "text",
+      "bbox": [0.533, 0.26, 0.622, 0.277],
+      "angle": 0,
+      "content": "10.12. Vanish"
+    },
+    {
+      "type": "text",
+      "bbox": [0.533, 0.283, 0.612, 0.3],
+      "angle": 0,
+      "content": "10.13. Ward"
+    },
+    {
+      "type": "list",
+      "bbox": [0.533, 0.237, 0.633, 0.3],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.511, 0.316, 0.592, 0.333],
+      "angle": 0,
+      "content": "GLOSSARY"
+    },
+    {
+      "type": "text",
+      "bbox": [0.511, 0.339, 0.658, 0.356],
+      "angle": 0,
+      "content": "UPDATE SUMMARY"
+    },
+    {
+      "type": "text",
+      "bbox": [0.511, 0.361, 0.74, 0.379],
+      "angle": 0,
+      "content": "PREVIOUS UPDATE SUMMARY"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.941, 0.157, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.059, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.494, 0.956, 0.505, 0.967],
+      "angle": 0,
+      "content": "11"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.907, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.457, 0.044, 0.548, 0.075],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "title",
+      "bbox": [0.055, 0.15, 0.15, 0.166],
+      "angle": 0,
+      "content": "1. CONCEPTS"
+    },
+    {
+      "type": "title",
+      "bbox": [0.075, 0.175, 0.158, 0.19],
+      "angle": 0,
+      "content": "1.1. General"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.204, 0.933, 0.237],
+      "angle": 0,
+      "content": "1.1.1. Disney Lorcana cards are published in multiple languages. For the purposes of gameplay, the English cards, rules, rulings, and clarifications are the official versions."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.242, 0.94, 0.276],
+      "angle": 0,
+      "content": "1.1.2. Card text and rules may be updated or corrected. The most current updated or corrected information is the official version for gameplay."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.28, 0.912, 0.315],
+      "angle": 0,
+      "content": "1.1.3. The Disney Lorcana TCG is a game played with two or more people. Each player needs a deck of Disney Lorcana cards that they'll use in the game. See 2.1 \"Deck Rules\" for deck requirements."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.318, 0.902, 0.353],
+      "angle": 0,
+      "content": "1.1.4. Each player needs a way to track their lore totals and mark damage on characters and locations. This can be any method players find convenient that is clear to all players in the game."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.357, 0.922, 0.391],
+      "angle": 0,
+      "content": "1.1.5. Disney Lorcana tournaments may have additional rules that can affect the ones in this document. Please refer to the Disney Lorcana TCG Tournament Rules found here for further reference."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.395, 0.913, 0.43],
+      "angle": 0,
+      "content": "1.1.6. Some cards include reminder text set in italics. Reminder text isn't rules text. It's only a memory aid and may vary without changing the meaning of keyword rules."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.204, 0.94, 0.43],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.442, 0.192, 0.457],
+      "angle": 0,
+      "content": "1.2. Golden Rules"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.471, 0.661, 0.487],
+      "angle": 0,
+      "content": "1.2.1. If the text of a card contradicts a game rule, the card effect supersedes that rule."
+    },
+    {
+      "type": "text",
+      "bbox": [0.148, 0.498, 0.914, 0.551],
+      "angle": 0,
+      "content": "Example: The game doesn't allow a character to challenge a ready character, but a player has a character with an ability that reads, \"This character can challenge ready characters.\" The ability overrides the game rule and allows that character to challenge a ready character."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.56, 0.922, 0.594],
+      "angle": 0,
+      "content": "1.2.2. If a rule or effect prevents something from happening, that rule or effect supersedes other rules and effects that allow it to happen."
+    },
+    {
+      "type": "text",
+      "bbox": [0.148, 0.605, 0.928, 0.64],
+      "angle": 0,
+      "content": "Example: An effect says that players can't play actions. Another effect instructs a player they may play an action for free. That player still can't play an action."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.649, 0.926, 0.684],
+      "angle": 0,
+      "content": "1.2.3. Do as much as you can - If an effect tells a player to do something, the player does as much as possible even if some part of that effect can't be done, except in specific cases (see 7.1.2)."
+    },
+    {
+      "type": "text",
+      "bbox": [0.148, 0.693, 0.919, 0.729],
+      "angle": 0,
+      "content": "Example: Strike a Good Match has an effect that reads, \"Draw 2 cards, then choose and discard a card.\" If an effect prevents the player of this action from drawing any cards, they still have to choose and discard a card."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.739, 0.94, 0.772],
+      "angle": 0,
+      "content": "1.2.4. Choices that are made as a part of an effect are made as the effect is resolving and not as part of playing the card or using the ability with the effect."
+    },
+    {
+      "type": "text",
+      "bbox": [0.148, 0.783, 0.938, 0.889],
+      "angle": 0,
+      "content": "Example: The active player has a Let the Storm Rage On in their hand and no characters in play. The opponent has a Cogsworth - Grandfather Clock (which has Ward) in play and has no other characters in play. Let the Storm Rage On has an effect that reads, \"Deal 2 damage to chosen character. Draw a card.\" When the active player plays Let the Storm Rage On, the opponent isn't sure they can play it, since there are no characters in play for them to choose. The choice of character happens as the effect is resolving, though, not when the card is played. Because the active player can't choose Cogsworth as the effect is resolving, they do as much as they can and draw a card without dealing 2 damage."
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.94, 0.157, 0.954],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.955, 0.11, 0.969],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.495, 0.956, 0.503, 0.967],
+      "angle": 0,
+      "content": "1"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.908, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.457, 0.044, 0.548, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.151, 0.194, 0.168],
+      "angle": 0,
+      "content": "1.3.Active Player"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.18, 0.911, 0.216],
+      "angle": 0,
+      "content": "1.3.1. When a player starts their turn, they become the active player. When a player ends their turn, they're no longer the active player."
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.227, 0.175, 0.245],
+      "angle": 0,
+      "content": "1.4. Opponent"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.256, 0.479, 0.274],
+      "angle": 0,
+      "content": "1.4.1. Anyone a player is playing against is their opponent."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.276, 0.935, 0.313],
+      "angle": 0,
+      "content": "1.4.2. Some game formats allow a player to designate one or more players as teammates. Such teammates are identified before the game starts. As teammates aren't playing against each other, they aren't opponents to one another."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.256, 0.935, 0.313],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.323, 0.196, 0.342],
+      "angle": 0,
+      "content": "1.5. Playing Cards"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.352, 0.942, 0.388],
+      "angle": 0,
+      "content": "1.5.1. Players can play a card whenever they're the active player and there are no effects to resolve. To play a card, the player reveals it from their hand and pays the cost (see 4.3.4)."
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.399, 0.218, 0.418],
+      "angle": 0,
+      "content": "1.6. Types of Abilities"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.428, 0.538, 0.447],
+      "angle": 0,
+      "content": "1.6.1. There are several kinds of abilities in the Disney Lorcana TCG."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.457, 0.937, 0.491],
+      "angle": 0,
+      "content": "1.6.1.1. Keywords are words or shortened phrases that represent a larger ability or abilities. See section 10 for the full list of current keywords."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.496, 0.88, 0.53],
+      "angle": 0,
+      "content": "1.6.1.2. Triggered abilities continuously look for a specific condition and have an effect when that condition is met. Triggered abilities follow the rules in section 7.4."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.534, 0.937, 0.551],
+      "angle": 0,
+      "content": "1.6.1.3. Activated abilities have a cost and an effect that occurs if that cost is paid. Activated abilities follow the rules in section 7.5."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.554, 0.915, 0.589],
+      "angle": 0,
+      "content": "1.6.1.4. Static abilities are effects that are continuously active, either for a fixed length of time or for as long as the card generating the effect is in play. Static abilities follow the rules in section 7.6."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.593, 0.922, 0.627],
+      "angle": 0,
+      "content": "1.6.1.5. Replacement effects are generated by some abilities. These replace one effect with another. Replacement effects follow the rules in section 7.7."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.457, 0.937, 0.627],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.639, 0.918, 0.675],
+      "angle": 0,
+      "content": "1.6.2. Whenever an effect would affect multiple players at the same time, the active player resolves that effect first, then in turn order each other player resolves that effect."
+    },
+    {
+      "type": "text",
+      "bbox": [0.148, 0.684, 0.942, 0.756],
+      "angle": 0,
+      "content": "Example: Donald Duck – Perfect Gentleman has the ability Allow Me that reads, “At the start of your turn, each player may draw a card.” While the triggered ability is resolving, the active player resolves their part of the effect first and draws a card. Then in turn order each other player resolves their part of the effect and draws a card. Once all players have finished resolving their respective parts of the effect, it has fully resolved and the game continues."
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.764, 0.162, 0.782],
+      "angle": 0,
+      "content": "1.7. The Bag"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.793, 0.918, 0.863],
+      "angle": 0,
+      "content": "1.7.1. The bag is the zone where triggered abilities wait to resolve. It's not a physical zone but a way to picture the process of resolving triggered abilities. Think of each triggered ability as a marble and the bag as a place to put them until they're resolved. Every marble is separate from every other marble, and a player can look through the bag of marbles to select the one they wish to resolve next."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.867, 0.928, 0.902],
+      "angle": 0,
+      "content": "1.7.2. It's possible for both the active player and their opponent(s) to add triggered abilities to the bag at the same time. Resolving these abilities follows the rules in section 8.7, \"Bag.\""
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.793, 0.928, 0.902],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.94, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.494, 0.956, 0.504, 0.968],
+      "angle": 0,
+      "content": "2"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.908, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.457, 0.044, 0.548, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.151, 0.197, 0.168],
+      "angle": 0,
+      "content": "1.8. Players' Cards"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.18, 0.937, 0.214],
+      "angle": 0,
+      "content": "1.8.1. Cards a player brings to the table in their deck are their cards, and that player makes any decisions necessary for the card and its effects unless otherwise specified by an effect."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.219, 0.93, 0.254],
+      "angle": 0,
+      "content": "1.8.2. His/Her/Its/Their - When a card refers to \"his,\" \"her,\" \"its,\" or \"their\" player, it's referring to the person who played the card. When a card refers to \"his,\" \"her,\" \"its,\" or \"their\" turn, it's referring to its player's turn."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.257, 0.915, 0.292],
+      "angle": 0,
+      "content": "1.8.3. You/Your/Yours - Card effects address the player who played that card. When a card refers to \"you,\" \"your,\" or \"yours,\" it's referring to the player of the card, even if the ability containing the reference was granted by an opposing effect."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.18, 0.937, 0.292],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.304, 0.225, 0.32],
+      "angle": 0,
+      "content": "1.9. Game State Check"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.332, 0.923, 0.42],
+      "angle": 0,
+      "content": "1.9.1. There is a set of conditions the game checks for with certain required actions happening when one or more of those conditions is met. This is called a game state check and is made up of two parts: the game state condition and the required action. A game state condition is a specific circumstance the game state can achieve. A required action is what happens in the game when a game state condition is met. The following are the conditions that the game state check looks for and the required action each creates."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.432, 0.577, 0.451],
+      "angle": 0,
+      "content": "1.9.1.1. If a player has 20 or more lore, that player wins the game."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.453, 0.938, 0.471],
+      "angle": 0,
+      "content": "1.9.1.2. If a player attempted to draw from a deck with no cards since the last game state check, that player loses the game."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.474, 0.922, 0.543],
+      "angle": 0,
+      "content": "1.9.1.3. If a character or location has damage equal to or greater than its Willpower, that character or location is banished. A character or location banished as a result of damage dealt by a character in a challenge since the last game state check or as a result of damage dealt, put, or moved by a character's ability since the last game state check is considered banished by that character."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.432, 0.938, 0.543],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.555, 0.926, 0.644],
+      "angle": 0,
+      "content": "1.9.2. A game state check is made at the end of every step, after any action or ability is finished resolving, and after each effect in the bag is finished resolving. During a game state check, first check and complete all win and loss conditions and required actions. Then if there are no win or loss conditions met, check and complete all other conditions and required actions. Once all required actions are complete, the game state check repeats until there are no further required actions to complete. Triggered abilities that occurred during this process are then added to the bag to resolve."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.655, 0.916, 0.691],
+      "angle": 0,
+      "content": "1.9.2.1. Any required actions generated from a game state check happen in turn order. If a player would win and lose the game at the same time as a result of the same game state check, that player wins the game."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.702, 0.609, 0.719],
+      "angle": 0,
+      "content": "1.9.3. Once a required action is completed, the game state check occurs again."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.723, 0.932, 0.758],
+      "angle": 0,
+      "content": "1.9.4. Abilities that trigger as a result of a game state check are added to the bag as soon as the check and any required actions are fully completed."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.761, 0.901, 0.797],
+      "angle": 0,
+      "content": "1.9.5. If multiple required actions would happen at once, a single combined required action takes place, and all of the required actions happen simultaneously."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.702, 0.932, 0.797],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.808, 0.227, 0.825],
+      "angle": 0,
+      "content": "1.10. Multiplayer Games"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.837, 0.932, 0.871],
+      "angle": 0,
+      "content": "1.10.1. Multiplayer games are played with three or more players. Team games are a subset of multiplayer play that are not covered in this document."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.875, 0.732, 0.893],
+      "angle": 0,
+      "content": "1.10.2. Multiplayer games follow the same rules as two-player games, with the following exceptions."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.837, 0.932, 0.893],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.94, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.494, 0.956, 0.504, 0.968],
+      "angle": 0,
+      "content": "3"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.908, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.075],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.151, 0.941, 0.185],
+      "angle": 0,
+      "content": "1.10.2.1. At the end of each player's turn, play proceeds to the player on their left rather than going back and forth across the table."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.19, 0.917, 0.225],
+      "angle": 0,
+      "content": "1.10.2.2. If an ability requires more than one player to do something at the same time, the active player does it first. Then proceed to the left, one player at a time, until all players are done."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.228, 0.935, 0.299],
+      "angle": 0,
+      "content": "1.10.2.3. After a player loses the game from attempting to draw from a deck with no cards (see 1.9.1.2), they must leave the game immediately. All of that player's cards and effects are removed from the game, including any static effects that would have ended during their current or future turns as well as any triggered abilities that player added to the bag that haven't resolved."
+    },
+    {
+      "type": "list",
+      "bbox": [0.152, 0.151, 0.941, 0.299],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.31, 0.506, 0.327],
+      "angle": 0,
+      "content": "1.10.3. Some multiplayer game formats use simultaneous turns."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.339, 0.937, 0.392],
+      "angle": 0,
+      "content": "1.10.3.1. During a simultaneous turn, all players on the same team progress through the phases and steps of the game at the same time. During the Main Phase, the players can take any turn action they could take normally in any player order they wish. Players must complete one turn action in its entirety before moving to the next turn action."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.395, 0.934, 0.449],
+      "angle": 0,
+      "content": "1.10.3.2. If triggered abilities or effects are added to the bag by multiple players during a simultaneous turn, these triggered abilities or effects are added to the bag by the team as a whole, and the order in which they are resolved is chosen by the team. Otherwise, resolving follows the same rules found in section 8.7, \"Bag.\""
+    },
+    {
+      "type": "list",
+      "bbox": [0.152, 0.339, 0.937, 0.449],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.211, 0.457, 0.937, 0.528],
+      "angle": 0,
+      "content": "Example: Three players are members of the same team taking a simultaneous turn. During the Ready step of the Beginning Phase, all three players ready their cards at the same time. During the Set step, all three players gain lore from locations they have in play with a \\(\\diamond\\) characteristic and then add any effects or abilities that triggered during the Ready step to the bag at the same time. In the Draw step, all three players draw a card from their decks at the same time."
+    },
+    {
+      "type": "text",
+      "bbox": [0.211, 0.532, 0.937, 0.603],
+      "angle": 0,
+      "content": "After the game moves into the Main Phase, the players take a simultaneous turn together. The first player wants to put a card into their inkwell. The second wants to quest, and the third has decided to have one of their characters challenge an opposing character. The players can decide the order of these turn actions, but each turn action must be completed in its entirety before the next player can act."
+    },
+    {
+      "type": "text",
+      "bbox": [0.212, 0.606, 0.928, 0.641],
+      "angle": 0,
+      "content": "During the End of Turn Phase, the players declare the end of their turn. All triggers are added to the bag at the same time and all \"this turn\" effects end at the same time."
+    },
+    {
+      "type": "title",
+      "bbox": [0.055, 0.67, 0.204, 0.687],
+      "angle": 0,
+      "content": "2. BEFORE THE GAME"
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.695, 0.181, 0.71],
+      "angle": 0,
+      "content": "2.1. Deck Rules"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.723, 0.879, 0.759],
+      "angle": 0,
+      "content": "2.1.1. Each player's Disney Lorcana deck must meet the following requirements. Alternate play formats may have different requirements."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.77, 0.82, 0.787],
+      "angle": 0,
+      "content": "2.1.1. The deck must contain at least 60 cards. There's no upper limit to the number of cards in a deck."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.791, 0.519, 0.808],
+      "angle": 0,
+      "content": "2.1.1.2. The deck can't contain more than two ink types."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.811, 0.703, 0.828],
+      "angle": 0,
+      "content": "2.1.1.3. The deck can't contain more than 4 cards with the same full name (see 6.2.4)."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.832, 0.476, 0.849],
+      "angle": 0,
+      "content": "2.1.1.4. The deck can't contain any banned cards."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.77, 0.82, 0.849],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.94, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.494, 0.956, 0.505, 0.968],
+      "angle": 0,
+      "content": "4"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.907, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.457, 0.044, 0.548, 0.075],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "title",
+      "bbox": [0.055, 0.151, 0.152, 0.166],
+      "angle": 0,
+      "content": "3. GAMEPLAY"
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.175, 0.21, 0.192],
+      "angle": 0,
+      "content": "3.1. Starting a Game"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.204, 0.923, 0.236],
+      "angle": 0,
+      "content": "3.1.1. Starting a game involves several steps that all players follow. Once these steps are completed, the game is considered to be started."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.242, 0.94, 0.294],
+      "angle": 0,
+      "content": "3.1.2. First, use a method for randomly determining who chooses who is the starting player and takes the first turn of the game. This can include rolling dice, flipping a coin, or other methods. If this game is next in a best-of series (such as a best-of-three), the losing player of the previous game chooses the starting player."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.298, 0.937, 0.35],
+      "angle": 0,
+      "content": "3.1.3. Second, each player randomizes (shuffles) their deck. Players may use any form of randomization they find convenient and comfortable, but the method chosen must sufficiently randomize the deck. Each player must offer an opposing player a chance to cut their deck after it's shuffled. Once these steps are complete, the deck is ready to play and is placed in the play area."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.354, 0.913, 0.388],
+      "angle": 0,
+      "content": "3.1.4. Third, each player begins the game with 0 lore. Players may use any method for tracking their lore, such as pen and paper, lore trackers, or the official Disney Lorcana Trading Card Game Companion app."
+    },
+    {
+      "type": "text",
+      "bbox": [0.105, 0.393, 0.368, 0.409],
+      "angle": 0,
+      "content": "3.1.5. Fourth, each player draws 7 cards."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.413, 0.905, 0.447],
+      "angle": 0,
+      "content": "3.1.6. Fifth, players may alter their hands, beginning with the starting player. Each player can alter their hand only once in each game, following the steps listed here."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.204, 0.94, 0.447],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.459, 0.895, 0.493],
+      "angle": 0,
+      "content": "3.1.6.1. Step 1 - The player selects any number of cards from their hand and places them on the bottom of their deck without revealing them."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.498, 0.606, 0.513],
+      "angle": 0,
+      "content": "3.1.6.2. Step 2 - The player draws until they have 7 cards in their hand."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.518, 0.828, 0.534],
+      "angle": 0,
+      "content": "3.1.6.3. Step 3 - In turn order, each other player completes steps 1 and 2 if they choose to alter their hand."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.539, 0.729, 0.555],
+      "angle": 0,
+      "content": "3.1.6.4. Step 4 - Each player who altered their hand by 1 or more cards shuffles their deck."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.56, 0.918, 0.594],
+      "angle": 0,
+      "content": "3.1.6.5. Step 5 - Each player who altered their hand offers an opposing player a chance to cut their deck. Note that some play events may allow additional randomizing methods or require specific ones."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.459, 0.918, 0.594],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.607, 0.925, 0.639],
+      "angle": 0,
+      "content": "3.1.7. Once all players have altered or chosen not to alter their hand, the game officially starts with the starting player's Beginning Phase (see 4.2)."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.645, 0.77, 0.661],
+      "angle": 0,
+      "content": "3.1.8. Certain formats and tournament policies may add to, remove from, or otherwise adjust these rules."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.607, 0.925, 0.661],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.674, 0.203, 0.691],
+      "angle": 0,
+      "content": "3.2. Ending a Game"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.703, 0.375, 0.72],
+      "angle": 0,
+      "content": "3.2.1. A game can end one of these ways:"
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.732, 0.531, 0.748],
+      "angle": 0,
+      "content": "3.2.1.1. When a player reaches 20 lore, they win the game."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.753, 0.937, 0.821],
+      "angle": 0,
+      "content": "3.2.1.2. If a player attempted to draw from a deck with no cards since the last game state check, that player loses the game. All cards in play and any abilities or effects waiting to resolve that belong to a player who loses the game are immediately removed. If this occurs in a multiplayer game, the game continues. If it was the losing player's turn, the game progresses to the next player's turn after any other effects have been resolved."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.827, 0.604, 0.843],
+      "angle": 0,
+      "content": "3.2.1.3. If a player is the last person left in a game, they win the game."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.732, 0.937, 0.843],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.94, 0.157, 0.954],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.955, 0.11, 0.969],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.495, 0.956, 0.504, 0.967],
+      "angle": 0,
+      "content": "5"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.908, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "title",
+      "bbox": [0.055, 0.15, 0.201, 0.167],
+      "angle": 0,
+      "content": "4. TURN STRUCTURE"
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.175, 0.154, 0.191],
+      "angle": 0,
+      "content": "4.1. Phases"
+    },
+    {
+      "type": "text",
+      "bbox": [0.103, 0.204, 0.806, 0.221],
+      "angle": 0,
+      "content": "4.1.1. A turn has three phases, which occur in this order: Beginning Phase, Main Phase, and End of Turn Phase."
+    },
+    {
+      "type": "text",
+      "bbox": [0.103, 0.224, 0.937, 0.277],
+      "angle": 0,
+      "content": "4.1.2. The Beginning Phase is where a player resets their cards as appropriate for their new turn. This is where all effects that end at the start of the player's turn end and where effects that occur or begin at the start of their turn happen. The Beginning Phase has three steps: Ready, Set, and Draw. (See 4.2, \"Beginning Phase.\")"
+    },
+    {
+      "type": "text",
+      "bbox": [0.103, 0.28, 0.911, 0.315],
+      "angle": 0,
+      "content": "4.1.3. The Main Phase is where a player can act on their turn, choosing to perform any of the Main Phase turn actions. (See 4.3, \"Main Phase.\")"
+    },
+    {
+      "type": "text",
+      "bbox": [0.103, 0.318, 0.94, 0.371],
+      "angle": 0,
+      "content": "4.1.4. The End of Turn Phase is where all effects that end at the current turn end. If effects would be added to the bag as a result of effects ending, those effects are resolved and the game proceeds to the next player's Beginning Phase. (See 4.4, \"End of Turn Phase.\")"
+    },
+    {
+      "type": "list",
+      "bbox": [0.103, 0.204, 0.94, 0.371],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.383, 0.214, 0.401],
+      "angle": 0,
+      "content": "4.2. Beginning Phase"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.412, 0.195, 0.43],
+      "angle": 0,
+      "content": "4.2.1. Ready"
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.441, 0.631, 0.459],
+      "angle": 0,
+      "content": "4.2.1.1. The active player readies all their cards in play and in their inkwell."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.461, 0.543, 0.481],
+      "angle": 0,
+      "content": "4.2.1.2. Effects that apply \"During your turn\" start applying."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.482, 0.723, 0.5],
+      "angle": 0,
+      "content": "4.2.1.3. Effects that end \"at the start of your turn\" or \"at the start of your next turn\" end."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.502, 0.937, 0.522],
+      "angle": 0,
+      "content": "4.2.1.4. Effects that trigger \"at the start of your turn\" and \"at the beginning of your turn\" trigger but do not yet resolve (see 4.2.2.3)."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.441, 0.937, 0.522],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.532, 0.178, 0.548],
+      "angle": 0,
+      "content": "4.2.2. Set"
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.561, 0.885, 0.596],
+      "angle": 0,
+      "content": "4.2.2.1. Characters that are in play are no longer \"drying\" and will be able to quest, challenge, or to pay costs for activated abilities or song cards."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.599, 0.937, 0.635],
+      "angle": 0,
+      "content": "4.2.2.2. The active player gains lore from locations they have in play with a \\(\\diamond\\) characteristic. This isn't a triggered ability and doesn't use the bag."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.637, 0.917, 0.673],
+      "angle": 0,
+      "content": "4.2.2.3. Effects that would occur \"At the start of your turn\" or \"At the beginning of your turn\" and abilities that triggered during the Ready step are added to the bag. Then, all triggers are resolved."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.561, 0.937, 0.673],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.684, 0.19, 0.7],
+      "angle": 0,
+      "content": "4.2.3. Draw"
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.713, 0.931, 0.749],
+      "angle": 0,
+      "content": "4.2.3.1. Drawing is when a player takes the top card of their deck and puts that card into their hand. A player can draw only from their deck. Putting a card into a hand from any zone besides the deck isn't considered drawing."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.751, 0.934, 0.787],
+      "angle": 0,
+      "content": "4.2.3.2. First, the active player draws a card from their deck. If this turn is the first turn of the game, the active player skips this step."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.79, 0.94, 0.808],
+      "angle": 0,
+      "content": "4.2.3.3. Once all effects have been resolved and there are no more waiting to be added, the game moves into the Main Phase."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.713, 0.94, 0.808],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.819, 0.182, 0.836],
+      "angle": 0,
+      "content": "4.3. Main Phase"
+    },
+    {
+      "type": "text",
+      "bbox": [0.103, 0.848, 0.934, 0.883],
+      "angle": 0,
+      "content": "4.3.1. Turn actions are the actions that the game allows a player to take during their turn. No effect or other card is needed in order to take these turn actions."
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.94, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.495, 0.956, 0.504, 0.968],
+      "angle": 0,
+      "content": "6"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.908, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.151, 0.93, 0.203],
+      "angle": 0,
+      "content": "4.3.2. The active player may take turn actions in any order during the Main Phase of their turn. Unless otherwise noted, they may take each action any number of times, provided they have the necessary resources to pay any associated costs and complete the turn actions."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.208, 0.592, 0.225],
+      "angle": 0,
+      "content": "4.3.3. Put a card into the inkwell. This turn action is limited to once per turn."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.151, 0.93, 0.225],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.236, 0.921, 0.272],
+      "angle": 0,
+      "content": "4.3.3.1. The player declares they're putting a card into their inkwell, then chooses and reveals a card from their hand with the inkwell symbol. All players verify that the inkwell symbol is present."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.275, 0.665, 0.292],
+      "angle": 0,
+      "content": "4.3.3.2. The player places the revealed card in their inkwell facedown and ready."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.295, 0.894, 0.313],
+      "angle": 0,
+      "content": "4.3.3.3. Effects that would occur as a result of a card being put into the inkwell are added to the bag (see 8.7, \"Bag\")."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.236, 0.921, 0.313],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.105, 0.324, 0.227, 0.342],
+      "angle": 0,
+      "content": "4.3.4. Play a card."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.354, 0.935, 0.406],
+      "angle": 0,
+      "content": "4.3.4.1. The active player can take a turn action to play a card from their hand by announcing the card and paying its cost. This process follows a series of steps. If any part of the playing a card process can't be performed, it's illegal to play the card and the game goes back to the point right before the card was announced."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.41, 0.928, 0.445],
+      "angle": 0,
+      "content": "4.3.4.2. These steps apply to all cards that can be played. Cards can normally be played only from a player's hand. Only the active player can play cards; no player may play a card on an opponent's turn."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.448, 0.794, 0.465],
+      "angle": 0,
+      "content": "4.3.4.3. First, the active player announces the card they intend to play and reveals it from their hand."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.469, 0.929, 0.521],
+      "angle": 0,
+      "content": "4.3.4.4. Second, the player announces how they intend to play the card, whether for its ink cost or an alternate cost. If multiple alternate costs could apply to the card, the player may choose one and ignore the others for the purposes of playing the card."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.525, 0.921, 0.577],
+      "angle": 0,
+      "content": "4.3.4.5. Third, the player determines the total cost needed to play the card. The total cost is the ink cost or alternate cost plus any cost modifiers. This can include additional costs, cost increases, or cost reductions. Apply any additional costs first, then cost increases, then cost reductions. The resulting cost is the total cost."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.581, 0.935, 0.633],
+      "angle": 0,
+      "content": "4.3.4.6. Fourth, the player pays the total cost. If the total cost includes any ink, the player must exert a number of ready ink cards equal to the ink cost. If any other costs are included, the player pays those costs as instructed by the card text. Costs can be paid in any order but must be paid in full."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.636, 0.94, 0.707],
+      "angle": 0,
+      "content": "4.3.4.7. Once the total card cost is paid, the card is now \"played.\" If the card is a character, item, or location, the card enters the Play zone. If it's a character being played using its Shift ability, it must be put on top of the card indicated in the second step of this process. If the card is an action, the effect immediately resolves and the card goes to the player's discard pile."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.71, 0.932, 0.763],
+      "angle": 0,
+      "content": "4.3.4.8. If an effect would trigger as a result of any of the steps for playing a card, that effect waits to resolve until the card and its effect are fully played and resolved. Note that while an action card is resolving, it's not considered to be in the discard yet."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.766, 0.884, 0.784],
+      "angle": 0,
+      "content": "4.3.4.9. Effects that change how a player pays the cost of a card (e.g., Singer) don't change the ink cost of the card."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.787, 0.925, 0.822],
+      "angle": 0,
+      "content": "4.3.4.10. If a card can be played \"for free,\" ignore all ink costs when paying for it. Other steps required to play the card and non-ink costs still apply."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.354, 0.94, 0.822],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.105, 0.834, 0.194, 0.851],
+      "angle": 0,
+      "content": "4.3.5. Quest"
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.862, 0.68, 0.88],
+      "angle": 0,
+      "content": "4.3.5.1. Sending a character on a quest is a turn action. Only characters can quest."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.884, 0.931, 0.918],
+      "angle": 0,
+      "content": "4.3.5.2. A character chosen to quest is the questing character. The player who declares a questing character is the questing player."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.862, 0.931, 0.918],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.94, 0.157, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.494, 0.956, 0.504, 0.968],
+      "angle": 0,
+      "content": "7"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.91, 0.942, 0.967],
+      "angle": 0,
+      "content": "Revierbsurjet"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.151, 0.597, 0.168],
+      "angle": 0,
+      "content": "4.3.5.3. To quest, the active player takes the following steps in order."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.172, 0.722, 0.189],
+      "angle": 0,
+      "content": "4.3.5.4. First, the player declares that they're going to have one of their characters quest."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.193, 0.886, 0.227],
+      "angle": 0,
+      "content": "4.3.5.5. Second, the player identifies the questing character and checks for any restrictions that prevent them from questing (e.g., they aren't dry yet, they have Reckless, etc.)."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.231, 0.715, 0.248],
+      "angle": 0,
+      "content": "4.3.5.6. If an effect prevents the identified character from questing, that quest is illegal."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.252, 0.512, 0.269],
+      "angle": 0,
+      "content": "4.3.5.7. Third, the player exerts the questing character."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.272, 0.934, 0.307],
+      "angle": 0,
+      "content": "4.3.5.8. If no effect prevents the character from questing, the quest is complete and the questing player gains lore equal to the \\(\\diamond\\) of the questing character."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.31, 0.753, 0.328],
+      "angle": 0,
+      "content": "4.3.5.9. Effects that would occur as a result of the quest are added to the bag (see 8.7, \"Bag\")."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.331, 0.553, 0.348],
+      "angle": 0,
+      "content": "4.3.5.10. Once all effects have been resolved, the quest is over."
+    },
+    {
+      "type": "list",
+      "bbox": [0.152, 0.151, 0.934, 0.348],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.105, 0.36, 0.218, 0.379],
+      "angle": 0,
+      "content": "4.3.6. Challenge"
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.389, 0.739, 0.407],
+      "angle": 0,
+      "content": "4.3.6.1. Sending a character into a challenge is a turn action. Only characters can challenge."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.41, 0.941, 0.461],
+      "angle": 0,
+      "content": "4.3.6.2. A character sent into a challenge is known as a challenging character, and the opposing character or location is being challenged. Both are considered to be in the challenge. Characters can challenge locations. For the differences in that process, see 4.3.6.19."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.466, 0.934, 0.501],
+      "angle": 0,
+      "content": "4.3.6.3. Only the challenging character and the character being challenged are in the challenge. If an ability or effect refers to a character \"in a challenge,\" it's referring to one of the two characters in the current challenge."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.504, 0.884, 0.539],
+      "angle": 0,
+      "content": "4.3.6.4. A player who declares a challenging character is the challenging player. The player whose character is being challenged is the challenged player."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.543, 0.643, 0.56],
+      "angle": 0,
+      "content": "4.3.6.5. To challenge, the active player follows the steps listed here, in order."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.563, 0.931, 0.598],
+      "angle": 0,
+      "content": "4.3.6.6. First, the player declares one of their characters is challenging a character. The declared character must have been in play since the beginning of the turn (that is, they must be dry), ready, and otherwise able to challenge."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.601, 0.692, 0.619],
+      "angle": 0,
+      "content": "4.3.6.7. Second, the player chooses an exerted opposing character to be challenged."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.622, 0.915, 0.64],
+      "angle": 0,
+      "content": "4.3.6.8. Third, the players check for challenging restrictions. If any effect prevents the challenge, the challenge is illegal."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.643, 0.613, 0.66],
+      "angle": 0,
+      "content": "4.3.6.9. Fourth, the challenging player exerts the challenging character."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.664, 0.389, 0.681],
+      "angle": 0,
+      "content": "4.3.6.10. Fifth, the challenge occurs."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.684, 0.466, 0.702],
+      "angle": 0,
+      "content": "4.3.6.11. Sixth, \"while challenging\" effects apply."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.705, 0.928, 0.74],
+      "angle": 0,
+      "content": "4.3.6.12. Seventh, effects that would trigger are added to the bag. This includes effects from abilities that occur \"when this character is banished in a challenge\" or \"when this character is challenged and banished.\""
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.743, 0.926, 0.778],
+      "angle": 0,
+      "content": "4.3.6.13. Eighth, once all effects in the bag have resolved, each character deals damage equal to their Strength to the other character. This is known as the \"Challenge Damage step.\" This isn't an ability or effect and isn't added to the bag."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.781, 0.937, 0.834],
+      "angle": 0,
+      "content": "4.3.6.14. To determine the damage each character in the challenge deals, first calculate the total Strength \\(\\mathbf{Q}\\) of each, taking into account any current modifier effects. If a character's \\(\\mathbf{Q}\\) is negative, it counts as 0 \\(\\mathbf{Q}\\) for the purpose of determining damage."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.837, 0.635, 0.855],
+      "angle": 0,
+      "content": "4.3.6.15. Apply effects that adjust the amount of damage dealt (e.g., Resist)."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.858, 0.937, 0.893],
+      "angle": 0,
+      "content": "4.3.6.16. The resulting number is the final amount of damage that character deals. When damage is dealt to a character, place a number of damage counters equal to that damage on that character. (See 9.1, \"Representation of Damage.\")"
+    },
+    {
+      "type": "list",
+      "bbox": [0.152, 0.389, 0.941, 0.893],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.94, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.494, 0.956, 0.504, 0.968],
+      "angle": 0,
+      "content": "8"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.908, 0.943, 0.968],
+      "angle": 0,
+      "content": "Ravenburg"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.395, 0.075, 0.611, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.151, 0.923, 0.185],
+      "angle": 0,
+      "content": "4.3.6.17. Any effects that would trigger as a result of a character being banished in or during a challenge that apply trigger and resolve."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.19, 0.871, 0.225],
+      "angle": 0,
+      "content": "4.3.6.18. Once all effects have been resolved and there are no more waiting to be added, effects that apply \"while challenging\" or \"while being challenged\" end, and the challenge is over."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.228, 0.888, 0.263],
+      "angle": 0,
+      "content": "4.3.6.19. Players can choose to have a character challenge a location. This follows all of the normal rules and steps of challenging with the following exceptions."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.267, 0.882, 0.284],
+      "angle": 0,
+      "content": "4.3.6.20. When a challenger is declared, the player chooses an opposing location to challenge instead of a character."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.288, 0.791, 0.305],
+      "angle": 0,
+      "content": "4.3.6.21. Locations are never ready or exerted. They can be challenged at any time in the Main Phase."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.308, 0.851, 0.325],
+      "angle": 0,
+      "content": "4.3.6.22. Locations don't have a Strength \\(\\mathbb{O}\\) characteristic and don't deal damage to the challenging character."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.328, 0.918, 0.38],
+      "angle": 0,
+      "content": "4.3.6.23. If a character in a challenge is removed from the challenge for any reason, that challenge ends. First, resolve any remaining triggered abilities in the bag. Then, all \"while challenging\" effects end and the game proceeds to the Main Phase (see 4.3)."
+    },
+    {
+      "type": "list",
+      "bbox": [0.152, 0.151, 0.923, 0.38],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.133, 0.388, 0.907, 0.46],
+      "angle": 0,
+      "content": "Example A: The active player has a ready Stitch - New Dog in play, and an opponent has an exerted Milo Thatch - Clever Cartographer in play. The active player announces Stitch is challenging and chooses Milo Thatch as the character being challenged. There are no restrictions or requirements to satisfy. No effects trigger as a result of these declarations. The active player exerts Stitch."
+    },
+    {
+      "type": "text",
+      "bbox": [0.133, 0.47, 0.925, 0.506],
+      "angle": 0,
+      "content": "Both Stitch and Milo Thatch deal damage equal to their Strength to the other. The active player and the opponent each place damage counters on their character."
+    },
+    {
+      "type": "text",
+      "bbox": [0.134, 0.517, 0.776, 0.535],
+      "angle": 0,
+      "content": "A game state check is performed. There are no effects that trigger from the check. The challenge is over."
+    },
+    {
+      "type": "image",
+      "bbox": [0.139, 0.545, 0.88, 0.874],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.94, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.955, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.494, 0.955, 0.504, 0.968],
+      "angle": 0,
+      "content": "9"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.907, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.075],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.395, 0.075, 0.611, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "text",
+      "bbox": [0.133, 0.151, 0.938, 0.207],
+      "angle": 0,
+      "content": "Example B: The active player declares Marshmallow - Persistent Guardian is challenging an opposing Cheshire Cat - Not All There. Cheshire Cat's ability Lose Something? reads, \"When this character is challenged and banished, banish the challenging character.\" Marshmallow's ability Durable reads, \"When this character is banished in a challenge, you may return this card to your hand.\""
+    },
+    {
+      "type": "text",
+      "bbox": [0.133, 0.216, 0.931, 0.253],
+      "angle": 0,
+      "content": "Marshmallow has 5, so he deals 5 damage to Cheshire Cat, who has 3. When the game state check is made, Cheshire Cat is banished. This triggers Cheshire Cat's ability, and the opponent adds it to the bag."
+    },
+    {
+      "type": "text",
+      "bbox": [0.133, 0.263, 0.936, 0.336],
+      "angle": 0,
+      "content": "The opponent resolves the ability's effect, banishing Marshmallow. Because the players haven't reached the step of the challenge in which the bag is resolved, they're still in the challenge, and Marshmallow's ability is added to the bag by the active player. The active player can then resolve it, returning Marshmallow to their hand. There are no more effects to add, and the bag is empty. The challenge is over."
+    },
+    {
+      "type": "image",
+      "bbox": [0.139, 0.344, 0.88, 0.673],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.941, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.492, 0.955, 0.507, 0.968],
+      "angle": 0,
+      "content": "10"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.907, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "text",
+      "bbox": [0.133, 0.144, 0.923, 0.198],
+      "angle": 0,
+      "content": "Example C: The active player declares Rafiki – Mystical Fighter is challenging an opposing Shenzi – Hyena Pack Leader, who has 0 and is at De Vil Manor – Cruella's Estate. De Vil Manor has no abilities, but Shenzi's ability I'll Handle This gives her +3 while she's at a location."
+    },
+    {
+      "type": "text",
+      "bbox": [0.133, 0.209, 0.921, 0.264],
+      "angle": 0,
+      "content": "Rafiki's ability Ancient Skills reads, \"Whenever he challenges a Hyena character, this character takes no damage from the challenge.\" After restrictions and requirements are checked, the active player adds this ability to the bag. The active player then resolves that effect. When the challenge proceeds to the Challenge Damage step, Rafiki won't be dealt any damage."
+    },
+    {
+      "type": "image",
+      "bbox": [0.139, 0.271, 0.88, 0.6],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.104, 0.609, 0.351, 0.626],
+      "angle": 0,
+      "content": "4.3.7. Move a character to a location."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.638, 0.923, 0.674],
+      "angle": 0,
+      "content": "4.3.7.1. A player can move only their characters. A player can move characters only to their locations. A player can't move opposing characters, and they can't move their characters to opposing locations."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.676, 0.914, 0.711],
+      "angle": 0,
+      "content": "4.3.7.2. Moving a character to a location is a turn action. To move a character to a location, the active player follows the steps listed here in order."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.715, 0.938, 0.749],
+      "angle": 0,
+      "content": "4.3.7.3. First, the player chooses one of their characters and one of their locations and declares that the character will move to that location."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.753, 0.938, 0.771],
+      "angle": 0,
+      "content": "4.3.7.4. Second, the player pays the chosen location's move cost. Once the cost is paid, the character moves to the location."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.774, 0.89, 0.791],
+      "angle": 0,
+      "content": "4.3.7.5. Third, any effects that would happen as a result of the character moving are added to the bag for resolution."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.795, 0.585, 0.812],
+      "angle": 0,
+      "content": "4.3.7.6. Once all effects have been resolved, the move is complete."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.638, 0.938, 0.812],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.104, 0.824, 0.398, 0.842],
+      "angle": 0,
+      "content": "4.3.8. Use activated abilities on cards in play."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.852, 0.929, 0.887],
+      "angle": 0,
+      "content": "4.3.8.1. The use of activated abilities is a turn action provided by cards in play. To use the abilities of characters, follow the steps listed in section 7.5, \"Activated Abilities.\""
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.891, 0.62, 0.909],
+      "angle": 0,
+      "content": "4.3.8.2. \\(\\mathbb{O}\\) abilities of characters can be used only if the character is dry."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.852, 0.929, 0.909],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.94, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.493, 0.956, 0.506, 0.968],
+      "angle": 0,
+      "content": "11"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.908, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.151, 0.678, 0.169],
+      "angle": 0,
+      "content": "4.3.8.3. Activated abilities of items can be used during the turn the item is played."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.172, 0.935, 0.209],
+      "angle": 0,
+      "content": "4.3.8.4. If an activated ability can be used \"for free,\" ignore all ink costs when paying for it. Other steps required to use the ability and non-ink costs still apply."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.151, 0.935, 0.209],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.219, 0.222, 0.235],
+      "angle": 0,
+      "content": "4.4. End of Turn Phase"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.247, 0.911, 0.282],
+      "angle": 0,
+      "content": "4.4.1. To end a turn, there must be no abilities currently waiting to resolve. The active player declares the end of their turn. This creates the start of the End of Turn Phase (see 4.1.4)."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.294, 0.921, 0.312],
+      "angle": 0,
+      "content": "4.4.1.1. Effects that would occur \"At the end of the turn\" and \"At the end of your turn\" and abilities are added to the bag."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.315, 0.406, 0.333],
+      "angle": 0,
+      "content": "4.4.1.2. Resolve all triggers in the bag."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.335, 0.926, 0.372],
+      "angle": 0,
+      "content": "4.4.1.3. Effects that would end at the end of your turn end. This includes effects with a stated duration of \"this turn\" (e.g., Support). If this causes any new triggers, return to step 4.4.1.2."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.374, 0.67, 0.392],
+      "angle": 0,
+      "content": "4.4.1.4. The turn ends for the active player, and the next player begins their turn."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.294, 0.926, 0.392],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.054, 0.432, 0.133, 0.45],
+      "angle": 0,
+      "content": "5. CARDS"
+    },
+    {
+      "type": "title",
+      "bbox": [0.077, 0.455, 0.2, 0.473],
+      "angle": 0,
+      "content": "5.1. Conditions"
+    },
+    {
+      "type": "image",
+      "bbox": [0.211, 0.519, 0.404, 0.724],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image_caption",
+      "bbox": [0.29, 0.734, 0.331, 0.747],
+      "angle": 0,
+      "content": "READY"
+    },
+    {
+      "type": "image",
+      "bbox": [0.455, 0.548, 0.721, 0.697],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image_caption",
+      "bbox": [0.564, 0.734, 0.615, 0.747],
+      "angle": 0,
+      "content": "EXERTED"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.803, 0.885, 0.821],
+      "angle": 0,
+      "content": "5.1.1. Ready - Cards enter play ready. A player can't use any of an exerted card's abilities that include as part of the cost."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.824, 0.938, 0.858],
+      "angle": 0,
+      "content": "5.1.2. Exerted - When a card is exerted, it's turned sideways. A player can use an exerted card's abilities that don't require \\(\\odot\\) as part of the cost."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.863, 0.585, 0.881],
+      "angle": 0,
+      "content": "5.1.3. Damaged - A card that has at least 1 damage is considered damaged."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.884, 0.576, 0.901],
+      "angle": 0,
+      "content": "5.1.4. Undamaged - A card that has no damage is considered undamaged."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.803, 0.938, 0.901],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.94, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.492, 0.955, 0.506, 0.968],
+      "angle": 0,
+      "content": "12"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.908, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.151, 0.917, 0.187],
+      "angle": 0,
+      "content": "5.1.5. Under - A card that has one or more cards on top of it is considered to be under the top card in a stack (see 5.1.7). A player can't choose any card that's under the top card (see 5.1.6) in a stack."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.19, 0.942, 0.226],
+      "angle": 0,
+      "content": "5.1.6. On Top - A card that has one or more cards under it is considered to be on top of all cards under it. A card that's on top of one or more cards doesn't gain the text of any card under it. The card that's on top of all other cards in a stack is called the top card."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.228, 0.94, 0.281],
+      "angle": 0,
+      "content": "5.1.7. In a Stack - When a card is placed on top of one or more other cards in play, it and all cards under it are considered to be in a stack. These cards are considered to be in a stack only while in play. If the top card in a stack leaves play, all cards in the stack move to the same zone as the top card, and these cards are no longer considered to be in a stack."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.151, 0.942, 0.281],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.054, 0.292, 0.162, 0.308],
+      "angle": 0,
+      "content": "6. CARD TYPES"
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.316, 0.179, 0.332],
+      "angle": 0,
+      "content": "6.1. Characters"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.345, 0.936, 0.379],
+      "angle": 0,
+      "content": "6.1.1. Characters are a type of card that can be in play. A character card that's in the Play zone is a character; in all other zones it's a character card."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.383, 0.925, 0.418],
+      "angle": 0,
+      "content": "6.1.2. Characters don't list \"Character\" on their classification line. A card needs to have both characteristics outlined in 6.1.2.1 and 6.1.2.2 to be a character. If not, the card isn't a character."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.345, 0.936, 0.418],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.43, 0.479, 0.446],
+      "angle": 0,
+      "content": "6.1.2.1. A character has a value and a value."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.45, 0.936, 0.522],
+      "angle": 0,
+      "content": "6.1.2.2. A character has at least one of the following listed on the classification line: Alien, Ally, Broom, Captain, Deity, Detective, Dragon, Dreamborn, Entangled, Fairy, Floodborn, Hero, Hyena, Illusion, Inventor, King, Knight, Madrigal, Mentor, Musketeer, Pirate, Prince, Princess, Puppy, Queen, Racer, Robot, Seven Dwarfs, Sorcerer, Storyborn, Tigger, Titan, Villain."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.43, 0.936, 0.522],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.533, 0.402, 0.551],
+      "angle": 0,
+      "content": "6.1.3. Only characters can quest or challenge."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.553, 0.936, 0.589],
+      "angle": 0,
+      "content": "6.1.4. A character must have been in play at the beginning of the Set step of their player's turn in order to quest, challenge, or as part of a cost (see 4.2.2, \"Set\")."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.533, 0.936, 0.589],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.074, 0.6, 0.204, 0.616],
+      "angle": 0,
+      "content": "6.2. Parts of a Card"
+    },
+    {
+      "type": "text",
+      "bbox": [0.221, 0.678, 0.355, 0.695],
+      "angle": 0,
+      "content": "Cost & Inkwell"
+    },
+    {
+      "type": "text",
+      "bbox": [0.221, 0.702, 0.294, 0.718],
+      "angle": 0,
+      "content": "2 Name"
+    },
+    {
+      "type": "text",
+      "bbox": [0.222, 0.726, 0.306, 0.742],
+      "angle": 0,
+      "content": "3 Version"
+    },
+    {
+      "type": "text",
+      "bbox": [0.222, 0.749, 0.35, 0.766],
+      "angle": 0,
+      "content": "4 Classification"
+    },
+    {
+      "type": "text",
+      "bbox": [0.222, 0.774, 0.316, 0.79],
+      "angle": 0,
+      "content": "5 Strength"
+    },
+    {
+      "type": "text",
+      "bbox": [0.222, 0.797, 0.329, 0.814],
+      "angle": 0,
+      "content": "6 Willpower"
+    },
+    {
+      "type": "text",
+      "bbox": [0.222, 0.821, 0.393, 0.838],
+      "angle": 0,
+      "content": "7 Abilities and Effects"
+    },
+    {
+      "type": "text",
+      "bbox": [0.222, 0.845, 0.328, 0.862],
+      "angle": 0,
+      "content": "8 Lore Value"
+    },
+    {
+      "type": "list",
+      "bbox": [0.221, 0.678, 0.393, 0.862],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.449, 0.658, 0.677, 0.809],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.45, 0.811, 0.681, 0.884],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.94, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.492, 0.955, 0.506, 0.968],
+      "angle": 0,
+      "content": "13"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.908, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.149, 0.871, 0.168],
+      "angle": 0,
+      "content": "6.2.1. Most parts of a card appear on all card types. Specific differences are noted in the entry for the relevant card type."
+    },
+    {
+      "type": "text",
+      "bbox": [0.105, 0.171, 0.385, 0.187],
+      "angle": 0,
+      "content": "6.2.2. Art - The art isn't used for gameplay."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.191, 0.911, 0.225],
+      "angle": 0,
+      "content": "6.2.3. Ink Type - The ink type of the card, identified by the ink type symbol. The colored bar behind the card's name reflects the associated color. A card's ink type is important for building a deck and may be referenced in card rules."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.149, 0.911, 0.225],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.237, 0.804, 0.255],
+      "angle": 0,
+      "content": "6.2.3.1. Some cards have more than one ink type. Cards with two ink types have two ink type symbols."
+    },
+    {
+      "type": "image",
+      "bbox": [0.215, 0.267, 0.943, 0.445],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.461, 0.942, 0.531],
+      "angle": 0,
+      "content": "6.2.4. Name - The name of the card appears in larger print. An effect that looks for a card or character with a specified name looks only at this line and ignores the version. The whole character or location name must be the same as the specified name to be a match. A character's or location's name and version together constitute its full name. (See #2 in the diagram under 6.2, \"Parts of a Card.\")"
+    },
+    {
+      "type": "text",
+      "bbox": [0.149, 0.54, 0.928, 0.594],
+      "angle": 0,
+      "content": "Example A: Tinker Bell – Peter Pan's Ally has an ability called Loyal and Devoted that reads, “Your characters named Peter Pan gain Challenger +1. (They get +1 while challenging.)” If you have Peter Pan – Fearless Fighter and Peter Pan – Never Land Hero in play with this Tinker Bell, she gives both versions of Peter Pan Challenger +1."
+    },
+    {
+      "type": "text",
+      "bbox": [0.149, 0.598, 0.922, 0.651],
+      "angle": 0,
+      "content": "Example B: The Sorcerer's Hat is an item with an activated ability that lets you name a card, then reveal the top card of your deck and put that card into your hand if it's the card you named. If you use The Sorcerer's Hat to look for a card named Lucky and then reveal Lucky Dime, that's not a match and you don't get to put it into your hand."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.66, 0.93, 0.711],
+      "angle": 0,
+      "content": "6.2.4.1. Some characters have two names. These characters have an ampersand (&) between the two names listed on the name line. If an effect looks for a card or character with a specified name, the specified name only needs to match one of the two on the character."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.716, 0.578, 0.733],
+      "angle": 0,
+      "content": "6.2.4.2. A character with multiple names is still a single character."
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.66, 0.93, 0.733],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.211, 0.742, 0.937, 0.795],
+      "angle": 0,
+      "content": "Example: Flotsam & Jetsam is a character that has two names. The card is both a character named \"Flotsam\" and a character named \"Jetsam\" in all zones where the card would normally have one name. The names are separated by an ampersand (&) to denote that this character has two names."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.805, 0.905, 0.84],
+      "angle": 0,
+      "content": "6.2.5. Version - A card's version differentiates cards with the same name. A character's or location's name and version together constitute its full name. (See #3 in the diagram under 6.2, \"Parts of a Card.\")"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.843, 0.934, 0.877],
+      "angle": 0,
+      "content": "6.2.6. Classifications - Categories that identify some characteristics of the card and may be referenced in card rules. (See #4 in the diagram under 6.2, \"Parts of a Card.\")"
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.805, 0.934, 0.877],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.149, 0.887, 0.924, 0.923],
+      "angle": 0,
+      "content": "Example: Hades - King of Olympus has an ability that references cards with the Villain classification. It reads, \"This character gets \\(+1 \\downarrow\\) for each other Villain character you have in play.\""
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.941, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.969],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.492, 0.956, 0.507, 0.968],
+      "angle": 0,
+      "content": "14"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.91, 0.942, 0.968],
+      "angle": 0,
+      "content": "Ravensburger"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.151, 0.827, 0.169],
+      "angle": 0,
+      "content": "6.2.7. Card Cost - The amount of ink needed to play the card. (See #1 in the diagram under 6.2, \"Parts of a Card.\")"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.172, 0.928, 0.207],
+      "angle": 0,
+      "content": "6.2.8. Inkwell Symbol - If this swirl icon, \\(\\mathbb{O}\\), is present around the card's cost, the card can be put into its player's inkwell. Cards in the inkwell are referred to as ink. Each card counts as 1 (See #1 in the diagram under 6.2, \"Parts of a Card.\")"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.21, 0.928, 0.263],
+      "angle": 0,
+      "content": "6.2.9. Strength - Primarily, how much damage this character deals in a challenge, though card effects can also reference this value. Strength only appears on characters. If a character would deal damage equal to its Strength and it has 0 or less Strength, it deals no damage."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.266, 0.938, 0.319],
+      "angle": 0,
+      "content": "6.2.10. Willpower - Damage on a character is persistent, which means it accumulates over the course of the game. If a character has damage equal to or higher than their Willpower, they are banished as a required action. Card effects can also reference this value. (See #6 in the diagram under 6.2, \"Parts of a Card.\")"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.322, 0.937, 0.374],
+      "angle": 0,
+      "content": "6.2.11. Lore Value - How much lore the player gains when the character quests. The appearance of the Lore value symbol \\(\\diamond\\) may vary on some cards (e.g., some enchanted or promo cards), but these variations don't affect gameplay. (See #8 in the diagram under 6.2, \"Parts of a Card.\")"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.379, 0.942, 0.431],
+      "angle": 0,
+      "content": "6.2.12. Abilities - Any abilities the card has appear here. Some abilities have a cost to use them. Abilities can be keywords (see section 10) or have a story name, which is used for referencing the ability but otherwise isn't used for gameplay. (See #7 in the diagram under 6.2, \"Parts of a Card\" for where abilities appear on a card. See section 7 for more on abilities.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.435, 0.456, 0.452],
+      "angle": 0,
+      "content": "6.2.13. Flavor Text - Flavor text isn't used for gameplay."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.455, 0.581, 0.473],
+      "angle": 0,
+      "content": "6.2.14. Ancillary Information - Ancillary information isn't used for gameplay."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.151, 0.942, 0.473],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.484, 0.497, 0.5],
+      "angle": 0,
+      "content": "6.2.14.1. Artist Name - Artist who illustrated the card."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.504, 0.915, 0.539],
+      "angle": 0,
+      "content": "6.2.14.2. Collector Number - Indicates where this card appears in the set. The number of unique standard cards in the set appears after the slash."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.543, 0.521, 0.559],
+      "angle": 0,
+      "content": "6.2.14.3. Set Number - What number set this card is from."
+    },
+    {
+      "type": "list",
+      "bbox": [0.152, 0.484, 0.915, 0.559],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.211, 0.57, 0.925, 0.605],
+      "angle": 0,
+      "content": "Example: The First Chapter, Rise of the Floodborn, Into the Inklands, and Ursula's Return are indicated with 1, 2, 3, and 4 here, respectively."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.614, 0.464, 0.632],
+      "angle": 0,
+      "content": "6.2.14.4. Language - The language the card is in."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.635, 0.437, 0.653],
+      "angle": 0,
+      "content": "6.2.14.5. Legal Text - Copyright information."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.655, 0.806, 0.674],
+      "angle": 0,
+      "content": "6.2.14.6. *Rarity Symbol - Indicates how common the card is among the cards in the set it was printed in.*"
+    },
+    {
+      "type": "list",
+      "bbox": [0.152, 0.614, 0.806, 0.674],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.212, 0.685, 0.943, 0.864],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.94, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.955, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.492, 0.955, 0.506, 0.968],
+      "angle": 0,
+      "content": "15"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.907, 0.943, 0.968],
+      "angle": 0,
+      "content": "Ravenburg"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.075],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.395, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "title",
+      "bbox": [0.075, 0.151, 0.158, 0.167],
+      "angle": 0,
+      "content": "6.3. Actions"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.18, 0.927, 0.214],
+      "angle": 0,
+      "content": "6.3.1. Actions are a type of card that can be played but can't be in play. An action is an action while being played; otherwise, it's an action card."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.227, 0.658, 0.243],
+      "angle": 0,
+      "content": "6.3.1.1. An action is defined as having \"Action\" on the card's classification line."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.248, 0.922, 0.282],
+      "angle": 0,
+      "content": "6.3.1.2. Actions are played from a player's hand, but they're not considered in play. An effect from an action doesn't enter the bag. (See 8.7, \"Bag.\")"
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.227, 0.922, 0.282],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.294, 0.471, 0.311],
+      "angle": 0,
+      "content": "6.3.2. Effects - Actions have effects rather than abilities."
+    },
+    {
+      "type": "text",
+      "bbox": [0.105, 0.316, 0.194, 0.333],
+      "angle": 0,
+      "content": "6.3.3. Songs"
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.294, 0.471, 0.333],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.344, 0.82, 0.361],
+      "angle": 0,
+      "content": "6.3.3.1. Songs are actions that have a special rule in addition to the normal rules for actions (see 6.3.3.3)."
+    },
+    {
+      "type": "text",
+      "bbox": [0.152, 0.365, 0.715, 0.382],
+      "angle": 0,
+      "content": "6.3.3.2. A song is defined as having \"Action\" and \"Song\" on the card's classification line."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.386, 0.924, 0.438],
+      "angle": 0,
+      "content": "6.3.3.3. All songs allow the player to pay an alternate cost instead of their ink cost to play them. Being a song means \"Instead of paying the ink cost of this card, you can one of your characters in play with ink cost N or greater to play this card for free.\" This is called singing the song."
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.441, 0.913, 0.476],
+      "angle": 0,
+      "content": "6.3.3.4. Some songs also have the keyword Sing Together, which functions similarly to the special rule. (See 10.10, \"Sing Together.\")"
+    },
+    {
+      "type": "text",
+      "bbox": [0.151, 0.48, 0.89, 0.498],
+      "angle": 0,
+      "content": "6.3.3.5. The standard reminder text for a song is \" (A character with cost N or more can to sing this song for free.)\""
+    },
+    {
+      "type": "list",
+      "bbox": [0.151, 0.344, 0.924, 0.498],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.509, 0.905, 0.543],
+      "angle": 0,
+      "content": "6.3.4. Any effect that's triggered because of an action being played is placed in the bag and will resolve after the effects of the action are fully resolved."
+    },
+    {
+      "type": "title",
+      "bbox": [0.075, 0.556, 0.147, 0.571],
+      "angle": 0,
+      "content": "6.4. Items"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.584, 0.927, 0.602],
+      "angle": 0,
+      "content": "6.4.1. Items are a type of card that can be in play. An item is an item only while in the Play zone; in all other zones it's an item card."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.606, 0.574, 0.622],
+      "angle": 0,
+      "content": "6.4.2. An item is defined as having \"Item\" on the card's classification line."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.626, 0.668, 0.644],
+      "angle": 0,
+      "content": "6.4.3. If an item has an ability, that ability can be used during the turn the item is played."
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.584, 0.927, 0.644],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.057, 0.941, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.492, 0.956, 0.506, 0.968],
+      "angle": 0,
+      "content": "16"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.908, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ],
+  [
+    {
+      "type": "header",
+      "bbox": [0.456, 0.044, 0.549, 0.076],
+      "angle": 0,
+      "content": "DISNEY"
+    },
+    {
+      "type": "header",
+      "bbox": [0.396, 0.075, 0.61, 0.11],
+      "angle": 0,
+      "content": "LORCANA"
+    },
+    {
+      "type": "header",
+      "bbox": [0.428, 0.111, 0.573, 0.123],
+      "angle": 0,
+      "content": "TRADING CARD GAME"
+    },
+    {
+      "type": "title",
+      "bbox": [0.075, 0.145, 0.17, 0.16],
+      "angle": 0,
+      "content": "6.5. Locations"
+    },
+    {
+      "type": "text",
+      "bbox": [0.201, 0.255, 0.35, 0.273],
+      "angle": 0,
+      "content": "Cost & Inkwell"
+    },
+    {
+      "type": "text",
+      "bbox": [0.203, 0.281, 0.35, 0.299],
+      "angle": 0,
+      "content": "2 Classifications"
+    },
+    {
+      "type": "text",
+      "bbox": [0.204, 0.308, 0.317, 0.325],
+      "angle": 0,
+      "content": "3 Move Cost"
+    },
+    {
+      "type": "text",
+      "bbox": [0.204, 0.334, 0.32, 0.353],
+      "angle": 0,
+      "content": "4 Willpower"
+    },
+    {
+      "type": "text",
+      "bbox": [0.204, 0.36, 0.39, 0.377],
+      "angle": 0,
+      "content": "5 Abilities and Effects"
+    },
+    {
+      "type": "text",
+      "bbox": [0.204, 0.386, 0.319, 0.404],
+      "angle": 0,
+      "content": "6 Lore Value"
+    },
+    {
+      "type": "list",
+      "bbox": [0.201, 0.255, 0.39, 0.404],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.439, 0.241, 0.78, 0.42],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.509, 0.929, 0.543],
+      "angle": 0,
+      "content": "6.5.1. Locations are a type of card that can be in play. A location is a location while in the Play zone; in all other zones it's a location card."
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.547, 0.942, 0.584],
+      "angle": 0,
+      "content": "6.5.2. Classification - A location is defined as having \"Location\" on the card's classification line. Locations are the only card type that is printed in landscape (i.e., with the longer sides on the top and bottom). (See #2 on the diagram under 6.5.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.586, 0.939, 0.621],
+      "angle": 0,
+      "content": "6.5.3. Cost - A location's cost is in a different place on the card than the cost of other card types, but it works the same way. (See #1 on the diagram under 6.5.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.624, 0.934, 0.659],
+      "angle": 0,
+      "content": "6.5.4. Move Cost - A location has a move cost. This is the amount of ink needed to move a character to this location. (See #3 on the diagram under 6.5.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.662, 0.928, 0.716],
+      "angle": 0,
+      "content": "6.5.5. Willpower - Damage on a location is persistent, which means it accumulates over the course of the game. If a location has damage equal to or higher than its Willpower \\(\\text{串}\\), it's banished as a required action. Note that locations don't have a Strength \\(\\text{串}\\) characteristic and don't deal damage. (See #4 on the diagram under 6.5.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.718, 0.925, 0.754],
+      "angle": 0,
+      "content": "6.5.6. Lore Value - A location may have a Lore value \\(\\diamond\\), which is how much lore its player gains at the start of their turn during the Set step. (See #6 on the diagram under 6.5.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.104, 0.757, 0.918, 0.792],
+      "angle": 0,
+      "content": "6.5.7. Abilities - If a location has an ability, that ability can be used during the turn the location is played. (See #5 on the diagram under 6.5.)"
+    },
+    {
+      "type": "list",
+      "bbox": [0.104, 0.509, 0.942, 0.792],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.941, 0.158, 0.955],
+      "angle": 0,
+      "content": "disneylorcana.com"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.058, 0.956, 0.11, 0.97],
+      "angle": 0,
+      "content": "©Disney"
+    },
+    {
+      "type": "page_number",
+      "bbox": [0.493, 0.956, 0.506, 0.968],
+      "angle": 0,
+      "content": "17"
+    },
+    {
+      "type": "footer",
+      "bbox": [0.865, 0.908, 0.943, 0.967],
+      "angle": 0,
+      "content": "Ravenbudget"
+    }
+  ]
+]
