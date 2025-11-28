@@ -59,6 +59,31 @@ export * from "./deck-validation";
 export { LorcanaEngine } from "./engine/lorcana-engine";
 // Spec 3: Turn Structure & Flow
 export * from "./flow";
+// Spec 6: Keywords
+export {
+  calculateTotalChallenger,
+  calculateTotalResist,
+  canBeChosenBy,
+  canBypassDrying,
+  canSingSong,
+  canSingTogether,
+  checkWardProtection,
+  createSingerPayment,
+  createSupportContext,
+  getValidSupportTargets,
+  getVanishRedirect,
+  hasSupport,
+  type KeywordContext,
+  type KeywordEvent,
+  needsDryRequirement,
+  type ShiftStackInfo,
+  type SingerPayment,
+  type StackingKeywordTotal,
+  type SupportContext,
+  shouldVanishRedirect,
+  type VanishRedirect,
+  type WardCheckResult,
+} from "./keywords";
 // Spec 4: Core Moves
 export * from "./moves";
 // Type exports
