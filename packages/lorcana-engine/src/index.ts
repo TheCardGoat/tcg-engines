@@ -67,3 +67,5 @@ export type {
   ParameterInfo,
   ParamFieldSchema,
 } from "./types/move-enumeration";
+// Spec 2: Zones & Card States
+export * from "./zones";
