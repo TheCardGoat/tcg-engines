@@ -125,11 +125,13 @@ export function generateExportName(fullName: string): string {
 }
 
 /**
- * Convert set sort_number to padded folder name
- * e.g., 1 -> "001", 10 -> "010"
+ * Extract set number from set ID and convert to padded folder name
+ * e.g., "set1" -> "001", "set10" -> "010"
  */
-export function getSetFolderName(sortNumber: number): string {
-  return sortNumber.toString().padStart(3, "0");
+export function getSetFolderName(setId: string): string {
+  const match = setId.match(/\d+/);
+  const num = match ? Number.parseInt(match[0], 10) : 0;
+  return num.toString().padStart(3, "0");
 }
 
 /**
@@ -500,7 +502,7 @@ export function generateCardFiles(
   // Create set ID to folder name mapping
   const setMapping = new Map<string, string>();
   for (const set of Object.values(sets)) {
-    setMapping.set(set.id, getSetFolderName(set.sortNumber));
+    setMapping.set(set.id, getSetFolderName(set.id));
   }
 
   // Organize cards for file generation
