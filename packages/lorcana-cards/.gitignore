@@ -1,0 +1,5 @@
+node_modules/
+build/
+turbo/
+data/inputs/lorcast-input.json
+data/inputs/ravensburger-input.json
