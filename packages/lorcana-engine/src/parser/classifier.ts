@@ -2,9 +2,9 @@
  * Ability Type Classifier
  *
  * Determines the type of ability from text patterns using priority-ordered rules:
- * 1. Keyword (exact match) - highest priority
- * 2. Triggered (starts with trigger word)
- * 3. Activated (has cost separator)
+ * 1. Triggered (starts with trigger word) - highest priority
+ * 2. Activated (has cost separator)
+ * 3. Keyword (exact match)
  * 4. Static (continuous modifications/restrictions)
  * 5. Action (standalone effect - no triggers/costs/conditions)
  * 6. Default to Static (fallback)
@@ -29,12 +29,46 @@ import type { ClassificationResult } from "./types";
  * - Have NO condition words at the start (While, Your, If)
  * - Do NOT target selection for continuous effects (Chosen X gains/gets)
  *
+ * Special handling:
+ * - "You may X" patterns ARE action effects (optional standalone effects)
+ * - "Each player/opponent X" patterns ARE action effects
+ *
  * @example "Draw 2 cards"
  * @example "Deal 3 damage to chosen character"
  * @example "Banish all items"
  * @example "Each opponent loses 2 lore"
+ * @example "You may draw a card"
  */
 function isActionEffect(text: string): boolean {
+  // Special case: "You may X" is an action effect (optional standalone effect)
+  if (text.match(/^You may\s+/i)) {
+    // Check that what follows "you may" is an action verb
+    const afterMay = text.replace(/^You may\s+/i, "");
+    const actionVerbs = [
+      /^draw\s+/i,
+      /^deal\s+/i,
+      /^banish\s+/i,
+      /^gain\s+/i,
+      /^ready\s+/i,
+      /^exert\s+/i,
+      /^return\s+/i,
+      /^remove\s+/i,
+      /^put\s+/i,
+      /^play\s+/i,
+      /^reveal\s+/i,
+      /^search\s+/i,
+      /^shuffle\s+/i,
+      /^move\s+/i,
+      /^look\s+/i,
+      /^choose\s+/i,
+    ];
+
+    const hasActionVerb = actionVerbs.some((pattern) => pattern.test(afterMay));
+    if (hasActionVerb) {
+      return true;
+    }
+  }
+
   // Must start with common effect verbs
   const actionVerbs = [
     /^Draw\s+/i,
@@ -54,6 +88,7 @@ function isActionEffect(text: string): boolean {
     /^Move\s+/i,
     /^Look\s+/i,
     /^Name\s+/i,
+    /^Choose\s+/i,
   ];
 
   const startsWithActionVerb = actionVerbs.some((pattern) =>
@@ -100,9 +135,9 @@ function isActionEffect(text: string): boolean {
  * Classify an ability text into its type
  *
  * Uses pattern matching to determine whether the text represents:
- * - keyword: Simple or complex keywords (Rush, Challenger +3, Shift 5)
- * - triggered: Abilities with trigger words (When/Whenever/At)
+ * - triggered: Abilities with trigger words (When/Whenever/At) - HIGHEST PRIORITY
  * - activated: Abilities with costs ({E} -, Banish this -)
+ * - keyword: Simple or complex keywords (Rush, Challenger +3, Shift 5)
  * - static: Continuous effects (Chosen character gains, Your characters gain, etc.)
  * - action: Standalone effects (Draw 2 cards, Banish all items)
  *
@@ -115,16 +150,9 @@ export function classifyAbility(text: string): ClassificationResult {
   const extracted = extractNamedAbilityPrefix(text);
   const textToClassify = extracted?.remainingText || text;
 
-  // Priority 1: Check for keyword abilities (exact match)
-  if (isKeywordAbilityText(textToClassify)) {
-    return {
-      type: "keyword",
-      confidence: 1.0,
-      reason: "Matched keyword pattern",
-    };
-  }
-
-  // Priority 2: Check for triggered abilities (trigger word prefix)
+  // Priority 1: Check for triggered abilities (trigger word prefix) - HIGHEST PRIORITY
+  // This must come before keywords because some abilities like "IT WORKS! Whenever..."
+  // would otherwise be misclassified as static
   if (isTriggeredAbilityText(textToClassify)) {
     return {
       type: "triggered",
@@ -133,12 +161,23 @@ export function classifyAbility(text: string): ClassificationResult {
     };
   }
 
-  // Priority 3: Check for activated abilities (cost separator)
+  // Priority 2: Check for activated abilities (cost separator)
+  // Must come before keywords to handle patterns like "{E} - Draw a card"
   if (hasActivatedAbilityCost(textToClassify)) {
     return {
       type: "activated",
       confidence: 0.9,
       reason: "Contains cost separator pattern",
+    };
+  }
+
+  // Priority 3: Check for keyword abilities (exact match)
+  // Now check keywords after triggers and activated to ensure proper classification
+  if (isKeywordAbilityText(textToClassify)) {
+    return {
+      type: "keyword",
+      confidence: 1.0,
+      reason: "Matched keyword pattern",
     };
   }
 
@@ -163,6 +202,7 @@ export function classifyAbility(text: string): ClassificationResult {
   }
 
   // Priority 6: Check for action effects (standalone effects)
+  // This now includes "You may X" patterns
   if (isActionEffect(textToClassify)) {
     return {
       type: "action",

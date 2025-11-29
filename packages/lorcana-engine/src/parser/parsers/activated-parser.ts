@@ -6,8 +6,10 @@
  * Examples:
  * - "{E} - Draw a card"
  * - "{E}, 2 {I} - Deal 3 damage to chosen character"
+ * - "{E}, {d} {I} - Deal {d} damage to chosen character"
  * - "Banish this item - Gain 3 lore"
  * - "MAGIC HAIR {E} - Remove up to 3 damage from chosen character"
+ * - "SKIRMISH {E} − Deal {d} damage to chosen character"
  */
 
 import type { ActivatedAbility } from "../../cards/abilities/types/ability-types";
@@ -28,12 +30,12 @@ export function parseActivatedAbility(text: string): ParseResult {
   const name = extracted?.name;
   const remainingText = extracted?.remainingText || text;
 
-  // Split cost from effect by cost separator (-, −, or :)
-  const splitMatch = remainingText.match(/^(.+?)\s*[-−:]\s*(.+)$/);
+  // Split cost from effect by cost separator (-, −, –, or :)
+  const splitMatch = remainingText.match(/^(.+?)\s*[-−–:]\s*(.+)$/);
   if (!splitMatch) {
     return {
       success: false,
-      error: "Could not find cost separator (-, −, or :)",
+      error: "Could not find cost separator (-, −, –, or :)",
     };
   }
 
@@ -84,8 +86,9 @@ export function parseActivatedAbility(text: string): ParseResult {
  *
  * Handles:
  * - {E} - exert cost
- * - N {I} - ink cost
- * - {E}, N {I} - combined costs
+ * - N {I} - ink cost (N can be numeric or {d} placeholder)
+ * - {E}, N {I} - combined exert and ink costs
+ * - {E}, Banish this item/character - combined exert and banish costs
  * - Banish this item/character - banish self cost
  * - Choose and discard N cards - discard cost
  */
@@ -97,10 +100,12 @@ function parseCost(text: string): AbilityCost | undefined {
     cost.exert = true;
   }
 
-  // Check for ink cost
-  const inkMatch = text.match(/(\d+)\s*\{I\}/);
+  // Check for ink cost - supports both numeric and {d} placeholder
+  const inkMatch = text.match(/(\{d\}|\d+)\s*\{I\}/);
   if (inkMatch) {
-    cost.ink = Number.parseInt(inkMatch[1], 10);
+    const inkValue = inkMatch[1];
+    // Convert {d} to -1 as placeholder value
+    cost.ink = inkValue === "{d}" ? -1 : Number.parseInt(inkValue, 10);
   }
 
   // Check for banish self cost
@@ -109,9 +114,17 @@ function parseCost(text: string): AbilityCost | undefined {
   }
 
   // Check for discard cost
-  const discardMatch = text.match(/Choose and discard (?:a|(\d+)) cards?/i);
+  const discardMatch = text.match(
+    /Choose and discard (?:a|(\{d\}|\d+)) cards?/i,
+  );
   if (discardMatch) {
-    const amount = discardMatch[1] ? Number.parseInt(discardMatch[1], 10) : 1;
+    const discardValue = discardMatch[1];
+    // Handle "a" (implicitly 1 card), {d} placeholder, or numeric
+    const amount = discardValue
+      ? discardValue === "{d}"
+        ? -1
+        : Number.parseInt(discardValue, 10)
+      : 1;
     cost.discardCards = amount;
     cost.discardChosen = true;
   }

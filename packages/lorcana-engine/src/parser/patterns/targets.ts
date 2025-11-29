@@ -39,11 +39,13 @@ export const ALL_OPPOSING_CHARACTERS_PATTERN = /\ball opposing characters?\b/i;
 
 /**
  * Player target patterns
+ * Now includes "Chosen player" pattern
  */
 export const YOU_PATTERN = /\byou\b/i;
 export const OPPONENT_PATTERN = /\bopponent\b/i;
 export const EACH_PLAYER_PATTERN = /\beach player\b/i;
 export const EACH_OPPONENT_PATTERN = /\beach opponent\b/i;
+export const CHOSEN_PLAYER_PATTERN = /\bchosen player\b/i;
 
 /**
  * Check if text contains a self-reference
@@ -61,6 +63,7 @@ export function hasChosenTarget(text: string): boolean {
     CHOSEN_OPPOSING_CHARACTER_PATTERN.test(text) ||
     CHOSEN_CHARACTER_OF_YOURS_PATTERN.test(text) ||
     CHOSEN_ITEM_PATTERN.test(text) ||
-    CHOSEN_LOCATION_PATTERN.test(text)
+    CHOSEN_LOCATION_PATTERN.test(text) ||
+    CHOSEN_PLAYER_PATTERN.test(text)
   );
 }

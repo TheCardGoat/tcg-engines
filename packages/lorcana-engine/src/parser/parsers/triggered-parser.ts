@@ -7,6 +7,7 @@
  * - "When you play this character, draw a card"
  * - "Whenever this character quests, gain 1 lore"
  * - "DARK KNOWLEDGE Whenever this character quests, you may draw a card"
+ * - "Once per turn, when you play a character here, you may draw a card"
  */
 
 import type { TriggeredAbility } from "../../cards/abilities/types/ability-types";
@@ -29,7 +30,21 @@ export function parseTriggeredAbility(text: string): ParseResult {
   // Extract named ability prefix if present
   const extracted = extractNamedAbilityPrefix(text);
   const name = extracted?.name;
-  const remainingText = extracted?.remainingText || text;
+  let remainingText = extracted?.remainingText || text;
+
+  // Check for restriction prefixes and strip them
+  // These would be added as restrictions on the ability
+  // For now, we strip them and just parse the trigger/effect
+
+  // Handle "Once per turn, when/whenever..."
+  if (remainingText.match(/^Once per turn,\s+/i)) {
+    remainingText = remainingText.replace(/^Once per turn,\s+/i, "");
+  }
+
+  // Handle "During your turn, when..."
+  if (remainingText.match(/^During your turn,\s+/i)) {
+    remainingText = remainingText.replace(/^During your turn,\s+/i, "");
+  }
 
   // Extract trigger timing and event
   const trigger = parseTrigger(remainingText);
@@ -137,8 +152,16 @@ function parseTrigger(text: string): Trigger | undefined {
     }
   }
 
-  // Parse event-based triggers for characters
+  // Parse self-triggers (must come before generic patterns)
   if (text.match(/\byou play this character\b/i)) {
+    return {
+      event: "play",
+      timing,
+      on: "SELF",
+    };
+  }
+
+  if (text.match(/\byou play this (?:item|location)\b/i)) {
     return {
       event: "play",
       timing,
@@ -186,15 +209,94 @@ function parseTrigger(text: string): Trigger | undefined {
     };
   }
 
-  // Parse "you play X" triggers
-  if (text.match(/\byou play this (?:item|location)\b/i)) {
+  // Parse "you play a card" (generic - any card type)
+  if (text.match(/\byou play a card\b/i)) {
     return {
       event: "play",
       timing,
-      on: "SELF",
+      on: { controller: "you", cardType: "card" },
     };
   }
 
+  // Parse "you play X" triggers with specific card types
+  // Check for classification-based triggers first (more specific)
+  if (text.match(/\byou play a Hero character\b/i)) {
+    return {
+      event: "play",
+      timing,
+      on: { controller: "you", cardType: "character", classification: "Hero" },
+    };
+  }
+
+  if (text.match(/\byou play a Villain character\b/i)) {
+    return {
+      event: "play",
+      timing,
+      on: {
+        controller: "you",
+        cardType: "character",
+        classification: "Villain",
+      },
+    };
+  }
+
+  if (text.match(/\byou play a Princess character\b/i)) {
+    return {
+      event: "play",
+      timing,
+      on: {
+        controller: "you",
+        cardType: "character",
+        classification: "Princess",
+      },
+    };
+  }
+
+  if (text.match(/\byou play a King character\b/i)) {
+    return {
+      event: "play",
+      timing,
+      on: { controller: "you", cardType: "character", classification: "King" },
+    };
+  }
+
+  if (text.match(/\byou play a Queen character\b/i)) {
+    return {
+      event: "play",
+      timing,
+      on: {
+        controller: "you",
+        cardType: "character",
+        classification: "Queen",
+      },
+    };
+  }
+
+  if (text.match(/\byou play a Pirate character\b/i)) {
+    return {
+      event: "play",
+      timing,
+      on: {
+        controller: "you",
+        cardType: "character",
+        classification: "Pirate",
+      },
+    };
+  }
+
+  if (text.match(/\byou play a Floodborn character\b/i)) {
+    return {
+      event: "play",
+      timing,
+      on: {
+        controller: "you",
+        cardType: "character",
+        classification: "Floodborn",
+      },
+    };
+  }
+
+  // Generic card type triggers (less specific)
   if (text.match(/\byou play a character\b/i)) {
     return {
       event: "play",
@@ -232,6 +334,31 @@ function parseTrigger(text: string): Trigger | undefined {
       event: "play",
       timing,
       on: { controller: "you", cardType: "location" },
+    };
+  }
+
+  // Parse opponent triggers
+  if (text.match(/\ban opponent plays a song\b/i)) {
+    return {
+      event: "play",
+      timing,
+      on: { controller: "opponent", cardType: "song" },
+    };
+  }
+
+  if (text.match(/\ban opponent plays a character\b/i)) {
+    return {
+      event: "play",
+      timing,
+      on: { controller: "opponent", cardType: "character" },
+    };
+  }
+
+  if (text.match(/\ban opponent plays a card\b/i)) {
+    return {
+      event: "play",
+      timing,
+      on: { controller: "opponent", cardType: "card" },
     };
   }
 

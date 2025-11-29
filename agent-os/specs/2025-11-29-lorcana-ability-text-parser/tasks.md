@@ -440,21 +440,260 @@ Phase 7: Testing (Task Group 7) [COMPLETE]
 
 | Metric | Target | Status | Notes |
 |--------|--------|--------|-------|
-| Parse 80%+ of 1552 unique ability texts | 80%+ | NOT MET (9.28%) | Coverage validation documents patterns for improvement |
-| Zero TypeScript compilation errors | 0 errors | PARTIAL | Type mismatches identified in parsers; tests pass at runtime |
-| All tests pass | 140 tests | MET | All 140 parser tests passing |
-| Batch processing under 5 seconds | <5s | MET | 15.32ms for all 1552 texts |
+| Parse 80%+ of 1552 unique ability texts | 80%+ | NOT MET (49.74%) | Coverage improved from 20.49% to 49.74% with Phase 2 |
+| Zero TypeScript compilation errors | 0 errors | MET | No compilation errors |
+| All tests pass | 500 tests | MET | All 500 parser tests passing |
+| Batch processing under 5 seconds | <5s | MET | 23.36ms for all 1552 texts |
 | Clear documentation of unsupported patterns | Yes | MET | Coverage validation provides detailed diagnostics |
 | Warnings for partially parsed abilities | Yes | MET | Lenient mode implemented with unparsedSegments |
 
 ---
 
-## Final Implementation Status
+## Phase 1 Implementation Status
 
 **Implementation Complete:** All 7 Task Groups implemented with 140 passing tests.
 
 **Known Issues:**
-1. Parse success rate (9.28%) below 80% target - documented with diagnostics for future improvement
+1. Parse success rate (20.49%) below 80% target - documented with diagnostics for future improvement
 2. TypeScript type mismatches in parser implementations - tests pass at runtime but type safety compromised
 
-**Recommendation:** Approve with follow-up to address type mismatches and improve parse rate.
+---
+
+# Phase 2: Coverage Improvement Tasks
+
+**Current State:** 49.74% coverage (772/1552 texts)
+**Target:** 80%+ coverage
+
+## Top Failure Categories
+1. "Could not parse trigger from text" (72 cases)
+2. "Effect type 'optional' is not a valid static effect" (36 cases)
+3. "Effect type 'sequence' is not a valid static effect" (21 cases)
+4. "Effect type 'gain-lore' is not a valid static effect" (12 cases)
+
+---
+
+### Task Group 2.1: Fix {d} Placeholder Handling
+**Assigned implementer:** api-engineer
+**Dependencies:** None
+**Complexity:** Low
+**Impact:** ~50+ texts
+
+- [x] 2.1.0 Complete {d} placeholder handling in effects
+  - [x] 2.1.1 Update GAIN_LORE_PATTERN to handle `{d}`: `/[Gg]ain (\d+|\{d\}) lore/`
+  - [x] 2.1.2 Update LOSE_LORE_PATTERN to handle `{d}`
+  - [x] 2.1.3 Update DEAL_DAMAGE_PATTERN to handle `{d}`
+  - [x] 2.1.4 Update REMOVE_DAMAGE_PATTERN to handle `{d}`
+  - [x] 2.1.5 Update DRAW_AMOUNT_PATTERN to handle `{d}`
+  - [x] 2.1.6 Update STAT_MODIFIER_PATTERN to handle `{d}`: `/gets? ([+-]?\d+|\{d\}|\+\{d\}|-\{d\}) \{([SWL])\}/`
+  - [x] 2.1.7 Update effect parser to convert `{d}` to placeholder value (-1)
+  - [x] 2.1.8 Write tests for {d} placeholder effects
+
+**Acceptance Criteria:**
+- "Gain {d} lore." parses successfully
+- "Deal {d} damage to chosen character." parses successfully
+- "Draw {d} cards." parses successfully
+- "Chosen character gets +{d} {S} this turn." parses successfully
+
+---
+
+### Task Group 2.2: Fix Ability Classification
+**Assigned implementer:** api-engineer
+**Dependencies:** None
+**Complexity:** Medium
+**Impact:** ~100+ texts
+
+- [x] 2.2.0 Fix ability classification priority
+  - [x] 2.2.1 Update classifier to check triggered indicators FIRST (When, Whenever, At the start/end)
+  - [x] 2.2.2 Update classifier to check activated indicators SECOND ({E}, cost patterns)
+  - [x] 2.2.3 Update classifier to check keywords THIRD (exact matches)
+  - [x] 2.2.4 Update preprocessor to extract named ability prefix BEFORE classification
+  - [x] 2.2.5 Ensure classifier operates on text AFTER name extraction
+  - [x] 2.2.6 Write tests for classification edge cases
+
+**Acceptance Criteria:**
+- "IT WORKS! Whenever you play an item, you may draw a card." → triggered (not static)
+- "FRESH INK When you play this item, draw a card." → triggered (not static)
+- Named abilities don't confuse the classifier
+
+---
+
+### Task Group 2.3: Expand Trigger Patterns
+**Assigned implementer:** api-engineer
+**Dependencies:** Task Group 2.2
+**Complexity:** Medium
+**Impact:** ~57+ texts
+
+- [x] 2.3.0 Add missing trigger patterns
+  - [x] 2.3.1 Add "Whenever you play a card" pattern
+  - [x] 2.3.2 Add "Whenever an opponent plays X" pattern
+  - [x] 2.3.3 Add "Whenever you play a [Type] character" pattern (Hero, Villain, etc.)
+  - [x] 2.3.4 Add "Whenever this character is challenged" pattern
+  - [x] 2.3.5 Add "Whenever you play an action" pattern
+  - [x] 2.3.6 Add "Whenever you play an item" pattern
+  - [x] 2.3.7 Add "Whenever you play a song" pattern
+  - [x] 2.3.8 Add "When this character is banished" pattern
+  - [x] 2.3.9 Update triggered-parser to use new patterns
+  - [x] 2.3.10 Write tests for each new trigger pattern
+
+**Acceptance Criteria:**
+- "YOUR REWARD AWAITS Whenever you play a card, draw a card." → parses
+- "FINE PRINT Whenever an opponent plays a song, you may draw a card." → parses
+- "SHAMELESS PROMOTER Whenever you play a Hero character, gain {d} lore." → parses
+- "FAN FAVORITE Whenever you play a song, gain {d} lore." → parses
+
+---
+
+### Task Group 2.4: Fix Optional Effects in Triggered Abilities
+**Assigned implementer:** api-engineer
+**Dependencies:** Task Group 2.2
+**Complexity:** Medium
+**Impact:** ~74 texts
+
+- [x] 2.4.0 Fix "you may" effects in triggered abilities
+    - [x] 2.4.1 Update triggered-parser to properly handle OptionalEffect
+    - [x] 2.4.2 Ensure effect parser returns OptionalEffect for "you may X"
+    - [x] 2.4.3 Ensure OptionalEffect is valid for TriggeredAbility.effect
+    - [x] 2.4.4 Write tests for triggered abilities with optional effects
+
+**Acceptance Criteria:**
+- "Whenever you play an item, you may draw a card." → TriggeredAbility with OptionalEffect
+- "When this character is banished, you may draw a card." → TriggeredAbility with OptionalEffect
+- "TEA PARTY Whenever this character is challenged, you may draw a card." → parses
+
+---
+
+### Task Group 2.5: Simple Standalone Action Effects
+**Assigned implementer:** api-engineer
+**Dependencies:** Task Group 2.1
+**Complexity:** Low
+**Impact:** ~100+ texts
+
+- [x] 2.5.0 Expand standalone action effect parsing
+  - [x] 2.5.1 Add "Chosen player draws {d} cards" pattern
+  - [x] 2.5.2 Add "Each player draws X cards" pattern
+  - [x] 2.5.3 Add "Each opponent loses {d} lore" pattern
+  - [x] 2.5.4 Add "Banish all X" patterns (items, characters, locations)
+  - [x] 2.5.5 Add "Ready chosen X" patterns
+  - [x] 2.5.6 Add "Return X from discard to hand" patterns
+  - [x] 2.5.7 Add "Chosen character gains [Keyword] this turn" patterns
+  - [x] 2.5.8 Add "Chosen character gets +/-{d} {S/W/L} this turn" patterns
+  - [x] 2.5.9 Write tests for each new action effect
+
+**Acceptance Criteria:**
+- "Chosen player draws {d} cards." → parses as action
+- "Each opponent loses {d} lore." → parses as action
+- "Banish all items." → parses as action
+- "Ready chosen item." → parses as action
+- "Chosen character gains Rush this turn." → parses as action
+
+---
+
+### Task Group 2.6: Simple Static Ability Patterns
+**Assigned implementer:** api-engineer
+**Dependencies:** Task Group 2.2
+**Complexity:** Medium
+**Impact:** ~50+ texts
+
+- [x] 2.6.0 Expand static ability patterns
+  - [x] 2.6.1 Add "can't be challenged" restriction pattern
+  - [x] 2.6.2 Add "cannot challenge" restriction pattern
+  - [x] 2.6.3 Add "enters play exerted" pattern
+  - [x] 2.6.4 Add "Your X gain Y" grant patterns
+  - [x] 2.6.5 Add "Your X get +{d} {S}" modifier patterns
+  - [x] 2.6.6 Add "Characters gain X while here" location patterns
+  - [x] 2.6.7 Add "can challenge ready characters" pattern
+  - [x] 2.6.8 Write tests for each new static pattern
+
+**Acceptance Criteria:**
+- "HIDDEN AWAY This character can't be challenged." → parses as static
+- "WAR WOUND This character cannot challenge." → parses as static
+- "ASLEEP This item enters play exerted." → parses as static
+- "ISOLATED Characters gain Resist +{d} while here." → parses as static
+
+---
+
+### Task Group 2.7: Named Ability Extraction Improvement
+**Assigned implementer:** api-engineer
+**Dependencies:** None
+**Complexity:** Low
+**Impact:** ~150+ texts improved extraction
+
+- [x] 2.7.0 Improve named ability extraction
+  - [x] 2.7.1 Update regex to handle names with numbers: "{d},{d} MEDICAL PROCEDURES"
+  - [x] 2.7.2 Update regex to handle special characters properly
+  - [x] 2.7.3 Ensure extraction works for all name patterns in card texts
+  - [x] 2.7.4 Write tests for edge case names
+
+**Acceptance Criteria:**
+- Names with numbers extract correctly
+- Names with special punctuation extract correctly
+- Named abilities don't break classification
+
+---
+
+### Task Group 2.8: Activated Ability Improvements
+**Assigned implementer:** api-engineer
+**Dependencies:** Task Group 2.1
+**Complexity:** Medium
+**Impact:** ~30+ texts
+
+- [x] 2.8.0 Expand activated ability parsing
+  - [x] 2.8.1 Add "{E}, {d} {I} - effect" combined cost pattern
+  - [x] 2.8.2 Add "{E}, Banish this X - effect" sacrifice cost pattern
+  - [x] 2.8.3 Add "{d} {I} - effect" ink-only cost pattern
+  - [x] 2.8.4 Add "NAME {E} - effect" named activated pattern
+  - [x] 2.8.5 Update cost parser for all separator variants (-, −, –, :)
+  - [x] 2.8.6 Write tests for each cost pattern
+
+**Acceptance Criteria:**
+- "{E}, {d} {I} - Deal {d} damage to chosen character." → parses as activated
+- "{E}, Banish this item - Choose one:" → parses as activated
+- "SKIRMISH {E} − Deal {d} damage to chosen character." → parses as activated
+
+---
+
+## Phase 2 Execution Order
+
+```
+2.1 {d} Placeholder (LOW complexity) [COMPLETE] ─────────────────────┐
+                                                                      │
+2.2 Classification Fix (MEDIUM) [COMPLETE] ───────────────────────┼──→ 2.3 Triggers [COMPLETE]
+                                                                      │
+                                                                      └──→ 2.4 Optional Effects [COMPLETE]
+
+2.5 Action Effects [COMPLETE] ──────────────────────────→ 2.6 Static Patterns [COMPLETE]
+
+2.7 Named Extraction [COMPLETE] ──────────────────────────────→ 2.8 Activated [COMPLETE]
+```
+
+**Parallel opportunities:**
+- 2.1 and 2.2 can run in parallel
+- 2.3 and 2.4 can run in parallel after 2.2
+- 2.5 and 2.6 can run in parallel after 2.1/2.2
+- 2.7 and 2.8 are independent
+
+---
+
+## Phase 2 Success Metrics
+
+| Metric | Current | Target |
+|--------|---------|--------|
+| Total Coverage | 49.74% (772) | 80%+ (~1240) |
+| Triggered Abilities | 365 | ~500 |
+| Activated Abilities | 70 | ~120 |
+| Static Abilities | 244 | ~300 |
+| Action Effects | 75 | ~200 |
+| Performance | 23.36ms | <50ms |
+| Tests | 500 | ~500 |
+
+---
+
+## Phase 3 (Future Work)
+
+Reserved for complex patterns:
+- "Choose one:" modal effects
+- "for each" scaling effects
+- Multi-sentence composite sequences
+- Conditional "if X, Y" / "if X, Y instead" effects
+- Replacement abilities
+- While conditions with continuous effects

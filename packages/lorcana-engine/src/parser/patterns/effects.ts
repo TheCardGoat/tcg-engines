@@ -22,12 +22,15 @@
 
 /**
  * Draw effect patterns
- * Now supports both "Draw X cards" and "Each player/opponent draws X cards"
+ * Now supports "Draw X cards", "Each player/opponent draws X cards", and "Chosen player draws X cards"
+ * Updated to handle {d} placeholder
  */
 export const DRAW_PATTERN =
-  /(?:[Ee]ach (?:player|opponent) )?[Dd]raw(?:s)? (?:a|(\d+)|an?) cards?/;
+  /(?:[Ee]ach (?:player|opponent)|[Cc]hosen player )?[Dd]raw(?:s)? (?:a|(\d+|\{d\})|an?) cards?/;
 export const DRAW_AMOUNT_PATTERN =
-  /(?:[Ee]ach (?:player|opponent) )?[Dd]raw(?:s)? (?:a|(\d+)) cards?/;
+  /(?:[Ee]ach (?:player|opponent)|[Cc]hosen player )?[Dd]raw(?:s)? (?:a|(\d+|\{d\})) cards?/;
+export const CHOSEN_PLAYER_DRAWS_PATTERN =
+  /[Cc]hosen player draws? (\d+|\{d\}) cards?/;
 
 /**
  * Discard effect patterns
@@ -40,28 +43,32 @@ export const CHOOSE_AND_DISCARD_PATTERN =
 
 /**
  * Damage effect patterns
+ * Updated to handle {d} placeholder
  */
-export const DEAL_DAMAGE_PATTERN = /[Dd]eal (\d+) damage/;
-export const REMOVE_DAMAGE_PATTERN = /[Rr]emove (?:up to )?(\d+) damage/;
-export const PUT_DAMAGE_PATTERN = /[Pp]ut (\d+) damage counters?/;
+export const DEAL_DAMAGE_PATTERN = /[Dd]eal (\d+|\{d\}) damage/;
+export const REMOVE_DAMAGE_PATTERN = /[Rr]emove (?:up to )?(\d+|\{d\}) damage/;
+export const PUT_DAMAGE_PATTERN = /[Pp]ut (\d+|\{d\}) damage counters?/;
 
 /**
  * Lore effect patterns
  * Now supports "Each opponent loses X lore"
+ * Updated to handle {d} placeholder
  */
-export const GAIN_LORE_PATTERN = /[Gg]ain (\d+) lore/;
+export const GAIN_LORE_PATTERN = /[Gg]ain (\d+|\{d\}) lore/;
 export const LOSE_LORE_PATTERN =
-  /(?:[Ee]ach (?:player|opponent) )?[Ll]ose(?:s)? (\d+) lore/;
+  /(?:[Ee]ach (?:player|opponent) )?[Ll]ose(?:s)? (\d+|\{d\}) lore/;
 
 /**
  * Exert/ready effect patterns
+ * Updated to support "Ready chosen X" where X can be character, item, or location
  */
 export const EXERT_PATTERN =
-  /[Ee]xert (?:chosen )?(?:opposing )?(?:damaged )?(?:character|item)/;
-export const READY_PATTERN = /[Rr]eady (?:chosen )?(?:character|item)/;
+  /[Ee]xert (?:chosen )?(?:opposing )?(?:damaged )?(?:character|item|location)/;
+export const READY_PATTERN = /[Rr]eady (?:chosen )?(?:character|item|location)/;
 
 /**
  * Banish effect patterns
+ * Now supports "Banish all X" for items, characters, and locations
  */
 export const BANISH_PATTERN =
   /[Bb]anish (?:chosen )?(?:opposing )?(?:damaged )?(?:all )?(?:character|item|location)s?/;
@@ -76,18 +83,22 @@ export const RETURN_TO_HAND_PATTERN =
 
 /**
  * Return from discard effect patterns
+ * Now supports returning any card type from discard to hand
  */
 export const RETURN_FROM_DISCARD_PATTERN =
   /[Rr]eturn (?:a|an) (?:(character|action|item|location|song)(?: card)?) from (?:your|their) discard (?:pile )?to (?:your|their) hand/;
 
 /**
  * Stat modification patterns
+ * Updated to handle {d} placeholder with optional +/- prefix
+ * Supports "Chosen character gets +/-{d} {S/W/L} this turn"
  */
 export const STAT_MODIFIER_PATTERN =
-  /gets? ([+-]\d+) \{([SWL])\}(?: this turn)?/;
+  /gets? ([+-]?\d+|[+-]?\{d\}) \{([SWL])\}(?: this turn)?/;
 
 /**
  * Keyword grant patterns
+ * Supports "Chosen character gains [Keyword] this turn"
  */
 export const GRANT_KEYWORD_PATTERN =
   /gains? (Rush|Ward|Evasive|Bodyguard|Support|Reckless|Challenger \+\d+|Resist \+\d+)(?: this turn)?/;
@@ -157,6 +168,7 @@ export const REVEAL_TOP_CARD_PATTERN =
  * Chosen patterns
  */
 export const CHOSEN_OPPONENT_PATTERN = /[Cc]hosen opponent/;
+export const CHOSEN_PLAYER_PATTERN = /[Cc]hosen player/;
 export const CHOSEN_CHARACTER_PATTERN =
   /[Cc]hosen (?:opposing )?(?:damaged )?character/;
 export const CHOSEN_ITEM_PATTERN = /[Cc]hosen (?:opposing )?item/;
@@ -166,7 +178,7 @@ export const CHOSEN_LOCATION_PATTERN = /[Cc]hosen (?:opposing )?location/;
  * Restriction patterns (for static abilities)
  */
 export const CANT_BE_CHALLENGED_PATTERN = /[Cc]an'?t be challenged/;
-export const CANT_CHALLENGE_PATTERN = /[Cc]an'?t challenge/;
+export const CANT_CHALLENGE_PATTERN = /[Cc]annot challenge/;
 export const CANT_QUEST_PATTERN = /[Cc]an'?t quest/;
 export const CANNOT_PATTERN = /[Cc]annot /;
 
@@ -174,6 +186,33 @@ export const CANNOT_PATTERN = /[Cc]annot /;
  * Enters play patterns
  */
 export const ENTERS_PLAY_EXERTED_PATTERN = /[Ee]nters? play exerted/;
+
+/**
+ * Static grant patterns for "Your X gain/get Y"
+ * These patterns match abilities that grant keywords or stat bonuses to groups of cards
+ */
+export const YOUR_CHARACTERS_GAIN_PATTERN =
+  /[Yy]our (?:(?:[A-Z][a-z]+ )?)?characters? gains? ([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?(?:\s*\+\{d\}|\s*\+\d+)?)/;
+export const YOUR_CHARACTERS_GET_STAT_PATTERN =
+  /[Yy]our (?:(?:[A-Z][a-z]+ )?)?characters? gets? ([+-]?\d+|[+-]?\{d\}) \{([SWL])\}/;
+export const YOUR_ITEMS_GAIN_PATTERN =
+  /[Yy]our items? gains? ([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?(?:\s*\+\{d\}|\s*\+\d+)?)/;
+export const YOUR_ITEMS_GET_STAT_PATTERN =
+  /[Yy]our items? gets? ([+-]?\d+|[+-]?\{d\}) \{([SWL])\}/;
+
+/**
+ * Location static patterns "while here"
+ * These patterns match abilities granted to characters at a location
+ */
+export const CHARACTERS_GAIN_WHILE_HERE_PATTERN =
+  /[Cc]haracters? gains? ([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?(?:\s*\+\{d\}|\s*\+\d+)?) while here/;
+export const CHARACTERS_GET_STAT_WHILE_HERE_PATTERN =
+  /[Cc]haracters? gets? ([+-]?\d+|[+-]?\{d\}) \{([SWL])\} while here/;
+
+/**
+ * Special ability grant pattern for "can challenge ready characters"
+ */
+export const CAN_CHALLENGE_READY_PATTERN = /[Cc]an challenge ready characters?/;
 
 /**
  * Optional effect patterns

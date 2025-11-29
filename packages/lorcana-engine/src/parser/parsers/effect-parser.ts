@@ -88,6 +88,20 @@ import { parseCondition } from "./condition-parser";
 import { parseCharacterTarget, parsePlayerTarget } from "./target-parser";
 
 /**
+ * Helper function to parse numeric values or {d} placeholders
+ * Converts {d} to -1 as a placeholder value
+ *
+ * @param value - String that might be a number or "{d}"
+ * @returns Parsed number or -1 for {d} placeholder
+ */
+function parseNumericValue(value: string): number {
+  if (value === "{d}") {
+    return -1; // Placeholder value for {d}
+  }
+  return Number.parseInt(value, 10);
+}
+
+/**
  * Parse effect from text
  *
  * @param text - Text containing effect phrase
@@ -702,14 +716,14 @@ function parseAtomicEffect(text: string): Effect | undefined {
     }
   }
 
-  // Try draw effect
+  // Try draw effect - with {d} placeholder support
   const drawMatch = text.match(DRAW_AMOUNT_PATTERN);
   if (drawMatch) {
-    // drawMatch[1] is either undefined (for "a") or a number string
+    // drawMatch[1] is either undefined (for "a") or a number/placeholder string
     const amount =
       !drawMatch[1] || drawMatch[1] === "a" || drawMatch[1] === "an"
         ? 1
-        : Number.parseInt(drawMatch[1], 10);
+        : parseNumericValue(drawMatch[1]);
     const target = parsePlayerTarget(text) || "CONTROLLER";
     return {
       type: "draw",
@@ -735,10 +749,10 @@ function parseAtomicEffect(text: string): Effect | undefined {
     };
   }
 
-  // Try damage effect
+  // Try damage effect - with {d} placeholder support
   const damageMatch = text.match(DEAL_DAMAGE_PATTERN);
   if (damageMatch) {
-    const amount = Number.parseInt(damageMatch[1], 10);
+    const amount = parseNumericValue(damageMatch[1]);
     const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
     return {
       type: "deal-damage",
@@ -747,10 +761,10 @@ function parseAtomicEffect(text: string): Effect | undefined {
     };
   }
 
-  // Try put damage effect (different from deal damage)
+  // Try put damage effect - with {d} placeholder support
   const putDamageMatch = text.match(PUT_DAMAGE_PATTERN);
   if (putDamageMatch) {
-    const amount = Number.parseInt(putDamageMatch[1], 10);
+    const amount = parseNumericValue(putDamageMatch[1]);
     const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
     return {
       type: "put-damage",
@@ -759,10 +773,10 @@ function parseAtomicEffect(text: string): Effect | undefined {
     };
   }
 
-  // Try remove damage effect
+  // Try remove damage effect - with {d} placeholder support
   const removeDamageMatch = text.match(REMOVE_DAMAGE_PATTERN);
   if (removeDamageMatch) {
-    const amount = Number.parseInt(removeDamageMatch[1], 10);
+    const amount = parseNumericValue(removeDamageMatch[1]);
     const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
     const upTo = text.includes("up to");
     return {
@@ -773,20 +787,20 @@ function parseAtomicEffect(text: string): Effect | undefined {
     };
   }
 
-  // Try lore gain effect
+  // Try lore gain effect - with {d} placeholder support
   const gainLoreMatch = text.match(GAIN_LORE_PATTERN);
   if (gainLoreMatch) {
-    const amount = Number.parseInt(gainLoreMatch[1], 10);
+    const amount = parseNumericValue(gainLoreMatch[1]);
     return {
       type: "gain-lore",
       amount,
     };
   }
 
-  // Try lore loss effect
+  // Try lore loss effect - with {d} placeholder support
   const loseLoreMatch = text.match(LOSE_LORE_PATTERN);
   if (loseLoreMatch) {
-    const amount = Number.parseInt(loseLoreMatch[1], 10);
+    const amount = parseNumericValue(loseLoreMatch[1]);
     const target = parsePlayerTarget(text) || "OPPONENT";
     return {
       type: "lose-lore",
@@ -840,10 +854,20 @@ function parseAtomicEffect(text: string): Effect | undefined {
     };
   }
 
-  // Try stat modification
+  // Try stat modification - with {d} placeholder support
   const statModMatch = text.match(STAT_MODIFIER_PATTERN);
   if (statModMatch) {
-    const modifier = Number.parseInt(statModMatch[1], 10);
+    const modifierStr = statModMatch[1];
+    // Handle +{d}, -{d}, or {d} (which defaults to positive)
+    let modifier: number;
+    if (modifierStr === "{d}" || modifierStr === "+{d}") {
+      modifier = -1; // Placeholder for positive {d}
+    } else if (modifierStr === "-{d}") {
+      modifier = 1; // Placeholder for negative {d} (stored as positive, negated later)
+    } else {
+      modifier = Number.parseInt(modifierStr, 10);
+    }
+
     const stat = statModMatch[2] as "S" | "W" | "L";
     const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
     const duration = text.includes("this turn") ? "this-turn" : "permanent";

@@ -22,6 +22,7 @@ import {
   CHOSEN_ITEM_PATTERN,
   CHOSEN_LOCATION_PATTERN,
   CHOSEN_OPPOSING_CHARACTER_PATTERN,
+  CHOSEN_PLAYER_PATTERN,
   EACH_OPPONENT_PATTERN,
   EACH_OPPOSING_CHARACTER_PATTERN,
   EACH_PLAYER_PATTERN,
@@ -111,11 +112,17 @@ export function parseLocationTarget(
 
 /**
  * Parse player target from text
+ * Now supports "Chosen player" pattern
  *
  * @param text - Text containing target phrase
  * @returns Player target or undefined if not found
  */
 export function parsePlayerTarget(text: string): PlayerTarget | undefined {
+  // Check "Chosen player" first before more general patterns
+  if (CHOSEN_PLAYER_PATTERN.test(text)) {
+    return "CHOSEN_PLAYER";
+  }
+
   // Check "Each player" before "Each opponent" since it's more specific
   if (EACH_PLAYER_PATTERN.test(text)) {
     return "EACH_PLAYER";
