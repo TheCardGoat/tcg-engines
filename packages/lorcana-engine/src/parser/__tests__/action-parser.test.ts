@@ -6,193 +6,236 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type { ActionAbility } from "../../cards/abilities/types/ability-types";
 import { parseAbilityText } from "../parser";
 
 describe("Action Parser", () => {
   describe("Simple Draw Effects", () => {
     it("should parse 'Draw 2 cards'", () => {
       const result = parseAbilityText("Draw 2 cards");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("draw");
-      if (action.effect.type === "draw") {
-        expect(action.effect.amount).toBe(2);
-        expect(action.effect.target).toBe("CONTROLLER");
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "draw", amount: 2, target: "CONTROLLER" },
+          },
+        },
+      });
     });
 
     it("should parse 'Draw a card'", () => {
       const result = parseAbilityText("Draw a card");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("draw");
-      if (action.effect.type === "draw") {
-        expect(action.effect.amount).toBe(1);
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "draw", amount: 1 },
+          },
+        },
+      });
     });
 
     it("should parse 'Each player draws a card'", () => {
       const result = parseAbilityText("Each player draws a card");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("draw");
-      if (action.effect.type === "draw") {
-        expect(action.effect.amount).toBe(1);
-        expect(action.effect.target).toBe("EACH_PLAYER");
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "draw", amount: 1, target: "EACH_PLAYER" },
+          },
+        },
+      });
     });
 
     it("should parse 'Each player draws 2 cards'", () => {
       const result = parseAbilityText("Each player draws 2 cards");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("draw");
-      if (action.effect.type === "draw") {
-        expect(action.effect.amount).toBe(2);
-        expect(action.effect.target).toBe("EACH_PLAYER");
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "draw", amount: 2, target: "EACH_PLAYER" },
+          },
+        },
+      });
     });
   });
 
   describe("Damage Effects", () => {
     it("should parse 'Deal 3 damage to chosen character'", () => {
       const result = parseAbilityText("Deal 3 damage to chosen character");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("deal-damage");
-      if (action.effect.type === "deal-damage") {
-        expect(action.effect.amount).toBe(3);
-        expect(action.effect.target).toBe("CHOSEN_CHARACTER");
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: {
+              type: "deal-damage",
+              amount: 3,
+              target: "CHOSEN_CHARACTER",
+            },
+          },
+        },
+      });
     });
 
     it("should parse 'Deal 2 damage to each opposing character'", () => {
       const result = parseAbilityText(
         "Deal 2 damage to each opposing character",
       );
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("deal-damage");
-      if (action.effect.type === "deal-damage") {
-        expect(action.effect.amount).toBe(2);
-        expect(action.effect.target).toBe("ALL_OPPOSING_CHARACTERS");
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: {
+              type: "deal-damage",
+              amount: 2,
+              target: "ALL_OPPOSING_CHARACTERS",
+            },
+          },
+        },
+      });
     });
   });
 
   describe("Banish Effects", () => {
     it("should parse 'Banish all items'", () => {
       const result = parseAbilityText("Banish all items");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("banish");
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "banish" },
+          },
+        },
+      });
     });
 
     it("should parse 'Banish chosen character'", () => {
       const result = parseAbilityText("Banish chosen character");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("banish");
-      if (action.effect.type === "banish") {
-        expect(action.effect.target).toBe("CHOSEN_CHARACTER");
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "banish", target: "CHOSEN_CHARACTER" },
+          },
+        },
+      });
     });
 
     it("should parse 'Banish all characters'", () => {
       const result = parseAbilityText("Banish all characters");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("banish");
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "banish" },
+          },
+        },
+      });
     });
 
     it("should parse 'Banish all opposing items'", () => {
       const result = parseAbilityText("Banish all opposing items");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("banish");
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "banish" },
+          },
+        },
+      });
     });
   });
 
   describe("Lore Effects", () => {
     it("should parse 'Gain 2 lore'", () => {
       const result = parseAbilityText("Gain 2 lore");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("gain-lore");
-      if (action.effect.type === "gain-lore") {
-        expect(action.effect.amount).toBe(2);
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "gain-lore", amount: 2 },
+          },
+        },
+      });
     });
 
     it("should parse 'Each opponent loses 2 lore'", () => {
       const result = parseAbilityText("Each opponent loses 2 lore");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("lose-lore");
-      if (action.effect.type === "lose-lore") {
-        expect(action.effect.amount).toBe(2);
-        expect(action.effect.target).toBe("EACH_OPPONENT");
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "lose-lore", amount: 2, target: "EACH_OPPONENT" },
+          },
+        },
+      });
     });
   });
 
   describe("Ready/Exert Effects", () => {
     it("should parse 'Ready chosen character'", () => {
       const result = parseAbilityText("Ready chosen character");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("ready");
-      if (action.effect.type === "ready") {
-        expect(action.effect.target).toBe("CHOSEN_CHARACTER");
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "ready", target: "CHOSEN_CHARACTER" },
+          },
+        },
+      });
     });
 
     it("should parse 'Ready chosen item'", () => {
       const result = parseAbilityText("Ready chosen item");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("ready");
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "ready" },
+          },
+        },
+      });
     });
 
     it("should parse 'Exert chosen opposing character'", () => {
       const result = parseAbilityText("Exert chosen opposing character");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("exert");
-      if (action.effect.type === "exert") {
-        expect(action.effect.target).toBe("CHOSEN_OPPOSING_CHARACTER");
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "exert", target: "CHOSEN_OPPOSING_CHARACTER" },
+          },
+        },
+      });
     });
   });
 
@@ -201,14 +244,16 @@ describe("Action Parser", () => {
       const result = parseAbilityText(
         "Return chosen character to their player's hand",
       );
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("return-to-hand");
-      if (action.effect.type === "return-to-hand") {
-        expect(action.effect.target).toBe("CHOSEN_CHARACTER");
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: { type: "return-to-hand", target: "CHOSEN_CHARACTER" },
+          },
+        },
+      });
     });
   });
 
@@ -217,47 +262,62 @@ describe("Action Parser", () => {
       const result = parseAbilityText(
         "Each player chooses and discards a card",
       );
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("discard");
-      if (action.effect.type === "discard") {
-        expect(action.effect.amount).toBe(1);
-        expect(action.effect.target).toBe("EACH_PLAYER");
-        expect(action.effect.chosen).toBe(true);
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: {
+              type: "discard",
+              amount: 1,
+              target: "EACH_PLAYER",
+              chosen: true,
+            },
+          },
+        },
+      });
     });
 
     it("should parse 'Each opponent chooses and discards a card'", () => {
       const result = parseAbilityText(
         "Each opponent chooses and discards a card",
       );
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
 
-      const action = result.ability?.ability as ActionAbility;
-      expect(action.effect.type).toBe("discard");
-      if (action.effect.type === "discard") {
-        expect(action.effect.amount).toBe(1);
-        expect(action.effect.target).toBe("EACH_OPPONENT");
-        expect(action.effect.chosen).toBe(true);
-      }
+      expect(result).toMatchObject({
+        success: true,
+        ability: {
+          ability: {
+            type: "action",
+            effect: {
+              type: "discard",
+              amount: 1,
+              target: "EACH_OPPONENT",
+              chosen: true,
+            },
+          },
+        },
+      });
     });
   });
 
   describe("Composite Effects", () => {
     it("should successfully parse composite effects (though may only parse first part)", () => {
       const result = parseAbilityText("Gain 2 lore. Draw a card.");
-      // Composite effects are not fully implemented yet, but shouldn't fail
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
+
+      expect(result).toMatchObject({
+        success: true,
+        ability: { ability: { type: "action" } },
+      });
     });
 
     it("should successfully parse multi-part effects (though may only parse first part)", () => {
       const result = parseAbilityText("Banish chosen item. Draw a card.");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("action");
+
+      expect(result).toMatchObject({
+        success: true,
+        ability: { ability: { type: "action" } },
+      });
     });
   });
 
@@ -266,30 +326,38 @@ describe("Action Parser", () => {
       const result = parseAbilityText(
         "When you play this character, draw 2 cards",
       );
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).not.toBe("action");
-      expect(result.ability?.ability.type).toBe("triggered");
+
+      expect(result).toMatchObject({
+        success: true,
+        ability: { ability: { type: "triggered" } },
+      });
     });
 
     it("should NOT parse activated abilities as actions", () => {
       const result = parseAbilityText("{E} - Draw a card");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).not.toBe("action");
-      expect(result.ability?.ability.type).toBe("activated");
+
+      expect(result).toMatchObject({
+        success: true,
+        ability: { ability: { type: "activated" } },
+      });
     });
 
     it("should NOT parse static abilities as actions", () => {
       const result = parseAbilityText("Your characters gain Ward");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).not.toBe("action");
-      expect(result.ability?.ability.type).toBe("static");
+
+      expect(result).toMatchObject({
+        success: true,
+        ability: { ability: { type: "static" } },
+      });
     });
 
     it("should NOT parse keywords as actions", () => {
       const result = parseAbilityText("Rush");
-      expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).not.toBe("action");
-      expect(result.ability?.ability.type).toBe("keyword");
+
+      expect(result).toMatchObject({
+        success: true,
+        ability: { ability: { type: "keyword" } },
+      });
     });
   });
 });
