@@ -158,7 +158,7 @@ function parseSpecificStaticPattern(text: string): StaticEffect | undefined {
       type: "restriction",
       restriction: "enters-play-exerted",
       target: "SELF",
-    } as StaticEffect;
+    };
   }
 
   // Pattern: "This character can challenge ready characters"
@@ -295,9 +295,20 @@ function parseSpecificStaticPattern(text: string): StaticEffect | undefined {
  * Parse a keyword from text (e.g., "Rush", "Challenger +3", "Resist +{d}")
  * Returns keyword name and optional value
  */
+type KeywordName =
+  | "Rush"
+  | "Ward"
+  | "Evasive"
+  | "Bodyguard"
+  | "Support"
+  | "Reckless"
+  | "Alert"
+  | "Challenger"
+  | "Resist";
+
 function parseKeywordFromText(text: string):
   | {
-      keyword: string;
+      keyword: KeywordName;
       value?: number;
     }
   | undefined {
@@ -319,7 +330,7 @@ function parseKeywordFromText(text: string):
   }
 
   // Check for simple keywords
-  const simpleKeywords = [
+  const simpleKeywords: KeywordName[] = [
     "Rush",
     "Ward",
     "Evasive",
