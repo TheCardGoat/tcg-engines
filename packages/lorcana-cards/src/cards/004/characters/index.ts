@@ -1,0 +1,16 @@
+export { agustinMadrigalClumsyDad } from "./001-agustin-madrigal-clumsy-dad";
+export { flixMadrigalFunlovingFamilyMan } from "./009-flix-madrigal-fun-loving-family-man";
+export { antonioMadrigalAnimalExpert } from "./035-antonio-madrigal-animal-expert";
+export { picoHelpfulToucan } from "./055-pico-helpful-toucan";
+export { gusChampionOfCheese } from "./073-gus-champion-of-cheese";
+export { painImmortalSidekick } from "./081-pain-immortal-sidekick";
+export { peteRottenGuy } from "./086-pete-rotten-guy";
+export { torFlorist } from "./091-tor-florist";
+export { benjaBoldUniter } from "./104-benja-bold-uniter";
+export { liShangGeneralsSon } from "./111-li-shang-generals-son";
+export { hadesMeticulousPlotter } from "./145-hades-meticulous-plotter";
+export { johnSilverTerrorOfTheRealm } from "./148-john-silver-terror-of-the-realm";
+export { tukTukCuriousPartner } from "./161-tuk-tuk-curious-partner";
+export { aladdinResoluteSwordsman } from "./172-aladdin-resolute-swordsman";
+export { argesTheCyclops } from "./173-arges-the-cyclops";
+export { mulanArmoredFighter } from "./189-mulan-armored-fighter";

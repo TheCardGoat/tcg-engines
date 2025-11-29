@@ -156,9 +156,6 @@ export interface CanonicalCard {
   /** Short generated ID (e.g., "a7x") */
   id: string;
 
-  /** Original deck_building_id for cross-reference */
-  deckBuildingId: string;
-
   /** Card name (e.g., "Baloo") */
   name: string;
 
@@ -201,14 +198,48 @@ export interface CanonicalCard {
   /** Keywords on the card */
   keywords?: string[];
 
-  /** Raw rules text for display */
-  rulesText: string;
+  /** Raw rules text for display (omitted for vanilla cards) */
+  rulesText?: string;
 
-  /** Parsed abilities for game logic */
+  /** Parsed abilities for game logic (omitted for vanilla cards) */
   abilities?: AbilityDefinition[];
 
   /** References to all printings of this card */
-  printings: string[];
+  printings: CardPrintingRef[];
+
+  /** True if card has no rules text (no abilities to test) */
+  vanilla: boolean;
+
+  /** Franchise the card belongs to (e.g., "Jungle Book", "Frozen") */
+  franchise?: string;
+
+  /** External IDs for cross-referencing with other systems */
+  externalIds?: ExternalIds;
+}
+
+export interface ExternalIds {
+  /** Ravensburger's deck building ID */
+  ravensburger?: string;
+
+  /** Ravensburger's culture invariant ID */
+  cultureInvariantId?: number;
+
+  /** TCGPlayer product ID */
+  tcgPlayer?: number;
+
+  /** Lorcast card ID */
+  lorcast?: string;
+}
+
+export interface CardPrintingRef {
+  /** Set ID (e.g., "set10") */
+  set: string;
+
+  /** Collector number within the set */
+  collectorNumber: number;
+
+  /** Full printing ID (e.g., "set10-001") */
+  id: string;
 }
 
 export interface AbilityDefinition {

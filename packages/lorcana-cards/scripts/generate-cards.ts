@@ -3,7 +3,8 @@
  * Card Generation Script
  *
  * Generates card data from ravensburger-input.json and lorcast-input.json
- * into the src/data directory.
+ * into the src/cards directory (individual TypeScript files) and
+ * src/data directory (JSON reference files).
  *
  * Data source strategy:
  *   - Card text: Lorcast (has symbols like {S}, {I}, {L})
@@ -13,8 +14,11 @@
  *   bun packages/lorcana-cards/scripts/generate-cards.ts
  *
  * Output files:
+ *   - src/cards/{set}/{type}/{card}.ts (individual card files)
+ *   - src/cards/cards.ts (main aggregator)
+ *   - src/cards/index.ts (entry point)
+ *   - src/cards/types.ts (type definitions)
  *   - src/data/sets.json
- *   - src/data/canonical-cards.json
  *   - src/data/printings.json
  *   - src/data/id-mapping.json
  */
@@ -22,6 +26,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { generateCanonicalCards } from "./generators/canonical-generator";
+import { generateCardFiles } from "./generators/file-generator";
 import { createIdMapping } from "./generators/id-generator";
 import {
   calculateSetTotals,
@@ -40,8 +45,9 @@ import {
 import { loadAndBuildLorcastIndex } from "./parsers/lorcast-parser";
 import type { IdMapping } from "./types";
 
-const OUTPUT_DIR = path.resolve(__dirname, "../src/data");
-const ID_MAPPING_PATH = path.resolve(OUTPUT_DIR, "id-mapping.json");
+const DATA_OUTPUT_DIR = path.resolve(__dirname, "../src/data");
+const CARDS_OUTPUT_DIR = path.resolve(__dirname, "../src/cards");
+const ID_MAPPING_PATH = path.resolve(DATA_OUTPUT_DIR, "id-mapping.json");
 
 /**
  * Load existing ID mapping if available (for stable IDs)
@@ -85,9 +91,25 @@ async function main() {
   console.log("\n📚 Loading Ravensburger data with Lorcast text...");
   const input = loadMergedInput();
 
+  // Generate sets (only EXPANSION sets, filter out QUEST/gateway)
+  console.log("📚 Generating sets...");
+  const cardSets = getCardSets(input);
+  const expansionSets = cardSets.filter((set) => set.type === "EXPANSION");
+  const sets = generateSets(expansionSets);
+  const expansionSetIds = new Set(Object.keys(sets));
+  console.log(
+    `  Found ${Object.keys(sets).length} expansion sets (filtered ${cardSets.length - expansionSets.length} non-expansion sets)`,
+  );
+
   console.log("📦 Processing cards...");
-  const allCards = getAllCards(input);
-  console.log(`  Found ${allCards.length} total card entries`);
+  const allCardsRaw = getAllCards(input);
+  // Filter to only cards that belong to expansion sets
+  const allCards = allCardsRaw.filter((card) =>
+    card.card_sets.some((setId) => expansionSetIds.has(setId)),
+  );
+  console.log(
+    `  Found ${allCards.length} expansion card entries (filtered ${allCardsRaw.length - allCards.length} non-expansion cards)`,
+  );
 
   // Get unique deck_building_ids
   const deckBuildingIds = getUniqueDeckBuildingIds(allCards);
@@ -98,12 +120,6 @@ async function main() {
   const existingMapping = loadExistingIdMapping();
   const idMapping = createIdMapping(deckBuildingIds, existingMapping);
   console.log(`  Generated ${Object.keys(idMapping.byShortId).length} IDs`);
-
-  // Generate sets
-  console.log("📚 Generating sets...");
-  const cardSets = getCardSets(input);
-  const sets = generateSets(cardSets);
-  console.log(`  Found ${Object.keys(sets).length} sets`);
 
   // Group cards by deck_building_id
   console.log("🗂️ Grouping cards by deck_building_id...");
@@ -131,20 +147,38 @@ async function main() {
     `  Generated ${Object.keys(canonicalCards).length} canonical cards`,
   );
 
-  // Write output files
-  console.log("📝 Writing output files...");
+  // Write JSON reference files
+  console.log("📝 Writing JSON reference files...");
 
-  writeJson(path.join(OUTPUT_DIR, "sets.json"), sets);
+  writeJson(path.join(DATA_OUTPUT_DIR, "sets.json"), sets);
   console.log("  ✅ sets.json");
 
-  writeJson(path.join(OUTPUT_DIR, "canonical-cards.json"), canonicalCards);
-  console.log("  ✅ canonical-cards.json");
-
-  writeJson(path.join(OUTPUT_DIR, "printings.json"), printings);
+  writeJson(path.join(DATA_OUTPUT_DIR, "printings.json"), printings);
   console.log("  ✅ printings.json");
 
   writeJson(ID_MAPPING_PATH, idMapping);
   console.log("  ✅ id-mapping.json");
+
+  // Generate individual card TypeScript files
+  console.log("\n📂 Generating card TypeScript files...");
+
+  // Clear existing cards directory
+  if (fs.existsSync(CARDS_OUTPUT_DIR)) {
+    fs.rmSync(CARDS_OUTPUT_DIR, { recursive: true });
+  }
+
+  // Filter to only vanilla cards (no abilities to implement)
+  const vanillaCards: Record<string, (typeof canonicalCards)[string]> = {};
+  for (const [id, card] of Object.entries(canonicalCards)) {
+    if (card.vanilla) {
+      vanillaCards[id] = card;
+    }
+  }
+  console.log(
+    `  Filtering to ${Object.keys(vanillaCards).length} vanilla cards only`,
+  );
+
+  generateCardFiles(CARDS_OUTPUT_DIR, vanillaCards, sets);
 
   // Print summary
   console.log("\n📊 Summary:");

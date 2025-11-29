@@ -16,7 +16,9 @@ import type { LorcastTextIndex } from "../parsers/lorcast-parser";
 import type {
   AbilityDefinition,
   CanonicalCard,
+  CardPrintingRef,
   CardType,
+  ExternalIds,
   IdMapping,
   InkType,
   InputCard,
@@ -202,23 +204,77 @@ function findBasePrinting(
 }
 
 /**
- * Generate printing IDs for all cards in a group
+ * Generate printing refs for all cards in a group
  */
-function generatePrintingIds(
+function generatePrintingRefs(
   cards: Array<InputCard & { cardType: CardType }>,
-): string[] {
-  const printingIds: string[] = [];
+): CardPrintingRef[] {
+  const printingRefs: CardPrintingRef[] = [];
+  const seen = new Set<string>();
 
   for (const card of cards) {
     for (const setId of card.card_sets) {
       const parsed = parseCardIdentifier(card.card_identifier);
       if (parsed) {
-        printingIds.push(generatePrintingId(setId, parsed.cardNumber));
+        const id = generatePrintingId(setId, parsed.cardNumber);
+        if (!seen.has(id)) {
+          seen.add(id);
+          printingRefs.push({
+            set: setId,
+            collectorNumber: parsed.cardNumber,
+            id,
+          });
+        }
       }
     }
   }
 
-  return [...new Set(printingIds)]; // Dedupe
+  return printingRefs;
+}
+
+/**
+ * Extract franchise from searchable_keywords
+ */
+function extractFranchise(card: InputCard): string | undefined {
+  if (card.searchable_keywords && card.searchable_keywords.length > 0) {
+    return card.searchable_keywords[0];
+  }
+  return undefined;
+}
+
+/**
+ * Build external IDs object from card data
+ */
+function buildExternalIds(
+  card: InputCard,
+  lorcastIndex?: LorcastTextIndex,
+): ExternalIds | undefined {
+  const externalIds: ExternalIds = {};
+
+  // Ravensburger IDs
+  if (card.deck_building_id) {
+    externalIds.ravensburger = card.deck_building_id;
+  }
+  if (card.culture_invariant_id) {
+    externalIds.cultureInvariantId = card.culture_invariant_id;
+  }
+
+  // Lorcast IDs (if we have a match)
+  if (lorcastIndex) {
+    const key = `${card.name}|${card.subtitle || ""}`.toLowerCase();
+    const lorcastEntry = lorcastIndex.get(key);
+    if (lorcastEntry) {
+      if (lorcastEntry.id) {
+        externalIds.lorcast = lorcastEntry.id;
+      }
+      if (lorcastEntry.tcgplayer_id) {
+        externalIds.tcgPlayer = lorcastEntry.tcgplayer_id;
+      }
+    }
+  }
+
+  // Only return if we have at least one ID
+  return Object.keys(externalIds).length > 0 ? externalIds : undefined;
 }
 
 /**
@@ -251,51 +307,61 @@ export function transformToCanonicalCard(
     rulesText = cleanRulesText(baseCard.rules_text || "");
   }
 
+  // Determine if card is vanilla (no rules text)
+  const isVanilla = !rulesText || rulesText.trim() === "";
+
+  // Extract all optional data first
+  const franchise = extractFranchise(baseCard);
+  const externalIds = buildExternalIds(baseCard, lorcastIndex);
+  const keywords = extractKeywords(baseCard.abilities || []);
+  const printingRefs = generatePrintingRefs(cards);
+
+  // Check if action is a song
+  const isSong =
+    baseCard.cardType === "action" &&
+    (baseCard.abilities?.some((a) => a.toLowerCase().includes("song")) ||
+      baseCard.subtypes?.some((s) => s.toLowerCase() === "song"));
+
+  // Get type-specific values
+  const isCharacter = baseCard.cardType === "character";
+  const isLocation = baseCard.cardType === "location";
+
+  // Build card with properties in order: text → numeric → boolean → object → arrays
+  // Using spread to conditionally include properties while maintaining order
   const canonicalCard: CanonicalCard = {
+    // === TEXT PROPERTIES ===
     id: shortId,
-    deckBuildingId,
     name: baseCard.name,
     version: baseCard.subtitle || "",
     fullName,
     cardType: baseCard.cardType,
     inkType: extractInkType(baseCard.magic_ink_colors || []),
+    ...(isSong && { actionSubtype: "song" as const }),
+    ...(franchise && { franchise }),
+    ...(!isVanilla && { rulesText }),
+
+    // === NUMERIC PROPERTIES ===
     cost: baseCard.ink_cost,
+    ...(isCharacter && { strength: baseCard.strength }),
+    ...(isCharacter && { willpower: baseCard.willpower }),
+    ...(isCharacter && { lore: baseCard.quest_value }),
+    ...(isLocation && { lore: baseCard.lore }),
+    ...(isLocation && { moveCost: baseCard.move_cost }),
+
+    // === BOOLEAN PROPERTIES ===
     inkable: baseCard.ink_convertible,
-    rulesText,
-    abilities: parseAbilities(rulesText),
-    printings: generatePrintingIds(cards),
+    vanilla: isVanilla,
+
+    // === OBJECT PROPERTIES ===
+    ...(externalIds && { externalIds }),
+
+    // === ARRAY PROPERTIES ===
+    ...(isCharacter &&
+      baseCard.subtypes?.length && { classifications: baseCard.subtypes }),
+    ...(keywords.length > 0 && { keywords }),
+    ...(!isVanilla && { abilities: parseAbilities(rulesText) }),
+    printings: printingRefs,
   };
-
-  // Add type-specific properties
-  if (baseCard.cardType === "character") {
-    canonicalCard.strength = baseCard.strength;
-    canonicalCard.willpower = baseCard.willpower;
-    canonicalCard.lore = baseCard.quest_value;
-    if (baseCard.subtypes?.length) {
-      canonicalCard.classifications = baseCard.subtypes;
-    }
-  }
-
-  if (baseCard.cardType === "location") {
-    canonicalCard.lore = baseCard.lore;
-    canonicalCard.moveCost = baseCard.move_cost;
-  }
-
-  if (baseCard.cardType === "action") {
-    // Check if it's a song
-    if (
-      baseCard.abilities?.some((a) => a.toLowerCase().includes("song")) ||
-      baseCard.subtypes?.some((s) => s.toLowerCase() === "song")
-    ) {
-      canonicalCard.actionSubtype = "song";
-    }
-  }
-
-  // Extract keywords
-  const keywords = extractKeywords(baseCard.abilities || []);
-  if (keywords.length > 0) {
-    canonicalCard.keywords = keywords;
-  }
 
   return canonicalCard;
 }

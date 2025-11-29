@@ -1,5 +1,12 @@
 node_modules/
 build/
 turbo/
+
+# Input files (fetched from APIs)
 data/inputs/lorcast-input.json
 data/inputs/ravensburger-input.json
+
+# Generated auxiliary files (regenerate with `bun generate`)
+src/data/printings.json
+src/data/sets.json
+src/data/id-mapping.json
