@@ -9,10 +9,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type {
-  OptionalEffect,
-  SequenceEffect,
-} from "../../cards/abilities/types/effect-types";
+import type { OptionalEffect, SequenceEffect } from "@tcg/lorcana";
 import { parseEffect } from "../parsers/effect-parser";
 
 describe("Optional Effect Parser", () => {

@@ -10,14 +10,14 @@
  */
 
 import type {
+  Condition,
   KeywordAbility,
   ParameterizedKeywordAbility,
   ShiftKeywordAbility,
   SimpleKeywordAbility,
   SimpleKeywordType,
   ValueKeywordAbility,
-} from "../../cards/abilities/types/ability-types";
-import type { Condition } from "../../cards/abilities/types/condition-types";
+} from "@tcg/lorcana";
 import {
   BOOST_PATTERN,
   SHIFT_PATTERN,

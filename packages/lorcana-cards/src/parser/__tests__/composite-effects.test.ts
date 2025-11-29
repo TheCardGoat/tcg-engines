@@ -6,7 +6,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type { SequenceEffect } from "../../cards/abilities/types/effect-types";
+import type { SequenceEffect } from "@tcg/lorcana";
 import { parseEffect } from "../parsers/effect-parser";
 
 describe("Composite Effect Parser", () => {

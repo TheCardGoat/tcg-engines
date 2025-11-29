@@ -8,12 +8,12 @@
  * can be parsed into full DSL objects when needed.
  */
 
-import type { PlayerTarget } from "../../cards/abilities/types/target-types";
 import type {
   CharacterTargetEnum,
   ItemTargetEnum,
   LocationTargetEnum,
-} from "../../targeting";
+  PlayerTarget,
+} from "@tcg/lorcana";
 import {
   ALL_CHARACTERS_PATTERN,
   ALL_OPPOSING_CHARACTERS_PATTERN,
