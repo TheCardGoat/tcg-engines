@@ -88,7 +88,8 @@ function generateDSLDescription(target: LorcanaCardTarget): string {
   } else if (target.selector === "chosen") {
     const count = getCountValue(target.count);
     if (count === 1) {
-      parts.push("a");
+      // Defer article choice until we know the next word
+      parts.push("__ARTICLE__");
     } else if (typeof count === "number") {
       parts.push(String(count));
     } else if (count && typeof count === "object" && "upTo" in count) {
@@ -131,7 +132,14 @@ function generateDSLDescription(target: LorcanaCardTarget): string {
     }
   }
 
-  return parts.join(" ");
+  // Replace article placeholder with correct article based on following word
+  const result = parts.join(" ");
+  return result.replace(/__ARTICLE__\s+(\w)/, (_, nextChar) => {
+    const vowels = ["a", "e", "i", "o", "u"];
+    return vowels.includes(nextChar.toLowerCase())
+      ? `an ${nextChar}`
+      : `a ${nextChar}`;
+  });
 }
 
 /**
@@ -151,6 +159,13 @@ function getCountValue(
 }
 
 /**
+ * Exhaustive check helper - fails at compile time if a case is not handled
+ */
+function assertNever(x: never): never {
+  throw new Error(`Unhandled filter type: ${JSON.stringify(x)}`);
+}
+
+/**
  * Get adjective form of a filter (for placement before card type)
  */
 function getFilterAdjective(filter: LorcanaFilter): string | undefined {
@@ -167,8 +182,23 @@ function getFilterAdjective(filter: LorcanaFilter): string | undefined {
       return "fresh";
     case "inkable":
       return filter.value ? "inkable" : "non-inkable";
-    default:
+    // Filters that don't produce adjectives (handled in getFilterSuffix)
+    case "has-keyword":
+    case "has-classification":
+    case "cost":
+    case "strength":
+    case "willpower":
+    case "lore-value":
+    case "name":
+    case "at-location":
+    case "move-cost":
+    case "and":
+    case "or":
+    case "not":
       return undefined;
+    default:
+      // Exhaustive check - will fail to compile if a new filter type is added
+      return assertNever(filter);
   }
 }
 
@@ -189,12 +219,30 @@ function getFilterSuffix(filter: LorcanaFilter): string | undefined {
       return `with willpower ${getComparisonSymbol(filter.comparison)} ${filter.value}`;
     case "lore-value":
       return `with lore ${getComparisonSymbol(filter.comparison)} ${filter.value}`;
+    case "at-location":
+      return filter.location ? `at ${filter.location}` : "at a location";
+    case "move-cost":
+      return `with move cost ${getComparisonSymbol(filter.comparison)} ${filter.value}`;
     case "name":
       if ("equals" in filter) return `named ${filter.equals}`;
       if ("contains" in filter) return `with "${filter.contains}" in name`;
       return undefined;
-    default:
+    // State filters handled in getFilterAdjective
+    case "damaged":
+    case "undamaged":
+    case "exerted":
+    case "ready":
+    case "dry":
+    case "inkable":
       return undefined;
+    // Composite filters - recursively process
+    case "and":
+    case "or":
+    case "not":
+      return undefined;
+    default:
+      // Exhaustive check - will fail to compile if a new filter type is added
+      return assertNever(filter);
   }
 }
 

@@ -233,7 +233,7 @@ describe("Target Description Generation", () => {
 
   it("should describe CHOSEN_OPPOSING_CHARACTER", () => {
     const desc = generateTargetDescription("CHOSEN_OPPOSING_CHARACTER");
-    expect(desc).toBe("a opposing character");
+    expect(desc).toBe("an opposing character");
   });
 
   it("should describe ALL_OPPOSING_CHARACTERS", () => {

@@ -8,12 +8,6 @@
  * @module targeting
  */
 
-// Legacy target definition (for backward compatibility with moves)
-export type {
-  TargetCount as LegacyTargetCount,
-  TargetDefinition,
-  TargetRestriction,
-} from "./target-definition";
 // Core DSL types
 export {
   type BaseContext,
