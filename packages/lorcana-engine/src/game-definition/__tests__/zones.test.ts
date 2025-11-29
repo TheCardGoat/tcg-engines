@@ -22,7 +22,7 @@ import { type LorcanaZoneId, lorcanaZones } from "../zones";
  */
 
 describe("Lorcana Zone Configurations", () => {
-  it("should have all 5 required zones", () => {
+  it("should have all 6 required zones", () => {
     const zoneIds = Object.keys(lorcanaZones);
 
     expect(zoneIds).toContain("deck");
@@ -30,7 +30,8 @@ describe("Lorcana Zone Configurations", () => {
     expect(zoneIds).toContain("play");
     expect(zoneIds).toContain("discard");
     expect(zoneIds).toContain("inkwell");
-    expect(zoneIds).toHaveLength(5);
+    expect(zoneIds).toContain("limbo");
+    expect(zoneIds).toHaveLength(6);
   });
 
   describe("Deck Zone", () => {
@@ -103,12 +104,26 @@ describe("Lorcana Zone Configurations", () => {
     });
   });
 
+  describe("Limbo Zone", () => {
+    it("should be private visibility (phased out cards not directly interactable)", () => {
+      expect(lorcanaZones.limbo.visibility).toBe("owner");
+    });
+
+    it("should be ordered (maintain stacking sequence for shifts)", () => {
+      expect(lorcanaZones.limbo.ordered).toBe(true);
+    });
+
+    it("should not be facedown (for tracking purposes)", () => {
+      expect(lorcanaZones.limbo.facedown).toBe(false);
+    });
+  });
+
   describe("Zone Properties Validation", () => {
-    it("should have exactly 2 private zones", () => {
+    it("should have exactly 4 private zones", () => {
       const privateZones = Object.values(lorcanaZones).filter(
         (zone) => zone.visibility === "owner",
       );
-      expect(privateZones).toHaveLength(3); // deck, hand, inkwell
+      expect(privateZones).toHaveLength(4); // deck, hand, inkwell, limbo
     });
 
     it("should have exactly 2 public zones", () => {
@@ -125,11 +140,11 @@ describe("Lorcana Zone Configurations", () => {
       expect(facedownZones).toHaveLength(2); // deck, inkwell
     });
 
-    it("should have exactly 2 ordered zones", () => {
+    it("should have exactly 3 ordered zones", () => {
       const orderedZones = Object.values(lorcanaZones).filter(
         (zone) => zone.ordered === true,
       );
-      expect(orderedZones).toHaveLength(2); // deck, discard
+      expect(orderedZones).toHaveLength(3); // deck, discard, limbo
     });
   });
 
@@ -141,6 +156,7 @@ describe("Lorcana Zone Configurations", () => {
         "play",
         "discard",
         "inkwell",
+        "limbo",
       ];
 
       for (const id of validIds) {

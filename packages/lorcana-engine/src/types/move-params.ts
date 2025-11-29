@@ -5,7 +5,7 @@
  * Each move has explicit parameter types that leverage TypeScript's type narrowing.
  */
 
-import type { CardId, PlayerId } from "@tcg/core";
+import type { CardId, PlayerId } from "./branded-types";
 
 /**
  * Play Card Cost Types - Discriminated Union
@@ -263,40 +263,4 @@ export type LorcanaCardMeta = {
   [key: string]: unknown;
 };
 
-/**
- * Game State Type
- *
- * Simplified game state - engine manages zones, flow, and trackers.
- * Only Lorcana-specific state lives here.
- */
-export type LorcanaGameState = {
-  /**
-   * Lore scores for each player
-   *
-   * Rule 1.9.1.1: Win condition - first to 20 lore
-   */
-  loreScores: Record<PlayerId, number>;
-
-  /**
-   * Effects awaiting resolution
-   *
-   * Rule 8.7: Bag system for triggered effects
-   */
-  effects: Array<{
-    id: string;
-    type: string;
-    sourceCardId: CardId;
-    targetCardIds?: CardId[];
-    params?: unknown;
-  }>;
-
-  /**
-   * Pending choices/selections (bag system)
-   */
-  bag: Array<{
-    id: string;
-    type: string;
-    playerId: PlayerId;
-    options: unknown[];
-  }>;
-};
+// LorcanaGameState is exported from game-state.ts - import from there

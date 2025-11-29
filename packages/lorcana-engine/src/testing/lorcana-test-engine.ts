@@ -25,11 +25,11 @@ import type {
   LorcanaCardMeta,
   LorcanaGameState,
   LorcanaMoveParams,
-} from "../types/move-params";
+} from "../types";
 
 // Export player ID constants for tests
-export const PLAYER_ONE = "player_one";
-export const PLAYER_TWO = "player_two";
+export const PLAYER_ONE = createPlayerId("player_one");
+export const PLAYER_TWO = createPlayerId("player_two");
 
 /**
  * Test Initial State

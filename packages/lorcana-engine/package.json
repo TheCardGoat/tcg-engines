@@ -1,7 +1,7 @@
 {
   "name": "@tcg/lorcana",
   "version": "0.1.0",
-  "description": "Disney Lorcana TCG engine built with @tcg/core framework",
+  "description": "Disney Lorcana TCG engine implementation using @tcg/core framework",
   "private": true,
   "main": "./src/index.ts",
   "types": "./src/index.d.ts",
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@tcg/core": "workspace:*",
-    "immer": "^10.1.1"
+    "immer": "^10.1.3"
   },
   "devDependencies": {
     "@biomejs/biome": "2.0.4",

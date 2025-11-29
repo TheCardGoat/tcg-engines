@@ -8,6 +8,7 @@ import {
   createPlayerId,
   createPlayerZones,
   createZone,
+  createZoneId,
   getCardsInZone,
   getTopCard,
   getZoneSize,
@@ -47,7 +48,7 @@ describe("Core Zone Integration for Lorcana", () => {
       // Use core's createPlayerZones helper
       const handZones = createPlayerZones([player1, player2], () =>
         createZone({
-          id: "hand",
+          id: createZoneId("hand"),
           name: "Hand",
           visibility: "private",
           ordered: false,
@@ -64,7 +65,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const [player1] = createTestPlayers("player1");
 
       const deckZone = createZone({
-        id: "deck",
+        id: createZoneId("deck"),
         name: "Deck",
         visibility: "secret",
         ordered: true,
@@ -73,7 +74,7 @@ describe("Core Zone Integration for Lorcana", () => {
       });
 
       const handZone = createZone({
-        id: "hand",
+        id: createZoneId("hand"),
         name: "Hand",
         visibility: "private",
         ordered: false,
@@ -81,7 +82,7 @@ describe("Core Zone Integration for Lorcana", () => {
       });
 
       const playZone = createZone({
-        id: "play",
+        id: createZoneId("play"),
         name: "Play",
         visibility: "public",
         ordered: false,
@@ -89,7 +90,7 @@ describe("Core Zone Integration for Lorcana", () => {
       });
 
       const discardZone = createZone({
-        id: "discard",
+        id: createZoneId("discard"),
         name: "Discard",
         visibility: "public",
         ordered: true,
@@ -97,7 +98,7 @@ describe("Core Zone Integration for Lorcana", () => {
       });
 
       const inkwellZone = createZone({
-        id: "inkwell",
+        id: createZoneId("inkwell"),
         name: "Inkwell",
         visibility: "secret",
         ordered: false,
@@ -120,7 +121,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const card1 = createCardId("card-1");
 
       const handZone = createZone({
-        id: "hand",
+        id: createZoneId("hand"),
         name: "Hand",
         visibility: "private",
         ordered: false,
@@ -139,7 +140,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const card2 = createCardId("card-2");
 
       let handZone = createZone({
-        id: "hand",
+        id: createZoneId("hand"),
         name: "Hand",
         visibility: "private",
         ordered: false,
@@ -159,7 +160,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const card1 = createCardId("card-1");
 
       let handZone = createZone({
-        id: "hand",
+        id: createZoneId("hand"),
         name: "Hand",
         visibility: "private",
         ordered: false,
@@ -167,7 +168,7 @@ describe("Core Zone Integration for Lorcana", () => {
       });
 
       const playZone = createZone({
-        id: "play",
+        id: createZoneId("play"),
         name: "Play",
         visibility: "public",
         ordered: false,
@@ -194,7 +195,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const card2 = createCardId("card-2");
 
       let handZone = createZone({
-        id: "hand",
+        id: createZoneId("hand"),
         name: "Hand",
         visibility: "private",
         ordered: false,
@@ -214,7 +215,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const card3 = createCardId("card-3");
 
       let handZone = createZone({
-        id: "hand",
+        id: createZoneId("hand"),
         name: "Hand",
         visibility: "private",
         ordered: false,
@@ -236,7 +237,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const card2 = createCardId("card-2");
 
       let deckZone = createZone({
-        id: "deck",
+        id: createZoneId("deck"),
         name: "Deck",
         visibility: "secret",
         ordered: true,
@@ -255,7 +256,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const card2 = createCardId("card-2");
 
       let deckZone = createZone({
-        id: "deck",
+        id: createZoneId("deck"),
         name: "Deck",
         visibility: "secret",
         ordered: true,
@@ -276,7 +277,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const card2 = createCardId("card-2");
 
       let deckZone = createZone({
-        id: "deck",
+        id: createZoneId("deck"),
         name: "Deck",
         visibility: "secret",
         ordered: true,
@@ -296,7 +297,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const card2 = createCardId("card-2");
 
       let deckZone = createZone({
-        id: "deck",
+        id: createZoneId("deck"),
         name: "Deck",
         visibility: "secret",
         ordered: true,
@@ -316,7 +317,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const card2 = createCardId("card-2");
 
       let handZone = createZone({
-        id: "hand",
+        id: createZoneId("hand"),
         name: "Hand",
         visibility: "private",
         ordered: false,
@@ -340,7 +341,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const card3 = createCardId("card-3");
 
       let deckZone = createZone({
-        id: "deck",
+        id: createZoneId("deck"),
         name: "Deck",
         visibility: "secret",
         ordered: true,
@@ -348,7 +349,7 @@ describe("Core Zone Integration for Lorcana", () => {
       });
 
       const handZone = createZone({
-        id: "hand",
+        id: createZoneId("hand"),
         name: "Hand",
         visibility: "private",
         ordered: false,
@@ -375,7 +376,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const character = createCardId("character-1");
 
       let handZone = createZone({
-        id: "hand",
+        id: createZoneId("hand"),
         name: "Hand",
         visibility: "private",
         ordered: false,
@@ -383,7 +384,7 @@ describe("Core Zone Integration for Lorcana", () => {
       });
 
       const playZone = createZone({
-        id: "play",
+        id: createZoneId("play"),
         name: "Play",
         visibility: "public",
         ordered: false,
@@ -407,7 +408,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const character = createCardId("character-1");
 
       let playZone = createZone({
-        id: "play",
+        id: createZoneId("play"),
         name: "Play",
         visibility: "public",
         ordered: false,
@@ -415,7 +416,7 @@ describe("Core Zone Integration for Lorcana", () => {
       });
 
       const discardZone = createZone({
-        id: "discard",
+        id: createZoneId("discard"),
         name: "Discard",
         visibility: "public",
         ordered: true,
@@ -439,7 +440,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const inkableCard = createCardId("inkable-1");
 
       let handZone = createZone({
-        id: "hand",
+        id: createZoneId("hand"),
         name: "Hand",
         visibility: "private",
         ordered: false,
@@ -447,7 +448,7 @@ describe("Core Zone Integration for Lorcana", () => {
       });
 
       const inkwellZone = createZone({
-        id: "inkwell",
+        id: createZoneId("inkwell"),
         name: "Inkwell",
         visibility: "secret",
         ordered: false,
@@ -475,7 +476,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const deckCard2 = createCardId("deck-2");
 
       let deckZone = createZone({
-        id: "deck",
+        id: createZoneId("deck"),
         name: "Deck",
         visibility: "secret",
         ordered: true,
@@ -504,7 +505,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const card1 = createCardId("card-1");
 
       const originalZone = createZone({
-        id: "hand",
+        id: createZoneId("hand"),
         name: "Hand",
         visibility: "private",
         ordered: false,
@@ -522,7 +523,7 @@ describe("Core Zone Integration for Lorcana", () => {
       const card1 = createCardId("card-1");
 
       let handZone = createZone({
-        id: "hand",
+        id: createZoneId("hand"),
         name: "Hand",
         visibility: "private",
         ordered: false,
@@ -530,7 +531,7 @@ describe("Core Zone Integration for Lorcana", () => {
       });
 
       const playZone = createZone({
-        id: "play",
+        id: createZoneId("play"),
         name: "Play",
         visibility: "public",
         ordered: false,
