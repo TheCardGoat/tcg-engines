@@ -4,7 +4,7 @@
  * Defines the input/output types for the parser system.
  */
 
-import type { Ability } from "../cards/abilities/types/ability-types";
+import type { Ability } from "@tcg/lorcana";
 
 /**
  * Ability with original text preserved

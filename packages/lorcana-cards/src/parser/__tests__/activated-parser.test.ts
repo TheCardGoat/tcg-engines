@@ -12,7 +12,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type { ActivatedAbility } from "../../cards/abilities/types/ability-types";
+import type { ActivatedAbility } from "@tcg/lorcana";
 import { parseActivatedAbility } from "../parsers/activated-parser";
 
 describe("Activated Ability Parser", () => {

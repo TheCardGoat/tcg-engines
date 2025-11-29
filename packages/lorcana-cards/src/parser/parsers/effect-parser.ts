@@ -19,14 +19,12 @@
  */
 
 import type {
+  CardType,
+  CharacterTarget,
   Effect,
   ForEachCounter,
-} from "../../cards/abilities/types/effect-types";
-import type {
-  CharacterTarget,
   PlayerTarget,
-} from "../../cards/abilities/types/target-types";
-import type { CardType } from "../../types/card-types";
+} from "@tcg/lorcana";
 import {
   hasConditionalEffect,
   splitConditionalEffect,

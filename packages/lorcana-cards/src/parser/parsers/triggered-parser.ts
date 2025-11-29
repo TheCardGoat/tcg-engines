@@ -10,11 +10,7 @@
  * - "Once per turn, when you play a character here, you may draw a card"
  */
 
-import type { TriggeredAbility } from "../../cards/abilities/types/ability-types";
-import type {
-  Trigger,
-  TriggerTiming,
-} from "../../cards/abilities/types/trigger-types";
+import type { Trigger, TriggeredAbility, TriggerTiming } from "@tcg/lorcana";
 import { extractNamedAbilityPrefix } from "../preprocessor";
 import type { ParseResult } from "../types";
 import { extractConditionText, parseCondition } from "./condition-parser";

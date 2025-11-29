@@ -12,8 +12,7 @@
  * - "This character can challenge ready characters"
  */
 
-import type { StaticAbility } from "../../cards/abilities/types/ability-types";
-import type { StaticEffect } from "../../cards/abilities/types/effect-types";
+import type { StaticAbility, StaticEffect } from "@tcg/lorcana";
 import {
   CAN_CHALLENGE_READY_PATTERN,
   CANT_BE_CHALLENGED_PATTERN,

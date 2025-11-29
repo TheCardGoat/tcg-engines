@@ -47,7 +47,7 @@
     "tags": {
       "game-engine": {
         "dependencies": {
-          "allow": ["@tcg/core", "@jest/globals", "immer"]
+          "allow": ["@tcg/core", "@tcg/lorcana", "@jest/globals", "immer"]
         }
       },
       "independent": {

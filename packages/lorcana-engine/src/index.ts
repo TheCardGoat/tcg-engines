@@ -69,6 +69,8 @@ export {
   boost,
   type CardTarget,
   type CharacterTarget,
+  // Effect types for composite effects
+  type ChoiceEffect,
   COMMON_TRIGGERS,
   // Condition types
   type Condition,
@@ -82,6 +84,7 @@ export {
   exertAndBanishItemCost,
   exertAndInkCost,
   exertCost,
+  type ForEachCounter,
   getInkCost,
   hasCharacterCount,
   hasCharacterNamed,
@@ -120,6 +123,8 @@ export {
   // Builders
   keyword,
   type LocationTarget,
+  // Composite effect types
+  type OptionalEffect,
   or,
   type ParameterizedKeywordAbility,
   // Target types
@@ -131,9 +136,12 @@ export {
   requiresExert,
   requiresInk,
   resist,
+  // Composite effect types
+  type SequenceEffect,
   type ShiftKeywordAbility,
   // Strict keyword ability variants
   type SimpleKeywordAbility,
+  type SimpleKeywordType,
   type StaticAbility,
   type StaticAffects,
   type StaticEffect,

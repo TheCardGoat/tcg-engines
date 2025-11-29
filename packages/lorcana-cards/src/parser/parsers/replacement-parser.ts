@@ -8,7 +8,7 @@
  * - "If you would draw a card, draw 2 cards instead"
  */
 
-import type { ReplacementAbility } from "../../cards/abilities/types/ability-types";
+import type { ReplacementAbility } from "@tcg/lorcana";
 import type { ParseResult } from "../types";
 
 /**
