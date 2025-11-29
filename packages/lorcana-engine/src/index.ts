@@ -166,6 +166,8 @@ export {
 export * from "./deck-validation";
 // Engine exports
 export { LorcanaEngine } from "./engine/lorcana-engine";
+// Targeting DSL
+export * from "./targeting";
 // Type exports
 export * from "./types";
 // Move enumeration type exports

@@ -39,6 +39,8 @@ export { parseReplacementAbility } from "./parsers/replacement-parser";
 export { parseStaticAbility } from "./parsers/static-parser";
 export {
   parseCharacterTarget,
+  parseItemTarget,
+  parseLocationTarget,
   parsePlayerTarget,
 } from "./parsers/target-parser";
 export { parseTriggeredAbility } from "./parsers/triggered-parser";
