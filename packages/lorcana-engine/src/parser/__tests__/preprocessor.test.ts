@@ -75,6 +75,201 @@ describe("extractNamedAbilityPrefix", () => {
       remainingText: "When you play this character, gain 2 lore.",
     });
   });
+
+  describe("edge cases: names with numbers", () => {
+    it("should handle names with {d},{d} prefix", () => {
+      const result = extractNamedAbilityPrefix(
+        "{d},{d} MEDICAL PROCEDURES {E} - Choose one:",
+      );
+      expect(result).toEqual({
+        name: "MEDICAL PROCEDURES",
+        remainingText: "{E} - Choose one:",
+      });
+    });
+
+    it("should handle names with numeric prefix", () => {
+      const result = extractNamedAbilityPrefix(
+        "1,2 MEDICAL PROCEDURES {E} - Choose one:",
+      );
+      expect(result).toEqual({
+        name: "MEDICAL PROCEDURES",
+        remainingText: "{E} - Choose one:",
+      });
+    });
+
+    it("should handle names ending with numbers", () => {
+      const result = extractNamedAbilityPrefix(
+        "ABILITY 99 When you play this character, draw a card.",
+      );
+      expect(result).toEqual({
+        name: "ABILITY 99",
+        remainingText: "When you play this character, draw a card.",
+      });
+    });
+  });
+
+  describe("edge cases: names with special punctuation", () => {
+    it("should handle names with exclamation marks", () => {
+      const result = extractNamedAbilityPrefix(
+        "IT WORKS! Whenever you play an item, you may draw a card.",
+      );
+      expect(result).toEqual({
+        name: "IT WORKS!",
+        remainingText: "Whenever you play an item, you may draw a card.",
+      });
+    });
+
+    it("should handle names with apostrophes", () => {
+      const result = extractNamedAbilityPrefix(
+        "DON'T BE AFRAID Your Puppy characters gain Ward.",
+      );
+      expect(result).toEqual({
+        name: "DON'T BE AFRAID",
+        remainingText: "Your Puppy characters gain Ward.",
+      });
+    });
+
+    it("should handle names with commas", () => {
+      const result = extractNamedAbilityPrefix(
+        "LOOK ALIVE, YOU SWABS! Characters gain Rush while here.",
+      );
+      expect(result).toEqual({
+        name: "LOOK ALIVE, YOU SWABS!",
+        remainingText: "Characters gain Rush while here.",
+      });
+    });
+
+    it("should handle names with question marks and exclamation marks", () => {
+      const result = extractNamedAbilityPrefix(
+        "WHAT HAVE YOU DONE?! This character enters play with {d} damage.",
+      );
+      expect(result).toEqual({
+        name: "WHAT HAVE YOU DONE?!",
+        remainingText: "This character enters play with {d} damage.",
+      });
+    });
+
+    it("should handle names with periods", () => {
+      const result = extractNamedAbilityPrefix(
+        "WAIT. WHAT? When you play this character, draw a card.",
+      );
+      expect(result).toEqual({
+        name: "WAIT. WHAT?",
+        remainingText: "When you play this character, draw a card.",
+      });
+    });
+
+    it("should handle names with hyphens", () => {
+      const result = extractNamedAbilityPrefix(
+        "READY-SET-GO When you play this character, gain 2 lore.",
+      );
+      expect(result).toEqual({
+        name: "READY-SET-GO",
+        remainingText: "When you play this character, gain 2 lore.",
+      });
+    });
+
+    it("should handle mixed case name with apostrophes", () => {
+      const result = extractNamedAbilityPrefix(
+        "I'm late! {E}, {d} {I} - Chosen character gains Rush this turn.",
+      );
+      expect(result).toEqual({
+        name: "I'm late!",
+        remainingText: "{E}, {d} {I} - Chosen character gains Rush this turn.",
+      });
+    });
+  });
+
+  describe("edge cases: names followed by different text patterns", () => {
+    it("should handle name followed by This", () => {
+      const result = extractNamedAbilityPrefix(
+        "HAPPY FACE This item enters play exerted.",
+      );
+      expect(result).toEqual({
+        name: "HAPPY FACE",
+        remainingText: "This item enters play exerted.",
+      });
+    });
+
+    it("should handle name followed by Your", () => {
+      const result = extractNamedAbilityPrefix(
+        "PROUD TO SERVE Your Queen characters gain Ward.",
+      );
+      expect(result).toEqual({
+        name: "PROUD TO SERVE",
+        remainingText: "Your Queen characters gain Ward.",
+      });
+    });
+
+    it("should handle name followed by Characters", () => {
+      const result = extractNamedAbilityPrefix(
+        "MAGICAL POWER Characters get +{d} {L} while here.",
+      );
+      expect(result).toEqual({
+        name: "MAGICAL POWER",
+        remainingText: "Characters get +{d} {L} while here.",
+      });
+    });
+
+    it("should handle name followed by Opponents", () => {
+      const result = extractNamedAbilityPrefix(
+        "GUARDIAN Opponents can't choose your items.",
+      );
+      expect(result).toEqual({
+        name: "GUARDIAN",
+        remainingText: "Opponents can't choose your items.",
+      });
+    });
+
+    it("should handle name followed by Opposing", () => {
+      const result = extractNamedAbilityPrefix(
+        "PLAYFULNESS Opposing items enter play exerted.",
+      );
+      expect(result).toEqual({
+        name: "PLAYFULNESS",
+        remainingText: "Opposing items enter play exerted.",
+      });
+    });
+
+    it("should handle name followed by Damage", () => {
+      const result = extractNamedAbilityPrefix(
+        "TRAPPED! Damage counters can't be removed.",
+      );
+      expect(result).toEqual({
+        name: "TRAPPED!",
+        remainingText: "Damage counters can't be removed.",
+      });
+    });
+
+    it("should handle name followed by Skip", () => {
+      const result = extractNamedAbilityPrefix(
+        "NO MORE BOOKS Skip your turn's Draw step.",
+      );
+      expect(result).toEqual({
+        name: "NO MORE BOOKS",
+        remainingText: "Skip your turn's Draw step.",
+      });
+    });
+  });
+
+  describe("edge cases: should not extract", () => {
+    it("should not extract when only keyword present", () => {
+      const result = extractNamedAbilityPrefix("RUSH");
+      expect(result).toBeUndefined();
+    });
+
+    it("should not extract when text is mostly lowercase", () => {
+      const result = extractNamedAbilityPrefix(
+        "Something weird When you play this character, draw a card.",
+      );
+      expect(result).toBeUndefined();
+    });
+
+    it("should not extract when ALL CAPS followed by ALL CAPS", () => {
+      const result = extractNamedAbilityPrefix("RUSH WARD");
+      expect(result).toBeUndefined();
+    });
+  });
 });
 
 describe("resolveSymbols", () => {

@@ -444,7 +444,8 @@ export interface RestrictionEffect {
     | "cant-quest-or-challenge"
     | "cant-be-dealt-damage"
     | "cant-sing"
-    | "cant-move";
+    | "cant-move"
+    | "enters-play-exerted";
   target: CharacterTarget;
   duration?: EffectDuration;
 }

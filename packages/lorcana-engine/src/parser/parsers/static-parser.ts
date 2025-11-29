@@ -8,10 +8,25 @@
  * - "Your characters get +1 {S}"
  * - "While this character has no damage, he gets +2 {S}"
  * - "HIDDEN AWAY This character can't be challenged"
+ * - "Characters gain Resist +{d} while here"
+ * - "This character can challenge ready characters"
  */
 
 import type { StaticAbility } from "../../cards/abilities/types/ability-types";
 import type { StaticEffect } from "../../cards/abilities/types/effect-types";
+import {
+  CAN_CHALLENGE_READY_PATTERN,
+  CANT_BE_CHALLENGED_PATTERN,
+  CANT_CHALLENGE_PATTERN,
+  CANT_QUEST_PATTERN,
+  CHARACTERS_GAIN_WHILE_HERE_PATTERN,
+  CHARACTERS_GET_STAT_WHILE_HERE_PATTERN,
+  ENTERS_PLAY_EXERTED_PATTERN,
+  YOUR_CHARACTERS_GAIN_PATTERN,
+  YOUR_CHARACTERS_GET_STAT_PATTERN,
+  YOUR_ITEMS_GAIN_PATTERN,
+  YOUR_ITEMS_GET_STAT_PATTERN,
+} from "../patterns/effects";
 import { extractNamedAbilityPrefix } from "../preprocessor";
 import type { ParseResult } from "../types";
 import { extractConditionText, parseCondition } from "./condition-parser";
@@ -41,87 +56,30 @@ export function parseStaticAbility(text: string): ParseResult {
       )
     : remainingText;
 
+  // Try to parse specific static ability patterns first
+  const specificResult = parseSpecificStaticPattern(effectText);
+  if (specificResult) {
+    const ability: StaticAbility = {
+      type: "static",
+      effect: specificResult,
+    };
+
+    if (name) ability.name = name;
+    if (condition) ability.condition = condition;
+
+    return {
+      success: true,
+      ability: {
+        ability,
+        text,
+        name,
+      },
+    };
+  }
+
   // Parse effect - static abilities use a subset of effects
   const parsedEffect = parseEffect(effectText);
   if (!parsedEffect) {
-    // Try to parse as a restriction effect (e.g., "This character can't be challenged")
-    if (effectText.match(/can'?t be challenged/i)) {
-      const staticEffect: StaticEffect = {
-        type: "restriction",
-        restriction: "cant-be-challenged",
-        target: "SELF",
-      };
-
-      const ability: StaticAbility = {
-        type: "static",
-        effect: staticEffect,
-      };
-
-      if (name) ability.name = name;
-      if (condition) ability.condition = condition;
-
-      return {
-        success: true,
-        ability: {
-          ability,
-          text,
-          name,
-        },
-      };
-    }
-
-    // Try to parse "can't challenge"
-    if (effectText.match(/can'?t challenge/i)) {
-      const staticEffect: StaticEffect = {
-        type: "restriction",
-        restriction: "cant-challenge",
-        target: "SELF",
-      };
-
-      const ability: StaticAbility = {
-        type: "static",
-        effect: staticEffect,
-      };
-
-      if (name) ability.name = name;
-      if (condition) ability.condition = condition;
-
-      return {
-        success: true,
-        ability: {
-          ability,
-          text,
-          name,
-        },
-      };
-    }
-
-    // Try to parse "can't quest"
-    if (effectText.match(/can'?t quest/i)) {
-      const staticEffect: StaticEffect = {
-        type: "restriction",
-        restriction: "cant-quest",
-        target: "SELF",
-      };
-
-      const ability: StaticAbility = {
-        type: "static",
-        effect: staticEffect,
-      };
-
-      if (name) ability.name = name;
-      if (condition) ability.condition = condition;
-
-      return {
-        success: true,
-        ability: {
-          ability,
-          text,
-          name,
-        },
-      };
-    }
-
     return {
       success: false,
       error: `Could not parse static effect: "${effectText}"`,
@@ -160,6 +118,257 @@ export function parseStaticAbility(text: string): ParseResult {
       name,
     },
   };
+}
+
+/**
+ * Parse specific static ability patterns that don't fit the general effect parser
+ * Returns a StaticEffect if a pattern matches, or undefined if no match
+ */
+function parseSpecificStaticPattern(text: string): StaticEffect | undefined {
+  // Pattern: "This character/item can't be challenged"
+  if (CANT_BE_CHALLENGED_PATTERN.test(text)) {
+    return {
+      type: "restriction",
+      restriction: "cant-be-challenged",
+      target: "SELF",
+    };
+  }
+
+  // Pattern: "This character/item cannot challenge"
+  if (CANT_CHALLENGE_PATTERN.test(text)) {
+    return {
+      type: "restriction",
+      restriction: "cant-challenge",
+      target: "SELF",
+    };
+  }
+
+  // Pattern: "This character/item can't quest"
+  if (CANT_QUEST_PATTERN.test(text)) {
+    return {
+      type: "restriction",
+      restriction: "cant-quest",
+      target: "SELF",
+    };
+  }
+
+  // Pattern: "This character/item enters play exerted"
+  if (ENTERS_PLAY_EXERTED_PATTERN.test(text)) {
+    return {
+      type: "restriction",
+      restriction: "enters-play-exerted",
+      target: "SELF",
+    };
+  }
+
+  // Pattern: "This character can challenge ready characters"
+  if (CAN_CHALLENGE_READY_PATTERN.test(text)) {
+    return {
+      type: "grant-ability",
+      ability: "can-challenge-ready",
+      target: "SELF",
+    };
+  }
+
+  // Pattern: "Your characters gain [Keyword]"
+  const yourCharactersGainMatch = text.match(YOUR_CHARACTERS_GAIN_PATTERN);
+  if (yourCharactersGainMatch) {
+    const keywordText = yourCharactersGainMatch[1];
+    const parsedKeyword = parseKeywordFromText(keywordText);
+
+    if (parsedKeyword) {
+      return {
+        type: "gain-keyword",
+        keyword: parsedKeyword.keyword,
+        value: parsedKeyword.value,
+        target: "YOUR_CHARACTERS",
+      };
+    }
+  }
+
+  // Pattern: "Your characters get +X {S/W/L}"
+  const yourCharactersGetStatMatch = text.match(
+    YOUR_CHARACTERS_GET_STAT_PATTERN,
+  );
+  if (yourCharactersGetStatMatch) {
+    const modifier = parseNumericValue(yourCharactersGetStatMatch[1]);
+    const statSymbol = yourCharactersGetStatMatch[2];
+    const stat =
+      statSymbol === "S"
+        ? "strength"
+        : statSymbol === "W"
+          ? "willpower"
+          : "lore";
+
+    return {
+      type: "modify-stat",
+      stat,
+      modifier,
+      target: "YOUR_CHARACTERS",
+      duration: "while-condition",
+    };
+  }
+
+  // Pattern: "Your items gain [Keyword]"
+  const yourItemsGainMatch = text.match(YOUR_ITEMS_GAIN_PATTERN);
+  if (yourItemsGainMatch) {
+    const keywordText = yourItemsGainMatch[1];
+    const parsedKeyword = parseKeywordFromText(keywordText);
+
+    if (parsedKeyword) {
+      return {
+        type: "gain-keyword",
+        keyword: parsedKeyword.keyword,
+        value: parsedKeyword.value,
+        target: "YOUR_ITEMS" as any,
+      };
+    }
+  }
+
+  // Pattern: "Your items get +X {S/W/L}"
+  const yourItemsGetStatMatch = text.match(YOUR_ITEMS_GET_STAT_PATTERN);
+  if (yourItemsGetStatMatch) {
+    const modifier = parseNumericValue(yourItemsGetStatMatch[1]);
+    const statSymbol = yourItemsGetStatMatch[2];
+    const stat =
+      statSymbol === "S"
+        ? "strength"
+        : statSymbol === "W"
+          ? "willpower"
+          : "lore";
+
+    return {
+      type: "modify-stat",
+      stat,
+      modifier,
+      target: "YOUR_ITEMS" as any,
+      duration: "while-condition",
+    };
+  }
+
+  // Pattern: "Characters gain [Keyword] while here"
+  const charactersGainWhileHereMatch = text.match(
+    CHARACTERS_GAIN_WHILE_HERE_PATTERN,
+  );
+  if (charactersGainWhileHereMatch) {
+    const keywordText = charactersGainWhileHereMatch[1];
+    const parsedKeyword = parseKeywordFromText(keywordText);
+
+    if (parsedKeyword) {
+      return {
+        type: "gain-keyword",
+        keyword: parsedKeyword.keyword,
+        value: parsedKeyword.value,
+        target: "CHARACTERS_HERE" as any,
+        duration: "while-condition",
+      };
+    }
+  }
+
+  // Pattern: "Characters get +X {S/W/L} while here"
+  const charactersGetStatWhileHereMatch = text.match(
+    CHARACTERS_GET_STAT_WHILE_HERE_PATTERN,
+  );
+  if (charactersGetStatWhileHereMatch) {
+    const modifier = parseNumericValue(charactersGetStatWhileHereMatch[1]);
+    const statSymbol = charactersGetStatWhileHereMatch[2];
+    const stat =
+      statSymbol === "S"
+        ? "strength"
+        : statSymbol === "W"
+          ? "willpower"
+          : "lore";
+
+    return {
+      type: "modify-stat",
+      stat,
+      modifier,
+      target: "CHARACTERS_HERE" as any,
+      duration: "while-condition",
+    };
+  }
+
+  return undefined;
+}
+
+/**
+ * Parse a keyword from text (e.g., "Rush", "Challenger +3", "Resist +{d}")
+ * Returns keyword name and optional value
+ */
+type KeywordName =
+  | "Rush"
+  | "Ward"
+  | "Evasive"
+  | "Bodyguard"
+  | "Support"
+  | "Reckless"
+  | "Alert"
+  | "Challenger"
+  | "Resist";
+
+function parseKeywordFromText(text: string):
+  | {
+      keyword: KeywordName;
+      value?: number;
+    }
+  | undefined {
+  // Check for parameterized keywords: "Challenger +X" or "Resist +X"
+  const challengerMatch = text.match(/Challenger\s*\+(\d+|\{d\})/);
+  if (challengerMatch) {
+    return {
+      keyword: "Challenger",
+      value: parseNumericValue(challengerMatch[1]),
+    };
+  }
+
+  const resistMatch = text.match(/Resist\s*\+(\d+|\{d\})/);
+  if (resistMatch) {
+    return {
+      keyword: "Resist",
+      value: parseNumericValue(resistMatch[1]),
+    };
+  }
+
+  // Check for simple keywords
+  const simpleKeywords: KeywordName[] = [
+    "Rush",
+    "Ward",
+    "Evasive",
+    "Bodyguard",
+    "Support",
+    "Reckless",
+    "Alert",
+  ];
+  for (const keyword of simpleKeywords) {
+    if (text === keyword) {
+      return { keyword };
+    }
+  }
+
+  return undefined;
+}
+
+/**
+ * Helper function to parse numeric values or {d} placeholders
+ * Converts {d} to -1 as a placeholder value
+ *
+ * @param value - String that might be a number or "{d}"
+ * @returns Parsed number or -1 for {d} placeholder
+ */
+function parseNumericValue(value: string): number {
+  if (value === "{d}") {
+    return -1; // Placeholder value for {d}
+  }
+
+  // Remove optional + prefix
+  const cleaned = value.replace(/^\+/, "");
+  const parsed = Number.parseInt(cleaned, 10);
+
+  if (Number.isNaN(parsed)) {
+    return -1; // Fallback for unparseable values
+  }
+
+  return parsed;
 }
 
 /**
