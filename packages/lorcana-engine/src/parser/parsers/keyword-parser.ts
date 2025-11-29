@@ -20,8 +20,6 @@ import type {
 import type { Condition } from "../../cards/abilities/types/condition-types";
 import {
   BOOST_PATTERN,
-  CHALLENGER_PATTERN,
-  RESIST_PATTERN,
   SHIFT_PATTERN,
   SIMPLE_KEYWORD_PATTERN,
   SING_TOGETHER_PATTERN,
