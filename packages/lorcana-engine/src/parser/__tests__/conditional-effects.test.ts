@@ -8,7 +8,7 @@
  * - "instead" clauses for else branches
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
 import type {
   ConditionalEffect,
   Effect,

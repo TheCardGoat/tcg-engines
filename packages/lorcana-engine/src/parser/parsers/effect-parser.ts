@@ -15,17 +15,18 @@
  * - Search/look at cards effects
  * - Inkwell effects
  * - Location movement effects
- * - Composite effects (sequences, optional, choice, conditional)
+ * - Composite effects (sequences, optional, choice, conditional, for-each, repeat)
  */
 
 import type {
-  CardType,
   Effect,
+  ForEachCounter,
 } from "../../cards/abilities/types/effect-types";
 import type {
   CharacterTarget,
   PlayerTarget,
 } from "../../cards/abilities/types/target-types";
+import type { CardType } from "../../types/card-types";
 import {
   hasConditionalEffect,
   splitConditionalEffect,
@@ -38,11 +39,23 @@ import {
   DISCARD_PATTERN,
   DRAW_AMOUNT_PATTERN,
   EXERT_PATTERN,
+  FOR_EACH_CARD_IN_DISCARD_PATTERN,
+  FOR_EACH_CARD_IN_HAND_PATTERN,
+  FOR_EACH_CARD_UNDER_SELF_PATTERN,
+  FOR_EACH_CHARACTER_PATTERN,
+  FOR_EACH_CHARACTER_THAT_SANG_PATTERN,
+  FOR_EACH_DAMAGE_ON_SELF_PATTERN,
+  FOR_EACH_DAMAGE_ON_TARGET_PATTERN,
+  FOR_EACH_DAMAGED_CHARACTER_PATTERN,
+  FOR_EACH_ITEM_PATTERN,
+  FOR_EACH_LOCATION_PATTERN,
   GAIN_LORE_PATTERN,
   GRANT_KEYWORD_PATTERN,
   hasChoiceEffect,
+  hasForEachEffect,
   hasIfYouDoPattern,
   hasOptionalEffect,
+  hasRepeatEffect,
   hasSequenceEffect,
   LOOK_AT_CARDS_FULL_PATTERN,
   LOOK_AT_TOP_PATTERN,
@@ -55,6 +68,8 @@ import {
   PUT_UNDER_PATTERN,
   READY_PATTERN,
   REMOVE_DAMAGE_PATTERN,
+  REPEAT_PATTERN,
+  REPEAT_UP_TO_PATTERN,
   RETURN_FROM_DISCARD_PATTERN,
   RETURN_TO_HAND_PATTERN,
   REVEAL_HAND_PATTERN,
@@ -64,6 +79,7 @@ import {
   SHUFFLE_INTO_DECK_PATTERN,
   STAT_MODIFIER_PATTERN,
   splitChoiceOptions,
+  splitOnForEach,
   splitOnIfYouDo,
   splitSequenceSteps,
   YOU_MAY_PUT_INTO_INKWELL_PATTERN,
@@ -98,8 +114,18 @@ export function parseEffect(text: string): Effect | undefined {
     return parseOptionalWithFollowUp(text);
   }
 
+  // Handle for-each effects (before sequence to avoid splitting on periods in "for each")
+  if (hasForEachEffect(text)) {
+    return parseForEachEffect(text);
+  }
+
+  // Handle repeat effects (before sequence to handle "X. Repeat this Y times")
+  if (hasRepeatEffect(text)) {
+    return parseRepeatEffect(text);
+  }
+
   // Handle sequence effects ("X, then Y" or "X. Y" or "X and Y")
-  // Check this before optional effects to handle "X. You may Y" sequences
+  // Check this after for-each and repeat to handle those patterns correctly
   if (hasSequenceEffect(text) && !hasOptionalEffect(text)) {
     return parseSequenceEffect(text);
   }
@@ -111,6 +137,207 @@ export function parseEffect(text: string): Effect | undefined {
 
   // Parse as single atomic effect
   return parseAtomicEffect(text);
+}
+
+/**
+ * Parse a for-each effect
+ * Example: "Gain 1 lore for each character you have in play"
+ *
+ * @param text - Text containing for-each effect
+ * @returns ForEachEffect or undefined if not parsable
+ */
+function parseForEachEffect(text: string): Effect | undefined {
+  const parts = splitOnForEach(text);
+  if (!parts) return undefined;
+
+  const [effectText, counterText] = parts;
+
+  // Parse the inner effect
+  const effect = parseAtomicEffect(effectText);
+  if (!effect) return undefined;
+
+  // Parse the counter type
+  const counter = parseForEachCounter(counterText);
+  if (!counter) return undefined;
+
+  return {
+    type: "for-each",
+    counter,
+    effect,
+  };
+}
+
+/**
+ * Parse a for-each counter from text
+ *
+ * @param text - Text describing the counter (e.g., "character you have", "card in your hand")
+ * @returns ForEachCounter or undefined if not parsable
+ */
+function parseForEachCounter(text: string): ForEachCounter | undefined {
+  // Check characters pattern
+  if (FOR_EACH_CHARACTER_PATTERN.test(text)) {
+    const match = text.match(FOR_EACH_CHARACTER_PATTERN);
+    if (match) {
+      const ownership = match[1]?.toLowerCase();
+      // Determine controller based on ownership or presence of "you have" / "they have"
+      const controller =
+        ownership === "your"
+          ? ("you" as const)
+          : ownership === "opponent's"
+            ? ("opponent" as const)
+            : text.includes("you have")
+              ? ("you" as const)
+              : text.includes("they have")
+                ? ("opponent" as const)
+                : ("any" as const);
+      return { type: "characters", controller };
+    }
+  }
+
+  // Check damaged characters pattern
+  if (FOR_EACH_DAMAGED_CHARACTER_PATTERN.test(text)) {
+    return { type: "damaged-characters", controller: "any" };
+  }
+
+  // Check items pattern
+  if (FOR_EACH_ITEM_PATTERN.test(text)) {
+    const match = text.match(FOR_EACH_ITEM_PATTERN);
+    if (match) {
+      const ownership = match[1]?.toLowerCase();
+      const controller =
+        ownership === "your"
+          ? ("you" as const)
+          : ownership === "opponent's"
+            ? ("opponent" as const)
+            : text.includes("you have")
+              ? ("you" as const)
+              : text.includes("they have")
+                ? ("opponent" as const)
+                : ("you" as const); // Default to "you" for items
+      return { type: "items", controller };
+    }
+  }
+
+  // Check locations pattern
+  if (FOR_EACH_LOCATION_PATTERN.test(text)) {
+    const match = text.match(FOR_EACH_LOCATION_PATTERN);
+    if (match) {
+      const ownership = match[1]?.toLowerCase();
+      const controller =
+        ownership === "your"
+          ? ("you" as const)
+          : ownership === "opponent's"
+            ? ("opponent" as const)
+            : text.includes("you have")
+              ? ("you" as const)
+              : text.includes("they have")
+                ? ("opponent" as const)
+                : ("you" as const);
+      return { type: "locations", controller };
+    }
+  }
+
+  // Check cards in hand pattern
+  if (FOR_EACH_CARD_IN_HAND_PATTERN.test(text)) {
+    const match = text.match(FOR_EACH_CARD_IN_HAND_PATTERN);
+    if (match) {
+      const ownership = match[1]?.toLowerCase();
+      const controller =
+        ownership === "their" || ownership === "opponent's"
+          ? ("opponent" as const)
+          : ("you" as const);
+      return { type: "cards-in-hand", controller };
+    }
+  }
+
+  // Check cards in discard pattern
+  if (FOR_EACH_CARD_IN_DISCARD_PATTERN.test(text)) {
+    const match = text.match(FOR_EACH_CARD_IN_DISCARD_PATTERN);
+    if (match) {
+      const ownership = match[1]?.toLowerCase();
+      const controller =
+        ownership === "their" || ownership === "opponent's"
+          ? ("opponent" as const)
+          : ("you" as const);
+      return { type: "cards-in-discard", controller };
+    }
+  }
+
+  // Check damage on self pattern
+  if (FOR_EACH_DAMAGE_ON_SELF_PATTERN.test(text)) {
+    return { type: "damage-on-self" };
+  }
+
+  // Check damage on target pattern
+  if (FOR_EACH_DAMAGE_ON_TARGET_PATTERN.test(text)) {
+    return { type: "damage-on-target" };
+  }
+
+  // Check cards under self pattern
+  if (FOR_EACH_CARD_UNDER_SELF_PATTERN.test(text)) {
+    return { type: "cards-under-self" };
+  }
+
+  // Check characters that sang pattern
+  if (FOR_EACH_CHARACTER_THAT_SANG_PATTERN.test(text)) {
+    const thisTurn = text.includes("this turn");
+    return { type: "characters-that-sang", thisTurn };
+  }
+
+  return undefined;
+}
+
+/**
+ * Parse a repeat effect
+ * Example: "Deal 1 damage to chosen character. Repeat this 3 times"
+ *
+ * @param text - Text containing repeat effect
+ * @returns RepeatEffect or undefined if not parsable
+ */
+function parseRepeatEffect(text: string): Effect | undefined {
+  // Check for "Repeat this X times" pattern
+  let match = text.match(REPEAT_PATTERN);
+  if (match) {
+    const times = Number.parseInt(match[1], 10);
+    // Extract the effect part (before "Repeat this")
+    const effectText = text.replace(REPEAT_PATTERN, "").trim();
+    // Remove trailing period if present
+    const cleanEffectText = effectText.replace(/\.\s*$/, "");
+
+    const effect = parseAtomicEffect(cleanEffectText);
+    if (!effect) return undefined;
+
+    return {
+      type: "repeat",
+      times,
+      effect,
+    };
+  }
+
+  // Check for "You may repeat this up to X times" pattern
+  match = text.match(REPEAT_UP_TO_PATTERN);
+  if (match) {
+    const times = Number.parseInt(match[1], 10);
+    // Extract the effect part (before "Repeat this")
+    const effectText = text.replace(REPEAT_UP_TO_PATTERN, "").trim();
+    const cleanEffectText = effectText.replace(/\.\s*$/, "");
+
+    const effect = parseAtomicEffect(cleanEffectText);
+    if (!effect) return undefined;
+
+    // Wrap in optional since it's "you may repeat"
+    return {
+      type: "optional",
+      effect: {
+        type: "repeat",
+        times,
+        effect,
+      },
+      chooser: "CONTROLLER",
+    };
+  }
+
+  return undefined;
 }
 
 /**

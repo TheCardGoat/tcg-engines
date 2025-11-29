@@ -5,6 +5,7 @@
  * @group preprocessor
  */
 
+import { describe, expect, it } from "bun:test";
 import {
   extractNamedAbilityPrefix,
   normalizeText,

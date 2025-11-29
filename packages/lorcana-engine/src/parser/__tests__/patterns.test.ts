@@ -5,6 +5,7 @@
  * @group patterns
  */
 
+import { describe, expect, it } from "bun:test";
 import { classifyAbility } from "../classifier";
 import { COST_PATTERNS } from "../patterns/costs";
 import { KEYWORD_PATTERNS } from "../patterns/keywords";

@@ -17,6 +17,7 @@
  * - Location movement effects
  * - Composite effects (sequences, "and" combinations)
  * - Optional effects ("you may" and "if you do")
+ * - For-each and repeat effects
  */
 
 /**
@@ -182,6 +183,40 @@ export const YOU_MAY_PATTERN = /\byou may\b/i;
 export const IF_YOU_DO_PATTERN = /\.\s*if you do,?\s+/i;
 
 /**
+ * For-each effect patterns
+ * Patterns for matching the counter portion AFTER "for each" has been split off
+ * E.g., after splitting "Gain 1 lore for each character you have", these match "character you have"
+ */
+export const FOR_EACH_PATTERN = /\bfor each\b/i;
+export const FOR_EACH_CHARACTER_PATTERN =
+  /^(?:(your|opponent's) )?characters?(?: (?:you|they) have)?(?: in play)?$/i;
+export const FOR_EACH_DAMAGED_CHARACTER_PATTERN =
+  /^damaged characters?(?: in play)?$/i;
+export const FOR_EACH_ITEM_PATTERN =
+  /^(?:(your|opponent's) )?items?(?: (?:you|they) have)?(?: in play)?$/i;
+export const FOR_EACH_LOCATION_PATTERN =
+  /^(?:(your|opponent's) )?locations?(?: (?:you|they) have)?(?: in play)?$/i;
+export const FOR_EACH_CARD_IN_HAND_PATTERN =
+  /^card in (?:(your|their|opponent's) )?hand$/i;
+export const FOR_EACH_CARD_IN_DISCARD_PATTERN =
+  /^card in (?:(your|their|opponent's) )?discard(?: pile)?$/i;
+export const FOR_EACH_DAMAGE_ON_SELF_PATTERN =
+  /^damage (?:counter )?on (?:this (?:character|location)|it)$/i;
+export const FOR_EACH_DAMAGE_ON_TARGET_PATTERN =
+  /^damage (?:counter )?on (?:chosen )?(?:character|location)$/i;
+export const FOR_EACH_CARD_UNDER_SELF_PATTERN =
+  /^card under (?:this (?:character|location)|it)$/i;
+export const FOR_EACH_CHARACTER_THAT_SANG_PATTERN =
+  /^character that sang(?: this turn)?$/i;
+
+/**
+ * Repeat effect patterns
+ */
+export const REPEAT_PATTERN = /[Rr]epeat (?:this|that) (\d+) times?/i;
+export const REPEAT_UP_TO_PATTERN =
+  /(?:[Yy]ou may )?[Rr]epeat (?:this|that) up to (\d+) times?/i;
+
+/**
  * Sequence separator patterns (for composite effects)
  * Ordered from most specific to least specific
  */
@@ -226,6 +261,33 @@ export function splitOnIfYouDo(text: string): [string, string] | undefined {
   if (parts.length !== 2) return undefined;
 
   return [parts[0].trim(), parts[1].trim()];
+}
+
+/**
+ * Check if text contains a for-each effect
+ */
+export function hasForEachEffect(text: string): boolean {
+  return FOR_EACH_PATTERN.test(text);
+}
+
+/**
+ * Check if text contains a repeat effect
+ */
+export function hasRepeatEffect(text: string): boolean {
+  return REPEAT_PATTERN.test(text) || REPEAT_UP_TO_PATTERN.test(text);
+}
+
+/**
+ * Split text on "for each" separator
+ * Returns [effect part, for-each part] or undefined if no match
+ *
+ * Example: "Gain 1 lore for each character you have" -> ["Gain 1 lore", "character you have"]
+ */
+export function splitOnForEach(text: string): [string, string] | undefined {
+  const match = text.match(/(.+?)\s+for each\s+(.+)/i);
+  if (!match) return undefined;
+
+  return [match[1].trim(), match[2].trim()];
 }
 
 /**

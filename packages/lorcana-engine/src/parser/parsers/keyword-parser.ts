@@ -236,7 +236,9 @@ function parseKeywordCondition(text: string): Condition | undefined {
   }
 
   if (normalized.includes("while questing")) {
-    return { type: "while-questing" };
+    // "while questing" doesn't have a direct condition type - return undefined
+    // The engine handles this contextually during resolution
+    return undefined;
   }
 
   // Unknown condition

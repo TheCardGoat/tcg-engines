@@ -273,10 +273,10 @@ describe("Integration: Regression Tests for Known Problematic Patterns", () => {
       expect(result.ability?.name).toMatch(/^[A-Z\s!]+$/); // All caps pattern
 
       // Name should be in the ability object too
-      if (result.ability?.ability.type !== "keyword") {
-        expect(
-          "name" in result.ability.ability && result.ability.ability.name,
-        ).toBe(result.ability.name);
+      if (result.ability && result.ability.ability.type !== "keyword") {
+        const ability = result.ability.ability as { name?: string };
+        const expectedName = result.ability.name ?? "";
+        expect(ability.name ?? "").toBe(expectedName);
       }
     });
   });
@@ -299,7 +299,7 @@ describe("Integration: Regression Tests for Known Problematic Patterns", () => {
       expect(result.ability?.ability.type).toBe("keyword");
 
       if (result.ability?.ability.type === "keyword") {
-        expect(result.ability.ability.keyword).toBe(keyword);
+        expect(result.ability.ability.keyword).toBe(keyword as any);
       }
     });
   });
@@ -320,7 +320,7 @@ describe("Integration: Regression Tests for Known Problematic Patterns", () => {
       expect(result.ability?.ability.type).toBe("triggered");
 
       if (result.ability?.ability.type === "triggered") {
-        expect(result.ability.ability.trigger.timing).toBe(timing);
+        expect(result.ability.ability.trigger.timing).toBe(timing as any);
       }
     });
   });
@@ -350,7 +350,7 @@ describe("Integration: Regression Tests for Known Problematic Patterns", () => {
     expect(normalized.success).toBe(true);
     expect(standard.success).toBe(true);
     expect(normalized.ability?.ability.type).toBe(
-      standard.ability?.ability.type,
+      standard.ability?.ability.type as any,
     );
   });
 });
