@@ -3,17 +3,24 @@
  *
  * Parses target phrases from ability text into Target types.
  * Extracts who/what an effect applies to.
+ *
+ * Returns enum shortcuts for common patterns. Complex patterns
+ * can be parsed into full DSL objects when needed.
  */
 
+import type { PlayerTarget } from "../../cards/abilities/types/target-types";
 import type {
-  CharacterTarget,
-  PlayerTarget,
-} from "../../cards/abilities/types/target-types";
+  CharacterTargetEnum,
+  ItemTargetEnum,
+  LocationTargetEnum,
+} from "../../targeting";
 import {
   ALL_CHARACTERS_PATTERN,
   ALL_OPPOSING_CHARACTERS_PATTERN,
   CHOSEN_CHARACTER_OF_YOURS_PATTERN,
   CHOSEN_CHARACTER_PATTERN,
+  CHOSEN_ITEM_PATTERN,
+  CHOSEN_LOCATION_PATTERN,
   CHOSEN_OPPOSING_CHARACTER_PATTERN,
   EACH_OPPONENT_PATTERN,
   EACH_OPPOSING_CHARACTER_PATTERN,
@@ -28,11 +35,11 @@ import {
  * Parse character target from text
  *
  * @param text - Text containing target phrase
- * @returns Character target or undefined if not found
+ * @returns Character target enum or undefined if not found
  */
 export function parseCharacterTarget(
   text: string,
-): CharacterTarget | undefined {
+): CharacterTargetEnum | undefined {
   // Check for specific patterns first (most specific to least specific)
   if (CHOSEN_OPPOSING_CHARACTER_PATTERN.test(text)) {
     return "CHOSEN_OPPOSING_CHARACTER";
@@ -64,6 +71,40 @@ export function parseCharacterTarget(
   if (hasSelfReference(text)) {
     return "SELF";
   }
+
+  return undefined;
+}
+
+/**
+ * Parse item target from text
+ *
+ * @param text - Text containing target phrase
+ * @returns Item target enum or undefined if not found
+ */
+export function parseItemTarget(text: string): ItemTargetEnum | undefined {
+  if (CHOSEN_ITEM_PATTERN.test(text)) {
+    return "CHOSEN_ITEM";
+  }
+
+  // TODO: Add more item patterns as needed
+
+  return undefined;
+}
+
+/**
+ * Parse location target from text
+ *
+ * @param text - Text containing target phrase
+ * @returns Location target enum or undefined if not found
+ */
+export function parseLocationTarget(
+  text: string,
+): LocationTargetEnum | undefined {
+  if (CHOSEN_LOCATION_PATTERN.test(text)) {
+    return "CHOSEN_LOCATION";
+  }
+
+  // TODO: Add more location patterns as needed
 
   return undefined;
 }
