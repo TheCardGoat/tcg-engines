@@ -4,11 +4,12 @@
  * This file defines the top-level ability types that compose together
  * triggers, effects, costs, and conditions.
  *
- * Lorcana has four main ability types:
+ * Lorcana has five main ability types:
  * - **Keyword**: Simple abilities like Rush, Ward, Challenger +X
  * - **Triggered**: Abilities that fire when events occur (When/Whenever/At)
  * - **Activated**: Abilities with costs that players choose to use ({E} - ...)
  * - **Static**: Abilities that are always active (While/Your characters gain...)
+ * - **Action**: Standalone effects on action cards (Draw 2 cards, Banish chosen character)
  *
  * @example Keyword ability
  * ```typescript
@@ -21,6 +22,14 @@
  * {
  *   type: "triggered",
  *   trigger: { event: "PLAY_SELF", timing: "when" },
+ *   effect: { type: "draw", amount: 2, target: "CONTROLLER" }
+ * }
+ * ```
+ *
+ * @example Action ability
+ * ```typescript
+ * {
+ *   type: "action",
  *   effect: { type: "draw", amount: 2, target: "CONTROLLER" }
  * }
  * ```
@@ -357,6 +366,29 @@ export type StaticAffects =
   | { type: "all" };
 
 // ============================================================================
+// Action Abilities
+// ============================================================================
+
+/**
+ * Action ability - standalone effect on action cards
+ *
+ * Action cards have one-time effects that happen when played.
+ * These are different from triggered abilities (no trigger word),
+ * activated abilities (no cost), and static abilities (not continuous).
+ *
+ * @example "Draw 2 cards"
+ * @example "Deal 3 damage to chosen character"
+ * @example "Banish all items"
+ * @example "Each opponent loses 2 lore"
+ */
+export interface ActionAbility {
+  type: "action";
+
+  /** What happens when the action resolves */
+  effect: Effect;
+}
+
+// ============================================================================
 // Replacement Effects
 // ============================================================================
 
@@ -399,6 +431,7 @@ export type Ability =
   | TriggeredAbility
   | ActivatedAbility
   | StaticAbility
+  | ActionAbility
   | ReplacementAbility;
 
 /**
@@ -450,6 +483,13 @@ export function isActivatedAbility(
  */
 export function isStaticAbility(ability: Ability): ability is StaticAbility {
   return ability.type === "static";
+}
+
+/**
+ * Check if ability is an action ability
+ */
+export function isActionAbility(ability: Ability): ability is ActionAbility {
+  return ability.type === "action";
 }
 
 /**
@@ -706,5 +746,15 @@ export function staticAbility(
     type: "static",
     effect,
     ...options,
+  };
+}
+
+/**
+ * Create an action ability
+ */
+export function actionAbility(effect: Effect): ActionAbility {
+  return {
+    type: "action",
+    effect,
   };
 }
