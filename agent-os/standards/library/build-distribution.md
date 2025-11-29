@@ -147,7 +147,7 @@ alwaysApply: true
 - **Turborepo**: Use for monorepo build orchestration
 - **Bun**: Consider bun for fast TypeScript execution
 - **Biome**: Use for formatting and linting
-- **Test Runner**: Use bun test or vitest
+- **Test Runner**: Use bun test
 
 ## Platform Considerations
 - **Node.js Version**: Specify minimum Node.js version in engines field

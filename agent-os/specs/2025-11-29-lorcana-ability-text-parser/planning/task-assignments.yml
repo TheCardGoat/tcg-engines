@@ -1,0 +1,28 @@
+task_assignments:
+  - task_group: "Task Group 1: Core Types and Utilities"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 2: Pattern Registry and Classifier"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 3: Keyword Ability Parser"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 4: Effect, Target, and Condition Parsers"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 5: Triggered, Activated, and Static Parsers"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 6: Main Parser and Batch Processing"
+    assigned_subagent: "api-engineer"
+
+  - task_group: "Task Group 7: Comprehensive Testing and Coverage"
+    assigned_subagent: "testing-engineer"
+
+verifiers:
+  - implementer: "api-engineer"
+    verified_by: "backend-verifier"
+
+  - implementer: "testing-engineer"
+    verified_by: "backend-verifier"
