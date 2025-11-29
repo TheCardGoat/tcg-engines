@@ -26,9 +26,9 @@
  * Updated to handle {d} placeholder
  */
 export const DRAW_PATTERN =
-  /(?:[Ee]ach (?:player|opponent)|[Cc]hosen player )?[Dd]raw(?:s)? (?:a|(\d+|\{d\})|an?) cards?/;
+  /(?:[Ee]ach (?:player|opponent) |[Cc]hosen player )?[Dd]raw(?:s)? (?:a|(\d+|\{d\})|an?) cards?/;
 export const DRAW_AMOUNT_PATTERN =
-  /(?:[Ee]ach (?:player|opponent)|[Cc]hosen player )?[Dd]raw(?:s)? (?:a|(\d+|\{d\})) cards?/;
+  /(?:[Ee]ach (?:player|opponent) |[Cc]hosen player )?[Dd]raw(?:s)? (?:a|(\d+|\{d\})) cards?/;
 export const CHOSEN_PLAYER_DRAWS_PATTERN =
   /[Cc]hosen player draws? (\d+|\{d\}) cards?/;
 
@@ -178,7 +178,7 @@ export const CHOSEN_LOCATION_PATTERN = /[Cc]hosen (?:opposing )?location/;
  * Restriction patterns (for static abilities)
  */
 export const CANT_BE_CHALLENGED_PATTERN = /[Cc]an'?t be challenged/;
-export const CANT_CHALLENGE_PATTERN = /[Cc]annot challenge/;
+export const CANT_CHALLENGE_PATTERN = /[Cc]an(?:'t|not) challenge/;
 export const CANT_QUEST_PATTERN = /[Cc]an'?t quest/;
 export const CANNOT_PATTERN = /[Cc]annot /;
 
