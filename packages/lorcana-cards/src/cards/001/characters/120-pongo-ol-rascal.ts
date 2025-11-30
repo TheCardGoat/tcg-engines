@@ -22,7 +22,7 @@ export const pongoOlRascal: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "37ja1",
+      id: "37j-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

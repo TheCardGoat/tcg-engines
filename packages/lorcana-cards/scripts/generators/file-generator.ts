@@ -770,6 +770,141 @@ export interface CardFileInfo {
 }
 
 /**
+ * Keyword to card model getter mapping
+ * Some are methods (called with parentheses), some are properties
+ */
+const KEYWORD_METHOD_MAP: Record<string, { name: string; isMethod: boolean }> =
+  {
+    // Methods (call with parentheses)
+    Bodyguard: { name: "hasBodyguard", isMethod: true },
+    Singer: { name: "hasSinger", isMethod: true },
+    Shift: { name: "hasShift", isMethod: true },
+    Reckless: { name: "hasReckless", isMethod: true },
+    Ward: { name: "hasWard", isMethod: true },
+    Support: { name: "hasSupport", isMethod: true },
+    // Properties (no parentheses)
+    Vanish: { name: "hasVanish", isMethod: false },
+    Evasive: { name: "hasEvasive", isMethod: false },
+    Challenger: { name: "hasChallenger", isMethod: false },
+    Resist: { name: "hasResist", isMethod: false },
+    Rush: { name: "hasRush", isMethod: false },
+  };
+
+/**
+ * Extract keywords from a card's abilities
+ * Returns an array of { keyword, value? } objects
+ */
+function extractKeywordsFromCard(
+  card: CanonicalCard,
+): Array<{ keyword: string; value?: number }> {
+  const keywords: Array<{ keyword: string; value?: number }> = [];
+
+  if (!card.parsedAbilities || card.parsedAbilities.length === 0) {
+    return keywords;
+  }
+
+  for (const ability of card.parsedAbilities) {
+    if (ability.type === "keyword" && ability.keyword) {
+      keywords.push({
+        keyword: ability.keyword,
+        value: ability.value,
+      });
+    }
+  }
+
+  return keywords;
+}
+
+/**
+ * Generate the test file name for a card
+ * Format: {cardNumber}-{kebab-case-name}.test.ts
+ */
+export function generateTestFileName(
+  cardNumber: number,
+  fullName: string,
+): string {
+  const paddedNumber = cardNumber.toString().padStart(3, "0");
+  const kebabName = toKebabCase(fullName);
+  return `${paddedNumber}-${kebabName}.test.ts`;
+}
+
+/**
+ * Generate test file content for a card with keywords
+ * Uses TestEngine to set up a real game board and validate against card model
+ */
+export function generateTestFileContent(
+  card: CanonicalCard,
+  exportName: string,
+  cardFileName: string,
+): string | null {
+  // Don't generate tests for vanilla cards
+  if (card.vanilla) {
+    return null;
+  }
+
+  const keywords = extractKeywordsFromCard(card);
+
+  // Don't generate tests if no keywords found
+  if (keywords.length === 0) {
+    return null;
+  }
+
+  // Build the import path (relative from test file to card file)
+  const importPath = `./${cardFileName.replace(".ts", "")}`;
+
+  // Generate test cases for each keyword
+  const testCases: string[] = [];
+
+  for (const { keyword, value } of keywords) {
+    const methodInfo = KEYWORD_METHOD_MAP[keyword];
+
+    if (!methodInfo) {
+      // Skip keywords we don't have a mapping for
+      continue;
+    }
+
+    const { name: methodName, isMethod } = methodInfo;
+    const assertion = isMethod
+      ? `cardUnderTest.${methodName}()`
+      : `cardUnderTest.${methodName}`;
+
+    if (value !== undefined) {
+      testCases.push(`  it("should have ${keyword} ${value} ability", () => {
+    const testEngine = new LorcanaTestEngine({
+      play: [${exportName}],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(${exportName});
+    expect(${assertion}).toBe(true);
+  });`);
+    } else {
+      testCases.push(`  it("should have ${keyword} ability", () => {
+    const testEngine = new LorcanaTestEngine({
+      play: [${exportName}],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(${exportName});
+    expect(${assertion}).toBe(true);
+  });`);
+    }
+  }
+
+  // If no valid test cases were generated, return null
+  if (testCases.length === 0) {
+    return null;
+  }
+
+  return `import { describe, expect, it } from "bun:test";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { ${exportName} } from "${importPath}";
+
+describe("${card.fullName}", () => {
+${testCases.join("\n\n")}
+});
+`;
+}
+
+/**
  * Organize cards into file info grouped by set and card type
  */
 export function organizeCardsForFileGeneration(
@@ -826,12 +961,19 @@ export function organizeCardsForFileGeneration(
 }
 
 /**
+ * Cache for created directories to avoid repeated filesystem checks
+ */
+const createdDirs = new Set<string>();
+
+/**
  * Write a file, creating directories as needed
+ * Uses caching to reduce filesystem operations
  */
 function writeFile(filePath: string, content: string): void {
   const dir = path.dirname(filePath);
-  if (!fs.existsSync(dir)) {
+  if (!createdDirs.has(dir)) {
     fs.mkdirSync(dir, { recursive: true });
+    createdDirs.add(dir);
   }
   fs.writeFileSync(filePath, content, "utf-8");
 }
@@ -844,6 +986,9 @@ export function generateCardFiles(
   canonicalCards: Record<string, CanonicalCard>,
   sets: Record<string, SetDefinition>,
 ): void {
+  // Reset directory cache for fresh run
+  createdDirs.clear();
+
   // Create set number to folder name mapping
   // Printings now use numeric set format (e.g., "001") instead of "set1"
   const setMapping = new Map<string, string>();
@@ -857,6 +1002,7 @@ export function generateCardFiles(
 
   // Track all set folder names for main aggregator
   const setFolderNames: string[] = [];
+  let totalTestFilesGenerated = 0;
 
   // Generate files for each set
   for (const [setFolderName, cardTypeMap] of organized) {
@@ -873,7 +1019,8 @@ export function generateCardFiles(
       const typeFolder = getCardTypeFolderName(cardType);
       const typeDir = path.join(setDir, typeFolder);
 
-      // Generate individual card files
+      // Generate individual card files and test files
+      let testFilesGenerated = 0;
       for (const cardInfo of cards) {
         const filePath = path.join(typeDir, cardInfo.fileName);
         const content = generateCardFileContent(
@@ -882,6 +1029,23 @@ export function generateCardFiles(
           2, // Depth: set/type/card.ts -> types.ts is 2 levels up
         );
         writeFile(filePath, content);
+
+        // Generate test file for non-vanilla cards with keywords
+        const testContent = generateTestFileContent(
+          cardInfo.card,
+          cardInfo.exportName,
+          cardInfo.fileName,
+        );
+        if (testContent) {
+          const testFileName = generateTestFileName(
+            cardInfo.cardNumber,
+            cardInfo.card.fullName,
+          );
+          const testFilePath = path.join(typeDir, testFileName);
+          writeFile(testFilePath, testContent);
+          testFilesGenerated++;
+          totalTestFilesGenerated++;
+        }
       }
 
       // Generate card type index file
@@ -917,6 +1081,7 @@ export function generateCardFiles(
   writeFile(path.join(outputDir, "types.ts"), typesContent);
 
   console.log(`  Generated ${Object.keys(canonicalCards).length} card files`);
+  console.log(`  Generated ${totalTestFilesGenerated} test files`);
   console.log(`  Generated ${setFolderNames.length} set index files`);
   console.log("  Generated main cards.ts, index.ts, and types.ts");
 }

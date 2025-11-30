@@ -22,7 +22,7 @@ export const ticktockEverpresentPursuer: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "16ha1",
+      id: "16h-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

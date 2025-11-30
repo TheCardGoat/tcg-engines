@@ -22,7 +22,7 @@ export const archimedesExasperatedOwl: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "12va1",
+      id: "12v-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

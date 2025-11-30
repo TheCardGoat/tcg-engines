@@ -22,7 +22,7 @@ export const tiggerWonderfulThing: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1cga1",
+      id: "1cg-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

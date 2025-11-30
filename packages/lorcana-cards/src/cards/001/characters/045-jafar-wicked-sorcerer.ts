@@ -27,7 +27,7 @@ export const jafarWickedSorcerer: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1dna1",
+      id: "1dn-1",
       text: "Challenger +3",
       type: "keyword",
       keyword: "Challenger",

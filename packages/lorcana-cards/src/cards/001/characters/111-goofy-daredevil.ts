@@ -21,7 +21,7 @@ export const goofyDaredevil: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "cgxa1",
+      id: "cgx-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

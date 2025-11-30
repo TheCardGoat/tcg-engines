@@ -22,7 +22,7 @@ export const wasabiAlwaysPrepared: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "aika1",
+      id: "aik-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

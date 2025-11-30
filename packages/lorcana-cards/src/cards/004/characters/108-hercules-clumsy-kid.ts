@@ -22,7 +22,7 @@ export const herculesClumsyKid: CharacterCard = {
   keywords: ["Rush"],
   abilities: [
     {
-      id: "1l5a1",
+      id: "1l5-1",
       text: "Rush",
       type: "keyword",
       keyword: "Rush",

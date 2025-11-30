@@ -22,7 +22,7 @@ export const annaMakingSnowPlans: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "9zfa1",
+      id: "9zf-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

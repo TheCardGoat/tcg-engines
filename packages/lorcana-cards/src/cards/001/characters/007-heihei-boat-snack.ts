@@ -22,7 +22,7 @@ export const heiheiBoatSnack: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "uioa1",
+      id: "uio-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

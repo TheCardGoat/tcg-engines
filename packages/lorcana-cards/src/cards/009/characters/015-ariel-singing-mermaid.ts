@@ -27,7 +27,7 @@ export const arielSingingMermaid: CharacterCard = {
   ],
   abilities: [
     {
-      id: "17wa1",
+      id: "17w-1",
       text: "Singer 7",
       type: "keyword",
       keyword: "Singer",

@@ -22,7 +22,7 @@ export const vanellopeVonSchweetzSpunkySpeedster: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1wea1",
+      id: "1we-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

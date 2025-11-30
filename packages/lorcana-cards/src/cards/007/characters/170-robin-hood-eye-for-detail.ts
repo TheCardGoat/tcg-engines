@@ -22,7 +22,7 @@ export const robinHoodEyeForDetail: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "193a1",
+      id: "193-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

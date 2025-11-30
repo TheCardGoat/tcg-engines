@@ -22,7 +22,7 @@ export const kaaSecretiveSnake: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "r2ha1",
+      id: "r2h-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

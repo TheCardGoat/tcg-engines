@@ -22,7 +22,7 @@ export const rajahDevotedProtector: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1gka1",
+      id: "1gk-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

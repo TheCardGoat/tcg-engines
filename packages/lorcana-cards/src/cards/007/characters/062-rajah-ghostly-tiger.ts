@@ -22,7 +22,7 @@ export const rajahGhostlyTiger: CharacterCard = {
   keywords: ["Vanish"],
   abilities: [
     {
-      id: "1baa1",
+      id: "1ba-1",
       text: "Vanish",
       type: "keyword",
       keyword: "Vanish",

@@ -21,7 +21,7 @@ export const daisyDuckSpotlessFoodfighter: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1d8a1",
+      id: "1d8-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

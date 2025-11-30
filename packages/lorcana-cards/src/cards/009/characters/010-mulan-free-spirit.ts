@@ -22,7 +22,7 @@ export const mulanFreeSpirit: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "roaa1",
+      id: "roa-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

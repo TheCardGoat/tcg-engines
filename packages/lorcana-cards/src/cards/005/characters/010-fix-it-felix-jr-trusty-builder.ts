@@ -22,7 +22,7 @@ export const fixitFelixJrTrustyBuilder: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1hma1",
+      id: "1hm-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

@@ -22,7 +22,7 @@ export const merlinSelfappointedMentor: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "uiia1",
+      id: "uii-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

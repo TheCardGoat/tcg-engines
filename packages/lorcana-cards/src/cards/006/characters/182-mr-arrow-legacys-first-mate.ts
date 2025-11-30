@@ -27,7 +27,7 @@ export const mrArrowLegacysFirstMate: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1ama1",
+      id: "1am-1",
       text: "Resist +1",
       type: "keyword",
       keyword: "Resist",

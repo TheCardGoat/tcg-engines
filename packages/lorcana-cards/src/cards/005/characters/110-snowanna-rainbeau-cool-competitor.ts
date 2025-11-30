@@ -22,7 +22,7 @@ export const snowannaRainbeauCoolCompetitor: CharacterCard = {
   keywords: ["Rush"],
   abilities: [
     {
-      id: "rgla1",
+      id: "rgl-1",
       text: "Rush",
       type: "keyword",
       keyword: "Rush",

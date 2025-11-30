@@ -22,7 +22,7 @@ export const inspectorTezukaResoluteOfficer: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "15oa1",
+      id: "15o-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

@@ -22,7 +22,7 @@ export const sleepySluggishKnight: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1k0a1",
+      id: "1k0-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

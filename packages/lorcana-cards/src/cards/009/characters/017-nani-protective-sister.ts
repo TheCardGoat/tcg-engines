@@ -22,7 +22,7 @@ export const naniProtectiveSister: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1fna1",
+      id: "1fn-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

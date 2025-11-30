@@ -22,7 +22,7 @@ export const gastonArrogantHunter: CharacterCard = {
   keywords: ["Reckless"],
   abilities: [
     {
-      id: "enfa1",
+      id: "enf-1",
       text: "Reckless",
       type: "keyword",
       keyword: "Reckless",

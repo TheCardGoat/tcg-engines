@@ -22,7 +22,7 @@ export const mrsBeakleyFormerShushAgent: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "16ma1",
+      id: "16m-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

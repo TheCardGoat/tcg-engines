@@ -27,7 +27,7 @@ export const druunRavenousPlague: CharacterCard = {
   ],
   abilities: [
     {
-      id: "c4ia1",
+      id: "c4i-1",
       text: "Challenger +4",
       type: "keyword",
       keyword: "Challenger",

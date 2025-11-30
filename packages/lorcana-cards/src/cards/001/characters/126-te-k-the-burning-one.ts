@@ -22,7 +22,7 @@ export const teKTheBurningOne: CharacterCard = {
   keywords: ["Reckless"],
   abilities: [
     {
-      id: "14na1",
+      id: "14n-1",
       text: "Reckless",
       type: "keyword",
       keyword: "Reckless",

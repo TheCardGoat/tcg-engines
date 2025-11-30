@@ -22,7 +22,7 @@ export const jimDearBelovedHusband: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "cfta1",
+      id: "cft-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

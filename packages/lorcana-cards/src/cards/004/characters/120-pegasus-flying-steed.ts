@@ -22,7 +22,7 @@ export const pegasusFlyingSteed: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "dxea1",
+      id: "dxe-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

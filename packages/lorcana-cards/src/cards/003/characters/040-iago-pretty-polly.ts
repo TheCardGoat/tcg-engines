@@ -22,7 +22,7 @@ export const iagoPrettyPolly: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "d7sa1",
+      id: "d7s-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

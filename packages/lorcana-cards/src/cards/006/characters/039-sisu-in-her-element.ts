@@ -27,7 +27,7 @@ export const sisuInHerElement: CharacterCard = {
   ],
   abilities: [
     {
-      id: "39ba1",
+      id: "39b-1",
       text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",

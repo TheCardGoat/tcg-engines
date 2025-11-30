@@ -22,7 +22,7 @@ export const herculesTrueHero: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1cha1",
+      id: "1ch-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

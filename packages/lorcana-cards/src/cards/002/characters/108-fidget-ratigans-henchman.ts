@@ -22,7 +22,7 @@ export const fidgetRatigansHenchman: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "168a1",
+      id: "168-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

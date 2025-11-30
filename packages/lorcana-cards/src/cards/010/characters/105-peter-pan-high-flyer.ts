@@ -22,7 +22,7 @@ export const peterPanHighFlyer: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1sqa1",
+      id: "1sq-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

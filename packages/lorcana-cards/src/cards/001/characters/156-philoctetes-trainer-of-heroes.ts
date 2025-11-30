@@ -22,7 +22,7 @@ export const philoctetesTrainerOfHeroes: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "1g8a1",
+      id: "1g8-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

@@ -22,7 +22,7 @@ export const violetSabrewingSeniorJuniorWoodchuck: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "ynja1",
+      id: "ynj-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

@@ -22,7 +22,7 @@ export const basilPracticedDetective: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "jeba1",
+      id: "jeb-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

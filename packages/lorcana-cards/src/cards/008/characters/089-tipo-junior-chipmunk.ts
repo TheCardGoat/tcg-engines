@@ -22,7 +22,7 @@ export const tipoJuniorChipmunk: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "y4va1",
+      id: "y4v-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

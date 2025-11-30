@@ -22,7 +22,7 @@ export const simbaProtectiveCub: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "rvma1",
+      id: "rvm-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

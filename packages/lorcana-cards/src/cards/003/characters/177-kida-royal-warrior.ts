@@ -22,7 +22,7 @@ export const kidaRoyalWarrior: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1bia1",
+      id: "1bi-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

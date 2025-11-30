@@ -22,7 +22,7 @@ export const dellaDuckUnstoppableMom: CharacterCard = {
   keywords: ["Reckless"],
   abilities: [
     {
-      id: "1xaa1",
+      id: "1xa-1",
       text: "Reckless",
       type: "keyword",
       keyword: "Reckless",

@@ -22,7 +22,7 @@ export const scuttleBirdbrained: CharacterCard = {
   keywords: ["Ward"],
   abilities: [
     {
-      id: "13da1",
+      id: "13d-1",
       text: "Ward",
       type: "keyword",
       keyword: "Ward",

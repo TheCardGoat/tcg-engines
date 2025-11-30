@@ -22,7 +22,7 @@ export const ratiganCriminalMastermind: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "952a1",
+      id: "952-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

@@ -22,7 +22,7 @@ export const mulanSoldierInTraining: CharacterCard = {
   keywords: ["Rush"],
   abilities: [
     {
-      id: "x7ma1",
+      id: "x7m-1",
       text: "Rush",
       type: "keyword",
       keyword: "Rush",

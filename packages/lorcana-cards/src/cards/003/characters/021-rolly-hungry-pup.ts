@@ -22,7 +22,7 @@ export const rollyHungryPup: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "evpa1",
+      id: "evp-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

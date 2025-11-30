@@ -27,7 +27,7 @@ export const gazellePopStar: CharacterCard = {
   ],
   abilities: [
     {
-      id: "g80a1",
+      id: "g80-1",
       text: "Singer 5",
       type: "keyword",
       keyword: "Singer",
