@@ -65,6 +65,9 @@ export interface BaseCardProperties {
   /** Card abilities */
   abilities?: AbilityDefinition[];
 
+  /** Rules text - raw ability text as printed on the card */
+  text?: string;
+
   /** Flavor text (not mechanically relevant) */
   flavorText?: string;
 
@@ -293,6 +296,9 @@ export interface LorcanaCardDefinition {
 
   /** Card abilities */
   abilities?: AbilityDefinition[];
+
+  /** Rules text - raw ability text as printed on the card */
+  text?: string;
 
   /** Flavor text (not mechanically relevant) */
   flavorText?: string;

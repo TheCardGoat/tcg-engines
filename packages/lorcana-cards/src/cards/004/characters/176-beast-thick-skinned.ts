@@ -1,0 +1,37 @@
+import type { CharacterCard } from "@tcg/lorcana";
+
+export const beastThickskinned: CharacterCard = {
+  id: "qz9",
+  cardType: "character",
+  name: "Beast",
+  version: "Thick-Skinned",
+  fullName: "Beast - Thick-Skinned",
+  inkType: ["steel"],
+  franchise: "Beauty and the Beast",
+  set: "004",
+  text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
+  cardNumber: "176",
+  cost: 3,
+  strength: 2,
+  willpower: 3,
+  lore: 1,
+  inkable: true,
+  vanilla: false,
+  externalIds: {
+    ravensburger: "613c1d6a03168cd893e044a3b018c6d7d70f295d",
+  },
+  keywords: [
+    {
+      type: "Resist",
+      value: 1,
+    },
+  ],
+  abilities: [
+    {
+      id: "qz9-ability-1",
+      text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
+      type: "static",
+    },
+  ],
+  classifications: ["Storyborn", "Hero", "Prince"],
+};

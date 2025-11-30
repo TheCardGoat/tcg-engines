@@ -231,14 +231,116 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
   }
 
   // === ARRAY PROPERTIES ===
-  if (card.keywords && card.keywords.length > 0) {
-    result.keywords = card.keywords;
+  // Convert keywords to proper engine format
+  // Simple keywords stay as strings, parameterized/complex keywords become objects
+  if (card.parsedAbilities && card.parsedAbilities.length > 0) {
+    const engineKeywords: unknown[] = [];
+    for (const ability of card.parsedAbilities) {
+      if (ability.type === "keyword") {
+        const kw = ability.keyword;
+        // Simple keywords (strings)
+        if (
+          [
+            "Bodyguard",
+            "Evasive",
+            "Reckless",
+            "Rush",
+            "Support",
+            "Vanish",
+            "Ward",
+            "Alert",
+          ].includes(kw)
+        ) {
+          engineKeywords.push(kw);
+        }
+        // Parameterized keywords (objects with value)
+        else if (kw === "Challenger" || kw === "Resist") {
+          engineKeywords.push({ type: kw, value: ability.value ?? 0 });
+        }
+        // Singer keyword (object with value)
+        else if (kw === "Singer") {
+          engineKeywords.push({ type: "Singer", value: ability.value ?? 0 });
+        }
+        // Note: Shift is more complex - requires targetName, skip for now
+      }
+    }
+    if (engineKeywords.length > 0) {
+      result.keywords = engineKeywords;
+    }
   }
+
+  // Output raw rules text as 'text' field
   if (card.rulesText) {
-    result.rulesText = card.rulesText;
+    result.text = card.rulesText;
   }
-  if (card.abilities && card.abilities.length > 0) {
-    result.abilities = card.abilities;
+
+  // Output abilities with proper AbilityDefinition format
+  // AbilityDefinition requires: id, text, type (triggered|activated|static)
+  if (card.rulesText && !card.vanilla) {
+    const abilityTexts = card.rulesText.split("\n").filter((t) => t.trim());
+    const engineAbilities: Array<{
+      id: string;
+      name?: string;
+      text: string;
+      type: "triggered" | "activated" | "static";
+    }> = [];
+
+    for (let i = 0; i < abilityTexts.length; i++) {
+      const text = abilityTexts[i].trim();
+      const abilityId = `${card.id}-ability-${i + 1}`;
+
+      // Try to extract ability name (all caps at start)
+      const namedMatch = text.match(/^([A-Z][A-Z\s]+[A-Z])\s+(.+)$/);
+      const name = namedMatch ? namedMatch[1].trim() : undefined;
+
+      // Determine ability type
+      let abilityType: "triggered" | "activated" | "static" = "static";
+      const lower = text.toLowerCase();
+
+      // Check if it's a keyword (map to static)
+      const isKeyword = [
+        "bodyguard",
+        "evasive",
+        "reckless",
+        "rush",
+        "support",
+        "vanish",
+        "ward",
+        "alert",
+        "challenger",
+        "resist",
+        "singer",
+        "shift",
+      ].some((kw) => lower.startsWith(kw));
+
+      if (!isKeyword) {
+        // Triggered abilities
+        if (
+          lower.includes("whenever") ||
+          lower.includes("when you play") ||
+          lower.includes("when this") ||
+          lower.includes("at the start") ||
+          lower.includes("at the end")
+        ) {
+          abilityType = "triggered";
+        }
+        // Activated abilities (have exert cost)
+        else if (lower.includes("{e}") || lower.includes("⬡")) {
+          abilityType = "activated";
+        }
+      }
+
+      engineAbilities.push({
+        id: abilityId,
+        ...(name && { name }),
+        text,
+        type: abilityType,
+      });
+    }
+
+    if (engineAbilities.length > 0) {
+      result.abilities = engineAbilities;
+    }
   }
   if ("classifications" in card && card.classifications?.length) {
     result.classifications = card.classifications;

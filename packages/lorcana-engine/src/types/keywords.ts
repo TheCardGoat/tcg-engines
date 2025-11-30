@@ -9,6 +9,7 @@
 
 /** Simple keywords that have no parameters */
 export const SIMPLE_KEYWORDS = [
+  "Alert",
   "Bodyguard",
   "Evasive",
   "Reckless",
