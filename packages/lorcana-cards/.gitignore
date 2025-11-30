@@ -6,7 +6,5 @@ turbo/
 data/inputs/lorcast-input.json
 data/inputs/ravensburger-input.json
 
-# Generated auxiliary files (regenerate with `bun generate`)
-src/data/printings.json
-src/data/sets.json
-src/data/id-mapping.json
+# Generated auxiliary files are now tracked (like canonical-cards.json)
+# to avoid CI failures. Regenerate with `bun generate`
