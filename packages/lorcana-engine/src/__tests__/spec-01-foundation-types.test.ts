@@ -37,7 +37,7 @@ function createMockCard(
     name: "Test Card",
     version: "Test Version",
     fullName: "Test Card - Test Version",
-    inkType: "amber",
+    inkType: ["amber"],
     cost: 3,
     inkable: true,
     cardType: "character",
@@ -51,7 +51,7 @@ function createMockCard(
 
 // Helper to create a valid 60-card deck with given ink types
 function createValidDeck(
-  inkType: InkType = "amber",
+  inkType: InkType[] = ["amber"],
   secondInkType?: InkType,
 ): LorcanaCardDefinition[] {
   const cards: LorcanaCardDefinition[] = [];
@@ -77,7 +77,7 @@ function createValidDeck(
           name: `Character ${(i % 15) + 15}`,
           version: `Version ${Math.floor(i / 15)}`,
           fullName: `Character ${(i % 15) + 15} - Version ${Math.floor(i / 15)}`,
-          inkType: secondInkType,
+          inkType: [secondInkType],
         }),
       );
     }
@@ -125,21 +125,21 @@ describe("Spec 1: Foundation & Types", () => {
         deck.push(
           createMockCard({
             id: `amber-${i}`,
-            inkType: "amber",
+            inkType: ["amber"],
             fullName: `Amber ${i}`,
           }),
         );
         deck.push(
           createMockCard({
             id: `ruby-${i}`,
-            inkType: "ruby",
+            inkType: ["ruby"],
             fullName: `Ruby ${i}`,
           }),
         );
         deck.push(
           createMockCard({
             id: `sapphire-${i}`,
-            inkType: "sapphire",
+            inkType: ["sapphire"],
             fullName: `Sapphire ${i}`,
           }),
         );
@@ -154,7 +154,7 @@ describe("Spec 1: Foundation & Types", () => {
     });
 
     it("accepts mono-ink deck", () => {
-      const deck = createValidDeck("amber");
+      const deck = createValidDeck(["amber"]);
       const result = validateDeck(deck);
 
       expect(result.valid).toBe(true);
@@ -162,7 +162,7 @@ describe("Spec 1: Foundation & Types", () => {
     });
 
     it("accepts dual-ink deck", () => {
-      const deck = createValidDeck("amber", "ruby");
+      const deck = createValidDeck(["amber"], "ruby");
       const result = validateDeck(deck);
 
       expect(result.valid).toBe(true);
@@ -464,7 +464,7 @@ describe("Spec 1: Foundation & Types", () => {
 
   describe("Deck Statistics", () => {
     it("calculates deck statistics correctly", () => {
-      const deck = createValidDeck("amber", "ruby");
+      const deck = createValidDeck(["amber"], "ruby");
       const stats = getDeckStats(deck);
 
       expect(stats.totalCards).toBe(60);

@@ -16,6 +16,10 @@
     "./parser": {
       "types": "./src/parser/index.ts",
       "default": "./src/parser/index.ts"
+    },
+    "./data": {
+      "types": "./src/data/index.ts",
+      "default": "./src/data/index.ts"
     }
   },
   "scripts": {
@@ -27,7 +31,10 @@
     "test": "AGENT=1 bun test --silent",
     "test:watch": "bun test --watch",
     "test:coverage": "bun test --coverage",
-    "check": "turbo format lint check-types test"
+    "check": "turbo format lint check-types test",
+    "fetch": "bun scripts/fetch-inputs.ts",
+    "generate": "bun scripts/generate-cards.ts",
+    "generate:all": "bun run fetch && bun run generate"
   },
   "dependencies": {
     "@tcg/lorcana": "workspace:*"
