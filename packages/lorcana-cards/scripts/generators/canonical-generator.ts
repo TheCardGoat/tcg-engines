@@ -26,7 +26,9 @@ import type {
   IdMapping,
   InkType,
   InputCard,
+  KeywordAbility,
 } from "../types";
+import { parseKeywordAbilities } from "./parser-validator";
 
 /**
  * Map ink color names from input to our enum
@@ -58,40 +60,40 @@ function extractInkType(colors: string[]): InkType[] {
 
 /**
  * Extract keywords from abilities array
- * Keywords are typically single words like "Bodyguard", "Rush", "Evasive"
+ * Keywords are capitalized to match the engine's Keyword type
  */
-const KNOWN_KEYWORDS = [
-  "alert",
-  "bodyguard",
-  "boost",
-  "challenger",
-  "evasive",
-  "reckless",
-  "resist",
-  "rush",
-  "shift",
-  "singer",
-  "support",
-  "ward",
-];
+const KNOWN_KEYWORDS: Record<string, string> = {
+  alert: "Alert",
+  bodyguard: "Bodyguard",
+  boost: "Boost",
+  challenger: "Challenger",
+  evasive: "Evasive",
+  reckless: "Reckless",
+  resist: "Resist",
+  rush: "Rush",
+  shift: "Shift",
+  singer: "Singer",
+  support: "Support",
+  ward: "Ward",
+};
 
 function extractKeywords(abilities: string[]): string[] {
   const keywords: string[] = [];
 
   for (const ability of abilities) {
     const lower = ability.toLowerCase();
-    if (KNOWN_KEYWORDS.includes(lower)) {
-      keywords.push(lower);
+    if (lower in KNOWN_KEYWORDS) {
+      keywords.push(KNOWN_KEYWORDS[lower]);
     } else if (lower.startsWith("shift ")) {
-      keywords.push("shift");
+      keywords.push("Shift");
     } else if (lower.startsWith("singer ")) {
-      keywords.push("singer");
+      keywords.push("Singer");
     } else if (lower.startsWith("resist ")) {
-      keywords.push("resist");
+      keywords.push("Resist");
     } else if (lower.startsWith("challenger ")) {
-      keywords.push("challenger");
+      keywords.push("Challenger");
     } else if (lower.startsWith("boost ")) {
-      keywords.push("boost");
+      keywords.push("Boost");
     }
   }
 
@@ -161,7 +163,7 @@ function inferAbilityType(
   const lower = text.toLowerCase();
 
   // Check for keywords first
-  for (const kw of KNOWN_KEYWORDS) {
+  for (const kw of Object.keys(KNOWN_KEYWORDS)) {
     if (lower.startsWith(kw)) return "keyword";
   }
 
@@ -331,6 +333,7 @@ interface CommonCardProperties {
   keywords?: string[];
   rulesText?: string;
   abilities?: AbilityDefinition[];
+  parsedAbilities?: KeywordAbility[];
   classifications?: string[];
   printings?: CardPrintingRef[];
 }
@@ -383,6 +386,16 @@ function buildCommonCardProperties(
   if (!isVanilla) {
     props.rulesText = rulesText;
     props.abilities = parseAbilities(rulesText);
+
+    // Try to parse structured keyword abilities
+    // This will only succeed if ALL abilities are keywords
+    const parsed = parseKeywordAbilities({
+      rulesText,
+      vanilla: false,
+    } as CanonicalCard);
+    if (parsed && parsed.length > 0) {
+      props.parsedAbilities = parsed.map((a) => a.ability as KeywordAbility);
+    }
   }
 
   return props;

@@ -231,15 +231,54 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
   }
 
   // === ARRAY PROPERTIES ===
-  if (card.keywords && card.keywords.length > 0) {
-    result.keywords = card.keywords;
+  // Convert keywords to proper engine format
+  // Simple keywords stay as strings, parameterized/complex keywords become objects
+  if (card.parsedAbilities && card.parsedAbilities.length > 0) {
+    const engineKeywords: unknown[] = [];
+    for (const ability of card.parsedAbilities) {
+      if (ability.type === "keyword") {
+        const kw = ability.keyword;
+        // Simple keywords (strings)
+        if (
+          [
+            "Bodyguard",
+            "Evasive",
+            "Reckless",
+            "Rush",
+            "Support",
+            "Vanish",
+            "Ward",
+            "Alert",
+          ].includes(kw)
+        ) {
+          engineKeywords.push(kw);
+        }
+        // Parameterized keywords (objects with value)
+        else if (kw === "Challenger" || kw === "Resist") {
+          engineKeywords.push({ type: kw, value: ability.value ?? 0 });
+        }
+        // Singer keyword (object with value)
+        else if (kw === "Singer") {
+          engineKeywords.push({ type: "Singer", value: ability.value ?? 0 });
+        }
+        // Note: Shift is more complex - requires targetName, skip for now
+      }
+    }
+    if (engineKeywords.length > 0) {
+      result.keywords = engineKeywords;
+    }
   }
-  if (card.rulesText) {
-    result.rulesText = card.rulesText;
-  }
-  if (card.abilities && card.abilities.length > 0) {
+  // Note: rulesText is NOT a valid field in engine's card types, so don't output it
+  // Only output abilities if we don't have parsedAbilities (keyword-only cards)
+  // The abilities array has type incompatibilities with the engine's AbilityDefinition
+  if (
+    card.abilities &&
+    card.abilities.length > 0 &&
+    !(card.parsedAbilities && card.parsedAbilities.length > 0)
+  ) {
     result.abilities = card.abilities;
   }
+  // Note: parsedAbilities is internal to lorcana-cards package, don't export to engine card types
   if ("classifications" in card && card.classifications?.length) {
     result.classifications = card.classifications;
   }

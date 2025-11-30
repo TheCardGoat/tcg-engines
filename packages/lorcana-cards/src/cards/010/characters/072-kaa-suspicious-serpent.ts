@@ -1,0 +1,24 @@
+import type { CharacterCard } from "@tcg/lorcana";
+
+export const kaaSuspiciousSerpent: CharacterCard = {
+  id: "xkn",
+  cardType: "character",
+  name: "Kaa",
+  version: "Suspicious Serpent",
+  fullName: "Kaa - Suspicious Serpent",
+  inkType: ["emerald"],
+  franchise: "Jungle Book",
+  set: "010",
+  cardNumber: "072",
+  cost: 3,
+  strength: 3,
+  willpower: 2,
+  lore: 2,
+  inkable: true,
+  vanilla: false,
+  externalIds: {
+    ravensburger: "790085a5369b1cc854dd2c964ca6e879be2e2a56",
+  },
+  keywords: ["Ward"],
+  classifications: ["Storyborn", "Villain"],
+};

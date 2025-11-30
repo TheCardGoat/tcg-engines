@@ -28,6 +28,7 @@ import path from "node:path";
 import { generateCanonicalCards } from "./generators/canonical-generator";
 import { generateCardFiles } from "./generators/file-generator";
 import { createIdMapping } from "./generators/id-generator";
+import { isKeywordOnlyCard } from "./generators/parser-validator";
 import {
   calculateSetTotals,
   generatePrintings,
@@ -167,18 +168,27 @@ async function main() {
     fs.rmSync(CARDS_OUTPUT_DIR, { recursive: true });
   }
 
-  // Filter to only vanilla cards (no abilities to implement)
-  const vanillaCards: Record<string, (typeof canonicalCards)[string]> = {};
+  // Filter to vanilla cards + keyword-only cards (parseable abilities)
+  const generatableCards: Record<string, (typeof canonicalCards)[string]> = {};
+  let vanillaCount = 0;
+  let keywordOnlyCount = 0;
+
   for (const [id, card] of Object.entries(canonicalCards)) {
     if (card.vanilla) {
-      vanillaCards[id] = card;
+      generatableCards[id] = card;
+      vanillaCount++;
+    } else if (isKeywordOnlyCard(card)) {
+      generatableCards[id] = card;
+      keywordOnlyCount++;
     }
   }
   console.log(
-    `  Filtering to ${Object.keys(vanillaCards).length} vanilla cards only`,
+    `  Filtering to ${Object.keys(generatableCards).length} generatable cards:`,
   );
+  console.log(`    - Vanilla: ${vanillaCount}`);
+  console.log(`    - Keyword-only: ${keywordOnlyCount}`);
 
-  generateCardFiles(CARDS_OUTPUT_DIR, vanillaCards, sets);
+  generateCardFiles(CARDS_OUTPUT_DIR, generatableCards, sets);
 
   // Print summary
   console.log("\n📊 Summary:");

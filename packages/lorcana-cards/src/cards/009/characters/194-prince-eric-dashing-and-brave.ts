@@ -1,0 +1,29 @@
+import type { CharacterCard } from "@tcg/lorcana";
+
+export const princeEricDashingAndBrave: CharacterCard = {
+  id: "1cu",
+  cardType: "character",
+  name: "Prince Eric",
+  version: "Dashing and Brave",
+  fullName: "Prince Eric - Dashing and Brave",
+  inkType: ["steel"],
+  franchise: "Little Mermaid",
+  set: "009",
+  cardNumber: "194",
+  cost: 2,
+  strength: 1,
+  willpower: 3,
+  lore: 1,
+  inkable: true,
+  vanilla: false,
+  externalIds: {
+    ravensburger: "b003941c689f0757920787101a49607295e99da1",
+  },
+  keywords: [
+    {
+      type: "Challenger",
+      value: 2,
+    },
+  ],
+  classifications: ["Storyborn", "Hero", "Prince"],
+};

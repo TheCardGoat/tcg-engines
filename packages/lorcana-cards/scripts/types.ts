@@ -18,6 +18,7 @@ export type {
   CharacterCard,
   InkType,
   ItemCard,
+  KeywordAbility,
   LocationCard,
   LorcanaCard,
 } from "@tcg/lorcana";
@@ -29,6 +30,7 @@ import type {
   CharacterCard,
   InkType,
   ItemCard,
+  KeywordAbility,
   LocationCard,
   LorcanaCard,
 } from "@tcg/lorcana";
@@ -203,6 +205,9 @@ export interface CanonicalCardMetadata {
 
   /** Parsed abilities for game logic (omitted for vanilla cards) */
   abilities?: AbilityDefinition[];
+
+  /** Structured keyword abilities parsed from rules text */
+  parsedAbilities?: KeywordAbility[];
 
   /** References to all printings of this card */
   printings: CardPrintingRef[];

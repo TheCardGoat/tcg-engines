@@ -1,0 +1,24 @@
+import type { CharacterCard } from "@tcg/lorcana";
+
+export const sleepySluggishKnight: CharacterCard = {
+  id: "1k0",
+  cardType: "character",
+  name: "Sleepy",
+  version: "Sluggish Knight",
+  fullName: "Sleepy - Sluggish Knight",
+  inkType: ["steel"],
+  franchise: "Snow White",
+  set: "005",
+  cardNumber: "177",
+  cost: 2,
+  strength: 0,
+  willpower: 4,
+  lore: 1,
+  inkable: true,
+  vanilla: false,
+  externalIds: {
+    ravensburger: "c9ec3115210a0d6350a7df1c16405f550b05b3cd",
+  },
+  keywords: ["Bodyguard"],
+  classifications: ["Dreamborn", "Ally", "Knight", "Seven Dwarfs"],
+};
