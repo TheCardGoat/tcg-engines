@@ -22,7 +22,7 @@ export const theHeadlessHorsemanRelentlessSpirit: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "i51a1",
+      id: "i51-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

@@ -22,7 +22,7 @@ export const aladdinPrinceAli: CharacterCard = {
   keywords: ["Ward"],
   abilities: [
     {
-      id: "820a1",
+      id: "820-1",
       text: "Ward",
       type: "keyword",
       keyword: "Ward",

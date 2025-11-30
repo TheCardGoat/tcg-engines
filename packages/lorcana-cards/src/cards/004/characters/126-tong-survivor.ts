@@ -22,7 +22,7 @@ export const tongSurvivor: CharacterCard = {
   keywords: ["Reckless"],
   abilities: [
     {
-      id: "qqaa1",
+      id: "qqa-1",
       text: "Reckless",
       type: "keyword",
       keyword: "Reckless",

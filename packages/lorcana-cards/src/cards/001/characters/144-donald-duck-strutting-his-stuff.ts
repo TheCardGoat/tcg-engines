@@ -21,7 +21,7 @@ export const donaldDuckStruttingHisStuff: CharacterCard = {
   keywords: ["Ward"],
   abilities: [
     {
-      id: "10ba1",
+      id: "10b-1",
       text: "Ward",
       type: "keyword",
       keyword: "Ward",

@@ -22,7 +22,7 @@ export const trustyLoyalBloodhound: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "oyta1",
+      id: "oyt-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

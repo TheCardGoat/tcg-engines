@@ -21,7 +21,7 @@ export const mickeyMouseBraveLittleTailor: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "a81a1",
+      id: "a81-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

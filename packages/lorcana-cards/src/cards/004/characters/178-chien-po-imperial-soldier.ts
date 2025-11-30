@@ -22,7 +22,7 @@ export const chienpoImperialSoldier: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1m9a1",
+      id: "1m9-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

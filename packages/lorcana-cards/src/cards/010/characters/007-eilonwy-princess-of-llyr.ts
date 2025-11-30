@@ -22,7 +22,7 @@ export const eilonwyPrincessOfLlyr: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "49aa1",
+      id: "49a-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

@@ -22,7 +22,7 @@ export const chiefTuiRespectedLeader: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "qaia1",
+      id: "qai-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

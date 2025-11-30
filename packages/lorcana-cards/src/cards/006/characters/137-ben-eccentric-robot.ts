@@ -22,7 +22,7 @@ export const benEccentricRobot: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "1b4a1",
+      id: "1b4-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

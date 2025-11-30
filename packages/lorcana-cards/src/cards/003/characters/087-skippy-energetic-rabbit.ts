@@ -22,7 +22,7 @@ export const skippyEnergeticRabbit: CharacterCard = {
   keywords: ["Ward"],
   abilities: [
     {
-      id: "1m8a1",
+      id: "1m8-1",
       text: "Ward",
       type: "keyword",
       keyword: "Ward",

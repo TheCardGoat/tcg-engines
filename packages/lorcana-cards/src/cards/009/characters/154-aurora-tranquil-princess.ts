@@ -22,7 +22,7 @@ export const auroraTranquilPrincess: CharacterCard = {
   keywords: ["Ward"],
   abilities: [
     {
-      id: "1sra1",
+      id: "1sr-1",
       text: "Ward",
       type: "keyword",
       keyword: "Ward",

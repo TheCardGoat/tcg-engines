@@ -22,7 +22,7 @@ export const princeEricSeafaringPrince: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "98xa1",
+      id: "98x-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

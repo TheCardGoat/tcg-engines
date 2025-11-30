@@ -22,7 +22,7 @@ export const thePrinceVigilantSuitor: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "ot0a1",
+      id: "ot0-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

@@ -22,7 +22,7 @@ export const peterPanNeverLanding: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1g6a1",
+      id: "1g6-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

@@ -22,7 +22,7 @@ export const montereyJackDefiantProtector: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1s2a1",
+      id: "1s2-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

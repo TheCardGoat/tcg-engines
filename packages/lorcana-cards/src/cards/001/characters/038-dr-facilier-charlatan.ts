@@ -27,7 +27,7 @@ export const drFacilierCharlatan: CharacterCard = {
   ],
   abilities: [
     {
-      id: "8u0a1",
+      id: "8u0-1",
       text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",

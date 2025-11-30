@@ -27,7 +27,7 @@ export const clawhauserDonutDetective: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1ura1",
+      id: "1ur-1",
       text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",

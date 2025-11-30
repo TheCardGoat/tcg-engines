@@ -27,7 +27,7 @@ export const shantiVillageGirl: CharacterCard = {
   ],
   abilities: [
     {
-      id: "lyqa1",
+      id: "lyq-1",
       text: "Singer 5",
       type: "keyword",
       keyword: "Singer",

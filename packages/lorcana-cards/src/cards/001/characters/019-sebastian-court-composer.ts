@@ -27,7 +27,7 @@ export const sebastianCourtComposer: CharacterCard = {
   ],
   abilities: [
     {
-      id: "8rza1",
+      id: "8rz-1",
       text: "Singer 4",
       type: "keyword",
       keyword: "Singer",

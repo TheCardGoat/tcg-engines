@@ -27,7 +27,7 @@ export const elsaGlovesOff: CharacterCard = {
   ],
   abilities: [
     {
-      id: "77oa1",
+      id: "77o-1",
       text: "Challenger +3",
       type: "keyword",
       keyword: "Challenger",

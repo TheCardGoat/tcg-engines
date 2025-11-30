@@ -27,7 +27,7 @@ export const generalLiHeadOfTheImperialArmy: CharacterCard = {
   ],
   abilities: [
     {
-      id: "iiqa1",
+      id: "iiq-1",
       text: "Resist +1",
       type: "keyword",
       keyword: "Resist",

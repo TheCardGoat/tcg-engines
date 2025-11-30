@@ -22,7 +22,7 @@ export const ruttNorthernMoose: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "sqfa1",
+      id: "sqf-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

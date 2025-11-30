@@ -26,7 +26,7 @@ export const mickeyMouseFoodFightDefender: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1m6a1",
+      id: "1m6-1",
       text: "Resist +1",
       type: "keyword",
       keyword: "Resist",

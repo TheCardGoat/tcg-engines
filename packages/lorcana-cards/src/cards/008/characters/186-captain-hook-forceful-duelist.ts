@@ -27,7 +27,7 @@ export const captainHookForcefulDuelist: CharacterCard = {
   ],
   abilities: [
     {
-      id: "bhva1",
+      id: "bhv-1",
       text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",

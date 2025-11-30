@@ -22,7 +22,7 @@ export const peterPanFearlessFighter: CharacterCard = {
   keywords: ["Rush"],
   abilities: [
     {
-      id: "czpa1",
+      id: "czp-1",
       text: "Rush",
       type: "keyword",
       keyword: "Rush",

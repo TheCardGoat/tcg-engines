@@ -22,7 +22,7 @@ export const lenaSabrewingRebelliousTeenager: CharacterCard = {
   keywords: ["Rush"],
   abilities: [
     {
-      id: "1j3a1",
+      id: "1j3-1",
       text: "Rush",
       type: "keyword",
       keyword: "Rush",

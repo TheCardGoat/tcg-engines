@@ -22,7 +22,7 @@ export const happyGoodnatured: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "deta1",
+      id: "det-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

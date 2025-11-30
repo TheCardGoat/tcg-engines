@@ -27,7 +27,7 @@ export const eeyoreOverstuffedDonkey: CharacterCard = {
   ],
   abilities: [
     {
-      id: "16oa1",
+      id: "16o-1",
       text: "Resist +1",
       type: "keyword",
       keyword: "Resist",

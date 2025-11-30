@@ -22,7 +22,7 @@ export const heiheiProtectiveRooster: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "9loa1",
+      id: "9lo-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

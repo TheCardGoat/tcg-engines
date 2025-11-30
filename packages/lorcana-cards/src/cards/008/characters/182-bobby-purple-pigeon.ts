@@ -22,7 +22,7 @@ export const bobbyPurplePigeon: CharacterCard = {
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "mbja1",
+      id: "mbj-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

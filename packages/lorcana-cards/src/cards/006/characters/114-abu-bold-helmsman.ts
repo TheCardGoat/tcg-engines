@@ -22,7 +22,7 @@ export const abuBoldHelmsman: CharacterCard = {
   keywords: ["Rush"],
   abilities: [
     {
-      id: "1f2a1",
+      id: "1f2-1",
       text: "Rush",
       type: "keyword",
       keyword: "Rush",

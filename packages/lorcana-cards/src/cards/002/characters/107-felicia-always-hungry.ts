@@ -22,7 +22,7 @@ export const feliciaAlwaysHungry: CharacterCard = {
   keywords: ["Reckless"],
   abilities: [
     {
-      id: "7iza1",
+      id: "7iz-1",
       text: "Reckless",
       type: "keyword",
       keyword: "Reckless",

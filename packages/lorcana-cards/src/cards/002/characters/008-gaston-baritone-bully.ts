@@ -27,7 +27,7 @@ export const gastonBaritoneBully: CharacterCard = {
   ],
   abilities: [
     {
-      id: "6hka1",
+      id: "6hk-1",
       text: "Singer 5",
       type: "keyword",
       keyword: "Singer",

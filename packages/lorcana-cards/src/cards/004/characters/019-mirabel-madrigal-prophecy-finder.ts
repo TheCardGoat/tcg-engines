@@ -22,7 +22,7 @@ export const mirabelMadrigalProphecyFinder: CharacterCard = {
   keywords: ["Support"],
   abilities: [
     {
-      id: "1lva1",
+      id: "1lv-1",
       text: "Support",
       type: "keyword",
       keyword: "Support",

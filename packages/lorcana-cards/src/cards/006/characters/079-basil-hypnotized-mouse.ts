@@ -22,7 +22,7 @@ export const basilHypnotizedMouse: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1v9a1",
+      id: "1v9-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

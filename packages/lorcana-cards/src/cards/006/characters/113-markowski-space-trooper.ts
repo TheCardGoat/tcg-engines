@@ -22,7 +22,7 @@ export const markowskiSpaceTrooper: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1t3a1",
+      id: "1t3-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

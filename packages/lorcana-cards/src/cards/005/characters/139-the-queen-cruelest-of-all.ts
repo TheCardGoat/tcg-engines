@@ -22,7 +22,7 @@ export const theQueenCruelestOfAll: CharacterCard = {
   keywords: ["Ward"],
   abilities: [
     {
-      id: "s28a1",
+      id: "s28-1",
       text: "Ward",
       type: "keyword",
       keyword: "Ward",

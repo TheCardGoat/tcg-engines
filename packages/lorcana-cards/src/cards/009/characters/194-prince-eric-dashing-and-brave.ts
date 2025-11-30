@@ -27,7 +27,7 @@ export const princeEricDashingAndBrave: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1cua1",
+      id: "1cu-1",
       text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",

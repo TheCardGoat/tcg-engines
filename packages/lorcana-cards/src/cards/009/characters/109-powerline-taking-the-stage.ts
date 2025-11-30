@@ -27,7 +27,7 @@ export const powerlineTakingTheStage: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1t6a1",
+      id: "1t6-1",
       text: "Singer 4",
       type: "keyword",
       keyword: "Singer",

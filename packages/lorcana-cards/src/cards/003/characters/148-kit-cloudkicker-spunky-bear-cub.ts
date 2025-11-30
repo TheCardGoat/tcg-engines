@@ -22,7 +22,7 @@ export const kitCloudkickerSpunkyBearCub: CharacterCard = {
   keywords: ["Ward"],
   abilities: [
     {
-      id: "hkta1",
+      id: "hkt-1",
       text: "Ward",
       type: "keyword",
       keyword: "Ward",

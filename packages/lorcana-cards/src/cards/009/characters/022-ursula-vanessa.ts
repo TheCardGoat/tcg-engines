@@ -27,7 +27,7 @@ export const ursulaVanessa: CharacterCard = {
   ],
   abilities: [
     {
-      id: "lsja1",
+      id: "lsj-1",
       text: "Singer 4",
       type: "keyword",
       keyword: "Singer",

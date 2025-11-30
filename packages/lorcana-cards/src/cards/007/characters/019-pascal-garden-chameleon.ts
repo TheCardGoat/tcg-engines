@@ -22,7 +22,7 @@ export const pascalGardenChameleon: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1oza1",
+      id: "1oz-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

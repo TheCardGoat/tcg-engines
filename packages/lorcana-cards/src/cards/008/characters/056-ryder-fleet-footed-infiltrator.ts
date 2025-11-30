@@ -22,7 +22,7 @@ export const ryderFleetfootedInfiltrator: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "14oa1",
+      id: "14o-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

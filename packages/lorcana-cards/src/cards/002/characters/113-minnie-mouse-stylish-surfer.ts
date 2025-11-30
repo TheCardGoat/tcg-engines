@@ -21,7 +21,7 @@ export const minnieMouseStylishSurfer: CharacterCard = {
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1yya1",
+      id: "1yy-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

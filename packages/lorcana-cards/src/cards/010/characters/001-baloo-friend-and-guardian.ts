@@ -22,13 +22,13 @@ export const balooFriendAndGuardian: CharacterCard = {
   keywords: ["Bodyguard", "Support"],
   abilities: [
     {
-      id: "qnca1",
+      id: "qnc-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",
     },
     {
-      id: "qnca2",
+      id: "qnc-2",
       text: "Support",
       type: "keyword",
       keyword: "Support",

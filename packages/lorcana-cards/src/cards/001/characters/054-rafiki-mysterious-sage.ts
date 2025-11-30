@@ -22,7 +22,7 @@ export const rafikiMysteriousSage: CharacterCard = {
   keywords: ["Rush"],
   abilities: [
     {
-      id: "zqha1",
+      id: "zqh-1",
       text: "Rush",
       type: "keyword",
       keyword: "Rush",
