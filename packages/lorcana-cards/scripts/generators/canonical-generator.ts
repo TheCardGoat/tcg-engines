@@ -46,12 +46,13 @@ function mapInkColor(color: string): InkType {
 
 /**
  * Extract ink type(s) from magic_ink_colors array
+ * Always returns an array for consistency
  */
-function extractInkType(colors: string[]): InkType | [InkType, InkType] {
-  if (colors.length === 0) return "amber";
-  if (colors.length === 1) return mapInkColor(colors[0]);
+function extractInkType(colors: string[]): InkType[] {
+  if (colors.length === 0) return [];
+  if (colors.length === 1) return [mapInkColor(colors[0])];
 
-  // Dual ink
+  // Dual ink - return as array
   return [mapInkColor(colors[0]), mapInkColor(colors[1])];
 }
 
@@ -227,19 +228,38 @@ function generatePrintingRefs(
   const seen = new Set<string>();
 
   for (const card of cards) {
+    const parsed = parseCardIdentifier(card.card_identifier);
+    if (!parsed) continue;
+
     for (const setId of card.card_sets) {
-      const parsed = parseCardIdentifier(card.card_identifier);
-      if (parsed) {
-        const setNumber = getSetNumber(setId);
-        const key = `${setNumber}-${parsed.cardNumber}`;
-        if (!seen.has(key)) {
-          seen.add(key);
-          printingRefs.push({
-            set: setNumber,
-            collectorNumber: parsed.cardNumber,
-            id: shortId,
-          });
-        }
+      const setNumber = getSetNumber(setId);
+
+      // Verify that the card_identifier's set number matches the setId
+      // card_identifier format: "4/204 EN 1" where "1" is the set number
+      // Extract set number from setId (e.g., "set1" -> 1, "set2" -> 2)
+      const setIdMatch = setId.match(/\d+/);
+      const setIdNumber = setIdMatch
+        ? Number.parseInt(setIdMatch[0], 10)
+        : null;
+
+      // Only use this card_identifier if it matches the current setId
+      if (
+        parsed.setNumber !== null &&
+        setIdNumber !== null &&
+        parsed.setNumber !== setIdNumber
+      ) {
+        // This card_identifier is for a different set, skip it
+        continue;
+      }
+
+      const key = `${setNumber}-${parsed.cardNumber}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        printingRefs.push({
+          set: setNumber,
+          collectorNumber: parsed.cardNumber,
+          id: shortId,
+        });
       }
     }
   }
@@ -290,8 +310,38 @@ function buildExternalIds(
 }
 
 /**
- * Build common card properties shared by all card types
+ * Build ordered common properties for all card types
+ * Order: String → Numeric → Boolean → Object → Array
  */
+interface CommonCardProperties {
+  // STRING PROPERTIES
+  id: string;
+  cardType: CardType;
+  name: string;
+  version: string;
+  fullName: string;
+  inkType: InkType[];
+  franchise?: string;
+  set?: string;
+  cardNumber?: string;
+  // NUMERIC PROPERTIES
+  cost: number;
+  strength?: number;
+  willpower?: number;
+  lore?: number;
+  // BOOLEAN PROPERTIES
+  inkable: boolean;
+  vanilla: boolean;
+  // OBJECT PROPERTIES
+  externalIds?: ExternalIds;
+  // ARRAY PROPERTIES
+  keywords?: string[];
+  rulesText?: string;
+  abilities?: AbilityDefinition[];
+  classifications?: string[];
+  printings?: CardPrintingRef[];
+}
+
 function buildCommonCardProperties(
   shortId: string,
   baseCard: InputCard & { cardType: CardType },
@@ -301,34 +351,48 @@ function buildCommonCardProperties(
   externalIds: ExternalIds | undefined,
   keywords: string[],
   printingRefs: CardPrintingRef[],
-) {
-  return {
+): Partial<CommonCardProperties> {
+  // Build object with proper property order
+  const props: Partial<CommonCardProperties> = {
     // === STRING PROPERTIES ===
     id: shortId,
+    cardType: baseCard.cardType,
     name: baseCard.name,
     version: baseCard.subtitle || "",
     fullName: baseCard.subtitle
       ? `${baseCard.name} - ${baseCard.subtitle}`
       : baseCard.name,
     inkType: extractInkType(baseCard.magic_ink_colors || []),
-    ...(franchise && { franchise }),
-
-    // === NUMERIC PROPERTIES ===
-    cost: baseCard.ink_cost,
-
-    // === BOOLEAN PROPERTIES ===
-    inkable: baseCard.ink_convertible,
-    vanilla: isVanilla,
-
-    // === OBJECT PROPERTIES ===
-    ...(externalIds && { externalIds }),
-
-    // === ARRAY PROPERTIES ===
-    printings: printingRefs,
-    ...(keywords.length > 0 && { keywords }),
-    ...(!isVanilla && { rulesText }),
-    ...(!isVanilla && { abilities: parseAbilities(rulesText) }),
   };
+
+  if (franchise) {
+    props.franchise = franchise;
+  }
+
+  // === NUMERIC PROPERTIES ===
+  props.cost = baseCard.ink_cost;
+
+  // === BOOLEAN PROPERTIES ===
+  props.inkable = baseCard.ink_convertible;
+  props.vanilla = isVanilla;
+
+  // === OBJECT PROPERTIES ===
+  if (externalIds) {
+    props.externalIds = externalIds;
+  }
+
+  // === ARRAY PROPERTIES ===
+  // TODO: Printings will be added back to output when needed
+  props.printings = printingRefs;
+  if (keywords.length > 0) {
+    props.keywords = keywords;
+  }
+  if (!isVanilla) {
+    props.rulesText = rulesText;
+    props.abilities = parseAbilities(rulesText);
+  }
+
+  return props;
 }
 
 /**
@@ -430,6 +494,11 @@ export function transformToCanonicalCard(
         // === NUMERIC PROPERTIES ===
         moveCost: baseCard.move_cost ?? 0,
         lore: baseCard.lore ?? 0,
+
+        // === ARRAY PROPERTIES ===
+        ...(baseCard.subtypes?.length && {
+          classifications: baseCard.subtypes,
+        }),
       };
       return card;
     }

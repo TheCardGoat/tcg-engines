@@ -172,30 +172,134 @@ function getCanonicalTypeName(cardType: CardType): string {
 
 /**
  * Convert canonical card to LorcanaCard format
+ * Reconstructs with proper property ordering: String → Numeric → Boolean → Object → Array
  * Maps printings array to set/cardNumber from first printing
+ * TODO: Re-enable printing in output when requested
  */
 function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
   const firstPrinting = card.printings[0];
 
-  // Build the lorcana card object
-  const lorcanaCard: Record<string, unknown> = {};
+  // Build set and cardNumber from first printing
+  const set = firstPrinting?.set;
+  const cardNumber = firstPrinting
+    ? firstPrinting.collectorNumber.toString().padStart(3, "0")
+    : undefined;
 
-  // Copy all properties except printings
-  for (const [key, value] of Object.entries(card)) {
-    if (key !== "printings") {
-      lorcanaCard[key] = value;
+  // Reconstruct object with proper property ordering
+  const result: Record<string, unknown> = {
+    // === STRING PROPERTIES (in order) ===
+    id: card.id,
+    cardType: card.cardType,
+    name: card.name,
+    version: card.version,
+    fullName: card.fullName,
+    inkType: card.inkType,
+  };
+
+  // Add optional string properties
+  if (card.franchise) {
+    result.franchise = card.franchise;
+  }
+  if (set) {
+    result.set = set;
+  }
+
+  // === NUMERIC PROPERTIES ===
+  result.cost = card.cost;
+
+  // Add type-specific numeric properties
+  if ("strength" in card) {
+    result.strength = card.strength;
+  }
+  if ("willpower" in card) {
+    result.willpower = card.willpower;
+  }
+  if ("moveCost" in card) {
+    result.moveCost = card.moveCost;
+  }
+  if ("lore" in card) {
+    result.lore = card.lore;
+  }
+
+  // === BOOLEAN PROPERTIES ===
+  result.inkable = card.inkable;
+  result.vanilla = card.vanilla;
+
+  // === OBJECT PROPERTIES ===
+  if (card.externalIds) {
+    result.externalIds = card.externalIds;
+  }
+
+  // === ARRAY PROPERTIES ===
+  if (card.keywords && card.keywords.length > 0) {
+    result.keywords = card.keywords;
+  }
+  if (card.rulesText) {
+    result.rulesText = card.rulesText;
+  }
+  if (card.abilities && card.abilities.length > 0) {
+    result.abilities = card.abilities;
+  }
+  if ("classifications" in card && card.classifications?.length) {
+    result.classifications = card.classifications;
+  }
+  if ("actionSubtype" in card && card.actionSubtype) {
+    result.actionSubtype = card.actionSubtype;
+  }
+
+  // Add cardNumber at the end with string properties
+  if (cardNumber) {
+    // Need to re-order to put cardNumber with strings - reconstruct
+    const finalResult: Record<string, unknown> = {};
+    const keys = Object.keys(result);
+
+    // Copy string properties first
+    for (const key of keys) {
+      if (
+        typeof result[key] === "string" ||
+        key === "inkType" ||
+        key === "cardType"
+      ) {
+        finalResult[key] = result[key];
+      }
     }
+    finalResult.cardNumber = cardNumber;
+
+    // Copy numeric properties
+    for (const key of keys) {
+      if (
+        typeof result[key] === "number" &&
+        key !== "cardNumber" &&
+        !["cost", "strength", "willpower", "lore", "moveCost"].includes(key)
+      ) {
+        finalResult[key] = result[key];
+      }
+    }
+    // Add known numeric properties in order
+    if ("cost" in result) finalResult.cost = result.cost;
+    if ("strength" in result) finalResult.strength = result.strength;
+    if ("willpower" in result) finalResult.willpower = result.willpower;
+    if ("moveCost" in result) finalResult.moveCost = result.moveCost;
+    if ("lore" in result) finalResult.lore = result.lore;
+
+    // Copy boolean properties
+    for (const key of keys) {
+      if (typeof result[key] === "boolean") {
+        finalResult[key] = result[key];
+      }
+    }
+
+    // Copy remaining properties
+    for (const key of keys) {
+      if (!(key in finalResult)) {
+        finalResult[key] = result[key];
+      }
+    }
+
+    return finalResult;
   }
 
-  // Add set and cardNumber from first printing
-  if (firstPrinting) {
-    lorcanaCard.set = firstPrinting.set;
-    lorcanaCard.cardNumber = firstPrinting.collectorNumber
-      .toString()
-      .padStart(3, "0");
-  }
-
-  return lorcanaCard;
+  return result;
 }
 
 /**
@@ -256,6 +360,13 @@ export function generateSetIndexContent(
     })
     .join("\n");
 
+  const typeUnion = cardTypes
+    .map((type) => {
+      const typeName = getCanonicalTypeName(type);
+      return typeName;
+    })
+    .join(" | ");
+
   const spreadValues = cardTypes
     .map((type) => `  ...Object.values(${getCardTypeFolderName(type)}),`)
     .join("\n");
@@ -264,14 +375,15 @@ export function generateSetIndexContent(
     .map((type) => `export * from "./${getCardTypeFolderName(type)}";`)
     .join("\n");
 
-  return `import type { CanonicalCard } from "../types";
+  const importedTypes = typeUnion.split(" | ").join(", ");
+  return `import type { ${importedTypes} } from "@tcg/lorcana";
 ${imports}
 
-export const all${setFolderName}Cards: CanonicalCard[] = [
+export const all${setFolderName}Cards: (${typeUnion})[] = [
 ${spreadValues}
 ];
 
-export const all${setFolderName}CardsById: Record<string, CanonicalCard> = {};
+export const all${setFolderName}CardsById: Record<string, ${typeUnion}> = {};
 for (const card of all${setFolderName}Cards) {
   all${setFolderName}CardsById[card.id] = card;
 }
@@ -299,14 +411,14 @@ export function generateMainCardsContent(setFolderNames: string[]): string {
     .map((name) => `  ...all${name}CardsById,`)
     .join("\n");
 
-  return `import type { CanonicalCard } from "./types";
+  return `import type { CharacterCard, ActionCard, ItemCard, LocationCard } from "@tcg/lorcana";
 ${imports}
 
-export const allCards: CanonicalCard[] = [
+export const allCards: (CharacterCard | ActionCard | ItemCard | LocationCard)[] = [
 ${cardsSpreads}
 ];
 
-export const allCardsById: Record<string, CanonicalCard> = {
+export const allCardsById: Record<string, CharacterCard | ActionCard | ItemCard | LocationCard> = {
 ${byIdSpreads}
 };
 `;
@@ -316,19 +428,19 @@ ${byIdSpreads}
  * Generate content for index.ts entry point
  */
 export function generateEntryPointContent(): string {
-  return `import type { CanonicalCard } from "./types";
+  return `import type { CharacterCard, ActionCard, ItemCard, LocationCard } from "@tcg/lorcana";
 
-let allCardsCache: CanonicalCard[] | null = null;
-let allCardsByIdCache: Record<string, CanonicalCard> | null = null;
+let allCardsCache: (CharacterCard | ActionCard | ItemCard | LocationCard)[] | null = null;
+let allCardsByIdCache: Record<string, CharacterCard | ActionCard | ItemCard | LocationCard> | null = null;
 
-export async function getAllCards(): Promise<CanonicalCard[]> {
+export async function getAllCards(): Promise<(CharacterCard | ActionCard | ItemCard | LocationCard)[]> {
   if (allCardsCache) return allCardsCache;
   const { allCards } = await import("./cards");
   allCardsCache = allCards;
   return allCardsCache;
 }
 
-export async function getAllCardsById(): Promise<Record<string, CanonicalCard>> {
+export async function getAllCardsById(): Promise<Record<string, CharacterCard | ActionCard | ItemCard | LocationCard>> {
   if (allCardsByIdCache) return allCardsByIdCache;
   const { allCardsById } = await import("./cards");
   allCardsByIdCache = allCardsById;

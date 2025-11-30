@@ -1,6 +1,8 @@
 export { kidaAtlantean } from "./006-kida-atlantean";
+export { mrSnoopsIneptBusinessman } from "./011-mr-snoops-inept-businessman";
 export { orvilleAcePilot } from "./013-orville-ace-pilot";
 export { wendyDarlingTalentedSailor } from "./023-wendy-darling-talented-sailor";
+export { magicaDeSpellAmbitiousWitch } from "./048-magica-de-spell-ambitious-witch";
 export { theFirebirdForceOfDestruction } from "./056-the-firebird-force-of-destruction";
 export { theQueenHatefulRival } from "./057-the-queen-hateful-rival";
 export { miloThatchCleverCartographer } from "./079-milo-thatch-clever-cartographer";
@@ -8,6 +10,7 @@ export { starkeyDeviousPirate } from "./088-starkey-devious-pirate";
 export { billyBonesKeeperOfTheMap } from "./104-billy-bones-keeper-of-the-map";
 export { jimHawkinsThrillSeeker } from "./110-jim-hawkins-thrill-seeker";
 export { nutsyVultureHenchman } from "./118-nutsy-vulture-henchman";
+export { webbyVanderquackEnthusiasticDuck } from "./127-webby-vanderquack-enthusiastic-duck";
 export { genieCrampedInTheLamp } from "./141-genie-cramped-in-the-lamp";
 export { kingLouieBandleader } from "./146-king-louie-bandleader";
 export { plutoMickeysCleverFriend } from "./152-pluto-mickeys-clever-friend";

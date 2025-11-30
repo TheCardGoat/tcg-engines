@@ -1,4 +1,5 @@
 export { nalaMischievousCub } from "./002-nala-mischievous-cub";
+export { vanellopeVonSchweetzSugarRushChamp } from "./006-vanellope-von-schweetz-sugar-rush-champ";
 export { tukeNorthernMoose } from "./007-tuke-northern-moose";
 export { moanaDeterminedExplorer } from "./018-moana-determined-explorer";
 export { whiteRabbitRoyalHerald } from "./043-white-rabbit-royal-herald";
@@ -12,8 +13,10 @@ export { taffytaMuttonfudgeRuthlessRival } from "./103-taffyta-muttonfudge-ruthl
 export { rancisFluggerbutterChocolateCharger } from "./108-rancis-fluggerbutter-chocolate-charger";
 export { denahiAvengingBrother } from "./115-denahi-avenging-brother";
 export { petePastryChomper } from "./120-pete-pastry-chomper";
+export { kingCandySovereignOfSugar } from "./137-king-candy-sovereign-of-sugar";
 export { chacaImpressiveDaughter } from "./138-chaca-impressive-daughter";
 export { scroogeMcduckAfficionadoOfAntiquities } from "./140-scrooge-mcduck-afficionado-of-antiquities";
+export { ludwigVonDrakeSelfproclaimedGenius } from "./151-ludwig-von-drake-self-proclaimed-genius";
 export { rudyGrooveDisrupter } from "./174-rudy-groove-disrupter";
 export { royalGuardBovineProtector } from "./175-royal-guard-bovine-protector";
 export { sirEctorCastleLord } from "./188-sir-ector-castle-lord";

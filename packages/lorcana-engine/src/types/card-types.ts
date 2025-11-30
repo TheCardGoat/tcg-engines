@@ -51,7 +51,7 @@ export interface BaseCardProperties {
   fullName: string;
 
   /** Ink type (Rule 6.2.3) - single or dual ink */
-  inkType: InkType | [InkType, InkType];
+  inkType: InkType[];
 
   /** Ink cost (Rule 6.2.7) */
   cost: number;
@@ -95,6 +95,23 @@ export interface BaseCardProperties {
 
   /** Franchise the card belongs to (e.g., "Jungle Book", "Frozen") */
   franchise?: string;
+
+  /** Whether the card is vanilla (no abilities/rules text) */
+  vanilla?: boolean;
+
+  /** External IDs from various systems */
+  externalIds?: {
+    ravensburger?: string;
+    lorcast?: string;
+    tcgPlayer?: number;
+  };
+
+  /** Printing references for cards with multiple printings */
+  printings?: Array<{
+    set: string;
+    collectorNumber: number;
+    id: string;
+  }>;
 }
 
 // ============================================================================
@@ -234,7 +251,7 @@ export interface LorcanaCardDefinition {
   fullName: string;
 
   /** Ink type (Rule 6.2.3) - single or dual ink */
-  inkType: InkType | [InkType, InkType];
+  inkType: InkType[];
 
   /** Ink cost (Rule 6.2.7) */
   cost: number;
@@ -334,17 +351,14 @@ export function getFullName(card: LorcanaCardDefinition | LorcanaCard): string {
  * Check if a card has dual ink types (Rule 6.2.3.1)
  */
 export function isDualInk(card: LorcanaCardDefinition | LorcanaCard): boolean {
-  return Array.isArray(card.inkType);
+  return card.inkType.length === 2;
 }
 
 /**
- * Get all ink types from a card (handles both single and dual ink)
+ * Get all ink types from a card
  */
 export function getInkTypes(
   card: LorcanaCardDefinition | LorcanaCard,
 ): InkType[] {
-  if (Array.isArray(card.inkType)) {
-    return card.inkType;
-  }
-  return [card.inkType];
+  return card.inkType;
 }

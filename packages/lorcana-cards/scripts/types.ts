@@ -186,8 +186,8 @@ export interface CanonicalCardMetadata {
   /** Full name for display and deck building (e.g., "Baloo - Friend and Guardian") */
   fullName: string;
 
-  /** Ink type(s) - single or dual ink */
-  inkType: InkType | [InkType, InkType];
+  /** Ink type(s) - always an array (single or dual ink) */
+  inkType: InkType[];
 
   /** Ink cost to play */
   cost: number;

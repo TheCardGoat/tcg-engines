@@ -1,3 +1,9 @@
+import type {
+  ActionCard,
+  CharacterCard,
+  ItemCard,
+  LocationCard,
+} from "@tcg/lorcana";
 import { all001Cards, all001CardsById } from "./001";
 import { all002Cards, all002CardsById } from "./002";
 import { all003Cards, all003CardsById } from "./003";
@@ -8,9 +14,13 @@ import { all007Cards, all007CardsById } from "./007";
 import { all008Cards, all008CardsById } from "./008";
 import { all009Cards, all009CardsById } from "./009";
 import { all010Cards, all010CardsById } from "./010";
-import type { CanonicalCard } from "./types";
 
-export const allCards: CanonicalCard[] = [
+export const allCards: (
+  | CharacterCard
+  | ActionCard
+  | ItemCard
+  | LocationCard
+)[] = [
   ...all001Cards,
   ...all002Cards,
   ...all003Cards,
@@ -23,7 +33,10 @@ export const allCards: CanonicalCard[] = [
   ...all010Cards,
 ];
 
-export const allCardsById: Record<string, CanonicalCard> = {
+export const allCardsById: Record<
+  string,
+  CharacterCard | ActionCard | ItemCard | LocationCard
+> = {
   ...all001CardsById,
   ...all002CardsById,
   ...all003CardsById,

@@ -12,5 +12,6 @@ export { friendOwlCantankerousNeighbor } from "./144-friend-owl-cantankerous-nei
 export { theMouseQueenRulerOfMousedom } from "./153-the-mouse-queen-ruler-of-mousedom";
 export { adelaideBonfamillePatronOfTheArts } from "./164-adelaide-bonfamille-patron-of-the-arts";
 export { jumbaJookibaCriticalScientist } from "./173-jumba-jookiba-critical-scientist";
+export { atitayaFangGeneral } from "./181-atitaya-fang-general";
 export { ariannaQueenOfCorona } from "./191-arianna-queen-of-corona";
 export { khanWarHorse } from "./193-khan-war-horse";
