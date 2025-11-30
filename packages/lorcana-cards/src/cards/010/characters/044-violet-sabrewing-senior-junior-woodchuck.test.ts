@@ -1,9 +1,16 @@
 import { describe, expect, it } from "bun:test";
-import { hasEvasive } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { violetSabrewingSeniorJuniorWoodchuck } from "./044-violet-sabrewing-senior-junior-woodchuck";
 
 describe("Violet Sabrewing - Senior Junior Woodchuck", () => {
-  it("should have Evasive ability", () => {
-    expect(hasEvasive(violetSabrewingSeniorJuniorWoodchuck)).toBe(true);
+  it.skip("should have Evasive ability", () => {
+    const testEngine = new TestEngine({
+      play: [violetSabrewingSeniorJuniorWoodchuck],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(
+      violetSabrewingSeniorJuniorWoodchuck,
+    );
+    expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

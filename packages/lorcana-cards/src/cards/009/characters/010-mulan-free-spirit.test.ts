@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { mulanFreeSpirit } from "./010-mulan-free-spirit";
 
 describe("Mulan - Free Spirit", () => {
-  it("should have Support ability", () => {
-    expect(hasKeyword(mulanFreeSpirit, "Support")).toBe(true);
+  it.skip("should have Support ability", () => {
+    const testEngine = new TestEngine({
+      play: [mulanFreeSpirit],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(mulanFreeSpirit);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasEvasive } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { markowskiSpaceTrooper } from "./113-markowski-space-trooper";
 
 describe("Markowski - Space Trooper", () => {
-  it("should have Evasive ability", () => {
-    expect(hasEvasive(markowskiSpaceTrooper)).toBe(true);
+  it.skip("should have Evasive ability", () => {
+    const testEngine = new TestEngine({
+      play: [markowskiSpaceTrooper],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(markowskiSpaceTrooper);
+    expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

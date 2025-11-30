@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasWard } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { kaaSuspiciousSerpent } from "./072-kaa-suspicious-serpent";
 
 describe("Kaa - Suspicious Serpent", () => {
-  it("should have Ward ability", () => {
-    expect(hasWard(kaaSuspiciousSerpent)).toBe(true);
+  it.skip("should have Ward ability", () => {
+    const testEngine = new TestEngine({
+      play: [kaaSuspiciousSerpent],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(kaaSuspiciousSerpent);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

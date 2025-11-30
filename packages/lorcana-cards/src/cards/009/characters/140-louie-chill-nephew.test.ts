@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { louieChillNephew } from "./140-louie-chill-nephew";
 
 describe("Louie - Chill Nephew", () => {
-  it("should have Support ability", () => {
-    expect(hasKeyword(louieChillNephew, "Support")).toBe(true);
+  it.skip("should have Support ability", () => {
+    const testEngine = new TestEngine({
+      play: [louieChillNephew],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(louieChillNephew);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

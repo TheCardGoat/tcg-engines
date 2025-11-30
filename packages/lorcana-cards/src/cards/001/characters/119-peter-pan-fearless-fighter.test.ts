@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasRush } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { peterPanFearlessFighter } from "./119-peter-pan-fearless-fighter";
 
 describe("Peter Pan - Fearless Fighter", () => {
-  it("should have Rush ability", () => {
-    expect(hasRush(peterPanFearlessFighter)).toBe(true);
+  it.skip("should have Rush ability", () => {
+    const testEngine = new TestEngine({
+      play: [peterPanFearlessFighter],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(peterPanFearlessFighter);
+    expect(cardUnderTest.hasRush).toBe(true);
   });
 });

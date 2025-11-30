@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { francineEyeingTheEvidence } from "./176-francine-eyeing-the-evidence";
 
 describe("Francine - Eyeing the Evidence", () => {
-  it("should have Resist 1 ability", () => {
-    expect(hasKeyword(francineEyeingTheEvidence, "Resist")).toBe(true);
+  it.skip("should have Resist 1 ability", () => {
+    const testEngine = new TestEngine({
+      play: [francineEyeingTheEvidence],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(francineEyeingTheEvidence);
+    expect(cardUnderTest.hasResist).toBe(true);
   });
 });

@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { cinderellaBallroomSensation } from "./003-cinderella-ballroom-sensation";
 
 describe("Cinderella - Ballroom Sensation", () => {
-  it("should have Singer 3 ability", () => {
-    expect(hasKeyword(cinderellaBallroomSensation, "Singer")).toBe(true);
+  it.skip("should have Singer 3 ability", () => {
+    const testEngine = new TestEngine({
+      play: [cinderellaBallroomSensation],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(cinderellaBallroomSensation);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 });

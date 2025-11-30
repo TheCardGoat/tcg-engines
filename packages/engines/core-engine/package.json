@@ -15,6 +15,10 @@
     "./lobby": {
       "types": "./src/lobby.ts",
       "default": "./src/lobby.ts"
+    },
+    "./lorcana-testing": {
+      "types": "./src/game-engine/engines/lorcana/src/testing/lorcana-test-engine.ts",
+      "default": "./src/game-engine/engines/lorcana/src/testing/lorcana-test-engine.ts"
     }
   },
   "scripts": {

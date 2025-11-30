@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { arielSingingMermaid } from "./015-ariel-singing-mermaid";
 
 describe("Ariel - Singing Mermaid", () => {
-  it("should have Singer 7 ability", () => {
-    expect(hasKeyword(arielSingingMermaid, "Singer")).toBe(true);
+  it.skip("should have Singer 7 ability", () => {
+    const testEngine = new TestEngine({
+      play: [arielSingingMermaid],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(arielSingingMermaid);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 });

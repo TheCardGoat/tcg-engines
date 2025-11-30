@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasReckless } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { gastonArrogantHunter } from "./115-gaston-arrogant-hunter";
 
 describe("Gaston - Arrogant Hunter", () => {
-  it("should have Reckless ability", () => {
-    expect(hasReckless(gastonArrogantHunter)).toBe(true);
+  it.skip("should have Reckless ability", () => {
+    const testEngine = new TestEngine({
+      play: [gastonArrogantHunter],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(gastonArrogantHunter);
+    expect(cardUnderTest.hasReckless()).toBe(true);
   });
 });

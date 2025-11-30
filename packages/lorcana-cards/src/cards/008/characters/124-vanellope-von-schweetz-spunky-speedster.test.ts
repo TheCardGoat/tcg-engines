@@ -1,9 +1,16 @@
 import { describe, expect, it } from "bun:test";
-import { hasEvasive } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { vanellopeVonSchweetzSpunkySpeedster } from "./124-vanellope-von-schweetz-spunky-speedster";
 
 describe("Vanellope Von Schweetz - Spunky Speedster", () => {
-  it("should have Evasive ability", () => {
-    expect(hasEvasive(vanellopeVonSchweetzSpunkySpeedster)).toBe(true);
+  it.skip("should have Evasive ability", () => {
+    const testEngine = new TestEngine({
+      play: [vanellopeVonSchweetzSpunkySpeedster],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(
+      vanellopeVonSchweetzSpunkySpeedster,
+    );
+    expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

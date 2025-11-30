@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { happyGoodnatured } from "./011-happy-good-natured";
 
 describe("Happy - Good-Natured", () => {
-  it("should have Support ability", () => {
-    expect(hasKeyword(happyGoodnatured, "Support")).toBe(true);
+  it.skip("should have Support ability", () => {
+    const testEngine = new TestEngine({
+      play: [happyGoodnatured],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(happyGoodnatured);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

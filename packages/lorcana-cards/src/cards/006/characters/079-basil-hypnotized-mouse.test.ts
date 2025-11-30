@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasEvasive } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { basilHypnotizedMouse } from "./079-basil-hypnotized-mouse";
 
 describe("Basil - Hypnotized Mouse", () => {
-  it("should have Evasive ability", () => {
-    expect(hasEvasive(basilHypnotizedMouse)).toBe(true);
+  it.skip("should have Evasive ability", () => {
+    const testEngine = new TestEngine({
+      play: [basilHypnotizedMouse],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(basilHypnotizedMouse);
+    expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

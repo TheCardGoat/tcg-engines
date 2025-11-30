@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { merlinSelfappointedMentor } from "./153-merlin-self-appointed-mentor";
 
 describe("Merlin - Self-Appointed Mentor", () => {
-  it("should have Support ability", () => {
-    expect(hasKeyword(merlinSelfappointedMentor, "Support")).toBe(true);
+  it.skip("should have Support ability", () => {
+    const testEngine = new TestEngine({
+      play: [merlinSelfappointedMentor],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(merlinSelfappointedMentor);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

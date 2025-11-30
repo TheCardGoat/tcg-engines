@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasRush } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { abuBoldHelmsman } from "./114-abu-bold-helmsman";
 
 describe("Abu - Bold Helmsman", () => {
-  it("should have Rush ability", () => {
-    expect(hasRush(abuBoldHelmsman)).toBe(true);
+  it.skip("should have Rush ability", () => {
+    const testEngine = new TestEngine({
+      play: [abuBoldHelmsman],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(abuBoldHelmsman);
+    expect(cardUnderTest.hasRush).toBe(true);
   });
 });

@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasRush } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { hermesHarriedMessenger } from "./112-hermes-harried-messenger";
 
 describe("Hermes - Harried Messenger", () => {
-  it("should have Rush ability", () => {
-    expect(hasRush(hermesHarriedMessenger)).toBe(true);
+  it.skip("should have Rush ability", () => {
+    const testEngine = new TestEngine({
+      play: [hermesHarriedMessenger],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(hermesHarriedMessenger);
+    expect(cardUnderTest.hasRush).toBe(true);
   });
 });

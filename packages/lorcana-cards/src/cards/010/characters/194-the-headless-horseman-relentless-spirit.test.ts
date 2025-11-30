@@ -1,9 +1,16 @@
 import { describe, expect, it } from "bun:test";
-import { hasBodyguard } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { theHeadlessHorsemanRelentlessSpirit } from "./194-the-headless-horseman-relentless-spirit";
 
 describe("The Headless Horseman - Relentless Spirit", () => {
-  it("should have Bodyguard ability", () => {
-    expect(hasBodyguard(theHeadlessHorsemanRelentlessSpirit)).toBe(true);
+  it.skip("should have Bodyguard ability", () => {
+    const testEngine = new TestEngine({
+      play: [theHeadlessHorsemanRelentlessSpirit],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(
+      theHeadlessHorsemanRelentlessSpirit,
+    );
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

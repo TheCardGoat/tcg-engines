@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasEvasive } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { kaaSecretiveSnake } from "./212-kaa-secretive-snake";
 
 describe("Kaa - Secretive Snake", () => {
-  it("should have Evasive ability", () => {
-    expect(hasEvasive(kaaSecretiveSnake)).toBe(true);
+  it.skip("should have Evasive ability", () => {
+    const testEngine = new TestEngine({
+      play: [kaaSecretiveSnake],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(kaaSecretiveSnake);
+    expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

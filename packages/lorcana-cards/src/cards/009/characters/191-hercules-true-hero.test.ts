@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasBodyguard } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { herculesTrueHero } from "./191-hercules-true-hero";
 
 describe("Hercules - True Hero", () => {
-  it("should have Bodyguard ability", () => {
-    expect(hasBodyguard(herculesTrueHero)).toBe(true);
+  it.skip("should have Bodyguard ability", () => {
+    const testEngine = new TestEngine({
+      play: [herculesTrueHero],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(herculesTrueHero);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

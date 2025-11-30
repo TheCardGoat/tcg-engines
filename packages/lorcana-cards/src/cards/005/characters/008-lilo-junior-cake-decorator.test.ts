@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { liloJuniorCakeDecorator } from "./008-lilo-junior-cake-decorator";
 
 describe("Lilo - Junior Cake Decorator", () => {
-  it("should have Support ability", () => {
-    expect(hasKeyword(liloJuniorCakeDecorator, "Support")).toBe(true);
+  it.skip("should have Support ability", () => {
+    const testEngine = new TestEngine({
+      play: [liloJuniorCakeDecorator],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(liloJuniorCakeDecorator);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

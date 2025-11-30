@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasEvasive } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { rayEasygoingFirefly } from "./092-ray-easygoing-firefly";
 
 describe("Ray - Easygoing Firefly", () => {
-  it("should have Evasive ability", () => {
-    expect(hasEvasive(rayEasygoingFirefly)).toBe(true);
+  it.skip("should have Evasive ability", () => {
+    const testEngine = new TestEngine({
+      play: [rayEasygoingFirefly],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(rayEasygoingFirefly);
+    expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasWard } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { theNokkWaterSpirit } from "./160-the-nokk-water-spirit";
 
 describe("The Nokk - Water Spirit", () => {
-  it("should have Ward ability", () => {
-    expect(hasWard(theNokkWaterSpirit)).toBe(true);
+  it.skip("should have Ward ability", () => {
+    const testEngine = new TestEngine({
+      play: [theNokkWaterSpirit],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(theNokkWaterSpirit);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

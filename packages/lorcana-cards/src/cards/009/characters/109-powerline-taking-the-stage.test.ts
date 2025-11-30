@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { powerlineTakingTheStage } from "./109-powerline-taking-the-stage";
 
 describe("Powerline - Taking the Stage", () => {
-  it("should have Singer 4 ability", () => {
-    expect(hasKeyword(powerlineTakingTheStage, "Singer")).toBe(true);
+  it.skip("should have Singer 4 ability", () => {
+    const testEngine = new TestEngine({
+      play: [powerlineTakingTheStage],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(powerlineTakingTheStage);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 });

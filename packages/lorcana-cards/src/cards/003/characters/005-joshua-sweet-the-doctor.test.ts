@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasBodyguard } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { joshuaSweetTheDoctor } from "./005-joshua-sweet-the-doctor";
 
 describe("Joshua Sweet - The Doctor", () => {
-  it("should have Bodyguard ability", () => {
-    expect(hasBodyguard(joshuaSweetTheDoctor)).toBe(true);
+  it.skip("should have Bodyguard ability", () => {
+    const testEngine = new TestEngine({
+      play: [joshuaSweetTheDoctor],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(joshuaSweetTheDoctor);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

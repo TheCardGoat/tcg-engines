@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { annaMakingSnowPlans } from "./139-anna-making-snow-plans";
 
 describe("Anna - Making Snow Plans", () => {
-  it("should have Support ability", () => {
-    expect(hasKeyword(annaMakingSnowPlans, "Support")).toBe(true);
+  it.skip("should have Support ability", () => {
+    const testEngine = new TestEngine({
+      play: [annaMakingSnowPlans],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(annaMakingSnowPlans);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

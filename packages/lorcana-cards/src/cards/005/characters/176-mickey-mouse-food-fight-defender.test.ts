@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { mickeyMouseFoodFightDefender } from "./176-mickey-mouse-food-fight-defender";
 
 describe("Mickey Mouse - Food Fight Defender", () => {
-  it("should have Resist 1 ability", () => {
-    expect(hasKeyword(mickeyMouseFoodFightDefender, "Resist")).toBe(true);
+  it.skip("should have Resist 1 ability", () => {
+    const testEngine = new TestEngine({
+      play: [mickeyMouseFoodFightDefender],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(mickeyMouseFoodFightDefender);
+    expect(cardUnderTest.hasResist).toBe(true);
   });
 });

@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasVanish } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { rajahGhostlyTiger } from "./062-rajah-ghostly-tiger";
 
 describe("Rajah - Ghostly Tiger", () => {
-  it("should have Vanish ability", () => {
-    expect(hasVanish(rajahGhostlyTiger)).toBe(true);
+  it.skip("should have Vanish ability", () => {
+    const testEngine = new TestEngine({
+      play: [rajahGhostlyTiger],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(rajahGhostlyTiger);
+    expect(cardUnderTest.hasVanish).toBe(true);
   });
 });

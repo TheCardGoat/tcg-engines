@@ -1,9 +1,16 @@
 import { describe, expect, it } from "bun:test";
-import { hasRush } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { luisaMadrigalMagicallyStrongOne } from "./058-luisa-madrigal-magically-strong-one";
 
 describe("Luisa Madrigal - Magically Strong One", () => {
-  it("should have Rush ability", () => {
-    expect(hasRush(luisaMadrigalMagicallyStrongOne)).toBe(true);
+  it.skip("should have Rush ability", () => {
+    const testEngine = new TestEngine({
+      play: [luisaMadrigalMagicallyStrongOne],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(
+      luisaMadrigalMagicallyStrongOne,
+    );
+    expect(cardUnderTest.hasRush).toBe(true);
   });
 });

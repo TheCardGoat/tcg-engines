@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasBodyguard } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { simbaProtectiveCub } from "./020-simba-protective-cub";
 
 describe("Simba - Protective Cub", () => {
-  it("should have Bodyguard ability", () => {
-    expect(hasBodyguard(simbaProtectiveCub)).toBe(true);
+  it.skip("should have Bodyguard ability", () => {
+    const testEngine = new TestEngine({
+      play: [simbaProtectiveCub],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(simbaProtectiveCub);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

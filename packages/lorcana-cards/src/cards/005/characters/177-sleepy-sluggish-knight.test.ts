@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasBodyguard } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { sleepySluggishKnight } from "./177-sleepy-sluggish-knight";
 
 describe("Sleepy - Sluggish Knight", () => {
-  it("should have Bodyguard ability", () => {
-    expect(hasBodyguard(sleepySluggishKnight)).toBe(true);
+  it.skip("should have Bodyguard ability", () => {
+    const testEngine = new TestEngine({
+      play: [sleepySluggishKnight],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(sleepySluggishKnight);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

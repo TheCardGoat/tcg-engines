@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasEvasive } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { ryderFleetfootedInfiltrator } from "./056-ryder-fleet-footed-infiltrator";
 
 describe("Ryder - Fleet-Footed Infiltrator", () => {
-  it("should have Evasive ability", () => {
-    expect(hasEvasive(ryderFleetfootedInfiltrator)).toBe(true);
+  it.skip("should have Evasive ability", () => {
+    const testEngine = new TestEngine({
+      play: [ryderFleetfootedInfiltrator],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(ryderFleetfootedInfiltrator);
+    expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

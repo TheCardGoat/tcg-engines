@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasWard } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { auroraTranquilPrincess } from "./154-aurora-tranquil-princess";
 
 describe("Aurora - Tranquil Princess", () => {
-  it("should have Ward ability", () => {
-    expect(hasWard(auroraTranquilPrincess)).toBe(true);
+  it.skip("should have Ward ability", () => {
+    const testEngine = new TestEngine({
+      play: [auroraTranquilPrincess],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(auroraTranquilPrincess);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

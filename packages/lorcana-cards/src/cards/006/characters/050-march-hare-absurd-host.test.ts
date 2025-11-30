@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasRush } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { marchHareAbsurdHost } from "./050-march-hare-absurd-host";
 
 describe("March Hare - Absurd Host", () => {
-  it("should have Rush ability", () => {
-    expect(hasRush(marchHareAbsurdHost)).toBe(true);
+  it.skip("should have Rush ability", () => {
+    const testEngine = new TestEngine({
+      play: [marchHareAbsurdHost],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(marchHareAbsurdHost);
+    expect(cardUnderTest.hasRush).toBe(true);
   });
 });

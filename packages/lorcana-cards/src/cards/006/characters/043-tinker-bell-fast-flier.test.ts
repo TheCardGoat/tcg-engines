@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasEvasive } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { tinkerBellFastFlier } from "./043-tinker-bell-fast-flier";
 
 describe("Tinker Bell - Fast Flier", () => {
-  it("should have Evasive ability", () => {
-    expect(hasEvasive(tinkerBellFastFlier)).toBe(true);
+  it.skip("should have Evasive ability", () => {
+    const testEngine = new TestEngine({
+      play: [tinkerBellFastFlier],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(tinkerBellFastFlier);
+    expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

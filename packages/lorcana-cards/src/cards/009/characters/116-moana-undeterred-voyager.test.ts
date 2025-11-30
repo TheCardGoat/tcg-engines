@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasEvasive } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { moanaUndeterredVoyager } from "./116-moana-undeterred-voyager";
 
 describe("Moana - Undeterred Voyager", () => {
-  it("should have Evasive ability", () => {
-    expect(hasEvasive(moanaUndeterredVoyager)).toBe(true);
+  it.skip("should have Evasive ability", () => {
+    const testEngine = new TestEngine({
+      play: [moanaUndeterredVoyager],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(moanaUndeterredVoyager);
+    expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

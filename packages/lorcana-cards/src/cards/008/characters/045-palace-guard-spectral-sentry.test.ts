@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasVanish } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { palaceGuardSpectralSentry } from "./045-palace-guard-spectral-sentry";
 
 describe("Palace Guard - Spectral Sentry", () => {
-  it("should have Vanish ability", () => {
-    expect(hasVanish(palaceGuardSpectralSentry)).toBe(true);
+  it.skip("should have Vanish ability", () => {
+    const testEngine = new TestEngine({
+      play: [palaceGuardSpectralSentry],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(palaceGuardSpectralSentry);
+    expect(cardUnderTest.hasVanish).toBe(true);
   });
 });

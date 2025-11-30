@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasWard } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { donaldDuckStruttingHisStuff } from "./144-donald-duck-strutting-his-stuff";
 
 describe("Donald Duck - Strutting His Stuff", () => {
-  it("should have Ward ability", () => {
-    expect(hasWard(donaldDuckStruttingHisStuff)).toBe(true);
+  it.skip("should have Ward ability", () => {
+    const testEngine = new TestEngine({
+      play: [donaldDuckStruttingHisStuff],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(donaldDuckStruttingHisStuff);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

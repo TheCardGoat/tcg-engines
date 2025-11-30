@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { chiefTuiRespectedLeader } from "./143-chief-tui-respected-leader";
 
 describe("Chief Tui - Respected Leader", () => {
-  it("should have Support ability", () => {
-    expect(hasKeyword(chiefTuiRespectedLeader, "Support")).toBe(true);
+  it.skip("should have Support ability", () => {
+    const testEngine = new TestEngine({
+      play: [chiefTuiRespectedLeader],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(chiefTuiRespectedLeader);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

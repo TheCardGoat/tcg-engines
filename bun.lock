@@ -131,6 +131,7 @@
       "name": "@tcg/lorcana-cards",
       "version": "0.1.0",
       "dependencies": {
+        "@lorcanito/core-engine": "workspace:*",
         "@tcg/lorcana": "workspace:*",
       },
       "devDependencies": {

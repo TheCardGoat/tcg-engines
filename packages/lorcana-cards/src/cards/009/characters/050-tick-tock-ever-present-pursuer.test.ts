@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasEvasive } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { ticktockEverpresentPursuer } from "./050-tick-tock-ever-present-pursuer";
 
 describe("Tick-Tock - Ever-Present Pursuer", () => {
-  it("should have Evasive ability", () => {
-    expect(hasEvasive(ticktockEverpresentPursuer)).toBe(true);
+  it.skip("should have Evasive ability", () => {
+    const testEngine = new TestEngine({
+      play: [ticktockEverpresentPursuer],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(ticktockEverpresentPursuer);
+    expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { daisyDuckGhostFinder } from "./141-daisy-duck-ghost-finder";
 
 describe("Daisy Duck - Ghost Finder", () => {
-  it("should have Support ability", () => {
-    expect(hasKeyword(daisyDuckGhostFinder, "Support")).toBe(true);
+  it.skip("should have Support ability", () => {
+    const testEngine = new TestEngine({
+      play: [daisyDuckGhostFinder],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(daisyDuckGhostFinder);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

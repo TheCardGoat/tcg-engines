@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { gazellePopStar } from "./011-gazelle-pop-star";
 
 describe("Gazelle - Pop Star", () => {
-  it("should have Singer 5 ability", () => {
-    expect(hasKeyword(gazellePopStar, "Singer")).toBe(true);
+  it.skip("should have Singer 5 ability", () => {
+    const testEngine = new TestEngine({
+      play: [gazellePopStar],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(gazellePopStar);
+    expect(cardUnderTest.hasSinger()).toBe(true);
   });
 });

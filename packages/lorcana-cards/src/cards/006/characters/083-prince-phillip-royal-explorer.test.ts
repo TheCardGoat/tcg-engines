@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasWard } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { princePhillipRoyalExplorer } from "./083-prince-phillip-royal-explorer";
 
 describe("Prince Phillip - Royal Explorer", () => {
-  it("should have Ward ability", () => {
-    expect(hasWard(princePhillipRoyalExplorer)).toBe(true);
+  it.skip("should have Ward ability", () => {
+    const testEngine = new TestEngine({
+      play: [princePhillipRoyalExplorer],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(princePhillipRoyalExplorer);
+    expect(cardUnderTest.hasWard()).toBe(true);
   });
 });

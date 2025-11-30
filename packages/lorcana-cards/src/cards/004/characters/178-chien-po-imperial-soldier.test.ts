@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasBodyguard } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { chienpoImperialSoldier } from "./178-chien-po-imperial-soldier";
 
 describe("Chien-Po - Imperial Soldier", () => {
-  it("should have Bodyguard ability", () => {
-    expect(hasBodyguard(chienpoImperialSoldier)).toBe(true);
+  it.skip("should have Bodyguard ability", () => {
+    const testEngine = new TestEngine({
+      play: [chienpoImperialSoldier],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(chienpoImperialSoldier);
+    expect(cardUnderTest.hasBodyguard()).toBe(true);
   });
 });

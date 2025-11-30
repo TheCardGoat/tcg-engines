@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasEvasive } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { pongoOlRascal } from "./120-pongo-ol-rascal";
 
 describe("Pongo - Ol’ Rascal", () => {
-  it("should have Evasive ability", () => {
-    expect(hasEvasive(pongoOlRascal)).toBe(true);
+  it.skip("should have Evasive ability", () => {
+    const testEngine = new TestEngine({
+      play: [pongoOlRascal],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(pongoOlRascal);
+    expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

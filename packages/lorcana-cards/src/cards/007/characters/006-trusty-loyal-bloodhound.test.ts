@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasKeyword } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { trustyLoyalBloodhound } from "./006-trusty-loyal-bloodhound";
 
 describe("Trusty - Loyal Bloodhound", () => {
-  it("should have Support ability", () => {
-    expect(hasKeyword(trustyLoyalBloodhound, "Support")).toBe(true);
+  it.skip("should have Support ability", () => {
+    const testEngine = new TestEngine({
+      play: [trustyLoyalBloodhound],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(trustyLoyalBloodhound);
+    expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

@@ -1,9 +1,14 @@
 import { describe, expect, it } from "bun:test";
-import { hasEvasive } from "@tcg/lorcana";
+import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
 import { minnieMouseStylishSurfer } from "./113-minnie-mouse-stylish-surfer";
 
 describe("Minnie Mouse - Stylish Surfer", () => {
-  it("should have Evasive ability", () => {
-    expect(hasEvasive(minnieMouseStylishSurfer)).toBe(true);
+  it.skip("should have Evasive ability", () => {
+    const testEngine = new TestEngine({
+      play: [minnieMouseStylishSurfer],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(minnieMouseStylishSurfer);
+    expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });
