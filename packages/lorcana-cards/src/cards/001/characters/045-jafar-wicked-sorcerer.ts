@@ -16,7 +16,6 @@ export const jafarWickedSorcerer: CharacterCard = {
   willpower: 5,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "b3001090c82926f995dda5332ff5f0546257b061",
   },
@@ -28,8 +27,8 @@ export const jafarWickedSorcerer: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1dn-ability-1",
-      text: "Challenger +3 (While challenging, this character gets +3.)",
+      id: "1dna1",
+      text: "Challenger +3",
       type: "static",
     },
   ],

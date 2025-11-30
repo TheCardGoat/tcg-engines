@@ -16,7 +16,6 @@ export const clawhauserDonutDetective: CharacterCard = {
   willpower: 6,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "f09761a7261a822638183f5db78126e9763e9313",
   },
@@ -28,8 +27,8 @@ export const clawhauserDonutDetective: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1ur-ability-1",
-      text: "Challenger +2 (When he challenges, this character gets +2 {S}.)",
+      id: "1ura1",
+      text: "Challenger +2",
       type: "static",
     },
   ],

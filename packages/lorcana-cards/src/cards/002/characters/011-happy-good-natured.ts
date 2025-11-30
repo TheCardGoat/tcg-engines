@@ -16,15 +16,14 @@ export const happyGoodnatured: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "0157bb5c2ecca10239adf522033e57b4905afa65",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "det-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+      id: "deta1",
+      text: "Support",
       type: "static",
     },
   ],

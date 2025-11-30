@@ -16,7 +16,6 @@ export const herculesUnwaveringDemigod: CharacterCard = {
   willpower: 4,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "d57ba4914c87d36251c93894e3081d6552322ca0",
   },
@@ -28,8 +27,8 @@ export const herculesUnwaveringDemigod: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1n8-ability-1",
-      text: "Challenger +2 (While challenging, this character gets +2.)",
+      id: "1n8a1",
+      text: "Challenger +2",
       type: "static",
     },
   ],

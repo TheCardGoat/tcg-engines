@@ -16,15 +16,14 @@ export const teKTheBurningOne: CharacterCard = {
   willpower: 6,
   lore: 0,
   inkable: false,
-  vanilla: false,
   externalIds: {
     ravensburger: "92788505267291d061bce171dae43b361f5c9eca",
   },
   keywords: ["Reckless"],
   abilities: [
     {
-      id: "14n-ability-1",
-      text: "Reckless (This character can't quest and must challenge each turn if able.)",
+      id: "14na1",
+      text: "Reckless",
       type: "static",
     },
   ],

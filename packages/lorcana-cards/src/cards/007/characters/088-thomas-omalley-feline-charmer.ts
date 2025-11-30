@@ -16,15 +16,14 @@ export const thomasOmalleyFelineCharmer: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "926bc29c21b56c27f1a52cfead290ea03de769de",
   },
   keywords: ["Ward"],
   abilities: [
     {
-      id: "14m-ability-1",
-      text: "Ward (Opponents can't choose this character except to challenge.)",
+      id: "14ma1",
+      text: "Ward",
       type: "static",
     },
   ],

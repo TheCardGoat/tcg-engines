@@ -16,15 +16,14 @@ export const kitCloudkickerSpunkyBearCub: CharacterCard = {
   willpower: 1,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "3f5ab1825bd1fe21e090a0b8eff482833549bc44",
   },
   keywords: ["Ward"],
   abilities: [
     {
-      id: "hkt-ability-1",
-      text: "Ward (Opponents can't choose this character except to challenge.)",
+      id: "hkta1",
+      text: "Ward",
       type: "static",
     },
   ],

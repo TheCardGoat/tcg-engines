@@ -16,15 +16,14 @@ export const scuttleBirdbrained: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "8ded4e32f6390106d15d72e5aab8aa2ebd2b2963",
   },
   keywords: ["Ward"],
   abilities: [
     {
-      id: "13d-ability-1",
-      text: "Ward (Opponents can't choose this character except to challenge.)",
+      id: "13da1",
+      text: "Ward",
       type: "static",
     },
   ],

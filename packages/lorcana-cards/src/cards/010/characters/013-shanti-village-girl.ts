@@ -16,7 +16,6 @@ export const shantiVillageGirl: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "4f296f41288f0bc56b098b2146d98af6428db935",
   },
@@ -28,8 +27,8 @@ export const shantiVillageGirl: CharacterCard = {
   ],
   abilities: [
     {
-      id: "lyq-ability-1",
-      text: "Singer 5 (This character counts as cost 5 to sing songs.)",
+      id: "lyqa1",
+      text: "Singer 5",
       type: "static",
     },
   ],

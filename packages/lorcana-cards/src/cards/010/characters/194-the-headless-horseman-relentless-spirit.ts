@@ -16,15 +16,14 @@ export const theHeadlessHorsemanRelentlessSpirit: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "4160bece2c94394d46717dbd1fb2880098079cd6",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "i51-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      id: "i51a1",
+      text: "Bodyguard",
       type: "static",
     },
   ],

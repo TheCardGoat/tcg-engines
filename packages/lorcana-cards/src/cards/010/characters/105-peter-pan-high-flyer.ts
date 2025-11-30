@@ -16,15 +16,14 @@ export const peterPanHighFlyer: CharacterCard = {
   willpower: 3,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "067ac8173c1f60f06e456367ff8785feaa83214f",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1sq-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      id: "1sqa1",
+      text: "Evasive",
       type: "static",
     },
   ],

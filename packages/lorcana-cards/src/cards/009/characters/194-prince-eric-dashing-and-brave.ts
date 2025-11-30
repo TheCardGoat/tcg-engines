@@ -16,7 +16,6 @@ export const princeEricDashingAndBrave: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "b003941c689f0757920787101a49607295e99da1",
   },
@@ -28,8 +27,8 @@ export const princeEricDashingAndBrave: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1cu-ability-1",
-      text: "Challenger +2 (While challenging, this character gets +2.)",
+      id: "1cua1",
+      text: "Challenger +2",
       type: "static",
     },
   ],

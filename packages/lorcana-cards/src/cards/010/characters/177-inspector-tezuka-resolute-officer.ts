@@ -16,15 +16,14 @@ export const inspectorTezukaResoluteOfficer: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "9644b567eec1691484deb7950ab8728fb6fdc9a8",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "15o-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      id: "15oa1",
+      text: "Bodyguard",
       type: "static",
     },
   ],

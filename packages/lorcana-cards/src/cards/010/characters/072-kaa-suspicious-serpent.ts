@@ -16,15 +16,14 @@ export const kaaSuspiciousSerpent: CharacterCard = {
   willpower: 2,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "790085a5369b1cc854dd2c964ca6e879be2e2a56",
   },
   keywords: ["Ward"],
   abilities: [
     {
-      id: "xkn-ability-1",
-      text: "Ward (Opponents can't choose this character except to challenge.)",
+      id: "xkna1",
+      text: "Ward",
       type: "static",
     },
   ],

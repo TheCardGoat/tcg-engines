@@ -16,7 +16,6 @@ export const powerlineTakingTheStage: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "eaec5385aacc0b81f5f7c60bb16fc754ed2fce81",
   },
@@ -28,8 +27,8 @@ export const powerlineTakingTheStage: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1t6-ability-1",
-      text: "Singer 4 (This character counts as cost 4 to sing songs.)",
+      id: "1t6a1",
+      text: "Singer 4",
       type: "static",
     },
   ],

@@ -16,15 +16,14 @@ export const peterPanNeverLanding: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "bdb08565784cd7012548f33dfb41c5f27b8bf8f7",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1g6-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      id: "1g6a1",
+      text: "Evasive",
       type: "static",
     },
   ],

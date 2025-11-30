@@ -16,7 +16,6 @@ export const generalLiHeadOfTheImperialArmy: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "42bf6581e2f12f6875f38d3cbcd9a56544b2acfd",
   },
@@ -28,8 +27,8 @@ export const generalLiHeadOfTheImperialArmy: CharacterCard = {
   ],
   abilities: [
     {
-      id: "iiq-ability-1",
-      text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
+      id: "iiqa1",
+      text: "Resist +1",
       type: "static",
     },
   ],

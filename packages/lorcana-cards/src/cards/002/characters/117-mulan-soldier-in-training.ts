@@ -16,15 +16,14 @@ export const mulanSoldierInTraining: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: false,
-  vanilla: false,
   externalIds: {
     ravensburger: "77b270ef01a1671fcf0123fc2f0dceb294777022",
   },
   keywords: ["Rush"],
   abilities: [
     {
-      id: "x7m-ability-1",
-      text: "Rush (This character can challenge the turn they're played.)",
+      id: "x7ma1",
+      text: "Rush",
       type: "static",
     },
   ],

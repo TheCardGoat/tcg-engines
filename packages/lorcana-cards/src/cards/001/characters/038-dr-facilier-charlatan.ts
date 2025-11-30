@@ -16,7 +16,6 @@ export const drFacilierCharlatan: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "1fd605fe2fe7ee5b8de1e22cc92998c2f04e0304",
   },
@@ -28,8 +27,8 @@ export const drFacilierCharlatan: CharacterCard = {
   ],
   abilities: [
     {
-      id: "8u0-ability-1",
-      text: "Challenger +2 (While challenging, this character gets +2.)",
+      id: "8u0a1",
+      text: "Challenger +2",
       type: "static",
     },
   ],

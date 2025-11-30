@@ -16,15 +16,14 @@ export const jimDearBelovedHusband: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "2cd509bc3d4a9b911eb07cec23d5037de65bf673",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "cft-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      id: "cfta1",
+      text: "Bodyguard",
       type: "static",
     },
   ],

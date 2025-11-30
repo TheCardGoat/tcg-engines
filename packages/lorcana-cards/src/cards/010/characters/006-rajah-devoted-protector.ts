@@ -16,15 +16,14 @@ export const rajahDevotedProtector: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "05432111c47bf28eb52d76930eb2c603642d13e9",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1gk-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      id: "1gka1",
+      text: "Bodyguard",
       type: "static",
     },
   ],

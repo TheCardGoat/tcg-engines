@@ -16,15 +16,14 @@ export const lenaSabrewingRebelliousTeenager: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "c8008c9decb7e2f82c626c48623a36620179e03b",
   },
   keywords: ["Rush"],
   abilities: [
     {
-      id: "1j3-ability-1",
-      text: "Rush (This character can challenge the turn they're played.)",
+      id: "1j3a1",
+      text: "Rush",
       type: "static",
     },
   ],

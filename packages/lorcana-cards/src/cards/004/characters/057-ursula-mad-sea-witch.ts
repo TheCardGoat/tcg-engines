@@ -16,7 +16,6 @@ export const ursulaMadSeaWitch: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "6df2820402c29a10e4294b8b6703f720b6211791",
   },
@@ -28,8 +27,8 @@ export const ursulaMadSeaWitch: CharacterCard = {
   ],
   abilities: [
     {
-      id: "ui8-ability-1",
-      text: "Challenger +2 (While challenging, this character gets +2.)",
+      id: "ui8a1",
+      text: "Challenger +2",
       type: "static",
     },
   ],

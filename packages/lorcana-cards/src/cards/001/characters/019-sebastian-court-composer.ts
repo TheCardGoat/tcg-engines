@@ -16,7 +16,6 @@ export const sebastianCourtComposer: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "1fa28a7f4b2398c8cc72ea121b01ac0cccdda582",
   },
@@ -28,8 +27,8 @@ export const sebastianCourtComposer: CharacterCard = {
   ],
   abilities: [
     {
-      id: "8rz-ability-1",
-      text: "Singer 4 (This character counts as cost 4 to sing songs.)",
+      id: "8rza1",
+      text: "Singer 4",
       type: "static",
     },
   ],

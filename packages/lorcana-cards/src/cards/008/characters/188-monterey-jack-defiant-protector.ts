@@ -16,15 +16,14 @@ export const montereyJackDefiantProtector: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "0669c45afa1ed8a75915fc48406f8c1f601cc2db",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1s2-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      id: "1s2a1",
+      text: "Bodyguard",
       type: "static",
     },
   ],

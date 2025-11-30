@@ -16,15 +16,14 @@ export const rafikiMysteriousSage: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: false,
-  vanilla: false,
   externalIds: {
     ravensburger: "80caf60ae34281409e8e7afd88224c417a282bac",
   },
   keywords: ["Rush"],
   abilities: [
     {
-      id: "zqh-ability-1",
-      text: "Rush (This character can challenge the turn they're played.)",
+      id: "zqha1",
+      text: "Rush",
       type: "static",
     },
   ],

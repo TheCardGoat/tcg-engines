@@ -16,15 +16,14 @@ export const heiheiBoatSnack: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "6dfdbf904cb6a8f2f700f9839e50902b7dd4bcad",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "uio-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+      id: "uioa1",
+      text: "Support",
       type: "static",
     },
   ],

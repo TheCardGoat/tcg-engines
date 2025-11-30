@@ -16,7 +16,6 @@ export const captainHookForcefulDuelist: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "296f4ed274c9b83418b64ea35bcc8ffc4a4a5dc3",
   },
@@ -28,8 +27,8 @@ export const captainHookForcefulDuelist: CharacterCard = {
   ],
   abilities: [
     {
-      id: "bhv-ability-1",
-      text: "Challenger +2 (While challenging, this character gets +2.)",
+      id: "bhva1",
+      text: "Challenger +2",
       type: "static",
     },
   ],

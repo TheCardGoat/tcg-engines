@@ -16,15 +16,14 @@ export const ratiganCriminalMastermind: CharacterCard = {
   willpower: 1,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "20f1cee3efa42ca0bdb7295992b0b9f485f9c40e",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "952-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      id: "952a1",
+      text: "Evasive",
       type: "static",
     },
   ],

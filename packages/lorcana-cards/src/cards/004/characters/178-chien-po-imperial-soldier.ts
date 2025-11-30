@@ -16,15 +16,14 @@ export const chienpoImperialSoldier: CharacterCard = {
   willpower: 7,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "d1fd5839ad177cf9b28ff3c6336c8cb568683243",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1m9-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      id: "1m9a1",
+      text: "Bodyguard",
       type: "static",
     },
   ],

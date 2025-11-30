@@ -16,15 +16,14 @@ export const stitchLittleRocket: CharacterCard = {
   willpower: 1,
   lore: 1,
   inkable: false,
-  vanilla: false,
   externalIds: {
     ravensburger: "2ce76e99fa3946189d8b3985a10b16a474034d40",
   },
   keywords: ["Rush"],
   abilities: [
     {
-      id: "cgj-ability-1",
-      text: "Rush (This character can challenge the turn they're played.)",
+      id: "cgja1",
+      text: "Rush",
       type: "static",
     },
   ],

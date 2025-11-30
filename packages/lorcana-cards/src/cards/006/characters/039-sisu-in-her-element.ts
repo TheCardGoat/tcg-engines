@@ -16,7 +16,6 @@ export const sisuInHerElement: CharacterCard = {
   willpower: 6,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "0bbeceed403764a29bc21ac53a1d7095e9c56321",
   },
@@ -28,8 +27,8 @@ export const sisuInHerElement: CharacterCard = {
   ],
   abilities: [
     {
-      id: "39b-ability-1",
-      text: "Challenger +2 (While challenging, this character gets +2.)",
+      id: "39ba1",
+      text: "Challenger +2",
       type: "static",
     },
   ],

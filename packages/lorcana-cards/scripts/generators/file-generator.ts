@@ -223,7 +223,10 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
 
   // === BOOLEAN PROPERTIES ===
   result.inkable = card.inkable;
-  result.vanilla = card.vanilla;
+  // Only output vanilla when true (non-vanilla cards omit this field)
+  if (card.vanilla) {
+    result.vanilla = true;
+  }
 
   // === OBJECT PROPERTIES ===
   if (card.externalIds) {
@@ -286,8 +289,12 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
     }> = [];
 
     for (let i = 0; i < abilityTexts.length; i++) {
-      const text = abilityTexts[i].trim();
-      const abilityId = `${card.id}-ability-${i + 1}`;
+      const rawText = abilityTexts[i].trim();
+      // Short ability ID: cardId + "a" + index (e.g., "84pa1" instead of "84p-ability-1")
+      const abilityId = `${card.id}a${i + 1}`;
+
+      // Remove reminder text (parenthetical explanations)
+      const text = rawText.replace(/\s*\([^)]*\)/g, "").trim();
 
       // Try to extract ability name (all caps at start)
       const namedMatch = text.match(/^([A-Z][A-Z\s]+[A-Z])\s+(.+)$/);

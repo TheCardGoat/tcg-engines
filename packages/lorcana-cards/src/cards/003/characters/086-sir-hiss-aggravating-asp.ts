@@ -16,15 +16,14 @@ export const sirHissAggravatingAsp: CharacterCard = {
   willpower: 1,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "f2df9a64c41a939980ee70dfe3cce16063dffbfb",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1vh-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      id: "1vha1",
+      text: "Evasive",
       type: "static",
     },
   ],

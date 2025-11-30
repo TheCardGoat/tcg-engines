@@ -16,15 +16,14 @@ export const tipoJuniorChipmunk: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "7b06c25ffca1f97366fbde4b81b28dcfbe6abcb4",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "y4v-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      id: "y4va1",
+      text: "Evasive",
       type: "static",
     },
   ],

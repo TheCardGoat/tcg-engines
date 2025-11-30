@@ -16,15 +16,14 @@ export const marchHareAbsurdHost: CharacterCard = {
   willpower: 3,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "85684498bb53ffacf3dd58bf50013dc97d5766b6",
   },
   keywords: ["Rush"],
   abilities: [
     {
-      id: "110-ability-1",
-      text: "Rush (This character can challenge the turn they're played.)",
+      id: "110a1",
+      text: "Rush",
       type: "static",
     },
   ],

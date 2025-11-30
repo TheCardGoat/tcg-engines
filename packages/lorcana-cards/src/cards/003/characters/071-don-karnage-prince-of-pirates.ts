@@ -16,15 +16,14 @@ export const donKarnagePrinceOfPirates: CharacterCard = {
   willpower: 4,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "24ea5904a2f26342b5785ee8bc9953780df09477",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "a8q-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      id: "a8qa1",
+      text: "Evasive",
       type: "static",
     },
   ],

@@ -16,15 +16,14 @@ export const pegasusFlyingSteed: CharacterCard = {
   willpower: 1,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "3232a625c1ad1451c0bd29fcfbc149d3d2a38166",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "dxe-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      id: "dxea1",
+      text: "Evasive",
       type: "static",
     },
   ],

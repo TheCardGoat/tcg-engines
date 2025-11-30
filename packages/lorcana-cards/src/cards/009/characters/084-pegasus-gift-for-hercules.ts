@@ -16,15 +16,14 @@ export const pegasusGiftForHercules: CharacterCard = {
   willpower: 1,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "b9041d1ca62abbd3a21d0c6f7bf65471865b0da4",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1fc-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      id: "1fca1",
+      text: "Evasive",
       type: "static",
     },
   ],

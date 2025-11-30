@@ -16,7 +16,6 @@ export const elsaGlovesOff: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "19ff66fcdff2f3666e276f89a192f746b49b256b",
   },
@@ -28,8 +27,8 @@ export const elsaGlovesOff: CharacterCard = {
   ],
   abilities: [
     {
-      id: "77o-ability-1",
-      text: "Challenger +3 (While challenging, this character gets +3.)",
+      id: "77oa1",
+      text: "Challenger +3",
       type: "static",
     },
   ],

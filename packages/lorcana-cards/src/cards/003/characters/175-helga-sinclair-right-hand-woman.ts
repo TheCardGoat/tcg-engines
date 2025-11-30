@@ -16,7 +16,6 @@ export const helgaSinclairRighthandWoman: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "b92c30c1e0b46b38207f9ff73b6e43a9d4ffd5c9",
   },
@@ -28,8 +27,8 @@ export const helgaSinclairRighthandWoman: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1fd-ability-1",
-      text: "Challenger +2 (While challenging, this character gets +2.)",
+      id: "1fda1",
+      text: "Challenger +2",
       type: "static",
     },
   ],

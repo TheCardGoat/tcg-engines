@@ -16,15 +16,14 @@ export const moanaUndeterredVoyager: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "2f63375cd85e72b1c7c5774f2318433677ff7601",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "d5c-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      id: "d5ca1",
+      text: "Evasive",
       type: "static",
     },
   ],

@@ -16,15 +16,14 @@ export const auroraTranquilPrincess: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "067bc768bc6b0221356cb0b7535f6bf9fced1949",
   },
   keywords: ["Ward"],
   abilities: [
     {
-      id: "1sr-ability-1",
-      text: "Ward (Opponents can't choose this character except to challenge.)",
+      id: "1sra1",
+      text: "Ward",
       type: "static",
     },
   ],

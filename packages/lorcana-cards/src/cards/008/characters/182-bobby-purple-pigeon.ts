@@ -16,15 +16,14 @@ export const bobbyPurplePigeon: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "5071a3a017156ec252d3ef037f0e3fb1fd212f87",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "mbj-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      id: "mbja1",
+      text: "Bodyguard",
       type: "static",
     },
   ],

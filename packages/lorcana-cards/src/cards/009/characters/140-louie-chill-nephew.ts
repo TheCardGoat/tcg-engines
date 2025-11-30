@@ -16,15 +16,14 @@ export const louieChillNephew: CharacterCard = {
   willpower: 4,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "a70aef349e62cbf271e5f595be6b22aeb3d34724",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "1ac-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+      id: "1aca1",
+      text: "Support",
       type: "static",
     },
   ],

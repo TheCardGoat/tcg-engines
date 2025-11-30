@@ -16,7 +16,6 @@ export const francineEyeingTheEvidence: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "ab013cade204fc90400f1cb148720c2a1914fe37",
   },
@@ -28,8 +27,8 @@ export const francineEyeingTheEvidence: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1bg-ability-1",
-      text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
+      id: "1bga1",
+      text: "Resist +1",
       type: "static",
     },
   ],

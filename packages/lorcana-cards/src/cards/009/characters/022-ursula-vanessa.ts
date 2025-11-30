@@ -16,7 +16,6 @@ export const ursulaVanessa: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "4e8aaca4272863b70bf21a78240c97ccad2e3ce5",
   },
@@ -28,8 +27,8 @@ export const ursulaVanessa: CharacterCard = {
   ],
   abilities: [
     {
-      id: "lsj-ability-1",
-      text: "Singer 4 (This character counts as cost 4 to sing songs.)",
+      id: "lsja1",
+      text: "Singer 4",
       type: "static",
     },
   ],

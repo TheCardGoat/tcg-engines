@@ -16,15 +16,14 @@ export const ryderFleetfootedInfiltrator: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "92a8bffc338852c3c4d649bd891f34fb5462730e",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "14o-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      id: "14oa1",
+      text: "Evasive",
       type: "static",
     },
   ],

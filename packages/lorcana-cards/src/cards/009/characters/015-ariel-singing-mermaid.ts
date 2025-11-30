@@ -16,7 +16,6 @@ export const arielSingingMermaid: CharacterCard = {
   willpower: 3,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "9e45cd57bcaee1034e81d1c387fdbd8b35cdab85",
   },
@@ -28,8 +27,8 @@ export const arielSingingMermaid: CharacterCard = {
   ],
   abilities: [
     {
-      id: "17w-ability-1",
-      text: "Singer 7 (This character counts as cost 7 to sing songs.)",
+      id: "17wa1",
+      text: "Singer 7",
       type: "static",
     },
   ],

@@ -16,15 +16,14 @@ export const basilOfBakerStreet: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "fba07c9e309578673beb0679dd654ab701fc31bb",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "1xt-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+      id: "1xta1",
+      text: "Support",
       type: "static",
     },
   ],

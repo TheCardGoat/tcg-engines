@@ -16,7 +16,6 @@ export const gastonBaritoneBully: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "176214ba5544b38d31aa4d2d706edd897e07259a",
   },
@@ -28,8 +27,8 @@ export const gastonBaritoneBully: CharacterCard = {
   ],
   abilities: [
     {
-      id: "6hk-ability-1",
-      text: "Singer 5 (This character counts as cost 5 to sing songs.)",
+      id: "6hka1",
+      text: "Singer 5",
       type: "static",
     },
   ],

@@ -16,15 +16,14 @@ export const iagoPrettyPolly: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "2fa1ceaaf0d1dd9e4204f55a9c73c7ef3b00dcb7",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "d7s-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      id: "d7sa1",
+      text: "Evasive",
       type: "static",
     },
   ],

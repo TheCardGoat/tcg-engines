@@ -16,15 +16,14 @@ export const fixitFelixJrTrustyBuilder: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "c139143d214c2a6edd012e7428ca9ff6081cb764",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1hm-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      id: "1hma1",
+      text: "Bodyguard",
       type: "static",
     },
   ],

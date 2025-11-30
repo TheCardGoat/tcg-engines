@@ -16,15 +16,14 @@ export const kaaSecretiveSnake: CharacterCard = {
   willpower: 7,
   lore: 3,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "618ecda72b6d469648e0b167bd013d03dc4e62f6",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "r2h-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      id: "r2ha1",
+      text: "Evasive",
       type: "static",
     },
   ],

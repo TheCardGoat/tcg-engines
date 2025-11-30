@@ -16,7 +16,6 @@ export const kronkUnlicensedInvestigator: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "020df7caff144b7a745a51d6252d5a5861fb6489",
   },
@@ -28,8 +27,8 @@ export const kronkUnlicensedInvestigator: CharacterCard = {
   ],
   abilities: [
     {
-      id: "kit-ability-1",
-      text: "Challenger +1 (While challenging, this character gets +1.)",
+      id: "kita1",
+      text: "Challenger +1",
       type: "static",
     },
   ],

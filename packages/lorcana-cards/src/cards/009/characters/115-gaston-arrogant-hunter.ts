@@ -16,15 +16,14 @@ export const gastonArrogantHunter: CharacterCard = {
   willpower: 2,
   lore: 0,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "34cd6eb73f7b4b7dd53a239a0dedfdf75cb2efbc",
   },
   keywords: ["Reckless"],
   abilities: [
     {
-      id: "enf-ability-1",
-      text: "Reckless (This character can't quest and must challenge each turn if able.)",
+      id: "enfa1",
+      text: "Reckless",
       type: "static",
     },
   ],

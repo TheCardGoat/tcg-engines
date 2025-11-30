@@ -16,15 +16,14 @@ export const crikeeGoodLuckCharm: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "becfbb1f4251f07b2c92bee5465e8d8cbf12d90f",
   },
   keywords: ["Alert"],
   abilities: [
     {
-      id: "1gx-ability-1",
-      text: "Alert (This character can challenge as if they had Evasive.)",
+      id: "1gxa1",
+      text: "Alert",
       type: "static",
     },
   ],

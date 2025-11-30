@@ -16,7 +16,6 @@ export const missBiancaRescueAidSocietyAgent: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "856f8987d811850242fd68b59881b2c78568dc0a",
   },
@@ -28,8 +27,8 @@ export const missBiancaRescueAidSocietyAgent: CharacterCard = {
   ],
   abilities: [
     {
-      id: "113-ability-1",
-      text: "Singer 4 (This character counts as cost 4 to sing songs.)",
+      id: "113a1",
+      text: "Singer 4",
       type: "static",
     },
   ],

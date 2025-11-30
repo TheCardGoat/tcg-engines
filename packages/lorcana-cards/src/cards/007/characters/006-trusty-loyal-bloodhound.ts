@@ -16,15 +16,14 @@ export const trustyLoyalBloodhound: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "59fb789b94c97942a564b6c0fd20a35b436b07c6",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "oyt-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+      id: "oyta1",
+      text: "Support",
       type: "static",
     },
   ],

@@ -16,15 +16,14 @@ export const tinkerBellFastFlier: CharacterCard = {
   willpower: 3,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "cacdb6abf873de6f92bea008b9b53b48adb1624c",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1k9-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      id: "1k9a1",
+      text: "Evasive",
       type: "static",
     },
   ],
