@@ -16,16 +16,16 @@ export const zazuAdvisorToMufasa: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "1c49ac7ff34fcbbbd4e8e2c2cc50bc858e2cb391",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "7uk-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
-      type: "static",
+      id: "7uka1",
+      text: "Evasive",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

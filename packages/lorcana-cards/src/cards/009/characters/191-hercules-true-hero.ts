@@ -16,16 +16,16 @@ export const herculesTrueHero: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "aec8753f7f97cb51feeedf58b45f27661b18c44e",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1ch-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-      type: "static",
+      id: "1cha1",
+      text: "Bodyguard",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Prince"],

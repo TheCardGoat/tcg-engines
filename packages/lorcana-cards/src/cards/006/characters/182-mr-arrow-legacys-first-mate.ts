@@ -16,7 +16,6 @@ export const mrArrowLegacysFirstMate: CharacterCard = {
   willpower: 2,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "a814e468ab73333f21ba1a0d58cb731f9dcf1521",
   },
@@ -28,9 +27,11 @@ export const mrArrowLegacysFirstMate: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1am-ability-1",
-      text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
-      type: "static",
+      id: "1ama1",
+      text: "Resist +1",
+      type: "keyword",
+      keyword: "Resist",
+      value: 1,
     },
   ],
   classifications: ["Storyborn", "Ally", "Alien"],

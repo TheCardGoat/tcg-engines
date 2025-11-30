@@ -223,7 +223,10 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
 
   // === BOOLEAN PROPERTIES ===
   result.inkable = card.inkable;
-  result.vanilla = card.vanilla;
+  // Only output vanilla when true (non-vanilla cards omit this field)
+  if (card.vanilla) {
+    result.vanilla = true;
+  }
 
   // === OBJECT PROPERTIES ===
   if (card.externalIds) {
@@ -275,45 +278,88 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
   }
 
   // Output abilities with proper AbilityDefinition format
-  // AbilityDefinition requires: id, text, type (triggered|activated|static)
+  // AbilityDefinition requires: id, text, type (triggered|activated|static|keyword)
   if (card.rulesText && !card.vanilla) {
     const abilityTexts = card.rulesText.split("\n").filter((t) => t.trim());
     const engineAbilities: Array<{
       id: string;
       name?: string;
       text: string;
-      type: "triggered" | "activated" | "static";
+      type: "triggered" | "activated" | "static" | "keyword";
+      keyword?: string;
+      value?: number;
     }> = [];
 
+    // Simple keywords (no value)
+    const simpleKeywords = [
+      "bodyguard",
+      "evasive",
+      "reckless",
+      "rush",
+      "support",
+      "vanish",
+      "ward",
+      "alert",
+    ];
+    // Parameterized keywords (have a +N value)
+    const parameterizedKeywords = ["challenger", "resist", "singer"];
+
     for (let i = 0; i < abilityTexts.length; i++) {
-      const text = abilityTexts[i].trim();
-      const abilityId = `${card.id}-ability-${i + 1}`;
+      const rawText = abilityTexts[i].trim();
+      const abilityId = `${card.id}-${i + 1}`;
+
+      // Remove reminder text (parenthetical explanations)
+      // Note: In Lorcana, reminder text always appears in parentheses after keywords/abilities
+      // e.g., "Challenger +2 (While challenging, this character gets +2.)"
+      const text = rawText.replace(/\s*\([^)]*\)/g, "").trim();
 
       // Try to extract ability name (all caps at start)
+      // Pattern requires at least 3 uppercase letters - all Lorcana ability names are 4+ chars
+      // e.g., "RUSH", "WARD", "CHALLENGER", "FRESH INK"
       const namedMatch = text.match(/^([A-Z][A-Z\s]+[A-Z])\s+(.+)$/);
       const name = namedMatch ? namedMatch[1].trim() : undefined;
 
       // Determine ability type
-      let abilityType: "triggered" | "activated" | "static" = "static";
+      let abilityType: "triggered" | "activated" | "static" | "keyword" =
+        "static";
       const lower = text.toLowerCase();
+      let keyword: string | undefined;
+      let value: number | undefined;
 
-      // Check if it's a keyword (map to static)
-      const isKeyword = [
-        "bodyguard",
-        "evasive",
-        "reckless",
-        "rush",
-        "support",
-        "vanish",
-        "ward",
-        "alert",
-        "challenger",
-        "resist",
-        "singer",
-        "shift",
-      ].some((kw) => lower.startsWith(kw));
-
-      if (!isKeyword) {
+      // Check for simple keywords
+      const simpleKeywordMatch = simpleKeywords.find((kw) =>
+        lower.startsWith(kw),
+      );
+      if (simpleKeywordMatch) {
+        abilityType = "keyword";
+        keyword =
+          simpleKeywordMatch.charAt(0).toUpperCase() +
+          simpleKeywordMatch.slice(1);
+      }
+      // Check for parameterized keywords (e.g., "Challenger +3", "Resist +2", "Singer 5")
+      else if (parameterizedKeywords.some((kw) => lower.startsWith(kw))) {
+        const paramMatch = text.match(
+          /^(Challenger|Resist|Singer)\s*\+?(\d+)/i,
+        );
+        if (paramMatch) {
+          abilityType = "keyword";
+          keyword =
+            paramMatch[1].charAt(0).toUpperCase() +
+            paramMatch[1].slice(1).toLowerCase();
+          value = Number.parseInt(paramMatch[2], 10);
+        }
+      }
+      // Check for Shift keyword (e.g., "Shift 5")
+      else if (lower.startsWith("shift")) {
+        const shiftMatch = text.match(/^Shift\s+(\d+)/i);
+        if (shiftMatch) {
+          abilityType = "keyword";
+          keyword = "Shift";
+          value = Number.parseInt(shiftMatch[1], 10);
+        }
+      }
+      // Not a keyword - check for triggered/activated
+      else {
         // Triggered abilities
         if (
           lower.includes("whenever") ||
@@ -335,6 +381,8 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
         ...(name && { name }),
         text,
         type: abilityType,
+        ...(keyword && { keyword }),
+        ...(value !== undefined && { value }),
       });
     }
 

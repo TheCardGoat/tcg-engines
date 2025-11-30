@@ -16,16 +16,16 @@ export const basilHypnotizedMouse: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "f404642244e838db87343396d53a98cc355ec34e",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1v9-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
-      type: "static",
+      id: "1v9a1",
+      text: "Evasive",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Detective"],

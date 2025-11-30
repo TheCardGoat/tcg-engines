@@ -15,16 +15,16 @@ export const mickeyMouseBraveLittleTailor: CharacterCard = {
   willpower: 5,
   lore: 4,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "24d9608bc36bf0e9c6e158b0569ebcd8d0515343",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "a81-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
-      type: "static",
+      id: "a81a1",
+      text: "Evasive",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Hero"],

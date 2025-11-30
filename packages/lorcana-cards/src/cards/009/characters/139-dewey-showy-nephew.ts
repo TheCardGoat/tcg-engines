@@ -16,16 +16,16 @@ export const deweyShowyNephew: CharacterCard = {
   willpower: 3,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "0b0ddc6a36474b1503510c3a4c1a09e035e13baf",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "32f-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-      type: "static",
+      id: "32fa1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

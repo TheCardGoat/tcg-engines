@@ -16,16 +16,16 @@ export const tiggerWonderfulThing: CharacterCard = {
   willpower: 4,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "aeb12d5f9810897355e57f169ef318f584e11c64",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1cg-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
-      type: "static",
+      id: "1cga1",
+      text: "Evasive",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Tigger"],

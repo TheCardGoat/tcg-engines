@@ -16,16 +16,16 @@ export const boltDependableFriend: CharacterCard = {
   willpower: 4,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "4569c6b9d1aa773811189e4fe7746e13a5b67569",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "j9c-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-      type: "static",
+      id: "j9ca1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero"],

@@ -16,16 +16,16 @@ export const tongSurvivor: CharacterCard = {
   willpower: 6,
   lore: 0,
   inkable: false,
-  vanilla: false,
   externalIds: {
     ravensburger: "605680cde1ad7c1f3add90d42b8193ca0e197da6",
   },
   keywords: ["Reckless"],
   abilities: [
     {
-      id: "qqa-ability-1",
-      text: "Reckless (This character can't quest and must challenge each turn if able.)",
-      type: "static",
+      id: "qqaa1",
+      text: "Reckless",
+      type: "keyword",
+      keyword: "Reckless",
     },
   ],
   classifications: ["Storyborn", "Ally"],

@@ -16,16 +16,16 @@ export const naniProtectiveSister: CharacterCard = {
   willpower: 6,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "ba2f05538e1999601db469cfe0b44f78bcbdb61c",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1fn-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-      type: "static",
+      id: "1fna1",
+      text: "Bodyguard",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Hero"],

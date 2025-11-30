@@ -16,16 +16,16 @@ export const mrsBeakleyFormerShushAgent: CharacterCard = {
   willpower: 6,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "99a7cb5afcf2f617bc3f2280c0afc300de76be91",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "16m-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-      type: "static",
+      id: "16ma1",
+      text: "Bodyguard",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Ally"],

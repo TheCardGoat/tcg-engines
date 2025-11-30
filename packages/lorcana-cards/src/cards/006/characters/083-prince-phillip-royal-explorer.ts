@@ -16,16 +16,16 @@ export const princePhillipRoyalExplorer: CharacterCard = {
   willpower: 2,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "875592f80cfc4d6e34c02219ce9530abc27695f8",
   },
   keywords: ["Ward"],
   abilities: [
     {
-      id: "11j-ability-1",
-      text: "Ward (Opponents can't choose this character except to challenge.)",
-      type: "static",
+      id: "11ja1",
+      text: "Ward",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

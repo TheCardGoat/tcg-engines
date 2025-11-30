@@ -16,16 +16,16 @@ export const fidgetRatigansHenchman: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "9836b26ae57048c3c2225cde40cc9be4712fc633",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "168-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
-      type: "static",
+      id: "168a1",
+      text: "Evasive",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

@@ -16,16 +16,16 @@ export const ticktockEverpresentPursuer: CharacterCard = {
   willpower: 7,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "99133bb34b1ce309fdf855a65f0cd70f9a17cc59",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "16h-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
-      type: "static",
+      id: "16ha1",
+      text: "Evasive",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

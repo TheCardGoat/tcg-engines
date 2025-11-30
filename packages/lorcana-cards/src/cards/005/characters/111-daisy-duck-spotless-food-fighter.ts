@@ -15,16 +15,16 @@ export const daisyDuckSpotlessFoodfighter: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "b1724348bcda8483959b2f906793c0d8ec1ee40a",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1d8-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
-      type: "static",
+      id: "1d8a1",
+      text: "Evasive",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Hero"],

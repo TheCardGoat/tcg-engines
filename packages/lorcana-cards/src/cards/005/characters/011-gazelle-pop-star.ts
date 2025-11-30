@@ -16,7 +16,6 @@ export const gazellePopStar: CharacterCard = {
   willpower: 3,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "3a77973047a9e2dc5748299006ede3868e00d061",
   },
@@ -28,9 +27,11 @@ export const gazellePopStar: CharacterCard = {
   ],
   abilities: [
     {
-      id: "g80-ability-1",
-      text: "Singer 5 (This character counts as cost 5 to sing songs.)",
-      type: "static",
+      id: "g80a1",
+      text: "Singer 5",
+      type: "keyword",
+      keyword: "Singer",
+      value: 5,
     },
   ],
   classifications: ["Storyborn", "Ally"],

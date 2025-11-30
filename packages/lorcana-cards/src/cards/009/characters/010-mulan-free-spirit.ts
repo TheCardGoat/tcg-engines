@@ -16,16 +16,16 @@ export const mulanFreeSpirit: CharacterCard = {
   willpower: 3,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "63be0c9e418d5a0329a87de4082802d18848efe6",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "roa-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-      type: "static",
+      id: "roaa1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Princess"],

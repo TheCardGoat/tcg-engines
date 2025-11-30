@@ -15,16 +15,16 @@ export const daisyDuckGhostFinder: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "d3e63fe9f4bd72e82b947dcc61d0f2c1744b9221",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "1m1-ability-1",
-      text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
-      type: "static",
+      id: "1m1a1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Detective"],

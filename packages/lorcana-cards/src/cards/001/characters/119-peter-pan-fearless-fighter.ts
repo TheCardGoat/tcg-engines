@@ -16,16 +16,16 @@ export const peterPanFearlessFighter: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: false,
-  vanilla: false,
   externalIds: {
     ravensburger: "2ed2d4d7295557a864451ec395c78721255c0c17",
   },
   keywords: ["Rush"],
   abilities: [
     {
-      id: "czp-ability-1",
-      text: "Rush (This character can challenge the turn they're played.)",
-      type: "static",
+      id: "czpa1",
+      text: "Rush",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Hero"],

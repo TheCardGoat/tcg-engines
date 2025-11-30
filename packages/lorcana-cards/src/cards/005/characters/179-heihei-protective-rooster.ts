@@ -16,16 +16,16 @@ export const heiheiProtectiveRooster: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "229b50a7f3386e0bd2aa989a726fa7a22826eee1",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "9lo-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-      type: "static",
+      id: "9loa1",
+      text: "Bodyguard",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

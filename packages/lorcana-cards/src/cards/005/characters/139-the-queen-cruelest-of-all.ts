@@ -16,16 +16,16 @@ export const theQueenCruelestOfAll: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "6522f49b10eefa0162d9f38ed91efba1027e5efc",
   },
   keywords: ["Ward"],
   abilities: [
     {
-      id: "s28-ability-1",
-      text: "Ward (Opponents can't choose this character except to challenge.)",
-      type: "static",
+      id: "s28a1",
+      text: "Ward",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Storyborn", "Villain", "Queen", "Sorcerer"],

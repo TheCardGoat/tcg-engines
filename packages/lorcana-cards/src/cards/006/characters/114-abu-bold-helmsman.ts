@@ -16,16 +16,16 @@ export const abuBoldHelmsman: CharacterCard = {
   willpower: 4,
   lore: 2,
   inkable: false,
-  vanilla: false,
   externalIds: {
     ravensburger: "b875bd5dc6364f60d60d0e20e53a61eb2a7eb097",
   },
   keywords: ["Rush"],
   abilities: [
     {
-      id: "1f2-ability-1",
-      text: "Rush (This character can challenge the turn they're played.)",
-      type: "static",
+      id: "1f2a1",
+      text: "Rush",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Ally"],

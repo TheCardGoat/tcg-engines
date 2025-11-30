@@ -16,7 +16,6 @@ export const yaoImperialSoldier: CharacterCard = {
   willpower: 5,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "277f711b5cc9107e8bae7d0ab1d79e8e08ca13f3",
   },
@@ -28,9 +27,11 @@ export const yaoImperialSoldier: CharacterCard = {
   ],
   abilities: [
     {
-      id: "ayj-ability-1",
-      text: "Challenger +2 (While challenging, this character gets +2.)",
-      type: "static",
+      id: "ayja1",
+      text: "Challenger +2",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 2,
     },
   ],
   classifications: ["Storyborn", "Ally"],

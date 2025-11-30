@@ -16,16 +16,16 @@ export const philoctetesTrainerOfHeroes: CharacterCard = {
   willpower: 1,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "bc5a3301196e31a727216ba5bd0ecf0f0dcae69a",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "1g8-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-      type: "static",
+      id: "1g8a1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Mentor"],

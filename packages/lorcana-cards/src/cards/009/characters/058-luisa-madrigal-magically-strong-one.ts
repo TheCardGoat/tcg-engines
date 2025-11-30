@@ -16,16 +16,16 @@ export const luisaMadrigalMagicallyStrongOne: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: false,
-  vanilla: false,
   externalIds: {
     ravensburger: "e5dd22ae0e83e9f520522e07643858b4e2d081e7",
   },
   keywords: ["Rush"],
   abilities: [
     {
-      id: "1rs-ability-1",
-      text: "Rush (This character can challenge the turn they're played.)",
-      type: "static",
+      id: "1rsa1",
+      text: "Rush",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Ally", "Madrigal"],

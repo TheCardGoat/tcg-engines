@@ -16,7 +16,6 @@ export const beastThickskinned: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "613c1d6a03168cd893e044a3b018c6d7d70f295d",
   },
@@ -28,9 +27,11 @@ export const beastThickskinned: CharacterCard = {
   ],
   abilities: [
     {
-      id: "qz9-ability-1",
-      text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
-      type: "static",
+      id: "qz9a1",
+      text: "Resist +1",
+      type: "keyword",
+      keyword: "Resist",
+      value: 1,
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

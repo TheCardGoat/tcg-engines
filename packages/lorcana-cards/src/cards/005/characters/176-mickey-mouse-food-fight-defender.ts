@@ -15,7 +15,6 @@ export const mickeyMouseFoodFightDefender: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "d1324726fcfc8dc6a6c64e536b9abff579e86482",
   },
@@ -27,9 +26,11 @@ export const mickeyMouseFoodFightDefender: CharacterCard = {
   ],
   abilities: [
     {
-      id: "1m6-ability-1",
-      text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
-      type: "static",
+      id: "1m6a1",
+      text: "Resist +1",
+      type: "keyword",
+      keyword: "Resist",
+      value: 1,
     },
   ],
   classifications: ["Storyborn", "Hero"],

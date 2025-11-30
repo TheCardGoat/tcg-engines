@@ -16,16 +16,16 @@ export const rajahGhostlyTiger: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "aa7759237b508c4b2e253ca43417ab8d26d6da36",
   },
   keywords: ["Vanish"],
   abilities: [
     {
-      id: "1ba-ability-1",
-      text: "Vanish (When an opponent chooses this character for an action, banish them.)",
-      type: "static",
+      id: "1baa1",
+      text: "Vanish",
+      type: "keyword",
+      keyword: "Vanish",
     },
   ],
   classifications: ["Dreamborn", "Ally", "Illusion"],

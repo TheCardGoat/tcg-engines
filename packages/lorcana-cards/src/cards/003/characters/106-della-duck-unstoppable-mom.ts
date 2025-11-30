@@ -16,16 +16,16 @@ export const dellaDuckUnstoppableMom: CharacterCard = {
   willpower: 3,
   lore: 0,
   inkable: false,
-  vanilla: false,
   externalIds: {
     ravensburger: "f9389799f1792877b71c185b548e270163ef1c81",
   },
   keywords: ["Reckless"],
   abilities: [
     {
-      id: "1xa-ability-1",
-      text: "Reckless (This character can't quest and must challenge each turn if able.)",
-      type: "static",
+      id: "1xaa1",
+      text: "Reckless",
+      type: "keyword",
+      keyword: "Reckless",
     },
   ],
   classifications: ["Storyborn", "Ally"],

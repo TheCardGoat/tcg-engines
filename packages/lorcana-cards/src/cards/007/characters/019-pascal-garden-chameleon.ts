@@ -16,16 +16,16 @@ export const pascalGardenChameleon: CharacterCard = {
   willpower: 3,
   lore: 3,
   inkable: false,
-  vanilla: false,
   externalIds: {
     ravensburger: "dbbfc68f60125a864a3dff7e2bf4693570e24611",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1oz-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
-      type: "static",
+      id: "1oza1",
+      text: "Evasive",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

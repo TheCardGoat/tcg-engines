@@ -16,16 +16,16 @@ export const ruttNorthernMoose: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "678f68c55dfedbbaffb7e07321b6342581a6b658",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "sqf-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-      type: "static",
+      id: "sqfa1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Ally"],

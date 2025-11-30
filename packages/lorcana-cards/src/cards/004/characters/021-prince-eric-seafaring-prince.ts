@@ -16,16 +16,16 @@ export const princeEricSeafaringPrince: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "215468ad3c809a1adc7ae0b14aa9d95e4875e52d",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "98x-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose a character with Bodyguard if able.)",
-      type: "static",
+      id: "98xa1",
+      text: "Bodyguard",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Prince"],

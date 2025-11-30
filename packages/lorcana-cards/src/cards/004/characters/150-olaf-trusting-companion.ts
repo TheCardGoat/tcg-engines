@@ -16,16 +16,16 @@ export const olafTrustingCompanion: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "cbab906d9150c14ea179ca6198b84543704569f4",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "1ki-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character’s this turn.)",
-      type: "static",
+      id: "1kia1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Ally"],

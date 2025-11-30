@@ -16,16 +16,16 @@ export const arthurNoviceSparrow: CharacterCard = {
   willpower: 3,
   lore: 0,
   inkable: false,
-  vanilla: false,
   externalIds: {
     ravensburger: "29f376ad78c551ed84b353cdcbe6ae4a1bceaa40",
   },
   keywords: ["Reckless"],
   abilities: [
     {
-      id: "bn1-ability-1",
-      text: "Reckless (This character can't quest and must challenge each turn if able.)",
-      type: "static",
+      id: "bn1a1",
+      text: "Reckless",
+      type: "keyword",
+      keyword: "Reckless",
     },
   ],
   classifications: ["Storyborn", "Hero"],

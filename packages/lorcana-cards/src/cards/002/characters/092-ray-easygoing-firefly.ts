@@ -16,16 +16,16 @@ export const rayEasygoingFirefly: CharacterCard = {
   willpower: 3,
   lore: 3,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "ab6c67ceb00eb3d0444aff79e47e18bd4a08a536",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1bk-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
-      type: "static",
+      id: "1bka1",
+      text: "Evasive",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

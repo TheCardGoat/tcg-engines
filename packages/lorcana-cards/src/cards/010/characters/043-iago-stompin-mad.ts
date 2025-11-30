@@ -16,7 +16,6 @@ export const iagoStompinMad: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "1d9f1179673d307584d5af2eff385d3291e06044",
   },
@@ -28,9 +27,11 @@ export const iagoStompinMad: CharacterCard = {
   ],
   abilities: [
     {
-      id: "87v-ability-1",
-      text: "Challenger +5 (While challenging, this character gets +5.)",
-      type: "static",
+      id: "87va1",
+      text: "Challenger +5",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 5,
     },
   ],
   classifications: ["Storyborn", "Ally"],

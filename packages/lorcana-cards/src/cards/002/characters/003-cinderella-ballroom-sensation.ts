@@ -16,7 +16,6 @@ export const cinderellaBallroomSensation: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "1053acb0af19beb3e33f5d547aa4078efbd13b6c",
   },
@@ -28,9 +27,11 @@ export const cinderellaBallroomSensation: CharacterCard = {
   ],
   abilities: [
     {
-      id: "4j3-ability-1",
-      text: "Singer 3 (This character counts as cost 3 to sing songs.)",
-      type: "static",
+      id: "4j3a1",
+      text: "Singer 3",
+      type: "keyword",
+      keyword: "Singer",
+      value: 3,
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess"],

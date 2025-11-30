@@ -16,16 +16,16 @@ export const vanellopeVonSchweetzSpunkySpeedster: CharacterCard = {
   willpower: 1,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "f688dbd85d7d9d0deb20a991bf4299135b286ae0",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1we-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
-      type: "static",
+      id: "1wea1",
+      text: "Evasive",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess", "Racer"],

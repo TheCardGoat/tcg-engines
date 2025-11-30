@@ -16,16 +16,16 @@ export const markowskiSpaceTrooper: CharacterCard = {
   willpower: 2,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "ead46bfd3bf059ae7fe97fb6163a498b70b7e8a7",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "1t3-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
-      type: "static",
+      id: "1t3a1",
+      text: "Evasive",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

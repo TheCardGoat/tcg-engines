@@ -16,16 +16,16 @@ export const pongoOlRascal: CharacterCard = {
   willpower: 3,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "0b91137c16607aa4f8e758e7b1ffc78257c42cd4",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "37j-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
-      type: "static",
+      id: "37ja1",
+      text: "Evasive",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Hero"],

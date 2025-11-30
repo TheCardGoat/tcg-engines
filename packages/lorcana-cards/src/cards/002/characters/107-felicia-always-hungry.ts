@@ -16,16 +16,16 @@ export const feliciaAlwaysHungry: CharacterCard = {
   willpower: 1,
   lore: 0,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "1b20de5f2b02e1b11d1cc8c4407911c249df3db3",
   },
   keywords: ["Reckless"],
   abilities: [
     {
-      id: "7iz-ability-1",
-      text: "Reckless (This character can't quest and must challenge each turn if able.)",
-      type: "static",
+      id: "7iza1",
+      text: "Reckless",
+      type: "keyword",
+      keyword: "Reckless",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

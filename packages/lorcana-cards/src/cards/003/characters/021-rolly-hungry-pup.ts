@@ -16,16 +16,16 @@ export const rollyHungryPup: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "35a17094ae0ea85e5bf8c8c37dfc63064b508a63",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "evp-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-      type: "static",
+      id: "evpa1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Puppy"],

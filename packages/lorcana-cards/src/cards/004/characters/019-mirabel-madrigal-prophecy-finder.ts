@@ -16,16 +16,16 @@ export const mirabelMadrigalProphecyFinder: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "d093d99a5578a883cc8f720171886790e355e192",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "1lv-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-      type: "static",
+      id: "1lva1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero", "Madrigal"],

@@ -16,16 +16,16 @@ export const snowannaRainbeauCoolCompetitor: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: false,
-  vanilla: false,
   externalIds: {
     ravensburger: "62f8f59f90124ef9f0b9787ccf4611aaf361be9f",
   },
   keywords: ["Rush"],
   abilities: [
     {
-      id: "rgl-ability-1",
-      text: "Rush (This character can challenge the turn they're played.)",
-      type: "static",
+      id: "rgla1",
+      text: "Rush",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Ally", "Racer"],

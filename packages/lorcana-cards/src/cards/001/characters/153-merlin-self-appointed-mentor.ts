@@ -16,16 +16,16 @@ export const merlinSelfappointedMentor: CharacterCard = {
   willpower: 4,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "6df9e37cf042bea283043a907feb840a22e7db90",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "uii-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-      type: "static",
+      id: "uiia1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Dreamborn", "Mentor", "Sorcerer"],

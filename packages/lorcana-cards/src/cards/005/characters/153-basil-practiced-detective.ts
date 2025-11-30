@@ -16,16 +16,16 @@ export const basilPracticedDetective: CharacterCard = {
   willpower: 1,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "45e94574ada65e2810ad87f119a52fc83df37d25",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "jeb-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-      type: "static",
+      id: "jeba1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero", "Detective"],

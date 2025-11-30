@@ -16,16 +16,16 @@ export const hermesHarriedMessenger: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "9ce36fa3156e783f9c693a2e872e588419f40862",
   },
   keywords: ["Rush"],
   abilities: [
     {
-      id: "17j-ability-1",
-      text: "Rush (This character can challenge the turn they're played.)",
-      type: "static",
+      id: "17ja1",
+      text: "Rush",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Deity"],

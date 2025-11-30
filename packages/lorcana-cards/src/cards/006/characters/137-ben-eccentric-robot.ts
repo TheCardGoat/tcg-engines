@@ -16,16 +16,16 @@ export const benEccentricRobot: CharacterCard = {
   willpower: 3,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "aa97f4df72681860790f4df212f77ab3bf9a7239",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "1b4-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-      type: "static",
+      id: "1b4a1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Ally", "Robot", "Pirate"],

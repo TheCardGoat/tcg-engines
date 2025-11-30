@@ -16,7 +16,6 @@ export const teKLavaMonster: CharacterCard = {
   willpower: 6,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "1d4dce8830332274f2d71f03712751024137f96e",
   },
@@ -28,9 +27,11 @@ export const teKLavaMonster: CharacterCard = {
   ],
   abilities: [
     {
-      id: "84p-ability-1",
-      text: "Challenger +2 (While challenging, this character gets +2.)",
-      type: "static",
+      id: "84pa1",
+      text: "Challenger +2",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 2,
     },
   ],
   classifications: ["Storyborn", "Villain", "Deity"],

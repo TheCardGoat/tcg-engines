@@ -16,16 +16,16 @@ export const drFacilierSavvyOpportunist: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "7eb3e95e745e4e80a3c3f2b46bce3df355e3acbf",
   },
   keywords: ["Evasive"],
   abilities: [
     {
-      id: "z5l-ability-1",
-      text: "Evasive (Only characters with Evasive can challenge this character.)",
-      type: "static",
+      id: "z5la1",
+      text: "Evasive",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],

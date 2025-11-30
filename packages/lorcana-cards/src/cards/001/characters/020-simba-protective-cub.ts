@@ -16,16 +16,16 @@ export const simbaProtectiveCub: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "6479a6ae550768c207018562ce6f687ec41e7c86",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "rvm-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-      type: "static",
+      id: "rvma1",
+      text: "Bodyguard",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

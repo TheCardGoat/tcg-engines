@@ -16,16 +16,16 @@ export const aladdinPrinceAli: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "1d08728f58803b68227b42d077f73afbfe1f9880",
   },
   keywords: ["Ward"],
   abilities: [
     {
-      id: "820-ability-1",
-      text: "Ward (Opponents can't choose this character except to challenge.)",
-      type: "static",
+      id: "820a1",
+      text: "Ward",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

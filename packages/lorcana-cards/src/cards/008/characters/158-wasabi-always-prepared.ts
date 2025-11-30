@@ -16,16 +16,16 @@ export const wasabiAlwaysPrepared: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
-  vanilla: false,
   externalIds: {
     ravensburger: "25e61d810205cf763e55f3f76c58fe35a4785e2a",
   },
   keywords: ["Support"],
   abilities: [
     {
-      id: "aik-ability-1",
-      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-      type: "static",
+      id: "aika1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero", "Inventor"],

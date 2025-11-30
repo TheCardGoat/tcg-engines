@@ -16,16 +16,16 @@ export const thePrinceVigilantSuitor: CharacterCard = {
   willpower: 5,
   lore: 1,
   inkable: false,
-  vanilla: false,
   externalIds: {
     ravensburger: "5966f7b1df7bd6ef309aa7694d0a45d89624c970",
   },
   keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "ot0-ability-1",
-      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-      type: "static",
+      id: "ot0a1",
+      text: "Bodyguard",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],
