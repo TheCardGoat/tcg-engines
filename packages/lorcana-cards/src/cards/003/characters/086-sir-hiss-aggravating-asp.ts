@@ -24,7 +24,8 @@ export const sirHissAggravatingAsp: CharacterCard = {
     {
       id: "1vha1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

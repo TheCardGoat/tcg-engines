@@ -29,7 +29,9 @@ export const powerlineTakingTheStage: CharacterCard = {
     {
       id: "1t6a1",
       text: "Singer 4",
-      type: "static",
+      type: "keyword",
+      keyword: "Singer",
+      value: 4,
     },
   ],
   classifications: ["Storyborn"],

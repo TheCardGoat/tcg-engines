@@ -24,7 +24,8 @@ export const liloJuniorCakeDecorator: CharacterCard = {
     {
       id: "183a1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero"],

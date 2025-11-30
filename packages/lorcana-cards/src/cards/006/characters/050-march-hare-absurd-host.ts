@@ -24,7 +24,8 @@ export const marchHareAbsurdHost: CharacterCard = {
     {
       id: "110a1",
       text: "Rush",
-      type: "static",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn"],

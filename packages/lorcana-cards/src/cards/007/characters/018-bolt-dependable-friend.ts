@@ -24,7 +24,8 @@ export const boltDependableFriend: CharacterCard = {
     {
       id: "j9ca1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero"],

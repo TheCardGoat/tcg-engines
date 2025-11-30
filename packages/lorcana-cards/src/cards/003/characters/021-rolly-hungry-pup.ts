@@ -24,7 +24,8 @@ export const rollyHungryPup: CharacterCard = {
     {
       id: "evpa1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Puppy"],

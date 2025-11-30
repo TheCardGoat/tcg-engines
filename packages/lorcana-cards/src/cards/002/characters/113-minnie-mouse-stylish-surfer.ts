@@ -23,7 +23,8 @@ export const minnieMouseStylishSurfer: CharacterCard = {
     {
       id: "1yya1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Hero"],

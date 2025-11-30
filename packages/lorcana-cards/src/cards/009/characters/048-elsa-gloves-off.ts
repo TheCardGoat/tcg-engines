@@ -29,7 +29,9 @@ export const elsaGlovesOff: CharacterCard = {
     {
       id: "77oa1",
       text: "Challenger +3",
-      type: "static",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 3,
     },
   ],
   classifications: ["Storyborn", "Hero", "Queen", "Sorcerer"],

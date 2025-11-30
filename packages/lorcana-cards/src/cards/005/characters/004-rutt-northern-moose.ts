@@ -24,7 +24,8 @@ export const ruttNorthernMoose: CharacterCard = {
     {
       id: "sqfa1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Ally"],

@@ -24,7 +24,8 @@ export const tipoJuniorChipmunk: CharacterCard = {
     {
       id: "y4va1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

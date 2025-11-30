@@ -24,7 +24,8 @@ export const thomasOmalleyFelineCharmer: CharacterCard = {
     {
       id: "14ma1",
       text: "Ward",
-      type: "static",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Storyborn", "Hero"],

@@ -24,7 +24,8 @@ export const zazuAdvisorToMufasa: CharacterCard = {
     {
       id: "7uka1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

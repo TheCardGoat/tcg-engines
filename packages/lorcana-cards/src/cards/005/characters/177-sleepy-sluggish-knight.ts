@@ -24,7 +24,8 @@ export const sleepySluggishKnight: CharacterCard = {
     {
       id: "1k0a1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Dreamborn", "Ally", "Knight", "Seven Dwarfs"],

@@ -29,7 +29,9 @@ export const mrArrowLegacysFirstMate: CharacterCard = {
     {
       id: "1ama1",
       text: "Resist +1",
-      type: "static",
+      type: "keyword",
+      keyword: "Resist",
+      value: 1,
     },
   ],
   classifications: ["Storyborn", "Ally", "Alien"],

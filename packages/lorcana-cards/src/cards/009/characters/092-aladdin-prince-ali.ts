@@ -24,7 +24,8 @@ export const aladdinPrinceAli: CharacterCard = {
     {
       id: "820a1",
       text: "Ward",
-      type: "static",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

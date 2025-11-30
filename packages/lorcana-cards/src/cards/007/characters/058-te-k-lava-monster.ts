@@ -29,7 +29,9 @@ export const teKLavaMonster: CharacterCard = {
     {
       id: "84pa1",
       text: "Challenger +2",
-      type: "static",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 2,
     },
   ],
   classifications: ["Storyborn", "Villain", "Deity"],

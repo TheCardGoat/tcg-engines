@@ -29,7 +29,9 @@ export const captainHookForcefulDuelist: CharacterCard = {
     {
       id: "bhva1",
       text: "Challenger +2",
-      type: "static",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 2,
     },
   ],
   classifications: ["Dreamborn", "Villain", "Pirate", "Captain"],

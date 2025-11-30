@@ -24,7 +24,8 @@ export const mulanFreeSpirit: CharacterCard = {
     {
       id: "roaa1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Princess"],

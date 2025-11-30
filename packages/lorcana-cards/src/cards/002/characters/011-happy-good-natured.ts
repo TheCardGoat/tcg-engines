@@ -24,7 +24,8 @@ export const happyGoodnatured: CharacterCard = {
     {
       id: "deta1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Ally", "Seven Dwarfs"],

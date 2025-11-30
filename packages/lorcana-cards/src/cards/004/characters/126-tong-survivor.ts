@@ -24,7 +24,8 @@ export const tongSurvivor: CharacterCard = {
     {
       id: "qqaa1",
       text: "Reckless",
-      type: "static",
+      type: "keyword",
+      keyword: "Reckless",
     },
   ],
   classifications: ["Storyborn", "Ally"],

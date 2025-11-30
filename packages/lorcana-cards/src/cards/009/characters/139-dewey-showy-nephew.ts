@@ -24,7 +24,8 @@ export const deweyShowyNephew: CharacterCard = {
     {
       id: "32fa1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

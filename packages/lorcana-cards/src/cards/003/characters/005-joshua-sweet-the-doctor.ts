@@ -24,7 +24,8 @@ export const joshuaSweetTheDoctor: CharacterCard = {
     {
       id: "1qpa1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Ally"],

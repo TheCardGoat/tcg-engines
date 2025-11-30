@@ -24,7 +24,8 @@ export const basilPracticedDetective: CharacterCard = {
     {
       id: "jeba1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero", "Detective"],

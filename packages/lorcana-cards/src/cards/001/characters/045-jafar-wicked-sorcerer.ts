@@ -29,7 +29,9 @@ export const jafarWickedSorcerer: CharacterCard = {
     {
       id: "1dna1",
       text: "Challenger +3",
-      type: "static",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 3,
     },
   ],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],

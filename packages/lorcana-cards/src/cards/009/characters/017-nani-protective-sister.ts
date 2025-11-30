@@ -24,7 +24,8 @@ export const naniProtectiveSister: CharacterCard = {
     {
       id: "1fna1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Hero"],

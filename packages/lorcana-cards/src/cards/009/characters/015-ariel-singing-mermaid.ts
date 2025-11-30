@@ -29,7 +29,9 @@ export const arielSingingMermaid: CharacterCard = {
     {
       id: "17wa1",
       text: "Singer 7",
-      type: "static",
+      type: "keyword",
+      keyword: "Singer",
+      value: 7,
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess"],

@@ -24,7 +24,8 @@ export const mrsBeakleyFormerShushAgent: CharacterCard = {
     {
       id: "16ma1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Ally"],

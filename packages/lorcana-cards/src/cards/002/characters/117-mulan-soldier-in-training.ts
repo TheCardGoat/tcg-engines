@@ -24,7 +24,8 @@ export const mulanSoldierInTraining: CharacterCard = {
     {
       id: "x7ma1",
       text: "Rush",
-      type: "static",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess"],

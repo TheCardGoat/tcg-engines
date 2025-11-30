@@ -24,7 +24,8 @@ export const tukTukWreckingBall: CharacterCard = {
     {
       id: "1ora1",
       text: "Reckless",
-      type: "static",
+      type: "keyword",
+      keyword: "Reckless",
     },
   ],
   classifications: ["Storyborn", "Ally"],

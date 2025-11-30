@@ -24,7 +24,8 @@ export const pongoOlRascal: CharacterCard = {
     {
       id: "37ja1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Hero"],

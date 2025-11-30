@@ -24,7 +24,8 @@ export const kakamoraBoardingParty: CharacterCard = {
     {
       id: "7k1a1",
       text: "Rush",
-      type: "static",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Pirate"],

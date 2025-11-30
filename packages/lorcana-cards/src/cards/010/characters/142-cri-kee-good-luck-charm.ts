@@ -24,7 +24,8 @@ export const crikeeGoodLuckCharm: CharacterCard = {
     {
       id: "1gxa1",
       text: "Alert",
-      type: "static",
+      type: "keyword",
+      keyword: "Alert",
     },
   ],
   classifications: ["Storyborn", "Ally"],

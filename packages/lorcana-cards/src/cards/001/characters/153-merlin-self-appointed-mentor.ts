@@ -24,7 +24,8 @@ export const merlinSelfappointedMentor: CharacterCard = {
     {
       id: "uiia1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Dreamborn", "Mentor", "Sorcerer"],

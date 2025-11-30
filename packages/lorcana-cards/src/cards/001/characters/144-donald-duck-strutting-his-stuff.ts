@@ -23,7 +23,8 @@ export const donaldDuckStruttingHisStuff: CharacterCard = {
     {
       id: "10ba1",
       text: "Ward",
-      type: "static",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Inventor"],

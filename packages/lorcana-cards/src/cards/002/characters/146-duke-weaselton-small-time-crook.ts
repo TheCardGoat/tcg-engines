@@ -24,7 +24,8 @@ export const dukeWeaseltonSmalltimeCrook: CharacterCard = {
     {
       id: "1e8a1",
       text: "Ward",
-      type: "static",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Storyborn"],

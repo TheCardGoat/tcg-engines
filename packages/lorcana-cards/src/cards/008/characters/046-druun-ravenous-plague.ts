@@ -29,7 +29,9 @@ export const druunRavenousPlague: CharacterCard = {
     {
       id: "c4ia1",
       text: "Challenger +4",
-      type: "static",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 4,
     },
   ],
   classifications: ["Storyborn", "Villain"],

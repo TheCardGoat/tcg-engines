@@ -23,7 +23,8 @@ export const mickeyMouseBraveLittleTailor: CharacterCard = {
     {
       id: "a81a1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Hero"],

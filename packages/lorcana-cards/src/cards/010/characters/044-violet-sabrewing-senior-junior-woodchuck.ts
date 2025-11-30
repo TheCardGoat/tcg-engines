@@ -24,7 +24,8 @@ export const violetSabrewingSeniorJuniorWoodchuck: CharacterCard = {
     {
       id: "ynja1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

@@ -24,7 +24,8 @@ export const rafikiMysteriousSage: CharacterCard = {
     {
       id: "zqha1",
       text: "Rush",
-      type: "static",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Dreamborn", "Mentor", "Sorcerer"],

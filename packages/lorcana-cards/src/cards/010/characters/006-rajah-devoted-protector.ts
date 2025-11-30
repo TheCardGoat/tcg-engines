@@ -24,7 +24,8 @@ export const rajahDevotedProtector: CharacterCard = {
     {
       id: "1gka1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Ally"],

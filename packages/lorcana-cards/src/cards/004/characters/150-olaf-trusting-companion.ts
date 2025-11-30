@@ -24,7 +24,8 @@ export const olafTrustingCompanion: CharacterCard = {
     {
       id: "1kia1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Ally"],

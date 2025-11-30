@@ -24,7 +24,11 @@ export interface AbilityDefinition {
   id: string;
   name?: string;
   text: string;
-  type: "triggered" | "activated" | "static";
+  type: "triggered" | "activated" | "static" | "keyword";
+  /** Keyword type for keyword abilities (e.g., "Challenger", "Resist", "Singer") */
+  keyword?: string;
+  /** Value for parameterized keywords (e.g., Challenger +3 has value 3) */
+  value?: number;
 }
 
 // ============================================================================

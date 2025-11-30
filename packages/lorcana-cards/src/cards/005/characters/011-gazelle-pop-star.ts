@@ -29,7 +29,9 @@ export const gazellePopStar: CharacterCard = {
     {
       id: "g80a1",
       text: "Singer 5",
-      type: "static",
+      type: "keyword",
+      keyword: "Singer",
+      value: 5,
     },
   ],
   classifications: ["Storyborn", "Ally"],

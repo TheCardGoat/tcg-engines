@@ -24,7 +24,8 @@ export const queenOfHeartsImpulsiveRuler: CharacterCard = {
     {
       id: "106a1",
       text: "Rush",
-      type: "static",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Villain", "Queen"],

@@ -29,7 +29,9 @@ export const iagoStompinMad: CharacterCard = {
     {
       id: "87va1",
       text: "Challenger +5",
-      type: "static",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 5,
     },
   ],
   classifications: ["Storyborn", "Ally"],

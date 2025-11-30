@@ -24,7 +24,8 @@ export const skippyEnergeticRabbit: CharacterCard = {
     {
       id: "1m8a1",
       text: "Ward",
-      type: "static",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Storyborn", "Ally"],

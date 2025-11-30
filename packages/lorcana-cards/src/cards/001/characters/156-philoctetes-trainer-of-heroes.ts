@@ -24,7 +24,8 @@ export const philoctetesTrainerOfHeroes: CharacterCard = {
     {
       id: "1g8a1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Mentor"],

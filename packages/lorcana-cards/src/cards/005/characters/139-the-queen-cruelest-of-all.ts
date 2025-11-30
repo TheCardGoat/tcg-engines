@@ -24,7 +24,8 @@ export const theQueenCruelestOfAll: CharacterCard = {
     {
       id: "s28a1",
       text: "Ward",
-      type: "static",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Storyborn", "Villain", "Queen", "Sorcerer"],

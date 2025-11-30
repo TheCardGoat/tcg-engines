@@ -29,7 +29,9 @@ export const ursulaVanessa: CharacterCard = {
     {
       id: "lsja1",
       text: "Singer 4",
-      type: "static",
+      type: "keyword",
+      keyword: "Singer",
+      value: 4,
     },
   ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],

@@ -24,7 +24,8 @@ export const heiheiProtectiveRooster: CharacterCard = {
     {
       id: "9loa1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

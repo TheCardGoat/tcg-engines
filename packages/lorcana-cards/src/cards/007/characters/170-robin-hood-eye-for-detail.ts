@@ -24,7 +24,8 @@ export const robinHoodEyeForDetail: CharacterCard = {
     {
       id: "193a1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero"],

@@ -29,7 +29,9 @@ export const clawhauserDonutDetective: CharacterCard = {
     {
       id: "1ura1",
       text: "Challenger +2",
-      type: "static",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 2,
     },
   ],
   classifications: ["Dreamborn", "Ally", "Detective"],

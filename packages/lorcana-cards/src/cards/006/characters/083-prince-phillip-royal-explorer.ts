@@ -24,7 +24,8 @@ export const princePhillipRoyalExplorer: CharacterCard = {
     {
       id: "11ja1",
       text: "Ward",
-      type: "static",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

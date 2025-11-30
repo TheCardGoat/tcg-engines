@@ -24,7 +24,8 @@ export const lenaSabrewingRebelliousTeenager: CharacterCard = {
     {
       id: "1j3a1",
       text: "Rush",
-      type: "static",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Hero", "Sorcerer"],

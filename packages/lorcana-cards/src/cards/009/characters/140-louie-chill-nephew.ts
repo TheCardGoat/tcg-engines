@@ -24,7 +24,8 @@ export const louieChillNephew: CharacterCard = {
     {
       id: "1aca1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

@@ -24,7 +24,8 @@ export const teKTheBurningOne: CharacterCard = {
     {
       id: "14na1",
       text: "Reckless",
-      type: "static",
+      type: "keyword",
+      keyword: "Reckless",
     },
   ],
   classifications: ["Storyborn", "Villain", "Deity"],

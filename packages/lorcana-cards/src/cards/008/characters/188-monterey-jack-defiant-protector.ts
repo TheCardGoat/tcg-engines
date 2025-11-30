@@ -24,7 +24,8 @@ export const montereyJackDefiantProtector: CharacterCard = {
     {
       id: "1s2a1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Ally"],

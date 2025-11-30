@@ -24,7 +24,8 @@ export const pegasusFlyingSteed: CharacterCard = {
     {
       id: "dxea1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

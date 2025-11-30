@@ -29,7 +29,9 @@ export const ursulaMadSeaWitch: CharacterCard = {
     {
       id: "ui8a1",
       text: "Challenger +2",
-      type: "static",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 2,
     },
   ],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],

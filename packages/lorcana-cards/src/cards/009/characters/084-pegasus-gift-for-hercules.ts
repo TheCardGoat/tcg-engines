@@ -24,7 +24,8 @@ export const pegasusGiftForHercules: CharacterCard = {
     {
       id: "1fca1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

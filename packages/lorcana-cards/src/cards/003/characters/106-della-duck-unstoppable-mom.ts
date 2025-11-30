@@ -24,7 +24,8 @@ export const dellaDuckUnstoppableMom: CharacterCard = {
     {
       id: "1xaa1",
       text: "Reckless",
-      type: "static",
+      type: "keyword",
+      keyword: "Reckless",
     },
   ],
   classifications: ["Storyborn", "Ally"],

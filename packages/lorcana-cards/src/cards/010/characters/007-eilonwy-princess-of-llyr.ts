@@ -24,7 +24,8 @@ export const eilonwyPrincessOfLlyr: CharacterCard = {
     {
       id: "49aa1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Ally", "Princess"],

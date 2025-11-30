@@ -24,7 +24,8 @@ export const auroraTranquilPrincess: CharacterCard = {
     {
       id: "1sra1",
       text: "Ward",
-      type: "static",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Princess"],

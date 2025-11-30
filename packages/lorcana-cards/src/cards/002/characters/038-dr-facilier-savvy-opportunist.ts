@@ -24,7 +24,8 @@ export const drFacilierSavvyOpportunist: CharacterCard = {
     {
       id: "z5la1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],

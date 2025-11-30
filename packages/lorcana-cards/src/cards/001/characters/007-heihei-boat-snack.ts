@@ -24,7 +24,8 @@ export const heiheiBoatSnack: CharacterCard = {
     {
       id: "uioa1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Ally"],

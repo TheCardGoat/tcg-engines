@@ -24,7 +24,8 @@ export const princeEricSeafaringPrince: CharacterCard = {
     {
       id: "98xa1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Prince"],

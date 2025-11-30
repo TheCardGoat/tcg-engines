@@ -24,7 +24,8 @@ export const flotsamSlipperyAsAnEel: CharacterCard = {
     {
       id: "3maa1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

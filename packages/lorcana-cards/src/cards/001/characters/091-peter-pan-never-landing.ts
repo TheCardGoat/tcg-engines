@@ -24,7 +24,8 @@ export const peterPanNeverLanding: CharacterCard = {
     {
       id: "1g6a1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Hero"],

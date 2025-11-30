@@ -24,7 +24,8 @@ export const wasabiAlwaysPrepared: CharacterCard = {
     {
       id: "aika1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero", "Inventor"],

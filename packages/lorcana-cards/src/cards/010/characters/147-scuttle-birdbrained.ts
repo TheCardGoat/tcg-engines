@@ -24,7 +24,8 @@ export const scuttleBirdbrained: CharacterCard = {
     {
       id: "13da1",
       text: "Ward",
-      type: "static",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

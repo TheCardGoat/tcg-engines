@@ -24,7 +24,8 @@ export const annaMakingSnowPlans: CharacterCard = {
     {
       id: "9zfa1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero", "Queen"],

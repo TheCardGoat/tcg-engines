@@ -24,7 +24,8 @@ export const kitCloudkickerSpunkyBearCub: CharacterCard = {
     {
       id: "hkta1",
       text: "Ward",
-      type: "static",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Storyborn", "Ally"],

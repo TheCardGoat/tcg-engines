@@ -24,12 +24,14 @@ export const balooFriendAndGuardian: CharacterCard = {
     {
       id: "qnca1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
     {
       id: "qnca2",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Ally"],

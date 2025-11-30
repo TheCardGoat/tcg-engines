@@ -24,7 +24,8 @@ export const fixitFelixJrTrustyBuilder: CharacterCard = {
     {
       id: "1hma1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Hero"],

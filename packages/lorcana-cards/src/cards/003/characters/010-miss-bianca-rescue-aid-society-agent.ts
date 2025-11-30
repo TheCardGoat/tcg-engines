@@ -29,7 +29,9 @@ export const missBiancaRescueAidSocietyAgent: CharacterCard = {
     {
       id: "113a1",
       text: "Singer 4",
-      type: "static",
+      type: "keyword",
+      keyword: "Singer",
+      value: 4,
     },
   ],
   classifications: ["Storyborn", "Hero"],

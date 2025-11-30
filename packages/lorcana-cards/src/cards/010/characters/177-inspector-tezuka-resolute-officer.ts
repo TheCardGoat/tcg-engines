@@ -24,7 +24,8 @@ export const inspectorTezukaResoluteOfficer: CharacterCard = {
     {
       id: "15oa1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Ally", "Detective"],

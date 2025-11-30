@@ -29,7 +29,9 @@ export const sebastianCourtComposer: CharacterCard = {
     {
       id: "8rza1",
       text: "Singer 4",
-      type: "static",
+      type: "keyword",
+      keyword: "Singer",
+      value: 4,
     },
   ],
   classifications: ["Storyborn", "Ally"],

@@ -24,7 +24,8 @@ export const stitchLittleRocket: CharacterCard = {
     {
       id: "cgja1",
       text: "Rush",
-      type: "static",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Alien"],

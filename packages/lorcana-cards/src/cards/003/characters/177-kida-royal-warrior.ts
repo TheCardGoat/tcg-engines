@@ -24,7 +24,8 @@ export const kidaRoyalWarrior: CharacterCard = {
     {
       id: "1bia1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess"],

@@ -24,7 +24,8 @@ export const rayEasygoingFirefly: CharacterCard = {
     {
       id: "1bka1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

@@ -24,7 +24,8 @@ export const theHeadlessHorsemanRelentlessSpirit: CharacterCard = {
     {
       id: "i51a1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Villain"],

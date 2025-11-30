@@ -29,7 +29,9 @@ export const cinderellaBallroomSensation: CharacterCard = {
     {
       id: "4j3a1",
       text: "Singer 3",
-      type: "static",
+      type: "keyword",
+      keyword: "Singer",
+      value: 3,
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess"],

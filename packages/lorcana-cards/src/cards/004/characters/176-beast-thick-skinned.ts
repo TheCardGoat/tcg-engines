@@ -29,7 +29,9 @@ export const beastThickskinned: CharacterCard = {
     {
       id: "qz9a1",
       text: "Resist +1",
-      type: "static",
+      type: "keyword",
+      keyword: "Resist",
+      value: 1,
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

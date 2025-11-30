@@ -24,7 +24,8 @@ export const basilOfBakerStreet: CharacterCard = {
     {
       id: "1xta1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Detective"],

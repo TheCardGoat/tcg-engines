@@ -29,7 +29,9 @@ export const sisuInHerElement: CharacterCard = {
     {
       id: "39ba1",
       text: "Challenger +2",
-      type: "static",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 2,
     },
   ],
   classifications: ["Storyborn", "Hero", "Deity", "Dragon"],

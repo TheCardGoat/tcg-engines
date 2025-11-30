@@ -24,7 +24,8 @@ export const tiggerWonderfulThing: CharacterCard = {
     {
       id: "1cga1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Tigger"],

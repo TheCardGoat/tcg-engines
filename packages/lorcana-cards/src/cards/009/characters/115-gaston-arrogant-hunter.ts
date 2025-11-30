@@ -24,7 +24,8 @@ export const gastonArrogantHunter: CharacterCard = {
     {
       id: "enfa1",
       text: "Reckless",
-      type: "static",
+      type: "keyword",
+      keyword: "Reckless",
     },
   ],
   classifications: ["Storyborn", "Villain"],

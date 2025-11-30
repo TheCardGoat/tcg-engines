@@ -24,7 +24,8 @@ export const abuBoldHelmsman: CharacterCard = {
     {
       id: "1f2a1",
       text: "Rush",
-      type: "static",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Ally"],

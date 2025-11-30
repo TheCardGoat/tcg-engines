@@ -24,7 +24,8 @@ export const arthurNoviceSparrow: CharacterCard = {
     {
       id: "bn1a1",
       text: "Reckless",
-      type: "static",
+      type: "keyword",
+      keyword: "Reckless",
     },
   ],
   classifications: ["Storyborn", "Hero"],

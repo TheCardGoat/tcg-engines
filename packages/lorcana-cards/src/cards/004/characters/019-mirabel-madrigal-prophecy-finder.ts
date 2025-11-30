@@ -24,7 +24,8 @@ export const mirabelMadrigalProphecyFinder: CharacterCard = {
     {
       id: "1lva1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero", "Madrigal"],

@@ -29,7 +29,9 @@ export const herculesUnwaveringDemigod: CharacterCard = {
     {
       id: "1n8a1",
       text: "Challenger +2",
-      type: "static",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 2,
     },
   ],
   classifications: ["Dreamborn", "Hero", "Prince"],

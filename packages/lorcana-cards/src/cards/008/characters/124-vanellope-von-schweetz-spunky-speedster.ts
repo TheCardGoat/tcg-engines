@@ -24,7 +24,8 @@ export const vanellopeVonSchweetzSpunkySpeedster: CharacterCard = {
     {
       id: "1wea1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess", "Racer"],

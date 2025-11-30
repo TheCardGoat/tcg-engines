@@ -24,7 +24,8 @@ export const hermesHarriedMessenger: CharacterCard = {
     {
       id: "17ja1",
       text: "Rush",
-      type: "static",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Deity"],

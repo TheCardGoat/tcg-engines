@@ -24,7 +24,8 @@ export const chiefTuiRespectedLeader: CharacterCard = {
     {
       id: "qaia1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Storyborn", "Mentor", "King"],

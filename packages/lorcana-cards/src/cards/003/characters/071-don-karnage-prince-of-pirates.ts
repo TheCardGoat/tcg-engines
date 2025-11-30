@@ -24,7 +24,8 @@ export const donKarnagePrinceOfPirates: CharacterCard = {
     {
       id: "a8qa1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Villain", "Prince", "Pirate"],

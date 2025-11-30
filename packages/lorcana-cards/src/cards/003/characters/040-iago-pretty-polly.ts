@@ -24,7 +24,8 @@ export const iagoPrettyPolly: CharacterCard = {
     {
       id: "d7sa1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

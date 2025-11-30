@@ -24,7 +24,8 @@ export const ticktockEverpresentPursuer: CharacterCard = {
     {
       id: "16ha1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

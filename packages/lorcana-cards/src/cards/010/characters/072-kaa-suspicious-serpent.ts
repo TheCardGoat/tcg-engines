@@ -24,7 +24,8 @@ export const kaaSuspiciousSerpent: CharacterCard = {
     {
       id: "xkna1",
       text: "Ward",
-      type: "static",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Storyborn", "Villain"],

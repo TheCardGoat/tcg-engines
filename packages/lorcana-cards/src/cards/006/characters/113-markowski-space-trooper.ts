@@ -24,7 +24,8 @@ export const markowskiSpaceTrooper: CharacterCard = {
     {
       id: "1t3a1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

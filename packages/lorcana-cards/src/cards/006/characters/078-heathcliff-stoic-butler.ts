@@ -24,7 +24,8 @@ export const heathcliffStoicButler: CharacterCard = {
     {
       id: "foba1",
       text: "Ward",
-      type: "static",
+      type: "keyword",
+      keyword: "Ward",
     },
   ],
   classifications: ["Storyborn", "Ally"],

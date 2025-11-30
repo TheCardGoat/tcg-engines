@@ -24,7 +24,8 @@ export const archimedesExasperatedOwl: CharacterCard = {
     {
       id: "12va1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

@@ -24,7 +24,8 @@ export const peterPanFearlessFighter: CharacterCard = {
     {
       id: "czpa1",
       text: "Rush",
-      type: "static",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Hero"],

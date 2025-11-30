@@ -24,7 +24,8 @@ export const simbaProtectiveCub: CharacterCard = {
     {
       id: "rvma1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

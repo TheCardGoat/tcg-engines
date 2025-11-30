@@ -29,7 +29,9 @@ export const gastonBaritoneBully: CharacterCard = {
     {
       id: "6hka1",
       text: "Singer 5",
-      type: "static",
+      type: "keyword",
+      keyword: "Singer",
+      value: 5,
     },
   ],
   classifications: ["Dreamborn", "Villain"],

@@ -24,7 +24,8 @@ export const feliciaAlwaysHungry: CharacterCard = {
     {
       id: "7iza1",
       text: "Reckless",
-      type: "static",
+      type: "keyword",
+      keyword: "Reckless",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

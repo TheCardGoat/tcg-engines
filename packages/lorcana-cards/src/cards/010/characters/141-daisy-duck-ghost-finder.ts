@@ -23,7 +23,8 @@ export const daisyDuckGhostFinder: CharacterCard = {
     {
       id: "1m1a1",
       text: "Support",
-      type: "static",
+      type: "keyword",
+      keyword: "Support",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Detective"],

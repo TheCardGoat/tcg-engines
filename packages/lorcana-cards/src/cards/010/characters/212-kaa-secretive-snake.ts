@@ -24,7 +24,8 @@ export const kaaSecretiveSnake: CharacterCard = {
     {
       id: "r2ha1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Villain"],

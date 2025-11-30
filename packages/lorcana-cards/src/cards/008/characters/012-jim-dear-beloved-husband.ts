@@ -24,7 +24,8 @@ export const jimDearBelovedHusband: CharacterCard = {
     {
       id: "cfta1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Ally"],

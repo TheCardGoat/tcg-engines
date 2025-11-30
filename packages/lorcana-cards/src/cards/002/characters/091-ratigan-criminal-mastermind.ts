@@ -24,7 +24,8 @@ export const ratiganCriminalMastermind: CharacterCard = {
     {
       id: "952a1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Villain"],

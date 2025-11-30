@@ -24,7 +24,8 @@ export const ryderFleetfootedInfiltrator: CharacterCard = {
     {
       id: "14oa1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

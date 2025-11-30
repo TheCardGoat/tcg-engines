@@ -24,7 +24,8 @@ export const herculesClumsyKid: CharacterCard = {
     {
       id: "1l5a1",
       text: "Rush",
-      type: "static",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

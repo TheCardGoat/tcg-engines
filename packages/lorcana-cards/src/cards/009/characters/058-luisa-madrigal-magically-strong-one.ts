@@ -24,7 +24,8 @@ export const luisaMadrigalMagicallyStrongOne: CharacterCard = {
     {
       id: "1rsa1",
       text: "Rush",
-      type: "static",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Ally", "Madrigal"],

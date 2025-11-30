@@ -24,7 +24,8 @@ export const thePrinceVigilantSuitor: CharacterCard = {
     {
       id: "ot0a1",
       text: "Bodyguard",
-      type: "static",
+      type: "keyword",
+      keyword: "Bodyguard",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

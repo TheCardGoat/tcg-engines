@@ -24,7 +24,8 @@ export const basilHypnotizedMouse: CharacterCard = {
     {
       id: "1v9a1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Detective"],

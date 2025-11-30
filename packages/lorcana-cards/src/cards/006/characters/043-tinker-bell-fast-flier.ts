@@ -24,7 +24,8 @@ export const tinkerBellFastFlier: CharacterCard = {
     {
       id: "1k9a1",
       text: "Evasive",
-      type: "static",
+      type: "keyword",
+      keyword: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally", "Fairy"],

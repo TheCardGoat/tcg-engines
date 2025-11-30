@@ -23,7 +23,8 @@ export const thePhantomBlotShadowyFigure: CharacterCard = {
     {
       id: "1wya1",
       text: "Rush",
-      type: "static",
+      type: "keyword",
+      keyword: "Rush",
     },
   ],
   classifications: ["Storyborn", "Villain"],

@@ -29,7 +29,9 @@ export const kronkUnlicensedInvestigator: CharacterCard = {
     {
       id: "kita1",
       text: "Challenger +1",
-      type: "static",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 1,
     },
   ],
   classifications: ["Dreamborn", "Ally"],
