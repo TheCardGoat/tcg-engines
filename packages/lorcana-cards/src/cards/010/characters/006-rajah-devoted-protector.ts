@@ -9,6 +9,7 @@ export const rajahDevotedProtector: CharacterCard = {
   inkType: ["amber"],
   franchise: "Aladdin",
   set: "010",
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
   cardNumber: "006",
   cost: 3,
   strength: 3,
@@ -20,5 +21,12 @@ export const rajahDevotedProtector: CharacterCard = {
     ravensburger: "05432111c47bf28eb52d76930eb2c603642d13e9",
   },
   keywords: ["Bodyguard"],
+  abilities: [
+    {
+      id: "1gk-ability-1",
+      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

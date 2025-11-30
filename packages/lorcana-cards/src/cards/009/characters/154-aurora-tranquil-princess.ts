@@ -9,6 +9,7 @@ export const auroraTranquilPrincess: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Sleeping Beauty",
   set: "009",
+  text: "Ward (Opponents can't choose this character except to challenge.)",
   cardNumber: "154",
   cost: 2,
   strength: 1,
@@ -20,5 +21,12 @@ export const auroraTranquilPrincess: CharacterCard = {
     ravensburger: "067bc768bc6b0221356cb0b7535f6bf9fced1949",
   },
   keywords: ["Ward"],
+  abilities: [
+    {
+      id: "1sr-ability-1",
+      text: "Ward (Opponents can't choose this character except to challenge.)",
+      type: "static",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Princess"],
 };

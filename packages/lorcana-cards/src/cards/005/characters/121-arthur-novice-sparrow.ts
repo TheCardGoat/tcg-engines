@@ -9,6 +9,7 @@ export const arthurNoviceSparrow: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Sword in the Stone",
   set: "005",
+  text: "Reckless (This character can't quest and must challenge each turn if able.)",
   cardNumber: "121",
   cost: 1,
   strength: 2,
@@ -20,5 +21,12 @@ export const arthurNoviceSparrow: CharacterCard = {
     ravensburger: "29f376ad78c551ed84b353cdcbe6ae4a1bceaa40",
   },
   keywords: ["Reckless"],
+  abilities: [
+    {
+      id: "bn1-ability-1",
+      text: "Reckless (This character can't quest and must challenge each turn if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

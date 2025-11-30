@@ -9,6 +9,7 @@ export const sebastianCourtComposer: CharacterCard = {
   inkType: ["amber"],
   franchise: "Little Mermaid",
   set: "001",
+  text: "Singer 4 (This character counts as cost 4 to sing songs.)",
   cardNumber: "019",
   cost: 2,
   strength: 2,
@@ -23,6 +24,13 @@ export const sebastianCourtComposer: CharacterCard = {
     {
       type: "Singer",
       value: 4,
+    },
+  ],
+  abilities: [
+    {
+      id: "8rz-ability-1",
+      text: "Singer 4 (This character counts as cost 4 to sing songs.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Ally"],

@@ -9,6 +9,7 @@ export const hermesHarriedMessenger: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Hercules",
   set: "010",
+  text: "Rush (This character can challenge the turn they're played.)",
   cardNumber: "112",
   cost: 3,
   strength: 3,
@@ -20,5 +21,12 @@ export const hermesHarriedMessenger: CharacterCard = {
     ravensburger: "9ce36fa3156e783f9c693a2e872e588419f40862",
   },
   keywords: ["Rush"],
+  abilities: [
+    {
+      id: "17j-ability-1",
+      text: "Rush (This character can challenge the turn they're played.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Deity"],
 };

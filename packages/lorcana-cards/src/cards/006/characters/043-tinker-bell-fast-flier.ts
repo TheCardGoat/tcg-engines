@@ -9,6 +9,7 @@ export const tinkerBellFastFlier: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Peter Pan",
   set: "006",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "043",
   cost: 3,
   strength: 1,
@@ -20,5 +21,12 @@ export const tinkerBellFastFlier: CharacterCard = {
     ravensburger: "cacdb6abf873de6f92bea008b9b53b48adb1624c",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "1k9-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Fairy"],
 };

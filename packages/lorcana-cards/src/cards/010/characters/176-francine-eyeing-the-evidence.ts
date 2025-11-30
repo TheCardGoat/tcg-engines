@@ -9,6 +9,7 @@ export const francineEyeingTheEvidence: CharacterCard = {
   inkType: ["steel"],
   franchise: "Zootropolis",
   set: "010",
+  text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
   cardNumber: "176",
   cost: 3,
   strength: 4,
@@ -23,6 +24,13 @@ export const francineEyeingTheEvidence: CharacterCard = {
     {
       type: "Resist",
       value: 1,
+    },
+  ],
+  abilities: [
+    {
+      id: "1bg-ability-1",
+      text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Ally", "Detective"],

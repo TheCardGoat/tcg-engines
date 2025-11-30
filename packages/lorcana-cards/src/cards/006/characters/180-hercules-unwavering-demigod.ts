@@ -9,6 +9,7 @@ export const herculesUnwaveringDemigod: CharacterCard = {
   inkType: ["steel"],
   franchise: "Hercules",
   set: "006",
+  text: "Challenger +2 (While challenging, this character gets +2.)",
   cardNumber: "180",
   cost: 4,
   strength: 2,
@@ -23,6 +24,13 @@ export const herculesUnwaveringDemigod: CharacterCard = {
     {
       type: "Challenger",
       value: 2,
+    },
+  ],
+  abilities: [
+    {
+      id: "1n8-ability-1",
+      text: "Challenger +2 (While challenging, this character gets +2.)",
+      type: "static",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Prince"],

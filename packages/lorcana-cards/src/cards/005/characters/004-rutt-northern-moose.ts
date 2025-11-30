@@ -9,6 +9,7 @@ export const ruttNorthernMoose: CharacterCard = {
   inkType: ["amber"],
   franchise: "Brother Bear",
   set: "005",
+  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
   cardNumber: "004",
   cost: 4,
   strength: 3,
@@ -20,5 +21,12 @@ export const ruttNorthernMoose: CharacterCard = {
     ravensburger: "678f68c55dfedbbaffb7e07321b6342581a6b658",
   },
   keywords: ["Support"],
+  abilities: [
+    {
+      id: "sqf-ability-1",
+      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

@@ -9,6 +9,7 @@ export const simbaProtectiveCub: CharacterCard = {
   inkType: ["amber"],
   franchise: "Lion King",
   set: "001",
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
   cardNumber: "020",
   cost: 2,
   strength: 2,
@@ -20,5 +21,12 @@ export const simbaProtectiveCub: CharacterCard = {
     ravensburger: "6479a6ae550768c207018562ce6f687ec41e7c86",
   },
   keywords: ["Bodyguard"],
+  abilities: [
+    {
+      id: "rvm-ability-1",
+      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };

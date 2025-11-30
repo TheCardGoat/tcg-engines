@@ -9,6 +9,7 @@ export const fixitFelixJrTrustyBuilder: CharacterCard = {
   inkType: ["amber"],
   franchise: "Wreck It Ralph",
   set: "005",
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
   cardNumber: "010",
   cost: 3,
   strength: 2,
@@ -20,5 +21,12 @@ export const fixitFelixJrTrustyBuilder: CharacterCard = {
     ravensburger: "c139143d214c2a6edd012e7428ca9ff6081cb764",
   },
   keywords: ["Bodyguard"],
+  abilities: [
+    {
+      id: "1hm-ability-1",
+      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

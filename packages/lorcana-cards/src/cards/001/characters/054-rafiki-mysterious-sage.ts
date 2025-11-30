@@ -9,6 +9,7 @@ export const rafikiMysteriousSage: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Lion King",
   set: "001",
+  text: "Rush (This character can challenge the turn they're played.)",
   cardNumber: "054",
   cost: 3,
   strength: 3,
@@ -20,5 +21,12 @@ export const rafikiMysteriousSage: CharacterCard = {
     ravensburger: "80caf60ae34281409e8e7afd88224c417a282bac",
   },
   keywords: ["Rush"],
+  abilities: [
+    {
+      id: "zqh-ability-1",
+      text: "Rush (This character can challenge the turn they're played.)",
+      type: "static",
+    },
+  ],
   classifications: ["Dreamborn", "Mentor", "Sorcerer"],
 };

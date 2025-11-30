@@ -9,6 +9,7 @@ export const stitchLittleRocket: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Lilo and Stitch",
   set: "003",
+  text: "Rush (This character can challenge the turn they're played.)",
   cardNumber: "125",
   cost: 2,
   strength: 3,
@@ -20,5 +21,12 @@ export const stitchLittleRocket: CharacterCard = {
     ravensburger: "2ce76e99fa3946189d8b3985a10b16a474034d40",
   },
   keywords: ["Rush"],
+  abilities: [
+    {
+      id: "cgj-ability-1",
+      text: "Rush (This character can challenge the turn they're played.)",
+      type: "static",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Alien"],
 };

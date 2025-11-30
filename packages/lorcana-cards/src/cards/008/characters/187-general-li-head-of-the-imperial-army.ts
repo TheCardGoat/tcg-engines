@@ -9,6 +9,7 @@ export const generalLiHeadOfTheImperialArmy: CharacterCard = {
   inkType: ["steel"],
   franchise: "Mulan",
   set: "008",
+  text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
   cardNumber: "187",
   cost: 3,
   strength: 2,
@@ -23,6 +24,13 @@ export const generalLiHeadOfTheImperialArmy: CharacterCard = {
     {
       type: "Resist",
       value: 1,
+    },
+  ],
+  abilities: [
+    {
+      id: "iiq-ability-1",
+      text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Mentor"],

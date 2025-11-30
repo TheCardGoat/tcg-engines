@@ -268,17 +268,80 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
       result.keywords = engineKeywords;
     }
   }
-  // Note: rulesText is NOT a valid field in engine's card types, so don't output it
-  // Only output abilities if we don't have parsedAbilities (keyword-only cards)
-  // The abilities array has type incompatibilities with the engine's AbilityDefinition
-  if (
-    card.abilities &&
-    card.abilities.length > 0 &&
-    !(card.parsedAbilities && card.parsedAbilities.length > 0)
-  ) {
-    result.abilities = card.abilities;
+
+  // Output raw rules text as 'text' field
+  if (card.rulesText) {
+    result.text = card.rulesText;
   }
-  // Note: parsedAbilities is internal to lorcana-cards package, don't export to engine card types
+
+  // Output abilities with proper AbilityDefinition format
+  // AbilityDefinition requires: id, text, type (triggered|activated|static)
+  if (card.rulesText && !card.vanilla) {
+    const abilityTexts = card.rulesText.split("\n").filter((t) => t.trim());
+    const engineAbilities: Array<{
+      id: string;
+      name?: string;
+      text: string;
+      type: "triggered" | "activated" | "static";
+    }> = [];
+
+    for (let i = 0; i < abilityTexts.length; i++) {
+      const text = abilityTexts[i].trim();
+      const abilityId = `${card.id}-ability-${i + 1}`;
+
+      // Try to extract ability name (all caps at start)
+      const namedMatch = text.match(/^([A-Z][A-Z\s]+[A-Z])\s+(.+)$/);
+      const name = namedMatch ? namedMatch[1].trim() : undefined;
+
+      // Determine ability type
+      let abilityType: "triggered" | "activated" | "static" = "static";
+      const lower = text.toLowerCase();
+
+      // Check if it's a keyword (map to static)
+      const isKeyword = [
+        "bodyguard",
+        "evasive",
+        "reckless",
+        "rush",
+        "support",
+        "vanish",
+        "ward",
+        "alert",
+        "challenger",
+        "resist",
+        "singer",
+        "shift",
+      ].some((kw) => lower.startsWith(kw));
+
+      if (!isKeyword) {
+        // Triggered abilities
+        if (
+          lower.includes("whenever") ||
+          lower.includes("when you play") ||
+          lower.includes("when this") ||
+          lower.includes("at the start") ||
+          lower.includes("at the end")
+        ) {
+          abilityType = "triggered";
+        }
+        // Activated abilities (have exert cost)
+        else if (lower.includes("{e}") || lower.includes("⬡")) {
+          abilityType = "activated";
+        }
+      }
+
+      engineAbilities.push({
+        id: abilityId,
+        ...(name && { name }),
+        text,
+        type: abilityType,
+      });
+    }
+
+    if (engineAbilities.length > 0) {
+      result.abilities = engineAbilities;
+    }
+  }
   if ("classifications" in card && card.classifications?.length) {
     result.classifications = card.classifications;
   }

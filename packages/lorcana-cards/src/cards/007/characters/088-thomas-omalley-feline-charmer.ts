@@ -9,6 +9,7 @@ export const thomasOmalleyFelineCharmer: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Aristocats",
   set: "007",
+  text: "Ward (Opponents can't choose this character except to challenge.)",
   cardNumber: "088",
   cost: 3,
   strength: 4,
@@ -20,5 +21,12 @@ export const thomasOmalleyFelineCharmer: CharacterCard = {
     ravensburger: "926bc29c21b56c27f1a52cfead290ea03de769de",
   },
   keywords: ["Ward"],
+  abilities: [
+    {
+      id: "14m-ability-1",
+      text: "Ward (Opponents can't choose this character except to challenge.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

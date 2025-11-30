@@ -9,6 +9,7 @@ export const peterPanHighFlyer: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Peter Pan",
   set: "010",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "105",
   cost: 3,
   strength: 1,
@@ -20,5 +21,12 @@ export const peterPanHighFlyer: CharacterCard = {
     ravensburger: "067ac8173c1f60f06e456367ff8785feaa83214f",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "1sq-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

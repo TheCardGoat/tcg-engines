@@ -9,6 +9,7 @@ export const ursulaMadSeaWitch: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Little Mermaid",
   set: "004",
+  text: "Challenger +2 (While challenging, this character gets +2.)",
   cardNumber: "057",
   cost: 2,
   strength: 1,
@@ -23,6 +24,13 @@ export const ursulaMadSeaWitch: CharacterCard = {
     {
       type: "Challenger",
       value: 2,
+    },
+  ],
+  abilities: [
+    {
+      id: "ui8-ability-1",
+      text: "Challenger +2 (While challenging, this character gets +2.)",
+      type: "static",
     },
   ],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],

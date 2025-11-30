@@ -9,6 +9,7 @@ export const robinHoodEyeForDetail: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Robin Hood",
   set: "007",
+  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
   cardNumber: "170",
   cost: 3,
   strength: 3,
@@ -20,5 +21,12 @@ export const robinHoodEyeForDetail: CharacterCard = {
     ravensburger: "a4d8629141486ff391420a5a92cc523b1bdfc285",
   },
   keywords: ["Support"],
+  abilities: [
+    {
+      id: "193-ability-1",
+      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

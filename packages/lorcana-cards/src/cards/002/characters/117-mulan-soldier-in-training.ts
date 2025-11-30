@@ -9,6 +9,7 @@ export const mulanSoldierInTraining: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Mulan",
   set: "002",
+  text: "Rush (This character can challenge the turn they're played.)",
   cardNumber: "117",
   cost: 4,
   strength: 4,
@@ -20,5 +21,12 @@ export const mulanSoldierInTraining: CharacterCard = {
     ravensburger: "77b270ef01a1671fcf0123fc2f0dceb294777022",
   },
   keywords: ["Rush"],
+  abilities: [
+    {
+      id: "x7m-ability-1",
+      text: "Rush (This character can challenge the turn they're played.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };

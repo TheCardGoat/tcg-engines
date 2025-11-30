@@ -9,6 +9,7 @@ export const rajahGhostlyTiger: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Aladdin",
   set: "007",
+  text: "Vanish (When an opponent chooses this character for an action, banish them.)",
   cardNumber: "062",
   cost: 2,
   strength: 3,
@@ -20,5 +21,12 @@ export const rajahGhostlyTiger: CharacterCard = {
     ravensburger: "aa7759237b508c4b2e253ca43417ab8d26d6da36",
   },
   keywords: ["Vanish"],
+  abilities: [
+    {
+      id: "1ba-ability-1",
+      text: "Vanish (When an opponent chooses this character for an action, banish them.)",
+      type: "static",
+    },
+  ],
   classifications: ["Dreamborn", "Ally", "Illusion"],
 };

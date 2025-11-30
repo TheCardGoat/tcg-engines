@@ -9,6 +9,7 @@ export const fidgetRatigansHenchman: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Great Mouse Detective",
   set: "002",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "108",
   cost: 3,
   strength: 3,
@@ -20,5 +21,12 @@ export const fidgetRatigansHenchman: CharacterCard = {
     ravensburger: "9836b26ae57048c3c2225cde40cc9be4712fc633",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "168-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Dreamborn", "Ally"],
 };

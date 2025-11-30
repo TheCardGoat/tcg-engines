@@ -9,6 +9,7 @@ export const palaceGuardSpectralSentry: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Aladdin",
   set: "008",
+  text: "Vanish (When an opponent chooses this character for an action, banish them.)",
   cardNumber: "045",
   cost: 1,
   strength: 1,
@@ -20,5 +21,12 @@ export const palaceGuardSpectralSentry: CharacterCard = {
     ravensburger: "f1807bfd473e7be0f8010219734c4c6a9702ffd5",
   },
   keywords: ["Vanish"],
+  abilities: [
+    {
+      id: "1v0-ability-1",
+      text: "Vanish (When an opponent chooses this character for an action, banish them.)",
+      type: "static",
+    },
+  ],
   classifications: ["Dreamborn", "Ally", "Illusion"],
 };

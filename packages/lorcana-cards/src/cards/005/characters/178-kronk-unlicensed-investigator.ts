@@ -9,6 +9,7 @@ export const kronkUnlicensedInvestigator: CharacterCard = {
   inkType: ["steel"],
   franchise: "Emperors New Groove",
   set: "005",
+  text: "Challenger +1 (While challenging, this character gets +1.)",
   cardNumber: "178",
   cost: 2,
   strength: 1,
@@ -23,6 +24,13 @@ export const kronkUnlicensedInvestigator: CharacterCard = {
     {
       type: "Challenger",
       value: 1,
+    },
+  ],
+  abilities: [
+    {
+      id: "kit-ability-1",
+      text: "Challenger +1 (While challenging, this character gets +1.)",
+      type: "static",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

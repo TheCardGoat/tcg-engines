@@ -9,6 +9,7 @@ export const theQueenCruelestOfAll: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Snow White",
   set: "005",
+  text: "Ward (Opponents can't choose this character except to challenge.)",
   cardNumber: "139",
   cost: 2,
   strength: 0,
@@ -20,5 +21,12 @@ export const theQueenCruelestOfAll: CharacterCard = {
     ravensburger: "6522f49b10eefa0162d9f38ed91efba1027e5efc",
   },
   keywords: ["Ward"],
+  abilities: [
+    {
+      id: "s28-ability-1",
+      text: "Ward (Opponents can't choose this character except to challenge.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Queen", "Sorcerer"],
 };

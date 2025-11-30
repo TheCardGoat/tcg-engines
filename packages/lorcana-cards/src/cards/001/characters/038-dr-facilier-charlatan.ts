@@ -9,6 +9,7 @@ export const drFacilierCharlatan: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Princess and the Frog",
   set: "001",
+  text: "Challenger +2 (While challenging, this character gets +2.)",
   cardNumber: "038",
   cost: 2,
   strength: 0,
@@ -23,6 +24,13 @@ export const drFacilierCharlatan: CharacterCard = {
     {
       type: "Challenger",
       value: 2,
+    },
+  ],
+  abilities: [
+    {
+      id: "8u0-ability-1",
+      text: "Challenger +2 (While challenging, this character gets +2.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],

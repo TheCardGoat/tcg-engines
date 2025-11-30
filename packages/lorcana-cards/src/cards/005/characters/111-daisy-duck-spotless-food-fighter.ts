@@ -8,6 +8,7 @@ export const daisyDuckSpotlessFoodfighter: CharacterCard = {
   fullName: "Daisy Duck - Spotless Food-Fighter",
   inkType: ["ruby"],
   set: "005",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "111",
   cost: 2,
   strength: 2,
@@ -19,5 +20,12 @@ export const daisyDuckSpotlessFoodfighter: CharacterCard = {
     ravensburger: "b1724348bcda8483959b2f906793c0d8ec1ee40a",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "1d8-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

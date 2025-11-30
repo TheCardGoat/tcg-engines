@@ -9,6 +9,7 @@ export const basilHypnotizedMouse: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Great Mouse Detective",
   set: "006",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "079",
   cost: 3,
   strength: 3,
@@ -20,5 +21,12 @@ export const basilHypnotizedMouse: CharacterCard = {
     ravensburger: "f404642244e838db87343396d53a98cc355ec34e",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "1v9-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Detective"],
 };

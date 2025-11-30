@@ -9,6 +9,7 @@ export const mrArrowLegacysFirstMate: CharacterCard = {
   inkType: ["steel"],
   franchise: "Treasure Planet",
   set: "006",
+  text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
   cardNumber: "182",
   cost: 2,
   strength: 1,
@@ -23,6 +24,13 @@ export const mrArrowLegacysFirstMate: CharacterCard = {
     {
       type: "Resist",
       value: 1,
+    },
+  ],
+  abilities: [
+    {
+      id: "1am-ability-1",
+      text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Ally", "Alien"],

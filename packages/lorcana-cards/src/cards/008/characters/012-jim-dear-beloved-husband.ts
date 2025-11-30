@@ -9,6 +9,7 @@ export const jimDearBelovedHusband: CharacterCard = {
   inkType: ["amber"],
   franchise: "Lady and the Tramp",
   set: "008",
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
   cardNumber: "012",
   cost: 2,
   strength: 0,
@@ -20,5 +21,12 @@ export const jimDearBelovedHusband: CharacterCard = {
     ravensburger: "2cd509bc3d4a9b911eb07cec23d5037de65bf673",
   },
   keywords: ["Bodyguard"],
+  abilities: [
+    {
+      id: "cft-ability-1",
+      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

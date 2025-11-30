@@ -9,6 +9,7 @@ export const dukeWeaseltonSmalltimeCrook: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Zootropolis",
   set: "002",
+  text: "Ward (Opponents can't choose this character except to challenge.)",
   cardNumber: "146",
   cost: 2,
   strength: 1,
@@ -20,5 +21,12 @@ export const dukeWeaseltonSmalltimeCrook: CharacterCard = {
     ravensburger: "b51612597f56a105b1d978244f4cde86b568d13e",
   },
   keywords: ["Ward"],
+  abilities: [
+    {
+      id: "1e8-ability-1",
+      text: "Ward (Opponents can't choose this character except to challenge.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn"],
 };

@@ -9,6 +9,7 @@ export const pegasusGiftForHercules: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Hercules",
   set: "009",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "084",
   cost: 1,
   strength: 1,
@@ -20,5 +21,12 @@ export const pegasusGiftForHercules: CharacterCard = {
     ravensburger: "b9041d1ca62abbd3a21d0c6f7bf65471865b0da4",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "1fc-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

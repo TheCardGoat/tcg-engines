@@ -9,6 +9,7 @@ export const peterPanFearlessFighter: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Peter Pan",
   set: "001",
+  text: "Rush (This character can challenge the turn they're played.)",
   cardNumber: "119",
   cost: 3,
   strength: 3,
@@ -20,5 +21,12 @@ export const peterPanFearlessFighter: CharacterCard = {
     ravensburger: "2ed2d4d7295557a864451ec395c78721255c0c17",
   },
   keywords: ["Rush"],
+  abilities: [
+    {
+      id: "czp-ability-1",
+      text: "Rush (This character can challenge the turn they're played.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

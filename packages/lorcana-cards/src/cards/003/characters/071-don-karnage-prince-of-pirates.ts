@@ -9,6 +9,7 @@ export const donKarnagePrinceOfPirates: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Talespin",
   set: "003",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "071",
   cost: 5,
   strength: 4,
@@ -20,5 +21,12 @@ export const donKarnagePrinceOfPirates: CharacterCard = {
     ravensburger: "24ea5904a2f26342b5785ee8bc9953780df09477",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "a8q-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Dreamborn", "Villain", "Prince", "Pirate"],
 };

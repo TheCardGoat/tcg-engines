@@ -9,6 +9,7 @@ export const liloJuniorCakeDecorator: CharacterCard = {
   inkType: ["amber"],
   franchise: "Lilo and Stitch",
   set: "005",
+  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
   cardNumber: "008",
   cost: 2,
   strength: 1,
@@ -20,5 +21,12 @@ export const liloJuniorCakeDecorator: CharacterCard = {
     ravensburger: "9f1e57fa50cfe2c903d722580bbf99ab2cb544aa",
   },
   keywords: ["Support"],
+  abilities: [
+    {
+      id: "183-ability-1",
+      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

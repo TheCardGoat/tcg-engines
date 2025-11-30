@@ -9,6 +9,7 @@ export const joshuaSweetTheDoctor: CharacterCard = {
   inkType: ["amber"],
   franchise: "Atlantis",
   set: "003",
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
   cardNumber: "005",
   cost: 4,
   strength: 1,
@@ -20,5 +21,12 @@ export const joshuaSweetTheDoctor: CharacterCard = {
     ravensburger: "e1f557b29f945126b59c4ccace8ec9ba4c9e013a",
   },
   keywords: ["Bodyguard"],
+  abilities: [
+    {
+      id: "1qp-ability-1",
+      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

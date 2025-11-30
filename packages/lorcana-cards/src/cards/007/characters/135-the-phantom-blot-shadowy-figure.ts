@@ -8,6 +8,7 @@ export const thePhantomBlotShadowyFigure: CharacterCard = {
   fullName: "The Phantom Blot - Shadowy Figure",
   inkType: ["ruby"],
   set: "007",
+  text: "Rush (This character can challenge the turn they're played.)",
   cardNumber: "135",
   cost: 2,
   strength: 3,
@@ -19,5 +20,12 @@ export const thePhantomBlotShadowyFigure: CharacterCard = {
     ravensburger: "f87fff900b6d5596c88b04100c0a87c2c9346faa",
   },
   keywords: ["Rush"],
+  abilities: [
+    {
+      id: "1wy-ability-1",
+      text: "Rush (This character can challenge the turn they're played.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };

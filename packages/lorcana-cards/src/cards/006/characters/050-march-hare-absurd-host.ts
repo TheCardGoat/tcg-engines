@@ -9,6 +9,7 @@ export const marchHareAbsurdHost: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Alice in Wonderland",
   set: "006",
+  text: "Rush (This character can challenge the turn they're played.)",
   cardNumber: "050",
   cost: 4,
   strength: 2,
@@ -20,5 +21,12 @@ export const marchHareAbsurdHost: CharacterCard = {
     ravensburger: "85684498bb53ffacf3dd58bf50013dc97d5766b6",
   },
   keywords: ["Rush"],
+  abilities: [
+    {
+      id: "110-ability-1",
+      text: "Rush (This character can challenge the turn they're played.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn"],
 };

@@ -9,6 +9,7 @@ export const gastonBaritoneBully: CharacterCard = {
   inkType: ["amber"],
   franchise: "Beauty and the Beast",
   set: "002",
+  text: "Singer 5 (This character counts as cost 5 to sing songs.)",
   cardNumber: "008",
   cost: 3,
   strength: 3,
@@ -23,6 +24,13 @@ export const gastonBaritoneBully: CharacterCard = {
     {
       type: "Singer",
       value: 5,
+    },
+  ],
+  abilities: [
+    {
+      id: "6hk-ability-1",
+      text: "Singer 5 (This character counts as cost 5 to sing songs.)",
+      type: "static",
     },
   ],
   classifications: ["Dreamborn", "Villain"],

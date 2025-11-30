@@ -9,6 +9,7 @@ export const pegasusFlyingSteed: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Hercules",
   set: "004",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "120",
   cost: 2,
   strength: 3,
@@ -20,5 +21,12 @@ export const pegasusFlyingSteed: CharacterCard = {
     ravensburger: "3232a625c1ad1451c0bd29fcfbc149d3d2a38166",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "dxe-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

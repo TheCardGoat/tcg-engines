@@ -9,6 +9,7 @@ export const iagoStompinMad: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Aladdin",
   set: "010",
+  text: "Challenger +5 (While challenging, this character gets +5.)",
   cardNumber: "043",
   cost: 2,
   strength: 0,
@@ -23,6 +24,13 @@ export const iagoStompinMad: CharacterCard = {
     {
       type: "Challenger",
       value: 5,
+    },
+  ],
+  abilities: [
+    {
+      id: "87v-ability-1",
+      text: "Challenger +5 (While challenging, this character gets +5.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Ally"],

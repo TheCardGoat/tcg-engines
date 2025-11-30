@@ -9,6 +9,7 @@ export const yaoImperialSoldier: CharacterCard = {
   inkType: ["steel"],
   franchise: "Mulan",
   set: "004",
+  text: "Challenger +2 (While challenging, this character gets +2.)",
   cardNumber: "194",
   cost: 4,
   strength: 2,
@@ -23,6 +24,13 @@ export const yaoImperialSoldier: CharacterCard = {
     {
       type: "Challenger",
       value: 2,
+    },
+  ],
+  abilities: [
+    {
+      id: "ayj-ability-1",
+      text: "Challenger +2 (While challenging, this character gets +2.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Ally"],

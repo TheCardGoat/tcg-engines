@@ -9,6 +9,7 @@ export const herculesTrueHero: CharacterCard = {
   inkType: ["steel"],
   franchise: "Hercules",
   set: "009",
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
   cardNumber: "191",
   cost: 3,
   strength: 3,
@@ -20,5 +21,12 @@ export const herculesTrueHero: CharacterCard = {
     ravensburger: "aec8753f7f97cb51feeedf58b45f27661b18c44e",
   },
   keywords: ["Bodyguard"],
+  abilities: [
+    {
+      id: "1ch-ability-1",
+      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Prince"],
 };

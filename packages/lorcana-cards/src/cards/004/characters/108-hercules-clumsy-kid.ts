@@ -9,6 +9,7 @@ export const herculesClumsyKid: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Hercules",
   set: "004",
+  text: "Rush (This character can challenge the turn they're played.)",
   cardNumber: "108",
   cost: 3,
   strength: 3,
@@ -20,5 +21,12 @@ export const herculesClumsyKid: CharacterCard = {
     ravensburger: "ce69a0c9df8b79208d330486269074d53266f7ac",
   },
   keywords: ["Rush"],
+  abilities: [
+    {
+      id: "1l5-ability-1",
+      text: "Rush (This character can challenge the turn they're played.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };

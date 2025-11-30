@@ -9,6 +9,7 @@ export const thePrinceVigilantSuitor: CharacterCard = {
   inkType: ["amber"],
   franchise: "Snow White",
   set: "007",
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
   cardNumber: "024",
   cost: 2,
   strength: 0,
@@ -20,5 +21,12 @@ export const thePrinceVigilantSuitor: CharacterCard = {
     ravensburger: "5966f7b1df7bd6ef309aa7694d0a45d89624c970",
   },
   keywords: ["Bodyguard"],
+  abilities: [
+    {
+      id: "ot0-ability-1",
+      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };

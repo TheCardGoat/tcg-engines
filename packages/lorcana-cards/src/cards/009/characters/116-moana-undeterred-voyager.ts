@@ -9,6 +9,7 @@ export const moanaUndeterredVoyager: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Moana",
   set: "009",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "116",
   cost: 4,
   strength: 3,
@@ -20,5 +21,12 @@ export const moanaUndeterredVoyager: CharacterCard = {
     ravensburger: "2f63375cd85e72b1c7c5774f2318433677ff7601",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "d5c-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };

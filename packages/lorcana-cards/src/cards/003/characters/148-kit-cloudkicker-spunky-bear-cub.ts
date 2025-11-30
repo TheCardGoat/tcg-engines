@@ -9,6 +9,7 @@ export const kitCloudkickerSpunkyBearCub: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Talespin",
   set: "003",
+  text: "Ward (Opponents can't choose this character except to challenge.)",
   cardNumber: "148",
   cost: 1,
   strength: 0,
@@ -20,5 +21,12 @@ export const kitCloudkickerSpunkyBearCub: CharacterCard = {
     ravensburger: "3f5ab1825bd1fe21e090a0b8eff482833549bc44",
   },
   keywords: ["Ward"],
+  abilities: [
+    {
+      id: "hkt-ability-1",
+      text: "Ward (Opponents can't choose this character except to challenge.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

@@ -9,6 +9,7 @@ export const happyGoodnatured: CharacterCard = {
   inkType: ["amber"],
   franchise: "Snow White",
   set: "002",
+  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
   cardNumber: "011",
   cost: 5,
   strength: 3,
@@ -20,5 +21,12 @@ export const happyGoodnatured: CharacterCard = {
     ravensburger: "0157bb5c2ecca10239adf522033e57b4905afa65",
   },
   keywords: ["Support"],
+  abilities: [
+    {
+      id: "det-ability-1",
+      text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Seven Dwarfs"],
 };

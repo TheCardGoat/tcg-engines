@@ -9,6 +9,7 @@ export const eeyoreOverstuffedDonkey: CharacterCard = {
   inkType: ["steel"],
   franchise: "Winnie the Pooh",
   set: "009",
+  text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
   cardNumber: "183",
   cost: 5,
   strength: 4,
@@ -23,6 +24,13 @@ export const eeyoreOverstuffedDonkey: CharacterCard = {
     {
       type: "Resist",
       value: 1,
+    },
+  ],
+  abilities: [
+    {
+      id: "16o-ability-1",
+      text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Ally"],

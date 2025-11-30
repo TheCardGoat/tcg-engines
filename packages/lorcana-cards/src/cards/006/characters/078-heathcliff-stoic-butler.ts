@@ -9,6 +9,7 @@ export const heathcliffStoicButler: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Big Hero 6",
   set: "006",
+  text: "Ward (Opponents can't choose this character except to challenge.)",
   cardNumber: "078",
   cost: 4,
   strength: 3,
@@ -20,5 +21,12 @@ export const heathcliffStoicButler: CharacterCard = {
     ravensburger: "387e97baeef07c3cc3b5128b8604c359f50b3818",
   },
   keywords: ["Ward"],
+  abilities: [
+    {
+      id: "fob-ability-1",
+      text: "Ward (Opponents can't choose this character except to challenge.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

@@ -9,6 +9,7 @@ export const missBiancaRescueAidSocietyAgent: CharacterCard = {
   inkType: ["amber"],
   franchise: "Rescuers",
   set: "003",
+  text: "Singer 4 (This character counts as cost 4 to sing songs.)",
   cardNumber: "010",
   cost: 2,
   strength: 2,
@@ -23,6 +24,13 @@ export const missBiancaRescueAidSocietyAgent: CharacterCard = {
     {
       type: "Singer",
       value: 4,
+    },
+  ],
+  abilities: [
+    {
+      id: "113-ability-1",
+      text: "Singer 4 (This character counts as cost 4 to sing songs.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Hero"],

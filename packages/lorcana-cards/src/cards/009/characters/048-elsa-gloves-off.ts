@@ -9,6 +9,7 @@ export const elsaGlovesOff: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Frozen",
   set: "009",
+  text: "Challenger +3 (While challenging, this character gets +3.)",
   cardNumber: "048",
   cost: 4,
   strength: 3,
@@ -23,6 +24,13 @@ export const elsaGlovesOff: CharacterCard = {
     {
       type: "Challenger",
       value: 3,
+    },
+  ],
+  abilities: [
+    {
+      id: "77o-ability-1",
+      text: "Challenger +3 (While challenging, this character gets +3.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Hero", "Queen", "Sorcerer"],

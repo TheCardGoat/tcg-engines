@@ -9,6 +9,7 @@ export const powerlineTakingTheStage: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Goofy Movie",
   set: "009",
+  text: "Singer 4 (This character counts as cost 4 to sing songs.)",
   cardNumber: "109",
   cost: 2,
   strength: 3,
@@ -23,6 +24,13 @@ export const powerlineTakingTheStage: CharacterCard = {
     {
       type: "Singer",
       value: 4,
+    },
+  ],
+  abilities: [
+    {
+      id: "1t6-ability-1",
+      text: "Singer 4 (This character counts as cost 4 to sing songs.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn"],

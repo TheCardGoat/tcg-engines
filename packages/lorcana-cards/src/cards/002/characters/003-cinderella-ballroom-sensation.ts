@@ -9,6 +9,7 @@ export const cinderellaBallroomSensation: CharacterCard = {
   inkType: ["amber"],
   franchise: "Cinderella",
   set: "002",
+  text: "Singer 3 (This character counts as cost 3 to sing songs.)",
   cardNumber: "003",
   cost: 1,
   strength: 1,
@@ -23,6 +24,13 @@ export const cinderellaBallroomSensation: CharacterCard = {
     {
       type: "Singer",
       value: 3,
+    },
+  ],
+  abilities: [
+    {
+      id: "4j3-ability-1",
+      text: "Singer 3 (This character counts as cost 3 to sing songs.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess"],

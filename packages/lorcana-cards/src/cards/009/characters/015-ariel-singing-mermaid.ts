@@ -9,6 +9,7 @@ export const arielSingingMermaid: CharacterCard = {
   inkType: ["amber"],
   franchise: "Little Mermaid",
   set: "009",
+  text: "Singer 7 (This character counts as cost 7 to sing songs.)",
   cardNumber: "015",
   cost: 4,
   strength: 3,
@@ -23,6 +24,13 @@ export const arielSingingMermaid: CharacterCard = {
     {
       type: "Singer",
       value: 7,
+    },
+  ],
+  abilities: [
+    {
+      id: "17w-ability-1",
+      text: "Singer 7 (This character counts as cost 7 to sing songs.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess"],

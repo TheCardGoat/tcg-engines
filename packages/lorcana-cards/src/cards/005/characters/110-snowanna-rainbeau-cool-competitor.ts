@@ -9,6 +9,7 @@ export const snowannaRainbeauCoolCompetitor: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Wreck It Ralph",
   set: "005",
+  text: "Rush (This character can challenge the turn they're played.)",
   cardNumber: "110",
   cost: 3,
   strength: 2,
@@ -20,5 +21,12 @@ export const snowannaRainbeauCoolCompetitor: CharacterCard = {
     ravensburger: "62f8f59f90124ef9f0b9787ccf4611aaf361be9f",
   },
   keywords: ["Rush"],
+  abilities: [
+    {
+      id: "rgl-ability-1",
+      text: "Rush (This character can challenge the turn they're played.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Racer"],
 };

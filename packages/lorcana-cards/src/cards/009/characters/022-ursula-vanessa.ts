@@ -9,6 +9,7 @@ export const ursulaVanessa: CharacterCard = {
   inkType: ["amber"],
   franchise: "Little Mermaid",
   set: "009",
+  text: "Singer 4 (This character counts as cost 4 to sing songs.)",
   cardNumber: "022",
   cost: 2,
   strength: 1,
@@ -23,6 +24,13 @@ export const ursulaVanessa: CharacterCard = {
     {
       type: "Singer",
       value: 4,
+    },
+  ],
+  abilities: [
+    {
+      id: "lsj-ability-1",
+      text: "Singer 4 (This character counts as cost 4 to sing songs.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],

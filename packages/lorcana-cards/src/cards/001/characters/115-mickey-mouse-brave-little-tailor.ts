@@ -8,6 +8,7 @@ export const mickeyMouseBraveLittleTailor: CharacterCard = {
   fullName: "Mickey Mouse - Brave Little Tailor",
   inkType: ["ruby"],
   set: "001",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "115",
   cost: 8,
   strength: 5,
@@ -19,5 +20,12 @@ export const mickeyMouseBraveLittleTailor: CharacterCard = {
     ravensburger: "24d9608bc36bf0e9c6e158b0569ebcd8d0515343",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "a81-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Dreamborn", "Hero"],
 };

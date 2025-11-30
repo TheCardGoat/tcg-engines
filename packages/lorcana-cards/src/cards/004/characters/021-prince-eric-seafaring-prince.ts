@@ -9,6 +9,7 @@ export const princeEricSeafaringPrince: CharacterCard = {
   inkType: ["amber"],
   franchise: "Little Mermaid",
   set: "004",
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose a character with Bodyguard if able.)",
   cardNumber: "021",
   cost: 3,
   strength: 3,
@@ -20,5 +21,12 @@ export const princeEricSeafaringPrince: CharacterCard = {
     ravensburger: "215468ad3c809a1adc7ae0b14aa9d95e4875e52d",
   },
   keywords: ["Bodyguard"],
+  abilities: [
+    {
+      id: "98x-ability-1",
+      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose a character with Bodyguard if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Prince"],
 };

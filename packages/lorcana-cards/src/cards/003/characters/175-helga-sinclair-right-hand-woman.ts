@@ -9,6 +9,7 @@ export const helgaSinclairRighthandWoman: CharacterCard = {
   inkType: ["steel"],
   franchise: "Atlantis",
   set: "003",
+  text: "Challenger +2 (While challenging, this character gets +2.)",
   cardNumber: "175",
   cost: 3,
   strength: 2,
@@ -23,6 +24,13 @@ export const helgaSinclairRighthandWoman: CharacterCard = {
     {
       type: "Challenger",
       value: 2,
+    },
+  ],
+  abilities: [
+    {
+      id: "1fd-ability-1",
+      text: "Challenger +2 (While challenging, this character gets +2.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Villain"],

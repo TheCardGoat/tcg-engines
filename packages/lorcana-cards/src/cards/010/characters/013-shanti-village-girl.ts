@@ -9,6 +9,7 @@ export const shantiVillageGirl: CharacterCard = {
   inkType: ["amber"],
   franchise: "Jungle Book",
   set: "010",
+  text: "Singer 5 (This character counts as cost 5 to sing songs.)",
   cardNumber: "013",
   cost: 3,
   strength: 0,
@@ -23,6 +24,13 @@ export const shantiVillageGirl: CharacterCard = {
     {
       type: "Singer",
       value: 5,
+    },
+  ],
+  abilities: [
+    {
+      id: "lyq-ability-1",
+      text: "Singer 5 (This character counts as cost 5 to sing songs.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Ally"],

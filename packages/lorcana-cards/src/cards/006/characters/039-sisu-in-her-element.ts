@@ -9,6 +9,7 @@ export const sisuInHerElement: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Raya and the Last Dragon",
   set: "006",
+  text: "Challenger +2 (While challenging, this character gets +2.)",
   cardNumber: "039",
   cost: 5,
   strength: 3,
@@ -23,6 +24,13 @@ export const sisuInHerElement: CharacterCard = {
     {
       type: "Challenger",
       value: 2,
+    },
+  ],
+  abilities: [
+    {
+      id: "39b-ability-1",
+      text: "Challenger +2 (While challenging, this character gets +2.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Hero", "Deity", "Dragon"],

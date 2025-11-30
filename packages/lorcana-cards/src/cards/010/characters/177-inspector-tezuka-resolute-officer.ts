@@ -9,6 +9,7 @@ export const inspectorTezukaResoluteOfficer: CharacterCard = {
   inkType: ["steel"],
   franchise: "Ducktales",
   set: "010",
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
   cardNumber: "177",
   cost: 2,
   strength: 2,
@@ -20,5 +21,12 @@ export const inspectorTezukaResoluteOfficer: CharacterCard = {
     ravensburger: "9644b567eec1691484deb7950ab8728fb6fdc9a8",
   },
   keywords: ["Bodyguard"],
+  abilities: [
+    {
+      id: "15o-ability-1",
+      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Detective"],
 };

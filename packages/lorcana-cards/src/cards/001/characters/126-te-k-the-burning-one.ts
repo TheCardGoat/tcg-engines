@@ -9,6 +9,7 @@ export const teKTheBurningOne: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Moana",
   set: "001",
+  text: "Reckless (This character can't quest and must challenge each turn if able.)",
   cardNumber: "126",
   cost: 6,
   strength: 8,
@@ -20,5 +21,12 @@ export const teKTheBurningOne: CharacterCard = {
     ravensburger: "92788505267291d061bce171dae43b361f5c9eca",
   },
   keywords: ["Reckless"],
+  abilities: [
+    {
+      id: "14n-ability-1",
+      text: "Reckless (This character can't quest and must challenge each turn if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Deity"],
 };

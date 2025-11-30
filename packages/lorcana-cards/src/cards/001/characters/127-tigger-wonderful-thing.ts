@@ -9,6 +9,7 @@ export const tiggerWonderfulThing: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Winnie the Pooh",
   set: "001",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "127",
   cost: 6,
   strength: 4,
@@ -20,5 +21,12 @@ export const tiggerWonderfulThing: CharacterCard = {
     ravensburger: "aeb12d5f9810897355e57f169ef318f584e11c64",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "1cg-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Tigger"],
 };

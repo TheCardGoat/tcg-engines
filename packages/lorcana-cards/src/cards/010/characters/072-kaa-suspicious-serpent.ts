@@ -9,6 +9,7 @@ export const kaaSuspiciousSerpent: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Jungle Book",
   set: "010",
+  text: "Ward (Opponents can't choose this character except to challenge.)",
   cardNumber: "072",
   cost: 3,
   strength: 3,
@@ -20,5 +21,12 @@ export const kaaSuspiciousSerpent: CharacterCard = {
     ravensburger: "790085a5369b1cc854dd2c964ca6e879be2e2a56",
   },
   keywords: ["Ward"],
+  abilities: [
+    {
+      id: "xkn-ability-1",
+      text: "Ward (Opponents can't choose this character except to challenge.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };

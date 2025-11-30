@@ -9,6 +9,7 @@ export const lenaSabrewingRebelliousTeenager: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Ducktales",
   set: "003",
+  text: "Rush (This character can challenge the turn they're played.)",
   cardNumber: "043",
   cost: 2,
   strength: 1,
@@ -20,5 +21,12 @@ export const lenaSabrewingRebelliousTeenager: CharacterCard = {
     ravensburger: "c8008c9decb7e2f82c626c48623a36620179e03b",
   },
   keywords: ["Rush"],
+  abilities: [
+    {
+      id: "1j3-ability-1",
+      text: "Rush (This character can challenge the turn they're played.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Sorcerer"],
 };

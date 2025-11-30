@@ -9,6 +9,7 @@ export const beastThickskinned: CharacterCard = {
   inkType: ["steel"],
   franchise: "Beauty and the Beast",
   set: "004",
+  text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
   cardNumber: "176",
   cost: 3,
   strength: 2,
@@ -23,6 +24,13 @@ export const beastThickskinned: CharacterCard = {
     {
       type: "Resist",
       value: 1,
+    },
+  ],
+  abilities: [
+    {
+      id: "qz9-ability-1",
+      text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
+      type: "static",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

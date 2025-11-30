@@ -9,6 +9,7 @@ export const theHeadlessHorsemanRelentlessSpirit: CharacterCard = {
   inkType: ["steel"],
   franchise: "Sleepy Hollow",
   set: "010",
+  text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
   cardNumber: "194",
   cost: 4,
   strength: 4,
@@ -20,5 +21,12 @@ export const theHeadlessHorsemanRelentlessSpirit: CharacterCard = {
     ravensburger: "4160bece2c94394d46717dbd1fb2880098079cd6",
   },
   keywords: ["Bodyguard"],
+  abilities: [
+    {
+      id: "i51-ability-1",
+      text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };

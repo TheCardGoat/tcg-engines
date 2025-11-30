@@ -9,6 +9,7 @@ export const ticktockEverpresentPursuer: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Peter Pan",
   set: "009",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "050",
   cost: 6,
   strength: 4,
@@ -20,5 +21,12 @@ export const ticktockEverpresentPursuer: CharacterCard = {
     ravensburger: "99133bb34b1ce309fdf855a65f0cd70f9a17cc59",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "16h-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

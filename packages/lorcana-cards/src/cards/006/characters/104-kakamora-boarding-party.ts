@@ -9,6 +9,7 @@ export const kakamoraBoardingParty: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Moana",
   set: "006",
+  text: "Rush (This character can challenge the turn they're played.)",
   cardNumber: "104",
   cost: 4,
   strength: 5,
@@ -20,5 +21,12 @@ export const kakamoraBoardingParty: CharacterCard = {
     ravensburger: "1b4a8518d45c24ba97ec36484731e8b55c085d5b",
   },
   keywords: ["Rush"],
+  abilities: [
+    {
+      id: "7k1-ability-1",
+      text: "Rush (This character can challenge the turn they're played.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Pirate"],
 };

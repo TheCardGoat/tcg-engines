@@ -9,6 +9,7 @@ export const zazuAdvisorToMufasa: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Lion King",
   set: "005",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "072",
   cost: 5,
   strength: 3,
@@ -20,5 +21,12 @@ export const zazuAdvisorToMufasa: CharacterCard = {
     ravensburger: "1c49ac7ff34fcbbbd4e8e2c2cc50bc858e2cb391",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "7uk-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

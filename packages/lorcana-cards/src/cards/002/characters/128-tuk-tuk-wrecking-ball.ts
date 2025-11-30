@@ -9,6 +9,7 @@ export const tukTukWreckingBall: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Raya and the Last Dragon",
   set: "002",
+  text: "Reckless (This character can't quest and must challenge each turn if able.)",
   cardNumber: "128",
   cost: 4,
   strength: 4,
@@ -20,5 +21,12 @@ export const tukTukWreckingBall: CharacterCard = {
     ravensburger: "db06f844bce8daadacf3b667fc574090eded709d",
   },
   keywords: ["Reckless"],
+  abilities: [
+    {
+      id: "1or-ability-1",
+      text: "Reckless (This character can't quest and must challenge each turn if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

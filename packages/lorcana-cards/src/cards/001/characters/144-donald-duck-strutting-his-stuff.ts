@@ -8,6 +8,7 @@ export const donaldDuckStruttingHisStuff: CharacterCard = {
   fullName: "Donald Duck - Strutting His Stuff",
   inkType: ["sapphire"],
   set: "001",
+  text: "Ward (Opponents can't choose this character except to challenge.)",
   cardNumber: "144",
   cost: 5,
   strength: 4,
@@ -19,5 +20,12 @@ export const donaldDuckStruttingHisStuff: CharacterCard = {
     ravensburger: "827efa2d86fedbf475bd6d3956aa3b8d96bb21fc",
   },
   keywords: ["Ward"],
+  abilities: [
+    {
+      id: "10b-ability-1",
+      text: "Ward (Opponents can't choose this character except to challenge.)",
+      type: "static",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Inventor"],
 };

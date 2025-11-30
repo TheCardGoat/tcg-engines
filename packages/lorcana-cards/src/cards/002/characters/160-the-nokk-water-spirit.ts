@@ -9,6 +9,7 @@ export const theNokkWaterSpirit: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Frozen",
   set: "002",
+  text: "Ward (Opponents can't choose this character except to challenge.)",
   cardNumber: "160",
   cost: 4,
   strength: 4,
@@ -20,5 +21,12 @@ export const theNokkWaterSpirit: CharacterCard = {
     ravensburger: "5e84bd330102f933591077e27d65cdc0c3dbfdf1",
   },
   keywords: ["Ward"],
+  abilities: [
+    {
+      id: "q84-ability-1",
+      text: "Ward (Opponents can't choose this character except to challenge.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn"],
 };

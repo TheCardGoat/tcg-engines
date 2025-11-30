@@ -9,6 +9,7 @@ export const skippyEnergeticRabbit: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Robin Hood",
   set: "003",
+  text: "Ward (Opponents can't choose this character except to challenge.)",
   cardNumber: "087",
   cost: 2,
   strength: 2,
@@ -20,5 +21,12 @@ export const skippyEnergeticRabbit: CharacterCard = {
     ravensburger: "d1dd02f4399d22aed3de073b0011d0a9fa633020",
   },
   keywords: ["Ward"],
+  abilities: [
+    {
+      id: "1m8-ability-1",
+      text: "Ward (Opponents can't choose this character except to challenge.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

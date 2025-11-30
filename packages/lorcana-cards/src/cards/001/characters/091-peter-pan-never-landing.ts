@@ -9,6 +9,7 @@ export const peterPanNeverLanding: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Peter Pan",
   set: "001",
+  text: "Evasive (Only characters with Evasive can challenge this character.)",
   cardNumber: "091",
   cost: 3,
   strength: 3,
@@ -20,5 +21,12 @@ export const peterPanNeverLanding: CharacterCard = {
     ravensburger: "bdb08565784cd7012548f33dfb41c5f27b8bf8f7",
   },
   keywords: ["Evasive"],
+  abilities: [
+    {
+      id: "1g6-ability-1",
+      text: "Evasive (Only characters with Evasive can challenge this character.)",
+      type: "static",
+    },
+  ],
   classifications: ["Dreamborn", "Hero"],
 };

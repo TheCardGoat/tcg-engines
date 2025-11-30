@@ -9,6 +9,7 @@ export const gastonArrogantHunter: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Beauty and the Beast",
   set: "009",
+  text: "Reckless (This character can't quest and must challenge each turn if able.)",
   cardNumber: "115",
   cost: 2,
   strength: 4,
@@ -20,5 +21,12 @@ export const gastonArrogantHunter: CharacterCard = {
     ravensburger: "34cd6eb73f7b4b7dd53a239a0dedfdf75cb2efbc",
   },
   keywords: ["Reckless"],
+  abilities: [
+    {
+      id: "enf-ability-1",
+      text: "Reckless (This character can't quest and must challenge each turn if able.)",
+      type: "static",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };
