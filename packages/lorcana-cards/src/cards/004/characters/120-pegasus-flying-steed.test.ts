@@ -1,13 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { hasEvasive } from "@tcg/lorcana";
 import { pegasusFlyingSteed } from "./120-pegasus-flying-steed";
 
 describe("Pegasus - Flying Steed", () => {
   it("should have Evasive ability", () => {
-    const testEngine = new TestEngine({
-      play: [pegasusFlyingSteed],
-    });
-    const cardUnderTest = testEngine.getCardModel(pegasusFlyingSteed);
-    expect(cardUnderTest.hasEvasive).toBe(true);
+    expect(hasEvasive(pegasusFlyingSteed)).toBe(true);
   });
 });

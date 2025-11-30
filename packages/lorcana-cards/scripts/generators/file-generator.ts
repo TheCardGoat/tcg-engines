@@ -770,21 +770,29 @@ export interface CardFileInfo {
 }
 
 /**
- * Keyword to TestEngine property mapping
- * Maps keyword names to the corresponding `has*` property on the card model
+ * Keywords with dedicated `has*` functions exported from @tcg/lorcana
+ * These can be called as `hasBodyguard(card)` directly
  */
-const KEYWORD_TO_PROPERTY: Record<string, string> = {
+const DEDICATED_KEYWORD_FUNCTIONS = new Set([
+  "Bodyguard",
+  "Evasive",
+  "Reckless",
+  "Rush",
+  "Vanish",
+  "Ward",
+  "Shift",
+]);
+
+/**
+ * Keyword to function name mapping for dedicated functions
+ */
+const KEYWORD_TO_FUNCTION: Record<string, string> = {
   Bodyguard: "hasBodyguard",
   Evasive: "hasEvasive",
   Reckless: "hasReckless",
   Rush: "hasRush",
-  Support: "hasSupport",
   Vanish: "hasVanish",
   Ward: "hasWard",
-  Alert: "hasAlert",
-  Challenger: "hasChallenger",
-  Resist: "hasResist",
-  Singer: "hasSinger",
   Shift: "hasShift",
 };
 
@@ -849,34 +857,40 @@ export function generateTestFileContent(
   // Build the import path (relative from test file to card file)
   const importPath = `./${cardFileName.replace(".ts", "")}`;
 
-  // Generate test cases for each keyword
+  // Generate test cases for each keyword and collect needed imports
   const testCases: string[] = [];
+  const neededImports = new Set<string>();
+  let needsGenericHasKeyword = false;
 
   for (const { keyword, value } of keywords) {
-    const propertyName = KEYWORD_TO_PROPERTY[keyword];
-    if (!propertyName) {
-      // Skip unknown keywords
-      continue;
-    }
+    const hasDedicatedFunction = DEDICATED_KEYWORD_FUNCTIONS.has(keyword);
 
-    if (value !== undefined) {
-      // Parameterized keyword test (e.g., Challenger +3, Singer 5)
-      testCases.push(`  it("should have ${keyword} ${value} ability", () => {
-    const testEngine = new TestEngine({
-      play: [${exportName}],
-    });
-    const cardUnderTest = testEngine.getCardModel(${exportName});
-    expect(cardUnderTest.${propertyName}).toBe(true);
+    if (hasDedicatedFunction) {
+      const funcName = KEYWORD_TO_FUNCTION[keyword];
+      neededImports.add(funcName);
+
+      if (value !== undefined) {
+        testCases.push(`  it("should have ${keyword} ${value} ability", () => {
+    expect(${funcName}(${exportName})).toBe(true);
   });`);
+      } else {
+        testCases.push(`  it("should have ${keyword} ability", () => {
+    expect(${funcName}(${exportName})).toBe(true);
+  });`);
+      }
     } else {
-      // Simple keyword test (e.g., Bodyguard, Rush)
-      testCases.push(`  it("should have ${keyword} ability", () => {
-    const testEngine = new TestEngine({
-      play: [${exportName}],
-    });
-    const cardUnderTest = testEngine.getCardModel(${exportName});
-    expect(cardUnderTest.${propertyName}).toBe(true);
+      // Use generic hasKeyword function for keywords without dedicated functions
+      needsGenericHasKeyword = true;
+
+      if (value !== undefined) {
+        testCases.push(`  it("should have ${keyword} ${value} ability", () => {
+    expect(hasKeyword(${exportName}, "${keyword}")).toBe(true);
   });`);
+      } else {
+        testCases.push(`  it("should have ${keyword} ability", () => {
+    expect(hasKeyword(${exportName}, "${keyword}")).toBe(true);
+  });`);
+      }
     }
   }
 
@@ -885,9 +899,15 @@ export function generateTestFileContent(
     return null;
   }
 
+  // Build imports
+  if (needsGenericHasKeyword) {
+    neededImports.add("hasKeyword");
+  }
+  const cardUtilsImports = Array.from(neededImports).sort().join(", ");
+
   return `import { describe, expect, it } from "bun:test";
 import { ${exportName} } from "${importPath}";
-import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+import { ${cardUtilsImports} } from "@tcg/lorcana";
 
 describe("${card.fullName}", () => {
 ${testCases.join("\n\n")}
