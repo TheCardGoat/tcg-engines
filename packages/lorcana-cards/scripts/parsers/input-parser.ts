@@ -49,10 +49,7 @@ export function loadLorcastJson(inputPath?: string): LorcastInputCard[] {
  */
 function normalizeForMatching(str: string | undefined | null): string {
   if (!str) return "";
-  return str
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "")
-    .trim();
+  return str.toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
 /**

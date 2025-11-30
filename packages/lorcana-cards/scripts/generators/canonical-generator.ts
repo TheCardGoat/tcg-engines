@@ -57,13 +57,6 @@ function extractInkType(colors: string[]): InkType[] {
 }
 
 /**
- * Map rarity string to lowercase
- */
-function mapRarity(rarity: string): string {
-  return rarity.toLowerCase().replace(/_/g, "_");
-}
-
-/**
  * Extract keywords from abilities array
  * Keywords are typically single words like "Bodyguard", "Rush", "Evasive"
  */

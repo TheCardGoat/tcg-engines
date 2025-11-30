@@ -7,8 +7,6 @@
 
 import type { IdMapping } from "../types";
 
-const BASE36_CHARS = "0123456789abcdefghijklmnopqrstuvwxyz";
-
 /**
  * Convert a hex string to base36
  */

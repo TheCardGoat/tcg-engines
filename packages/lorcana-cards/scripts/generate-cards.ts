@@ -7,7 +7,7 @@
  * src/data directory (JSON reference files).
  *
  * Data source strategy:
- *   - Card text: Lorcast (has symbols like {S}, {I}, {L})
+ *   - Card text: Lorcast (has symbols like {S}, {I}, {D})
  *   - All other data: Ravensburger (stats, images, set info)
  *
  * Usage:
