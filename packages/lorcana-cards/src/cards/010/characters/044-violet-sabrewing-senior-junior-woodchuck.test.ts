@@ -4,13 +4,9 @@ import { violetSabrewingSeniorJuniorWoodchuck } from "./044-violet-sabrewing-sen
 
 describe("Violet Sabrewing - Senior Junior Woodchuck", () => {
   it("should have Evasive ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [violetSabrewingSeniorJuniorWoodchuck],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [violetSabrewingSeniorJuniorWoodchuck],
+    });
 
     const cardUnderTest = testEngine.getCardModel(
       violetSabrewingSeniorJuniorWoodchuck,

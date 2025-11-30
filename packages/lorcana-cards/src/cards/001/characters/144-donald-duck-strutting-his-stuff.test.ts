@@ -4,13 +4,9 @@ import { donaldDuckStruttingHisStuff } from "./144-donald-duck-strutting-his-stu
 
 describe("Donald Duck - Strutting His Stuff", () => {
   it("should have Ward ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [donaldDuckStruttingHisStuff],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [donaldDuckStruttingHisStuff],
+    });
 
     const cardUnderTest = testEngine.getCardModel(donaldDuckStruttingHisStuff);
     expect(cardUnderTest.hasWard()).toBe(true);

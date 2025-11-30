@@ -4,13 +4,9 @@ import { tipoJuniorChipmunk } from "./089-tipo-junior-chipmunk";
 
 describe("Tipo - Junior Chipmunk", () => {
   it("should have Evasive ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [tipoJuniorChipmunk],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [tipoJuniorChipmunk],
+    });
 
     const cardUnderTest = testEngine.getCardModel(tipoJuniorChipmunk);
     expect(cardUnderTest.hasEvasive).toBe(true);

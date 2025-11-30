@@ -4,13 +4,9 @@ import { missBiancaRescueAidSocietyAgent } from "./010-miss-bianca-rescue-aid-so
 
 describe("Miss Bianca - Rescue Aid Society Agent", () => {
   it("should have Singer 4 ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [missBiancaRescueAidSocietyAgent],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [missBiancaRescueAidSocietyAgent],
+    });
 
     const cardUnderTest = testEngine.getCardModel(
       missBiancaRescueAidSocietyAgent,

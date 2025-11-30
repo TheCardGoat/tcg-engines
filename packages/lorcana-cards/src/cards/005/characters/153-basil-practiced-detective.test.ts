@@ -4,13 +4,9 @@ import { basilPracticedDetective } from "./153-basil-practiced-detective";
 
 describe("Basil - Practiced Detective", () => {
   it("should have Support ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [basilPracticedDetective],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [basilPracticedDetective],
+    });
 
     const cardUnderTest = testEngine.getCardModel(basilPracticedDetective);
     expect(cardUnderTest.hasSupport()).toBe(true);

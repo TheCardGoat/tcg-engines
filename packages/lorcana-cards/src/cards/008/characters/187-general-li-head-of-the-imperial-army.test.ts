@@ -4,13 +4,9 @@ import { generalLiHeadOfTheImperialArmy } from "./187-general-li-head-of-the-imp
 
 describe("General Li - Head of the Imperial Army", () => {
   it("should have Resist 1 ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [generalLiHeadOfTheImperialArmy],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [generalLiHeadOfTheImperialArmy],
+    });
 
     const cardUnderTest = testEngine.getCardModel(
       generalLiHeadOfTheImperialArmy,

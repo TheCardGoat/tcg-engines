@@ -4,13 +4,9 @@ import { mickeyMouseFoodFightDefender } from "./176-mickey-mouse-food-fight-defe
 
 describe("Mickey Mouse - Food Fight Defender", () => {
   it("should have Resist 1 ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [mickeyMouseFoodFightDefender],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [mickeyMouseFoodFightDefender],
+    });
 
     const cardUnderTest = testEngine.getCardModel(mickeyMouseFoodFightDefender);
     expect(cardUnderTest.hasResist).toBe(true);

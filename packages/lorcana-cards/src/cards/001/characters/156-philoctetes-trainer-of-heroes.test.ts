@@ -4,13 +4,9 @@ import { philoctetesTrainerOfHeroes } from "./156-philoctetes-trainer-of-heroes"
 
 describe("Philoctetes - Trainer of Heroes", () => {
   it("should have Support ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [philoctetesTrainerOfHeroes],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [philoctetesTrainerOfHeroes],
+    });
 
     const cardUnderTest = testEngine.getCardModel(philoctetesTrainerOfHeroes);
     expect(cardUnderTest.hasSupport()).toBe(true);

@@ -4,13 +4,9 @@ import { mickeyMouseBraveLittleTailor } from "./115-mickey-mouse-brave-little-ta
 
 describe("Mickey Mouse - Brave Little Tailor", () => {
   it("should have Evasive ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [mickeyMouseBraveLittleTailor],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [mickeyMouseBraveLittleTailor],
+    });
 
     const cardUnderTest = testEngine.getCardModel(mickeyMouseBraveLittleTailor);
     expect(cardUnderTest.hasEvasive).toBe(true);

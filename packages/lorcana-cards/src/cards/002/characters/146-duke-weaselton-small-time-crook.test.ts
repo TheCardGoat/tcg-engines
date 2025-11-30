@@ -4,13 +4,9 @@ import { dukeWeaseltonSmalltimeCrook } from "./146-duke-weaselton-small-time-cro
 
 describe("Duke Weaselton - Small-Time Crook", () => {
   it("should have Ward ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [dukeWeaseltonSmalltimeCrook],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [dukeWeaseltonSmalltimeCrook],
+    });
 
     const cardUnderTest = testEngine.getCardModel(dukeWeaseltonSmalltimeCrook);
     expect(cardUnderTest.hasWard()).toBe(true);

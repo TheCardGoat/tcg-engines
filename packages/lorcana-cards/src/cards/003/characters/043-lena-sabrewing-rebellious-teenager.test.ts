@@ -4,13 +4,9 @@ import { lenaSabrewingRebelliousTeenager } from "./043-lena-sabrewing-rebellious
 
 describe("Lena Sabrewing - Rebellious Teenager", () => {
   it("should have Rush ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [lenaSabrewingRebelliousTeenager],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [lenaSabrewingRebelliousTeenager],
+    });
 
     const cardUnderTest = testEngine.getCardModel(
       lenaSabrewingRebelliousTeenager,

@@ -4,13 +4,9 @@ import { heiheiProtectiveRooster } from "./179-heihei-protective-rooster";
 
 describe("HeiHei - Protective Rooster", () => {
   it("should have Bodyguard ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [heiheiProtectiveRooster],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [heiheiProtectiveRooster],
+    });
 
     const cardUnderTest = testEngine.getCardModel(heiheiProtectiveRooster);
     expect(cardUnderTest.hasBodyguard()).toBe(true);

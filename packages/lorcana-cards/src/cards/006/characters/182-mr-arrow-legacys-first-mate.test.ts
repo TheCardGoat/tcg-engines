@@ -4,13 +4,9 @@ import { mrArrowLegacysFirstMate } from "./182-mr-arrow-legacys-first-mate";
 
 describe("Mr. Arrow - Legacy's First Mate", () => {
   it("should have Resist 1 ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [mrArrowLegacysFirstMate],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [mrArrowLegacysFirstMate],
+    });
 
     const cardUnderTest = testEngine.getCardModel(mrArrowLegacysFirstMate);
     expect(cardUnderTest.hasResist).toBe(true);

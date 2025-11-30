@@ -4,13 +4,9 @@ import { daisyDuckSpotlessFoodfighter } from "./111-daisy-duck-spotless-food-fig
 
 describe("Daisy Duck - Spotless Food-Fighter", () => {
   it("should have Evasive ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [daisyDuckSpotlessFoodfighter],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [daisyDuckSpotlessFoodfighter],
+    });
 
     const cardUnderTest = testEngine.getCardModel(daisyDuckSpotlessFoodfighter);
     expect(cardUnderTest.hasEvasive).toBe(true);

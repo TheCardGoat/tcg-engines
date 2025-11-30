@@ -4,13 +4,9 @@ import { montereyJackDefiantProtector } from "./188-monterey-jack-defiant-protec
 
 describe("Monterey Jack - Defiant Protector", () => {
   it("should have Bodyguard ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [montereyJackDefiantProtector],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [montereyJackDefiantProtector],
+    });
 
     const cardUnderTest = testEngine.getCardModel(montereyJackDefiantProtector);
     expect(cardUnderTest.hasBodyguard()).toBe(true);

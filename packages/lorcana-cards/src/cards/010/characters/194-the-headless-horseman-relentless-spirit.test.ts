@@ -4,13 +4,9 @@ import { theHeadlessHorsemanRelentlessSpirit } from "./194-the-headless-horseman
 
 describe("The Headless Horseman - Relentless Spirit", () => {
   it("should have Bodyguard ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [theHeadlessHorsemanRelentlessSpirit],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [theHeadlessHorsemanRelentlessSpirit],
+    });
 
     const cardUnderTest = testEngine.getCardModel(
       theHeadlessHorsemanRelentlessSpirit,

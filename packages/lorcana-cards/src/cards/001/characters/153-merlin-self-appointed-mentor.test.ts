@@ -4,13 +4,9 @@ import { merlinSelfappointedMentor } from "./153-merlin-self-appointed-mentor";
 
 describe("Merlin - Self-Appointed Mentor", () => {
   it("should have Support ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [merlinSelfappointedMentor],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [merlinSelfappointedMentor],
+    });
 
     const cardUnderTest = testEngine.getCardModel(merlinSelfappointedMentor);
     expect(cardUnderTest.hasSupport()).toBe(true);

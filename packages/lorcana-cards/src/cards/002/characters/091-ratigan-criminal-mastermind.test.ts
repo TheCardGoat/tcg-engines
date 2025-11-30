@@ -4,13 +4,9 @@ import { ratiganCriminalMastermind } from "./091-ratigan-criminal-mastermind";
 
 describe("Ratigan - Criminal Mastermind", () => {
   it("should have Evasive ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [ratiganCriminalMastermind],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [ratiganCriminalMastermind],
+    });
 
     const cardUnderTest = testEngine.getCardModel(ratiganCriminalMastermind);
     expect(cardUnderTest.hasEvasive).toBe(true);

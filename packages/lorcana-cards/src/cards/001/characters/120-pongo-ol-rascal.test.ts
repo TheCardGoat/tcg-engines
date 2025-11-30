@@ -4,13 +4,9 @@ import { pongoOlRascal } from "./120-pongo-ol-rascal";
 
 describe("Pongo - Ol’ Rascal", () => {
   it("should have Evasive ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [pongoOlRascal],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [pongoOlRascal],
+    });
 
     const cardUnderTest = testEngine.getCardModel(pongoOlRascal);
     expect(cardUnderTest.hasEvasive).toBe(true);

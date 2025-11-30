@@ -4,13 +4,9 @@ import { joshuaSweetTheDoctor } from "./005-joshua-sweet-the-doctor";
 
 describe("Joshua Sweet - The Doctor", () => {
   it("should have Bodyguard ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [joshuaSweetTheDoctor],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [joshuaSweetTheDoctor],
+    });
 
     const cardUnderTest = testEngine.getCardModel(joshuaSweetTheDoctor);
     expect(cardUnderTest.hasBodyguard()).toBe(true);

@@ -4,13 +4,9 @@ import { inspectorTezukaResoluteOfficer } from "./177-inspector-tezuka-resolute-
 
 describe("Inspector Tezuka - Resolute Officer", () => {
   it("should have Bodyguard ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [inspectorTezukaResoluteOfficer],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [inspectorTezukaResoluteOfficer],
+    });
 
     const cardUnderTest = testEngine.getCardModel(
       inspectorTezukaResoluteOfficer,

@@ -4,13 +4,9 @@ import { thePhantomBlotShadowyFigure } from "./135-the-phantom-blot-shadowy-figu
 
 describe("The Phantom Blot - Shadowy Figure", () => {
   it("should have Rush ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [thePhantomBlotShadowyFigure],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [thePhantomBlotShadowyFigure],
+    });
 
     const cardUnderTest = testEngine.getCardModel(thePhantomBlotShadowyFigure);
     expect(cardUnderTest.hasRush).toBe(true);

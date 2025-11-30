@@ -35,19 +35,21 @@ export const PLAYER_TWO = createPlayerId("player_two");
 /**
  * Test Initial State
  *
- * Simple zone configuration for setting up test games
+ * Simple zone configuration for setting up test games.
+ * Zones can be configured with either a number (to create placeholder cards)
+ * or an array of LorcanaCardDefinition (to create cards with actual definitions).
  */
 export type TestInitialState = {
-  /** Number of cards in hand */
-  hand?: number;
-  /** Number of cards in deck */
-  deck?: number;
-  /** Number of cards in play */
-  play?: number;
-  /** Number of cards in inkwell */
-  inkwell?: number;
-  /** Number of cards in discard */
-  discard?: number;
+  /** Cards in hand - number or card definitions */
+  hand?: number | LorcanaCardDefinition[];
+  /** Cards in deck - number or card definitions */
+  deck?: number | LorcanaCardDefinition[];
+  /** Cards in play - number or card definitions */
+  play?: number | LorcanaCardDefinition[];
+  /** Cards in inkwell - number or card definitions */
+  inkwell?: number | LorcanaCardDefinition[];
+  /** Cards in discard - number or card definitions */
+  discard?: number | LorcanaCardDefinition[];
   /** Starting lore */
   lore?: number;
 };
@@ -78,8 +80,6 @@ export type TestEngineOptions = {
   debug?: boolean;
   /** Optional card definitions for testing (with stats like strength, willpower) */
   cardDefinitions?: Record<string, TestCardDefinition>;
-  /** Card definitions to place in play zone (for keyword testing) */
-  play?: LorcanaCardDefinition[];
 };
 
 /**
@@ -236,11 +236,6 @@ export class LorcanaTestEngine {
     // Initialize zones with test cards
     this.initializeZones(_playerOneState, _playerTwoState);
 
-    // Initialize cards from play option (card definitions for keyword testing)
-    if (opts.play && opts.play.length > 0) {
-      this.initializePlayCards(opts.play);
-    }
-
     // If skipPreGame is true, fast-forward to main game
     if (opts.skipPreGame) {
       // Set OTP to skip chooseFirstPlayer phase
@@ -266,11 +261,24 @@ export class LorcanaTestEngine {
   }
 
   /**
+   * Check if a zone value is an array of card definitions
+   */
+  private isCardDefinitionsArray(
+    value: number | LorcanaCardDefinition[] | undefined,
+  ): value is LorcanaCardDefinition[] {
+    return Array.isArray(value);
+  }
+
+  /**
    * Initialize zones with test cards
    *
    * BACKDOOR for testing: Accesses RuleEngine internal state to populate zones
    * before any moves execute. This violates encapsulation but is necessary for
    * AAA testing (Arrange-Act-Assert) where board state must be set up before moves.
+   *
+   * Supports both:
+   * - Numbers: Creates placeholder cards (e.g., { hand: 7 })
+   * - Card definitions: Creates real cards with the provided definitions (e.g., { play: [heiheiCard] })
    *
    * TODO: @tcg/core should expose a proper TestEngine base class with this capability
    */
@@ -306,100 +314,54 @@ export class LorcanaTestEngine {
       }
     };
 
-    // Create cards for player one
-    if (playerOneState.hand) {
-      const cardIds = zoneOps.createDeck({
-        zoneId: "hand" as any,
-        playerId: createPlayerId(PLAYER_ONE),
-        cardCount: playerOneState.hand,
-        shuffle: false,
-      });
-      initializeCardMetadata(cardIds);
-    }
+    // Helper to initialize a zone with either a number or card definitions
+    const initializeZone = (
+      zoneId: string,
+      playerId: string,
+      value: number | LorcanaCardDefinition[] | undefined,
+      shuffle: boolean,
+    ) => {
+      if (value === undefined) return;
 
-    if (playerOneState.deck) {
-      const cardIds = zoneOps.createDeck({
-        zoneId: "deck" as any,
-        playerId: createPlayerId(PLAYER_ONE),
-        cardCount: playerOneState.deck,
-        shuffle: true, // Shuffle deck by default
-      });
-      initializeCardMetadata(cardIds);
-    }
+      if (this.isCardDefinitionsArray(value)) {
+        // Handle card definitions array
+        for (const cardDef of value) {
+          // Register the card definition for getCardModel lookup
+          this.playedCardDefinitions.set(cardDef.id, cardDef);
+        }
+        // Create placeholder cards for the count (cards are registered for keyword lookup)
+        const cardIds = zoneOps.createDeck({
+          zoneId: zoneId as any,
+          playerId: createPlayerId(playerId),
+          cardCount: value.length,
+          shuffle,
+        });
+        initializeCardMetadata(cardIds);
+      } else {
+        // Handle number - create placeholder cards
+        const cardIds = zoneOps.createDeck({
+          zoneId: zoneId as any,
+          playerId: createPlayerId(playerId),
+          cardCount: value,
+          shuffle,
+        });
+        initializeCardMetadata(cardIds);
+      }
+    };
 
-    if (playerOneState.play) {
-      const cardIds = zoneOps.createDeck({
-        zoneId: "play" as any,
-        playerId: createPlayerId(PLAYER_ONE),
-        cardCount: playerOneState.play,
-        shuffle: false,
-      });
-      initializeCardMetadata(cardIds);
-    }
+    // Initialize zones for player one
+    initializeZone("hand", PLAYER_ONE, playerOneState.hand, false);
+    initializeZone("deck", PLAYER_ONE, playerOneState.deck, true);
+    initializeZone("play", PLAYER_ONE, playerOneState.play, false);
+    initializeZone("inkwell", PLAYER_ONE, playerOneState.inkwell, false);
+    initializeZone("discard", PLAYER_ONE, playerOneState.discard, false);
 
-    if (playerOneState.inkwell) {
-      const cardIds = zoneOps.createDeck({
-        zoneId: "inkwell" as any,
-        playerId: createPlayerId(PLAYER_ONE),
-        cardCount: playerOneState.inkwell,
-        shuffle: false,
-      });
-      initializeCardMetadata(cardIds);
-    }
-
-    // Create cards for player two
-    if (playerTwoState.hand) {
-      const cardIds = zoneOps.createDeck({
-        zoneId: "hand" as any,
-        playerId: createPlayerId(PLAYER_TWO),
-        cardCount: playerTwoState.hand,
-        shuffle: false,
-      });
-      initializeCardMetadata(cardIds);
-    }
-
-    if (playerTwoState.deck) {
-      const cardIds = zoneOps.createDeck({
-        zoneId: "deck" as any,
-        playerId: createPlayerId(PLAYER_TWO),
-        cardCount: playerTwoState.deck,
-        shuffle: true,
-      });
-      initializeCardMetadata(cardIds);
-    }
-
-    if (playerTwoState.play) {
-      const cardIds = zoneOps.createDeck({
-        zoneId: "play" as any,
-        playerId: createPlayerId(PLAYER_TWO),
-        cardCount: playerTwoState.play,
-        shuffle: false,
-      });
-      initializeCardMetadata(cardIds);
-    }
-
-    if (playerTwoState.inkwell) {
-      const cardIds = zoneOps.createDeck({
-        zoneId: "inkwell" as any,
-        playerId: createPlayerId(PLAYER_TWO),
-        cardCount: playerTwoState.inkwell,
-        shuffle: false,
-      });
-      initializeCardMetadata(cardIds);
-    }
-  }
-
-  /**
-   * Initialize cards from Lorcana card definitions (for keyword testing)
-   *
-   * Places the provided card definitions in the play zone and registers them
-   * for later retrieval via getCardModel().
-   */
-  private initializePlayCards(cards: LorcanaCardDefinition[]) {
-    for (const card of cards) {
-      // Register the card definition for getCardModel lookup
-      this.playedCardDefinitions.set(card.id, card);
-    }
+    // Initialize zones for player two
+    initializeZone("hand", PLAYER_TWO, playerTwoState.hand, false);
+    initializeZone("deck", PLAYER_TWO, playerTwoState.deck, true);
+    initializeZone("play", PLAYER_TWO, playerTwoState.play, false);
+    initializeZone("inkwell", PLAYER_TWO, playerTwoState.inkwell, false);
+    initializeZone("discard", PLAYER_TWO, playerTwoState.discard, false);
   }
 
   /**
@@ -410,7 +372,7 @@ export class LorcanaTestEngine {
    *
    * @example
    * ```typescript
-   * const testEngine = new LorcanaTestEngine({}, {}, { play: [heiheiBoatSnack] });
+   * const testEngine = new LorcanaTestEngine({ play: [heiheiBoatSnack] });
    * const cardUnderTest = testEngine.getCardModel(heiheiBoatSnack);
    * expect(cardUnderTest.hasSupport()).toBe(true);
    * ```

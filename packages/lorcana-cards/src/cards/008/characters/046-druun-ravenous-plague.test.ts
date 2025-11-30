@@ -4,13 +4,9 @@ import { druunRavenousPlague } from "./046-druun-ravenous-plague";
 
 describe("Druun - Ravenous Plague", () => {
   it("should have Challenger 4 ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [druunRavenousPlague],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [druunRavenousPlague],
+    });
 
     const cardUnderTest = testEngine.getCardModel(druunRavenousPlague);
     expect(cardUnderTest.hasChallenger).toBe(true);

@@ -4,13 +4,9 @@ import { markowskiSpaceTrooper } from "./113-markowski-space-trooper";
 
 describe("Markowski - Space Trooper", () => {
   it("should have Evasive ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [markowskiSpaceTrooper],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [markowskiSpaceTrooper],
+    });
 
     const cardUnderTest = testEngine.getCardModel(markowskiSpaceTrooper);
     expect(cardUnderTest.hasEvasive).toBe(true);

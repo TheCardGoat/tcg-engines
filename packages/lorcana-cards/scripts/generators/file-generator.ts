@@ -870,7 +870,7 @@ export function generateTestFileContent(
 
     if (value !== undefined) {
       testCases.push(`  it("should have ${keyword} ${value} ability", () => {
-    const testEngine = new LorcanaTestEngine({}, {}, {
+    const testEngine = new LorcanaTestEngine({
       play: [${exportName}],
     });
 
@@ -879,7 +879,7 @@ export function generateTestFileContent(
   });`);
     } else {
       testCases.push(`  it("should have ${keyword} ability", () => {
-    const testEngine = new LorcanaTestEngine({}, {}, {
+    const testEngine = new LorcanaTestEngine({
       play: [${exportName}],
     });
 

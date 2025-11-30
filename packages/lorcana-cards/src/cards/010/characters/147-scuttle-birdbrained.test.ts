@@ -4,13 +4,9 @@ import { scuttleBirdbrained } from "./147-scuttle-birdbrained";
 
 describe("Scuttle - Birdbrained", () => {
   it("should have Ward ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [scuttleBirdbrained],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [scuttleBirdbrained],
+    });
 
     const cardUnderTest = testEngine.getCardModel(scuttleBirdbrained);
     expect(cardUnderTest.hasWard()).toBe(true);

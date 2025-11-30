@@ -4,13 +4,9 @@ import { ryderFleetfootedInfiltrator } from "./056-ryder-fleet-footed-infiltrato
 
 describe("Ryder - Fleet-Footed Infiltrator", () => {
   it("should have Evasive ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [ryderFleetfootedInfiltrator],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [ryderFleetfootedInfiltrator],
+    });
 
     const cardUnderTest = testEngine.getCardModel(ryderFleetfootedInfiltrator);
     expect(cardUnderTest.hasEvasive).toBe(true);

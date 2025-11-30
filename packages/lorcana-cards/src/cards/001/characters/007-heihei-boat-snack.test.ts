@@ -4,13 +4,9 @@ import { heiheiBoatSnack } from "./007-heihei-boat-snack";
 
 describe("HeiHei - Boat Snack", () => {
   it("should have Support ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [heiheiBoatSnack],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [heiheiBoatSnack],
+    });
 
     const cardUnderTest = testEngine.getCardModel(heiheiBoatSnack);
     expect(cardUnderTest.hasSupport()).toBe(true);

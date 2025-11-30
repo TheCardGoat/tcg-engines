@@ -4,13 +4,9 @@ import { tukTukWreckingBall } from "./128-tuk-tuk-wrecking-ball";
 
 describe("Tuk Tuk - Wrecking Ball", () => {
   it("should have Reckless ability", () => {
-    const testEngine = new LorcanaTestEngine(
-      {},
-      {},
-      {
-        play: [tukTukWreckingBall],
-      },
-    );
+    const testEngine = new LorcanaTestEngine({
+      play: [tukTukWreckingBall],
+    });
 
     const cardUnderTest = testEngine.getCardModel(tukTukWreckingBall);
     expect(cardUnderTest.hasReckless()).toBe(true);
