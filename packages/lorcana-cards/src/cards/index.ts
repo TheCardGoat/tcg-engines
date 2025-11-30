@@ -19,4 +19,25 @@ export async function getAllCardsById(): Promise<
   return allCardsByIdCache;
 }
 
-export type { CanonicalCard } from "./types";
+// Export all types
+export type {
+  AbilityDefinition,
+  CanonicalActionCard,
+  CanonicalCard,
+  CanonicalCardMetadata,
+  CanonicalCharacterCard,
+  CanonicalItemCard,
+  CanonicalLocationCard,
+  CardPrintingRef,
+  CardType,
+  ExternalIds,
+  InkType,
+} from "./types";
+
+// Export type guards
+export {
+  isCanonicalAction,
+  isCanonicalCharacter,
+  isCanonicalItem,
+  isCanonicalLocation,
+} from "./types";

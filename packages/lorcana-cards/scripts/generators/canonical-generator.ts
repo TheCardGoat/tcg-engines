@@ -15,7 +15,11 @@ import {
 import type { LorcastTextIndex } from "../parsers/lorcast-parser";
 import type {
   AbilityDefinition,
+  CanonicalActionCard,
   CanonicalCard,
+  CanonicalCharacterCard,
+  CanonicalItemCard,
+  CanonicalLocationCard,
   CardPrintingRef,
   CardType,
   ExternalIds,
@@ -204,10 +208,20 @@ function findBasePrinting(
 }
 
 /**
+ * Convert set ID to numeric format (e.g., "set2" -> "002")
+ */
+function getSetNumber(setId: string): string {
+  const match = setId.match(/\d+/);
+  const num = match ? Number.parseInt(match[0], 10) : 0;
+  return num.toString().padStart(3, "0");
+}
+
+/**
  * Generate printing refs for all cards in a group
  */
 function generatePrintingRefs(
   cards: Array<InputCard & { cardType: CardType }>,
+  shortId: string,
 ): CardPrintingRef[] {
   const printingRefs: CardPrintingRef[] = [];
   const seen = new Set<string>();
@@ -216,13 +230,14 @@ function generatePrintingRefs(
     for (const setId of card.card_sets) {
       const parsed = parseCardIdentifier(card.card_identifier);
       if (parsed) {
-        const id = generatePrintingId(setId, parsed.cardNumber);
-        if (!seen.has(id)) {
-          seen.add(id);
+        const setNumber = getSetNumber(setId);
+        const key = `${setNumber}-${parsed.cardNumber}`;
+        if (!seen.has(key)) {
+          seen.add(key);
           printingRefs.push({
-            set: setId,
+            set: setNumber,
             collectorNumber: parsed.cardNumber,
-            id,
+            id: shortId,
           });
         }
       }
@@ -255,9 +270,6 @@ function buildExternalIds(
   if (card.deck_building_id) {
     externalIds.ravensburger = card.deck_building_id;
   }
-  if (card.culture_invariant_id) {
-    externalIds.cultureInvariantId = card.culture_invariant_id;
-  }
 
   // Lorcast IDs (if we have a match)
   if (lorcastIndex) {
@@ -278,7 +290,50 @@ function buildExternalIds(
 }
 
 /**
+ * Build common card properties shared by all card types
+ */
+function buildCommonCardProperties(
+  shortId: string,
+  baseCard: InputCard & { cardType: CardType },
+  rulesText: string,
+  isVanilla: boolean,
+  franchise: string | undefined,
+  externalIds: ExternalIds | undefined,
+  keywords: string[],
+  printingRefs: CardPrintingRef[],
+) {
+  return {
+    // === STRING PROPERTIES ===
+    id: shortId,
+    name: baseCard.name,
+    version: baseCard.subtitle || "",
+    fullName: baseCard.subtitle
+      ? `${baseCard.name} - ${baseCard.subtitle}`
+      : baseCard.name,
+    inkType: extractInkType(baseCard.magic_ink_colors || []),
+    ...(franchise && { franchise }),
+
+    // === NUMERIC PROPERTIES ===
+    cost: baseCard.ink_cost,
+
+    // === BOOLEAN PROPERTIES ===
+    inkable: baseCard.ink_convertible,
+    vanilla: isVanilla,
+
+    // === OBJECT PROPERTIES ===
+    ...(externalIds && { externalIds }),
+
+    // === ARRAY PROPERTIES ===
+    printings: printingRefs,
+    ...(keywords.length > 0 && { keywords }),
+    ...(!isVanilla && { rulesText }),
+    ...(!isVanilla && { abilities: parseAbilities(rulesText) }),
+  };
+}
+
+/**
  * Transform a group of cards (same deck_building_id) to a canonical card
+ * Returns a discriminated union type based on the card type.
  */
 export function transformToCanonicalCard(
   deckBuildingId: string,
@@ -294,10 +349,6 @@ export function transformToCanonicalCard(
   // Use the base printing for canonical data
   const baseCard = findBasePrinting(cards);
 
-  const fullName = baseCard.subtitle
-    ? `${baseCard.name} - ${baseCard.subtitle}`
-    : baseCard.name;
-
   // Get rules text - prefer Lorcast text (has symbols) if available
   let rulesText: string;
   if (lorcastIndex) {
@@ -310,60 +361,85 @@ export function transformToCanonicalCard(
   // Determine if card is vanilla (no rules text)
   const isVanilla = !rulesText || rulesText.trim() === "";
 
-  // Extract all optional data first
+  // Extract all optional data
   const franchise = extractFranchise(baseCard);
   const externalIds = buildExternalIds(baseCard, lorcastIndex);
   const keywords = extractKeywords(baseCard.abilities || []);
-  const printingRefs = generatePrintingRefs(cards);
+  const printingRefs = generatePrintingRefs(cards, shortId);
 
-  // Check if action is a song
-  const isSong =
-    baseCard.cardType === "action" &&
-    (baseCard.abilities?.some((a) => a.toLowerCase().includes("song")) ||
-      baseCard.subtypes?.some((s) => s.toLowerCase() === "song"));
+  // Build common properties
+  const common = buildCommonCardProperties(
+    shortId,
+    baseCard,
+    rulesText,
+    isVanilla,
+    franchise,
+    externalIds,
+    keywords,
+    printingRefs,
+  );
 
-  // Get type-specific values
-  const isCharacter = baseCard.cardType === "character";
-  const isLocation = baseCard.cardType === "location";
+  // Create type-specific card based on cardType
+  switch (baseCard.cardType) {
+    case "character": {
+      const card: CanonicalCharacterCard = {
+        // === STRING PROPERTIES (from common) ===
+        ...common,
+        cardType: "character",
 
-  // Build card with properties in order: text → numeric → boolean → object → arrays
-  // Using spread to conditionally include properties while maintaining order
-  const canonicalCard: CanonicalCard = {
-    // === TEXT PROPERTIES ===
-    id: shortId,
-    name: baseCard.name,
-    version: baseCard.subtitle || "",
-    fullName,
-    cardType: baseCard.cardType,
-    inkType: extractInkType(baseCard.magic_ink_colors || []),
-    ...(isSong && { actionSubtype: "song" as const }),
-    ...(franchise && { franchise }),
-    ...(!isVanilla && { rulesText }),
+        // === NUMERIC PROPERTIES ===
+        strength: baseCard.strength ?? 0,
+        willpower: baseCard.willpower ?? 0,
+        lore: baseCard.quest_value ?? 0,
 
-    // === NUMERIC PROPERTIES ===
-    cost: baseCard.ink_cost,
-    ...(isCharacter && { strength: baseCard.strength }),
-    ...(isCharacter && { willpower: baseCard.willpower }),
-    ...(isCharacter && { lore: baseCard.quest_value }),
-    ...(isLocation && { lore: baseCard.lore }),
-    ...(isLocation && { moveCost: baseCard.move_cost }),
+        // === ARRAY PROPERTIES ===
+        ...(baseCard.subtypes?.length && {
+          classifications: baseCard.subtypes,
+        }),
+      };
+      return card;
+    }
 
-    // === BOOLEAN PROPERTIES ===
-    inkable: baseCard.ink_convertible,
-    vanilla: isVanilla,
+    case "action": {
+      const isSong =
+        baseCard.abilities?.some((a) => a.toLowerCase().includes("song")) ||
+        baseCard.subtypes?.some((s) => s.toLowerCase() === "song");
 
-    // === OBJECT PROPERTIES ===
-    ...(externalIds && { externalIds }),
+      const card: CanonicalActionCard = {
+        ...common,
+        cardType: "action",
+        ...(isSong && { actionSubtype: "song" as const }),
+      };
+      return card;
+    }
 
-    // === ARRAY PROPERTIES ===
-    ...(isCharacter &&
-      baseCard.subtypes?.length && { classifications: baseCard.subtypes }),
-    ...(keywords.length > 0 && { keywords }),
-    ...(!isVanilla && { abilities: parseAbilities(rulesText) }),
-    printings: printingRefs,
-  };
+    case "item": {
+      const card: CanonicalItemCard = {
+        ...common,
+        cardType: "item",
+      };
+      return card;
+    }
 
-  return canonicalCard;
+    case "location": {
+      const card: CanonicalLocationCard = {
+        // === STRING PROPERTIES (from common) ===
+        ...common,
+        cardType: "location",
+
+        // === NUMERIC PROPERTIES ===
+        moveCost: baseCard.move_cost ?? 0,
+        lore: baseCard.lore ?? 0,
+      };
+      return card;
+    }
+
+    default: {
+      // This should never happen, but TypeScript needs exhaustive handling
+      const exhaustiveCheck: never = baseCard.cardType;
+      throw new Error(`Unknown card type: ${exhaustiveCheck}`);
+    }
+  }
 }
 
 /**

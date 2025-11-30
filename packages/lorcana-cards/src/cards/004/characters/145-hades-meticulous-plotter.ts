@@ -1,29 +1,23 @@
-import type { CanonicalCard } from "../../types";
+import type { CharacterCard } from "@tcg/lorcana";
 
-export const hadesMeticulousPlotter: CanonicalCard = {
+export const hadesMeticulousPlotter: CharacterCard = {
   id: "svm",
   name: "Hades",
   version: "Meticulous Plotter",
   fullName: "Hades - Meticulous Plotter",
-  cardType: "character",
   inkType: "sapphire",
   franchise: "Hercules",
   cost: 4,
-  strength: 3,
-  willpower: 6,
-  lore: 1,
   inkable: true,
   vanilla: true,
   externalIds: {
     ravensburger: "68146d6fa08641ea608a09555035a71d11aef35e",
-    cultureInvariantId: 836,
   },
+  cardType: "character",
+  strength: 3,
+  willpower: 6,
+  lore: 1,
   classifications: ["Storyborn", "Villain", "Deity"],
-  printings: [
-    {
-      set: "set4",
-      collectorNumber: 145,
-      id: "set4-145",
-    },
-  ],
+  set: "004",
+  cardNumber: "145",
 };

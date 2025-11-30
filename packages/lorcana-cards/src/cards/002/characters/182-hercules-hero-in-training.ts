@@ -1,29 +1,23 @@
-import type { CanonicalCard } from "../../types";
+import type { CharacterCard } from "@tcg/lorcana";
 
-export const herculesHeroInTraining: CanonicalCard = {
+export const herculesHeroInTraining: CharacterCard = {
   id: "198",
   name: "Hercules",
   version: "Hero in Training",
   fullName: "Hercules - Hero in Training",
-  cardType: "character",
   inkType: "steel",
   franchise: "Hercules",
   cost: 2,
-  strength: 2,
-  willpower: 3,
-  lore: 1,
   inkable: true,
   vanilla: true,
   externalIds: {
     ravensburger: "a2a32240189369d4a32fbbfdb9b7c6d163511eb6",
-    cultureInvariantId: 398,
   },
+  cardType: "character",
+  strength: 2,
+  willpower: 3,
+  lore: 1,
   classifications: ["Storyborn", "Hero", "Prince"],
-  printings: [
-    {
-      set: "set2",
-      collectorNumber: 182,
-      id: "set2-182",
-    },
-  ],
+  set: "002",
+  cardNumber: "182",
 };

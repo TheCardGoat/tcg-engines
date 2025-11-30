@@ -1,29 +1,23 @@
-import type { CanonicalCard } from "../../types";
+import type { CharacterCard } from "@tcg/lorcana";
 
-export const moanaAdventurerOfLandAndSea: CanonicalCard = {
+export const moanaAdventurerOfLandAndSea: CharacterCard = {
   id: "NaN",
   name: "Moana",
   version: "Adventurer of Land and Sea",
   fullName: "Moana - Adventurer of Land and Sea",
-  cardType: "character",
   inkType: "sapphire",
   franchise: "Moana",
   cost: 3,
-  strength: 1,
-  willpower: 6,
-  lore: 1,
   inkable: true,
   vanilla: true,
   externalIds: {
     ravensburger: "moana-vaiana",
-    cultureInvariantId: 1589,
   },
+  cardType: "character",
+  strength: 1,
+  willpower: 6,
+  lore: 1,
   classifications: ["Storyborn", "Hero", "Princess"],
-  printings: [
-    {
-      set: "set7",
-      collectorNumber: 156,
-      id: "set7-156",
-    },
-  ],
+  set: "007",
+  cardNumber: "156",
 };

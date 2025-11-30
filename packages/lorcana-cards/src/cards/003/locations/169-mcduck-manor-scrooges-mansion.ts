@@ -1,26 +1,21 @@
-import type { CanonicalCard } from "../../types";
+import type { LocationCard } from "@tcg/lorcana";
 
-export const mcduckManorScroogesMansion: CanonicalCard = {
+export const mcduckManorScroogesMansion: LocationCard = {
   id: "12h",
   name: "McDuck Manor",
   version: "Scrooge's Mansion",
   fullName: "McDuck Manor - Scrooge's Mansion",
-  cardType: "location",
   inkType: "sapphire",
   franchise: "Ducktales",
   cost: 4,
-  moveCost: 1,
   inkable: true,
   vanilla: true,
   externalIds: {
     ravensburger: "8aa9251dcc86028d39e3e81f85533171539598da",
-    cultureInvariantId: 605,
   },
-  printings: [
-    {
-      set: "set3",
-      collectorNumber: 169,
-      id: "set3-169",
-    },
-  ],
+  cardType: "location",
+  moveCost: 1,
+  lore: 0,
+  set: "003",
+  cardNumber: "169",
 };

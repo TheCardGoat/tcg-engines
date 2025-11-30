@@ -1,29 +1,23 @@
-import type { CanonicalCard } from "../../types";
+import type { CharacterCard } from "@tcg/lorcana";
 
-export const tobyDoggedCompanion: CanonicalCard = {
+export const tobyDoggedCompanion: CharacterCard = {
   id: "cgh",
   name: "Toby",
   version: "Dogged Companion",
   fullName: "Toby - Dogged Companion",
-  cardType: "character",
   inkType: "ruby",
   franchise: "Great Mouse Detective",
   cost: 1,
-  strength: 3,
-  willpower: 1,
-  lore: 1,
   inkable: false,
   vanilla: true,
   externalIds: {
     ravensburger: "2ce68e33c28129fa66e9ff6b4fa8385224fc0ea4",
-    cultureInvariantId: 1564,
   },
+  cardType: "character",
+  strength: 3,
+  willpower: 1,
+  lore: 1,
   classifications: ["Storyborn", "Ally"],
-  printings: [
-    {
-      set: "set7",
-      collectorNumber: 131,
-      id: "set7-131",
-    },
-  ],
+  set: "007",
+  cardNumber: "131",
 };

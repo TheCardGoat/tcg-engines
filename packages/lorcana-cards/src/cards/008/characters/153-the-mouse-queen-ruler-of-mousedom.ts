@@ -1,29 +1,23 @@
-import type { CanonicalCard } from "../../types";
+import type { CharacterCard } from "@tcg/lorcana";
 
-export const theMouseQueenRulerOfMousedom: CanonicalCard = {
+export const theMouseQueenRulerOfMousedom: CharacterCard = {
   id: "u3h",
   name: "The Mouse Queen",
   version: "Ruler of Mousedom",
   fullName: "The Mouse Queen - Ruler of Mousedom",
-  cardType: "character",
   inkType: "sapphire",
   franchise: "Great Mouse Detective",
   cost: 4,
-  strength: 3,
-  willpower: 6,
-  lore: 1,
   inkable: true,
   vanilla: true,
   externalIds: {
     ravensburger: "6c78dae5b416000cbf73a4cdda6870b9b2ea25d6",
-    cultureInvariantId: 1817,
   },
+  cardType: "character",
+  strength: 3,
+  willpower: 6,
+  lore: 1,
   classifications: ["Storyborn", "Ally", "Queen"],
-  printings: [
-    {
-      set: "set8",
-      collectorNumber: 153,
-      id: "set8-153",
-    },
-  ],
+  set: "008",
+  cardNumber: "153",
 };

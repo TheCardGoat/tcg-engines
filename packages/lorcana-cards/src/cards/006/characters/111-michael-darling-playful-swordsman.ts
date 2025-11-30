@@ -1,29 +1,23 @@
-import type { CanonicalCard } from "../../types";
+import type { CharacterCard } from "@tcg/lorcana";
 
-export const michaelDarlingPlayfulSwordsman: CanonicalCard = {
+export const michaelDarlingPlayfulSwordsman: CharacterCard = {
   id: "6jf",
   name: "Michael Darling",
   version: "Playful Swordsman",
   fullName: "Michael Darling - Playful Swordsman",
-  cardType: "character",
   inkType: "ruby",
   franchise: "Peter Pan",
   cost: 1,
-  strength: 2,
-  willpower: 2,
-  lore: 1,
   inkable: true,
   vanilla: true,
   externalIds: {
     ravensburger: "1791b696efc7194f13104cd397919423568103fc",
-    cultureInvariantId: 1310,
   },
+  cardType: "character",
+  strength: 2,
+  willpower: 2,
+  lore: 1,
   classifications: ["Storyborn", "Ally", "Pirate"],
-  printings: [
-    {
-      set: "set6",
-      collectorNumber: 111,
-      id: "set6-111",
-    },
-  ],
+  set: "006",
+  cardNumber: "111",
 };

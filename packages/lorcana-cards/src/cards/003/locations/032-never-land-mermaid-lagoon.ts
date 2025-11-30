@@ -1,26 +1,21 @@
-import type { CanonicalCard } from "../../types";
+import type { LocationCard } from "@tcg/lorcana";
 
-export const neverLandMermaidLagoon: CanonicalCard = {
+export const neverLandMermaidLagoon: LocationCard = {
   id: "h5t",
   name: "Never Land",
   version: "Mermaid Lagoon",
   fullName: "Never Land - Mermaid Lagoon",
-  cardType: "location",
   inkType: "amber",
   franchise: "Peter Pan",
   cost: 1,
-  moveCost: 1,
   inkable: true,
   vanilla: true,
   externalIds: {
     ravensburger: "3dda47c95f7fd5557d048647909c7fb4c9f62dbb",
-    cultureInvariantId: 468,
   },
-  printings: [
-    {
-      set: "set3",
-      collectorNumber: 32,
-      id: "set3-032",
-    },
-  ],
+  cardType: "location",
+  moveCost: 1,
+  lore: 0,
+  set: "003",
+  cardNumber: "032",
 };

@@ -8,11 +8,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import type {
-  CanonicalCard,
+  ActionCard,
   CardType,
-  InputCardSet,
-  SetDefinition,
-} from "../types";
+  CharacterCard,
+  ItemCard,
+  LocationCard,
+} from "@tcg/lorcana";
+import type { CanonicalCard, SetDefinition } from "../types";
 
 const CARD_TYPES: CardType[] = ["character", "action", "item", "location"];
 
@@ -156,6 +158,47 @@ function getRelativeTypesImport(depth: number): string {
 }
 
 /**
+ * Get the type-specific interface name for a card type
+ */
+function getCanonicalTypeName(cardType: CardType): string {
+  const typeNames: Record<CardType, string> = {
+    character: "CharacterCard",
+    action: "ActionCard",
+    item: "ItemCard",
+    location: "LocationCard",
+  };
+  return typeNames[cardType];
+}
+
+/**
+ * Convert canonical card to LorcanaCard format
+ * Maps printings array to set/cardNumber from first printing
+ */
+function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
+  const firstPrinting = card.printings[0];
+
+  // Build the lorcana card object
+  const lorcanaCard: Record<string, unknown> = {};
+
+  // Copy all properties except printings
+  for (const [key, value] of Object.entries(card)) {
+    if (key !== "printings") {
+      lorcanaCard[key] = value;
+    }
+  }
+
+  // Add set and cardNumber from first printing
+  if (firstPrinting) {
+    lorcanaCard.set = firstPrinting.set;
+    lorcanaCard.cardNumber = firstPrinting.collectorNumber
+      .toString()
+      .padStart(3, "0");
+  }
+
+  return lorcanaCard;
+}
+
+/**
  * Generate content for an individual card file
  */
 export function generateCardFileContent(
@@ -163,16 +206,19 @@ export function generateCardFileContent(
   exportName: string,
   depth: number,
 ): string {
-  const typesImport = getRelativeTypesImport(depth);
+  const typeName = getCanonicalTypeName(card.cardType);
+
+  // Convert canonical card to lorcana format
+  const lorcanaCard = convertToLorcanaCard(card);
 
   // Serialize the card object to TypeScript
-  const cardJson = JSON.stringify(card, null, 2)
+  const cardJson = JSON.stringify(lorcanaCard, null, 2)
     .replace(/"([^"]+)":/g, "$1:") // Remove quotes from keys
     .replace(/"/g, '"'); // Use double quotes for strings
 
-  return `import type { CanonicalCard } from "${typesImport}";
+  return `import type { ${typeName} } from "@tcg/lorcana";
 
-export const ${exportName}: CanonicalCard = ${cardJson};
+export const ${exportName}: ${typeName} = ${cardJson};
 `;
 }
 
@@ -289,7 +335,28 @@ export async function getAllCardsById(): Promise<Record<string, CanonicalCard>> 
   return allCardsByIdCache;
 }
 
-export type { CanonicalCard } from "./types";
+// Export all types
+export type {
+  AbilityDefinition,
+  CanonicalActionCard,
+  CanonicalCard,
+  CanonicalCardMetadata,
+  CanonicalCharacterCard,
+  CanonicalItemCard,
+  CanonicalLocationCard,
+  CardPrintingRef,
+  CardType,
+  ExternalIds,
+  InkType,
+} from "./types";
+
+// Export type guards
+export {
+  isCanonicalAction,
+  isCanonicalCharacter,
+  isCanonicalItem,
+  isCanonicalLocation,
+} from "./types";
 `;
 }
 
@@ -298,9 +365,10 @@ export type { CanonicalCard } from "./types";
  */
 export function generateTypesContent(): string {
   return `/**
- * Canonical Card Type
+ * Canonical Card Types - Discriminated Union
  *
- * Represents a unique game card with all rules-relevant information.
+ * Type-safe card definitions for generated Lorcana cards.
+ * Uses discriminated unions to provide type-safe access to card-type-specific properties.
  */
 
 export type CardType = "character" | "action" | "item" | "location";
@@ -320,94 +388,109 @@ export interface AbilityDefinition {
   type: "triggered" | "activated" | "static" | "keyword";
 }
 
-export interface CanonicalCard {
-  /** Short generated ID (e.g., "a7x") */
-  id: string;
-
-  /** Card name (e.g., "Baloo") */
-  name: string;
-
-  /** Card version/subtitle (e.g., "Friend and Guardian") */
-  version: string;
-
-  /** Full name for display and deck building (e.g., "Baloo - Friend and Guardian") */
-  fullName: string;
-
-  /** Card type */
-  cardType: CardType;
-
-  /** Ink type(s) - single or dual ink */
-  inkType: InkType | [InkType, InkType];
-
-  /** Ink cost to play */
-  cost: number;
-
-  /** Can be added to inkwell */
-  inkable: boolean;
-
-  /** Strength - characters only */
-  strength?: number;
-
-  /** Willpower - characters only */
-  willpower?: number;
-
-  /** Lore value when questing - characters and locations */
-  lore?: number;
-
-  /** Move cost - locations only */
-  moveCost?: number;
-
-  /** Classifications (e.g., ["Storyborn", "Ally"]) - characters only */
-  classifications?: string[];
-
-  /** Action subtype (song, etc.) - actions only */
-  actionSubtype?: "song" | null;
-
-  /** Keywords on the card */
-  keywords?: string[];
-
-  /** Raw rules text for display (omitted for vanilla cards) */
-  rulesText?: string;
-
-  /** Parsed abilities for game logic (omitted for vanilla cards) */
-  abilities?: AbilityDefinition[];
-
-  /** References to all printings of this card */
-  printings: CardPrintingRef[];
-
-  /** True if card has no rules text (no abilities to test) */
-  vanilla: boolean;
-
-  /** Franchise the card belongs to (e.g., "Jungle Book", "Frozen") */
-  franchise?: string;
-
-  /** External IDs for cross-referencing with other systems */
-  externalIds?: ExternalIds;
-}
-
 export interface ExternalIds {
-  /** Ravensburger's deck building ID */
   ravensburger?: string;
-
-  /** Ravensburger's culture invariant ID */
   cultureInvariantId?: number;
-
-  /** TCGPlayer product ID */
   tcgPlayer?: number;
-
-  /** Lorcast card ID */
   lorcast?: string;
 }
 
 export interface CardPrintingRef {
-  /** Set ID (e.g., "set10") */
   set: string;
-
-  /** Collector number within the set */
   collectorNumber: number;
-
-  /** Full printing ID (e.g., "set10-001") */
   id: string;
+}
+
+/**
+ * Base properties for all canonical cards
+ */
+export interface CanonicalCardMetadata {
+  id: string;
+  name: string;
+  version: string;
+  fullName: string;
+  inkType: InkType | [InkType, InkType];
+  cost: number;
+  inkable: boolean;
+  keywords?: string[];
+  rulesText?: string;
+  abilities?: AbilityDefinition[];
+  printings: CardPrintingRef[];
+  vanilla: boolean;
+  franchise?: string;
+  externalIds?: ExternalIds;
+}
+
+/**
+ * Character Card - has strength, willpower, lore, and classifications
+ */
+export interface CanonicalCharacterCard extends CanonicalCardMetadata {
+  cardType: "character";
+  strength: number;
+  willpower: number;
+  lore: number;
+  classifications?: string[];
+}
+
+/**
+ * Action Card - has optional actionSubtype for Songs
+ */
+export interface CanonicalActionCard extends CanonicalCardMetadata {
+  cardType: "action";
+  actionSubtype?: "song" | null;
+}
+
+/**
+ * Item Card - permanent cards with ongoing effects
+ */
+export interface CanonicalItemCard extends CanonicalCardMetadata {
+  cardType: "item";
+}
+
+/**
+ * Location Card - has moveCost and lore
+ */
+export interface CanonicalLocationCard extends CanonicalCardMetadata {
+  cardType: "location";
+  moveCost: number;
+  lore: number;
+}
+
+/**
+ * Canonical Card - discriminated union of all card types
+ */
+export type CanonicalCard =
+  | CanonicalCharacterCard
+  | CanonicalActionCard
+  | CanonicalItemCard
+  | CanonicalLocationCard;
+
+/**
+ * Type guard for character cards
+ */
+export function isCanonicalCharacter(card: CanonicalCard): card is CanonicalCharacterCard {
+  return card.cardType === "character";
+}
+
+/**
+ * Type guard for action cards
+ */
+export function isCanonicalAction(card: CanonicalCard): card is CanonicalActionCard {
+  return card.cardType === "action";
+}
+
+/**
+ * Type guard for item cards
+ */
+export function isCanonicalItem(card: CanonicalCard): card is CanonicalItemCard {
+  return card.cardType === "item";
+}
+
+/**
+ * Type guard for location cards
+ */
+export function isCanonicalLocation(card: CanonicalCard): card is CanonicalLocationCard {
+  return card.cardType === "location";
 }
 `;
 }
@@ -499,10 +582,12 @@ export function generateCardFiles(
   canonicalCards: Record<string, CanonicalCard>,
   sets: Record<string, SetDefinition>,
 ): void {
-  // Create set ID to folder name mapping
+  // Create set number to folder name mapping
+  // Printings now use numeric set format (e.g., "001") instead of "set1"
   const setMapping = new Map<string, string>();
   for (const set of Object.values(sets)) {
-    setMapping.set(set.id, getSetFolderName(set.id));
+    const setFolderName = getSetFolderName(set.id);
+    setMapping.set(setFolderName, setFolderName);
   }
 
   // Organize cards for file generation

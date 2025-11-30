@@ -1,29 +1,23 @@
-import type { CanonicalCard } from "../../types";
+import type { CharacterCard } from "@tcg/lorcana";
 
-export const toulouseArtisticKitten: CanonicalCard = {
+export const toulouseArtisticKitten: CharacterCard = {
   id: "axz",
   name: "Toulouse",
   version: "Artistic Kitten",
   fullName: "Toulouse - Artistic Kitten",
-  cardType: "character",
   inkType: "sapphire",
   franchise: "Aristocats",
   cost: 1,
-  strength: 1,
-  willpower: 3,
-  lore: 1,
   inkable: true,
   vanilla: true,
   externalIds: {
     ravensburger: "27718e9c6fa9fbce1ded888a8cdc3f4723eabffb",
-    cultureInvariantId: 1598,
   },
+  cardType: "character",
+  strength: 1,
+  willpower: 3,
+  lore: 1,
   classifications: ["Storyborn", "Ally"],
-  printings: [
-    {
-      set: "set7",
-      collectorNumber: 165,
-      id: "set7-165",
-    },
-  ],
+  set: "007",
+  cardNumber: "165",
 };

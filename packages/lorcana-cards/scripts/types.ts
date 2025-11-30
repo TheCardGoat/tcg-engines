@@ -4,7 +4,34 @@
  * This file contains types for:
  * - Input JSON structure (lorcana-input.json)
  * - Output JSON structures (canonical cards, printings, sets)
+ *
+ * Uses types from @tcg/lorcana for card definitions to ensure
+ * compatibility between generated cards and the game engine.
  */
+
+// Re-export types from the engine for use in generation
+export type {
+  ActionCard,
+  ActionSubtype,
+  BaseCardProperties,
+  CardType,
+  CharacterCard,
+  InkType,
+  ItemCard,
+  LocationCard,
+  LorcanaCard,
+} from "@tcg/lorcana";
+
+// Import types needed for internal use
+import type {
+  ActionCard,
+  CardType,
+  CharacterCard,
+  InkType,
+  ItemCard,
+  LocationCard,
+  LorcanaCard,
+} from "@tcg/lorcana";
 
 // ============================================================================
 // Input Types (ravensburger-input.json structure)
@@ -125,15 +152,7 @@ export type LorcanaInputJson = RavensburgerInputJson;
 // Output Types (Generated JSON structures)
 // ============================================================================
 
-export type CardType = "character" | "action" | "item" | "location";
-
-export type InkType =
-  | "amber"
-  | "amethyst"
-  | "emerald"
-  | "ruby"
-  | "sapphire"
-  | "steel";
+// CardType and InkType are now imported from @tcg/lorcana
 
 export type Rarity =
   | "common"
@@ -146,13 +165,15 @@ export type Rarity =
 
 export type SpecialRarity = "enchanted" | "epic" | "iconic" | "promo";
 
+// ============================================================================
+// Canonical Card Types - Discriminated Union
+// ============================================================================
+
 /**
- * Canonical Card - Game-relevant data only
- *
- * Keyed by short generated ID (e.g., "a7x")
- * Contains all rules-relevant information for a unique game card
+ * Base properties for all canonical cards.
+ * These are metadata properties added during card generation.
  */
-export interface CanonicalCard {
+export interface CanonicalCardMetadata {
   /** Short generated ID (e.g., "a7x") */
   id: string;
 
@@ -165,9 +186,6 @@ export interface CanonicalCard {
   /** Full name for display and deck building (e.g., "Baloo - Friend and Guardian") */
   fullName: string;
 
-  /** Card type */
-  cardType: CardType;
-
   /** Ink type(s) - single or dual ink */
   inkType: InkType | [InkType, InkType];
 
@@ -177,25 +195,7 @@ export interface CanonicalCard {
   /** Can be added to inkwell */
   inkable: boolean;
 
-  /** Strength - characters only */
-  strength?: number;
-
-  /** Willpower - characters only */
-  willpower?: number;
-
-  /** Lore value when questing - characters and locations */
-  lore?: number;
-
-  /** Move cost - locations only */
-  moveCost?: number;
-
-  /** Classifications (e.g., ["Storyborn", "Ally"]) - characters only */
-  classifications?: string[];
-
-  /** Action subtype (song, etc.) - actions only */
-  actionSubtype?: "song" | null;
-
-  /** Keywords on the card */
+  /** Keywords on the card (as strings for generation) */
   keywords?: string[];
 
   /** Raw rules text for display (omitted for vanilla cards) */
@@ -217,18 +217,125 @@ export interface CanonicalCard {
   externalIds?: ExternalIds;
 }
 
+/**
+ * Canonical Character Card
+ *
+ * Characters have strength, willpower, lore value, and classifications.
+ */
+export interface CanonicalCharacterCard extends CanonicalCardMetadata {
+  cardType: "character";
+
+  /** Strength - damage dealt in challenges */
+  strength: number;
+
+  /** Willpower - damage threshold before banishment */
+  willpower: number;
+
+  /** Lore value when questing */
+  lore: number;
+
+  /** Classifications (e.g., ["Storyborn", "Ally"]) */
+  classifications?: string[];
+}
+
+/**
+ * Canonical Action Card
+ *
+ * Actions are one-time effects. Songs are a subtype of actions.
+ */
+export interface CanonicalActionCard extends CanonicalCardMetadata {
+  cardType: "action";
+
+  /** Action subtype ("song" for Song cards) */
+  actionSubtype?: "song" | null;
+}
+
+/**
+ * Canonical Item Card
+ *
+ * Items are permanent cards that provide ongoing effects.
+ */
+export interface CanonicalItemCard extends CanonicalCardMetadata {
+  cardType: "item";
+}
+
+/**
+ * Canonical Location Card
+ *
+ * Locations have a move cost and lore value.
+ */
+export interface CanonicalLocationCard extends CanonicalCardMetadata {
+  cardType: "location";
+
+  /** Move cost - ink cost to move a character here */
+  moveCost: number;
+
+  /** Lore value when questing at this location */
+  lore: number;
+}
+
+/**
+ * Canonical Card - Discriminated union of all card types
+ *
+ * Keyed by short generated ID (e.g., "a7x")
+ * Contains all rules-relevant information for a unique game card.
+ * Use type guards or check `cardType` to narrow to specific card types.
+ */
+export type CanonicalCard =
+  | CanonicalCharacterCard
+  | CanonicalActionCard
+  | CanonicalItemCard
+  | CanonicalLocationCard;
+
+// ============================================================================
+// Type Guards for Canonical Cards
+// ============================================================================
+
+/**
+ * Check if a canonical card is a character
+ */
+export function isCanonicalCharacter(
+  card: CanonicalCard,
+): card is CanonicalCharacterCard {
+  return card.cardType === "character";
+}
+
+/**
+ * Check if a canonical card is an action
+ */
+export function isCanonicalAction(
+  card: CanonicalCard,
+): card is CanonicalActionCard {
+  return card.cardType === "action";
+}
+
+/**
+ * Check if a canonical card is an item
+ */
+export function isCanonicalItem(
+  card: CanonicalCard,
+): card is CanonicalItemCard {
+  return card.cardType === "item";
+}
+
+/**
+ * Check if a canonical card is a location
+ */
+export function isCanonicalLocation(
+  card: CanonicalCard,
+): card is CanonicalLocationCard {
+  return card.cardType === "location";
+}
+
 export interface ExternalIds {
   /** Ravensburger's deck building ID */
   ravensburger?: string;
 
-  /** Ravensburger's culture invariant ID */
-  cultureInvariantId?: number;
+  /** Lorcast card ID */
+  lorcast?: string;
 
   /** TCGPlayer product ID */
   tcgPlayer?: number;
-
-  /** Lorcast card ID */
-  lorcast?: string;
 }
 
 export interface CardPrintingRef {

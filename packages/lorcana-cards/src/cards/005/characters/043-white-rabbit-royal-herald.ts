@@ -1,29 +1,23 @@
-import type { CanonicalCard } from "../../types";
+import type { CharacterCard } from "@tcg/lorcana";
 
-export const whiteRabbitRoyalHerald: CanonicalCard = {
+export const whiteRabbitRoyalHerald: CharacterCard = {
   id: "1m5",
   name: "White Rabbit",
   version: "Royal Herald",
   fullName: "White Rabbit - Royal Herald",
-  cardType: "character",
   inkType: "amethyst",
   franchise: "Alice in Wonderland",
   cost: 3,
-  strength: 3,
-  willpower: 4,
-  lore: 1,
   inkable: true,
   vanilla: true,
   externalIds: {
     ravensburger: "d25e463a72b570a5a6cd876b38749e5e28add26d",
-    cultureInvariantId: 999,
   },
+  cardType: "character",
+  strength: 3,
+  willpower: 4,
+  lore: 1,
   classifications: ["Storyborn", "Ally"],
-  printings: [
-    {
-      set: "set5",
-      collectorNumber: 43,
-      id: "set5-043",
-    },
-  ],
+  set: "005",
+  cardNumber: "043",
 };

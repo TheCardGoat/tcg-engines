@@ -1,29 +1,23 @@
-import type { CanonicalCard } from "../../types";
+import type { CharacterCard } from "@tcg/lorcana";
 
-export const littleJohnLoyalFriend: CanonicalCard = {
+export const littleJohnLoyalFriend: CharacterCard = {
   id: "1sm",
   name: "Little John",
   version: "Loyal Friend",
   fullName: "Little John - Loyal Friend",
-  cardType: "character",
   inkType: "emerald",
   franchise: "Robin Hood",
   cost: 6,
-  strength: 6,
-  willpower: 6,
-  lore: 2,
   inkable: true,
   vanilla: true,
   externalIds: {
     ravensburger: "e8f06c9f22b299b64fb4ee57e0e387f17cbf9daf",
-    cultureInvariantId: 300,
   },
+  cardType: "character",
+  strength: 6,
+  willpower: 6,
+  lore: 2,
   classifications: ["Storyborn", "Ally"],
-  printings: [
-    {
-      set: "set2",
-      collectorNumber: 84,
-      id: "set2-084",
-    },
-  ],
+  set: "002",
+  cardNumber: "084",
 };

@@ -1,29 +1,23 @@
-import type { CanonicalCard } from "../../types";
+import type { CharacterCard } from "@tcg/lorcana";
 
-export const banzaiGluttonousPredator: CanonicalCard = {
+export const banzaiGluttonousPredator: CharacterCard = {
   id: "d69",
   name: "Banzai",
   version: "Gluttonous Predator",
   fullName: "Banzai - Gluttonous Predator",
-  cardType: "character",
   inkType: "emerald",
   franchise: "Lion King",
   cost: 2,
-  strength: 3,
-  willpower: 2,
-  lore: 2,
   inkable: false,
   vanilla: true,
   externalIds: {
     ravensburger: "2f7af827afa94bd82be911c9a81fd82f3568ace0",
-    cultureInvariantId: 1036,
   },
+  cardType: "character",
+  strength: 3,
+  willpower: 2,
+  lore: 2,
   classifications: ["Storyborn", "Ally", "Hyena"],
-  printings: [
-    {
-      set: "set5",
-      collectorNumber: 80,
-      id: "set5-080",
-    },
-  ],
+  set: "005",
+  cardNumber: "080",
 };

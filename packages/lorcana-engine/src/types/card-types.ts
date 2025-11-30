@@ -2,6 +2,8 @@
  * Card Types (Section 6)
  *
  * Four card types with distinct behaviors and properties.
+ * Provides both a unified LorcanaCardDefinition and discriminated union types
+ * for type-safe access to card-type-specific properties.
  */
 
 import type { Classification } from "./classifications";
@@ -25,8 +27,185 @@ export interface AbilityDefinition {
   type: "triggered" | "activated" | "static";
 }
 
+// ============================================================================
+// Base Card Properties (shared by all card types)
+// ============================================================================
+
+/**
+ * Base properties shared by all card types
+ */
+export interface BaseCardProperties {
+  /** Unique identifier for the card */
+  id: string;
+
+  /** Card name (Rule 6.2.4) - e.g., "Elsa" */
+  name: string;
+
+  /** Card version (Rule 6.2.5) - e.g., "Ice Queen" */
+  version: string;
+
+  /**
+   * Full name (name + version) - e.g., "Elsa - Ice Queen"
+   * Used for deck building limits (max 4 copies per full name)
+   */
+  fullName: string;
+
+  /** Ink type (Rule 6.2.3) - single or dual ink */
+  inkType: InkType | [InkType, InkType];
+
+  /** Ink cost (Rule 6.2.7) */
+  cost: number;
+
+  /** Inkable - has inkwell symbol (Rule 6.2.8) */
+  inkable: boolean;
+
+  /** Keywords on the card */
+  keywords?: Keyword[];
+
+  /** Card abilities */
+  abilities?: AbilityDefinition[];
+
+  /** Flavor text (not mechanically relevant) */
+  flavorText?: string;
+
+  /** Set information */
+  set: string;
+
+  /** Card number in set */
+  cardNumber?: string;
+
+  /** Rarity */
+  rarity?:
+    | "common"
+    | "uncommon"
+    | "rare"
+    | "super_rare"
+    | "legendary"
+    | "enchanted"
+    | "iconic"
+    | "promo";
+
+  /**
+   * Special card copy limit rules
+   * - "no-limit": Unlimited copies allowed (e.g., Microbots)
+   * - number: Custom limit (e.g., 99 for Dalmatian Puppy, 2 for The Glass Slipper)
+   * - undefined: Default 4 copies per full name
+   */
+  cardCopyLimit?: number | "no-limit";
+
+  /** Franchise the card belongs to (e.g., "Jungle Book", "Frozen") */
+  franchise?: string;
+}
+
+// ============================================================================
+// Discriminated Union Types by Card Type
+// ============================================================================
+
+/**
+ * Character Card Definition (Rule 6.1.2)
+ *
+ * Characters have strength, willpower, lore value, and classifications.
+ * They can quest, challenge, and be challenged.
+ */
+export interface CharacterCard extends BaseCardProperties {
+  cardType: "character";
+
+  /** Strength (Rule 6.2.9) - damage dealt in challenges */
+  strength: number;
+
+  /** Willpower (Rule 6.2.10) - damage threshold before banishment */
+  willpower: number;
+
+  /** Lore value (Rule 6.2.11) - lore gained when questing */
+  lore: number;
+
+  /** Character classifications (Rule 6.2.6) */
+  classifications?: Classification[];
+}
+
+/**
+ * Action Card Definition (Rule 6.1.3)
+ *
+ * Actions are one-time effects that are played and then discarded.
+ * Songs are a subtype of actions that can be sung by characters.
+ */
+export interface ActionCard extends BaseCardProperties {
+  cardType: "action";
+
+  /** Action subtype (Rule 6.3.3) - "song" for Song cards */
+  actionSubtype?: ActionSubtype;
+}
+
+/**
+ * Item Card Definition (Rule 6.1.4)
+ *
+ * Items are permanent cards that provide ongoing effects.
+ * They stay in play until removed.
+ */
+export interface ItemCard extends BaseCardProperties {
+  cardType: "item";
+}
+
+/**
+ * Location Card Definition (Rule 6.5)
+ *
+ * Locations have a move cost and lore value.
+ * Characters can move to locations and quest at them.
+ */
+export interface LocationCard extends BaseCardProperties {
+  cardType: "location";
+
+  /** Move cost (Rule 6.5.5) - ink cost to move a character here */
+  moveCost: number;
+
+  /** Lore value - lore gained when questing at this location */
+  lore: number;
+}
+
+/**
+ * Discriminated union of all card types
+ * Use this when you need type-safe access to card-type-specific properties.
+ */
+export type LorcanaCard = CharacterCard | ActionCard | ItemCard | LocationCard;
+
+// ============================================================================
+// Type Guards for Card Types
+// ============================================================================
+
+/**
+ * Check if a card is a character
+ */
+export function isCharacterCard(card: LorcanaCard): card is CharacterCard {
+  return card.cardType === "character";
+}
+
+/**
+ * Check if a card is an action
+ */
+export function isActionCard(card: LorcanaCard): card is ActionCard {
+  return card.cardType === "action";
+}
+
+/**
+ * Check if a card is an item
+ */
+export function isItemCard(card: LorcanaCard): card is ItemCard {
+  return card.cardType === "item";
+}
+
+/**
+ * Check if a card is a location
+ */
+export function isLocationCard(card: LorcanaCard): card is LocationCard {
+  return card.cardType === "location";
+}
+
 /**
  * Lorcana Card Definition (Rule 6.2)
+ *
+ * Unified type with all properties optional based on card type.
+ * Use `LorcanaCard` discriminated union for type-safe access to
+ * card-type-specific properties.
  *
  * All card properties including:
  * - id, name, version, fullName
@@ -125,6 +304,9 @@ export interface LorcanaCardDefinition {
    * - undefined: Default 4 copies per full name
    */
   cardCopyLimit?: number | "no-limit";
+
+  /** Franchise the card belongs to (e.g., "Jungle Book", "Frozen") */
+  franchise?: string;
 }
 
 /**
@@ -138,7 +320,7 @@ export function isCardType(value: unknown): value is CardType {
  * Get the full name of a card (name + version)
  * Uses the stored fullName or generates it from name and version
  */
-export function getFullName(card: LorcanaCardDefinition): string {
+export function getFullName(card: LorcanaCardDefinition | LorcanaCard): string {
   if (card.fullName) {
     return card.fullName;
   }
@@ -151,14 +333,16 @@ export function getFullName(card: LorcanaCardDefinition): string {
 /**
  * Check if a card has dual ink types (Rule 6.2.3.1)
  */
-export function isDualInk(card: LorcanaCardDefinition): boolean {
+export function isDualInk(card: LorcanaCardDefinition | LorcanaCard): boolean {
   return Array.isArray(card.inkType);
 }
 
 /**
  * Get all ink types from a card (handles both single and dual ink)
  */
-export function getInkTypes(card: LorcanaCardDefinition): InkType[] {
+export function getInkTypes(
+  card: LorcanaCardDefinition | LorcanaCard,
+): InkType[] {
   if (Array.isArray(card.inkType)) {
     return card.inkType;
   }
