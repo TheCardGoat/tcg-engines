@@ -309,9 +309,13 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
       const abilityId = `${card.id}-${i + 1}`;
 
       // Remove reminder text (parenthetical explanations)
+      // Note: In Lorcana, reminder text always appears in parentheses after keywords/abilities
+      // e.g., "Challenger +2 (While challenging, this character gets +2.)"
       const text = rawText.replace(/\s*\([^)]*\)/g, "").trim();
 
       // Try to extract ability name (all caps at start)
+      // Pattern requires at least 3 uppercase letters - all Lorcana ability names are 4+ chars
+      // e.g., "RUSH", "WARD", "CHALLENGER", "FRESH INK"
       const namedMatch = text.match(/^([A-Z][A-Z\s]+[A-Z])\s+(.+)$/);
       const name = namedMatch ? namedMatch[1].trim() : undefined;
 
