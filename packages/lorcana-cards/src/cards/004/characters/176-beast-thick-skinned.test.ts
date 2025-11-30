@@ -1,12 +1,16 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { beastThickskinned } from "./176-beast-thick-skinned";
 
 describe("Beast - Thick-Skinned", () => {
-  it.skip("should have Resist 1 ability", () => {
-    const testEngine = new TestEngine({
-      play: [beastThickskinned],
-    });
+  it("should have Resist 1 ability", () => {
+    const testEngine = new LorcanaTestEngine(
+      {},
+      {},
+      {
+        play: [beastThickskinned],
+      },
+    );
 
     const cardUnderTest = testEngine.getCardModel(beastThickskinned);
     expect(cardUnderTest.hasResist).toBe(true);

@@ -1,12 +1,16 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { kidaRoyalWarrior } from "./177-kida-royal-warrior";
 
 describe("Kida - Royal Warrior", () => {
-  it.skip("should have Bodyguard ability", () => {
-    const testEngine = new TestEngine({
-      play: [kidaRoyalWarrior],
-    });
+  it("should have Bodyguard ability", () => {
+    const testEngine = new LorcanaTestEngine(
+      {},
+      {},
+      {
+        play: [kidaRoyalWarrior],
+      },
+    );
 
     const cardUnderTest = testEngine.getCardModel(kidaRoyalWarrior);
     expect(cardUnderTest.hasBodyguard()).toBe(true);

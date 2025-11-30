@@ -1,12 +1,16 @@
 import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { donKarnagePrinceOfPirates } from "./071-don-karnage-prince-of-pirates";
 
 describe("Don Karnage - Prince of Pirates", () => {
-  it.skip("should have Evasive ability", () => {
-    const testEngine = new TestEngine({
-      play: [donKarnagePrinceOfPirates],
-    });
+  it("should have Evasive ability", () => {
+    const testEngine = new LorcanaTestEngine(
+      {},
+      {},
+      {
+        play: [donKarnagePrinceOfPirates],
+      },
+    );
 
     const cardUnderTest = testEngine.getCardModel(donKarnagePrinceOfPirates);
     expect(cardUnderTest.hasEvasive).toBe(true);

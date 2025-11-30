@@ -869,8 +869,8 @@ export function generateTestFileContent(
       : `cardUnderTest.${methodName}`;
 
     if (value !== undefined) {
-      testCases.push(`  it.skip("should have ${keyword} ${value} ability", () => {
-    const testEngine = new TestEngine({
+      testCases.push(`  it("should have ${keyword} ${value} ability", () => {
+    const testEngine = new LorcanaTestEngine({}, {}, {
       play: [${exportName}],
     });
 
@@ -878,8 +878,8 @@ export function generateTestFileContent(
     expect(${assertion}).toBe(true);
   });`);
     } else {
-      testCases.push(`  it.skip("should have ${keyword} ability", () => {
-    const testEngine = new TestEngine({
+      testCases.push(`  it("should have ${keyword} ability", () => {
+    const testEngine = new LorcanaTestEngine({}, {}, {
       play: [${exportName}],
     });
 
@@ -895,7 +895,7 @@ export function generateTestFileContent(
   }
 
   return `import { describe, expect, it } from "bun:test";
-import { TestEngine } from "@lorcanito/core-engine/lorcana-testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { ${exportName} } from "${importPath}";
 
 describe("${card.fullName}", () => {

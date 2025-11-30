@@ -26,6 +26,7 @@ import type {
   LorcanaGameState,
   LorcanaMoveParams,
 } from "../types";
+import type { LorcanaCardDefinition } from "../types/card-types";
 
 // Export player ID constants for tests
 export const PLAYER_ONE = createPlayerId("player_one");
@@ -77,7 +78,94 @@ export type TestEngineOptions = {
   debug?: boolean;
   /** Optional card definitions for testing (with stats like strength, willpower) */
   cardDefinitions?: Record<string, TestCardDefinition>;
+  /** Card definitions to place in play zone (for keyword testing) */
+  play?: LorcanaCardDefinition[];
 };
+
+/**
+ * Test Card Model
+ *
+ * Wraps a card definition and provides keyword checking methods.
+ * Used for testing that cards have the expected keywords.
+ */
+export class TestCardModel {
+  constructor(private readonly card: LorcanaCardDefinition) {}
+
+  /** Check if card has a specific keyword */
+  private hasKeywordAbility(keyword: string): boolean {
+    // Check keywords array (simple keywords)
+    if (this.card.keywords) {
+      for (const kw of this.card.keywords) {
+        if (
+          typeof kw === "string" &&
+          kw.toLowerCase() === keyword.toLowerCase()
+        ) {
+          return true;
+        }
+        if (
+          typeof kw === "object" &&
+          kw.type?.toLowerCase() === keyword.toLowerCase()
+        ) {
+          return true;
+        }
+      }
+    }
+
+    // Check abilities array (keyword abilities)
+    if (this.card.abilities) {
+      for (const ability of this.card.abilities) {
+        if (
+          ability.type === "keyword" &&
+          ability.keyword?.toLowerCase() === keyword.toLowerCase()
+        ) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  // Keyword methods (matching legacy TestEngine API)
+  hasBodyguard(): boolean {
+    return this.hasKeywordAbility("bodyguard");
+  }
+  hasSupport(): boolean {
+    return this.hasKeywordAbility("support");
+  }
+  hasSinger(): boolean {
+    return this.hasKeywordAbility("singer");
+  }
+  hasShift(): boolean {
+    return this.hasKeywordAbility("shift");
+  }
+  hasReckless(): boolean {
+    return this.hasKeywordAbility("reckless");
+  }
+  hasWard(): boolean {
+    return this.hasKeywordAbility("ward");
+  }
+
+  // Keyword properties (matching legacy TestEngine API)
+  get hasVanish(): boolean {
+    return this.hasKeywordAbility("vanish");
+  }
+  get hasEvasive(): boolean {
+    return this.hasKeywordAbility("evasive");
+  }
+  get hasChallenger(): boolean {
+    return this.hasKeywordAbility("challenger");
+  }
+  get hasResist(): boolean {
+    return this.hasKeywordAbility("resist");
+  }
+  get hasRush(): boolean {
+    return this.hasKeywordAbility("rush");
+  }
+  get hasAlert(): boolean {
+    return this.hasKeywordAbility("alert");
+  }
+}
 
 /**
  * Lorcana Test Engine
@@ -105,6 +193,9 @@ export class LorcanaTestEngine {
 
   /** Counter for generating unique card IDs */
   private cardCounter = 0;
+
+  /** Registry of Lorcana card definitions placed in play (for getCardModel) */
+  private playedCardDefinitions: Map<string, LorcanaCardDefinition> = new Map();
 
   constructor(
     _playerOneState: TestInitialState = {},
@@ -144,6 +235,11 @@ export class LorcanaTestEngine {
 
     // Initialize zones with test cards
     this.initializeZones(_playerOneState, _playerTwoState);
+
+    // Initialize cards from play option (card definitions for keyword testing)
+    if (opts.play && opts.play.length > 0) {
+      this.initializePlayCards(opts.play);
+    }
 
     // If skipPreGame is true, fast-forward to main game
     if (opts.skipPreGame) {
@@ -291,6 +387,41 @@ export class LorcanaTestEngine {
       });
       initializeCardMetadata(cardIds);
     }
+  }
+
+  /**
+   * Initialize cards from Lorcana card definitions (for keyword testing)
+   *
+   * Places the provided card definitions in the play zone and registers them
+   * for later retrieval via getCardModel().
+   */
+  private initializePlayCards(cards: LorcanaCardDefinition[]) {
+    for (const card of cards) {
+      // Register the card definition for getCardModel lookup
+      this.playedCardDefinitions.set(card.id, card);
+    }
+  }
+
+  /**
+   * Get a TestCardModel for a card definition
+   *
+   * Returns a wrapper around the card definition that provides keyword checking methods.
+   * This allows tests to verify card keywords using the same API as the legacy TestEngine.
+   *
+   * @example
+   * ```typescript
+   * const testEngine = new LorcanaTestEngine({}, {}, { play: [heiheiBoatSnack] });
+   * const cardUnderTest = testEngine.getCardModel(heiheiBoatSnack);
+   * expect(cardUnderTest.hasSupport()).toBe(true);
+   * ```
+   */
+  getCardModel(cardDef: LorcanaCardDefinition): TestCardModel {
+    const registered = this.playedCardDefinitions.get(cardDef.id);
+    if (!registered) {
+      // Card wasn't registered via play option, but we can still create a model for it
+      // This allows testing cards without explicitly adding them to the engine
+    }
+    return new TestCardModel(cardDef);
   }
 
   /**
