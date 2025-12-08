@@ -3,7 +3,7 @@ import type {
   LorcanaCardMeta,
   LorcanaGameState,
   LorcanaMoveParams,
-} from "../../../types/move-params";
+} from "../../../types";
 
 /**
  * Pass Turn
@@ -24,8 +24,26 @@ export const passTurn = createMove<
   "passTurn",
   LorcanaCardMeta
 >({
-  reducer: (_draft, _context) => {
-    // Engine handles turn transitions automatically
-    // No manual state management needed
+  condition: (state, context) => {
+    // Cannot pass turn during setup phases
+    const phase = context.flow?.currentPhase;
+    if (phase === "chooseFirstPlayer" || phase === "mulligan") {
+      return false;
+    }
+
+    // Can only pass turn if it's your turn
+    if (
+      context.flow?.currentPlayer &&
+      context.flow.currentPlayer !== context.playerId
+    ) {
+      return false;
+    }
+
+    return true;
+  },
+  reducer: (_draft, context) => {
+    // End the current phase
+    // Flow will automatically transition: main → end → next turn's beginning
+    context.flow?.endPhase();
   },
 });

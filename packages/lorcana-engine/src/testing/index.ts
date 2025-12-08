@@ -8,6 +8,7 @@ export {
   LorcanaTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
+  TestCardModel,
   type TestEngineOptions,
   type TestInitialState,
 } from "./lorcana-test-engine";

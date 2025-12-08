@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { daisyDuckMusketeerSpy } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { daisyDuckMusketeerSpy } from "./011-daisy-duck-musketeer-spy";
 
 describe("Daisy Duck - Musketeer Spy", () => {
   it.skip("INFILTRATION When you play this character, each opponent chooses and discards a card.", async () => {

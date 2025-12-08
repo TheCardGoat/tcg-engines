@@ -1,0 +1,1440 @@
+[
+  [
+    {
+      "type": "title",
+      "bbox": [0.116, 0.092, 0.882, 0.123],
+      "angle": 0,
+      "content": "Archazia's Island Unofficial Set Notes"
+    },
+    {
+      "type": "text",
+      "bbox": [0.114, 0.187, 0.384, 0.205],
+      "angle": 0,
+      "content": "Presented by LorcanaJudges.com"
+    },
+    {
+      "type": "text",
+      "bbox": [0.66, 0.187, 0.724, 0.202],
+      "angle": 0,
+      "content": "Author:"
+    },
+    {
+      "type": "image",
+      "bbox": [0.731, 0.169, 0.917, 0.226],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.14, 0.246, 0.856, 0.269],
+      "angle": 0,
+      "content": "(Updated 3/17/25 to reflect CRD changes on 2/28/25 & more)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.111, 0.285, 0.865, 0.352],
+      "angle": 0,
+      "content": "Disclaimer: These set notes are assembled as a volunteer effort based on common questions from the community and clarifying information from the Disney Lorcana TCG rules team. They do not reflect any possible upcoming rule changes, and are not official in any sense of the word. They are meant as a general, community-driven play aid only."
+    },
+    {
+      "type": "text",
+      "bbox": [0.111, 0.367, 0.872, 0.45],
+      "angle": 0,
+      "content": "These Unofficial Set Notes use trademarks and/or copyrights associated with Disney Lorca, TCG, used under Ravensburger's Community Code Policy (here). We are expressly prohibited from charging you to use or access this content. These Set Notes are not published, endorsed, or specifically approved by Disney or Ravensburger. For more information about Disney Lorca, visit DisneyLorca.com."
+    },
+    {
+      "type": "text",
+      "bbox": [0.111, 0.469, 0.885, 0.508],
+      "angle": 0,
+      "content": "As always, a huge thank you to the Rules Advisors on the Lorcana Rulebook Hub Discord for helping to collate questions and proofread the Set Notes!"
+    },
+    {
+      "type": "title",
+      "bbox": [0.377, 0.527, 0.623, 0.55],
+      "angle": 0,
+      "content": "Table of Contents"
+    },
+    {
+      "type": "text",
+      "bbox": [0.273, 0.579, 0.726, 0.602],
+      "angle": 0,
+      "content": "General Rules Updates/Clarifications"
+    },
+    {
+      "type": "text",
+      "bbox": [0.412, 0.625, 0.586, 0.647],
+      "angle": 0,
+      "content": "New Keywords"
+    },
+    {
+      "type": "text",
+      "bbox": [0.35, 0.671, 0.648, 0.691],
+      "angle": 0,
+      "content": "General Rules Questions"
+    },
+    {
+      "type": "text",
+      "bbox": [0.493, 0.7, 0.505, 0.707],
+      "angle": 0,
+      "content": "#"
+    },
+    {
+      "type": "text",
+      "bbox": [0.32, 0.716, 0.678, 0.736],
+      "angle": 0,
+      "content": "Specific Character Questions"
+    },
+    {
+      "type": "text",
+      "bbox": [0.493, 0.744, 0.505, 0.752],
+      "angle": 0,
+      "content": "#"
+    },
+    {
+      "type": "text",
+      "bbox": [0.355, 0.761, 0.644, 0.782],
+      "angle": 0,
+      "content": "Specific Item Questions"
+    },
+    {
+      "type": "text",
+      "bbox": [0.493, 0.791, 0.505, 0.799],
+      "angle": 0,
+      "content": "#"
+    },
+    {
+      "type": "text",
+      "bbox": [0.307, 0.806, 0.691, 0.827],
+      "angle": 0,
+      "content": "Specific Action/Song Questions"
+    },
+    {
+      "type": "text",
+      "bbox": [0.493, 0.836, 0.505, 0.844],
+      "angle": 0,
+      "content": "#"
+    },
+    {
+      "type": "text",
+      "bbox": [0.431, 0.852, 0.567, 0.872],
+      "angle": 0,
+      "content": "References"
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.114, 0.089, 0.628, 0.114],
+      "angle": 0,
+      "content": "General Rules Updates/Clarifications"
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.134, 0.677, 0.175],
+      "angle": 0,
+      "content": "Q: How do “if you do” effect clauses know if they should resolve? (Ref. 1.1.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.192, 0.661, 0.351],
+      "angle": 0,
+      "content": "A: Effects that start with \"if you do\" look to see if the effect in the previous clause was completed exactly as described. If that first effect was not done or was replaced by something else, the \"if you do\" check fails and the following effect cannot be done. The current rules do not cover this conditional, so expect it to be added in a future update."
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.118, 0.924, 0.369],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.115, 0.374, 0.348, 0.624],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.369, 0.879, 0.448],
+      "angle": 0,
+      "content": "Q: How do \"once during your turn\" abilities work with \"may\" effects? Do I lose the chance to resolve an effect if I don't do it the first time? (Ref. 1.2.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.466, 0.882, 0.622],
+      "angle": 0,
+      "content": "A: \"Once during your turn\" abilities will continue to trigger and go in the bag until all the effects are resolved. For mandatory abilities this will always be the first time the ability triggers, but for \"may\" abilities you will continue to get the opportunity to resolve the effect until you actually choose to do so. The current rules do not cover this conditional, so expect it to be added in a future update."
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.64, 0.618, 0.681],
+      "angle": 0,
+      "content": "Q: How do Belle/Scrooge's \"play for free\" abilities really work? (Ref. 1.3.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.699, 0.677, 0.817],
+      "angle": 0,
+      "content": "A: Belle and Scrooge both have activated abilities that can be used on your turn while they are still in your hand. The rules do not currently allow for activated abilities that can be used from hand, so expect this to be added in a future update."
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.634, 0.922, 0.884],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "image",
+      "bbox": [0.115, 0.1, 0.348, 0.35],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.359, 0.089, 0.877, 0.148],
+      "angle": 0,
+      "content": "Q: Can I arrange my inkwell to help me remember which cards I have inked, and where they are? (Ref. 1.4.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.359, 0.166, 0.852, 0.244],
+      "angle": 0,
+      "content": "A: Yes. You are allowed to arrange your inkwell in any manner you choose, as long as the status (ready or exerted) of all the cards is clear to all players."
+    },
+    {
+      "type": "text",
+      "bbox": [0.117, 0.361, 0.851, 0.4],
+      "angle": 0,
+      "content": "Q: What is “a stack” in Lorcana? How can cards be “under” or “on top of” other cards? (Ref. 1.5.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.174, 0.419, 0.869, 0.517],
+      "angle": 0,
+      "content": "A: The 2/28/25 update to the Comprehensive Rules Document (CRD) added new definitions for these terms, although some were previously defined in the glossary. Currently, the only mechanic that uses \"stacks\" of cards is the Shift mechanic, so these terms only apply to characters played by Shifting."
+    },
+    {
+      "type": "text",
+      "bbox": [0.117, 0.535, 0.839, 0.575],
+      "angle": 0,
+      "content": "Q: Are characters with strength values reduced below zero counted as having zero strength? (Ref. 1.6.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.174, 0.594, 0.865, 0.751],
+      "angle": 0,
+      "content": "A: Yes. The 2/28/25 update to the Comprehensive Rules Document (CRD) corrected an oversight in the previous CRD. Until this revision, characters with negative strength only counted as having zero strength for the purposes of determining damage. That has now been correctly expanded to all circumstances with the exception of applying new modifiers. Negative strength values are now always counted as zero unless you're changing the strength again. Yokai now works as intended with his stolen Microbots."
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.115, 0.09, 0.31, 0.114],
+      "angle": 0,
+      "content": "New Keywords"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.137, 0.348, 0.387],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.358, 0.134, 0.649, 0.155],
+      "angle": 0,
+      "content": "Q: What is \"Vanish\"? (Ref. 2.1.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.173, 0.882, 0.291],
+      "angle": 0,
+      "content": "A: \"Vanish\" is a new keyword on characters that acts to balance particularly strong character stats. When a character with \"Vanish\" is chosen by an opponent's action card effect, that character is banished. It is a triggered ability and uses the bag like any other triggered ability."
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.309, 0.841, 0.35],
+      "angle": 0,
+      "content": "Q: What if a character with \"Vanish\" leaves play before the trigger is resolved? (Ref. 2.2.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.367, 0.879, 0.407],
+      "angle": 0,
+      "content": "A: If the character with \"Vanish\" leaves play after being chosen by an action card effect, such as Let"
+    },
+    {
+      "type": "text",
+      "bbox": [0.173, 0.409, 0.833, 0.428],
+      "angle": 0,
+      "content": "It Go or Mother Knows Best, then \"Vanish\" will resolve to no effect."
+    },
+    {
+      "type": "text",
+      "bbox": [0.111, 0.447, 0.645, 0.507],
+      "angle": 0,
+      "content": "Q: Do “Universal Shift” and “Puppy Shift” trigger abilities that occur when something is played using “Shift”? (Ref. 2.3.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.525, 0.666, 0.584],
+      "angle": 0,
+      "content": "A: Yes! “Universal Shift” and “Puppy Shift” are just special kinds of Shift, so they still trigger any ability that refers to “Shift” in its text."
+    },
+    {
+      "type": "text",
+      "bbox": [0.111, 0.603, 0.677, 0.682],
+      "angle": 0,
+      "content": "Q: If I shift Baymax - Giant Robot onto a character with a triggered ability, like Bucky - Squirrel Squeak Tutor, can that triggered ability go into the bag before it is covered up? (Ref. 2.4.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.701, 0.677, 0.821],
+      "angle": 0,
+      "content": "A: Yes! Baymax would be considered played as soon as his cost is paid, and just before he is put into the Play Zone on top of Bucky. Bucky's ability, Squeak, would trigger right then and go into the bag to be resolved after playing Baymax is completed."
+    },
+    {
+      "type": "image",
+      "bbox": [0.689, 0.442, 0.924, 0.673],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.688, 0.679, 0.922, 0.93],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.114, 0.09, 0.456, 0.113],
+      "angle": 0,
+      "content": "General Rules Questions"
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.14, 0.861, 0.181],
+      "angle": 0,
+      "content": "Q: Does paying for a song with ink mean it's not being played as a song? (Ref. 3.1.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.199, 0.871, 0.277],
+      "angle": 0,
+      "content": "A: No. No matter how you pay to play a song card, it is still a song. The characters in this set that refer to playing an \"action that isn't a song\" only mean actions that do not also have song in their classifications."
+    },
+    {
+      "type": "image",
+      "bbox": [0.149, 0.298, 0.38, 0.549],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.384, 0.298, 0.615, 0.549],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.617, 0.298, 0.851, 0.549],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.114, 0.089, 0.524, 0.114],
+      "angle": 0,
+      "content": "Specific Character Questions"
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.135, 0.379, 0.155],
+      "angle": 0,
+      "content": "Baymax - Giant Robot"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.157, 0.633, 0.216],
+      "angle": 0,
+      "content": "Q: If I use Universal Shift to play Baymax on top of a character that has 5 damage, will Baymax be banished? (Ref. 4.1.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.234, 0.64, 0.371],
+      "angle": 0,
+      "content": "A: Yes. There is a Game State Check (GSC) that will occur after playing Baymax and before the Bag is checked to resolve his triggered ability, Functionality Improved. This means he will be banished by that GSC before you can remove any damage counters from him."
+    },
+    {
+      "type": "image",
+      "bbox": [0.652, 0.1, 0.885, 0.351],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.392, 0.439, 0.414],
+      "angle": 0,
+      "content": "Belle - Apprentice Inventor"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.422, 0.348, 0.675],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.357, 0.416, 0.861, 0.456],
+      "angle": 0,
+      "content": "Q: Does the Item banished for What a Mess need to have a banish ability? (Ref. 4.2.a.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.473, 0.882, 0.593],
+      "angle": 0,
+      "content": "A: No. The ability on the item does not matter for What a Mess. In fact, if the banished Item did have an activated ability, that ability could not be used since the item was not banished for the purpose of paying the cost of that ability. It was only banished to pay for What a Mess."
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.614, 0.871, 0.694],
+      "angle": 0,
+      "content": "A2: Note that items with abilities that trigger when they are banished, such as Unconventional Tool, would still have their triggered abilities go in the bag if banished to pay for What a Mess."
+    },
+    {
+      "type": "text",
+      "bbox": [0.111, 0.713, 0.882, 0.753],
+      "angle": 0,
+      "content": "Q: When I banish an Item to play Belle for free, can I play all the Belles that are in my hand? (Ref. 4.2.b.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.772, 0.875, 0.832],
+      "angle": 0,
+      "content": "A: No. Because What a Mess is an activated ability, you must pay the cost for each copy of the ability you wish to activate by taking the \"Use Activated Abilities\" turn action for each one individually."
+    }
+  ],
+  [
+    {
+      "type": "text",
+      "bbox": [0.111, 0.09, 0.825, 0.131],
+      "angle": 0,
+      "content": "Q: Can I use Belle's ability What a Mess to banish on item while she is already in play? (Ref. 4.2.c.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.149, 0.875, 0.228],
+      "angle": 0,
+      "content": "A: No. While using Belle's ability while she is in play is not specifically prohibited by the rules, it is not intended. We have a special ruling to clarify that What a Mess may only be activated while Belle is in your hand."
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.251, 0.308, 0.273],
+      "angle": 0,
+      "content": "Bolt - Superdog"
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.274, 0.624, 0.333],
+      "angle": 0,
+      "content": "Q: Can I play Lilo - Escape Artist during my Set Step to gain an additional lore when Bolt readies at the start of my turn? (Ref. 4.3.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.352, 0.625, 0.492],
+      "angle": 0,
+      "content": "A: Yes! While Bolt's ability, Mark of Power, is triggered during the Ready Step, it is not resolved until the Set Step. This is the same timing as Lilo's triggered ability, so they can be resolved in the order that allows you to have Lilo in play before counting your undamaged characters for Mark of Power."
+    },
+    {
+      "type": "image",
+      "bbox": [0.652, 0.262, 0.885, 0.513],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.51, 0.522, 0.53],
+      "angle": 0,
+      "content": "Donald Duck - Flustered Sorcerer"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.541, 0.348, 0.793],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.357, 0.534, 0.871, 0.574],
+      "angle": 0,
+      "content": "Q: Does my opponent need exactly 25 lore to win? (Ref. 4.4.a.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.593, 0.865, 0.655],
+      "angle": 0,
+      "content": "A: No, Obfuscate! is intended to change the opponent's win condition to 25 lore or more while Donald Duck remains in play."
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.672, 0.869, 0.713],
+      "angle": 0,
+      "content": "Q: What happens if Donald is banished when my opponent has between 20 and 25 lore? (Ref. 4.4.b.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.731, 0.871, 0.81],
+      "angle": 0,
+      "content": "A: Your opponent would win during the next game state check. If multiple opponents meet the criteria, whichever is first in turn order starting from the active player would be the winner."
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.828, 0.655, 0.849],
+      "angle": 0,
+      "content": "Q: Do multiple Donalds stack their effect? (Ref. 4.4.c.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.867, 0.416, 0.887],
+      "angle": 0,
+      "content": "A: No. Thank goodness."
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.113, 0.089, 0.309, 0.109],
+      "angle": 0,
+      "content": "Elsa - Ice Maker"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.111, 0.62, 0.152],
+      "angle": 0,
+      "content": "Q: Can I choose an already exerted character for this Elsa's ability? (Ref. 4.5.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.173, 0.64, 0.349],
+      "angle": 0,
+      "content": "A: Yes, you can. However, doing so means the character did not become exerted with this ability, and the second effect of making them unable to ready at the start of their next turn will not resolve even if you have a character named Anna in play. The words \"if you do\" on the second effect require the first effect to be resolved exactly as the effect describes in order for the second effect to resolve at all."
+    },
+    {
+      "type": "image",
+      "bbox": [0.652, 0.1, 0.885, 0.351],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.369, 0.355, 0.39],
+      "angle": 0,
+      "content": "Fa Zhou - War Hero"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.4, 0.348, 0.655],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.357, 0.392, 0.851, 0.454],
+      "angle": 0,
+      "content": "Q: Does Fa Zhou have to be in play during both challenges in order for Training Exercises to trigger? (Ref. 4.6.a.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.471, 0.865, 0.531],
+      "angle": 0,
+      "content": "A: No. Training Exercises will trigger when the second challenge of your turn is declared, even if he was not in play to see the first one."
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.549, 0.882, 0.608],
+      "angle": 0,
+      "content": "Q: Will Fa Zhou's ability trigger if he is played after the second challenge has already occurred that turn? (Ref. 4.6.b.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.627, 0.869, 0.665],
+      "angle": 0,
+      "content": "A: No. Fa Zhou must be in play when the second challenge occurs. If he misses that one, he misses"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.666, 0.862, 0.687],
+      "angle": 0,
+      "content": "his opportunity, even if other challenges happen while he is in play."
+    },
+    {
+      "type": "text",
+      "bbox": [0.111, 0.705, 0.878, 0.745],
+      "angle": 0,
+      "content": "Q: Do the challenges both need to be from/against the same character or location? (Ref. 4.6.c.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.763, 0.821, 0.803],
+      "angle": 0,
+      "content": "A: No. Fa Zhou does not care who challenged or what was challenged. Only that the second challenge has been declared."
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.113, 0.089, 0.476, 0.11],
+      "angle": 0,
+      "content": "Gantu - Experienced Enforcer"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.111, 0.62, 0.133],
+      "angle": 0,
+      "content": "Q: Does Gantu affect cards that I play? (Ref. 4.7.a.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.15, 0.605, 0.19],
+      "angle": 0,
+      "content": "A: Yes. Both of Gantu's abilities apply their effects to all players."
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.208, 0.62, 0.25],
+      "angle": 0,
+      "content": "Q: If an action or item is played “for free”, is the 2 ink from Don’t Get Any Ideas included? (Ref. 4.7.b.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.268, 0.603, 0.365],
+      "angle": 0,
+      "content": "A: Playing a card \"for free\" means that you don't pay any ink costs at all. Even ones added by other abilities or effects. Gantu does not affect how much you pay for something played \"for free\"."
+    },
+    {
+      "type": "image",
+      "bbox": [0.651, 0.1, 0.885, 0.352],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.381, 0.348, 0.632],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.357, 0.385, 0.845, 0.448],
+      "angle": 0,
+      "content": "Heihei - Expanded Consciousness Q: Is this the greatest Lorcona card of all time? (Ref. 4.8.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.358, 0.466, 0.424, 0.484],
+      "angle": 0,
+      "content": "A: Yes."
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.642, 0.331, 0.661],
+      "angle": 0,
+      "content": "Kronk - Laid Back"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.664, 0.625, 0.723],
+      "angle": 0,
+      "content": "Q: Can I still pay for abilities that require me to discard cards as part of the cost while Kronk is in play? (Ref. 4.9.a.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.742, 0.637, 0.9],
+      "angle": 0,
+      "content": "A: Yes! I'm Lovin' This only applies to the effect portion of an ability. If the ability has a cost that includes discarding, you must still discard, such as for Madam Mim - Truly Marvelous or to resolve Twin Fire's second effect. Cards such as Sudden Chill would have their effect prevented if it was attempting to make you discard."
+    },
+    {
+      "type": "image",
+      "bbox": [0.651, 0.656, 0.885, 0.907],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "text",
+      "bbox": [0.112, 0.108, 0.635, 0.149],
+      "angle": 0,
+      "content": "Q: What about if I play Megara - Captivating Cynic while Kronk is in play? (Ref. 4.9.b.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.167, 0.635, 0.227],
+      "angle": 0,
+      "content": "A: Megara is banished. Kronk prevents you from being able to discard a card in order to keep her in play."
+    },
+    {
+      "type": "image",
+      "bbox": [0.652, 0.101, 0.885, 0.351],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.38, 0.504, 0.402],
+      "angle": 0,
+      "content": "Lady Tremaine - Bitterly Jealous"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.414, 0.348, 0.664],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.405, 0.882, 0.464],
+      "angle": 0,
+      "content": "Q: Can I activate That's Quite Enough if there are no damaged characters in play? What happens if I do? (Ref. 4.10.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.483, 0.879, 0.581],
+      "angle": 0,
+      "content": "A: You can activate the ability when there are no damaged characters in play, as the only cost is to exert Lady Tremaine. If you do so, no characters will return to any player's hand, but each of your opponents will still have to discard a random card."
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.601, 0.884, 0.66],
+      "angle": 0,
+      "content": "A2: Remember, though - if there is a valid choice, you must choose it. Even if it is your own character! That part of the ability is not optional."
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.679, 0.48, 0.698],
+      "angle": 0,
+      "content": "Maid Marian - Badminton Ace"
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.701, 0.616, 0.763],
+      "angle": 0,
+      "content": "Q: If one of my Ally characters is dealt damage, but has Resist that reduces it to 0 damage dealt, does Good Shot still trigger? (Ref. 4.11.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.78, 0.61, 0.86],
+      "angle": 0,
+      "content": "A: No. If Resist reduces an instance of damage to zero, then no damage is considered to have been dealt. Good Shot will not trigger if no damage is dealt."
+    },
+    {
+      "type": "image",
+      "bbox": [0.652, 0.673, 0.885, 0.925],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "text",
+      "bbox": [0.171, 0.089, 0.882, 0.148],
+      "angle": 0,
+      "content": "A2: Note that this also includes moving damage and putting damage counters - neither of those effects \"deal\" damage, and do not trigger Good Shot."
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.168, 0.562, 0.19],
+      "angle": 0,
+      "content": "Mickey Mouse - Inspirational Warrior"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.2, 0.348, 0.452],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.191, 0.851, 0.231],
+      "angle": 0,
+      "content": "Q: Does Mickey need to survive the challenge in order to play a character for free? (Ref. 4.12.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.249, 0.882, 0.33],
+      "angle": 0,
+      "content": "A: No. Even if Mickey is banished in the challenge, if he banishes the opposing character then Stirring Spirit will trigger and get to resolve. Mickey does not need to remain in play."
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.462, 0.492, 0.481],
+      "angle": 0,
+      "content": "Mother Gothel - Vain Sorceress"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.485, 0.579, 0.545],
+      "angle": 0,
+      "content": "Q: Can Now You've Upset Me move a damage counter that was dealt in the challenge that triggered the ability? (Ref. 4.13.a.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.563, 0.629, 0.643],
+      "angle": 0,
+      "content": "A: No. Mother Gothel's ability resolves after the challenge has been declared, but before the Challenge Damage Step has dealt any damage to characters."
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.661, 0.616, 0.721],
+      "angle": 0,
+      "content": "Q: What happens if the moved damage counter causes one of the characters in the challenge to be banished? (Ref. 4.13.b.)"
+    },
+    {
+      "type": "image",
+      "bbox": [0.651, 0.454, 0.885, 0.705],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.739, 0.851, 0.799],
+      "angle": 0,
+      "content": "A: Remaining abilities are resolved from the bag, and then the challenge ends. It is an open question whether Gothel \"gets credit\" for banishing the character - stay tuned for updates!"
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.114, 0.089, 0.502, 0.111],
+      "angle": 0,
+      "content": "Pepa Madrigal - Sensitive Sister"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.12, 0.348, 0.371],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.112, 0.84, 0.152],
+      "angle": 0,
+      "content": "Q: If I sing a song with Sing Together, do I get a lore for each character that song? (Ref. 4.14.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.171, 0.874, 0.23],
+      "angle": 0,
+      "content": "A: No. Because Clear Skies, Clear Skies specifies \"one or more\" characters, singing a song with Sing Together would only ever grant one lore."
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.385, 0.607, 0.446],
+      "angle": 0,
+      "content": "Pepper - Quick-Thinking Puppy  \nQ: Can Pepper's ability put herself in the inkwell when she is banished? (Ref. 4.15.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.466, 0.629, 0.525],
+      "angle": 0,
+      "content": "A: Yes! Pepper is a puppy character, and her ability would trigger when she is banished. If you wish, you can put her into the inkwell."
+    },
+    {
+      "type": "image",
+      "bbox": [0.651, 0.334, 0.885, 0.585],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.612, 0.345, 0.634],
+      "angle": 0,
+      "content": "Pete - Space Pirate"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.643, 0.348, 0.895],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.636, 0.856, 0.675],
+      "angle": 0,
+      "content": "Q: Does Pete get Resist +1 from Frightful Scheme when he challenges? (Ref. 4.16.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.694, 0.875, 0.773],
+      "angle": 0,
+      "content": "A: Yes! Pete is exerted before the challenge occurs, so he would immediately gain Resist +1 at that point and have it for the entirety of the challenge (and beyond)."
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.113, 0.089, 0.381, 0.111],
+      "angle": 0,
+      "content": "Pongo - Dear Old Dad"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.111, 0.635, 0.151],
+      "angle": 0,
+      "content": "Q: What happens if some of my ink is exerted when I resolve Pongo's ability? (Ref. 4.17.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.17, 0.637, 0.248],
+      "angle": 0,
+      "content": "A: If you look at your inkwell and find that a Puppy was one of the cards you exerted, you can play that character for free and keep the same amount of ready ink - congratulations!"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.267, 0.611, 0.346],
+      "angle": 0,
+      "content": "A2: If you are playing with ink tokens, you must select which cards from your real ink pile are the exerted ones before looking at your inkwell."
+    },
+    {
+      "type": "image",
+      "bbox": [0.652, 0.1, 0.885, 0.356],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.366, 0.58, 0.389],
+      "angle": 0,
+      "content": "Queen of Hearts - Unpredictable Bully"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.398, 0.348, 0.649],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.357, 0.389, 0.867, 0.428],
+      "angle": 0,
+      "content": "Q: If I shift a character onto Queen of Hearts, will it get a damage counter put on it? (Ref. 4.18.a.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.447, 0.872, 0.526],
+      "angle": 0,
+      "content": "A: Yes. Playing a character onto Queen of Hearts with Shift counts as \"playing another character\". It doesn't matter that she will herself be covered up by that character when the ability resolves."
+    },
+    {
+      "type": "text",
+      "bbox": [0.357, 0.545, 0.833, 0.606],
+      "angle": 0,
+      "content": "Q: Does Resist or Ward prevent If I Lose My Temper... from putting a damage counter on a character? (Ref. 4.18.b.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.625, 0.859, 0.665],
+      "angle": 0,
+      "content": "A: No. Resist does not reduce placed damage counters, as they are not \"dealt\", and If I Lose My"
+    },
+    {
+      "type": "text",
+      "bbox": [0.172, 0.666, 0.835, 0.704],
+      "angle": 0,
+      "content": "Temper... does not \"choose\" a character so does not interact with Ward."
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.113, 0.089, 0.461, 0.11],
+      "angle": 0,
+      "content": "Ratigan - Nefarious Criminal"
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.112, 0.616, 0.172],
+      "angle": 0,
+      "content": "Q: If I sing Try Everything with Ratigan and ready him, does A Marvelous Performance give me any lore? (Ref. 4.19.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.192, 0.633, 0.368],
+      "angle": 0,
+      "content": "A: Yes! A Marvelous Performance triggers and goes in the bag whenever an action is played while Ratigan is exerted. Since you have to exert him to pay the cost of the song before it is played, this condition is met. Resolving the effect of Try Everything does ready Ratigan after that, but the ability does not care if he remains exerted until it resolves. You get the lore!"
+    },
+    {
+      "type": "image",
+      "bbox": [0.651, 0.1, 0.885, 0.352],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.387, 0.561, 0.408],
+      "angle": 0,
+      "content": "Scrooge McDuck - Resourceful Miser"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.418, 0.348, 0.668],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.357, 0.411, 0.831, 0.451],
+      "angle": 0,
+      "content": "Q: Do the items exerted for Put It To Good Use need to have an exert ability? (Ref. 4.20.a.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.469, 0.863, 0.57],
+      "angle": 0,
+      "content": "A: No. The abilities on the items do not matter for Put It To Good Use. In fact, if any of the items exerted did have an exert ability, it would not be used since they were not exerted for the purpose of paying the cost of that ability - only Scrooge's."
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.588, 0.854, 0.63],
+      "angle": 0,
+      "content": "Q: Can I \"exert\" items that are already exerted to pay the cost of Put It To Good Use? (Ref. 4.20.a.)"
+    },
+    {
+      "type": "list",
+      "bbox": [0.356, 0.469, 0.863, 0.63],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.648, 0.882, 0.706],
+      "angle": 0,
+      "content": "A: No. If you are not able to do what a cost requires you to do, then you cannot pay that cost. And you em that is already exerted."
+    },
+    {
+      "type": "text",
+      "bbox": [0.112, 0.727, 0.867, 0.768],
+      "angle": 0,
+      "content": "Q: Can I use Scrooge's ability Put It To Good Use to exert items while he is already in play? (Ref. 4.20.b.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.786, 0.882, 0.867],
+      "angle": 0,
+      "content": "A: No. While using Scrooge's ability while he is in play is not specifically prohibited by the rules, it is not intended. We have a special ruling to clarify that Put It To Good Use may only be activated while Scrooge is in your hand."
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.113, 0.089, 0.504, 0.109],
+      "angle": 0,
+      "content": "Snow White - Fairest in the Land"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.111, 0.627, 0.132],
+      "angle": 0,
+      "content": "Q: What happens if I give Snow White Bodyguard?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.114, 0.133, 0.212, 0.15],
+      "angle": 0,
+      "content": "(Ref. 4.21.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.17, 0.615, 0.266],
+      "angle": 0,
+      "content": "A: Bodyguard only affects opposing characters that are able to challenge the character with the keyword - no characters can challenge Snow White, so Bodyguard would not have any effect."
+    },
+    {
+      "type": "image",
+      "bbox": [0.652, 0.1, 0.885, 0.351],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.332, 0.402, 0.352],
+      "angle": 0,
+      "content": "Te Kā - Elemental Terror"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.364, 0.348, 0.615],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.357, 0.356, 0.584, 0.375],
+      "angle": 0,
+      "content": "Q: Does Ancient Rage"
+    },
+    {
+      "type": "text",
+      "bbox": [0.357, 0.377, 0.866, 0.415],
+      "angle": 0,
+      "content": "banish characters that are already exerted when she is played (or when my turn begins)? (Ref. 4.22.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.434, 0.871, 0.513],
+      "angle": 0,
+      "content": "A: No. \"Is exerted\" in the text of Ancient Rage refers to the event of going from the Ready position to the Exerted position. You also cannot \"re-exert\" an already exerted character."
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.533, 0.871, 0.631],
+      "angle": 0,
+      "content": "A2: Notably, this also excludes characters that enter play exerted (if they happen to be played on your turn). Cards like Sleepy - Nodding Off do not go from Ready to Exerted, they simply enter play already sideways."
+    },
+    {
+      "type": "title",
+      "bbox": [0.111, 0.649, 0.457, 0.671],
+      "angle": 0,
+      "content": "The Queen - Jealous Beauty"
+    },
+    {
+      "type": "text",
+      "bbox": [0.111, 0.672, 0.592, 0.731],
+      "angle": 0,
+      "content": "Q: Can I move fewer than three cards from my opponent's discard if that's all they have? (Ref. 4.23.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.75, 0.625, 0.848],
+      "angle": 0,
+      "content": "A: No. In order to resolve No Ordinary Apple fully, you must move exactly three cards to the bottom of the deck. If you cannot move three cards, you cannot move any (and, of course, you won't gain any lore)."
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.849, 0.583, 0.905],
+      "angle": 0,
+      "content": "You can still exert The Queen to use the ability if desired, but it will resolve to no effect."
+    },
+    {
+      "type": "image",
+      "bbox": [0.651, 0.656, 0.885, 0.907],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.114, 0.089, 0.442, 0.114],
+      "angle": 0,
+      "content": "Specific Item Questions"
+    },
+    {
+      "type": "title",
+      "bbox": [0.115, 0.134, 0.357, 0.155],
+      "angle": 0,
+      "content": "Devil's Eye Diamond"
+    },
+    {
+      "type": "image",
+      "bbox": [0.122, 0.165, 0.356, 0.421],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.362, 0.157, 0.879, 0.218],
+      "angle": 0,
+      "content": "Q: Does Devil's Eye Diamond need to have been in play when one of my characters was damaged? (Ref. 5.1.a.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.361, 0.235, 0.88, 0.314],
+      "angle": 0,
+      "content": "A: No. The Price of Power will resolve successfully if one of your characters was dealt damage at any time during this turn, even before Diamond was played."
+    },
+    {
+      "type": "text",
+      "bbox": [0.362, 0.333, 0.875, 0.393],
+      "angle": 0,
+      "content": "Q: Does the character that was damaged need to still be in play when Devil's Eye Diamond's ability is activated? (Ref. 5.1.b.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.362, 0.412, 0.861, 0.451],
+      "angle": 0,
+      "content": "A: No. The Price of Power will resolve successfully after that was damaged has been banished."
+    },
+    {
+      "type": "text",
+      "bbox": [0.111, 0.47, 0.867, 0.553],
+      "angle": 0,
+      "content": "Q: Does moving damage counters to or putting damage counters on one of my characters make The Price of Power able to resolve and give me lore? What about characters that enter play with damage counters? (Ref. 5.1.c.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.57, 0.882, 0.669],
+      "angle": 0,
+      "content": "A: No. Only damage having been \"dealt\" will allow The Price of Power to resolve successfully. Moving damage counters and putting damage counters do not count as \"dealing\" damage. Characters that enter play with damage counters also do not count as having been dealt damage."
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.688, 0.348, 0.707],
+      "angle": 0,
+      "content": "Maurice's Machine"
+    },
+    {
+      "type": "text",
+      "bbox": [0.114, 0.71, 0.607, 0.751],
+      "angle": 0,
+      "content": "Q: Can I banish Maurice's Machine at any time? (Ref. 5.2.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.769, 0.621, 0.829],
+      "angle": 0,
+      "content": "A: No. Maurice's Machine must be banished by another ability, like Hiram Flaversham - Toymaker's Artificer."
+    },
+    {
+      "type": "image",
+      "bbox": [0.651, 0.675, 0.885, 0.931],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.114, 0.089, 0.331, 0.111],
+      "angle": 0,
+      "content": "The Glass Slipper"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.121, 0.348, 0.376],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.357, 0.111, 0.837, 0.151],
+      "angle": 0,
+      "content": "Q: How many copies of The Glass Slipper can I play in Draft/Sealed? (Ref. 5.3.a.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.357, 0.17, 0.573, 0.188],
+      "angle": 0,
+      "content": "A: No more than two."
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.21, 0.861, 0.29],
+      "angle": 0,
+      "content": "Q: Can I banish The Glass Slipper to use Search the Kingdom if I don't have a Prince character to exert? Or if my Prince character is drying? (Ref. 5.3.b.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.308, 0.871, 0.39],
+      "angle": 0,
+      "content": "A: No. Banishing the slipper and exerting a Prince character is the cost to activate Search the Kingdom. You cannot only pay part of a cost - you must pay costs in their entirety."
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.409, 0.878, 0.448],
+      "angle": 0,
+      "content": "Remember that drying characters cannot exert to pay costs that use the exert symbol."
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.493, 0.367, 0.513],
+      "angle": 0,
+      "content": "Unconventional Tool"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.515, 0.623, 0.535],
+      "angle": 0,
+      "content": "Q: Can I banish Unconventional Tool at any time?"
+    },
+    {
+      "type": "text",
+      "bbox": [0.114, 0.535, 0.205, 0.555],
+      "angle": 0,
+      "content": "(Ref. 5.4.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.574, 0.638, 0.633],
+      "angle": 0,
+      "content": "A: No. Unconventional Tool must be banished by another ability, like Hiram Flaversham - Toymaker's Artificer."
+    },
+    {
+      "type": "image",
+      "bbox": [0.651, 0.478, 0.885, 0.731],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.114, 0.089, 0.553, 0.114],
+      "angle": 0,
+      "content": "Specific Action/Song Questions"
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.134, 0.259, 0.154],
+      "angle": 0,
+      "content": "All Is Found"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.165, 0.348, 0.417],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.357, 0.157, 0.854, 0.215],
+      "angle": 0,
+      "content": "Q: Can I place the copy of All Is Found that I just played into the inkwell when I resolve its effect? (Ref. 6.1.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.234, 0.882, 0.332],
+      "angle": 0,
+      "content": "A: No. While a played action card is resolving, it is not in any zone, and does not enter the discard pile until its effect is completely resolved. When you are choosing cards from the discard to put into the inkwell, All Is Found is not there to be chosen."
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.446, 0.241, 0.466],
+      "angle": 0,
+      "content": "Ink Geyser"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.468, 0.621, 0.527],
+      "angle": 0,
+      "content": "Q: How do I determine which cards stay in the inkwell? Do the inkwell cards have to be shuffled? (Ref. 6.2.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.17, 0.546, 0.637, 0.723],
+      "angle": 0,
+      "content": "A: Which cards stay in the inkwell must be determined randomly, but shuffling is not necessarily required. Dice can be used to determine which cards to move to the hand without shuffling their order, for example, but any method that is acceptable to both players can be used. If players cannot agree on a method to determine the random cards, a judge can be called in tournament settings"
+    },
+    {
+      "type": "image",
+      "bbox": [0.651, 0.441, 0.885, 0.693],
+      "angle": 0,
+      "content": null
+    }
+  ],
+  [
+    {
+      "type": "title",
+      "bbox": [0.115, 0.09, 0.333, 0.111],
+      "angle": 0,
+      "content": "Restoring Atlantis"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.12, 0.348, 0.371],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.112, 0.867, 0.151],
+      "angle": 0,
+      "content": "Q: Are characters that are played after Restoring Atlantis able to be challenged? (Ref. 6.3.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.17, 0.881, 0.249],
+      "angle": 0,
+      "content": "A: No. Restoring Atlantis essentially applies an effect to the player, which protects all characters they have in play. The characters do not need to have been in play when Restoring Atlantis resolved."
+    },
+    {
+      "type": "title",
+      "bbox": [0.113, 0.381, 0.318, 0.4],
+      "angle": 0,
+      "content": "So Much To Give"
+    },
+    {
+      "type": "text",
+      "bbox": [0.113, 0.403, 0.617, 0.443],
+      "angle": 0,
+      "content": "Q: If I give a drying character Bodyguard with So Much To Give, can I exert them? (Ref. 6.4.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.462, 0.628, 0.56],
+      "angle": 0,
+      "content": "A: No. The character gaining Bodyguard must already be in play to be chosen for the effect of So Much To Give - it is too late to use the \"enter play exerted\" effect that Bodyguard usually has."
+    },
+    {
+      "type": "image",
+      "bbox": [0.652, 0.328, 0.885, 0.58],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "title",
+      "bbox": [0.114, 0.578, 0.395, 0.598],
+      "angle": 0,
+      "content": "The Return of Hercules"
+    },
+    {
+      "type": "image",
+      "bbox": [0.116, 0.61, 0.348, 0.862],
+      "angle": 0,
+      "content": null
+    },
+    {
+      "type": "text",
+      "bbox": [0.357, 0.601, 0.869, 0.641],
+      "angle": 0,
+      "content": "Q: How do my opponent and I resolve this card in the correct order? (Ref. 6.5.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.659, 0.871, 0.756],
+      "angle": 0,
+      "content": "A: Starting with the active player, each player chooses and reveals a character card that they wish to play (if any - it is optional). Yes, that means your opponent will see what you're choosing to play before they make their choice."
+    },
+    {
+      "type": "text",
+      "bbox": [0.356, 0.757, 0.871, 0.853],
+      "angle": 0,
+      "content": "Then all revealed characters will be played in turn order, before finally resolving any triggered abilities as is usually done - in turn order, with each player choosing the order of resolution of their own abilities."
+    }
+  ],
+  [
+    {
+      "type": "text",
+      "bbox": [0.113, 0.089, 0.62, 0.129],
+      "angle": 0,
+      "content": "Q: What if we both play Maleficent - Dragon? (Ref. 6.5.)"
+    },
+    {
+      "type": "text",
+      "bbox": [0.171, 0.148, 0.638, 0.284],
+      "angle": 0,
+      "content": "A: Both Dragons would enter play and trigger when they do so, adding their abilities to the bag. Then each player would get to resolve the banish effect even if the active player chose to banish the opposing Maleficent, since her ability doesn't care if she remains in play and will still resolve."
+    },
+    {
+      "type": "image",
+      "bbox": [0.652, 0.102, 0.885, 0.351],
+      "angle": 0,
+      "content": null
+    }
+  ]
+]

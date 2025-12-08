@@ -1,15 +1,13 @@
 import { describe, expect, it } from "bun:test";
 import { dragonFire } from "~/game-engine/engines/lorcana/src/cards/definitions/001/actions/130-dragon-fire";
 import {
-  cruellaDeVilStyleIcon,
-  mulanInjuredSoldier,
-  nalaUndauntedLioness,
-  roxannePowerlineFan,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/009";
-import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { roxannePowerlineFan } from "../ruby/113-roxanne-powerline-fan";
+import { mulanInjuredSoldier } from "../ruby/125-mulan-injured-soldier";
+import { nalaUndauntedLioness } from "../steel/173-nala-undaunted-lioness";
+import { cruellaDeVilStyleIcon } from "./143-cruella-de-vil-style-icon";
 
 describe("Cruella De Vil - Style Icon", () => {
   it("OUT OF SEASON Once during your turn, whenever a character with cost 2 or less is banished, put the top card of your deck into your inkwell facedown and exerted.", async () => {

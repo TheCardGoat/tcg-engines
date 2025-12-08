@@ -1,13 +1,11 @@
 import { describe, expect, it } from "bun:test";
 import { trialsAndTribulations } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
-import {
-  maxGoofRebelliousTeen,
-  motherKnowsBest,
-} from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
+import { motherKnowsBest } from "~/game-engine/engines/lorcana/src/cards/definitions/009/actions/emerald/099-mother-knows-best";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { maxGoofRebelliousTeen } from "./075-max-goof-rebellious-teen";
 
 describe("Max Goof - Rebellious Teen", () => {
   it("PERSONAL SOUNDTRACK When you play this character, you may pay 1 {I} to return a song card with cost 3 or less from your discard to your hand.", async () => {

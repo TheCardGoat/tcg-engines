@@ -1,0 +1,23 @@
+import type { CharacterCard } from "@tcg/lorcana";
+
+export const kohutTrustedMarine: CharacterCard = {
+  id: "1kt",
+  cardType: "character",
+  name: "Kohut",
+  version: "Trusted Marine",
+  fullName: "Kohut - Trusted Marine",
+  inkType: ["steel"],
+  franchise: "Wreck It Ralph",
+  set: "006",
+  cardNumber: "178",
+  cost: 2,
+  strength: 2,
+  willpower: 3,
+  lore: 1,
+  inkable: true,
+  vanilla: true,
+  externalIds: {
+    ravensburger: "ccc49ec3dc6fdfb401d2610c418b1da5fd819cbe",
+  },
+  classifications: ["Storyborn", "Ally"],
+};

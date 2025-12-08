@@ -3,11 +3,11 @@ import {
   charlotteLaBouffMardiGrasPrincess,
   deweyLovableShowoff,
 } from "~/game-engine/engines/lorcana/src/cards/definitions/008";
-import { theQueenConceitedRuler } from "~/game-engine/engines/lorcana/src/cards/definitions/009";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { theQueenConceitedRuler } from "./001-the-queen-conceited-ruler";
 
 describe("The Queen - Conceited Ruler", () => {
   it("Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)", async () => {

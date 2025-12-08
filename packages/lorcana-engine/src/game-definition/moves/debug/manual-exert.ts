@@ -4,7 +4,7 @@ import type {
   LorcanaCardMeta,
   LorcanaGameState,
   LorcanaMoveParams,
-} from "../../../types/move-params";
+} from "../../../types";
 
 /**
  * Manual Exert (Debug/Testing)
@@ -24,6 +24,10 @@ export const manualExert = createMove<
   "manualExert",
   LorcanaCardMeta
 >({
+  condition: (_state, context) => {
+    // Not available during chooseFirstPlayer phase
+    return context.flow?.currentPhase !== "chooseFirstPlayer";
+  },
   reducer: (_draft, context) => {
     const { cardId } = context.params;
     const ops = useLorcanaOps(context);

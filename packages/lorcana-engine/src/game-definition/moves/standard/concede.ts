@@ -3,7 +3,7 @@ import type {
   LorcanaCardMeta,
   LorcanaGameState,
   LorcanaMoveParams,
-} from "../../../types/move-params";
+} from "../../../types";
 import { lorcanaZones } from "../../zones/zone-configs";
 
 /**
@@ -24,6 +24,14 @@ export const concede = createMove<
   "concede",
   LorcanaCardMeta
 >({
+  condition: (_state, context) => {
+    // Cannot concede during setup phases
+    const phase = context.flow?.currentPhase;
+    if (phase === "chooseFirstPlayer" || phase === "mulligan") {
+      return false;
+    }
+    return true;
+  },
   reducer: (draft, context) => {
     // Get all players from the game state
     const allPlayers = Object.keys(draft.loreScores) as PlayerId[];

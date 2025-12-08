@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { motunuiIslandParadise } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { motunuiIslandParadise } from "./170-motunui-island-paradise";
 
 describe("Motunui - Island Paradise", () => {
   it.skip("**REINCARNATION** Whenever a character is banished while here, you may put that card into your inkwell facedown and exerted.", async () => {

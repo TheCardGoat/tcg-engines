@@ -1,10 +1,10 @@
 import { describe, expect, it } from "bun:test";
 import { thisIsMyFamily } from "~/game-engine/engines/lorcana/src/cards/definitions/007";
-import { pjPeteCaughtUpInTheMusic } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { pjPeteCaughtUpInTheMusic } from "./114-p-j-pete-caught-up-in-the-music";
 
 describe("P.J. Pete - Caught Up in the Music", () => {
   it("SHOUT OUT LOUD! Whenever you play a song, this character gets +2 {S} this turn.", async () => {

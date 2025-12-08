@@ -1,9 +1,9 @@
 import { describe, it } from "bun:test";
-import { mamaOdieMysticalMaven } from "~/game-engine/engines/lorcana/src/cards/definitions/009/index";
 import {
   TestEngine,
   TestStore,
 } from "~/game-engine/engines/lorcana/src/testing/lorcana-test-engine";
+import { mamaOdieMysticalMaven } from "./152-mama-odie-mystical-maven";
 
 describe("Mama Odie - Mystical Maven", () => {
   it.skip("**THIS GOING TO BE GOOD** Whenever you play a song, you may put the top card of your deck into your inkwell facedown and exerted.", async () => {

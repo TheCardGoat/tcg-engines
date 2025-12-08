@@ -57,7 +57,7 @@ Modular TCG engine with three main components:
 - TypeScript strict mode
 - Use real schemas/types in tests
 
-**Tools:** TypeScript (strict), Jest/Vitest + React Testing Library, immutable patterns
+**Tools:** TypeScript (strict), Bun Test + React Testing Library, immutable patterns
 
 ## Testing Principles
 
