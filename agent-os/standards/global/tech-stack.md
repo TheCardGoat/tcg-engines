@@ -1,31 +1,33 @@
 ## Tech stack
 
-Define your technical stack below. This serves as a reference for all team members and helps maintain consistency across the project.
+This document outlines the technical stack for the TCG Engines project.
 
 ### Framework & Runtime
-- **Application Framework:** [e.g., Rails, Django, Next.js, Express]
-- **Language/Runtime:** [e.g., Ruby, Python, Node.js, Java]
-- **Package Manager:** [e.g., bundler, pip, npm, yarn]
+- **Application Framework:** Custom TCG Framework
+- **Language/Runtime:** TypeScript 5.9.3, Bun 1.2.18, Node.js 22.17.0
+- **Package Manager:** Bun
 
 ### Frontend
-- **JavaScript Framework:** [e.g., React, Vue, Svelte, Alpine, vanilla JS]
-- **CSS Framework:** [e.g., Tailwind CSS, Bootstrap, custom]
-- **UI Components:** [e.g., shadcn/ui, Material UI, custom library]
+- **JavaScript Framework:** Svelte (for `@tcg/component-library`)
+- **CSS Framework:** Not specified
+- **UI Components:** Not specified
 
-### Database & Storage
-- **Database:** [e.g., PostgreSQL, MySQL, MongoDB]
-- **ORM/Query Builder:** [e.g., ActiveRecord, Prisma, Sequelize]
-- **Caching:** [e.g., Redis, Memcached]
+### State Management & Data
+- **State Management:** Immer
+- **Validation:** Zod
+- **RNG:** seedrandom
+- **IDs:** nanoid
 
 ### Testing & Quality
-- **Test Framework:** [e.g., Jest, RSpec, pytest]
-- **Linting/Formatting:** [e.g., ESLint, Prettier, RuboCop]
+- **Test Framework:** Bun Test (Jest-compatible)
+- **Linting/Formatting:** Biome
 
-### Deployment & Infrastructure
-- **Hosting:** [e.g., Heroku, AWS, Vercel, Railway]
-- **CI/CD:** [e.g., GitHub Actions, CircleCI]
+### Build & Infrastructure
+- **Build System:** Turborepo
+- **CI/CD:** Not specified
+- **Hosting:** Not specified
 
 ### Third-Party Services
-- **Authentication:** [e.g., Auth0, Devise, NextAuth]
-- **Email:** [e.g., SendGrid, Postmark]
-- **Monitoring:** [e.g., Sentry, Datadog]
+- **Authentication:** Not applicable
+- **Email:** Not applicable
+- **Monitoring:** Not applicable
