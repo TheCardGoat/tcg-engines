@@ -1,1 +1,0 @@
-{"version":3,"file":"ConfigurationStore.d.ts","sourceRoot":"","sources":["../../../../../../lorcana-engine/src/store/ConfigurationStore.ts"],"names":[],"mappings":"AAGA,qBAAa,kBAAkB;IAC7B,OAAO,CAAC,QAAQ,CAAC,UAAU,CAAkB;IAC7C,UAAU,UAAQ;IAClB,mBAAmB,UAAQ;gBAEf,UAAU,EAAE,OAAO;CAShC"}

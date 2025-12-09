@@ -1,1 +1,0 @@
-{"version":3,"file":"lobby.d.ts","sourceRoot":"","sources":["../../../../src/lobby.ts"],"names":[],"mappings":"AAAA,cAAc,6BAA6B,CAAC;AAC5C,mBAAmB,mCAAmC,CAAC;AACvD,cAAc,oCAAoC,CAAC;AACnD,OAAO,EACL,iBAAiB,EACjB,iBAAiB,GAClB,MAAM,oCAAoC,CAAC;AAC5C,cAAc,qCAAqC,CAAC;AACpD,YAAY,EAAE,YAAY,EAAE,MAAM,iBAAiB,CAAC;AAEpD,wBAAgB,eAAe,CAAC,CAAC,EAAE,KAAK,GAAG,KAAK,CAE/C"}
