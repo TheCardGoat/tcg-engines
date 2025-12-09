@@ -34,6 +34,16 @@ describe("Effect Parser", () => {
       });
     });
 
+    it("should parse draw an card", () => {
+      const effect = parseEffect("draw an card");
+
+      expect(effect).toEqual({
+        type: "draw",
+        amount: 1,
+        target: "CONTROLLER",
+      });
+    });
+
     it("should parse optional draw", () => {
       const effect = parseEffect("you may draw a card");
 
