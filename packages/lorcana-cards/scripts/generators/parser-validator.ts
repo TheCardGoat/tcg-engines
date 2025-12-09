@@ -50,6 +50,78 @@ export function isKeywordOnlyCard(card: CanonicalCard): boolean {
 }
 
 /**
+ * Check if all abilities on a card are parseable (keywords or simple draw effects)
+ *
+ * Strict validation:
+ * - ALL abilities must parse with success: true
+ * - NO warnings allowed
+ * - ALL parsed abilities must be:
+ *   - type: "keyword" (any keyword), OR
+ *   - type: "action" with effect.type: "draw" (simple draw only, no composite effects)
+ *
+ * This allows cards with:
+ * - Keyword abilities (e.g., "Rush", "Challenger +2")
+ * - Simple draw action abilities (e.g., "Draw a card", "Draw 2 cards")
+ *
+ * This REJECTS cards with:
+ * - Other action effects (e.g., "Deal 3 damage", "Remove damage")
+ * - Composite effects (e.g., "Draw a card and discard a card", "Draw 2 cards, then deal 1 damage")
+ * - Choice effects (e.g., "Choose one: Draw a card or discard a card")
+ * - Optional effects (e.g., "You may draw a card")
+ * - Conditional effects (e.g., "If X, draw a card")
+ *
+ * @param card - The canonical card to check
+ * @returns true if all abilities are successfully parsed keywords or simple draw actions
+ */
+export function isParseableCard(card: CanonicalCard): boolean {
+  if (!card.rulesText) return false; // Vanilla cards handled separately
+
+  const abilityTexts = card.rulesText.split("\n").filter((text) => text.trim());
+  if (abilityTexts.length === 0) return false;
+
+  return abilityTexts.every((text) => {
+    const cleanText = stripReminderText(text);
+    const result = parseAbilityText(cleanText);
+    // Must succeed with no warnings
+    if (!result.success || result.warnings?.length) return false;
+    if (!result.ability) return false;
+
+    const abilityType = result.ability.ability.type;
+
+    // Allow keywords
+    if (abilityType === "keyword") {
+      return true;
+    }
+
+    // For action abilities, only allow simple draw effects
+    if (abilityType === "action") {
+      const effect = result.ability.ability.effect;
+      if (!effect) return false;
+
+      // Must be a simple draw effect (not composite)
+      // Composite effects have types: "sequence", "choice", "optional", "conditional", "for-each", "repeat"
+      const compositeTypes = [
+        "sequence",
+        "choice",
+        "optional",
+        "conditional",
+        "for-each",
+        "repeat",
+      ];
+      if (compositeTypes.includes(effect.type)) {
+        return false;
+      }
+
+      // Must be exactly "draw" type
+      return effect.type === "draw";
+    }
+
+    // Reject all other ability types
+    return false;
+  });
+}
+
+/**
  * Parse abilities for a keyword-only card
  *
  * Returns the parsed abilities if ALL abilities are:
