@@ -414,7 +414,15 @@ describe("Spec 1: Foundation & Types", () => {
   describe("Keywords", () => {
     it("detects simple keywords (Bodyguard, Evasive, etc.)", () => {
       const card = createMockCard({
-        keywords: ["Bodyguard", "Ward"],
+        abilities: [
+          {
+            type: "keyword",
+            keyword: "Bodyguard",
+            id: "ab1",
+            text: "Bodyguard",
+          },
+          { type: "keyword", keyword: "Ward", id: "ab2", text: "Ward" },
+        ],
       });
 
       expect(hasKeyword(card, "Bodyguard")).toBe(true);
@@ -424,7 +432,15 @@ describe("Spec 1: Foundation & Types", () => {
 
     it("extracts value from parameterized keywords (Challenger +2)", () => {
       const card = createMockCard({
-        keywords: [{ type: "Challenger", value: 2 }],
+        abilities: [
+          {
+            type: "keyword",
+            keyword: "Challenger",
+            value: 2,
+            id: "ab1",
+            text: "Challenger +2",
+          },
+        ],
       });
 
       expect(getKeywordValue(card, "Challenger")).toBe(2);
@@ -433,10 +449,27 @@ describe("Spec 1: Foundation & Types", () => {
 
     it("handles multiple keywords on same card", () => {
       const card = createMockCard({
-        keywords: [
-          "Bodyguard",
-          { type: "Challenger", value: 2 },
-          { type: "Resist", value: 1 },
+        abilities: [
+          {
+            type: "keyword",
+            keyword: "Bodyguard",
+            id: "ab1",
+            text: "Bodyguard",
+          },
+          {
+            type: "keyword",
+            keyword: "Challenger",
+            value: 2,
+            id: "ab2",
+            text: "Challenger +2",
+          },
+          {
+            type: "keyword",
+            keyword: "Resist",
+            value: 1,
+            id: "ab3",
+            text: "Resist +1",
+          },
         ],
       });
 
@@ -446,7 +479,16 @@ describe("Spec 1: Foundation & Types", () => {
 
     it("detects Shift keyword and extracts cost", () => {
       const card = createMockCard({
-        keywords: [{ type: "Shift", cost: 4, targetName: "Elsa" }],
+        abilities: [
+          {
+            type: "keyword",
+            keyword: "Shift",
+            cost: { ink: 4 },
+            shiftTarget: "Elsa",
+            id: "ab1",
+            text: "Shift 4",
+          },
+        ],
       });
 
       expect(hasShift(card)).toBe(true);
@@ -455,7 +497,15 @@ describe("Spec 1: Foundation & Types", () => {
 
     it("detects Singer keyword and extracts value", () => {
       const card = createMockCard({
-        keywords: [{ type: "Singer", value: 5 }],
+        abilities: [
+          {
+            type: "keyword",
+            keyword: "Singer",
+            value: 5,
+            id: "ab1",
+            text: "Singer 5",
+          },
+        ],
       });
 
       expect(getSingerValue(card)).toBe(5);
