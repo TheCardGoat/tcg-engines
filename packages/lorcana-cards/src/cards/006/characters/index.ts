@@ -32,7 +32,6 @@ export { gadgetHackwrenchPerceptiveMouse } from "./151-gadget-hackwrench-percept
 export { drDelbertDopplerFussyAstronomer } from "./152-dr-delbert-doppler-fussy-astronomer";
 export { yokaiProfessorCallaghan } from "./158-yokai-professor-callaghan";
 export { hiramFlavershamIntriguedInventor } from "./159-hiram-flaversham-intrigued-inventor";
-export { kakamoraPirateChief } from "./172-kakamora-pirate-chief";
 export { kohutTrustedMarine } from "./178-kohut-trusted-marine";
 export { kingHubertPhillipsFather } from "./179-king-hubert-phillips-father";
 export { mrArrowLegacysFirstMate } from "./182-mr-arrow-legacys-first-mate";

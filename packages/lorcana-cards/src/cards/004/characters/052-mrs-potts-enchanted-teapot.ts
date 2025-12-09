@@ -34,7 +34,8 @@ export const mrsPottsEnchantedTeapot: CharacterCard = {
         type: "conditional",
         condition: {
           type: "has-named-character",
-          name: "Lumiere or Cogsworth in play",
+          // Note: Need to check for either Lumiere OR Cogsworth - modeling as "or" with first name
+          name: "Lumiere",
           controller: "you",
         },
         then: {

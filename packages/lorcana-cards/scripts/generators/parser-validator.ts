@@ -11,6 +11,57 @@ import type { AbilityWithText } from "../../src/parser/types";
 import type { CanonicalCard } from "../types";
 
 /**
+ * Text patterns that indicate a card is NOT a simple draw effect.
+ * These are checked against the card's rulesText before parsing.
+ *
+ * This allows us to quickly skip complex cards that the parser might
+ * technically parse but are too complex for our simple draw effect generator.
+ */
+const COMPLEX_TEXT_PATTERNS = [
+  // Draw + discard sequences
+  /draw.*then.*discard/i,
+  /draw.*choose and discard/i,
+  /draw.*then choose and discard/i,
+
+  // Discard + draw (in any order)
+  /discard.*to draw/i,
+  /discard.*draw/i,
+
+  // Effects that have "otherwise" or "instead"
+  /otherwise/i,
+  /instead/i,
+
+  // Effects with costs that aren't just simple "may"
+  /pay \d+ \{I\} to draw/i,
+  /banish.*to draw/i,
+
+  // Complex conditions - comparing values
+  /has more cards/i,
+  /have more cards/i,
+  /unless that/i,
+
+  // Effects that do more than draw
+  /draw.*put.*bottom/i,
+  /draw.*shuffle/i,
+  /draw.*deal.*damage/i,
+
+  // Multiple triggers in one ability
+  /and when.*leaves play/i,
+  /and whenever/i,
+];
+
+/**
+ * Check if a card's rules text contains any complex patterns that
+ * indicate it's NOT a simple draw effect.
+ *
+ * @param rulesText - The card's rules text
+ * @returns true if the text contains complex patterns
+ */
+function hasComplexTextPatterns(rulesText: string): boolean {
+  return COMPLEX_TEXT_PATTERNS.some((pattern) => pattern.test(rulesText));
+}
+
+/**
  * Strip reminder text (parenthetical content) from ability text.
  * Keywords often include reminder text like:
  * "Shift 5 (You may pay 5 {I} to play this...)"
@@ -223,6 +274,12 @@ export function isParseableCard(card: CanonicalCard): boolean {
   if (!card.rulesText) {
     return false; // Vanilla cards handled separately
   }
+
+  // Quick check: reject cards with complex text patterns
+  if (hasComplexTextPatterns(card.rulesText)) {
+    return false;
+  }
+
   const abilityTexts = card.rulesText.split("\n").filter((text) => text.trim());
   if (abilityTexts.length === 0) return false;
 
@@ -280,6 +337,11 @@ export function isParseableCard(card: CanonicalCard): boolean {
 export function hasSimpleDrawAbility(card: CanonicalCard): boolean {
   if (!card.rulesText) return false;
   if (card.vanilla) return false;
+
+  // Quick check: reject cards with complex text patterns
+  if (hasComplexTextPatterns(card.rulesText)) {
+    return false;
+  }
 
   const abilityTexts = card.rulesText.split("\n").filter((text) => text.trim());
   if (abilityTexts.length === 0) return false;

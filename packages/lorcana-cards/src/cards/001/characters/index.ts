@@ -52,4 +52,3 @@ export { kristoffOfficialIceMaster } from "./182-kristoff-official-ice-master";
 export { kronkRighthandMan } from "./183-kronk-right-hand-man";
 export { liloGalacticHero } from "./184-lilo-galactic-hero";
 export { mauiDemigod } from "./185-maui-demigod";
-export { simbaFutureKing } from "./188-simba-future-king";

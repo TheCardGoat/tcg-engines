@@ -1,22 +1,16 @@
-import type { ActionCard, CharacterCard, ItemCard } from "@tcg/lorcana";
+import type { ActionCard, CharacterCard } from "@tcg/lorcana";
 import * as actions from "./actions";
 import * as characters from "./characters";
-import * as items from "./items";
 
-export const all001Cards: (CharacterCard | ActionCard | ItemCard)[] = [
+export const all001Cards: (CharacterCard | ActionCard)[] = [
   ...Object.values(characters),
   ...Object.values(actions),
-  ...Object.values(items),
 ];
 
-export const all001CardsById: Record<
-  string,
-  CharacterCard | ActionCard | ItemCard
-> = {};
+export const all001CardsById: Record<string, CharacterCard | ActionCard> = {};
 for (const card of all001Cards) {
   all001CardsById[card.id] = card;
 }
 
 export * from "./actions";
 export * from "./characters";
-export * from "./items";
