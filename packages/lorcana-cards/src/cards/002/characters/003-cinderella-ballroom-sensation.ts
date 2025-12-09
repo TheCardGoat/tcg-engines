@@ -19,12 +19,6 @@ export const cinderellaBallroomSensation: CharacterCard = {
   externalIds: {
     ravensburger: "1053acb0af19beb3e33f5d547aa4078efbd13b6c",
   },
-  keywords: [
-    {
-      type: "Singer",
-      value: 3,
-    },
-  ],
   abilities: [
     {
       id: "4j3-1",

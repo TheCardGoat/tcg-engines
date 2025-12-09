@@ -19,7 +19,6 @@ export const snowannaRainbeauCoolCompetitor: CharacterCard = {
   externalIds: {
     ravensburger: "62f8f59f90124ef9f0b9787ccf4611aaf361be9f",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "rgl-1",

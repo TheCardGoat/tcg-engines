@@ -18,7 +18,6 @@ export const daisyDuckSpotlessFoodfighter: CharacterCard = {
   externalIds: {
     ravensburger: "b1724348bcda8483959b2f906793c0d8ec1ee40a",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "1d8-1",

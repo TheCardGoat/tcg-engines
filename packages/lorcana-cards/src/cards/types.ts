@@ -20,10 +20,10 @@ export interface AbilityDefinition {
   name?: string | null;
   text: string;
   type: "triggered" | "activated" | "static" | "keyword" | "action";
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  effect?: any;
   keyword?: string;
   value?: number;
+  cost?: unknown;
+  shiftTarget?: string;
 }
 
 export interface ExternalIds {
@@ -50,7 +50,6 @@ export interface CanonicalCardMetadata {
   inkType: InkType | [InkType, InkType];
   cost: number;
   inkable: boolean;
-  keywords?: string[];
   rulesText?: string;
   abilities?: AbilityDefinition[];
   printings: CardPrintingRef[];

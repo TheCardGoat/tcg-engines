@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const sirHissAggravatingAsp: CharacterCard = {
-  id: "1vh",
+  id: "1vd",
   cardType: "character",
   name: "Sir Hiss",
   version: "Aggravating Asp",
@@ -19,10 +19,9 @@ export const sirHissAggravatingAsp: CharacterCard = {
   externalIds: {
     ravensburger: "f2df9a64c41a939980ee70dfe3cce16063dffbfb",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
-      id: "1vh-1",
+      id: "1vd-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

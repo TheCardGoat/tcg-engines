@@ -9,7 +9,7 @@ export const iagoStompinMad: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Aladdin",
   set: "010",
-  text: "Challenger +5 (While challenging, this character gets +5.)",
+  text: "Challenger +5 (While challenging, this character gets +5 {S}.)",
   cost: 2,
   strength: 0,
   willpower: 2,
@@ -19,12 +19,6 @@ export const iagoStompinMad: CharacterCard = {
   externalIds: {
     ravensburger: "1d9f1179673d307584d5af2eff385d3291e06044",
   },
-  keywords: [
-    {
-      type: "Challenger",
-      value: 5,
-    },
-  ],
   abilities: [
     {
       id: "87v-1",

@@ -19,7 +19,6 @@ export const herculesClumsyKid: CharacterCard = {
   externalIds: {
     ravensburger: "ce69a0c9df8b79208d330486269074d53266f7ac",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "1l5-1",

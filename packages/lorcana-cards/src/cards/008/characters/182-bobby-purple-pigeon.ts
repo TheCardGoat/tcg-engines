@@ -19,7 +19,6 @@ export const bobbyPurplePigeon: CharacterCard = {
   externalIds: {
     ravensburger: "5071a3a017156ec252d3ef037f0e3fb1fd212f87",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "mbj-1",

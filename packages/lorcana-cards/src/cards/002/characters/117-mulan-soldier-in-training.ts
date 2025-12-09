@@ -19,7 +19,6 @@ export const mulanSoldierInTraining: CharacterCard = {
   externalIds: {
     ravensburger: "77b270ef01a1671fcf0123fc2f0dceb294777022",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "x7m-1",

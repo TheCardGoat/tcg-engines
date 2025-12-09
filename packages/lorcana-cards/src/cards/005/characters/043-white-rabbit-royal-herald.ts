@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const whiteRabbitRoyalHerald: CharacterCard = {
-  id: "1m5",
+  id: "1m6",
   cardType: "character",
   name: "White Rabbit",
   version: "Royal Herald",

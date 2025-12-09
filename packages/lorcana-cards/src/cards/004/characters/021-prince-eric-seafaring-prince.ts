@@ -19,7 +19,6 @@ export const princeEricSeafaringPrince: CharacterCard = {
   externalIds: {
     ravensburger: "215468ad3c809a1adc7ae0b14aa9d95e4875e52d",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "98x-1",

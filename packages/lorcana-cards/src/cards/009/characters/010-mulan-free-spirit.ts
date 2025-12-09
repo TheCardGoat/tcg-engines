@@ -9,7 +9,7 @@ export const mulanFreeSpirit: CharacterCard = {
   inkType: ["amber"],
   franchise: "Mulan",
   set: "009",
-  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+  text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
   cost: 3,
   strength: 2,
   willpower: 3,
@@ -19,7 +19,6 @@ export const mulanFreeSpirit: CharacterCard = {
   externalIds: {
     ravensburger: "63be0c9e418d5a0329a87de4082802d18848efe6",
   },
-  keywords: ["Support"],
   abilities: [
     {
       id: "roa-1",

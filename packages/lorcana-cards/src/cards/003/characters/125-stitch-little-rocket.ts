@@ -19,7 +19,6 @@ export const stitchLittleRocket: CharacterCard = {
   externalIds: {
     ravensburger: "2ce76e99fa3946189d8b3985a10b16a474034d40",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "cgj-1",

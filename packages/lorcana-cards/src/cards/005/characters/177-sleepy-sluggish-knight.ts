@@ -19,7 +19,6 @@ export const sleepySluggishKnight: CharacterCard = {
   externalIds: {
     ravensburger: "c9ec3115210a0d6350a7df1c16405f550b05b3cd",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "1k0-1",

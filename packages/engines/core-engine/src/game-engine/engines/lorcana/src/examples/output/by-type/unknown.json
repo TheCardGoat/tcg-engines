@@ -1,0 +1,1362 @@
+[
+  {
+    "text": "Vanish\\nGRASPING TRUNK Whenever this character quests, gain lore equal to the {L} of chosen opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "Bodyguard\\nTHE BIGGEST STAR EVER When this character is banished, deal 5 damage to each opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "WHERE DID THEY ALL COME FROM? You may have up to 99 copies of Dalmatian Puppy - Tail Wagger in your deck.",
+    "abilityType": null
+  },
+  {
+    "text": "You discard a card.",
+    "abilityType": null
+  },
+  {
+    "text": "Ward\\nTIME RUNS OUT At the end of your turn, if you didn't put any cards into your inkwell this turn, banish this character.",
+    "abilityType": null
+  },
+  {
+    "text": "I'LL HANDLE IT When you play this character, choose an opponent to discard a card.",
+    "abilityType": null
+  },
+  {
+    "text": "I'VE GOT JUST THE THING Whenever this character quests, you may remove up to 1 damage from each of your characters with Bodyguard.",
+    "abilityType": null
+  },
+  {
+    "text": "Evasive\\nENOUGH'S ENOUGH While this character is exerted, opposing characters with Rush enter play exerted.",
+    "abilityType": null
+  },
+  {
+    "text": "Evasive\\nSupport",
+    "abilityType": null
+  },
+  {
+    "text": "I'LL TAKE CARE OF YOU When you play this character, you may give chosen Puppy character Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)",
+    "abilityType": null
+  },
+  {
+    "text": "LET ME AT 'EM When you play this character, you may deal 1 damage to chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "Remove up to 3 damage from chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "Remove up to 3 damage from each of your characters with Bodyguard.",
+    "abilityType": null
+  },
+  {
+    "text": "Evasive\\nTELL NO TALES Whenever one of your other characters is banished, you may remove all damage from chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "Bodyguard\\nResist +2",
+    "abilityType": null
+  },
+  {
+    "text": "Rush\\nFORMIDABLE GLARE When you play this character, chosen character gets -3 {S} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "chosen character gets -3 {S} this turn",
+    "abilityType": null
+  },
+  {
+    "text": "chosen opponent loses 1 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "You may exert 4 items of yours to play this character for free.",
+    "abilityType": null
+  },
+  {
+    "text": "PUT IT TO GOOD USE You may exert 4 items of yours to play this character for free.\\nFORTUNE HUNTER When you play this character, look at the top 4 cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": null
+  },
+  {
+    "text": "I'VE COME TO COLLECT Whenever this character quests, you may banish chosen item to draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "Bodyguard\\nNO THANKS NECESSARY Once during your turn, whenever a card is put into your inkwell, your other characters with Bodyguard get +1 {L} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "KEEP HOPE Playing this character costs you 2 {I} less if you have an Ally character in play.",
+    "abilityType": null
+  },
+  {
+    "text": "Playing this character costs you 2 {I} less if you have an Ally character in play.",
+    "abilityType": null
+  },
+  {
+    "text": "Evasive\\nSinger 5",
+    "abilityType": null
+  },
+  {
+    "text": "I'M YOUR GUY Whenever you play an action, you may give chosen character +2 {S} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "name a card, then reveal the top card of your deck. If it's the named card, put it into your inkwell facedown and exerted. Otherwise, put it on the top of your deck.",
+    "abilityType": null
+  },
+  {
+    "text": "I'LL SHOW YOU Whenever this character quests, you may give chosen character -2 {S} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "put the top 3 cards of chosen player's deck into their discard.",
+    "abilityType": null
+  },
+  {
+    "text": "Bodyguard\\nWard",
+    "abilityType": null
+  },
+  {
+    "text": "Ward\\nI'M LOVING THIS If an effect would cause you to discard one or more cards, you don't discard.",
+    "abilityType": null
+  },
+  {
+    "text": "Evasive\\nVanish",
+    "abilityType": null
+  },
+  {
+    "text": "I'VE GOT ALL THE LUCK WE'LL NEED Whenever this character quests, you may give chosen character of yours +2 {S} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "Evasive\\nSTAR POWER Whenever this character challenges another character, your other characters get +1 {L} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "Vanish\\nMYSTERIOUS ADVANTAGE When you play this character, you may choose and discard a card to gain 2 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "Evasive\\nChallenger +2",
+    "abilityType": null
+  },
+  {
+    "text": "Reckless\\nResist +2",
+    "abilityType": null
+  },
+  {
+    "text": "Support\\nADVANCED SCANNER When you play this character, look at the top 4 cards of your deck. You may reveal a Floodborn character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": null
+  },
+  {
+    "text": "**FEDERATION DECREE** While you have an Alien or Robot character here, this location can’t be challenged.",
+    "abilityType": null
+  },
+  {
+    "text": "LIMITLESS APPLICATIONS You may have any number of cards named Microbots in your deck.\\nINSPIRED TECH When you play this item, chosen character gets -1 {S} this turn for each item named Microbots you have in play.",
+    "abilityType": null
+  },
+  {
+    "text": "GIVE 'EM A SHOW At the start of your turn, you may move a character of yours to a location for free.",
+    "abilityType": null
+  },
+  {
+    "text": "Remove up to 1 damage from chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**NUTS ABOUT PRANKS** When you play this character, you may put the top 3 cards of your deck into your discard to give chosen character -3 {S} until the start of your next turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_\\n\\n**HIRE A CREW** When you play this character, look at the top 4 cards of your deck. You may reveal any number of Pirate character cards and put them into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": null
+  },
+  {
+    "text": "**READY FOR ACTION** _When you play this character, if you used Shift to play him, you may put an action card from your discard on the top of your deck._",
+    "abilityType": null
+  },
+  {
+    "text": "**HOW COOL IS THAT** Whenever this character is challenged, gain 2 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**THE TREATMENT IS WORKING** When you play this character and whenever he quests, you may remove up to 2 damage from another chosen character of yours. Gain 1 lore for each 1 damage removed this way.",
+    "abilityType": null
+  },
+  {
+    "text": "I'M A PIRATE TOO! When you play this character, you may give chosen character -2 {S} until the start of your next turn.",
+    "abilityType": null
+  },
+  {
+    "text": "I'LL GET YOU! When this character is banished, you may exert chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "You may play items named Microbots for free.",
+    "abilityType": null
+  },
+  {
+    "text": "Chosen character gets -1 {S} until the start of your next turn.",
+    "abilityType": null
+  },
+  {
+    "text": "Count the number of characters you have in play. Chosen character loses {S} equal to that number until the start of your next turn.",
+    "abilityType": null
+  },
+  {
+    "text": "Each opponent puts the top 2 cards of their deck into their discard.",
+    "abilityType": null
+  },
+  {
+    "text": "Ready chosen item.",
+    "abilityType": null
+  },
+  {
+    "text": "{E} one of your characters to deal damage equal to their {S} to chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "Each opponent chooses one of their characters and deals 4 damage to them.",
+    "abilityType": null
+  },
+  {
+    "text": "Ready chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "Then, you may choose and discard a card to deal 2 damage to another chosen character",
+    "abilityType": null
+  },
+  {
+    "text": "Each opponent discards all cards in their hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**SAFE AND SOUND** Characters get +3 {W} while here.",
+    "abilityType": null
+  },
+  {
+    "text": "**OUR HUMBLE HOME** While you have 3 or more characters here, you may banish this location to play a character from your discard for free.",
+    "abilityType": null
+  },
+  {
+    "text": "**LOST IN A BOOK** Whenever a character is banished while here, you may draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**ON YOUR MARKS!** Once per turn, you may {E} chosen character here and deal them 1 damage to move them to another location for free.",
+    "abilityType": null
+  },
+  {
+    "text": "Once per turn, you may {E} chosen character here and deal them 1 damage to move them to another location for free.",
+    "abilityType": null
+  },
+  {
+    "text": "**WARM WELCOME** Characters with **Support** get +1 {L} and +2 {W} while here.",
+    "abilityType": null
+  },
+  {
+    "text": "**MOUNTAIN DEFENSE** During your turn, the first time you move a character here, you may deal 1 damage to chosen character. If the moved character is a Knight, deal 2 damage instead.",
+    "abilityType": null
+  },
+  {
+    "text": "You may draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**EMERALD LIGHT** During opponents’ turns, whenever one of your characters is banished, you may return chosen character to their player’s hand.",
+    "abilityType": null
+  },
+  {
+    "text": "Ruby Light",
+    "abilityType": null
+  },
+  {
+    "text": "**Singer 6** _(This character counts as cost 6 to sing songs.)_\\n**IT'S BEAUTIFUL NO?** When you play this character, you may play a song with cost 6 or less for free.",
+    "abilityType": null
+  },
+  {
+    "text": "**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**YOU’VE GOT TO PAY TO PLAY** Whenever this character quests, chosen opposing character gets -1 {S} until the start of your next turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**Singer 5** _(This character counts as cost 5 to sing songs.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**NOT WITHOUT MY FAMILY** You can’t play this character unless you have 5 or more characters in play.",
+    "abilityType": null
+  },
+  {
+    "text": "You can’t play this character unless you have 5 or more characters in play.",
+    "abilityType": null
+  },
+  {
+    "text": "**BIG PRIZE** Whenever this character quests, each opponent reveals the top card of their deck. If it’s a character card, they may put it into their hand. Otherwise, they put it on the bottom of their deck.",
+    "abilityType": null
+  },
+  {
+    "text": "**OH, MY LAND!** When you play this character, if you have a location in play, draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**FAN FAVORITE** Whenever you play a song, gain 1 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**I’VE GOT THE COOLEST FRIEND** When you play this character, return a character card from your discard to your hand. If that card is a Princess character card, gain 2 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**IF IT PLEASES THE LADY** When you play this character, opposing character of your choice gets -5 {S} until the start of your next turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**REINDEER GAMES** When you play this character, you may ready chosen character. They can’t quest or challenge for the rest of this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**PATCH THEM UP** Whenever this character quests, you may remove up to 2 damage from chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**TURNING TIDES** When you play this character, you may move up to 2 damage counters from chosen character to chosen opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "**UNEARTHED** When you play this character, each opponent draws a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**RECURRING GUST** When this character is banished, return this card to your hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**A LITTLE GAME** When you play this character, banish her or return another chosen character of yours to your hand.\\n\\n **SNEAKY MOVE** At the start of your turn, you may move up to 2 damage counters from this character to chosen opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "**SPECTACULAR ENTERTAINER** When this character is exerted, opposing characters cannot ready at the start of your opponents turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**WHAT AN AWKWARD SITUATION** Whenever this character quests, you may choose and discard a card to return chosen character, item, or location with cost 3 or less to their player’s hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**PLAYING WITH POWER** During opponents’ turns, if an effect would cause you to discard one or more cards from your hand, you don’t discard.",
+    "abilityType": null
+  },
+  {
+    "text": "**GROWING POWERS** When you play this character, each opponent chooses and exerts on of their ready characters.",
+    "abilityType": null
+  },
+  {
+    "text": "**IMITATE** Whenever this character quests, you may gain lore equal to the {L} of chosen other character of yours. Return that character to your hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**CAUSE A PANIC** When you play this character, you may deal 2 damage to chosen damaged character.",
+    "abilityType": null
+  },
+  {
+    "text": "**ROWDY GUEST** Damaged characters can’t challenge this character.",
+    "abilityType": null
+  },
+  {
+    "text": "Damaged characters can’t challenge this character.",
+    "abilityType": null
+  },
+  {
+    "text": "**SLAYER OF DRAGONS** When you play this character, banish chosen opposing Dragon character.\\n \\n**PRESSING THE ADVANTAGE** When he challenges a damaged character, ready this character after the challenge.",
+    "abilityType": null
+  },
+  {
+    "text": "Each opponent chooses and discards a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**HERE KITTY, KITTY, KITTY** When you play this character, you may exert chosen damaged character.",
+    "abilityType": null
+  },
+  {
+    "text": "**REFRESHING BREAK** Whenever you ready this character, gain 1 lore for each 1 damage on him.",
+    "abilityType": null
+  },
+  {
+    "text": "**LONG LIVE THE KING** When you play this character, you may banish chosen character named Mufasa.",
+    "abilityType": null
+  },
+  {
+    "text": "**SHOWSTOPPER** When you play this character, if you have a location in play, each opponent loses 1 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**SCRAM!** When you play this character, if you have another character named Pete in play, you may banish chosen opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "**MY GREATEST PERFORMANCE** Whenever this character quests, look at the top 4 cards of your deck. You may reveal an action card with cost 6 or less and play it for free. Put the rest in your discard.",
+    "abilityType": null
+  },
+  {
+    "text": "**PLUCKY PLAY** Whenever this character challenges another character, each opponent loses 1 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**DANCE-OFF** Whenever this character or one of your characters named Mickey Mouse challenges another character, gain 1 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**A DELICATE BALANCE** When you play this character, exert all cards in your inkwell, then return 2 cards at random from your inkwell to your hand. **EVERYTHING THE LIGHT TOUCHES** Whenever this character quests, ready all cards in your inkwell.",
+    "abilityType": null
+  },
+  {
+    "text": "**CAKE CATAPULT** When you play this character, chosen character gets -2 {S} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**BAFFLING MYSTERY** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": null
+  },
+  {
+    "text": "**YOUR BROTHERS NEED GUIDANCE** When you play this character, you may remove up to 1 damage from chosen character or location.",
+    "abilityType": null
+  },
+  {
+    "text": "**MEASURE ME AGAIN** When you play this character, you may put a card from your hand into your inkwell facedown and exerted.",
+    "abilityType": null
+  },
+  {
+    "text": "**HEAVE HO!** When you play this character, you may deal 2 damage to chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**FACE THE PAST** During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**Resist** +1 _(Damage dealt to this character is reduced by 1.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your character must chose one with Bodyguard if able.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**STRONGER TOGETHER** When you play this character, if you have another Knight character in play, you may deal 1 damage to chosen character or location.",
+    "abilityType": null
+  },
+  {
+    "text": "**I'M WARNING YOU!** During your turn, whenever one of your characters banishes a character in a challenge, you may deal 1 damage to chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**DRASTIC MEASURES** When you play this character, you may discard your hand to draw 2 cards.",
+    "abilityType": null
+  },
+  {
+    "text": "**BLOW THE WHISTLE** When you play this character, opponents can’t play actions until the start of your next turn.",
+    "abilityType": null
+  },
+  {
+    "text": "Remove up to 3 damage from chosen character and ready them. They can’t quest or challenge for the rest of this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "Play a character card with cost 5 or less from your discard for free.",
+    "abilityType": null
+  },
+  {
+    "text": "Ready all your characters. They can’t quest for the rest of this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**HELP THE WOUNDED** Whenever a character quests while here, remove up to 2 damage from them. If they're a Hero character, remove up to 4 damage instead.",
+    "abilityType": null
+  },
+  {
+    "text": "Strength of Mind",
+    "abilityType": null
+  },
+  {
+    "text": "**Abandon Hope** While you have an exerted character here, opposing characters get -1 {L}.",
+    "abilityType": null
+  },
+  {
+    "text": "**REVITALIZING WATERS** Characters get +1 {S} and +1 {W} while here.",
+    "abilityType": null
+  },
+  {
+    "text": "**SLIPPERY HALLS** Whenever a characters is banished in a challenge while here, you may return them to your hand. \\n\\n\\n**SEAT OF POWER** Characters named Ursula get +1 {L} while here.",
+    "abilityType": null
+  },
+  {
+    "text": "**UNDERWATER ACOUSTICS** Characters count as having +2 cost to sing songs while here.",
+    "abilityType": null
+  },
+  {
+    "text": "**LOOK AT THIS!** Whenever you play a song, chosen character gets -2 {S} until the start of your next turn.\\n\\n**HIT PARADE** Your characters named Stitch count as having +1 cost to sing songs.",
+    "abilityType": null
+  },
+  {
+    "text": "**FRESH INK** When you play this item, draw a card.\\n\\n\\n**UNEXPECTED TREASURE** All cards in your hand count as having ⏣.",
+    "abilityType": null
+  },
+  {
+    "text": "**FINE PRINT** Whenever an opponent plays a song, you may draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**ICY DEFENSE** Whenever you play a character, they gain **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**RESOURCEFUL** When you play this item, you may draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**ALL AT THE TABLE** When you play this character, look at your deck. You may reveal a Madrigal character card. Shuffle your deck and put that card on top of your deck.",
+    "abilityType": null
+  },
+  {
+    "text": "**Singer** 7 _(This character counts as cost 7 to sing songs.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**Singer** 9 _(This character counts as cost 9 to sing songs.)_\\n\\n\\n**BEAUTIFUL VOICE** Whenever this character sings a song, your other Princess characters get +1 {L} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**AS YOU WERE!** Whenever this character quests, you may give chosen character -2 {S} until the start of your next turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**INFILTRATION** When you play this character, each opponent chooses and discards a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**STOLEN AWAY** At the end of your turn, if you didn't play a song this turn, banish this character.",
+    "abilityType": null
+  },
+  {
+    "text": "**SIGNATURE RECIPE** When you play this character, you may remove up to 2 damage from chosen character. If you removed damage this way, you may draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your character must chose one with Bodyguard if able.)_\\n\\n\\n**DRAMATIC ENTERANCE** When you play this character, banish chosen opposing character with 5  {S} or more.",
+    "abilityType": null
+  },
+  {
+    "text": "**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_\\n\\n**SAVING THE MIRACLE** Whenever this character quests, your other Madrigal characters get +1 {L} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**TO THE RESCUE** When you play this character, you may remove up to 3 damage from chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**Shift: Discard a song card** _(You may discard a song card to play this on top of one of your characters named Ursula.)_\\n\\n**VANESSA'S DESIGN** Whenever this character quests, chosen opponent reveals their hand and discards a non-character card of your choice.",
+    "abilityType": null
+  },
+  {
+    "text": "**Singer** 4 _(This character counts as cost 4 to sing songs.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**Shift** 3\\n\\n\\n**ENHANCED HEALING** When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "**HERE NOW, DON'T DO THAT** When you play this character, move up to 1 damage counter from chosen character to chosen opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "**QUICK ESCAPE** When this character is banished in a challenge, return this card to your hand.\\n\\n\\n**OMINOUS PAIR** Your characters named Jetsam gain \"When this character is banished in a challenge, return this card to your hand.\"",
+    "abilityType": null
+  },
+  {
+    "text": "**Shift: Discard 2 cards** _(You may discard 2 cards to play this on top of one of your characters named Flotsam or Jetsam.)_\\n\\n_(This character counts as being named both Flotsam and Jetsam)_",
+    "abilityType": null
+  },
+  {
+    "text": "**NICE AND TIDY** Whenever you play another character, you man banish this character to draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**IT'LL TURN OUT ALL RIGHT** When you play this characters, if you have a character named Lumiere or Cogsworth in play, you may draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**SPREADING GOOD FORTUNE** When you play this character, your other characters get +3 {S} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**SCOUT AHEAD** When you play this character, you may look at each opponent's hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**SAD-EYED PUPPY** When this character is challenged and banished, each opponent chooses one of their characters and returns that card to their hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**SMART MANEUVER** When you play this character and each time she is challenged, each opponent chooses and discards a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**SHADY DEAL** When you play this character, chose and discard a card or banish this character.",
+    "abilityType": null
+  },
+  {
+    "text": "**ALL WILL BE SEEN** When you play this character, look at the top card of each opponent's deck.",
+    "abilityType": null
+  },
+  {
+    "text": "**Shift: Discard a character card** _(You may discard a character card to play this on top of one of your characters named Li Shang.)_\\n\\n**LEAD THE CHARGE** Your characters with 4 {S} or more get +1 {L}.",
+    "abilityType": null
+  },
+  {
+    "text": "**FERVENT ADDRESS** Your other characters get +1 {S}.",
+    "abilityType": null
+  },
+  {
+    "text": "**TWO-WEAPON FIGHTING** During your turn, whenever this character deals damage to another character in a challenge, you may deal the same amount of damage to another chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**FANCY FOOTWORK** Whenever you play an action, this character takes no damage from challenges this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**DON'T CROSS ME** Whenever this character challenges another character, gain 1 lore for each other damaged character you have in play.",
+    "abilityType": null
+  },
+  {
+    "text": "**LET ME HELP YOU** Whenever this character quests, your other Hero characters get +1 {L} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**YOU BETTER TALK FAST** Your other Villain characters gain **Support.** _(Whenever they quest, you mad add their {S} to another chosen character's {S} this turn.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**ROYAL SCHEMES** When you play this characer, if a Princess or Queen character is in play, gain 1 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**ENDURING LOVE** When this character is banished, you may put this card into your inkwell facedown and exerted.",
+    "abilityType": null
+  },
+  {
+    "text": "**COLORFUL TACTICS** When you play this character, look at the top 3 cards of your deck and put them back in any order.",
+    "abilityType": null
+  },
+  {
+    "text": "**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_\\n\\n \\n**BEST DEFENSE** Whenver one of your characters is chosen for **Support**, they gain **Resist** +1 this turn. _(Damage dealt to them is reduced by 1.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**LET ME SEE** When you play this character, look at the top 4 cards of your deck. You may reveal an item card and put it in your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": null
+  },
+  {
+    "text": "**SMOOTH SMALL DISHES** When you play this character, remove up to 2 damage from chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**Shift: Discard a location card** _(You may discard a location card to play this on top of one of your characters named Aladdin.)_\\n\\n**CRASHING THROUGH** Whenever this character quests, you may banish chosen item.",
+    "abilityType": null
+  },
+  {
+    "text": "**I WANT MORE** Whenever you play a song, you may draw a card, then choose and discard a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**Resist** +1 _(Damage dealt to this character is reduced by 1 )_",
+    "abilityType": null
+  },
+  {
+    "text": "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must chose one with Bodyguard if able.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**BOARDING PARTY** During your turn, whenever this character banishes a character in a challenge, your other characters get +1 {L} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_\\n\\n\\n**Resist +1** _(Damage dealt to this character is reduced by 1.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**I LEARNED FROM THE BEST** During your turn, you may play this character for free if an opposing character was banished in a challenge this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**FULL OF SPIRIT** Your Hero characters get +1 {S}.",
+    "abilityType": null
+  },
+  {
+    "text": "**YOU GOTTA STAY FOCUSED** Your Hero characters gain **Challenger** +1. _(They get +1 {S} while challenging.)_\\n\\n\\n**SHAMELESS PROMOTER** Whenever you play a Hero character, gain 1 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "Remove up to 1 damage from each of your characters.",
+    "abilityType": null
+  },
+  {
+    "text": "Discard a card",
+    "abilityType": null
+  },
+  {
+    "text": "**Sing Together** 10 _(Any number of your of your teammates' characters with total cost 10 or more may {E} to sing this song for free.)_\\n\\n\\nChosen player draws 5 cards.",
+    "abilityType": null
+  },
+  {
+    "text": "Each opponent may choose and discard a card. For each opponent who doesn't, you draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "Discard a Card.",
+    "abilityType": null
+  },
+  {
+    "text": "Each opponent chooses and banishes one of their characters.",
+    "abilityType": null
+  },
+  {
+    "text": "Each opponent chooses one of their characters and deals 2 damage to them.",
+    "abilityType": null
+  },
+  {
+    "text": "**USING THE MIRROR** At the start of your turn, for each character you have here, you may draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**BROOM CLOSET** Your characters named Magic Broom may move here for free.\\n\\n\\n**MAGICAL POWER** Characters get +1 {L} while here.",
+    "abilityType": null
+  },
+  {
+    "text": "**CITY WALLS** Whenever a character is challenged and banished while here, banish the challenging character.",
+    "abilityType": null
+  },
+  {
+    "text": "**REINCARNATION** Whenever a character is banished while here, you may put that card into your inkwell facedown and exerted.",
+    "abilityType": null
+  },
+  {
+    "text": "**SHOW ME THE WAY** Whenever a character quests while here, you may draw a card, then choose and discard a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**SOURCE OF MAGIC** During your turn, whenever one of your characters is banished in a challenge, you may draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**SEEKING KNOWLEDGE** Whenever one of your characters quests, you may look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    "abilityType": null
+  },
+  {
+    "text": "**LISTEN TO YOUR MAMA NOW** Whenever this character quests, you may move up to 2 damage counters from chosen character to chosen opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "**I'LL CHECK IT OUT** At the end of your turn, if this character is exerted, you may ready another chosen character of yours.",
+    "abilityType": null
+  },
+  {
+    "text": "**WHERE DID THEY ALL COME FROM?** You may have up to 99 copies of Dalmatian Puppy - Tail Wagger in your deck.",
+    "abilityType": null
+  },
+  {
+    "text": "**COME ALONG, CHILDREN** When you play this character and whenever she quests, you may play a character with cost 2 or less from your discard for free.",
+    "abilityType": null
+  },
+  {
+    "text": "**ALL WAYS HERE ARE MY WAYS** Whenever this character quests, your other Villain characters get +1 {L} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**MAKE A NEW FRIEND** When you play this character, look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Place the rest on the bottom of your deck in any order.",
+    "abilityType": null
+  },
+  {
+    "text": "**IN SEARCH OF AURORA** Whenever you play a character named Maleficent, you may look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    "abilityType": null
+  },
+  {
+    "text": "**THREE WISHES** Whenever this character quests, you may shuffle this card into your deck to draw 3 cards.",
+    "abilityType": null
+  },
+  {
+    "text": "**I AM YOUR MASTER NOW** When you play this character, look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+    "abilityType": null
+  },
+  {
+    "text": "**RESTLESS SOULS** Whenever this character quests, you may banish this character to draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**ENERGETIC CLEANING** When you play this character, if you have a Sorcerer character in play, exert an opposing character. The chosen character doesn't ready at the start of their next turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**DARK KNOWLEDGE** Whenever this character quests, you may draw a card.\\n\\n**DIVINATION** During your turn, whenever you draw a card, you may move 1 damage counter from a chosen character to a chosen opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "**ALWAYS THERE** When this character is banished, you may shuffle this card into your deck.",
+    "abilityType": null
+  },
+  {
+    "text": "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_\\n\\n\\n**LET'S MAKE LIKE A TREE** When this character is banished, gain 2 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**Singer** 3 _(This character counts as cost 3 to sing songs.)_\\n\\n\\n**ENTOURAGE** Whenever you play a character with **Bodyguard**, you may remove up to 2 damage from chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**YOU THIEVING SCOUNDREL** When you play this character, the player or players with the most cards in their hand chooses and discards a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**SKYSURFING** When you play this character, you may return chosen opposing character with 2 {S} or less to their player's hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**CALCULATING AND VAIN** Whenever this character quests, you may look at the top 3 cards of your deck and put them back in any order.",
+    "abilityType": null
+  },
+  {
+    "text": "**ERUPTION** During your turn, whenever this character banishes another character in a challenge, you may ready chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**POOR SOULS** Whenever this character is challenged, each opponent chooses and discards a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**EERIE PAIR** Your characters named Jetsam get +3 {S}.",
+    "abilityType": null
+  },
+  {
+    "text": "**NOTHING PERSONAL** When this character is challenged and banished, banish the challenging character.",
+    "abilityType": null
+  },
+  {
+    "text": "**MIMICRY** You may play any character with **Shift** on this character as if this character had any name.",
+    "abilityType": null
+  },
+  {
+    "text": "**COLLECT TAXES** Whenever this character quests, each opponent with more Lore than you loses 2 Lore.",
+    "abilityType": null
+  },
+  {
+    "text": "Each opponent with more Lore than you loses 2 Lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**YOU'LL NEVER EVEN MISS IT** When you play this character, chosen opponent reveals their hand and discards a song card of your choice.",
+    "abilityType": null
+  },
+  {
+    "text": "**WHAT A DEAL** Whenever this character sings a song, you may play that song again from your discard for free, then put it on the bottom of your deck.",
+    "abilityType": null
+  },
+  {
+    "text": "**WATCH THE TEETH** When this character is damaged, deal the same amount of damage to a chosen opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "**THIS IS IT!** When you play this character, you may play a location with cost 4 or less for free.\\n\\n\\n**TAKE THE HELM** Whenever you play a location, this character may move there for free.",
+    "abilityType": null
+  },
+  {
+    "text": "**PLUNDER** When you play this character, each opponent loses 1 Lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**THAT TERRIBLE WOMAN** When you play this character, banish chosen opposing character with 3 {S} or less.",
+    "abilityType": null
+  },
+  {
+    "text": "**SURPRISE MANEUVER** When this character is banished, you may banish chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**THERE WAS ONLY OCEAN** When you play this character, look at the top 2 cards of your deck. You may add one into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": null
+  },
+  {
+    "text": "**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_\\n\\n\\n**THREE NEPHEWS** Whenever this character quests, if you have characters named Dewey and Louie in play, you may draw 3 cards.",
+    "abilityType": null
+  },
+  {
+    "text": "**THIS GOING TO BE GOOD** Whenever you play a song, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": null
+  },
+  {
+    "text": "**A LITTLE TOO OLD TO HUNT MICE** When this character is banished, you may put this card into your inkwell facedown and exerted.",
+    "abilityType": null
+  },
+  {
+    "text": "**I CAN USE THAT** Whenever one of your items is banished, you may put that card into your inkwell facedown and exerted.",
+    "abilityType": null
+  },
+  {
+    "text": "**OH DEAR, DEAR, DEAR** At the end of your turn, if this character is exerted and you do not have a Captain character in play, deal 1 damage to this character.",
+    "abilityType": null
+  },
+  {
+    "text": "**TAXES SHOULD HURT** Whenever you discard a card, you may deal 1 damage to chosen opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "You may draw 2 cards, then choose and discard 2 cards.",
+    "abilityType": null
+  },
+  {
+    "text": "You may deal 2 damage to chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**SHARP JAW** Whenever this character quests while at a location, you may deal 1 damage to chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "Remove up to 3 damage from chosen location.",
+    "abilityType": null
+  },
+  {
+    "text": "Remove up to 3 damage from one of your locations or characters.",
+    "abilityType": null
+  },
+  {
+    "text": "**WE'LL ALWAYS BE TOGETHER** Whenever you ready this character, if you have 2 or more other characters in play, gain 2 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**Singer** 3 _(This character counts as cost 3 to sing songs.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**ODD ONE OUT** When this character is banished, your other Seven Dwarfs characters get +2 {S} until the start of your next turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**Singer** 5 _(This character counts as cost 5 to sing songs.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**THERE'S TROUBLE A-BREWIN'** Your other Seven Dwarfs characters get +1 {S}.",
+    "abilityType": null
+  },
+  {
+    "text": "**LAY IT ON THE LINE** Whenever another character is banished, you may remove up to 2 damage from this character.",
+    "abilityType": null
+  },
+  {
+    "text": "**THE SUN WILL SET** When this character is banished, you may reveal the top card of your deck. If it's a character card, you may play that character for free and they enter play exerted. Otherwise, put it on the top of your deck.",
+    "abilityType": null
+  },
+  {
+    "text": "**NURSEMAID** Whenever you play a Floodborn character, you may remove all damage from chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**AH-CHOO!** Whenever you play this character or another Seven Dwarfs character, you may give chosen character -1 {S} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**I WON'T HURT YOU** When you play this character, you may remove up to 2 damage from chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**STUDENT** Whenever this character quests, you may return another chosen character of yours to your hand to gain 2 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**JUST LEAVE IT TO ME** Whenever you play a character named Cinderella, you may exert chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**HE'S BACK!** When this character is banished in a challenge, return this card to your hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**OK, WHERE AM I?** When this character is banished, you may draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**JUST YOU WAIT** When you play this character, banish her or return another chosen character of yours to your hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**TELLING LIES** When you play this character, you may exert chosen opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "**Shift** 4\\n\\n**CRUEL IRONY** When you play this character, shuffle another chosen character card into their player's deck. That player draws 2 cards.",
+    "abilityType": null
+  },
+  {
+    "text": "**SECOND WIND** Whenever an opposing character is damaged, you may ready this character.",
+    "abilityType": null
+  },
+  {
+    "text": "**SQUEAK** Whenever you play a Floodborn character, each opponent chooses and discards a card. à Whenever you play a Floodborn character, if you used Shift to play them, each opponent chooses and discards a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**THWART** Whenever this character quests, each opponent chooses and discards a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**MOUSE CATCHER** When you play this character, each opponent chooses and discards either 2 cards or 1 action card.",
+    "abilityType": null
+  },
+  {
+    "text": "**ROYALE RAGE** When you play this character, deal 1 damage to chosen damaged opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "**EASY STREET** Whenever you play a Floodborn character, each opponent loses 1 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**NOT FOR YOU** When you play this character, each opponent with more lore than you loses 1 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**NOTE TO SELF, DON’T DIE** During your turn, whenever this character banishes another character in a challenge, you may ready this character. She can’t quest for the rest of this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**DON'T INSULT MY INTELLIGENCE** Whenever one of your characters challenges another character, gain 1 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "If you used **Shift** to play this character, you may draw 2 cards when he enters play.",
+    "abilityType": null
+  },
+  {
+    "text": "**Support** _(Whenever this character quests, you\\u0003 may add their {S} to another chosen character‘s {S} this turn.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**ANCIENT INSIGHT** Whenever you remove 1 or more damage from one of your characters, gain 2 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**ARTIFICER** When you play this character and whenever he quests, you may banish one of your items to draw 2 cards.",
+    "abilityType": null
+  },
+  {
+    "text": "**NEVER, EVER LOSE SIGHT** When this character is banished, you may put this card into your inkwell facedown and exerted.",
+    "abilityType": null
+  },
+  {
+    "text": "**I'M A FAST LEARNER** When you play this character, remove up to 1 damage from chosen character of yours.",
+    "abilityType": null
+  },
+  {
+    "text": "**DON'T CALL ME CUTE** When you play this character, you may banish chosen item. Its player draws a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**TIDY UP** Whenever you play a Floodborn character, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": null
+  },
+  {
+    "text": "**IT'S CALLED A HUSTLE** When you play this character, you may return an item card named Pawpsicle from your discard to your hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**I TRUST YOU** Whenever this character quests, look at the top 2 cards of your deck. You may put one into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": null
+  },
+  {
+    "text": "**HUNNY POT** Whenever this character quests, you may put a card from your hand into your inkwell facedown.",
+    "abilityType": null
+  },
+  {
+    "text": "**YOU'RE NOT WELCOME HERE** When you play this character, you may deal 1 damage to chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**WE HAVE A CHOICE** When you play this character, you may banish chosen item.",
+    "abilityType": null
+  },
+  {
+    "text": "**INSUBORDINATION!** Whenever you play a Floodborn character, deal 1 damage to each opposing character.",
+    "abilityType": null
+  },
+  {
+    "text": "**HAVE COURAGE** When you play this character, you may draw a card, then choose and discard a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**Resist** +1 _(Damage dealt to this character is reduced by 2.)_\\n\\n**SCOUT LEADER** During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**OFF WITH THEIR HEADS!** Whenever an opposing character is banished, you may ready this character.",
+    "abilityType": null
+  },
+  {
+    "text": "**CHANGE OF HEART** Whenever this character quests, you may draw a card, then choose and discard a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_\\n\\n**Resist** +1 _(Damage dealt to this character is reduced by 1.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**Resist** +2 _(Damage dealt to this character is reduced by 2.)_\\n\\n**WHAT YOU GIVE IS WHAT YOU GET** While this character is exerted and you have no cards in your hand, opponents can’t play actions.",
+    "abilityType": null
+  },
+  {
+    "text": "Remove up to 4 damage from chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "Remove up to 3 damage from each of your characters.",
+    "abilityType": null
+  },
+  {
+    "text": "**CONSIDER THE COCONUT** Whenever you play a character,\\ryou may remove up to 2 damage from chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**ALL FOR ONE AND ONE FOR ALL** Whenever one of your characters with **Bodyguard** is banished, you may draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**Singer** 5 _(This character counts as cost 5 to sing songs.)_\\n**MUSICAL DEBUT** When you play this character, look at the top 4 cards of your deck. You may reveal a song card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": null
+  },
+  {
+    "text": "**SWEEP** When you play this character, you may shuffle a card from any discard into its player's deck.",
+    "abilityType": null
+  },
+  {
+    "text": "**Challenger** +4 (_When challenging, this character get +4 {S}._)",
+    "abilityType": null
+  },
+  {
+    "text": "**THIS IS NOT WHO YOU ARE** When you play this character, you may banish chosen character named Te Ka.",
+    "abilityType": null
+  },
+  {
+    "text": "**DISTURBING BEAUTY** When you play this character, chosen character gets -2 {S} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**Dragon Fire** When you play this character, you may banish chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**Support** _(Whenever this character quests, you\\u0003 may add their {S} to another chosen character's {S} this turn.)_",
+    "abilityType": null
+  },
+  {
+    "text": "**IMPROVISE** When you play this character each opponent loses 1 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**Insidious plot** When you play this character, chosen opposing character gets -5 {S} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**STAGE LITTLE ACCIDENT** Whenever this character quests, you may deal 1 damage to chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_\\n\\n**Support** _(Whenever this character quests, you may add their {S} to another chosen character‘s {S} this turn.)",
+    "abilityType": null
+  },
+  {
+    "text": "**Do it again!** When you play this character, you may return an action card from your discard to your hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_\\n**AND TWO FOR TEA!** When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
+    "abilityType": null
+  },
+  {
+    "text": "**WELL OF SOULS** When you play this character, return a character card from your discard to your hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**HORSE KICK** When you play this character, chosen character gets -2 {S} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**HEROISM** When this character challenges and is banished, you may banish the challenged character.",
+    "abilityType": null
+  },
+  {
+    "text": "**GLEAM AND GLOW** When you play this character, remove up to 3 damage from one of your characters. Draw a card for each 1 damage removed this way.",
+    "abilityType": null
+  },
+  {
+    "text": "**OHANA** When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
+    "abilityType": null
+  },
+  {
+    "text": "**TASTES LIKE CHICKEN** When you play this character, you may remove up to 1 damage from chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "**LOVING HEART** When you play this character, if you have a character named Elsa in play, choose an opposing character. The chosen character doesn't ready at the start of their next turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**Challenger** +2 (_When challenging, this character get +2 {S}._)",
+    "abilityType": null
+  },
+  {
+    "text": "**DREAMS MADE REAL** Whenever you play a song, you may look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+    "abilityType": null
+  },
+  {
+    "text": "**Challenger** +3 (_When challenging, this character get +3 {S}._)",
+    "abilityType": null
+  },
+  {
+    "text": "**CAST MY SPELL** When you play this character, you may draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**DURABLE** When this character is banished in a challenge, you may return this card to your hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**IT'S TOO EASY!** When you play this character, each opponent loses 1 lore. You may draw a card for each 1 lore lost this way.",
+    "abilityType": null
+  },
+  {
+    "text": "Each opponent loses 1 lore. You may draw a card for each 1 lore lost this way.",
+    "abilityType": null
+  },
+  {
+    "text": "**YOU'RE EXCUSED** Whenever this character quests, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    "abilityType": null
+  },
+  {
+    "text": "**Lose something?** When this character is challenged and banished, banish the challenging character.",
+    "abilityType": null
+  },
+  {
+    "text": "**You'll Be Sorry** When this character is challenged and banished, you may return chosen character to their player's hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**HERE COMES THE SMOLDER** Whenever this character is challenged, the challenging player chooses and discards a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**BREAK** When you play this character, you may banish chosen item card.",
+    "abilityType": null
+  },
+  {
+    "text": "**DOUBLE THE POWDER!** When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.",
+    "abilityType": null
+  },
+  {
+    "text": "**GUESS WHAT?** When you play this character, you may draw a card, then choose and discard a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**TEA PARTY** Whenever this character is challenged, you may draw a card.",
+    "abilityType": null
+  },
+  {
+    "text": "**Lead by example** During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "**Challenger** +2 (_While challenging, this character get +2 {S}._)",
+    "abilityType": null
+  },
+  {
+    "text": "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_\\n**ALL FOR ONE** Your other Musketeer characters\\rget +1 {S}.",
+    "abilityType": null
+  },
+  {
+    "text": "**TANGLE** When you play this character, each opponent loses 1 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "**LOOK AT THIS STUFF** Whenever you play an item, you may ready this character.",
+    "abilityType": null
+  },
+  {
+    "text": "**I WILL BE WITH YOU** When this character is banished, you may put this card into your inkwell facedown and exerted.",
+    "abilityType": null
+  },
+  {
+    "text": "**IS THERE A DOWNSIDE TO THIS?** When you play this character, you may put chosen opposing character into their player's inkwell facedown.",
+    "abilityType": null
+  },
+  {
+    "text": "**Support** _(Whenever this character quests, you\\u0003 may add their {S} to another chosen character‘s {S} this turn.)",
+    "abilityType": null
+  },
+  {
+    "text": "**GET A CLUE** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": null
+  },
+  {
+    "text": "Chosen characters gets -2 {S} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "Remove up to 2 damage from chosen character.",
+    "abilityType": null
+  },
+  {
+    "text": "You may play a character with cost 5 or less for free.",
+    "abilityType": null
+  },
+  {
+    "text": "Each opponent chooses and discards 2 cards.",
+    "abilityType": null
+  },
+  {
+    "text": "Each opponent chooses and discards two cards.",
+    "abilityType": null
+  },
+  {
+    "text": "Each opponent loses 1 lore.",
+    "abilityType": null
+  },
+  {
+    "text": "Sing Together 6\\nRemove up to 3 damage from any number of chosen characters. All opposing characters get -3 {S} this turn.",
+    "abilityType": null
+  },
+  {
+    "text": "You discard your hand and draw 3 cards",
+    "abilityType": null
+  },
+  {
+    "text": "Chosen character gets -4 {S} until the start of your next turn.",
+    "abilityType": null
+  },
+  {
+    "text": "Exert all opposing characters. Whenever one of your characters banishes another character in a challenge this turn, gain 2 lore.",
+    "abilityType": null
+  }
+]

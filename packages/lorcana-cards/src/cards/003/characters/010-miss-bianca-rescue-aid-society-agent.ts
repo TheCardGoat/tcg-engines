@@ -19,12 +19,6 @@ export const missBiancaRescueAidSocietyAgent: CharacterCard = {
   externalIds: {
     ravensburger: "856f8987d811850242fd68b59881b2c78568dc0a",
   },
-  keywords: [
-    {
-      type: "Singer",
-      value: 4,
-    },
-  ],
   abilities: [
     {
       id: "113-1",

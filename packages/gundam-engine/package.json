@@ -15,7 +15,7 @@
     }
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
     "check-types": "tsc --noEmit",
     "format": "bunx @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",

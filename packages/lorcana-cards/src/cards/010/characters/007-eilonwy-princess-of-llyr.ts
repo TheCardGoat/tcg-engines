@@ -19,7 +19,6 @@ export const eilonwyPrincessOfLlyr: CharacterCard = {
   externalIds: {
     ravensburger: "0f58ea02eaf39ac3ef2bc75f001ad1d539b477ed",
   },
-  keywords: ["Support"],
   abilities: [
     {
       id: "49a-1",

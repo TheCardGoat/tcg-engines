@@ -19,7 +19,6 @@ export const simbaProtectiveCub: CharacterCard = {
   externalIds: {
     ravensburger: "6479a6ae550768c207018562ce6f687ec41e7c86",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "rvm-1",

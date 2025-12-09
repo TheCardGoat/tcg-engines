@@ -19,7 +19,6 @@ export const theNokkWaterSpirit: CharacterCard = {
   externalIds: {
     ravensburger: "5e84bd330102f933591077e27d65cdc0c3dbfdf1",
   },
-  keywords: ["Ward"],
   abilities: [
     {
       id: "q84-1",

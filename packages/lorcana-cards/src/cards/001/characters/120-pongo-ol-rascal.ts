@@ -19,7 +19,6 @@ export const pongoOlRascal: CharacterCard = {
   externalIds: {
     ravensburger: "0b91137c16607aa4f8e758e7b1ffc78257c42cd4",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "37j-1",

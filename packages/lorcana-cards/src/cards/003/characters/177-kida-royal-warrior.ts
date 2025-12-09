@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const kidaRoyalWarrior: CharacterCard = {
-  id: "1bi",
+  id: "1be",
   cardType: "character",
   name: "Kida",
   version: "Royal Warrior",
@@ -19,10 +19,9 @@ export const kidaRoyalWarrior: CharacterCard = {
   externalIds: {
     ravensburger: "aa90cc579bd99086d5e1d845fb0cdc765a5c1e27",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
-      id: "1bi-1",
+      id: "1be-1",
       text: "Bodyguard",
       type: "keyword",
       keyword: "Bodyguard",

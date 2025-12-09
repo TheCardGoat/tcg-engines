@@ -19,7 +19,6 @@ export const queenOfHeartsImpulsiveRuler: CharacterCard = {
   externalIds: {
     ravensburger: "8260dc617e55b1bdf94da0f0bf4b25bf196d0848",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "106-1",

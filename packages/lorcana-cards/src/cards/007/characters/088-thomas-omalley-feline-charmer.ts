@@ -19,7 +19,6 @@ export const thomasOmalleyFelineCharmer: CharacterCard = {
   externalIds: {
     ravensburger: "926bc29c21b56c27f1a52cfead290ea03de769de",
   },
-  keywords: ["Ward"],
   abilities: [
     {
       id: "14m-1",

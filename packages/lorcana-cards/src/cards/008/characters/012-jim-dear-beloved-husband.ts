@@ -19,7 +19,6 @@ export const jimDearBelovedHusband: CharacterCard = {
   externalIds: {
     ravensburger: "2cd509bc3d4a9b911eb07cec23d5037de65bf673",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "cft-1",

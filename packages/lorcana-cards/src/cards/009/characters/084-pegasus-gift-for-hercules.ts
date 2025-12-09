@@ -19,7 +19,6 @@ export const pegasusGiftForHercules: CharacterCard = {
   externalIds: {
     ravensburger: "b9041d1ca62abbd3a21d0c6f7bf65471865b0da4",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "1fc-1",

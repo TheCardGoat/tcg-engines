@@ -19,12 +19,6 @@ export const ursulaVanessa: CharacterCard = {
   externalIds: {
     ravensburger: "4e8aaca4272863b70bf21a78240c97ccad2e3ce5",
   },
-  keywords: [
-    {
-      type: "Singer",
-      value: 4,
-    },
-  ],
   abilities: [
     {
       id: "lsj-1",

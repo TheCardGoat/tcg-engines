@@ -93,24 +93,6 @@ export class TestCardModel {
 
   /** Check if card has a specific keyword */
   private hasKeywordAbility(keyword: string): boolean {
-    // Check keywords array (simple keywords)
-    if (this.card.keywords) {
-      for (const kw of this.card.keywords) {
-        if (
-          typeof kw === "string" &&
-          kw.toLowerCase() === keyword.toLowerCase()
-        ) {
-          return true;
-        }
-        if (
-          typeof kw === "object" &&
-          kw.type?.toLowerCase() === keyword.toLowerCase()
-        ) {
-          return true;
-        }
-      }
-    }
-
     // Check abilities array (keyword abilities)
     if (this.card.abilities) {
       for (const ability of this.card.abilities) {

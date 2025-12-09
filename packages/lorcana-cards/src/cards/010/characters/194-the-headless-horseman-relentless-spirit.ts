@@ -19,7 +19,6 @@ export const theHeadlessHorsemanRelentlessSpirit: CharacterCard = {
   externalIds: {
     ravensburger: "4160bece2c94394d46717dbd1fb2880098079cd6",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "i51-1",

@@ -9,7 +9,7 @@ export const teKLavaMonster: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Moana",
   set: "007",
-  text: "Challenger +2 (While challenging, this character gets +2.)",
+  text: "Challenger +2 (While challenging, this character gets +2 {S}.)",
   cost: 6,
   strength: 5,
   willpower: 6,
@@ -19,12 +19,6 @@ export const teKLavaMonster: CharacterCard = {
   externalIds: {
     ravensburger: "1d4dce8830332274f2d71f03712751024137f96e",
   },
-  keywords: [
-    {
-      type: "Challenger",
-      value: 2,
-    },
-  ],
   abilities: [
     {
       id: "84p-1",

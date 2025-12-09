@@ -19,12 +19,6 @@ export const generalLiHeadOfTheImperialArmy: CharacterCard = {
   externalIds: {
     ravensburger: "42bf6581e2f12f6875f38d3cbcd9a56544b2acfd",
   },
-  keywords: [
-    {
-      type: "Resist",
-      value: 1,
-    },
-  ],
   abilities: [
     {
       id: "iiq-1",

@@ -170,9 +170,11 @@ async function main() {
   console.log("\n📂 Generating card TypeScript files...");
 
   // Clear existing cards directory
+  /*
   if (fs.existsSync(CARDS_OUTPUT_DIR)) {
     fs.rmSync(CARDS_OUTPUT_DIR, { recursive: true });
   }
+  */
 
   // Filter to vanilla cards + parseable cards (keywords or action effects)
   const generatableCards: Record<string, (typeof canonicalCards)[string]> = {};

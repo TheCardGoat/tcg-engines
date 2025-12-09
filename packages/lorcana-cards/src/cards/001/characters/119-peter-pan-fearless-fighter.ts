@@ -19,7 +19,6 @@ export const peterPanFearlessFighter: CharacterCard = {
   externalIds: {
     ravensburger: "2ed2d4d7295557a864451ec395c78721255c0c17",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "czp-1",
