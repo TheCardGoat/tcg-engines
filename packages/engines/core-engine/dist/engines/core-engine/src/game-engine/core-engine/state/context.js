@@ -1,0 +1,148 @@
+import { logger } from "~/game-engine/core-engine/utils/logger";
+function isValidContext(context) {
+    // check if there's cards with the same instance id
+    for (const playerId in context.cards) {
+        const playerCards = context.cards[playerId];
+        const cardIds = new Set();
+        if (context.players[playerId].id !== playerId) {
+            throw new Error(`Player ${playerId} not found in players list.`);
+        }
+        for (const cardId in playerCards) {
+            if (cardIds.has(cardId)) {
+                throw new Error(`Duplicate card instance ID found: ${cardId}`);
+            }
+            cardIds.add(cardId);
+        }
+    }
+    // check if playerOrder is valid
+    if (!Array.isArray(context.playerOrder) || context.playerOrder.length === 0) {
+        logger.error(`Invalid playerOrder: ${context.playerOrder} in context`, context);
+        throw new Error("playerOrder must be a non-empty array.");
+    }
+    // check that every ctx.players  in ctx.playerOrder
+    for (const playerId of context.playerOrder) {
+        if (!context.players[playerId]) {
+            logger.error(`Player ${playerId} not found in players list.`, context);
+            throw new Error(`Player ${playerId} not found in context.`);
+        }
+    }
+    // check that zones are valid
+    for (const zoneId in context.cardZones || {}) {
+        const zone = context.cardZones[zoneId];
+        if (zone.id !== zoneId) {
+            throw new Error(`Zone ID mismatch: expected ${zoneId}, got ${zone.id}`);
+        }
+        if (!context.players[zone.owner]) {
+            throw new Error(`Zone owner ${zone.owner} not found in players.`);
+        }
+        if (!Array.isArray(zone?.cards)) {
+            throw new Error(`Invalid zone configuration for zone: ${zoneId}`);
+        }
+        // Check if all cards in the zone are valid instance IDs
+        for (const cardId of zone.cards) {
+            if (typeof cardId !== "string" || cardId.trim() === "") {
+                throw new Error(`Invalid card ID in zone ${zoneId}: ${cardId}`);
+            }
+            if (!context.cards[cardId]) {
+                throw new Error(`Card ID ${cardId} not found in game cards.`);
+            }
+        }
+    }
+    return true;
+}
+export function createCtx({ playerOrder, initialSegment, initialPhase, initialStep, cards, cardZones, players, seed, gameId = "default-game-id", matchId = "default-match-id", }) {
+    const context = {
+        gameId,
+        matchId,
+        playerOrder: playerOrder || [],
+        turnPlayerPos: 0,
+        priorityPlayerPos: 0,
+        numMoves: 0,
+        gameOver: undefined,
+        numTurns: 1,
+        numTurnMoves: 0,
+        currentSegment: initialSegment,
+        currentPhase: initialPhase,
+        currentStep: initialStep,
+        cards,
+        cardZones,
+        players,
+        moveHistory: [],
+        seed,
+    };
+    if (!isValidContext(context)) {
+        throw new Error("Invalid context.");
+    }
+    return context;
+}
+/**
+ * Legacy function with shallow copying - use for backward compatibility
+ * For new code, prefer using ImmutableContextManager directly
+ */
+export function setNextTurnPlayer(ctx) {
+    const nextTurnPlayerPos = (ctx.turnPlayerPos + 1) % ctx.playerOrder.length;
+    // Deep copy arrays and objects to prevent mutations
+    return {
+        ...ctx,
+        turnPlayerPos: nextTurnPlayerPos,
+        playerOrder: [...ctx.playerOrder],
+        cards: ctx.cards,
+        cardZones: ctx.cardZones,
+    };
+}
+/**
+ * Enhanced version using immutable context manager
+ * Provides deep immutability and change tracking
+ */
+export function getCurrentTurnPlayer(ctx) {
+    if (ctx.turnPlayerPos < 0 || ctx.turnPlayerPos >= ctx.playerOrder.length) {
+        return null;
+    }
+    return ctx.playerOrder[ctx.turnPlayerPos];
+}
+export function getCurrentPriorityPlayer(ctx) {
+    if (ctx.priorityPlayerPos < 0 ||
+        ctx.priorityPlayerPos >= ctx.playerOrder.length) {
+        return null;
+    }
+    return ctx.playerOrder[ctx.priorityPlayerPos];
+}
+export function hasPriorityPlayer(ctx, playerId) {
+    return getCurrentPriorityPlayer(ctx) === playerId;
+}
+/**
+ * Legacy function with shallow copying - use for backward compatibility
+ * For new code, prefer using ImmutableContextManager directly
+ */
+export function setPriorityPlayer(ctx, player) {
+    const priorityPlayerPos = ctx.playerOrder.indexOf(player);
+    if (priorityPlayerPos === -1) {
+        throw new Error(`Player ${player} is not in the player order.`);
+    }
+    return {
+        ...ctx,
+        priorityPlayerPos: priorityPlayerPos,
+        playerOrder: [...ctx.playerOrder],
+        cards: ctx.cards,
+        cardZones: ctx.cardZones,
+    };
+}
+/**
+ * Legacy function with shallow copying - use for backward compatibility
+ * For new code, prefer using ImmutableContextManager directly
+ */
+export function setTurnPlayer(ctx, player) {
+    const turnPlayerPos = ctx.playerOrder.indexOf(player);
+    if (turnPlayerPos === -1) {
+        throw new Error(`Player ${player} is not in the player order.`);
+    }
+    // Deep copy arrays and objects to prevent mutations
+    return {
+        ...ctx,
+        turnPlayerPos: turnPlayerPos,
+        playerOrder: [...ctx.playerOrder],
+        cards: ctx.cards,
+        cardZones: ctx.cardZones,
+    };
+}
+//# sourceMappingURL=context.js.map

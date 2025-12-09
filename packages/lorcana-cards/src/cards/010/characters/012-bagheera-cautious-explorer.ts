@@ -6,9 +6,7 @@ export const bagheeraCautiousExplorer: CharacterCard = {
   name: "Bagheera",
   version: "Cautious Explorer",
   fullName: "Bagheera - Cautious Explorer",
-  inkType: [
-    "amber"
-  ],
+  inkType: ["amber"],
   franchise: "Jungle Book",
   set: "010",
   cost: 3,
@@ -19,10 +17,7 @@ export const bagheeraCautiousExplorer: CharacterCard = {
   inkable: true,
   vanilla: true,
   externalIds: {
-    ravensburger: "260de94fa510985afc35a37f683b4861315b4fd1"
+    ravensburger: "260de94fa510985afc35a37f683b4861315b4fd1",
   },
-  classifications: [
-    "Storyborn",
-    "Ally"
-  ]
+  classifications: ["Storyborn", "Ally"],
 };

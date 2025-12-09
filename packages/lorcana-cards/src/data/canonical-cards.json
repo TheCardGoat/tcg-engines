@@ -4,9 +4,7 @@
     "cardType": "character",
     "name": "Elsa",
     "fullName": "Elsa - Exploring the Unknown",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Exploring the Unknown",
     "franchise": "Frozen",
     "cost": 3,
@@ -32,21 +30,14 @@
     "strength": 1,
     "willpower": 3,
     "lore": 1,
-    "classifications": [
-      "Dreamborn",
-      "Hero",
-      "Queen",
-      "Sorcerer"
-    ]
+    "classifications": ["Dreamborn", "Hero", "Queen", "Sorcerer"]
   },
   "qnc": {
     "id": "qnc",
     "cardType": "character",
     "name": "Baloo",
     "fullName": "Baloo - Friend and Guardian",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Friend and Guardian",
     "franchise": "Jungle Book",
     "cost": 6,
@@ -61,10 +52,7 @@
         "id": "qnc"
       }
     ],
-    "keywords": [
-      "Bodyguard",
-      "Support"
-    ],
+    "keywords": ["Bodyguard", "Support"],
     "rulesText": "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nSupport (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
     "abilities": [
       {
@@ -91,19 +79,14 @@
     "strength": 3,
     "willpower": 8,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "14y": {
     "id": "14y",
     "cardType": "character",
     "name": "Gaston",
     "fullName": "Gaston - Frightful Bully",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Frightful Bully",
     "franchise": "Beauty and the Beast",
     "cost": 2,
@@ -118,9 +101,7 @@
         "id": "14y"
       }
     ],
-    "keywords": [
-      "Boost"
-    ],
+    "keywords": ["Boost"],
     "rulesText": "Boost 2 {I} (Once during your turn, you may pay 2 {I} to put the top card of your deck facedown under this character.)\nTOP THAT! Whenever this character quests, if there's a card under him, chosen opposing character can't challenge and must quest if able during their next turn.",
     "abilities": [
       {
@@ -137,20 +118,14 @@
     "strength": 3,
     "willpower": 3,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Villain",
-      "Whisper"
-    ]
+    "classifications": ["Storyborn", "Villain", "Whisper"]
   },
   "1fr": {
     "id": "1fr",
     "cardType": "character",
     "name": "Rapunzel",
     "fullName": "Rapunzel - Ready for Adventure",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Ready for Adventure",
     "franchise": "Tangled",
     "cost": 2,
@@ -165,9 +140,7 @@
         "id": "1fr"
       }
     ],
-    "keywords": [
-      "Support"
-    ],
+    "keywords": ["Support"],
     "rulesText": "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)\nACT OF KINDNESS Whenever one of your characters is chosen for Support, until the start of your next turn, the next time they would be dealt damage they take no damage instead.",
     "abilities": [
       {
@@ -184,20 +157,14 @@
     "strength": 1,
     "willpower": 2,
     "lore": 1,
-    "classifications": [
-      "Dreamborn",
-      "Hero",
-      "Princess"
-    ]
+    "classifications": ["Dreamborn", "Hero", "Princess"]
   },
   "wfp": {
     "id": "wfp",
     "cardType": "character",
     "name": "Headless Manhorse",
     "fullName": "Headless Manhorse - Manny",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Manny",
     "franchise": "Ducktales",
     "cost": 6,
@@ -216,19 +183,14 @@
     "strength": 5,
     "willpower": 10,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "1fo": {
     "id": "1fo",
     "cardType": "character",
     "name": "Higgins",
     "fullName": "Higgins - Undercover Officer",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Undercover Officer",
     "franchise": "Zootropolis",
     "cost": 1,
@@ -247,20 +209,14 @@
     "strength": 2,
     "willpower": 2,
     "lore": 1,
-    "classifications": [
-      "Dreamborn",
-      "Ally",
-      "Detective"
-    ]
+    "classifications": ["Dreamborn", "Ally", "Detective"]
   },
   "1gk": {
     "id": "1gk",
     "cardType": "character",
     "name": "Rajah",
     "fullName": "Rajah - Devoted Protector",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Devoted Protector",
     "franchise": "Aladdin",
     "cost": 3,
@@ -275,9 +231,7 @@
         "id": "1gk"
       }
     ],
-    "keywords": [
-      "Bodyguard"
-    ],
+    "keywords": ["Bodyguard"],
     "rulesText": "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
     "abilities": [
       {
@@ -295,19 +249,14 @@
     "strength": 3,
     "willpower": 4,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "49a": {
     "id": "49a",
     "cardType": "character",
     "name": "Eilonwy",
     "fullName": "Eilonwy - Princess of Llyr",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Princess of Llyr",
     "franchise": "Black Cauldron",
     "cost": 1,
@@ -322,9 +271,7 @@
         "id": "49a"
       }
     ],
-    "keywords": [
-      "Support"
-    ],
+    "keywords": ["Support"],
     "rulesText": "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
     "abilities": [
       {
@@ -342,20 +289,14 @@
     "strength": 2,
     "willpower": 1,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Ally",
-      "Princess"
-    ]
+    "classifications": ["Storyborn", "Ally", "Princess"]
   },
   "ut8": {
     "id": "ut8",
     "cardType": "character",
     "name": "Scrooge McDuck",
     "fullName": "Scrooge McDuck - On the Right Track",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "On the Right Track",
     "franchise": "Ducktales",
     "cost": 3,
@@ -381,19 +322,14 @@
     "strength": 4,
     "willpower": 3,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Hero"
-    ]
+    "classifications": ["Storyborn", "Hero"]
   },
   "15d": {
     "id": "15d",
     "cardType": "character",
     "name": "Webby Vanderquack",
     "fullName": "Webby Vanderquack - Knowledge Seeker",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Knowledge Seeker",
     "franchise": "Ducktales",
     "cost": 3,
@@ -419,19 +355,14 @@
     "strength": 1,
     "willpower": 6,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "1pr": {
     "id": "1pr",
     "cardType": "character",
     "name": "Gurgi",
     "fullName": "Gurgi - Apple Lover",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Apple Lover",
     "franchise": "Black Cauldron",
     "cost": 2,
@@ -457,19 +388,14 @@
     "strength": 2,
     "willpower": 3,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "16m": {
     "id": "16m",
     "cardType": "character",
     "name": "Mrs. Beakley",
     "fullName": "Mrs. Beakley - Former S.H.U.S.H. Agent",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Former S.H.U.S.H. Agent",
     "franchise": "Ducktales",
     "cost": 4,
@@ -484,9 +410,7 @@
         "id": "16m"
       }
     ],
-    "keywords": [
-      "Bodyguard"
-    ],
+    "keywords": ["Bodyguard"],
     "rulesText": "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
     "abilities": [
       {
@@ -504,19 +428,14 @@
     "strength": 2,
     "willpower": 6,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "ak4": {
     "id": "ak4",
     "cardType": "character",
     "name": "Bagheera",
     "fullName": "Bagheera - Cautious Explorer",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Cautious Explorer",
     "franchise": "Jungle Book",
     "cost": 3,
@@ -535,19 +454,14 @@
     "strength": 4,
     "willpower": 4,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "lyq": {
     "id": "lyq",
     "cardType": "character",
     "name": "Shanti",
     "fullName": "Shanti - Village Girl",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Village Girl",
     "franchise": "Jungle Book",
     "cost": 3,
@@ -562,9 +476,7 @@
         "id": "lyq"
       }
     ],
-    "keywords": [
-      "Singer"
-    ],
+    "keywords": ["Singer"],
     "rulesText": "Singer 5 (This character counts as cost 5 to sing songs.)",
     "abilities": [
       {
@@ -583,19 +495,14 @@
     "strength": 0,
     "willpower": 5,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "1ds": {
     "id": "1ds",
     "cardType": "character",
     "name": "Flash",
     "fullName": "Flash - Records Specialist",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Records Specialist",
     "franchise": "Zootropolis",
     "cost": 3,
@@ -626,19 +533,14 @@
     "strength": 3,
     "willpower": 4,
     "lore": 2,
-    "classifications": [
-      "Dreamborn",
-      "Ally"
-    ]
+    "classifications": ["Dreamborn", "Ally"]
   },
   "5f5": {
     "id": "5f5",
     "cardType": "character",
     "name": "Taran",
     "fullName": "Taran - Pig Keeper",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Pig Keeper",
     "franchise": "Black Cauldron",
     "cost": 5,
@@ -653,9 +555,7 @@
         "id": "5f5"
       }
     ],
-    "keywords": [
-      "Support"
-    ],
+    "keywords": ["Support"],
     "rulesText": "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)\nFOLLOW THE PIG Whenever this character quests, you may return a character card named Hen Wen from your discard to your hand.",
     "abilities": [
       {
@@ -672,19 +572,14 @@
     "strength": 5,
     "willpower": 5,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Hero"
-    ]
+    "classifications": ["Storyborn", "Hero"]
   },
   "1b3": {
     "id": "1b3",
     "cardType": "character",
     "name": "Sebastian",
     "fullName": "Sebastian - Loyal Crab",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Loyal Crab",
     "franchise": "Little Mermaid",
     "cost": 2,
@@ -703,19 +598,14 @@
     "strength": 1,
     "willpower": 1,
     "lore": 3,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "1l1": {
     "id": "1l1",
     "cardType": "character",
     "name": "Ariel",
     "fullName": "Ariel - Ethereal Voice",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Ethereal Voice",
     "franchise": "Little Mermaid",
     "cost": 4,
@@ -730,9 +620,7 @@
         "id": "1l1"
       }
     ],
-    "keywords": [
-      "Boost"
-    ],
+    "keywords": ["Boost"],
     "rulesText": "Boost 1 {I} (Once during your turn, you may pay 1 {I} to put the top card of your deck facedown under this character.)\nCOMMAND PERFORMANCE Once during your turn, whenever you play a song, if there's a card under this character, you may draw a card.",
     "abilities": [
       {
@@ -749,21 +637,14 @@
     "strength": 3,
     "willpower": 4,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Hero",
-      "Princess",
-      "Whisper"
-    ]
+    "classifications": ["Storyborn", "Hero", "Princess", "Whisper"]
   },
   "1hq": {
     "id": "1hq",
     "cardType": "character",
     "name": "Scrooge McDuck",
     "fullName": "Scrooge McDuck - Cavern Prospector",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Cavern Prospector",
     "franchise": "Ducktales",
     "cost": 6,
@@ -778,9 +659,7 @@
         "id": "1hq"
       }
     ],
-    "keywords": [
-      "Shift"
-    ],
+    "keywords": ["Shift"],
     "rulesText": "Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named Scrooge McDuck.)\nSPECULATION Whenever you play a character or location with Boost, you may put the top card of your deck facedown under them.",
     "abilities": [
       {
@@ -797,19 +676,14 @@
     "strength": 4,
     "willpower": 7,
     "lore": 2,
-    "classifications": [
-      "Floodborn",
-      "Hero"
-    ]
+    "classifications": ["Floodborn", "Hero"]
   },
   "mea": {
     "id": "mea",
     "cardType": "character",
     "name": "Mowgli",
     "fullName": "Mowgli - Man Cub",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Man Cub",
     "franchise": "Jungle Book",
     "cost": 2,
@@ -835,19 +709,14 @@
     "strength": 1,
     "willpower": 2,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Hero"
-    ]
+    "classifications": ["Storyborn", "Hero"]
   },
   "dbt": {
     "id": "dbt",
     "cardType": "character",
     "name": "Simba",
     "fullName": "Simba - King in the Making",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "King in the Making",
     "franchise": "Lion King",
     "cost": 7,
@@ -862,9 +731,7 @@
         "id": "dbt"
       }
     ],
-    "keywords": [
-      "Boost"
-    ],
+    "keywords": ["Boost"],
     "rulesText": "Boost 3 {I} (Once during your turn, you may pay 3 {I} to put the top card of your deck facedown under this character.)\nTIMELY ALLIANCE Whenever you put a card under this character, you may reveal the top card of your deck. If it's a character card, you may play that character for free and they enter play exerted. Otherwise, put it on the bottom of your deck.",
     "abilities": [
       {
@@ -881,21 +748,14 @@
     "strength": 5,
     "willpower": 5,
     "lore": 3,
-    "classifications": [
-      "Storyborn",
-      "Hero",
-      "Prince",
-      "Whisper"
-    ]
+    "classifications": ["Storyborn", "Hero", "Prince", "Whisper"]
   },
   "1mg": {
     "id": "1mg",
     "cardType": "character",
     "name": "Goofy",
     "fullName": "Goofy - Ghost Hunter",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Ghost Hunter",
     "cost": 4,
     "inkable": true,
@@ -920,20 +780,14 @@
     "strength": 4,
     "willpower": 5,
     "lore": 1,
-    "classifications": [
-      "Dreamborn",
-      "Hero",
-      "Detective"
-    ]
+    "classifications": ["Dreamborn", "Hero", "Detective"]
   },
   "27n": {
     "id": "27n",
     "cardType": "character",
     "name": "Della Duck",
     "fullName": "Della Duck - Returning Mother",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Returning Mother",
     "franchise": "Ducktales",
     "cost": 4,
@@ -959,19 +813,14 @@
     "strength": 2,
     "willpower": 5,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "12o": {
     "id": "12o",
     "cardType": "character",
     "name": "Mickey Mouse",
     "fullName": "Mickey Mouse - Amber Champion",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Amber Champion",
     "cost": 4,
     "inkable": true,
@@ -1001,19 +850,14 @@
     "strength": 2,
     "willpower": 5,
     "lore": 1,
-    "classifications": [
-      "Dreamborn",
-      "Hero"
-    ]
+    "classifications": ["Dreamborn", "Hero"]
   },
   "1mo": {
     "id": "1mo",
     "cardType": "character",
     "name": "Goofy",
     "fullName": "Goofy - Galumphing Gumshoe",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Galumphing Gumshoe",
     "cost": 8,
     "inkable": true,
@@ -1027,9 +871,7 @@
         "id": "1mo"
       }
     ],
-    "keywords": [
-      "Shift"
-    ],
+    "keywords": ["Shift"],
     "rulesText": "Shift 5 {I} (You may pay 5 {I} to play this on top of one of your characters named Goofy.)\nHOT PURSUIT When you play this character and whenever he quests, each opposing character gets -1 {S} until the start of your next turn.",
     "abilities": [
       {
@@ -1046,20 +888,14 @@
     "strength": 5,
     "willpower": 7,
     "lore": 3,
-    "classifications": [
-      "Floodborn",
-      "Hero",
-      "Detective"
-    ]
+    "classifications": ["Floodborn", "Hero", "Detective"]
   },
   "1kx": {
     "id": "1kx",
     "cardType": "character",
     "name": "Gazelle",
     "fullName": "Gazelle - Ballad Singer",
-    "inkType": [
-      "amber"
-    ],
+    "inkType": ["amber"],
     "version": "Ballad Singer",
     "franchise": "Zootropolis",
     "cost": 5,
@@ -1074,9 +910,7 @@
         "id": "1kx"
       }
     ],
-    "keywords": [
-      "Singer"
-    ],
+    "keywords": ["Singer"],
     "rulesText": "Singer 7 (This character counts as cost 7 to sing songs.)\nCROWD FAVORITE When you play this character, you may put a song card from your discard on the top of your deck.",
     "abilities": [
       {
@@ -1093,19 +927,14 @@
     "strength": 3,
     "willpower": 8,
     "lore": 1,
-    "classifications": [
-      "Dreamborn",
-      "Ally"
-    ]
+    "classifications": ["Dreamborn", "Ally"]
   },
   "1kv": {
     "id": "1kv",
     "cardType": "character",
     "name": "Minnie Mouse",
     "fullName": "Minnie Mouse - Amethyst Champion",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Amethyst Champion",
     "cost": 4,
     "inkable": true,
@@ -1130,19 +959,14 @@
     "strength": 2,
     "willpower": 3,
     "lore": 2,
-    "classifications": [
-      "Dreamborn",
-      "Hero"
-    ]
+    "classifications": ["Dreamborn", "Hero"]
   },
   "wsd": {
     "id": "wsd",
     "cardType": "character",
     "name": "The Horned King",
     "fullName": "The Horned King - Wicked Ruler",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Wicked Ruler",
     "franchise": "Black Cauldron",
     "cost": 4,
@@ -1157,9 +981,7 @@
         "id": "wsd"
       }
     ],
-    "keywords": [
-      "Shift"
-    ],
+    "keywords": ["Shift"],
     "rulesText": "Shift 2 {I} (You may pay 2 {I} to play this on top of one of your characters named The Horned King.)\nARISE! Whenever one of your other characters is banished in a challenge, you may return that card to your hand, then choose and discard a card.",
     "abilities": [
       {
@@ -1176,21 +998,14 @@
     "strength": 3,
     "willpower": 4,
     "lore": 2,
-    "classifications": [
-      "Floodborn",
-      "Villain",
-      "King",
-      "Sorcerer"
-    ]
+    "classifications": ["Floodborn", "Villain", "King", "Sorcerer"]
   },
   "grx": {
     "id": "grx",
     "cardType": "character",
     "name": "Gwythaint",
     "fullName": "Gwythaint - Savage Hunter",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Savage Hunter",
     "franchise": "Black Cauldron",
     "cost": 5,
@@ -1205,9 +1020,7 @@
         "id": "grx"
       }
     ],
-    "keywords": [
-      "Evasive"
-    ],
+    "keywords": ["Evasive"],
     "rulesText": "Evasive (Only characters with Evasive can challenge this character.)\nSWOOPING STRIKE Whenever this character quests, each opponent chooses and exerts one of their ready characters.",
     "abilities": [
       {
@@ -1224,20 +1037,14 @@
     "strength": 4,
     "willpower": 3,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Ally",
-      "Dragon"
-    ]
+    "classifications": ["Storyborn", "Ally", "Dragon"]
   },
   "33o": {
     "id": "33o",
     "cardType": "character",
     "name": "The Horned King",
     "fullName": "The Horned King - Heartless Devil",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Heartless Devil",
     "franchise": "Black Cauldron",
     "cost": 1,
@@ -1256,21 +1063,14 @@
     "strength": 2,
     "willpower": 2,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Villain",
-      "King",
-      "Sorcerer"
-    ]
+    "classifications": ["Storyborn", "Villain", "King", "Sorcerer"]
   },
   "5uf": {
     "id": "5uf",
     "cardType": "character",
     "name": "Cauldron Born",
     "fullName": "Cauldron Born - Mindless Horde",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Mindless Horde",
     "franchise": "Black Cauldron",
     "cost": 5,
@@ -1289,18 +1089,14 @@
     "strength": 6,
     "willpower": 7,
     "lore": 1,
-    "classifications": [
-      "Storyborn"
-    ]
+    "classifications": ["Storyborn"]
   },
   "t99": {
     "id": "t99",
     "cardType": "character",
     "name": "Demona",
     "fullName": "Demona - Betrayer of the Clan",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Betrayer of the Clan",
     "franchise": "Gargoyles",
     "cost": 4,
@@ -1315,9 +1111,7 @@
         "id": "t99"
       }
     ],
-    "keywords": [
-      "Challenger"
-    ],
+    "keywords": ["Challenger"],
     "rulesText": "Challenger +2 (While challenging, this character gets +2 {S}.)\nSTONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
     "abilities": [
       {
@@ -1334,21 +1128,14 @@
     "strength": 4,
     "willpower": 6,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Villain",
-      "Gargoyle",
-      "Sorcerer"
-    ]
+    "classifications": ["Storyborn", "Villain", "Gargoyle", "Sorcerer"]
   },
   "1l8": {
     "id": "1l8",
     "cardType": "character",
     "name": "Magica De Spell",
     "fullName": "Magica De Spell - Shadowy and Sinister",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Shadowy and Sinister",
     "franchise": "Ducktales",
     "cost": 3,
@@ -1374,20 +1161,14 @@
     "strength": 3,
     "willpower": 4,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Villain",
-      "Sorcerer"
-    ]
+    "classifications": ["Storyborn", "Villain", "Sorcerer"]
   },
   "ejj": {
     "id": "ejj",
     "cardType": "character",
     "name": "Lena Sabrewing",
     "fullName": "Lena Sabrewing - Mysterious Duck",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Mysterious Duck",
     "franchise": "Ducktales",
     "cost": 4,
@@ -1413,20 +1194,14 @@
     "strength": 3,
     "willpower": 3,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Ally",
-      "Sorcerer"
-    ]
+    "classifications": ["Storyborn", "Ally", "Sorcerer"]
   },
   "87v": {
     "id": "87v",
     "cardType": "character",
     "name": "Iago",
     "fullName": "Iago - Stompin' Mad",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Stompin' Mad",
     "franchise": "Aladdin",
     "cost": 2,
@@ -1441,9 +1216,7 @@
         "id": "87v"
       }
     ],
-    "keywords": [
-      "Challenger"
-    ],
+    "keywords": ["Challenger"],
     "rulesText": "Challenger +5 (While challenging, this character gets +5 {S}.)",
     "abilities": [
       {
@@ -1462,19 +1235,14 @@
     "strength": 0,
     "willpower": 2,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "ynj": {
     "id": "ynj",
     "cardType": "character",
     "name": "Violet Sabrewing",
     "fullName": "Violet Sabrewing - Senior Junior Woodchuck",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Senior Junior Woodchuck",
     "franchise": "Ducktales",
     "cost": 2,
@@ -1489,9 +1257,7 @@
         "id": "ynj"
       }
     ],
-    "keywords": [
-      "Evasive"
-    ],
+    "keywords": ["Evasive"],
     "rulesText": "Evasive (Only characters with Evasive can challenge this character.)",
     "abilities": [
       {
@@ -1509,19 +1275,14 @@
     "strength": 3,
     "willpower": 1,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "1rk": {
     "id": "1rk",
     "cardType": "character",
     "name": "Mushu",
     "fullName": "Mushu - Braggin' Dragon",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Braggin' Dragon",
     "franchise": "Mulan",
     "cost": 4,
@@ -1540,20 +1301,14 @@
     "strength": 4,
     "willpower": 4,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Ally",
-      "Dragon"
-    ]
+    "classifications": ["Storyborn", "Ally", "Dragon"]
   },
   "1a3": {
     "id": "1a3",
     "cardType": "character",
     "name": "Duckworth",
     "fullName": "Duckworth - Ghost Butler",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Ghost Butler",
     "franchise": "Ducktales",
     "cost": 3,
@@ -1568,9 +1323,7 @@
         "id": "1a3"
       }
     ],
-    "keywords": [
-      "Rush"
-    ],
+    "keywords": ["Rush"],
     "rulesText": "Rush (This character can challenge the turn they're played.)\nFINAL ACT During your turn, when this character is banished, you may put the top card of your deck facedown under one of your characters or locations with Boost.",
     "abilities": [
       {
@@ -1587,20 +1340,14 @@
     "strength": 3,
     "willpower": 1,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Ally",
-      "Ghost"
-    ]
+    "classifications": ["Storyborn", "Ally", "Ghost"]
   },
   "1ar": {
     "id": "1ar",
     "cardType": "character",
     "name": "Nibs",
     "fullName": "Nibs - Lost Boy",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Lost Boy",
     "franchise": "Peter Pan",
     "cost": 4,
@@ -1626,19 +1373,14 @@
     "strength": 3,
     "willpower": 3,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "1f3": {
     "id": "1f3",
     "cardType": "character",
     "name": "The Horned King",
     "fullName": "The Horned King - Triumphant Ghoul",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Triumphant Ghoul",
     "franchise": "Black Cauldron",
     "cost": 2,
@@ -1664,21 +1406,14 @@
     "strength": 2,
     "willpower": 2,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Villain",
-      "King",
-      "Sorcerer"
-    ]
+    "classifications": ["Storyborn", "Villain", "King", "Sorcerer"]
   },
   "1gy": {
     "id": "1gy",
     "cardType": "character",
     "name": "Creeper",
     "fullName": "Creeper - Loyal Lackey",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Loyal Lackey",
     "franchise": "Black Cauldron",
     "cost": 6,
@@ -1697,19 +1432,14 @@
     "strength": 5,
     "willpower": 4,
     "lore": 4,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "1uk": {
     "id": "1uk",
     "cardType": "character",
     "name": "Coldstone",
     "fullName": "Coldstone - Reincarnated Cyborg",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Reincarnated Cyborg",
     "franchise": "Gargoyles",
     "cost": 5,
@@ -1735,20 +1465,14 @@
     "strength": 5,
     "willpower": 4,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Ally",
-      "Gargoyle"
-    ]
+    "classifications": ["Storyborn", "Ally", "Gargoyle"]
   },
   "qv8": {
     "id": "qv8",
     "cardType": "character",
     "name": "Magica De Spell",
     "fullName": "Magica De Spell - Spiteful Sorceress",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Spiteful Sorceress",
     "franchise": "Ducktales",
     "cost": 5,
@@ -1774,20 +1498,14 @@
     "strength": 3,
     "willpower": 6,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Villain",
-      "Sorcerer"
-    ]
+    "classifications": ["Storyborn", "Villain", "Sorcerer"]
   },
   "1lc": {
     "id": "1lc",
     "cardType": "character",
     "name": "Nana",
     "fullName": "Nana - Canine Caregiver",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Canine Caregiver",
     "franchise": "Peter Pan",
     "cost": 3,
@@ -1813,19 +1531,14 @@
     "strength": 3,
     "willpower": 3,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "x7f": {
     "id": "x7f",
     "cardType": "character",
     "name": "Magica De Spell",
     "fullName": "Magica De Spell - Conniving Sorceress",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Conniving Sorceress",
     "franchise": "Ducktales",
     "cost": 7,
@@ -1840,9 +1553,7 @@
         "id": "x7f"
       }
     ],
-    "keywords": [
-      "Shift"
-    ],
+    "keywords": ["Shift"],
     "rulesText": "Shift 7 {I} (You may pay 7 {I} to play this on top of one of your characters named Magica De Spell.)\nSHADOW'S GRASP When you play this character, if you used Shift to play her, you may draw 4 cards.",
     "abilities": [
       {
@@ -1859,20 +1570,14 @@
     "strength": 7,
     "willpower": 7,
     "lore": 1,
-    "classifications": [
-      "Floodborn",
-      "Villain",
-      "Sorcerer"
-    ]
+    "classifications": ["Floodborn", "Villain", "Sorcerer"]
   },
   "4nl": {
     "id": "4nl",
     "cardType": "character",
     "name": "Demona",
     "fullName": "Demona - Scourge of the Wyvern Clan",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Scourge of the Wyvern Clan",
     "franchise": "Gargoyles",
     "cost": 6,
@@ -1903,21 +1608,14 @@
     "strength": 5,
     "willpower": 6,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Villain",
-      "Gargoyle",
-      "Sorcerer"
-    ]
+    "classifications": ["Storyborn", "Villain", "Gargoyle", "Sorcerer"]
   },
   "qkg": {
     "id": "qkg",
     "cardType": "character",
     "name": "Hades",
     "fullName": "Hades - Looking for a Deal",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Looking for a Deal",
     "franchise": "Hercules",
     "cost": 5,
@@ -1943,20 +1641,14 @@
     "strength": 3,
     "willpower": 4,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Villain",
-      "Deity"
-    ]
+    "classifications": ["Storyborn", "Villain", "Deity"]
   },
   "uix": {
     "id": "uix",
     "cardType": "character",
     "name": "Olaf",
     "fullName": "Olaf - Helping Hand",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Helping Hand",
     "franchise": "Frozen",
     "cost": 1,
@@ -1982,19 +1674,14 @@
     "strength": 2,
     "willpower": 1,
     "lore": 1,
-    "classifications": [
-      "Storyborn",
-      "Ally"
-    ]
+    "classifications": ["Storyborn", "Ally"]
   },
   "mr7": {
     "id": "mr7",
     "cardType": "character",
     "name": "Merlin",
     "fullName": "Merlin - Completing His Research",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Completing His Research",
     "franchise": "Sword in the Stone",
     "cost": 2,
@@ -2009,9 +1696,7 @@
         "id": "mr7"
       }
     ],
-    "keywords": [
-      "Boost"
-    ],
+    "keywords": ["Boost"],
     "rulesText": "Boost 2 {I} (Once during your turn, you may pay 2 {I} to put the top card of your deck facedown under this character.)\nLEGACY OF LEARNING When this character is banished in a challenge, if he had a card under him, draw 2 cards.",
     "abilities": [
       {
@@ -2028,21 +1713,14 @@
     "strength": 0,
     "willpower": 3,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Mentor",
-      "Sorcerer",
-      "Whisper"
-    ]
+    "classifications": ["Storyborn", "Mentor", "Sorcerer", "Whisper"]
   },
   "86p": {
     "id": "86p",
     "cardType": "character",
     "name": "Ursula",
     "fullName": "Ursula - Whisper of Vanessa",
-    "inkType": [
-      "amethyst"
-    ],
+    "inkType": ["amethyst"],
     "version": "Whisper of Vanessa",
     "franchise": "Little Mermaid",
     "cost": 5,
@@ -2057,9 +1735,7 @@
         "id": "86p"
       }
     ],
-    "keywords": [
-      "Boost"
-    ],
+    "keywords": ["Boost"],
     "rulesText": "Boost 1 {I} (Once during your turn, you may pay 1 {I} to put the top card of your deck facedown under this character.)\nSLIPPERY SPELL While there's a card under this character, she gets +1 {L} and gains Evasive. (Only characters with Evasive can challenge them.)",
     "abilities": [
       {
@@ -2076,11 +1752,6 @@
     "strength": 4,
     "willpower": 5,
     "lore": 2,
-    "classifications": [
-      "Storyborn",
-      "Villain",
-      "Sorcerer",
-      "Whisper"
-    ]
+    "classifications": ["Storyborn", "Villain", "Sorcerer", "Whisper"]
   }
 }

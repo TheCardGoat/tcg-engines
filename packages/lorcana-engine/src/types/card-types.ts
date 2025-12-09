@@ -7,8 +7,8 @@
  */
 
 import type {
-  ActivatedAbility,
   ActionAbility,
+  ActivatedAbility,
   KeywordAbility,
   ReplacementAbility,
   StaticAbility,

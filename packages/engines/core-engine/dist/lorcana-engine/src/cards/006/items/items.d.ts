@@ -1,0 +1,20 @@
+import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+export declare const madHattersTeapot: LorcanitoItemCard;
+export declare const poohPirateShip: LorcanitoItemCard;
+export declare const pixieDust: LorcanitoItemCard;
+export declare const goldCoin: LorcanitoItemCard;
+export declare const jumboPop: LorcanitoItemCard;
+export declare const galacticCommunicator: LorcanitoItemCard;
+export declare const baymaxsHealthcareChip: LorcanitoItemCard;
+export declare const sunglasses: LorcanitoItemCard;
+export declare const trainingDummy: LorcanitoItemCard;
+export declare const megabot: LorcanitoItemCard;
+export declare const microbots: LorcanitoItemCard;
+export declare const naveensUkulele: LorcanitoItemCard;
+export declare const scrump: LorcanitoItemCard;
+export declare const maleficentsStaff: LorcanitoItemCard;
+export declare const transportPod: LorcanitoItemCard;
+export declare const longboat: LorcanitoItemCard;
+export declare const cardSoldiersSpear: LorcanitoItemCard;
+export declare const kingsSensorCore: LorcanitoItemCard;
+//# sourceMappingURL=items.d.ts.map

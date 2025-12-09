@@ -1,0 +1,25 @@
+import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+export declare const controlYourTemper: LorcanitoActionCard;
+export declare const healingGlow: LorcanitoActionCard;
+export declare const justInTime: LorcanitoActionCard;
+export declare const youHaveForgottenMe: LorcanitoActionCard;
+export declare const befuddle: LorcanitoActionCard;
+export declare const freeze: LorcanitoActionCard;
+export declare const doItAgain: LorcanitoActionCard;
+export declare const stampede: LorcanitoActionCard;
+export declare const stealFromRich: LorcanitoActionCard;
+export declare const theBeastIsMine: LorcanitoActionCard;
+export declare const viciousBetrayal: LorcanitoActionCard;
+export declare const cutToTheChase: LorcanitoActionCard;
+export declare const dragonFire: LorcanitoActionCard;
+export declare const fanTheFlames: LorcanitoActionCard;
+export declare const hesGotASword: LorcanitoActionCard;
+export declare const tangle: LorcanitoActionCard;
+export declare const developYourBrain: LorcanitoActionCard;
+export declare const ifItsNotBaroque: LorcanitoActionCard;
+export declare const workTogether: LorcanitoActionCard;
+export declare const breakAction: LorcanitoActionCard;
+export declare const fireTheCannons: LorcanitoActionCard;
+export declare const ransack: LorcanitoActionCard;
+export declare const smash: LorcanitoActionCard;
+//# sourceMappingURL=actions.d.ts.map

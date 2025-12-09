@@ -1,0 +1,28 @@
+import type { CardEffectTarget, TargetFilter } from "@lorcanito/lorcana-engine";
+export declare const anyCardYouOwn: CardEffectTarget;
+export declare const oneCardFromHand: CardEffectTarget;
+export declare const chosenCharacterOfYours: CardEffectTarget;
+export declare const chosenCharacter: CardEffectTarget;
+export declare const chosenOpposingCharacter: CardEffectTarget;
+export declare const chosenOpposingDamagedCharacter: CardEffectTarget;
+export declare function opposingCharactersWithCostXorLess(_cost?: number): CardEffectTarget;
+export declare const chosenCharacterItemOrLocation: CardEffectTarget;
+export declare const anotherChosenCharacter: CardEffectTarget;
+export declare const itemsYouControl: TargetFilter[];
+export declare const readyItemsYouControl: TargetFilter[];
+export declare const anotherChosenCharOfYours: CardEffectTarget;
+export declare const chosenItem: CardEffectTarget;
+export declare const chosenItemOfYours: CardEffectTarget;
+export declare const chosenItemOfYoursInHand: CardEffectTarget;
+export declare const allOtherCharactersHere: CardEffectTarget;
+export declare const yourOtherCharacters: CardEffectTarget;
+export declare const yourDamagedCharacters: CardEffectTarget;
+export declare const yourOtherLocations: CardEffectTarget;
+export declare const otherCharacters: CardEffectTarget;
+export declare const opposingCharacters: CardEffectTarget;
+export declare const opposingCharactersWithEvasive: CardEffectTarget;
+export declare const opposingCharactersWithoutEvasive: CardEffectTarget;
+export declare const chosenDamagedCharacter: CardEffectTarget;
+export declare const chosenCharacterOrLocation: CardEffectTarget;
+export declare const actionCardsInHand: CardEffectTarget;
+//# sourceMappingURL=target.d.ts.map

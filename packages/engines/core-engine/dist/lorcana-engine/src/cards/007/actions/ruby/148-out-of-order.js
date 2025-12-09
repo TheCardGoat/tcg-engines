@@ -1,0 +1,17 @@
+import { outOfOrderAbility } from "../../abilities";
+export const outOfOrder = {
+    id: "hvy",
+    name: "Out Of Order",
+    characteristics: ["action"],
+    text: "Banish chosen character.",
+    type: "action",
+    abilities: [outOfOrderAbility],
+    inkwell: true,
+    colors: ["ruby"],
+    cost: 7,
+    illustrator: "Hedvig H.S",
+    number: 148,
+    set: "007",
+    rarity: "common",
+};
+//# sourceMappingURL=148-out-of-order.js.map

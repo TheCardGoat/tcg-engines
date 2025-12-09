@@ -102,27 +102,35 @@ export type CanonicalCard =
 /**
  * Type guard for character cards
  */
-export function isCanonicalCharacter(card: CanonicalCard): card is CanonicalCharacterCard {
+export function isCanonicalCharacter(
+  card: CanonicalCard,
+): card is CanonicalCharacterCard {
   return card.cardType === "character";
 }
 
 /**
  * Type guard for action cards
  */
-export function isCanonicalAction(card: CanonicalCard): card is CanonicalActionCard {
+export function isCanonicalAction(
+  card: CanonicalCard,
+): card is CanonicalActionCard {
   return card.cardType === "action";
 }
 
 /**
  * Type guard for item cards
  */
-export function isCanonicalItem(card: CanonicalCard): card is CanonicalItemCard {
+export function isCanonicalItem(
+  card: CanonicalCard,
+): card is CanonicalItemCard {
   return card.cardType === "item";
 }
 
 /**
  * Type guard for location cards
  */
-export function isCanonicalLocation(card: CanonicalCard): card is CanonicalLocationCard {
+export function isCanonicalLocation(
+  card: CanonicalCard,
+): card is CanonicalLocationCard {
   return card.cardType === "location";
 }

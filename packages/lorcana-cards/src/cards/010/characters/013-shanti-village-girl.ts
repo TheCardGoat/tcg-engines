@@ -6,9 +6,7 @@ export const shantiVillageGirl: CharacterCard = {
   name: "Shanti",
   version: "Village Girl",
   fullName: "Shanti - Village Girl",
-  inkType: [
-    "amber"
-  ],
+  inkType: ["amber"],
   franchise: "Jungle Book",
   set: "010",
   text: "Singer 5 (This character counts as cost 5 to sing songs.)",
@@ -19,7 +17,7 @@ export const shantiVillageGirl: CharacterCard = {
   cardNumber: 13,
   inkable: true,
   externalIds: {
-    ravensburger: "4f296f41288f0bc56b098b2146d98af6428db935"
+    ravensburger: "4f296f41288f0bc56b098b2146d98af6428db935",
   },
   abilities: [
     {
@@ -27,11 +25,8 @@ export const shantiVillageGirl: CharacterCard = {
       text: "Singer 5",
       type: "keyword",
       keyword: "Singer",
-      value: 5
-    }
+      value: 5,
+    },
   ],
-  classifications: [
-    "Storyborn",
-    "Ally"
-  ]
+  classifications: ["Storyborn", "Ally"],
 };

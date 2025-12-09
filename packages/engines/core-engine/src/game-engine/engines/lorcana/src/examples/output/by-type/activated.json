@@ -1,0 +1,1254 @@
+[
+  {
+    "text": "{E}, 1 {I} – If you have 2 or more characters in play, gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item, {E} one of your Prince characters – Search your deck for a Princess character card and reveal it to all players. Put that card into your hand and shuffle your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} - If one of your characters was damaged this turn, gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 1 {I} – Chosen character gains Challenger +2 this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "INSIDE JOB If you have a character named Donald Duck in play, you pay 1 {I} less to play this item.\\nPAYOFF {e} – Chosen character gets -1 {S} until the start of your next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{e} – Chosen character gets -1 {S} until the start of your next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "SEARCH THE SANDS {E} 2 {I} – Return an Illusion character card from your discard to your hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} 2 {I} – Return an Illusion character card from your discard to your hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 1 {I} – Exert chosen opposing item. It can't ready at the start of its next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "ROLL WITH THE PUNCHES {E}, 1 {I} – Chosen character with no damage gains Resist +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 1 {I} – Chosen character with no damage gains Resist +2 until the start of your next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "WORTHY WEAPON {E}, {E} one of your characters – Ready chosen character. They can’t quest for the rest of this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, {E} one of your characters – Ready chosen character. They can’t quest for the rest of this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 1 {I} – Look at the top card of your deck. If it's a Puppy character card, you may reveal it and put it into your hand. Otherwise, put it on the bottom of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "IS IT ON YET? {E}, 1 {I} – Look at the top card of your deck. If it's a Puppy character card, you may reveal it and put it into your hand. Otherwise, put it on the bottom of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "CHAPTER THREE {E}, Banish one of your other items – Put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, Banish one of your other items – Put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "SHIELDING LIGHT {E}, 2 {I} – Chosen character gains Resist +2 and Support until the start of your next turn. (Damage dealt to them is reduced by 2. Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} – Chosen character gains Resist +2 and Support until the start of your next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "When you play this character, your other characters gain \"{E} – Draw a card\" this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "LOOK FOR A NEW ANGLE {E} - Ready chosen Floodborn character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} - Ready chosen Floodborn character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "YOU CAN DO IT! {E} – Chosen character gets +3 {S} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Chosen character gets +3 {S} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "AND MEAN {E} – Move 1 damage counter from this character to chosen opposing character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Move 1 damage counter from this character to chosen opposing character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "When this character is banished, choose one:\\n- Put 2 damage counters on all opposing characters.\\n- Banish all opposing items.\\n- Banish all opposing locations.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "I'M NOT FINISHED YET When this character is banished, choose one:\\n- Put 2 damage counters on all opposing characters.\\n- Banish all opposing items.\\n- Banish all opposing locations.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "ALL FOR ME {E}, banish one of your items – Chosen opponent loses 1 lore and you gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, banish one of your items – Chosen opponent loses 1 lore and you gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, Choose and discard an item card - Draw 2 cards",
+    "abilityType": "activated"
+  },
+  {
+    "text": "I HAVE JUST THE THING {E}, Choose and discard an item card - Draw 2 cards",
+    "abilityType": "activated"
+  },
+  {
+    "text": "LET'S GET THIS SHOW ON THE ROAD {E} – Chosen character gains Rush this turn. (They can challenge the turn they're played.)",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Chosen character gains Rush this turn. (They can challenge the turn they're played.)",
+    "abilityType": "activated"
+  },
+  {
+    "text": "STICK TO THE PLAN {E} – Another chosen character gains Resist +2 this turn. (Damage dealt to them is reduced by 2.)\\nIT'S UP TO YOU, LILO Your characters named Lilo gain Support. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Wreck-It Ralph.)\\nBACK ON TRACK When you play this character and whenever he quests, you may return a Racer character card with cost 6 or less from your discard to your hand. If you do, gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Evasive (Only characters with Evasive can challenge this character.)\\nSUPERNATURAL VENGEANCE {E} – Deal 1 damage to chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Deal 1 damage to chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "1 {I}, Choose and discard a card – Exert chosen opposing character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "ICE OVER 1 {I}, Choose and discard a card – Exert chosen opposing character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Choose and discard a card - Ready this character. He can't quest for the rest of this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Rush (This character can challenge the turn they're played.)\\nFULL BREACH Choose and discard a card - Ready this character. He can't quest for the rest of this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "CLEAN UP {E}, Banish one of your items – Draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, Banish one of your items – Draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Your Pirate characters gain \"{E} – Banish chosen damaged character\" this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "FINE DINING {E}, 1 {I} – If you have 2 or more characters in play, gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "PERFECT PAIR You may only have 2 copies of The Glass Slipper in your deck.\\n\\nSEARCH THE KINGDOM Banish this item, {E} one of your Prince characters – Search your deck for a Princess character card and reveal it to all players. Put that card into your hand and shuffle your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "THE PRICE OF POWER {E} - If one of your characters was damaged this turn, gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "PRECISION STRIKE {E}, 1 {I} – Chosen character gains Challenger +2 this turn. (They get +2 {S} while challenging.)",
+    "abilityType": "activated"
+  },
+  {
+    "text": "NOT AN ORDINARY APPLE {E} - Choose 3 cards in an opponent's discard and put them under their deck to gain 3 lore. If you moved at least 1 Princess this way, gain 4 lore instead.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "CAPTIVE AUDIENCE {E} – If you have at least 3 other characters in play, draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – If you have at least 3 other characters in play, draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "THAT'S QUITE ENOUGH {E} – Return chosen damaged character to their player's hand. Then, each opponent discards a card at random.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Look at the top 2 cards of your deck. Put one into your inkwell facedown and exerted, and the other on top of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Ward\\nKEY TO THE PUZZLE {E} – Look at the top 2 cards of your deck. Put one into your inkwell  facedown and exerted, and the other on top of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Bolt.)\\nMARK OF POWER Whenever you ready this character, gain 1 lore for each other undamaged character you have in play.\\nBOLT STARE {E} – Banish chosen Illusion character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Banish chosen Illusion character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I}, Banish 2 of your items – Deal 5 damage to chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "I'VE HAD IT! {E}, 2 {I}, Banish 2 of your items – Deal 5 damage to chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**NO ROOM, NO ROOM**, {E}, 1 {I} – Each opponent puts the top card of their deck into their discard.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "MAKE A RESCUE {E}, 3 {I} – Return a Pirate character card from your discard to your hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "FAITH AND TRUST {E}, {2} {I} - Chosen character gains Challenger +2 and Evasive until the start of your next turn. (While challenging, they get +2 {1}. Only characters with Evasive can challenge them.)",
+    "abilityType": "activated"
+  },
+  {
+    "text": "GLITTERING ACCESS {E}, 1 {I}, Banish this item – Ready chosen character of yours. They can't quest for the rest of this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "HERE YOU GO Banish this item – Remove up to 2 damage from each of your characters. Draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "RESOURCE ALLOCATION 1 {I}, Banish this item - Return chosen character with 2 {S} or less to their player's hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "10,000 MEDICAL PROCEDURES {E} - Choose one:\\n* Remove up to 1 damage from chosen character. \\n* If you have a Robot character in play, remove up to 3 damage from chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "SPYCRAFT {E} - Draw a card, then choose and discard a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "HANDLE WITH CARE {E}, 2 {I} – Chosen character gains Bodyguard until the start of your next turn. (An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+    "abilityType": "activated"
+  },
+  {
+    "text": "MAKE IT SING 1 {I}, Banish this item - Chosen character counts as having +3 cost to sing songs this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "I MADE HER {E} one of your characters - Chosen character gets -2 {S} until the start of your next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "TAKE IT FOR A SPIN 2 {I} – Chosen character of yours gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**SYMBOL OF ROYALTY** Your Prince and King characters gain Resist +1. (Damage dealt to them is reduced by 1.)\\n**ROYAL SEARCH** {E}, 2 {I} – Reveal the top card of your deck. If it's a Prince or King character card, you may put that card into your hand. Otherwise, put it on the top of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 1 {I} – Each opponent puts the top card of their deck into their discard.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "1 {I}, Banish this item - Chosen character counts as having +3 cost to sing songs this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} one of your characters - Chosen character gets -2 {S} until the start of your next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "2 {I} – Chosen character of yours gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} – Reveal the top card of your deck. If it’s a Prince or King character card, you may put it into your hand. Otherwise, put it on the top of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**FEEL THE POWER** {E} – _If you have fewer than 3 cards in your hand, draw until you have 3 cards in your hand._",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**SWEET TECH**  {E}, 2 {I} − Search your deck for an item card or a Robot character card and reveal it to all players. Shuffle your deck and put that card on top of it.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} − Search your deck for an item card or a Robot character card and reveal it to all players. Shuffle your deck and put that card on top of it.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**I NEED TO UPGRADE ALL OF YOU** Your other Inventor characters gain **Resist** +1. _(Damage dealt to them is reduced by 1.)_\\n\\n**SHAPE THE FUTURE** 2 {I} − Look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**FULLY CHARGED** If you have an Inventor character in play, you pay 1 {I} less to play this character.\\n\\n**YOU SAID 'OW'** 2 {I} - Remove up to 1 damage from another chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "2 {I} - Remove up to 1 damage from another chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "OH, BAT GIZZARDS 2 {I}, Choose and discard a card - Gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Ward (Opponents can't choose this character except to challenge.)\\nSTRONG LIKE HIS DAD 3 {I} - Deal 1 damage to chosen damaged character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "WHAT ARE YOU GONNA DO? {E}, 3 {I}, Banish one of your characters – Banish chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Whenever a character of yours is challenged while this character is exerted, the challenging character gets -3 {S} this turn unless their player pays 3 {I}.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Support (Whenever this character quests, you may add their {S} to another chosen character’s {S} this turn.)\\nI AM SO SORRY 2 {I} - Chosen character gets -1 {S} until the start of your next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "NEED A HAND? 1 {I} - This character gets +1 {S} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\\nTHINK ABOUT WHAT'S BEST 2 {I} – Draw a card, then choose and discard a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**FOREST HOME** Your characters named Robin Hood may move here for free. **FAMILIAR TERRAIN** Characters gain **Ward** and \"{E} ,1 {I} −Deal 2 damage to chosen damaged character\" while here. _(Opponents can\\",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Deal 2 damage to chosen damaged character or location.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} , 1 {I} − Deal 2 damage to chosen damaged character",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**THERE'S NO ONE I'D RATHER BE THAN ME** Villain characters gain {E}, 3 {I} - Play a character with the same name as this character for free\\",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Villain characters gain \"{E}, 3 {I} - Play a character with the same name as this character for free\" while here.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 3 {I} - Play a character with the same name as this character for free",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**RENEWING ESSENCE** {E} – Remove up to 2 damage from chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Remove up to 2 damage from chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**SYMBOL OF NOBILITY** At the start of your turn, if you have a Princess or Queen character in play, gain 1 lore.<br>\\n**ROYAL SEARCH** {E}, 2 {I} – Reveal the top card of your deck. If it’s a Princess or Queen character card, you may put it into your hand. Otherwise, put it on the top of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} – Reveal the top card of your deck. If it’s a Princess or Queen character card, you may put it into your hand. Otherwise, put it on the top of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**AMBER LIGHT** {E} – Remove up to 1 damage from each of your characters.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Remove up to 1 damage from each of your characters.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**EXTRACT OF AMETHYST** 2 {I}, Banish this item – Return chosen character, item, or location with cost 3 or less to their player’s hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "2 {I}, Banish this item – Return chosen character, item, or location with cost 3 or less to their player’s hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**AN UNEXPECTED FIND**, {E}, 2 {I} — Draw a card. *A PERILOUS POWER** {E}, 2 {I}, Discard a card – Exert chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I}, Discard a card – Exert chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**AMETHYST LIGHT** {E} − Each player may draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − Each player may draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**EXTRACT OF EMERALD** 2 {I}, Banish this item – Your characters gain **Ward** until the start of your next turn. _(Opponents can't choose them except to challenge.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "2 {I}, Banish this item – Your characters gain **Ward** until the start of your next turn. _(Opponents can't choose them except to challenge.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**VILE CONCOCTION** 1 {I} Banish this item – Chosen character gets +3 {S} this turn. If a Villain character is chosen, they get +4 {S} instead.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "1 {I} Banish this item – Chosen character gets +3 {S} this turn. If a Villain character is chosen, they get +4 {S} instead.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**RUBY LIGHT** {E} − Chosen character gets +1 {S} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**CONGRATULATIONS, SOLDIER**{E}, 2 {I}, Banish this item − Chosen character of yours gets +2 {L} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I}, Banish this item − Chosen character of yours gets +2 {L} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Hockety Pockety**{E}, 1 {I} – Return an item card from your discard to your hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 1 {I} – Return an item card from your discard to your hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**POWERING UP** This item enters play exerted.<br>**SAPPHIRE LIGHT** {E}, 2 {I}, Banish one of your items – Gain 2 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I}, Banish one of your items – Gain 2 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**DEFLECT** Banish this item – Chosen character gains **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item – Chosen character gains **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**WELL CRAFTED** {E} – Chosen character gains **Resist** +2 until the start of your next turn. _(Damage dealt to them is reduced by 2.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Chosen character gains **Resist** +2 until the start of your next turn. _(Damage dealt to them is reduced by 2.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**STEEL LIGHT** {E} – Deal 1 damage to chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**FIND WHAT’S HIDDEN** {E}, 2 {I} - Look at the top 3 cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} - Look at the top 3 cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Shift 3** _(You may pay 3 {I} to play this on top of one of your characters named Fix-It Felix, Jr.)_ \\n**BUILDING TOGETHER** Your locations get +2 {W}.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Shift** 2 _You may pay 2 {I} to play this on top of one of your characters named Vanellope von Schweetz.)_\\n \\n**I HEARBY DECREE** Whenever you play another Princess character, all opposing characters get -1 {S} until the start of your next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**PLEASING THE QUEEN** {E} – Chosen exerted character can’t ready at the start of their next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Chosen exerted character can’t ready at the start of their next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**BEAUTIFUL, LOVELY TAXES** {E} – Play an item from your hand or discard with cost 5 or less for free, exerted.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Play an item from your hand or discard with cost 5 or less for free, exerted.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**OUTPLACEMENT** When you play this character, you may put chosen item or location into its player’s inkwell facedown and exerted. **BY INVITE ONLY** 4 {I} − Your other characters gain **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "4 {I} − Your other characters gain **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**RE-PETE** {E} - Reveal the top card of your deck. If it’s a character card named Pete, you may play it for free.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} - Reveal the top card of your deck. If it’s a character card named Pete, you may play it for free.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Your characters gain {E}, 1 {I} – Deal 1 damage to chosen character this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**STRENGTH OF MIND** 1 {I} - Chosen character here gets +1 {S} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**ABUELA'S GIFT** Banish this item − If you have 3 or more characters in play, gain 2 lore and remove up to 2 damage from chosen location.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item − If you have 3 or more characters in play, gain 2 lore and remove up to 2 damage from chosen location.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**DISPEL THE ENTANGLEMENT** Banish this item − Chosen character named Beast gets +2 {L} this turn. If you have a character named Belle in play, move up to 3 damage counters from chosen character to chosen opposing character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item − Chosen character named Beast gets +2 {L} this turn. If you have a character named Belle in play, move up to 3 damage counters from chosen character to chosen opposing character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "MYSTICAL PETALS  {E}, 2 {I} − Move 1 damage counter from chosen character to chosen opposing character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} − Move 1 damage counter from chosen character to chosen opposing character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**DISCIPLINE AND STRENGTH** {E}, 2 {I} - Chosen character gets +2 {S} this turn. Whenever they challenge another character this turn, you may draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} - Chosen character gets +2 {S} this turn. Whenever they challenge another character this turn, you may draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**WALK!** 2 {I}, Banish this item - Choose one:\\n· Banish chosen Hero character.\\n· Ready chosen Villain character. They can't quest for the rest of this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "2 {I}, Banish this item - Choose one:\\n· Banish chosen Hero character.\\n· Ready chosen Villain character. They can't quest for the rest of this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**EXTRACT OF RUBY** 1 {I}, Banish this item - Chosen character gains **Rush** and gets +2 {S} this turn. _(They can challenge the turn they're played.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "1 {I}, Banish this item - Chosen character gains **Rush** and gets +2 {S} this turn. _(They can challenge the turn they're played.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**ASLEEP** This item enters play exerted.\\n\\n\\n**AWAKEN** {E}- Put a character card from your discard into your inkwell facedown and exerted.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}- Put a character card from your discard into your inkwell facedown and exerted.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**CHILLY LABOR** {E} − Chosen character gets -1 {S} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − Chosen character gets -1 {S} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**RESOURCEFUL** When you play this item, you may draw a card.\\n\\n\\n**EXTRACT OF STEEL** 1 {I}, Banish this item - Chosen character of yours gains **Bodyguard** until the start of your next turn. _(An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "1 {I}, Banish this item - Chosen character of yours gains **Bodyguard** until the start of your next turn. _(An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**WITHIN RANGE** {E}, 1 {I} − Chosen Hero character gains **Challenger** +2 and **Evasive** this turn. _(They get +2 {S} while challenging. They can challenge characters with Evasive.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 1 {I} − Chosen Hero character gains **Challenger** +2 and **Evasive** this turn. _(They get +2 {S} while challenging. They can challenge characters with Evasive.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**BA-BOOM!** {E}, 2 {I}, Discard a card - Deal 2 damage to chosen character or location.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I}, Discard a card - Deal 2 damage to chosen character or location.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "DUBIOUS RECRUITMENT  {E} − You pay 2 {I} less for the next character you play this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – You pay 2 {I} less for the next character you play this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Evasive** _(Only characters with Evasive can challenge this character.)_\\n**YOU JUST HAVE TO SEE IT** {E} − Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand and gain 3 lore. Otherwise, put it on the top of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**TEMPEST** {E}− Chosen character gains **Challenger** +2 and **Rush** this turn. _(They get +2 {S} while challenging. They can challenge the turn they're played.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**GET DOWN TO BUSINESS** {E},  Banish chosen character of yours - Play another character from your hand with the same name.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E},  Banish chosen character of yours - Play another character from your hand with the same name.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**WAR WOUND** This character cannot challenge.\\n\\n\\n**HEAD OF FAMILY** {E} - Ready chosen character named Mulan. They can't quest for the rest of the turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} - Ready chosen character named Mulan. They can't quest for the rest of the turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Shift** 2 _(You may pay 2 ink to play this on top of one of your characters named Aurora.)_\\n\\n\\n**GUARDIAN** Opponents can't choose your items.\\n\\n\\n**ROYAL INVENTORY** {E} one of your items – look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} one of your items – look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**CONSULT THE Spellbook** {E} – Look at the top 4 cards of your deck. You may reveal an item card and put it into your hand. If that item card costs 3 or less, you may play that item for free and it enters play exerted. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Look at the top 4 cards of your deck. You may reveal an item card and put it into your hand. If that item card costs 3 or less, you may play that item for free and it enters play exerted. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Shift** 6 _You may pay 6 {I} to play this on top of one of your characters named Triton.)_\\n\\n\\n**IMPOSING PRESENCE** Opposing characters get -1 {S} for each location you have in play.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**CONSIGN TO THE DEPTHS** {E}, Banish one of your items − Gain 3 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, Banish one of your items − Gain 3 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "_(A character with cost 4 or more can {E} to sing this song for free.)_\\n\\n\\nAll opposing characters get -2 {S} until the start of your next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "_(A character with cost 2 or more can {E} to sing this song for free.)_\\n\\nChosen character gets -3 {S} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**ANCIENT POWER** Banish this item – Remove up to 2 damage from each of your characters.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item – Remove up to 2 damage from each of your characters.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**LIFE GIVER** {E} – You pay 2 {I} less for the next character you play this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**REBUILD** {E} – Remove up to 2 damage from chosen location.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Remove up to 2 damage from chosen location.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**INCREDIBLE ENERGY** {E}, 1 {I} − Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand. Otherwise, put it on the top of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 1 {I} − Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand. Otherwise, put it on the top of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**I GOT TO BE GOING** {E} – If you’ve played 2 or more actions this turn, draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − If you’ve played 2 or more actions this turn, draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**FOREST’S GIFT** {E} – Deal 1 damage to chosen damaged character or location.\\n\\n\\n**A BIT OF A LARK** Whenever a character of yours named Robin Hood quests, you may ready this item.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Deal 1 damage to chosen damaged character or location.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**IT'S MAUI TIME!** If you have a character named Maui in play, you may use this item's Shapeshift ability for free.\\n\\n\\n**SHAPESHIFT** {E}, 2 {I} – Choose one:\\n\\n· Chosen character gains **Evasive** until the start of your next turn. _(Only characters with Evasive can challenge them.)_\\n\\n· Chosen character gets +3 {S} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} – Choose one: Chosen character gains **Evasive** until the start of your next turn. Chosen character gets +3 {S} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**NUMBER ONE** {E}, 2 {I} − Choose a character of yours and gain lore equal to their {L}.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} − Choose a character of yours and gain lore equal to their {L}.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**BUSINESS EXPERTISE** {E} – Choose one: You pay 1 {I} less to play your next action this turn. You pay 1 {I} less to play your next item this turn. You pay 1 {I} less to play your next location this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Choose one: You pay 1 {I} less to play your next action this turn. You pay 1 {I} less to play your next item this turn. You pay 1 {I} less to play your next location this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**CYBERNETIC ARMOR** Banish this item – Chosen character gains **Resist** +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item – Chosen character gains **Resist** +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**KEY TO THE PORTAL** {E} – You pay 1 {I} less for the next location you play this turn.\\n\\n\\n**SHOW THE WAY** You pay 1 {I} less to move your characters to a location.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – You pay 1 {I} less for the next location you play this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**GOOD OR EVIL** Banish this item – If you have a character named Jafar in play, draw 2 cards. If you have a character named Genie in play, return chosen character with cost 4 or less to their player's hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item – If you have a character named Jafar in play, draw 2 cards. If you have a character named Genie in play, return chosen character with cost 4 or less to their player's hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**EFFICIENT ENERGY** {E} – You pay 2 {I} less for the next action you play this turn.\\n\\n\\n**TRAP** 2 {I}, Banish this item – Draw 2 cards, then choose and discard a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "2 {I}, Banish this item – Draw 2 cards, then choose and discard a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – You pay 2 {I} less for the next action you play this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**CREATE LIFE** {E}, 2 {I} – Put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} – Put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Shift** 3 _(You may pay 3 {I} to play this on top of one of your characters named Kida.)_\\n\\n**PERHAPS WE CAN SAVE OUR FUTURE** When you play this character, all characters get -3 {S} until the start of your next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**BARK** {E} – Chosen character gets -2 {S} until the start of your next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Chosen character gets -2 {S} until the start of your next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**GOOD DOG** {E} – You pay 1 {I} less for the next character you play this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – You pay 1 {I} less for the next character you play this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**CURIOUSER AND CURIOUSER** {E} – Exert chosen opposing character and all other opposing characters with the same name.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Exert chosen opposing character and all other opposing characters with the same name.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**BLIZZARD** {E} − Exert chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − Exert chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**TELEKINESIS** {E} – Return chosen item with cost equal to or less than this character's {S} to its player's hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Return chosen item with cost equal to or less than this character's {S} to its player's hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**GOOD AS NEW** {E} – Reveal the top 3 cards of your deck. You may put each character card with cost 2 or less into your hand. Put the rest on the bottom of your deck in any order.\\n\\n\\n**PUPPY LOVE** Whenever this character quests, if you have 4 or more other characters in play, your other characters get +1 {L} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Reveal the top 3 cards of your deck. You may put each character card with cost 2 or less into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Evasive** _(Only characters with Evasive can challenge this character.)_\\n\\n\\n**FIND THE WAY** {E} – Move a character of yours to a location for free.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Move a character of yours to a location for free.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Evasive** _(Only characters with Evasive can challenge this character.)_\\n\\n\\n**CYCLONE** {E} – Gain lore equal to the number of Titan characters you have in play.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Gain lore equal to the number of Titan characters you have in play.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Evasive** _(Only characters with Evasive can challenge this character.)_\\n**DISASSEMBLE** {E} – Banish chosen item.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Banish chosen item.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "2 {I} - Ready this character, this character can’t quest for the rest of this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**THIS MISSION IS CURSED** This character doesn’t ready at the start of the turn.\\n**DON’T WORRY, I’M HERE** 2 {I} - Ready this character, this character can’t quest for the rest of this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**FOLLOW THE TWISTS OF MY GENIUS BRAIN** {E} - Put an item card from your discard to the top of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} - Put an item card from your discard to the top of your deck.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**CALLING THE TITANS** {E} – Ready your Titan characters.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} – Ready your Titan characters.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Resist** +2 _(Damage dealt to this character is reduced by 2.)_\\n\\n\\n**STONE SKIN** {E} − Chosen character gains **Resist** +2 this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − Chosen character gains **Resist** +2 this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**BUGLE CALL** {E}, 2 {I} - Play a character for free.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} - Play a character for free.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**BRING BACK TO LIFE** {E}, 3 {I} − Return a character card with **Support** from your discard to your hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 3 {I} − Return a character card with **Support** from your discard to your hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**A SILLY SONG** {E} − If you played a song this turn, gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − If you played a song this turn, gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**FOR ALL ETERNITY** {E}, {E} one of your characters − Exert chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, {E} one of your characters − Exert chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**HURTLING HEDGEHOG** Banish this item − Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item − Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**TO WONDERLAND** Banish this item – Return chosen character of yours to your hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item – Return chosen character of yours to your hand.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**KNOWLEDGE** {E}, 1 {I} − Gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 1 {I} − Gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**SNAP! BOOM! TWANG!** Banish this item − Each opponent loses 2 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item − Each opponent loses 2 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**YOU KNOW WHAT HAPPENS** {E}, 2 {I} − Draw cards equal to the damage on chosen character of yours, then banish them.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} − Draw cards equal to the damage on chosen character of yours, then banish them.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} - Chosen character gets +1 {S} this turn for each 1 damage on them.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**CAREFUL AIM** {E}, 2 {I} – Chosen character gets -2 {S} this turn.\\n\\n**STAY BACK!** {E}, Banish this item – Banish chosen Dragon character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 2 {I} – Chosen character gets -2 {S} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, Banish this item – Banish chosen Dragon character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**THE BEST I'VE EVER TASTED** {E} − Remove 1 damage each from up to 2 chosen characters.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − Remove 1 damage each from up to 2 chosen characters.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**JUMBO POP** When you play this item, you may draw a card.\\n\\n**THAT'S REDWOOD** Banish this item − Remove up to 2 damage from chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item − Remove up to 2 damage from chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**ARM YOURSELF** 1 {I}, Banish this item − Chosen character gains **Challenger** +3 this turn. _(They get +3 {S} while challenging.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "1 {I}, Banish this item − Chosen character gains **Challenger** +3 this turn. _(They get +3 {S} while challenging.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**PROTECTION** {E} − Chosen character gains **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − Chosen character gains **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**MAGIC HAIR** {E} − Remove up to 2 damage from chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − Remove up to 2 damage from chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Shift** 2 _You may pay 2 {I} to play this on top of one of your characters named The Queen.)_<br>\\n**WHO IS THE FAIREST?** Whenever this character quests, chosen opposing character gets -4 {S} this turn and chosen character gets +4 {S} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Shift** 3 (_You may pay 3 {I} to play this on top of one of your characters named Madam Mim._)\\n**GRUESOME AND GRIM** {E} − Play a character with cost 4 or less for free. They gain **Rush**. At the end of the turn, banish them. _They can challenge the turn they're played._",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − Play a character with cost 4 or less for free. They gain **Rush**. At the end of the turn, banish them. _They can challenge the turn they're played._'",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Shift** 5 _You may pay 5 {I} to play this on top of one of your characters named Cheshire Cat.)_\\n\\n**Evasive** (_Only characters with Evasive can challenge this character._)\\n\\n**WICKED SMILE** {E} − Banish chosen damaged character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − Banish chosen damaged character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Shift** 2 _You may pay 2 {I} to play this on top of one of your characters named Flynn Rider.)_\\n\\n**Evasive** (_Only characters with Evasive can challenge this character._)\\n\\n**ONE LAST, BIG SCORE** This character gets -1 {L} for each card in your opponents' hands.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**A PERFECT DISGUISE** {E}, Choose and discard a character card − Gain lore equal to the discarded character's {L}.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, Choose and discard a character card − Gain lore equal to the discarded character's {L}.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**THIS SHOULDN'T TAKE LONG** {E}, Banish this character − Banish chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, Banish this character − Banish chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**WAIT A MINUTE** Your character with **Reckless** gain {E} − Gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Your character with **Reckless** gain {E} − Gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − Gain 1 lore.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Shift** 3 (_You may pay 3 {I} to play this on top of one of your characters named Cruella De Vil._)\\n**OH, NO YOU DON'T** Whenever this character quests, chosen opposing character gets -2 {S} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**SKIRMISH** {E} − Deal 1 damage to chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − Deal 1 damage to chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "_(A character with cost 2 or more can {E} to sing this song for free.)_\\n\\nUp to 2 chosen characters get -1 {S} this turn. Draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**STRAIGHTEN HAIR** {E} - Remove up to 1 damage from chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} - Remove up to 1 damage from chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**BIRTHDAY LIGHTS** {E} - You pay 1 {I} less for the next character you play this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} - You pay 1 {I} less for the next character you play this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Speak** {E}, 4 {I} - Draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}, 4 {I} - Draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**PEER INTO THE DEPTHS** {E} − Look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − Look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**I'm late!** {E}, 1 {I} - Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**THE CARDS WILL TELL** {E} − You pay 1 {I} less for the next action you play this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**SLASH** {E} − Chosen character get +1 {S} this turn. If a character named Aladdin is chosen, he gets +2 {S} instead.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**TAKE A BITE . . . ** 1 {I}, Banish this item − Exert chosen character. If a Princess character is chosen, banish her instead.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item − Exert chosen character. If a Princess character is chosen, banish her instead.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**FIREPROOF** {E}, 3 {I} − Ready chosen character. They can't quest for the rest of this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**FINAL ENCHANTMENT** Banish this item − Banish chosen Villain character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item − Banish chosen Villain character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**SEE THE FUTURE** {E} − Chosen character gets +1 {L} this turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**GO AHEAD AND SIGN** {E} − Put any card from your hand into your inkwell facedown.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**HEALING POLLEN** Banish this item - Remove up to 3 damage from chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "Banish this item - Remove up to 3 damage from chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**COMMAND** {E} − Chosen character gains **Support** this turn. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**SHOW ME** {E}, 3 {I} - If you have no cards in your hand, draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**CLANG!** Banish this item - Chosen character can't challenge during their next turn.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**QUICK SHOT** {E}, 2 {I} − Deal 1 damage to chosen character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Singer** 4 _(This character counts as cost 4 to sing songs.)_\\n\\n**A WONDERFUL DREAM** {E}− Remove up to 3 damage from chosen Princess character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E}− Remove up to 3 damage from chosen Princess character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Freeze** {E} - Exert chosen opposing character.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**I SUMMON THEE** {E} − Draw a card.",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**YOU GOT A PROBLEM** {E} − Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "{E} − Chosen character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
+    "abilityType": "activated"
+  },
+  {
+    "text": "**Battle plans** {E} - Draw a card, then choose and discard a card.",
+    "abilityType": "activated"
+  }
+]

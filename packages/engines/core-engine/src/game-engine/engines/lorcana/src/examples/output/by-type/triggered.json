@@ -1,0 +1,3906 @@
+[
+  {
+    "text": "Remove up to 3 damage from chosen character or location. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return chosen character of yours to your hand. Exert chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Look at the top 4 cards of chosen player's deck. Put one on the top of their deck and the rest on the bottom of their deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Look at the top 5 cards of your deck. You may reveal up to 1 Madrigal character card and up to 1 song card and put them into your hand. Put the rest on the top of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Put up to 2 cards from your discard into your inkwell, facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 1 damage to up to 2 chosen characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return chosen damaged character to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Exert all opposing characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters banishes another character in a challenge this turn, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, you may move 1 damage counter from chosen character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, chosen character gains Evasive until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this item is banished, you pay 2 {I} less for the next item you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, you may give chosen character -2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a Floodborn character, if you used Shift to play them, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, you may remove up to 2 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, chosen character gets +2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this item is banished, you may return an item card with cost 2 or less from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, you may draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if an opponent has an exerted character in play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, each opponent chooses one of their readied characters and exhausts it. Characters exhausted this way do not ready at the start of their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may deal 2 damage to chosen damaged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an action that isn't a song, you may banish chosen item.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HOLD STILL When you play this item, exert chosen opposing character.\\nIT'S STUCK {E}, 1 {I} – Exert chosen opposing item. It can't ready at the start of its next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this item, exert chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HERE'S THE BEST PART Whenever you play a character, if you used Shift to play them, they get +4 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character, if you used Shift to play them, they get +4 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "WELCOME EXTRAVAGANCE Whenever one of your characters is challenged, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters is challenged, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a song, each opposing character gets -1 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character sings a song, you may draw a card for each character you have in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "PACK OF HER OWN Whenever you play a character, this character gets +1 {S} this turn.\\nTAKE THE LEAD While this character has 3 {S} or more, she gets +2 {L}.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character, this character gets +1 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "THE MIRACLE IS YOU Once during your turn, whenever one or more of your characters sings a song, you may ready those characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once during your turn, whenever one or more of your characters sings a song, you may ready those characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may deal 2 damage to another chosen character of yours to return chosen character with cost 2 or less to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "DOUBLE-CROSS When you play this character, you may deal 2 damage to another chosen character of yours to return chosen character with cost 2 or less to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, gain lore equal to the {L} of chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once during your turn, whenever you ready this character, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SAY HELLO When you play this character, gain 1 lore.\\nKIND OF BASHFUL When an opponent plays a character, return this character to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When an opponent plays a character, return this character to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "DARK POWER Whenever this character quests, you may draw a card, then choose and discard a card. If an Illusion character card is discarded this way, you may play that character for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may draw a card, then choose and discard a card. If an Illusion character card is discarded this way, you may play that character for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "LOOKING FOR FRIENDS Whenever you play another character, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play another character, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, chosen opposing character can't quest during their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "VERY RUDE INDEED When you play this character, you may put 1 damage counter on chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may put 1 damage counter on chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an action that isn't a song, chosen opposing character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "JUST WHAT YOU NEED When you play this character, you may give another chosen character Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may give another chosen character Resist +1 until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have an Ally character in play, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your Ally characters quests, you may remove up to 2 damage from this character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, look at the top 3 cards of your deck. You may reveal an Ally character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "I WIN! During your turn, whenever this character banishes another character in a challenge, you may draw a card and gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, you may draw a card and gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "I KNOW THE WAY Whenever this character quests, you pay 1 {I} less for the next character you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you pay 1 {I} less for the next character you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SOMEONE TO CARE FOR When you play this character, you may play a character with cost 2 or less for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may play a character with cost 2 or less for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SENDING BACKUP During an opponent's turn, whenever one of your characters with Bodyguard is banished, you may reveal the top card of your deck. If it's a character card with cost 5 or less, you may play that character for free. Otherwise, put it on the top of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During an opponent's turn, whenever one of your characters with Bodyguard is banished, you may reveal the top card of your deck. If it's a character card with cost 5 or less, you may play that character for free. Otherwise, put it on the top of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During an opponent's turn, whenever one of your characters is banished, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "WE ONLY TRUST NATURE When you play this character, chosen character gains Challenger +2 this turn. (They get +2 {S} while challenging.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gains Challenger +2 this turn. (They get +2 {S} while challenging.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HOW DO I GET IN? When you play this character, chosen character gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gains Ward until the start of your next turn. (Opponents can't choose them except to challenge.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "VOICE OF EXPERIENCE When you play this character, if you have 3 or more other characters in play, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have 3 or more other characters in play, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SPITEFUL During your turn, when this character is banished, if one of your characters was damaged this turn, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, when this character is banished, if one of your characters was damaged this turn, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, deal 5 damage to each opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "A NEW ROSTER When this character is banished, you may return another Racer character card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, you may return another Racer character card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may put a character card from your discard in your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may put all Puppy character cards from your discard into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "YOU WANT TO GO WHERE? When you play this character, if you have a character in play named Antonio Madrigal, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have a character in play named Antonio Madrigal, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and whenever he quests, you may deal 2 damage to another chosen character of yours to draw 2 cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SHORT ON PATIENCE When you play this character and whenever he quests, you may deal 2 damage to another chosen character of yours to draw 2 cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "LIGHT THE CANDLES When you play this character, you may deal 2 damage to chosen damaged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "THIS IS A VERY BIG DAY Whenever this character is challenged, the challenging player may choose and discard a card. If they don't, you gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character is challenged, the challenging player may choose and discard a card. If they don't, you gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once during your turn, whenever an opposing character is damaged, your Pirate characters get +2 {S} and gain Resist +2 this turn. (Damage dealt to them is reduced by 2.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Put 2 damage counters on all opposing characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish all opposing items.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish all opposing locations.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "LET'S DO THIS! Whenever you play a Floodborn character, if you used Shift to play them, you may return chosen character to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a Floodborn character, if you used Shift to play them, you may return chosen character to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the end of your turn, if you didn't put any cards into your inkwell this turn, banish this character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "I JUST LIKE TO BLOW THINGS UP When you play this character, you may deal 3 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may deal 3 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "YOU ARE A JEWEL When you play this character, you may reveal a song card in your hand to gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may reveal a song card in your hand to gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "I GUESS YOU EARNED THIS Whenever this character quests, you may remove up to 2 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may remove up to 2 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "STANDING TALL When you play this character, chosen opposing character can't ready at the start of their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen opposing character can't ready at the start of their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "LOOK WHAT YOU'VE DONE When you play this character, you may deal 2 damage to another chosen character of yours to give that character Challenger +1 and “When this character is banished in a challenge, return this card to your hand” this turn. (They get +1 {S} while challenging.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may deal 2 damage to another chosen character of yours to give that character Challenger +1 and “When this character is banished in a challenge, return this card to your hand” this turn. (They get +1 {S} while challenging.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, if you have a character named Elsa in play, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "BIS! BIS! When this character is banished in a challenge, return this card to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished in a challenge, return this card to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "INCAPACITATE When you play this character, you may return chosen character to their player's hand.\\nINTERFERE Whenever this character quests, chosen opponent discards a card at random.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may return chosen character to their player's hand",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, chosen opponent discards a card at random.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, choose an opponent to discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "UNCONVENTIONAL TACTICS Whenever this character quests, you may pay 2 {I} to ready another chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may pay 2 {I} to ready another chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "YOU DON'T NEED THAT When you play this character, you may banish chosen item.\\nNOW, THAT'S NOT BAD During your turn, whenever an item is banished, you may draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may banish chosen item.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever an item is banished, you may draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "ENDLESS TALE When you play this character, chosen opposing character gets -1 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen opposing character gets -1 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "WE CAN DO THIS TOGETHER When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have a character named Elsa in play, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "PLENTY TO GO AROUND At the end of your turn, you may remove up to 1 damage from each of your other characters. Ready each character you removed damage from this way.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the end of your turn, you may remove up to 1 damage from each of your other characters. Ready each character you removed damage from this way.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "OF COURSE THEY CAN COME Once during your turn, whenever one of your characters sings a song, you may search your deck for a character card with cost 3 or less and reveal that card to all players. Put that card into your hand and shuffle your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once during your turn, whenever one of your characters sings a song, you may search your deck for a character card with cost 3 or less and reveal that card to all players. Put that card into your hand and shuffle your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SUPERIOR MIND When you play this character, chosen opponent reveals their hand and discards a non-character card of your choice.\\nLASTING LEGACY When this character is banished, you may put this card into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen opponent reveals their hand and discards a non-character card of your choice.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, you may put this card into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "TINY HOWL When you play this character, chosen opposing character gets -1 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen opposing character gets -1 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HOW SWEET When you play this character, chosen character gets +2 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gets +2 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "LOOK ME IN THE EYE Whenever this character quests, chosen opposing character gets -2 {S} and gains Reckless until the start of your next turn. (They can't quest and must challenge if able.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, chosen opposing character gets -2 {S} and gains Reckless until the start of your next turn. (They can't quest and must challenge if able.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and whenever he quests, you may return a Racer character card with cost 6 or less from your discard to your hand. If you do, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may remove up to 1 damage from each of your characters with Bodyguard.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "LLAMA BREATH When you play this character, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Draw your whole deck, discard that many cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may return one of your other characters to your hand to draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, each opponent chooses one of their characters and puts that card on the bottom of their deck. Then, each opponent may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "WHY DO WE EVEN HAVE THAT LEVER? When you play this character, if you have a card named Pull the Lever! in your discard, you may search your deck for a card named Wrong Lever! and reveal that card to all players. Put that card into your hand and shuffle your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have a card named Pull the Lever! in your discard, you may search your deck for a card named Wrong Lever! and reveal that card to all players. Put that card into your hand and shuffle your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your Illusion characters quests, exert chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "IN CAHOOTS When you play this character, if you have a character named Tipo in play, chosen opposing character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have a character named Tipo in play, chosen opposing character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SPITTING FIRE! When you play this character, you may banish chosen item.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen opposing character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "GOLLY! When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, put 1 damage counter on each other character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "NEED THIS! When you play a Floodborn character on this card, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play a Floodborn character on this card, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you used Shift to play her, you may put chosen character into their player's inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "PUMPKIN SPICE When you play this character, each opponent loses 1 lore and you gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, each opponent loses 1 lore and you gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen opposing character gets -3 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "THIS WAY OUT When you play this character, you may ready chosen damaged character of yours. They can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may ready chosen damaged character of yours. They can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "BREAK APART When you play this character, you may banish one of your items to give chosen character +2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may banish one of your items to give chosen character +2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "CHARGED UP When you play this character, chosen Racer character gets +4 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen Racer character gets +4 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character with 5 {S} or more, you may exert them to gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "STOMPIN' TIME! During your turn, if you've played 3 or more actions this turn, you may play this character for free.\\nRAAAWR! When you play this character, ready chosen character. They can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, if you've played 3 or more actions this turn, you may play this character for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, ready chosen character. They can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your items is banished, this character gets +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play another character, they gain Rush, Reckless, and Evasive this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "DOUBLE-CROSSING CROOK! During your turn, when this character is banished, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, when this character is banished, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HELP! HELP! Whenever an opponent plays a character, deal 1 damage to this character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever an opponent plays a character, deal 1 damage to this character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "CODE OF HONOR Whenever this character quests, your other characters gain Support this turn. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, your other characters gain Support this turn. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may give chosen Puppy character Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "LET ME HELP When you play this character, you may remove up to 1 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may remove up to 1 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SO NAUGHTY When you play this character, each opponent puts the top card of their deck into their inkwell.\\nSTEALTH MODE At the start of your turn, if this card is in your discard, you may choose and discard a card with {IW} to play him for free and he enters play exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, each opponent puts the top card of their deck into their inkwell.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if this card is in your discard, you may choose and discard a card with {IW} to play him for free and he enters play exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SAFEKEEPING Whenever this character quests, you may put chosen item into its player's inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may put chosen item into its player's inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SEEKING INSPIRATION Whenever this character quests, you may choose and discard any number of item cards to gain 1 lore for each item card discarded this way.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may choose and discard any number of item cards to gain 1 lore for each item card discarded this way.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "UNWELCOME PROPOSAL When you play this character, you may exert chosen Princess character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may exert chosen Princess character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may deal 1 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "BUG CATCHER During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "LEARNING EXPERIENCE During an opponent's turn, whenever one of your other characters is banished, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During an opponent's turn, whenever one of your other characters is banished, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "STRATEGIC EDGE When you play this character and at the start of your turn, you may draw a card, then choose and discard a card.\\nEXTREME FOCUS This character gets +1 {S} for each card in your discard.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and at the start of your turn, you may draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Choose one:\\n• Remove up to 3 damage from chosen character.\\n• Remove up to 3 damage from each of your characters with Bodyguard.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Up to 2 chosen characters can’t ready at the start of their next turn. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Move 1 damage counter from each damaged character you have in play to chosen opposing character. Draw a card for each damage counter moved this way.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen item. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Sing Together 8\\nReturn up to 2 chosen characters with 3 {S} or less each to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 1 damage to chosen character for each exerted character you have in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Look at the top 3 cards of your deck. You may reveal a character, item, or location card with cost 6 or less and play it for free. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "MAGICAL TOUCH During your turn, whenever a card is put into your inkwell, you may move 1 damage counter from chosen character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SHIMMERING WINGS During your turn, whenever a card is put into your inkwell, chosen character gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "FIXED IN NO TIME When this item is banished, you pay 2 {I} less for the next item you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "BRILLIANT SHINE During your turn, whenever a card is put into your inkwell, you may give chosen character -2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "ENERGY CONVERTER Whenever you play a Floodborn character, if you used Shift to play them, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HEALING AURA During your turn, whenever a card is put into your inkwell, you may remove up to 2 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "CRIMSON SPARK During your turn, whenever a card is put into your inkwell, chosen character gets +2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "BREAK DOWN When this item is banished, you may return an item card with cost 2 or less from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "METALLIC FLOW During your turn, whenever a card is put into your inkwell, you may draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HOW SHALL I DO IT? When you play this character, you may draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "I WON When this character is banished, if you have more cards in hand than any opponent, you may return this character to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, if you have more cards in hand than any opponent, you may return this character to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever another character is banished in a challenge, return that card to its player's hand, then that player discards a card at random.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "OUTFLANK During your turn, whenever one of your other characters is banished, this character gets +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever one of your other characters is banished, this character gets +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your other characters is banished, you may remove all damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "ANOTHER RECITATION Whenever this character quests, you may return chosen damaged character to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may return chosen damaged character to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "UNTOLD TREASURE When you play this character, if you have an Illusion character in play, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have an Illusion character in play, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may draw a card for each of your other characters in play. Then choose the same number of cards from your hand and discard them.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character of yours gets +1 {S} this turn for each other character you have in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "LOOKING FOR LUNCH During your turn, this character gains Evasive while a Pirate character is in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, this character gains Evasive while a Pirate character is in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "YOU ARE A DISGRACE! Whenever this character challenges another character, each opponent loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character challenges another character, each opponent loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever an opposing character is exerted, banish them.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "COOLEST COLLECTION When you play this character, return up to 2 item cards from your discard to your hand.\\nI'M BEAUTIFUL, BABY! Whenever this character quests, you may play an item for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, return up to 2 item cards from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may play an item for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "CRIME OF OPPORTUNITY When you play this character, chosen opponent loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "IT IS REGRETTABLE When you play this character, discard your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, discard your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, look at the top 4 cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "THERE YOU GO Whenever this character quests, you may remove up to 1 damage from each of your Puppy characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may remove up to 1 damage from each of your Puppy characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have a character named Jafar in play, you may banish chosen item.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "MY ORDERS COME FROM JAFAR When you play this character, if you have a character named Jafar in play, you may banish chosen item.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "A GREATER PURPOSE During your turn, whenever a card is put into your inkwell, this character gains Resist +1 until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, this character gains Resist +1 until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "A MARVELOUS PERFORMANCE Whenever you play an action while this character is exerted, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an action while this character is exerted, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever another character is played, put a damage counter on them.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "FOUND YOU, YOU LITTLE RASCAL At the start of your turn, look at the cards in your inkwell. You may play a Puppy character from there for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, look at the cards in your inkwell. You may play a Puppy character from there for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "PILFER AND PLUNDER Whenever you play an action that isn’t a song, you may banish chosen item.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "WHO'S NEXT? Whenever this character quests, you pay 2 {I} less for the next Puppy character you play this turn.\\nDON'T BE AFRAID Your Puppy characters gain Ward. (Opponents can't choose them except to challenge.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you pay 2 {I} less for the next Puppy character you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "IN THE NICK OF TIME Whenever one of your Puppy characters is banished, you may put that card into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your Puppy characters is banished, you may put that card into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "CLEAR SKIES, CLEAR SKIES Whenever one or more of your characters sings a song, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one or more of your characters sings a song, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "ENDURING LOYALTY When you play this character, you may remove up to 2 damage from chosen character and they gain Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may remove up to 2 damage from chosen character and they gain Resist +1 until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you can move up to 2 damage counters from chosen character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "WELCOME ABOARD, FOLKS During your turn, while you have a character named Miss Bianca or Bernard in play, this character gains Evasive.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, while you have a character named Miss Bianca or Bernard in play, this character gains Evasive.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "INTIMIDATING AND AWE-INSPIRING Whenever one of your characters challenges, they gain Resist +2 during that challenge. (Damage dealt to them is reduced by 2.)\\nGUARDIAN OF LOST SOULS During your turn, whenever one of your characters banishes another character in a challenge, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters challenges, they gain Resist +2 during that challenge. (Damage dealt to them is reduced by 2.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever one of your characters banishes another character in a challenge, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character challenges another character, your other characters gain \"This character can challenge ready characters\" this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "WHERE DO I SIGN IN? When you play this character, you may draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "PIPE UP THE CREW Whenever you play an action that isn’t a song, you may ready chosen Pirate character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an action that isn’t a song, you may ready chosen Pirate character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "NOW YOU'VE UPSET ME Whenever one of your characters challenges, you may move 1 damage counter from chosen character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters challenges, you may move 1 damage counter from chosen character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may banish chosen item to draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character challenges another character, another chosen character of yours gets +3 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once during your turn, whenever a card is put into your inkwell, your other characters with Bodyguard get +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may return a song card with cost 3 or less from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "GATHER AROUND Whenever you play a character, this character gets +1 {L} this turn.\\nJUST ONE MORE Whenever this character quests, chosen opposing character loses {S} equal to this character's {L} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character, this character gets +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, chosen opposing character loses {S} equal to this character's {L} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an action, you may give chosen character +2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "STIRRING SPIRIT During your turn, whenever this character banishes another character in a challenge, you may play a character for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, you may play a character for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "PRESTIDIGITONIUM Whenever this character quests, name a card, then reveal the top card of your deck. If it's the named card, put it into your inkwell facedown and exerted. Otherwise, put it on the top of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HOW ON EARTH DID THAT HAPPEN? When you play this character, you may banish chosen item of yours to draw a card. If the banished item is named Maurice’s Machine, you may also banish chosen character with 2 {S} or less.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may banish chosen item of yours to draw a card. If the banished item is named Maurice’s Machine, you may also banish chosen character with 2 {S} or less.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may give chosen character -2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "GOOD SHOT During an opponent’s turn, whenever one of your Ally characters is damaged, deal 1 damage to chosen opposing character.\\nFAIR PLAY Your characters named Lady Kluck gain Resist +1. (Damage dealt to them is reduced by 1.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During an opponent’s turn, whenever one of your Ally characters is damaged, deal 1 damage to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may deal 2 damage to another chosen character of yours to put the top 3 cards of chosen player's deck into their discard.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SEARCH THE SWAMP Whenever this character quests, you may deal 2 damage to another chosen character of yours to put the top 3 cards of chosen player's deck into their discard.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "PLAY ROUGH Whenever this character quests, exert chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, exert chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "UNBIRTHDAY PRESENT Whenever a damaged character challenges another character, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever a damaged character challenges another character, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "EXPLOSIVE Once during your turn, whenever a card is put into your inkwell, deal 2 damage to each character in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once during your turn, whenever a card is put into your inkwell, deal 2 damage to each character in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "FOLLOW MY VOICE Whenever this character quests, look at the top 2 cards of your deck. You may reveal any number of Puppy character cards and put them in your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, look at the top 2 cards of your deck. You may reveal any number of Puppy character cards and put them in your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return chosen damaged character to their player's hand. Then, each opponent discards a card at random.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may return up to 2 character cards with cost 2 or less each from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "DON'T YOU SAY A WORD Once during your turn, whenever a card is put into your inkwell, you may return chosen character, item, or location with cost 2 or less to their player's hand, then that player draws a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once during your turn, whenever a card is put into your inkwell, you may return chosen character, item, or location with cost 2 or less to their player's hand, then that player draws a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, choose one: \\n• Each player draws a card. \\n• Each player chooses and discards a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SWEET REVENGE Whenever one of your other Racer characters is banished, each opponent chooses and banishes one of their characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your other Racer characters is banished, each opponent chooses and banishes one of their characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Choose and banish one of your characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HE NEEDS ME At the end of your turn, if this character is exerted, you may ready another chosen character of yours and remove all damage from them.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the end of your turn, if this character is exerted, you may ready another chosen character of yours and remove all damage from them.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Challenger +2. WISDOM OF HIS STORY During your turn, when this character is banished in a challenge, return this card to your hand and gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, when this character is banished in a challenge, return this card to your hand and gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an action that isn't a song, you may deal 1 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gains Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "EXTRA ASSISTANCE Whenever this character quests, if you have no cards in your hand, draw a card for each Ally character you have in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, if you have no cards in your hand, draw a card for each Ally character you have in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "THIS IS NOT DONE YET During an opponent’s turn, whenever one of your Illusion characters is banished, you may return that card to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During an opponent's turn, whenever one of your Illusion characters is banished, you may return that card to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "THAT'S BETTER When you play this character, chosen character gains Challenger +2 this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gains Challenger +2 this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters sings a song, this character can't be challenged until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "TALE OF THE FIFTH SPIRIT When you play this character, if an opponent has an exerted character in play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "PRETTY GREAT, HUH? Whenever you play a Floodborn character, if you used Shift to play them, you may remove up to 2 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a Floodborn character, if you used Shift to play them, you may remove up to 2 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "ORIGIN STORY When you play a Floodborn character on this card, draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play a Floodborn character on this card, draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, put all cards from your hand into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "FOR JUST A LITTLE PAIN When you play this character, you may deal 2 damage to another chosen character of yours to banish chosen character with cost 3 or less.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may deal 2 damage to another chosen character of yours to banish chosen character with cost 3 or less.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "RAPID FIRE Whenever this character quests, you pay 1 {I} less for the next action you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you pay 1 {I} less for the next action you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may give chosen character of yours +2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character challenges another character, your other characters get +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may choose and discard a card to gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "CLOSE ALL CHANNELS When you play this character, characters can’t exert to sing songs until the start of your next turn.\\nDON'T GET ANY IDEAS Each player pays 2 {I} more to play actions or items. (This doesn’t apply to singing songs.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, characters can't exert to sing songs until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "JUST SO CUTE! When you play this character, chosen opposing character gets -1 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "LET'S GET TO WORK Whenever you return a Racer character card from your discard to your hand, you may ready chosen Racer character. They can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you return a Racer character card from your discard to your hand, you may ready chosen Racer character. They can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "EVASIVE\\nI TOOK CARE OF EVERYTHING Whenever this character quests, another chosen character of yours gain Evasive until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, another chosen character of yours gain Evasive until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "TRAINING EXERCISES Whenever one of your characters challenges another character, if it's the second challenge this turn, you gain 3 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters challenges another character, if it's the second challenge this turn, you gain 3 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "WHAT DO WE DO NOW? Whenever this character quests, if you have a character named Anna in play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, if you have a character named Anna in play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may exert chosen character. If you do and you have a character named Anna in play, the chosen character can't ready at the start of their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "DUCK OF ACTION Whenever this character is challenged, you may return an action card that isn't a song from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character is challenged, you may return an action card that isn't a song from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "I HEAR YOU Whenever one of your characters sings a song, chosen opponent reveals their hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters sings a song, chosen opponent reveals their hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "BE SENSIBLE Once during your turn, whenever a card is put into your inkwell, look at the top card of your deck. You may put it on either the top or the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once during your turn, whenever a card is put into your inkwell, look at the top card of your deck. You may put it on either the top or the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "FOWL PLAY Once during your turn, whenever a card is put into your inkwell, chosen opponent chooses one of their characters and returns that card to their hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once during your turn, whenever a card is put into your inkwell, chosen opponent chooses one of their characters and returns that card to their hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "IF THE SLIPPER FITS When you play this character, you may put an item card named The Glass Slipper from your discard on the bottom of your deck to gain 3 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may put an item card named The Glass Slipper from your discard on the bottom of your deck to gain 3 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "MAD GRIN When you play this character, you may deal 2 damage to chosen damaged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "WINNING ISN'T EVERYTHING When this character is banished, you may remove up to 2 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, you may remove up to 2 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character challenges another character, you may return a Racer character card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "TACTICAL ADVANTAGE When you play this character, you may choose and discard a card to give chosen opposing character -3 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may choose and discard a card to give chosen opposing character -3 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "POP! When this character is banished in a challenge, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished in a challenge, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you ready this character, gain 1 lore for each other undamaged character you have in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "THERE'S NO TURNING BACK Whenever this character quests, if he has no damage, you may draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, if he has no damage, you may draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may put up to 3 item cards from your discard on the bottom of your deck to gain 1 lore for each item card moved this way.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, you may banish chosen item of yours to play this character for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "WHAT A MESS During your turn, you may banish chosen item of yours to play this character for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HURRY IT UP! Whenever this character quests, chosen character of yours gains Rush and Resist +1 this turn. (They can challenge the turn they're played. Damage dealt to them is reduced by 1.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, chosen character of yours gains Rush and Resist +1 this turn. (They can challenge the turn they're played. Damage dealt to them is reduced by 1.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, look at the top 4 cards of your deck. You may reveal a Floodborn character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you used Shift to play him, remove all damage from him.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "DRAW THEM OUT Whenever this character quests, opposing damaged characters gain Reckless during their next turn. (They can't quest and must challenge if able.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, opposing damaged characters gain Reckless during their next turn. (They can't quest and must challenge if able.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished during an opponent's turn, deal 2 damage to each opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you remove 1 or more damage from a character, ready this character. She can't quest or challenge for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "LEARN MORE Whenever an opponent chooses this character for an action or ability, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "OH, I HATE THIS! Whenever this character is challenged, the challenging player chooses and discards a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character is challenged, the challenging player chooses and discards a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HELPING HAND Whenever this character quests, you can play an Ally character with cost 3 or less for free.\\nPUT IN THE EFFORT While this character exerted, your Ally characters gain +1 {S}.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you can play an Ally character with cost 3 or less for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "NOT BAD At the start of your turn, you may move 1 damage counter from chosen character here to chosen opposing character.\\n\\nHARD-EARNED WISDOM At the start of your turn, if you have a character named Mama Odie here, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, you may move 1 damage counter from chosen character here to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "PLANNING SESSION At the start of your turn, if you have a character here, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if you have a character here, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "BRING IT HOME, LITTLE ONE! When you move a character here from another location, you may banish this location to gain 3 lore and draw 3 cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you move a character here from another location, you may banish this location to gain 3 lore and draw 3 cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a second action in a turn, gain 3 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "TINY THIEVES At the start of your turn, if you have a character here, all opponents lose 1 lore and you gain lore equal to the lore lost this way.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if you have a character here, all opponents lose 1 lore and you gain lore equal to the lore lost this way.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if you have a character here, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "FRIENDS FOREVER During an opponent's turn, whenever a character is banished here, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During an opponent's turn, whenever a character is banished here, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if you have a Pirate character here, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SECRET WEAPON At the start of your turn, deal damage to chosen character or location equal to the number of characters here.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, deal damage to chosen character or location equal to the number of characters here.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "LOST IN THE WAVES Whenever a character is challenged while here, each opponent chooses and discards a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever a character is challenged while here, each opponent chooses and discards a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HAPPY FACE This item enters play exerted.\\nDESTROY! {E}, Banish this item - Choose one:\\n* Banish chosen item.\\n* Banish chosen damaged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "BACK, FOOLS! Whenever one of your opponents' characters, items, or locations is returned to their hand from play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return a Pirate character card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Choose one:\\n* Banish chosen item.\\n* Banish chosen damaged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen item.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen damaged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this item, chosen character gets -1 {S} this turn for each item named Microbots you have in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your opponents' characters, items, or locations is returned to their hand from play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, you may move a character of yours to a location for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gets +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may put the top 3 cards of your deck into your discard to give chosen character -3 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, look at the top 4 cards of your deck. You may reveal any number of Pirate character cards and put them into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you used Shift to play him, you may put an action card from your discard on the top of your deck._",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may pay 2 {I} to gain lore equal to the damage on chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may pay 2 {I} to have each opponent choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character is challenged, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an action, this character gets +1 {S} and +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, this character gains **Evasive**.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may banish chosen item. Its player gains 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and whenever he quests, you may remove up to 2 damage from another chosen character of yours. Gain 1 lore for each 1 damage removed this way.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, you may return a character card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the end of your turn, you may ready another chosen character of yours.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "BE MORE CAREFUL When you play this character, you may remove up to 1 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SOUL COLLECTOR Whenever one of your other characters is banished during the opponent's turn, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your other characters is banished during the opponent's turn, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "FIND IT! Whenever this character quests, your other Alien characters get +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, your other Alien characters get +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, your other Fairy characters get +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "I HAVE TO DO EVERYTHING AROUND HERE Whenever you play a song, you may move up to 2 damage counters from chosen character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a song, you may move up to 2 damage counters from chosen character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, choose one: \\n* Exert chosen damaged character. \\n* Chosen opposing character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Exert chosen damaged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character is challenged, draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "FEAR ALWAYS WORKS During your turn, whenever a card is put into your inkwell, chosen opposing character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, chosen opposing character gains Reckless during their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "YOU HAVE TO CHART YOUR OWN COURSE Whenever this character quests, you may deal 1 damage to one of your other characters. If you do, ready that character. They cannot quest this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may deal 1 damage to one of your other characters. If you do, ready that character. They cannot quest this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "BARED TEETH When you play this character, deal 2 damage to chosen character of yours to deal 2 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, deal 2 damage to chosen character of yours to deal 2 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "TIME TO UPGRADE Whenever this character quests, you may return one of your items to your hand to pay 2 {I} less for the next item you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may return one of your items to your hand to pay 2 {S} less for the next item you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "GOOD CATCH During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "KEEP IT HIDDEN When this character is banished, you may banish chosen item or location.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, you may banish chosen item or location.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "WELL SPOTTED During your turn, whenever a card is put into your inkwell, chosen opposing character gets -1 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, chosen opposing character gets -1 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may give chosen character -2 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, you may exert chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a card, draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the end of your turn, put all the cards in your hand on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "YOU ARE A REALLY HOT DANCER When you play this character, chosen character gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, your characters get +2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "COCONUT LEADER Whenever this character quests, you may draw a card. Then, choose and discard a card to deal 1 damage to chosen character or location. If a Pirate character card was discarded, deal 3 damage to that character or location instead.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may draw a card. Then, choose and discard a card to deal 1 damage to chosen character or location. If a Pirate character card was discarded, deal 3 damage to that character or location instead.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HUNK OF HARDWARE When you play this character, chosen character can't challenge during their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character can't challenge during their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may deal 1 damage to chosen character or location.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "YOU WILL BE PAID WHEN THE TIME COMES During your turn, whenever a card is put into your inkwell, deal 1 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, deal 1 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SPECIAL RESERVATION Whenever a character of yours is challenged while this character is exerted, the challenging character gets -3 {S} this turn unless their player pays 3 {I}.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "BEES' KNEES When you play this character, move 1 damage counter from chosen character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "YOU'LL NEVER MISS IT Whenever this character quests, each opponent loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, each opponent loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "BRAINSTORM Whenever you play an item, this character gets +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an item, this character gets +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, deal 1 damage to each opposing ready character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SOMEONE HAS TO HELP During an opponent’s turn, when this character is banished, you may put the top card of your deck into your inkwell facedown. Then, put this card into your inkwell facedown.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During an opponent’s turn, when this character is banished, you may put the top card of your deck into your inkwell facedown. Then, put this card into your inkwell facedown.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, draw a card for each opposing character with 0 {S}.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, the next Pirate character you play this turn costs 1 {I} less.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "SAFE AND SOUND Whenever this character quests, choose a character of yours and that character can't be challenged until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, choose a character of yours and that character can't be challenged until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "THE GANG'S ALL HERE Once during your turn, whenever you play another character, you may ready this character. He can’t quest or challenge for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "FLY, MY PET! When this character is banished, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "GOTCHA! During your turn, whenever a card is put into your inkwell, exert chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, exert chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may look at the top card of chosen player's deck. Put it on top of their deck or into their discard.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "WE'LL HAVE TO LOOK INTO THIS Whenever this character quests, you may look at the top card of chosen player's deck. Put it on top of their deck or into their discard.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "AN EYE FOR TECH When you play this character, if an opponent has an item in play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if an opponent has an item in play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, you may pay 1 {I} to have chosen opponent choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "DIZZYING SPEED When you play this character, chosen Pirate character gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen Pirate character gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "COME ON, LET'S DO THIS Once during your turn, whenever a card is put into your inkwell, you may ready another chosen character of yours. They can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once during your turn, whenever a card is put into your inkwell, you may ready another chosen character of yours. They can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may move any number of your characters to the same location for free. Gain 1 lore for each character you moved.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an action, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character challenges another character, you may return an action card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, another chosen character gains Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "REPORTING FOR DUTY When you play this character, put chosen character of yours into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, put chosen character of yours into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "EAT ANYTHING When you play this character, exert chosen opposing item. It can't ready at the start of its next turn.\\nOUT TO LUNCH During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, exert chosen opposing item. It can't ready at the start of its next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, this character gains **Evasive**. (_They can challenge characters with Evasive._)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "A LITTLE HELP When you play this character, if you have another Pirate character in play, you may deal 1 damage to chosen character or location.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have another Pirate character in play, you may deal 1 damage to chosen character or location.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "COME HERE, COME HERE, COME HERE! During your turn, whenever a card is put into your inkwell, this character gets Challenger +2 this turn. (While challenging, this character gets +2 {S}.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, this character gets Challenger +2 this turn. (While challenging, this character gets +2 {S}.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may deal damage to chosen character equal to the number of your other Pirate characters in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the end of your turn, if this character is exerted, you may ready your other characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "THE BEAUTY OF THE WORLD When you play this character, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if this character is at a location, draw a card and gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "HAPPY TO HELP Whenever this character quests, chosen Inventor character gets +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, chosen Inventor character gets +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "UNPALATABLE When you play this character, chosen opposing character gets -2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen opposing character gets -2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "I WRECK THINGS Whenever this character quests, you may banish chosen item or location to gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may banish chosen item or location to gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "TRUST BUILDS TRUST Whenever this character quests, reveal the top card of your deck. If it’s a Dragon character card, put it into your hand and repeat this effect. Otherwise, put it on either the top or the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, reveal the top card of your deck. If it’s a Dragon character card, put it into your hand and repeat this effect. Otherwise, put it on either the top or the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, another chosen character of yours gets +1 {L} and gains Ward until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "FAVORABLE CHANCE During your turn, whenever a card is put into your inkwell, you may reveal the top card of your deck. If it's an item card, you may play that item for free and they enter play exerted. Otherwise put it on the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a card is put into your inkwell, you may reveal the top card of your deck. If it's an item card, you may play that item for free and they enter play exerted. Otherwise put it on the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, chosen character gains Ward until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "LAND, HO! Once during your turn, whenever a card is put into your inkwell, you may return a location card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once during your turn, whenever a card is put into your inkwell, you may return a location card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "DISTANT SHORES Whenever one of your Pirate characters quests while at a location, draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your Pirate characters quests while at a location, draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if this card is in your discard, you may play her and she enters play exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "GUESS WHO When this character is banished in a challenge, return this card to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you used Shift to play her, return all other exerted characters to their players’ hands.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, chosen Pirate character gets +2 {S} and gains \"This character takes no damage from challenges\" this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen character. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Put 1 damage counter on chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Choose one:\\n\\n· Deal 2 damage to chosen character.\\n\\n· Banish chosen item.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 2 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return a character card with cost 2 or less from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Chosen opponent loses 1 lore. Gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Move 1 damage counter from chosen character to chosen opposing character. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "This turn, you may put an additional card from your hand into your inkwell facedown. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 2 damage to chosen character. Then, you may choose and discard a card to deal 2 damage to another chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this location, choose an exerted character. While this location is in play, that character can't ready at the start of their turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever a character is banished while here, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, the first time you move a character here, you may deal 1 damage to chosen character. If the moved character is a Knight, deal 2 damage instead.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if you have a Princess or Queen character in play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "{E}, 2 {I} — Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the end of each opponent’s turn, if they have more than 3 cards in their hand, they discard until they have 3 cards in their hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During opponents’ turns, whenever one of your characters is banished, you may return chosen character to their player’s hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if you have a character in play with more {S} than each opposing character in play, each opponent loses 1 lore and you gain lore equal to the lore lost.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may play a song with cost 6 or less for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, chosen opposing character gets -1 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you used **Shift** to play her, you may search your deck for a character card and reveal that card to all players. Shuffle your deck and put that card on top of it.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, each opponent reveals the top card of their deck. If it’s a character card, they may put it into their hand. Otherwise, they put it on the bottom of their deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have a location in play, draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play another Princess character, all opposing characters get -1 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, return a character card from your discard to your hand. If that card is a Princess character card, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, opposing character of your choice gets -5 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may ready chosen character. They can’t quest or challenge for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, for each character named Maleficent you have in play, return chosen opposing character, item, or location of cost 3 or less to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may move up to 2 damage counters from chosen character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gains **Rush** this turn. _(They can challenge the turn they’re played.)_",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**GIVE ME TIME TO THINK** When you play this character and when he leaves play, look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and when he leaves play, look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, each opponent draws a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, return this card to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, you may move up to 2 damage counters from this character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, exert all opposing characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, exert chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is exerted, opposing characters cannot ready at the start of your opponents turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may choose and discard a card to return chosen character, item, or location with cost 3 or less to their player’s hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During opponents’ turns, if an effect would cause you to discard one or more cards from your hand, you don’t discard.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, he gains **Challenger** +4 this turn. _(They get +4 while challenging.)_",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, each opponent choses and exerts on of their ready characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may gain lore equal to the {L} of chosen other character of yours. Return that character to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may pay 1 {I} to give chosen character +2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if an opponent has a damaged character in play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you pay 2 {I} less for the next action you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may pay 3 {I} to banish chosen damaged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, banish chosen opposing Dragon character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When he challenges a damaged character, ready this character after the challenge.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the end of your turn, if chosen opponent has more cards in their hand than you, you may draw cards until you have the same number.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character you may pay 2 {I} to chose one:\\n* Each opponent choses and discards a card.\\n* Chosen character gets +2 {S} this turn. \\n* Banish chosen damaged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may pay to 2 {I} to banish chosen item.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may exert chosen damaged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may pay 3 {I} to return chosen character to their player’s hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your Hyena characters challenges a damaged character, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, each opponent chooses one of their characters and returns that card to their hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters challenges a damaged character, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you ready this character, gain 1 lore for each 1 damage on him.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the end of your turn, if you have a character in play with 5 {S} or more, gain 2 lore. If that character has 10 {S} or more, gain 5 lore instead.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you used **Shift** to play him, each opponent loses 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may banish chosen character named Mufasa.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have a location in play, each opponent loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have another character named Pete in play, you may banish chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**Shift** 2 _(You may pay 2 {I} to play this on top of one of your characters named Taffyta Muttonfudge.)_ **NEW ROSTER** Once per turn, when this character moves to a location, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once per turn, when this character moves to a location, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, look at the top 4 cards of your deck. You may reveal an action card with cost 6 or less and play it for free. Put the rest in your discard.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, she gains **Evasive** until the start of your next turn. _(Only characters with Evasive can challenge them.)_",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gets +2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character or one of your characters named Mickey Mouse challenges another character, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an item, this character gets +2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if you have an item in play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if you have a location in play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**Support** _(Whenever this character quests, you may add their {S} to another chosen character’s {S} this turn.)_ **ONE ON THE WAY** During your turn, when you put a card into your inkwell, if it’s the second card you’ve put into your inkwell this turn, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, when you put a card into your inkwell, if it’s the second card you’ve put into your inkwell this turn, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, look at the top 3 cards of your deck. You may reveal any number of character cards named The Queen and put them into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may put chosen item or location into its player’s inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, exert all cards in your inkwell, then return 2 cards at random from your inkwell to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, ready all cards in your inkwell.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gets -2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may draw 2 cards, then put a card from your hand on the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may remove up to 1 damage from chosen character or location.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may put a card from your hand into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, your other characters gain **Ward** until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you used **Shift** to play him, you may search your deck for any card, put that card into your hand, then shuffle your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may deal 2 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen Knight character gains **Challenger** +2 this turn. _(They get +2 {S} while challenging.)_",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have another Knight character in play, you may deal 1 damage to chosen character or location.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever one of your characters banishes a character in a challenge, you may deal 1 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, you may play a character with cost 5 or less for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may banish chosen item or location.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may discard your hand to draw 2 cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gains **Challenger** +2 and **Resist** +2 and can challenge ready characters this turn. _(They get +2 {S} while challenging. Damage dealt to them is reduced by 2.)_",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, opponents can’t play actions until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Remove up to 4 damage from chosen character. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Reveal the top 2 cards of your deck. Put revealed character cards into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Draw 3 cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Draw 3 cards, then put 2 cards from your hand on the top of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen character of yours to banish chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters with **Reckless** challenges another character this turn, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Look at the top 5 cards of your deck. Put one into your hand and the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish any number of your items, then draw a card for each item banished this way.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Put chosen item or location into its player’s inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Put chosen character of yours into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Choose one:<br>• Deal 1 damage to each opposing character without **Evasive**.<br>• Deal 3 damage to each opposing character with **Evasive**.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 1 damage to each opposing character without **Evasive**.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 3 damage to each opposing character with **Evasive**.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Chosen character can’t challenge during their next turn. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever a character with 3 {S} or more challenges another character while here, gain 1 lore. If the challenging character has 6 {S} or more, gain 3 lore instead.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever a character banishes another character in a challenge while here, you gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever a character quests while here, remove up to 2 damage from them. If they're a Hero character, remove up to 4 damage instead.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever a characters is banished in a challenge while here, you may return them to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever a character quests while here, you may pay 3 {I} to return a character card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a song, chosen character gets -2 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever an opponent plays a song, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if an opposing character has damage, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters challenges another character, you pay 1 {I} less for the next character you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever they challenge another character this turn, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen Hero character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character, they gain **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, look at your deck. You may reveal a Madrigal character card. Shuffle your deck and put that card on top of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character sings a song, your other Princess characters get +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may give chosen character -2 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the end of your turn, if you didn't play a song this turn, banish this character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character with **Bodyguard**, ready this character. He can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may remove up to 2 damage from chosen character. If you removed damage this way, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gains **Support** this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you used **Shift** to play him, you may draw a chard for each character with **Bodyguard** you have in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, banish chosen opposing character with 5  {S} or more.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, your other Madrigal characters get +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may remove up to 3 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, chosen opponent reveals their hand and discards a non-character card of your choice.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, move up to 1 damage counter from chosen character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished in a challenge, you may return this card to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, you may chose one:\\n\\n\\n• This character gets +1 {L} this turn.\\n\\n\\n• This character gain **Challenger** +2 this turn. _(While challenging, this character gets +2 {S}.)_",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if an opponent has an exerted character in play, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, if no other character has quested this turn, this character gets +3 {L}.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, your other characters can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play another character, you may banish this character to draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this characters, if you have a character named Lumiere or Cogsworth in play, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may exert chosen opposing character. That character can't ready at the start of their next turn unless you're at a location.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, exert chosen character",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, your other characters get +3 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During each opponent's turn, whenever they draw a card while this character is exerted, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may look at each opponent's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is challenged and banished, each opponent chooses one of their characters and returns that card to their hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if an opponent has more cards in their inkwell than you, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and each time she is challenged, each opponent chooses and discards a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chose and discard a card or banish this character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character named Hercules, you may ready this character",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you used **Shift** to play him, your characters gain **Evasive** until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests while he has 5 {S} or more, return chosen character with 2 {S} or less to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, banish all opposing damaged characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a song, you may return chosen character with 2 {S} or less to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character challenges another character, he gets + {S} equal to the {S} of chosen character this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if you have a character in play with more {S} than each opposing character, gain 3 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character challenges another character, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an action, this character gets +2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character deals damage to another character in a challenge, deal the same amount of damage to another chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an action, this character takes no damage from challenges this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character challenges another character, gain 1 lore for each other damaged character you have in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, ready chosen character of yours at a location. They can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, banish chosen opposing character with 1 {S} or less.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, banish all opposing characters with 2 {S} or less.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may move him and one of your other characters to the same location for free. The other character gets +2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, your other Hero characters get +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if a Princess or Queen character is in play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever he quests, each of your other characters gets +{S} equal to this character's {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, look at the top 3 cards of your deck and put them back in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, look at the top 4 cards of your deck. You may reveal an item card and put it in your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, remove up to 2 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your locations is banished, you may put that card into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may banish chosen item.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a song, you may draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a song, you may pay 2 {I} to deal 3 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, you may play this character for free if an opposing character was banished in a challenge this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gains **Challenger** +2 this turn. _(They get +2 {S} while challenging.)_",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a Hero character, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have a character named Magic Broom in play, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you used **Shift** to play her, she gets +3 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character deals damage to another character in a challenge, deal the same amount of damage to up to 2 other chosen characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return a character card from your discard to your hand. Then remove up to 2 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**Sing Together** 7 _(Any number of your of your teammates' characters with total cost 7 or more may {E} to sing this song for free.)_\\n\\n\\nLook at the top 5 cards of your deck. You may reveal up to 2 character cards and put them into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Opponent Gain 2 Lore",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Choose one:\\n· Banish chosen item.\\n· Deal 2 damage to chosen damaged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen item",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 2 damage to chosen damaged character",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Put all opposing characters with 2 {S} or less on the bottom of their players' decks in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Opponent Draws a Card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen character with 2 {S} or less.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**Sing Together** 8 _(Any number of your of your teammates' characters with total cost 8 or more may {E} to sing this song for free.)_\\n\\n\\nLook at the top 7 cards of your deck. Put 2 into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return up to 2 item cards from your discard into your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 1 damage to each opposing character. You may banish chosen location.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**Sing Together** 10 _(Any number of your of your teammates' characters with total cost 10 or more may {E} to sing this song for free.)_\\n\\n\\nDeal 3 damage to up to 3 chosen characters and/or locations.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return chosen character to their player's hand, then that player discards a card at random.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, for each character you have here, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever a character is challenged and banished while here, banish the challenging character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever a character is banished while here, you may put that card into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever a character quests while here, you may draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever a character of yours named Robin Hood quests, you may ready this item.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever one of your characters is banished in a challenge, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters quests, you may look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever one of your characters banishes another character in a challenge, you may pay 1 {I} to draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may move up to 2 damage counters from chosen character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**I CAME TO LISTEN TO THE STORIES** Once per turn, when this character moves to a location, gain lore equal to that location's {L}.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once per turn, when this character moves to a location, gain lore equal to that location's {L}.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the end of your turn, if this character is exerted, you may ready another chosen character of yours.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, all characters get -3 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and whenever she quests, you may play a character with cost 2 or less from your discard for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, remove up to 3 damage from this character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, your other Villain characters get +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Place the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character named Maleficent, you may look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may shuffle this card into your deck to draw 3 cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, while this character is exerted, whenever you draw a card, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may banish this character to draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have a Sorcerer character in play, exert an opposing character. The chosen character doesn't ready at the start of their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may shuffle all Broom characters from your discard to your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, gain lore equal to the cost of one of your items in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever you draw a card, you may move 1 damage counter from a chosen character to a chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, you may shuffle this card into your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, chosen opposing character can't ready at the start of their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, pay 1 {I} less for every character card in your discard.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, shuffle all character cards from your discard into your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, if you have 4 or more other characters in play, your other characters get +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character with **Bodyguard**, you may remove up to 2 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever he challenges a Hyena character, this character takes no damage from the challenge.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, the player or players with the most cards in their hand chooses and discards a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may return chosen opposing character with 2 {S} or less to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "TREASURE FINDER  Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may look at the top 3 cards of your deck and put them back in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever one of your other characters banishes another character in a challenge, you may ready this character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, you may ready chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character moves to a location, he gets +3 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character is challenged, each opponent chooses and discards a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may deal 3 damage to chosen damaged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is challenged and banished, banish the challenging character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen opposing character gains **Reckless** during their next turn. _(They can’t quest and must challenge if able.)",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your other characters is banished, each opponent loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, return all opposing characters to their players’ hands.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**I WILL DO IT** When this character is at a location, she gets +3 {S}.\\n**WHAT’S THE HURRY?** When this character is at a location, when she challenges another character, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is at a location, when she challenges another character, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is at a location, she gets +3 {S}.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen opponent reveals their hand and discards a song card of your choice.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character sings a song, you may play that song again from your discard for free, then put it on the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a song, chosen character of yours gains **Evasive** until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, ready this character. He can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**MINDLESS WANDERING** Once per turn, when this character moves to a location, each opponent loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Once per turn, when this character moves to a location, each opponent loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is damaged, deal the same amount of damage to a chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may play a location with cost 4 or less for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a location, this character may move there for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character each opponent loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, banish chosen opposing character with 3 {S} or less.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters named Heihei quests, this character gets +1 {L} and loses **Reckless** for this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests while at a location, ready all other characters here. They can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, you may banish chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, ready one of your items.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, look at the top 2 cards of your deck. You may add one into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever a card is put into your inkwell, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, if you have characters named Dewey and Louie in play, you may draw 3 cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "ELEGANT AND NOBLE LADY: When you play this character, chosen character gets -2 {S} for this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gets -2 {S} for this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a song, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, you may play an item for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your items is banished, you may put that card into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the end of your turn, if this character is exerted and you do not have a Captain character in play, deal 1 damage to this character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you discard a card, you may deal 1 damage to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**SUBMIT OR FIGHT** When you play this character and whenever this character banishes another character in a challenge during your turn, choose one:\\n\\n· You may draw 2 cards, then choose and discard 2 cards.\\n\\n· You may deal 2 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and whenever this character banishes another character in a challenge during your turn, choose one:\\n\\n· You may draw 2 cards, then choose and discard 2 cards.\\n\\n· You may deal 2 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character banishes another character in a challenge during your turn, choose one:\\n\\n· You may draw 2 cards, then choose and discard 2 cards.\\n\\n· You may deal 2 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, chosen opposing character can't challenge during their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests while at a location, you may deal 1 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever he challenges a Pirate character, this character takes no damage from the challenge.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters quests this turn, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Remove up to 3 damage from chosen character. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Move 1 damage counter from chosen character to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Draw a card. Shuffle up to 3 cards from your opponent's discard into your opponent's deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Draw 2 cards, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish one of your characters with **Reckless** to banish chosen character with less {S} than that character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Move up to 2 characters of yours to the same location for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Chosen character gets -2 {S} this turn. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Look at the top 2 cards of your deck. Put one into your hand and the other into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 5 damage to chosen character or location.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 2 damage to chosen character or location.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen location or item.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play another item, you may pay 1 {I} to draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character with 4 {S} or more, you may pay 1 {I} to draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you ready this character, if you have 2 or more other characters in play, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, your other Seven Dwarfs characters get +2 {S} until the start of your next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever another character is banished, you may remove up to 2 damage from this character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you pay 3 {I} less for the next character you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is banished, you may reveal the top card of your deck. If it's a character card, you may play that character for free and they enter play exerted. Otherwise, put it on the top of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may reveal the top card of your deck. If it's a song card, you may play it for free. Otherwise, put it on the top of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a Floodborn character, you may remove all damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you remove 1 or more damage from one of your characters, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play this character or another Seven Dwarfs character, you may give chosen character -1 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may remove up to 2 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may return a character card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, chosen opposing character gets -4 {S} this turn and chosen character gets +4 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may return another chosen character of yours to your hand to gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a Floodborn character, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, your characters gain **Challenger** +3 and When this character is banished in a challenge, return this card to your hand this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character named Cinderella, you may exert chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have a character named Pinocchio in play, you may draw a card",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, banish her or return another 2 chosen characters of yours to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, banish her or return another chosen character of yours to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**READY OR NOT!** When you play this character and when he leaves play, chosen character gains **Challenger** +3 this turn. _(They get +3 {S} while challenging.)_",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and when he leaves play, chosen character gains **Challenger** +3 this turn. _(They get +3 {S} while challenging.)_",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**HERE I COME!** When you play this character and when he leaves play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and when he leaves play, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**HOPPITY HIP!** When you play this character and when he leaves play, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and when he leaves play, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your other characters is returned to your hand from play, this character gets +1 {L} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**LOOK BEFORE YOU LEAP** When you play this character and when he leaves play, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and when he leaves play, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may return chosen character or item with cost 3 or less to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may exert chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, shuffle another chosen character card into their player's deck. That player draws 2 cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever an opposing character is damaged, you may ready this character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character is challenged, the challenging character’s player discards all cards in their hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a Floodborn character, each opponent chooses and discards a card. à Whenever you play a Floodborn character, if you used Shift to play them, each opponent chooses and discards a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, each opponent chooses and discards a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, each player may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, each opponent chooses and discards either 2 cards or 1 action card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gets +2 {S} this turn. If the chosen character is named Pain, he gets +4 {S} instead.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever your opponent discards 1 or more cards, you may draw a card for each card discarded.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, deal 1 damage to chosen damaged opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a Floodborn character, each opponent loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, each opponent chooses and banishes one of their characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, each opponent with more lore than you loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an item, you may ready this character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters challenges another character, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, exert chosen opposing character with 3 {S} or less. Chose one of your characters and ready them. They can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, you may ready this character. She can’t quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character challenges a damaged character, she takes no damage from the challenge.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, you may ready this character. He can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters challenges another character, gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "**Shift** 5 _You may pay 5 {I} to play this on top of one of your characters named Basil.)_\\n\\n**THERE'S ALWAYS A CHANCE** If you used **Shift** to play this character, you may draw 2 cards when he enters play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, chosen opposing character gets -2 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, look at the top 3 cards of your deck. You may put one into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you remove 1 or more damage from one of your characters, gain 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and whenever he quests, you may banish one of your items to draw 2 cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, remove up to 1 damage from chosen character of yours.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may banish chosen item. Its player draws a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a Floodborn character, you may put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may return an item card named Pawpsicle from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, look at the top 2 cards of your deck. You may put one into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may put a card from your hand into your inkwell facedown.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your other characters would be dealt damage, put that many damage counters on this character instead.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if this character has no damage, draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "At the start of your turn, if this character has damage, he gets +4 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a Floodborn character, deal 1 damage to each opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a song, this character may challenge ready characters this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen character",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, your characters gain **Evasive** this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gains **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever an opposing character is banished, you may ready this character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may draw a card, then choose and discard a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen character who was challenged this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Up to 2 chosen characters get -1 {S} this turn. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen character with 5 {S} or more.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return chosen character of yours to your hand to play another character with the same cost or less for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return chosen character of yours to your hand to return another chosen character to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Each opponent chooses and discards a card. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Gain 1 lore for each damaged character opponents have in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen item of yours to deal 5 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Each opponent reveals their hand. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 2 damage to chosen character. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal damage to chosen character equal to the number of characters you have in play.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Draw 2 cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return a character card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Look at the top 3 cards of your deck. Put them back on the top of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return chosen character to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish all characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Put chosen character into their player's inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Put the top card of your deck into your inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 2 damage to each opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character, you may remove up to 2 damage from chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Put any card from your hand into your inkwell facedown.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 1 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, look at the top 4 cards of your deck. You may reveal a song card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may ready your other Princess characters. They can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play an action, chosen opposing character can't quest during their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may shuffle a card from any discard into its player's deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may banish chosen character named Te Ka.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may banish chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, ready your characters with cost 3 or less. They can't quest for the rest of this turn",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, you gain 2 lore and each opponent loses 2 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and whenever he quests, chosen opposing character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen opposing character gets -5 {S} this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character and whenever he quests, you may return an item card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may deal 1 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you may play an action with cost 5 or less for free.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may return chosen character to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may return an action card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, return a character card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character challenges and is banished, you may banish the challenged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, remove up to 3 damage from one of your characters. Draw a card for each 1 damage removed this way.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character with cost 2 or less, you may exert them to draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if you have a character named Elsa in play, choose an opposing character. The chosen character doesn't ready at the start of their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your other characters is banished in a challenge, you may return that card to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Exert chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, exert up to 2 chosen characters. They can't ready at the start of their next turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, your Musketeer characters gain **Evasive.** _(They can challenge characters with Evasive.)_",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, exert all opposing damaged characters.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is challenged and banished, you may return chosen character to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may banish chosen item card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever you play a character named Anna, ready this character. This character can't quest for the rest of this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you pay 2 {I} less for the next item you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character is challenged, you may draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, if an opponent has more cards in their hand than you, draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When this character is challenged and banished, you may banish the challenging character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, you gain 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, deal 1 damage to each opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen opposing character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, chosen character gains **Evasive** this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, each opponent loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "During your turn, you may put an additional card from your hand into your inkwell facedown.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "When you play this character, you may put chosen opposing character into their player's inkwell facedown.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return a character or item with cost 2 or less to their player's hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return an action card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 2 damage to chosen damaged character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever one of your characters quests this turn, each opponent loses 1 lore.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return an item card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Draw 2 cards, then choose and discard 2 cards.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 3 damage to the chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 3 damage to chosen character.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Whenever this character quests, reveal cards from the top of your deck until you reveal a Floodborn character card. Put that card into your hand and shuffle the rest into your deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Deal 1 damage to chosen character. Draw a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Gain lore equal to the damage on chosen character, then banish them.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Banish chosen character, then return an item card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Choose one:\\n- Return chosen character to their player's hand.\\n- Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Choose one:\\n- Draw 2 cards.\\n- Each opponent chooses and discards a card.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Put chosen exerted character into their player's inkwell facedown and exerted.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Sing Together 7\\nChoose any number of players. They discard their hands and draw 3 cards each.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Return chosen character with 2 {S} or less to their player's hand. Return a character card from your discard to your hand.",
+    "abilityType": "triggered"
+  },
+  {
+    "text": "Gain 1 lore. Draw a card.",
+    "abilityType": "triggered"
+  }
+]

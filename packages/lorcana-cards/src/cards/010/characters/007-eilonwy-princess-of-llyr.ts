@@ -6,9 +6,7 @@ export const eilonwyPrincessOfLlyr: CharacterCard = {
   name: "Eilonwy",
   version: "Princess of Llyr",
   fullName: "Eilonwy - Princess of Llyr",
-  inkType: [
-    "amber"
-  ],
+  inkType: ["amber"],
   franchise: "Black Cauldron",
   set: "010",
   text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
@@ -19,19 +17,15 @@ export const eilonwyPrincessOfLlyr: CharacterCard = {
   cardNumber: 7,
   inkable: true,
   externalIds: {
-    ravensburger: "0f58ea02eaf39ac3ef2bc75f001ad1d539b477ed"
+    ravensburger: "0f58ea02eaf39ac3ef2bc75f001ad1d539b477ed",
   },
   abilities: [
     {
       id: "49a-1",
       text: "Support",
       type: "keyword",
-      keyword: "Support"
-    }
+      keyword: "Support",
+    },
   ],
-  classifications: [
-    "Storyborn",
-    "Ally",
-    "Princess"
-  ]
+  classifications: ["Storyborn", "Ally", "Princess"],
 };

@@ -97,7 +97,7 @@ export function getKeywordValue(
   const kw = getKeywordAbilities(card).find(
     (k) => k.keyword === keyword && isParameterizedKeywordAbility(k),
   );
-  if (!kw || !isParameterizedKeywordAbility(kw)) return null;
+  if (!(kw && isParameterizedKeywordAbility(kw))) return null;
   return kw.value;
 }
 
@@ -143,7 +143,7 @@ export function getShiftCost(card: LorcanaCardDefinition): number | null {
   const shift = getKeywordAbilities(card).find(
     (k) => k.keyword === "Shift" && isShiftKeywordAbility(k),
   );
-  if (!shift || !isShiftKeywordAbility(shift)) return null;
+  if (!(shift && isShiftKeywordAbility(shift))) return null;
 
   // Assuming 'ink' cost for now as per previous types
   if ("ink" in shift.cost) {
@@ -159,7 +159,7 @@ export function getShiftTargetName(card: LorcanaCardDefinition): string | null {
   const shift = getKeywordAbilities(card).find(
     (k) => k.keyword === "Shift" && isShiftKeywordAbility(k),
   );
-  if (!shift || !isShiftKeywordAbility(shift)) return null;
+  if (!(shift && isShiftKeywordAbility(shift))) return null;
   return shift.shiftTarget ?? null;
 }
 
@@ -170,7 +170,7 @@ export function getSingerValue(card: LorcanaCardDefinition): number | null {
   const singer = getKeywordAbilities(card).find(
     (k) => k.keyword === "Singer" && isValueKeywordAbility(k),
   );
-  if (!singer || !isValueKeywordAbility(singer)) return null;
+  if (!(singer && isValueKeywordAbility(singer))) return null;
   return singer.value;
 }
 
@@ -183,7 +183,7 @@ export function getSingTogetherValue(
   const singTogether = getKeywordAbilities(card).find(
     (k) => k.keyword === "SingTogether" && isValueKeywordAbility(k),
   );
-  if (!singTogether || !isValueKeywordAbility(singTogether)) return null;
+  if (!(singTogether && isValueKeywordAbility(singTogether))) return null;
   return singTogether.value;
 }
 

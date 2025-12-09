@@ -6,9 +6,7 @@ export const theHornedKingHeartlessDevil: CharacterCard = {
   name: "The Horned King",
   version: "Heartless Devil",
   fullName: "The Horned King - Heartless Devil",
-  inkType: [
-    "amethyst"
-  ],
+  inkType: ["amethyst"],
   franchise: "Black Cauldron",
   set: "010",
   cost: 1,
@@ -19,12 +17,7 @@ export const theHornedKingHeartlessDevil: CharacterCard = {
   inkable: true,
   vanilla: true,
   externalIds: {
-    ravensburger: "0b2e0292852ba958299be48fba687444c8216655"
+    ravensburger: "0b2e0292852ba958299be48fba687444c8216655",
   },
-  classifications: [
-    "Storyborn",
-    "Villain",
-    "King",
-    "Sorcerer"
-  ]
+  classifications: ["Storyborn", "Villain", "King", "Sorcerer"],
 };

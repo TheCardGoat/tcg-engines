@@ -1,0 +1,20 @@
+import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+export declare const forbiddenMountainMaleficentsCastle: LorcanitoLocationCard;
+export declare const neverLandMermaidLagoon: LorcanitoLocationCard;
+export declare const prideLandsPrideRock: LorcanitoLocationCard;
+export declare const tianasPalaceJazzRestaurant: LorcanitoLocationCard;
+export declare const theQueensCastleMirrorChamber: LorcanitoLocationCard;
+export declare const theSorcerersTowerWondrousWorkspace: LorcanitoLocationCard;
+export declare const deVilManorCruellasEstate: LorcanitoLocationCard;
+export declare const fangRiverCity: LorcanitoLocationCard;
+export declare const kuzcosPalaceHomeOfTheEmperor: LorcanitoLocationCard;
+export declare const agrabahMarketplace: LorcanitoLocationCard;
+export declare const jollyRogerHooksShip: LorcanitoLocationCard;
+export declare const rlsLegacySolarGalleon: LorcanitoLocationCard;
+export declare const bellesHouseMauricesWorkshop: LorcanitoLocationCard;
+export declare const motunuiIslandParadise: LorcanitoLocationCard;
+export declare const mauisPlaceOfExileHiddenIsland: LorcanitoLocationCard;
+export declare const nottinghamPrinceJohnsCastle: LorcanitoLocationCard;
+export declare const theBayouMysteriousSwamp: LorcanitoLocationCard;
+export declare const mcduckManorScroogesMansion: LorcanitoLocationCard;
+//# sourceMappingURL=locations.d.ts.map

@@ -1,0 +1,133 @@
+import { createInvalidMove } from "~/game-engine/core-engine/move/move-types";
+import { logger } from "~/game-engine/core-engine/utils/logger";
+export const challengeMove = ({ G, ctx, coreOps, gameOps, playerID }, challengerInstanceId, options) => {
+    try {
+        // Ensure we're in the main phase (this is a turn action)
+        if (ctx.currentPhase !== "mainPhase") {
+            logger.error(`Cannot challenge during ${ctx.currentPhase} phase`);
+            return createInvalidMove("WRONG_PHASE", "moves.challenge.errors.wrongPhase", { currentPhase: ctx.currentPhase, expectedPhase: "mainPhase" });
+        }
+        const challengerInstance = coreOps.getCardInstance(challengerInstanceId);
+        if (!challengerInstance) {
+            logger.error(`Failed to get challenger instance ${challengerInstanceId}`);
+            return createInvalidMove("CHALLENGER_NOT_FOUND", "moves.challenge.errors.challengerNotFound", { instanceId: challengerInstanceId });
+        }
+        const targetInstance = coreOps.getCardInstance(options.targetInstanceId);
+        if (!targetInstance) {
+            logger.error(`Failed to get target instance ${options.targetInstanceId}`);
+            return createInvalidMove("TARGET_NOT_FOUND", "moves.challenge.errors.targetNotFound", { instanceId: options.targetInstanceId });
+        }
+        const challenger = challengerInstance;
+        const target = targetInstance;
+        // Verify challenger is a character
+        if (!challenger.card.type?.includes("Character")) {
+            logger.error(`Challenger ${challengerInstanceId} is not a character`);
+            return createInvalidMove("CHALLENGER_NOT_CHARACTER", "moves.challenge.errors.challengerNotCharacter", { instanceId: challengerInstanceId, cardType: challenger.card.type });
+        }
+        // Verify challenger is in player's play zone
+        const playerPlayCards = coreOps.getCardsInZone("play", playerID);
+        if (!playerPlayCards.find((card) => card.instanceId === challengerInstanceId)) {
+            logger.error(`Challenger ${challengerInstanceId} is not in player ${playerID}'s play zone`);
+            return createInvalidMove("CHALLENGER_NOT_IN_PLAY", "moves.challenge.errors.challengerNotInPlay", { instanceId: challengerInstanceId, playerId: playerID });
+        }
+        // Verify target is either an exerted character or a location
+        const isTargetCharacter = target.card.type?.includes("Character");
+        const isTargetLocation = target.card.type?.includes("Location");
+        if (!(isTargetCharacter || isTargetLocation)) {
+            logger.error(`Target ${options.targetInstanceId} is neither a character nor a location`);
+            return createInvalidMove("INVALID_TARGET_TYPE", "moves.challenge.errors.invalidTargetType", { instanceId: options.targetInstanceId, cardType: target.card.type });
+        }
+        // If target is a character, it must be exerted
+        if (isTargetCharacter) {
+            // Note: This would need proper character state tracking for exerted status
+            // For now, we assume the validation passes
+            logger.info(`Challenging exerted character ${options.targetInstanceId}`);
+        }
+        // Verify target is controlled by opponent
+        const targetOwner = coreOps.getCardOwner(options.targetInstanceId);
+        if (targetOwner === playerID) {
+            logger.error(`Cannot challenge own card ${options.targetInstanceId}`);
+            return createInvalidMove("CANNOT_CHALLENGE_OWN_CARD", "moves.challenge.errors.cannotChallengeOwnCard", { instanceId: options.targetInstanceId, playerId: playerID });
+        }
+        // Check for Evasive restriction
+        const targetKeywords = target.card.keywords || [];
+        const challengerKeywords = challenger.card.keywords || [];
+        if (targetKeywords.includes("Evasive") &&
+            !challengerKeywords.includes("Evasive")) {
+            logger.error(`Cannot challenge Evasive character ${options.targetInstanceId} without Evasive challenger`);
+            return createInvalidMove("TARGET_EVASIVE", "moves.challenge.errors.targetEvasive", {
+                challengerInstanceId,
+                targetInstanceId: options.targetInstanceId,
+            });
+        }
+        // Check for Bodyguard restriction
+        if (isTargetCharacter && !targetKeywords.includes("Bodyguard")) {
+            // If target doesn't have Bodyguard, check if there's a Bodyguard that must be challenged first
+            const opponentPlayCards = coreOps.getCardsInZone("play", targetOwner);
+            const bodyguardCards = opponentPlayCards.filter((card) => {
+                const cardKeywords = card.card.keywords || [];
+                return (cardKeywords.includes("Bodyguard") &&
+                    card.instanceId !== options.targetInstanceId);
+            });
+            if (bodyguardCards.length > 0) {
+                logger.error("Must challenge Bodyguard character first");
+                return createInvalidMove("MUST_CHALLENGE_BODYGUARD", "moves.challenge.errors.mustChallengeBodyguard", {
+                    targetInstanceId: options.targetInstanceId,
+                    bodyguardCards: bodyguardCards.map((c) => c.instanceId),
+                });
+            }
+        }
+        // Check if challenger can challenge (must be ready/not exerted)
+        // Note: This would need proper character state tracking
+        // For now, we assume the challenger is ready
+        // Get strength values for damage calculation
+        const challengerStrength = challenger.card.strength || 0;
+        const targetStrength = isTargetLocation
+            ? 0
+            : target.card.strength || 0;
+        // Exert the challenging character
+        logger.info(`Exerting challenger ${challengerInstanceId}`);
+        // Apply "while challenging" effects
+        // Note: This would need to be implemented based on specific card abilities
+        // Add triggered abilities to the bag
+        gameOps?.addTriggeredEffectsToTheBag("onChallenge", challengerInstanceId);
+        // Deal damage simultaneously
+        if (challengerStrength > 0) {
+            logger.info(`Challenger deals ${challengerStrength} damage to target`);
+            // Note: This would need proper damage tracking system
+        }
+        if (targetStrength > 0 && isTargetCharacter) {
+            logger.info(`Target deals ${targetStrength} damage to challenger`);
+            // Note: This would need proper damage tracking system
+        }
+        // Check for banishment (when damage >= willpower)
+        const challengerWillpower = challenger.card.willpower || 0;
+        const targetWillpower = isTargetLocation
+            ? target.card.willpower || 0
+            : target.card.willpower || 0;
+        if (targetStrength >= challengerWillpower && challengerWillpower > 0) {
+            logger.info(`Challenger ${challengerInstanceId} is banished`);
+            // Add banishment trigger to bag
+            gameOps?.addTriggeredEffectsToTheBag("onBanish", challengerInstanceId);
+        }
+        if (challengerStrength >= targetWillpower && targetWillpower > 0) {
+            logger.info(`Target ${options.targetInstanceId} is banished`);
+            // Add banishment trigger to bag
+            gameOps?.addTriggeredEffectsToTheBag("onBanish", options.targetInstanceId);
+        }
+        // End "while challenging" effects
+        // Note: This would clean up temporary effects
+        logger.info(`Player ${playerID} challenged ${options.targetInstanceId} with ${challengerInstanceId}`);
+        return G;
+    }
+    catch (error) {
+        logger.error(`Unexpected error in challengeMove: ${error}`);
+        return createInvalidMove("UNEXPECTED_ERROR", "moves.challenge.errors.unexpectedError", {
+            error: String(error),
+            challengerInstanceId,
+            targetInstanceId: options?.targetInstanceId,
+            playerId: playerID,
+        });
+    }
+};
+//# sourceMappingURL=challenge.js.map
