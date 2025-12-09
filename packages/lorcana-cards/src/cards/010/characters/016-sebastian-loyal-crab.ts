@@ -6,7 +6,9 @@ export const sebastianLoyalCrab: CharacterCard = {
   name: "Sebastian",
   version: "Loyal Crab",
   fullName: "Sebastian - Loyal Crab",
-  inkType: ["amber"],
+  inkType: [
+    "amber"
+  ],
   franchise: "Little Mermaid",
   set: "010",
   cost: 2,
@@ -17,7 +19,10 @@ export const sebastianLoyalCrab: CharacterCard = {
   inkable: false,
   vanilla: true,
   externalIds: {
-    ravensburger: "a9c439aedf6fe2b18185622636ae80d64c0e1cf6",
+    ravensburger: "a9c439aedf6fe2b18185622636ae80d64c0e1cf6"
   },
-  classifications: ["Storyborn", "Ally"],
+  classifications: [
+    "Storyborn",
+    "Ally"
+  ]
 };

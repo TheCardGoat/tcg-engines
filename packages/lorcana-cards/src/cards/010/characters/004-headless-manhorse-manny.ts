@@ -6,7 +6,9 @@ export const headlessManhorseManny: CharacterCard = {
   name: "Headless Manhorse",
   version: "Manny",
   fullName: "Headless Manhorse - Manny",
-  inkType: ["amber"],
+  inkType: [
+    "amber"
+  ],
   franchise: "Ducktales",
   set: "010",
   cost: 6,
@@ -17,7 +19,10 @@ export const headlessManhorseManny: CharacterCard = {
   inkable: true,
   vanilla: true,
   externalIds: {
-    ravensburger: "74e70de1f6826e8bd5376c54ec0413b7b8a33f2d",
+    ravensburger: "74e70de1f6826e8bd5376c54ec0413b7b8a33f2d"
   },
-  classifications: ["Storyborn", "Ally"],
+  classifications: [
+    "Storyborn",
+    "Ally"
+  ]
 };

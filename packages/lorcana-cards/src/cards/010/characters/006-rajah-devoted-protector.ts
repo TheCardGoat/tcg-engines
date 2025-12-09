@@ -6,7 +6,9 @@ export const rajahDevotedProtector: CharacterCard = {
   name: "Rajah",
   version: "Devoted Protector",
   fullName: "Rajah - Devoted Protector",
-  inkType: ["amber"],
+  inkType: [
+    "amber"
+  ],
   franchise: "Aladdin",
   set: "010",
   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
@@ -17,16 +19,18 @@ export const rajahDevotedProtector: CharacterCard = {
   cardNumber: 6,
   inkable: true,
   externalIds: {
-    ravensburger: "05432111c47bf28eb52d76930eb2c603642d13e9",
+    ravensburger: "05432111c47bf28eb52d76930eb2c603642d13e9"
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "1gk-1",
       text: "Bodyguard",
       type: "keyword",
-      keyword: "Bodyguard",
-    },
+      keyword: "Bodyguard"
+    }
   ],
-  classifications: ["Storyborn", "Ally"],
+  classifications: [
+    "Storyborn",
+    "Ally"
+  ]
 };

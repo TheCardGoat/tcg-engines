@@ -6,7 +6,9 @@ export const mrsBeakleyFormerShushAgent: CharacterCard = {
   name: "Mrs. Beakley",
   version: "Former S.H.U.S.H. Agent",
   fullName: "Mrs. Beakley - Former S.H.U.S.H. Agent",
-  inkType: ["amber"],
+  inkType: [
+    "amber"
+  ],
   franchise: "Ducktales",
   set: "010",
   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
@@ -17,16 +19,18 @@ export const mrsBeakleyFormerShushAgent: CharacterCard = {
   cardNumber: 11,
   inkable: true,
   externalIds: {
-    ravensburger: "99a7cb5afcf2f617bc3f2280c0afc300de76be91",
+    ravensburger: "99a7cb5afcf2f617bc3f2280c0afc300de76be91"
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "16m-1",
       text: "Bodyguard",
       type: "keyword",
-      keyword: "Bodyguard",
-    },
+      keyword: "Bodyguard"
+    }
   ],
-  classifications: ["Storyborn", "Ally"],
+  classifications: [
+    "Storyborn",
+    "Ally"
+  ]
 };

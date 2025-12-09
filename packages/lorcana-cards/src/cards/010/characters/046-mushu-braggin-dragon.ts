@@ -6,7 +6,9 @@ export const mushuBragginDragon: CharacterCard = {
   name: "Mushu",
   version: "Braggin' Dragon",
   fullName: "Mushu - Braggin' Dragon",
-  inkType: ["amethyst"],
+  inkType: [
+    "amethyst"
+  ],
   franchise: "Mulan",
   set: "010",
   cost: 4,
@@ -17,7 +19,11 @@ export const mushuBragginDragon: CharacterCard = {
   inkable: true,
   vanilla: true,
   externalIds: {
-    ravensburger: "e52036adb795f301a821d78c2ba527eae343a403",
+    ravensburger: "e52036adb795f301a821d78c2ba527eae343a403"
   },
-  classifications: ["Storyborn", "Ally", "Dragon"],
+  classifications: [
+    "Storyborn",
+    "Ally",
+    "Dragon"
+  ]
 };

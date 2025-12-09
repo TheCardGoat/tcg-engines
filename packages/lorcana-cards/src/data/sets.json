@@ -5,8 +5,7 @@
     "code": "TFC",
     "sortNumber": 1,
     "type": "EXPANSION",
-    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set1/thumbnails/ba3c9a84b0afc41e50e8c08f18a528107ec9b3e8de151a90da7f611611ccc23e.png",
-    "totalCards": 204
+    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set1/thumbnails/ba3c9a84b0afc41e50e8c08f18a528107ec9b3e8de151a90da7f611611ccc23e.png"
   },
   "set2": {
     "id": "set2",
@@ -14,8 +13,7 @@
     "code": "ROF",
     "sortNumber": 2,
     "type": "EXPANSION",
-    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set2/thumbnails/3bb44edb659ab2c045210ce7acbcc949fa4bcd3cd17986f3d519944c144617a7.png",
-    "totalCards": 204
+    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set2/thumbnails/3bb44edb659ab2c045210ce7acbcc949fa4bcd3cd17986f3d519944c144617a7.png"
   },
   "set3": {
     "id": "set3",
@@ -23,8 +21,7 @@
     "code": "ITI",
     "sortNumber": 3,
     "type": "EXPANSION",
-    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set3/thumbnails/b23a0a7b454739fb17a6eb6729d0f9cf59aa4802653bad411eda3cf6a7511bfd.png",
-    "totalCards": 204
+    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set3/thumbnails/b23a0a7b454739fb17a6eb6729d0f9cf59aa4802653bad411eda3cf6a7511bfd.png"
   },
   "set4": {
     "id": "set4",
@@ -32,8 +29,7 @@
     "code": "URR",
     "sortNumber": 4,
     "type": "EXPANSION",
-    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set4/thumbnails/3973da0d1570b2ee91cf8ec773283f4fed21a9f4704fa97f2d9933bc70fd6c8f.png",
-    "totalCards": 204
+    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set4/thumbnails/3973da0d1570b2ee91cf8ec773283f4fed21a9f4704fa97f2d9933bc70fd6c8f.png"
   },
   "set5": {
     "id": "set5",
@@ -41,8 +37,7 @@
     "code": "SSK",
     "sortNumber": 6,
     "type": "EXPANSION",
-    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set5/thumbnails/cf484bf56f8592ef46c05d3007fab262f74d3bd228cb55385adabe78411529a8.png",
-    "totalCards": 204
+    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set5/thumbnails/cf484bf56f8592ef46c05d3007fab262f74d3bd228cb55385adabe78411529a8.png"
   },
   "set6": {
     "id": "set6",
@@ -50,8 +45,7 @@
     "code": "AZS",
     "sortNumber": 8,
     "type": "EXPANSION",
-    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set6/thumbnails/cbf4d3681aa7216e12e64d5291721077b2107dc3a47382eb85f6abb5d83290c7.png",
-    "totalCards": 204
+    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set6/thumbnails/cbf4d3681aa7216e12e64d5291721077b2107dc3a47382eb85f6abb5d83290c7.png"
   },
   "set7": {
     "id": "set7",
@@ -59,8 +53,7 @@
     "code": "ARC",
     "sortNumber": 9,
     "type": "EXPANSION",
-    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set7/thumbnails/52179a92740c11b77d2ca9b0f7d997acd820cbd4d3a696e6494aafcd4281174b.png",
-    "totalCards": 204
+    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set7/thumbnails/52179a92740c11b77d2ca9b0f7d997acd820cbd4d3a696e6494aafcd4281174b.png"
   },
   "set8": {
     "id": "set8",
@@ -68,8 +61,7 @@
     "code": "ROJ",
     "sortNumber": 10,
     "type": "EXPANSION",
-    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set8/thumbnails/ef43be637834357ccc788f8d3b3e2bf57711ab913c88e091b70997f02e78ed04.png",
-    "totalCards": 204
+    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set8/thumbnails/ef43be637834357ccc788f8d3b3e2bf57711ab913c88e091b70997f02e78ed04.png"
   },
   "set9": {
     "id": "set9",
@@ -77,8 +69,7 @@
     "code": "FAB",
     "sortNumber": 12,
     "type": "EXPANSION",
-    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set9/thumbnails/a7c8d809894f7a058ca6c2abc27f318e23cc71981889b985538b2918d6a535cc.png",
-    "totalCards": 204
+    "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set9/thumbnails/a7c8d809894f7a058ca6c2abc27f318e23cc71981889b985538b2918d6a535cc.png"
   },
   "set10": {
     "id": "set10",
@@ -87,6 +78,6 @@
     "sortNumber": 13,
     "type": "EXPANSION",
     "thumbnailUrl": "https://api.lorcana.ravensburger.com/images/en/set10/thumbnails/1c851495416d49f0649a17619780c07892b916a49e92427008222857684477e4.png",
-    "totalCards": 204
+    "totalCards": 59
   }
 }

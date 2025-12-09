@@ -108,9 +108,11 @@ async function main() {
   console.log("📦 Processing cards...");
   const allCardsRaw = getAllCards(input);
   // Filter to only cards that belong to expansion sets
-  const allCards = allCardsRaw.filter((card) =>
-    card.card_sets.some((setId) => expansionSetIds.has(setId)),
-  );
+  const allCards = allCardsRaw
+    .filter((card) =>
+      card.card_sets.some((setId) => expansionSetIds.has(setId)),
+    )
+    .slice(0, 50); // LIMIT FOR TESTING
   console.log(
     `  Found ${allCards.length} expansion card entries (filtered ${allCardsRaw.length - allCards.length} non-expansion cards)`,
   );
@@ -170,9 +172,11 @@ async function main() {
   console.log("\n📂 Generating card TypeScript files...");
 
   // Clear existing cards directory
+  /*
   if (fs.existsSync(CARDS_OUTPUT_DIR)) {
     fs.rmSync(CARDS_OUTPUT_DIR, { recursive: true });
   }
+  */
 
   // Filter to vanilla cards + parseable cards (keywords or action effects)
   const generatableCards: Record<string, (typeof canonicalCards)[string]> = {};

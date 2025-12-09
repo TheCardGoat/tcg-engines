@@ -238,43 +238,6 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
   }
 
   // === ARRAY PROPERTIES ===
-  // Convert keywords to proper engine format
-  // Simple keywords stay as strings, parameterized/complex keywords become objects
-  if (card.parsedAbilities && card.parsedAbilities.length > 0) {
-    const engineKeywords: unknown[] = [];
-    for (const ability of card.parsedAbilities) {
-      if (ability.type === "keyword") {
-        const kw = ability.keyword;
-        // Simple keywords (strings)
-        if (
-          [
-            "Bodyguard",
-            "Evasive",
-            "Reckless",
-            "Rush",
-            "Support",
-            "Vanish",
-            "Ward",
-            "Alert",
-          ].includes(kw)
-        ) {
-          engineKeywords.push(kw);
-        }
-        // Parameterized keywords (objects with value)
-        else if (kw === "Challenger" || kw === "Resist") {
-          engineKeywords.push({ type: kw, value: ability.value ?? 0 });
-        }
-        // Singer keyword (object with value)
-        else if (kw === "Singer") {
-          engineKeywords.push({ type: "Singer", value: ability.value ?? 0 });
-        }
-        // Note: Shift is more complex - requires targetName, skip for now
-      }
-    }
-    if (engineKeywords.length > 0) {
-      result.keywords = engineKeywords;
-    }
-  }
 
   // Output raw rules text as 'text' field
   if (card.rulesText) {
@@ -293,6 +256,8 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
       type: "triggered" | "activated" | "static" | "keyword" | "action";
       keyword?: string;
       value?: number;
+      cost?: unknown;
+      shiftTarget?: string;
       effect?: unknown;
     }> = [];
 
@@ -335,6 +300,8 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
           type: "triggered" | "activated" | "static" | "keyword" | "action";
           keyword?: string;
           value?: number;
+          cost?: unknown;
+          shiftTarget?: string;
           effect?: unknown;
         } = {
           id: abilityId,
@@ -366,6 +333,15 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
           }
           if ("value" in parsedAbility && parsedAbility.value !== undefined) {
             engineAbility.value = parsedAbility.value;
+          }
+          if ("cost" in parsedAbility && parsedAbility.cost !== undefined) {
+            engineAbility.cost = parsedAbility.cost;
+          }
+          if (
+            "shiftTarget" in parsedAbility &&
+            parsedAbility.shiftTarget !== undefined
+          ) {
+            engineAbility.shiftTarget = parsedAbility.shiftTarget;
           }
         }
 
@@ -412,7 +388,17 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
           if (shiftMatch) {
             abilityType = "keyword";
             keyword = "Shift";
-            value = Number.parseInt(shiftMatch[1], 10);
+            // For Shift, we need to construct a cost object
+            const shiftValue = Number.parseInt(shiftMatch[1], 10);
+            engineAbilities.push({
+              id: abilityId,
+              ...(name && { name }),
+              text,
+              type: "keyword",
+              keyword: "Shift",
+              cost: { ink: shiftValue },
+            });
+            continue;
           }
         }
         // Not a keyword - check for triggered/activated
@@ -711,6 +697,10 @@ export interface AbilityDefinition {
   name?: string | null;
   text: string;
   type: "triggered" | "activated" | "static" | "keyword" | "action";
+  keyword?: string;
+  value?: number;
+  cost?: unknown;
+  shiftTarget?: string;
 }
 
 export interface ExternalIds {
@@ -737,7 +727,6 @@ export interface CanonicalCardMetadata {
   inkType: InkType | [InkType, InkType];
   cost: number;
   inkable: boolean;
-  keywords?: string[];
   rulesText?: string;
   abilities?: AbilityDefinition[];
   printings: CardPrintingRef[];
