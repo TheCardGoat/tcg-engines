@@ -157,6 +157,9 @@ async function main() {
   writeJson(path.join(DATA_OUTPUT_DIR, "printings.json"), printings);
   console.log("  ✅ printings.json");
 
+  writeJson(path.join(DATA_OUTPUT_DIR, "canonical-cards.json"), canonicalCards);
+  console.log("  ✅ canonical-cards.json");
+
   writeJson(ID_MAPPING_PATH, idMapping);
   console.log("  ✅ id-mapping.json");
 
