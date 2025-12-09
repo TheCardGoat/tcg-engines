@@ -10,11 +10,11 @@ export const kronkUnlicensedInvestigator: CharacterCard = {
   franchise: "Emperors New Groove",
   set: "005",
   text: "Challenger +1 (While challenging, this character gets +1.)",
-  cardNumber: "178",
   cost: 2,
   strength: 1,
   willpower: 4,
   lore: 1,
+  cardNumber: 178,
   inkable: true,
   externalIds: {
     ravensburger: "020df7caff144b7a745a51d6252d5a5861fb6489",

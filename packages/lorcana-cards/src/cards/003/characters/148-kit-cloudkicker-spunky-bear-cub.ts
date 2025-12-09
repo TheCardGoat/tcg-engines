@@ -10,11 +10,11 @@ export const kitCloudkickerSpunkyBearCub: CharacterCard = {
   franchise: "Talespin",
   set: "003",
   text: "Ward (Opponents can't choose this character except to challenge.)",
-  cardNumber: "148",
   cost: 1,
   strength: 0,
   willpower: 1,
   lore: 1,
+  cardNumber: 148,
   inkable: true,
   externalIds: {
     ravensburger: "3f5ab1825bd1fe21e090a0b8eff482833549bc44",

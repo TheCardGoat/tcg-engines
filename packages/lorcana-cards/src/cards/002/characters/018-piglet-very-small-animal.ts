@@ -9,11 +9,11 @@ export const pigletVerySmallAnimal: CharacterCard = {
   inkType: ["amber"],
   franchise: "Winnie the Pooh",
   set: "002",
-  cardNumber: "018",
   cost: 3,
   strength: 2,
   willpower: 4,
   lore: 2,
+  cardNumber: 18,
   inkable: true,
   vanilla: true,
   externalIds: {

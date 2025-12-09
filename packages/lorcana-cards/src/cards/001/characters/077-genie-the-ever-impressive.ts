@@ -9,11 +9,11 @@ export const genieTheEverImpressive: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Aladdin",
   set: "001",
-  cardNumber: "077",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 77,
   inkable: true,
   vanilla: true,
   externalIds: {

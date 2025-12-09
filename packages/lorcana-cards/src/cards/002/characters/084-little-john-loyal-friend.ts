@@ -9,11 +9,11 @@ export const littleJohnLoyalFriend: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Robin Hood",
   set: "002",
-  cardNumber: "084",
   cost: 6,
   strength: 6,
   willpower: 6,
   lore: 2,
+  cardNumber: 84,
   inkable: true,
   vanilla: true,
   externalIds: {

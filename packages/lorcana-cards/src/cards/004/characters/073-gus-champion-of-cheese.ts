@@ -9,11 +9,11 @@ export const gusChampionOfCheese: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Cinderella",
   set: "004",
-  cardNumber: "073",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 73,
   inkable: true,
   vanilla: true,
   externalIds: {

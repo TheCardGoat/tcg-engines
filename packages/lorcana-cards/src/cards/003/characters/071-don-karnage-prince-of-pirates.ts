@@ -10,11 +10,11 @@ export const donKarnagePrinceOfPirates: CharacterCard = {
   franchise: "Talespin",
   set: "003",
   text: "Evasive (Only characters with Evasive can challenge this character.)",
-  cardNumber: "071",
   cost: 5,
   strength: 4,
   willpower: 4,
   lore: 2,
+  cardNumber: 71,
   inkable: true,
   externalIds: {
     ravensburger: "24ea5904a2f26342b5785ee8bc9953780df09477",

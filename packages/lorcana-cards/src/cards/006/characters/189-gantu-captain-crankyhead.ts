@@ -9,11 +9,11 @@ export const gantuCaptainCrankyhead: CharacterCard = {
   inkType: ["steel"],
   franchise: "Lilo and Stitch",
   set: "006",
-  cardNumber: "189",
   cost: 5,
   strength: 4,
   willpower: 3,
   lore: 4,
+  cardNumber: 189,
   inkable: true,
   vanilla: true,
   externalIds: {

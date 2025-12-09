@@ -17,6 +17,8 @@ export { lafayetteSleepyBassetHound } from "./132-lafayette-sleepy-basset-hound"
 export { friendOwlCantankerousNeighbor } from "./144-friend-owl-cantankerous-neighbor";
 export { theMouseQueenRulerOfMousedom } from "./153-the-mouse-queen-ruler-of-mousedom";
 export { wasabiAlwaysPrepared } from "./158-wasabi-always-prepared";
+export { theWardrobePerceptiveFriend } from "./160-the-wardrobe-perceptive-friend";
+export { mrsPottsHeadHousekeeper } from "./161-mrs-potts-head-housekeeper";
 export { adelaideBonfamillePatronOfTheArts } from "./164-adelaide-bonfamille-patron-of-the-arts";
 export { jumbaJookibaCriticalScientist } from "./173-jumba-jookiba-critical-scientist";
 export { atitayaFangGeneral } from "./181-atitaya-fang-general";

@@ -9,11 +9,11 @@ export const poeDeSpellMagicasBrother: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Ducktales",
   set: "008",
-  cardNumber: "058",
   cost: 3,
   strength: 3,
   willpower: 4,
   lore: 1,
+  cardNumber: 58,
   inkable: true,
   vanilla: true,
   externalIds: {

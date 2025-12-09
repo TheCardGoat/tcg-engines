@@ -9,11 +9,11 @@ export const tukTukBigBuddy: CharacterCard = {
   inkType: ["steel"],
   franchise: "Raya and the Last Dragon",
   set: "006",
-  cardNumber: "184",
   cost: 5,
   strength: 6,
   willpower: 5,
   lore: 1,
+  cardNumber: 184,
   inkable: true,
   vanilla: true,
   externalIds: {

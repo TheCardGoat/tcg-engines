@@ -9,11 +9,11 @@ export const auroraRegalPrincess: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Sleeping Beauty",
   set: "009",
-  cardNumber: "161",
   cost: 2,
   strength: 2,
   willpower: 2,
   lore: 2,
+  cardNumber: 161,
   inkable: true,
   vanilla: true,
   externalIds: {

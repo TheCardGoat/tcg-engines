@@ -9,11 +9,11 @@ export const bounPrecociousEntrepreneur: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Raya and the Last Dragon",
   set: "002",
-  cardNumber: "104",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 104,
   inkable: true,
   vanilla: true,
   externalIds: {

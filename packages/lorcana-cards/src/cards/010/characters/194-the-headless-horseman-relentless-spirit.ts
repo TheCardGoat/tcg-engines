@@ -10,11 +10,11 @@ export const theHeadlessHorsemanRelentlessSpirit: CharacterCard = {
   franchise: "Sleepy Hollow",
   set: "010",
   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-  cardNumber: "194",
   cost: 4,
   strength: 4,
   willpower: 4,
   lore: 1,
+  cardNumber: 194,
   inkable: true,
   externalIds: {
     ravensburger: "4160bece2c94394d46717dbd1fb2880098079cd6",

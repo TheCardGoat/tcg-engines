@@ -9,11 +9,11 @@ export const pumbaaFriendlyWarthog: CharacterCard = {
   inkType: ["amber"],
   franchise: "Lion King",
   set: "001",
-  cardNumber: "017",
   cost: 4,
   strength: 3,
   willpower: 5,
   lore: 1,
+  cardNumber: 17,
   inkable: true,
   vanilla: true,
   externalIds: {

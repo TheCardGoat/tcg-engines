@@ -9,11 +9,11 @@ export const theHornedKingHeartlessDevil: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Black Cauldron",
   set: "010",
-  cardNumber: "038",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 38,
   inkable: true,
   vanilla: true,
   externalIds: {

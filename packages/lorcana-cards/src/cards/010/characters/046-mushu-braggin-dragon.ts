@@ -9,11 +9,11 @@ export const mushuBragginDragon: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Mulan",
   set: "010",
-  cardNumber: "046",
   cost: 4,
   strength: 4,
   willpower: 4,
   lore: 2,
+  cardNumber: 46,
   inkable: true,
   vanilla: true,
   externalIds: {

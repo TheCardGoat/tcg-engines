@@ -9,10 +9,10 @@ export const fairyShipRoyalVessel: LocationCard = {
   inkType: ["amethyst"],
   franchise: "Peter Pan",
   set: "006",
-  cardNumber: "068",
   cost: 1,
   moveCost: 1,
   lore: 0,
+  cardNumber: 68,
   inkable: true,
   vanilla: true,
   externalIds: {

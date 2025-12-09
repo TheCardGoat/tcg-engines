@@ -9,11 +9,11 @@ export const magicBroomLivelySweeper: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Fantasia",
   set: "004",
-  cardNumber: "049",
   cost: 3,
   strength: 2,
   willpower: 4,
   lore: 1,
+  cardNumber: 49,
   inkable: true,
   vanilla: true,
   externalIds: {

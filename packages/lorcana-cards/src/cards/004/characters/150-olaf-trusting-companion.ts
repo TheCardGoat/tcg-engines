@@ -10,11 +10,11 @@ export const olafTrustingCompanion: CharacterCard = {
   franchise: "Frozen",
   set: "004",
   text: "Support (Whenever this character quests, you may add their to another chosen character’s this turn.)",
-  cardNumber: "150",
   cost: 1,
   strength: 1,
   willpower: 2,
   lore: 1,
+  cardNumber: 150,
   inkable: true,
   externalIds: {
     ravensburger: "cbab906d9150c14ea179ca6198b84543704569f4",

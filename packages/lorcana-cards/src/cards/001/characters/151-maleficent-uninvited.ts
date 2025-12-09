@@ -9,11 +9,11 @@ export const maleficentUninvited: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Sleeping Beauty",
   set: "001",
-  cardNumber: "151",
   cost: 5,
   strength: 3,
   willpower: 6,
   lore: 3,
+  cardNumber: 151,
   inkable: true,
   vanilla: true,
   externalIds: {

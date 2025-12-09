@@ -9,11 +9,11 @@ export const kingLouieBandleader: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Talespin",
   set: "003",
-  cardNumber: "146",
   cost: 7,
   strength: 7,
   willpower: 7,
   lore: 3,
+  cardNumber: 146,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const winnieThePoohHunnyWizard: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Winnie the Pooh",
   set: "009",
-  cardNumber: "041",
   cost: 5,
   strength: 5,
   willpower: 5,
   lore: 2,
+  cardNumber: 41,
   inkable: true,
   vanilla: true,
   externalIds: {

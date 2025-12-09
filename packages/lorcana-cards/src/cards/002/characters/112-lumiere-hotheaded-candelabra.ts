@@ -9,11 +9,11 @@ export const lumiereHotheadedCandelabra: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Beauty and the Beast",
   set: "002",
-  cardNumber: "112",
   cost: 7,
   strength: 7,
   willpower: 7,
   lore: 2,
+  cardNumber: 112,
   inkable: true,
   vanilla: true,
   externalIds: {

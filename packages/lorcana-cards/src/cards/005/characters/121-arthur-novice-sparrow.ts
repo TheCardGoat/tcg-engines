@@ -10,11 +10,11 @@ export const arthurNoviceSparrow: CharacterCard = {
   franchise: "Sword in the Stone",
   set: "005",
   text: "Reckless (This character can't quest and must challenge each turn if able.)",
-  cardNumber: "121",
   cost: 1,
   strength: 2,
   willpower: 3,
   lore: 0,
+  cardNumber: 121,
   inkable: false,
   externalIds: {
     ravensburger: "29f376ad78c551ed84b353cdcbe6ae4a1bceaa40",

@@ -9,11 +9,11 @@ export const picoHelpfulToucan: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Encanto",
   set: "004",
-  cardNumber: "055",
   cost: 2,
   strength: 3,
   willpower: 2,
   lore: 1,
+  cardNumber: 55,
   inkable: true,
   vanilla: true,
   externalIds: {

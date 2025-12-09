@@ -9,11 +9,11 @@ export const magicalMaidFeatherDuster: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Beauty and the Beast",
   set: "004",
-  cardNumber: "050",
   cost: 2,
   strength: 2,
   willpower: 2,
   lore: 2,
+  cardNumber: 50,
   inkable: true,
   vanilla: true,
   externalIds: {

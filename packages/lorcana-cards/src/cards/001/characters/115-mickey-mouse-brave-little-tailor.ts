@@ -9,11 +9,11 @@ export const mickeyMouseBraveLittleTailor: CharacterCard = {
   inkType: ["ruby"],
   set: "001",
   text: "Evasive (Only characters with Evasive can challenge this character.)",
-  cardNumber: "115",
   cost: 8,
   strength: 5,
   willpower: 5,
   lore: 4,
+  cardNumber: 115,
   inkable: true,
   externalIds: {
     ravensburger: "24d9608bc36bf0e9c6e158b0569ebcd8d0515343",

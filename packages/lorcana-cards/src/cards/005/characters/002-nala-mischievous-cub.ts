@@ -9,11 +9,11 @@ export const nalaMischievousCub: CharacterCard = {
   inkType: ["amber"],
   franchise: "Lion King",
   set: "005",
-  cardNumber: "002",
   cost: 1,
   strength: 0,
   willpower: 4,
   lore: 1,
+  cardNumber: 2,
   inkable: true,
   vanilla: true,
   externalIds: {

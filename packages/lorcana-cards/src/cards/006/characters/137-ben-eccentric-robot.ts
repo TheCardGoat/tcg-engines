@@ -10,11 +10,11 @@ export const benEccentricRobot: CharacterCard = {
   franchise: "Treasure Planet",
   set: "006",
   text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-  cardNumber: "137",
   cost: 4,
   strength: 4,
   willpower: 3,
   lore: 2,
+  cardNumber: 137,
   inkable: true,
   externalIds: {
     ravensburger: "aa97f4df72681860790f4df212f77ab3bf9a7239",

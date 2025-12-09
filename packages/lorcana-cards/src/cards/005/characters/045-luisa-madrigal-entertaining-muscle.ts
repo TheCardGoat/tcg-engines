@@ -9,11 +9,11 @@ export const luisaMadrigalEntertainingMuscle: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Encanto",
   set: "005",
-  cardNumber: "045",
   cost: 6,
   strength: 4,
   willpower: 8,
   lore: 3,
+  cardNumber: 45,
   inkable: false,
   vanilla: true,
   externalIds: {

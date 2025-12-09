@@ -9,11 +9,11 @@ export const mulanArmoredFighter: CharacterCard = {
   inkType: ["steel"],
   franchise: "Mulan",
   set: "004",
-  cardNumber: "189",
   cost: 4,
   strength: 3,
   willpower: 6,
   lore: 1,
+  cardNumber: 189,
   inkable: true,
   vanilla: true,
   externalIds: {

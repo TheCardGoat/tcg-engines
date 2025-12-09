@@ -9,11 +9,11 @@ export const bagheeraCautiousExplorer: CharacterCard = {
   inkType: ["amber"],
   franchise: "Jungle Book",
   set: "010",
-  cardNumber: "012",
   cost: 3,
   strength: 4,
   willpower: 4,
   lore: 1,
+  cardNumber: 12,
   inkable: true,
   vanilla: true,
   externalIds: {

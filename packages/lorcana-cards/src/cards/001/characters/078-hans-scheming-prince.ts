@@ -9,11 +9,11 @@ export const hansSchemingPrince: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Frozen",
   set: "001",
-  cardNumber: "078",
   cost: 4,
   strength: 3,
   willpower: 3,
   lore: 3,
+  cardNumber: 78,
   inkable: true,
   vanilla: true,
   externalIds: {

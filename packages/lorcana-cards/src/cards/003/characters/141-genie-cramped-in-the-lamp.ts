@@ -9,11 +9,11 @@ export const genieCrampedInTheLamp: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Aladdin",
   set: "003",
-  cardNumber: "141",
   cost: 2,
   strength: 2,
   willpower: 2,
   lore: 2,
+  cardNumber: 141,
   inkable: true,
   vanilla: true,
   externalIds: {

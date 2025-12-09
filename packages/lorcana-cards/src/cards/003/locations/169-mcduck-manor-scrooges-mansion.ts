@@ -9,10 +9,10 @@ export const mcduckManorScroogesMansion: LocationCard = {
   inkType: ["sapphire"],
   franchise: "Ducktales",
   set: "003",
-  cardNumber: "169",
   cost: 4,
   moveCost: 1,
   lore: 0,
+  cardNumber: 169,
   inkable: true,
   vanilla: true,
   externalIds: {

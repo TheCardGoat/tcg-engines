@@ -10,11 +10,11 @@ export const ryderFleetfootedInfiltrator: CharacterCard = {
   franchise: "Frozen",
   set: "008",
   text: "Evasive (Only characters with Evasive can challenge this character.)",
-  cardNumber: "056",
   cost: 4,
   strength: 3,
   willpower: 4,
   lore: 1,
+  cardNumber: 56,
   inkable: true,
   externalIds: {
     ravensburger: "92a8bffc338852c3c4d649bd891f34fb5462730e",

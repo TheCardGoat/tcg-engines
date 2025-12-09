@@ -12,6 +12,7 @@ export { rajahGhostlyTiger } from "./062-rajah-ghostly-tiger";
 export { kashekimAncientRuler } from "./077-kashekim-ancient-ruler";
 export { drizellaSpoiledStepsister } from "./085-drizella-spoiled-stepsister";
 export { thomasOmalleyFelineCharmer } from "./088-thomas-omalley-feline-charmer";
+export { hiroHamadaFutureChampion } from "./090-hiro-hamada-future-champion";
 export { berliozMischievousKitten } from "./099-berlioz-mischievous-kitten";
 export { duchessElegantFeline } from "./112-duchess-elegant-feline";
 export { tobyDoggedCompanion } from "./131-toby-dogged-companion";

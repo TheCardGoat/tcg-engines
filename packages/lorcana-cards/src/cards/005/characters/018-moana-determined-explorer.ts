@@ -9,11 +9,11 @@ export const moanaDeterminedExplorer: CharacterCard = {
   inkType: ["amber"],
   franchise: "Moana",
   set: "005",
-  cardNumber: "018",
   cost: 3,
   strength: 3,
   willpower: 4,
   lore: 2,
+  cardNumber: 18,
   inkable: false,
   vanilla: true,
   externalIds: {

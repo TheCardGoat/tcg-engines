@@ -9,11 +9,11 @@ export const eudoraAccomplishedSeamstress: CharacterCard = {
   inkType: ["amber"],
   franchise: "Princess and the Frog",
   set: "002",
-  cardNumber: "007",
   cost: 5,
   strength: 1,
   willpower: 9,
   lore: 2,
+  cardNumber: 7,
   inkable: true,
   vanilla: true,
   externalIds: {

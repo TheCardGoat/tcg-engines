@@ -8,11 +8,11 @@ export const ludwigVonDrakeSelfproclaimedGenius: CharacterCard = {
   fullName: "Ludwig von Drake - Self-Proclaimed Genius",
   inkType: ["sapphire"],
   set: "005",
-  cardNumber: "151",
   cost: 5,
   strength: 4,
   willpower: 4,
   lore: 3,
+  cardNumber: 151,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -8,11 +8,11 @@ export const plutoMickeysCleverFriend: CharacterCard = {
   fullName: "Pluto - Mickey's Clever Friend",
   inkType: ["sapphire"],
   set: "003",
-  cardNumber: "152",
   cost: 3,
   strength: 3,
   willpower: 4,
   lore: 1,
+  cardNumber: 152,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const billyBonesKeeperOfTheMap: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Treasure Planet",
   set: "003",
-  cardNumber: "104",
   cost: 5,
   strength: 6,
   willpower: 5,
   lore: 1,
+  cardNumber: 104,
   inkable: true,
   vanilla: true,
   externalIds: {

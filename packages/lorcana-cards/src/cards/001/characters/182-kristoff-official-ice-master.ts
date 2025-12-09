@@ -9,11 +9,11 @@ export const kristoffOfficialIceMaster: CharacterCard = {
   inkType: ["steel"],
   franchise: "Frozen",
   set: "001",
-  cardNumber: "182",
   cost: 3,
   strength: 3,
   willpower: 3,
   lore: 2,
+  cardNumber: 182,
   inkable: true,
   vanilla: true,
   externalIds: {

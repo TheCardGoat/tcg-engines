@@ -9,11 +9,11 @@ export const magicCarpetAmazingFlier: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Aladdin",
   set: "006",
-  cardNumber: "051",
   cost: 3,
   strength: 1,
   willpower: 3,
   lore: 3,
+  cardNumber: 51,
   inkable: true,
   vanilla: true,
   externalIds: {

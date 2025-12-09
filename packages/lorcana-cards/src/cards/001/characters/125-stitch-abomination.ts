@@ -9,11 +9,11 @@ export const stitchAbomination: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Lilo and Stitch",
   set: "001",
-  cardNumber: "125",
   cost: 6,
   strength: 4,
   willpower: 6,
   lore: 3,
+  cardNumber: 125,
   inkable: true,
   vanilla: true,
   externalIds: {

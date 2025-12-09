@@ -10,11 +10,11 @@ export const peterPanHighFlyer: CharacterCard = {
   franchise: "Peter Pan",
   set: "010",
   text: "Evasive (Only characters with Evasive can challenge this character.)",
-  cardNumber: "105",
   cost: 3,
   strength: 1,
   willpower: 3,
   lore: 2,
+  cardNumber: 105,
   inkable: true,
   externalIds: {
     ravensburger: "067ac8173c1f60f06e456367ff8785feaa83214f",

@@ -9,11 +9,11 @@ export const suzyMasterSeamstress: CharacterCard = {
   inkType: ["amber"],
   franchise: "Cinderella",
   set: "007",
-  cardNumber: "008",
   cost: 4,
   strength: 3,
   willpower: 4,
   lore: 2,
+  cardNumber: 8,
   inkable: true,
   vanilla: true,
   externalIds: {

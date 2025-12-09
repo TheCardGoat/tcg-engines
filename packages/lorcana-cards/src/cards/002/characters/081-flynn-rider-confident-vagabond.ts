@@ -9,11 +9,11 @@ export const flynnRiderConfidentVagabond: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Tangled",
   set: "002",
-  cardNumber: "081",
   cost: 1,
   strength: 1,
   willpower: 3,
   lore: 1,
+  cardNumber: 81,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const balooLaidbackBear: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Jungle Book",
   set: "010",
-  cardNumber: "069",
   cost: 2,
   strength: 2,
   willpower: 4,
   lore: 1,
+  cardNumber: 69,
   inkable: true,
   vanilla: true,
   externalIds: {

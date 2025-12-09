@@ -9,11 +9,11 @@ export const theWardrobeBellesConfidant: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Beauty and the Beast",
   set: "001",
-  cardNumber: "057",
   cost: 3,
   strength: 3,
   willpower: 4,
   lore: 1,
+  cardNumber: 57,
   inkable: true,
   vanilla: true,
   externalIds: {

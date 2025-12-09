@@ -10,11 +10,11 @@ export const heiheiBoatSnack: CharacterCard = {
   franchise: "Moana",
   set: "001",
   text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-  cardNumber: "007",
   cost: 1,
   strength: 1,
   willpower: 2,
   lore: 1,
+  cardNumber: 7,
   inkable: true,
   externalIds: {
     ravensburger: "6dfdbf904cb6a8f2f700f9839e50902b7dd4bcad",

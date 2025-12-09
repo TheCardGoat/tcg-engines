@@ -10,11 +10,11 @@ export const deweyShowyNephew: CharacterCard = {
   franchise: "Ducktales",
   set: "009",
   text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-  cardNumber: "139",
   cost: 3,
   strength: 2,
   willpower: 3,
   lore: 2,
+  cardNumber: 139,
   inkable: true,
   externalIds: {
     ravensburger: "0b0ddc6a36474b1503510c3a4c1a09e035e13baf",

@@ -9,11 +9,11 @@ export const wilhelminaPackardTheRadioOperator: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Atlantis",
   set: "008",
-  cardNumber: "085",
   cost: 3,
   strength: 3,
   willpower: 4,
   lore: 1,
+  cardNumber: 85,
   inkable: true,
   vanilla: true,
   externalIds: {

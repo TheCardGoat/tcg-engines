@@ -9,11 +9,11 @@ export const tritonTheSeaKing: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Little Mermaid",
   set: "001",
-  cardNumber: "160",
   cost: 7,
   strength: 5,
   willpower: 9,
   lore: 2,
+  cardNumber: 160,
   inkable: true,
   vanilla: true,
   externalIds: {

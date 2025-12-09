@@ -10,11 +10,11 @@ export const basilHypnotizedMouse: CharacterCard = {
   franchise: "Great Mouse Detective",
   set: "006",
   text: "Evasive (Only characters with Evasive can challenge this character.)",
-  cardNumber: "079",
   cost: 3,
   strength: 3,
   willpower: 2,
   lore: 1,
+  cardNumber: 79,
   inkable: true,
   externalIds: {
     ravensburger: "f404642244e838db87343396d53a98cc355ec34e",

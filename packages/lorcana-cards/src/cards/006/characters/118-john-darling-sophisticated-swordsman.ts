@@ -9,11 +9,11 @@ export const johnDarlingSophisticatedSwordsman: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Peter Pan",
   set: "006",
-  cardNumber: "118",
   cost: 2,
   strength: 1,
   willpower: 4,
   lore: 1,
+  cardNumber: 118,
   inkable: true,
   vanilla: true,
   externalIds: {

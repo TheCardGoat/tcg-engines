@@ -9,11 +9,11 @@ export const arthurWart: CharacterCard = {
   inkType: ["steel"],
   franchise: "Sword in the Stone",
   set: "005",
-  cardNumber: "190",
   cost: 2,
   strength: 2,
   willpower: 2,
   lore: 2,
+  cardNumber: 190,
   inkable: true,
   vanilla: true,
   externalIds: {

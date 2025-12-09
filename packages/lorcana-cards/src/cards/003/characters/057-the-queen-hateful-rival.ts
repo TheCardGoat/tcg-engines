@@ -9,11 +9,11 @@ export const theQueenHatefulRival: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Snow White",
   set: "003",
-  cardNumber: "057",
   cost: 3,
   strength: 4,
   willpower: 3,
   lore: 1,
+  cardNumber: 57,
   inkable: true,
   vanilla: true,
   externalIds: {

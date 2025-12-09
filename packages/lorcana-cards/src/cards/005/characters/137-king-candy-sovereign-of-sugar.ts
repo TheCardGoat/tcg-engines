@@ -9,11 +9,11 @@ export const kingCandySovereignOfSugar: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Wreck It Ralph",
   set: "005",
-  cardNumber: "137",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 137,
   inkable: true,
   vanilla: true,
   externalIds: {

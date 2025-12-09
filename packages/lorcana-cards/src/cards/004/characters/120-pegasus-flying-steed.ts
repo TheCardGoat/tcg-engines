@@ -10,11 +10,11 @@ export const pegasusFlyingSteed: CharacterCard = {
   franchise: "Hercules",
   set: "004",
   text: "Evasive (Only characters with Evasive can challenge this character.)",
-  cardNumber: "120",
   cost: 2,
   strength: 3,
   willpower: 1,
   lore: 1,
+  cardNumber: 120,
   inkable: true,
   externalIds: {
     ravensburger: "3232a625c1ad1451c0bd29fcfbc149d3d2a38166",

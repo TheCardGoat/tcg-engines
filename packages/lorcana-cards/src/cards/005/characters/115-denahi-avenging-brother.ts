@@ -9,11 +9,11 @@ export const denahiAvengingBrother: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Brother Bear",
   set: "005",
-  cardNumber: "115",
   cost: 5,
   strength: 7,
   willpower: 5,
   lore: 2,
+  cardNumber: 115,
   inkable: false,
   vanilla: true,
   externalIds: {

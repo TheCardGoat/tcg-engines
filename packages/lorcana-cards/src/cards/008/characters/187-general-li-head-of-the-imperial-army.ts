@@ -10,11 +10,11 @@ export const generalLiHeadOfTheImperialArmy: CharacterCard = {
   franchise: "Mulan",
   set: "008",
   text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
-  cardNumber: "187",
   cost: 3,
   strength: 2,
   willpower: 4,
   lore: 1,
+  cardNumber: 187,
   inkable: true,
   externalIds: {
     ravensburger: "42bf6581e2f12f6875f38d3cbcd9a56544b2acfd",

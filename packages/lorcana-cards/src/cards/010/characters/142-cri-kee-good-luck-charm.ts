@@ -10,11 +10,11 @@ export const crikeeGoodLuckCharm: CharacterCard = {
   franchise: "Mulan",
   set: "010",
   text: "Alert (This character can challenge as if they had Evasive.)",
-  cardNumber: "142",
   cost: 2,
   strength: 3,
   willpower: 2,
   lore: 1,
+  cardNumber: 142,
   inkable: true,
   externalIds: {
     ravensburger: "becfbb1f4251f07b2c92bee5465e8d8cbf12d90f",

@@ -10,11 +10,11 @@ export const mulanFreeSpirit: CharacterCard = {
   franchise: "Mulan",
   set: "009",
   text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-  cardNumber: "010",
   cost: 3,
   strength: 2,
   willpower: 3,
   lore: 2,
+  cardNumber: 10,
   inkable: true,
   externalIds: {
     ravensburger: "63be0c9e418d5a0329a87de4082802d18848efe6",

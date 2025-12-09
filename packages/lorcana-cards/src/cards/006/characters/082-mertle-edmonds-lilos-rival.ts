@@ -9,11 +9,11 @@ export const mertleEdmondsLilosRival: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Lilo and Stitch",
   set: "006",
-  cardNumber: "082",
   cost: 1,
   strength: 1,
   willpower: 3,
   lore: 1,
+  cardNumber: 82,
   inkable: true,
   vanilla: true,
   externalIds: {

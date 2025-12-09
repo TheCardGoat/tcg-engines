@@ -9,11 +9,11 @@ export const elsaQueenRegent: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Frozen",
   set: "001",
-  cardNumber: "040",
   cost: 4,
   strength: 4,
   willpower: 4,
   lore: 1,
+  cardNumber: 40,
   inkable: true,
   vanilla: true,
   externalIds: {

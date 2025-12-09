@@ -9,11 +9,11 @@ export const toulouseArtisticKitten: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Aristocats",
   set: "007",
-  cardNumber: "165",
   cost: 1,
   strength: 1,
   willpower: 3,
   lore: 1,
+  cardNumber: 165,
   inkable: true,
   vanilla: true,
   externalIds: {

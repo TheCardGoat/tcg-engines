@@ -9,11 +9,11 @@ export const akelaWolfPackElder: CharacterCard = {
   inkType: ["steel"],
   franchise: "Jungle Book",
   set: "007",
-  cardNumber: "182",
   cost: 2,
   strength: 3,
   willpower: 2,
   lore: 1,
+  cardNumber: 182,
   inkable: true,
   vanilla: true,
   externalIds: {

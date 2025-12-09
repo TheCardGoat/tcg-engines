@@ -10,11 +10,11 @@ export const yaoImperialSoldier: CharacterCard = {
   franchise: "Mulan",
   set: "004",
   text: "Challenger +2 (While challenging, this character gets +2.)",
-  cardNumber: "194",
   cost: 4,
   strength: 2,
   willpower: 5,
   lore: 1,
+  cardNumber: 194,
   inkable: true,
   externalIds: {
     ravensburger: "277f711b5cc9107e8bae7d0ab1d79e8e08ca13f3",

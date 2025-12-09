@@ -9,11 +9,11 @@ export const painImpudentImp: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Hercules",
   set: "007",
-  cardNumber: "061",
   cost: 1,
   strength: 1,
   willpower: 3,
   lore: 1,
+  cardNumber: 61,
   inkable: true,
   vanilla: true,
   externalIds: {

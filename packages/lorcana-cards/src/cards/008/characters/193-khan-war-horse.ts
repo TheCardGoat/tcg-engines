@@ -9,11 +9,11 @@ export const khanWarHorse: CharacterCard = {
   inkType: ["steel"],
   franchise: "Mulan",
   set: "008",
-  cardNumber: "193",
   cost: 4,
   strength: 2,
   willpower: 7,
   lore: 1,
+  cardNumber: 193,
   inkable: true,
   vanilla: true,
   externalIds: {
