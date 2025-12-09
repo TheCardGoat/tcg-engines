@@ -19,7 +19,12 @@ export const friendsOnTheOtherSide: ActionCard = {
     {
       id: "a41-1",
       text: "Draw 2 cards.",
-      type: "static",
+      type: "action",
+      effect: {
+        type: "draw",
+        amount: 2,
+        target: "CONTROLLER",
+      },
     },
   ],
 };

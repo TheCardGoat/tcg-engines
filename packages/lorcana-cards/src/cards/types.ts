@@ -19,7 +19,11 @@ export interface AbilityDefinition {
   id?: string;
   name?: string | null;
   text: string;
-  type: "triggered" | "activated" | "static" | "keyword";
+  type: "triggered" | "activated" | "static" | "keyword" | "action";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  effect?: any;
+  keyword?: string;
+  value?: number;
 }
 
 export interface ExternalIds {

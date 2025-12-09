@@ -22,9 +22,14 @@ export const theWardrobePerceptiveFriend: CharacterCard = {
   abilities: [
     {
       id: "s0r-1",
-      name: "I HAVE JUST THE",
+      name: "I HAVE JUST THE THING!",
       text: "I HAVE JUST THE THING! , Choose and discard an item card — Draw 2 cards.",
-      type: "static",
+      type: "action",
+      effect: {
+        type: "draw",
+        amount: 2,
+        target: "CONTROLLER",
+      },
     },
   ],
   classifications: ["Storyborn", "Ally"],
