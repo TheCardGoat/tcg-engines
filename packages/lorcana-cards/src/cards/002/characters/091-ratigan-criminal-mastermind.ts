@@ -19,7 +19,6 @@ export const ratiganCriminalMastermind: CharacterCard = {
   externalIds: {
     ravensburger: "20f1cee3efa42ca0bdb7295992b0b9f485f9c40e",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "952-1",

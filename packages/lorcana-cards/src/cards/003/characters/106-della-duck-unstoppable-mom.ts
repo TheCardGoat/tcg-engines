@@ -19,7 +19,6 @@ export const dellaDuckUnstoppableMom: CharacterCard = {
   externalIds: {
     ravensburger: "f9389799f1792877b71c185b548e270163ef1c81",
   },
-  keywords: ["Reckless"],
   abilities: [
     {
       id: "1xa-1",

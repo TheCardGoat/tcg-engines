@@ -19,7 +19,6 @@ export const tiggerWonderfulThing: CharacterCard = {
   externalIds: {
     ravensburger: "aeb12d5f9810897355e57f169ef318f584e11c64",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "1cg-1",

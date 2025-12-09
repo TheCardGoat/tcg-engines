@@ -19,7 +19,6 @@ export const peterPanHighFlyer: CharacterCard = {
   externalIds: {
     ravensburger: "067ac8173c1f60f06e456367ff8785feaa83214f",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "1sq-1",

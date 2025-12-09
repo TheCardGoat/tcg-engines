@@ -18,7 +18,6 @@ export const donaldDuckStruttingHisStuff: CharacterCard = {
   externalIds: {
     ravensburger: "827efa2d86fedbf475bd6d3956aa3b8d96bb21fc",
   },
-  keywords: ["Ward"],
   abilities: [
     {
       id: "10b-1",

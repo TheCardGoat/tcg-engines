@@ -19,7 +19,6 @@ export const naniProtectiveSister: CharacterCard = {
   externalIds: {
     ravensburger: "ba2f05538e1999601db469cfe0b44f78bcbdb61c",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "1fn-1",

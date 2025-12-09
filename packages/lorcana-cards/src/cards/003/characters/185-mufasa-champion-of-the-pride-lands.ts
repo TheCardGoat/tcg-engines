@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const mufasaChampionOfThePrideLands: CharacterCard = {
-  id: "1pd",
+  id: "1pc",
   cardType: "character",
   name: "Mufasa",
   version: "Champion of the Pride Lands",

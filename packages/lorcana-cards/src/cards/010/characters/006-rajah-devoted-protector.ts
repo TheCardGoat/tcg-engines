@@ -19,7 +19,6 @@ export const rajahDevotedProtector: CharacterCard = {
   externalIds: {
     ravensburger: "05432111c47bf28eb52d76930eb2c603642d13e9",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "1gk-1",

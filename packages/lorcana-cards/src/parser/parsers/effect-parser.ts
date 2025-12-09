@@ -718,7 +718,7 @@ function parseAtomicEffect(text: string): Effect | undefined {
   const drawMatch = text.match(DRAW_AMOUNT_PATTERN);
   if (drawMatch) {
     // drawMatch[1] is either undefined (for "a", "an") or a number/placeholder string
-    const amount = !drawMatch[1] ? 1 : parseNumericValue(drawMatch[1]);
+    const amount = drawMatch[1] ? parseNumericValue(drawMatch[1]) : 1;
     const target = parsePlayerTarget(text) || "CONTROLLER";
     return {
       type: "draw",

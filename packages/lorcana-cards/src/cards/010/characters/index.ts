@@ -19,6 +19,8 @@ export { bigNoseLovesickPoet } from "./070-big-nose-lovesick-poet";
 export { flotsamSlipperyAsAnEel } from "./071-flotsam-slippery-as-an-eel";
 export { kaaSuspiciousSerpent } from "./072-kaa-suspicious-serpent";
 export { hookHandUnexpectedlyFriendly } from "./078-hook-hand-unexpectedly-friendly";
+export { kaaSecretiveSnake } from "./079-kaa-secretive-snake";
+export { penumbraMoonAlien } from "./084-penumbra-moon-alien";
 export { diabloWatchfulRaven } from "./103-diablo-watchful-raven";
 export { peterPanHighFlyer } from "./105-peter-pan-high-flyer";
 export { tinkerBellFancyFootwork } from "./106-tinker-bell-fancy-footwork";
@@ -40,4 +42,3 @@ export { nickWildeDeterminedDetective } from "./178-nick-wilde-determined-detect
 export { blackHeronRealBadEgg } from "./182-black-heron-real-bad-egg";
 export { mayorWinddancerActorturnedpolitician } from "./188-mayor-winddancer-actor-turned-politician";
 export { theHeadlessHorsemanRelentlessSpirit } from "./194-the-headless-horseman-relentless-spirit";
-export { kaaSecretiveSnake } from "./212-kaa-secretive-snake";

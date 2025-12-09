@@ -19,7 +19,6 @@ export const peterPanNeverLanding: CharacterCard = {
   externalIds: {
     ravensburger: "bdb08565784cd7012548f33dfb41c5f27b8bf8f7",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "1g6-1",

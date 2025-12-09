@@ -19,7 +19,6 @@ export const donKarnagePrinceOfPirates: CharacterCard = {
   externalIds: {
     ravensburger: "24ea5904a2f26342b5785ee8bc9953780df09477",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "a8q-1",

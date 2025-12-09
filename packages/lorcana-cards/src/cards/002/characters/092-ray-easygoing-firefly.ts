@@ -19,7 +19,6 @@ export const rayEasygoingFirefly: CharacterCard = {
   externalIds: {
     ravensburger: "ab6c67ceb00eb3d0444aff79e47e18bd4a08a536",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "1bk-1",

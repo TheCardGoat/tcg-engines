@@ -19,7 +19,6 @@ export const annaMakingSnowPlans: CharacterCard = {
   externalIds: {
     ravensburger: "23fbbd7099c1f99fe8cea396e7cb66af956ebcb0",
   },
-  keywords: ["Support"],
   abilities: [
     {
       id: "9zf-1",

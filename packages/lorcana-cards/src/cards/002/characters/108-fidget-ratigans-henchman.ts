@@ -19,7 +19,6 @@ export const fidgetRatigansHenchman: CharacterCard = {
   externalIds: {
     ravensburger: "9836b26ae57048c3c2225cde40cc9be4712fc633",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "168-1",

@@ -19,12 +19,6 @@ export const sebastianCourtComposer: CharacterCard = {
   externalIds: {
     ravensburger: "1fa28a7f4b2398c8cc72ea121b01ac0cccdda582",
   },
-  keywords: [
-    {
-      type: "Singer",
-      value: 4,
-    },
-  ],
   abilities: [
     {
       id: "8rz-1",

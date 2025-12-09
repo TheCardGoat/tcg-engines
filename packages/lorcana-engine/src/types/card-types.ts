@@ -6,9 +6,16 @@
  * for type-safe access to card-type-specific properties.
  */
 
+import type {
+  ActionAbility,
+  ActivatedAbility,
+  KeywordAbility,
+  ReplacementAbility,
+  StaticAbility,
+  TriggeredAbility,
+} from "../cards/abilities/types/ability-types";
 import type { Classification } from "./classifications";
 import type { InkType } from "./ink-types";
-import type { Keyword } from "./keywords";
 
 /** Card Types (Section 6) */
 export const CARD_TYPES = ["character", "action", "item", "location"] as const;
@@ -18,18 +25,131 @@ export type CardType = (typeof CARD_TYPES)[number];
 export type ActionSubtype = "song" | null;
 
 /**
- * Ability Definition (placeholder - will be expanded in Spec 7)
+ * Base interface for all ability definitions in card data
+ * Adds card-definition-specific metadata to the comprehensive ability types
  */
-export interface AbilityDefinition {
+export interface BaseAbilityDefinition {
+  /** Unique identifier for this ability instance */
   id: string;
+
+  /**
+   * Optional name for named abilities (e.g., "I SUMMON THEE", "DISASSEMBLE")
+   * Typically appears in ALL CAPS before the ability text
+   */
   name?: string;
+
+  /**
+   * Original card text for this ability
+   * Used for display and debugging
+   */
   text: string;
-  type: "triggered" | "activated" | "static" | "keyword";
-  /** Keyword type for keyword abilities (e.g., "Challenger", "Resist", "Singer") */
-  keyword?: string;
-  /** Value for parameterized keywords (e.g., Challenger +3 has value 3) */
-  value?: number;
 }
+
+/**
+ * Keyword ability definition
+ * @example { type: "keyword", keyword: "Rush", id: "card-001-ability-1", text: "Rush" }
+ * @example { type: "keyword", keyword: "Challenger", value: 3, id: "card-002-ability-1", text: "Challenger +3" }
+ * @example { type: "keyword", keyword: "Shift", cost: { ink: 5 }, id: "card-003-ability-1", text: "Shift 5" }
+ */
+export type KeywordAbilityDefinition = BaseAbilityDefinition & KeywordAbility;
+
+/**
+ * Triggered ability definition
+ * @example {
+ *   type: "triggered",
+ *   trigger: { event: "play", timing: "when", on: "SELF" },
+ *   effect: { type: "draw", amount: 2, target: "CONTROLLER" },
+ *   id: "card-001-ability-1",
+ *   text: "When you play this character, draw 2 cards."
+ * }
+ */
+export interface TriggeredAbilityDefinition
+  extends BaseAbilityDefinition,
+    Omit<TriggeredAbility, "type"> {
+  type: "triggered";
+}
+
+/**
+ * Activated ability definition
+ * @example {
+ *   type: "activated",
+ *   name: "I SUMMON THEE",
+ *   cost: { exert: true },
+ *   effect: { type: "draw", amount: 1, target: "CONTROLLER" },
+ *   id: "card-001-ability-1",
+ *   text: "I SUMMON THEE {E} − Draw a card."
+ * }
+ */
+export interface ActivatedAbilityDefinition
+  extends BaseAbilityDefinition,
+    Omit<ActivatedAbility, "type" | "name"> {
+  type: "activated";
+}
+
+/**
+ * Static ability definition
+ * @example {
+ *   type: "static",
+ *   condition: { type: "during-turn", whose: "your" },
+ *   effect: { type: "gain-keyword", keyword: "Evasive", target: "SELF" },
+ *   id: "card-001-ability-1",
+ *   text: "During your turn, this character gains Evasive."
+ * }
+ */
+export interface StaticAbilityDefinition
+  extends BaseAbilityDefinition,
+    Omit<StaticAbility, "type" | "name"> {
+  type: "static";
+}
+
+/**
+ * Action ability definition
+ * @example {
+ *   type: "action",
+ *   effect: { type: "draw", amount: 2, target: "CONTROLLER" },
+ *   id: "card-001-ability-1",
+ *   text: "Draw 2 cards."
+ * }
+ */
+export interface ActionAbilityDefinition
+  extends BaseAbilityDefinition,
+    Omit<ActionAbility, "type"> {
+  type: "action";
+}
+
+/**
+ * Replacement ability definition
+ * @example {
+ *   type: "replacement",
+ *   replaces: "damage-to-self",
+ *   replacement: "prevent",
+ *   id: "card-001-ability-1",
+ *   text: "If this character would be dealt damage, prevent that damage."
+ * }
+ */
+export interface ReplacementAbilityDefinition
+  extends BaseAbilityDefinition,
+    Omit<ReplacementAbility, "type" | "name"> {
+  type: "replacement";
+}
+
+/**
+ * Comprehensive ability definition type
+ *
+ * Represents any ability that can appear on a Lorcana card.
+ * Each variant includes the full ability structure from the comprehensive
+ * ability system, plus card-definition-specific metadata (id, name, text).
+ *
+ * This type bridges the card definition layer (static card data) with
+ * the ability execution layer (runtime ability resolution).
+ */
+export type AbilityDefinition =
+  | KeywordAbilityDefinition
+  | TriggeredAbilityDefinition
+  | ActivatedAbilityDefinition
+  | StaticAbilityDefinition
+  | ActionAbilityDefinition
+  | ReplacementAbilityDefinition;
 
 // ============================================================================
 // Base Card Properties (shared by all card types)
@@ -64,10 +184,7 @@ export interface BaseCardProperties {
   /** Inkable - has inkwell symbol (Rule 6.2.8) */
   inkable: boolean;
 
-  /** Keywords on the card */
-  keywords?: Keyword[];
-
-  /** Card abilities */
+  /** Card abilities (includes keywords) */
   abilities?: AbilityDefinition[];
 
   /** Rules text - raw ability text as printed on the card */
@@ -240,7 +357,7 @@ export function isLocationCard(card: LorcanaCard): card is LocationCard {
  * - Character-specific: strength, willpower, lore, classifications
  * - Action-specific: actionSubtype (Song)
  * - Location-specific: moveCost
- * - keywords, abilities
+ * - abilities
  */
 export interface LorcanaCardDefinition {
   /** Unique identifier for the card */
@@ -295,12 +412,9 @@ export interface LorcanaCardDefinition {
   /** Move cost (Rule 6.5.5) - ink cost to move a character here */
   moveCost?: number;
 
-  // Abilities and keywords
+  // Abilities
 
-  /** Keywords on the card */
-  keywords?: Keyword[];
-
-  /** Card abilities */
+  /** Card abilities (includes keywords) */
   abilities?: AbilityDefinition[];
 
   /** Rules text - raw ability text as printed on the card */

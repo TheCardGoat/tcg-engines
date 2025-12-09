@@ -19,7 +19,6 @@ export const iagoPrettyPolly: CharacterCard = {
   externalIds: {
     ravensburger: "2fa1ceaaf0d1dd9e4204f55a9c73c7ef3b00dcb7",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "d7s-1",

@@ -19,7 +19,6 @@ export const montereyJackDefiantProtector: CharacterCard = {
   externalIds: {
     ravensburger: "0669c45afa1ed8a75915fc48406f8c1f601cc2db",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "1s2-1",

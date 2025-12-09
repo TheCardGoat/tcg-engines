@@ -19,7 +19,6 @@ export const pegasusFlyingSteed: CharacterCard = {
   externalIds: {
     ravensburger: "3232a625c1ad1451c0bd29fcfbc149d3d2a38166",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "dxe-1",

@@ -19,7 +19,6 @@ export const gastonArrogantHunter: CharacterCard = {
   externalIds: {
     ravensburger: "34cd6eb73f7b4b7dd53a239a0dedfdf75cb2efbc",
   },
-  keywords: ["Reckless"],
   abilities: [
     {
       id: "enf-1",

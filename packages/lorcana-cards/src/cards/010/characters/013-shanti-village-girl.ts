@@ -19,12 +19,6 @@ export const shantiVillageGirl: CharacterCard = {
   externalIds: {
     ravensburger: "4f296f41288f0bc56b098b2146d98af6428db935",
   },
-  keywords: [
-    {
-      type: "Singer",
-      value: 5,
-    },
-  ],
   abilities: [
     {
       id: "lyq-1",

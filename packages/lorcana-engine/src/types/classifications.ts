@@ -40,6 +40,7 @@ export const CLASSIFICATIONS = [
   "Tigger",
   "Titan",
   "Villain",
+  "Whisper",
 ] as const;
 
 export type Classification = (typeof CLASSIFICATIONS)[number];

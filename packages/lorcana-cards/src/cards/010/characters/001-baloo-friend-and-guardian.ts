@@ -19,7 +19,6 @@ export const balooFriendAndGuardian: CharacterCard = {
   externalIds: {
     ravensburger: "600b15a6131a9729bcbb09477b1417d11e96769f",
   },
-  keywords: ["Bodyguard", "Support"],
   abilities: [
     {
       id: "qnc-1",

@@ -19,7 +19,6 @@ export const kaaSuspiciousSerpent: CharacterCard = {
   externalIds: {
     ravensburger: "790085a5369b1cc854dd2c964ca6e879be2e2a56",
   },
-  keywords: ["Ward"],
   abilities: [
     {
       id: "xkn-1",

@@ -19,7 +19,6 @@ export const marchHareAbsurdHost: CharacterCard = {
   externalIds: {
     ravensburger: "85684498bb53ffacf3dd58bf50013dc97d5766b6",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "110-1",

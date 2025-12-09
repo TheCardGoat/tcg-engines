@@ -19,7 +19,6 @@ export const violetSabrewingSeniorJuniorWoodchuck: CharacterCard = {
   externalIds: {
     ravensburger: "7ce568a37fd12efd3f1a26e586a792d5ec9ae132",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "ynj-1",

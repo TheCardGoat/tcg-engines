@@ -19,7 +19,6 @@ export const archimedesExasperatedOwl: CharacterCard = {
   externalIds: {
     ravensburger: "8c1eb6e2d2c4b6d20d3428c9522a8bb003976cda",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "12v-1",

@@ -19,7 +19,6 @@ export const heathcliffStoicButler: CharacterCard = {
   externalIds: {
     ravensburger: "387e97baeef07c3cc3b5128b8604c359f50b3818",
   },
-  keywords: ["Ward"],
   abilities: [
     {
       id: "fob-1",

@@ -19,12 +19,6 @@ export const powerlineTakingTheStage: CharacterCard = {
   externalIds: {
     ravensburger: "eaec5385aacc0b81f5f7c60bb16fc754ed2fce81",
   },
-  keywords: [
-    {
-      type: "Singer",
-      value: 4,
-    },
-  ],
   abilities: [
     {
       id: "1t6-1",

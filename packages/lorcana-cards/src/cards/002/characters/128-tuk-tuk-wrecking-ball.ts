@@ -19,7 +19,6 @@ export const tukTukWreckingBall: CharacterCard = {
   externalIds: {
     ravensburger: "db06f844bce8daadacf3b667fc574090eded709d",
   },
-  keywords: ["Reckless"],
   abilities: [
     {
       id: "1or-1",

@@ -19,7 +19,6 @@ export const pascalGardenChameleon: CharacterCard = {
   externalIds: {
     ravensburger: "dbbfc68f60125a864a3dff7e2bf4693570e24611",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "1oz-1",

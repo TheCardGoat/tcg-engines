@@ -19,7 +19,6 @@ export const tipoJuniorChipmunk: CharacterCard = {
   externalIds: {
     ravensburger: "7b06c25ffca1f97366fbde4b81b28dcfbe6abcb4",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "y4v-1",

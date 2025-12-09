@@ -19,7 +19,11 @@ export interface AbilityDefinition {
   id?: string;
   name?: string | null;
   text: string;
-  type: "triggered" | "activated" | "static" | "keyword";
+  type: "triggered" | "activated" | "static" | "keyword" | "action";
+  keyword?: string;
+  value?: number;
+  cost?: unknown;
+  shiftTarget?: string;
 }
 
 export interface ExternalIds {
@@ -46,7 +50,6 @@ export interface CanonicalCardMetadata {
   inkType: InkType | [InkType, InkType];
   cost: number;
   inkable: boolean;
-  keywords?: string[];
   rulesText?: string;
   abilities?: AbilityDefinition[];
   printings: CardPrintingRef[];

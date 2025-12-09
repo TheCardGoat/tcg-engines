@@ -19,7 +19,6 @@ export const feliciaAlwaysHungry: CharacterCard = {
   externalIds: {
     ravensburger: "1b20de5f2b02e1b11d1cc8c4407911c249df3db3",
   },
-  keywords: ["Reckless"],
   abilities: [
     {
       id: "7iz-1",

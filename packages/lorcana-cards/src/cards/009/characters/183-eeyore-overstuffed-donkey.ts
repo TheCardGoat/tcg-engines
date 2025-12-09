@@ -19,12 +19,6 @@ export const eeyoreOverstuffedDonkey: CharacterCard = {
   externalIds: {
     ravensburger: "99d2d33370532b6247f8ecd7ee8301e6c94afd8e",
   },
-  keywords: [
-    {
-      type: "Resist",
-      value: 1,
-    },
-  ],
   abilities: [
     {
       id: "16o-1",
