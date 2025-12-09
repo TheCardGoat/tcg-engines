@@ -17,9 +17,11 @@ import type { CanonicalCard } from "../types";
  * We want to parse just "Shift 5"
  */
 function stripReminderText(text: string): string {
-  // Remove parenthetical content at the end of the text
-  // Match: optional space + opening paren + any content + closing paren at end
-  return text.replace(/\s*\([^)]*\)\s*$/, "").trim();
+  // Remove parenthetical content at the beginning or end of the text
+  return text
+    .replace(/^\s*\([^)]*\)\s*/, "") // Leading
+    .replace(/\s*\([^)]*\)\s*$/, "") // Trailing
+    .trim();
 }
 
 /**
@@ -41,6 +43,7 @@ export function isKeywordOnlyCard(card: CanonicalCard): boolean {
 
   return abilityTexts.every((text) => {
     const cleanText = stripReminderText(text);
+    if (!cleanText) return true;
     const result = parseAbilityText(cleanText);
     // Must succeed with no warnings
     if (!result.success || result.warnings?.length) return false;
@@ -95,6 +98,8 @@ export function isParseableCard(card: CanonicalCard): boolean {
 
   return abilityTexts.every((text) => {
     const cleanText = stripReminderText(text);
+    if (!cleanText) return true;
+
     const result = parseAbilityText(cleanText);
 
     // Must parse successfully
@@ -156,6 +161,7 @@ export function parseKeywordAbilities(
 
   for (const text of abilityTexts) {
     const cleanText = stripReminderText(text);
+    if (!cleanText) continue;
     const result = parseAbilityText(cleanText);
     // Strict: success, no warnings, must be keyword
     if (!result.success || result.warnings?.length || !result.ability)

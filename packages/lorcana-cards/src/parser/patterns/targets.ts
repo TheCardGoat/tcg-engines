@@ -25,7 +25,7 @@ export const CHOSEN_CHARACTER_PATTERN = /\bchosen (?:opposing )?character\b/i;
 export const CHOSEN_OPPOSING_CHARACTER_PATTERN =
   /\bchosen opposing character\b/i;
 export const CHOSEN_CHARACTER_OF_YOURS_PATTERN =
-  /\bchosen character of yours\b/i;
+  /\b(?:chosen character of yours|one of your characters)\b/i;
 export const CHOSEN_ITEM_PATTERN = /\bchosen item\b/i;
 export const CHOSEN_LOCATION_PATTERN = /\bchosen location\b/i;
 

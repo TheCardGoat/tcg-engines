@@ -40,5 +40,6 @@ export { francineEyeingTheEvidence } from "./176-francine-eyeing-the-evidence";
 export { inspectorTezukaResoluteOfficer } from "./177-inspector-tezuka-resolute-officer";
 export { nickWildeDeterminedDetective } from "./178-nick-wilde-determined-detective";
 export { blackHeronRealBadEgg } from "./182-black-heron-real-bad-egg";
+export { nickWildePersistentInvestigator } from "./187-nick-wilde-persistent-investigator";
 export { mayorWinddancerActorturnedpolitician } from "./188-mayor-winddancer-actor-turned-politician";
 export { theHeadlessHorsemanRelentlessSpirit } from "./194-the-headless-horseman-relentless-spirit";

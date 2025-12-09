@@ -35,6 +35,7 @@ import {
   CANT_SING_PATTERN,
   CHOOSE_AND_DISCARD_PATTERN,
   DEAL_DAMAGE_PATTERN,
+  DISCARD_HAND_PATTERN,
   DISCARD_PATTERN,
   DRAW_AMOUNT_PATTERN,
   EXERT_PATTERN,
@@ -45,6 +46,7 @@ import {
   FOR_EACH_CHARACTER_THAT_SANG_PATTERN,
   FOR_EACH_DAMAGE_ON_SELF_PATTERN,
   FOR_EACH_DAMAGE_ON_TARGET_PATTERN,
+  FOR_EACH_DAMAGE_REMOVED_PATTERN,
   FOR_EACH_DAMAGED_CHARACTER_PATTERN,
   FOR_EACH_ITEM_PATTERN,
   FOR_EACH_LOCATION_PATTERN,
@@ -61,17 +63,25 @@ import {
   LOSE_LORE_PATTERN,
   MOVE_TO_LOCATION_PATTERN,
   PAY_LESS_TO_PLAY_PATTERN,
+  PLAY_COST_X_OR_LESS_FREE_PATTERN,
   PLAY_FROM_DISCARD_PATTERN,
+  PUT_BACK_ON_TOP_PATTERN,
   PUT_DAMAGE_PATTERN,
   PUT_INTO_INKWELL_FACEDOWN_PATTERN,
   PUT_INTO_INKWELL_PATTERN,
+  PUT_ONE_IN_HAND_AND_BOTTOM_PATTERN,
+  PUT_ONE_ON_TOP_AND_BOTTOM_PATTERN,
+  PUT_REST_ON_BOTTOM_PATTERN,
+  PUT_TOP_OR_BOTTOM_PATTERN,
   PUT_UNDER_PATTERN,
   READY_PATTERN,
   REMOVE_DAMAGE_PATTERN,
   REPEAT_PATTERN,
   REPEAT_UP_TO_PATTERN,
+  RETURN_COST_X_OR_LESS_PATTERN,
   RETURN_FROM_DISCARD_PATTERN,
   RETURN_TO_HAND_PATTERN,
+  REVEAL_AND_PUT_IN_HAND_PATTERN,
   REVEAL_HAND_PATTERN,
   SEARCH_AND_SHUFFLE_PATTERN,
   SEARCH_DECK_PATTERN,
@@ -297,6 +307,13 @@ function parseForEachCounter(text: string): ForEachCounter | undefined {
   if (FOR_EACH_CHARACTER_THAT_SANG_PATTERN.test(text)) {
     const thisTurn = text.includes("this turn");
     return { type: "characters-that-sang", thisTurn };
+  }
+
+  // Check damage removed pattern (Rapunzel)
+  if (FOR_EACH_DAMAGE_REMOVED_PATTERN.test(text)) {
+    const match = text.match(FOR_EACH_DAMAGE_REMOVED_PATTERN);
+    const amount = match && match[1] ? Number.parseInt(match[1], 10) : 1;
+    return { type: "damage-removed", amount } as any;
   }
 
   return undefined;
@@ -619,7 +636,91 @@ function parseAtomicEffect(text: string): Effect | undefined {
     }
   }
 
-  // Try put into inkwell effects
+  // Look-and-put composite movement handlers
+  if (PUT_ONE_ON_TOP_AND_BOTTOM_PATTERN.test(text)) {
+    return {
+      type: "move-cards",
+      from: "look-at",
+      to: "top-and-bottom",
+      count: 2, // 1 on top, 1 on bottom
+    } as any;
+  }
+
+  if (PUT_ONE_IN_HAND_AND_BOTTOM_PATTERN.test(text)) {
+    return {
+      type: "move-cards",
+      from: "look-at",
+      to: "hand-and-bottom",
+      count: 2,
+    } as any;
+  }
+
+  if (PUT_TOP_OR_BOTTOM_PATTERN.test(text)) {
+    return {
+      type: "move-cards",
+      from: "look-at",
+      to: "top-or-bottom",
+      count: 1,
+    } as any;
+  }
+
+  if (PUT_REST_ON_BOTTOM_PATTERN.test(text)) {
+    return {
+      type: "move-cards",
+      from: "look-at",
+      to: "bottom-deck",
+      count: "rest",
+    } as any;
+  }
+
+  if (PUT_BACK_ON_TOP_PATTERN.test(text)) {
+    return {
+      type: "move-cards",
+      from: "look-at",
+      to: "top-of-deck",
+      count: "all",
+    } as any;
+  }
+
+  // Reveal and put in hand (Be Our Guest)
+  if (REVEAL_AND_PUT_IN_HAND_PATTERN.test(text)) {
+    const match = text.match(REVEAL_AND_PUT_IN_HAND_PATTERN);
+    if (match) {
+      // match[1] is e.g. "a character card" or "character card"
+      // We need to parse this filter if possible, or store as "filter"
+      return {
+        type: "reveal-and-put-in-hand",
+        filter: match[1],
+        from: "look-at",
+      } as any;
+    }
+  }
+
+  // Play for free (Just in Time)
+  if (PLAY_COST_X_OR_LESS_FREE_PATTERN.test(text)) {
+    const match = text.match(PLAY_COST_X_OR_LESS_FREE_PATTERN);
+    if (match) {
+      const cost = Number.parseInt(match[1], 10);
+      return {
+        type: "play-card",
+        cost: "free",
+        filter: { cost: { lte: cost } },
+      } as any;
+    }
+  }
+
+  // Return cost X or less (Befuddle)
+  if (RETURN_COST_X_OR_LESS_PATTERN.test(text)) {
+    const match = text.match(RETURN_COST_X_OR_LESS_PATTERN);
+    if (match) {
+      const cost = Number.parseInt(match[1], 10);
+      return {
+        type: "return-to-hand",
+        target: "CHOSEN_CHARACTER_OR_ITEM",
+        filter: { cost: { lte: cost } },
+      } as any;
+    }
+  }
   if (YOU_MAY_PUT_INTO_INKWELL_PATTERN.test(text)) {
     return {
       type: "put-into-inkwell",
@@ -732,6 +833,17 @@ function parseAtomicEffect(text: string): Effect | undefined {
 
   // Try discard effect
   const discardMatch = text.match(DISCARD_PATTERN);
+  const discardHandMatch = text.match(DISCARD_HAND_PATTERN);
+
+  if (discardHandMatch) {
+    const target = parsePlayerTarget(text) || "CONTROLLER";
+    return {
+      type: "discard",
+      amount: "hand",
+      target,
+    } as any;
+  }
+
   if (discardMatch) {
     const amount =
       !discardMatch[1] || discardMatch[1] === "a"

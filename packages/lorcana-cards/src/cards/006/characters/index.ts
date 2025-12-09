@@ -15,6 +15,7 @@ export { tootlesLostBoy } from "./076-tootles-lost-boy";
 export { dawsonBasilsAssistant } from "./077-dawson-basils-assistant";
 export { heathcliffStoicButler } from "./078-heathcliff-stoic-butler";
 export { basilHypnotizedMouse } from "./079-basil-hypnotized-mouse";
+export { daisyDuckPirateCaptain } from "./081-daisy-duck-pirate-captain";
 export { mertleEdmondsLilosRival } from "./082-mertle-edmonds-lilos-rival";
 export { princePhillipRoyalExplorer } from "./083-prince-phillip-royal-explorer";
 export { oliviaFlavershamTheToymakersDaughter } from "./092-olivia-flaversham-the-toymakers-daughter";

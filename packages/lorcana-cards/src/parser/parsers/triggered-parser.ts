@@ -384,7 +384,7 @@ function parseTrigger(text: string): Trigger | undefined {
   }
 
   // Parse "your other characters" triggers
-  if (text.match(/\bone of your (?:other )?characters/i)) {
+  if (text.match(/\bone of your (?:other |.* )?characters/i)) {
     return {
       event: "banish", // Most common, could be other events
       timing,

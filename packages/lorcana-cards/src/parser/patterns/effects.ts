@@ -35,7 +35,9 @@ export const CHOSEN_PLAYER_DRAWS_PATTERN =
  * Now supports "Each player/opponent chooses and discards"
  */
 export const DISCARD_PATTERN =
-  /(?:[Ee]ach (?:player|opponent) )?[Dd]iscard(?:s)? (?:a|(\d+)) cards?/;
+  /(?:[Ee]ach (?:player|opponent) )?[Dd]iscard(?:s)? (?:a|(\d+)|their hand) cards?/;
+export const DISCARD_HAND_PATTERN =
+  /(?:[Ee]ach (?:player|opponent) )?[Dd]iscard(?:s)? (?:their|your) hand/;
 export const CHOOSE_AND_DISCARD_PATTERN =
   /(?:[Ee]ach (?:player|opponent) )?[Cc]hoose(?:s)? and discard(?:s)? (?:a|(\d+)) cards?/;
 
@@ -62,7 +64,8 @@ export const LOSE_LORE_PATTERN =
  */
 export const EXERT_PATTERN =
   /[Ee]xert (?:chosen )?(?:opposing )?(?:damaged )?(?:character|item|location)/;
-export const READY_PATTERN = /[Rr]eady (?:chosen )?(?:character|item|location)/;
+export const READY_PATTERN =
+  /[Rr]eady (?:chosen )?(?:character|item|location|your characters)/;
 
 /**
  * Banish effect patterns
@@ -84,7 +87,7 @@ export const RETURN_TO_HAND_PATTERN =
  * Now supports returning any card type from discard to hand
  */
 export const RETURN_FROM_DISCARD_PATTERN =
-  /[Rr]eturn (?:a|an) (?:(character|action|item|location|song)(?: card)?) from (?:your|their) discard (?:pile )?to (?:your|their) hand/;
+  /[Rr]eturn (?:a|an) (character|action|item|location|song)(?: card)?(?: named .*?)? from (?:your|their) discard (?:pile )?to (?:your|their) hand/;
 
 /**
  * Stat modification patterns
@@ -110,6 +113,22 @@ export const LOOK_AT_CARDS_FULL_PATTERN =
   /[Ll]ook at the top (\d+) cards? of (?:your|their) deck(?:\.|,)?\s*(?:[Pp]ut (?:(\d+)|one) (?:of them )?(?:into your hand|on (?:the )?(?:top|bottom)))?/;
 
 /**
+ * Look and put/move patterns
+ */
+export const PUT_ONE_ON_TOP_AND_BOTTOM_PATTERN =
+  /[Pp]ut one on (?:the )?top(?: of (?:your )?deck)? and (?:the )?other on (?:the )?bottom/i;
+export const PUT_ONE_IN_HAND_AND_BOTTOM_PATTERN =
+  /[Pp]ut one into (?:your )?hand and (?:the )?other on (?:the )?bottom/i;
+export const PUT_TOP_OR_BOTTOM_PATTERN =
+  /[Pp]ut it on either (?:the )?top or (?:the )?bottom(?: of (?:your )?deck)?/i;
+export const PUT_REST_ON_BOTTOM_PATTERN =
+  /[Pp]ut the rest on (?:the )?bottom(?: of (?:your )?deck)?(?: in any order)?/i;
+export const PUT_BACK_ON_TOP_PATTERN =
+  /[Pp]ut them (?:back )?on (?:the )?top(?: of (?:your )?deck)?(?: in any order)?/i;
+export const REVEAL_AND_PUT_IN_HAND_PATTERN =
+  /[Rr]eveal (?:a|an) (.*?) and put it into (?:your )?hand/i;
+
+/**
  * Search deck patterns
  */
 export const SEARCH_DECK_PATTERN =
@@ -123,9 +142,9 @@ export const SEARCH_AND_SHUFFLE_PATTERN =
  * Put into inkwell patterns
  */
 export const PUT_INTO_INKWELL_PATTERN =
-  /[Pp]ut (?:the top card of your deck|a card from your hand|(?:chosen )?(?:character|item|location)) into (?:your|their) inkwell/;
+  /[Pp]ut (?:the top card of your deck|(?:any )?card from your hand|(?:chosen )?(?:character|item|location)) into (?:your|their) inkwell/;
 export const PUT_INTO_INKWELL_FACEDOWN_PATTERN =
-  /[Pp]ut (?:the top card of your deck|a card from your hand|chosen opposing character) into (?:your|their) inkwell (?:facedown|face ?down)(?: and exerted)?/;
+  /[Pp]ut (?:the top card of your deck|(?:any )?card from your hand|(?:chosen )?(?:opposing )?character) into (?:your|their|their player'?s?) inkwell (?:facedown|face ?down)(?: and exerted)?/;
 export const YOU_MAY_PUT_INTO_INKWELL_PATTERN =
   /\byou may\b.*?\bput a card from your hand into your inkwell\b/i;
 
@@ -151,9 +170,13 @@ export const MOVE_TO_LOCATION_PATTERN =
  * Play card patterns
  */
 export const PLAY_CARD_PATTERN =
-  /[Pp]lay a (?:character|action|item|song) from your (?:discard|hand)(?: for free)?/;
+  /[Pp]lay (?:a|an) (?:character|action|item|song) from your (?:discard|hand)(?: for free)?/;
 export const PLAY_FROM_DISCARD_PATTERN =
-  /[Pp]lay a (?:character|action|item|song) from your discard(?: for free)?/;
+  /[Pp]lay (?:a|an) (?:character|action|item|song) from your discard(?: for free)?/;
+export const PLAY_COST_X_OR_LESS_FREE_PATTERN =
+  /[Pp]lay (?:a|an) (?:character|action|item|song)(?: card)? with cost (\d+) or less for free/;
+export const RETURN_COST_X_OR_LESS_PATTERN =
+  /[Rr]eturn a (?:character|action|item|song) or (?:character|action|item|song) with cost (\d+) or less to (?:their|its|your) player'?s? hand/;
 
 /**
  * Reveal patterns
@@ -264,6 +287,8 @@ export const FOR_EACH_CARD_UNDER_SELF_PATTERN =
   /^card under (?:this (?:character|location)|it)$/i;
 export const FOR_EACH_CHARACTER_THAT_SANG_PATTERN =
   /^character that sang(?: this turn)?$/i;
+export const FOR_EACH_DAMAGE_REMOVED_PATTERN =
+  /^(?:(\d+) )?damage removed(?: this way)?$/i;
 
 /**
  * Repeat effect patterns
