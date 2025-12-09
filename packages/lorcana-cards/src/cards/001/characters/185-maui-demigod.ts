@@ -9,11 +9,11 @@ export const mauiDemigod: CharacterCard = {
   inkType: ["steel"],
   franchise: "Moana",
   set: "001",
-  cardNumber: "185",
   cost: 8,
   strength: 8,
   willpower: 8,
   lore: 3,
+  cardNumber: 185,
   inkable: true,
   vanilla: true,
   externalIds: {

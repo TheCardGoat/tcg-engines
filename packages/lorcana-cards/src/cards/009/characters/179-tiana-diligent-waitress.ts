@@ -9,11 +9,11 @@ export const tianaDiligentWaitress: CharacterCard = {
   inkType: ["steel"],
   franchise: "Princess and the Frog",
   set: "009",
-  cardNumber: "179",
   cost: 1,
   strength: 1,
   willpower: 3,
   lore: 1,
+  cardNumber: 179,
   inkable: true,
   vanilla: true,
   externalIds: {

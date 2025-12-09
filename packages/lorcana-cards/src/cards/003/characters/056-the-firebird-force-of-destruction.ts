@@ -9,11 +9,11 @@ export const theFirebirdForceOfDestruction: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Fantasia",
   set: "003",
-  cardNumber: "056",
   cost: 4,
   strength: 6,
   willpower: 2,
   lore: 1,
+  cardNumber: 56,
   inkable: true,
   vanilla: true,
   externalIds: {

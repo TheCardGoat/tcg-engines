@@ -9,11 +9,11 @@ export const herculesHeroInTraining: CharacterCard = {
   inkType: ["steel"],
   franchise: "Hercules",
   set: "002",
-  cardNumber: "182",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 182,
   inkable: true,
   vanilla: true,
   externalIds: {

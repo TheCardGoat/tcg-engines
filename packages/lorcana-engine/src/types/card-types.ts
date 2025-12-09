@@ -46,13 +46,14 @@ export interface BaseCardProperties {
   name: string;
 
   /** Card version (Rule 6.2.5) - e.g., "Ice Queen" */
-  version: string;
+  version?: string;
 
   /**
    * Full name (name + version) - e.g., "Elsa - Ice Queen"
    * Used for deck building limits (max 4 copies per full name)
+   * When not present, card name is equal to full name
    */
-  fullName: string;
+  fullName?: string;
 
   /** Ink type (Rule 6.2.3) - single or dual ink */
   inkType: InkType[];
@@ -79,7 +80,7 @@ export interface BaseCardProperties {
   set: string;
 
   /** Card number in set */
-  cardNumber?: string;
+  cardNumber?: number;
 
   /** Rarity */
   rarity?:
@@ -249,13 +250,14 @@ export interface LorcanaCardDefinition {
   name: string;
 
   /** Card version (Rule 6.2.5) - e.g., "Ice Queen" */
-  version: string;
+  version?: string;
 
   /**
    * Full name (name + version) - e.g., "Elsa - Ice Queen"
    * Used for deck building limits (max 4 copies per full name)
+   * When not present, card name is equal to full name
    */
-  fullName: string;
+  fullName?: string;
 
   /** Ink type (Rule 6.2.3) - single or dual ink */
   inkType: InkType[];
@@ -311,7 +313,7 @@ export interface LorcanaCardDefinition {
   set: string;
 
   /** Card number in set */
-  cardNumber?: string;
+  cardNumber?: number;
 
   /** Rarity */
   rarity?:

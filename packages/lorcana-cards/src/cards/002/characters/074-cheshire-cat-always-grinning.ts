@@ -9,11 +9,11 @@ export const cheshireCatAlwaysGrinning: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Alice in Wonderland",
   set: "002",
-  cardNumber: "074",
   cost: 2,
   strength: 3,
   willpower: 2,
   lore: 1,
+  cardNumber: 74,
   inkable: true,
   vanilla: true,
   externalIds: {

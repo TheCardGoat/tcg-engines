@@ -9,11 +9,11 @@ export const liShangGeneralsSon: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Mulan",
   set: "004",
-  cardNumber: "111",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 111,
   inkable: true,
   vanilla: true,
   externalIds: {

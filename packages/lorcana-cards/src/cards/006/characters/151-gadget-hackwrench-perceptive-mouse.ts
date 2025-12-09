@@ -9,11 +9,11 @@ export const gadgetHackwrenchPerceptiveMouse: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Rescue Rangers",
   set: "006",
-  cardNumber: "151",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 151,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const duchessElegantFeline: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Aristocats",
   set: "007",
-  cardNumber: "112",
   cost: 2,
   strength: 3,
   willpower: 2,
   lore: 1,
+  cardNumber: 112,
   inkable: true,
   vanilla: true,
   externalIds: {

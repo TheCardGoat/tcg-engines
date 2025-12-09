@@ -9,11 +9,11 @@ export const simbaScrappyCub: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Lion King",
   set: "009",
-  cardNumber: "105",
   cost: 2,
   strength: 1,
   willpower: 1,
   lore: 3,
+  cardNumber: 105,
   inkable: false,
   vanilla: true,
   externalIds: {

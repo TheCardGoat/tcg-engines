@@ -9,11 +9,11 @@ export const lafayetteSleepyBassetHound: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Aristocats",
   set: "008",
-  cardNumber: "132",
   cost: 5,
   strength: 7,
   willpower: 4,
   lore: 1,
+  cardNumber: 132,
   inkable: true,
   vanilla: true,
   externalIds: {

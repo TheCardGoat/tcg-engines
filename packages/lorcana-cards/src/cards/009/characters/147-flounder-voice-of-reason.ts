@@ -9,11 +9,11 @@ export const flounderVoiceOfReason: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Little Mermaid",
   set: "009",
-  cardNumber: "147",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 147,
   inkable: true,
   vanilla: true,
   externalIds: {

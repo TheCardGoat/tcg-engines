@@ -10,11 +10,11 @@ export const chienpoImperialSoldier: CharacterCard = {
   franchise: "Mulan",
   set: "004",
   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-  cardNumber: "178",
   cost: 5,
   strength: 4,
   willpower: 7,
   lore: 1,
+  cardNumber: 178,
   inkable: true,
   externalIds: {
     ravensburger: "d1fd5839ad177cf9b28ff3c6336c8cb568683243",

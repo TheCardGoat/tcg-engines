@@ -10,11 +10,11 @@ export const basilPracticedDetective: CharacterCard = {
   franchise: "Great Mouse Detective",
   set: "005",
   text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-  cardNumber: "153",
   cost: 1,
   strength: 2,
   willpower: 1,
   lore: 1,
+  cardNumber: 153,
   inkable: true,
   externalIds: {
     ravensburger: "45e94574ada65e2810ad87f119a52fc83df37d25",

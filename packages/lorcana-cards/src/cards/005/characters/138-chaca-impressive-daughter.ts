@@ -9,11 +9,11 @@ export const chacaImpressiveDaughter: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Emperors New Groove",
   set: "005",
-  cardNumber: "138",
   cost: 4,
   strength: 4,
   willpower: 3,
   lore: 2,
+  cardNumber: 138,
   inkable: true,
   vanilla: true,
   externalIds: {

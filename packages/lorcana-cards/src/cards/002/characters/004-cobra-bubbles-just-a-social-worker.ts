@@ -9,11 +9,11 @@ export const cobraBubblesJustASocialWorker: CharacterCard = {
   inkType: ["amber"],
   franchise: "Lilo and Stitch",
   set: "002",
-  cardNumber: "004",
   cost: 7,
   strength: 5,
   willpower: 9,
   lore: 2,
+  cardNumber: 4,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const diabloWatchfulRaven: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Sleeping Beauty",
   set: "010",
-  cardNumber: "103",
   cost: 2,
   strength: 3,
   willpower: 3,
   lore: 2,
+  cardNumber: 103,
   inkable: false,
   vanilla: true,
   externalIds: {

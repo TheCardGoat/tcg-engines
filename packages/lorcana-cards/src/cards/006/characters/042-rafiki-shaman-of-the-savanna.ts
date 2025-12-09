@@ -9,11 +9,11 @@ export const rafikiShamanOfTheSavanna: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Lion King",
   set: "006",
-  cardNumber: "042",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 42,
   inkable: true,
   vanilla: true,
   externalIds: {

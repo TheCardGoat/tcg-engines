@@ -9,11 +9,11 @@ export const montereyJackGoodheartedRanger: CharacterCard = {
   inkType: ["amber"],
   franchise: "Rescue Rangers",
   set: "006",
-  cardNumber: "013",
   cost: 4,
   strength: 0,
   willpower: 7,
   lore: 2,
+  cardNumber: 13,
   inkable: true,
   vanilla: true,
   externalIds: {

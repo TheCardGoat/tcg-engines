@@ -10,11 +10,11 @@ export const philoctetesTrainerOfHeroes: CharacterCard = {
   franchise: "Hercules",
   set: "001",
   text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-  cardNumber: "156",
   cost: 2,
   strength: 3,
   willpower: 1,
   lore: 1,
+  cardNumber: 156,
   inkable: true,
   externalIds: {
     ravensburger: "bc5a3301196e31a727216ba5bd0ecf0f0dcae69a",

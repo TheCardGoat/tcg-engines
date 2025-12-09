@@ -10,11 +10,11 @@ export const markowskiSpaceTrooper: CharacterCard = {
   franchise: "Wreck It Ralph",
   set: "006",
   text: "Evasive (Only characters with Evasive can challenge this character.)",
-  cardNumber: "113",
   cost: 4,
   strength: 3,
   willpower: 2,
   lore: 2,
+  cardNumber: 113,
   inkable: true,
   externalIds: {
     ravensburger: "ead46bfd3bf059ae7fe97fb6163a498b70b7e8a7",

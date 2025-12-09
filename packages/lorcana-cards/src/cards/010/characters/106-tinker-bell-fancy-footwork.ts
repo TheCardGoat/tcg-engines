@@ -9,11 +9,11 @@ export const tinkerBellFancyFootwork: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Peter Pan",
   set: "010",
-  cardNumber: "106",
   cost: 1,
   strength: 3,
   willpower: 1,
   lore: 1,
+  cardNumber: 106,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const yokaiProfessorCallaghan: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Big Hero 6",
   set: "006",
-  cardNumber: "158",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 158,
   inkable: true,
   vanilla: true,
   externalIds: {

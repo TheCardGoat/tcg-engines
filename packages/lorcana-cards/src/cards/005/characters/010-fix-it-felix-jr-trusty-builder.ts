@@ -10,11 +10,11 @@ export const fixitFelixJrTrustyBuilder: CharacterCard = {
   franchise: "Wreck It Ralph",
   set: "005",
   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-  cardNumber: "010",
   cost: 3,
   strength: 2,
   willpower: 4,
   lore: 1,
+  cardNumber: 10,
   inkable: true,
   externalIds: {
     ravensburger: "c139143d214c2a6edd012e7428ca9ff6081cb764",

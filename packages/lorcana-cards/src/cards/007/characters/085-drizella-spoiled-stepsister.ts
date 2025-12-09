@@ -9,11 +9,11 @@ export const drizellaSpoiledStepsister: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Cinderella",
   set: "007",
-  cardNumber: "085",
   cost: 4,
   strength: 4,
   willpower: 4,
   lore: 1,
+  cardNumber: 85,
   inkable: true,
   vanilla: true,
   externalIds: {

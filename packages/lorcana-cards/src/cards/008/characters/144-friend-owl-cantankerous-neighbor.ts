@@ -9,11 +9,11 @@ export const friendOwlCantankerousNeighbor: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Bambi",
   set: "008",
-  cardNumber: "144",
   cost: 2,
   strength: 2,
   willpower: 2,
   lore: 2,
+  cardNumber: 144,
   inkable: true,
   vanilla: true,
   externalIds: {

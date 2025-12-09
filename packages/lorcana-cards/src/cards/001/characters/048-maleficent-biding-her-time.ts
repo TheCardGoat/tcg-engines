@@ -9,11 +9,11 @@ export const maleficentBidingHerTime: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Sleeping Beauty",
   set: "001",
-  cardNumber: "048",
   cost: 1,
   strength: 1,
   willpower: 1,
   lore: 2,
+  cardNumber: 48,
   inkable: false,
   vanilla: true,
   externalIds: {

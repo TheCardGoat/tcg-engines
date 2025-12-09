@@ -9,11 +9,11 @@ export const taffytaMuttonfudgeRuthlessRival: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Wreck It Ralph",
   set: "005",
-  cardNumber: "103",
   cost: 2,
   strength: 2,
   willpower: 2,
   lore: 2,
+  cardNumber: 103,
   inkable: true,
   vanilla: true,
   externalIds: {

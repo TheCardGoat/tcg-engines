@@ -10,11 +10,11 @@ export const missBiancaRescueAidSocietyAgent: CharacterCard = {
   franchise: "Rescuers",
   set: "003",
   text: "Singer 4 (This character counts as cost 4 to sing songs.)",
-  cardNumber: "010",
   cost: 2,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 10,
   inkable: true,
   externalIds: {
     ravensburger: "856f8987d811850242fd68b59881b2c78568dc0a",

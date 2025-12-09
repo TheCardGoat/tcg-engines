@@ -9,11 +9,11 @@ export const balooFunlovingBear: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Jungle Book",
   set: "002",
-  cardNumber: "103",
   cost: 3,
   strength: 4,
   willpower: 3,
   lore: 1,
+  cardNumber: 103,
   inkable: true,
   vanilla: true,
   externalIds: {

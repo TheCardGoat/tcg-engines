@@ -9,11 +9,11 @@ export const mufasaChampionOfThePrideLands: CharacterCard = {
   inkType: ["steel"],
   franchise: "Lion King",
   set: "003",
-  cardNumber: "185",
   cost: 7,
   strength: 3,
   willpower: 10,
   lore: 3,
+  cardNumber: 185,
   inkable: true,
   vanilla: true,
   externalIds: {

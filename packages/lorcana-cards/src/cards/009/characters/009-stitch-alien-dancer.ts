@@ -9,11 +9,11 @@ export const stitchAlienDancer: CharacterCard = {
   inkType: ["amber"],
   franchise: "Lilo and Stitch",
   set: "009",
-  cardNumber: "009",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 9,
   inkable: true,
   vanilla: true,
   externalIds: {

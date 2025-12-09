@@ -9,11 +9,11 @@ export const arthurTrainedSwordsman: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Sword in the Stone",
   set: "002",
-  cardNumber: "069",
   cost: 4,
   strength: 4,
   willpower: 3,
   lore: 2,
+  cardNumber: 69,
   inkable: true,
   vanilla: true,
   externalIds: {

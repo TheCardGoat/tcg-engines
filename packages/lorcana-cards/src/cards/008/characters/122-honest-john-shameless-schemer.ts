@@ -9,11 +9,11 @@ export const honestJohnShamelessSchemer: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Pinocchio",
   set: "008",
-  cardNumber: "122",
   cost: 6,
   strength: 7,
   willpower: 5,
   lore: 2,
+  cardNumber: 122,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const liShangSeasonedStrategist: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Mulan",
   set: "010",
-  cardNumber: "145",
   cost: 3,
   strength: 2,
   willpower: 4,
   lore: 2,
+  cardNumber: 145,
   inkable: true,
   vanilla: true,
   externalIds: {

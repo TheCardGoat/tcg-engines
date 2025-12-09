@@ -10,11 +10,11 @@ export const gazellePopStar: CharacterCard = {
   franchise: "Zootropolis",
   set: "005",
   text: "Singer 5 (This character counts as cost 5 to sing songs.)",
-  cardNumber: "011",
   cost: 3,
   strength: 2,
   willpower: 3,
   lore: 2,
+  cardNumber: 11,
   inkable: true,
   externalIds: {
     ravensburger: "3a77973047a9e2dc5748299006ede3868e00d061",

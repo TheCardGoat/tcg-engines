@@ -9,11 +9,11 @@ export const chefLouisInOverHisHead: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Little Mermaid",
   set: "010",
-  cardNumber: "140",
   cost: 7,
   strength: 6,
   willpower: 8,
   lore: 3,
+  cardNumber: 140,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const svenOfficialIceDeliverer: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Frozen",
   set: "009",
-  cardNumber: "056",
   cost: 6,
   strength: 5,
   willpower: 7,
   lore: 1,
+  cardNumber: 56,
   inkable: true,
   vanilla: true,
   externalIds: {

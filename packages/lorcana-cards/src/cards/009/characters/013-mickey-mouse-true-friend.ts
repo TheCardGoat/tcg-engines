@@ -8,11 +8,11 @@ export const mickeyMouseTrueFriend: CharacterCard = {
   fullName: "Mickey Mouse - True Friend",
   inkType: ["amber"],
   set: "009",
-  cardNumber: "013",
   cost: 3,
   strength: 3,
   willpower: 3,
   lore: 2,
+  cardNumber: 13,
   inkable: true,
   vanilla: true,
   externalIds: {

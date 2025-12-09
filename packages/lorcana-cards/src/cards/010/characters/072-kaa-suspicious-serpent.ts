@@ -10,11 +10,11 @@ export const kaaSuspiciousSerpent: CharacterCard = {
   franchise: "Jungle Book",
   set: "010",
   text: "Ward (Opponents can't choose this character except to challenge.)",
-  cardNumber: "072",
   cost: 3,
   strength: 3,
   willpower: 2,
   lore: 2,
+  cardNumber: 72,
   inkable: true,
   externalIds: {
     ravensburger: "790085a5369b1cc854dd2c964ca6e879be2e2a56",

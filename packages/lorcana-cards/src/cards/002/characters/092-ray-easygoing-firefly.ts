@@ -10,11 +10,11 @@ export const rayEasygoingFirefly: CharacterCard = {
   franchise: "Princess and the Frog",
   set: "002",
   text: "Evasive (Only characters with Evasive can challenge this character.)",
-  cardNumber: "092",
   cost: 5,
   strength: 3,
   willpower: 3,
   lore: 3,
+  cardNumber: 92,
   inkable: true,
   externalIds: {
     ravensburger: "ab6c67ceb00eb3d0444aff79e47e18bd4a08a536",

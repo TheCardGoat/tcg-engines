@@ -9,11 +9,11 @@ export const eliLaBouffBigDaddy: CharacterCard = {
   inkType: ["steel"],
   franchise: "Princess and the Frog",
   set: "002",
-  cardNumber: "179",
   cost: 4,
   strength: 2,
   willpower: 5,
   lore: 2,
+  cardNumber: 179,
   inkable: true,
   vanilla: true,
   externalIds: {

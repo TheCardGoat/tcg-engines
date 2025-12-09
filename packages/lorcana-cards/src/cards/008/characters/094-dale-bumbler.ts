@@ -9,11 +9,11 @@ export const daleBumbler: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Rescue Rangers",
   set: "008",
-  cardNumber: "094",
   cost: 1,
   strength: 1,
   willpower: 3,
   lore: 1,
+  cardNumber: 94,
   inkable: true,
   vanilla: true,
   externalIds: {

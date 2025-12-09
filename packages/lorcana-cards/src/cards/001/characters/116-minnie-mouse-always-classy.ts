@@ -8,11 +8,11 @@ export const minnieMouseAlwaysClassy: CharacterCard = {
   fullName: "Minnie Mouse - Always Classy",
   inkType: ["ruby"],
   set: "001",
-  cardNumber: "116",
   cost: 1,
   strength: 1,
   willpower: 3,
   lore: 1,
+  cardNumber: 116,
   inkable: true,
   vanilla: true,
   externalIds: {

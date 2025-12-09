@@ -9,11 +9,11 @@ export const charlotteLaBouffMardiGrasPrincess: CharacterCard = {
   inkType: ["amber"],
   franchise: "Princess and the Frog",
   set: "008",
-  cardNumber: "008",
   cost: 1,
   strength: 1,
   willpower: 3,
   lore: 1,
+  cardNumber: 8,
   inkable: true,
   vanilla: true,
   externalIds: {

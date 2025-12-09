@@ -10,11 +10,11 @@ export const tiggerWonderfulThing: CharacterCard = {
   franchise: "Winnie the Pooh",
   set: "001",
   text: "Evasive (Only characters with Evasive can challenge this character.)",
-  cardNumber: "127",
   cost: 6,
   strength: 4,
   willpower: 4,
   lore: 2,
+  cardNumber: 127,
   inkable: true,
   externalIds: {
     ravensburger: "aeb12d5f9810897355e57f169ef318f584e11c64",

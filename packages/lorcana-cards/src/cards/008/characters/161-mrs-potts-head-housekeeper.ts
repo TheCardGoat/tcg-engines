@@ -10,11 +10,11 @@ export const mrsPottsHeadHousekeeper: CharacterCard = {
   franchise: "Beauty and the Beast",
   set: "008",
   text: "CLEAN UP , Banish one of your items — Draw a card.",
-  cardNumber: "161",
   cost: 3,
   strength: 2,
   willpower: 4,
   lore: 1,
+  cardNumber: 161,
   inkable: true,
   externalIds: {
     ravensburger: "2dd0dfa5cece069d35c5263852b8fca5400530e7",

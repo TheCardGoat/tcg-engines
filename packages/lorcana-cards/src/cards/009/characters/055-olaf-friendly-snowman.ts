@@ -9,11 +9,11 @@ export const olafFriendlySnowman: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Frozen",
   set: "009",
-  cardNumber: "055",
   cost: 1,
   strength: 1,
   willpower: 3,
   lore: 1,
+  cardNumber: 55,
   inkable: true,
   vanilla: true,
   externalIds: {

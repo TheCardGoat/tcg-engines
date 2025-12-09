@@ -8,11 +8,11 @@ export const donaldDuckDeepseaDiver: CharacterCard = {
   fullName: "Donald Duck - Deep-Sea Diver",
   inkType: ["steel"],
   set: "002",
-  cardNumber: "178",
   cost: 5,
   strength: 6,
   willpower: 5,
   lore: 1,
+  cardNumber: 178,
   inkable: true,
   vanilla: true,
   externalIds: {

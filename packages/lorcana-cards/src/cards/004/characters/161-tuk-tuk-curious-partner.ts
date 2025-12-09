@@ -9,11 +9,11 @@ export const tukTukCuriousPartner: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Raya and the Last Dragon",
   set: "004",
-  cardNumber: "161",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 161,
   inkable: true,
   vanilla: true,
   externalIds: {

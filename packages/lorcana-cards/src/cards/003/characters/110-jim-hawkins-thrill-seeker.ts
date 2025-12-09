@@ -9,11 +9,11 @@ export const jimHawkinsThrillSeeker: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Treasure Planet",
   set: "003",
-  cardNumber: "110",
   cost: 2,
   strength: 3,
   willpower: 2,
   lore: 1,
+  cardNumber: 110,
   inkable: true,
   vanilla: true,
   externalIds: {

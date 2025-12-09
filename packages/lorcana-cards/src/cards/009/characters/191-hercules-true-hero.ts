@@ -10,11 +10,11 @@ export const herculesTrueHero: CharacterCard = {
   franchise: "Hercules",
   set: "009",
   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-  cardNumber: "191",
   cost: 3,
   strength: 3,
   willpower: 3,
   lore: 1,
+  cardNumber: 191,
   inkable: true,
   externalIds: {
     ravensburger: "aec8753f7f97cb51feeedf58b45f27661b18c44e",

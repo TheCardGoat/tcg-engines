@@ -9,11 +9,11 @@ export const sirEctorCastleLord: CharacterCard = {
   inkType: ["steel"],
   franchise: "Sword in the Stone",
   set: "005",
-  cardNumber: "188",
   cost: 7,
   strength: 7,
   willpower: 10,
   lore: 3,
+  cardNumber: 188,
   inkable: false,
   vanilla: true,
   externalIds: {

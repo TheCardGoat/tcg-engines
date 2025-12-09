@@ -9,11 +9,11 @@ export const bambiPrinceOfTheForest: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Bambi",
   set: "008",
-  cardNumber: "057",
   cost: 2,
   strength: 3,
   willpower: 2,
   lore: 1,
+  cardNumber: 57,
   inkable: true,
   vanilla: true,
   externalIds: {

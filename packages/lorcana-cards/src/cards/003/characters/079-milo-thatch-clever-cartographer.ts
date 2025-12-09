@@ -9,11 +9,11 @@ export const miloThatchCleverCartographer: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Atlantis",
   set: "003",
-  cardNumber: "079",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 79,
   inkable: true,
   vanilla: true,
   externalIds: {

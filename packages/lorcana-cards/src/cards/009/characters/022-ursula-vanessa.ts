@@ -10,11 +10,11 @@ export const ursulaVanessa: CharacterCard = {
   franchise: "Little Mermaid",
   set: "009",
   text: "Singer 4 (This character counts as cost 4 to sing songs.)",
-  cardNumber: "022",
   cost: 2,
   strength: 1,
   willpower: 4,
   lore: 1,
+  cardNumber: 22,
   inkable: true,
   externalIds: {
     ravensburger: "4e8aaca4272863b70bf21a78240c97ccad2e3ce5",

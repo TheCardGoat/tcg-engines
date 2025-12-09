@@ -10,11 +10,11 @@ export const naniProtectiveSister: CharacterCard = {
   franchise: "Lilo and Stitch",
   set: "009",
   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-  cardNumber: "017",
   cost: 5,
   strength: 3,
   willpower: 6,
   lore: 2,
+  cardNumber: 17,
   inkable: true,
   externalIds: {
     ravensburger: "ba2f05538e1999601db469cfe0b44f78bcbdb61c",

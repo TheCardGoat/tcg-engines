@@ -13,6 +13,7 @@ export { iagoStompinMad } from "./043-iago-stompin-mad";
 export { violetSabrewingSeniorJuniorWoodchuck } from "./044-violet-sabrewing-senior-junior-woodchuck";
 export { mushuBragginDragon } from "./046-mushu-braggin-dragon";
 export { creeperLoyalLackey } from "./050-creeper-loyal-lackey";
+export { merlinCompletingHisResearch } from "./058-merlin-completing-his-research";
 export { balooLaidbackBear } from "./069-baloo-laid-back-bear";
 export { bigNoseLovesickPoet } from "./070-big-nose-lovesick-poet";
 export { flotsamSlipperyAsAnEel } from "./071-flotsam-slippery-as-an-eel";

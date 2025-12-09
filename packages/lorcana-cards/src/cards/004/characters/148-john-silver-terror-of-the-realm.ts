@@ -9,11 +9,11 @@ export const johnSilverTerrorOfTheRealm: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Treasure Planet",
   set: "004",
-  cardNumber: "148",
   cost: 8,
   strength: 8,
   willpower: 8,
   lore: 3,
+  cardNumber: 148,
   inkable: true,
   vanilla: true,
   externalIds: {

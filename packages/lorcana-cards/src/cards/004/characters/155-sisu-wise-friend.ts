@@ -9,11 +9,11 @@ export const sisuWiseFriend: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Raya and the Last Dragon",
   set: "004",
-  cardNumber: "155",
   cost: 6,
   strength: 6,
   willpower: 6,
   lore: 2,
+  cardNumber: 155,
   inkable: true,
   vanilla: true,
   externalIds: {

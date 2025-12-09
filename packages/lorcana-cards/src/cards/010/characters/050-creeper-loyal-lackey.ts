@@ -9,11 +9,11 @@ export const creeperLoyalLackey: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Black Cauldron",
   set: "010",
-  cardNumber: "050",
   cost: 6,
   strength: 5,
   willpower: 4,
   lore: 4,
+  cardNumber: 50,
   inkable: true,
   vanilla: true,
   externalIds: {

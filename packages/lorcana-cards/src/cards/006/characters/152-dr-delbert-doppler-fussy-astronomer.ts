@@ -9,11 +9,11 @@ export const drDelbertDopplerFussyAstronomer: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Treasure Planet",
   set: "006",
-  cardNumber: "152",
   cost: 4,
   strength: 4,
   willpower: 4,
   lore: 1,
+  cardNumber: 152,
   inkable: true,
   vanilla: true,
   externalIds: {

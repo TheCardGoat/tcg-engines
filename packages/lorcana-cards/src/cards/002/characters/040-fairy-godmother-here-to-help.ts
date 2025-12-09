@@ -9,11 +9,11 @@ export const fairyGodmotherHereToHelp: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Cinderella",
   set: "002",
-  cardNumber: "040",
   cost: 5,
   strength: 3,
   willpower: 7,
   lore: 2,
+  cardNumber: 40,
   inkable: true,
   vanilla: true,
   externalIds: {

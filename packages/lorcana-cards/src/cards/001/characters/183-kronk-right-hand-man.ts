@@ -9,11 +9,11 @@ export const kronkRighthandMan: CharacterCard = {
   inkType: ["steel"],
   franchise: "Emperors New Groove",
   set: "001",
-  cardNumber: "183",
   cost: 6,
   strength: 6,
   willpower: 6,
   lore: 2,
+  cardNumber: 183,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const princeNaveenPennilessRoyal: CharacterCard = {
   inkType: ["steel"],
   franchise: "Princess and the Frog",
   set: "009",
-  cardNumber: "182",
   cost: 3,
   strength: 4,
   willpower: 3,
   lore: 1,
+  cardNumber: 182,
   inkable: true,
   vanilla: true,
   externalIds: {

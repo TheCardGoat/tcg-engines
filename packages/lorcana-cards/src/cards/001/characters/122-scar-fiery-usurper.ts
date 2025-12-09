@@ -9,11 +9,11 @@ export const scarFieryUsurper: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Lion King",
   set: "001",
-  cardNumber: "122",
   cost: 4,
   strength: 5,
   willpower: 3,
   lore: 1,
+  cardNumber: 122,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const aladdinCorneredSwordsman: CharacterCard = {
   inkType: ["steel"],
   franchise: "Aladdin",
   set: "001",
-  cardNumber: "171",
   cost: 2,
   strength: 2,
   willpower: 1,
   lore: 2,
+  cardNumber: 171,
   inkable: true,
   vanilla: true,
   externalIds: {

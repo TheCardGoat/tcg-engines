@@ -9,11 +9,11 @@ export const kashekimAncientRuler: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Atlantis",
   set: "007",
-  cardNumber: "077",
   cost: 3,
   strength: 4,
   willpower: 3,
   lore: 1,
+  cardNumber: 77,
   inkable: true,
   vanilla: true,
   externalIds: {

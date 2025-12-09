@@ -9,11 +9,11 @@ export const genieInvestigativeMind: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Aladdin",
   set: "010",
-  cardNumber: "146",
   cost: 5,
   strength: 4,
   willpower: 7,
   lore: 2,
+  cardNumber: 146,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,10 +9,10 @@ export const nottinghamPrinceJohnsCastle: LocationCard = {
   inkType: ["steel"],
   franchise: "Robin Hood",
   set: "003",
-  cardNumber: "203",
   cost: 2,
   moveCost: 1,
   lore: 0,
+  cardNumber: 203,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -10,11 +10,11 @@ export const mrsBeakleyFormerShushAgent: CharacterCard = {
   franchise: "Ducktales",
   set: "010",
   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-  cardNumber: "011",
   cost: 4,
   strength: 2,
   willpower: 6,
   lore: 1,
+  cardNumber: 11,
   inkable: true,
   externalIds: {
     ravensburger: "99a7cb5afcf2f617bc3f2280c0afc300de76be91",

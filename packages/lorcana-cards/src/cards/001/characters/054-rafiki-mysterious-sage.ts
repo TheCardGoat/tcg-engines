@@ -10,11 +10,11 @@ export const rafikiMysteriousSage: CharacterCard = {
   franchise: "Lion King",
   set: "001",
   text: "Rush (This character can challenge the turn they're played.)",
-  cardNumber: "054",
   cost: 3,
   strength: 3,
   willpower: 3,
   lore: 1,
+  cardNumber: 54,
   inkable: false,
   externalIds: {
     ravensburger: "80caf60ae34281409e8e7afd88224c417a282bac",

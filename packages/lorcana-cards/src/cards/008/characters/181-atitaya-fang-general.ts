@@ -9,11 +9,11 @@ export const atitayaFangGeneral: CharacterCard = {
   inkType: ["steel"],
   franchise: "Raya and the Last Dragon",
   set: "008",
-  cardNumber: "181",
   cost: 7,
   strength: 7,
   willpower: 7,
   lore: 3,
+  cardNumber: 181,
   inkable: true,
   vanilla: true,
   externalIds: {
