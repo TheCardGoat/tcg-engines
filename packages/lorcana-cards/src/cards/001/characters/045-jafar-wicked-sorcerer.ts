@@ -9,7 +9,7 @@ export const jafarWickedSorcerer: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Aladdin",
   set: "001",
-  text: "Challenger +3 (While challenging, this character gets +3.)",
+  text: "Challenger +3 (While challenging, this character gets +3 {S}.)",
   cost: 4,
   strength: 2,
   willpower: 5,
@@ -19,12 +19,6 @@ export const jafarWickedSorcerer: CharacterCard = {
   externalIds: {
     ravensburger: "b3001090c82926f995dda5332ff5f0546257b061",
   },
-  keywords: [
-    {
-      type: "Challenger",
-      value: 3,
-    },
-  ],
   abilities: [
     {
       id: "1dn-1",

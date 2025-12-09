@@ -19,7 +19,6 @@ export const moanaUndeterredVoyager: CharacterCard = {
   externalIds: {
     ravensburger: "2f63375cd85e72b1c7c5774f2318433677ff7601",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "d5c-1",

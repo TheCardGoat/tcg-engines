@@ -23,8 +23,13 @@ export const earthGiantLivingMountain: CharacterCard = {
     {
       id: "1xh-1",
       text: "UNEARTHED When you play this character, each opponent draws a card.",
-      type: "triggered",
       name: "UNEARTHED",
+      type: "triggered",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
       effect: {
         type: "draw",
         amount: 1,

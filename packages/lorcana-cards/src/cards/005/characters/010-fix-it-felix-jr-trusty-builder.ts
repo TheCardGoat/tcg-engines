@@ -19,7 +19,6 @@ export const fixitFelixJrTrustyBuilder: CharacterCard = {
   externalIds: {
     ravensburger: "c139143d214c2a6edd012e7428ca9ff6081cb764",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "1hm-1",

@@ -19,12 +19,6 @@ export const arielSingingMermaid: CharacterCard = {
   externalIds: {
     ravensburger: "9e45cd57bcaee1034e81d1c387fdbd8b35cdab85",
   },
-  keywords: [
-    {
-      type: "Singer",
-      value: 7,
-    },
-  ],
   abilities: [
     {
       id: "17w-1",

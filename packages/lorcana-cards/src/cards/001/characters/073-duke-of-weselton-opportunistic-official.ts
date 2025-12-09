@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const dukeOfWeseltonOpportunisticOfficial: CharacterCard = {
-  id: "129",
+  id: "128",
   cardType: "character",
   name: "Duke of Weselton",
   version: "Opportunistic Official",

@@ -23,8 +23,17 @@ export const hiroHamadaFutureChampion: CharacterCard = {
     {
       id: "syk-1",
       text: "ORIGIN STORY When you play a Floodborn character on this card, draw a card.",
-      type: "triggered",
       name: "ORIGIN STORY",
+      type: "triggered",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: {
+          controller: "you",
+          cardType: "character",
+          classification: "Floodborn",
+        },
+      },
       effect: {
         type: "draw",
         amount: 1,

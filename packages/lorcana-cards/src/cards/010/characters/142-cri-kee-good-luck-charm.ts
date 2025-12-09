@@ -19,7 +19,6 @@ export const crikeeGoodLuckCharm: CharacterCard = {
   externalIds: {
     ravensburger: "becfbb1f4251f07b2c92bee5465e8d8cbf12d90f",
   },
-  keywords: ["Alert"],
   abilities: [
     {
       id: "1gx-1",

@@ -19,12 +19,6 @@ export const francineEyeingTheEvidence: CharacterCard = {
   externalIds: {
     ravensburger: "ab013cade204fc90400f1cb148720c2a1914fe37",
   },
-  keywords: [
-    {
-      type: "Resist",
-      value: 1,
-    },
-  ],
   abilities: [
     {
       id: "1bg-1",

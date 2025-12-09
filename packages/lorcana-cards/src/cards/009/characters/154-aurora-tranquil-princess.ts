@@ -19,7 +19,6 @@ export const auroraTranquilPrincess: CharacterCard = {
   externalIds: {
     ravensburger: "067bc768bc6b0221356cb0b7535f6bf9fced1949",
   },
-  keywords: ["Ward"],
   abilities: [
     {
       id: "1sr-1",

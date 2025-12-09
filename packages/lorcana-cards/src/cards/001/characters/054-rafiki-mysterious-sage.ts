@@ -19,7 +19,6 @@ export const rafikiMysteriousSage: CharacterCard = {
   externalIds: {
     ravensburger: "80caf60ae34281409e8e7afd88224c417a282bac",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "zqh-1",

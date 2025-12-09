@@ -19,7 +19,6 @@ export const heiheiProtectiveRooster: CharacterCard = {
   externalIds: {
     ravensburger: "229b50a7f3386e0bd2aa989a726fa7a22826eee1",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "9lo-1",

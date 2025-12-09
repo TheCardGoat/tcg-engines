@@ -9,7 +9,7 @@ export const captainHookForcefulDuelist: CharacterCard = {
   inkType: ["steel"],
   franchise: "Peter Pan",
   set: "008",
-  text: "Challenger +2 (While challenging, this character gets +2.)",
+  text: "Challenger +2 (While challenging, this character gets +2 {S}.)",
   cost: 1,
   strength: 1,
   willpower: 2,
@@ -19,12 +19,6 @@ export const captainHookForcefulDuelist: CharacterCard = {
   externalIds: {
     ravensburger: "296f4ed274c9b83418b64ea35bcc8ffc4a4a5dc3",
   },
-  keywords: [
-    {
-      type: "Challenger",
-      value: 2,
-    },
-  ],
   abilities: [
     {
       id: "bhv-1",

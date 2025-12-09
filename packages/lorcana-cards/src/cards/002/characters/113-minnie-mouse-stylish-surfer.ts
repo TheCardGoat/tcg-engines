@@ -18,7 +18,6 @@ export const minnieMouseStylishSurfer: CharacterCard = {
   externalIds: {
     ravensburger: "ffbe9beca8f3ff3eb0301baf5d2fe237571c4099",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "1yy-1",

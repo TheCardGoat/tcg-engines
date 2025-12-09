@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const skippyEnergeticRabbit: CharacterCard = {
-  id: "1m8",
+  id: "1ma",
   cardType: "character",
   name: "Skippy",
   version: "Energetic Rabbit",
@@ -19,10 +19,9 @@ export const skippyEnergeticRabbit: CharacterCard = {
   externalIds: {
     ravensburger: "d1dd02f4399d22aed3de073b0011d0a9fa633020",
   },
-  keywords: ["Ward"],
   abilities: [
     {
-      id: "1m8-1",
+      id: "1ma-1",
       text: "Ward",
       type: "keyword",
       keyword: "Ward",

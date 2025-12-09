@@ -19,7 +19,6 @@ export const inspectorTezukaResoluteOfficer: CharacterCard = {
   externalIds: {
     ravensburger: "9644b567eec1691484deb7950ab8728fb6fdc9a8",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "15o-1",

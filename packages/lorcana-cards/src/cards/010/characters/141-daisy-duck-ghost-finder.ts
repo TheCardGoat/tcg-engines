@@ -18,7 +18,6 @@ export const daisyDuckGhostFinder: CharacterCard = {
   externalIds: {
     ravensburger: "d3e63fe9f4bd72e82b947dcc61d0f2c1744b9221",
   },
-  keywords: ["Support"],
   abilities: [
     {
       id: "1m1-1",

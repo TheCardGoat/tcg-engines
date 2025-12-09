@@ -19,7 +19,6 @@ export const drFacilierSavvyOpportunist: CharacterCard = {
   externalIds: {
     ravensburger: "7eb3e95e745e4e80a3c3f2b46bce3df355e3acbf",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "z5l-1",

@@ -19,7 +19,6 @@ export const hermesHarriedMessenger: CharacterCard = {
   externalIds: {
     ravensburger: "9ce36fa3156e783f9c693a2e872e588419f40862",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "17j-1",

@@ -19,7 +19,6 @@ export const kakamoraBoardingParty: CharacterCard = {
   externalIds: {
     ravensburger: "1b4a8518d45c24ba97ec36484731e8b55c085d5b",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "7k1-1",

@@ -30,8 +30,13 @@ export const merlinCompletingHisResearch: CharacterCard = {
     {
       id: "mr7-2",
       text: "LEGACY OF LEARNING When this character is banished in a challenge, if he had a card under him, draw 2 cards.",
-      type: "triggered",
       name: "LEGACY OF LEARNING",
+      type: "triggered",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
       effect: {
         type: "draw",
         amount: 2,

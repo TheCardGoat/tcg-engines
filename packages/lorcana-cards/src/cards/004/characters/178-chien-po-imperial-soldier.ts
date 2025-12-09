@@ -19,7 +19,6 @@ export const chienpoImperialSoldier: CharacterCard = {
   externalIds: {
     ravensburger: "d1fd5839ad177cf9b28ff3c6336c8cb568683243",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "1m9-1",

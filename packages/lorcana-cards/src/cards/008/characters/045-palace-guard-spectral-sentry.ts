@@ -19,7 +19,6 @@ export const palaceGuardSpectralSentry: CharacterCard = {
   externalIds: {
     ravensburger: "f1807bfd473e7be0f8010219734c4c6a9702ffd5",
   },
-  keywords: ["Vanish"],
   abilities: [
     {
       id: "1v0-1",

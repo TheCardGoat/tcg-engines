@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const basilHypnotizedMouse: CharacterCard = {
-  id: "1v9",
+  id: "1v5",
   cardType: "character",
   name: "Basil",
   version: "Hypnotized Mouse",
@@ -19,10 +19,9 @@ export const basilHypnotizedMouse: CharacterCard = {
   externalIds: {
     ravensburger: "f404642244e838db87343396d53a98cc355ec34e",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
-      id: "1v9-1",
+      id: "1v5-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

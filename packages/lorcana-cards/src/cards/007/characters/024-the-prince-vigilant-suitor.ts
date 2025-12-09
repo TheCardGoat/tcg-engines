@@ -19,7 +19,6 @@ export const thePrinceVigilantSuitor: CharacterCard = {
   externalIds: {
     ravensburger: "5966f7b1df7bd6ef309aa7694d0a45d89624c970",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "ot0-1",

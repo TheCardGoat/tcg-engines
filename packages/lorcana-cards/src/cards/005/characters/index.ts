@@ -11,6 +11,7 @@ export { archimedesExasperatedOwl } from "./039-archimedes-exasperated-owl";
 export { earthGiantLivingMountain } from "./041-earth-giant-living-mountain";
 export { whiteRabbitRoyalHerald } from "./043-white-rabbit-royal-herald";
 export { luisaMadrigalEntertainingMuscle } from "./045-luisa-madrigal-entertaining-muscle";
+export { archimedesElectrifiedOwl } from "./047-archimedes-electrified-owl";
 export { monstroWhaleOfAWhale } from "./052-monstro-whale-of-a-whale";
 export { maleficentVengefulSorceress } from "./054-maleficent-vengeful-sorceress";
 export { littleJohnCampCook } from "./071-little-john-camp-cook";

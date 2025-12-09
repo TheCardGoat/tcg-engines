@@ -19,7 +19,6 @@ export const rajahGhostlyTiger: CharacterCard = {
   externalIds: {
     ravensburger: "aa7759237b508c4b2e253ca43417ab8d26d6da36",
   },
-  keywords: ["Vanish"],
   abilities: [
     {
       id: "1ba-1",

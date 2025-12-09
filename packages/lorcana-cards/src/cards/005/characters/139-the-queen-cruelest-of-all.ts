@@ -19,7 +19,6 @@ export const theQueenCruelestOfAll: CharacterCard = {
   externalIds: {
     ravensburger: "6522f49b10eefa0162d9f38ed91efba1027e5efc",
   },
-  keywords: ["Ward"],
   abilities: [
     {
       id: "s28-1",

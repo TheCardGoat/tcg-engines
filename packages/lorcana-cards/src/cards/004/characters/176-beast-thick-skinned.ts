@@ -19,12 +19,6 @@ export const beastThickskinned: CharacterCard = {
   externalIds: {
     ravensburger: "613c1d6a03168cd893e044a3b018c6d7d70f295d",
   },
-  keywords: [
-    {
-      type: "Resist",
-      value: 1,
-    },
-  ],
   abilities: [
     {
       id: "qz9-1",

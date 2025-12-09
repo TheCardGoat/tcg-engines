@@ -19,7 +19,6 @@ export const herculesTrueHero: CharacterCard = {
   externalIds: {
     ravensburger: "aec8753f7f97cb51feeedf58b45f27661b18c44e",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "1ch-1",

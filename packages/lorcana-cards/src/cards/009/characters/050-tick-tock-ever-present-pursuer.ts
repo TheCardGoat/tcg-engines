@@ -19,7 +19,6 @@ export const ticktockEverpresentPursuer: CharacterCard = {
   externalIds: {
     ravensburger: "99133bb34b1ce309fdf855a65f0cd70f9a17cc59",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "16h-1",

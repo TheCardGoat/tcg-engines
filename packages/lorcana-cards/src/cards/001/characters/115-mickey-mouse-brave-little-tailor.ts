@@ -18,7 +18,6 @@ export const mickeyMouseBraveLittleTailor: CharacterCard = {
   externalIds: {
     ravensburger: "24d9608bc36bf0e9c6e158b0569ebcd8d0515343",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "a81-1",

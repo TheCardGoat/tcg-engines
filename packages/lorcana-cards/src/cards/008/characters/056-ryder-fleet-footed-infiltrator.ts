@@ -19,7 +19,6 @@ export const ryderFleetfootedInfiltrator: CharacterCard = {
   externalIds: {
     ravensburger: "92a8bffc338852c3c4d649bd891f34fb5462730e",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "14o-1",

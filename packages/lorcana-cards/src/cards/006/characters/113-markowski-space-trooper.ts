@@ -19,7 +19,6 @@ export const markowskiSpaceTrooper: CharacterCard = {
   externalIds: {
     ravensburger: "ead46bfd3bf059ae7fe97fb6163a498b70b7e8a7",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "1t3-1",

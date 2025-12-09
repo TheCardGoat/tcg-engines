@@ -19,7 +19,6 @@ export const luisaMadrigalMagicallyStrongOne: CharacterCard = {
   externalIds: {
     ravensburger: "e5dd22ae0e83e9f520522e07643858b4e2d081e7",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "1rs-1",

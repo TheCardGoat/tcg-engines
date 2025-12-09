@@ -19,7 +19,6 @@ export const tinkerBellFastFlier: CharacterCard = {
   externalIds: {
     ravensburger: "cacdb6abf873de6f92bea008b9b53b48adb1624c",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "1k9-1",

@@ -19,7 +19,6 @@ export const kitCloudkickerSpunkyBearCub: CharacterCard = {
   externalIds: {
     ravensburger: "3f5ab1825bd1fe21e090a0b8eff482833549bc44",
   },
-  keywords: ["Ward"],
   abilities: [
     {
       id: "hkt-1",

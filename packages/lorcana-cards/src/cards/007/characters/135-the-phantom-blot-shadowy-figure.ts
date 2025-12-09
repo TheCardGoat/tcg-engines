@@ -18,7 +18,6 @@ export const thePhantomBlotShadowyFigure: CharacterCard = {
   externalIds: {
     ravensburger: "f87fff900b6d5596c88b04100c0a87c2c9346faa",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "1wy-1",

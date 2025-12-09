@@ -19,7 +19,6 @@ export const zazuAdvisorToMufasa: CharacterCard = {
   externalIds: {
     ravensburger: "1c49ac7ff34fcbbbd4e8e2c2cc50bc858e2cb391",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "7uk-1",

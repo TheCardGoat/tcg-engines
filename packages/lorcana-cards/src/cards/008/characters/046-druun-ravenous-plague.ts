@@ -9,7 +9,7 @@ export const druunRavenousPlague: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Raya and the Last Dragon",
   set: "008",
-  text: "Challenger +4 (While challenging, this character gets +4.)",
+  text: "Challenger +4 (While challenging, this character gets +4 {S}.)",
   cost: 4,
   strength: 1,
   willpower: 5,
@@ -19,12 +19,6 @@ export const druunRavenousPlague: CharacterCard = {
   externalIds: {
     ravensburger: "2bb33b315b146bb97dcb0790b7c5819a986519d6",
   },
-  keywords: [
-    {
-      type: "Challenger",
-      value: 4,
-    },
-  ],
   abilities: [
     {
       id: "c4i-1",

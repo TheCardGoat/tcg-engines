@@ -19,7 +19,6 @@ export const princePhillipRoyalExplorer: CharacterCard = {
   externalIds: {
     ravensburger: "875592f80cfc4d6e34c02219ce9530abc27695f8",
   },
-  keywords: ["Ward"],
   abilities: [
     {
       id: "11j-1",

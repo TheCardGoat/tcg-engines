@@ -19,7 +19,6 @@ export const teKTheBurningOne: CharacterCard = {
   externalIds: {
     ravensburger: "92788505267291d061bce171dae43b361f5c9eca",
   },
-  keywords: ["Reckless"],
   abilities: [
     {
       id: "14n-1",

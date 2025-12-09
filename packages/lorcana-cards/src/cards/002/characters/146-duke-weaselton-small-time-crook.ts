@@ -19,7 +19,6 @@ export const dukeWeaseltonSmalltimeCrook: CharacterCard = {
   externalIds: {
     ravensburger: "b51612597f56a105b1d978244f4cde86b568d13e",
   },
-  keywords: ["Ward"],
   abilities: [
     {
       id: "1e8-1",

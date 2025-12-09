@@ -19,7 +19,6 @@ export const aladdinPrinceAli: CharacterCard = {
   externalIds: {
     ravensburger: "1d08728f58803b68227b42d077f73afbfe1f9880",
   },
-  keywords: ["Ward"],
   abilities: [
     {
       id: "820-1",

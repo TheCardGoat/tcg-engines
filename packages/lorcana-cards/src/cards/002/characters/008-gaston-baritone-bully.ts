@@ -19,12 +19,6 @@ export const gastonBaritoneBully: CharacterCard = {
   externalIds: {
     ravensburger: "176214ba5544b38d31aa4d2d706edd897e07259a",
   },
-  keywords: [
-    {
-      type: "Singer",
-      value: 5,
-    },
-  ],
   abilities: [
     {
       id: "6hk-1",

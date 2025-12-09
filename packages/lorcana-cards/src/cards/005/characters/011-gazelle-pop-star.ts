@@ -19,12 +19,6 @@ export const gazellePopStar: CharacterCard = {
   externalIds: {
     ravensburger: "3a77973047a9e2dc5748299006ede3868e00d061",
   },
-  keywords: [
-    {
-      type: "Singer",
-      value: 5,
-    },
-  ],
   abilities: [
     {
       id: "g80-1",

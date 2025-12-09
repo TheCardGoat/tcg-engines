@@ -19,7 +19,6 @@ export const joshuaSweetTheDoctor: CharacterCard = {
   externalIds: {
     ravensburger: "e1f557b29f945126b59c4ccace8ec9ba4c9e013a",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "1qp-1",

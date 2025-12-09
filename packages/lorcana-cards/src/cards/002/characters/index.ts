@@ -37,5 +37,7 @@ export { theNokkWaterSpirit } from "./160-the-nokk-water-spirit";
 export { donaldDuckDeepseaDiver } from "./178-donald-duck-deep-sea-diver";
 export { eliLaBouffBigDaddy } from "./179-eli-la-bouff-big-daddy";
 export { goofyKnightForADay } from "./180-goofy-knight-for-a-day";
+export { herculesDivineHero } from "./181-hercules-divine-hero";
 export { herculesHeroInTraining } from "./182-hercules-hero-in-training";
 export { pachaVillageLeader } from "./190-pacha-village-leader";
+export { thePrinceNeverGivesUp } from "./195-the-prince-never-gives-up";

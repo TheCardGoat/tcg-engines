@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const miloThatchCleverCartographer: CharacterCard = {
-  id: "1de",
+  id: "1dd",
   cardType: "character",
   name: "Milo Thatch",
   version: "Clever Cartographer",

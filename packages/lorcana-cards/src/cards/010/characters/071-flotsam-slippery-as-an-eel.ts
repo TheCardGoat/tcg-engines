@@ -19,7 +19,6 @@ export const flotsamSlipperyAsAnEel: CharacterCard = {
   externalIds: {
     ravensburger: "0d0b8280324df86a9fb785909a5ba25e5422f783",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "3ma-1",

@@ -19,7 +19,6 @@ export const arthurNoviceSparrow: CharacterCard = {
   externalIds: {
     ravensburger: "29f376ad78c551ed84b353cdcbe6ae4a1bceaa40",
   },
-  keywords: ["Reckless"],
   abilities: [
     {
       id: "bn1-1",
