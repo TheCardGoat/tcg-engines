@@ -120,9 +120,6 @@ tcg-engines/
 │   │   │   └── types/           # Branded types and utilities
 │   │   └── docs/                # Comprehensive documentation
 │   │
-│   ├── engines/
-│   │   └── core-engine/         # Large reference implementation (4443+ files)
-│   │
 │   ├── gundam-engine/           # Gundam Card Game implementation
 │   │   ├── src/
 │   │   │   ├── cards/           # Card definitions organized by set
