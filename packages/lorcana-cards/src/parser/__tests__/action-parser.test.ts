@@ -79,7 +79,13 @@ describe("Action Parser", () => {
             effect: {
               type: "deal-damage",
               amount: 3,
-              target: "CHOSEN_CHARACTER",
+              target: {
+                type: "query",
+                cardType: "character",
+                count: 1,
+                controller: "any",
+                zone: ["play"],
+              },
             },
           },
         },
@@ -99,7 +105,13 @@ describe("Action Parser", () => {
             effect: {
               type: "deal-damage",
               amount: 2,
-              target: "ALL_OPPOSING_CHARACTERS",
+              target: {
+                type: "query",
+                cardType: "character",
+                count: "all",
+                controller: "opponent",
+                zone: ["play"],
+              },
             },
           },
         },
@@ -130,7 +142,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "banish", target: "CHOSEN_CHARACTER" },
+            effect: {
+              type: "banish",
+              target: {
+                type: "query",
+                cardType: "character",
+                count: 1,
+                controller: "any",
+                zone: ["play"],
+              },
+            },
           },
         },
       });
@@ -204,7 +225,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "ready", target: "CHOSEN_CHARACTER" },
+            effect: {
+              type: "ready",
+              target: {
+                type: "query",
+                cardType: "character",
+                count: 1,
+                controller: "any",
+                zone: ["play"],
+              },
+            },
           },
         },
       });
@@ -232,7 +262,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "exert", target: "CHOSEN_OPPOSING_CHARACTER" },
+            effect: {
+              type: "exert",
+              target: {
+                type: "query",
+                cardType: "character",
+                count: 1,
+                controller: "opponent",
+                zone: ["play"],
+              },
+            },
           },
         },
       });
@@ -250,7 +289,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "return-to-hand", target: "CHOSEN_CHARACTER" },
+            effect: {
+              type: "return-to-hand",
+              target: {
+                type: "query",
+                cardType: "character",
+                count: 1,
+                controller: "any",
+                zone: ["play"],
+              },
+            },
           },
         },
       });

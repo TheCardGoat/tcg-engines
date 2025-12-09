@@ -4,14 +4,13 @@
  * Parses target phrases from ability text into Target types.
  * Extracts who/what an effect applies to.
  *
- * Returns enum shortcuts for common patterns. Complex patterns
- * can be parsed into full DSL objects when needed.
+ * Returns DSL objects (Query types) for consistent targeting.
  */
 
 import type {
-  CharacterTargetEnum,
-  ItemTargetEnum,
-  LocationTargetEnum,
+  CharacterTarget,
+  ItemTarget,
+  LocationTarget,
   PlayerTarget,
 } from "@tcg/lorcana";
 import {
@@ -36,37 +35,73 @@ import {
  * Parse character target from text
  *
  * @param text - Text containing target phrase
- * @returns Character target enum or undefined if not found
+ * @returns Character target DSL object or undefined if not found
  */
 export function parseCharacterTarget(
   text: string,
-): CharacterTargetEnum | undefined {
+): CharacterTarget | undefined {
   // Check for specific patterns first (most specific to least specific)
   if (CHOSEN_OPPOSING_CHARACTER_PATTERN.test(text)) {
-    return "CHOSEN_OPPOSING_CHARACTER";
+    return {
+      type: "query",
+      cardType: "character",
+      count: 1,
+      controller: "opponent",
+      zone: ["play"],
+    };
   }
 
   if (CHOSEN_CHARACTER_OF_YOURS_PATTERN.test(text)) {
-    return "CHOSEN_CHARACTER_OF_YOURS";
+    return {
+      type: "query",
+      cardType: "character",
+      count: 1,
+      controller: "you",
+      zone: ["play"],
+    };
   }
 
   if (CHOSEN_CHARACTER_PATTERN.test(text)) {
-    return "CHOSEN_CHARACTER";
+    return {
+      type: "query",
+      cardType: "character",
+      count: 1,
+      controller: "any",
+      zone: ["play"],
+    };
   }
 
   if (
     ALL_OPPOSING_CHARACTERS_PATTERN.test(text) ||
     EACH_OPPOSING_CHARACTER_PATTERN.test(text)
   ) {
-    return "ALL_OPPOSING_CHARACTERS";
+    return {
+      type: "query",
+      cardType: "character",
+      count: "all",
+      controller: "opponent",
+      zone: ["play"],
+    };
   }
 
   if (YOUR_CHARACTERS_PATTERN.test(text)) {
-    return "YOUR_CHARACTERS";
+    return {
+      type: "query",
+      cardType: "character",
+      count: "all",
+      controller: "you",
+      zone: ["play"],
+    };
   }
 
   if (ALL_CHARACTERS_PATTERN.test(text)) {
-    return "ALL_CHARACTERS";
+    return {
+      type: "query",
+      cardType: "character",
+      count: "all",
+      controller: "any",
+      zone: ["play"],
+    };
   }
 
   if (hasSelfReference(text)) {
@@ -80,11 +115,17 @@ export function parseCharacterTarget(
  * Parse item target from text
  *
  * @param text - Text containing target phrase
- * @returns Item target enum or undefined if not found
+ * @returns Item target DSL object or undefined if not found
  */
-export function parseItemTarget(text: string): ItemTargetEnum | undefined {
+export function parseItemTarget(text: string): ItemTarget | undefined {
   if (CHOSEN_ITEM_PATTERN.test(text)) {
-    return "CHOSEN_ITEM";
+    return {
+      type: "query",
+      cardType: "item",
+      count: 1,
+      controller: "any",
+      zone: ["play"],
+    };
   }
 
   // TODO: Add more item patterns as needed
@@ -96,13 +137,17 @@ export function parseItemTarget(text: string): ItemTargetEnum | undefined {
  * Parse location target from text
  *
  * @param text - Text containing target phrase
- * @returns Location target enum or undefined if not found
+ * @returns Location target DSL object or undefined if not found
  */
-export function parseLocationTarget(
-  text: string,
-): LocationTargetEnum | undefined {
+export function parseLocationTarget(text: string): LocationTarget | undefined {
   if (CHOSEN_LOCATION_PATTERN.test(text)) {
-    return "CHOSEN_LOCATION";
+    return {
+      type: "query",
+      cardType: "location",
+      count: 1,
+      controller: "any",
+      zone: ["play"],
+    };
   }
 
   // TODO: Add more location patterns as needed
