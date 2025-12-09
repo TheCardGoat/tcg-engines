@@ -1,9 +1,0 @@
-export { aileStrikeGundam } from "./001-aile-strike-gundam";
-export { strikeGundam } from "./002-strike-gundam";
-export { moebiusZero } from "./003-moebius-zero";
-export { moebius } from "./004-moebius";
-export { strikeDagger } from "./005-strike-dagger";
-export { aegisGundam } from "./006-aegis-gundam";
-export { aegisGundamMaMode } from "./007-aegis-gundam-ma-mode";
-export { ginn } from "./008-ginn";
-export { miguelsGinn } from "./009-miguels-ginn";

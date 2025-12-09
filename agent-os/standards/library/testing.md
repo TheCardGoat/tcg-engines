@@ -177,7 +177,7 @@ alwaysApply: true
 - **Bundle Testing**: Test that package bundles correctly in consumer projects
 
 ## Test Environment
-- **Test Runner**: Use modern test runner (Vitest, Jest, Bun Test)
+- **Test Runner**: Use modern test runner (Bun Test)
 - **Assertion Library**: Use clear assertion syntax
 - **Test Isolation**: Ensure proper test isolation
 - **TypeScript Support**: Full TypeScript support in tests

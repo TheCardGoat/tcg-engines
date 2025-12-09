@@ -25,8 +25,8 @@
     "@biomejs/biome": "2.0.4",
     "@evilmartians/lefthook": "1.11.2",
     "@types/seedrandom": "^3.0.8",
-    "turbo": "^2.5.8",
-    "typescript": "5.8.3"
+    "turbo": "2.6.1",
+    "typescript": "5.9.3"
   },
   "dependencies": {
     "object-hash": "3.0.0",

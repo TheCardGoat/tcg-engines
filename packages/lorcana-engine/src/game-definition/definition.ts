@@ -3,7 +3,7 @@ import type {
   LorcanaCardMeta,
   LorcanaGameState,
   LorcanaMoveParams,
-} from "../types/move-params";
+} from "../types";
 import { lorcanaFlow } from "./flow/turn-flow";
 import { lorcanaMoves } from "./moves";
 import { setupLorcanaGame } from "./setup/game-setup";

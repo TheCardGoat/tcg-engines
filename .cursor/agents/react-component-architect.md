@@ -897,7 +897,7 @@ const ListItem = memo(({ item, onClick }: { item: Item; onClick: (id: string) =>
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { vi } from 'vitest';
+import { describe, it, expect, mock } from 'bun:test';
 
 // Component to test
 import { UserProfile } from './UserProfile';
@@ -925,7 +925,7 @@ describe('UserProfile', () => {
     };
     
     // Mock API call
-    global.fetch = vi.fn().mockResolvedValueOnce({
+    global.fetch = mock().mockResolvedValueOnce({
       ok: true,
       json: async () => mockUser,
     });

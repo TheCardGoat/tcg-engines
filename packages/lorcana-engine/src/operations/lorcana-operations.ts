@@ -10,7 +10,7 @@
 
 import type { CardId, MoveContext, PlayerId, ZoneId } from "@tcg/core";
 import type { Draft } from "immer";
-import type { LorcanaCardMeta, LorcanaGameState } from "../types/move-params";
+import type { LorcanaCardMeta, LorcanaGameState } from "../types";
 
 /**
  * Lorcana Operations Type
