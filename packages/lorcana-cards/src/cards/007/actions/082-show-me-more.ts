@@ -18,7 +18,12 @@ export const showMeMore: ActionCard = {
     {
       id: "11i-1",
       text: "Each player draws 3 cards.",
-      type: "static",
+      type: "action",
+      effect: {
+        type: "draw",
+        amount: 3,
+        target: "EACH_PLAYER",
+      },
     },
   ],
 };
