@@ -53,7 +53,13 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps[0]).toEqual({
         type: "deal-damage",
         amount: 2,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "any",
+          zone: ["play"],
+        },
       });
 
       // Step 2: Draw a card
@@ -78,14 +84,26 @@ describe("Composite Effect Parser", () => {
       // Step 1: Exert character
       expect(sequence.steps[0]).toEqual({
         type: "exert",
-        target: "CHOSEN_OPPOSING_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "opponent",
+          zone: ["play"],
+        },
       });
 
       // Step 2: Deal 1 damage
       expect(sequence.steps[1]).toEqual({
         type: "deal-damage",
         amount: 1,
-        target: "CHOSEN_OPPOSING_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "opponent",
+          zone: ["play"],
+        },
       });
     });
 
@@ -146,13 +164,25 @@ describe("Composite Effect Parser", () => {
 
       expect(sequence.steps[0]).toEqual({
         type: "exert",
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "any",
+          zone: ["play"],
+        },
       });
 
       expect(sequence.steps[1]).toEqual({
         type: "deal-damage",
         amount: 2,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "any",
+          zone: ["play"],
+        },
       });
     });
 
@@ -167,7 +197,13 @@ describe("Composite Effect Parser", () => {
 
       expect(sequence.steps[0]).toEqual({
         type: "ready",
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "any",
+          zone: ["play"],
+        },
       });
 
       expect(sequence.steps[1]).toEqual({
@@ -235,13 +271,25 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps[0]).toEqual({
         type: "deal-damage",
         amount: 2,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "any",
+          zone: ["play"],
+        },
       });
 
       expect(sequence.steps[1]).toEqual({
         type: "deal-damage",
         amount: 2,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "any",
+          zone: ["play"],
+        },
       });
     });
   });
@@ -272,7 +320,13 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps[2]).toEqual({
         type: "deal-damage",
         amount: 1,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "any",
+          zone: ["play"],
+        },
       });
     });
 
@@ -300,7 +354,13 @@ describe("Composite Effect Parser", () => {
 
       expect(sequence.steps[2]).toEqual({
         type: "banish",
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "any",
+          zone: ["play"],
+        },
       });
     });
   });
@@ -338,7 +398,13 @@ describe("Composite Effect Parser", () => {
 
       expect(sequence.steps[0]).toEqual({
         type: "exert",
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "any",
+          zone: ["play"],
+        },
       });
 
       expect(sequence.steps[1]).toEqual({

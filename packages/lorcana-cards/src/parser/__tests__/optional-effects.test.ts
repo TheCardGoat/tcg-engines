@@ -50,7 +50,13 @@ describe("Optional Effect Parser", () => {
         effect: {
           type: "deal-damage",
           amount: 2,
-          target: "CHOSEN_CHARACTER",
+          target: {
+            type: "query",
+            cardType: "character",
+            count: 1,
+            controller: "any",
+            zone: ["play"],
+          },
         },
         chooser: "CONTROLLER",
       });
@@ -65,7 +71,13 @@ describe("Optional Effect Parser", () => {
         type: "optional",
         effect: {
           type: "return-to-hand",
-          target: "CHOSEN_CHARACTER",
+          target: {
+            type: "query",
+            cardType: "character",
+            count: 1,
+            controller: "any",
+            zone: ["play"],
+          },
         },
         chooser: "CONTROLLER",
       });
@@ -79,7 +91,13 @@ describe("Optional Effect Parser", () => {
         effect: {
           type: "banish",
           // Note: "item" is currently parsed as CHOSEN_CHARACTER by the BANISH_PATTERN
-          target: "CHOSEN_CHARACTER",
+          target: {
+            type: "query",
+            cardType: "character",
+            count: 1,
+            controller: "any",
+            zone: ["play"],
+          },
         },
         chooser: "CONTROLLER",
       });
@@ -105,7 +123,13 @@ describe("Optional Effect Parser", () => {
         type: "optional",
         effect: {
           type: "exert",
-          target: "CHOSEN_CHARACTER",
+          target: {
+            type: "query",
+            cardType: "character",
+            count: 1,
+            controller: "any",
+            zone: ["play"],
+          },
         },
         chooser: "CONTROLLER",
       });
@@ -118,7 +142,13 @@ describe("Optional Effect Parser", () => {
         type: "optional",
         effect: {
           type: "ready",
-          target: "CHOSEN_CHARACTER",
+          target: {
+            type: "query",
+            cardType: "character",
+            count: 1,
+            controller: "any",
+            zone: ["play"],
+          },
         },
         chooser: "CONTROLLER",
       });
@@ -142,7 +172,13 @@ describe("Optional Effect Parser", () => {
         type: "optional",
         effect: {
           type: "exert",
-          target: "CHOSEN_CHARACTER",
+          target: {
+            type: "query",
+            cardType: "character",
+            count: 1,
+            controller: "any",
+            zone: ["play"],
+          },
         },
         chooser: "CONTROLLER",
       });
@@ -171,7 +207,13 @@ describe("Optional Effect Parser", () => {
         effect: {
           type: "banish",
           // Note: "item" is currently parsed as CHOSEN_CHARACTER by the BANISH_PATTERN
-          target: "CHOSEN_CHARACTER",
+          target: {
+            type: "query",
+            cardType: "character",
+            count: 1,
+            controller: "any",
+            zone: ["play"],
+          },
         },
         chooser: "CONTROLLER",
       });
@@ -199,7 +241,13 @@ describe("Optional Effect Parser", () => {
         effect: {
           type: "deal-damage",
           amount: 2,
-          target: "CHOSEN_CHARACTER",
+          target: {
+            type: "query",
+            cardType: "character",
+            count: 1,
+            controller: "any",
+            zone: ["play"],
+          },
         },
         chooser: "CONTROLLER",
       });
@@ -225,7 +273,13 @@ describe("Optional Effect Parser", () => {
         type: "optional",
         effect: {
           type: "return-to-hand",
-          target: "CHOSEN_CHARACTER",
+          target: {
+            type: "query",
+            cardType: "character",
+            count: 1,
+            controller: "any",
+            zone: ["play"],
+          },
         },
         chooser: "CONTROLLER",
       });
@@ -252,7 +306,13 @@ describe("Optional Effect Parser", () => {
         type: "optional",
         effect: {
           type: "exert",
-          target: "CHOSEN_CHARACTER",
+          target: {
+            type: "query",
+            cardType: "character",
+            count: 1,
+            controller: "any",
+            zone: ["play"],
+          },
         },
         chooser: "CONTROLLER",
       });
@@ -260,7 +320,13 @@ describe("Optional Effect Parser", () => {
       expect(sequenceEffect.steps[1]).toEqual({
         type: "deal-damage",
         amount: 2,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "any",
+          zone: ["play"],
+        },
       });
     });
   });
@@ -328,7 +394,13 @@ describe("Optional Effect Parser", () => {
         effect: {
           type: "deal-damage",
           amount: 3,
-          target: "CHOSEN_CHARACTER",
+          target: {
+            type: "query",
+            cardType: "character",
+            count: 1,
+            controller: "any",
+            zone: ["play"],
+          },
         },
         chooser: "CONTROLLER",
       });
@@ -371,7 +443,13 @@ describe("Optional Effect Parser", () => {
       expect(sequenceEffect.steps[1]).toEqual({
         type: "deal-damage",
         amount: 2,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "any",
+          zone: ["play"],
+        },
       });
     });
   });
@@ -440,7 +518,13 @@ describe("Optional Effect Parser", () => {
         type: "optional",
         effect: {
           type: "exert",
-          target: "CHOSEN_CHARACTER",
+          target: {
+            type: "query",
+            cardType: "character",
+            count: 1,
+            controller: "any",
+            zone: ["play"],
+          },
         },
         chooser: "CONTROLLER",
       });
@@ -448,7 +532,13 @@ describe("Optional Effect Parser", () => {
       expect(sequenceEffect.steps[1]).toEqual({
         type: "deal-damage",
         amount: 1,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+          cardType: "character",
+          count: 1,
+          controller: "any",
+          zone: ["play"],
+        },
       });
     });
   });
