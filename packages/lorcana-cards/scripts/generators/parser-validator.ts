@@ -75,31 +75,14 @@ function isSimpleDrawEffect(effect: { type: string }): boolean {
 }
 
 /**
- * Check if all abilities on a card are parseable (keywords or simple draw effects)
+ * Check if all abilities on a card are parseable
  *
- * Strict validation:
- * - ALL abilities must parse with success: true
- * - NO warnings allowed
- * - ALL parsed abilities must be:
- *   - type: "keyword" (any keyword), OR
- *   - type: "action" with effect.type: "draw" (simple draw only, no composite effects), OR
- *   - type: "triggered" with effect.type: "draw" (simple draw only, no composite effects)
- *
- * This allows cards with:
- * - Keyword abilities (e.g., "Rush", "Challenger +2")
- * - Simple draw action abilities (e.g., "Draw a card", "Draw 2 cards")
- * - Simple draw triggered abilities (e.g., "When you play this, draw a card", "Whenever this character quests, draw a card")
- *
- * This REJECTS cards with:
- * - Other action effects (e.g., "Deal 3 damage", "Remove damage")
- * - Other triggered effects (e.g., "When you play this, deal 3 damage")
- * - Composite effects (e.g., "Draw a card and discard a card", "Draw 2 cards, then deal 1 damage")
- * - Choice effects (e.g., "Choose one: Draw a card or discard a card")
- * - Optional effects (e.g., "You may draw a card")
- * - Conditional effects (e.g., "If X, draw a card")
+ * Logic:
+ * - For Set 1 and Set 2: Relaxed validation (allow all successfully parsed abilities)
+ * - For other sets: Strict validation (keywords or simple draw only)
  *
  * @param card - The canonical card to check
- * @returns true if all abilities are successfully parsed keywords or simple draw actions/triggers
+ * @returns true if all abilities are successfully parsed and pass validation
  */
 export function isParseableCard(card: CanonicalCard): boolean {
   if (!card.rulesText) return false; // Vanilla cards handled separately
@@ -107,35 +90,47 @@ export function isParseableCard(card: CanonicalCard): boolean {
   const abilityTexts = card.rulesText.split("\n").filter((text) => text.trim());
   if (abilityTexts.length === 0) return false;
 
+  // Check if card is from Set 1
+  const isTargetSet = card.printings.some((p) => p.set === "set1");
+
   return abilityTexts.every((text) => {
     const cleanText = stripReminderText(text);
     const result = parseAbilityText(cleanText);
-    // Must succeed with no warnings
-    if (!result.success || result.warnings?.length) return false;
-    if (!result.ability) return false;
+
+    // Must parse successfully
+    if (!(result.success && result.ability)) return false;
+
+    // For non-target sets, we disallow warnings
+    if (!isTargetSet && result.warnings?.length) return false;
 
     const abilityType = result.ability.ability.type;
 
+    // RELAXED LOGIC (Set 1 & 2)
+    if (isTargetSet) {
+      const validTypes = [
+        "keyword",
+        "activated",
+        "static",
+        "triggered",
+        "action",
+      ];
+      return validTypes.includes(abilityType);
+    }
+
+    // STRICT LOGIC (Other Sets)
     // Allow keywords
     if (abilityType === "keyword") {
       return true;
     }
 
-    // For action abilities, only allow simple draw effects
-    if (abilityType === "action") {
+    // For action/triggered abilities, only allow simple draw effects
+    if (abilityType === "action" || abilityType === "triggered") {
       const effect = result.ability.ability.effect;
       if (!effect) return false;
       return isSimpleDrawEffect(effect);
     }
 
-    // For triggered abilities, only allow simple draw effects
-    if (abilityType === "triggered") {
-      const effect = result.ability.ability.effect;
-      if (!effect) return false;
-      return isSimpleDrawEffect(effect);
-    }
-
-    // Reject all other ability types
+    // Reject all other ability types for strict sets
     return false;
   });
 }

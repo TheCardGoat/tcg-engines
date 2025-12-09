@@ -36,6 +36,9 @@ export const YOUR_CHARACTERS_PATTERN = /\byour characters?\b/i;
 export const ALL_CHARACTERS_PATTERN = /\ball characters?\b/i;
 export const EACH_OPPOSING_CHARACTER_PATTERN = /\beach opposing character\b/i;
 export const ALL_OPPOSING_CHARACTERS_PATTERN = /\ball opposing characters?\b/i;
+export const THE_CHALLENGED_CHARACTER_PATTERN = /\bthe challenged character\b/i;
+export const THE_CHALLENGING_CHARACTER_PATTERN =
+  /\bthe challenging character\b/i;
 
 /**
  * Player target patterns

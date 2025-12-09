@@ -32,6 +32,7 @@ import {
 import {
   BANISH_ALL_PATTERN,
   BANISH_PATTERN,
+  CANT_SING_PATTERN,
   CHOOSE_AND_DISCARD_PATTERN,
   DEAL_DAMAGE_PATTERN,
   DISCARD_PATTERN,
@@ -59,6 +60,7 @@ import {
   LOOK_AT_TOP_PATTERN,
   LOSE_LORE_PATTERN,
   MOVE_TO_LOCATION_PATTERN,
+  PAY_LESS_TO_PLAY_PATTERN,
   PLAY_FROM_DISCARD_PATTERN,
   PUT_DAMAGE_PATTERN,
   PUT_INTO_INKWELL_FACEDOWN_PATTERN,
@@ -80,6 +82,7 @@ import {
   splitOnForEach,
   splitOnIfYouDo,
   splitSequenceSteps,
+  THIS_CHARACTER_GETS_STAT_PATTERN,
   YOU_MAY_PUT_INTO_INKWELL_PATTERN,
 } from "../patterns/effects";
 import { parseCondition } from "./condition-parser";
@@ -802,6 +805,109 @@ function parseAtomicEffect(text: string): Effect | undefined {
       amount,
       target,
     };
+  }
+
+  // Try cost reduction effect
+  const payLessMatch = text.match(PAY_LESS_TO_PLAY_PATTERN);
+  if (payLessMatch) {
+    const amount = parseNumericValue(payLessMatch[1]);
+    const targetText = payLessMatch[2];
+
+    // Determine target (simplistic for now)
+    let target: any = "SELF";
+    if (targetText.includes("next action")) target = "NEXT_ACTION";
+    if (targetText.includes("next character")) target = "NEXT_CHARACTER";
+    if (targetText.includes("next item")) target = "NEXT_ITEM";
+    if (targetText.includes("Broom characters"))
+      target = "YOUR_BROOM_CHARACTERS";
+
+    return {
+      type: "cost-reduction",
+      amount,
+      target,
+    } as any;
+  }
+
+  // Try keyword granting effect
+  const grantMatch = text.match(GRANT_KEYWORD_PATTERN);
+  if (grantMatch) {
+    const keywordRaw = grantMatch[1];
+    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+
+    // Parse keyword value if present
+    let keyword = keywordRaw;
+    let value: number | undefined;
+
+    // Handle parameterized keywords
+    if (keywordRaw.includes("Challenger")) {
+      keyword = "Challenger";
+      const match = keywordRaw.match(/Challenger \+(\d+)/);
+      if (match) value = Number.parseInt(match[1], 10);
+    } else if (keywordRaw.includes("Resist")) {
+      keyword = "Resist";
+      const match = keywordRaw.match(/Resist \+(\d+)/);
+      if (match) value = Number.parseInt(match[1], 10);
+    }
+
+    return {
+      type: "gain-keyword",
+      keyword,
+      value,
+      target,
+      duration: "turn",
+    } as any;
+  }
+
+  // Try stat modification effect
+  const statMatch = text.match(STAT_MODIFIER_PATTERN);
+  if (statMatch) {
+    const modifier = parseNumericValue(statMatch[1]);
+    const statSymbol = statMatch[2];
+    const stat =
+      statSymbol === "S"
+        ? "strength"
+        : statSymbol === "W"
+          ? "willpower"
+          : "lore";
+    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+
+    return {
+      type: "modify-stat",
+      stat,
+      modifier,
+      target,
+      duration: "turn",
+    } as any;
+  }
+
+  // Try self stat modification
+  const selfStatMatch = text.match(THIS_CHARACTER_GETS_STAT_PATTERN);
+  if (selfStatMatch) {
+    const modifier = parseNumericValue(selfStatMatch[1]);
+    const statSymbol = selfStatMatch[2];
+    const stat =
+      statSymbol === "S"
+        ? "strength"
+        : statSymbol === "W"
+          ? "willpower"
+          : "lore";
+
+    return {
+      type: "modify-stat",
+      stat,
+      modifier,
+      target: "SELF",
+      duration: "continuous", // explicit
+    } as any;
+  }
+
+  // Try singer restriction
+  if (CANT_SING_PATTERN.test(text)) {
+    return {
+      type: "restriction",
+      restriction: "cant-sing",
+      target: "SELF",
+    } as any;
   }
 
   // Try exert effect

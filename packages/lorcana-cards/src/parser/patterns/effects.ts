@@ -125,7 +125,7 @@ export const SEARCH_AND_SHUFFLE_PATTERN =
 export const PUT_INTO_INKWELL_PATTERN =
   /[Pp]ut (?:the top card of your deck|a card from your hand|(?:chosen )?(?:character|item|location)) into (?:your|their) inkwell/;
 export const PUT_INTO_INKWELL_FACEDOWN_PATTERN =
-  /[Pp]ut (?:the top card of your deck|a card from your hand) into (?:your|their) inkwell (?:facedown|face ?down)/;
+  /[Pp]ut (?:the top card of your deck|a card from your hand|chosen opposing character) into (?:your|their) inkwell (?:facedown|face ?down)(?: and exerted)?/;
 export const YOU_MAY_PUT_INTO_INKWELL_PATTERN =
   /\byou may\b.*?\bput a card from your hand into your inkwell\b/i;
 
@@ -211,6 +211,25 @@ export const CHARACTERS_GET_STAT_WHILE_HERE_PATTERN =
  * Special ability grant pattern for "can challenge ready characters"
  */
 export const CAN_CHALLENGE_READY_PATTERN = /[Cc]an challenge ready characters?/;
+
+/**
+ * Cost reduction patterns
+ * Supports "You pay X {I} less to play..."
+ */
+export const PAY_LESS_TO_PLAY_PATTERN =
+  /[Yy]ou pay (\d+|\{d\})\s*\{I\} less (?:to play|for) (.*?)(?: this turn)?(?:\.)?$/;
+
+/**
+ * Self stat modification pattern
+ * Supports "This character gets +X {S/W/L}..."
+ */
+export const THIS_CHARACTER_GETS_STAT_PATTERN =
+  /[Tt]his character gets ([+-]?\d+|[+-]?\{d\}) \{([SWL])\}/;
+
+/**
+ * Singer restriction pattern
+ */
+export const CANT_SING_PATTERN = /[Cc]an'?t \{E\} to sing/;
 
 /**
  * Optional effect patterns
