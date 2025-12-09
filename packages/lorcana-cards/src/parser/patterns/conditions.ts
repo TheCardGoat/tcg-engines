@@ -24,18 +24,21 @@ export const IF_YOU_HAVE_FLOODBORN_PATTERN =
  * Item existence patterns
  */
 export const IF_YOU_HAVE_ITEMS_PATTERN =
-  /\bif you have (\d+) or more items?\b/i;
-export const IF_YOU_HAVE_AN_ITEM_PATTERN = /\bif you have (?:an? )?item\b/i;
+  /\b(?:if|while) you have (\d+) or more items?\b/i;
+export const IF_YOU_HAVE_AN_ITEM_PATTERN =
+  /\b(?:if|while) you have (?:an? )?item\b/i;
 
 /**
  * Resource condition patterns
  */
 export const IF_NO_CARDS_IN_HAND_PATTERN =
-  /\bif you have no cards in (?:your )?hand\b/i;
+  /\b(?:if|while) you have no cards in (?:your )?hand\b/i;
 export const IF_CARDS_IN_HAND_PATTERN =
-  /\bif you have (\d+) or (?:more|fewer) cards in (?:your )?hand\b/i;
+  /\b(?:if|while) you have (\d+) or (?:more|fewer) cards in (?:your )?hand\b/i;
 export const IF_CHARACTERS_IN_PLAY_PATTERN =
-  /\bif you have (\d+) or more characters in play\b/i;
+  /\b(?:if|while) you have (\d+) or more characters in play\b/i;
+export const IF_CARDS_IN_INKWELL_PATTERN =
+  /\b(?:if|while) you have (\d+) or more cards in (?:your )?inkwell\b/i;
 
 /**
  * State condition patterns - "if this character has..."
@@ -109,7 +112,8 @@ export function hasResourceCondition(text: string): boolean {
   return (
     IF_NO_CARDS_IN_HAND_PATTERN.test(text) ||
     IF_CARDS_IN_HAND_PATTERN.test(text) ||
-    IF_CHARACTERS_IN_PLAY_PATTERN.test(text)
+    IF_CHARACTERS_IN_PLAY_PATTERN.test(text) ||
+    IF_CARDS_IN_INKWELL_PATTERN.test(text)
   );
 }
 

@@ -72,7 +72,7 @@ export const READY_PATTERN =
  * Now supports "Banish all X" for items, characters, and locations
  */
 export const BANISH_PATTERN =
-  /[Bb]anish (?:chosen )?(?:opposing )?(?:damaged )?(?:all )?(?:character|item|location)s?/;
+  /[Bb]anish (?:chosen )?(?:opposing )?(?:damaged )?(?:all )?(?:the challenging |challenging )?(?:character|item|location)s?/;
 export const BANISH_ALL_PATTERN =
   /[Bb]anish all (?:opposing )?(?:character|item|location)s/;
 
@@ -80,7 +80,7 @@ export const BANISH_ALL_PATTERN =
  * Return to hand effect patterns
  */
 export const RETURN_TO_HAND_PATTERN =
-  /[Rr]eturn (?:chosen )?(?:opposing )?(?:character|item|location) to (?:their|its|your) player'?s? hand/;
+  /[Rr]eturn (?:chosen )?(?:opposing )?(?:character|item|location|that card|this card) to (?:their|its|your) (?:player'?s? )?hand/;
 
 /**
  * Return from discard effect patterns
@@ -108,9 +108,9 @@ export const GRANT_KEYWORD_PATTERN =
  * Look at cards patterns
  */
 export const LOOK_AT_TOP_PATTERN =
-  /[Ll]ook at the top (\d+) cards? of (?:your|their) deck/;
+  /[Ll]ook at the top (?:(\d+) cards?|card) of (?:your|their) deck/;
 export const LOOK_AT_CARDS_FULL_PATTERN =
-  /[Ll]ook at the top (\d+) cards? of (?:your|their) deck(?:\.|,)?\s*(?:[Pp]ut (?:(\d+)|one) (?:of them )?(?:into your hand|on (?:the )?(?:top|bottom)))?/;
+  /^[Ll]ook at the top (?:(\d+) cards?|card) of (?:your|their) deck(?:\.|,)?\s*(?:[Pp]ut (?:(\d+)|one) (?:of them )?(?:into your hand|on (?:the )?(?:top|bottom)))?$/;
 
 /**
  * Look and put/move patterns
@@ -142,9 +142,9 @@ export const SEARCH_AND_SHUFFLE_PATTERN =
  * Put into inkwell patterns
  */
 export const PUT_INTO_INKWELL_PATTERN =
-  /[Pp]ut (?:the top card of your deck|(?:any )?card from your hand|(?:chosen )?(?:character|item|location)) into (?:your|their) inkwell/;
+  /[Pp]ut (?:the top card of your deck|(?:any )?card from your hand|(?:chosen )?(?:character|item|location)|this card|that card) into (?:your|their|their player'?s?) inkwell/;
 export const PUT_INTO_INKWELL_FACEDOWN_PATTERN =
-  /[Pp]ut (?:the top card of your deck|(?:any )?card from your hand|(?:chosen )?(?:opposing )?character) into (?:your|their|their player'?s?) inkwell (?:facedown|face ?down)(?: and exerted)?/;
+  /[Pp]ut (?:the top card of your deck|(?:any )?card from your hand|(?:chosen )?(?:opposing )?(?:character|item|location)|this card|that card) into (?:your|their|their player'?s?) inkwell (?:facedown|face ?down)(?: and exerted)?/;
 export const YOU_MAY_PUT_INTO_INKWELL_PATTERN =
   /\byou may\b.*?\bput a card from your hand into your inkwell\b/i;
 
@@ -201,6 +201,7 @@ export const CHOSEN_LOCATION_PATTERN = /[Cc]hosen (?:opposing )?location/;
 export const CANT_BE_CHALLENGED_PATTERN = /[Cc]an'?t be challenged/;
 export const CANT_CHALLENGE_PATTERN = /[Cc]an(?:'t|not) challenge/;
 export const CANT_QUEST_PATTERN = /[Cc]an'?t quest/;
+export const CANT_READY_PATTERN = /[Cc]an'?t ready/;
 export const CANNOT_PATTERN = /[Cc]annot /;
 
 /**
@@ -289,6 +290,8 @@ export const FOR_EACH_CHARACTER_THAT_SANG_PATTERN =
   /^character that sang(?: this turn)?$/i;
 export const FOR_EACH_DAMAGE_REMOVED_PATTERN =
   /^(?:(\d+) )?damage removed(?: this way)?$/i;
+export const FOR_EACH_LORE_LOST_PATTERN =
+  /^(?:(\d+) )?lore lost(?: this way)?$/i;
 
 /**
  * Repeat effect patterns
@@ -303,7 +306,7 @@ export const REPEAT_UP_TO_PATTERN =
  */
 export const THEN_SEPARATOR = /,\s+then\s+/i;
 export const PERIOD_THEN_SEPARATOR = /\.\s+[Tt]hen,?\s+/;
-export const PERIOD_SEPARATOR = /\.\s+(?![Tt]hey\b)/; // Period followed by space, but not "They"
+export const PERIOD_SEPARATOR = /\.\s+/; // Period followed by space
 export const AND_SEPARATOR =
   /\s+and\s+(?=(?:draw|gain|deal|exert|ready|banish|return))/i; // "and" before effect verbs
 

@@ -17,6 +17,7 @@
 import type { Condition } from "@tcg/lorcana";
 import {
   IF_CARDS_IN_HAND_PATTERN,
+  IF_CARDS_IN_INKWELL_PATTERN,
   IF_CHARACTERS_IN_PLAY_PATTERN,
   IF_NO_CARDS_IN_HAND_PATTERN,
   IF_OPPONENT_HAS_MORE_LORE_PATTERN,
@@ -137,6 +138,21 @@ export function parseCondition(text: string): Condition | undefined {
     };
   }
 
+  const cardsInInkwellMatch = normalizedText.match(IF_CARDS_IN_INKWELL_PATTERN);
+  if (cardsInInkwellMatch) {
+    const count = Number.parseInt(cardsInInkwellMatch[1], 10);
+    const comparison = normalizedText.includes("more")
+      ? "greater-or-equal"
+      : "less-or-equal";
+    return {
+      type: "resource-count",
+      what: "inkwell",
+      controller: "you",
+      comparison,
+      value: count,
+    };
+  }
+
   // State conditions - "if this character has..."
   if (IF_THIS_HAS_DAMAGE_PATTERN.test(normalizedText)) {
     return { type: "has-any-damage" };
@@ -216,12 +232,12 @@ export function parseCondition(text: string): Condition | undefined {
  */
 export function extractConditionText(text: string): string | undefined {
   // Match "if X" or "while X" patterns
-  const ifMatch = text.match(/,?\s+if (.+?)(?:[,.]|$)/i);
+  const ifMatch = text.match(/(?:^|[\s,])if (.+?)(?:[,.]|$)/i);
   if (ifMatch) {
     return ifMatch[1].trim();
   }
 
-  const whileMatch = text.match(/,?\s+while (.+?)(?:[,.]|$)/i);
+  const whileMatch = text.match(/(?:^|[\s,])while (.+?)(?:[,.]|$)/i);
   if (whileMatch) {
     return whileMatch[1].trim();
   }
