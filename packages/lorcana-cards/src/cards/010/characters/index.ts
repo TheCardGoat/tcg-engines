@@ -1,9 +1,6 @@
-export { balooFriendAndGuardian } from "./001-baloo-friend-and-guardian";
 export { headlessManhorseManny } from "./004-headless-manhorse-manny";
 export { higginsUndercoverOfficer } from "./005-higgins-undercover-officer";
-export { rajahDevotedProtector } from "./006-rajah-devoted-protector";
 export { eilonwyPrincessOfLlyr } from "./007-eilonwy-princess-of-llyr";
-export { mrsBeakleyFormerShushAgent } from "./011-mrs-beakley-former-shush-agent";
 export { bagheeraCautiousExplorer } from "./012-bagheera-cautious-explorer";
 export { shantiVillageGirl } from "./013-shanti-village-girl";
 export { sebastianLoyalCrab } from "./016-sebastian-loyal-crab";
@@ -39,8 +36,6 @@ export { scuttleBirdbrained } from "./147-scuttle-birdbrained";
 export { theSultanPlayfulMonarch } from "./151-the-sultan-playful-monarch";
 export { clawhauserDonutDetective } from "./175-clawhauser-donut-detective";
 export { francineEyeingTheEvidence } from "./176-francine-eyeing-the-evidence";
-export { inspectorTezukaResoluteOfficer } from "./177-inspector-tezuka-resolute-officer";
 export { nickWildeDeterminedDetective } from "./178-nick-wilde-determined-detective";
 export { blackHeronRealBadEgg } from "./182-black-heron-real-bad-egg";
 export { mayorWinddancerActorturnedpolitician } from "./188-mayor-winddancer-actor-turned-politician";
-export { theHeadlessHorsemanRelentlessSpirit } from "./194-the-headless-horseman-relentless-spirit";

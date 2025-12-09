@@ -1,6 +1,5 @@
 export { gopherShipsCarpenter } from "./004-gopher-ships-carpenter";
 export { simbaHappygolucky } from "./005-simba-happy-go-lucky";
-export { princeNaveenVigilantFirstMate } from "./009-prince-naveen-vigilant-first-mate";
 export { princeNaveenCarefreeExplorer } from "./010-prince-naveen-carefree-explorer";
 export { montereyJackGoodheartedRanger } from "./013-monterey-jack-good-hearted-ranger";
 export { genieExcitedShipbuilder } from "./038-genie-excited-shipbuilder";

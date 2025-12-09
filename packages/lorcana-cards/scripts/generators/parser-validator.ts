@@ -48,6 +48,28 @@ const COMPLEX_TEXT_PATTERNS = [
   // Multiple triggers in one ability
   /and when.*leaves play/i,
   /and whenever/i,
+
+  // Banish effects that aren't simple (e.g., "banish item, if you do, draw")
+  /banish.*if you do/i,
+  /may banish.*draw/i,
+  /may banish chosen/i,
+
+  // Complex conditions with multiple named characters
+  /if you have characters named/i,
+  /characters named.*and/i,
+
+  // Triggers that aren't standard events (remove damage, challenges damaged)
+  /remove.*damage/i,
+  /challenges.*damaged/i,
+  /challenges a damaged/i,
+
+  // Location-specific triggers
+  /while here/i,
+  /while at/i,
+
+  // Effect targets specific card types with additional conditions
+  /with \d+ \{S\} or more/i,
+  /with Bodyguard/i,
 ];
 
 /**

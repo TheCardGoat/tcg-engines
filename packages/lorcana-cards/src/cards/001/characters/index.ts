@@ -1,11 +1,9 @@
 export { heiheiBoatSnack } from "./007-heihei-boat-snack";
 export { liloMakingAWish } from "./009-lilo-making-a-wish";
-export { maximusPalaceHorse } from "./010-maximus-palace-horse";
 export { minnieMouseBelovedPrincess } from "./013-minnie-mouse-beloved-princess";
 export { mrSmeeLoyalFirstMate } from "./015-mr-smee-loyal-first-mate";
 export { pumbaaFriendlyWarthog } from "./017-pumbaa-friendly-warthog";
 export { sebastianCourtComposer } from "./019-sebastian-court-composer";
-export { simbaProtectiveCub } from "./020-simba-protective-cub";
 export { stitchNewDog } from "./022-stitch-new-dog";
 export { archimedesHighlyEducatedOwl } from "./036-archimedes-highly-educated-owl";
 export { drFacilierCharlatan } from "./038-dr-facilier-charlatan";
