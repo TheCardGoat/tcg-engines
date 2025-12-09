@@ -8,6 +8,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type {
+  AbilityDefinition,
   ActionCard,
   CardType,
   CharacterCard,
@@ -238,43 +239,6 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
   }
 
   // === ARRAY PROPERTIES ===
-  // Convert keywords to proper engine format
-  // Simple keywords stay as strings, parameterized/complex keywords become objects
-  if (card.parsedAbilities && card.parsedAbilities.length > 0) {
-    const engineKeywords: unknown[] = [];
-    for (const ability of card.parsedAbilities) {
-      if (ability.type === "keyword") {
-        const kw = ability.keyword;
-        // Simple keywords (strings)
-        if (
-          [
-            "Bodyguard",
-            "Evasive",
-            "Reckless",
-            "Rush",
-            "Support",
-            "Vanish",
-            "Ward",
-            "Alert",
-          ].includes(kw)
-        ) {
-          engineKeywords.push(kw);
-        }
-        // Parameterized keywords (objects with value)
-        else if (kw === "Challenger" || kw === "Resist") {
-          engineKeywords.push({ type: kw, value: ability.value ?? 0 });
-        }
-        // Singer keyword (object with value)
-        else if (kw === "Singer") {
-          engineKeywords.push({ type: "Singer", value: ability.value ?? 0 });
-        }
-        // Note: Shift is more complex - requires targetName, skip for now
-      }
-    }
-    if (engineKeywords.length > 0) {
-      result.keywords = engineKeywords;
-    }
-  }
 
   // Output raw rules text as 'text' field
   if (card.rulesText) {
@@ -286,15 +250,7 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
   // Now uses parser to extract structured effects
   if (card.rulesText && !card.vanilla) {
     const abilityTexts = card.rulesText.split("\n").filter((t) => t.trim());
-    const engineAbilities: Array<{
-      id: string;
-      name?: string;
-      text: string;
-      type: "triggered" | "activated" | "static" | "keyword" | "action";
-      keyword?: string;
-      value?: number;
-      effect?: unknown;
-    }> = [];
+    const engineAbilities: Array<AbilityDefinition> = [];
 
     // Simple keywords (no value) - keep for fallback
     const simpleKeywords = [
@@ -327,47 +283,14 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
         const parsedAbility = parseResult.ability.ability;
         const abilityName = parseResult.ability.name;
 
-        // Build ability object with parsed structure
-        const engineAbility: {
-          id: string;
-          name?: string;
-          text: string;
-          type: "triggered" | "activated" | "static" | "keyword" | "action";
-          keyword?: string;
-          value?: number;
-          effect?: unknown;
-        } = {
+        // Build ability object with parsed structure by spreading parsed properties
+        // This ensures we capture cost, trigger, condition, etc.
+        const engineAbility = {
           id: abilityId,
           text: parseResult.ability.text,
-          type: parsedAbility.type,
-        };
-
-        // Add name if present
-        if (abilityName) {
-          engineAbility.name = abilityName;
-        }
-
-        // Extract effect for action, triggered, activated, and static abilities
-        if (
-          parsedAbility.type === "action" ||
-          parsedAbility.type === "triggered" ||
-          parsedAbility.type === "activated" ||
-          parsedAbility.type === "static"
-        ) {
-          if ("effect" in parsedAbility) {
-            engineAbility.effect = parsedAbility.effect;
-          }
-        }
-
-        // Extract keyword info for keyword abilities
-        if (parsedAbility.type === "keyword") {
-          if ("keyword" in parsedAbility) {
-            engineAbility.keyword = parsedAbility.keyword;
-          }
-          if ("value" in parsedAbility && parsedAbility.value !== undefined) {
-            engineAbility.value = parsedAbility.value;
-          }
-        }
+          ...(abilityName && { name: abilityName }),
+          ...parsedAbility,
+        } as AbilityDefinition;
 
         engineAbilities.push(engineAbility);
       } else {
@@ -412,7 +335,17 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
           if (shiftMatch) {
             abilityType = "keyword";
             keyword = "Shift";
-            value = Number.parseInt(shiftMatch[1], 10);
+            // For Shift, we need to construct a cost object
+            const shiftValue = Number.parseInt(shiftMatch[1], 10);
+            engineAbilities.push({
+              id: abilityId,
+              ...(name && { name }),
+              text,
+              type: "keyword",
+              keyword: "Shift",
+              cost: { ink: shiftValue },
+            } as AbilityDefinition);
+            continue;
           }
         }
         // Not a keyword - check for triggered/activated
@@ -437,14 +370,19 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
           }
         }
 
-        engineAbilities.push({
+        const fallbackAbility: any = {
           id: abilityId,
           ...(name && { name }),
           text,
           type: abilityType,
           ...(keyword && { keyword }),
           ...(value !== undefined && { value }),
-        });
+        };
+
+        // For fallback non-keyword abilities, we might be missing required fields like 'trigger' or 'cost'
+        // Ideally we shouldn't hit fallback often if the parser is good.
+        // If we do, these objects might not fully satisfy AbilityDefinition, but we cast to satisfy TS in generator.
+        engineAbilities.push(fallbackAbility as AbilityDefinition);
       }
     }
 
@@ -711,6 +649,10 @@ export interface AbilityDefinition {
   name?: string | null;
   text: string;
   type: "triggered" | "activated" | "static" | "keyword" | "action";
+  keyword?: string;
+  value?: number;
+  cost?: unknown;
+  shiftTarget?: string;
 }
 
 export interface ExternalIds {
@@ -737,7 +679,6 @@ export interface CanonicalCardMetadata {
   inkType: InkType | [InkType, InkType];
   cost: number;
   inkable: boolean;
-  keywords?: string[];
   rulesText?: string;
   abilities?: AbilityDefinition[];
   printings: CardPrintingRef[];

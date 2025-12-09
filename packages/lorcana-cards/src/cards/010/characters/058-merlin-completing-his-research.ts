@@ -6,7 +6,9 @@ export const merlinCompletingHisResearch: CharacterCard = {
   name: "Merlin",
   version: "Completing His Research",
   fullName: "Merlin - Completing His Research",
-  inkType: ["amethyst"],
+  inkType: [
+    "amethyst"
+  ],
   franchise: "Sword in the Stone",
   set: "010",
   text: "Boost 2 {I} (Once during your turn, you may pay 2 {I} to put the top card of your deck facedown under this character.)\nLEGACY OF LEARNING When this character is banished in a challenge, if he had a card under him, draw 2 cards.",
@@ -17,7 +19,7 @@ export const merlinCompletingHisResearch: CharacterCard = {
   cardNumber: 58,
   inkable: false,
   externalIds: {
-    ravensburger: "5203ac82e44d01fa635507539a18d68b70569ca4",
+    ravensburger: "5203ac82e44d01fa635507539a18d68b70569ca4"
   },
   abilities: [
     {
@@ -25,7 +27,7 @@ export const merlinCompletingHisResearch: CharacterCard = {
       text: "Boost 2 {I}",
       type: "keyword",
       keyword: "Boost",
-      value: 2,
+      value: 2
     },
     {
       id: "mr7-2",
@@ -35,9 +37,14 @@ export const merlinCompletingHisResearch: CharacterCard = {
       effect: {
         type: "draw",
         amount: 2,
-        target: "CONTROLLER",
-      },
-    },
+        target: "CONTROLLER"
+      }
+    }
   ],
-  classifications: ["Storyborn", "Mentor", "Sorcerer", "Whisper"],
+  classifications: [
+    "Storyborn",
+    "Mentor",
+    "Sorcerer",
+    "Whisper"
+  ]
 };

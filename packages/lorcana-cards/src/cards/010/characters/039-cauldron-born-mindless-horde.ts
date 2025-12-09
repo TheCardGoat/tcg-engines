@@ -6,7 +6,9 @@ export const cauldronBornMindlessHorde: CharacterCard = {
   name: "Cauldron Born",
   version: "Mindless Horde",
   fullName: "Cauldron Born - Mindless Horde",
-  inkType: ["amethyst"],
+  inkType: [
+    "amethyst"
+  ],
   franchise: "Black Cauldron",
   set: "010",
   cost: 5,
@@ -17,7 +19,9 @@ export const cauldronBornMindlessHorde: CharacterCard = {
   inkable: true,
   vanilla: true,
   externalIds: {
-    ravensburger: "15116f4af4d8ab402db06fd4383b20b710e856c7",
+    ravensburger: "15116f4af4d8ab402db06fd4383b20b710e856c7"
   },
-  classifications: ["Storyborn"],
+  classifications: [
+    "Storyborn"
+  ]
 };
