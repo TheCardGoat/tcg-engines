@@ -108,11 +108,9 @@ async function main() {
   console.log("📦 Processing cards...");
   const allCardsRaw = getAllCards(input);
   // Filter to only cards that belong to expansion sets
-  const allCards = allCardsRaw
-    .filter((card) =>
-      card.card_sets.some((setId) => expansionSetIds.has(setId)),
-    )
-    .slice(0, 50); // LIMIT FOR TESTING
+  const allCards = allCardsRaw.filter((card) =>
+    card.card_sets.some((setId) => expansionSetIds.has(setId)),
+  );
   console.log(
     `  Found ${allCards.length} expansion card entries (filtered ${allCardsRaw.length - allCards.length} non-expansion cards)`,
   );
