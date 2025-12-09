@@ -8,6 +8,7 @@ export { rafikiShamanOfTheSavanna } from "./042-rafiki-shaman-of-the-savanna";
 export { tinkerBellFastFlier } from "./043-tinker-bell-fast-flier";
 export { theWalrusGreedyGourmand } from "./046-the-walrus-greedy-gourmand";
 export { scarTempestuousLion } from "./047-scar-tempestuous-lion";
+export { diabloObedientRaven } from "./049-diablo-obedient-raven";
 export { marchHareAbsurdHost } from "./050-march-hare-absurd-host";
 export { magicCarpetAmazingFlier } from "./051-magic-carpet-amazing-flier";
 export { genieWishFulfilled } from "./053-genie-wish-fulfilled";
@@ -31,6 +32,7 @@ export { gadgetHackwrenchPerceptiveMouse } from "./151-gadget-hackwrench-percept
 export { drDelbertDopplerFussyAstronomer } from "./152-dr-delbert-doppler-fussy-astronomer";
 export { yokaiProfessorCallaghan } from "./158-yokai-professor-callaghan";
 export { hiramFlavershamIntriguedInventor } from "./159-hiram-flaversham-intrigued-inventor";
+export { kakamoraPirateChief } from "./172-kakamora-pirate-chief";
 export { kohutTrustedMarine } from "./178-kohut-trusted-marine";
 export { kingHubertPhillipsFather } from "./179-king-hubert-phillips-father";
 export { mrArrowLegacysFirstMate } from "./182-mr-arrow-legacys-first-mate";

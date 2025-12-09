@@ -29,6 +29,7 @@ import { generateCanonicalCards } from "./generators/canonical-generator";
 import { generateCardFiles } from "./generators/file-generator";
 import { createIdMapping } from "./generators/id-generator";
 import {
+  hasSimpleDrawAbility,
   isKeywordOnlyCard,
   isParseableCard,
 } from "./generators/parser-validator";
@@ -180,6 +181,7 @@ async function main() {
   const generatableCards: Record<string, (typeof canonicalCards)[string]> = {};
   let vanillaCount = 0;
   let parseableCount = 0;
+  let simpleDrawCount = 0;
 
   for (const [id, card] of Object.entries(canonicalCards)) {
     if (card.vanilla) {
@@ -188,6 +190,10 @@ async function main() {
     } else if (isParseableCard(card)) {
       generatableCards[id] = card;
       parseableCount++;
+      // Track how many have simple draw abilities (for statistics)
+      if (hasSimpleDrawAbility(card)) {
+        simpleDrawCount++;
+      }
     }
   }
   console.log(
@@ -195,6 +201,16 @@ async function main() {
   );
   console.log(`    - Vanilla: ${vanillaCount}`);
   console.log(`    - Parseable (keywords/actions): ${parseableCount}`);
+  console.log(`    - With simple draw effects: ${simpleDrawCount}`);
+
+  if (simpleDrawCount > 0) {
+    console.log("\n  Cards with simple draw effects:");
+    Object.values(generatableCards).forEach((card) => {
+      if (hasSimpleDrawAbility(card)) {
+        console.log(`    - ${card.fullName || card.name}`);
+      }
+    });
+  }
 
   generateCardFiles(CARDS_OUTPUT_DIR, generatableCards, sets);
 

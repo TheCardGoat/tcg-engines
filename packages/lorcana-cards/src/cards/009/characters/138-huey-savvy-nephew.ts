@@ -1,0 +1,51 @@
+import type { CharacterCard } from "@tcg/lorcana";
+
+export const hueySavvyNephew: CharacterCard = {
+  id: "aka",
+  cardType: "character",
+  name: "Huey",
+  version: "Savvy Nephew",
+  fullName: "Huey - Savvy Nephew",
+  inkType: ["sapphire"],
+  franchise: "Ducktales",
+  set: "009",
+  text: "Support (Whenever this character quests, you may add their {S} to another chosen character’s {S} this turn.)\nTHREE NEPHEWS Whenever this character quests, if you have characters named Dewey and Louie in play, you may draw 3 cards.",
+  cost: 2,
+  strength: 2,
+  willpower: 2,
+  lore: 1,
+  cardNumber: 138,
+  inkable: true,
+  externalIds: {
+    ravensburger: "2612c4d73c23b6a316f7b372373164a6be833e87",
+  },
+  abilities: [
+    {
+      id: "aka-1",
+      text: "Support",
+      type: "keyword",
+      keyword: "Support",
+    },
+    {
+      id: "aka-2",
+      text: "THREE NEPHEWS Whenever this character quests, if you have characters named Dewey and Louie in play, you may draw 3 cards.",
+      name: "THREE NEPHEWS",
+      type: "triggered",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "draw",
+          amount: 3,
+          target: "CONTROLLER",
+        },
+        chooser: "CONTROLLER",
+      },
+    },
+  ],
+  classifications: ["Dreamborn", "Ally"],
+};

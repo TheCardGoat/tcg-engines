@@ -5,6 +5,7 @@ export { mrSnoopsIneptBusinessman } from "./011-mr-snoops-inept-businessman";
 export { orvilleAcePilot } from "./013-orville-ace-pilot";
 export { rollyHungryPup } from "./021-rolly-hungry-pup";
 export { wendyDarlingTalentedSailor } from "./023-wendy-darling-talented-sailor";
+export { chernabogsFollowersCreaturesOfEvil } from "./036-chernabogs-followers-creatures-of-evil";
 export { iagoPrettyPolly } from "./040-iago-pretty-polly";
 export { lenaSabrewingRebelliousTeenager } from "./043-lena-sabrewing-rebellious-teenager";
 export { magicaDeSpellAmbitiousWitch } from "./048-magica-de-spell-ambitious-witch";

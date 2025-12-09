@@ -6,6 +6,7 @@ export { princeEricSeafaringPrince } from "./021-prince-eric-seafaring-prince";
 export { antonioMadrigalAnimalExpert } from "./035-antonio-madrigal-animal-expert";
 export { magicBroomLivelySweeper } from "./049-magic-broom-lively-sweeper";
 export { magicalMaidFeatherDuster } from "./050-magical-maid-feather-duster";
+export { mrsPottsEnchantedTeapot } from "./052-mrs-potts-enchanted-teapot";
 export { picoHelpfulToucan } from "./055-pico-helpful-toucan";
 export { ursulaMadSeaWitch } from "./057-ursula-mad-sea-witch";
 export { gusChampionOfCheese } from "./073-gus-champion-of-cheese";
