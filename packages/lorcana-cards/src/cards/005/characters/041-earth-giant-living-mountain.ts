@@ -22,9 +22,14 @@ export const earthGiantLivingMountain: CharacterCard = {
   abilities: [
     {
       id: "1xh-1",
-      name: "UNEARTHED",
       text: "UNEARTHED When you play this character, each opponent draws a card.",
       type: "triggered",
+      name: "UNEARTHED",
+      effect: {
+        type: "draw",
+        amount: 1,
+        target: "EACH_OPPONENT",
+      },
     },
   ],
   classifications: ["Storyborn", "Ally"],

@@ -22,9 +22,13 @@ export const mrsPottsHeadHousekeeper: CharacterCard = {
   abilities: [
     {
       id: "cpn-1",
-      name: "CLEAN UP",
       text: "CLEAN UP , Banish one of your items — Draw a card.",
-      type: "static",
+      type: "action",
+      effect: {
+        type: "draw",
+        amount: 1,
+        target: "CONTROLLER",
+      },
     },
   ],
   classifications: ["Storyborn", "Ally"],
