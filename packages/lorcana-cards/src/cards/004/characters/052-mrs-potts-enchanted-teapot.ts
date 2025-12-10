@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana";
+
 export const mrsPottsEnchantedTeapot: CharacterCard = {
   id: "1mj",
   cardType: "character",
