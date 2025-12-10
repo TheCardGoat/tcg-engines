@@ -1,6 +1,7 @@
 export { kingStefanNewFather } from "./003-king-stefan-new-father";
 export { trustyLoyalBloodhound } from "./006-trusty-loyal-bloodhound";
 export { suzyMasterSeamstress } from "./008-suzy-master-seamstress";
+export { trampStreetsmartDog } from "./010-tramp-street-smart-dog";
 export { theTroubadourMusicalNarrator } from "./011-the-troubadour-musical-narrator";
 export { boltDependableFriend } from "./018-bolt-dependable-friend";
 export { pascalGardenChameleon } from "./019-pascal-garden-chameleon";

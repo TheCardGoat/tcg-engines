@@ -54,15 +54,34 @@ function main(): void {
       // Find which key matched
       const normalizedFull = normalizeText(card.rulesText.replace(/\n/g, " "));
       const patternFull = normalizeToPattern(normalizedFull);
-      if (patternFull in MANUAL_ENTRIES) {
-        matchedKeys.add(patternFull);
+
+      const strippedFull = stripAllParentheses(
+        card.rulesText.replace(/\n/g, " "),
+      );
+      const patternStrippedFull = normalizeToPattern(
+        normalizeText(strippedFull),
+      );
+
+      if (
+        patternFull in MANUAL_ENTRIES ||
+        patternStrippedFull in MANUAL_ENTRIES
+      ) {
+        matchedKeys.add(
+          patternFull in MANUAL_ENTRIES ? patternFull : patternStrippedFull,
+        );
       } else {
         const lines = card.rulesText.split("\n").filter((l) => l.trim());
         for (const line of lines) {
           const normalized = normalizeText(line.trim());
           const pattern = normalizeToPattern(normalized);
-          if (pattern in MANUAL_ENTRIES) {
-            matchedKeys.add(pattern);
+          // Also check stripped version
+          const stripped = stripAllParentheses(line.trim());
+          const patternStripped = normalizeToPattern(normalizeText(stripped));
+
+          if (pattern in MANUAL_ENTRIES || patternStripped in MANUAL_ENTRIES) {
+            matchedKeys.add(
+              pattern in MANUAL_ENTRIES ? pattern : patternStripped,
+            );
           }
         }
       }

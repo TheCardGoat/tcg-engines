@@ -34,6 +34,7 @@ export { mufasaKingOfThePrideLands } from "./144-mufasa-king-of-the-pride-lands"
 export { flounderVoiceOfReason } from "./147-flounder-voice-of-reason";
 export { auroraTranquilPrincess } from "./154-aurora-tranquil-princess";
 export { auroraRegalPrincess } from "./161-aurora-regal-princess";
+export { scarFinallyKing } from "./175-scar-finally-king";
 export { tianaDiligentWaitress } from "./179-tiana-diligent-waitress";
 export { princeNaveenPennilessRoyal } from "./182-prince-naveen-penniless-royal";
 export { eeyoreOverstuffedDonkey } from "./183-eeyore-overstuffed-donkey";

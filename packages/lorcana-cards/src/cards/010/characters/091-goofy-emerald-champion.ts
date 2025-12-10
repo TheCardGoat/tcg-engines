@@ -1,0 +1,59 @@
+import type { CharacterCard } from "@tcg/lorcana";
+
+export const goofyEmeraldChampion: CharacterCard = {
+  id: "bau",
+  cardType: "character",
+  name: "Goofy",
+  version: "Emerald Champion",
+  fullName: "Goofy - Emerald Champion",
+  inkType: ["emerald"],
+  set: "010",
+  text: "EVEN THE SCORE Whenever one of your other Emerald characters is challenged and banished, banish the challenging character.\nPROVIDE COVER Your other Emerald characters gain Ward. (Opponents can't choose them except to challenge.)",
+  cost: 5,
+  strength: 3,
+  willpower: 5,
+  lore: 2,
+  cardNumber: 91,
+  inkable: false,
+  externalIds: {
+    ravensburger: "28bab6167da4c29d12d6021e7e28f3cf48449adb",
+  },
+  abilities: [
+    {
+      id: "bau-1",
+      text: "EVEN THE SCORE Whenever one of your other Emerald characters is challenged and banished, banish the challenging character.",
+      name: "EVEN THE SCORE",
+      type: "triggered",
+      trigger: {
+        event: "banish-in-challenge",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          excludeSelf: true,
+        },
+        challengeContext: {
+          role: "defender",
+        },
+      },
+      effect: {
+        type: "banish",
+        target: "challenging-character",
+      },
+    },
+    {
+      id: "bau-2",
+      text: "PROVIDE COVER Your other Emerald characters gain Ward.",
+      name: "PROVIDE COVER",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Ward",
+      },
+      affects: {
+        controller: "you",
+        excludeSelf: true,
+      },
+    },
+  ],
+  classifications: ["Dreamborn", "Hero"],
+};

@@ -195,19 +195,38 @@ tcg-engines/
 
 ### Prerequisites
 
-- [Bun](https://bun.sh/) (v1.2.14+) - Fast JavaScript runtime
-- [Node.js](https://nodejs.org/) (v22+ compatible) - Alternative runtime
+- [Bun](https://bun.sh/) (v1.2.18) - **Primary package manager and JavaScript runtime**
+  - This project uses Bun as the package manager (specified in `package.json`)
+  - Bun provides fast package installation, testing, and bundling
+  - Install: `curl -fsSL https://bun.sh/install | bash`
+- [Node.js](https://nodejs.org/) (v24.x) - For compatibility with some tools
+- [fnm](https://github.com/Schniz/fnm) (optional) - Fast Node.js version manager
+  - This repository includes a `.node-version` file for automatic Node.js version switching
+  - If you're using fnm, it will automatically switch to Node.js v24.x when you enter this directory
 - Git - Version control
 
 ### Installation
 
-Clone the repository and install dependencies:
+**Quick Setup (Recommended):**
+
+Run the automated setup script:
+
+```bash
+git clone https://github.com/the-card-goat/tcg-engines.git
+cd tcg-engines
+chmod +x setup.sh
+./setup.sh
+```
+
+**Manual Setup:**
 
 ```bash
 git clone https://github.com/the-card-goat/tcg-engines.git
 cd tcg-engines
 bun install
 ```
+
+**For AI Agents:** See [agents.md](./agents.md) for detailed setup instructions and environment configuration.
 
 ### Quick Start for Framework Users
 
@@ -410,7 +429,11 @@ All code follows strict standards documented in `agent-os/standards/`:
 ## Tech Stack
 
 - **Language**: TypeScript 5.8+
-- **Runtime**: Bun 1.2.14+ (Node.js 18+ compatible)
+- **Package Manager & Runtime**: [Bun](https://bun.sh/) 1.2.18
+  - Fast package installation (30x faster than npm)
+  - Built-in test runner (Jest-compatible)
+  - Built-in bundler
+  - Node.js-compatible runtime
 - **State Management**: Immer 10.0.0+
 - **Validation**: Zod 3.22.0+
 - **RNG**: seedrandom 3.0.5+
