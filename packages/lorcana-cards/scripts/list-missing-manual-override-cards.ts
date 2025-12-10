@@ -47,9 +47,6 @@ function main(): void {
 
       if (patternFull in MANUAL_ENTRIES) {
         matchedKeys.add(patternFull);
-        if (patternFull.includes("NOW IT'S A PARTY")) {
-          console.log("✅ NOW IT'S A PARTY matched!");
-        }
       } else {
         const lines = card.rulesText.split("\n").filter((l) => l.trim());
         for (const line of lines) {

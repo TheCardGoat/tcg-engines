@@ -120,7 +120,7 @@ None
 ### Manual Testing Performed
 1. Ran all helper tests: `bun test packages/engines/core-engine/src/game-engine/engines/gundam/__tests__/helpers/` - All 43 tests pass
 2. Ran full gundam engine test suite: `bun test packages/engines/core-engine/src/game-engine/engines/gundam` - 223 pass, 23 skip, 9 fail (pre-existing failures)
-3. Ran linter: `bunx @biomejs/biome check --fix packages/engines/core-engine/src/game-engine/engines/gundam` - Fixed 5 files, helper files have no issues
+3. Ran linter: `bun x @biomejs/biome check --fix packages/engines/core-engine/src/game-engine/engines/gundam` - Fixed 5 files, helper files have no issues
 4. Ran typecheck: `bun run check-types --filter=@lorcanito/core-engine` - No errors in new helper files
 
 ## User Standards & Preferences Compliance
