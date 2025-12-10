@@ -3,5 +3,5 @@ pre-commit:
   commands:
     biome:
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
-      run: bun node_modules/@biomejs/biome/bin/biome check --write --diagnostic-level=error --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
+      run: npx @biomejs/biome check --write --diagnostic-level=error --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
       stage_fixed: true
