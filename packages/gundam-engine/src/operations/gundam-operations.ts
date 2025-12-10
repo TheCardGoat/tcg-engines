@@ -109,7 +109,7 @@ export type GundamOperations = {
  * // In a move reducer:
  * const ops = createGundamOperations(context);
  * ops.restCard(cardId);
- * ops.addDamage(draft, playerId, 2);
+ * ops.addDamage(cardId, 2);
  * ```
  */
 export function createGundamOperations<TParams>(
