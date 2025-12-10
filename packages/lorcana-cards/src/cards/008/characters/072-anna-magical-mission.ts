@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana";
+
 export const annaMagicalMission: CharacterCard = {
   id: "1w2",
   cardType: "character",
@@ -48,17 +49,13 @@ export const annaMagicalMission: CharacterCard = {
         type: "conditional",
         condition: {
           type: "has-named-character",
-          name: "Elsa",
+          name: "Elsa in play",
           controller: "you",
         },
         then: {
-          type: "optional",
-          effect: {
-            type: "draw",
-            amount: 1,
-            target: "CONTROLLER",
-          },
-          chooser: "CONTROLLER",
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
         },
       },
     },

@@ -6,6 +6,7 @@
  * Uses merged text from Lorcast (which has symbols) and Ravensburger data.
  */
 
+import { resolvePlaceholders } from "../../src/parser/numeric-extractor";
 import { getMergedRulesText } from "../parsers/data-merger";
 import {
   generatePrintingId,
@@ -465,10 +466,22 @@ export function transformToCanonicalCard(
   const baseCard = findBasePrinting(cards);
 
   // Get rules text - prefer Lorcast text (has symbols) if available
+  // Resolve {d} placeholders with actual numbers from original text
   let rulesText: string;
   if (lorcastIndex) {
-    const { text } = getMergedRulesText(baseCard, lorcastIndex);
-    rulesText = text;
+    const { text, originalText } = getMergedRulesText(baseCard, lorcastIndex);
+    // If we have both normalized text (with {d}) and original text (with numbers),
+    // resolve the placeholders
+    if (originalText && originalText.trim() && text.includes("{d}")) {
+      rulesText = resolvePlaceholders(text, originalText);
+      // If resolution failed (patterns don't match), fall back to normalized text
+      if (rulesText === text && text.includes("{d}")) {
+        // Resolution didn't work, use normalized text as-is
+        rulesText = text;
+      }
+    } else {
+      rulesText = text;
+    }
   } else {
     rulesText = cleanRulesText(baseCard.rules_text || "");
   }

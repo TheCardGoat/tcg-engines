@@ -19,7 +19,6 @@ export const princeEricDashingAndBrave: CharacterCard = {
   externalIds: {
     ravensburger: "b003941c689f0757920787101a49607295e99da1",
   },
-
   abilities: [
     {
       id: "1cu-1",

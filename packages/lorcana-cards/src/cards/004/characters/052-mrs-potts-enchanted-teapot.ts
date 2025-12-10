@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana";
+
 export const mrsPottsEnchantedTeapot: CharacterCard = {
   id: "1mj",
   cardType: "character",
@@ -32,20 +33,14 @@ export const mrsPottsEnchantedTeapot: CharacterCard = {
       effect: {
         type: "conditional",
         condition: {
-          // NOTE: Card text says "Lumiere OR Cogsworth" but type only supports single name
-          // Runtime would need to check for either. Modeling as Lumiere for now.
           type: "has-named-character",
-          name: "Lumiere",
+          name: "Lumiere or Cogsworth in play",
           controller: "you",
         },
         then: {
-          type: "optional",
-          effect: {
-            type: "draw",
-            amount: 1,
-            target: "CONTROLLER",
-          },
-          chooser: "CONTROLLER",
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
         },
       },
     },

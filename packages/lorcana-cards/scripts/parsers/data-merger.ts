@@ -40,18 +40,25 @@ function cleanRulesText(text: string): string {
 /**
  * Get merged rules text for a card
  * Uses Lorcast text if available, falls back to cleaned Ravensburger text
+ * Returns both normalized text (with {d} placeholders) and original text (with numbers)
  */
 export function getMergedRulesText(
   card: InputCard,
   lorcastIndex: LorcastTextIndex,
-): { text: string; matched: boolean } {
+): {
+  text: string;
+  originalText?: string;
+  matched: boolean;
+} {
   const setCode = extractSetCodeFromIdentifier(card.card_identifier);
   const cardNumber = extractCardNumberFromIdentifier(card.card_identifier);
+  const originalText = cleanRulesText(card.rules_text || "");
 
   if (!setCode || cardNumber === null) {
     // Can't parse identifier, fall back to Ravensburger
     return {
-      text: cleanRulesText(card.rules_text || ""),
+      text: originalText,
+      originalText: originalText,
       matched: false,
     };
   }
@@ -65,12 +72,18 @@ export function getMergedRulesText(
   );
 
   if (lorcastText) {
-    return { text: lorcastText, matched: true };
+    // Return Lorcast text (normalized with {d}) and original Ravensburger text
+    return {
+      text: lorcastText,
+      originalText: originalText,
+      matched: true,
+    };
   }
 
   // No match found, use cleaned Ravensburger text
   return {
-    text: cleanRulesText(card.rules_text || ""),
+    text: originalText,
+    originalText: originalText,
     matched: false,
   };
 }

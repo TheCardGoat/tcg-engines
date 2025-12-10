@@ -89,6 +89,7 @@ function isActionEffect(text: string): boolean {
     /^Look\s+/i,
     /^Name\s+/i,
     /^Choose\s+/i,
+    /^Chosen\s+/i,
   ];
 
   const startsWithActionVerb = actionVerbs.some((pattern) =>
