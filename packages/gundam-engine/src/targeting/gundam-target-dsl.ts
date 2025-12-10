@@ -160,7 +160,7 @@ export interface GundamContext extends BaseContext {
   /** Reference the attacker in a challenge */
   attacker?: boolean;
 
-  /** Reference the defender in a challenge */
+  /** Reference the defender in a battle */
   defender?: boolean;
 
   /** Reference the previously selected target in an effect chain */
