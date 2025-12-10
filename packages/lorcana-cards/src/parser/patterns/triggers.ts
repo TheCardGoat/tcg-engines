@@ -38,7 +38,8 @@ export const ONCE_PER_TURN_TRIGGER_PATTERN =
 /**
  * Pattern for "During your turn, when" (restriction prefix)
  */
-export const DURING_YOUR_TURN_TRIGGER_PATTERN = /^During your turn,\s+when\s+/i;
+export const DURING_YOUR_TURN_TRIGGER_PATTERN =
+  /^During your turn,\s+(?:when|whenever)\s+/i;
 
 /**
  * Common trigger event patterns

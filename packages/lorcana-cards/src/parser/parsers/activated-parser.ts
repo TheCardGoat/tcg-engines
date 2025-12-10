@@ -30,7 +30,7 @@ export function parseActivatedAbility(text: string): ParseResult {
   const remainingText = extracted?.remainingText || text;
 
   // Split cost from effect by cost separator (-, −, –, or :)
-  const splitMatch = remainingText.match(/^(.+?)\s*[-−–:]\s*(.+)$/);
+  const splitMatch = remainingText.match(/^(.+?)\s*[-−–—:]\s*(.+)$/);
   if (!splitMatch) {
     return {
       success: false,

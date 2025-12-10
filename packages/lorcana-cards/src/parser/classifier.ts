@@ -89,6 +89,7 @@ function isActionEffect(text: string): boolean {
     /^Look\s+/i,
     /^Name\s+/i,
     /^Choose\s+/i,
+    /^Chosen\s+/i,
   ];
 
   const startsWithActionVerb = actionVerbs.some((pattern) =>
@@ -257,7 +258,8 @@ function isLikelyStaticAbility(text: string): boolean {
   // e.g., "This character gets +2 {S}" (without "When" or "Whenever")
   if (
     text.match(/\b(?:gets?|gains?)\s+[+-]\d+\s+\{[SWL]\}/i) &&
-    !text.match(/^(?:When|Whenever|At the)\s+/i)
+    !text.match(/^(?:When|Whenever|At the)\s+/i) &&
+    !text.match(/\bthis turn\b/i)
   ) {
     return true;
   }
@@ -265,7 +267,10 @@ function isLikelyStaticAbility(text: string): boolean {
   // Check for "Chosen X gains/gets" patterns (static targeted modifications)
   // e.g., "Chosen character gains Rush this turn"
   if (
-    text.match(/^Chosen\s+(?:character|item|location)s?\s+(?:gains?|gets?)\s+/i)
+    text.match(
+      /^Chosen\s+(?:character|item|location)s?\s+(?:gains?|gets?)\s+/i,
+    ) &&
+    !text.match(/\bthis turn\b/i)
   ) {
     return true;
   }

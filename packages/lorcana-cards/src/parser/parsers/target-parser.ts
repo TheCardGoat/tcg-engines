@@ -28,6 +28,9 @@ import {
   EACH_PLAYER_PATTERN,
   hasSelfReference,
   OPPONENT_PATTERN,
+  REFERENCED_PATTERNS,
+  THE_CHALLENGED_CHARACTER_PATTERN,
+  THE_CHALLENGING_CHARACTER_PATTERN,
   YOU_PATTERN,
   YOUR_CHARACTERS_PATTERN,
 } from "../patterns/targets";
@@ -71,6 +74,18 @@ export function parseCharacterTarget(
 
   if (hasSelfReference(text)) {
     return "SELF";
+  }
+
+  if (THE_CHALLENGED_CHARACTER_PATTERN.test(text)) {
+    return "THE_CHALLENGED_CHARACTER";
+  }
+
+  if (THE_CHALLENGING_CHARACTER_PATTERN.test(text)) {
+    return "THE_CHALLENGING_CHARACTER";
+  }
+
+  if (REFERENCED_PATTERNS.some((p) => p.test(text))) {
+    return "REFERENCED" as any;
   }
 
   return undefined;

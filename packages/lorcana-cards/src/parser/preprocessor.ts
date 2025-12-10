@@ -11,7 +11,12 @@
  * @returns Normalized text
  */
 export function normalizeText(text: string): string {
-  return text.trim().replace(/\s+/g, " "); // Collapse multiple spaces into one
+  // Normalize quotes and collapse spaces
+  return text
+    .replace(/[\u2018\u2019]/g, "'") // Replace smart single quotes
+    .replace(/[\u201C\u201D]/g, '"') // Replace smart double quotes
+    .trim()
+    .replace(/\s+/g, " ");
 }
 
 /**
