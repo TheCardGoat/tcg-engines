@@ -40,7 +40,7 @@ export const jiminyCricketPinocchiosConscience: CharacterCard = {
         type: "conditional",
         condition: {
           type: "has-named-character",
-          name: "Pinocchio",
+          name: "Pinocchio in play",
           controller: "you",
         },
         then: {

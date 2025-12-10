@@ -20,6 +20,7 @@ export { friendOwlCantankerousNeighbor } from "./144-friend-owl-cantankerous-nei
 export { theMouseQueenRulerOfMousedom } from "./153-the-mouse-queen-ruler-of-mousedom";
 export { wasabiAlwaysPrepared } from "./158-wasabi-always-prepared";
 export { adelaideBonfamillePatronOfTheArts } from "./164-adelaide-bonfamille-patron-of-the-arts";
+export { bernardOverprepared } from "./169-bernard-over-prepared";
 export { jumbaJookibaCriticalScientist } from "./173-jumba-jookiba-critical-scientist";
 export { atitayaFangGeneral } from "./181-atitaya-fang-general";
 export { captainHookForcefulDuelist } from "./186-captain-hook-forceful-duelist";

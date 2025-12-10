@@ -19,7 +19,6 @@ export const herculesUnwaveringDemigod: CharacterCard = {
   externalIds: {
     ravensburger: "d57ba4914c87d36251c93894e3081d6552322ca0",
   },
-
   abilities: [
     {
       id: "1n8-1",
