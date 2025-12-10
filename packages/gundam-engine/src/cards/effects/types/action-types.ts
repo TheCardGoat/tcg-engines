@@ -81,7 +81,7 @@ export type LookAtFollowUp =
   | { action: "put-in-hand"; count?: number }
   | { action: "put-on-top"; count?: number }
   | { action: "put-on-bottom"; count?: number }
-  | { action: "put-in-inkwell"; count?: number };
+  | { action: "put-in-resource-area"; count?: number };
 
 // ============================================================================
 // Card State Actions
