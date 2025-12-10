@@ -282,7 +282,8 @@ export interface PutIntoInkwellEffect {
     | "chosen-character"
     | "this-card"
     | "discard"
-    | "revealed";
+    | "revealed"
+    | CardTarget;
   target?: PlayerTarget;
   cardType?: CardType;
   exerted?: boolean;
@@ -293,7 +294,7 @@ export interface PutIntoInkwellEffect {
  */
 export interface PutUnderEffect {
   type: "put-under";
-  source: "top-of-deck" | "hand";
+  source: "top-of-deck" | "hand" | "discard";
   under: CharacterTarget | LocationTarget | "self";
   cardType?: CardType;
 }
@@ -339,6 +340,15 @@ export interface PlayCardEffect {
   grantsRush?: boolean;
   /** Banish at end of turn */
   banishAtEndOfTurn?: boolean;
+}
+
+/**
+ * Enable playing from under a card
+ */
+export interface EnablePlayFromUnderEffect {
+  type: "enable-play-from-under";
+  cardType?: CardType | "song" | "floodborn";
+  duration?: EffectDuration;
 }
 
 // ============================================================================
@@ -391,7 +401,8 @@ export type EffectDuration =
   | "until-start-of-next-turn"
   | "until-end-of-turn"
   | "permanent"
-  | "while-condition"; // Used with static abilities
+  | "while-condition"
+  | "next-play-this-turn"; // Used with static abilities
 
 // ============================================================================
 // Keyword Effects
@@ -478,7 +489,7 @@ export interface GrantAbilityEffect {
  */
 export interface CostReductionEffect {
   type: "cost-reduction";
-  amount: number;
+  amount: Amount;
   cardType?: CardType | "song";
   target?: PlayerTarget; // Who gets the reduction (usually YOU)
   duration?: EffectDuration;
@@ -691,6 +702,7 @@ export type Effect =
   | PutOnBottomEffect
   // Play Card
   | PlayCardEffect
+  | EnablePlayFromUnderEffect
   // Location Movement
   | MoveToLocationEffect
   // Stat Modification

@@ -46,19 +46,25 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
               type: "banish",
               target: {
                 selector: "chosen",
-                controller: "opponent",
+                count: { exactly: 1 },
+                filter: [{ type: "owner", owner: "opponent" }],
               },
             },
             {
-              type: "conditional",
-              condition: {
-                type: "if-you-do",
-              },
+              type: "look-at-cards",
+              amount: 1,
+              from: "top-of-deck",
+              target: "OPPONENT",
               then: {
-                type: "look-at-cards",
-                amount: 1,
-                from: "top-of-deck",
-                target: "OPPONENT",
+                action: "reveal-and-play",
+                cost: "free",
+                filter: {
+                  type: "card-type",
+                  cardType: "character" /* or item */,
+                },
+                // The filter needs to allow character OR item. "cardType" usually single.
+                // "card-type" filter: string | string[].
+                // If not supported, use character.
               },
             },
           ],

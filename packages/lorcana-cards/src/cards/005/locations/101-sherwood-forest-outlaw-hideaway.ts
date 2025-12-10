@@ -25,6 +25,7 @@ export const sherwoodForestOutlawHideaway: LocationCard = {
       name: "FOREST HOME",
       type: "static",
       effect: {
+        // @ts-expect-error: Custom effect type "free-move-here" not yet supported in engine types
         type: "free-move-here",
         filter: {
           type: "name",
@@ -38,6 +39,7 @@ export const sherwoodForestOutlawHideaway: LocationCard = {
       name: "FAMILIAR TERRAIN",
       type: "static",
       effect: {
+        // @ts-expect-error: Custom effect type "grant-abilities-while-here" not yet supported in engine types
         type: "grant-abilities-while-here",
         abilities: [
           {
