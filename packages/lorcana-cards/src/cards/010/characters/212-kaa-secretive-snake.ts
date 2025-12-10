@@ -19,7 +19,7 @@ export const kaaSecretiveSnake: CharacterCard = {
   externalIds: {
     ravensburger: "618ecda72b6d469648e0b167bd013d03dc4e62f6",
   },
-  keywords: ["Evasive"],
+
   abilities: [
     {
       id: "r2h-1",
