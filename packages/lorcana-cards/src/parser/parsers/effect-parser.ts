@@ -86,17 +86,19 @@ import { parseCondition } from "./condition-parser";
 import { parseCharacterTarget, parsePlayerTarget } from "./target-parser";
 
 const DEFAULT_CHOSEN_CHARACTER_TARGET: CharacterTarget = {
-  type: "query",
+  selector: "chosen",
   count: 1,
-  controller: "any",
-  zone: "play",
+  owner: "any",
+  zones: ["play"],
+  cardTypes: ["character"],
 };
 
 const DEFAULT_ALL_CHARACTERS_TARGET: CharacterTarget = {
-  type: "query",
+  selector: "all",
   count: "all",
-  controller: "any",
-  zone: "play",
+  owner: "any",
+  zones: ["play"],
+  cardTypes: ["character"],
 };
 
 /**

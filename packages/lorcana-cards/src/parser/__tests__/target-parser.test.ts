@@ -3,7 +3,6 @@
  *
  * Verifies that target phrases are correctly parsed into the Target DSL.
  */
-
 import { describe, expect, it } from "bun:test";
 import {
   parseCharacterTarget,
@@ -16,10 +15,11 @@ describe("Target Parser", () => {
     it("should parse 'chosen character'", () => {
       const result = parseCharacterTarget("Deal damage to chosen character");
       expect(result).toEqual({
-        type: "query",
+        selector: "chosen",
         count: 1,
-        controller: "any",
-        zone: "play",
+        owner: "any",
+        zones: ["play"],
+        cardTypes: ["character"],
       });
     });
 
@@ -28,60 +28,66 @@ describe("Target Parser", () => {
         "Banishing chosen opposing character",
       );
       expect(result).toEqual({
-        type: "query",
+        selector: "chosen",
         count: 1,
-        controller: "opponent",
-        zone: "play",
+        owner: "opponent",
+        zones: ["play"],
+        cardTypes: ["character"],
       });
     });
 
     it("should parse 'chosen character of yours'", () => {
       const result = parseCharacterTarget("Heal chosen character of yours");
       expect(result).toEqual({
-        type: "query",
+        selector: "chosen",
         count: 1,
-        controller: "you",
-        zone: "play",
+        owner: "you",
+        zones: ["play"],
+        cardTypes: ["character"],
       });
     });
 
     it("should parse 'all characters'", () => {
       const result = parseCharacterTarget("Damage all characters");
       expect(result).toEqual({
-        type: "query",
+        selector: "all",
         count: "all",
-        controller: "any",
-        zone: "play",
+        owner: "any",
+        zones: ["play"],
+        cardTypes: ["character"],
       });
     });
 
     it("should parse 'all opposing characters'", () => {
       const result = parseCharacterTarget("Damage all opposing characters");
       expect(result).toEqual({
-        type: "query",
+        selector: "all",
         count: "all",
-        controller: "opponent",
-        zone: "play",
+        owner: "opponent",
+        zones: ["play"],
+        cardTypes: ["character"],
       });
     });
 
     it("should parse 'each opposing character'", () => {
       const result = parseCharacterTarget("Damage each opposing character");
       expect(result).toEqual({
-        type: "query",
+        selector: "all",
         count: "all",
-        controller: "opponent",
-        zone: "play",
+        owner: "opponent",
+        zones: ["play"],
+        cardTypes: ["character"],
       });
     });
 
     it("should parse 'your characters'", () => {
       const result = parseCharacterTarget("Your characters get +1 lore");
       expect(result).toEqual({
-        type: "query",
+        selector: "all",
         count: "all",
-        controller: "you",
-        zone: "play",
+        owner: "you",
+        zones: ["play"],
+        cardTypes: ["character"],
       });
     });
   });
@@ -90,9 +96,11 @@ describe("Target Parser", () => {
     it("should parse 'chosen item'", () => {
       const result = parseItemTarget("Banish chosen item");
       expect(result).toEqual({
-        type: "query",
+        selector: "chosen",
         count: 1,
-        controller: "any",
+        owner: "any",
+        zones: ["play"],
+        cardTypes: ["item"],
       });
     });
   });
@@ -101,9 +109,11 @@ describe("Target Parser", () => {
     it("should parse 'chosen location'", () => {
       const result = parseLocationTarget("Banish chosen location");
       expect(result).toEqual({
-        type: "query",
+        selector: "chosen",
         count: 1,
-        controller: "any",
+        owner: "any",
+        zones: ["play"],
+        cardTypes: ["location"],
       });
     });
   });

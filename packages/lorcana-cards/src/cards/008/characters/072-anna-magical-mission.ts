@@ -1,5 +1,4 @@
 import type { CharacterCard } from "@tcg/lorcana";
-
 export const annaMagicalMission: CharacterCard = {
   id: "1w2",
   cardType: "character",
