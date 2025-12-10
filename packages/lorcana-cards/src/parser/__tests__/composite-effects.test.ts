@@ -55,10 +55,10 @@ describe("Composite Effect Parser", () => {
         amount: 2,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
 
@@ -86,10 +86,10 @@ describe("Composite Effect Parser", () => {
         type: "exert",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "opponent",
-          zone: ["play"],
+          zone: "play",
         },
       });
 
@@ -99,10 +99,10 @@ describe("Composite Effect Parser", () => {
         amount: 1,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "opponent",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -166,10 +166,10 @@ describe("Composite Effect Parser", () => {
         type: "exert",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
 
@@ -178,10 +178,10 @@ describe("Composite Effect Parser", () => {
         amount: 2,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -199,10 +199,10 @@ describe("Composite Effect Parser", () => {
         type: "ready",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
 
@@ -273,10 +273,10 @@ describe("Composite Effect Parser", () => {
         amount: 2,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
 
@@ -285,10 +285,10 @@ describe("Composite Effect Parser", () => {
         amount: 2,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -322,10 +322,10 @@ describe("Composite Effect Parser", () => {
         amount: 1,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -356,10 +356,10 @@ describe("Composite Effect Parser", () => {
         type: "banish",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -400,10 +400,10 @@ describe("Composite Effect Parser", () => {
         type: "exert",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
 

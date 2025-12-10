@@ -124,12 +124,8 @@ describe("Simple Draw Effects", () => {
         expect(isParseableCard(card)).toBe(true);
       });
 
-      it("should accept 'Draw a card for each character'", () => {
-        const card = createTestCard({
-          rulesText: "Draw a card for each character you have",
-        });
-        expect(isParseableCard(card)).toBe(true);
-      });
+      // NOTE: "Draw a card for each" is now treated as complex (dynamic amounts)
+      // and rejected in COMPLEX_TEXT_PATTERNS
 
       it("should accept 'Draw a card. Repeat this 3 times'", () => {
         const card = createTestCard({

@@ -120,10 +120,10 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "banish",
         target: {
           type: "query",
-          cardType: "character",
+
           count: "all",
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         }, // Parsed as character target, would need item target type
       });
     });
@@ -135,10 +135,10 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "banish",
         target: {
           type: "query",
-          cardType: "character",
+
           count: "all",
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -150,10 +150,10 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "banish",
         target: {
           type: "query",
-          cardType: "character",
+
           count: "all",
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         }, // Parsed as character target, would need location target type
       });
     });
@@ -165,10 +165,10 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "banish",
         target: {
           type: "query",
-          cardType: "character",
+
           count: "all",
           controller: "opponent",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -182,10 +182,10 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "ready",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -197,10 +197,10 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "ready",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         }, // Parsed as character, would need item target
       });
     });
@@ -212,10 +212,10 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "ready",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         }, // Parsed as character, would need location target
       });
     });
@@ -292,10 +292,10 @@ describe("Action Effects - Task Group 2.5", () => {
         keyword: "Rush",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -309,10 +309,10 @@ describe("Action Effects - Task Group 2.5", () => {
         keyword: "Ward",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -326,10 +326,10 @@ describe("Action Effects - Task Group 2.5", () => {
         keyword: "Evasive",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -346,10 +346,10 @@ describe("Action Effects - Task Group 2.5", () => {
         value: 2,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -364,10 +364,10 @@ describe("Action Effects - Task Group 2.5", () => {
         value: 1,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -384,10 +384,10 @@ describe("Action Effects - Task Group 2.5", () => {
         modifier: 2,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -402,10 +402,10 @@ describe("Action Effects - Task Group 2.5", () => {
         modifier: -1,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -420,10 +420,10 @@ describe("Action Effects - Task Group 2.5", () => {
         modifier: 1,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -438,10 +438,10 @@ describe("Action Effects - Task Group 2.5", () => {
         modifier: -1, // {d} placeholder value (positive)
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -456,10 +456,10 @@ describe("Action Effects - Task Group 2.5", () => {
         modifier: 1, // {d} placeholder value stored positive, negated later
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -474,10 +474,10 @@ describe("Action Effects - Task Group 2.5", () => {
         modifier: -1, // {d} placeholder value (defaults to positive)
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -505,10 +505,10 @@ describe("Action Effects - Task Group 2.5", () => {
         modifier: 3,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "permanent",
       });
@@ -522,10 +522,10 @@ describe("Action Effects - Task Group 2.5", () => {
         keyword: "Rush",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "permanent",
       });

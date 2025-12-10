@@ -7,10 +7,8 @@ export { pascalGardenChameleon } from "./019-pascal-garden-chameleon";
 export { perlaNimbleSeamstress } from "./032-perla-nimble-seamstress";
 export { kodaSmallishBear } from "./034-koda-smallish-bear";
 export { tananaTribalElder } from "./046-tanana-tribal-elder";
-export { treasureGuardianForebodingSentry } from "./047-treasure-guardian-foreboding-sentry";
 export { iagoGiantSpectralParrot } from "./049-iago-giant-spectral-parrot";
 export { teKLavaMonster } from "./058-te-k-lava-monster";
-export { buckyNuttyRascal } from "./060-bucky-nutty-rascal";
 export { painImpudentImp } from "./061-pain-impudent-imp";
 export { rajahGhostlyTiger } from "./062-rajah-ghostly-tiger";
 export { diabloSpitefulRaven } from "./066-diablo-spiteful-raven";
@@ -30,7 +28,6 @@ export { moanaAdventurerOfLandAndSea } from "./156-moana-adventurer-of-land-and-
 export { gaetanMoliereTheMole } from "./158-gaetan-moliere-the-mole";
 export { toulouseArtisticKitten } from "./165-toulouse-artistic-kitten";
 export { robinHoodEyeForDetail } from "./170-robin-hood-eye-for-detail";
-export { jasmineInspiredResearcher } from "./173-jasmine-inspired-researcher";
 export { akelaWolfPackElder } from "./182-akela-wolf-pack-elder";
 export { heiheiRamblingRooster } from "./185-heihei-rambling-rooster";
 export { mufasaRespectedKing } from "./196-mufasa-respected-king";

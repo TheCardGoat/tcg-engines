@@ -49,13 +49,17 @@ export const annaMagicalMission: CharacterCard = {
         type: "conditional",
         condition: {
           type: "has-named-character",
-          name: "Elsa in play",
+          name: "Elsa",
           controller: "you",
         },
         then: {
-          type: "draw",
-          amount: 1,
-          target: "CONTROLLER",
+          type: "optional",
+          effect: {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+          chooser: "CONTROLLER",
         },
       },
     },

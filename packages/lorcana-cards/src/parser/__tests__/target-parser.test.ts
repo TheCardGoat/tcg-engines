@@ -9,7 +9,6 @@ import {
   parseCharacterTarget,
   parseItemTarget,
   parseLocationTarget,
-  parsePlayerTarget,
 } from "../parsers/target-parser";
 
 describe("Target Parser", () => {
@@ -18,10 +17,9 @@ describe("Target Parser", () => {
       const result = parseCharacterTarget("Deal damage to chosen character");
       expect(result).toEqual({
         type: "query",
-        cardType: "character",
         count: 1,
         controller: "any",
-        zone: ["play"],
+        zone: "play",
       });
     });
 
@@ -31,10 +29,9 @@ describe("Target Parser", () => {
       );
       expect(result).toEqual({
         type: "query",
-        cardType: "character",
         count: 1,
         controller: "opponent",
-        zone: ["play"],
+        zone: "play",
       });
     });
 
@@ -42,10 +39,9 @@ describe("Target Parser", () => {
       const result = parseCharacterTarget("Heal chosen character of yours");
       expect(result).toEqual({
         type: "query",
-        cardType: "character",
         count: 1,
         controller: "you",
-        zone: ["play"],
+        zone: "play",
       });
     });
 
@@ -53,10 +49,9 @@ describe("Target Parser", () => {
       const result = parseCharacterTarget("Damage all characters");
       expect(result).toEqual({
         type: "query",
-        cardType: "character",
         count: "all",
         controller: "any",
-        zone: ["play"],
+        zone: "play",
       });
     });
 
@@ -64,10 +59,9 @@ describe("Target Parser", () => {
       const result = parseCharacterTarget("Damage all opposing characters");
       expect(result).toEqual({
         type: "query",
-        cardType: "character",
         count: "all",
         controller: "opponent",
-        zone: ["play"],
+        zone: "play",
       });
     });
 
@@ -75,10 +69,9 @@ describe("Target Parser", () => {
       const result = parseCharacterTarget("Damage each opposing character");
       expect(result).toEqual({
         type: "query",
-        cardType: "character",
         count: "all",
         controller: "opponent",
-        zone: ["play"],
+        zone: "play",
       });
     });
 
@@ -86,10 +79,9 @@ describe("Target Parser", () => {
       const result = parseCharacterTarget("Your characters get +1 lore");
       expect(result).toEqual({
         type: "query",
-        cardType: "character",
         count: "all",
         controller: "you",
-        zone: ["play"],
+        zone: "play",
       });
     });
   });
@@ -99,10 +91,8 @@ describe("Target Parser", () => {
       const result = parseItemTarget("Banish chosen item");
       expect(result).toEqual({
         type: "query",
-        cardType: "item",
         count: 1,
         controller: "any",
-        zone: ["play"],
       });
     });
   });
@@ -112,10 +102,8 @@ describe("Target Parser", () => {
       const result = parseLocationTarget("Banish chosen location");
       expect(result).toEqual({
         type: "query",
-        cardType: "location",
         count: 1,
         controller: "any",
-        zone: ["play"],
       });
     });
   });

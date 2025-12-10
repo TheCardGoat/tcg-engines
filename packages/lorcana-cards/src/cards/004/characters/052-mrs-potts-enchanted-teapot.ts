@@ -33,15 +33,20 @@ export const mrsPottsEnchantedTeapot: CharacterCard = {
       effect: {
         type: "conditional",
         condition: {
+          // NOTE: Card text says "Lumiere OR Cogsworth" but type only supports single name
+          // Runtime would need to check for either. Modeling as Lumiere for now.
           type: "has-named-character",
-          // Note: Need to check for either Lumiere OR Cogsworth - modeling as "or" with first name
           name: "Lumiere",
           controller: "you",
         },
         then: {
-          type: "draw",
-          amount: 1,
-          target: "CONTROLLER",
+          type: "optional",
+          effect: {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+          chooser: "CONTROLLER",
         },
       },
     },

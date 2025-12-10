@@ -50,10 +50,10 @@ describe("For-Each Effects", () => {
           amount: 1,
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
       });
@@ -151,10 +151,10 @@ describe("For-Each Effects", () => {
           amount: 1,
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
       });
@@ -326,10 +326,10 @@ describe("For-Each Effects", () => {
           type: "exert",
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
       });
@@ -347,10 +347,10 @@ describe("For-Each Effects", () => {
           type: "banish",
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
       });
@@ -373,10 +373,10 @@ describe("Repeat Effects", () => {
           amount: 1,
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
       });
@@ -446,10 +446,10 @@ describe("Repeat Effects", () => {
             amount: 2,
             target: {
               type: "query",
-              cardType: "character",
+
               count: 1,
               controller: "any",
-              zone: ["play"],
+              zone: "play",
             },
           },
         },
@@ -469,10 +469,10 @@ describe("Repeat Effects", () => {
           type: "exert",
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
       });
@@ -488,10 +488,10 @@ describe("Repeat Effects", () => {
           type: "ready",
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
       });

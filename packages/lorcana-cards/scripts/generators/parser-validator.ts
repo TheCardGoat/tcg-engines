@@ -70,6 +70,26 @@ const COMPLEX_TEXT_PATTERNS = [
   // Effect targets specific card types with additional conditions
   /with \d+ \{S\} or more/i,
   /with Bodyguard/i,
+
+  // Return to hand/deck as cost for draw
+  /return.*to your hand.*draw/i,
+  /return.*to your deck.*draw/i,
+
+  // Shuffle as cost for draw
+  /shuffle.*into your deck.*draw/i,
+  /shuffle this card.*draw/i,
+
+  // Deal damage as cost for draw
+  /deal.*damage.*to draw/i,
+  /deal \d+ damage.*draw/i,
+  /may deal.*damage.*draw/i,
+
+  // Shift-specific conditions (complex trigger conditions)
+  /if you used Shift/i,
+
+  // For-each draw patterns (dynamic amounts - complex for now)
+  /draw a card for each/i,
+  /draw \d+ cards? for each/i,
 ];
 
 /**

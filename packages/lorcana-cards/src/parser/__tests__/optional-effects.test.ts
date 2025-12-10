@@ -52,10 +52,10 @@ describe("Optional Effect Parser", () => {
           amount: 2,
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
         chooser: "CONTROLLER",
@@ -73,10 +73,10 @@ describe("Optional Effect Parser", () => {
           type: "return-to-hand",
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
         chooser: "CONTROLLER",
@@ -93,10 +93,10 @@ describe("Optional Effect Parser", () => {
           // Note: "item" is currently parsed as CHOSEN_CHARACTER by the BANISH_PATTERN
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
         chooser: "CONTROLLER",
@@ -125,10 +125,10 @@ describe("Optional Effect Parser", () => {
           type: "exert",
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
         chooser: "CONTROLLER",
@@ -144,10 +144,10 @@ describe("Optional Effect Parser", () => {
           type: "ready",
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
         chooser: "CONTROLLER",
@@ -174,10 +174,10 @@ describe("Optional Effect Parser", () => {
           type: "exert",
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
         chooser: "CONTROLLER",
@@ -209,10 +209,10 @@ describe("Optional Effect Parser", () => {
           // Note: "item" is currently parsed as CHOSEN_CHARACTER by the BANISH_PATTERN
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
         chooser: "CONTROLLER",
@@ -243,10 +243,10 @@ describe("Optional Effect Parser", () => {
           amount: 2,
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
         chooser: "CONTROLLER",
@@ -275,10 +275,10 @@ describe("Optional Effect Parser", () => {
           type: "return-to-hand",
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
         chooser: "CONTROLLER",
@@ -308,10 +308,10 @@ describe("Optional Effect Parser", () => {
           type: "exert",
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
         chooser: "CONTROLLER",
@@ -322,10 +322,10 @@ describe("Optional Effect Parser", () => {
         amount: 2,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -396,10 +396,10 @@ describe("Optional Effect Parser", () => {
           amount: 3,
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
         chooser: "CONTROLLER",
@@ -445,10 +445,10 @@ describe("Optional Effect Parser", () => {
         amount: 2,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -520,10 +520,10 @@ describe("Optional Effect Parser", () => {
           type: "exert",
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
         chooser: "CONTROLLER",
@@ -534,10 +534,10 @@ describe("Optional Effect Parser", () => {
         amount: 1,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });

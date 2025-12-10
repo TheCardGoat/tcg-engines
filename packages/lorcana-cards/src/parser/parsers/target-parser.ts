@@ -44,30 +44,27 @@ export function parseCharacterTarget(
   if (CHOSEN_OPPOSING_CHARACTER_PATTERN.test(text)) {
     return {
       type: "query",
-      cardType: "character",
       count: 1,
       controller: "opponent",
-      zone: ["play"],
+      zone: "play",
     };
   }
 
   if (CHOSEN_CHARACTER_OF_YOURS_PATTERN.test(text)) {
     return {
       type: "query",
-      cardType: "character",
       count: 1,
       controller: "you",
-      zone: ["play"],
+      zone: "play",
     };
   }
 
   if (CHOSEN_CHARACTER_PATTERN.test(text)) {
     return {
       type: "query",
-      cardType: "character",
       count: 1,
       controller: "any",
-      zone: ["play"],
+      zone: "play",
     };
   }
 
@@ -77,30 +74,27 @@ export function parseCharacterTarget(
   ) {
     return {
       type: "query",
-      cardType: "character",
       count: "all",
       controller: "opponent",
-      zone: ["play"],
+      zone: "play",
     };
   }
 
   if (YOUR_CHARACTERS_PATTERN.test(text)) {
     return {
       type: "query",
-      cardType: "character",
       count: "all",
       controller: "you",
-      zone: ["play"],
+      zone: "play",
     };
   }
 
   if (ALL_CHARACTERS_PATTERN.test(text)) {
     return {
       type: "query",
-      cardType: "character",
       count: "all",
       controller: "any",
-      zone: ["play"],
+      zone: "play",
     };
   }
 
@@ -121,10 +115,8 @@ export function parseItemTarget(text: string): ItemTarget | undefined {
   if (CHOSEN_ITEM_PATTERN.test(text)) {
     return {
       type: "query",
-      cardType: "item",
       count: 1,
       controller: "any",
-      zone: ["play"],
     };
   }
 
@@ -143,10 +135,8 @@ export function parseLocationTarget(text: string): LocationTarget | undefined {
   if (CHOSEN_LOCATION_PATTERN.test(text)) {
     return {
       type: "query",
-      cardType: "location",
       count: 1,
       controller: "any",
-      zone: ["play"],
     };
   }
 

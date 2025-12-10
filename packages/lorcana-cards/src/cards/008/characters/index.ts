@@ -6,7 +6,6 @@ export { ryderFleetfootedInfiltrator } from "./056-ryder-fleet-footed-infiltrato
 export { bambiPrinceOfTheForest } from "./057-bambi-prince-of-the-forest";
 export { poeDeSpellMagicasBrother } from "./058-poe-de-spell-magicas-brother";
 export { madamMimUpToNoGood } from "./059-madam-mim-up-to-no-good";
-export { magicaDeSpellShadowForm } from "./066-magica-de-spell-shadow-form";
 export { blueFairyGuidingLight } from "./071-blue-fairy-guiding-light";
 export { annaMagicalMission } from "./072-anna-magical-mission";
 export { wilhelminaPackardTheRadioOperator } from "./085-wilhelmina-packard-the-radio-operator";
@@ -21,7 +20,6 @@ export { friendOwlCantankerousNeighbor } from "./144-friend-owl-cantankerous-nei
 export { theMouseQueenRulerOfMousedom } from "./153-the-mouse-queen-ruler-of-mousedom";
 export { wasabiAlwaysPrepared } from "./158-wasabi-always-prepared";
 export { adelaideBonfamillePatronOfTheArts } from "./164-adelaide-bonfamille-patron-of-the-arts";
-export { bernardOverprepared } from "./169-bernard-over-prepared";
 export { jumbaJookibaCriticalScientist } from "./173-jumba-jookiba-critical-scientist";
 export { atitayaFangGeneral } from "./181-atitaya-fang-general";
 export { captainHookForcefulDuelist } from "./186-captain-hook-forceful-duelist";

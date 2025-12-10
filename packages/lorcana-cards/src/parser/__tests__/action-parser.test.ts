@@ -81,10 +81,10 @@ describe("Action Parser", () => {
               amount: 3,
               target: {
                 type: "query",
-                cardType: "character",
+
                 count: 1,
                 controller: "any",
-                zone: ["play"],
+                zone: "play",
               },
             },
           },
@@ -107,10 +107,10 @@ describe("Action Parser", () => {
               amount: 2,
               target: {
                 type: "query",
-                cardType: "character",
+
                 count: "all",
                 controller: "opponent",
-                zone: ["play"],
+                zone: "play",
               },
             },
           },
@@ -146,10 +146,10 @@ describe("Action Parser", () => {
               type: "banish",
               target: {
                 type: "query",
-                cardType: "character",
+
                 count: 1,
                 controller: "any",
-                zone: ["play"],
+                zone: "play",
               },
             },
           },
@@ -229,10 +229,10 @@ describe("Action Parser", () => {
               type: "ready",
               target: {
                 type: "query",
-                cardType: "character",
+
                 count: 1,
                 controller: "any",
-                zone: ["play"],
+                zone: "play",
               },
             },
           },
@@ -266,10 +266,10 @@ describe("Action Parser", () => {
               type: "exert",
               target: {
                 type: "query",
-                cardType: "character",
+
                 count: 1,
                 controller: "opponent",
-                zone: ["play"],
+                zone: "play",
               },
             },
           },
@@ -293,10 +293,10 @@ describe("Action Parser", () => {
               type: "return-to-hand",
               target: {
                 type: "query",
-                cardType: "character",
+
                 count: 1,
                 controller: "any",
-                zone: ["play"],
+                zone: "play",
               },
             },
           },

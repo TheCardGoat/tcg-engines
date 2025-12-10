@@ -87,18 +87,16 @@ import { parseCharacterTarget, parsePlayerTarget } from "./target-parser";
 
 const DEFAULT_CHOSEN_CHARACTER_TARGET: CharacterTarget = {
   type: "query",
-  cardType: "character",
   count: 1,
   controller: "any",
-  zone: ["play"],
+  zone: "play",
 };
 
 const DEFAULT_ALL_CHARACTERS_TARGET: CharacterTarget = {
   type: "query",
-  cardType: "character",
   count: "all",
   controller: "any",
-  zone: ["play"],
+  zone: "play",
 };
 
 /**

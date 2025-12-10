@@ -68,10 +68,10 @@ describe("Effect Parser", () => {
         amount: 3,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -84,10 +84,10 @@ describe("Effect Parser", () => {
         amount: 3,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         upTo: true,
       });
@@ -113,10 +113,10 @@ describe("Effect Parser", () => {
         type: "exert",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -128,10 +128,10 @@ describe("Effect Parser", () => {
         type: "ready",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -147,10 +147,10 @@ describe("Effect Parser", () => {
         modifier: 2,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -165,10 +165,10 @@ describe("Effect Parser", () => {
         modifier: -1,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -304,10 +304,10 @@ describe("Effect Parser", () => {
         type: "shuffle-into-deck",
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         intoDeck: "owner",
       });
@@ -388,10 +388,10 @@ describe("Effect Parser", () => {
         source: "hand",
         under: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -453,10 +453,10 @@ describe("Target Parser", () => {
       const target = parseCharacterTarget("deal 3 damage to chosen character");
       expect(target).toEqual({
         type: "query",
-        cardType: "character",
+
         count: 1,
         controller: "any",
-        zone: ["play"],
+        zone: "play",
       });
     });
 
@@ -464,10 +464,10 @@ describe("Target Parser", () => {
       const target = parseCharacterTarget("exert chosen opposing character");
       expect(target).toEqual({
         type: "query",
-        cardType: "character",
+
         count: 1,
         controller: "opponent",
-        zone: ["play"],
+        zone: "play",
       });
     });
 
@@ -475,10 +475,10 @@ describe("Target Parser", () => {
       const target = parseCharacterTarget("your characters get +1 {S}");
       expect(target).toEqual({
         type: "query",
-        cardType: "character",
+
         count: "all",
         controller: "you",
-        zone: ["play"],
+        zone: "play",
       });
     });
 
@@ -488,10 +488,10 @@ describe("Target Parser", () => {
       );
       expect(target).toEqual({
         type: "query",
-        cardType: "character",
+
         count: "all",
         controller: "opponent",
-        zone: ["play"],
+        zone: "play",
       });
     });
 

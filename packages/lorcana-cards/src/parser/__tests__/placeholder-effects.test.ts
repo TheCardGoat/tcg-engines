@@ -38,10 +38,10 @@ describe("{d} Placeholder Effects", () => {
         amount: -1, // {d} placeholder converted to -1
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -56,10 +56,10 @@ describe("{d} Placeholder Effects", () => {
         amount: -1,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "opponent",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -96,10 +96,10 @@ describe("{d} Placeholder Effects", () => {
         amount: -1, // {d} placeholder converted to -1
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         upTo: false,
       });
@@ -115,10 +115,10 @@ describe("{d} Placeholder Effects", () => {
         amount: -1,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         upTo: true,
       });
@@ -157,10 +157,10 @@ describe("{d} Placeholder Effects", () => {
         modifier: -1, // +{d} placeholder converted to -1
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -175,10 +175,10 @@ describe("{d} Placeholder Effects", () => {
         modifier: -1, // {d} without sign defaults to positive, converted to -1
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -193,10 +193,10 @@ describe("{d} Placeholder Effects", () => {
         modifier: 1, // -{d} stored as positive 1, will be negated at runtime
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -211,10 +211,10 @@ describe("{d} Placeholder Effects", () => {
         modifier: -1,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -229,10 +229,10 @@ describe("{d} Placeholder Effects", () => {
         modifier: -1,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
         duration: "this-turn",
       });
@@ -248,10 +248,10 @@ describe("{d} Placeholder Effects", () => {
         amount: -1, // {d} placeholder converted to -1
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -264,10 +264,10 @@ describe("{d} Placeholder Effects", () => {
         amount: -1,
         target: {
           type: "query",
-          cardType: "character",
+
           count: 1,
           controller: "any",
-          zone: ["play"],
+          zone: "play",
         },
       });
     });
@@ -319,10 +319,10 @@ describe("{d} Placeholder Effects", () => {
           amount: -1,
           target: {
             type: "query",
-            cardType: "character",
+
             count: 1,
             controller: "any",
-            zone: ["play"],
+            zone: "play",
           },
         },
         chooser: "CONTROLLER",
