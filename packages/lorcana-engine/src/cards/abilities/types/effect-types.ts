@@ -304,7 +304,7 @@ export interface PutUnderEffect {
  */
 export interface ShuffleIntoDeckEffect {
   type: "shuffle-into-deck";
-  target: CharacterTarget | ItemTarget | LocationTarget;
+  target: CharacterTarget | ItemTarget | LocationTarget | CardTarget;
   /** Whose deck to shuffle into */
   intoDeck?: "owner" | "controller";
 }

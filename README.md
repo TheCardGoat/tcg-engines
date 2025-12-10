@@ -207,7 +207,7 @@ tcg-engines/
 
 ### Installation
 
-**Quick Setup (Recommended):**
+**Quick Setup (Recommended for macOS/Linux):**
 
 Run the automated setup script:
 
@@ -218,7 +218,7 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-**Manual Setup:**
+**Manual Setup (macOS/Linux):**
 
 ```bash
 git clone https://github.com/the-card-goat/tcg-engines.git
@@ -226,7 +226,38 @@ cd tcg-engines
 bun install
 ```
 
+**Windows Setup:**
+
+The automated setup script (`setup.sh`) is designed for macOS/Linux. On Windows, please follow these steps:
+
+1. **Install Node.js 24.x**
+   - Download from [nodejs.org](https://nodejs.org/) or use a version manager like [fnm for Windows](https://github.com/Schniz/fnm#windows)
+   - Verify: `node -v` should show v24.x
+
+2. **Install Bun**
+   - Use PowerShell: `powershell -c "irm bun.sh/install.ps1 | iex"`
+   - Or download from [bun.sh](https://bun.sh/)
+   - Verify: `bun -v` should show 1.2.18 or later
+
+3. **Install Dependencies**
+   ```bash
+   git clone https://github.com/the-card-goat/tcg-engines.git
+   cd tcg-engines
+   bun install
+   ```
+
 **For AI Agents:** See [agents.md](./agents.md) for detailed setup instructions and environment configuration.
+
+### Troubleshooting
+
+**Common Setup Issues:**
+
+- **fnm not found after installation**: Restart your terminal or manually source your shell config (`source ~/.bashrc` or `source ~/.zshrc`)
+- **Node.js version incorrect**: Run `fnm use 24` (if using fnm) or ensure Node.js 24.x is active
+- **Bun not found after installation**: Restart your terminal or add to PATH: `export PATH="$HOME/.bun/bin:$PATH"`
+- **Package installation fails**: Ensure you're using `bun install` (not npm/yarn/pnpm) and check that `package.json` specifies `"packageManager": "bun@1.2.18"`
+
+For more detailed troubleshooting, see the [Troubleshooting section in agents.md](./agents.md#troubleshooting).
 
 ### Quick Start for Framework Users
 

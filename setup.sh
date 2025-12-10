@@ -1,6 +1,10 @@
 #!/bin/bash
 # System setup script for TCG Engines
 # This script sets up the development environment with all required tools
+#
+# Security Note: This script uses `curl | bash` pattern for convenience.
+# While this is common for development tooling, users should review the
+# installation scripts from fnm and Bun before running if security is a concern.
 
 set -e  # Exit on error
 
@@ -13,6 +17,15 @@ if [[ "$OSTYPE" != "linux-gnu"* && "$OSTYPE" != "darwin"* ]]; then
     exit 1
 fi
 
+# Detect shell configuration file
+if [ -n "$ZSH_VERSION" ]; then
+    SHELL_CONFIG="$HOME/.zshrc"
+elif [ -n "$BASH_VERSION" ]; then
+    SHELL_CONFIG="$HOME/.bashrc"
+else
+    SHELL_CONFIG="$HOME/.profile"
+fi
+
 # Step 1: Install fnm (Fast Node Manager)
 echo "📦 Step 1: Installing fnm (Fast Node Manager)..."
 if command -v fnm &> /dev/null; then
@@ -20,7 +33,7 @@ if command -v fnm &> /dev/null; then
 else
     curl -o- https://fnm.vercel.app/install | bash
     echo "✅ fnm installed successfully"
-    echo "⚠️  Please restart your terminal or run: source ~/.bashrc (or ~/.zshrc)"
+    echo "⚠️  Please restart your terminal or run: source $SHELL_CONFIG"
 fi
 echo ""
 
@@ -46,7 +59,7 @@ echo ""
 # Step 3: Verify Node.js installation
 echo "🔍 Step 3: Verifying Node.js installation..."
 NODE_VERSION=$(node -v 2>/dev/null || echo "")
-if [[ "$NODE_VERSION" == v24* ]]; then
+if [[ "$NODE_VERSION" =~ ^v24\. ]]; then
     echo "✅ Node.js version: $NODE_VERSION"
 else
     echo "⚠️  Node.js version is $NODE_VERSION (expected v24.x)"
@@ -60,11 +73,17 @@ echo ""
 # Step 4: Install Bun
 echo "📦 Step 4: Installing Bun..."
 if command -v bun &> /dev/null; then
-    echo "✅ Bun is already installed: $(bun -v)"
+    BUN_VERSION=$(bun -v)
+    echo "✅ Bun is already installed: $BUN_VERSION"
 else
     curl -fsSL https://bun.sh/install | bash
     echo "✅ Bun installed successfully"
-    echo "⚠️  Please restart your terminal or run: source ~/.bashrc (or ~/.zshrc)"
+    echo "⚠️  Please restart your terminal or run: source $SHELL_CONFIG"
+    
+    # Try to source Bun in current session if possible
+    if [ -f "$HOME/.bun/bin/bun" ]; then
+        export PATH="$HOME/.bun/bin:$PATH"
+    fi
 fi
 echo ""
 
@@ -73,6 +92,12 @@ echo "🔍 Step 5: Verifying Bun installation..."
 if command -v bun &> /dev/null; then
     BUN_VERSION=$(bun -v)
     echo "✅ Bun version: $BUN_VERSION"
+    # Check if version meets minimum requirement
+    if [[ "$BUN_VERSION" =~ ^1\.2\.([0-9]+) ]] && [[ "${BASH_REMATCH[1]}" -ge 18 ]] || [[ "$BUN_VERSION" =~ ^1\.([3-9]|[0-9]{2,}) ]]; then
+        echo "✅ Bun version meets requirement (1.2.18+)"
+    else
+        echo "⚠️  Bun version $BUN_VERSION may be below required 1.2.18"
+    fi
 else
     echo "⚠️  Bun not found in PATH. Please restart your terminal and verify installation."
 fi

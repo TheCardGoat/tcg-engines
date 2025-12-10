@@ -47,8 +47,8 @@ fnm use 24
 
 Verify the installation:
 ```bash
-node -v  # Should print "v24.12.0" or similar v24.x version
-npm -v   # Should print "11.6.2" or similar 11.x version
+node -v  # Should print "v24.x.x" (e.g., v24.12.0)
+npm -v   # Should print "11.x.x" (e.g., 11.6.2)
 ```
 
 **Reference**: https://nodejs.org/en/download
