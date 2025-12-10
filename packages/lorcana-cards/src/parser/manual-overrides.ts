@@ -22,6 +22,7 @@
  * type system extensions.
  */
 
+import { extractNumericValues } from "./numeric-extractor";
 import type { AbilityWithText } from "./types";
 
 /**
@@ -2699,4 +2700,96 @@ export function getManualEntries(text: string): AbilityWithText[] | undefined {
   const entry = MANUAL_ENTRIES[text];
   if (!entry) return undefined;
   return Array.isArray(entry) ? entry : [entry];
+}
+
+/**
+ * Resolve numeric values in a manual override entry using original card text
+ *
+ * This function extracts numeric values from the original card text and:
+ * 1. Replaces `{d}` placeholders in text fields with actual values
+ * 2. Replaces `0` values in numeric fields that correspond to {d} placeholders
+ *
+ * Note: This function uses heuristics to match values to fields. For safety,
+ * it only replaces values when the pattern matches and values are available.
+ *
+ * @param entry - Manual override entry (single or array)
+ * @param originalText - Original card text with actual numbers
+ * @param normalizedText - Normalized text with {d} placeholders (key in MANUAL_ENTRIES)
+ * @returns Resolved entry with actual numeric values, or original entry if resolution fails
+ */
+export function resolveManualOverrideValues(
+  entry: ManualEntry,
+  originalText: string,
+  normalizedText: string,
+): ManualEntry {
+  // Extract numeric values from original text
+  const values = extractNumericValues(originalText, normalizedText);
+
+  // If extraction failed, return entry as-is
+  if (values.length === 0) {
+    return entry;
+  }
+
+  // Deep clone the entry to avoid mutating the original
+  const resolved = JSON.parse(JSON.stringify(entry)) as ManualEntry;
+
+  // Replace {d} in text fields and 0 in numeric fields
+  let valueIndex = 0;
+
+  function replacePlaceholders(obj: any, depth = 0): void {
+    if (typeof obj !== "object" || obj === null) {
+      return;
+    }
+
+    // First, replace {d} in text fields
+    if (typeof obj.text === "string" && obj.text.includes("{d}")) {
+      // Replace {d} placeholders in text
+      obj.text = obj.text.replace(/\{d\}/g, () => {
+        if (valueIndex < values.length) {
+          return values[valueIndex++].toString();
+        }
+        return "{d}";
+      });
+    }
+
+    // Then, handle numeric fields
+    // Common fields that might have placeholders: amount, value, modifier, size, count, ink
+    const numericFields = [
+      "amount",
+      "value",
+      "modifier",
+      "size",
+      "count",
+      "ink",
+    ];
+    for (const field of numericFields) {
+      if (
+        typeof obj[field] === "number" &&
+        obj[field] === 0 &&
+        valueIndex < values.length
+      ) {
+        // Replace 0 with extracted value
+        obj[field] = values[valueIndex++];
+      }
+    }
+
+    // Recursively process nested objects and arrays
+    for (const key in obj) {
+      if (key !== "text" && !numericFields.includes(key)) {
+        if (Array.isArray(obj[key])) {
+          obj[key].forEach((item: any) => replacePlaceholders(item, depth + 1));
+        } else if (typeof obj[key] === "object") {
+          replacePlaceholders(obj[key], depth + 1);
+        }
+      }
+    }
+  }
+
+  if (Array.isArray(resolved)) {
+    resolved.forEach((item) => replacePlaceholders(item));
+  } else {
+    replacePlaceholders(resolved);
+  }
+
+  return resolved;
 }

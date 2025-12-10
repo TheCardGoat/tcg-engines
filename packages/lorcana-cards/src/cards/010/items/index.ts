@@ -1,1 +1,1 @@
-export { juniorWoodchuckGuidebook } from "./066-junior-woodchuck-guidebook";
+export { recoveredPage } from "./030-recovered-page";

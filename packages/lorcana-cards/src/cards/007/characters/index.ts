@@ -14,6 +14,7 @@ export { buckyNuttyRascal } from "./060-bucky-nutty-rascal";
 export { painImpudentImp } from "./061-pain-impudent-imp";
 export { rajahGhostlyTiger } from "./062-rajah-ghostly-tiger";
 export { diabloSpitefulRaven } from "./066-diablo-spiteful-raven";
+export { merlinCleverClairvoyant } from "./067-merlin-clever-clairvoyant";
 export { kashekimAncientRuler } from "./077-kashekim-ancient-ruler";
 export { mufasaAmongTheStars } from "./079-mufasa-among-the-stars";
 export { drizellaSpoiledStepsister } from "./085-drizella-spoiled-stepsister";
