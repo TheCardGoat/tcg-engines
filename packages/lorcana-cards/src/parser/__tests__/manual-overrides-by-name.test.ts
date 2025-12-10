@@ -18,11 +18,11 @@ describe("Manual Overrides by Name", () => {
     ability: {
       type: "static",
       effect: {
-        type: "keyword", // Using a simple type for testing
+        type: "gain-keyword",
         keyword: "Ward",
       },
     },
-  };
+  } as any; // Using 'as any' because test creates a simplified mock entry
 
   it("should look up manual entry by card name", () => {
     // The text passed doesn't match the manual entry text, but the name should trigger the override
