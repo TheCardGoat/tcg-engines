@@ -11,7 +11,9 @@
  * @returns Normalized text
  */
 export function normalizeText(text: string): string {
-  return text.trim().replace(/\s+/g, " "); // Collapse multiple spaces into one
+  // Normalize to NFC (canonical composition) to ensure consistent string representation
+  // This is critical for matching manual overrides where keys might be composed differently than inputs
+  return text.normalize("NFC").trim().replace(/\s+/g, " "); // Collapse multiple spaces into one
 }
 
 /**
