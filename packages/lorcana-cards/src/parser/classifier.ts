@@ -94,7 +94,11 @@ function isActionEffect(text: string): boolean {
   const startsWithActionVerb = actionVerbs.some((pattern) =>
     pattern.test(text),
   );
-  if (!startsWithActionVerb) {
+
+  // Also allow "Chosen player/opponent" actions
+  const startsWithChosenAction = /^Chosen\s+(?:player|opponent)/i.test(text);
+
+  if (!(startsWithActionVerb || startsWithChosenAction)) {
     return false;
   }
 
