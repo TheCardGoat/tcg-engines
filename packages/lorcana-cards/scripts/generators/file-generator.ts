@@ -16,6 +16,13 @@ import type {
   LocationCard,
 } from "@tcg/lorcana";
 import { parseAbilityText } from "../../src/parser";
+import {
+  getManualEntry,
+  resolveManualOverrideValues,
+  tooComplexText,
+} from "../../src/parser/manual-overrides";
+import { normalizeToPattern } from "../../src/parser/numeric-extractor";
+import { normalizeText } from "../../src/parser/preprocessor";
 import type { CanonicalCard, SetDefinition } from "../types";
 
 const CARD_TYPES: CardType[] = ["character", "action", "item", "location"];
@@ -249,140 +256,185 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
   // AbilityDefinition requires: id, text, type (triggered|activated|static|keyword|action)
   // Now uses parser to extract structured effects
   if (card.rulesText && !card.vanilla) {
-    const abilityTexts = card.rulesText.split("\n").filter((t) => t.trim());
     const engineAbilities: Array<AbilityDefinition> = [];
 
-    // Simple keywords (no value) - keep for fallback
-    const simpleKeywords = [
-      "bodyguard",
-      "evasive",
-      "reckless",
-      "rush",
-      "support",
-      "vanish",
-      "ward",
-      "alert",
-    ];
-    // Parameterized keywords (have a +N value) - keep for fallback
-    const parameterizedKeywords = ["challenger", "resist", "singer"];
+    // Check if this card has a manual override entry (complex texts that bypass parsing)
+    // Manual overrides are keyed by normalized text with {d} placeholders, so we need to:
+    // 1. Normalize whitespace
+    // 2. Convert numbers to {d} placeholders
+    const normalizedFullText = normalizeText(
+      card.rulesText.replace(/\n/g, " "),
+    );
+    const patternText = normalizeToPattern(normalizedFullText);
+    const isManualOverride = tooComplexText(patternText);
 
-    for (let i = 0; i < abilityTexts.length; i++) {
-      const rawText = abilityTexts[i].trim();
-      const abilityId = `${card.id}-${i + 1}`;
-
-      // Remove reminder text (parenthetical explanations)
-      // Note: In Lorcana, reminder text always appears in parentheses after keywords/abilities
-      // e.g., "Challenger +2 (While challenging, this character gets +2.)"
-      const text = rawText.replace(/\s*\([^)]*\)/g, "").trim();
-
-      // Try to parse using the ability parser
-      const parseResult = parseAbilityText(text);
-
-      if (parseResult.success && parseResult.ability) {
-        // Parser succeeded - use structured ability
-        const parsedAbility = parseResult.ability.ability;
-        const abilityName = parseResult.ability.name;
-
-        // Build ability object with parsed structure by spreading parsed properties
-        // This ensures we capture cost, trigger, condition, etc.
-        const engineAbility = {
-          id: abilityId,
-          text: parseResult.ability.text,
-          ...(abilityName && { name: abilityName }),
-          ...parsedAbility,
-        } as AbilityDefinition;
-
-        engineAbilities.push(engineAbility);
-      } else {
-        // Parser failed - fall back to simple text-based detection
-        // Try to extract ability name (all caps at start)
-        const namedMatch = text.match(/^([A-Z][A-Z\s]+[A-Z])\s+(.+)$/);
-        const name = namedMatch ? namedMatch[1].trim() : undefined;
-
-        // Determine ability type
-        let abilityType: "triggered" | "activated" | "static" | "keyword" =
-          "static";
-        const lower = text.toLowerCase();
-        let keyword: string | undefined;
-        let value: number | undefined;
-
-        // Check for simple keywords
-        const simpleKeywordMatch = simpleKeywords.find((kw) =>
-          lower.startsWith(kw),
+    if (isManualOverride) {
+      // Get manual override entry (can be single or array)
+      const manualEntry = getManualEntry(patternText);
+      if (manualEntry) {
+        // Resolve numeric values from original card text
+        const resolvedEntry = resolveManualOverrideValues(
+          manualEntry,
+          card.rulesText,
+          patternText,
         );
-        if (simpleKeywordMatch) {
-          abilityType = "keyword";
-          keyword =
-            simpleKeywordMatch.charAt(0).toUpperCase() +
-            simpleKeywordMatch.slice(1);
+
+        // Convert resolved entries to AbilityDefinition format
+        const resolvedAbilities = Array.isArray(resolvedEntry)
+          ? resolvedEntry
+          : [resolvedEntry];
+
+        for (let i = 0; i < resolvedAbilities.length; i++) {
+          const resolvedAbility = resolvedAbilities[i];
+          const abilityId = `${card.id}-${i + 1}`;
+
+          // Build ability object from resolved manual override entry
+          const engineAbility = {
+            id: abilityId,
+            text: resolvedAbility.text,
+            ...(resolvedAbility.name && { name: resolvedAbility.name }),
+            ...resolvedAbility.ability,
+          } as AbilityDefinition;
+
+          engineAbilities.push(engineAbility);
         }
-        // Check for parameterized keywords (e.g., "Challenger +3", "Resist +2", "Singer 5")
-        else if (parameterizedKeywords.some((kw) => lower.startsWith(kw))) {
-          const paramMatch = text.match(
-            /^(Challenger|Resist|Singer)\s*\+?(\d+)/i,
+      }
+    } else {
+      // Not a manual override - use line-by-line parsing
+      const abilityTexts = card.rulesText.split("\n").filter((t) => t.trim());
+
+      // Simple keywords (no value) - keep for fallback
+      const simpleKeywords = [
+        "bodyguard",
+        "evasive",
+        "reckless",
+        "rush",
+        "support",
+        "vanish",
+        "ward",
+        "alert",
+      ];
+      // Parameterized keywords (have a +N value) - keep for fallback
+      const parameterizedKeywords = ["challenger", "resist", "singer"];
+
+      for (let i = 0; i < abilityTexts.length; i++) {
+        const rawText = abilityTexts[i].trim();
+        const abilityId = `${card.id}-${i + 1}`;
+
+        // Remove reminder text (parenthetical explanations)
+        // Note: In Lorcana, reminder text always appears in parentheses after keywords/abilities
+        // e.g., "Challenger +2 (While challenging, this character gets +2.)"
+        const text = rawText.replace(/\s*\([^)]*\)/g, "").trim();
+
+        // Try to parse using the ability parser
+        const parseResult = parseAbilityText(text);
+
+        if (parseResult.success && parseResult.ability) {
+          // Parser succeeded - use structured ability
+          const parsedAbility = parseResult.ability.ability;
+          const abilityName = parseResult.ability.name;
+
+          // Build ability object with parsed structure by spreading parsed properties
+          // This ensures we capture cost, trigger, condition, etc.
+          const engineAbility = {
+            id: abilityId,
+            text: parseResult.ability.text,
+            ...(abilityName && { name: abilityName }),
+            ...parsedAbility,
+          } as AbilityDefinition;
+
+          engineAbilities.push(engineAbility);
+        } else {
+          // Parser failed - fall back to simple text-based detection
+          // Try to extract ability name (all caps at start)
+          const namedMatch = text.match(/^([A-Z][A-Z\s]+[A-Z])\s+(.+)$/);
+          const name = namedMatch ? namedMatch[1].trim() : undefined;
+
+          // Determine ability type
+          let abilityType: "triggered" | "activated" | "static" | "keyword" =
+            "static";
+          const lower = text.toLowerCase();
+          let keyword: string | undefined;
+          let value: number | undefined;
+
+          // Check for simple keywords
+          const simpleKeywordMatch = simpleKeywords.find((kw) =>
+            lower.startsWith(kw),
           );
-          if (paramMatch) {
+          if (simpleKeywordMatch) {
             abilityType = "keyword";
             keyword =
-              paramMatch[1].charAt(0).toUpperCase() +
-              paramMatch[1].slice(1).toLowerCase();
-            value = Number.parseInt(paramMatch[2], 10);
+              simpleKeywordMatch.charAt(0).toUpperCase() +
+              simpleKeywordMatch.slice(1);
           }
-        }
-        // Check for Shift keyword (e.g., "Shift 5")
-        else if (lower.startsWith("shift")) {
-          const shiftMatch = text.match(/^Shift\s+(\d+)/i);
-          if (shiftMatch) {
-            abilityType = "keyword";
-            keyword = "Shift";
-            // For Shift, we need to construct a cost object
-            const shiftValue = Number.parseInt(shiftMatch[1], 10);
-            engineAbilities.push({
-              id: abilityId,
-              ...(name && { name }),
-              text,
-              type: "keyword",
-              keyword: "Shift",
-              cost: { ink: shiftValue },
-            } as AbilityDefinition);
-            continue;
+          // Check for parameterized keywords (e.g., "Challenger +3", "Resist +2", "Singer 5")
+          else if (parameterizedKeywords.some((kw) => lower.startsWith(kw))) {
+            const paramMatch = text.match(
+              /^(Challenger|Resist|Singer)\s*\+?(\d+)/i,
+            );
+            if (paramMatch) {
+              abilityType = "keyword";
+              keyword =
+                paramMatch[1].charAt(0).toUpperCase() +
+                paramMatch[1].slice(1).toLowerCase();
+              value = Number.parseInt(paramMatch[2], 10);
+            }
           }
-        }
-        // Not a keyword - check for triggered/activated
-        else {
-          // Triggered abilities
-          if (
-            lower.includes("whenever") ||
-            lower.includes("when you play") ||
-            lower.includes("when this") ||
-            lower.includes("at the start") ||
-            lower.includes("at the end")
-          ) {
-            abilityType = "triggered";
+          // Check for Shift keyword (e.g., "Shift 5")
+          else if (lower.startsWith("shift")) {
+            const shiftMatch = text.match(/^Shift\s+(\d+)/i);
+            if (shiftMatch) {
+              abilityType = "keyword";
+              keyword = "Shift";
+              // For Shift, we need to construct a cost object
+              const shiftValue = Number.parseInt(shiftMatch[1], 10);
+              engineAbilities.push({
+                id: abilityId,
+                ...(name && { name }),
+                text,
+                type: "keyword",
+                keyword: "Shift",
+                cost: { ink: shiftValue },
+              } as AbilityDefinition);
+              continue;
+            }
           }
-          // Activated abilities (have exert cost)
-          else if (lower.includes("{e}") || lower.includes("⬡")) {
-            abilityType = "activated";
+          // Not a keyword - check for triggered/activated
+          else {
+            // Triggered abilities
+            if (
+              lower.includes("whenever") ||
+              lower.includes("when you play") ||
+              lower.includes("when this") ||
+              lower.includes("at the start") ||
+              lower.includes("at the end")
+            ) {
+              abilityType = "triggered";
+            }
+            // Activated abilities (have exert cost)
+            else if (lower.includes("{e}") || lower.includes("⬡")) {
+              abilityType = "activated";
+            }
+            // For action cards, default to "action" type if no other match
+            else if (card.cardType === "action") {
+              abilityType = "static"; // Keep as static for backwards compatibility in fallback
+            }
           }
-          // For action cards, default to "action" type if no other match
-          else if (card.cardType === "action") {
-            abilityType = "static"; // Keep as static for backwards compatibility in fallback
-          }
-        }
 
-        const fallbackAbility: any = {
-          id: abilityId,
-          ...(name && { name }),
-          text,
-          type: abilityType,
-          ...(keyword && { keyword }),
-          ...(value !== undefined && { value }),
-        };
+          const fallbackAbility: any = {
+            id: abilityId,
+            ...(name && { name }),
+            text,
+            type: abilityType,
+            ...(keyword && { keyword }),
+            ...(value !== undefined && { value }),
+          };
 
-        // For fallback non-keyword abilities, we might be missing required fields like 'trigger' or 'cost'
-        // Ideally we shouldn't hit fallback often if the parser is good.
-        // If we do, these objects might not fully satisfy AbilityDefinition, but we cast to satisfy TS in generator.
-        engineAbilities.push(fallbackAbility as AbilityDefinition);
+          // For fallback non-keyword abilities, we might be missing required fields like 'trigger' or 'cost'
+          // Ideally we shouldn't hit fallback often if the parser is good.
+          // If we do, these objects might not fully satisfy AbilityDefinition, but we cast to satisfy TS in generator.
+          engineAbilities.push(fallbackAbility as AbilityDefinition);
+        }
       }
     }
 

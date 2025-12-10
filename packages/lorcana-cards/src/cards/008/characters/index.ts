@@ -6,6 +6,7 @@ export { ryderFleetfootedInfiltrator } from "./056-ryder-fleet-footed-infiltrato
 export { bambiPrinceOfTheForest } from "./057-bambi-prince-of-the-forest";
 export { poeDeSpellMagicasBrother } from "./058-poe-de-spell-magicas-brother";
 export { madamMimUpToNoGood } from "./059-madam-mim-up-to-no-good";
+export { yzmaOnEdge } from "./068-yzma-on-edge";
 export { blueFairyGuidingLight } from "./071-blue-fairy-guiding-light";
 export { annaMagicalMission } from "./072-anna-magical-mission";
 export { wilhelminaPackardTheRadioOperator } from "./085-wilhelmina-packard-the-radio-operator";

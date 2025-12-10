@@ -37,4 +37,5 @@ export { auroraRegalPrincess } from "./161-aurora-regal-princess";
 export { tianaDiligentWaitress } from "./179-tiana-diligent-waitress";
 export { princeNaveenPennilessRoyal } from "./182-prince-naveen-penniless-royal";
 export { eeyoreOverstuffedDonkey } from "./183-eeyore-overstuffed-donkey";
+export { captainHookCaptainOfTheJollyRoger } from "./190-captain-hook-captain-of-the-jolly-roger";
 export { liShangImperialCaptain } from "./193-li-shang-imperial-captain";

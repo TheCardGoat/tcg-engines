@@ -6,10 +6,10 @@
  * with structured ability definitions.
  */
 
-import { parseAbilityText } from "../../src/parser";
+import { parseAbilityText, parseAbilityTextMulti } from "../../src/parser";
+import { tooComplexText } from "../../src/parser/manual-overrides";
 import { normalizeToPattern } from "../../src/parser/numeric-extractor";
 import { normalizeText } from "../../src/parser/preprocessor";
-import { tooComplexText } from "../../src/parser/manual-overrides";
 import type { AbilityWithText } from "../../src/parser/types";
 import type { CanonicalCard } from "../types";
 
@@ -116,6 +116,14 @@ function stripReminderText(text: string): string {
   // Remove parenthetical content at the end of the text
   // Match: optional space + opening paren + any content + closing paren at end
   return text.replace(/\s*\([^)]*\)\s*$/, "").trim();
+}
+
+/**
+ * Strip all parenthetical content from text (for manual override matching)
+ * This removes all reminder text, not just at the end
+ */
+function stripAllParentheses(text: string): string {
+  return text.replace(/\([^)]*\)/g, "").trim().replace(/\s+/g, " ");
 }
 
 /**
@@ -368,6 +376,40 @@ export function hasSimpleDrawAbility(card: CanonicalCard): boolean {
 
     return false;
   });
+}
+
+/**
+ * Check if a card uses a manual override entry
+ *
+ * Manual override keys can match:
+ * - Full card text (multiple abilities combined)
+ * - Individual ability lines
+ *
+ * @param card - The canonical card to check
+ * @returns true if the card's rulesText matches a manual override entry
+ */
+export function hasManualOverride(card: CanonicalCard): boolean {
+  if (!card.rulesText) return false;
+
+  // First, check the full text (for multi-ability manual overrides)
+  const normalizedFullText = normalizeText(card.rulesText.replace(/\n/g, " "));
+  const patternFullText = normalizeToPattern(normalizedFullText);
+  if (tooComplexText(patternFullText)) {
+    return true;
+  }
+
+  // Also check individual ability lines (for single-ability manual overrides)
+  // Some cards have multiple abilities, and manual overrides might only match one
+  const abilityLines = card.rulesText.split("\n").filter((line) => line.trim());
+  for (const line of abilityLines) {
+    const normalizedLine = normalizeText(line.trim());
+    const patternLine = normalizeToPattern(normalizedLine);
+    if (tooComplexText(patternLine)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 /**
