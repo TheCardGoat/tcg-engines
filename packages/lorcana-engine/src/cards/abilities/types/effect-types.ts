@@ -209,7 +209,7 @@ export interface LoseLoreEffect {
  */
 export interface ExertEffect {
   type: "exert";
-  target: CharacterTarget | ItemTarget;
+  target: CharacterTarget | ItemTarget | LocationTarget;
 }
 
 /**
@@ -219,7 +219,7 @@ export interface ExertEffect {
  */
 export interface ReadyEffect {
   type: "ready";
-  target: CharacterTarget | ItemTarget;
+  target: CharacterTarget | ItemTarget | LocationTarget;
   /** Restriction after readying */
   restriction?: "cant-quest" | "cant-challenge" | "cant-quest-or-challenge";
 }

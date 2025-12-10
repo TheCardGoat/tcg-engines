@@ -4,19 +4,22 @@
  * Parses target phrases from ability text into Target types.
  * Extracts who/what an effect applies to.
  *
- * Returns enum shortcuts for common patterns. Complex patterns
- * can be parsed into full DSL objects when needed.
+ * Returns DSL objects (Query types) for consistent targeting.
  */
 
 import type {
-  CharacterTargetEnum,
-  ItemTargetEnum,
-  LocationTargetEnum,
+  CharacterTarget,
+  ItemTarget,
+  LocationTarget,
   PlayerTarget,
 } from "@tcg/lorcana";
 import {
   ALL_CHARACTERS_PATTERN,
+  ALL_ITEMS_PATTERN,
+  ALL_LOCATIONS_PATTERN,
   ALL_OPPOSING_CHARACTERS_PATTERN,
+  ALL_OPPOSING_ITEMS_PATTERN,
+  ALL_OPPOSING_LOCATIONS_PATTERN,
   CHOSEN_CHARACTER_OF_YOURS_PATTERN,
   CHOSEN_CHARACTER_PATTERN,
   CHOSEN_ITEM_PATTERN,
@@ -36,37 +39,73 @@ import {
  * Parse character target from text
  *
  * @param text - Text containing target phrase
- * @returns Character target enum or undefined if not found
+ * @returns Character target DSL object or undefined if not found
  */
 export function parseCharacterTarget(
   text: string,
-): CharacterTargetEnum | undefined {
+): CharacterTarget | undefined {
   // Check for specific patterns first (most specific to least specific)
   if (CHOSEN_OPPOSING_CHARACTER_PATTERN.test(text)) {
-    return "CHOSEN_OPPOSING_CHARACTER";
+    return {
+      selector: "chosen",
+      count: 1,
+      owner: "opponent",
+      zones: ["play"],
+      cardTypes: ["character"],
+    };
   }
 
   if (CHOSEN_CHARACTER_OF_YOURS_PATTERN.test(text)) {
-    return "CHOSEN_CHARACTER_OF_YOURS";
+    return {
+      selector: "chosen",
+      count: 1,
+      owner: "you",
+      zones: ["play"],
+      cardTypes: ["character"],
+    };
   }
 
   if (CHOSEN_CHARACTER_PATTERN.test(text)) {
-    return "CHOSEN_CHARACTER";
+    return {
+      selector: "chosen",
+      count: 1,
+      owner: "any",
+      zones: ["play"],
+      cardTypes: ["character"],
+    };
   }
 
   if (
     ALL_OPPOSING_CHARACTERS_PATTERN.test(text) ||
     EACH_OPPOSING_CHARACTER_PATTERN.test(text)
   ) {
-    return "ALL_OPPOSING_CHARACTERS";
+    return {
+      selector: "all",
+      count: "all",
+      owner: "opponent",
+      zones: ["play"],
+      cardTypes: ["character"],
+    };
   }
 
   if (YOUR_CHARACTERS_PATTERN.test(text)) {
-    return "YOUR_CHARACTERS";
+    return {
+      selector: "all",
+      count: "all",
+      owner: "you",
+      zones: ["play"],
+      cardTypes: ["character"],
+    };
   }
 
   if (ALL_CHARACTERS_PATTERN.test(text)) {
-    return "ALL_CHARACTERS";
+    return {
+      selector: "all",
+      count: "all",
+      owner: "any",
+      zones: ["play"],
+      cardTypes: ["character"],
+    };
   }
 
   if (hasSelfReference(text)) {
@@ -80,11 +119,37 @@ export function parseCharacterTarget(
  * Parse item target from text
  *
  * @param text - Text containing target phrase
- * @returns Item target enum or undefined if not found
+ * @returns Item target DSL object or undefined if not found
  */
-export function parseItemTarget(text: string): ItemTargetEnum | undefined {
+export function parseItemTarget(text: string): ItemTarget | undefined {
   if (CHOSEN_ITEM_PATTERN.test(text)) {
-    return "CHOSEN_ITEM";
+    return {
+      selector: "chosen",
+      count: 1,
+      owner: "any",
+      zones: ["play"],
+      cardTypes: ["item"],
+    };
+  }
+
+  if (ALL_OPPOSING_ITEMS_PATTERN.test(text)) {
+    return {
+      selector: "all",
+      count: "all",
+      owner: "opponent",
+      zones: ["play"],
+      cardTypes: ["item"],
+    };
+  }
+
+  if (ALL_ITEMS_PATTERN.test(text)) {
+    return {
+      selector: "all",
+      count: "all",
+      owner: "any",
+      zones: ["play"],
+      cardTypes: ["item"],
+    };
   }
 
   // TODO: Add more item patterns as needed
@@ -96,13 +161,37 @@ export function parseItemTarget(text: string): ItemTargetEnum | undefined {
  * Parse location target from text
  *
  * @param text - Text containing target phrase
- * @returns Location target enum or undefined if not found
+ * @returns Location target DSL object or undefined if not found
  */
-export function parseLocationTarget(
-  text: string,
-): LocationTargetEnum | undefined {
+export function parseLocationTarget(text: string): LocationTarget | undefined {
   if (CHOSEN_LOCATION_PATTERN.test(text)) {
-    return "CHOSEN_LOCATION";
+    return {
+      selector: "chosen",
+      count: 1,
+      owner: "any",
+      zones: ["play"],
+      cardTypes: ["location"],
+    };
+  }
+
+  if (ALL_OPPOSING_LOCATIONS_PATTERN.test(text)) {
+    return {
+      selector: "all",
+      count: "all",
+      owner: "opponent",
+      zones: ["play"],
+      cardTypes: ["location"],
+    };
+  }
+
+  if (ALL_LOCATIONS_PATTERN.test(text)) {
+    return {
+      selector: "all",
+      count: "all",
+      owner: "any",
+      zones: ["play"],
+      cardTypes: ["location"],
+    };
   }
 
   // TODO: Add more location patterns as needed
