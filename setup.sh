@@ -145,14 +145,19 @@ echo ""
 
 # Step 5: Verify Bun installation
 echo "🔍 Step 5: Verifying Bun installation..."
-BUN_VERSION=$(bun -v)
-echo "✅ Bun version: $BUN_VERSION"
-
-# Check if version meets minimum requirement
-if [[ "$BUN_VERSION" =~ ^1\.2\.([0-9]+) ]] && [[ "${BASH_REMATCH[1]}" -ge 18 ]] || [[ "$BUN_VERSION" =~ ^1\.([3-9]|[0-9]{2,}) ]]; then
-    echo "✅ Bun version meets requirement (1.2.18+)"
+if command -v bun &> /dev/null; then
+    BUN_VERSION=$(bun -v)
+    echo "✅ Bun version: $BUN_VERSION"
+    
+    # Check if version meets minimum requirement
+    if [[ "$BUN_VERSION" =~ ^1\.2\.([0-9]+) ]] && [[ "${BASH_REMATCH[1]}" -ge 18 ]] || [[ "$BUN_VERSION" =~ ^1\.([3-9]|[0-9]{2,}) ]]; then
+        echo "✅ Bun version meets requirement (1.2.18+)"
+    else
+        echo "⚠️  Bun version $BUN_VERSION may be below required 1.2.18"
+    fi
 else
-    echo "⚠️  Bun version $BUN_VERSION may be below required 1.2.18"
+    echo "❌ ERROR: Bun command not found"
+    exit 1
 fi
 
 # Verify bunx is available
