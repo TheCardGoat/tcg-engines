@@ -123,7 +123,10 @@ function stripReminderText(text: string): string {
  * This removes all reminder text, not just at the end
  */
 function stripAllParentheses(text: string): string {
-  return text.replace(/\([^)]*\)/g, "").trim().replace(/\s+/g, " ");
+  return text
+    .replace(/\([^)]*\)/g, "")
+    .trim()
+    .replace(/\s+/g, " ");
 }
 
 /**
@@ -266,9 +269,12 @@ export function isParseableCard(card: CanonicalCard): boolean {
 
   // First, check if the full text matches a manual override
   // Manual overrides are keyed by normalized text with {d} placeholders, so we need to:
-  // 1. Normalize whitespace
-  // 2. Convert numbers to {d} placeholders
-  const normalizedFullText = normalizeText(card.rulesText.replace(/\n/g, " "));
+  // 1. Strip parentheses (reminder text) - manual override keys don't have reminder text
+  // 2. Normalize whitespace
+  // 3. Convert numbers to {d} placeholders
+  let fullText = card.rulesText.replace(/\n/g, " ");
+  fullText = stripAllParentheses(fullText);
+  const normalizedFullText = normalizeText(fullText);
   const patternFullText = normalizeToPattern(normalizedFullText);
   if (tooComplexText(patternFullText)) {
     // Card has a manual override - consider it parseable
@@ -279,7 +285,10 @@ export function isParseableCard(card: CanonicalCard): boolean {
   // Some cards have multiple abilities, and manual overrides might only match one
   const abilityLines = card.rulesText.split("\n").filter((line) => line.trim());
   for (const line of abilityLines) {
-    const normalizedLine = normalizeText(line.trim());
+    // Strip parentheses first, then normalize
+    let lineText = line.trim();
+    lineText = stripAllParentheses(lineText);
+    const normalizedLine = normalizeText(lineText);
     const patternLine = normalizeToPattern(normalizedLine);
     if (tooComplexText(patternLine)) {
       // At least one ability has a manual override - consider it parseable
@@ -392,7 +401,10 @@ export function hasManualOverride(card: CanonicalCard): boolean {
   if (!card.rulesText) return false;
 
   // First, check the full text (for multi-ability manual overrides)
-  const normalizedFullText = normalizeText(card.rulesText.replace(/\n/g, " "));
+  // Strip parentheses first, then normalize (manual override keys don't have reminder text)
+  let fullText = card.rulesText.replace(/\n/g, " ");
+  fullText = stripAllParentheses(fullText);
+  const normalizedFullText = normalizeText(fullText);
   const patternFullText = normalizeToPattern(normalizedFullText);
   if (tooComplexText(patternFullText)) {
     return true;
@@ -402,7 +414,10 @@ export function hasManualOverride(card: CanonicalCard): boolean {
   // Some cards have multiple abilities, and manual overrides might only match one
   const abilityLines = card.rulesText.split("\n").filter((line) => line.trim());
   for (const line of abilityLines) {
-    const normalizedLine = normalizeText(line.trim());
+    // Strip parentheses first, then normalize
+    let lineText = line.trim();
+    lineText = stripAllParentheses(lineText);
+    const normalizedLine = normalizeText(lineText);
     const patternLine = normalizeToPattern(normalizedLine);
     if (tooComplexText(patternLine)) {
       return true;
@@ -442,38 +457,4 @@ export function parseKeywordAbilities(
   }
 
   return parsed;
-}
-
-/**
- * Check if a card uses a manual override entry
- *
- * Manual override keys can match:
- * - Full card text (multiple abilities combined)
- * - Individual ability lines
- *
- * @param card - The canonical card to check
- * @returns true if the card's rulesText matches a manual override entry
- */
-export function hasManualOverride(card: CanonicalCard): boolean {
-  if (!card.rulesText) return false;
-
-  // First, check the full text (for multi-ability manual overrides)
-  const normalizedFullText = normalizeText(card.rulesText.replace(/\n/g, " "));
-  const patternFullText = normalizeToPattern(normalizedFullText);
-  if (tooComplexText(patternFullText)) {
-    return true;
-  }
-
-  // Also check individual ability lines (for single-ability manual overrides)
-  // Some cards have multiple abilities, and manual overrides might only match one
-  const abilityLines = card.rulesText.split("\n").filter((line) => line.trim());
-  for (const line of abilityLines) {
-    const normalizedLine = normalizeText(line.trim());
-    const patternLine = normalizeToPattern(normalizedLine);
-    if (tooComplexText(patternLine)) {
-      return true;
-    }
-  }
-
-  return false;
 }
