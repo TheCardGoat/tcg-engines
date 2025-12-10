@@ -184,7 +184,7 @@ export type GundamCardType = "unit" | "shield" | "base" | "command";
  * Gundam card target - extends core DSL with Gundam-specific features
  *
  * @example Target a chosen opposing damaged character
- * ```typescript
+ *   cardType: "unit",
  * const target: GundamCardTarget = {
  *   selector: "chosen",
  *   count: 1,
