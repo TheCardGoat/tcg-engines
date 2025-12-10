@@ -19,12 +19,7 @@ export const sisuInHerElement: CharacterCard = {
   externalIds: {
     ravensburger: "0bbeceed403764a29bc21ac53a1d7095e9c56321",
   },
-  keywords: [
-    {
-      type: "Challenger",
-      value: 2,
-    },
-  ],
+
   abilities: [
     {
       id: "39b-1",
