@@ -46,20 +46,15 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
               type: "banish",
               target: {
                 selector: "chosen",
-                controller: "opponent",
+                count: 1,
+                owner: "opponent",
               },
             },
             {
-              type: "conditional",
-              condition: {
-                type: "if-you-do",
-              },
-              then: {
-                type: "look-at-cards",
-                amount: 1,
-                from: "top-of-deck",
-                target: "OPPONENT",
-              },
+              type: "look-at-cards",
+              amount: 1,
+              from: "top-of-deck",
+              target: "OPPONENT",
             },
           ],
         },

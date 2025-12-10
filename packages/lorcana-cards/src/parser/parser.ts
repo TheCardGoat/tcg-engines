@@ -71,8 +71,9 @@ export function parseAbilityText(
   }
 
   // Step 1.5: Check for manual override (complex texts that bypass parsing)
-  if (tooComplexText(normalizedText)) {
-    const manualEntries = getManualEntries(normalizedText);
+  const cardName = options?.cardName;
+  if (tooComplexText(normalizedText, cardName)) {
+    const manualEntries = getManualEntries(normalizedText, cardName);
     if (manualEntries && manualEntries.length > 0) {
       // Return the first ability for single-parse compatibility
       // Use parseAbilityTextMulti for full multi-ability support
@@ -83,7 +84,7 @@ export function parseAbilityText(
     }
     return {
       success: false,
-      error: `Text marked as complex but no manual entry found: "${normalizedText}". Please add an entry to MANUAL_ENTRIES in manual-overrides.ts`,
+      error: `Text marked as complex but no manual entry found: "${normalizedText}"${cardName ? ` (Card: ${cardName})` : ""}. Please add an entry to MANUAL_ENTRIES in manual-overrides.ts`,
     };
   }
 
@@ -184,8 +185,9 @@ export function parseAbilityTextMulti(
   }
 
   // Step 2: Check for manual override (complex texts that bypass parsing)
-  if (tooComplexText(normalizedText)) {
-    const manualEntries = getManualEntries(normalizedText);
+  const cardName = options?.cardName;
+  if (tooComplexText(normalizedText, cardName)) {
+    const manualEntries = getManualEntries(normalizedText, cardName);
     if (manualEntries && manualEntries.length > 0) {
       return {
         success: true,
@@ -195,7 +197,7 @@ export function parseAbilityTextMulti(
     return {
       success: false,
       abilities: [],
-      error: `Text marked as complex but no manual entry found: "${normalizedText}". Please add an entry to MANUAL_ENTRIES in manual-overrides.ts`,
+      error: `Text marked as complex but no manual entry found: "${normalizedText}"${cardName ? ` (Card: ${cardName})` : ""}. Please add an entry to MANUAL_ENTRIES in manual-overrides.ts`,
     };
   }
 

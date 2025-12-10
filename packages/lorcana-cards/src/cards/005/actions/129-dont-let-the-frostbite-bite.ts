@@ -27,7 +27,8 @@ export const dontLetTheFrostbiteBite: ActionCard = {
             type: "ready",
             target: {
               selector: "all",
-              controller: "you",
+              count: "all",
+              filter: [{ type: "owner", owner: "you" }],
             },
           },
           {
@@ -35,7 +36,8 @@ export const dontLetTheFrostbiteBite: ActionCard = {
             restriction: "cant-quest",
             target: {
               selector: "all",
-              controller: "you",
+              count: "all",
+              filter: [{ type: "owner", owner: "you" }],
             },
             duration: "this-turn",
           },

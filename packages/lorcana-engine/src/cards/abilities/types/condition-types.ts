@@ -120,6 +120,14 @@ export interface HasNamedLocationCondition {
   controller: "you" | "opponent" | "any";
 }
 
+export interface HasCharacterHereCondition {
+  type: "has-character-here";
+}
+
+export interface RevealedMatchesNamedCondition {
+  type: "revealed-matches-named";
+}
+
 /**
  * Check if a specific count of locations exists
  */
@@ -510,6 +518,8 @@ export type Condition =
   | FirstThisTurnCondition
   // Zone
   | ZoneCondition
+  | HasCharacterHereCondition
+  | RevealedMatchesNamedCondition
   // Combat Context
   | InChallengeCondition
   // Choice

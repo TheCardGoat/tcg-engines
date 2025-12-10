@@ -17,6 +17,7 @@ export const CLASSIFICATIONS = [
   "Entangled",
   "Fairy",
   "Floodborn",
+  "Gargoyle",
   "Hero",
   "Hunny",
   "Hyena",

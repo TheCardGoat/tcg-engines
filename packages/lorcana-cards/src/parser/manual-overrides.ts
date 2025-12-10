@@ -138,10 +138,10 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #3 - Score: 10.0 - Cost reduction + triggered draw/discard
-  "NOW IT'S A PARTY For each character you have in play, you pay {I} less to play this character. HOW'S PICKINGS? When you play this character, you may draw a card for each other character you have in play, then choose and ddiscard that many cards.":
+  "NOW IT'S A PARTY For each character you have in play, you pay {d} {I} less to play this character. HOW'S PICKINGS? When you play this character, you may draw a card for each other character you have in play, then choose and discard that many cards.":
     manualEntries([
       {
-        text: "NOW IT'S A PARTY For each character you have in play, you pay {I} less to play this character.",
+        text: "NOW IT'S A PARTY For each character you have in play, you pay {d} {I} less to play this character.",
         name: "NOW IT'S A PARTY",
         ability: {
           type: "static",
@@ -152,7 +152,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
         },
       },
       {
-        text: "HOW'S PICKINGS? When you play this character, you may draw a card for each other character you have in play, then choose and ddiscard that many cards.",
+        text: "HOW'S PICKINGS? When you play this character, you may draw a card for each other character you have in play, then choose and discard that many cards.",
         name: "HOW'S PICKINGS?",
         ability: {
           type: "triggered",
@@ -389,9 +389,9 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #10 - Score: 8.5 - Complex triggered with variable draw
-  "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of a chosen Ally character of yours. If you do, choose and discard {d} cards and banish that character.":
+  "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of chosen Ally character of yours. If you do, choose and discard {d} cards and banish that character.":
     manualEntry({
-      text: "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of a chosen Ally character of yours. If you do, choose and discard {d} cards and banish that character.",
+      text: "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of chosen Ally character of yours. If you do, choose and discard {d} cards and banish that character.",
       name: "STICK WITH ME",
       ability: {
         type: "triggered",
@@ -456,9 +456,9 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #12 - Score: 8.5 - Activated with named character buff + conditional
-  "DISPEL THE ENTANGLEMENT Banish this item − Chosen character named Beast gets +{d} {L} this turn. If you have a character named Belle in play, move up to {d} damage counters from chosen character to chosen opposing character.":
+  "DISPEL THE ENTANGLEMENT Banish this item — Chosen character named Beast gets +{d} {L} this turn. If you have a character named Belle in play, move up to {d} damage counters from chosen character to chosen opposing character.":
     manualEntry({
-      text: "DISPEL THE ENTANGLEMENT Banish this item − Chosen character named Beast gets +{d} {L} this turn. If you have a character named Belle in play, move up to {d} damage counters from chosen character to chosen opposing character.",
+      text: "DISPEL THE ENTANGLEMENT Banish this item — Chosen character named Beast gets +{d} {L} this turn. If you have a character named Belle in play, move up to {d} damage counters from chosen character to chosen opposing character.",
       name: "DISPEL THE ENTANGLEMENT",
       ability: {
         type: "activated",
@@ -572,9 +572,9 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #16 - Score: 8.0 - Activated look-at + put-in-hand
-  "FIND WHAT'S HIDDEN {E}, {d} {I} - Look at the top {d} cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.":
+  "FIND WHAT'S HIDDEN {E}, {d} {I} — Look at the top {d} cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.":
     manualEntry({
-      text: "FIND WHAT'S HIDDEN {E}, {d} {I} - Look at the top {d} cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+      text: "FIND WHAT'S HIDDEN {E}, {d} {I} — Look at the top {d} cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.",
       name: "FIND WHAT'S HIDDEN",
       ability: {
         type: "activated",
@@ -593,7 +593,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #17 - Score: 8.0 - Two location static abilities
-  'FOREST HOME Your characters named Robin Hood may move here for free. FAMILIAR TERRAIN Characters gain Ward and "{E} ,{d} {I} −Deal {d} damage to chosen damaged character" while here.':
+  "FOREST HOME Your characters named Robin Hood may move here for free. FAMILIAR TERRAIN Characters gain Ward and “{E}, {d} {I} — Deal {d} damage to chosen damaged character” while here.":
     manualEntries([
       {
         text: "FOREST HOME Your characters named Robin Hood may move here for free.",
@@ -607,7 +607,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
         },
       },
       {
-        text: 'FAMILIAR TERRAIN Characters gain Ward and "{E} ,{d} {I} −Deal {d} damage to chosen damaged character" while here.',
+        text: "FAMILIAR TERRAIN Characters gain Ward and “{E}, {d} {I} — Deal {d} damage to chosen damaged character” while here.",
         name: "FAMILIAR TERRAIN",
         ability: {
           type: "static",
@@ -634,7 +634,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     ]),
 
   // #18 - Score: 8.0 - Two activated item abilities
-  "THE CAULDRON CALLS {E}, {d} {I} — Put a character card from your discard under this item faceup. RISE AND JOIN ME! {E}, {d} {I} — This turn, you may play characters from under this item.":
+  "THE CAULDRON CALLS {E}, {d} {I} — Put a character card from your discard under this item faceup. RISE AND JOIN ME! {E}, {d} {I} – This turn, you may play characters from under this item.":
     manualEntries([
       {
         text: "THE CAULDRON CALLS {E}, {d} {I} — Put a character card from your discard under this item faceup.",
@@ -651,7 +651,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
         },
       },
       {
-        text: "RISE AND JOIN ME! {E}, {d} {I} — This turn, you may play characters from under this item.",
+        text: "RISE AND JOIN ME! {E}, {d} {I} – This turn, you may play characters from under this item.",
         name: "RISE AND JOIN ME!",
         ability: {
           type: "activated",
@@ -808,7 +808,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     ]),
 
   // #23 - Score: 7.5 - Triggered shift lore loss + static strength buff
-  "HUMBLE PIE When you play this character, if you used Shift to play him, each opponent loses {d} lore. RAGING DUCK While an opponent has {d} or more lore, this character gets +{d} {S}.":
+  "Shift {d} HUMBLE PIE When you play this character, if you used Shift to play him, each opponent loses {d} lore. RAGING DUCK While an opponent has {d} or more lore, this character gets +{d} {S}.":
     manualEntries([
       {
         text: "HUMBLE PIE When you play this character, if you used Shift to play him, each opponent loses {d} lore.",
@@ -870,7 +870,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     ]),
 
   // #25 - Score: 7.5 - Triggered inkwell + activated resist
-  "OUTPLACEMENT When you play this character, you may put chosen item or location into its player's inkwell facedown and exerted. BY INVITE ONLY {d} {I} − Your other characters gain Resist +{d} until the start of your next turn.":
+  "OUTPLACEMENT When you play this character, you may put chosen item or location into its player's inkwell facedown and exerted. BY INVITE ONLY {d} {I} — Your other characters gain Resist +{d} until the start of your next turn.":
     manualEntries([
       {
         text: "OUTPLACEMENT When you play this character, you may put chosen item or location into its player's inkwell facedown and exerted.",
@@ -889,7 +889,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
         },
       },
       {
-        text: "BY INVITE ONLY {d} {I} − Your other characters gain Resist +{d} until the start of your next turn.",
+        text: "BY INVITE ONLY {d} {I} — Your other characters gain Resist +{d} until the start of your next turn.",
         name: "BY INVITE ONLY",
         ability: {
           type: "activated",
@@ -2671,12 +2671,26 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
 };
 
 /**
+ * Manual entries for complex card texts (indexed by card name)
+ *
+ * Maps card names to their manual JSON representations.
+ * Used when text matching is difficult or unreliable.
+ */
+export const MANUAL_ENTRIES_BY_NAME: Record<string, ManualEntry> = {
+  // Add entries here as needed
+};
+
+/**
  * Check if a text is marked as too complex to parse generically
  *
  * @param text - Normalized text to check
- * @returns true if the text exists in MANUAL_ENTRIES
+ * @param cardName - Optional card name context for lookup
+ * @returns true if the text exists in MANUAL_ENTRIES or MANUAL_ENTRIES_BY_NAME
  */
-export function tooComplexText(text: string): boolean {
+export function tooComplexText(text: string, cardName?: string): boolean {
+  if (cardName && cardName in MANUAL_ENTRIES_BY_NAME) {
+    return true;
+  }
   return text in MANUAL_ENTRIES;
 }
 
@@ -2684,9 +2698,16 @@ export function tooComplexText(text: string): boolean {
  * Get the manual entry for a complex text
  *
  * @param text - Normalized text to look up
+ * @param cardName - Optional card name context for lookup
  * @returns The manual entry if it exists (single or array), undefined otherwise
  */
-export function getManualEntry(text: string): ManualEntry | undefined {
+export function getManualEntry(
+  text: string,
+  cardName?: string,
+): ManualEntry | undefined {
+  if (cardName && MANUAL_ENTRIES_BY_NAME[cardName]) {
+    return MANUAL_ENTRIES_BY_NAME[cardName];
+  }
   return MANUAL_ENTRIES[text];
 }
 
@@ -2694,10 +2715,14 @@ export function getManualEntry(text: string): ManualEntry | undefined {
  * Get all manual entries as an array (flattens single entries)
  *
  * @param text - Normalized text to look up
+ * @param cardName - Optional card name context for lookup
  * @returns Array of AbilityWithText entries, or undefined if not found
  */
-export function getManualEntries(text: string): AbilityWithText[] | undefined {
-  const entry = MANUAL_ENTRIES[text];
+export function getManualEntries(
+  text: string,
+  cardName?: string,
+): AbilityWithText[] | undefined {
+  const entry = getManualEntry(text, cardName);
   if (!entry) return undefined;
   return Array.isArray(entry) ? entry : [entry];
 }

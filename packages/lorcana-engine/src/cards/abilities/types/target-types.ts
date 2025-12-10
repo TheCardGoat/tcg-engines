@@ -20,7 +20,7 @@
  * ```
  */
 
-import type { TargetCount, TargetDSL } from "@tcg/core";
+import type { TargetDSL } from "@tcg/core";
 
 // ============================================================================
 // Player Targeting
@@ -37,7 +37,8 @@ export type PlayerTarget =
   | "OPPONENT" // A single opponent (2-player default)
   | "EACH_PLAYER" // All players including controller
   | "EACH_OPPONENT" // All opponents
-  | "CHOSEN_PLAYER"; // A player chosen by the controller
+  | "CHOSEN_PLAYER" // A player chosen by the controller
+  | "card-owner"; // The owner of the target card (context-dependent)
 
 // ============================================================================
 // Card References (Context-Aware)
@@ -594,7 +595,8 @@ export type CardTargetEnum =
   | "CHOSEN_CARD"
   | "CHOSEN_CARD_FROM_HAND"
   | "CHOSEN_CARD_FROM_DISCARD"
-  | "TOP_CARD_OF_DECK";
+  | "TOP_CARD_OF_DECK"
+  | "revealed";
 
 export type CardTarget =
   | CardTargetEnum
