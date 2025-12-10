@@ -37,6 +37,7 @@ import {
   CANT_READY_PATTERN,
   CANT_SING_PATTERN,
   CHOOSE_AND_DISCARD_PATTERN,
+  CHOOSE_PATTERN,
   DEAL_DAMAGE_PATTERN,
   DISCARD_HAND_PATTERN,
   DISCARD_PATTERN,
@@ -125,64 +126,68 @@ function parseNumericValue(value: string): number {
 export function parseEffect(text: string): Effect | undefined {
   if (!text) return undefined;
 
+  // Strip leading punctuation (commas, periods) that might be artifacts of splitting
+  const cleanText = text.trim().replace(/^[,.]\s*/, "");
+  if (!cleanText) return undefined;
+
   // Handle conditional effects first ("if X, Y" or "if X, Y instead")
   // Must be checked before choice and sequence effects
-  if (hasConditionalEffect(text)) {
-    const conditionalEffect = parseConditionalEffect(text);
+  if (hasConditionalEffect(cleanText)) {
+    const conditionalEffect = parseConditionalEffect(cleanText);
     if (conditionalEffect) return conditionalEffect;
   }
 
   // Handle complex look-at effects (which might look like sequences but should be atomic)
   // This must be checked before sequence splitting
-  if (LOOK_AT_CARDS_FULL_PATTERN.test(text)) {
-    return parseAtomicEffect(text);
+  if (LOOK_AT_CARDS_FULL_PATTERN.test(cleanText)) {
+    return parseAtomicEffect(cleanText);
   }
 
   // Handle choice effects ("Choose one:" or "X or Y")
-  if (hasChoiceEffect(text)) {
-    return parseChoiceEffect(text);
+  if (hasChoiceEffect(cleanText)) {
+    return parseChoiceEffect(cleanText);
   }
 
   // Handle "if you do" patterns (optional with follow-up)
   // Must be checked before general optional and sequence checks
-  if (hasIfYouDoPattern(text) && hasOptionalEffect(text)) {
-    return parseOptionalWithFollowUp(text);
+  if (hasIfYouDoPattern(cleanText) && hasOptionalEffect(cleanText)) {
+    return parseOptionalWithFollowUp(cleanText);
   }
 
   // Handle repeat effects (before sequence to handle "X. Repeat this Y times")
-  if (hasRepeatEffect(text)) {
-    return parseRepeatEffect(text);
+  if (hasRepeatEffect(cleanText)) {
+    return parseRepeatEffect(cleanText);
   }
 
   // Handle sequence effects ("X, then Y" or "X. Y" or "X and Y")
   // Check this after repeat but BEFORE for-each to correctly split multi-sentence effects
-  if (hasSequenceEffect(text) && !hasOptionalEffect(text)) {
-    return parseSequenceEffect(text);
+  if (hasSequenceEffect(cleanText)) {
+    return parseSequenceEffect(cleanText);
   }
 
   // Handle for-each effects
-  if (hasForEachEffect(text)) {
-    return parseForEachEffect(text);
+  if (hasForEachEffect(cleanText)) {
+    return parseForEachEffect(cleanText);
   }
 
   // Handle optional effects ("you may")
-  if (hasOptionalEffect(text)) {
-    return parseOptionalEffect(text);
+  if (hasOptionalEffect(cleanText)) {
+    return parseOptionalEffect(cleanText);
   }
 
   // Handle restriction effects ("can't X") as atomic effects
   // This must be checked before parseAtomicEffect which might return undefined
   if (
-    CANT_QUEST_PATTERN.test(text) ||
-    CANT_CHALLENGE_PATTERN.test(text) ||
-    CANT_READY_PATTERN.test(text) ||
-    CANT_SING_PATTERN.test(text)
+    CANT_QUEST_PATTERN.test(cleanText) ||
+    CANT_CHALLENGE_PATTERN.test(cleanText) ||
+    CANT_READY_PATTERN.test(cleanText) ||
+    CANT_SING_PATTERN.test(cleanText)
   ) {
-    return parseRestrictionEffect(text);
+    return parseRestrictionEffect(cleanText);
   }
 
   // Parse as single atomic effect
-  return parseAtomicEffect(text);
+  return parseAtomicEffect(cleanText);
 }
 
 /**
@@ -244,7 +249,9 @@ function parseForEachEffect(text: string): Effect | undefined {
   if (!effect) return undefined;
 
   // Parse the counter type
-  const counter = parseForEachCounter(counterText);
+  // Remove trailing period from counter text if present
+  const cleanCounterText = counterText.replace(/\.\s*$/, "");
+  const counter = parseForEachCounter(cleanCounterText);
   if (!counter) return undefined;
 
   return {
@@ -812,7 +819,10 @@ function parseAtomicEffect(text: string): Effect | undefined {
 
     if (text.includes("top card of your deck")) {
       source = "top-of-deck";
-    } else if (text.includes("card from your hand")) {
+    } else if (
+      text.includes("card from your hand") ||
+      text.includes("additional card")
+    ) {
       source = "hand";
     } else if (text.includes("this card")) {
       source = "this-card";
@@ -845,12 +855,14 @@ function parseAtomicEffect(text: string): Effect | undefined {
 
   // Try shuffle into deck effect
   if (SHUFFLE_INTO_DECK_PATTERN.test(text)) {
-    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    const target = text.includes("card from any discard")
+      ? "CARD_FROM_DISCARD"
+      : parseCharacterTarget(text) || "CHOSEN_CHARACTER";
     return {
       type: "shuffle-into-deck",
       target,
       intoDeck: "owner",
-    };
+    } as any;
   }
 
   // Try put under effect (Boost mechanic)
@@ -1105,20 +1117,26 @@ function parseAtomicEffect(text: string): Effect | undefined {
 
   // Try exert effect
   if (EXERT_PATTERN.test(text)) {
-    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    let target: any = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    if (text.includes("all opposing damaged characters")) {
+      target = "ALL_OPPOSING_DAMAGED_CHARACTERS";
+    }
     return {
       type: "exert",
       target,
-    };
+    } as any;
   }
 
   // Try ready effect
   if (READY_PATTERN.test(text)) {
-    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    let target: any = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    if (text.includes("this character")) {
+      target = "SELF";
+    }
     return {
       type: "ready",
       target,
-    };
+    } as any;
   }
 
   // Try banish effect
@@ -1169,6 +1187,15 @@ function parseAtomicEffect(text: string): Effect | undefined {
       type: "reveal-hand",
       target,
     };
+  }
+
+  // Try choose effect
+  if (CHOOSE_PATTERN.test(text)) {
+    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    return {
+      type: "choose",
+      target,
+    } as any;
   }
 
   // Could not parse effect

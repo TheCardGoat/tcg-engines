@@ -24,6 +24,7 @@ import {
   ENTERS_PLAY_EXERTED_PATTERN,
   PAY_LESS_TO_PLAY_PATTERN,
   THIS_CHARACTER_GETS_STAT_PATTERN,
+  YOU_MAY_PUT_INTO_INKWELL_PATTERN,
   YOUR_CHARACTERS_GAIN_PATTERN,
   YOUR_CHARACTERS_GET_STAT_PATTERN,
   YOUR_ITEMS_GAIN_PATTERN,
@@ -357,6 +358,15 @@ function parseSpecificStaticPattern(text: string): StaticEffect | undefined {
     return {
       type: "restriction",
       restriction: "cant-sing",
+      target: "SELF",
+    };
+  }
+
+  // Pattern: "During your turn, you may put an additional card..."
+  if (YOU_MAY_PUT_INTO_INKWELL_PATTERN.test(text)) {
+    return {
+      type: "grant-ability",
+      ability: "put-additional-ink",
       target: "SELF",
     };
   }

@@ -19,6 +19,16 @@ export const SELF_PATTERNS = [
 ];
 
 /**
+ * Referenced target patterns (her, him, them, that card)
+ */
+export const REFERENCED_PATTERNS = [
+  /\bher\b/i,
+  /\bhim\b/i,
+  /\bthem\b/i,
+  /\bthat card\b/i,
+];
+
+/**
  * Chosen target patterns
  */
 export const CHOSEN_CHARACTER_PATTERN = /\bchosen (?:opposing )?character\b/i;

@@ -19,6 +19,7 @@ import {
   IF_CARDS_IN_HAND_PATTERN,
   IF_CARDS_IN_INKWELL_PATTERN,
   IF_CHARACTERS_IN_PLAY_PATTERN,
+  IF_CHOSEN_CHARACTER_PATTERN,
   IF_NO_CARDS_IN_HAND_PATTERN,
   IF_OPPONENT_HAS_MORE_LORE_PATTERN,
   IF_OPPONENT_HAS_NO_CHARACTERS_PATTERN,
@@ -75,6 +76,17 @@ export function parseCondition(text: string): Condition | undefined {
       classification: "Floodborn",
       controller: "you",
     };
+  }
+
+  // Classification chosen condition
+  const chosenCharacterMatch = normalizedText.match(
+    IF_CHOSEN_CHARACTER_PATTERN,
+  );
+  if (chosenCharacterMatch) {
+    return {
+      type: "classification-chosen",
+      classification: chosenCharacterMatch[1],
+    } as any;
   }
 
   // Item conditions

@@ -46,7 +46,8 @@ export const CHOOSE_AND_DISCARD_PATTERN =
  * Updated to handle {d} placeholder
  */
 export const DEAL_DAMAGE_PATTERN = /[Dd]eal (\d+|\{d\}) damage/;
-export const REMOVE_DAMAGE_PATTERN = /[Rr]emove (?:up to )?(\d+|\{d\}) damage/;
+export const REMOVE_DAMAGE_PATTERN =
+  /[Rr]emove (?:up to )?(\d+|\{d\}) damage (?:from (?:chosen |one of your |each of your )?(?:(?:[A-Z][a-z]+) )?characters?|counters?)/;
 export const PUT_DAMAGE_PATTERN = /[Pp]ut (\d+|\{d\}) damage counters?/;
 
 /**
@@ -63,16 +64,16 @@ export const LOSE_LORE_PATTERN =
  * Updated to support "Ready chosen X" where X can be character, item, or location
  */
 export const EXERT_PATTERN =
-  /[Ee]xert (?:chosen )?(?:opposing )?(?:damaged )?(?:character|item|location)/;
+  /[Ee]xert (?:up to \d+ )?(?:chosen )?(?:all )?(?:opposing )?(?:damaged )?(?:character|item|location)s?/;
 export const READY_PATTERN =
-  /[Rr]eady (?:chosen )?(?:character|item|location|your characters)/;
+  /[Rr]eady (?:chosen )?(?:this |your )?(?:other )?(?:exerted )?(?:[A-Z][a-z]+ )?(?:character|item|location|characters?)/;
 
 /**
  * Banish effect patterns
  * Now supports "Banish all X" for items, characters, and locations
  */
 export const BANISH_PATTERN =
-  /[Bb]anish (?:chosen )?(?:opposing )?(?:damaged )?(?:all )?(?:the challenging |challenging )?(?:character|item|location)s?/;
+  /[Bb]anish (?:chosen )?(?:opposing )?(?:damaged )?(?:all )?(?:the challenging |challenging |the challenged )?(?:(?:[A-Z][a-z]+) )?(?:character|item|location|her|him|it|them)s?/;
 export const BANISH_ALL_PATTERN =
   /[Bb]anish all (?:opposing )?(?:character|item|location)s/;
 
@@ -142,17 +143,17 @@ export const SEARCH_AND_SHUFFLE_PATTERN =
  * Put into inkwell patterns
  */
 export const PUT_INTO_INKWELL_PATTERN =
-  /[Pp]ut (?:the top card of your deck|(?:any )?card from your hand|(?:chosen )?(?:character|item|location)|this card|that card) into (?:your|their|their player'?s?) inkwell/;
+  /[Pp]ut (?:the top card of your deck|(?:an )?additional card from your hand|(?:any )?card from your hand|(?:chosen )?(?:character|item|location)|this card|that card)\s+into (?:your|their|their player'?s?) inkwell(?: facedown)?(?: and exerted)?(?: facedown)?/;
 export const PUT_INTO_INKWELL_FACEDOWN_PATTERN =
-  /[Pp]ut (?:the top card of your deck|(?:any )?card from your hand|(?:chosen )?(?:opposing )?(?:character|item|location)|this card|that card) into (?:your|their|their player'?s?) inkwell (?:facedown|face ?down)(?: and exerted)?/;
+  /[Pp]ut (?:the top card of your deck|(?:any )?card from your hand|(?:chosen )?(?:opposing )?(?:character|item|location)|this card|that card)\s+into (?:your|their|their player'?s?) inkwell (?:facedown|face ?down)(?: and exerted)?/;
 export const YOU_MAY_PUT_INTO_INKWELL_PATTERN =
-  /\byou may\b.*?\bput a card from your hand into your inkwell\b/i;
+  /\byou may\b.*?\bput (?:a|an additional) card from your hand into your inkwell\b/i;
 
 /**
  * Shuffle into deck patterns
  */
 export const SHUFFLE_INTO_DECK_PATTERN =
-  /[Ss]huffle (?:chosen )?(?:character|item|location) into (?:their|its|your) (?:player'?s? )?deck/;
+  /[Ss]huffle (?:a card from any discard|(?:chosen )?(?:character|item|location)) into (?:their|its|your) (?:player'?s? )?deck/;
 
 /**
  * Put under effect patterns (Boost mechanic)
@@ -194,6 +195,8 @@ export const CHOSEN_CHARACTER_PATTERN =
   /[Cc]hosen (?:opposing )?(?:damaged )?character/;
 export const CHOSEN_ITEM_PATTERN = /[Cc]hosen (?:opposing )?item/;
 export const CHOSEN_LOCATION_PATTERN = /[Cc]hosen (?:opposing )?location/;
+export const CHOOSE_PATTERN =
+  /[Cc]hoose (?:an? )?(?:opposing )?(?:character|item|location)/;
 
 /**
  * Restriction patterns (for static abilities)
@@ -201,7 +204,7 @@ export const CHOSEN_LOCATION_PATTERN = /[Cc]hosen (?:opposing )?location/;
 export const CANT_BE_CHALLENGED_PATTERN = /[Cc]an'?t be challenged/;
 export const CANT_CHALLENGE_PATTERN = /[Cc]an(?:'t|not) challenge/;
 export const CANT_QUEST_PATTERN = /[Cc]an'?t quest/;
-export const CANT_READY_PATTERN = /[Cc]an'?t ready/;
+export const CANT_READY_PATTERN = /[Cc]an'?t ready|[Dd]oesn'?t ready/;
 export const CANNOT_PATTERN = /[Cc]annot /;
 
 /**
@@ -306,9 +309,10 @@ export const REPEAT_UP_TO_PATTERN =
  */
 export const THEN_SEPARATOR = /,\s+then\s+/i;
 export const PERIOD_THEN_SEPARATOR = /\.\s+[Tt]hen,?\s+/;
-export const PERIOD_SEPARATOR = /\.\s+/; // Period followed by space
+export const PERIOD_SEPARATOR = /\.[,]?\s+/; // Period followed by space, optional comma for weird texts
 export const AND_SEPARATOR =
-  /\s+and\s+(?=(?:draw|gain|deal|exert|ready|banish|return))/i; // "and" before effect verbs
+  /\s+and\s+(?=\b(?:draw|gain|deal|exert|ready|banish|return)\b)/i; // "and" before effect verbs
+export const COMMA_SEPARATOR = /,\s+(?!then|if)\b/i; // Comma not followed by then/if
 
 /**
  * Choice patterns
@@ -431,6 +435,9 @@ export function splitSequenceSteps(text: string): string[] {
   } else if (AND_SEPARATOR.test(text)) {
     // Split on "and" between effects
     parts = text.split(AND_SEPARATOR);
+  } else if (COMMA_SEPARATOR.test(text)) {
+    // Split on comma separator
+    parts = text.split(COMMA_SEPARATOR);
   } else {
     // No separator found, return as single step
     return [text];

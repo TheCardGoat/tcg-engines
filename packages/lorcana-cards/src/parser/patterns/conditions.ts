@@ -19,6 +19,8 @@ export const IF_YOU_HAVE_CHARACTER_WITH_PATTERN =
   /\bif you have (?:a )?character with ([A-Z][a-z]+)\b/i;
 export const IF_YOU_HAVE_FLOODBORN_PATTERN =
   /\bif you have (?:a )?Floodborn character\b/i;
+export const IF_CHOSEN_CHARACTER_PATTERN =
+  /\bif (?:a |an )?([A-Z][a-z]+) character is chosen\b/i;
 
 /**
  * Item existence patterns
