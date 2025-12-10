@@ -9,7 +9,7 @@ export const benEccentricRobot: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Treasure Planet",
   set: "006",
-  text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
+  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
   cost: 4,
   strength: 4,
   willpower: 3,

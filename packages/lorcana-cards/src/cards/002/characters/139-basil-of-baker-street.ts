@@ -9,7 +9,7 @@ export const basilOfBakerStreet: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Great Mouse Detective",
   set: "002",
-  text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
+  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
   cost: 2,
   strength: 2,
   willpower: 2,

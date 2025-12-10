@@ -9,7 +9,7 @@ export const ursulaMadSeaWitch: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Little Mermaid",
   set: "004",
-  text: "Challenger +2 (While challenging, this character gets +2 {S}.)",
+  text: "Challenger +2 (While challenging, this character gets +2.)",
   cost: 2,
   strength: 1,
   willpower: 3,

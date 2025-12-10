@@ -9,7 +9,7 @@ export const drFacilierCharlatan: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Princess and the Frog",
   set: "001",
-  text: "Challenger +2 (While challenging, this character gets +2 {S}.)",
+  text: "Challenger +2 (While challenging, this character gets +2.)",
   cost: 2,
   strength: 0,
   willpower: 4,

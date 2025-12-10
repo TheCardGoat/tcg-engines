@@ -9,7 +9,7 @@ export const merlinSelfappointedMentor: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Sword in the Stone",
   set: "001",
-  text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
+  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
   cost: 4,
   strength: 3,
   willpower: 4,

@@ -9,7 +9,7 @@ export const yaoImperialSoldier: CharacterCard = {
   inkType: ["steel"],
   franchise: "Mulan",
   set: "004",
-  text: "Challenger +2 (While challenging, this character gets +2 {S}.)",
+  text: "Challenger +2 (While challenging, this character gets +2.)",
   cost: 4,
   strength: 2,
   willpower: 5,

@@ -9,7 +9,7 @@ export const helgaSinclairRighthandWoman: CharacterCard = {
   inkType: ["steel"],
   franchise: "Atlantis",
   set: "003",
-  text: "Challenger +2 (While challenging, this character gets +2 {S}.)",
+  text: "Challenger +2 (While challenging, this character gets +2.)",
   cost: 3,
   strength: 2,
   willpower: 4,

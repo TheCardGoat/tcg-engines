@@ -9,7 +9,7 @@ export const philoctetesTrainerOfHeroes: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Hercules",
   set: "001",
-  text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
+  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
   cost: 2,
   strength: 3,
   willpower: 1,

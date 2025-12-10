@@ -7,6 +7,7 @@ export { wendyDarlingTalentedSailor } from "./023-wendy-darling-talented-sailor"
 export { iagoPrettyPolly } from "./040-iago-pretty-polly";
 export { lenaSabrewingRebelliousTeenager } from "./043-lena-sabrewing-rebellious-teenager";
 export { magicaDeSpellAmbitiousWitch } from "./048-magica-de-spell-ambitious-witch";
+export { maleficentMistressOfAllEvil } from "./051-maleficent-mistress-of-all-evil";
 export { theFirebirdForceOfDestruction } from "./056-the-firebird-force-of-destruction";
 export { theQueenHatefulRival } from "./057-the-queen-hateful-rival";
 export { donKarnagePrinceOfPirates } from "./071-don-karnage-prince-of-pirates";
@@ -22,10 +23,8 @@ export { stitchLittleRocket } from "./125-stitch-little-rocket";
 export { webbyVanderquackEnthusiasticDuck } from "./127-webby-vanderquack-enthusiastic-duck";
 export { genieCrampedInTheLamp } from "./141-genie-cramped-in-the-lamp";
 export { kingLouieBandleader } from "./146-king-louie-bandleader";
-export { kitCloudkickerNavigator } from "./147-kit-cloudkicker-navigator";
 export { kitCloudkickerSpunkyBearCub } from "./148-kit-cloudkicker-spunky-bear-cub";
 export { plutoMickeysCleverFriend } from "./152-pluto-mickeys-clever-friend";
-export { wendyDarlingAuthorityOnPeterPan } from "./158-wendy-darling-authority-on-peter-pan";
 export { chiefTuiProudOfMotunui } from "./171-chief-tui-proud-of-motunui";
 export { helgaSinclairRighthandWoman } from "./175-helga-sinclair-right-hand-woman";
 export { mufasaChampionOfThePrideLands } from "./185-mufasa-champion-of-the-pride-lands";

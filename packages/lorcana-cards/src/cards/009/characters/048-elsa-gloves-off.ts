@@ -9,7 +9,7 @@ export const elsaGlovesOff: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Frozen",
   set: "009",
-  text: "Challenger +3 (While challenging, this character gets +3 {S})",
+  text: "Challenger +3 (While challenging, this character gets +3.)",
   cost: 4,
   strength: 3,
   willpower: 4,

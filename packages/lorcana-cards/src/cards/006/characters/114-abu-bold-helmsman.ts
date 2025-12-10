@@ -9,7 +9,7 @@ export const abuBoldHelmsman: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Aladdin",
   set: "006",
-  text: "Rush (This character can challenge the turn they’re played.)",
+  text: "Rush (This character can challenge the turn they're played.)",
   cost: 5,
   strength: 4,
   willpower: 4,

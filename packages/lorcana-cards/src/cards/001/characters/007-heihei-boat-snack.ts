@@ -9,7 +9,7 @@ export const heiheiBoatSnack: CharacterCard = {
   inkType: ["amber"],
   franchise: "Moana",
   set: "001",
-  text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
+  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
   cost: 1,
   strength: 1,
   willpower: 2,
