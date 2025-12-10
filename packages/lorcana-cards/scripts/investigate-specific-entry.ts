@@ -10,7 +10,7 @@ import path from "node:path";
 import { MANUAL_ENTRIES } from "../src/parser/manual-overrides";
 import { normalizeToPattern } from "../src/parser/numeric-extractor";
 import { normalizeText } from "../src/parser/preprocessor";
-import { hasManualOverride } from "./generators/parser-validator";
+import { normalizeForMatching } from "./generators/parser-validator";
 import type { CanonicalCard } from "./types";
 
 const CANONICAL_CARDS_PATH = path.resolve(
@@ -162,10 +162,9 @@ function main(): void {
       // If no direct text match, check all cards for similarity to the KEY
       for (const card of Object.values(cards)) {
         if (!card.rulesText) continue;
-        const stripped = stripAllParentheses(
+        const pattern = normalizeForMatching(
           card.rulesText.replace(/\n/g, " "),
         );
-        const pattern = normalizeToPattern(normalizeText(stripped));
 
         const dist = levenshteinDistance(key, pattern);
         if (dist < minDistance) {
@@ -177,10 +176,9 @@ function main(): void {
       // Evaluate potential cards
       for (const card of potentialCards) {
         if (!card.rulesText) continue;
-        const stripped = stripAllParentheses(
+        const pattern = normalizeForMatching(
           card.rulesText.replace(/\n/g, " "),
         );
-        const pattern = normalizeToPattern(normalizeText(stripped));
 
         const dist = levenshteinDistance(key, pattern);
         if (dist < minDistance) {
@@ -201,28 +199,21 @@ function main(): void {
       // Step-by-step normalization comparison
       console.log("\n   --- Normalization Steps ---");
 
-      const step1 = stripAllParentheses(cardText);
-      console.log(`   1. Strip Parens: "${step1}"`);
+      // Apply the same comprehensive normalization as the actual matching logic
+      const comprehensivePattern = normalizeForMatching(cardText);
+      console.log(`   Final Pattern: "${comprehensivePattern}"`);
 
-      const step2 = normalizeText(step1);
-      console.log(`   2. Normalize WS: "${step2}"`);
-
-      const step3 = normalizeToPattern(step2);
-      console.log(`   3. To Pattern:   "${step3}"`);
-
-      const match = step3 === key;
+      const match = comprehensivePattern === key;
       console.log(`\n   MATCH: ${match ? "✅ YES" : "❌ NO"}`);
 
       if (!match) {
-        findCharacterDifferences(key, step3);
+        findCharacterDifferences(key, comprehensivePattern);
 
         // Check individual lines as well
         console.log("\n   Checking individual lines:");
         const lines = bestMatch.rulesText.split("\n").filter((l) => l.trim());
         for (const line of lines) {
-          const linePattern = normalizeToPattern(
-            normalizeText(stripAllParentheses(line)),
-          );
+          const linePattern = normalizeForMatching(line);
           if (key === linePattern) {
             console.log(`   ✅ Line matches key: "${line}"`);
           } else if (key.includes(linePattern) || linePattern.includes(key)) {
