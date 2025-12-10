@@ -260,24 +260,17 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
 
     // Check if this card has a manual override entry (complex texts that bypass parsing)
     // Manual overrides are keyed by normalized text with {d} placeholders, so we need to:
-    // 1. Normalize whitespace
-    // 2. Convert numbers to {d} placeholders
-    // 3. Try with and without parentheses (reminder text might prevent matches)
-    const normalizedFullText = normalizeText(
-      card.rulesText.replace(/\n/g, " "),
-    );
-    let patternText = normalizeToPattern(normalizedFullText);
-    let isManualOverride = tooComplexText(patternText);
-
-    // If not matched, try without parentheses
-    if (!isManualOverride) {
-      const textNoParens = normalizedFullText
-        .replace(/\([^)]*\)/g, "")
-        .trim()
-        .replace(/\s+/g, " ");
-      patternText = normalizeToPattern(textNoParens);
-      isManualOverride = tooComplexText(patternText);
-    }
+    // 1. Strip parentheses (reminder text) - manual override keys don't have reminder text
+    // 2. Normalize whitespace
+    // 3. Convert numbers to {d} placeholders
+    let fullText = card.rulesText.replace(/\n/g, " ");
+    fullText = fullText
+      .replace(/\([^)]*\)/g, "")
+      .trim()
+      .replace(/\s+/g, " ");
+    const normalizedFullText = normalizeText(fullText);
+    const patternText = normalizeToPattern(normalizedFullText);
+    const isManualOverride = tooComplexText(patternText);
 
     if (isManualOverride) {
       // Get manual override entry (can be single or array)
