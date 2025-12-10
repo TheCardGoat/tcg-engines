@@ -11,15 +11,8 @@ set -e  # Exit on error
 
 # Detect if running in non-interactive mode (Docker, CI/CD)
 NON_INTERACTIVE=false
-if [ -z "${PS1:-}" ] || [ -t 0 ] && [ -z "${CI:-}" ] && [ -z "${DOCKER:-}" ]; then
-    # Check if we're in a TTY or have CI/DOCKER env vars
-    if [ ! -t 0 ] || [ -n "${CI:-}" ] || [ -n "${DOCKER:-}" ]; then
-        NON_INTERACTIVE=true
-    fi
-fi
-
-# For Docker/CI, assume non-interactive
-if [ -f /.dockerenv ] || [ -n "${CI:-}" ] || [ -n "${GITHUB_ACTIONS:-}" ]; then
+# Check for Docker, CI, or non-TTY environments
+if [ -f /.dockerenv ] || [ -n "${CI:-}" ] || [ -n "${DOCKER:-}" ] || [ -n "${GITHUB_ACTIONS:-}" ] || [ ! -t 0 ]; then
     NON_INTERACTIVE=true
 fi
 
@@ -51,14 +44,21 @@ else
     curl -fsSL https://fnm.vercel.app/install | bash
     echo "✅ fnm installed successfully"
     
-    # fnm installs to ~/.local/share/fnm on Linux
-    FNM_PATH="$HOME/.local/share/fnm"
+    # fnm installs to different locations on Linux and macOS
+    # Try Linux path first, then macOS path, then fallback to ~/.fnm
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        FNM_PATH="$HOME/Library/Application Support/fnm"
+    else
+        FNM_PATH="$HOME/.local/share/fnm"
+    fi
+    
+    # If the OS-specific path doesn't exist, try the fallback
+    if [ ! -d "$FNM_PATH" ]; then
+        FNM_PATH="$HOME/.fnm"
+    fi
+    
     if [ -d "$FNM_PATH" ]; then
         ensure_path "$FNM_PATH"
-        # Try to initialize fnm - use --shell bash for explicit shell
-        if [ -f "$FNM_PATH/fnm" ]; then
-            export PATH="$FNM_PATH:$PATH"
-        fi
         # Evaluate fnm environment
         eval "$($FNM_PATH/fnm env --shell bash 2>/dev/null || $FNM_PATH/fnm env 2>/dev/null || true)" || true
     fi
@@ -81,7 +81,19 @@ if ! command -v fnm &> /dev/null; then
 fi
 
 # Ensure fnm environment is set up
-FNM_PATH="${FNM_PATH:-$HOME/.local/share/fnm}"
+# Use the same path detection logic as above
+if [ -z "${FNM_PATH:-}" ]; then
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        FNM_PATH="$HOME/Library/Application Support/fnm"
+    else
+        FNM_PATH="$HOME/.local/share/fnm"
+    fi
+    # Try fallback if OS-specific path doesn't exist
+    if [ ! -d "$FNM_PATH" ]; then
+        FNM_PATH="$HOME/.fnm"
+    fi
+fi
+
 if [ -d "$FNM_PATH" ]; then
     ensure_path "$FNM_PATH"
     eval "$($FNM_PATH/fnm env --shell bash 2>/dev/null || $FNM_PATH/fnm env 2>/dev/null || true)" || true
@@ -161,13 +173,13 @@ else
 fi
 
 # Verify bunx is available
-ensure_path "$HOME/.bun/bin"
+# Note: ~/.bun/bin is already in PATH from line 147
 if command -v bunx &> /dev/null; then
     echo "✅ bunx command is available"
 else
     # bunx should be in the same directory as bun
     if [ -f "$HOME/.bun/bin/bunx" ]; then
-        ensure_path "$HOME/.bun/bin"
+        # Path should already be set, but verify bunx is accessible
         if command -v bunx &> /dev/null; then
             echo "✅ bunx command is now available"
         else

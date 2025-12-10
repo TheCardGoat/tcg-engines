@@ -128,7 +128,7 @@ bun test packages/engines/core-engine/src/game-engine/engines/gundam/__tests__/r
 
 Linter verification:
 ```bash
-bunx @biomejs/biome check --fix packages/engines/core-engine/src/game-engine/engines/gundam/__tests__/rules/01-game-overview.test.ts
+bun x @biomejs/biome check --fix packages/engines/core-engine/src/game-engine/engines/gundam/__tests__/rules/01-game-overview.test.ts
 # Result: Checked 1 file in 33ms. Fixed 1 file.
 ```
 
