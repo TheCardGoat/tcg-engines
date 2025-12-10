@@ -170,7 +170,7 @@ export interface ChallengeTriggerContext {
  * }
  * ```
  */
-export interface ChallengeTrigger extends Trigger {
+export interface ChallengeTrigger extends BaseTrigger {
   event: "challenge" | "challenged" | "banish-in-challenge";
 
   /** Filter/context for the defender in the challenge */
@@ -262,7 +262,8 @@ export type TriggerSubject = TriggerSubjectEnum | TriggerSubjectQuery;
  * }
  * ```
  */
-export interface Trigger {
+
+export interface BaseTrigger {
   /** The event that causes this trigger to fire */
   event: TriggerEvent;
 
@@ -283,6 +284,8 @@ export interface Trigger {
    */
   restrictions?: TriggerRestriction[];
 }
+
+export type Trigger = BaseTrigger | ChallengeTrigger;
 
 /**
  * Restrictions specific to triggers

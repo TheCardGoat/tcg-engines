@@ -53,7 +53,13 @@ export type VariableAmount =
   | { type: "willpower-of"; target: CharacterTarget }
   | { type: "lore-value-of"; target: CharacterTarget }
   | { type: "cost-of"; target: CardTarget }
-  | { type: "cards-under-self" };
+  | { type: "cards-under-self" }
+  | {
+      type: "classification-character-count";
+      classification: string;
+      controller: "you" | "opponent";
+    }
+  | { type: "locations-in-play"; controller: "you" | "opponent" };
 
 // ============================================================================
 // Draw/Discard Effects
@@ -275,7 +281,8 @@ export interface PutIntoInkwellEffect {
     | "chosen-card-in-play"
     | "chosen-character"
     | "this-card"
-    | "discard";
+    | "discard"
+    | "revealed";
   target?: PlayerTarget;
   cardType?: CardType;
   exerted?: boolean;
@@ -463,6 +470,40 @@ export interface GrantAbilityEffect {
   target: CharacterTarget;
   duration?: EffectDuration;
 }
+
+/**
+ * Reduce cost effect
+ *
+ * @example "You pay 1 less to play this item"
+ */
+export interface CostReductionEffect {
+  type: "cost-reduction";
+  amount: number;
+  cardType?: CardType | "song";
+  target?: PlayerTarget; // Who gets the reduction (usually YOU)
+  duration?: EffectDuration;
+}
+
+export interface NameACardEffect {
+  type: "name-a-card";
+}
+
+export interface RevealTopCardEffect {
+  type: "reveal-top-card";
+  target?: PlayerTarget; // Whose deck
+}
+
+export interface PutOnTopEffect {
+  type: "put-on-top";
+  source: "revealed" | CardTarget;
+}
+
+export interface DrawUntilHandSizeEffect {
+  type: "draw-until-hand-size";
+  size: number;
+}
+
+// ============================================================================
 
 // ============================================================================
 // Control Flow Effects
@@ -660,6 +701,11 @@ export type Effect =
   // Restrictions
   | RestrictionEffect
   | GrantAbilityEffect
+  | CostReductionEffect
+  | NameACardEffect
+  | RevealTopCardEffect
+  | PutOnTopEffect
+  | DrawUntilHandSizeEffect
   // Control Flow
   | SequenceEffect
   | ChoiceEffect
@@ -686,7 +732,8 @@ export type StaticEffect =
   | GrantAbilityEffect
   | EntersPlayEffect
   | WinConditionEffect
-  | PropertyModificationEffect;
+  | PropertyModificationEffect
+  | CostReductionEffect;
 
 // ============================================================================
 // Type Guards
