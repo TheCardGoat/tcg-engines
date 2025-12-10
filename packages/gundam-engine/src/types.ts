@@ -136,3 +136,33 @@ export type GundamMoves = {
     playerId: PlayerId;
   };
 };
+
+/**
+ * Card Metadata Types
+ *
+ * Dynamic runtime state for cards in play.
+ * Replaces generic `any` metadata with explicit types.
+ */
+export type GundamCardMeta = {
+  /**
+   * 5-4. Active and Rested
+   * 5-4-1. Cards in the battle area, resource area, and base section can be in one of the two following indicative orientations.
+   * 5-4-1-1. Active: the card is placed vertically.
+   * 5-4-1-2. Rested: the card is placed horizontally
+   */
+  isRested: boolean;
+
+  /**
+   * 5-5. Damage
+   * 5-5-1. When damage is dealt to a Unit, Base, or Shield, the dealt damage is shown with counters
+   * 5-5-1-1. Show the current amount of damage a card has received by placing a number of counters equal to that damage on top of it.
+   * 5-5-2. A card that receives damage equal to or greater than its HP is destroyed as a result of rules management.
+   * 5-5-3. Units, Bases, Shields, and players can receive damage as a result of battle.  Attacking Units and Units being attacked deal damage equal to their AP to each other during the damage step. This damage is called battle damage.
+   * 5-5-4. Units, Bases, Shields, and players can receive damage from effects on cards. This damage is called effect damage.
+   * 5-5-5. Damage is not dealt when the amount of damage dealt would be zero.
+   * 5-5-6. When damage received by a Base or Shield exceeds its HP, the excess damage is not dealt to another Shield.
+   */
+  damage: number;
+
+  playedThisTurn: boolean;
+};
