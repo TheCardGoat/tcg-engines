@@ -33,18 +33,31 @@ if command -v fnm &> /dev/null; then
 else
     curl -o- https://fnm.vercel.app/install | bash
     echo "✅ fnm installed successfully"
-    echo "⚠️  Please restart your terminal or run: source $SHELL_CONFIG"
+    
+    # Try to source fnm in current session
+    # fnm installs to ~/.local/share/fnm on Linux
+    FNM_PATH="$HOME/.local/share/fnm"
+    if [ -d "$FNM_PATH" ]; then
+        export PATH="$FNM_PATH:$PATH"
+        eval "$(fnm env --shell bash)" 2>/dev/null || eval "$(fnm env)" 2>/dev/null || true
+    fi
+    
+    # Also try sourcing from shell config if fnm still not available
+    if ! command -v fnm &> /dev/null && [ -f "$SHELL_CONFIG" ]; then
+        # Source just the fnm-related lines from shell config
+        if grep -q "fnm" "$SHELL_CONFIG"; then
+            source "$SHELL_CONFIG" 2>/dev/null || true
+        fi
+    fi
+    
+    if ! command -v fnm &> /dev/null; then
+        echo "⚠️  fnm installed but not in PATH. Please restart your terminal or run: source $SHELL_CONFIG"
+    fi
 fi
 echo ""
 
 # Step 2: Install Node.js using fnm
 echo "📦 Step 2: Installing Node.js 24..."
-# Source fnm if it exists (for current shell session)
-if [ -f "$HOME/.fnm/fnm" ]; then
-    export PATH="$HOME/.fnm:$PATH"
-    eval "$(fnm env)"
-fi
-
 # Try to use fnm if available
 if command -v fnm &> /dev/null; then
     fnm install 24
@@ -78,11 +91,15 @@ if command -v bun &> /dev/null; then
 else
     curl -fsSL https://bun.sh/install | bash
     echo "✅ Bun installed successfully"
-    echo "⚠️  Please restart your terminal or run: source $SHELL_CONFIG"
     
-    # Try to source Bun in current session if possible
-    if [ -f "$HOME/.bun/bin/bun" ]; then
+    # Add bun to PATH for current session
+    if [ -d "$HOME/.bun/bin" ]; then
         export PATH="$HOME/.bun/bin:$PATH"
+    fi
+    
+    if ! command -v bun &> /dev/null; then
+        echo "⚠️  Bun installed but not in PATH. Please restart your terminal or run: source $SHELL_CONFIG"
+        echo "   Or manually add to PATH: export PATH=\"\$HOME/.bun/bin:\$PATH\""
     fi
 fi
 echo ""
@@ -97,6 +114,14 @@ if command -v bun &> /dev/null; then
         echo "✅ Bun version meets requirement (1.2.18+)"
     else
         echo "⚠️  Bun version $BUN_VERSION may be below required 1.2.18"
+    fi
+    
+    # Verify bunx is available
+    if command -v bunx &> /dev/null; then
+        echo "✅ bunx command is available"
+    else
+        echo "⚠️  bunx command not found. This may cause issues with scripts using bunx."
+        echo "   Try: export PATH=\"\$HOME/.bun/bin:\$PATH\""
     fi
 else
     echo "⚠️  Bun not found in PATH. Please restart your terminal and verify installation."
@@ -121,6 +146,7 @@ echo "   2. Verify installations:"
 echo "      - node -v  (should show v24.x)"
 echo "      - npm -v   (should show 11.x)"
 echo "      - bun -v   (should show 1.2.18 or later)"
+echo "      - bunx --version  (should be available)"
 echo "   3. Run project commands:"
 echo "      - bun run build"
 echo "      - bun test"
