@@ -78,7 +78,7 @@ export interface HasClassificationFilter {
 type ComparisonOperator = "eq" | "ne" | "gt" | "gte" | "lt" | "lte";
 
 /**
- * Filter by strength value
+ * Filter by AP value
  */
 export interface ApFilter {
   type: "ap";
