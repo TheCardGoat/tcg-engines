@@ -85,6 +85,20 @@ import {
 import { parseCondition } from "./condition-parser";
 import { parseCharacterTarget, parsePlayerTarget } from "./target-parser";
 
+const DEFAULT_CHOSEN_CHARACTER_TARGET: CharacterTarget = {
+  type: "query",
+  count: 1,
+  controller: "any",
+  zone: "play",
+};
+
+const DEFAULT_ALL_CHARACTERS_TARGET: CharacterTarget = {
+  type: "query",
+  count: "all",
+  controller: "any",
+  zone: "play",
+};
+
 /**
  * Helper function to parse numeric values or {d} placeholders
  * Converts {d} to -1 as a placeholder value

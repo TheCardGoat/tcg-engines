@@ -118,7 +118,13 @@ describe("Action Effects - Task Group 2.5", () => {
 
       expect(effect).toEqual({
         type: "banish",
-        target: "ALL_CHARACTERS", // Parsed as character target, would need item target type
+        target: {
+          type: "query",
+
+          count: "all",
+          controller: "any",
+          zone: "play",
+        }, // Parsed as character target, would need item target type
       });
     });
 
@@ -127,7 +133,13 @@ describe("Action Effects - Task Group 2.5", () => {
 
       expect(effect).toEqual({
         type: "banish",
-        target: "ALL_CHARACTERS",
+        target: {
+          type: "query",
+
+          count: "all",
+          controller: "any",
+          zone: "play",
+        },
       });
     });
 
@@ -136,7 +148,13 @@ describe("Action Effects - Task Group 2.5", () => {
 
       expect(effect).toEqual({
         type: "banish",
-        target: "ALL_CHARACTERS", // Parsed as character target, would need location target type
+        target: {
+          type: "query",
+
+          count: "all",
+          controller: "any",
+          zone: "play",
+        }, // Parsed as character target, would need location target type
       });
     });
 
@@ -145,7 +163,13 @@ describe("Action Effects - Task Group 2.5", () => {
 
       expect(effect).toEqual({
         type: "banish",
-        target: "ALL_OPPOSING_CHARACTERS",
+        target: {
+          type: "query",
+
+          count: "all",
+          controller: "opponent",
+          zone: "play",
+        },
       });
     });
   });
@@ -156,7 +180,13 @@ describe("Action Effects - Task Group 2.5", () => {
 
       expect(effect).toEqual({
         type: "ready",
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
       });
     });
 
@@ -165,7 +195,13 @@ describe("Action Effects - Task Group 2.5", () => {
 
       expect(effect).toEqual({
         type: "ready",
-        target: "CHOSEN_CHARACTER", // Parsed as character, would need item target
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        }, // Parsed as character, would need item target
       });
     });
 
@@ -174,7 +210,13 @@ describe("Action Effects - Task Group 2.5", () => {
 
       expect(effect).toEqual({
         type: "ready",
-        target: "CHOSEN_CHARACTER", // Parsed as character, would need location target
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        }, // Parsed as character, would need location target
       });
     });
   });
@@ -248,7 +290,13 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "gain-keyword",
         keyword: "Rush",
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
         duration: "this-turn",
       });
     });
@@ -259,7 +307,13 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "gain-keyword",
         keyword: "Ward",
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
         duration: "this-turn",
       });
     });
@@ -270,7 +324,13 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "gain-keyword",
         keyword: "Evasive",
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
         duration: "this-turn",
       });
     });
@@ -284,7 +344,13 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "gain-keyword",
         keyword: "Challenger",
         value: 2,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
         duration: "this-turn",
       });
     });
@@ -296,7 +362,13 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "gain-keyword",
         keyword: "Resist",
         value: 1,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
         duration: "this-turn",
       });
     });
@@ -310,7 +382,13 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "modify-stat",
         stat: "strength",
         modifier: 2,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
         duration: "this-turn",
       });
     });
@@ -322,7 +400,13 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "modify-stat",
         stat: "willpower",
         modifier: -1,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
         duration: "this-turn",
       });
     });
@@ -334,7 +418,13 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "modify-stat",
         stat: "lore",
         modifier: 1,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
         duration: "this-turn",
       });
     });
@@ -346,7 +436,13 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "modify-stat",
         stat: "strength",
         modifier: -1, // {d} placeholder value (positive)
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
         duration: "this-turn",
       });
     });
@@ -358,7 +454,13 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "modify-stat",
         stat: "willpower",
         modifier: 1, // {d} placeholder value stored positive, negated later
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
         duration: "this-turn",
       });
     });
@@ -370,7 +472,13 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "modify-stat",
         stat: "lore",
         modifier: -1, // {d} placeholder value (defaults to positive)
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
         duration: "this-turn",
       });
     });
@@ -395,7 +503,13 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "modify-stat",
         stat: "strength",
         modifier: 3,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
         duration: "permanent",
       });
     });
@@ -406,7 +520,13 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "gain-keyword",
         keyword: "Rush",
-        target: "CHOSEN_CHARACTER",
+        target: {
+          type: "query",
+
+          count: 1,
+          controller: "any",
+          zone: "play",
+        },
         duration: "permanent",
       });
     });
