@@ -9,7 +9,7 @@ export const trustyLoyalBloodhound: CharacterCard = {
   inkType: ["amber"],
   franchise: "Lady and the Tramp",
   set: "007",
-  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+  text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
   cost: 2,
   strength: 2,
   willpower: 2,

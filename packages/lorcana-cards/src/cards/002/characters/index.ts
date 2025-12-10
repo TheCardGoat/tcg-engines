@@ -4,9 +4,11 @@ export { eudoraAccomplishedSeamstress } from "./007-eudora-accomplished-seamstre
 export { gastonBaritoneBully } from "./008-gaston-baritone-bully";
 export { happyGoodnatured } from "./011-happy-good-natured";
 export { pigletVerySmallAnimal } from "./018-piglet-very-small-animal";
+export { blueFairyRewardingGoodDeeds } from "./036-blue-fairy-rewarding-good-deeds";
 export { chipTheTeacupGentleSoul } from "./037-chip-the-teacup-gentle-soul";
 export { drFacilierSavvyOpportunist } from "./038-dr-facilier-savvy-opportunist";
 export { fairyGodmotherHereToHelp } from "./040-fairy-godmother-here-to-help";
+export { jiminyCricketPinocchiosConscience } from "./044-jiminy-cricket-pinocchios-conscience";
 export { pinocchioStarAttraction } from "./056-pinocchio-star-attraction";
 export { yzmaWithoutBeautySleep } from "./061-yzma-without-beauty-sleep";
 export { arthurTrainedSwordsman } from "./069-arthur-trained-swordsman";
@@ -37,5 +39,6 @@ export { theNokkWaterSpirit } from "./160-the-nokk-water-spirit";
 export { donaldDuckDeepseaDiver } from "./178-donald-duck-deep-sea-diver";
 export { eliLaBouffBigDaddy } from "./179-eli-la-bouff-big-daddy";
 export { goofyKnightForADay } from "./180-goofy-knight-for-a-day";
+export { herculesDivineHero } from "./181-hercules-divine-hero";
 export { herculesHeroInTraining } from "./182-hercules-hero-in-training";
 export { pachaVillageLeader } from "./190-pacha-village-leader";

@@ -437,6 +437,28 @@
     ],
     "author": "Koni"
   },
+  "set10-021": {
+    "id": "set10-021",
+    "gameCardId": "1mg",
+    "set": "set10",
+    "cardNumber": 21,
+    "cardIdentifier": "21/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/21_90e2cca148f9196d92a5cf91c37ff77f34fe7bf2.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/21_90e2cca148f9196d92a5cf91c37ff77f34fe7bf2.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/21_ccda0ce955b1ead6654d116e803065b713138ddb.jpg"
+      }
+    ],
+    "author": "Janel Reh",
+    "flavorText": "If you wanna beat a ghost, you gotta think like a ghost."
+  },
   "set10-022": {
     "id": "set10-022",
     "gameCardId": "27n",
@@ -628,6 +650,27 @@
     ],
     "author": "Kendall Hale",
     "flavorText": "My beloved warriors have come to life! All the dead of centuries past! Never has anyone created an army like this! —The Horned King"
+  },
+  "set10-040": {
+    "id": "set10-040",
+    "gameCardId": "t99",
+    "set": "set10",
+    "cardNumber": 40,
+    "cardIdentifier": "40/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/40_51d10a90c5d290054a57671e08776ba4b257979e.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/40_51d10a90c5d290054a57671e08776ba4b257979e.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/40_0a2d099572f307e315b8a44850c7f7999f210c31.jpg"
+      }
+    ],
+    "author": "Alice Pisoni"
   },
   "set10-041": {
     "id": "set10-041",
@@ -913,6 +956,27 @@
     ],
     "author": "Rosa la Barbera / Livio Cacciatore"
   },
+  "set10-054": {
+    "id": "set10-054",
+    "gameCardId": "x7f",
+    "set": "set10",
+    "cardNumber": 54,
+    "cardIdentifier": "54/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/54_2f7b80e2ebadc844a7163e187a0313012289df8d.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/54_2f7b80e2ebadc844a7163e187a0313012289df8d.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/54_1edd0fcad029692484ee6bb3b94bb36761d4d995.jpg"
+      }
+    ],
+    "author": "Rebecka Helmersson"
+  },
   "set10-055": {
     "id": "set10-055",
     "gameCardId": "4nl",
@@ -1019,6 +1083,27 @@
       }
     ],
     "author": "Angelina \"Spikie\" Ricardo"
+  },
+  "set10-060": {
+    "id": "set10-060",
+    "gameCardId": "u5d",
+    "set": "set10",
+    "cardNumber": 60,
+    "cardIdentifier": "60/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/60_1b85e0c0de6462be1083080957c4240fb9c9e8e7.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/60_1b85e0c0de6462be1083080957c4240fb9c9e8e7.jpg",
+        "foilType": "FreeForm1",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/60_e45e09e25186f212022f6727b8751f96862de0a9.jpg"
+      }
+    ],
+    "author": "Alice Pisoni"
   },
   "set10-069": {
     "id": "set10-069",
@@ -1239,6 +1324,28 @@
     "author": "Jochem van Gool",
     "flavorText": "You're a strange lookin' glimmer, ain'tcha? he said to the whisper lingering uncertainly in the doorway. Welcome to the Snuggly Duckling!"
   },
+  "set10-079": {
+    "id": "set10-079",
+    "gameCardId": "r2h",
+    "set": "set10",
+    "cardNumber": 79,
+    "cardIdentifier": "79/204 EN 10",
+    "rarity": "uncommon",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/79_9812bf7025c7af4586c10c89a616abd500663199.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/79_9812bf7025c7af4586c10c89a616abd500663199.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/79_f2df94078b5d47b72ec6e65f6c43eb8a0fbdbb75.jpg"
+      }
+    ],
+    "author": "Mariana Moreno",
+    "flavorText": "It's hard to tell where the branches end and the snake begins."
+  },
   "set10-080": {
     "id": "set10-080",
     "gameCardId": "1nf",
@@ -1326,6 +1433,28 @@
     "author": "Aristeidis Zentelis",
     "flavorText": "You can’t spell ‘crash-landed’ without ‘landed’!"
   },
+  "set10-084": {
+    "id": "set10-084",
+    "gameCardId": "88t",
+    "set": "set10",
+    "cardNumber": 84,
+    "cardIdentifier": "84/204 EN 10",
+    "rarity": "rare",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/84_dd8d3efc6b5403647fb724d99dc1d942d83df5bd.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/84_dd8d3efc6b5403647fb724d99dc1d942d83df5bd.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/84_f65ec6ea4a82fe2b2b71b44334c8b54c1659693e.jpg"
+      }
+    ],
+    "author": "Mike Parker",
+    "flavorText": "You will treat the vastly superior Moon with respect, or you will suffer the ultimate consequence."
+  },
   "set10-085": {
     "id": "set10-085",
     "gameCardId": "1vf",
@@ -1395,6 +1524,27 @@
     ],
     "author": "Jiahui Eva Gao"
   },
+  "set10-088": {
+    "id": "set10-088",
+    "gameCardId": "1gj",
+    "set": "set10",
+    "cardNumber": 88,
+    "cardIdentifier": "88/204 EN 10",
+    "rarity": "legendary",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/88_4f901198e13ab51eb8fe0b73cecb62c14b33a7fa.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/88_4f901198e13ab51eb8fe0b73cecb62c14b33a7fa.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/88_1081977ec3f2eb9716c3f1dd49a147feb1a9e9ff.jpg"
+      }
+    ],
+    "author": "Luis Huerta"
+  },
   "set10-089": {
     "id": "set10-089",
     "gameCardId": "1l2",
@@ -1459,6 +1609,27 @@
     ],
     "author": "Lisa Parfenova"
   },
+  "set10-092": {
+    "id": "set10-092",
+    "gameCardId": "196",
+    "set": "set10",
+    "cardNumber": 92,
+    "cardIdentifier": "92/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/92_c2007bbb8a165f660ed351924fcec4cc1829403b.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/92_c2007bbb8a165f660ed351924fcec4cc1829403b.jpg",
+        "foilType": "FreeForm1",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/92_7855ff8876ce0ca0d6f3e65ad9144f39dd40f22b.jpg"
+      }
+    ],
+    "author": "Nicholas Kole"
+  },
   "set10-093": {
     "id": "set10-093",
     "gameCardId": "y1i",
@@ -1501,6 +1672,27 @@
     ],
     "author": "Giulia Iacopini / Livio Cacciatore",
     "flavorText": "Be careful when gathering herbs in the Inkwell Caverns. You never know who's watching. —Hana's Herborium"
+  },
+  "set10-104": {
+    "id": "set10-104",
+    "gameCardId": "3s2",
+    "set": "set10",
+    "cardNumber": 104,
+    "cardIdentifier": "104/204 EN 10",
+    "rarity": "uncommon",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/104_be50ac9fb22a64cb564ba071e0009c715a2b162b.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/104_be50ac9fb22a64cb564ba071e0009c715a2b162b.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/104_072661903c4aab79fd0db24afe8e7c1e97a0405f.jpg"
+      }
+    ],
+    "author": "Kiersten Hale"
   },
   "set10-105": {
     "id": "set10-105",
@@ -1699,6 +1891,27 @@
     ],
     "author": "Juan Diego León"
   },
+  "set10-114": {
+    "id": "set10-114",
+    "gameCardId": "ews",
+    "set": "set10",
+    "cardNumber": 114,
+    "cardIdentifier": "114/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/114_bb4753f9ed5c3ccf14d09e1c09f053ce918370c4.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/114_bb4753f9ed5c3ccf14d09e1c09f053ce918370c4.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/114_c986b56ec33793e9dee3c6b3f5dbba678e858049.jpg"
+      }
+    ],
+    "author": "Michaela Martin / Livio Cacciatore"
+  },
   "set10-115": {
     "id": "set10-115",
     "gameCardId": "yus",
@@ -1719,6 +1932,48 @@
       }
     ],
     "author": "Malia Ewart"
+  },
+  "set10-116": {
+    "id": "set10-116",
+    "gameCardId": "1jd",
+    "set": "set10",
+    "cardNumber": 116,
+    "cardIdentifier": "116/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/116_d8d2e0ee5bd82a685bf29b5e5ff574bb893a4d2f.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/116_d8d2e0ee5bd82a685bf29b5e5ff574bb893a4d2f.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/116_25f9741dab905b79bf231946e87a69d8e3550736.jpg"
+      }
+    ],
+    "author": "Randy Bishop"
+  },
+  "set10-117": {
+    "id": "set10-117",
+    "gameCardId": "bkr",
+    "set": "set10",
+    "cardNumber": 117,
+    "cardIdentifier": "117/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/117_b0250d920777113d24e17f08f9eea9421f4b3d70.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/117_b0250d920777113d24e17f08f9eea9421f4b3d70.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/117_067fae272819c34644c6f995f2255e4d2e87927e.jpg"
+      }
+    ],
+    "author": "Josh Black / Alejandro Hernandez"
   },
   "set10-118": {
     "id": "set10-118",
@@ -2528,6 +2783,27 @@
     "author": "Carmine Cassese",
     "flavorText": "Let's show those rotten ghosts who's in charge! You go first."
   },
+  "set10-173": {
+    "id": "set10-173",
+    "gameCardId": "1uq",
+    "set": "set10",
+    "cardNumber": 173,
+    "cardIdentifier": "173/204 EN 10",
+    "rarity": "legendary",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/173_02446272102753bbd8c707e080e6e2bb110cb0ca.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/173_02446272102753bbd8c707e080e6e2bb110cb0ca.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/173_8a7e1426eeef94028c33b62063b8180039b49a80.jpg"
+      }
+    ],
+    "author": "Valerio Buonfantino"
+  },
   "set10-174": {
     "id": "set10-174",
     "gameCardId": "1xu",
@@ -2659,6 +2935,27 @@
     "author": "Federico Maria Cugliari",
     "flavorText": "It's time to make a stand!"
   },
+  "set10-180": {
+    "id": "set10-180",
+    "gameCardId": "g6l",
+    "set": "set10",
+    "cardNumber": 180,
+    "cardIdentifier": "180/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/180_cd1cced6c985969553dbe65139d073036d4fce77.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/180_cd1cced6c985969553dbe65139d073036d4fce77.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/180_5330362df7d76c1511f7f7d6d657d6b153a7a572.jpg"
+      }
+    ],
+    "author": "Leonardo Giammichele"
+  },
   "set10-181": {
     "id": "set10-181",
     "gameCardId": "oy7",
@@ -2702,6 +2999,49 @@
     ],
     "author": "Mara Tango",
     "flavorText": "You may have bested me before, McDuck, but not this time!"
+  },
+  "set10-183": {
+    "id": "set10-183",
+    "gameCardId": "wbg",
+    "set": "set10",
+    "cardNumber": 183,
+    "cardIdentifier": "183/204 EN 10",
+    "rarity": "uncommon",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/183_505c4e256f61303f1d69063e051115e0320bb179.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/183_505c4e256f61303f1d69063e051115e0320bb179.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/183_3cfbc9bd0cfd65e18954a6ecc0ddf948b6aee58a.jpg"
+      }
+    ],
+    "author": "Leonardo Giammichele"
+  },
+  "set10-184": {
+    "id": "set10-184",
+    "gameCardId": "xa7",
+    "set": "set10",
+    "cardNumber": 184,
+    "cardIdentifier": "184/204 EN 10",
+    "rarity": "uncommon",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/184_e28abc268f0b1a8b854f48cf71dbec9f2c99c793.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/184_e28abc268f0b1a8b854f48cf71dbec9f2c99c793.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/184_2f2d65196d571f886859977083a377179c9438fc.jpg"
+      }
+    ],
+    "author": "Renato Roldan / Amanda Duarte",
+    "flavorText": "A plan only fails when you don’t learn from it. And my plans never fail. —David Xanatos"
   },
   "set10-185": {
     "id": "set10-185",
@@ -2852,6 +3192,27 @@
     ],
     "author": "Lisa Parfenova"
   },
+  "set10-192": {
+    "id": "set10-192",
+    "gameCardId": "45t",
+    "set": "set10",
+    "cardNumber": 192,
+    "cardIdentifier": "192/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/192_eb19530d334061f223ed0787de24d7097b23e7e8.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/192_eb19530d334061f223ed0787de24d7097b23e7e8.jpg",
+        "foilType": "FreeForm1",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/192_2be3bd9e42bb99891331ab0cf36edfeede986172.jpg"
+      }
+    ],
+    "author": "Tania Soler"
+  },
   "set10-193": {
     "id": "set10-193",
     "gameCardId": "gow",
@@ -2894,6 +3255,25 @@
     ],
     "author": "Cristian Romero",
     "flavorText": "If you hear hoofbeats in the dark, don’t look back."
+  },
+  "set10-205": {
+    "id": "set10-205",
+    "gameCardId": "1mg",
+    "set": "set10",
+    "cardNumber": 205,
+    "cardIdentifier": "205/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/205_c8155f8eb7a6f9006ca31b46f8840b6514a09b78.jpg",
+        "foilType": "Satin",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/205_ef571fa3ad66b562b2e8b792be8fd5721d473eed.jpg"
+      }
+    ],
+    "specialRarity": "epic",
+    "author": "Janel Reh",
+    "flavorText": "If you wanna beat a ghost, you gotta think like a ghost."
   },
   "set10-206": {
     "id": "set10-206",
@@ -3044,6 +3424,24 @@
     "author": "Devin Elle Kurtz",
     "flavorText": "Okay, now we know pixie dust doesn’t affect the torn lorebook pages. Thanks, Tink. —Venturo, an Illumineer"
   },
+  "set10-215": {
+    "id": "set10-215",
+    "gameCardId": "bls",
+    "set": "set10",
+    "cardNumber": 215,
+    "cardIdentifier": "215/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/215_3f9b4e2fbbe6e8bf01f7a7665a4ed49f2b74851c.jpg",
+        "foilType": "Satin",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/215_d77ec95e0f4cd334b0cf1dddbf51232ea271b9de.jpg"
+      }
+    ],
+    "specialRarity": "epic",
+    "author": "Nicoletta Baldari / Raquel Vilanueva"
+  },
   "set10-216": {
     "id": "set10-216",
     "gameCardId": "1tr",
@@ -3061,6 +3459,25 @@
     ],
     "specialRarity": "epic",
     "author": "E. Melaranci / Mario O. Gabriele"
+  },
+  "set10-217": {
+    "id": "set10-217",
+    "gameCardId": "1m1",
+    "set": "set10",
+    "cardNumber": 217,
+    "cardIdentifier": "217/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/217_e9e22f4094c0918bab08c5be32488d69a0c2dd70.jpg",
+        "foilType": "Satin",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/217_33e26e17cea7da8962691e0f62ed66192c6fd8fc.jpg"
+      }
+    ],
+    "specialRarity": "epic",
+    "author": "Alan Batson",
+    "flavorText": "If I'm reading this right, these aren't actually ghosts at all! Boy, you're lucky I came along on this one."
   },
   "set10-218": {
     "id": "set10-218",
@@ -3080,6 +3497,25 @@
     "specialRarity": "epic",
     "author": "Alejandro Hernandez"
   },
+  "set10-220": {
+    "id": "set10-220",
+    "gameCardId": "oy7",
+    "set": "set10",
+    "cardNumber": 220,
+    "cardIdentifier": "220/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/220_1ba50181ae318cc2fa3cf9cff849a6254c829a9b.jpg",
+        "foilType": "Satin",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/220_afbef7708a73cacd0fed70b194465d512a50a0bd.jpg"
+      }
+    ],
+    "specialRarity": "epic",
+    "author": "Brianna Garcia",
+    "flavorText": "It's hard to catch a ghost without going somewhere spooky."
+  },
   "set10-221": {
     "id": "set10-221",
     "gameCardId": "1pw",
@@ -3097,6 +3533,24 @@
     ],
     "specialRarity": "epic",
     "author": "Stefano Spagnuolo"
+  },
+  "set10-223": {
+    "id": "set10-223",
+    "gameCardId": "1mo",
+    "set": "set10",
+    "cardNumber": 223,
+    "cardIdentifier": "223/204 EN 10",
+    "rarity": "enchanted",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/223_91f040573a2260a617ebd035991c33373701ca1e.jpg",
+        "foilType": "Magma",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/223_572e1651a71bdf87cd45974c255e156e3724f525.jpg"
+      }
+    ],
+    "specialRarity": "enchanted",
+    "author": "Federico Maria Cugliari"
   },
   "set10-224": {
     "id": "set10-224",
@@ -4886,7 +5340,7 @@
       }
     ],
     "author": "Duyen Nguyen / Jared Nickerl",
-    "flavorText": "Don't be too put off by this. . . hunk of hardware."
+    "flavorText": "Don't be too put off by this. . . hunk of hardware."
   },
   "set9-090": {
     "id": "set9-090",
@@ -5810,7 +6264,7 @@
       }
     ],
     "author": "Brian Weisz",
-    "flavorText": "Excitement. . . adventure. . . danger lurking around every cor— AAAAAGGH!"
+    "flavorText": "Excitement. . . adventure. . . danger lurking around every cor— AAAAAGGH!"
   },
   "set9-148": {
     "id": "set9-148",
@@ -8402,7 +8856,7 @@
       }
     ],
     "author": "Rachel Elese",
-    "flavorText": "Wait'll they get a whiff of this . . ."
+    "flavorText": "Wait'll they get a whiff of this . . ."
   },
   "set8-054": {
     "id": "set8-054",
@@ -8424,7 +8878,7 @@
       }
     ],
     "author": "Samanta Erdini",
-    "flavorText": "The sooner we get this done, the sooner I'm free . . . of you."
+    "flavorText": "The sooner we get this done, the sooner I'm free . . . of you."
   },
   "quest2-055": {
     "id": "quest2-055",
@@ -11102,7 +11556,7 @@
       }
     ],
     "author": "Edu Francisco",
-    "flavorText": "Flint's secret trove was never found, but stories have persisted that it remains hidden.. . —Narrator"
+    "flavorText": "Flint's secret trove was never found, but stories have persisted that it remains hidden.. . —Narrator"
   },
   "quest2-197": {
     "id": "quest2-197",
@@ -16548,7 +17002,7 @@
       }
     ],
     "author": "Andrea Parisi",
-    "flavorText": "The Carpenter’s stomach growled as he clenched his hammer tight . . ."
+    "flavorText": "The Carpenter’s stomach growled as he clenched his hammer tight . . ."
   },
   "set6-045": {
     "id": "set6-045",
@@ -19441,7 +19895,7 @@
       }
     ],
     "author": "Hedvig Häggman-Sund",
-    "flavorText": "I’ll take whatever you’ve got . . . as long as it’s got sugar in it."
+    "flavorText": "I’ll take whatever you’ve got . . . as long as it’s got sugar in it."
   },
   "set5-010": {
     "id": "set5-010",
@@ -22349,7 +22803,7 @@
       }
     ],
     "author": "Brian Weisz",
-    "flavorText": "Well, by Jove. Don’t just stand there. Raise a glass to my son Kay . . . and may we be rid of the trickster wizard Marvin, or whatever his blasted name was."
+    "flavorText": "Well, by Jove. Don’t just stand there. Raise a glass to my son Kay . . . and may we be rid of the trickster wizard Marvin, or whatever his blasted name was."
   },
   "set5-189": {
     "id": "set5-189",
@@ -24441,7 +24895,7 @@
       }
     ],
     "author": "Stefano Zanchi",
-    "flavorText": "Minnie: This is an outrage!   Pete: No. It’s my nefarious plan to steal the throne."
+    "flavorText": "Minnie: This is an outrage!   Pete: No. It’s my nefarious plan to steal the throne."
   },
   "set4-087": {
     "id": "set4-087",
@@ -34923,7 +35377,7 @@
       }
     ],
     "author": "Jenna Gray",
-    "flavorText": "Sometimes, our strengths lie beneath the surface. Far beneath, in some cases.. . . —Moana"
+    "flavorText": "Sometimes, our strengths lie beneath the surface. Far beneath, in some cases.. . . —Moana"
   },
   "set1-007": {
     "id": "set1-007",
@@ -34945,7 +35399,7 @@
       }
     ],
     "author": "Jenna Gray",
-    "flavorText": "Sometimes, our strengths lie beneath the surface. Far beneath, in some cases.. . . —Moana"
+    "flavorText": "Sometimes, our strengths lie beneath the surface. Far beneath, in some cases.. . . —Moana"
   },
   "set1-008": {
     "id": "set1-008",
@@ -34989,7 +35443,7 @@
       }
     ],
     "author": "Dave Beauchene",
-    "flavorText": "A falling star. . . I have to make a wish!"
+    "flavorText": "A falling star. . . I have to make a wish!"
   },
   "set1-010": {
     "id": "set1-010",
@@ -35076,7 +35530,7 @@
       }
     ],
     "author": "Kendall Hale",
-    "flavorText": "Wherever the princess goes, her musketeers are. . . well, they’re around somewhere, probably."
+    "flavorText": "Wherever the princess goes, her musketeers are. . . well, they’re around somewhere, probably."
   },
   "set1-013": {
     "id": "set1-013",
@@ -35098,7 +35552,7 @@
       }
     ],
     "author": "Kendall Hale",
-    "flavorText": "Wherever the princess goes, her musketeers are. . . well, they’re around somewhere, probably."
+    "flavorText": "Wherever the princess goes, her musketeers are. . . well, they’re around somewhere, probably."
   },
   "set1-014": {
     "id": "set1-014",
@@ -35579,7 +36033,7 @@
       }
     ],
     "author": "Luis Huerta",
-    "flavorText": "We know someone who can help you. . . for a price."
+    "flavorText": "We know someone who can help you. . . for a price."
   },
   "set1-044": {
     "id": "set1-044",
@@ -35667,7 +36121,7 @@
       }
     ],
     "author": "Brian Weisz",
-    "flavorText": "We can help you get anything you want.. . ."
+    "flavorText": "We can help you get anything you want.. . ."
   },
   "quest1-047": {
     "id": "quest1-047",
@@ -36194,7 +36648,7 @@
       }
     ],
     "author": "Leonardo Giammichele",
-    "flavorText": "I didn’t want to have to do this, but you leave me no choice.. . ."
+    "flavorText": "I didn’t want to have to do this, but you leave me no choice.. . ."
   },
   "set1-075": {
     "id": "set1-075",
@@ -36368,7 +36822,7 @@
       }
     ],
     "author": "Jared Nickerl",
-    "flavorText": "Don't be too put off by this. . . hunk of hardware."
+    "flavorText": "Don't be too put off by this. . . hunk of hardware."
   },
   "set1-083": {
     "id": "set1-083",
@@ -36390,7 +36844,7 @@
       }
     ],
     "author": "Milica Celikovic",
-    "flavorText": "Created something? Ha! But that would be irresponsible and unethical. I would never, ever. . . make more than one."
+    "flavorText": "Created something? Ha! But that would be irresponsible and unethical. I would never, ever. . . make more than one."
   },
   "set1-084": {
     "id": "set1-084",
@@ -37531,7 +37985,7 @@
       }
     ],
     "author": "Brian Weisz",
-    "flavorText": "Excitement. . . adventure. . . danger lurking around every cor— AAAAAGGH!"
+    "flavorText": "Excitement. . . adventure. . . danger lurking around every cor— AAAAAGGH!"
   },
   "set1-146": {
     "id": "set1-146",
@@ -37597,7 +38051,7 @@
       }
     ],
     "author": "R. La Barbera / L. Giammichele",
-    "flavorText": "Try to understand. I’ve never done a thing on my own. I’ve never had any real friends.. . . I’ve never even been outside the palace walls."
+    "flavorText": "Try to understand. I’ve never done a thing on my own. I’ve never had any real friends.. . . I’ve never even been outside the palace walls."
   },
   "set1-149": {
     "id": "set1-149",
@@ -37640,7 +38094,7 @@
       }
     ],
     "author": "Nicholas Kole",
-    "flavorText": "The princess shall indeed grow in grace and beauty, beloved by all who know her. But before the sun sets on her sixteenth birthday, she shall prick her finger on the spindle of a spinning wheel.. . ."
+    "flavorText": "The princess shall indeed grow in grace and beauty, beloved by all who know her. But before the sun sets on her sixteenth birthday, she shall prick her finger on the spindle of a spinning wheel.. . ."
   },
   "set1-151": {
     "id": "set1-151",
@@ -37947,7 +38401,7 @@
       }
     ],
     "author": "Cookie",
-    "flavorText": "She’ll never see me as anything. . . but a monster."
+    "flavorText": "She’ll never see me as anything. . . but a monster."
   },
   "set1-172": {
     "id": "set1-172",
@@ -37969,7 +38423,7 @@
       }
     ],
     "author": "Cookie",
-    "flavorText": "She’ll never see me as anything. . . but a monster."
+    "flavorText": "She’ll never see me as anything. . . but a monster."
   },
   "set1-173": {
     "id": "set1-173",
@@ -38099,7 +38553,7 @@
       }
     ],
     "author": "Luis Huerta",
-    "flavorText": "Relax, enjoy the trip. . . and don’t get any ideas!"
+    "flavorText": "Relax, enjoy the trip. . . and don’t get any ideas!"
   },
   "set1-179": {
     "id": "set1-179",
@@ -40443,6 +40897,27 @@
     "author": "Francesca Risoldi",
     "flavorText": "How come ghosts get a whole section, but not were-ducks?! —Huey"
   },
+  "set10-067": {
+    "id": "set10-067",
+    "gameCardId": "177",
+    "set": "set10",
+    "cardNumber": 67,
+    "cardIdentifier": "67/204 EN 10",
+    "rarity": "rare",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/67_82a2fcee7e949bc292fc98606bf14961e16f2bcd.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/67_82a2fcee7e949bc292fc98606bf14961e16f2bcd.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/67_c158a5314870d087b1a17e3f3d936e0471eab2f6.jpg"
+      }
+    ],
+    "author": "Irish Chua"
+  },
   "set10-098": {
     "id": "set10-098",
     "gameCardId": "ifu",
@@ -41514,7 +41989,7 @@
       }
     ],
     "author": "Juan Diego Leon",
-    "flavorText": "Just look at it, filled with power for its owner. —Madame Medusa"
+    "flavorText": "Just look at it, filled with power for its owner. —Madame Medusa"
   },
   "quest2-179": {
     "id": "quest2-179",
@@ -44471,7 +44946,7 @@
       }
     ],
     "author": "Cory Godbey",
-    "flavorText": "Once upon a time, a single drop of sunlight fell from the heavens.. . . —Flynn Rider"
+    "flavorText": "Once upon a time, a single drop of sunlight fell from the heavens.. . . —Flynn Rider"
   },
   "gateway1-170": {
     "id": "gateway1-170",
@@ -44645,7 +45120,7 @@
       }
     ],
     "author": "Carlos Gomes Cabral",
-    "flavorText": "Every day they're out there makingDuckTales! Woo-oo!"
+    "flavorText": "Every day they're out there making DuckTales! Woo-oo!"
   },
   "set10-028": {
     "id": "set10-028",
@@ -44755,6 +45230,49 @@
     ],
     "author": "Gabriel Nascimento",
     "flavorText": "You could <try> to run..."
+  },
+  "set10-064": {
+    "id": "set10-064",
+    "gameCardId": "dcb",
+    "set": "set10",
+    "cardNumber": 64,
+    "cardIdentifier": "64/204 EN 10",
+    "rarity": "uncommon",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/64_5be6181cf3fe85df178ea17dbd5a3747d8106ecd.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/64_5be6181cf3fe85df178ea17dbd5a3747d8106ecd.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/64_cebbffef56c873e537ac19227e87c5a68d608392.jpg"
+      }
+    ],
+    "author": "Patri Balanovsky",
+    "flavorText": "Listen, fellas, it's a real ‘what have you done for me lately’ business. So give me something to work with here!"
+  },
+  "set10-065": {
+    "id": "set10-065",
+    "gameCardId": "1im",
+    "set": "set10",
+    "cardNumber": 65,
+    "cardIdentifier": "65/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/65_e2303c36ea97c29f4b06eec39d5d9fd48793fd08.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/65_e2303c36ea97c29f4b06eec39d5d9fd48793fd08.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/65_2b1253ecd5bfb0b7830a1113538a11ee13eedec4.jpg"
+      }
+    ],
+    "author": "Janel Reh"
   },
   "set10-094": {
     "id": "set10-094",
@@ -45123,6 +45641,28 @@
       }
     ],
     "author": "Carlos Luzzi"
+  },
+  "set10-198": {
+    "id": "set10-198",
+    "gameCardId": "1sa",
+    "set": "set10",
+    "cardNumber": 198,
+    "cardIdentifier": "198/204 EN 10",
+    "rarity": "uncommon",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/198_efe4476ec008c197766c947c9465f4861e6e8544.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/198_efe4476ec008c197766c947c9465f4861e6e8544.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/198_67d61c1b1c048888870cb875ea6087ea92bfb73b.jpg"
+      }
+    ],
+    "author": "Kevin Slawinski",
+    "flavorText": "We've not a moment to lose! —Basil"
   },
   "set10-207": {
     "id": "set10-207",
@@ -48220,7 +48760,7 @@
       }
     ],
     "author": "Elodie Mondoloni",
-    "flavorText": "A security device! Easily defeated, of course. Once I make room for the crown, I . . . can . . . bring . . . it . . . to . . . him."
+    "flavorText": "A security device! Easily defeated, of course. Once I make room for the crown, I . . . can . . . bring . . . it . . . to . . . him."
   },
   "set5-095": {
     "id": "set5-095",
@@ -50020,7 +50560,7 @@
       }
     ],
     "author": "Aisha Durmagambetova",
-    "flavorText": "Let’s finish this, binturi. —Namaari"
+    "flavorText": "Let’s finish this, binturi. —Namaari"
   },
   "set2-030": {
     "id": "set2-030",
@@ -51065,7 +51605,7 @@
       }
     ],
     "author": "Ellie Horie",
-    "flavorText": "... Then scrub the terrace, sweep the halls and the stairs, clean the chimneys. And of course there's the mending, and the sewing, and the laundry. . . —Lady Tremaine"
+    "flavorText": "... Then scrub the terrace, sweep the halls and the stairs, clean the chimneys. And of course there's the mending, and the sewing, and the laundry. . . —Lady Tremaine"
   },
   "set1-095": {
     "id": "set1-095",
@@ -51395,7 +51935,7 @@
       }
     ],
     "author": "Kenneth Anderson",
-    "flavorText": ". . . Don't fix it."
+    "flavorText": ". . . Don't fix it."
   },
   "gateway1-163": {
     "id": "gateway1-163",
@@ -51505,7 +52045,7 @@
       }
     ],
     "author": "Koni",
-    "flavorText": "Shining, shimmering, splendid. . ."
+    "flavorText": "Shining, shimmering, splendid. . ."
   },
   "set1-196": {
     "id": "set1-196",

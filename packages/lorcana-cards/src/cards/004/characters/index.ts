@@ -5,15 +5,16 @@ export { mirabelMadrigalProphecyFinder } from "./019-mirabel-madrigal-prophecy-f
 export { antonioMadrigalAnimalExpert } from "./035-antonio-madrigal-animal-expert";
 export { magicBroomLivelySweeper } from "./049-magic-broom-lively-sweeper";
 export { magicalMaidFeatherDuster } from "./050-magical-maid-feather-duster";
+export { mrsPottsEnchantedTeapot } from "./052-mrs-potts-enchanted-teapot";
 export { picoHelpfulToucan } from "./055-pico-helpful-toucan";
 export { ursulaMadSeaWitch } from "./057-ursula-mad-sea-witch";
-export { yenSidPowerfulSorcerer } from "./059-yen-sid-powerful-sorcerer";
 export { gusChampionOfCheese } from "./073-gus-champion-of-cheese";
 export { painImmortalSidekick } from "./081-pain-immortal-sidekick";
 export { peteRottenGuy } from "./086-pete-rotten-guy";
 export { torFlorist } from "./091-tor-florist";
 export { benjaBoldUniter } from "./104-benja-bold-uniter";
 export { herculesClumsyKid } from "./108-hercules-clumsy-kid";
+export { herculesDaringDemigod } from "./109-hercules-daring-demigod";
 export { khanBelovedSteed } from "./110-khan-beloved-steed";
 export { liShangGeneralsSon } from "./111-li-shang-generals-son";
 export { nessusRiverGuardian } from "./118-nessus-river-guardian";

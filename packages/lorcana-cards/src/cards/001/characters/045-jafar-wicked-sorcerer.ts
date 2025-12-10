@@ -9,7 +9,7 @@ export const jafarWickedSorcerer: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Aladdin",
   set: "001",
-  text: "Challenger +3 (While challenging, this character gets +3.)",
+  text: "Challenger +3 (While challenging, this character gets +3 {S}.)",
   cost: 4,
   strength: 2,
   willpower: 5,

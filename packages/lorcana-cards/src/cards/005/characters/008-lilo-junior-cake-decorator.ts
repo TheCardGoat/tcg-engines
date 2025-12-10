@@ -9,7 +9,7 @@ export const liloJuniorCakeDecorator: CharacterCard = {
   inkType: ["amber"],
   franchise: "Lilo and Stitch",
   set: "005",
-  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+  text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
   cost: 2,
   strength: 1,
   willpower: 3,

@@ -9,7 +9,7 @@ export const kronkUnlicensedInvestigator: CharacterCard = {
   inkType: ["steel"],
   franchise: "Emperors New Groove",
   set: "005",
-  text: "Challenger +1 (While challenging, this character gets +1.)",
+  text: "Challenger +1 (While challenging, this character gets +1 {S}.)",
   cost: 2,
   strength: 1,
   willpower: 4,

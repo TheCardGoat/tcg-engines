@@ -9,7 +9,7 @@ export const iagoStompinMad: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Aladdin",
   set: "010",
-  text: "Challenger +5 (While challenging, this character gets +5.)",
+  text: "Challenger +5 (While challenging, this character gets +5 {S}.)",
   cost: 2,
   strength: 0,
   willpower: 2,

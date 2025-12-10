@@ -9,7 +9,7 @@ export const druunRavenousPlague: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Raya and the Last Dragon",
   set: "008",
-  text: "Challenger +4 (While challenging, this character gets +4.)",
+  text: "Challenger +4 (While challenging, this character gets +4 {S}.)",
   cost: 4,
   strength: 1,
   willpower: 5,

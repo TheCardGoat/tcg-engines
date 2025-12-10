@@ -9,7 +9,7 @@ export const robinHoodEyeForDetail: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Robin Hood",
   set: "007",
-  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+  text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
   cost: 3,
   strength: 3,
   willpower: 3,

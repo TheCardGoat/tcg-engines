@@ -9,7 +9,7 @@ export const happyGoodnatured: CharacterCard = {
   inkType: ["amber"],
   franchise: "Snow White",
   set: "002",
-  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
+  text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
   cost: 5,
   strength: 3,
   willpower: 5,
