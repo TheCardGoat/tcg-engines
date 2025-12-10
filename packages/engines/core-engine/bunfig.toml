@@ -1,9 +1,0 @@
-[test]
-root = "./"
-preload = ["./bun-test-setup.ts"]
-
-# Exclude card definition tests as they are not finalized yet
-exclude = ["engines/lorcana/src/cards/definitions/**/*.test.ts"]
-
-[install]
-exact = true

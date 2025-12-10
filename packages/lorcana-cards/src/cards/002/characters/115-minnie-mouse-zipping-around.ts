@@ -8,11 +8,11 @@ export const minnieMouseZippingAround: CharacterCard = {
   fullName: "Minnie Mouse - Zipping Around",
   inkType: ["ruby"],
   set: "002",
-  cardNumber: "115",
   cost: 2,
   strength: 3,
   willpower: 2,
   lore: 1,
+  cardNumber: 115,
   inkable: true,
   vanilla: true,
   externalIds: {

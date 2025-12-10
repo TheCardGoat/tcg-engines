@@ -9,11 +9,11 @@ export const robinHoodDaydreamer: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Robin Hood",
   set: "009",
-  cardNumber: "070",
   cost: 6,
   strength: 4,
   willpower: 5,
   lore: 4,
+  cardNumber: 70,
   inkable: true,
   vanilla: true,
   externalIds: {

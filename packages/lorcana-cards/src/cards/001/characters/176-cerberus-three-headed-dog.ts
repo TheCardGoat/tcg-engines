@@ -9,11 +9,11 @@ export const cerberusThreeheadedDog: CharacterCard = {
   inkType: ["steel"],
   franchise: "Hercules",
   set: "001",
-  cardNumber: "176",
   cost: 5,
   strength: 5,
   willpower: 6,
   lore: 1,
+  cardNumber: 176,
   inkable: true,
   vanilla: true,
   externalIds: {

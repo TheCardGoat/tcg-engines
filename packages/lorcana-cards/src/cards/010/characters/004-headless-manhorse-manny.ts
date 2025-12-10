@@ -9,11 +9,11 @@ export const headlessManhorseManny: CharacterCard = {
   inkType: ["amber"],
   franchise: "Ducktales",
   set: "010",
-  cardNumber: "004",
   cost: 6,
   strength: 5,
   willpower: 10,
   lore: 1,
+  cardNumber: 4,
   inkable: true,
   vanilla: true,
   externalIds: {

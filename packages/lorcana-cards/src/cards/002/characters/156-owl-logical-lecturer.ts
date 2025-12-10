@@ -9,11 +9,11 @@ export const owlLogicalLecturer: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Winnie the Pooh",
   set: "002",
-  cardNumber: "156",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 156,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const mufasaChampionOfThePrideLands: CharacterCard = {
-  id: "1pd",
+  id: "1pc",
   cardType: "character",
   name: "Mufasa",
   version: "Champion of the Pride Lands",
@@ -9,11 +9,11 @@ export const mufasaChampionOfThePrideLands: CharacterCard = {
   inkType: ["steel"],
   franchise: "Lion King",
   set: "003",
-  cardNumber: "185",
   cost: 7,
   strength: 3,
   willpower: 10,
   lore: 3,
+  cardNumber: 185,
   inkable: true,
   vanilla: true,
   externalIds: {

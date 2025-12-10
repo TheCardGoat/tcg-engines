@@ -10,16 +10,15 @@ export const luisaMadrigalMagicallyStrongOne: CharacterCard = {
   franchise: "Encanto",
   set: "009",
   text: "Rush (This character can challenge the turn they're played.)",
-  cardNumber: "058",
   cost: 4,
   strength: 4,
   willpower: 3,
   lore: 1,
+  cardNumber: 58,
   inkable: false,
   externalIds: {
     ravensburger: "e5dd22ae0e83e9f520522e07643858b4e2d081e7",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "1rs-1",

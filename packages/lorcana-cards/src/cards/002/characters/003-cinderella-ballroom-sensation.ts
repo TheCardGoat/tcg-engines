@@ -10,21 +10,15 @@ export const cinderellaBallroomSensation: CharacterCard = {
   franchise: "Cinderella",
   set: "002",
   text: "Singer 3 (This character counts as cost 3 to sing songs.)",
-  cardNumber: "003",
   cost: 1,
   strength: 1,
   willpower: 2,
   lore: 1,
+  cardNumber: 3,
   inkable: true,
   externalIds: {
     ravensburger: "1053acb0af19beb3e33f5d547aa4078efbd13b6c",
   },
-  keywords: [
-    {
-      type: "Singer",
-      value: 3,
-    },
-  ],
   abilities: [
     {
       id: "4j3-1",

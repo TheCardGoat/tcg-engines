@@ -9,11 +9,11 @@ export const cardSoldiersFullDeck: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Alice in Wonderland",
   set: "009",
-  cardNumber: "122",
   cost: 5,
   strength: 5,
   willpower: 5,
   lore: 2,
+  cardNumber: 122,
   inkable: true,
   vanilla: true,
   externalIds: {

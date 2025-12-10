@@ -9,11 +9,11 @@ export const nalaFierceFriend: CharacterCard = {
   inkType: ["steel"],
   franchise: "Lion King",
   set: "003",
-  cardNumber: "186",
   cost: 3,
   strength: 2,
   willpower: 4,
   lore: 2,
+  cardNumber: 186,
   inkable: true,
   vanilla: true,
   externalIds: {

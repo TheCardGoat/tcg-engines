@@ -8,11 +8,11 @@ export const peteFreebooter: CharacterCard = {
   fullName: "Pete - Freebooter",
   inkType: ["ruby"],
   set: "006",
-  cardNumber: "122",
   cost: 3,
   strength: 5,
   willpower: 2,
   lore: 1,
+  cardNumber: 122,
   inkable: true,
   vanilla: true,
   externalIds: {

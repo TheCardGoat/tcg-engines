@@ -1,12 +1,14 @@
 export { deweyLovableShowoff } from "./002-dewey-lovable-showoff";
 export { charlotteLaBouffMardiGrasPrincess } from "./008-charlotte-la-bouff-mardi-gras-princess";
 export { jimDearBelovedHusband } from "./012-jim-dear-beloved-husband";
+export { clawhauserFrontDeskOfficer } from "./035-clawhauser-front-desk-officer";
 export { palaceGuardSpectralSentry } from "./045-palace-guard-spectral-sentry";
 export { druunRavenousPlague } from "./046-druun-ravenous-plague";
 export { ryderFleetfootedInfiltrator } from "./056-ryder-fleet-footed-infiltrator";
 export { bambiPrinceOfTheForest } from "./057-bambi-prince-of-the-forest";
 export { poeDeSpellMagicasBrother } from "./058-poe-de-spell-magicas-brother";
 export { madamMimUpToNoGood } from "./059-madam-mim-up-to-no-good";
+export { blueFairyGuidingLight } from "./071-blue-fairy-guiding-light";
 export { wilhelminaPackardTheRadioOperator } from "./085-wilhelmina-packard-the-radio-operator";
 export { tipoJuniorChipmunk } from "./089-tipo-junior-chipmunk";
 export { daleBumbler } from "./094-dale-bumbler";

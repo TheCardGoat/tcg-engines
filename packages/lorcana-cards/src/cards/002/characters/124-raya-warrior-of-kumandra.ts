@@ -9,11 +9,11 @@ export const rayaWarriorOfKumandra: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Raya and the Last Dragon",
   set: "002",
-  cardNumber: "124",
   cost: 4,
   strength: 5,
   willpower: 3,
   lore: 1,
+  cardNumber: 124,
   inkable: true,
   vanilla: true,
   externalIds: {

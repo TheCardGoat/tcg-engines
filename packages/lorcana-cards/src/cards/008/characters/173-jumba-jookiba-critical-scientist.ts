@@ -9,11 +9,11 @@ export const jumbaJookibaCriticalScientist: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Lilo and Stitch",
   set: "008",
-  cardNumber: "173",
   cost: 4,
   strength: 1,
   willpower: 6,
   lore: 2,
+  cardNumber: 173,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -10,21 +10,16 @@ export const princeEricDashingAndBrave: CharacterCard = {
   franchise: "Little Mermaid",
   set: "009",
   text: "Challenger +2 (While challenging, this character gets +2.)",
-  cardNumber: "194",
   cost: 2,
   strength: 1,
   willpower: 3,
   lore: 1,
+  cardNumber: 194,
   inkable: true,
   externalIds: {
     ravensburger: "b003941c689f0757920787101a49607295e99da1",
   },
-  keywords: [
-    {
-      type: "Challenger",
-      value: 2,
-    },
-  ],
+
   abilities: [
     {
       id: "1cu-1",

@@ -9,11 +9,11 @@ export const shereKhanKeeneyedHunter: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Jungle Book",
   set: "010",
-  cardNumber: "108",
   cost: 2,
   strength: 3,
   willpower: 3,
   lore: 1,
+  cardNumber: 108,
   inkable: true,
   vanilla: true,
   externalIds: {

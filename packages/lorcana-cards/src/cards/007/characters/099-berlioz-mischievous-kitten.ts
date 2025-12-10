@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const berliozMischievousKitten: CharacterCard = {
-  id: "1n1",
+  id: "1n0",
   cardType: "character",
   name: "Berlioz",
   version: "Mischievous Kitten",
@@ -9,11 +9,11 @@ export const berliozMischievousKitten: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Aristocats",
   set: "007",
-  cardNumber: "099",
   cost: 3,
   strength: 2,
   willpower: 5,
   lore: 1,
+  cardNumber: 99,
   inkable: true,
   vanilla: true,
   externalIds: {

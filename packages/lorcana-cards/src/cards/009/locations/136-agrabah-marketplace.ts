@@ -9,10 +9,10 @@ export const agrabahMarketplace: LocationCard = {
   inkType: ["ruby"],
   franchise: "Aladdin",
   set: "009",
-  cardNumber: "136",
   cost: 3,
   moveCost: 1,
   lore: 0,
+  cardNumber: 136,
   inkable: true,
   vanilla: true,
   externalIds: {

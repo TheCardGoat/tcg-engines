@@ -9,11 +9,11 @@ export const basilPerceptiveInvestigator: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Great Mouse Detective",
   set: "002",
-  cardNumber: "140",
   cost: 4,
   strength: 3,
   willpower: 4,
   lore: 2,
+  cardNumber: 140,
   inkable: true,
   vanilla: true,
   externalIds: {

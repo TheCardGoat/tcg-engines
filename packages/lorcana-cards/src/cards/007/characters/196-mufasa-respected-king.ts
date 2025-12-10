@@ -9,11 +9,11 @@ export const mufasaRespectedKing: CharacterCard = {
   inkType: ["steel"],
   franchise: "Lion King",
   set: "007",
-  cardNumber: "196",
   cost: 4,
   strength: 4,
   willpower: 4,
   lore: 1,
+  cardNumber: 196,
   inkable: true,
   vanilla: true,
   externalIds: {

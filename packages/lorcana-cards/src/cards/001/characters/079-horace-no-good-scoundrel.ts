@@ -9,11 +9,11 @@ export const horaceNogoodScoundrel: CharacterCard = {
   inkType: ["emerald"],
   franchise: "101 Dalmatians",
   set: "001",
-  cardNumber: "079",
   cost: 3,
   strength: 4,
   willpower: 3,
   lore: 1,
+  cardNumber: 79,
   inkable: true,
   vanilla: true,
   externalIds: {

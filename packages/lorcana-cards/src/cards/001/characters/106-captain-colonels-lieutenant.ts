@@ -9,11 +9,11 @@ export const captainColonelsLieutenant: CharacterCard = {
   inkType: ["ruby"],
   franchise: "101 Dalmatians",
   set: "001",
-  cardNumber: "106",
   cost: 5,
   strength: 6,
   willpower: 5,
   lore: 1,
+  cardNumber: 106,
   inkable: true,
   vanilla: true,
   externalIds: {

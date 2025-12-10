@@ -9,11 +9,11 @@ export const jasmineDisguised: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Aladdin",
   set: "001",
-  cardNumber: "148",
   cost: 3,
   strength: 3,
   willpower: 3,
   lore: 2,
+  cardNumber: 148,
   inkable: true,
   vanilla: true,
   externalIds: {

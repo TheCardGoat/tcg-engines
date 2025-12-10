@@ -9,11 +9,11 @@ export const banzaiGluttonousPredator: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Lion King",
   set: "005",
-  cardNumber: "080",
   cost: 2,
   strength: 3,
   willpower: 2,
   lore: 2,
+  cardNumber: 80,
   inkable: false,
   vanilla: true,
   externalIds: {

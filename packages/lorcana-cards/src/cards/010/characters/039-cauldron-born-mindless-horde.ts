@@ -9,11 +9,11 @@ export const cauldronBornMindlessHorde: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Black Cauldron",
   set: "010",
-  cardNumber: "039",
   cost: 5,
   strength: 6,
   willpower: 7,
   lore: 1,
+  cardNumber: 39,
   inkable: true,
   vanilla: true,
   externalIds: {

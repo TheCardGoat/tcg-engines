@@ -28,7 +28,10 @@ import path from "node:path";
 import { generateCanonicalCards } from "./generators/canonical-generator";
 import { generateCardFiles } from "./generators/file-generator";
 import { createIdMapping } from "./generators/id-generator";
-import { isKeywordOnlyCard } from "./generators/parser-validator";
+import {
+  isKeywordOnlyCard,
+  isParseableCard,
+} from "./generators/parser-validator";
 import {
   calculateSetTotals,
   generatePrintings,
@@ -157,6 +160,9 @@ async function main() {
   writeJson(path.join(DATA_OUTPUT_DIR, "printings.json"), printings);
   console.log("  ✅ printings.json");
 
+  writeJson(path.join(DATA_OUTPUT_DIR, "canonical-cards.json"), canonicalCards);
+  console.log("  ✅ canonical-cards.json");
+
   writeJson(ID_MAPPING_PATH, idMapping);
   console.log("  ✅ id-mapping.json");
 
@@ -164,29 +170,31 @@ async function main() {
   console.log("\n📂 Generating card TypeScript files...");
 
   // Clear existing cards directory
+  /*
   if (fs.existsSync(CARDS_OUTPUT_DIR)) {
     fs.rmSync(CARDS_OUTPUT_DIR, { recursive: true });
   }
+  */
 
-  // Filter to vanilla cards + keyword-only cards (parseable abilities)
+  // Filter to vanilla cards + parseable cards (keywords or action effects)
   const generatableCards: Record<string, (typeof canonicalCards)[string]> = {};
   let vanillaCount = 0;
-  let keywordOnlyCount = 0;
+  let parseableCount = 0;
 
   for (const [id, card] of Object.entries(canonicalCards)) {
     if (card.vanilla) {
       generatableCards[id] = card;
       vanillaCount++;
-    } else if (isKeywordOnlyCard(card)) {
+    } else if (isParseableCard(card)) {
       generatableCards[id] = card;
-      keywordOnlyCount++;
+      parseableCount++;
     }
   }
   console.log(
     `  Filtering to ${Object.keys(generatableCards).length} generatable cards:`,
   );
   console.log(`    - Vanilla: ${vanillaCount}`);
-  console.log(`    - Keyword-only: ${keywordOnlyCount}`);
+  console.log(`    - Parseable (keywords/actions): ${parseableCount}`);
 
   generateCardFiles(CARDS_OUTPUT_DIR, generatableCards, sets);
 

@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const sirHissAggravatingAsp: CharacterCard = {
-  id: "1vh",
+  id: "1vd",
   cardType: "character",
   name: "Sir Hiss",
   version: "Aggravating Asp",
@@ -10,19 +10,18 @@ export const sirHissAggravatingAsp: CharacterCard = {
   franchise: "Robin Hood",
   set: "003",
   text: "Evasive (Only characters with Evasive can challenge this character.)",
-  cardNumber: "086",
   cost: 2,
   strength: 3,
   willpower: 1,
   lore: 1,
+  cardNumber: 86,
   inkable: true,
   externalIds: {
     ravensburger: "f2df9a64c41a939980ee70dfe3cce16063dffbfb",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
-      id: "1vh-1",
+      id: "1vd-1",
       text: "Evasive",
       type: "keyword",
       keyword: "Evasive",

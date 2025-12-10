@@ -9,11 +9,11 @@ export const madamMimUpToNoGood: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Sword in the Stone",
   set: "008",
-  cardNumber: "059",
   cost: 3,
   strength: 4,
   willpower: 3,
   lore: 1,
+  cardNumber: 59,
   inkable: true,
   vanilla: true,
   externalIds: {

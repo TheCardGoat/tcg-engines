@@ -9,11 +9,11 @@ export const ariannaQueenOfCorona: CharacterCard = {
   inkType: ["steel"],
   franchise: "Tangled",
   set: "008",
-  cardNumber: "191",
   cost: 5,
   strength: 5,
   willpower: 5,
   lore: 2,
+  cardNumber: 191,
   inkable: true,
   vanilla: true,
   externalIds: {

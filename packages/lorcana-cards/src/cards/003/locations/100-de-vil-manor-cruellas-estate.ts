@@ -9,10 +9,10 @@ export const deVilManorCruellasEstate: LocationCard = {
   inkType: ["emerald"],
   franchise: "101 Dalmatians",
   set: "003",
-  cardNumber: "100",
   cost: 1,
   moveCost: 1,
   lore: 0,
+  cardNumber: 100,
   inkable: true,
   vanilla: true,
   externalIds: {

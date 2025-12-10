@@ -9,11 +9,11 @@ export const benjaBoldUniter: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Raya and the Last Dragon",
   set: "004",
-  cardNumber: "104",
   cost: 4,
   strength: 5,
   willpower: 3,
   lore: 1,
+  cardNumber: 104,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const theSultanPlayfulMonarch: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Aladdin",
   set: "010",
-  cardNumber: "151",
   cost: 1,
   strength: 1,
   willpower: 1,
   lore: 2,
+  cardNumber: 151,
   inkable: false,
   vanilla: true,
   externalIds: {

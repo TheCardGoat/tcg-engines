@@ -9,10 +9,10 @@ export const forbiddenMountainMaleficentsCastle: LocationCard = {
   inkType: ["amethyst"],
   franchise: "Sleeping Beauty",
   set: "003",
-  cardNumber: "066",
   cost: 2,
   moveCost: 1,
   lore: 0,
+  cardNumber: 66,
   inkable: true,
   vanilla: true,
   externalIds: {

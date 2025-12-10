@@ -9,11 +9,11 @@ export const hiramFlavershamIntriguedInventor: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Great Mouse Detective",
   set: "006",
-  cardNumber: "159",
   cost: 2,
   strength: 0,
   willpower: 2,
   lore: 3,
+  cardNumber: 159,
   inkable: false,
   vanilla: true,
   externalIds: {

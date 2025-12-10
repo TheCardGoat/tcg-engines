@@ -209,7 +209,7 @@ export interface LoseLoreEffect {
  */
 export interface ExertEffect {
   type: "exert";
-  target: CharacterTarget | ItemTarget;
+  target: CharacterTarget | ItemTarget | LocationTarget;
 }
 
 /**
@@ -219,7 +219,7 @@ export interface ExertEffect {
  */
 export interface ReadyEffect {
   type: "ready";
-  target: CharacterTarget | ItemTarget;
+  target: CharacterTarget | ItemTarget | LocationTarget;
   /** Restriction after readying */
   restriction?: "cant-quest" | "cant-challenge" | "cant-quest-or-challenge";
 }
@@ -445,8 +445,9 @@ export interface RestrictionEffect {
     | "cant-be-dealt-damage"
     | "cant-sing"
     | "cant-move"
-    | "enters-play-exerted";
-  target: CharacterTarget;
+    | "enters-play-exerted"
+    | "skip-draw-step";
+  target: CharacterTarget | PlayerTarget;
   duration?: EffectDuration;
 }
 
@@ -550,6 +551,47 @@ export interface RepeatEffect {
 }
 
 // ============================================================================
+// Special State Modifications
+// ============================================================================
+
+/**
+ * Enters play modification effect
+ *
+ * @example "Enters play exerted"
+ * @example "Enters play with 2 damage"
+ */
+export interface EntersPlayEffect {
+  type: "enters-play-modification";
+  modification: "exerted" | "damaged";
+  amount?: number; // for damaged
+  target: CharacterTarget;
+}
+
+/**
+ * Win condition modification effect
+ *
+ * @example "Opponents need 25 lore to win"
+ */
+export interface WinConditionEffect {
+  type: "win-condition-modification";
+  loreRequired: number;
+  target: PlayerTarget;
+}
+
+/**
+ * Property modification effect
+ *
+ * @example "This character counts as being named 'Dalmatian Puppy'"
+ */
+export interface PropertyModificationEffect {
+  type: "property-modification";
+  property: "name";
+  value: string;
+  operation: "add-alias";
+  target: CharacterTarget;
+}
+
+// ============================================================================
 // Reveal/Search Effects
 // ============================================================================
 
@@ -627,7 +669,11 @@ export type Effect =
   | RepeatEffect
   // Reveal/Search
   | RevealHandEffect
-  | SearchDeckEffect;
+  | SearchDeckEffect
+  // Special State Modifications
+  | EntersPlayEffect
+  | WinConditionEffect
+  | PropertyModificationEffect;
 
 /**
  * Static effects (always active, used in static abilities)
@@ -637,7 +683,10 @@ export type StaticEffect =
   | ModifyStatEffect
   | GainKeywordEffect
   | RestrictionEffect
-  | GrantAbilityEffect;
+  | GrantAbilityEffect
+  | EntersPlayEffect
+  | WinConditionEffect
+  | PropertyModificationEffect;
 
 // ============================================================================
 // Type Guards

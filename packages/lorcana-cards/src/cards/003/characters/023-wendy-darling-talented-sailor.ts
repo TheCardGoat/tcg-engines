@@ -9,11 +9,11 @@ export const wendyDarlingTalentedSailor: CharacterCard = {
   inkType: ["amber"],
   franchise: "Peter Pan",
   set: "003",
-  cardNumber: "023",
   cost: 2,
   strength: 1,
   willpower: 3,
   lore: 2,
+  cardNumber: 23,
   inkable: true,
   vanilla: true,
   externalIds: {

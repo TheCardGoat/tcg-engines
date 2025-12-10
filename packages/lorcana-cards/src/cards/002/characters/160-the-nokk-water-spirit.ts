@@ -10,16 +10,15 @@ export const theNokkWaterSpirit: CharacterCard = {
   franchise: "Frozen",
   set: "002",
   text: "Ward (Opponents can't choose this character except to challenge.)",
-  cardNumber: "160",
   cost: 4,
   strength: 4,
   willpower: 3,
   lore: 1,
+  cardNumber: 160,
   inkable: true,
   externalIds: {
     ravensburger: "5e84bd330102f933591077e27d65cdc0c3dbfdf1",
   },
-  keywords: ["Ward"],
   abilities: [
     {
       id: "q84-1",

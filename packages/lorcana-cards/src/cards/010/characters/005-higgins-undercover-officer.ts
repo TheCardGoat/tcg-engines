@@ -9,11 +9,11 @@ export const higginsUndercoverOfficer: CharacterCard = {
   inkType: ["amber"],
   franchise: "Zootropolis",
   set: "010",
-  cardNumber: "005",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 5,
   inkable: true,
   vanilla: true,
   externalIds: {

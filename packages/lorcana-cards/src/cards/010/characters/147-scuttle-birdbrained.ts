@@ -10,16 +10,15 @@ export const scuttleBirdbrained: CharacterCard = {
   franchise: "Little Mermaid",
   set: "010",
   text: "Ward (Opponents can't choose this character except to challenge.)",
-  cardNumber: "147",
   cost: 5,
   strength: 5,
   willpower: 5,
   lore: 2,
+  cardNumber: 147,
   inkable: true,
   externalIds: {
     ravensburger: "8ded4e32f6390106d15d72e5aab8aa2ebd2b2963",
   },
-  keywords: ["Ward"],
   abilities: [
     {
       id: "13d-1",

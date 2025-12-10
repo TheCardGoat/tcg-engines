@@ -9,11 +9,11 @@ export const monstroWhaleOfAWhale: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Pinocchio",
   set: "005",
-  cardNumber: "052",
   cost: 5,
   strength: 5,
   willpower: 6,
   lore: 1,
+  cardNumber: 52,
   inkable: true,
   vanilla: true,
   externalIds: {

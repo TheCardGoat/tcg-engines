@@ -9,11 +9,11 @@ export const tamatoaDrabLittleCrab: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Moana",
   set: "001",
-  cardNumber: "092",
   cost: 2,
   strength: 1,
   willpower: 4,
   lore: 1,
+  cardNumber: 92,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -10,16 +10,15 @@ export const archimedesExasperatedOwl: CharacterCard = {
   franchise: "Sword in the Stone",
   set: "005",
   text: "Evasive (Only characters with Evasive can challenge this character.)",
-  cardNumber: "039",
   cost: 3,
   strength: 2,
   willpower: 2,
   lore: 2,
+  cardNumber: 39,
   inkable: true,
   externalIds: {
     ravensburger: "8c1eb6e2d2c4b6d20d3428c9522a8bb003976cda",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "12v-1",

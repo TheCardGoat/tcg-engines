@@ -9,11 +9,11 @@ export const liloMakingAWish: CharacterCard = {
   inkType: ["amber"],
   franchise: "Lilo and Stitch",
   set: "001",
-  cardNumber: "009",
   cost: 1,
   strength: 1,
   willpower: 1,
   lore: 2,
+  cardNumber: 9,
   inkable: false,
   vanilla: true,
   externalIds: {

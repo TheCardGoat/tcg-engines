@@ -14,6 +14,7 @@ export { peteRottenGuy } from "./086-pete-rotten-guy";
 export { torFlorist } from "./091-tor-florist";
 export { benjaBoldUniter } from "./104-benja-bold-uniter";
 export { herculesClumsyKid } from "./108-hercules-clumsy-kid";
+export { herculesDaringDemigod } from "./109-hercules-daring-demigod";
 export { khanBelovedSteed } from "./110-khan-beloved-steed";
 export { liShangGeneralsSon } from "./111-li-shang-generals-son";
 export { nessusRiverGuardian } from "./118-nessus-river-guardian";

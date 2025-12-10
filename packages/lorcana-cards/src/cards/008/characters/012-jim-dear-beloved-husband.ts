@@ -10,16 +10,15 @@ export const jimDearBelovedHusband: CharacterCard = {
   franchise: "Lady and the Tramp",
   set: "008",
   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-  cardNumber: "012",
   cost: 2,
   strength: 0,
   willpower: 4,
   lore: 1,
+  cardNumber: 12,
   inkable: true,
   externalIds: {
     ravensburger: "2cd509bc3d4a9b911eb07cec23d5037de65bf673",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "cft-1",

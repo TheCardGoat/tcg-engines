@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const kristoffOfficialIceMaster: CharacterCard = {
-  id: "1pe",
+  id: "1pd",
   cardType: "character",
   name: "Kristoff",
   version: "Official Ice Master",
@@ -9,11 +9,11 @@ export const kristoffOfficialIceMaster: CharacterCard = {
   inkType: ["steel"],
   franchise: "Frozen",
   set: "001",
-  cardNumber: "182",
   cost: 3,
   strength: 3,
   willpower: 3,
   lore: 2,
+  cardNumber: 182,
   inkable: true,
   vanilla: true,
   externalIds: {

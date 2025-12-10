@@ -9,11 +9,11 @@ export const viranaFangChief: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Raya and the Last Dragon",
   set: "009",
-  cardNumber: "082",
   cost: 5,
   strength: 5,
   willpower: 5,
   lore: 2,
+  cardNumber: 82,
   inkable: true,
   vanilla: true,
   externalIds: {

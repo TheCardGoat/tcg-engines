@@ -9,11 +9,11 @@ export const tukeNorthernMoose: CharacterCard = {
   inkType: ["amber"],
   franchise: "Brother Bear",
   set: "005",
-  cardNumber: "007",
   cost: 4,
   strength: 4,
   willpower: 4,
   lore: 1,
+  cardNumber: 7,
   inkable: true,
   vanilla: true,
   externalIds: {

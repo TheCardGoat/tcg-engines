@@ -9,11 +9,11 @@ export const painImmortalSidekick: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Hercules",
   set: "004",
-  cardNumber: "081",
   cost: 3,
   strength: 2,
   willpower: 4,
   lore: 2,
+  cardNumber: 81,
   inkable: true,
   vanilla: true,
   externalIds: {

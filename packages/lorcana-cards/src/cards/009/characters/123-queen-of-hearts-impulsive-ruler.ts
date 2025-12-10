@@ -10,16 +10,15 @@ export const queenOfHeartsImpulsiveRuler: CharacterCard = {
   franchise: "Alice in Wonderland",
   set: "009",
   text: "Rush (This character can challenge the turn they're played.)",
-  cardNumber: "123",
   cost: 2,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 123,
   inkable: true,
   externalIds: {
     ravensburger: "8260dc617e55b1bdf94da0f0bf4b25bf196d0848",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "106-1",

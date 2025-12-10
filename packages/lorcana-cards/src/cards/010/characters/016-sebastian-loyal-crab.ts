@@ -9,11 +9,11 @@ export const sebastianLoyalCrab: CharacterCard = {
   inkType: ["amber"],
   franchise: "Little Mermaid",
   set: "010",
-  cardNumber: "016",
   cost: 2,
   strength: 1,
   willpower: 1,
   lore: 3,
+  cardNumber: 16,
   inkable: false,
   vanilla: true,
   externalIds: {

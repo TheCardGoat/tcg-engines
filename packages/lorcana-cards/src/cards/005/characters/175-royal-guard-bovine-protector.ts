@@ -9,11 +9,11 @@ export const royalGuardBovineProtector: CharacterCard = {
   inkType: ["steel"],
   franchise: "Emperors New Groove",
   set: "005",
-  cardNumber: "175",
   cost: 4,
   strength: 1,
   willpower: 7,
   lore: 1,
+  cardNumber: 175,
   inkable: true,
   vanilla: true,
   externalIds: {

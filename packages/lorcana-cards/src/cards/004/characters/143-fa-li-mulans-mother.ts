@@ -9,11 +9,11 @@ export const faLiMulansMother: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Mulan",
   set: "004",
-  cardNumber: "143",
   cost: 1,
   strength: 1,
   willpower: 3,
   lore: 1,
+  cardNumber: 143,
   inkable: true,
   vanilla: true,
   externalIds: {

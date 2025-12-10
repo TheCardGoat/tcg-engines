@@ -9,11 +9,11 @@ export const theQueenRegalMonarch: CharacterCard = {
   inkType: ["amber"],
   franchise: "Snow White",
   set: "009",
-  cardNumber: "007",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 7,
   inkable: true,
   vanilla: true,
   externalIds: {

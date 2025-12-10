@@ -9,11 +9,11 @@ export const abuMischievousMonkey: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Aladdin",
   set: "001",
-  cardNumber: "103",
   cost: 3,
   strength: 3,
   willpower: 2,
   lore: 2,
+  cardNumber: 103,
   inkable: true,
   vanilla: true,
   externalIds: {

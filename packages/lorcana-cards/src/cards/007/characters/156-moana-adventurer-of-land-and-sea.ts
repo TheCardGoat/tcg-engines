@@ -9,11 +9,11 @@ export const moanaAdventurerOfLandAndSea: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Moana",
   set: "007",
-  cardNumber: "156",
   cost: 3,
   strength: 1,
   willpower: 6,
   lore: 1,
+  cardNumber: 156,
   inkable: true,
   vanilla: true,
   externalIds: {

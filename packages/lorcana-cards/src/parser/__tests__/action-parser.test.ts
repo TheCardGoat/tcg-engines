@@ -79,7 +79,13 @@ describe("Action Parser", () => {
             effect: {
               type: "deal-damage",
               amount: 3,
-              target: "CHOSEN_CHARACTER",
+              target: {
+                selector: "chosen",
+                count: 1,
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["character"],
+              },
             },
           },
         },
@@ -99,7 +105,13 @@ describe("Action Parser", () => {
             effect: {
               type: "deal-damage",
               amount: 2,
-              target: "ALL_OPPOSING_CHARACTERS",
+              target: {
+                selector: "all",
+                count: "all",
+                owner: "opponent",
+                zones: ["play"],
+                cardTypes: ["character"],
+              },
             },
           },
         },
@@ -116,7 +128,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "banish" },
+            effect: {
+              type: "banish",
+              target: {
+                selector: "all",
+                count: "all",
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["item"],
+              },
+            },
           },
         },
       });
@@ -130,7 +151,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "banish", target: "CHOSEN_CHARACTER" },
+            effect: {
+              type: "banish",
+              target: {
+                selector: "chosen",
+                count: 1,
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["character"],
+              },
+            },
           },
         },
       });
@@ -144,7 +174,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "banish" },
+            effect: {
+              type: "banish",
+              target: {
+                selector: "all",
+                count: "all",
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["character"],
+              },
+            },
           },
         },
       });
@@ -158,7 +197,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "banish" },
+            effect: {
+              type: "banish",
+              target: {
+                selector: "all",
+                count: "all",
+                owner: "opponent",
+                zones: ["play"],
+                cardTypes: ["item"],
+              },
+            },
           },
         },
       });
@@ -204,7 +252,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "ready", target: "CHOSEN_CHARACTER" },
+            effect: {
+              type: "ready",
+              target: {
+                selector: "chosen",
+                count: 1,
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["character"],
+              },
+            },
           },
         },
       });
@@ -232,7 +289,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "exert", target: "CHOSEN_OPPOSING_CHARACTER" },
+            effect: {
+              type: "exert",
+              target: {
+                selector: "chosen",
+                count: 1,
+                owner: "opponent",
+                zones: ["play"],
+                cardTypes: ["character"],
+              },
+            },
           },
         },
       });
@@ -250,7 +316,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "return-to-hand", target: "CHOSEN_CHARACTER" },
+            effect: {
+              type: "return-to-hand",
+              target: {
+                selector: "chosen",
+                count: 1,
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["character"],
+              },
+            },
           },
         },
       });

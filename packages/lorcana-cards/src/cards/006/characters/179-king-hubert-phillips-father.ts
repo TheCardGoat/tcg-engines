@@ -9,11 +9,11 @@ export const kingHubertPhillipsFather: CharacterCard = {
   inkType: ["steel"],
   franchise: "Sleeping Beauty",
   set: "006",
-  cardNumber: "179",
   cost: 3,
   strength: 3,
   willpower: 4,
   lore: 1,
+  cardNumber: 179,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const nessusRiverGuardian: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Hercules",
   set: "004",
-  cardNumber: "118",
   cost: 6,
   strength: 7,
   willpower: 5,
   lore: 2,
+  cardNumber: 118,
   inkable: true,
   vanilla: true,
   externalIds: {

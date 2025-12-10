@@ -9,11 +9,11 @@ export const bigNoseLovesickPoet: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Tangled",
   set: "010",
-  cardNumber: "070",
   cost: 1,
   strength: 1,
   willpower: 3,
   lore: 1,
+  cardNumber: 70,
   inkable: true,
   vanilla: true,
   externalIds: {

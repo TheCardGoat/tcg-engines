@@ -9,11 +9,11 @@ export const hadesMeticulousPlotter: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Hercules",
   set: "004",
-  cardNumber: "145",
   cost: 4,
   strength: 3,
   willpower: 6,
   lore: 1,
+  cardNumber: 145,
   inkable: true,
   vanilla: true,
   externalIds: {

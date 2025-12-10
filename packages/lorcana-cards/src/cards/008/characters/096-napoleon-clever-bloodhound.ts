@@ -9,11 +9,11 @@ export const napoleonCleverBloodhound: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Aristocats",
   set: "008",
-  cardNumber: "096",
   cost: 4,
   strength: 3,
   willpower: 6,
   lore: 1,
+  cardNumber: 96,
   inkable: true,
   vanilla: true,
   externalIds: {

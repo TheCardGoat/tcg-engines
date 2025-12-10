@@ -8,11 +8,11 @@ export const mickeyMouseSteamboatPilot: CharacterCard = {
   fullName: "Mickey Mouse - Steamboat Pilot",
   inkType: ["emerald"],
   set: "009",
-  cardNumber: "080",
   cost: 3,
   strength: 3,
   willpower: 4,
   lore: 1,
+  cardNumber: 80,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -25,10 +25,8 @@
  * Now supports "Draw X cards", "Each player/opponent draws X cards", and "Chosen player draws X cards"
  * Updated to handle {d} placeholder
  */
-export const DRAW_PATTERN =
-  /(?:[Ee]ach (?:player|opponent) |[Cc]hosen player )?[Dd]raw(?:s)? (?:a|(\d+|\{d\})|an?) cards?/;
 export const DRAW_AMOUNT_PATTERN =
-  /(?:[Ee]ach (?:player|opponent) |[Cc]hosen player )?[Dd]raw(?:s)? (?:a|(\d+|\{d\})) cards?/;
+  /(?:[Ee]ach (?:player|opponent) |[Cc]hosen player )?[Dd]raw(?:s)? (?:an?|a|(\d+|\{d\})) cards?/;
 export const CHOSEN_PLAYER_DRAWS_PATTERN =
   /[Cc]hosen player draws? (\d+|\{d\}) cards?/;
 

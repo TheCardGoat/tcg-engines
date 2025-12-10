@@ -8,12 +8,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import type {
+  AbilityDefinition,
   ActionCard,
   CardType,
   CharacterCard,
   ItemCard,
   LocationCard,
 } from "@tcg/lorcana";
+import { parseAbilityText } from "../../src/parser";
 import type { CanonicalCard, SetDefinition } from "../types";
 
 const CARD_TYPES: CardType[] = ["character", "action", "item", "location"];
@@ -181,9 +183,7 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
 
   // Build set and cardNumber from first printing
   const set = firstPrinting?.set;
-  const cardNumber = firstPrinting
-    ? firstPrinting.collectorNumber.toString().padStart(3, "0")
-    : undefined;
+  const cardNumber = firstPrinting ? firstPrinting.collectorNumber : undefined;
 
   // Reconstruct object with proper property ordering
   const result: Record<string, unknown> = {
@@ -192,9 +192,14 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
     cardType: card.cardType,
     name: card.name,
     version: card.version,
-    fullName: card.fullName,
-    inkType: card.inkType,
   };
+
+  // Only include fullName if it differs from name (must come after version, before inkType)
+  if (card.fullName !== card.name) {
+    result.fullName = card.fullName;
+  }
+
+  result.inkType = card.inkType;
 
   // Add optional string properties
   if (card.franchise) {
@@ -234,43 +239,6 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
   }
 
   // === ARRAY PROPERTIES ===
-  // Convert keywords to proper engine format
-  // Simple keywords stay as strings, parameterized/complex keywords become objects
-  if (card.parsedAbilities && card.parsedAbilities.length > 0) {
-    const engineKeywords: unknown[] = [];
-    for (const ability of card.parsedAbilities) {
-      if (ability.type === "keyword") {
-        const kw = ability.keyword;
-        // Simple keywords (strings)
-        if (
-          [
-            "Bodyguard",
-            "Evasive",
-            "Reckless",
-            "Rush",
-            "Support",
-            "Vanish",
-            "Ward",
-            "Alert",
-          ].includes(kw)
-        ) {
-          engineKeywords.push(kw);
-        }
-        // Parameterized keywords (objects with value)
-        else if (kw === "Challenger" || kw === "Resist") {
-          engineKeywords.push({ type: kw, value: ability.value ?? 0 });
-        }
-        // Singer keyword (object with value)
-        else if (kw === "Singer") {
-          engineKeywords.push({ type: "Singer", value: ability.value ?? 0 });
-        }
-        // Note: Shift is more complex - requires targetName, skip for now
-      }
-    }
-    if (engineKeywords.length > 0) {
-      result.keywords = engineKeywords;
-    }
-  }
 
   // Output raw rules text as 'text' field
   if (card.rulesText) {
@@ -278,19 +246,13 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
   }
 
   // Output abilities with proper AbilityDefinition format
-  // AbilityDefinition requires: id, text, type (triggered|activated|static|keyword)
+  // AbilityDefinition requires: id, text, type (triggered|activated|static|keyword|action)
+  // Now uses parser to extract structured effects
   if (card.rulesText && !card.vanilla) {
     const abilityTexts = card.rulesText.split("\n").filter((t) => t.trim());
-    const engineAbilities: Array<{
-      id: string;
-      name?: string;
-      text: string;
-      type: "triggered" | "activated" | "static" | "keyword";
-      keyword?: string;
-      value?: number;
-    }> = [];
+    const engineAbilities: Array<AbilityDefinition> = [];
 
-    // Simple keywords (no value)
+    // Simple keywords (no value) - keep for fallback
     const simpleKeywords = [
       "bodyguard",
       "evasive",
@@ -301,7 +263,7 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
       "ward",
       "alert",
     ];
-    // Parameterized keywords (have a +N value)
+    // Parameterized keywords (have a +N value) - keep for fallback
     const parameterizedKeywords = ["challenger", "resist", "singer"];
 
     for (let i = 0; i < abilityTexts.length; i++) {
@@ -313,77 +275,115 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
       // e.g., "Challenger +2 (While challenging, this character gets +2.)"
       const text = rawText.replace(/\s*\([^)]*\)/g, "").trim();
 
-      // Try to extract ability name (all caps at start)
-      // Pattern requires at least 3 uppercase letters - all Lorcana ability names are 4+ chars
-      // e.g., "RUSH", "WARD", "CHALLENGER", "FRESH INK"
-      const namedMatch = text.match(/^([A-Z][A-Z\s]+[A-Z])\s+(.+)$/);
-      const name = namedMatch ? namedMatch[1].trim() : undefined;
+      // Try to parse using the ability parser
+      const parseResult = parseAbilityText(text);
 
-      // Determine ability type
-      let abilityType: "triggered" | "activated" | "static" | "keyword" =
-        "static";
-      const lower = text.toLowerCase();
-      let keyword: string | undefined;
-      let value: number | undefined;
+      if (parseResult.success && parseResult.ability) {
+        // Parser succeeded - use structured ability
+        const parsedAbility = parseResult.ability.ability;
+        const abilityName = parseResult.ability.name;
 
-      // Check for simple keywords
-      const simpleKeywordMatch = simpleKeywords.find((kw) =>
-        lower.startsWith(kw),
-      );
-      if (simpleKeywordMatch) {
-        abilityType = "keyword";
-        keyword =
-          simpleKeywordMatch.charAt(0).toUpperCase() +
-          simpleKeywordMatch.slice(1);
-      }
-      // Check for parameterized keywords (e.g., "Challenger +3", "Resist +2", "Singer 5")
-      else if (parameterizedKeywords.some((kw) => lower.startsWith(kw))) {
-        const paramMatch = text.match(
-          /^(Challenger|Resist|Singer)\s*\+?(\d+)/i,
+        // Build ability object with parsed structure by spreading parsed properties
+        // This ensures we capture cost, trigger, condition, etc.
+        const engineAbility = {
+          id: abilityId,
+          text: parseResult.ability.text,
+          ...(abilityName && { name: abilityName }),
+          ...parsedAbility,
+        } as AbilityDefinition;
+
+        engineAbilities.push(engineAbility);
+      } else {
+        // Parser failed - fall back to simple text-based detection
+        // Try to extract ability name (all caps at start)
+        const namedMatch = text.match(/^([A-Z][A-Z\s]+[A-Z])\s+(.+)$/);
+        const name = namedMatch ? namedMatch[1].trim() : undefined;
+
+        // Determine ability type
+        let abilityType: "triggered" | "activated" | "static" | "keyword" =
+          "static";
+        const lower = text.toLowerCase();
+        let keyword: string | undefined;
+        let value: number | undefined;
+
+        // Check for simple keywords
+        const simpleKeywordMatch = simpleKeywords.find((kw) =>
+          lower.startsWith(kw),
         );
-        if (paramMatch) {
+        if (simpleKeywordMatch) {
           abilityType = "keyword";
           keyword =
-            paramMatch[1].charAt(0).toUpperCase() +
-            paramMatch[1].slice(1).toLowerCase();
-          value = Number.parseInt(paramMatch[2], 10);
+            simpleKeywordMatch.charAt(0).toUpperCase() +
+            simpleKeywordMatch.slice(1);
         }
-      }
-      // Check for Shift keyword (e.g., "Shift 5")
-      else if (lower.startsWith("shift")) {
-        const shiftMatch = text.match(/^Shift\s+(\d+)/i);
-        if (shiftMatch) {
-          abilityType = "keyword";
-          keyword = "Shift";
-          value = Number.parseInt(shiftMatch[1], 10);
+        // Check for parameterized keywords (e.g., "Challenger +3", "Resist +2", "Singer 5")
+        else if (parameterizedKeywords.some((kw) => lower.startsWith(kw))) {
+          const paramMatch = text.match(
+            /^(Challenger|Resist|Singer)\s*\+?(\d+)/i,
+          );
+          if (paramMatch) {
+            abilityType = "keyword";
+            keyword =
+              paramMatch[1].charAt(0).toUpperCase() +
+              paramMatch[1].slice(1).toLowerCase();
+            value = Number.parseInt(paramMatch[2], 10);
+          }
         }
-      }
-      // Not a keyword - check for triggered/activated
-      else {
-        // Triggered abilities
-        if (
-          lower.includes("whenever") ||
-          lower.includes("when you play") ||
-          lower.includes("when this") ||
-          lower.includes("at the start") ||
-          lower.includes("at the end")
-        ) {
-          abilityType = "triggered";
+        // Check for Shift keyword (e.g., "Shift 5")
+        else if (lower.startsWith("shift")) {
+          const shiftMatch = text.match(/^Shift\s+(\d+)/i);
+          if (shiftMatch) {
+            abilityType = "keyword";
+            keyword = "Shift";
+            // For Shift, we need to construct a cost object
+            const shiftValue = Number.parseInt(shiftMatch[1], 10);
+            engineAbilities.push({
+              id: abilityId,
+              ...(name && { name }),
+              text,
+              type: "keyword",
+              keyword: "Shift",
+              cost: { ink: shiftValue },
+            } as AbilityDefinition);
+            continue;
+          }
         }
-        // Activated abilities (have exert cost)
-        else if (lower.includes("{e}") || lower.includes("⬡")) {
-          abilityType = "activated";
+        // Not a keyword - check for triggered/activated
+        else {
+          // Triggered abilities
+          if (
+            lower.includes("whenever") ||
+            lower.includes("when you play") ||
+            lower.includes("when this") ||
+            lower.includes("at the start") ||
+            lower.includes("at the end")
+          ) {
+            abilityType = "triggered";
+          }
+          // Activated abilities (have exert cost)
+          else if (lower.includes("{e}") || lower.includes("⬡")) {
+            abilityType = "activated";
+          }
+          // For action cards, default to "action" type if no other match
+          else if (card.cardType === "action") {
+            abilityType = "static"; // Keep as static for backwards compatibility in fallback
+          }
         }
-      }
 
-      engineAbilities.push({
-        id: abilityId,
-        ...(name && { name }),
-        text,
-        type: abilityType,
-        ...(keyword && { keyword }),
-        ...(value !== undefined && { value }),
-      });
+        const fallbackAbility: any = {
+          id: abilityId,
+          ...(name && { name }),
+          text,
+          type: abilityType,
+          ...(keyword && { keyword }),
+          ...(value !== undefined && { value }),
+        };
+
+        // For fallback non-keyword abilities, we might be missing required fields like 'trigger' or 'cost'
+        // Ideally we shouldn't hit fallback often if the parser is good.
+        // If we do, these objects might not fully satisfy AbilityDefinition, but we cast to satisfy TS in generator.
+        engineAbilities.push(fallbackAbility as AbilityDefinition);
+      }
     }
 
     if (engineAbilities.length > 0) {
@@ -397,9 +397,9 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
     result.actionSubtype = card.actionSubtype;
   }
 
-  // Add cardNumber at the end with string properties
-  if (cardNumber) {
-    // Need to re-order to put cardNumber with strings - reconstruct
+  // Add cardNumber with numeric properties
+  if (cardNumber !== undefined) {
+    // Need to re-order to put cardNumber with numeric properties - reconstruct
     const finalResult: Record<string, unknown> = {};
     const keys = Object.keys(result);
 
@@ -413,7 +413,6 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
         finalResult[key] = result[key];
       }
     }
-    finalResult.cardNumber = cardNumber;
 
     // Copy numeric properties
     for (const key of keys) {
@@ -431,6 +430,8 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
     if ("willpower" in result) finalResult.willpower = result.willpower;
     if ("moveCost" in result) finalResult.moveCost = result.moveCost;
     if ("lore" in result) finalResult.lore = result.lore;
+    // Add cardNumber as a numeric property
+    finalResult.cardNumber = cardNumber;
 
     // Copy boolean properties
     for (const key of keys) {
@@ -647,7 +648,11 @@ export interface AbilityDefinition {
   id?: string;
   name?: string | null;
   text: string;
-  type: "triggered" | "activated" | "static" | "keyword";
+  type: "triggered" | "activated" | "static" | "keyword" | "action";
+  keyword?: string;
+  value?: number;
+  cost?: unknown;
+  shiftTarget?: string;
 }
 
 export interface ExternalIds {
@@ -674,7 +679,6 @@ export interface CanonicalCardMetadata {
   inkType: InkType | [InkType, InkType];
   cost: number;
   inkable: boolean;
-  keywords?: string[];
   rulesText?: string;
   abilities?: AbilityDefinition[];
   printings: CardPrintingRef[];

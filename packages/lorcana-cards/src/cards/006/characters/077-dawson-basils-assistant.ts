@@ -9,11 +9,11 @@ export const dawsonBasilsAssistant: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Great Mouse Detective",
   set: "006",
-  cardNumber: "077",
   cost: 4,
   strength: 3,
   willpower: 4,
   lore: 2,
+  cardNumber: 77,
   inkable: true,
   vanilla: true,
   externalIds: {

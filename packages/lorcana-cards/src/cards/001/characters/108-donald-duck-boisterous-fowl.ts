@@ -8,11 +8,11 @@ export const donaldDuckBoisterousFowl: CharacterCard = {
   fullName: "Donald Duck - Boisterous Fowl",
   inkType: ["ruby"],
   set: "001",
-  cardNumber: "108",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 108,
   inkable: true,
   vanilla: true,
   externalIds: {

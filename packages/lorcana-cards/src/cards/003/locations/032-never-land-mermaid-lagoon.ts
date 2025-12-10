@@ -9,10 +9,10 @@ export const neverLandMermaidLagoon: LocationCard = {
   inkType: ["amber"],
   franchise: "Peter Pan",
   set: "003",
-  cardNumber: "032",
   cost: 1,
   moveCost: 1,
   lore: 0,
+  cardNumber: 32,
   inkable: true,
   vanilla: true,
   externalIds: {

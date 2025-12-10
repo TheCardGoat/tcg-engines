@@ -9,11 +9,11 @@ export const tobyDoggedCompanion: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Great Mouse Detective",
   set: "007",
-  cardNumber: "131",
   cost: 1,
   strength: 3,
   willpower: 1,
   lore: 1,
+  cardNumber: 131,
   inkable: false,
   vanilla: true,
   externalIds: {

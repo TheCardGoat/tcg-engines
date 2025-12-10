@@ -9,11 +9,11 @@ export const hookHandUnexpectedlyFriendly: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Tangled",
   set: "010",
-  cardNumber: "078",
   cost: 5,
   strength: 6,
   willpower: 5,
   lore: 2,
+  cardNumber: 78,
   inkable: true,
   vanilla: true,
   externalIds: {

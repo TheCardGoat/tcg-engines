@@ -9,11 +9,11 @@ export const yzmaWithoutBeautySleep: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Emperors New Groove",
   set: "002",
-  cardNumber: "061",
   cost: 3,
   strength: 3,
   willpower: 4,
   lore: 1,
+  cardNumber: 61,
   inkable: true,
   vanilla: true,
   externalIds: {

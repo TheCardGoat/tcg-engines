@@ -10,16 +10,15 @@ export const hermesHarriedMessenger: CharacterCard = {
   franchise: "Hercules",
   set: "010",
   text: "Rush (This character can challenge the turn they're played.)",
-  cardNumber: "112",
   cost: 3,
   strength: 3,
   willpower: 3,
   lore: 1,
+  cardNumber: 112,
   inkable: true,
   externalIds: {
     ravensburger: "9ce36fa3156e783f9c693a2e872e588419f40862",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "17j-1",

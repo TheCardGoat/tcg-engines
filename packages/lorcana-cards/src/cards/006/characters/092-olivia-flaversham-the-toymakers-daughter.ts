@@ -9,11 +9,11 @@ export const oliviaFlavershamTheToymakersDaughter: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Great Mouse Detective",
   set: "006",
-  cardNumber: "092",
   cost: 2,
   strength: 1,
   willpower: 1,
   lore: 3,
+  cardNumber: 92,
   inkable: false,
   vanilla: true,
   externalIds: {

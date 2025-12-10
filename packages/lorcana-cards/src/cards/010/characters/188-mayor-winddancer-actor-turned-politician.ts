@@ -9,11 +9,11 @@ export const mayorWinddancerActorturnedpolitician: CharacterCard = {
   inkType: ["steel"],
   franchise: "Zootropolis",
   set: "010",
-  cardNumber: "188",
   cost: 4,
   strength: 5,
   willpower: 7,
   lore: 1,
+  cardNumber: 188,
   inkable: false,
   vanilla: true,
   externalIds: {

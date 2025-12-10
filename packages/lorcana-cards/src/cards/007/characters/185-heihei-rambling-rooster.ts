@@ -9,11 +9,11 @@ export const heiheiRamblingRooster: CharacterCard = {
   inkType: ["steel"],
   franchise: "Moana",
   set: "007",
-  cardNumber: "185",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 185,
   inkable: true,
   vanilla: true,
   externalIds: {

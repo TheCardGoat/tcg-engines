@@ -9,11 +9,11 @@ export const scroogeMcduckAfficionadoOfAntiquities: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Ducktales",
   set: "005",
-  cardNumber: "140",
   cost: 4,
   strength: 5,
   willpower: 5,
   lore: 2,
+  cardNumber: 140,
   inkable: false,
   vanilla: true,
   externalIds: {

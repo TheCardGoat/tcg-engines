@@ -9,11 +9,11 @@ export const edgarBalthazarAmbitiousButler: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Aristocats",
   set: "007",
-  cardNumber: "146",
   cost: 5,
   strength: 6,
   willpower: 5,
   lore: 1,
+  cardNumber: 146,
   inkable: true,
   vanilla: true,
   externalIds: {

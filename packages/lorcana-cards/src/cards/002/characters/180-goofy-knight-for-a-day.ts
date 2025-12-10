@@ -8,11 +8,11 @@ export const goofyKnightForADay: CharacterCard = {
   fullName: "Goofy - Knight for a Day",
   inkType: ["steel"],
   set: "002",
-  cardNumber: "180",
   cost: 9,
   strength: 10,
   willpower: 10,
   lore: 4,
+  cardNumber: 180,
   inkable: true,
   vanilla: true,
   externalIds: {

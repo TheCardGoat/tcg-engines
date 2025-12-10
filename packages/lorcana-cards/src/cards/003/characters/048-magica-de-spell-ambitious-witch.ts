@@ -9,11 +9,11 @@ export const magicaDeSpellAmbitiousWitch: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Ducktales",
   set: "003",
-  cardNumber: "048",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 48,
   inkable: true,
   vanilla: true,
   externalIds: {

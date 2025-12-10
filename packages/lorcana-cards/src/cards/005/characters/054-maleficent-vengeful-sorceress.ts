@@ -9,11 +9,11 @@ export const maleficentVengefulSorceress: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Sleeping Beauty",
   set: "005",
-  cardNumber: "054",
   cost: 2,
   strength: 2,
   willpower: 2,
   lore: 2,
+  cardNumber: 54,
   inkable: true,
   vanilla: true,
   externalIds: {
