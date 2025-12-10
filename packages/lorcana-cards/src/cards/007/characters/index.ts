@@ -4,8 +4,6 @@ export { suzyMasterSeamstress } from "./008-suzy-master-seamstress";
 export { theTroubadourMusicalNarrator } from "./011-the-troubadour-musical-narrator";
 export { boltDependableFriend } from "./018-bolt-dependable-friend";
 export { pascalGardenChameleon } from "./019-pascal-garden-chameleon";
-export { thunderboltWonderDog } from "./023-thunderbolt-wonder-dog";
-export { thePrinceVigilantSuitor } from "./024-the-prince-vigilant-suitor";
 export { perlaNimbleSeamstress } from "./032-perla-nimble-seamstress";
 export { kodaSmallishBear } from "./034-koda-smallish-bear";
 export { tananaTribalElder } from "./046-tanana-tribal-elder";
@@ -30,8 +28,6 @@ export { moanaAdventurerOfLandAndSea } from "./156-moana-adventurer-of-land-and-
 export { gaetanMoliereTheMole } from "./158-gaetan-moliere-the-mole";
 export { toulouseArtisticKitten } from "./165-toulouse-artistic-kitten";
 export { robinHoodEyeForDetail } from "./170-robin-hood-eye-for-detail";
-export { ladyKluckProtectiveConfidant } from "./172-lady-kluck-protective-confidant";
 export { akelaWolfPackElder } from "./182-akela-wolf-pack-elder";
 export { heiheiRamblingRooster } from "./185-heihei-rambling-rooster";
-export { tukTukDisarminglyCute } from "./187-tuk-tuk-disarmingly-cute";
 export { mufasaRespectedKing } from "./196-mufasa-respected-king";
