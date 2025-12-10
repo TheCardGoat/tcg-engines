@@ -50,7 +50,7 @@ export const weKnowTheWay: ActionCard = {
             },
             else: {
               type: "return-to-hand",
-              target: "CHOSEN_CHARACTER",
+              target: "revealed",
             },
           },
         ],

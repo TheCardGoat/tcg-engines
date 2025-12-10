@@ -20,7 +20,7 @@
  * ```
  */
 
-import type { TargetCount, TargetDSL } from "@tcg/core";
+import type { TargetDSL } from "@tcg/core";
 
 // ============================================================================
 // Player Targeting
@@ -595,7 +595,8 @@ export type CardTargetEnum =
   | "CHOSEN_CARD"
   | "CHOSEN_CARD_FROM_HAND"
   | "CHOSEN_CARD_FROM_DISCARD"
-  | "TOP_CARD_OF_DECK";
+  | "TOP_CARD_OF_DECK"
+  | "revealed";
 
 export type CardTarget =
   | CardTargetEnum

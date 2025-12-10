@@ -252,7 +252,7 @@ export interface BanishEffect {
  */
 export interface ReturnToHandEffect {
   type: "return-to-hand";
-  target: CharacterTarget | ItemTarget | LocationTarget;
+  target: CardTarget;
 }
 
 /**
@@ -501,6 +501,7 @@ export interface PutOnTopEffect {
 export interface DrawUntilHandSizeEffect {
   type: "draw-until-hand-size";
   size: number;
+  target?: PlayerTarget;
 }
 
 // ============================================================================
