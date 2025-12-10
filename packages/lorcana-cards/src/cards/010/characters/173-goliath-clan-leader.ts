@@ -26,15 +26,35 @@ export const goliathClanLeader: CharacterCard = {
       text: "DUSK TO DAWN At the end of each player's turn, if they have more than 2 cards in their hand, they choose and discard cards until they have 2. If they have fewer than 2 cards in their hand, they draw until they have 2.",
       type: "triggered",
       trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "ANY_CHARACTER",
+        event: "end-turn",
+        timing: "at",
+        on: "ANY_PLAYER",
       },
       effect: {
-        type: "draw-until-hand-size",
-        size: 2,
-        target: "CONTROLLER",
+        type: "conditional",
+        condition: {
+          type: "resource-count",
+          what: "cards-in-hand",
+          controller: "opponent",
+          comparison: "greater",
+          value: 2,
+        },
+        then: {
+          type: "discard",
+          amount: {
+            type: "cards-in-discard", // Placeholder for actual calculation logic
+            controller: "you",
+          } as any,
+          target: "OPPONENT",
+          chosen: true,
+        },
+        else: {
+          type: "draw-until-hand-size",
+          size: 2,
+          target: "OPPONENT",
+        },
       },
+      // Re-doing the fix to be minimal valid typescript first.
     },
     {
       id: "1uq-2",

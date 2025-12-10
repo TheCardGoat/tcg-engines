@@ -354,36 +354,19 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
       },
     }),
 
-  // #9 - Score: 8.5 - Activated choice effect
-  "BUSINESS EXPERTISE {E} – Choose one: You pay {d} {I} less to play your next action this turn. You pay {d} {I} less to play your next item this turn. You pay {d} {I} less to play your next location this turn.":
+  // #9 - Score: 8.5 - Simple activated cost reduction (Scrooge's Top Hat)
+  "BUSINESS EXPERTISE {E} — You pay {d} {I} less for the next item you play this turn.":
     manualEntry({
-      text: "BUSINESS EXPERTISE {E} – Choose one: You pay {d} {I} less to play your next action this turn. You pay {d} {I} less to play your next item this turn. You pay {d} {I} less to play your next location this turn.",
+      text: "BUSINESS EXPERTISE {E} — You pay 1 {I} less for the next item you play this turn.",
       name: "BUSINESS EXPERTISE",
       ability: {
         type: "activated",
         cost: { exert: true },
         effect: {
-          type: "choice",
-          options: [
-            {
-              type: "cost-reduction",
-              amount: 0,
-              cardType: "action",
-              duration: "this-turn",
-            },
-            {
-              type: "cost-reduction",
-              amount: 0,
-              cardType: "item",
-              duration: "this-turn",
-            },
-            {
-              type: "cost-reduction",
-              amount: 0,
-              cardType: "location",
-              duration: "this-turn",
-            },
-          ],
+          type: "cost-reduction",
+          amount: 1, // Hardcoded
+          cardType: "item",
+          duration: "next-play-this-turn",
         },
       },
     }),
@@ -665,15 +648,15 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
       },
     ]),
 
-  // #19 - Score: 8.0 - Activated + triggered item
-  "SOUVENIR {E}, {d} {I}, banish this item — Draw a card, then choose and discard a card. TIME FLIES During your turn, when this item is banished, deal {d} damage to a character or a location of your choice.":
+  // #19 - Score: 8.0 - Activated + triggered item (Ingenious Device)
+  "SURPRISE PACKAGE {E}, {d} {I}, Banish this item — Draw a card, then choose and discard a card. TIME GROWS SHORT During your turn, when this item is banished, deal {d} damage to chosen character or location.":
     manualEntries([
       {
-        text: "SOUVENIR {E}, {d} {I}, banish this item — Draw a card, then choose and discard a card.",
-        name: "SOUVENIR",
+        text: "SURPRISE PACKAGE {E}, 2 {I}, Banish this item — Draw a card, then choose and discard a card.",
+        name: "SURPRISE PACKAGE",
         ability: {
           type: "activated",
-          cost: { exert: true, ink: 0, banishSelf: true }, // {d}
+          cost: { exert: true, ink: 2, banishSelf: true }, // Hardcoded 2
           effect: {
             type: "sequence",
             steps: [
@@ -689,19 +672,19 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
         },
       },
       {
-        text: "TIME FLIES During your turn, when this item is banished, deal {d} damage to a character or a location of your choice.",
-        name: "TIME FLIES",
+        text: "TIME GROWS SHORT During your turn, when this item is banished, deal 3 damage to chosen character or location.",
+        name: "TIME GROWS SHORT",
         ability: {
           type: "triggered",
           trigger: { event: "banish", timing: "when", on: "SELF" },
           effect: {
             type: "deal-damage",
-            amount: 0,
+            amount: 3, // Hardcoded 3
             target: {
               selector: "chosen",
               cardTypes: ["character", "location"],
             },
-          }, // {d}
+          },
           condition: { type: "turn", whose: "your" },
         },
       },

@@ -53,14 +53,8 @@ export const recoveredPage: ItemCard = {
         source: "top-of-deck",
         under: {
           selector: "chosen",
-          count: 1,
-          owner: "you",
-          filter: [
-            {
-              type: "has-keyword",
-              keyword: "Boost",
-            },
-          ],
+          count: { exactly: 1 },
+          filter: [{ type: "owner", owner: "you" }],
         },
       },
     },

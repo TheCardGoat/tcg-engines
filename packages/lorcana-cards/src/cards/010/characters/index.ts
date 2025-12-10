@@ -20,6 +20,7 @@ export { kaaSuspiciousSerpent } from "./072-kaa-suspicious-serpent";
 export { hookHandUnexpectedlyFriendly } from "./078-hook-hand-unexpectedly-friendly";
 export { kaaSecretiveSnake } from "./079-kaa-secretive-snake";
 export { penumbraMoonAlien } from "./084-penumbra-moon-alien";
+export { goofyEmeraldChampion } from "./091-goofy-emerald-champion";
 export { diabloWatchfulRaven } from "./103-diablo-watchful-raven";
 export { peterPanHighFlyer } from "./105-peter-pan-high-flyer";
 export { tinkerBellFancyFootwork } from "./106-tinker-bell-fancy-footwork";

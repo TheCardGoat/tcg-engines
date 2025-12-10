@@ -25,11 +25,7 @@ export const weKnowTheWay: ActionCard = {
         steps: [
           {
             type: "shuffle-into-deck",
-            target: {
-              selector: "chosen",
-              count: 1,
-              zones: ["discard"],
-            },
+            target: "CHOSEN_CARD_FROM_DISCARD",
           },
           {
             type: "reveal-top-card",
@@ -50,7 +46,7 @@ export const weKnowTheWay: ActionCard = {
             },
             else: {
               type: "return-to-hand",
-              target: "revealed",
+              target: "TOP_CARD_OF_DECK",
             },
           },
         ],
