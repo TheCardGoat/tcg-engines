@@ -80,11 +80,11 @@ describe("Action Parser", () => {
               type: "deal-damage",
               amount: 3,
               target: {
-                type: "query",
-
+                selector: "chosen",
                 count: 1,
-                controller: "any",
-                zone: "play",
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["character"],
               },
             },
           },
@@ -106,11 +106,11 @@ describe("Action Parser", () => {
               type: "deal-damage",
               amount: 2,
               target: {
-                type: "query",
-
+                selector: "all",
                 count: "all",
-                controller: "opponent",
-                zone: "play",
+                owner: "opponent",
+                zones: ["play"],
+                cardTypes: ["character"],
               },
             },
           },
@@ -128,7 +128,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "banish" },
+            effect: {
+              type: "banish",
+              target: {
+                selector: "all",
+                count: "all",
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["item"],
+              },
+            },
           },
         },
       });
@@ -145,11 +154,11 @@ describe("Action Parser", () => {
             effect: {
               type: "banish",
               target: {
-                type: "query",
-
+                selector: "chosen",
                 count: 1,
-                controller: "any",
-                zone: "play",
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["character"],
               },
             },
           },
@@ -165,7 +174,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "banish" },
+            effect: {
+              type: "banish",
+              target: {
+                selector: "all",
+                count: "all",
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["character"],
+              },
+            },
           },
         },
       });
@@ -179,7 +197,16 @@ describe("Action Parser", () => {
         ability: {
           ability: {
             type: "action",
-            effect: { type: "banish" },
+            effect: {
+              type: "banish",
+              target: {
+                selector: "all",
+                count: "all",
+                owner: "opponent",
+                zones: ["play"],
+                cardTypes: ["item"],
+              },
+            },
           },
         },
       });
@@ -228,11 +255,11 @@ describe("Action Parser", () => {
             effect: {
               type: "ready",
               target: {
-                type: "query",
-
+                selector: "chosen",
                 count: 1,
-                controller: "any",
-                zone: "play",
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["character"],
               },
             },
           },
@@ -265,11 +292,11 @@ describe("Action Parser", () => {
             effect: {
               type: "exert",
               target: {
-                type: "query",
-
+                selector: "chosen",
                 count: 1,
-                controller: "opponent",
-                zone: "play",
+                owner: "opponent",
+                zones: ["play"],
+                cardTypes: ["character"],
               },
             },
           },
@@ -292,11 +319,11 @@ describe("Action Parser", () => {
             effect: {
               type: "return-to-hand",
               target: {
-                type: "query",
-
+                selector: "chosen",
                 count: 1,
-                controller: "any",
-                zone: "play",
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["character"],
               },
             },
           },

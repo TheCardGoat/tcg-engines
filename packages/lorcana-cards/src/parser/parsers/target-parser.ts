@@ -15,7 +15,11 @@ import type {
 } from "@tcg/lorcana";
 import {
   ALL_CHARACTERS_PATTERN,
+  ALL_ITEMS_PATTERN,
+  ALL_LOCATIONS_PATTERN,
   ALL_OPPOSING_CHARACTERS_PATTERN,
+  ALL_OPPOSING_ITEMS_PATTERN,
+  ALL_OPPOSING_LOCATIONS_PATTERN,
   CHOSEN_CHARACTER_OF_YOURS_PATTERN,
   CHOSEN_CHARACTER_PATTERN,
   CHOSEN_ITEM_PATTERN,
@@ -43,28 +47,31 @@ export function parseCharacterTarget(
   // Check for specific patterns first (most specific to least specific)
   if (CHOSEN_OPPOSING_CHARACTER_PATTERN.test(text)) {
     return {
-      type: "query",
+      selector: "chosen",
       count: 1,
-      controller: "opponent",
-      zone: "play",
+      owner: "opponent",
+      zones: ["play"],
+      cardTypes: ["character"],
     };
   }
 
   if (CHOSEN_CHARACTER_OF_YOURS_PATTERN.test(text)) {
     return {
-      type: "query",
+      selector: "chosen",
       count: 1,
-      controller: "you",
-      zone: "play",
+      owner: "you",
+      zones: ["play"],
+      cardTypes: ["character"],
     };
   }
 
   if (CHOSEN_CHARACTER_PATTERN.test(text)) {
     return {
-      type: "query",
+      selector: "chosen",
       count: 1,
-      controller: "any",
-      zone: "play",
+      owner: "any",
+      zones: ["play"],
+      cardTypes: ["character"],
     };
   }
 
@@ -73,28 +80,31 @@ export function parseCharacterTarget(
     EACH_OPPOSING_CHARACTER_PATTERN.test(text)
   ) {
     return {
-      type: "query",
+      selector: "all",
       count: "all",
-      controller: "opponent",
-      zone: "play",
+      owner: "opponent",
+      zones: ["play"],
+      cardTypes: ["character"],
     };
   }
 
   if (YOUR_CHARACTERS_PATTERN.test(text)) {
     return {
-      type: "query",
+      selector: "all",
       count: "all",
-      controller: "you",
-      zone: "play",
+      owner: "you",
+      zones: ["play"],
+      cardTypes: ["character"],
     };
   }
 
   if (ALL_CHARACTERS_PATTERN.test(text)) {
     return {
-      type: "query",
+      selector: "all",
       count: "all",
-      controller: "any",
-      zone: "play",
+      owner: "any",
+      zones: ["play"],
+      cardTypes: ["character"],
     };
   }
 
@@ -114,9 +124,31 @@ export function parseCharacterTarget(
 export function parseItemTarget(text: string): ItemTarget | undefined {
   if (CHOSEN_ITEM_PATTERN.test(text)) {
     return {
-      type: "query",
+      selector: "chosen",
       count: 1,
-      controller: "any",
+      owner: "any",
+      zones: ["play"],
+      cardTypes: ["item"],
+    };
+  }
+
+  if (ALL_OPPOSING_ITEMS_PATTERN.test(text)) {
+    return {
+      selector: "all",
+      count: "all",
+      owner: "opponent",
+      zones: ["play"],
+      cardTypes: ["item"],
+    };
+  }
+
+  if (ALL_ITEMS_PATTERN.test(text)) {
+    return {
+      selector: "all",
+      count: "all",
+      owner: "any",
+      zones: ["play"],
+      cardTypes: ["item"],
     };
   }
 
@@ -134,9 +166,31 @@ export function parseItemTarget(text: string): ItemTarget | undefined {
 export function parseLocationTarget(text: string): LocationTarget | undefined {
   if (CHOSEN_LOCATION_PATTERN.test(text)) {
     return {
-      type: "query",
+      selector: "chosen",
       count: 1,
-      controller: "any",
+      owner: "any",
+      zones: ["play"],
+      cardTypes: ["location"],
+    };
+  }
+
+  if (ALL_OPPOSING_LOCATIONS_PATTERN.test(text)) {
+    return {
+      selector: "all",
+      count: "all",
+      owner: "opponent",
+      zones: ["play"],
+      cardTypes: ["location"],
+    };
+  }
+
+  if (ALL_LOCATIONS_PATTERN.test(text)) {
+    return {
+      selector: "all",
+      count: "all",
+      owner: "any",
+      zones: ["play"],
+      cardTypes: ["location"],
     };
   }
 

@@ -119,12 +119,12 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "banish",
         target: {
-          type: "query",
-
+          selector: "all",
           count: "all",
-          controller: "any",
-          zone: "play",
-        }, // Parsed as character target, would need item target type
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["item"],
+        },
       });
     });
 
@@ -134,11 +134,11 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "banish",
         target: {
-          type: "query",
-
+          selector: "all",
           count: "all",
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -149,12 +149,12 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "banish",
         target: {
-          type: "query",
-
+          selector: "all",
           count: "all",
-          controller: "any",
-          zone: "play",
-        }, // Parsed as character target, would need location target type
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["location"],
+        },
       });
     });
 
@@ -164,11 +164,11 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "banish",
         target: {
-          type: "query",
-
+          selector: "all",
           count: "all",
-          controller: "opponent",
-          zone: "play",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -181,11 +181,11 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "ready",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -196,12 +196,12 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "ready",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
-        }, // Parsed as character, would need item target
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["item"],
+        },
       });
     });
 
@@ -211,12 +211,12 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "ready",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
-        }, // Parsed as character, would need location target
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["location"],
+        },
       });
     });
   });
@@ -291,11 +291,11 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "gain-keyword",
         keyword: "Rush",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -308,11 +308,11 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "gain-keyword",
         keyword: "Ward",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -325,11 +325,11 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "gain-keyword",
         keyword: "Evasive",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -345,11 +345,11 @@ describe("Action Effects - Task Group 2.5", () => {
         keyword: "Challenger",
         value: 2,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -363,11 +363,11 @@ describe("Action Effects - Task Group 2.5", () => {
         keyword: "Resist",
         value: 1,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -383,11 +383,11 @@ describe("Action Effects - Task Group 2.5", () => {
         stat: "strength",
         modifier: 2,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -401,11 +401,11 @@ describe("Action Effects - Task Group 2.5", () => {
         stat: "willpower",
         modifier: -1,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -419,11 +419,11 @@ describe("Action Effects - Task Group 2.5", () => {
         stat: "lore",
         modifier: 1,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -437,11 +437,11 @@ describe("Action Effects - Task Group 2.5", () => {
         stat: "strength",
         modifier: -1, // {d} placeholder value (positive)
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -455,11 +455,11 @@ describe("Action Effects - Task Group 2.5", () => {
         stat: "willpower",
         modifier: 1, // {d} placeholder value stored positive, negated later
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -473,11 +473,11 @@ describe("Action Effects - Task Group 2.5", () => {
         stat: "lore",
         modifier: -1, // {d} placeholder value (defaults to positive)
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -504,11 +504,11 @@ describe("Action Effects - Task Group 2.5", () => {
         stat: "strength",
         modifier: 3,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "permanent",
       });
@@ -521,11 +521,11 @@ describe("Action Effects - Task Group 2.5", () => {
         type: "gain-keyword",
         keyword: "Rush",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "permanent",
       });

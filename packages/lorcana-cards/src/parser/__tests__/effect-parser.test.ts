@@ -67,11 +67,11 @@ describe("Effect Parser", () => {
         type: "deal-damage",
         amount: 3,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -83,11 +83,11 @@ describe("Effect Parser", () => {
         type: "remove-damage",
         amount: 3,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         upTo: true,
       });
@@ -112,11 +112,11 @@ describe("Effect Parser", () => {
       expect(effect).toEqual({
         type: "exert",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -127,11 +127,11 @@ describe("Effect Parser", () => {
       expect(effect).toEqual({
         type: "ready",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -146,11 +146,11 @@ describe("Effect Parser", () => {
         stat: "strength",
         modifier: 2,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -164,11 +164,11 @@ describe("Effect Parser", () => {
         stat: "strength",
         modifier: -1,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -303,11 +303,11 @@ describe("Effect Parser", () => {
       expect(effect).toEqual({
         type: "shuffle-into-deck",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         intoDeck: "owner",
       });
@@ -387,11 +387,11 @@ describe("Effect Parser", () => {
         type: "put-under",
         source: "hand",
         under: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -452,33 +452,33 @@ describe("Target Parser", () => {
     it("should parse chosen character", () => {
       const target = parseCharacterTarget("deal 3 damage to chosen character");
       expect(target).toEqual({
-        type: "query",
-
+        selector: "chosen",
         count: 1,
-        controller: "any",
-        zone: "play",
+        owner: "any",
+        zones: ["play"],
+        cardTypes: ["character"],
       });
     });
 
     it("should parse chosen opposing character", () => {
       const target = parseCharacterTarget("exert chosen opposing character");
       expect(target).toEqual({
-        type: "query",
-
+        selector: "chosen",
         count: 1,
-        controller: "opponent",
-        zone: "play",
+        owner: "opponent",
+        zones: ["play"],
+        cardTypes: ["character"],
       });
     });
 
     it("should parse your characters", () => {
       const target = parseCharacterTarget("your characters get +1 {S}");
       expect(target).toEqual({
-        type: "query",
-
+        selector: "all",
         count: "all",
-        controller: "you",
-        zone: "play",
+        owner: "you",
+        zones: ["play"],
+        cardTypes: ["character"],
       });
     });
 
@@ -487,11 +487,11 @@ describe("Target Parser", () => {
         "deal 2 damage to all opposing characters",
       );
       expect(target).toEqual({
-        type: "query",
-
+        selector: "all",
         count: "all",
-        controller: "opponent",
-        zone: "play",
+        owner: "opponent",
+        zones: ["play"],
+        cardTypes: ["character"],
       });
     });
 

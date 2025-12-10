@@ -83,20 +83,27 @@ import {
   YOU_MAY_PUT_INTO_INKWELL_PATTERN,
 } from "../patterns/effects";
 import { parseCondition } from "./condition-parser";
-import { parseCharacterTarget, parsePlayerTarget } from "./target-parser";
+import {
+  parseCharacterTarget,
+  parseItemTarget,
+  parseLocationTarget,
+  parsePlayerTarget,
+} from "./target-parser";
 
 const DEFAULT_CHOSEN_CHARACTER_TARGET: CharacterTarget = {
-  type: "query",
+  selector: "chosen",
   count: 1,
-  controller: "any",
-  zone: "play",
+  owner: "any",
+  zones: ["play"],
+  cardTypes: ["character"],
 };
 
 const DEFAULT_ALL_CHARACTERS_TARGET: CharacterTarget = {
-  type: "query",
+  selector: "all",
   count: "all",
-  controller: "any",
-  zone: "play",
+  owner: "any",
+  zones: ["play"],
+  cardTypes: ["character"],
 };
 
 /**
@@ -825,7 +832,10 @@ function parseAtomicEffect(text: string): Effect | undefined {
   // Try exert effect
   if (EXERT_PATTERN.test(text)) {
     const target =
-      parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
+      parseCharacterTarget(text) ||
+      parseItemTarget(text) ||
+      parseLocationTarget(text) ||
+      DEFAULT_CHOSEN_CHARACTER_TARGET;
     return {
       type: "exert",
       target,
@@ -835,7 +845,10 @@ function parseAtomicEffect(text: string): Effect | undefined {
   // Try ready effect
   if (READY_PATTERN.test(text)) {
     const target =
-      parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
+      parseCharacterTarget(text) ||
+      parseItemTarget(text) ||
+      parseLocationTarget(text) ||
+      DEFAULT_CHOSEN_CHARACTER_TARGET;
     return {
       type: "ready",
       target,
@@ -845,7 +858,11 @@ function parseAtomicEffect(text: string): Effect | undefined {
   // Try banish effect
   if (BANISH_ALL_PATTERN.test(text)) {
     // Handle "Banish all X"
-    const target = parseCharacterTarget(text) || DEFAULT_ALL_CHARACTERS_TARGET;
+    const target =
+      parseCharacterTarget(text) ||
+      parseItemTarget(text) ||
+      parseLocationTarget(text) ||
+      DEFAULT_ALL_CHARACTERS_TARGET;
     return {
       type: "banish",
       target,
@@ -854,7 +871,10 @@ function parseAtomicEffect(text: string): Effect | undefined {
 
   if (BANISH_PATTERN.test(text)) {
     const target =
-      parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
+      parseCharacterTarget(text) ||
+      parseItemTarget(text) ||
+      parseLocationTarget(text) ||
+      DEFAULT_CHOSEN_CHARACTER_TARGET;
     return {
       type: "banish",
       target,

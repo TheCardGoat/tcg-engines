@@ -54,11 +54,11 @@ describe("Composite Effect Parser", () => {
         type: "deal-damage",
         amount: 2,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
@@ -85,11 +85,11 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps[0]).toEqual({
         type: "exert",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "opponent",
-          zone: "play",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
@@ -98,11 +98,11 @@ describe("Composite Effect Parser", () => {
         type: "deal-damage",
         amount: 1,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "opponent",
-          zone: "play",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -165,11 +165,11 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps[0]).toEqual({
         type: "exert",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
@@ -177,11 +177,11 @@ describe("Composite Effect Parser", () => {
         type: "deal-damage",
         amount: 2,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -198,11 +198,11 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps[0]).toEqual({
         type: "ready",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
@@ -272,11 +272,11 @@ describe("Composite Effect Parser", () => {
         type: "deal-damage",
         amount: 2,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
@@ -284,11 +284,11 @@ describe("Composite Effect Parser", () => {
         type: "deal-damage",
         amount: 2,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -321,11 +321,11 @@ describe("Composite Effect Parser", () => {
         type: "deal-damage",
         amount: 1,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -355,11 +355,11 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps[2]).toEqual({
         type: "banish",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -399,11 +399,11 @@ describe("Composite Effect Parser", () => {
       expect(sequence.steps[0]).toEqual({
         type: "exert",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 

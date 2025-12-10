@@ -35,11 +35,11 @@ describe("Choice Effect Parser", () => {
         type: "deal-damage",
         amount: 2,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
@@ -75,11 +75,11 @@ describe("Choice Effect Parser", () => {
         type: "deal-damage",
         amount: 3,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "opponent",
-          zone: "play",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
@@ -104,22 +104,22 @@ describe("Choice Effect Parser", () => {
       expect(choice.options[0]).toEqual({
         type: "exert",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
       expect(choice.options[1]).toEqual({
         type: "ready",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -138,22 +138,22 @@ describe("Choice Effect Parser", () => {
       expect(choice.options[0]).toEqual({
         type: "banish",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
       expect(choice.options[1]).toEqual({
         type: "return-to-hand",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -181,11 +181,11 @@ describe("Choice Effect Parser", () => {
         type: "deal-damage",
         amount: 2,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
@@ -220,11 +220,11 @@ describe("Choice Effect Parser", () => {
       expect(choice.options[2]).toEqual({
         type: "banish",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
@@ -258,11 +258,11 @@ describe("Choice Effect Parser", () => {
         type: "deal-damage",
         amount: 2,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
@@ -307,22 +307,22 @@ describe("Choice Effect Parser", () => {
       expect(choice.options[0]).toEqual({
         type: "exert",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
       expect(choice.options[1]).toEqual({
         type: "ready",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -342,22 +342,22 @@ describe("Choice Effect Parser", () => {
         type: "deal-damage",
         amount: 3,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
 
       expect(choice.options[1]).toEqual({
         type: "banish",
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -438,11 +438,11 @@ describe("Choice Effect Parser", () => {
         type: "deal-damage",
         amount: 4,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "opponent",
-          zone: "play",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -485,11 +485,11 @@ describe("Choice Effect Parser", () => {
         type: "remove-damage",
         amount: 3,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         upTo: true,
       });
@@ -498,11 +498,11 @@ describe("Choice Effect Parser", () => {
         type: "deal-damage",
         amount: 2,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });

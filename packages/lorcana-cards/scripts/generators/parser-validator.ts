@@ -168,88 +168,24 @@ export function isKeywordOnlyCard(card: CanonicalCard): boolean {
  * @param effect - The effect to check
  * @returns true if the effect is a simple draw effect
  */
-export function isSimpleDrawEffect(effect: {
-  type: string;
-  [key: string]: any;
-}): boolean {
-  // 1. Base case: "draw" type
+function isSimpleDrawEffect(effect: any): boolean {
+  // Direct draw effect
   if (effect.type === "draw") {
-    // Validate that it's a pure draw effect (no nested or extra properties)
-    // Draw effects should only have: type, amount, target
-    const allowedKeys = ["type", "amount", "target"];
-    const hasOnlyDrawProperties = Object.keys(effect).every((key) => {
-      // Ignore keys that might be added by system but aren't logic (none currently expected but good practice)
-      // Actually strictly check for now to match previous logic
-      return allowedKeys.includes(key);
-    });
-    return hasOnlyDrawProperties;
+    return true;
   }
 
-  // 2. Recursive cases for wrapper effects
-  // These are considered "simple" if their inner effect is a simple draw effect
+  // Wrapper effects - recurse into the inner effect
+  if (effect.type === "conditional" && effect.then) {
+    return isSimpleDrawEffect(effect.then);
+  }
 
-  // Optional: { type: "optional", effect: Effect, chooser: ... }
-  if (effect.type === "optional") {
+  const wrapperTypes = ["optional", "repeat", "for-each"];
+  if (wrapperTypes.includes(effect.type) && effect.effect) {
     return isSimpleDrawEffect(effect.effect);
   }
 
-  // Conditional: { type: "conditional", condition: ..., then: Effect, else?: Effect }
-  if (effect.type === "conditional") {
-    // "then" must be simple draw
-    const thenIsSimple = isSimpleDrawEffect(effect.then);
-
-    // "else" must be either missing or simple draw
-    // (e.g. "If X draw 1, else draw 2" is arguably simple, but "If X draw 1 else discard" is not)
-    // For now, if else exists, we require it to be simple too.
-    const elseIsSimple = !effect.else || isSimpleDrawEffect(effect.else);
-
-    return thenIsSimple && elseIsSimple;
-  }
-
-  // For-each: { type: "for-each", counter: ..., effect: Effect }
-  if (effect.type === "for-each") {
-    return isSimpleDrawEffect(effect.effect);
-  }
-
-  // Repeat: { type: "repeat", times: ..., effect: Effect }
-  if (effect.type === "repeat") {
-    return isSimpleDrawEffect(effect.effect);
-  }
-
-  // 3. Rejected cases
-  // - sequence (unless we want to support "draw then draw", but "draw then discard" is definitely NO)
-  // - choice (explicitly rejected in requirements)
-  // - others
+  // Composite effects that are not simple wrappers (sequence, choice) are rejected
   return false;
-}
-
-/**
- * Check if a sequence effect contains ONLY simple draw effects
- *
- * Note: Even if a sequence contains only draws (e.g. "Draw a card, then draw a card"),
- * it is technically not a "simple draw effect" by our strict definition,
- * but this helper exists if we ever want to relax that rule.
- */
-export function isSequenceWithOnlyDraw(effect: {
-  type: string;
-  steps?: unknown[];
-}): boolean {
-  if (effect.type !== "sequence") {
-    return false;
-  }
-
-  if (!(effect.steps && Array.isArray(effect.steps))) {
-    return false;
-  }
-
-  return effect.steps.every(
-    (step) =>
-      typeof step === "object" &&
-      step !== null &&
-      "type" in step &&
-      // @ts-ignore - we know it has type based on check above
-      isSimpleDrawEffect(step),
-  );
 }
 
 /**
@@ -356,9 +292,7 @@ export function isParseableCard(card: CanonicalCard): boolean {
     // For activated abilities, only allow simple draw effects
     if (abilityType === "activated") {
       const effect = result.ability.ability.effect;
-      if (!effect) {
-        return false;
-      }
+      if (!effect) return false;
       return isSimpleDrawEffect(effect);
     }
 

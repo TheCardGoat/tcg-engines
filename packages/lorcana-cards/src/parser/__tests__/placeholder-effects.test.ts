@@ -37,11 +37,11 @@ describe("{d} Placeholder Effects", () => {
         type: "deal-damage",
         amount: -1, // {d} placeholder converted to -1
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -55,11 +55,11 @@ describe("{d} Placeholder Effects", () => {
         type: "deal-damage",
         amount: -1,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "opponent",
-          zone: "play",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -95,11 +95,11 @@ describe("{d} Placeholder Effects", () => {
         type: "remove-damage",
         amount: -1, // {d} placeholder converted to -1
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         upTo: false,
       });
@@ -114,11 +114,11 @@ describe("{d} Placeholder Effects", () => {
         type: "remove-damage",
         amount: -1,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         upTo: true,
       });
@@ -156,11 +156,11 @@ describe("{d} Placeholder Effects", () => {
         stat: "strength",
         modifier: -1, // +{d} placeholder converted to -1
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -174,11 +174,11 @@ describe("{d} Placeholder Effects", () => {
         stat: "strength",
         modifier: -1, // {d} without sign defaults to positive, converted to -1
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -192,11 +192,11 @@ describe("{d} Placeholder Effects", () => {
         stat: "strength",
         modifier: 1, // -{d} stored as positive 1, will be negated at runtime
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -210,11 +210,11 @@ describe("{d} Placeholder Effects", () => {
         stat: "willpower",
         modifier: -1,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -228,11 +228,11 @@ describe("{d} Placeholder Effects", () => {
         stat: "lore",
         modifier: -1,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         duration: "this-turn",
       });
@@ -247,11 +247,11 @@ describe("{d} Placeholder Effects", () => {
         type: "put-damage",
         amount: -1, // {d} placeholder converted to -1
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -263,11 +263,11 @@ describe("{d} Placeholder Effects", () => {
         type: "put-damage",
         amount: -1,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -318,11 +318,11 @@ describe("{d} Placeholder Effects", () => {
           type: "deal-damage",
           amount: -1,
           target: {
-            type: "query",
-
+            selector: "chosen",
             count: 1,
-            controller: "any",
-            zone: "play",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
           },
         },
         chooser: "CONTROLLER",

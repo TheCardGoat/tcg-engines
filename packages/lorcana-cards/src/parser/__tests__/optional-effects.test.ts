@@ -51,11 +51,11 @@ describe("Optional Effect Parser", () => {
           type: "deal-damage",
           amount: 2,
           target: {
-            type: "query",
-
+            selector: "chosen",
             count: 1,
-            controller: "any",
-            zone: "play",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
           },
         },
         chooser: "CONTROLLER",
@@ -72,11 +72,11 @@ describe("Optional Effect Parser", () => {
         effect: {
           type: "return-to-hand",
           target: {
-            type: "query",
-
+            selector: "chosen",
             count: 1,
-            controller: "any",
-            zone: "play",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
           },
         },
         chooser: "CONTROLLER",
@@ -90,13 +90,13 @@ describe("Optional Effect Parser", () => {
         type: "optional",
         effect: {
           type: "banish",
-          // Note: "item" is currently parsed as CHOSEN_CHARACTER by the BANISH_PATTERN
+          // Note: "item" is correctly parsed
           target: {
-            type: "query",
-
+            selector: "chosen",
             count: 1,
-            controller: "any",
-            zone: "play",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["item"],
           },
         },
         chooser: "CONTROLLER",
@@ -124,11 +124,11 @@ describe("Optional Effect Parser", () => {
         effect: {
           type: "exert",
           target: {
-            type: "query",
-
+            selector: "chosen",
             count: 1,
-            controller: "any",
-            zone: "play",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
           },
         },
         chooser: "CONTROLLER",
@@ -143,11 +143,11 @@ describe("Optional Effect Parser", () => {
         effect: {
           type: "ready",
           target: {
-            type: "query",
-
+            selector: "chosen",
             count: 1,
-            controller: "any",
-            zone: "play",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
           },
         },
         chooser: "CONTROLLER",
@@ -173,11 +173,11 @@ describe("Optional Effect Parser", () => {
         effect: {
           type: "exert",
           target: {
-            type: "query",
-
+            selector: "chosen",
             count: 1,
-            controller: "any",
-            zone: "play",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
           },
         },
         chooser: "CONTROLLER",
@@ -206,13 +206,13 @@ describe("Optional Effect Parser", () => {
         type: "optional",
         effect: {
           type: "banish",
-          // Note: "item" is currently parsed as CHOSEN_CHARACTER by the BANISH_PATTERN
+          // Note: "item" is correctly parsed
           target: {
-            type: "query",
-
+            selector: "chosen",
             count: 1,
-            controller: "any",
-            zone: "play",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["item"],
           },
         },
         chooser: "CONTROLLER",
@@ -242,11 +242,11 @@ describe("Optional Effect Parser", () => {
           type: "deal-damage",
           amount: 2,
           target: {
-            type: "query",
-
+            selector: "chosen",
             count: 1,
-            controller: "any",
-            zone: "play",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
           },
         },
         chooser: "CONTROLLER",
@@ -274,11 +274,11 @@ describe("Optional Effect Parser", () => {
         effect: {
           type: "return-to-hand",
           target: {
-            type: "query",
-
+            selector: "chosen",
             count: 1,
-            controller: "any",
-            zone: "play",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
           },
         },
         chooser: "CONTROLLER",
@@ -307,11 +307,11 @@ describe("Optional Effect Parser", () => {
         effect: {
           type: "exert",
           target: {
-            type: "query",
-
+            selector: "chosen",
             count: 1,
-            controller: "any",
-            zone: "play",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
           },
         },
         chooser: "CONTROLLER",
@@ -321,11 +321,11 @@ describe("Optional Effect Parser", () => {
         type: "deal-damage",
         amount: 2,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -395,11 +395,11 @@ describe("Optional Effect Parser", () => {
           type: "deal-damage",
           amount: 3,
           target: {
-            type: "query",
-
+            selector: "chosen",
             count: 1,
-            controller: "any",
-            zone: "play",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
           },
         },
         chooser: "CONTROLLER",
@@ -444,11 +444,11 @@ describe("Optional Effect Parser", () => {
         type: "deal-damage",
         amount: 2,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });
@@ -519,11 +519,11 @@ describe("Optional Effect Parser", () => {
         effect: {
           type: "exert",
           target: {
-            type: "query",
-
+            selector: "chosen",
             count: 1,
-            controller: "any",
-            zone: "play",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
           },
         },
         chooser: "CONTROLLER",
@@ -533,11 +533,11 @@ describe("Optional Effect Parser", () => {
         type: "deal-damage",
         amount: 1,
         target: {
-          type: "query",
-
+          selector: "chosen",
           count: 1,
-          controller: "any",
-          zone: "play",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
       });
     });

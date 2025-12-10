@@ -9,6 +9,7 @@
  */
 
 import { classifyAbility } from "./classifier";
+import { getManualEntry, tooComplexText } from "./manual-overrides";
 import { parseActionAbility } from "./parsers/action-parser";
 import { parseActivatedAbility } from "./parsers/activated-parser";
 import { parseKeywordAbility } from "./parsers/keyword-parser";
@@ -43,6 +44,21 @@ export function parseAbilityText(
     return {
       success: false,
       error: "Empty ability text",
+    };
+  }
+
+  // Step 1.5: Check for manual override (complex texts that bypass parsing)
+  if (tooComplexText(normalizedText)) {
+    const manualEntry = getManualEntry(normalizedText);
+    if (manualEntry) {
+      return {
+        success: true,
+        ability: manualEntry,
+      };
+    }
+    return {
+      success: false,
+      error: `Text marked as complex but no manual entry found: "${normalizedText}". Please add an entry to MANUAL_ENTRIES in manual-overrides.ts`,
     };
   }
 
