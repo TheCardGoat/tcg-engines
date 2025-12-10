@@ -18,6 +18,8 @@ import {
   ALL_ITEMS_PATTERN,
   ALL_LOCATIONS_PATTERN,
   ALL_OPPOSING_CHARACTERS_PATTERN,
+  ALL_OPPOSING_ITEMS_PATTERN,
+  ALL_OPPOSING_LOCATIONS_PATTERN,
   CHOSEN_CHARACTER_OF_YOURS_PATTERN,
   CHOSEN_CHARACTER_PATTERN,
   CHOSEN_ITEM_PATTERN,
@@ -130,6 +132,16 @@ export function parseItemTarget(text: string): ItemTarget | undefined {
     };
   }
 
+  if (ALL_OPPOSING_ITEMS_PATTERN.test(text)) {
+    return {
+      selector: "all",
+      count: "all",
+      owner: "opponent",
+      zones: ["play"],
+      cardTypes: ["item"],
+    };
+  }
+
   if (ALL_ITEMS_PATTERN.test(text)) {
     return {
       selector: "all",
@@ -157,6 +169,16 @@ export function parseLocationTarget(text: string): LocationTarget | undefined {
       selector: "chosen",
       count: 1,
       owner: "any",
+      zones: ["play"],
+      cardTypes: ["location"],
+    };
+  }
+
+  if (ALL_OPPOSING_LOCATIONS_PATTERN.test(text)) {
+    return {
+      selector: "all",
+      count: "all",
+      owner: "opponent",
       zones: ["play"],
       cardTypes: ["location"],
     };

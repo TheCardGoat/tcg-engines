@@ -36,7 +36,13 @@ describe("{d} Placeholder Effects", () => {
       expect(effect).toEqual({
         type: "deal-damage",
         amount: -1, // {d} placeholder converted to -1
-        target: "CHOSEN_CHARACTER",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
       });
     });
 
@@ -48,7 +54,13 @@ describe("{d} Placeholder Effects", () => {
       expect(effect).toEqual({
         type: "deal-damage",
         amount: -1,
-        target: "CHOSEN_OPPOSING_CHARACTER",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
       });
     });
   });
@@ -82,7 +94,13 @@ describe("{d} Placeholder Effects", () => {
       expect(effect).toEqual({
         type: "remove-damage",
         amount: -1, // {d} placeholder converted to -1
-        target: "CHOSEN_CHARACTER",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
         upTo: false,
       });
     });
@@ -95,7 +113,13 @@ describe("{d} Placeholder Effects", () => {
       expect(effect).toEqual({
         type: "remove-damage",
         amount: -1,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
         upTo: true,
       });
     });
@@ -131,7 +155,13 @@ describe("{d} Placeholder Effects", () => {
         type: "modify-stat",
         stat: "strength",
         modifier: -1, // +{d} placeholder converted to -1
-        target: "CHOSEN_CHARACTER",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
         duration: "this-turn",
       });
     });
@@ -143,7 +173,13 @@ describe("{d} Placeholder Effects", () => {
         type: "modify-stat",
         stat: "strength",
         modifier: -1, // {d} without sign defaults to positive, converted to -1
-        target: "CHOSEN_CHARACTER",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
         duration: "this-turn",
       });
     });
@@ -155,7 +191,13 @@ describe("{d} Placeholder Effects", () => {
         type: "modify-stat",
         stat: "strength",
         modifier: 1, // -{d} stored as positive 1, will be negated at runtime
-        target: "CHOSEN_CHARACTER",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
         duration: "this-turn",
       });
     });
@@ -167,7 +209,13 @@ describe("{d} Placeholder Effects", () => {
         type: "modify-stat",
         stat: "willpower",
         modifier: -1,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
         duration: "this-turn",
       });
     });
@@ -179,7 +227,13 @@ describe("{d} Placeholder Effects", () => {
         type: "modify-stat",
         stat: "lore",
         modifier: -1,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
         duration: "this-turn",
       });
     });
@@ -192,7 +246,13 @@ describe("{d} Placeholder Effects", () => {
       expect(effect).toEqual({
         type: "put-damage",
         amount: -1, // {d} placeholder converted to -1
-        target: "CHOSEN_CHARACTER",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
       });
     });
 
@@ -202,7 +262,13 @@ describe("{d} Placeholder Effects", () => {
       expect(effect).toEqual({
         type: "put-damage",
         amount: -1,
-        target: "CHOSEN_CHARACTER",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
       });
     });
   });
@@ -251,7 +317,13 @@ describe("{d} Placeholder Effects", () => {
         effect: {
           type: "deal-damage",
           amount: -1,
-          target: "CHOSEN_CHARACTER",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
         },
         chooser: "CONTROLLER",
       });

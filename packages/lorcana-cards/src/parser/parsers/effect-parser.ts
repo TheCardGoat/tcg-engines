@@ -83,7 +83,12 @@ import {
   YOU_MAY_PUT_INTO_INKWELL_PATTERN,
 } from "../patterns/effects";
 import { parseCondition } from "./condition-parser";
-import { parseCharacterTarget, parsePlayerTarget } from "./target-parser";
+import {
+  parseCharacterTarget,
+  parseItemTarget,
+  parseLocationTarget,
+  parsePlayerTarget,
+} from "./target-parser";
 
 const DEFAULT_CHOSEN_CHARACTER_TARGET: CharacterTarget = {
   selector: "chosen",
@@ -678,7 +683,8 @@ function parseAtomicEffect(text: string): Effect | undefined {
 
   // Try shuffle into deck effect
   if (SHUFFLE_INTO_DECK_PATTERN.test(text)) {
-    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    const target =
+      parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
     return {
       type: "shuffle-into-deck",
       target,
@@ -694,7 +700,7 @@ function parseAtomicEffect(text: string): Effect | undefined {
     const under =
       text.includes("this character") || text.includes("this location")
         ? "self"
-        : parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+        : parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
 
     return {
       type: "put-under",
@@ -764,7 +770,8 @@ function parseAtomicEffect(text: string): Effect | undefined {
   const damageMatch = text.match(DEAL_DAMAGE_PATTERN);
   if (damageMatch) {
     const amount = parseNumericValue(damageMatch[1]);
-    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    const target =
+      parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
     return {
       type: "deal-damage",
       amount,
@@ -776,7 +783,8 @@ function parseAtomicEffect(text: string): Effect | undefined {
   const putDamageMatch = text.match(PUT_DAMAGE_PATTERN);
   if (putDamageMatch) {
     const amount = parseNumericValue(putDamageMatch[1]);
-    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    const target =
+      parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
     return {
       type: "put-damage",
       amount,
@@ -788,7 +796,8 @@ function parseAtomicEffect(text: string): Effect | undefined {
   const removeDamageMatch = text.match(REMOVE_DAMAGE_PATTERN);
   if (removeDamageMatch) {
     const amount = parseNumericValue(removeDamageMatch[1]);
-    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    const target =
+      parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
     const upTo = text.includes("up to");
     return {
       type: "remove-damage",
@@ -822,7 +831,11 @@ function parseAtomicEffect(text: string): Effect | undefined {
 
   // Try exert effect
   if (EXERT_PATTERN.test(text)) {
-    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    const target =
+      parseCharacterTarget(text) ||
+      parseItemTarget(text) ||
+      parseLocationTarget(text) ||
+      DEFAULT_CHOSEN_CHARACTER_TARGET;
     return {
       type: "exert",
       target,
@@ -831,7 +844,11 @@ function parseAtomicEffect(text: string): Effect | undefined {
 
   // Try ready effect
   if (READY_PATTERN.test(text)) {
-    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    const target =
+      parseCharacterTarget(text) ||
+      parseItemTarget(text) ||
+      parseLocationTarget(text) ||
+      DEFAULT_CHOSEN_CHARACTER_TARGET;
     return {
       type: "ready",
       target,
@@ -841,7 +858,11 @@ function parseAtomicEffect(text: string): Effect | undefined {
   // Try banish effect
   if (BANISH_ALL_PATTERN.test(text)) {
     // Handle "Banish all X"
-    const target = parseCharacterTarget(text) || "ALL_CHARACTERS";
+    const target =
+      parseCharacterTarget(text) ||
+      parseItemTarget(text) ||
+      parseLocationTarget(text) ||
+      DEFAULT_ALL_CHARACTERS_TARGET;
     return {
       type: "banish",
       target,
@@ -849,7 +870,11 @@ function parseAtomicEffect(text: string): Effect | undefined {
   }
 
   if (BANISH_PATTERN.test(text)) {
-    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    const target =
+      parseCharacterTarget(text) ||
+      parseItemTarget(text) ||
+      parseLocationTarget(text) ||
+      DEFAULT_CHOSEN_CHARACTER_TARGET;
     return {
       type: "banish",
       target,
@@ -858,7 +883,8 @@ function parseAtomicEffect(text: string): Effect | undefined {
 
   // Try return to hand effect
   if (RETURN_TO_HAND_PATTERN.test(text)) {
-    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    const target =
+      parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
     return {
       type: "return-to-hand",
       target,
@@ -880,7 +906,8 @@ function parseAtomicEffect(text: string): Effect | undefined {
     }
 
     const stat = statModMatch[2] as "S" | "W" | "L";
-    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    const target =
+      parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
     const duration = text.includes("this turn") ? "this-turn" : "permanent";
 
     return {
@@ -896,7 +923,8 @@ function parseAtomicEffect(text: string): Effect | undefined {
   const keywordMatch = text.match(GRANT_KEYWORD_PATTERN);
   if (keywordMatch) {
     const keywordText = keywordMatch[1];
-    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    const target =
+      parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
     const duration = text.includes("this turn") ? "this-turn" : "permanent";
 
     // Parse the keyword name and value

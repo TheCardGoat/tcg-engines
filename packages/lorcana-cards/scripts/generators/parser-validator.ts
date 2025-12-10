@@ -55,23 +55,24 @@ export function isKeywordOnlyCard(card: CanonicalCard): boolean {
  * @param effect - The effect to check
  * @returns true if the effect is a simple draw effect
  */
-function isSimpleDrawEffect(effect: { type: string }): boolean {
-  // Must be a simple draw effect (not composite)
-  // Composite effects have types: "sequence", "choice", "optional", "conditional", "for-each", "repeat"
-  const compositeTypes = [
-    "sequence",
-    "choice",
-    "optional",
-    "conditional",
-    "for-each",
-    "repeat",
-  ];
-  if (compositeTypes.includes(effect.type)) {
-    return false;
+function isSimpleDrawEffect(effect: any): boolean {
+  // Direct draw effect
+  if (effect.type === "draw") {
+    return true;
   }
 
-  // Must be exactly "draw" type
-  return effect.type === "draw";
+  // Wrapper effects - recurse into the inner effect
+  if (effect.type === "conditional" && effect.then) {
+    return isSimpleDrawEffect(effect.then);
+  }
+
+  const wrapperTypes = ["optional", "repeat", "for-each"];
+  if (wrapperTypes.includes(effect.type) && effect.effect) {
+    return isSimpleDrawEffect(effect.effect);
+  }
+
+  // Composite effects that are not simple wrappers (sequence, choice) are rejected
+  return false;
 }
 
 /**
@@ -130,6 +131,13 @@ export function isParseableCard(card: CanonicalCard): boolean {
 
     // For triggered abilities, only allow simple draw effects
     if (abilityType === "triggered") {
+      const effect = result.ability.ability.effect;
+      if (!effect) return false;
+      return isSimpleDrawEffect(effect);
+    }
+
+    // For activated abilities, only allow simple draw effects
+    if (abilityType === "activated") {
       const effect = result.ability.ability.effect;
       if (!effect) return false;
       return isSimpleDrawEffect(effect);
