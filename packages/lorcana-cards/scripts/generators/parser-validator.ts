@@ -123,7 +123,10 @@ function stripReminderText(text: string): string {
  * This removes all reminder text, not just at the end
  */
 function stripAllParentheses(text: string): string {
-  return text.replace(/\([^)]*\)/g, "").trim().replace(/\s+/g, " ");
+  return text
+    .replace(/\([^)]*\)/g, "")
+    .trim()
+    .replace(/\s+/g, " ");
 }
 
 /**
@@ -275,6 +278,13 @@ export function isParseableCard(card: CanonicalCard): boolean {
     return true;
   }
 
+  // Also try without parentheses (reminder text might prevent matches)
+  const fullTextNoParens = stripAllParentheses(normalizedFullText);
+  const patternFullTextNoParens = normalizeToPattern(fullTextNoParens);
+  if (tooComplexText(patternFullTextNoParens)) {
+    return true;
+  }
+
   // Also check individual ability lines (for single-ability manual overrides)
   // Some cards have multiple abilities, and manual overrides might only match one
   const abilityLines = card.rulesText.split("\n").filter((line) => line.trim());
@@ -283,6 +293,13 @@ export function isParseableCard(card: CanonicalCard): boolean {
     const patternLine = normalizeToPattern(normalizedLine);
     if (tooComplexText(patternLine)) {
       // At least one ability has a manual override - consider it parseable
+      return true;
+    }
+
+    // Also try without parentheses
+    const lineNoParens = stripAllParentheses(normalizedLine);
+    const patternLineNoParens = normalizeToPattern(lineNoParens);
+    if (tooComplexText(patternLineNoParens)) {
       return true;
     }
   }

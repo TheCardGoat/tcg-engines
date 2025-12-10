@@ -262,11 +262,22 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
     // Manual overrides are keyed by normalized text with {d} placeholders, so we need to:
     // 1. Normalize whitespace
     // 2. Convert numbers to {d} placeholders
+    // 3. Try with and without parentheses (reminder text might prevent matches)
     const normalizedFullText = normalizeText(
       card.rulesText.replace(/\n/g, " "),
     );
-    const patternText = normalizeToPattern(normalizedFullText);
-    const isManualOverride = tooComplexText(patternText);
+    let patternText = normalizeToPattern(normalizedFullText);
+    let isManualOverride = tooComplexText(patternText);
+
+    // If not matched, try without parentheses
+    if (!isManualOverride) {
+      const textNoParens = normalizedFullText
+        .replace(/\([^)]*\)/g, "")
+        .trim()
+        .replace(/\s+/g, " ");
+      patternText = normalizeToPattern(textNoParens);
+      isManualOverride = tooComplexText(patternText);
+    }
 
     if (isManualOverride) {
       // Get manual override entry (can be single or array)
