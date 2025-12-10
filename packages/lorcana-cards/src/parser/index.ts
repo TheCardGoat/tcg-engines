@@ -24,8 +24,13 @@
  */
 
 export { classifyAbility } from "./classifier";
+export type { MultiParseResult } from "./parser";
 // Main parser functions
-export { parseAbilityText, parseAbilityTexts } from "./parser";
+export {
+  parseAbilityText,
+  parseAbilityTextMulti,
+  parseAbilityTexts,
+} from "./parser";
 export { parseActivatedAbility } from "./parsers/activated-parser";
 export {
   extractConditionText,

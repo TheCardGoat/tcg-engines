@@ -9,14 +9,37 @@
  */
 
 import { classifyAbility } from "./classifier";
-import { getManualEntry, tooComplexText } from "./manual-overrides";
+import { getManualEntries, tooComplexText } from "./manual-overrides";
 import { parseActionAbility } from "./parsers/action-parser";
 import { parseActivatedAbility } from "./parsers/activated-parser";
 import { parseKeywordAbility } from "./parsers/keyword-parser";
 import { parseStaticAbility } from "./parsers/static-parser";
 import { parseTriggeredAbility } from "./parsers/triggered-parser";
 import { normalizeText } from "./preprocessor";
-import type { BatchParseResult, ParseResult, ParserOptions } from "./types";
+import type {
+  AbilityWithText,
+  BatchParseResult,
+  ParseResult,
+  ParserOptions,
+} from "./types";
+
+/**
+ * Result for parsing multi-ability texts
+ * Used when a single text contains multiple abilities
+ */
+export interface MultiParseResult {
+  /** Whether parsing succeeded for all abilities */
+  success: boolean;
+
+  /** Parsed abilities (multiple for complex texts) */
+  abilities: AbilityWithText[];
+
+  /** Non-fatal warnings encountered during parsing */
+  warnings?: string[];
+
+  /** Fatal error message (if success is false) */
+  error?: string;
+}
 
 /**
  * Parse a single ability text string into a type-safe Ability object
@@ -49,11 +72,13 @@ export function parseAbilityText(
 
   // Step 1.5: Check for manual override (complex texts that bypass parsing)
   if (tooComplexText(normalizedText)) {
-    const manualEntry = getManualEntry(normalizedText);
-    if (manualEntry) {
+    const manualEntries = getManualEntries(normalizedText);
+    if (manualEntries && manualEntries.length > 0) {
+      // Return the first ability for single-parse compatibility
+      // Use parseAbilityTextMulti for full multi-ability support
       return {
         success: true,
-        ability: manualEntry,
+        ability: manualEntries[0],
       };
     }
     return {
@@ -120,6 +145,77 @@ export function parseAbilityText(
   }
 
   return result;
+}
+
+/**
+ * Parse ability text that may contain multiple abilities
+ *
+ * This function handles complex card texts that contain multiple abilities
+ * (e.g., "ABILITY ONE Effect. ABILITY TWO Other effect.").
+ *
+ * For manual override entries, returns all abilities defined in the entry.
+ * For regular texts, attempts to parse as a single ability.
+ *
+ * @param text - Raw ability text from card (may contain multiple abilities)
+ * @param options - Parser options
+ * @returns Multi-parse result with array of abilities
+ *
+ * @example
+ * ```typescript
+ * const result = parseAbilityTextMulti("ABILITY ONE Effect. ABILITY TWO Other.");
+ * if (result.success) {
+ *   console.log(`Found ${result.abilities.length} abilities`);
+ * }
+ * ```
+ */
+export function parseAbilityTextMulti(
+  text: string,
+  options?: ParserOptions,
+): MultiParseResult {
+  // Step 1: Preprocess text
+  const normalizedText = normalizeText(text);
+
+  if (!normalizedText) {
+    return {
+      success: false,
+      abilities: [],
+      error: "Empty ability text",
+    };
+  }
+
+  // Step 2: Check for manual override (complex texts that bypass parsing)
+  if (tooComplexText(normalizedText)) {
+    const manualEntries = getManualEntries(normalizedText);
+    if (manualEntries && manualEntries.length > 0) {
+      return {
+        success: true,
+        abilities: manualEntries,
+      };
+    }
+    return {
+      success: false,
+      abilities: [],
+      error: `Text marked as complex but no manual entry found: "${normalizedText}". Please add an entry to MANUAL_ENTRIES in manual-overrides.ts`,
+    };
+  }
+
+  // Step 3: Fall back to single ability parsing
+  const singleResult = parseAbilityText(text, options);
+
+  if (singleResult.success && singleResult.ability) {
+    return {
+      success: true,
+      abilities: [singleResult.ability],
+      warnings: singleResult.warnings,
+    };
+  }
+
+  return {
+    success: false,
+    abilities: [],
+    error: singleResult.error,
+    warnings: singleResult.warnings,
+  };
 }
 
 /**
