@@ -14,17 +14,7 @@ This specification covers all 12 Lorcana keywords:
 
 - `src/keywords/keyword-types.ts` - Keyword type definitions
 - `src/keywords/keyword-effects.ts` - Keyword effect implementations
-- `src/keywords/bodyguard.ts` - Bodyguard logic
-- `src/keywords/challenger.ts` - Challenger logic
-- `src/keywords/evasive.ts` - Evasive logic
-- `src/keywords/reckless.ts` - Reckless logic
-- `src/keywords/resist.ts` - Resist logic
-- `src/keywords/rush.ts` - Rush logic
-- `src/keywords/shift.ts` - Shift logic
-- `src/keywords/singer.ts` - Singer and Sing Together logic
-- `src/keywords/support.ts` - Support logic
-- `src/keywords/vanish.ts` - Vanish logic
-- `src/keywords/ward.ts` - Ward logic
+- `src/keywords/index.ts` - Keyword exports
 
 ## Types
 
@@ -47,17 +37,15 @@ type Keyword = SimpleKeyword | ParameterizedKeyword | ComplexKeyword;
 
 ### Keyword Effects
 
-```typescript
-interface KeywordEffect {
-  keyword: Keyword;
-  isActive: (state: GameState, cardId: CardId) => boolean;
-  apply: (state: GameState, cardId: CardId, context: KeywordContext) => GameState;
-}
+Keyword effects are implemented as individual functional helpers rather than a unified interface.
 
+```typescript
 interface KeywordContext {
   event: KeywordEvent;
   sourceCardId: CardId;
   targetCardId?: CardId;
+  playerId: PlayerId;
+  opponentId: PlayerId;
 }
 
 type KeywordEvent =
@@ -78,7 +66,7 @@ type KeywordEvent =
 interface StackingKeywordTotal {
   keyword: "Challenger" | "Resist";
   baseValue: number;
-  modifiers: { source: CardId | "ability"; amount: number }[];
+  modifiers: { source: CardId | "ability" | "effect"; amount: number }[];
   totalValue: number;
 }
 ```
@@ -93,32 +81,33 @@ function getAllKeywords(card: LorcanaCardDefinition): Keyword[];
 function hasSimpleKeyword(card: LorcanaCardDefinition, keyword: SimpleKeyword): boolean;
 
 // Stacking keyword totals
-function getTotalChallenger(state: GameState, cardId: CardId): number;
-function getTotalResist(state: GameState, cardId: CardId): number;
+function calculateTotalChallenger(card: LorcanaCardDefinition, additionalModifiers?: any[]): StackingKeywordTotal;
+function calculateTotalResist(card: LorcanaCardDefinition, additionalModifiers?: any[]): StackingKeywordTotal;
 
 // Keyword state checks
-function canQuest(state: GameState, cardId: CardId): boolean; // Checks Reckless
-function needsDryRequirement(state: GameState, cardId: CardId): boolean; // Checks Rush
-function canBeChosen(state: GameState, cardId: CardId, byPlayerId: PlayerId): boolean; // Checks Ward
-function mustChallengeFirst(state: GameState, targetId: CardId, attackerHasEvasive: boolean): boolean; // Checks Bodyguard
-function canChallengeReady(state: GameState, challengerId: CardId): boolean; // Checks Evasive
+function canQuest(state: GameState, cardId: CardId): boolean; // Checks Reckless (via card-utils)
+function needsDryRequirement(card: LorcanaCardDefinition): boolean; // Checks Rush
+function canBypassDrying(card: LorcanaCardDefinition): boolean; // Checks Rush
+function canBeChosenBy(targetCard: LorcanaCardDefinition, targetOwner: PlayerId, byPlayerId: PlayerId): boolean; // Checks Ward
+function checkWardProtection(targetCard: LorcanaCardDefinition, targetOwner: PlayerId, sourcePlayerId: PlayerId): WardCheckResult;
 
 // Shift helpers
 function getShiftTargetName(card: LorcanaCardDefinition): string | null;
 function getShiftCost(card: LorcanaCardDefinition): number | null;
-function canShift(state: GameState, shiftingCardId: CardId): boolean;
 
 // Singer helpers
-function getSingerValue(card: LorcanaCardDefinition): number | null;
-function getSingTogetherValue(card: LorcanaCardDefinition): number | null;
-function canSing(state: GameState, singerId: CardId, songCost: number): boolean;
+function getSingerValue(keywords: Keyword[]): number | null;
+function getSingTogetherValue(keywords: Keyword[]): number | null;
+function canSingSong(singerCard: LorcanaCardDefinition, singerState: CardInstanceState, songCost: number): boolean;
+function canSingTogether(singers: { card: LorcanaCardDefinition; state: CardInstanceState }[], songCost: number): boolean;
 
 // Support helpers
-function applySupportBonus(state: GameState, supporterId: CardId, targetId: CardId): GameState;
-function getSupportTargets(state: GameState, supporterId: CardId): CardId[];
+function createSupportBonus(supporterId: CardId, supporterCard: LorcanaCardDefinition, targetId: CardId): SupportContext;
+function getValidSupportTargets(supporterId: CardId, allCharacters: { cardId: CardId; owner: PlayerId }[], supporterOwner: PlayerId): CardId[];
 
 // Vanish helpers
-function shouldVanish(state: GameState, cardId: CardId, destinationZone: ZoneId): boolean;
+function shouldVanishRedirect(card: LorcanaCardDefinition, destinationZone: string): boolean;
+function getVanishRedirect(cardId: CardId, card: LorcanaCardDefinition, originalDestination: string): VanishRedirect | null;
 ```
 
 ## Test Cases
@@ -187,7 +176,7 @@ function shouldVanish(state: GameState, cardId: CardId, destinationZone: ZoneId)
 
 ### Support (Rule 10.11)
 
-1. `gives +1 Strength to another character when played` - Bonus grant
+1. `gives Strength equal to this character's Strength to another character when questing` - Bonus grant
 2. `effect lasts until end of turn` - Duration
 3. `is optional ('may')` - Optional effect
 4. `can only target other characters (not self)` - Target restriction

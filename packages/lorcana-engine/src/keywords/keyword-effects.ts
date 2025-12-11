@@ -47,14 +47,14 @@ export function needsDryRequirement(card: LorcanaCardDefinition): boolean {
 // =============================================================================
 
 /**
- * Create support bonus context when a card with Support enters play
+ * Create support bonus context when a Support character quests.
  * Support: When this character quests, you may add their Strength
  * to another chosen character's Strength this turn.
  *
- * Note: Support is actually triggered when QUESTING, not entering play.
- * The effect gives +Strength equal to the Support character's Strength.
+ * Note: This function should be called when the Support character QUESTS,
+ * not when it enters play. The effect gives +Strength equal to the Support character's Strength.
  */
-export function createSupportContext(
+export function createSupportBonus(
   supporterId: CardId,
   supporterCard: LorcanaCardDefinition,
   targetId: CardId,
@@ -69,16 +69,21 @@ export function createSupportContext(
 }
 
 /**
- * Get valid support targets (other characters, not self)
+ * Get valid support targets (other characters, not self).
+ * Targets must be characters owned by the same player.
  */
 export function getValidSupportTargets(
   supporterId: CardId,
-  allCharacters: Array<{ cardId: CardId; owner: PlayerId }>,
+  allCharacters: Array<{ cardId: CardId; owner: PlayerId; zone?: string }>,
   supporterOwner: PlayerId,
 ): CardId[] {
   return allCharacters
     .filter(
-      ({ cardId, owner }) => cardId !== supporterId && owner === supporterOwner,
+      ({ cardId, owner, zone }) =>
+        cardId !== supporterId &&
+        owner === supporterOwner &&
+        // Ensure character is in play (default assumption if zone is missing, but good to check)
+        (zone === undefined || zone === "play"),
     )
     .map(({ cardId }) => cardId);
 }
@@ -86,9 +91,14 @@ export function getValidSupportTargets(
 /**
  * Check if Support can be applied (character has Support keyword)
  */
-export function hasSupport(card: LorcanaCardDefinition): boolean {
+export function hasSupportKeyword(card: LorcanaCardDefinition): boolean {
   return hasKeyword(card, "Support");
 }
+
+/**
+ * @deprecated Use hasSupportKeyword instead
+ */
+export const hasSupport = hasSupportKeyword;
 
 // =============================================================================
 // Vanish (Rule 10.12)
@@ -143,7 +153,13 @@ export function checkWardProtection(
   targetCard: LorcanaCardDefinition,
   targetOwner: PlayerId,
   sourcePlayerId: PlayerId,
+  selectionType: "chosen" | "random" | "all" = "chosen",
 ): WardCheckResult {
+  // Ward only protects against being "chosen"
+  if (selectionType !== "chosen") {
+    return { protected: false };
+  }
+
   // Ward doesn't protect from own abilities
   if (targetOwner === sourcePlayerId) {
     return { protected: false };

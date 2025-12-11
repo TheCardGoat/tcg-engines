@@ -50,10 +50,11 @@ export {
   checkWardProtection,
   createSingerPayment,
   // Support (Rule 10.11)
-  createSupportContext,
+  createSupportBonus,
   getValidSupportTargets,
   getVanishRedirect,
   hasSupport,
+  hasSupportKeyword,
   needsDryRequirement,
   // Vanish (Rule 10.12)
   shouldVanishRedirect,

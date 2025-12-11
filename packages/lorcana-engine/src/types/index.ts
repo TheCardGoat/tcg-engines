@@ -13,5 +13,10 @@ export * from "./game-state";
 // Spec 1: Foundation & Types
 export * from "./ink-types";
 export * from "./keywords";
-export * from "./lorcana-state";
+export {
+  type LorcanaPhase,
+  type LorcanaState,
+  type PermanentState,
+  type TurnMetadata,
+} from "./lorcana-state";
 export * from "./move-params";

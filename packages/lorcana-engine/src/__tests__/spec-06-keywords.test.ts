@@ -30,10 +30,10 @@ import {
   canSingTogether,
   checkWardProtection,
   createSingerPayment,
-  createSupportContext,
+  createSupportBonus,
   getValidSupportTargets,
   getVanishRedirect,
-  hasSupport,
+  hasSupportKeyword,
   needsDryRequirement,
   shouldVanishRedirect,
 } from "../keywords/keyword-effects";
@@ -397,7 +397,7 @@ describe("Spec 6: Keywords", () => {
   describe("Support (Rule 10.11)", () => {
     it("detects Support keyword", () => {
       const card = createMockCard({ keywords: ["Support"] });
-      expect(hasSupport(card)).toBe(true);
+      expect(hasSupportKeyword(card)).toBe(true);
     });
 
     it("creates support context with strength bonus", () => {
@@ -406,7 +406,7 @@ describe("Spec 6: Keywords", () => {
         keywords: ["Support"],
       });
 
-      const context = createSupportContext(
+      const context = createSupportBonus(
         cardId("supporter"),
         supporter,
         cardId("target"),
@@ -476,6 +476,24 @@ describe("Spec 6: Keywords", () => {
       const card = createMockCard({ keywords: [] });
       const redirect = getVanishRedirect(cardId("card1"), card, "hand");
       expect(redirect).toBe(null);
+    });
+
+    it("handles implicit hand return correctly", () => {
+      const card = createMockCard({ keywords: ["Vanish"] });
+      // Simulating a "return to hand" effect
+      const redirect = getVanishRedirect(cardId("card1"), card, "hand");
+      expect(redirect?.actualDestination).toBe("discard");
+    });
+
+    it("handles implicit deck return correctly", () => {
+      const card = createMockCard({ keywords: ["Vanish"] });
+      // Simulating a "put into inkwell" effect (should NOT vanish)
+      const redirectInk = shouldVanishRedirect(card, "inkwell");
+      expect(redirectInk).toBe(false);
+
+      // Simulating a "shuffle into deck" effect (SHOULD vanish)
+      const redirectDeck = shouldVanishRedirect(card, "deck");
+      expect(redirectDeck).toBe(true);
     });
   });
 

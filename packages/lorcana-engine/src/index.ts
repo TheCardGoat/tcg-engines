@@ -25,7 +25,6 @@ export type {
 // Export card-utils
 export {
   canInk,
-  canQuest,
   getAllKeywords,
   getAmpersandNames,
   getLoreValue,
@@ -51,14 +50,26 @@ export {
   isLocation,
   isSong,
 } from "./card-utils";
-// Spec 5: Quest, Challenge & Locations
-export * from "./combat";
 // Spec 1: Foundation & Types
 export * from "./deck-validation";
-// Engine exports
-export { LorcanaEngine } from "./engine/lorcana-engine";
 // Spec 3: Turn Structure & Flow
 export * from "./flow";
+// Spec 4: Core Moves
+export * from "./moves";
+// Spec 5: Quest, Challenge & Locations
+// Note: ChallengeState is exported by both combat and types, so we don't re-export everything from combat
+export {
+  applyResist,
+  calculateChallengeDamage,
+  canChallenge,
+  canQuest,
+  getChallengeableTargets,
+  getQuestLore,
+  getReadyBodyguards,
+  validateChallenge,
+  validateQuest,
+  wouldBanish,
+} from "./combat";
 // Spec 6: Keywords
 export {
   calculateTotalChallenger,
@@ -69,10 +80,11 @@ export {
   canSingTogether,
   checkWardProtection,
   createSingerPayment,
-  createSupportContext,
+  createSupportBonus,
   getValidSupportTargets,
   getVanishRedirect,
   hasSupport,
+  hasSupportKeyword,
   type KeywordContext,
   type KeywordEvent,
   needsDryRequirement,
@@ -84,8 +96,8 @@ export {
   type VanishRedirect,
   type WardCheckResult,
 } from "./keywords";
-// Spec 4: Core Moves
-export * from "./moves";
+// Engine exports
+export { LorcanaEngine } from "./engine/lorcana-engine";
 // Type exports
 export * from "./types";
 // Move enumeration type exports
