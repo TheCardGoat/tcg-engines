@@ -22,6 +22,8 @@ export type {
   RuleEngine,
   RuleEngineOptions,
 } from "@tcg/core";
+// Spec 7: Abilities System
+export * from "./abilities";
 // Export card-utils
 export {
   canInk,
@@ -86,6 +88,8 @@ export {
 } from "./keywords";
 // Spec 4: Core Moves
 export * from "./moves";
+// Spec 8: Bag & Game State Check
+export * from "./systems";
 // Type exports
 export * from "./types";
 // Move enumeration type exports
