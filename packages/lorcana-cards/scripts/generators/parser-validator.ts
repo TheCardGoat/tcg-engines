@@ -130,6 +130,118 @@ function stripAllParentheses(text: string): string {
 }
 
 /**
+ * Normalize punctuation differences for manual override matching
+ * Handles common variations in punctuation that don't affect meaning
+ */
+function normalizePunctuation(text: string): string {
+  return (
+    text
+      // NOTE: Don't normalize em dashes to hyphens - manual override keys use em dashes intentionally
+      // Normalize various dash types to hyphen (but preserve em dashes)
+      // .replace(/[–−]/g, "-") // Only normalize en dashes and figure dashes, not em dashes
+      // Normalize quote marks
+      .replace(/[""]/g, '"')
+      .replace(/['']/g, "'")
+      // Normalize ellipsis
+      .replace(/\.\.\./g, "...")
+      // Normalize multiple punctuation
+      .replace(/,{2,}/g, ",")
+      .replace(/\.{2,}/g, ".")
+      // Ensure proper spacing around punctuation (but preserve em dash spacing)
+      .replace(/\s*,\s*/g, ", ")
+      .replace(/\s*\.\s*/g, ". ")
+      .replace(/\s*-\s*/g, " - ") // Only normalize regular hyphens
+      .replace(/\s*:\s*/g, ": ")
+      .replace(/\s*\?\s*/g, "? ")
+      .replace(/\s*!\s*/g, "! ")
+  );
+}
+
+/**
+ * Normalize sequencing words and phrases for manual override matching
+ * Handles common variations in how sequences are expressed
+ */
+function normalizeSequencing(text: string): string {
+  return (
+    text
+      // Conservative normalization - only target very specific known issues
+
+      // Don't normalize comma-then patterns as they may be intentional
+      // .replace(/\s*,\s*then\s+/g, " then ") // REMOVED - too aggressive
+
+      // Only normalize period-then patterns if they're clearly redundant
+      .replace(/\s*\.\s*then\s+/g, " then ")
+
+      // Only normalize excessive "then" spacing
+      .replace(/\s+then\s+/g, " then ")
+  );
+}
+
+/**
+ * Normalize common phrase variations for manual override matching
+ * Handles synonymous expressions that mean the same thing
+ */
+function normalizePhrases(text: string): string {
+  return (
+    text
+      // Normalize card text TO match manual override key patterns
+      // This converts variations in card text to the standardized manual override format
+
+      // Normalize "at random" variations - remove this phrase (not in manual override keys)
+      .replace(/\s+at random\./gi, ".")
+      .replace(/\s+at random/gi, "")
+
+      // Convert card text pattern TO manual override key pattern
+      // Convert "hand, then that player discards a card" to "hand. That player chooses and discards a card"
+      .replace(
+        /hand,\s*then that player discards a card\./gi,
+        "hand. That player chooses and discards a card.",
+      )
+      .replace(
+        /hand,\s*then that player discards/gi,
+        "hand. That player chooses and discards",
+      )
+
+      // Convert variations of the above pattern
+      .replace(
+        /hand\.\s*then that player discards a card\./gi,
+        "hand. That player chooses and discards a card.",
+      )
+      .replace(
+        /hand\.\s*then that player discards/gi,
+        "hand. That player chooses and discards",
+      )
+
+      // Normalize extra spaces around specific phrases
+      .replace(/\s+/g, " ")
+  ); // Only normalize excessive whitespace, not structure
+}
+
+/**
+ * Comprehensive normalization for manual override matching
+ * Applies all normalization steps in the correct order
+ */
+export function normalizeForMatching(text: string): string {
+  // Step 1: Strip all parentheses (reminder text)
+  let normalized = stripAllParentheses(text);
+
+  // Step 2: Normalize punctuation
+  normalized = normalizePunctuation(normalized);
+
+  // Step 3: Normalize sequencing words and phrases
+  normalized = normalizeSequencing(normalized);
+
+  // Step 4: Normalize common phrase variations
+  normalized = normalizePhrases(normalized);
+
+  // Step 5: Normalize whitespace
+  normalized = normalizeText(normalized);
+
+  // Step 6: Convert numbers to {d} placeholders
+  return normalizeToPattern(normalized);
+}
+
+/**
  * Check if all abilities on a card are keyword-only and parse successfully
  *
  * Strict validation:
@@ -269,13 +381,9 @@ export function isParseableCard(card: CanonicalCard): boolean {
 
   // First, check if the full text matches a manual override
   // Manual overrides are keyed by normalized text with {d} placeholders, so we need to:
-  // 1. Strip parentheses (reminder text) - manual override keys don't have reminder text
-  // 2. Normalize whitespace
-  // 3. Convert numbers to {d} placeholders
-  let fullText = card.rulesText.replace(/\n/g, " ");
-  fullText = stripAllParentheses(fullText);
-  const normalizedFullText = normalizeText(fullText);
-  const patternFullText = normalizeToPattern(normalizedFullText);
+  // Use comprehensive normalization to handle formatting differences
+  const fullText = card.rulesText.replace(/\n/g, " ");
+  const patternFullText = normalizeForMatching(fullText);
   if (tooComplexText(patternFullText)) {
     // Card has a manual override - consider it parseable
     return true;
@@ -285,11 +393,8 @@ export function isParseableCard(card: CanonicalCard): boolean {
   // Some cards have multiple abilities, and manual overrides might only match one
   const abilityLines = card.rulesText.split("\n").filter((line) => line.trim());
   for (const line of abilityLines) {
-    // Strip parentheses first, then normalize
-    let lineText = line.trim();
-    lineText = stripAllParentheses(lineText);
-    const normalizedLine = normalizeText(lineText);
-    const patternLine = normalizeToPattern(normalizedLine);
+    // Use comprehensive normalization for each line
+    const patternLine = normalizeForMatching(line.trim());
     if (tooComplexText(patternLine)) {
       // At least one ability has a manual override - consider it parseable
       return true;
@@ -401,11 +506,9 @@ export function hasManualOverride(card: CanonicalCard): boolean {
   if (!card.rulesText) return false;
 
   // First, check the full text (for multi-ability manual overrides)
-  // Strip parentheses first, then normalize (manual override keys don't have reminder text)
-  let fullText = card.rulesText.replace(/\n/g, " ");
-  fullText = stripAllParentheses(fullText);
-  const normalizedFullText = normalizeText(fullText);
-  const patternFullText = normalizeToPattern(normalizedFullText);
+  // Use comprehensive normalization to handle formatting differences
+  const fullText = card.rulesText.replace(/\n/g, " ");
+  const patternFullText = normalizeForMatching(fullText);
   if (tooComplexText(patternFullText)) {
     return true;
   }
@@ -414,11 +517,8 @@ export function hasManualOverride(card: CanonicalCard): boolean {
   // Some cards have multiple abilities, and manual overrides might only match one
   const abilityLines = card.rulesText.split("\n").filter((line) => line.trim());
   for (const line of abilityLines) {
-    // Strip parentheses first, then normalize
-    let lineText = line.trim();
-    lineText = stripAllParentheses(lineText);
-    const normalizedLine = normalizeText(lineText);
-    const patternLine = normalizeToPattern(normalizedLine);
+    // Use comprehensive normalization for each line
+    const patternLine = normalizeForMatching(line.trim());
     if (tooComplexText(patternLine)) {
       return true;
     }
