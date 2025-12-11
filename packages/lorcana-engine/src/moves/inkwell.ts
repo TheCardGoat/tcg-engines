@@ -13,6 +13,7 @@ import type { LorcanaCardDefinition } from "../types/card-types";
 import type { CardId } from "../types/game-state";
 import {
   invalidMove,
+  type MoveValidationError,
   type MoveValidationResult,
   validMove,
 } from "./move-types";
@@ -27,7 +28,7 @@ export function validatePutIntoInkwell(
   isActivePlayer: boolean,
   isMainPhase: boolean,
 ): MoveValidationResult {
-  const errors = [];
+  const errors: MoveValidationError[] = [];
 
   // Must be active player's turn
   if (!isActivePlayer) {
