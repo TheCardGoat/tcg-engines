@@ -118,13 +118,11 @@ export function getMatchingTriggers(
   for (const ability of abilities) {
     if (ability.type !== "triggered") continue;
 
-    const triggered = ability as unknown as TriggeredAbilityDefinition;
-
     // Skip if card not in play and ability doesn't float
-    if (!(cardInPlay || triggered.isFloating)) continue;
+    if (!(cardInPlay || ability.isFloating)) continue;
 
-    if (matchesTrigger(triggered.trigger, event, cardId, controllerId)) {
-      instances.push(createTriggeredInstance(triggered, cardId, controllerId));
+    if (matchesTrigger(ability.trigger, event, cardId, controllerId)) {
+      instances.push(createTriggeredInstance(ability, cardId, controllerId));
     }
   }
 

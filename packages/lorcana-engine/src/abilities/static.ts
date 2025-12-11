@@ -30,6 +30,7 @@ export function isStaticAbilityActive(
   }
 
   // If there's a condition, it would need to be checked here
+  // TODO: Implement condition checking logic here
   // For now, we assume it's active if in play
   return true;
 }
@@ -232,7 +233,11 @@ export function matchesCardFilter(
     const inkTypes = Array.isArray(card.inkType)
       ? card.inkType
       : [card.inkType];
-    if (!inkTypes.includes(filter.inkType as any)) {
+    // Cast filter.inkType to ensure it matches the InkType union
+    // InkType is a union of strings, so we just need to ensure TypeScript knows we're comparing strings
+    // or cast to the specific InkType if imported, but avoiding tight coupling here.
+    const filterInkType = filter.inkType;
+    if (!inkTypes.some((t) => t === filterInkType)) {
       return false;
     }
   }
