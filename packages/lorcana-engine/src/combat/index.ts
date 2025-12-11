@@ -28,8 +28,8 @@ export type {
 } from "./combat-types";
 // Quest
 export {
-  canQuest,
   getQuestableCharacters,
   getQuestLore,
+  validateCanQuest,
   validateQuest,
 } from "./quest";

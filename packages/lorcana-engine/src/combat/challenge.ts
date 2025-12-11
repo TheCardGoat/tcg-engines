@@ -38,6 +38,7 @@ export function validateChallenge(
   activePlayerId: PlayerId,
   isMainPhase: boolean,
   readyBodyguards: CardId[], // Ready bodyguards on opponent's side
+  targetCardId?: CardId, // Instance ID of the target
 ): MoveValidationResult {
   const errors = [];
 
@@ -91,15 +92,20 @@ export function validateChallenge(
   if (isCharacter(targetCard)) {
     // Characters must be exerted to be challenged (unless attacker has Evasive)
     const attackerHasEvasive = hasEvasive(challengerCard);
+    const targetIsBodyguard = hasBodyguard(targetCard);
 
-    if (!attackerHasEvasive && targetState.state !== "exerted") {
+    if (
+      !attackerHasEvasive &&
+      targetState.state !== "exerted" &&
+      !targetIsBodyguard
+    ) {
       errors.push({ type: "TARGET_NOT_EXERTED" as const });
     }
 
     // Must challenge Bodyguard first (unless attacker has Evasive)
     if (!attackerHasEvasive && readyBodyguards.length > 0) {
-      const targetId = targetCard.id as CardId;
-      if (!readyBodyguards.includes(targetId)) {
+      const idToCheck = targetCardId || (targetCard.id as CardId);
+      if (!readyBodyguards.includes(idToCheck)) {
         errors.push({
           type: "BODYGUARD_BLOCKING" as const,
           bodyguardId: readyBodyguards[0],
@@ -238,7 +244,7 @@ export function getChallengeableTargets(
   const readyBodyguards = getReadyBodyguards(opponentCards);
 
   return opponentCards
-    .filter(({ card, state }) => {
+    .filter(({ cardId, card, state }) => {
       // Must be character or location
       if (!(isCharacter(card) || isLocation(card))) {
         return false;
@@ -256,7 +262,7 @@ export function getChallengeableTargets(
 
       // Check Bodyguard blocking (unless Evasive)
       if (!attackerHasEvasive && readyBodyguards.length > 0) {
-        return readyBodyguards.includes(card.id as CardId);
+        return readyBodyguards.includes(cardId);
       }
 
       return true;

@@ -8,14 +8,12 @@ import { describe, expect, it } from "bun:test";
 import {
   applyResist,
   calculateChallengeDamage,
-  canChallenge,
   getChallengeableTargets,
   getReadyBodyguards,
   validateChallenge,
   wouldBanish,
 } from "../combat/challenge";
 import {
-  canQuest,
   getQuestableCharacters,
   getQuestLore,
   validateQuest,
@@ -406,6 +404,52 @@ describe("Spec 5: Quest, Challenge & Locations", () => {
       expect(bodyguards).toHaveLength(1);
       expect(bodyguards).toContain("ready-bodyguard");
     });
+
+    it("verifies multiple bodyguards handling (any can be chosen)", () => {
+      const challenger = createMockCard();
+      const challengerState = createReadyDryState("challenger");
+      const bg1 = createMockCard({
+        id: "bg1",
+        keywords: ["Bodyguard"],
+      });
+      const bg1State = createReadyDryState("bg1"); // Ready Bodyguard
+
+      const bg2 = createMockCard({
+        id: "bg2",
+        keywords: ["Bodyguard"],
+      });
+      const bg2State = createReadyDryState("bg2"); // Ready Bodyguard
+
+      // Both are valid targets
+      const result1 = validateChallenge(
+        challenger,
+        challengerState,
+        player1,
+        bg1,
+        bg1State,
+        player2,
+        player1,
+        true,
+        [cardId("bg1"), cardId("bg2")], // Both present
+        cardId("bg1"),
+      );
+
+      const result2 = validateChallenge(
+        challenger,
+        challengerState,
+        player1,
+        bg2,
+        bg2State,
+        player2,
+        player1,
+        true,
+        [cardId("bg1"), cardId("bg2")], // Both present
+        cardId("bg2"),
+      );
+
+      expect(result1.valid).toBe(true);
+      expect(result2.valid).toBe(true);
+    });
   });
 
   describe("Evasive (Rule 10.4)", () => {
@@ -446,6 +490,27 @@ describe("Spec 5: Quest, Challenge & Locations", () => {
         player1,
         true,
         [cardId("bodyguard")], // Bodyguard present but ignored
+      );
+
+      expect(result.valid).toBe(true);
+    });
+
+    it("can still challenge exerted characters (verification)", () => {
+      const challenger = createMockCard({ keywords: ["Evasive"] });
+      const challengerState = createReadyDryState("challenger");
+      const target = createMockCard();
+      const targetState = exertCard(createReadyDryState("target"));
+
+      const result = validateChallenge(
+        challenger,
+        challengerState,
+        player1,
+        target,
+        targetState,
+        player2,
+        player1,
+        true,
+        [],
       );
 
       expect(result.valid).toBe(true);

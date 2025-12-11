@@ -53,13 +53,13 @@ export type ChallengeValidationError =
   | { type: "NOT_READY" }
   | { type: "NOT_DRY" }
   | { type: "TARGET_NOT_EXERTED" }
-  | { type: "TARGET_HAS_EVASIVE"; targetId: CardId }
   | { type: "BODYGUARD_BLOCKING"; bodyguardId: CardId }
   | { type: "CANNOT_CHALLENGE_OWN" }
   | { type: "INVALID_TARGET" }
   | { type: "NOT_YOUR_TURN" }
   | { type: "NOT_MAIN_PHASE" }
-  | { type: "TARGET_NOT_IN_PLAY" };
+  | { type: "TARGET_NOT_IN_PLAY" }
+  | { type: "NOT_IN_PLAY" };
 
 /**
  * Move to location validation errors

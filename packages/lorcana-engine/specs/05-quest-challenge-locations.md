@@ -17,11 +17,9 @@ This specification covers:
 
 ## Implementation Files
 
-- `src/moves/quest.ts` - Quest action logic
-- `src/moves/challenge.ts` - Challenge action logic
-- `src/moves/move-to-location.ts` - Location movement
-- `src/combat/damage-calculation.ts` - Damage calculations
-- `src/combat/challenge-resolution.ts` - Challenge resolution
+- `src/combat/quest.ts` - Quest action logic
+- `src/combat/challenge.ts` - Challenge action logic and damage calculations
+- `src/combat/move-to-location.ts` - Location movement
 
 ## Types
 
