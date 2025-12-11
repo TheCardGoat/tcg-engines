@@ -22,6 +22,8 @@ export type {
   RuleEngine,
   RuleEngineOptions,
 } from "@tcg/core";
+// Spec 7: Abilities System
+export * from "./abilities";
 // Export card-utils
 export {
   canInk,
@@ -59,8 +61,35 @@ export * from "./deck-validation";
 export { LorcanaEngine } from "./engine/lorcana-engine";
 // Spec 3: Turn Structure & Flow
 export * from "./flow";
+// Spec 6: Keywords
+export {
+  calculateTotalChallenger,
+  calculateTotalResist,
+  canBeChosenBy,
+  canBypassDrying,
+  canSingSong,
+  canSingTogether,
+  checkWardProtection,
+  createSingerPayment,
+  createSupportContext,
+  getValidSupportTargets,
+  getVanishRedirect,
+  hasSupport,
+  type KeywordContext,
+  type KeywordEvent,
+  needsDryRequirement,
+  type ShiftStackInfo,
+  type SingerPayment,
+  type StackingKeywordTotal,
+  type SupportContext,
+  shouldVanishRedirect,
+  type VanishRedirect,
+  type WardCheckResult,
+} from "./keywords";
 // Spec 4: Core Moves
 export * from "./moves";
+// Spec 8: Bag & Game State Check
+export * from "./systems";
 // Type exports
 export * from "./types";
 // Move enumeration type exports

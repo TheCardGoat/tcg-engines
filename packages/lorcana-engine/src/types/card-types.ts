@@ -4,6 +4,7 @@
  * Four card types with distinct behaviors and properties.
  */
 
+import type { ExtendedAbilityDefinition } from "../abilities/ability-types";
 import type { Classification } from "./classifications";
 import type { InkType } from "./ink-types";
 import type { Keyword } from "./keywords";
@@ -14,16 +15,6 @@ export type CardType = (typeof CARD_TYPES)[number];
 
 /** Action subtypes */
 export type ActionSubtype = "song" | null;
-
-/**
- * Ability Definition (placeholder - will be expanded in Spec 7)
- */
-export interface AbilityDefinition {
-  id: string;
-  name?: string;
-  text: string;
-  type: "triggered" | "activated" | "static";
-}
 
 /**
  * Lorcana Card Definition (Rule 6.2)
@@ -96,7 +87,7 @@ export interface LorcanaCardDefinition {
   keywords?: Keyword[];
 
   /** Card abilities */
-  abilities?: AbilityDefinition[];
+  abilities?: ExtendedAbilityDefinition[];
 
   /** Flavor text (not mechanically relevant) */
   flavorText?: string;
