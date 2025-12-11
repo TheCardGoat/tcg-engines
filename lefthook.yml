@@ -5,3 +5,11 @@ pre-commit:
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
       run: npx @biomejs/biome check --write --diagnostic-level=error --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
       stage_fixed: true
+
+pre-push:
+  commands:
+    ci-check:
+      run: |
+        if [ "$AI" = "true" ]; then
+          bun run ci-check
+        fi
