@@ -78,7 +78,7 @@ export function validateQuest(
 /**
  * Check if a character can quest
  */
-export function canQuest(
+export function validateCanQuest(
   card: LorcanaCardDefinition | undefined,
   cardState: CardInstanceState | undefined,
   cardOwner: PlayerId,
@@ -117,7 +117,7 @@ export function getQuestableCharacters(
 ): CardId[] {
   return characters
     .filter(({ card, state, owner }) =>
-      canQuest(card, state, owner, activePlayerId, isMainPhase),
+      validateCanQuest(card, state, owner, activePlayerId, isMainPhase),
     )
     .map(({ cardId }) => cardId);
 }
