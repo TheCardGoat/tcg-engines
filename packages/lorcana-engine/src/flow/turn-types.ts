@@ -108,7 +108,8 @@ export const STARTING_HAND_SIZE = 7;
  * Check if a phase is valid
  */
 export function isPhase(value: unknown): value is Phase {
-  return typeof value === "string" && PHASES.includes(value as Phase);
+  if (typeof value !== "string") return false;
+  return PHASES.includes(value as Phase);
 }
 
 /**
