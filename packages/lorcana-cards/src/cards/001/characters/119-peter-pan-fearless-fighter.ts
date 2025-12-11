@@ -10,16 +10,15 @@ export const peterPanFearlessFighter: CharacterCard = {
   franchise: "Peter Pan",
   set: "001",
   text: "Rush (This character can challenge the turn they're played.)",
-  cardNumber: "119",
   cost: 3,
   strength: 3,
   willpower: 2,
   lore: 1,
+  cardNumber: 119,
   inkable: false,
   externalIds: {
     ravensburger: "2ed2d4d7295557a864451ec395c78721255c0c17",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "czp-1",

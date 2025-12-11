@@ -93,24 +93,6 @@ export class TestCardModel {
 
   /** Check if card has a specific keyword */
   private hasKeywordAbility(keyword: string): boolean {
-    // Check keywords array (simple keywords)
-    if (this.card.keywords) {
-      for (const kw of this.card.keywords) {
-        if (
-          typeof kw === "string" &&
-          kw.toLowerCase() === keyword.toLowerCase()
-        ) {
-          return true;
-        }
-        if (
-          typeof kw === "object" &&
-          kw.type?.toLowerCase() === keyword.toLowerCase()
-        ) {
-          return true;
-        }
-      }
-    }
-
     // Check abilities array (keyword abilities)
     if (this.card.abilities) {
       for (const ability of this.card.abilities) {
@@ -308,8 +290,8 @@ export class LorcanaTestEngine {
         // Initialize with default Lorcana card metadata
         cardOps.setCardMeta(createCardId(cardId), {
           damage: 0,
-          isExerted: false,
-          playedThisTurn: true, // Characters start with summoning sickness (played this turn)
+          state: "ready",
+          isDrying: true, // Characters start with summoning sickness
         } as any);
       }
     };
@@ -688,7 +670,7 @@ export class LorcanaTestEngine {
    */
   getLore(playerId: string): number {
     const state = this.getState();
-    return state.loreScores[createPlayerId(playerId)] || 0;
+    return state.external.loreScores[createPlayerId(playerId)] || 0;
   }
 
   /**
@@ -783,8 +765,8 @@ export class LorcanaTestEngine {
     const cardOps = createCardOperations(internalState);
     cardOps.setCardMeta(createCardId(cardId), {
       damage: 0,
-      isExerted: false,
-      playedThisTurn: false, // No summoning sickness - ready to use immediately
+      state: "ready",
+      isDrying: false, // No summoning sickness - ready to use immediately
     } as any);
 
     return cardId;

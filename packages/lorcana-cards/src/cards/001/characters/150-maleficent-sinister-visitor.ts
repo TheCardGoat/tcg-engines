@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const maleficentSinisterVisitor: CharacterCard = {
-  id: "1ca",
+  id: "1c4",
   cardType: "character",
   name: "Maleficent",
   version: "Sinister Visitor",
@@ -9,11 +9,11 @@ export const maleficentSinisterVisitor: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Sleeping Beauty",
   set: "001",
-  cardNumber: "150",
   cost: 4,
   strength: 3,
   willpower: 4,
   lore: 2,
+  cardNumber: 150,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -10,16 +10,15 @@ export const annaMakingSnowPlans: CharacterCard = {
   franchise: "Frozen",
   set: "010",
   text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
-  cardNumber: "139",
   cost: 4,
   strength: 4,
   willpower: 3,
   lore: 2,
+  cardNumber: 139,
   inkable: true,
   externalIds: {
     ravensburger: "23fbbd7099c1f99fe8cea396e7cb66af956ebcb0",
   },
-  keywords: ["Support"],
   abilities: [
     {
       id: "9zf-1",

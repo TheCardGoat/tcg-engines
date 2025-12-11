@@ -9,11 +9,11 @@ export const blackHeronRealBadEgg: CharacterCard = {
   inkType: ["steel"],
   franchise: "Ducktales",
   set: "010",
-  cardNumber: "182",
   cost: 2,
   strength: 3,
   willpower: 3,
   lore: 1,
+  cardNumber: 182,
   inkable: true,
   vanilla: true,
   externalIds: {

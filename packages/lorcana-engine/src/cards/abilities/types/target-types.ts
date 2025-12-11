@@ -13,12 +13,14 @@
  * @example Complex targeting with filters
  * ```typescript
  * const target: CharacterTarget = {
- *   type: "query",
- *   controller: "opponent",
- *   filters: [{ type: "damaged" }, { type: "strength-comparison", comparison: "less-or-equal", value: 3 }]
+ *   selector: "chosen",
+ *   owner: "opponent",
+ *   filter: [{ type: "damaged" }, { type: "strength-comparison", comparison: "less-or-equal", value: 3 }]
  * };
  * ```
  */
+
+import type { TargetDSL } from "@tcg/core";
 
 // ============================================================================
 // Player Targeting
@@ -35,7 +37,8 @@ export type PlayerTarget =
   | "OPPONENT" // A single opponent (2-player default)
   | "EACH_PLAYER" // All players including controller
   | "EACH_OPPONENT" // All opponents
-  | "CHOSEN_PLAYER"; // A player chosen by the controller
+  | "CHOSEN_PLAYER" // A player chosen by the controller
+  | "card-owner"; // The owner of the target card (context-dependent)
 
 // ============================================================================
 // Card References (Context-Aware)
@@ -44,7 +47,7 @@ export type PlayerTarget =
 /**
  * Context-aware card references for abilities
  *
- * These allow effects to reference cards based on the current context
+ * These allow effects to reference cards based on the current game context
  * rather than requiring explicit targeting.
  *
  * @example Reference the card that triggered an ability
@@ -88,6 +91,14 @@ export function isCardReference(value: unknown): value is CardReference {
 }
 
 // ============================================================================
+// Lorcana Context
+// ============================================================================
+
+export interface LorcanaContext {
+  self?: boolean;
+}
+
+// ============================================================================
 // Character Targeting - Common Patterns (Enums)
 // ============================================================================
 
@@ -114,12 +125,7 @@ export type CharacterTargetEnum =
   | "YOUR_CHARACTERS" // All of your characters
   | "YOUR_OTHER_CHARACTERS" // All of your characters except self
   | "EACH_CHARACTER" // Same as ALL_CHARACTERS
-  | "EACH_OPPOSING_CHARACTER" // Same as ALL_OPPOSING_CHARACTERS
-
-  // Damaged variants
-  | "CHOSEN_DAMAGED_CHARACTER" // Any damaged character
-  | "CHOSEN_OPPOSING_DAMAGED_CHARACTER" // Opponent's damaged character
-  | "ALL_OPPOSING_DAMAGED_CHARACTERS"; // All of opponent's damaged characters
+  | "EACH_OPPOSING_CHARACTER"; // Same as ALL_OPPOSING_CHARACTERS
 
 // ============================================================================
 // Character Targeting - Query-Based (Complex)
@@ -382,14 +388,9 @@ export type CharacterFilter =
 
 /**
  * Base properties shared by all character query variants
+ * Extended from generic TargetDSL
  */
-interface CharacterQueryBase {
-  type: "query";
-  zone?: TargetZone;
-  controller?: TargetController;
-  filters?: CharacterFilter[];
-  excludeSelf?: boolean;
-}
+export type CharacterQueryBase = TargetDSL<CharacterFilter[], LorcanaContext>;
 
 /**
  * Target exactly N characters
@@ -397,14 +398,14 @@ interface CharacterQueryBase {
  * @example Target exactly 2 characters
  * ```typescript
  * {
- *   type: "query",
- *   count: 2,
- *   controller: "opponent"
+ *   selector: "chosen",
+ *   count: { exactly: 2 },
+ *   owner: "opponent"
  * }
  * ```
  */
 export interface ExactCountCharacterQuery extends CharacterQueryBase {
-  count: number;
+  count: number | { exactly: number };
 }
 
 /**
@@ -413,18 +414,15 @@ export interface ExactCountCharacterQuery extends CharacterQueryBase {
  * @example Target up to 2 damaged opposing characters
  * ```typescript
  * {
- *   type: "query",
- *   controller: "opponent",
- *   filters: [{ type: "damaged" }],
- *   count: "up-to",
- *   maxCount: 2
+ *   selector: "chosen",
+ *   owner: "opponent",
+ *   filter: [{ type: "damaged" }],
+ *   count: { upTo: 2 }
  * }
  * ```
  */
 export interface UpToCountCharacterQuery extends CharacterQueryBase {
-  count: "up-to";
-  /** Maximum number of targets - REQUIRED when count is "up-to" */
-  maxCount: number;
+  count: { upTo: number };
 }
 
 /**
@@ -433,9 +431,8 @@ export interface UpToCountCharacterQuery extends CharacterQueryBase {
  * @example Target all opposing characters
  * ```typescript
  * {
- *   type: "query",
- *   controller: "opponent",
- *   count: "all"
+ *   selector: "all",
+ *   owner: "opponent"
  * }
  * ```
  */
@@ -480,23 +477,32 @@ export type LocationTargetEnum =
 // ============================================================================
 
 /**
+ * Filters applicable to locations
+ * Uses shared filter types for consistency
+ */
+export type LocationFilter =
+  | HasNameFilter
+  | WillpowerComparisonFilter
+  | MoveCostComparisonFilter
+  // Source/Reference
+  | SourceFilter
+  // Zone/Owner
+  | ZoneFilter
+  | OwnerFilter;
+
+/**
  * Base properties shared by all location query variants
  */
-interface LocationQueryBase {
-  type: "query";
-  controller?: TargetController;
-  filters?: LocationFilter[];
-}
+export type LocationQueryBase = TargetDSL<LocationFilter[], LorcanaContext>;
 
 /** Target exactly N locations */
 export interface ExactCountLocationQuery extends LocationQueryBase {
-  count: number;
+  count: number | { exactly: number };
 }
 
 /** Target up to N locations */
 export interface UpToCountLocationQuery extends LocationQueryBase {
-  count: "up-to";
-  maxCount: number;
+  count: { upTo: number };
 }
 
 /** Target all matching locations */
@@ -511,20 +517,6 @@ export type LocationTargetQuery =
   | ExactCountLocationQuery
   | UpToCountLocationQuery
   | AllMatchingLocationQuery;
-
-/**
- * Filters applicable to locations
- * Uses shared filter types for consistency
- */
-export type LocationFilter =
-  | HasNameFilter
-  | WillpowerComparisonFilter
-  | MoveCostComparisonFilter
-  // Source/Reference
-  | SourceFilter
-  // Zone/Owner
-  | ZoneFilter
-  | OwnerFilter;
 
 export type LocationTarget = LocationTargetEnum | LocationTargetQuery;
 
@@ -548,23 +540,33 @@ export type ItemTargetEnum =
 // ============================================================================
 
 /**
+ * Filters applicable to items
+ * Uses shared filter types for consistency
+ */
+export type ItemFilter =
+  | HasNameFilter
+  | CostComparisonFilter
+  | ExertedFilter
+  | ReadyFilter
+  // Source/Reference
+  | SourceFilter
+  // Zone/Owner
+  | ZoneFilter
+  | OwnerFilter;
+
+/**
  * Base properties shared by all item query variants
  */
-interface ItemQueryBase {
-  type: "query";
-  controller?: TargetController;
-  filters?: ItemFilter[];
-}
+export type ItemQueryBase = TargetDSL<ItemFilter[], LorcanaContext>;
 
 /** Target exactly N items */
 export interface ExactCountItemQuery extends ItemQueryBase {
-  count: number;
+  count: number | { exactly: number };
 }
 
 /** Target up to N items */
 export interface UpToCountItemQuery extends ItemQueryBase {
-  count: "up-to";
-  maxCount: number;
+  count: { upTo: number };
 }
 
 /** Target all matching items */
@@ -580,21 +582,6 @@ export type ItemTargetQuery =
   | UpToCountItemQuery
   | AllMatchingItemQuery;
 
-/**
- * Filters applicable to items
- * Uses shared filter types for consistency
- */
-export type ItemFilter =
-  | HasNameFilter
-  | CostComparisonFilter
-  | ExertedFilter
-  | ReadyFilter
-  // Source/Reference
-  | SourceFilter
-  // Zone/Owner
-  | ZoneFilter
-  | OwnerFilter;
-
 export type ItemTarget = ItemTargetEnum | ItemTargetQuery;
 
 // ============================================================================
@@ -608,7 +595,8 @@ export type CardTargetEnum =
   | "CHOSEN_CARD"
   | "CHOSEN_CARD_FROM_HAND"
   | "CHOSEN_CARD_FROM_DISCARD"
-  | "TOP_CARD_OF_DECK";
+  | "TOP_CARD_OF_DECK"
+  | "revealed";
 
 export type CardTarget =
   | CardTargetEnum
@@ -626,7 +614,7 @@ export type CardTarget =
 export function isCharacterTargetQuery(
   target: CharacterTarget,
 ): target is CharacterTargetQuery {
-  return typeof target === "object" && target.type === "query";
+  return typeof target === "object"; // && (target as any).selector !== undefined;
 }
 
 /**
@@ -635,7 +623,7 @@ export function isCharacterTargetQuery(
 export function isLocationTargetQuery(
   target: LocationTarget,
 ): target is LocationTargetQuery {
-  return typeof target === "object" && target.type === "query";
+  return typeof target === "object"; // && (target as any).selector !== undefined;
 }
 
 /**
@@ -644,5 +632,5 @@ export function isLocationTargetQuery(
 export function isItemTargetQuery(
   target: ItemTarget,
 ): target is ItemTargetQuery {
-  return typeof target === "object" && target.type === "query";
+  return typeof target === "object"; // && (target as any).selector !== undefined;
 }

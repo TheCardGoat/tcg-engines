@@ -9,11 +9,11 @@ export const liShangImperialCaptain: CharacterCard = {
   inkType: ["steel"],
   franchise: "Mulan",
   set: "009",
-  cardNumber: "193",
   cost: 5,
   strength: 5,
   willpower: 5,
   lore: 2,
+  cardNumber: 193,
   inkable: true,
   vanilla: true,
   externalIds: {

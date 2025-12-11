@@ -9,11 +9,11 @@ export const sirKayUnrulyKnight: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Sword in the Stone",
   set: "007",
-  cardNumber: "144",
   cost: 2,
   strength: 2,
   willpower: 2,
   lore: 2,
+  cardNumber: 144,
   inkable: true,
   vanilla: true,
   externalIds: {

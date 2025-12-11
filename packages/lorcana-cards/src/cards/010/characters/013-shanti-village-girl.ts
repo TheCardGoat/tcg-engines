@@ -10,21 +10,15 @@ export const shantiVillageGirl: CharacterCard = {
   franchise: "Jungle Book",
   set: "010",
   text: "Singer 5 (This character counts as cost 5 to sing songs.)",
-  cardNumber: "013",
   cost: 3,
   strength: 0,
   willpower: 5,
   lore: 2,
+  cardNumber: 13,
   inkable: true,
   externalIds: {
     ravensburger: "4f296f41288f0bc56b098b2146d98af6428db935",
   },
-  keywords: [
-    {
-      type: "Singer",
-      value: 5,
-    },
-  ],
   abilities: [
     {
       id: "lyq-1",

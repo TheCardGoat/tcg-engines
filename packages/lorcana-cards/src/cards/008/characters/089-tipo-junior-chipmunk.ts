@@ -10,16 +10,15 @@ export const tipoJuniorChipmunk: CharacterCard = {
   franchise: "Emperors New Groove",
   set: "008",
   text: "Evasive (Only characters with Evasive can challenge this character.)",
-  cardNumber: "089",
   cost: 2,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 89,
   inkable: true,
   externalIds: {
     ravensburger: "7b06c25ffca1f97366fbde4b81b28dcfbe6abcb4",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "y4v-1",

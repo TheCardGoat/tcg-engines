@@ -9,11 +9,11 @@ export const theMouseQueenRulerOfMousedom: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Great Mouse Detective",
   set: "008",
-  cardNumber: "153",
   cost: 4,
   strength: 3,
   willpower: 6,
   lore: 1,
+  cardNumber: 153,
   inkable: true,
   vanilla: true,
   externalIds: {

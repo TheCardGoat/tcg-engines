@@ -10,16 +10,15 @@ export const teKTheBurningOne: CharacterCard = {
   franchise: "Moana",
   set: "001",
   text: "Reckless (This character can't quest and must challenge each turn if able.)",
-  cardNumber: "126",
   cost: 6,
   strength: 8,
   willpower: 6,
   lore: 0,
+  cardNumber: 126,
   inkable: false,
   externalIds: {
     ravensburger: "92788505267291d061bce171dae43b361f5c9eca",
   },
-  keywords: ["Reckless"],
   abilities: [
     {
       id: "14n-1",

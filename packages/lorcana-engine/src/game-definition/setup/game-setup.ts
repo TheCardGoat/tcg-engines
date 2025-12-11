@@ -1,5 +1,5 @@
 import type { PlayerId } from "@tcg/core";
-import type { LorcanaGameState } from "../../types";
+import { createInitialLorcanaState, type LorcanaGameState } from "../../types";
 
 /**
  * Game Setup Function
@@ -13,25 +13,7 @@ export function setupLorcanaGame(
   players: Array<{ id: string }>,
 ): LorcanaGameState {
   const playerIds = players.map((p) => p.id as PlayerId);
-  const loreScores: Record<PlayerId, number> = {};
-
-  for (const playerId of playerIds) {
-    loreScores[playerId] = 0;
-  }
-
-  const startingPlayerId = playerIds[0];
-
-  return {
-    loreScores,
-    effects: [],
-    bag: [],
-    characterStates: {},
-    turnNumber: 1,
-    activePlayerId: startingPlayerId,
-    hasInkedThisTurn: false,
-    startingPlayerId,
-    currentPhase: "beginning",
-    currentStep: "ready",
-    isGameOver: false,
-  };
+  // Default to first player starting if not specified
+  // In a real game, this would be determined by coin flip or similar
+  return createInitialLorcanaState(playerIds[0], playerIds[1], playerIds[0]);
 }

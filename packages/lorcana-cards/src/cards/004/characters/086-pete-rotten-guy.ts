@@ -8,11 +8,11 @@ export const peteRottenGuy: CharacterCard = {
   fullName: "Pete - Rotten Guy",
   inkType: ["emerald"],
   set: "004",
-  cardNumber: "086",
   cost: 4,
   strength: 1,
   willpower: 5,
   lore: 2,
+  cardNumber: 86,
   inkable: true,
   vanilla: true,
   externalIds: {

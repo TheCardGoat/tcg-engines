@@ -9,11 +9,11 @@ export const deweyLovableShowoff: CharacterCard = {
   inkType: ["amber"],
   franchise: "Ducktales",
   set: "008",
-  cardNumber: "002",
   cost: 4,
   strength: 4,
   willpower: 4,
   lore: 1,
+  cardNumber: 2,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -10,21 +10,15 @@ export const mrArrowLegacysFirstMate: CharacterCard = {
   franchise: "Treasure Planet",
   set: "006",
   text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
-  cardNumber: "182",
   cost: 2,
   strength: 1,
   willpower: 2,
   lore: 2,
+  cardNumber: 182,
   inkable: true,
   externalIds: {
     ravensburger: "a814e468ab73333f21ba1a0d58cb731f9dcf1521",
   },
-  keywords: [
-    {
-      type: "Resist",
-      value: 1,
-    },
-  ],
   abilities: [
     {
       id: "1am-1",

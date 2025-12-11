@@ -9,11 +9,11 @@ export const tananaTribalElder: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Brother Bear",
   set: "007",
-  cardNumber: "046",
   cost: 4,
   strength: 4,
   willpower: 4,
   lore: 1,
+  cardNumber: 46,
   inkable: true,
   vanilla: true,
   externalIds: {

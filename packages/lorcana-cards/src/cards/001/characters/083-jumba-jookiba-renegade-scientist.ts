@@ -9,11 +9,11 @@ export const jumbaJookibaRenegadeScientist: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Lilo and Stitch",
   set: "001",
-  cardNumber: "083",
   cost: 5,
   strength: 4,
   willpower: 5,
   lore: 2,
+  cardNumber: 83,
   inkable: true,
   vanilla: true,
   externalIds: {

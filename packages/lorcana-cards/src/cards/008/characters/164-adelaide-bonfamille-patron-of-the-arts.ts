@@ -9,11 +9,11 @@ export const adelaideBonfamillePatronOfTheArts: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Aristocats",
   set: "008",
-  cardNumber: "164",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 164,
   inkable: true,
   vanilla: true,
   externalIds: {

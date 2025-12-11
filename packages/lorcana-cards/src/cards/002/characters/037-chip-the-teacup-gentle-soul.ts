@@ -9,11 +9,11 @@ export const chipTheTeacupGentleSoul: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Beauty and the Beast",
   set: "002",
-  cardNumber: "037",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 37,
   inkable: true,
   vanilla: true,
   externalIds: {

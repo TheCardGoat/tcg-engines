@@ -119,8 +119,7 @@ async function fetchLorcast(): Promise<void> {
 
     try {
       const response = await fetchWithRetry(url);
-      const cardsData = (await response.json()) as { results?: unknown[] };
-      const cards = cardsData.results || [];
+      const cards = (await response.json()) as unknown[];
       allCards.push(...cards);
       console.log(`    → ${cards.length} cards`);
 

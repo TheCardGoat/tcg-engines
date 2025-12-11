@@ -9,11 +9,11 @@ export const littleJohnCampCook: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Robin Hood",
   set: "005",
-  cardNumber: "071",
   cost: 1,
   strength: 0,
   willpower: 4,
   lore: 1,
+  cardNumber: 71,
   inkable: true,
   vanilla: true,
   externalIds: {

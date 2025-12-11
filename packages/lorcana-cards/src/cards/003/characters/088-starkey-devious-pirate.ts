@@ -9,11 +9,11 @@ export const starkeyDeviousPirate: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Peter Pan",
   set: "003",
-  cardNumber: "088",
   cost: 7,
   strength: 6,
   willpower: 6,
   lore: 3,
+  cardNumber: 88,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -195,19 +195,69 @@ tcg-engines/
 
 ### Prerequisites
 
-- [Bun](https://bun.sh/) (v1.2.14+) - Fast JavaScript runtime
-- [Node.js](https://nodejs.org/) (v22+ compatible) - Alternative runtime
+- [Bun](https://bun.sh/) (v1.2.18) - **Primary package manager and JavaScript runtime**
+  - This project uses Bun as the package manager (specified in `package.json`)
+  - Bun provides fast package installation, testing, and bundling
+  - Install: `curl -fsSL https://bun.sh/install | bash`
+- [Node.js](https://nodejs.org/) (v24.x) - For compatibility with some tools
+- [fnm](https://github.com/Schniz/fnm) (optional) - Fast Node.js version manager
+  - This repository includes a `.node-version` file for automatic Node.js version switching
+  - If you're using fnm, it will automatically switch to Node.js v24.x when you enter this directory
 - Git - Version control
 
 ### Installation
 
-Clone the repository and install dependencies:
+**Quick Setup (Recommended for macOS/Linux):**
+
+Run the automated setup script:
+
+```bash
+git clone https://github.com/the-card-goat/tcg-engines.git
+cd tcg-engines
+chmod +x setup.sh
+./setup.sh
+```
+
+**Manual Setup (macOS/Linux):**
 
 ```bash
 git clone https://github.com/the-card-goat/tcg-engines.git
 cd tcg-engines
 bun install
 ```
+
+**Windows Setup:**
+
+The automated setup script (`setup.sh`) is designed for macOS/Linux. On Windows, please follow these steps:
+
+1. **Install Node.js 24.x**
+   - Download from [nodejs.org](https://nodejs.org/) or use a version manager like [fnm for Windows](https://github.com/Schniz/fnm#windows)
+   - Verify: `node -v` should show v24.x
+
+2. **Install Bun**
+   - Use PowerShell: `powershell -c "irm bun.sh/install.ps1 | iex"`
+   - Or download from [bun.sh](https://bun.sh/)
+   - Verify: `bun -v` should show 1.2.18 or later
+
+3. **Install Dependencies**
+   ```bash
+   git clone https://github.com/the-card-goat/tcg-engines.git
+   cd tcg-engines
+   bun install
+   ```
+
+**For AI Agents:** See [agents.md](./agents.md) for detailed setup instructions and environment configuration.
+
+### Troubleshooting
+
+**Common Setup Issues:**
+
+- **fnm not found after installation**: Restart your terminal or manually source your shell config (`source ~/.bashrc` or `source ~/.zshrc`)
+- **Node.js version incorrect**: Run `fnm use 24` (if using fnm) or ensure Node.js 24.x is active
+- **Bun not found after installation**: Restart your terminal or add to PATH: `export PATH="$HOME/.bun/bin:$PATH"`
+- **Package installation fails**: Ensure you're using `bun install` (not npm/yarn/pnpm) and check that `package.json` specifies `"packageManager": "bun@1.2.18"`
+
+For more detailed troubleshooting, see the [Troubleshooting section in agents.md](./agents.md#troubleshooting).
 
 ### Quick Start for Framework Users
 
@@ -410,7 +460,11 @@ All code follows strict standards documented in `agent-os/standards/`:
 ## Tech Stack
 
 - **Language**: TypeScript 5.8+
-- **Runtime**: Bun 1.2.14+ (Node.js 18+ compatible)
+- **Package Manager & Runtime**: [Bun](https://bun.sh/) 1.2.18
+  - Fast package installation (30x faster than npm)
+  - Built-in test runner (Jest-compatible)
+  - Built-in bundler
+  - Node.js-compatible runtime
 - **State Management**: Immer 10.0.0+
 - **Validation**: Zod 3.22.0+
 - **RNG**: seedrandom 3.0.5+

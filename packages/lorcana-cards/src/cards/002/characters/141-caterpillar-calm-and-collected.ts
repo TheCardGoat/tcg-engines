@@ -9,11 +9,11 @@ export const caterpillarCalmAndCollected: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Alice in Wonderland",
   set: "002",
-  cardNumber: "141",
   cost: 3,
   strength: 1,
   willpower: 3,
   lore: 3,
+  cardNumber: 141,
   inkable: true,
   vanilla: true,
   externalIds: {

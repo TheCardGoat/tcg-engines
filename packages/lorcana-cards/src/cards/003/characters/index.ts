@@ -1,4 +1,3 @@
-export { joshuaSweetTheDoctor } from "./005-joshua-sweet-the-doctor";
 export { kidaAtlantean } from "./006-kida-atlantean";
 export { missBiancaRescueAidSocietyAgent } from "./010-miss-bianca-rescue-aid-society-agent";
 export { mrSnoopsIneptBusinessman } from "./011-mr-snoops-inept-businessman";
@@ -23,11 +22,12 @@ export { stitchLittleRocket } from "./125-stitch-little-rocket";
 export { webbyVanderquackEnthusiasticDuck } from "./127-webby-vanderquack-enthusiastic-duck";
 export { genieCrampedInTheLamp } from "./141-genie-cramped-in-the-lamp";
 export { kingLouieBandleader } from "./146-king-louie-bandleader";
+export { kitCloudkickerNavigator } from "./147-kit-cloudkicker-navigator";
 export { kitCloudkickerSpunkyBearCub } from "./148-kit-cloudkicker-spunky-bear-cub";
 export { plutoMickeysCleverFriend } from "./152-pluto-mickeys-clever-friend";
+export { wendyDarlingAuthorityOnPeterPan } from "./158-wendy-darling-authority-on-peter-pan";
 export { chiefTuiProudOfMotunui } from "./171-chief-tui-proud-of-motunui";
 export { helgaSinclairRighthandWoman } from "./175-helga-sinclair-right-hand-woman";
-export { kidaRoyalWarrior } from "./177-kida-royal-warrior";
 export { mufasaChampionOfThePrideLands } from "./185-mufasa-champion-of-the-pride-lands";
 export { nalaFierceFriend } from "./186-nala-fierce-friend";
 export { robinHoodBelovedOutlaw } from "./189-robin-hood-beloved-outlaw";

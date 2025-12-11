@@ -9,11 +9,11 @@ export const genieExcitedShipbuilder: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Aladdin",
   set: "006",
-  cardNumber: "038",
   cost: 3,
   strength: 4,
   willpower: 3,
   lore: 1,
+  cardNumber: 38,
   inkable: true,
   vanilla: true,
   externalIds: {

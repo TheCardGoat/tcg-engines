@@ -9,11 +9,11 @@ export const mrSmeeLoyalFirstMate: CharacterCard = {
   inkType: ["amber"],
   franchise: "Peter Pan",
   set: "001",
-  cardNumber: "015",
   cost: 3,
   strength: 2,
   willpower: 5,
   lore: 1,
+  cardNumber: 15,
   inkable: true,
   vanilla: true,
   externalIds: {

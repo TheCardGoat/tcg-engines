@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const archimedesHighlyEducatedOwl: CharacterCard = {
-  id: "1nb",
+  id: "1n9",
   cardType: "character",
   name: "Archimedes",
   version: "Highly Educated Owl",
@@ -9,11 +9,11 @@ export const archimedesHighlyEducatedOwl: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Sword in the Stone",
   set: "001",
-  cardNumber: "036",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 36,
   inkable: true,
   vanilla: true,
   externalIds: {

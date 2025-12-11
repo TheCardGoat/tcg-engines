@@ -9,11 +9,11 @@ export const kohutTrustedMarine: CharacterCard = {
   inkType: ["steel"],
   franchise: "Wreck It Ralph",
   set: "006",
-  cardNumber: "178",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 178,
   inkable: true,
   vanilla: true,
   externalIds: {

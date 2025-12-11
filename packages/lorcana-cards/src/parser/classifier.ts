@@ -89,12 +89,17 @@ function isActionEffect(text: string): boolean {
     /^Look\s+/i,
     /^Name\s+/i,
     /^Choose\s+/i,
+    /^Chosen\s+/i,
   ];
 
   const startsWithActionVerb = actionVerbs.some((pattern) =>
     pattern.test(text),
   );
-  if (!startsWithActionVerb) {
+
+  // Also allow "Chosen player/opponent" actions
+  const startsWithChosenAction = /^Chosen\s+(?:player|opponent)/i.test(text);
+
+  if (!(startsWithActionVerb || startsWithChosenAction)) {
     return false;
   }
 

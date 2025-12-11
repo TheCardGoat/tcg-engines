@@ -9,11 +9,11 @@ export const pachaVillageLeader: CharacterCard = {
   inkType: ["steel"],
   franchise: "Emperors New Groove",
   set: "002",
-  cardNumber: "190",
   cost: 6,
   strength: 4,
   willpower: 8,
   lore: 2,
+  cardNumber: 190,
   inkable: true,
   vanilla: true,
   externalIds: {

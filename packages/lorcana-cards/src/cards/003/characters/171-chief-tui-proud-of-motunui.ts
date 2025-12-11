@@ -9,11 +9,11 @@ export const chiefTuiProudOfMotunui: CharacterCard = {
   inkType: ["steel"],
   franchise: "Moana",
   set: "003",
-  cardNumber: "171",
   cost: 4,
   strength: 3,
   willpower: 4,
   lore: 2,
+  cardNumber: 171,
   inkable: true,
   vanilla: true,
   externalIds: {

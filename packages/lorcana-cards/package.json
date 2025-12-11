@@ -23,17 +23,17 @@
     }
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
     "check-types": "tsc --noEmit",
-    "format": "bunx @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
-    "lint": "bunx @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error ./src",
+    "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
+    "lint": "bun x @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error ./src",
     "test": "AGENT=1 bun test --silent",
     "test:watch": "bun test --watch",
     "test:coverage": "bun test --coverage",
     "check": "turbo format lint check-types test",
     "fetch": "bun scripts/fetch-inputs.ts",
-    "generate": "bun scripts/generate-cards.ts",
+    "generate": "bun scripts/generate-cards.ts && bun run format",
     "generate:all": "bun run fetch && bun run generate"
   },
   "dependencies": {
@@ -42,6 +42,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.0.4",
     "@types/bun": "1.2.14",
+    "bun-types": "^1.3.4",
     "typescript": "5.8.3"
   },
   "peerDependencies": {

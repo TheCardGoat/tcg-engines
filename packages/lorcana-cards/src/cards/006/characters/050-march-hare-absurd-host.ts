@@ -10,16 +10,15 @@ export const marchHareAbsurdHost: CharacterCard = {
   franchise: "Alice in Wonderland",
   set: "006",
   text: "Rush (This character can challenge the turn they're played.)",
-  cardNumber: "050",
   cost: 4,
   strength: 2,
   willpower: 3,
   lore: 2,
+  cardNumber: 50,
   inkable: true,
   externalIds: {
     ravensburger: "85684498bb53ffacf3dd58bf50013dc97d5766b6",
   },
-  keywords: ["Rush"],
   abilities: [
     {
       id: "110-1",

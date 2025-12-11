@@ -9,11 +9,11 @@ export const nutsyVultureHenchman: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Robin Hood",
   set: "003",
-  cardNumber: "118",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 118,
   inkable: true,
   vanilla: true,
   externalIds: {

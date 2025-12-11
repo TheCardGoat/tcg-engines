@@ -9,11 +9,11 @@ export const gopherShipsCarpenter: CharacterCard = {
   inkType: ["amber"],
   franchise: "Winnie the Pooh",
   set: "006",
-  cardNumber: "004",
   cost: 4,
   strength: 1,
   willpower: 6,
   lore: 2,
+  cardNumber: 4,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const princeCharmingHeirToTheThrone: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Cinderella",
   set: "002",
-  cardNumber: "157",
   cost: 4,
   strength: 3,
   willpower: 3,
   lore: 3,
+  cardNumber: 157,
   inkable: true,
   vanilla: true,
   externalIds: {

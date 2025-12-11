@@ -10,16 +10,15 @@ export const montereyJackDefiantProtector: CharacterCard = {
   franchise: "Rescue Rangers",
   set: "008",
   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
-  cardNumber: "188",
   cost: 5,
   strength: 4,
   willpower: 5,
   lore: 2,
+  cardNumber: 188,
   inkable: true,
   externalIds: {
     ravensburger: "0669c45afa1ed8a75915fc48406f8c1f601cc2db",
   },
-  keywords: ["Bodyguard"],
   abilities: [
     {
       id: "1s2-1",

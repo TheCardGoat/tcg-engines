@@ -9,11 +9,11 @@ export const flixMadrigalFunlovingFamilyMan: CharacterCard = {
   inkType: ["amber"],
   franchise: "Encanto",
   set: "004",
-  cardNumber: "009",
   cost: 3,
   strength: 2,
   willpower: 4,
   lore: 2,
+  cardNumber: 9,
   inkable: true,
   vanilla: true,
   externalIds: {

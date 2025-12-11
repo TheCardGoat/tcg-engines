@@ -9,11 +9,11 @@ export const mrSnoopsIneptBusinessman: CharacterCard = {
   inkType: ["amber"],
   franchise: "Rescuers",
   set: "003",
-  cardNumber: "011",
   cost: 6,
   strength: 4,
   willpower: 8,
   lore: 2,
+  cardNumber: 11,
   inkable: true,
   vanilla: true,
   externalIds: {

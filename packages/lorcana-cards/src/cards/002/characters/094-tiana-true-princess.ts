@@ -9,11 +9,11 @@ export const tianaTruePrincess: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Princess and the Frog",
   set: "002",
-  cardNumber: "094",
   cost: 5,
   strength: 5,
   willpower: 3,
   lore: 3,
+  cardNumber: 94,
   inkable: true,
   vanilla: true,
   externalIds: {

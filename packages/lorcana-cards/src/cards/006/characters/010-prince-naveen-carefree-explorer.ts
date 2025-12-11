@@ -9,11 +9,11 @@ export const princeNaveenCarefreeExplorer: CharacterCard = {
   inkType: ["amber"],
   franchise: "Princess and the Frog",
   set: "006",
-  cardNumber: "010",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 10,
   inkable: true,
   vanilla: true,
   externalIds: {

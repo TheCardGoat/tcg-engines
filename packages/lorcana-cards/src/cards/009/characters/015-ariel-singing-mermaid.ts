@@ -10,21 +10,15 @@ export const arielSingingMermaid: CharacterCard = {
   franchise: "Little Mermaid",
   set: "009",
   text: "Singer 7 (This character counts as cost 7 to sing songs.)",
-  cardNumber: "015",
   cost: 4,
   strength: 3,
   willpower: 3,
   lore: 2,
+  cardNumber: 15,
   inkable: true,
   externalIds: {
     ravensburger: "9e45cd57bcaee1034e81d1c387fdbd8b35cdab85",
   },
-  keywords: [
-    {
-      type: "Singer",
-      value: 7,
-    },
-  ],
   abilities: [
     {
       id: "17w-1",

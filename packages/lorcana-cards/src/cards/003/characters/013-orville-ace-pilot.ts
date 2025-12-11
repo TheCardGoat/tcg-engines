@@ -9,11 +9,11 @@ export const orvilleAcePilot: CharacterCard = {
   inkType: ["amber"],
   franchise: "Rescuers",
   set: "003",
-  cardNumber: "013",
   cost: 2,
   strength: 1,
   willpower: 4,
   lore: 1,
+  cardNumber: 13,
   inkable: true,
   vanilla: true,
   externalIds: {

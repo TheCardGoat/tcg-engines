@@ -9,11 +9,11 @@ export const katrinaVanTasselRosycheekedLass: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Sleepy Hollow",
   set: "010",
-  cardNumber: "111",
   cost: 4,
   strength: 6,
   willpower: 4,
   lore: 1,
+  cardNumber: 111,
   inkable: true,
   vanilla: true,
   externalIds: {

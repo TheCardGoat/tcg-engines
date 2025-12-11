@@ -8,11 +8,11 @@ export const petePastryChomper: CharacterCard = {
   fullName: "Pete - Pastry Chomper",
   inkType: ["ruby"],
   set: "005",
-  cardNumber: "120",
   cost: 3,
   strength: 4,
   willpower: 3,
   lore: 1,
+  cardNumber: 120,
   inkable: true,
   vanilla: true,
   externalIds: {

@@ -9,11 +9,11 @@ export const simbaHappygolucky: CharacterCard = {
   inkType: ["amber"],
   franchise: "Lion King",
   set: "006",
-  cardNumber: "005",
   cost: 2,
   strength: 1,
   willpower: 4,
   lore: 1,
+  cardNumber: 5,
   inkable: true,
   vanilla: true,
   externalIds: {

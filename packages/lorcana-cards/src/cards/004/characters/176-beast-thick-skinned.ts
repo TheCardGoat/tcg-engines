@@ -10,21 +10,15 @@ export const beastThickskinned: CharacterCard = {
   franchise: "Beauty and the Beast",
   set: "004",
   text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
-  cardNumber: "176",
   cost: 3,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 176,
   inkable: true,
   externalIds: {
     ravensburger: "613c1d6a03168cd893e044a3b018c6d7d70f295d",
   },
-  keywords: [
-    {
-      type: "Resist",
-      value: 1,
-    },
-  ],
   abilities: [
     {
       id: "qz9-1",

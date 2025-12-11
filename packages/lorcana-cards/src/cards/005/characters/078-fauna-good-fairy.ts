@@ -9,11 +9,11 @@ export const faunaGoodFairy: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Sleeping Beauty",
   set: "005",
-  cardNumber: "078",
   cost: 5,
   strength: 3,
   willpower: 7,
   lore: 2,
+  cardNumber: 78,
   inkable: true,
   vanilla: true,
   externalIds: {

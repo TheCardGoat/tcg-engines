@@ -9,11 +9,11 @@ export const theWalrusGreedyGourmand: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Alice in Wonderland",
   set: "006",
-  cardNumber: "046",
   cost: 4,
   strength: 3,
   willpower: 6,
   lore: 1,
+  cardNumber: 46,
   inkable: true,
   vanilla: true,
   externalIds: {

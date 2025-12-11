@@ -31,6 +31,47 @@ describe("normalizeText", () => {
   it("should preserve single spaces", () => {
     expect(normalizeText("Draw 2 cards")).toBe("Draw 2 cards");
   });
+
+  describe("Unicode normalization (NFC)", () => {
+    it("should normalize composed and decomposed characters to the same form", () => {
+      // é as single character (composed, NFC)
+      const composed = "café";
+      // é as e + combining acute accent (decomposed, NFD)
+      const decomposed = "cafe\u0301";
+
+      // Both should normalize to the same form (NFC)
+      expect(normalizeText(composed)).toBe(normalizeText(decomposed));
+      expect(normalizeText(composed)).toBe("café");
+    });
+
+    it("should normalize multiple accented characters", () => {
+      // Composed form (NFC)
+      const composed = "résumé naïve";
+      // Decomposed form (NFD)
+      const decomposed = "re\u0301sume\u0301 nai\u0308ve";
+
+      expect(normalizeText(composed)).toBe(normalizeText(decomposed));
+      expect(normalizeText(composed)).toBe("résumé naïve");
+    });
+
+    it("should handle normalization with whitespace", () => {
+      // Test that normalization works correctly with whitespace trimming
+      const composed = "  café  ";
+      const decomposed = "  cafe\u0301  ";
+
+      expect(normalizeText(composed)).toBe(normalizeText(decomposed));
+      expect(normalizeText(composed)).toBe("café");
+    });
+
+    it("should normalize characters in ability text context", () => {
+      // Simulate ability text with accented characters
+      const text1 = "DRAW CARD Whenever you play café, gain 1 lore.";
+      const text2 = "DRAW CARD Whenever you play cafe\u0301, gain 1 lore.";
+
+      // Both should normalize to the same form
+      expect(normalizeText(text1)).toBe(normalizeText(text2));
+    });
+  });
 });
 
 describe("extractNamedAbilityPrefix", () => {

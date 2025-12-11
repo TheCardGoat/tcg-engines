@@ -48,7 +48,13 @@ describe("For-Each Effects", () => {
         effect: {
           type: "deal-damage",
           amount: 1,
-          target: "CHOSEN_CHARACTER",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
         },
       });
     });
@@ -143,7 +149,13 @@ describe("For-Each Effects", () => {
         effect: {
           type: "deal-damage",
           amount: 1,
-          target: "CHOSEN_CHARACTER",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
         },
       });
     });
@@ -312,7 +324,13 @@ describe("For-Each Effects", () => {
         counter: { type: "items", controller: "you" },
         effect: {
           type: "exert",
-          target: "CHOSEN_CHARACTER",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
         },
       });
     });
@@ -327,7 +345,13 @@ describe("For-Each Effects", () => {
         counter: { type: "damaged-characters", controller: "any" },
         effect: {
           type: "banish",
-          target: "CHOSEN_CHARACTER",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
         },
       });
     });
@@ -347,7 +371,13 @@ describe("Repeat Effects", () => {
         effect: {
           type: "deal-damage",
           amount: 1,
-          target: "CHOSEN_CHARACTER",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
         },
       });
     });
@@ -414,7 +444,13 @@ describe("Repeat Effects", () => {
           effect: {
             type: "deal-damage",
             amount: 2,
-            target: "CHOSEN_CHARACTER",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
           },
         },
         chooser: "CONTROLLER",
@@ -431,7 +467,13 @@ describe("Repeat Effects", () => {
         times: 2,
         effect: {
           type: "exert",
-          target: "CHOSEN_CHARACTER",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
         },
       });
     });
@@ -444,7 +486,13 @@ describe("Repeat Effects", () => {
         times: 1,
         effect: {
           type: "ready",
-          target: "CHOSEN_CHARACTER",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
         },
       });
     });

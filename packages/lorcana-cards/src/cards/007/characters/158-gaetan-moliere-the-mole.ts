@@ -9,11 +9,11 @@ export const gaetanMoliereTheMole: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Atlantis",
   set: "007",
-  cardNumber: "158",
   cost: 3,
   strength: 3,
   willpower: 4,
   lore: 1,
+  cardNumber: 158,
   inkable: true,
   vanilla: true,
   externalIds: {

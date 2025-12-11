@@ -10,16 +10,15 @@ export const drFacilierSavvyOpportunist: CharacterCard = {
   franchise: "Princess and the Frog",
   set: "002",
   text: "Evasive (Only characters with Evasive can challenge this character.)",
-  cardNumber: "038",
   cost: 4,
   strength: 4,
   willpower: 2,
   lore: 1,
+  cardNumber: 38,
   inkable: true,
   externalIds: {
     ravensburger: "7eb3e95e745e4e80a3c3f2b46bce3df355e3acbf",
   },
-  keywords: ["Evasive"],
   abilities: [
     {
       id: "z5l-1",

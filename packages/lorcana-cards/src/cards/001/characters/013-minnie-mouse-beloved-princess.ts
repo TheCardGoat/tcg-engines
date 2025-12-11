@@ -8,11 +8,11 @@ export const minnieMouseBelovedPrincess: CharacterCard = {
   fullName: "Minnie Mouse - Beloved Princess",
   inkType: ["amber"],
   set: "001",
-  cardNumber: "013",
   cost: 2,
   strength: 2,
   willpower: 3,
   lore: 1,
+  cardNumber: 13,
   inkable: true,
   vanilla: true,
   externalIds: {

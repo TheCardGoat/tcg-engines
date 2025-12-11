@@ -9,11 +9,11 @@ export const rancisFluggerbutterChocolateCharger: CharacterCard = {
   inkType: ["ruby"],
   franchise: "Wreck It Ralph",
   set: "005",
-  cardNumber: "108",
   cost: 4,
   strength: 4,
   willpower: 4,
   lore: 1,
+  cardNumber: 108,
   inkable: true,
   vanilla: true,
   externalIds: {

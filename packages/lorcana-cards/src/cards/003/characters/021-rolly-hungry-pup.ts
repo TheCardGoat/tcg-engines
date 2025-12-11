@@ -9,17 +9,16 @@ export const rollyHungryPup: CharacterCard = {
   inkType: ["amber"],
   franchise: "101 Dalmatians",
   set: "003",
-  text: "Support (Whenever this character quests, you may add their to another chosen character's this turn.)",
-  cardNumber: "021",
+  text: "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
   cost: 3,
   strength: 3,
   willpower: 3,
   lore: 1,
+  cardNumber: 21,
   inkable: true,
   externalIds: {
     ravensburger: "35a17094ae0ea85e5bf8c8c37dfc63064b508a63",
   },
-  keywords: ["Support"],
   abilities: [
     {
       id: "evp-1",

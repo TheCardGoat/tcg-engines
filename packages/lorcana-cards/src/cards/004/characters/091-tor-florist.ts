@@ -9,11 +9,11 @@ export const torFlorist: CharacterCard = {
   inkType: ["emerald"],
   franchise: "Tangled",
   set: "004",
-  cardNumber: "091",
   cost: 5,
   strength: 4,
   willpower: 7,
   lore: 1,
+  cardNumber: 91,
   inkable: true,
   vanilla: true,
   externalIds: {

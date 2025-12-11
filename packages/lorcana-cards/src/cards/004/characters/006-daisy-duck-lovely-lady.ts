@@ -8,11 +8,11 @@ export const daisyDuckLovelyLady: CharacterCard = {
   fullName: "Daisy Duck - Lovely Lady",
   inkType: ["amber"],
   set: "004",
-  cardNumber: "006",
   cost: 1,
   strength: 1,
   willpower: 3,
   lore: 1,
+  cardNumber: 6,
   inkable: true,
   vanilla: true,
   externalIds: {

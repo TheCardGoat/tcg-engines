@@ -28,7 +28,12 @@ import path from "node:path";
 import { generateCanonicalCards } from "./generators/canonical-generator";
 import { generateCardFiles } from "./generators/file-generator";
 import { createIdMapping } from "./generators/id-generator";
-import { isKeywordOnlyCard } from "./generators/parser-validator";
+import {
+  hasManualOverride,
+  hasSimpleDrawAbility,
+  isKeywordOnlyCard,
+  isParseableCard,
+} from "./generators/parser-validator";
 import {
   calculateSetTotals,
   generatePrintings,
@@ -157,6 +162,9 @@ async function main() {
   writeJson(path.join(DATA_OUTPUT_DIR, "printings.json"), printings);
   console.log("  ✅ printings.json");
 
+  writeJson(path.join(DATA_OUTPUT_DIR, "canonical-cards.json"), canonicalCards);
+  console.log("  ✅ canonical-cards.json");
+
   writeJson(ID_MAPPING_PATH, idMapping);
   console.log("  ✅ id-mapping.json");
 
@@ -164,29 +172,141 @@ async function main() {
   console.log("\n📂 Generating card TypeScript files...");
 
   // Clear existing cards directory
+  /*
   if (fs.existsSync(CARDS_OUTPUT_DIR)) {
     fs.rmSync(CARDS_OUTPUT_DIR, { recursive: true });
   }
+  */
 
-  // Filter to vanilla cards + keyword-only cards (parseable abilities)
+  // Filter to vanilla cards + parseable cards (keywords or action effects)
   const generatableCards: Record<string, (typeof canonicalCards)[string]> = {};
   let vanillaCount = 0;
+  let parseableCount = 0;
+  let manualOverrideCount = 0;
   let keywordOnlyCount = 0;
+  let simpleDrawCount = 0;
+
+  // Detailed tracking for verbose log
+  const cardCategories: {
+    vanilla: string[];
+    manualOverride: string[];
+    keywordOnly: string[];
+    simpleDraw: string[];
+    otherParseable: string[];
+  } = {
+    vanilla: [],
+    manualOverride: [],
+    keywordOnly: [],
+    simpleDraw: [],
+    otherParseable: [],
+  };
 
   for (const [id, card] of Object.entries(canonicalCards)) {
     if (card.vanilla) {
       generatableCards[id] = card;
       vanillaCount++;
-    } else if (isKeywordOnlyCard(card)) {
+      cardCategories.vanilla.push(card.fullName || card.name);
+    } else if (isParseableCard(card)) {
       generatableCards[id] = card;
-      keywordOnlyCount++;
+      parseableCount++;
+
+      const cardName = card.fullName || card.name;
+      if (hasManualOverride(card)) {
+        manualOverrideCount++;
+        cardCategories.manualOverride.push(cardName);
+      } else if (isKeywordOnlyCard(card)) {
+        keywordOnlyCount++;
+        cardCategories.keywordOnly.push(cardName);
+      } else if (hasSimpleDrawAbility(card)) {
+        simpleDrawCount++;
+        cardCategories.simpleDraw.push(cardName);
+      } else {
+        cardCategories.otherParseable.push(cardName);
+      }
     }
   }
+
+  // CLI output - concise
   console.log(
     `  Filtering to ${Object.keys(generatableCards).length} generatable cards:`,
   );
   console.log(`    - Vanilla: ${vanillaCount}`);
-  console.log(`    - Keyword-only: ${keywordOnlyCount}`);
+  console.log(`    - Parseable: ${parseableCount}`);
+  if (manualOverrideCount > 0) {
+    console.log(`      • Manual overrides: ${manualOverrideCount}`);
+  }
+  if (keywordOnlyCount > 0) {
+    console.log(`      • Keywords only: ${keywordOnlyCount}`);
+  }
+  if (simpleDrawCount > 0) {
+    console.log(`      • Simple draw effects: ${simpleDrawCount}`);
+  }
+  if (cardCategories.otherParseable.length > 0) {
+    console.log(
+      `      • Other parseable: ${cardCategories.otherParseable.length}`,
+    );
+  }
+
+  // Write verbose log to file
+  const verboseLogPath = path.join(DATA_OUTPUT_DIR, "generation-verbose.log");
+  const verboseLog: string[] = [];
+  verboseLog.push("=".repeat(80));
+  verboseLog.push("CARD GENERATION VERBOSE LOG");
+  verboseLog.push("=".repeat(80));
+  verboseLog.push("");
+  verboseLog.push(
+    `Total generatable cards: ${Object.keys(generatableCards).length}`,
+  );
+  verboseLog.push("");
+
+  if (cardCategories.vanilla.length > 0) {
+    verboseLog.push(`VANILLA CARDS (${cardCategories.vanilla.length}):`);
+    cardCategories.vanilla.forEach((name) => verboseLog.push(`  - ${name}`));
+    verboseLog.push("");
+  }
+
+  if (cardCategories.manualOverride.length > 0) {
+    verboseLog.push(
+      `MANUAL OVERRIDE CARDS (${cardCategories.manualOverride.length}):`,
+    );
+    cardCategories.manualOverride.forEach((name) =>
+      verboseLog.push(`  - ${name}`),
+    );
+    verboseLog.push("");
+  }
+
+  if (cardCategories.keywordOnly.length > 0) {
+    verboseLog.push(
+      `KEYWORD-ONLY CARDS (${cardCategories.keywordOnly.length}):`,
+    );
+    cardCategories.keywordOnly.forEach((name) =>
+      verboseLog.push(`  - ${name}`),
+    );
+    verboseLog.push("");
+  }
+
+  if (cardCategories.simpleDraw.length > 0) {
+    verboseLog.push(
+      `SIMPLE DRAW EFFECT CARDS (${cardCategories.simpleDraw.length}):`,
+    );
+    cardCategories.simpleDraw.forEach((name) => verboseLog.push(`  - ${name}`));
+    verboseLog.push("");
+  }
+
+  if (cardCategories.otherParseable.length > 0) {
+    verboseLog.push(
+      `OTHER PARSEABLE CARDS (${cardCategories.otherParseable.length}):`,
+    );
+    cardCategories.otherParseable.forEach((name) =>
+      verboseLog.push(`  - ${name}`),
+    );
+    verboseLog.push("");
+  }
+
+  fs.writeFileSync(verboseLogPath, verboseLog.join("\n"), "utf-8");
+  console.log(
+    `  ✅ Verbose log: ${path.relative(process.cwd(), verboseLogPath)}`,
+  );
 
   generateCardFiles(CARDS_OUTPUT_DIR, generatableCards, sets);
 

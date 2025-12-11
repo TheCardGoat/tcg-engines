@@ -6,6 +6,7 @@
  * Uses merged text from Lorcast (which has symbols) and Ravensburger data.
  */
 
+import { resolvePlaceholders } from "../../src/parser/numeric-extractor";
 import { getMergedRulesText } from "../parsers/data-merger";
 import {
   generatePrintingId,
@@ -116,6 +117,19 @@ function cleanRulesText(text: string): string {
 }
 
 /**
+ * Check if text is song helper text (parenthetical text about singing)
+ */
+function isSongHelperText(text: string): boolean {
+  const trimmed = text.trim();
+  // Check if it's parenthetical text that mentions singing
+  return (
+    trimmed.startsWith("(") &&
+    trimmed.endsWith(")") &&
+    trimmed.toLowerCase().includes("sing this song")
+  );
+}
+
+/**
  * Parse abilities from rules_text
  * This is a simplified parser - the actual ability parsing would use the full parser
  */
@@ -152,6 +166,31 @@ function parseAbilities(rulesText: string): AbilityDefinition[] {
   }
 
   return abilities;
+}
+
+/**
+ * Filter out song helper text from abilities
+ */
+function filterSongHelperText(
+  abilities: AbilityDefinition[],
+): AbilityDefinition[] {
+  return abilities.filter((ability) => !isSongHelperText(ability.text));
+}
+
+/**
+ * Clean abilities for action cards: remove name property when it's null
+ */
+function cleanAbilitiesForAction(
+  abilities: AbilityDefinition[],
+): AbilityDefinition[] {
+  return abilities.map((ability) => {
+    if (ability.name === null) {
+      // Omit name property for action cards when null
+      const { name, ...rest } = ability;
+      return rest;
+    }
+    return ability;
+  });
 }
 
 /**
@@ -354,12 +393,16 @@ function buildCommonCardProperties(
     id: shortId,
     cardType: baseCard.cardType,
     name: baseCard.name,
-    version: baseCard.subtitle || "",
     fullName: baseCard.subtitle
       ? `${baseCard.name} - ${baseCard.subtitle}`
       : baseCard.name,
     inkType: extractInkType(baseCard.magic_ink_colors || []),
   };
+
+  // Only add version if it's not empty
+  if (baseCard.subtitle) {
+    props.version = baseCard.subtitle;
+  }
 
   if (franchise) {
     props.franchise = franchise;
@@ -370,7 +413,10 @@ function buildCommonCardProperties(
 
   // === BOOLEAN PROPERTIES ===
   props.inkable = baseCard.ink_convertible;
-  props.vanilla = isVanilla;
+  // Only add vanilla if it's true
+  if (isVanilla) {
+    props.vanilla = isVanilla;
+  }
 
   // === OBJECT PROPERTIES ===
   if (externalIds) {
@@ -420,12 +466,40 @@ export function transformToCanonicalCard(
   const baseCard = findBasePrinting(cards);
 
   // Get rules text - prefer Lorcast text (has symbols) if available
+  // Resolve {d} placeholders with actual numbers from original text
   let rulesText: string;
   if (lorcastIndex) {
-    const { text } = getMergedRulesText(baseCard, lorcastIndex);
-    rulesText = text;
+    const { text, originalText } = getMergedRulesText(baseCard, lorcastIndex);
+    // If we have both normalized text (with {d}) and original text (with numbers),
+    // resolve the placeholders
+    if (originalText && originalText.trim() && text.includes("{d}")) {
+      rulesText = resolvePlaceholders(text, originalText);
+      // If resolution failed (patterns don't match), fall back to normalized text
+      if (rulesText === text && text.includes("{d}")) {
+        // Resolution didn't work, use normalized text as-is
+        rulesText = text;
+      }
+    } else {
+      rulesText = text;
+    }
   } else {
     rulesText = cleanRulesText(baseCard.rules_text || "");
+  }
+
+  // For action cards that are songs, filter out helper text from rulesText
+  if (baseCard.cardType === "action") {
+    const isSong =
+      baseCard.abilities?.some((a) => a.toLowerCase().includes("song")) ||
+      baseCard.subtypes?.some((s) => s.toLowerCase() === "song");
+
+    if (isSong) {
+      // Remove song helper text from rulesText (parenthetical text about singing)
+      // Pattern: "(...sing this song...)" at the start or anywhere in the text
+      // Match parenthetical text that contains "sing this song" and remove it
+      rulesText = rulesText
+        .replace(/\([^)]*sing this song[^)]*\)\s*/gi, "")
+        .trim();
+    }
   }
 
   // Determine if card is vanilla (no rules text)
@@ -475,10 +549,19 @@ export function transformToCanonicalCard(
         baseCard.abilities?.some((a) => a.toLowerCase().includes("song")) ||
         baseCard.subtypes?.some((s) => s.toLowerCase() === "song");
 
+      // Filter abilities for action cards
+      const { abilities: originalAbilities, ...commonWithoutAbilities } =
+        common;
+      let cleanedAbilities = originalAbilities || [];
+
+      // For action cards, remove name property when it's null
+      cleanedAbilities = cleanAbilitiesForAction(cleanedAbilities);
+
       const card: CanonicalActionCard = {
-        ...common,
+        ...commonWithoutAbilities,
         cardType: "action",
         ...(isSong && { actionSubtype: "song" as const }),
+        ...(cleanedAbilities.length > 0 && { abilities: cleanedAbilities }),
       };
       return card;
     }

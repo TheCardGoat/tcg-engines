@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "format": "bunx @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
-    "lint": "bunx @biomejs/biome lint --write ./src",
+    "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
+    "lint": "bun x @biomejs/biome lint --write ./src",
     "check-types": "tsc --noEmit",
     "test": "echo 'No tests'"
   },

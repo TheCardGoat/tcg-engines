@@ -437,6 +437,28 @@
     ],
     "author": "Koni"
   },
+  "set10-021": {
+    "id": "set10-021",
+    "gameCardId": "1mg",
+    "set": "set10",
+    "cardNumber": 21,
+    "cardIdentifier": "21/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/21_90e2cca148f9196d92a5cf91c37ff77f34fe7bf2.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/21_90e2cca148f9196d92a5cf91c37ff77f34fe7bf2.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/21_ccda0ce955b1ead6654d116e803065b713138ddb.jpg"
+      }
+    ],
+    "author": "Janel Reh",
+    "flavorText": "If you wanna beat a ghost, you gotta think like a ghost."
+  },
   "set10-022": {
     "id": "set10-022",
     "gameCardId": "27n",
@@ -628,6 +650,27 @@
     ],
     "author": "Kendall Hale",
     "flavorText": "My beloved warriors have come to life! All the dead of centuries past! Never has anyone created an army like this! —The Horned King"
+  },
+  "set10-040": {
+    "id": "set10-040",
+    "gameCardId": "t99",
+    "set": "set10",
+    "cardNumber": 40,
+    "cardIdentifier": "40/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/40_51d10a90c5d290054a57671e08776ba4b257979e.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/40_51d10a90c5d290054a57671e08776ba4b257979e.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/40_0a2d099572f307e315b8a44850c7f7999f210c31.jpg"
+      }
+    ],
+    "author": "Alice Pisoni"
   },
   "set10-041": {
     "id": "set10-041",
@@ -913,6 +956,27 @@
     ],
     "author": "Rosa la Barbera / Livio Cacciatore"
   },
+  "set10-054": {
+    "id": "set10-054",
+    "gameCardId": "x7f",
+    "set": "set10",
+    "cardNumber": 54,
+    "cardIdentifier": "54/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/54_2f7b80e2ebadc844a7163e187a0313012289df8d.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/54_2f7b80e2ebadc844a7163e187a0313012289df8d.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/54_1edd0fcad029692484ee6bb3b94bb36761d4d995.jpg"
+      }
+    ],
+    "author": "Rebecka Helmersson"
+  },
   "set10-055": {
     "id": "set10-055",
     "gameCardId": "4nl",
@@ -1019,6 +1083,27 @@
       }
     ],
     "author": "Angelina \"Spikie\" Ricardo"
+  },
+  "set10-060": {
+    "id": "set10-060",
+    "gameCardId": "u5d",
+    "set": "set10",
+    "cardNumber": 60,
+    "cardIdentifier": "60/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/60_1b85e0c0de6462be1083080957c4240fb9c9e8e7.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/60_1b85e0c0de6462be1083080957c4240fb9c9e8e7.jpg",
+        "foilType": "FreeForm1",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/60_e45e09e25186f212022f6727b8751f96862de0a9.jpg"
+      }
+    ],
+    "author": "Alice Pisoni"
   },
   "set10-069": {
     "id": "set10-069",
@@ -1239,6 +1324,28 @@
     "author": "Jochem van Gool",
     "flavorText": "You're a strange lookin' glimmer, ain'tcha? he said to the whisper lingering uncertainly in the doorway. Welcome to the Snuggly Duckling!"
   },
+  "set10-079": {
+    "id": "set10-079",
+    "gameCardId": "r2h",
+    "set": "set10",
+    "cardNumber": 79,
+    "cardIdentifier": "79/204 EN 10",
+    "rarity": "uncommon",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/79_9812bf7025c7af4586c10c89a616abd500663199.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/79_9812bf7025c7af4586c10c89a616abd500663199.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/79_f2df94078b5d47b72ec6e65f6c43eb8a0fbdbb75.jpg"
+      }
+    ],
+    "author": "Mariana Moreno",
+    "flavorText": "It's hard to tell where the branches end and the snake begins."
+  },
   "set10-080": {
     "id": "set10-080",
     "gameCardId": "1nf",
@@ -1326,6 +1433,28 @@
     "author": "Aristeidis Zentelis",
     "flavorText": "You can’t spell ‘crash-landed’ without ‘landed’!"
   },
+  "set10-084": {
+    "id": "set10-084",
+    "gameCardId": "88t",
+    "set": "set10",
+    "cardNumber": 84,
+    "cardIdentifier": "84/204 EN 10",
+    "rarity": "rare",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/84_dd8d3efc6b5403647fb724d99dc1d942d83df5bd.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/84_dd8d3efc6b5403647fb724d99dc1d942d83df5bd.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/84_f65ec6ea4a82fe2b2b71b44334c8b54c1659693e.jpg"
+      }
+    ],
+    "author": "Mike Parker",
+    "flavorText": "You will treat the vastly superior Moon with respect, or you will suffer the ultimate consequence."
+  },
   "set10-085": {
     "id": "set10-085",
     "gameCardId": "1vf",
@@ -1395,6 +1524,27 @@
     ],
     "author": "Jiahui Eva Gao"
   },
+  "set10-088": {
+    "id": "set10-088",
+    "gameCardId": "1gj",
+    "set": "set10",
+    "cardNumber": 88,
+    "cardIdentifier": "88/204 EN 10",
+    "rarity": "legendary",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/88_4f901198e13ab51eb8fe0b73cecb62c14b33a7fa.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/88_4f901198e13ab51eb8fe0b73cecb62c14b33a7fa.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/88_1081977ec3f2eb9716c3f1dd49a147feb1a9e9ff.jpg"
+      }
+    ],
+    "author": "Luis Huerta"
+  },
   "set10-089": {
     "id": "set10-089",
     "gameCardId": "1l2",
@@ -1459,6 +1609,27 @@
     ],
     "author": "Lisa Parfenova"
   },
+  "set10-092": {
+    "id": "set10-092",
+    "gameCardId": "196",
+    "set": "set10",
+    "cardNumber": 92,
+    "cardIdentifier": "92/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/92_c2007bbb8a165f660ed351924fcec4cc1829403b.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/92_c2007bbb8a165f660ed351924fcec4cc1829403b.jpg",
+        "foilType": "FreeForm1",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/92_7855ff8876ce0ca0d6f3e65ad9144f39dd40f22b.jpg"
+      }
+    ],
+    "author": "Nicholas Kole"
+  },
   "set10-093": {
     "id": "set10-093",
     "gameCardId": "y1i",
@@ -1501,6 +1672,27 @@
     ],
     "author": "Giulia Iacopini / Livio Cacciatore",
     "flavorText": "Be careful when gathering herbs in the Inkwell Caverns. You never know who's watching. —Hana's Herborium"
+  },
+  "set10-104": {
+    "id": "set10-104",
+    "gameCardId": "3s2",
+    "set": "set10",
+    "cardNumber": 104,
+    "cardIdentifier": "104/204 EN 10",
+    "rarity": "uncommon",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/104_be50ac9fb22a64cb564ba071e0009c715a2b162b.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/104_be50ac9fb22a64cb564ba071e0009c715a2b162b.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/104_072661903c4aab79fd0db24afe8e7c1e97a0405f.jpg"
+      }
+    ],
+    "author": "Kiersten Hale"
   },
   "set10-105": {
     "id": "set10-105",
@@ -1699,6 +1891,27 @@
     ],
     "author": "Juan Diego León"
   },
+  "set10-114": {
+    "id": "set10-114",
+    "gameCardId": "ews",
+    "set": "set10",
+    "cardNumber": 114,
+    "cardIdentifier": "114/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/114_bb4753f9ed5c3ccf14d09e1c09f053ce918370c4.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/114_bb4753f9ed5c3ccf14d09e1c09f053ce918370c4.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/114_c986b56ec33793e9dee3c6b3f5dbba678e858049.jpg"
+      }
+    ],
+    "author": "Michaela Martin / Livio Cacciatore"
+  },
   "set10-115": {
     "id": "set10-115",
     "gameCardId": "yus",
@@ -1719,6 +1932,48 @@
       }
     ],
     "author": "Malia Ewart"
+  },
+  "set10-116": {
+    "id": "set10-116",
+    "gameCardId": "1jd",
+    "set": "set10",
+    "cardNumber": 116,
+    "cardIdentifier": "116/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/116_d8d2e0ee5bd82a685bf29b5e5ff574bb893a4d2f.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/116_d8d2e0ee5bd82a685bf29b5e5ff574bb893a4d2f.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/116_25f9741dab905b79bf231946e87a69d8e3550736.jpg"
+      }
+    ],
+    "author": "Randy Bishop"
+  },
+  "set10-117": {
+    "id": "set10-117",
+    "gameCardId": "bkr",
+    "set": "set10",
+    "cardNumber": 117,
+    "cardIdentifier": "117/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/117_b0250d920777113d24e17f08f9eea9421f4b3d70.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/117_b0250d920777113d24e17f08f9eea9421f4b3d70.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/117_067fae272819c34644c6f995f2255e4d2e87927e.jpg"
+      }
+    ],
+    "author": "Josh Black / Alejandro Hernandez"
   },
   "set10-118": {
     "id": "set10-118",
@@ -2528,6 +2783,27 @@
     "author": "Carmine Cassese",
     "flavorText": "Let's show those rotten ghosts who's in charge! You go first."
   },
+  "set10-173": {
+    "id": "set10-173",
+    "gameCardId": "1uq",
+    "set": "set10",
+    "cardNumber": 173,
+    "cardIdentifier": "173/204 EN 10",
+    "rarity": "legendary",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/173_02446272102753bbd8c707e080e6e2bb110cb0ca.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/173_02446272102753bbd8c707e080e6e2bb110cb0ca.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/173_8a7e1426eeef94028c33b62063b8180039b49a80.jpg"
+      }
+    ],
+    "author": "Valerio Buonfantino"
+  },
   "set10-174": {
     "id": "set10-174",
     "gameCardId": "1xu",
@@ -2659,6 +2935,27 @@
     "author": "Federico Maria Cugliari",
     "flavorText": "It's time to make a stand!"
   },
+  "set10-180": {
+    "id": "set10-180",
+    "gameCardId": "g6l",
+    "set": "set10",
+    "cardNumber": 180,
+    "cardIdentifier": "180/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/180_cd1cced6c985969553dbe65139d073036d4fce77.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/180_cd1cced6c985969553dbe65139d073036d4fce77.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/180_5330362df7d76c1511f7f7d6d657d6b153a7a572.jpg"
+      }
+    ],
+    "author": "Leonardo Giammichele"
+  },
   "set10-181": {
     "id": "set10-181",
     "gameCardId": "oy7",
@@ -2702,6 +2999,49 @@
     ],
     "author": "Mara Tango",
     "flavorText": "You may have bested me before, McDuck, but not this time!"
+  },
+  "set10-183": {
+    "id": "set10-183",
+    "gameCardId": "wbg",
+    "set": "set10",
+    "cardNumber": 183,
+    "cardIdentifier": "183/204 EN 10",
+    "rarity": "uncommon",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/183_505c4e256f61303f1d69063e051115e0320bb179.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/183_505c4e256f61303f1d69063e051115e0320bb179.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/183_3cfbc9bd0cfd65e18954a6ecc0ddf948b6aee58a.jpg"
+      }
+    ],
+    "author": "Leonardo Giammichele"
+  },
+  "set10-184": {
+    "id": "set10-184",
+    "gameCardId": "xa7",
+    "set": "set10",
+    "cardNumber": 184,
+    "cardIdentifier": "184/204 EN 10",
+    "rarity": "uncommon",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/184_e28abc268f0b1a8b854f48cf71dbec9f2c99c793.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/184_e28abc268f0b1a8b854f48cf71dbec9f2c99c793.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/184_2f2d65196d571f886859977083a377179c9438fc.jpg"
+      }
+    ],
+    "author": "Renato Roldan / Amanda Duarte",
+    "flavorText": "A plan only fails when you don’t learn from it. And my plans never fail. —David Xanatos"
   },
   "set10-185": {
     "id": "set10-185",
@@ -2852,6 +3192,27 @@
     ],
     "author": "Lisa Parfenova"
   },
+  "set10-192": {
+    "id": "set10-192",
+    "gameCardId": "45t",
+    "set": "set10",
+    "cardNumber": 192,
+    "cardIdentifier": "192/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/192_eb19530d334061f223ed0787de24d7097b23e7e8.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/192_eb19530d334061f223ed0787de24d7097b23e7e8.jpg",
+        "foilType": "FreeForm1",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/192_2be3bd9e42bb99891331ab0cf36edfeede986172.jpg"
+      }
+    ],
+    "author": "Tania Soler"
+  },
   "set10-193": {
     "id": "set10-193",
     "gameCardId": "gow",
@@ -2894,6 +3255,25 @@
     ],
     "author": "Cristian Romero",
     "flavorText": "If you hear hoofbeats in the dark, don’t look back."
+  },
+  "set10-205": {
+    "id": "set10-205",
+    "gameCardId": "1mg",
+    "set": "set10",
+    "cardNumber": 205,
+    "cardIdentifier": "205/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/205_c8155f8eb7a6f9006ca31b46f8840b6514a09b78.jpg",
+        "foilType": "Satin",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/205_ef571fa3ad66b562b2e8b792be8fd5721d473eed.jpg"
+      }
+    ],
+    "specialRarity": "epic",
+    "author": "Janel Reh",
+    "flavorText": "If you wanna beat a ghost, you gotta think like a ghost."
   },
   "set10-206": {
     "id": "set10-206",
@@ -3044,6 +3424,24 @@
     "author": "Devin Elle Kurtz",
     "flavorText": "Okay, now we know pixie dust doesn’t affect the torn lorebook pages. Thanks, Tink. —Venturo, an Illumineer"
   },
+  "set10-215": {
+    "id": "set10-215",
+    "gameCardId": "bls",
+    "set": "set10",
+    "cardNumber": 215,
+    "cardIdentifier": "215/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/215_3f9b4e2fbbe6e8bf01f7a7665a4ed49f2b74851c.jpg",
+        "foilType": "Satin",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/215_d77ec95e0f4cd334b0cf1dddbf51232ea271b9de.jpg"
+      }
+    ],
+    "specialRarity": "epic",
+    "author": "Nicoletta Baldari / Raquel Vilanueva"
+  },
   "set10-216": {
     "id": "set10-216",
     "gameCardId": "1tr",
@@ -3061,6 +3459,25 @@
     ],
     "specialRarity": "epic",
     "author": "E. Melaranci / Mario O. Gabriele"
+  },
+  "set10-217": {
+    "id": "set10-217",
+    "gameCardId": "1m1",
+    "set": "set10",
+    "cardNumber": 217,
+    "cardIdentifier": "217/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/217_e9e22f4094c0918bab08c5be32488d69a0c2dd70.jpg",
+        "foilType": "Satin",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/217_33e26e17cea7da8962691e0f62ed66192c6fd8fc.jpg"
+      }
+    ],
+    "specialRarity": "epic",
+    "author": "Alan Batson",
+    "flavorText": "If I'm reading this right, these aren't actually ghosts at all! Boy, you're lucky I came along on this one."
   },
   "set10-218": {
     "id": "set10-218",
@@ -3080,6 +3497,25 @@
     "specialRarity": "epic",
     "author": "Alejandro Hernandez"
   },
+  "set10-220": {
+    "id": "set10-220",
+    "gameCardId": "oy7",
+    "set": "set10",
+    "cardNumber": 220,
+    "cardIdentifier": "220/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/220_1ba50181ae318cc2fa3cf9cff849a6254c829a9b.jpg",
+        "foilType": "Satin",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/220_afbef7708a73cacd0fed70b194465d512a50a0bd.jpg"
+      }
+    ],
+    "specialRarity": "epic",
+    "author": "Brianna Garcia",
+    "flavorText": "It's hard to catch a ghost without going somewhere spooky."
+  },
   "set10-221": {
     "id": "set10-221",
     "gameCardId": "1pw",
@@ -3097,6 +3533,24 @@
     ],
     "specialRarity": "epic",
     "author": "Stefano Spagnuolo"
+  },
+  "set10-223": {
+    "id": "set10-223",
+    "gameCardId": "1mo",
+    "set": "set10",
+    "cardNumber": 223,
+    "cardIdentifier": "223/204 EN 10",
+    "rarity": "enchanted",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/223_91f040573a2260a617ebd035991c33373701ca1e.jpg",
+        "foilType": "Magma",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/223_572e1651a71bdf87cd45974c255e156e3724f525.jpg"
+      }
+    ],
+    "specialRarity": "enchanted",
+    "author": "Federico Maria Cugliari"
   },
   "set10-224": {
     "id": "set10-224",
@@ -4886,7 +5340,7 @@
       }
     ],
     "author": "Duyen Nguyen / Jared Nickerl",
-    "flavorText": "Don't be too put off by this. . . hunk of hardware."
+    "flavorText": "Don't be too put off by this. . . hunk of hardware."
   },
   "set9-090": {
     "id": "set9-090",
@@ -5810,7 +6264,7 @@
       }
     ],
     "author": "Brian Weisz",
-    "flavorText": "Excitement. . . adventure. . . danger lurking around every cor— AAAAAGGH!"
+    "flavorText": "Excitement. . . adventure. . . danger lurking around every cor— AAAAAGGH!"
   },
   "set9-148": {
     "id": "set9-148",
@@ -7657,7 +8111,7 @@
   },
   "set8-016": {
     "id": "set8-016",
-    "gameCardId": "1jd",
+    "gameCardId": "1j2",
     "set": "set8",
     "cardNumber": 16,
     "cardIdentifier": "16/204 EN 8",
@@ -8402,7 +8856,7 @@
       }
     ],
     "author": "Rachel Elese",
-    "flavorText": "Wait'll they get a whiff of this . . ."
+    "flavorText": "Wait'll they get a whiff of this . . ."
   },
   "set8-054": {
     "id": "set8-054",
@@ -8424,7 +8878,7 @@
       }
     ],
     "author": "Samanta Erdini",
-    "flavorText": "The sooner we get this done, the sooner I'm free . . . of you."
+    "flavorText": "The sooner we get this done, the sooner I'm free . . . of you."
   },
   "quest2-055": {
     "id": "quest2-055",
@@ -9524,7 +9978,7 @@
   },
   "set8-110": {
     "id": "set8-110",
-    "gameCardId": "1mg",
+    "gameCardId": "1m3",
     "set": "set8",
     "cardNumber": 110,
     "cardIdentifier": "110/204 EN 8",
@@ -11102,7 +11556,7 @@
       }
     ],
     "author": "Edu Francisco",
-    "flavorText": "Flint's secret trove was never found, but stories have persisted that it remains hidden.. . —Narrator"
+    "flavorText": "Flint's secret trove was never found, but stories have persisted that it remains hidden.. . —Narrator"
   },
   "quest2-197": {
     "id": "quest2-197",
@@ -11489,7 +11943,7 @@
   },
   "quest2-224": {
     "id": "quest2-224",
-    "gameCardId": "1v3",
+    "gameCardId": "1v2",
     "set": "quest2",
     "cardNumber": 224,
     "cardIdentifier": "224/204 EN 7",
@@ -12151,7 +12605,7 @@
   },
   "set7-026": {
     "id": "set7-026",
-    "gameCardId": "1m3",
+    "gameCardId": "1m4",
     "set": "set7",
     "cardNumber": 26,
     "cardIdentifier": "26/204 EN 7",
@@ -12689,7 +13143,7 @@
   },
   "set7-057": {
     "id": "set7-057",
-    "gameCardId": "1b1",
+    "gameCardId": "1bh",
     "set": "set7",
     "cardNumber": 57,
     "cardIdentifier": "57/204 EN 7",
@@ -12904,7 +13358,7 @@
   },
   "set7-066": {
     "id": "set7-066",
-    "gameCardId": "1v2",
+    "gameCardId": "1v4",
     "set": "set7",
     "cardNumber": 66,
     "cardIdentifier": "66/204 EN 7",
@@ -12967,7 +13421,7 @@
   },
   "set7-069": {
     "id": "set7-069",
-    "gameCardId": "1v3",
+    "gameCardId": "1v2",
     "set": "set7",
     "cardNumber": 69,
     "cardIdentifier": "69/204 EN 7",
@@ -13182,7 +13636,7 @@
   },
   "set7-079": {
     "id": "set7-079",
-    "gameCardId": "1c2",
+    "gameCardId": "1c7",
     "set": "set7",
     "cardNumber": 79,
     "cardIdentifier": "79/204 EN 7",
@@ -13509,7 +13963,7 @@
   },
   "set7-099": {
     "id": "set7-099",
-    "gameCardId": "1n1",
+    "gameCardId": "1n0",
     "set": "set7",
     "cardNumber": 99,
     "cardIdentifier": "99/204 EN 7",
@@ -13619,7 +14073,7 @@
   },
   "set7-104": {
     "id": "set7-104",
-    "gameCardId": "1c3",
+    "gameCardId": "1c2",
     "set": "set7",
     "cardNumber": 104,
     "cardIdentifier": "104/204 EN 7",
@@ -13855,7 +14309,7 @@
   },
   "set7-115": {
     "id": "set7-115",
-    "gameCardId": "1n2",
+    "gameCardId": "1n1",
     "set": "set7",
     "cardNumber": 115,
     "cardIdentifier": "115/204 EN 7",
@@ -14763,7 +15217,7 @@
   },
   "set7-168": {
     "id": "set7-168",
-    "gameCardId": "1v5",
+    "gameCardId": "1v6",
     "set": "set7",
     "cardNumber": 168,
     "cardIdentifier": "168/204 EN 7",
@@ -15688,7 +16142,7 @@
   },
   "set7-224": {
     "id": "set7-224",
-    "gameCardId": "1v3",
+    "gameCardId": "1v2",
     "set": "set7",
     "cardNumber": 224,
     "cardIdentifier": "224/204 EN 7",
@@ -15772,7 +16226,7 @@
   },
   "set6-003": {
     "id": "set6-003",
-    "gameCardId": "1v7",
+    "gameCardId": "1v3",
     "set": "set6",
     "cardNumber": 3,
     "cardIdentifier": "3/204 EN 6",
@@ -16548,7 +17002,7 @@
       }
     ],
     "author": "Andrea Parisi",
-    "flavorText": "The Carpenter’s stomach growled as he clenched his hammer tight . . ."
+    "flavorText": "The Carpenter’s stomach growled as he clenched his hammer tight . . ."
   },
   "set6-045": {
     "id": "set6-045",
@@ -17091,7 +17545,7 @@
   },
   "set6-079": {
     "id": "set6-079",
-    "gameCardId": "1v9",
+    "gameCardId": "1v5",
     "set": "set6",
     "cardNumber": 79,
     "cardIdentifier": "79/204 EN 6",
@@ -17286,7 +17740,7 @@
   },
   "set6-088": {
     "id": "set6-088",
-    "gameCardId": "1b2",
+    "gameCardId": "1b1",
     "set": "set6",
     "cardNumber": 88,
     "cardIdentifier": "88/204 EN 6",
@@ -17955,7 +18409,7 @@
   },
   "set6-137": {
     "id": "set6-137",
-    "gameCardId": "1b4",
+    "gameCardId": "1b2",
     "set": "set6",
     "cardNumber": 137,
     "cardIdentifier": "137/204 EN 6",
@@ -19270,7 +19724,7 @@
   },
   "set5-002": {
     "id": "set5-002",
-    "gameCardId": "1m4",
+    "gameCardId": "1m5",
     "set": "set5",
     "cardNumber": 2,
     "cardIdentifier": "2/204 EN 5",
@@ -19441,7 +19895,7 @@
       }
     ],
     "author": "Hedvig Häggman-Sund",
-    "flavorText": "I’ll take whatever you’ve got . . . as long as it’s got sugar in it."
+    "flavorText": "I’ll take whatever you’ve got . . . as long as it’s got sugar in it."
   },
   "set5-010": {
     "id": "set5-010",
@@ -19531,7 +19985,7 @@
   },
   "set5-014": {
     "id": "set5-014",
-    "gameCardId": "1vb",
+    "gameCardId": "1v7",
     "set": "set5",
     "cardNumber": 14,
     "cardIdentifier": "14/204 EN 5",
@@ -19983,7 +20437,7 @@
   },
   "set5-043": {
     "id": "set5-043",
-    "gameCardId": "1m5",
+    "gameCardId": "1m6",
     "set": "set5",
     "cardNumber": 43,
     "cardIdentifier": "43/204 EN 5",
@@ -20347,7 +20801,7 @@
   },
   "set5-058": {
     "id": "set5-058",
-    "gameCardId": "1rc",
+    "gameCardId": "1ra",
     "set": "set5",
     "cardNumber": 58,
     "cardIdentifier": "58/204 EN 5",
@@ -20821,7 +21275,7 @@
   },
   "set5-090": {
     "id": "set5-090",
-    "gameCardId": "1vc",
+    "gameCardId": "1v9",
     "set": "set5",
     "cardNumber": 90,
     "cardIdentifier": "90/204 EN 5",
@@ -21035,7 +21489,7 @@
   },
   "set5-109": {
     "id": "set5-109",
-    "gameCardId": "1rd",
+    "gameCardId": "1rc",
     "set": "set5",
     "cardNumber": 109,
     "cardIdentifier": "109/204 EN 5",
@@ -21339,7 +21793,7 @@
   },
   "set5-123": {
     "id": "set5-123",
-    "gameCardId": "1b5",
+    "gameCardId": "1b4",
     "set": "set5",
     "cardNumber": 123,
     "cardIdentifier": "123/204 EN 5",
@@ -21381,7 +21835,7 @@
   },
   "set5-125": {
     "id": "set5-125",
-    "gameCardId": "1vd",
+    "gameCardId": "1vb",
     "set": "set5",
     "cardNumber": 125,
     "cardIdentifier": "125/204 EN 5",
@@ -21640,7 +22094,7 @@
   },
   "set5-147": {
     "id": "set5-147",
-    "gameCardId": "1b7",
+    "gameCardId": "1b5",
     "set": "set5",
     "cardNumber": 147,
     "cardIdentifier": "147/204 EN 5",
@@ -21856,7 +22310,7 @@
   },
   "set5-156": {
     "id": "set5-156",
-    "gameCardId": "1b8",
+    "gameCardId": "1b7",
     "set": "set5",
     "cardNumber": 156,
     "cardIdentifier": "156/204 EN 5",
@@ -21899,7 +22353,7 @@
   },
   "set5-158": {
     "id": "set5-158",
-    "gameCardId": "1j2",
+    "gameCardId": "1j3",
     "set": "set5",
     "cardNumber": 158,
     "cardIdentifier": "158/204 EN 5",
@@ -22073,7 +22527,7 @@
   },
   "set5-176": {
     "id": "set5-176",
-    "gameCardId": "1m6",
+    "gameCardId": "1m7",
     "set": "set5",
     "cardNumber": 176,
     "cardIdentifier": "176/204 EN 5",
@@ -22349,7 +22803,7 @@
       }
     ],
     "author": "Brian Weisz",
-    "flavorText": "Well, by Jove. Don’t just stand there. Raise a glass to my son Kay . . . and may we be rid of the trickster wizard Marvin, or whatever his blasted name was."
+    "flavorText": "Well, by Jove. Don’t just stand there. Raise a glass to my son Kay . . . and may we be rid of the trickster wizard Marvin, or whatever his blasted name was."
   },
   "set5-189": {
     "id": "set5-189",
@@ -22718,7 +23172,7 @@
   },
   "set4-001": {
     "id": "set4-001",
-    "gameCardId": "1m7",
+    "gameCardId": "1m8",
     "set": "set4",
     "cardNumber": 1,
     "cardIdentifier": "1/204 EN 4",
@@ -23301,7 +23755,7 @@
   },
   "set4-022": {
     "id": "set4-022",
-    "gameCardId": "1re",
+    "gameCardId": "1rd",
     "set": "set4",
     "cardNumber": 22,
     "cardIdentifier": "22/204 EN 4",
@@ -24359,7 +24813,7 @@
   },
   "set4-083": {
     "id": "set4-083",
-    "gameCardId": "1bb",
+    "gameCardId": "1b8",
     "set": "set4",
     "cardNumber": 83,
     "cardIdentifier": "83/204 EN 4",
@@ -24441,7 +24895,7 @@
       }
     ],
     "author": "Stefano Zanchi",
-    "flavorText": "Minnie: This is an outrage!   Pete: No. It’s my nefarious plan to steal the throne."
+    "flavorText": "Minnie: This is an outrage!   Pete: No. It’s my nefarious plan to steal the throne."
   },
   "set4-087": {
     "id": "set4-087",
@@ -24663,7 +25117,7 @@
   },
   "gateway1-107": {
     "id": "gateway1-107",
-    "gameCardId": "1n3",
+    "gameCardId": "1n2",
     "set": "gateway1",
     "cardNumber": 107,
     "cardIdentifier": "107/204 EN 4",
@@ -24685,7 +25139,7 @@
   },
   "quest1-107": {
     "id": "quest1-107",
-    "gameCardId": "1n3",
+    "gameCardId": "1n2",
     "set": "quest1",
     "cardNumber": 107,
     "cardIdentifier": "107/204 EN 4",
@@ -24707,7 +25161,7 @@
   },
   "set4-107": {
     "id": "set4-107",
-    "gameCardId": "1n3",
+    "gameCardId": "1n2",
     "set": "set4",
     "cardNumber": 107,
     "cardIdentifier": "107/204 EN 4",
@@ -25230,7 +25684,7 @@
   },
   "set4-122": {
     "id": "set4-122",
-    "gameCardId": "1n4",
+    "gameCardId": "1n3",
     "set": "set4",
     "cardNumber": 122,
     "cardIdentifier": "122/204 EN 4",
@@ -25600,7 +26054,7 @@
   },
   "set4-144": {
     "id": "set4-144",
-    "gameCardId": "1n9",
+    "gameCardId": "1n4",
     "set": "set4",
     "cardNumber": 144,
     "cardIdentifier": "144/204 EN 4",
@@ -26057,7 +26511,7 @@
   },
   "set4-158": {
     "id": "set4-158",
-    "gameCardId": "1vg",
+    "gameCardId": "1vc",
     "set": "set4",
     "cardNumber": 158,
     "cardIdentifier": "158/204 EN 4",
@@ -26619,7 +27073,7 @@
   },
   "set4-191": {
     "id": "set4-191",
-    "gameCardId": "1be",
+    "gameCardId": "1bb",
     "set": "set4",
     "cardNumber": 191,
     "cardIdentifier": "191/204 EN 4",
@@ -26834,7 +27288,7 @@
   },
   "set4-214": {
     "id": "set4-214",
-    "gameCardId": "1n3",
+    "gameCardId": "1n2",
     "set": "set4",
     "cardNumber": 214,
     "cardIdentifier": "214/204 EN 4",
@@ -26924,7 +27378,7 @@
   },
   "set4-221": {
     "id": "set4-221",
-    "gameCardId": "1be",
+    "gameCardId": "1bb",
     "set": "set4",
     "cardNumber": 221,
     "cardIdentifier": "221/204 EN 4",
@@ -27379,7 +27833,7 @@
   },
   "set3-014": {
     "id": "set3-014",
-    "gameCardId": "1pb",
+    "gameCardId": "1p9",
     "set": "set3",
     "cardNumber": 14,
     "cardIdentifier": "14/204 EN 3",
@@ -27401,7 +27855,7 @@
   },
   "set3-015": {
     "id": "set3-015",
-    "gameCardId": "1dd",
+    "gameCardId": "1dc",
     "set": "set3",
     "cardNumber": 15,
     "cardIdentifier": "15/204 EN 3",
@@ -27488,7 +27942,7 @@
   },
   "gateway1-018": {
     "id": "gateway1-018",
-    "gameCardId": "152",
+    "gameCardId": "151",
     "set": "gateway1",
     "cardNumber": 18,
     "cardIdentifier": "18/204 EN 2",
@@ -27905,7 +28359,7 @@
   },
   "set3-043": {
     "id": "set3-043",
-    "gameCardId": "1j3",
+    "gameCardId": "1j4",
     "set": "set3",
     "cardNumber": 43,
     "cardIdentifier": "43/204 EN 3",
@@ -28583,7 +29037,7 @@
   },
   "set3-079": {
     "id": "set3-079",
-    "gameCardId": "1de",
+    "gameCardId": "1dd",
     "set": "set3",
     "cardNumber": 79,
     "cardIdentifier": "79/204 EN 3",
@@ -28737,7 +29191,7 @@
   },
   "set3-086": {
     "id": "set3-086",
-    "gameCardId": "1vh",
+    "gameCardId": "1vd",
     "set": "set3",
     "cardNumber": 86,
     "cardIdentifier": "86/204 EN 3",
@@ -28759,7 +29213,7 @@
   },
   "set3-087": {
     "id": "set3-087",
-    "gameCardId": "1m8",
+    "gameCardId": "1ma",
     "set": "set3",
     "cardNumber": 87,
     "cardIdentifier": "87/204 EN 3",
@@ -28803,7 +29257,7 @@
   },
   "set3-089": {
     "id": "set3-089",
-    "gameCardId": "1c4",
+    "gameCardId": "1c3",
     "set": "set3",
     "cardNumber": 89,
     "cardIdentifier": "89/204 EN 3",
@@ -29044,7 +29498,7 @@
   },
   "set3-108": {
     "id": "set3-108",
-    "gameCardId": "1ma",
+    "gameCardId": "1mb",
     "set": "set3",
     "cardNumber": 108,
     "cardIdentifier": "108/204 EN 3",
@@ -29088,7 +29542,7 @@
   },
   "set3-110": {
     "id": "set3-110",
-    "gameCardId": "1mb",
+    "gameCardId": "1me",
     "set": "set3",
     "cardNumber": 110,
     "cardIdentifier": "110/204 EN 3",
@@ -29416,7 +29870,7 @@
   },
   "set3-124": {
     "id": "set3-124",
-    "gameCardId": "1pc",
+    "gameCardId": "1pb",
     "set": "set3",
     "cardNumber": 124,
     "cardIdentifier": "124/204 EN 3",
@@ -29460,7 +29914,7 @@
   },
   "set3-126": {
     "id": "set3-126",
-    "gameCardId": "126",
+    "gameCardId": "125",
     "set": "set3",
     "cardNumber": 126,
     "cardIdentifier": "126/204 EN 3",
@@ -30139,7 +30593,7 @@
   },
   "set3-177": {
     "id": "set3-177",
-    "gameCardId": "1bi",
+    "gameCardId": "1be",
     "set": "set3",
     "cardNumber": 177,
     "cardIdentifier": "177/204 EN 3",
@@ -30334,7 +30788,7 @@
   },
   "set3-185": {
     "id": "set3-185",
-    "gameCardId": "1pd",
+    "gameCardId": "1pc",
     "set": "set3",
     "cardNumber": 185,
     "cardIdentifier": "185/204 EN 3",
@@ -30487,7 +30941,7 @@
   },
   "set3-191": {
     "id": "set3-191",
-    "gameCardId": "1me",
+    "gameCardId": "1mi",
     "set": "set3",
     "cardNumber": 191,
     "cardIdentifier": "191/204 EN 3",
@@ -31030,7 +31484,7 @@
   },
   "set2-009": {
     "id": "set2-009",
-    "gameCardId": "128",
+    "gameCardId": "126",
     "set": "set2",
     "cardNumber": 9,
     "cardIdentifier": "9/204 EN 2",
@@ -31248,7 +31702,7 @@
   },
   "set2-018": {
     "id": "set2-018",
-    "gameCardId": "152",
+    "gameCardId": "151",
     "set": "set2",
     "cardNumber": 18,
     "cardIdentifier": "18/204 EN 2",
@@ -31661,7 +32115,7 @@
   },
   "set2-043": {
     "id": "set2-043",
-    "gameCardId": "1aa",
+    "gameCardId": "1a9",
     "set": "set2",
     "cardNumber": 43,
     "cardIdentifier": "43/204 EN 2",
@@ -31878,7 +32332,7 @@
   },
   "set2-051": {
     "id": "set2-051",
-    "gameCardId": "196",
+    "gameCardId": "198",
     "set": "set2",
     "cardNumber": 51,
     "cardIdentifier": "51/204 EN 2",
@@ -31987,7 +32441,7 @@
   },
   "set2-056": {
     "id": "set2-056",
-    "gameCardId": "1mi",
+    "gameCardId": "1mk",
     "set": "set2",
     "cardNumber": 56,
     "cardIdentifier": "56/204 EN 2",
@@ -32140,7 +32594,7 @@
   },
   "set2-069": {
     "id": "set2-069",
-    "gameCardId": "1mk",
+    "gameCardId": "1ml",
     "set": "set2",
     "cardNumber": 69,
     "cardIdentifier": "69/204 EN 2",
@@ -32815,7 +33269,7 @@
   },
   "set2-106": {
     "id": "set2-106",
-    "gameCardId": "1ml",
+    "gameCardId": "1mm",
     "set": "set2",
     "cardNumber": 106,
     "cardIdentifier": "106/204 EN 2",
@@ -32880,7 +33334,7 @@
   },
   "set2-109": {
     "id": "set2-109",
-    "gameCardId": "1dg",
+    "gameCardId": "1de",
     "set": "set2",
     "cardNumber": 109,
     "cardIdentifier": "109/204 EN 2",
@@ -33250,7 +33704,7 @@
   },
   "set2-125": {
     "id": "set2-125",
-    "gameCardId": "1rj",
+    "gameCardId": "1re",
     "set": "set2",
     "cardNumber": 125,
     "cardIdentifier": "125/204 EN 2",
@@ -33358,7 +33812,7 @@
   },
   "set2-138": {
     "id": "set2-138",
-    "gameCardId": "1vi",
+    "gameCardId": "1vg",
     "set": "set2",
     "cardNumber": 138,
     "cardIdentifier": "138/204 EN 2",
@@ -33685,7 +34139,7 @@
   },
   "set2-153": {
     "id": "set2-153",
-    "gameCardId": "1j4",
+    "gameCardId": "1j5",
     "set": "set2",
     "cardNumber": 153,
     "cardIdentifier": "153/204 EN 2",
@@ -34014,7 +34468,7 @@
   },
   "set2-175": {
     "id": "set2-175",
-    "gameCardId": "1q8",
+    "gameCardId": "1q6",
     "set": "set2",
     "cardNumber": 175,
     "cardIdentifier": "175/204 EN 2",
@@ -34167,7 +34621,7 @@
   },
   "set2-182": {
     "id": "set2-182",
-    "gameCardId": "198",
+    "gameCardId": "19e",
     "set": "set2",
     "cardNumber": 182,
     "cardIdentifier": "182/204 EN 2",
@@ -34341,7 +34795,7 @@
   },
   "set2-189": {
     "id": "set2-189",
-    "gameCardId": "1di",
+    "gameCardId": "1dg",
     "set": "set2",
     "cardNumber": 189,
     "cardIdentifier": "189/204 EN 2",
@@ -34735,7 +35189,7 @@
   },
   "set2-216": {
     "id": "set2-216",
-    "gameCardId": "1di",
+    "gameCardId": "1dg",
     "set": "set2",
     "cardNumber": 216,
     "cardIdentifier": "216/204 EN 2",
@@ -34923,7 +35377,7 @@
       }
     ],
     "author": "Jenna Gray",
-    "flavorText": "Sometimes, our strengths lie beneath the surface. Far beneath, in some cases.. . . —Moana"
+    "flavorText": "Sometimes, our strengths lie beneath the surface. Far beneath, in some cases.. . . —Moana"
   },
   "set1-007": {
     "id": "set1-007",
@@ -34945,7 +35399,7 @@
       }
     ],
     "author": "Jenna Gray",
-    "flavorText": "Sometimes, our strengths lie beneath the surface. Far beneath, in some cases.. . . —Moana"
+    "flavorText": "Sometimes, our strengths lie beneath the surface. Far beneath, in some cases.. . . —Moana"
   },
   "set1-008": {
     "id": "set1-008",
@@ -34989,7 +35443,7 @@
       }
     ],
     "author": "Dave Beauchene",
-    "flavorText": "A falling star. . . I have to make a wish!"
+    "flavorText": "A falling star. . . I have to make a wish!"
   },
   "set1-010": {
     "id": "set1-010",
@@ -35076,7 +35530,7 @@
       }
     ],
     "author": "Kendall Hale",
-    "flavorText": "Wherever the princess goes, her musketeers are. . . well, they’re around somewhere, probably."
+    "flavorText": "Wherever the princess goes, her musketeers are. . . well, they’re around somewhere, probably."
   },
   "set1-013": {
     "id": "set1-013",
@@ -35098,7 +35552,7 @@
       }
     ],
     "author": "Kendall Hale",
-    "flavorText": "Wherever the princess goes, her musketeers are. . . well, they’re around somewhere, probably."
+    "flavorText": "Wherever the princess goes, her musketeers are. . . well, they’re around somewhere, probably."
   },
   "set1-014": {
     "id": "set1-014",
@@ -35146,7 +35600,7 @@
   },
   "set1-016": {
     "id": "set1-016",
-    "gameCardId": "154",
+    "gameCardId": "152",
     "set": "set1",
     "cardNumber": 16,
     "cardIdentifier": "16/204 EN 1",
@@ -35387,7 +35841,7 @@
   },
   "set1-036": {
     "id": "set1-036",
-    "gameCardId": "1nb",
+    "gameCardId": "1n9",
     "set": "set1",
     "cardNumber": 36,
     "cardIdentifier": "36/204 EN 1",
@@ -35579,7 +36033,7 @@
       }
     ],
     "author": "Luis Huerta",
-    "flavorText": "We know someone who can help you. . . for a price."
+    "flavorText": "We know someone who can help you. . . for a price."
   },
   "set1-044": {
     "id": "set1-044",
@@ -35667,7 +36121,7 @@
       }
     ],
     "author": "Brian Weisz",
-    "flavorText": "We can help you get anything you want.. . ."
+    "flavorText": "We can help you get anything you want.. . ."
   },
   "quest1-047": {
     "id": "quest1-047",
@@ -36154,7 +36608,7 @@
   },
   "set1-073": {
     "id": "set1-073",
-    "gameCardId": "129",
+    "gameCardId": "128",
     "set": "set1",
     "cardNumber": 73,
     "cardIdentifier": "73/204 EN 1",
@@ -36194,7 +36648,7 @@
       }
     ],
     "author": "Leonardo Giammichele",
-    "flavorText": "I didn’t want to have to do this, but you leave me no choice.. . ."
+    "flavorText": "I didn’t want to have to do this, but you leave me no choice.. . ."
   },
   "set1-075": {
     "id": "set1-075",
@@ -36368,7 +36822,7 @@
       }
     ],
     "author": "Jared Nickerl",
-    "flavorText": "Don't be too put off by this. . . hunk of hardware."
+    "flavorText": "Don't be too put off by this. . . hunk of hardware."
   },
   "set1-083": {
     "id": "set1-083",
@@ -36390,7 +36844,7 @@
       }
     ],
     "author": "Milica Celikovic",
-    "flavorText": "Created something? Ha! But that would be irresponsible and unethical. I would never, ever. . . make more than one."
+    "flavorText": "Created something? Ha! But that would be irresponsible and unethical. I would never, ever. . . make more than one."
   },
   "set1-084": {
     "id": "set1-084",
@@ -37447,7 +37901,7 @@
   },
   "set1-142": {
     "id": "set1-142",
-    "gameCardId": "1rm",
+    "gameCardId": "1rf",
     "set": "set1",
     "cardNumber": 142,
     "cardIdentifier": "142/204 EN 1",
@@ -37531,7 +37985,7 @@
       }
     ],
     "author": "Brian Weisz",
-    "flavorText": "Excitement. . . adventure. . . danger lurking around every cor— AAAAAGGH!"
+    "flavorText": "Excitement. . . adventure. . . danger lurking around every cor— AAAAAGGH!"
   },
   "set1-146": {
     "id": "set1-146",
@@ -37597,7 +38051,7 @@
       }
     ],
     "author": "R. La Barbera / L. Giammichele",
-    "flavorText": "Try to understand. I’ve never done a thing on my own. I’ve never had any real friends.. . . I’ve never even been outside the palace walls."
+    "flavorText": "Try to understand. I’ve never done a thing on my own. I’ve never had any real friends.. . . I’ve never even been outside the palace walls."
   },
   "set1-149": {
     "id": "set1-149",
@@ -37622,7 +38076,7 @@
   },
   "set1-150": {
     "id": "set1-150",
-    "gameCardId": "1ca",
+    "gameCardId": "1c4",
     "set": "set1",
     "cardNumber": 150,
     "cardIdentifier": "150/204 EN 1",
@@ -37640,7 +38094,7 @@
       }
     ],
     "author": "Nicholas Kole",
-    "flavorText": "The princess shall indeed grow in grace and beauty, beloved by all who know her. But before the sun sets on her sixteenth birthday, she shall prick her finger on the spindle of a spinning wheel.. . ."
+    "flavorText": "The princess shall indeed grow in grace and beauty, beloved by all who know her. But before the sun sets on her sixteenth birthday, she shall prick her finger on the spindle of a spinning wheel.. . ."
   },
   "set1-151": {
     "id": "set1-151",
@@ -37819,7 +38273,7 @@
   },
   "set1-158": {
     "id": "set1-158",
-    "gameCardId": "1nd",
+    "gameCardId": "1nb",
     "set": "set1",
     "cardNumber": 158,
     "cardIdentifier": "158/204 EN 1",
@@ -37947,7 +38401,7 @@
       }
     ],
     "author": "Cookie",
-    "flavorText": "She’ll never see me as anything. . . but a monster."
+    "flavorText": "She’ll never see me as anything. . . but a monster."
   },
   "set1-172": {
     "id": "set1-172",
@@ -37969,7 +38423,7 @@
       }
     ],
     "author": "Cookie",
-    "flavorText": "She’ll never see me as anything. . . but a monster."
+    "flavorText": "She’ll never see me as anything. . . but a monster."
   },
   "set1-173": {
     "id": "set1-173",
@@ -38099,7 +38553,7 @@
       }
     ],
     "author": "Luis Huerta",
-    "flavorText": "Relax, enjoy the trip. . . and don’t get any ideas!"
+    "flavorText": "Relax, enjoy the trip. . . and don’t get any ideas!"
   },
   "set1-179": {
     "id": "set1-179",
@@ -38169,7 +38623,7 @@
   },
   "set1-182": {
     "id": "set1-182",
-    "gameCardId": "1pe",
+    "gameCardId": "1pd",
     "set": "set1",
     "cardNumber": 182,
     "cardIdentifier": "182/204 EN 1",
@@ -38615,7 +39069,7 @@
   },
   "set1-214": {
     "id": "set1-214",
-    "gameCardId": "1rm",
+    "gameCardId": "1rf",
     "set": "set1",
     "cardNumber": 214,
     "cardIdentifier": "214/204 EN 1",
@@ -38966,7 +39420,7 @@
   },
   "set9-204": {
     "id": "set9-204",
-    "gameCardId": "1ph",
+    "gameCardId": "1pe",
     "set": "set9",
     "cardNumber": 204,
     "cardIdentifier": "204/204 EN 9",
@@ -39115,7 +39569,7 @@
   },
   "set6-135": {
     "id": "set6-135",
-    "gameCardId": "1vk",
+    "gameCardId": "1vh",
     "set": "set6",
     "cardNumber": 135,
     "cardIdentifier": "135/204 EN 6",
@@ -39136,7 +39590,7 @@
   },
   "set6-136": {
     "id": "set6-136",
-    "gameCardId": "1rp",
+    "gameCardId": "1rj",
     "set": "set6",
     "cardNumber": 136,
     "cardIdentifier": "136/204 EN 6",
@@ -39199,7 +39653,7 @@
   },
   "set6-203": {
     "id": "set6-203",
-    "gameCardId": "19e",
+    "gameCardId": "19g",
     "set": "set6",
     "cardNumber": 203,
     "cardIdentifier": "203/204 EN 6",
@@ -39259,7 +39713,7 @@
   },
   "set6-222": {
     "id": "set6-222",
-    "gameCardId": "19e",
+    "gameCardId": "19g",
     "set": "set6",
     "cardNumber": 222,
     "cardIdentifier": "222/204 EN 6",
@@ -39425,7 +39879,7 @@
   },
   "set5-136": {
     "id": "set5-136",
-    "gameCardId": "1ne",
+    "gameCardId": "1nd",
     "set": "set5",
     "cardNumber": 136,
     "cardIdentifier": "136/204 EN 5",
@@ -39531,7 +39985,7 @@
   },
   "set5-216": {
     "id": "set5-216",
-    "gameCardId": "1ne",
+    "gameCardId": "1nd",
     "set": "set5",
     "cardNumber": 216,
     "cardIdentifier": "216/204 EN 5",
@@ -39736,7 +40190,7 @@
   },
   "set4-169": {
     "id": "set4-169",
-    "gameCardId": "1cb",
+    "gameCardId": "1ca",
     "set": "set4",
     "cardNumber": 169,
     "cardIdentifier": "169/204 EN 4",
@@ -39757,7 +40211,7 @@
   },
   "set4-170": {
     "id": "set4-170",
-    "gameCardId": "12e",
+    "gameCardId": "129",
     "set": "set4",
     "cardNumber": 170,
     "cardIdentifier": "170/204 EN 4",
@@ -39778,7 +40232,7 @@
   },
   "set4-203": {
     "id": "set4-203",
-    "gameCardId": "1rt",
+    "gameCardId": "1rp",
     "set": "set4",
     "cardNumber": 203,
     "cardIdentifier": "203/204 EN 4",
@@ -39838,7 +40292,7 @@
   },
   "set4-219": {
     "id": "set4-219",
-    "gameCardId": "1cb",
+    "gameCardId": "1ca",
     "set": "set4",
     "cardNumber": 219,
     "cardIdentifier": "219/204 EN 4",
@@ -39856,7 +40310,7 @@
   },
   "set4-222": {
     "id": "set4-222",
-    "gameCardId": "1rt",
+    "gameCardId": "1rp",
     "set": "set4",
     "cardNumber": 222,
     "cardIdentifier": "222/204 EN 4",
@@ -39896,7 +40350,7 @@
   },
   "set3-033": {
     "id": "set3-033",
-    "gameCardId": "1pk",
+    "gameCardId": "1ph",
     "set": "set3",
     "cardNumber": 33,
     "cardIdentifier": "33/204 EN 3",
@@ -39983,7 +40437,7 @@
   },
   "set3-068": {
     "id": "set3-068",
-    "gameCardId": "1ng",
+    "gameCardId": "1ne",
     "set": "set3",
     "cardNumber": 68,
     "cardIdentifier": "68/204 EN 3",
@@ -40114,7 +40568,7 @@
   },
   "set3-136": {
     "id": "set3-136",
-    "gameCardId": "1ni",
+    "gameCardId": "1ng",
     "set": "set3",
     "cardNumber": 136,
     "cardIdentifier": "136/204 EN 3",
@@ -40200,7 +40654,7 @@
   },
   "set3-202": {
     "id": "set3-202",
-    "gameCardId": "1ph",
+    "gameCardId": "1pe",
     "set": "set3",
     "cardNumber": 202,
     "cardIdentifier": "202/204 EN 3",
@@ -40266,7 +40720,7 @@
   },
   "set3-207": {
     "id": "set3-207",
-    "gameCardId": "1pk",
+    "gameCardId": "1ph",
     "set": "set3",
     "cardNumber": 207,
     "cardIdentifier": "207/204 EN 3",
@@ -40302,7 +40756,7 @@
   },
   "set3-216": {
     "id": "set3-216",
-    "gameCardId": "1ni",
+    "gameCardId": "1ng",
     "set": "set3",
     "cardNumber": 216,
     "cardIdentifier": "216/204 EN 3",
@@ -40381,7 +40835,7 @@
   },
   "set10-032": {
     "id": "set10-032",
-    "gameCardId": "1nk",
+    "gameCardId": "1ni",
     "set": "set10",
     "cardNumber": 32,
     "cardIdentifier": "32/204 EN 10",
@@ -40442,6 +40896,27 @@
     ],
     "author": "Francesca Risoldi",
     "flavorText": "How come ghosts get a whole section, but not were-ducks?! —Huey"
+  },
+  "set10-067": {
+    "id": "set10-067",
+    "gameCardId": "177",
+    "set": "set10",
+    "cardNumber": 67,
+    "cardIdentifier": "67/204 EN 10",
+    "rarity": "rare",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/67_82a2fcee7e949bc292fc98606bf14961e16f2bcd.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/67_82a2fcee7e949bc292fc98606bf14961e16f2bcd.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/67_c158a5314870d087b1a17e3f3d936e0471eab2f6.jpg"
+      }
+    ],
+    "author": "Irish Chua"
   },
   "set10-098": {
     "id": "set10-098",
@@ -40682,7 +41157,7 @@
   },
   "set10-201": {
     "id": "set10-201",
-    "gameCardId": "12f",
+    "gameCardId": "12e",
     "set": "set10",
     "cardNumber": 201,
     "cardIdentifier": "201/204 EN 10",
@@ -40703,7 +41178,7 @@
   },
   "set10-225": {
     "id": "set10-225",
-    "gameCardId": "1nk",
+    "gameCardId": "1ni",
     "set": "set10",
     "cardNumber": 225,
     "cardIdentifier": "225/204 EN 10",
@@ -40913,7 +41388,7 @@
   },
   "set9-134": {
     "id": "set9-134",
-    "gameCardId": "1ru",
+    "gameCardId": "1rm",
     "set": "set9",
     "cardNumber": 134,
     "cardIdentifier": "134/204 EN 9",
@@ -40978,7 +41453,7 @@
   },
   "set9-168": {
     "id": "set9-168",
-    "gameCardId": "1vl",
+    "gameCardId": "1vi",
     "set": "set9",
     "cardNumber": 168,
     "cardIdentifier": "168/204 EN 9",
@@ -41321,7 +41796,7 @@
   },
   "set7-042": {
     "id": "set7-042",
-    "gameCardId": "1bj",
+    "gameCardId": "1bi",
     "set": "set7",
     "cardNumber": 42,
     "cardIdentifier": "42/204 EN 7",
@@ -41386,7 +41861,7 @@
   },
   "set7-084": {
     "id": "set7-084",
-    "gameCardId": "1bn",
+    "gameCardId": "1bj",
     "set": "set7",
     "cardNumber": 84,
     "cardIdentifier": "84/204 EN 7",
@@ -41430,7 +41905,7 @@
   },
   "set7-149": {
     "id": "set7-149",
-    "gameCardId": "1mm",
+    "gameCardId": "1mn",
     "set": "set7",
     "cardNumber": 149,
     "cardIdentifier": "149/204 EN 7",
@@ -41514,7 +41989,7 @@
       }
     ],
     "author": "Juan Diego Leon",
-    "flavorText": "Just look at it, filled with power for its owner. —Madame Medusa"
+    "flavorText": "Just look at it, filled with power for its owner. —Madame Medusa"
   },
   "quest2-179": {
     "id": "quest2-179",
@@ -41606,7 +42081,7 @@
   },
   "quest2-204": {
     "id": "quest2-204",
-    "gameCardId": "1ry",
+    "gameCardId": "1rn",
     "set": "quest2",
     "cardNumber": 204,
     "cardIdentifier": "204/204 EN 7",
@@ -41628,7 +42103,7 @@
   },
   "set7-204": {
     "id": "set7-204",
-    "gameCardId": "1ry",
+    "gameCardId": "1rn",
     "set": "set7",
     "cardNumber": 204,
     "cardIdentifier": "204/204 EN 7",
@@ -41945,7 +42420,7 @@
   },
   "set6-166": {
     "id": "set6-166",
-    "gameCardId": "1dj",
+    "gameCardId": "1di",
     "set": "set6",
     "cardNumber": 166,
     "cardIdentifier": "166/204 EN 6",
@@ -42029,7 +42504,7 @@
   },
   "set6-201": {
     "id": "set6-201",
-    "gameCardId": "1dk",
+    "gameCardId": "1dj",
     "set": "set6",
     "cardNumber": 201,
     "cardIdentifier": "201/204 EN 6",
@@ -42219,7 +42694,7 @@
   },
   "set5-066": {
     "id": "set5-066",
-    "gameCardId": "1nn",
+    "gameCardId": "1nk",
     "set": "set5",
     "cardNumber": 66,
     "cardIdentifier": "66/204 EN 5",
@@ -42347,7 +42822,7 @@
   },
   "set5-134": {
     "id": "set5-134",
-    "gameCardId": "1tg",
+    "gameCardId": "1tf",
     "set": "set5",
     "cardNumber": 134,
     "cardIdentifier": "134/204 EN 5",
@@ -42540,7 +43015,7 @@
   },
   "set4-031": {
     "id": "set4-031",
-    "gameCardId": "1cd",
+    "gameCardId": "1cb",
     "set": "set4",
     "cardNumber": 31,
     "cardIdentifier": "31/204 EN 4",
@@ -42583,7 +43058,7 @@
   },
   "set4-032": {
     "id": "set4-032",
-    "gameCardId": "1np",
+    "gameCardId": "1nm",
     "set": "set4",
     "cardNumber": 32,
     "cardIdentifier": "32/204 EN 4",
@@ -42846,7 +43321,7 @@
   },
   "quest1-132": {
     "id": "quest1-132",
-    "gameCardId": "1ru",
+    "gameCardId": "1rm",
     "set": "quest1",
     "cardNumber": 132,
     "cardIdentifier": "132/204 EN 4",
@@ -42867,7 +43342,7 @@
   },
   "set4-132": {
     "id": "set4-132",
-    "gameCardId": "1ru",
+    "gameCardId": "1rm",
     "set": "set4",
     "cardNumber": 132,
     "cardIdentifier": "132/204 EN 4",
@@ -42994,7 +43469,7 @@
   },
   "set4-167": {
     "id": "set4-167",
-    "gameCardId": "19g",
+    "gameCardId": "19h",
     "set": "set4",
     "cardNumber": 167,
     "cardIdentifier": "167/204 EN 4",
@@ -43101,7 +43576,7 @@
   },
   "set4-202": {
     "id": "set4-202",
-    "gameCardId": "117",
+    "gameCardId": "1rt",
     "set": "set4",
     "cardNumber": 202,
     "cardIdentifier": "202/204 EN 4",
@@ -43210,7 +43685,7 @@
   },
   "quest1-065": {
     "id": "quest1-065",
-    "gameCardId": "1ti",
+    "gameCardId": "1tg",
     "set": "quest1",
     "cardNumber": 65,
     "cardIdentifier": "65/204 EN 3",
@@ -43232,7 +43707,7 @@
   },
   "set3-065": {
     "id": "set3-065",
-    "gameCardId": "1ti",
+    "gameCardId": "1tg",
     "set": "set3",
     "cardNumber": 65,
     "cardIdentifier": "65/204 EN 3",
@@ -43276,7 +43751,7 @@
   },
   "set3-098": {
     "id": "set3-098",
-    "gameCardId": "1mn",
+    "gameCardId": "1mp",
     "set": "set3",
     "cardNumber": 98,
     "cardIdentifier": "98/204 EN 3",
@@ -43320,7 +43795,7 @@
   },
   "set3-132": {
     "id": "set3-132",
-    "gameCardId": "1bo",
+    "gameCardId": "1bn",
     "set": "set3",
     "cardNumber": 132,
     "cardIdentifier": "132/204 EN 3",
@@ -43406,7 +43881,7 @@
   },
   "gateway1-164": {
     "id": "gateway1-164",
-    "gameCardId": "19h",
+    "gameCardId": "19i",
     "set": "gateway1",
     "cardNumber": 164,
     "cardIdentifier": "164/204 EN 4",
@@ -43428,7 +43903,7 @@
   },
   "set3-164": {
     "id": "set3-164",
-    "gameCardId": "1vl",
+    "gameCardId": "1vi",
     "set": "set3",
     "cardNumber": 164,
     "cardIdentifier": "164/204 EN 3",
@@ -43472,7 +43947,7 @@
   },
   "set3-166": {
     "id": "set3-166",
-    "gameCardId": "1mp",
+    "gameCardId": "1mq",
     "set": "set3",
     "cardNumber": 166,
     "cardIdentifier": "166/204 EN 3",
@@ -43494,7 +43969,7 @@
   },
   "set3-167": {
     "id": "set3-167",
-    "gameCardId": "1nt",
+    "gameCardId": "1nn",
     "set": "set3",
     "cardNumber": 167,
     "cardIdentifier": "167/204 EN 3",
@@ -43581,7 +44056,7 @@
   },
   "set3-210": {
     "id": "set3-210",
-    "gameCardId": "1ti",
+    "gameCardId": "1tg",
     "set": "set3",
     "cardNumber": 210,
     "cardIdentifier": "210/204 EN 3",
@@ -43621,7 +44096,7 @@
   },
   "set2-034": {
     "id": "set2-034",
-    "gameCardId": "1ab",
+    "gameCardId": "1aa",
     "set": "set2",
     "cardNumber": 34,
     "cardIdentifier": "34/204 EN 2",
@@ -43642,7 +44117,7 @@
   },
   "set2-065": {
     "id": "set2-065",
-    "gameCardId": "1j5",
+    "gameCardId": "1j7",
     "set": "set2",
     "cardNumber": 65,
     "cardIdentifier": "65/204 EN 2",
@@ -43707,7 +44182,7 @@
   },
   "set2-068": {
     "id": "set2-068",
-    "gameCardId": "1pl",
+    "gameCardId": "1pk",
     "set": "set2",
     "cardNumber": 68,
     "cardIdentifier": "68/204 EN 2",
@@ -43838,7 +44313,7 @@
   },
   "set2-167": {
     "id": "set2-167",
-    "gameCardId": "1ad",
+    "gameCardId": "1ab",
     "set": "set2",
     "cardNumber": 167,
     "cardIdentifier": "167/204 EN 2",
@@ -44167,7 +44642,7 @@
   },
   "gateway1-067": {
     "id": "gateway1-067",
-    "gameCardId": "1ag",
+    "gameCardId": "1ad",
     "set": "gateway1",
     "cardNumber": 67,
     "cardIdentifier": "67/204 EN 1",
@@ -44189,7 +44664,7 @@
   },
   "quest1-067": {
     "id": "quest1-067",
-    "gameCardId": "1ag",
+    "gameCardId": "1ad",
     "set": "quest1",
     "cardNumber": 67,
     "cardIdentifier": "67/204 EN 1",
@@ -44211,7 +44686,7 @@
   },
   "set1-067": {
     "id": "set1-067",
-    "gameCardId": "1ag",
+    "gameCardId": "1ad",
     "set": "set1",
     "cardNumber": 67,
     "cardIdentifier": "67/204 EN 1",
@@ -44365,7 +44840,7 @@
   },
   "set1-136": {
     "id": "set1-136",
-    "gameCardId": "177",
+    "gameCardId": "179",
     "set": "set1",
     "cardNumber": 136,
     "cardIdentifier": "136/204 EN 1",
@@ -44453,7 +44928,7 @@
   },
   "set1-169": {
     "id": "set1-169",
-    "gameCardId": "1dp",
+    "gameCardId": "1dk",
     "set": "set1",
     "cardNumber": 169,
     "cardIdentifier": "169/204 EN 1",
@@ -44471,7 +44946,7 @@
       }
     ],
     "author": "Cory Godbey",
-    "flavorText": "Once upon a time, a single drop of sunlight fell from the heavens.. . . —Flynn Rider"
+    "flavorText": "Once upon a time, a single drop of sunlight fell from the heavens.. . . —Flynn Rider"
   },
   "gateway1-170": {
     "id": "gateway1-170",
@@ -44645,11 +45120,11 @@
       }
     ],
     "author": "Carlos Gomes Cabral",
-    "flavorText": "Every day they're out there makingDuckTales! Woo-oo!"
+    "flavorText": "Every day they're out there making DuckTales! Woo-oo!"
   },
   "set10-028": {
     "id": "set10-028",
-    "gameCardId": "155",
+    "gameCardId": "154",
     "set": "set10",
     "cardNumber": 28,
     "cardIdentifier": "28/204 EN 10",
@@ -44715,7 +45190,7 @@
   },
   "set10-062": {
     "id": "set10-062",
-    "gameCardId": "118",
+    "gameCardId": "1ry",
     "set": "set10",
     "cardNumber": 62,
     "cardIdentifier": "62/204 EN 10",
@@ -44756,6 +45231,49 @@
     "author": "Gabriel Nascimento",
     "flavorText": "You could <try> to run..."
   },
+  "set10-064": {
+    "id": "set10-064",
+    "gameCardId": "dcb",
+    "set": "set10",
+    "cardNumber": 64,
+    "cardIdentifier": "64/204 EN 10",
+    "rarity": "uncommon",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/64_5be6181cf3fe85df178ea17dbd5a3747d8106ecd.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/64_5be6181cf3fe85df178ea17dbd5a3747d8106ecd.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/64_cebbffef56c873e537ac19227e87c5a68d608392.jpg"
+      }
+    ],
+    "author": "Patri Balanovsky",
+    "flavorText": "Listen, fellas, it's a real ‘what have you done for me lately’ business. So give me something to work with here!"
+  },
+  "set10-065": {
+    "id": "set10-065",
+    "gameCardId": "1im",
+    "set": "set10",
+    "cardNumber": 65,
+    "cardIdentifier": "65/204 EN 10",
+    "rarity": "common",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/65_e2303c36ea97c29f4b06eec39d5d9fd48793fd08.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/65_e2303c36ea97c29f4b06eec39d5d9fd48793fd08.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/65_2b1253ecd5bfb0b7830a1113538a11ee13eedec4.jpg"
+      }
+    ],
+    "author": "Janel Reh"
+  },
   "set10-094": {
     "id": "set10-094",
     "gameCardId": "7zl",
@@ -44780,7 +45298,7 @@
   },
   "set10-095": {
     "id": "set10-095",
-    "gameCardId": "1dr",
+    "gameCardId": "1dp",
     "set": "set10",
     "cardNumber": 95,
     "cardIdentifier": "95/204 EN 10",
@@ -44801,7 +45319,7 @@
   },
   "set10-096": {
     "id": "set10-096",
-    "gameCardId": "1vo",
+    "gameCardId": "1vk",
     "set": "set10",
     "cardNumber": 96,
     "cardIdentifier": "96/204 EN 10",
@@ -45040,7 +45558,7 @@
   },
   "set10-165": {
     "id": "set10-165",
-    "gameCardId": "1cf",
+    "gameCardId": "1cd",
     "set": "set10",
     "cardNumber": 165,
     "cardIdentifier": "165/204 EN 10",
@@ -45062,7 +45580,7 @@
   },
   "set10-195": {
     "id": "set10-195",
-    "gameCardId": "1du",
+    "gameCardId": "1dr",
     "set": "set10",
     "cardNumber": 195,
     "cardIdentifier": "195/204 EN 10",
@@ -45083,7 +45601,7 @@
   },
   "set10-196": {
     "id": "set10-196",
-    "gameCardId": "1dw",
+    "gameCardId": "1du",
     "set": "set10",
     "cardNumber": 196,
     "cardIdentifier": "196/204 EN 10",
@@ -45123,6 +45641,28 @@
       }
     ],
     "author": "Carlos Luzzi"
+  },
+  "set10-198": {
+    "id": "set10-198",
+    "gameCardId": "1sa",
+    "set": "set10",
+    "cardNumber": 198,
+    "cardIdentifier": "198/204 EN 10",
+    "rarity": "uncommon",
+    "variants": [
+      {
+        "type": "regular",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/198_efe4476ec008c197766c947c9465f4861e6e8544.jpg"
+      },
+      {
+        "type": "foil",
+        "imageUrl": "https://api.lorcana.ravensburger.com/images/en/set10/198_efe4476ec008c197766c947c9465f4861e6e8544.jpg",
+        "foilType": "Silver",
+        "foilMaskUrl": "https://api.lorcana.ravensburger.com/images/en/set10/198_67d61c1b1c048888870cb875ea6087ea92bfb73b.jpg"
+      }
+    ],
+    "author": "Kevin Slawinski",
+    "flavorText": "We've not a moment to lose! —Basil"
   },
   "set10-207": {
     "id": "set10-207",
@@ -45181,7 +45721,7 @@
   },
   "set10-228": {
     "id": "set10-228",
-    "gameCardId": "118",
+    "gameCardId": "1ry",
     "set": "set10",
     "cardNumber": 228,
     "cardIdentifier": "228/204 EN 10",
@@ -45235,7 +45775,7 @@
   },
   "set10-237": {
     "id": "set10-237",
-    "gameCardId": "1cf",
+    "gameCardId": "1cd",
     "set": "set10",
     "cardNumber": 237,
     "cardIdentifier": "237/204 EN 10",
@@ -45274,7 +45814,7 @@
   },
   "set9-026": {
     "id": "set9-026",
-    "gameCardId": "1bp",
+    "gameCardId": "1bo",
     "set": "set9",
     "cardNumber": 26,
     "cardIdentifier": "26/204 EN 9",
@@ -45425,7 +45965,7 @@
   },
   "set9-061": {
     "id": "set9-061",
-    "gameCardId": "1tj",
+    "gameCardId": "1ti",
     "set": "set9",
     "cardNumber": 61,
     "cardIdentifier": "61/204 EN 9",
@@ -45599,7 +46139,7 @@
   },
   "set9-099": {
     "id": "set9-099",
-    "gameCardId": "179",
+    "gameCardId": "17a",
     "set": "set9",
     "cardNumber": 99,
     "cardIdentifier": "99/204 EN 9",
@@ -45729,7 +46269,7 @@
   },
   "set9-164": {
     "id": "set9-164",
-    "gameCardId": "1nx",
+    "gameCardId": "1np",
     "set": "set9",
     "cardNumber": 164,
     "cardIdentifier": "164/204 EN 9",
@@ -45858,7 +46398,7 @@
   },
   "set9-200": {
     "id": "set9-200",
-    "gameCardId": "1po",
+    "gameCardId": "1pl",
     "set": "set9",
     "cardNumber": 200,
     "cardIdentifier": "200/204 EN 9",
@@ -45978,7 +46518,7 @@
   },
   "set9-225": {
     "id": "set9-225",
-    "gameCardId": "1bp",
+    "gameCardId": "1bo",
     "set": "set9",
     "cardNumber": 225,
     "cardIdentifier": "225/204 EN 9",
@@ -46057,7 +46597,7 @@
   },
   "set8-041": {
     "id": "set8-041",
-    "gameCardId": "12g",
+    "gameCardId": "12f",
     "set": "set8",
     "cardNumber": 41,
     "cardIdentifier": "41/204 EN 8",
@@ -46121,7 +46661,7 @@
   },
   "quest2-077": {
     "id": "quest2-077",
-    "gameCardId": "12i",
+    "gameCardId": "12g",
     "set": "quest2",
     "cardNumber": 77,
     "cardIdentifier": "77/204 EN 8",
@@ -46143,7 +46683,7 @@
   },
   "set8-077": {
     "id": "set8-077",
-    "gameCardId": "12i",
+    "gameCardId": "12g",
     "set": "set8",
     "cardNumber": 77,
     "cardIdentifier": "77/204 EN 8",
@@ -46209,7 +46749,7 @@
   },
   "set8-079": {
     "id": "set8-079",
-    "gameCardId": "1ny",
+    "gameCardId": "1nt",
     "set": "set8",
     "cardNumber": 79,
     "cardIdentifier": "79/204 EN 8",
@@ -46357,7 +46897,7 @@
   },
   "set8-116": {
     "id": "set8-116",
-    "gameCardId": "1mq",
+    "gameCardId": "1mu",
     "set": "set8",
     "cardNumber": 116,
     "cardIdentifier": "116/204 EN 8",
@@ -46638,7 +47178,7 @@
   },
   "quest2-202": {
     "id": "quest2-202",
-    "gameCardId": "1ci",
+    "gameCardId": "1cf",
     "set": "quest2",
     "cardNumber": 202,
     "cardIdentifier": "202/204 EN 8",
@@ -46659,7 +47199,7 @@
   },
   "set8-202": {
     "id": "set8-202",
-    "gameCardId": "1ci",
+    "gameCardId": "1cf",
     "set": "set8",
     "cardNumber": 202,
     "cardIdentifier": "202/204 EN 8",
@@ -46719,7 +47259,7 @@
   },
   "set8-212": {
     "id": "set8-212",
-    "gameCardId": "1ny",
+    "gameCardId": "1nt",
     "set": "set8",
     "cardNumber": 212,
     "cardIdentifier": "212/204 EN 8",
@@ -46755,7 +47295,7 @@
   },
   "set8-216": {
     "id": "set8-216",
-    "gameCardId": "1mq",
+    "gameCardId": "1mu",
     "set": "set8",
     "cardNumber": 216,
     "cardIdentifier": "216/204 EN 8",
@@ -46855,7 +47395,7 @@
   },
   "set7-080": {
     "id": "set7-080",
-    "gameCardId": "1nz",
+    "gameCardId": "1nx",
     "set": "set7",
     "cardNumber": 80,
     "cardIdentifier": "80/204 EN 7",
@@ -46877,7 +47417,7 @@
   },
   "set7-081": {
     "id": "set7-081",
-    "gameCardId": "1im",
+    "gameCardId": "1io",
     "set": "set7",
     "cardNumber": 81,
     "cardIdentifier": "81/204 EN 7",
@@ -46965,7 +47505,7 @@
   },
   "set7-117": {
     "id": "set7-117",
-    "gameCardId": "1mu",
+    "gameCardId": "1mv",
     "set": "set7",
     "cardNumber": 117,
     "cardIdentifier": "117/204 EN 7",
@@ -47009,7 +47549,7 @@
   },
   "set7-119": {
     "id": "set7-119",
-    "gameCardId": "119",
+    "gameCardId": "1ny",
     "set": "set7",
     "cardNumber": 119,
     "cardIdentifier": "119/204 EN 7",
@@ -47052,7 +47592,7 @@
   },
   "set7-148": {
     "id": "set7-148",
-    "gameCardId": "157",
+    "gameCardId": "155",
     "set": "set7",
     "cardNumber": 148,
     "cardIdentifier": "148/204 EN 7",
@@ -47276,7 +47816,7 @@
   },
   "set6-027": {
     "id": "set6-027",
-    "gameCardId": "1qa",
+    "gameCardId": "1q8",
     "set": "set6",
     "cardNumber": 27,
     "cardIdentifier": "27/204 EN 6",
@@ -47341,7 +47881,7 @@
   },
   "set6-030": {
     "id": "set6-030",
-    "gameCardId": "1ps",
+    "gameCardId": "1po",
     "set": "set6",
     "cardNumber": 30,
     "cardIdentifier": "30/204 EN 6",
@@ -47363,7 +47903,7 @@
   },
   "set6-060": {
     "id": "set6-060",
-    "gameCardId": "1gj",
+    "gameCardId": "1gn",
     "set": "set6",
     "cardNumber": 60,
     "cardIdentifier": "60/204 EN 6",
@@ -47385,7 +47925,7 @@
   },
   "set6-062": {
     "id": "set6-062",
-    "gameCardId": "1cl",
+    "gameCardId": "1ci",
     "set": "set6",
     "cardNumber": 62,
     "cardIdentifier": "62/204 EN 6",
@@ -47539,7 +48079,7 @@
   },
   "set6-097": {
     "id": "set6-097",
-    "gameCardId": "1dy",
+    "gameCardId": "1dw",
     "set": "set6",
     "cardNumber": 97,
     "cardIdentifier": "97/204 EN 6",
@@ -47627,7 +48167,7 @@
   },
   "set6-131": {
     "id": "set6-131",
-    "gameCardId": "1j7",
+    "gameCardId": "1j8",
     "set": "set6",
     "cardNumber": 131,
     "cardIdentifier": "131/204 EN 6",
@@ -47822,7 +48362,7 @@
   },
   "set6-198": {
     "id": "set6-198",
-    "gameCardId": "1dz",
+    "gameCardId": "1dy",
     "set": "set6",
     "cardNumber": 198,
     "cardIdentifier": "198/204 EN 6",
@@ -47865,7 +48405,7 @@
   },
   "set6-213": {
     "id": "set6-213",
-    "gameCardId": "1dy",
+    "gameCardId": "1dw",
     "set": "set6",
     "cardNumber": 213,
     "cardIdentifier": "213/204 EN 6",
@@ -48051,7 +48591,7 @@
   },
   "set5-028": {
     "id": "set5-028",
-    "gameCardId": "1tk",
+    "gameCardId": "1tj",
     "set": "set5",
     "cardNumber": 28,
     "cardIdentifier": "28/204 EN 5",
@@ -48220,11 +48760,11 @@
       }
     ],
     "author": "Elodie Mondoloni",
-    "flavorText": "A security device! Easily defeated, of course. Once I make room for the crown, I . . . can . . . bring . . . it . . . to . . . him."
+    "flavorText": "A security device! Easily defeated, of course. Once I make room for the crown, I . . . can . . . bring . . . it . . . to . . . him."
   },
   "set5-095": {
     "id": "set5-095",
-    "gameCardId": "1mv",
+    "gameCardId": "1mw",
     "set": "set5",
     "cardNumber": 95,
     "cardIdentifier": "95/204 EN 5",
@@ -48246,7 +48786,7 @@
   },
   "set5-096": {
     "id": "set5-096",
-    "gameCardId": "1mw",
+    "gameCardId": "1my",
     "set": "set5",
     "cardNumber": 96,
     "cardIdentifier": "96/204 EN 5",
@@ -48268,7 +48808,7 @@
   },
   "set5-097": {
     "id": "set5-097",
-    "gameCardId": "1pu",
+    "gameCardId": "1ps",
     "set": "set5",
     "cardNumber": 97,
     "cardIdentifier": "97/204 EN 5",
@@ -48464,7 +49004,7 @@
   },
   "set5-163": {
     "id": "set5-163",
-    "gameCardId": "12j",
+    "gameCardId": "12i",
     "set": "set5",
     "cardNumber": 163,
     "cardIdentifier": "163/204 EN 5",
@@ -48486,7 +49026,7 @@
   },
   "set5-164": {
     "id": "set5-164",
-    "gameCardId": "1my",
+    "gameCardId": "1mz",
     "set": "set5",
     "cardNumber": 164,
     "cardIdentifier": "164/204 EN 5",
@@ -48508,7 +49048,7 @@
   },
   "set5-196": {
     "id": "set5-196",
-    "gameCardId": "1pv",
+    "gameCardId": "1pu",
     "set": "set5",
     "cardNumber": 196,
     "cardIdentifier": "196/204 EN 5",
@@ -48630,7 +49170,7 @@
   },
   "set5-213": {
     "id": "set5-213",
-    "gameCardId": "1mw",
+    "gameCardId": "1my",
     "set": "set5",
     "cardNumber": 213,
     "cardIdentifier": "213/204 EN 5",
@@ -48840,7 +49380,7 @@
   },
   "set4-060": {
     "id": "set4-060",
-    "gameCardId": "1tj",
+    "gameCardId": "1ti",
     "set": "set4",
     "cardNumber": 60,
     "cardIdentifier": "60/204 EN 4",
@@ -49014,7 +49554,7 @@
   },
   "set4-096": {
     "id": "set4-096",
-    "gameCardId": "1sa",
+    "gameCardId": "1sb",
     "set": "set4",
     "cardNumber": 96,
     "cardIdentifier": "96/204 EN 4",
@@ -49167,7 +49707,7 @@
   },
   "set4-164": {
     "id": "set4-164",
-    "gameCardId": "19h",
+    "gameCardId": "19i",
     "set": "set4",
     "cardNumber": 164,
     "cardIdentifier": "164/204 EN 4",
@@ -49211,7 +49751,7 @@
   },
   "set4-195": {
     "id": "set4-195",
-    "gameCardId": "11a",
+    "gameCardId": "1pv",
     "set": "set4",
     "cardNumber": 195,
     "cardIdentifier": "195/204 EN 4",
@@ -49340,7 +49880,7 @@
   },
   "set4-199": {
     "id": "set4-199",
-    "gameCardId": "1ll",
+    "gameCardId": "1lk",
     "set": "set4",
     "cardNumber": 199,
     "cardIdentifier": "199/204 EN 4",
@@ -49438,7 +49978,7 @@
   },
   "set3-025": {
     "id": "set3-025",
-    "gameCardId": "11p",
+    "gameCardId": "117",
     "set": "set3",
     "cardNumber": 25,
     "cardIdentifier": "25/204 EN 3",
@@ -49548,7 +50088,7 @@
   },
   "set3-061": {
     "id": "set3-061",
-    "gameCardId": "1sb",
+    "gameCardId": "1sd",
     "set": "set3",
     "cardNumber": 61,
     "cardIdentifier": "61/204 EN 3",
@@ -49658,7 +50198,7 @@
   },
   "set3-096": {
     "id": "set3-096",
-    "gameCardId": "11q",
+    "gameCardId": "1ru",
     "set": "set3",
     "cardNumber": 96,
     "cardIdentifier": "96/204 EN 3",
@@ -49745,7 +50285,7 @@
   },
   "set3-131": {
     "id": "set3-131",
-    "gameCardId": "1cn",
+    "gameCardId": "1cl",
     "set": "set3",
     "cardNumber": 131,
     "cardIdentifier": "131/204 EN 3",
@@ -49810,7 +50350,7 @@
   },
   "gateway1-161": {
     "id": "gateway1-161",
-    "gameCardId": "1tl",
+    "gameCardId": "1tk",
     "set": "gateway1",
     "cardNumber": 161,
     "cardIdentifier": "161/204 EN 3",
@@ -49831,7 +50371,7 @@
   },
   "set3-161": {
     "id": "set3-161",
-    "gameCardId": "1tl",
+    "gameCardId": "1tk",
     "set": "set3",
     "cardNumber": 161,
     "cardIdentifier": "161/204 EN 3",
@@ -49852,7 +50392,7 @@
   },
   "set3-162": {
     "id": "set3-162",
-    "gameCardId": "1sd",
+    "gameCardId": "1sg",
     "set": "set3",
     "cardNumber": 162,
     "cardIdentifier": "162/204 EN 3",
@@ -49980,7 +50520,7 @@
   },
   "set2-028": {
     "id": "set2-028",
-    "gameCardId": "1cq",
+    "gameCardId": "1cm",
     "set": "set2",
     "cardNumber": 28,
     "cardIdentifier": "28/204 EN 2",
@@ -50020,7 +50560,7 @@
       }
     ],
     "author": "Aisha Durmagambetova",
-    "flavorText": "Let’s finish this, binturi. —Namaari"
+    "flavorText": "Let’s finish this, binturi. —Namaari"
   },
   "set2-030": {
     "id": "set2-030",
@@ -50349,7 +50889,7 @@
   },
   "gateway1-129": {
     "id": "gateway1-129",
-    "gameCardId": "1tm",
+    "gameCardId": "1tl",
     "set": "gateway1",
     "cardNumber": 129,
     "cardIdentifier": "129/204 EN 2",
@@ -50370,7 +50910,7 @@
   },
   "set2-129": {
     "id": "set2-129",
-    "gameCardId": "1tm",
+    "gameCardId": "1tl",
     "set": "set2",
     "cardNumber": 129,
     "cardIdentifier": "129/204 EN 2",
@@ -50522,7 +51062,7 @@
   },
   "set2-163": {
     "id": "set2-163",
-    "gameCardId": "1nx",
+    "gameCardId": "1np",
     "set": "set2",
     "cardNumber": 163,
     "cardIdentifier": "163/204 EN 2",
@@ -50565,7 +51105,7 @@
   },
   "set2-165": {
     "id": "set2-165",
-    "gameCardId": "1tn",
+    "gameCardId": "1tm",
     "set": "set2",
     "cardNumber": 165,
     "cardIdentifier": "165/204 EN 2",
@@ -50915,7 +51455,7 @@
   },
   "set1-031": {
     "id": "set1-031",
-    "gameCardId": "1cs",
+    "gameCardId": "1cn",
     "set": "set1",
     "cardNumber": 31,
     "cardIdentifier": "31/204 EN 1",
@@ -50959,7 +51499,7 @@
   },
   "set1-063": {
     "id": "set1-063",
-    "gameCardId": "1cw",
+    "gameCardId": "1cq",
     "set": "set1",
     "cardNumber": 63,
     "cardIdentifier": "63/204 EN 1",
@@ -51065,11 +51605,11 @@
       }
     ],
     "author": "Ellie Horie",
-    "flavorText": "... Then scrub the terrace, sweep the halls and the stairs, clean the chimneys. And of course there's the mending, and the sewing, and the laundry. . . —Lady Tremaine"
+    "flavorText": "... Then scrub the terrace, sweep the halls and the stairs, clean the chimneys. And of course there's the mending, and the sewing, and the laundry. . . —Lady Tremaine"
   },
   "set1-095": {
     "id": "set1-095",
-    "gameCardId": "179",
+    "gameCardId": "17a",
     "set": "set1",
     "cardNumber": 95,
     "cardIdentifier": "95/204 EN 1",
@@ -51395,7 +51935,7 @@
       }
     ],
     "author": "Kenneth Anderson",
-    "flavorText": ". . . Don't fix it."
+    "flavorText": ". . . Don't fix it."
   },
   "gateway1-163": {
     "id": "gateway1-163",
@@ -51465,7 +52005,7 @@
   },
   "set1-165": {
     "id": "set1-165",
-    "gameCardId": "11s",
+    "gameCardId": "118",
     "set": "set1",
     "cardNumber": 165,
     "cardIdentifier": "165/204 EN 1",
@@ -51487,7 +52027,7 @@
   },
   "set1-195": {
     "id": "set1-195",
-    "gameCardId": "11t",
+    "gameCardId": "1dz",
     "set": "set1",
     "cardNumber": 195,
     "cardIdentifier": "195/204 EN 1",
@@ -51505,7 +52045,7 @@
       }
     ],
     "author": "Koni",
-    "flavorText": "Shining, shimmering, splendid. . ."
+    "flavorText": "Shining, shimmering, splendid. . ."
   },
   "set1-196": {
     "id": "set1-196",
@@ -51531,7 +52071,7 @@
   },
   "set1-197": {
     "id": "set1-197",
-    "gameCardId": "1po",
+    "gameCardId": "1pl",
     "set": "set1",
     "cardNumber": 197,
     "cardIdentifier": "197/204 EN 1",

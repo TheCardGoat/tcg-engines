@@ -9,11 +9,11 @@ export const kidaAtlantean: CharacterCard = {
   inkType: ["amber"],
   franchise: "Atlantis",
   set: "003",
-  cardNumber: "006",
   cost: 1,
   strength: 2,
   willpower: 2,
   lore: 1,
+  cardNumber: 6,
   inkable: true,
   vanilla: true,
   externalIds: {

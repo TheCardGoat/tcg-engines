@@ -53,7 +53,13 @@ export type VariableAmount =
   | { type: "willpower-of"; target: CharacterTarget }
   | { type: "lore-value-of"; target: CharacterTarget }
   | { type: "cost-of"; target: CardTarget }
-  | { type: "cards-under-self" };
+  | { type: "cards-under-self" }
+  | {
+      type: "classification-character-count";
+      classification: string;
+      controller: "you" | "opponent";
+    }
+  | { type: "locations-in-play"; controller: "you" | "opponent" };
 
 // ============================================================================
 // Draw/Discard Effects
@@ -209,7 +215,7 @@ export interface LoseLoreEffect {
  */
 export interface ExertEffect {
   type: "exert";
-  target: CharacterTarget | ItemTarget;
+  target: CharacterTarget | ItemTarget | LocationTarget;
 }
 
 /**
@@ -219,7 +225,7 @@ export interface ExertEffect {
  */
 export interface ReadyEffect {
   type: "ready";
-  target: CharacterTarget | ItemTarget;
+  target: CharacterTarget | ItemTarget | LocationTarget;
   /** Restriction after readying */
   restriction?: "cant-quest" | "cant-challenge" | "cant-quest-or-challenge";
 }
@@ -246,7 +252,7 @@ export interface BanishEffect {
  */
 export interface ReturnToHandEffect {
   type: "return-to-hand";
-  target: CharacterTarget | ItemTarget | LocationTarget;
+  target: CardTarget;
 }
 
 /**
@@ -275,7 +281,9 @@ export interface PutIntoInkwellEffect {
     | "chosen-card-in-play"
     | "chosen-character"
     | "this-card"
-    | "discard";
+    | "discard"
+    | "revealed"
+    | CardTarget;
   target?: PlayerTarget;
   cardType?: CardType;
   exerted?: boolean;
@@ -286,7 +294,7 @@ export interface PutIntoInkwellEffect {
  */
 export interface PutUnderEffect {
   type: "put-under";
-  source: "top-of-deck" | "hand";
+  source: "top-of-deck" | "hand" | "discard";
   under: CharacterTarget | LocationTarget | "self";
   cardType?: CardType;
 }
@@ -296,7 +304,7 @@ export interface PutUnderEffect {
  */
 export interface ShuffleIntoDeckEffect {
   type: "shuffle-into-deck";
-  target: CharacterTarget | ItemTarget | LocationTarget;
+  target: CharacterTarget | ItemTarget | LocationTarget | CardTarget;
   /** Whose deck to shuffle into */
   intoDeck?: "owner" | "controller";
 }
@@ -332,6 +340,15 @@ export interface PlayCardEffect {
   grantsRush?: boolean;
   /** Banish at end of turn */
   banishAtEndOfTurn?: boolean;
+}
+
+/**
+ * Enable playing from under a card
+ */
+export interface EnablePlayFromUnderEffect {
+  type: "enable-play-from-under";
+  cardType?: CardType | "song" | "floodborn";
+  duration?: EffectDuration;
 }
 
 // ============================================================================
@@ -384,7 +401,8 @@ export type EffectDuration =
   | "until-start-of-next-turn"
   | "until-end-of-turn"
   | "permanent"
-  | "while-condition"; // Used with static abilities
+  | "while-condition"
+  | "next-play-this-turn"; // Used with static abilities
 
 // ============================================================================
 // Keyword Effects
@@ -445,8 +463,9 @@ export interface RestrictionEffect {
     | "cant-be-dealt-damage"
     | "cant-sing"
     | "cant-move"
-    | "enters-play-exerted";
-  target: CharacterTarget;
+    | "enters-play-exerted"
+    | "skip-draw-step";
+  target: CharacterTarget | PlayerTarget;
   duration?: EffectDuration;
 }
 
@@ -462,6 +481,41 @@ export interface GrantAbilityEffect {
   target: CharacterTarget;
   duration?: EffectDuration;
 }
+
+/**
+ * Reduce cost effect
+ *
+ * @example "You pay 1 less to play this item"
+ */
+export interface CostReductionEffect {
+  type: "cost-reduction";
+  amount: Amount;
+  cardType?: CardType | "song";
+  target?: PlayerTarget; // Who gets the reduction (usually YOU)
+  duration?: EffectDuration;
+}
+
+export interface NameACardEffect {
+  type: "name-a-card";
+}
+
+export interface RevealTopCardEffect {
+  type: "reveal-top-card";
+  target?: PlayerTarget; // Whose deck
+}
+
+export interface PutOnTopEffect {
+  type: "put-on-top";
+  source: "revealed" | CardTarget;
+}
+
+export interface DrawUntilHandSizeEffect {
+  type: "draw-until-hand-size";
+  size: number;
+  target?: PlayerTarget;
+}
+
+// ============================================================================
 
 // ============================================================================
 // Control Flow Effects
@@ -550,6 +604,47 @@ export interface RepeatEffect {
 }
 
 // ============================================================================
+// Special State Modifications
+// ============================================================================
+
+/**
+ * Enters play modification effect
+ *
+ * @example "Enters play exerted"
+ * @example "Enters play with 2 damage"
+ */
+export interface EntersPlayEffect {
+  type: "enters-play-modification";
+  modification: "exerted" | "damaged";
+  amount?: number; // for damaged
+  target: CharacterTarget;
+}
+
+/**
+ * Win condition modification effect
+ *
+ * @example "Opponents need 25 lore to win"
+ */
+export interface WinConditionEffect {
+  type: "win-condition-modification";
+  loreRequired: number;
+  target: PlayerTarget;
+}
+
+/**
+ * Property modification effect
+ *
+ * @example "This character counts as being named 'Dalmatian Puppy'"
+ */
+export interface PropertyModificationEffect {
+  type: "property-modification";
+  property: "name";
+  value: string;
+  operation: "add-alias";
+  target: CharacterTarget;
+}
+
+// ============================================================================
 // Reveal/Search Effects
 // ============================================================================
 
@@ -607,6 +702,7 @@ export type Effect =
   | PutOnBottomEffect
   // Play Card
   | PlayCardEffect
+  | EnablePlayFromUnderEffect
   // Location Movement
   | MoveToLocationEffect
   // Stat Modification
@@ -618,6 +714,11 @@ export type Effect =
   // Restrictions
   | RestrictionEffect
   | GrantAbilityEffect
+  | CostReductionEffect
+  | NameACardEffect
+  | RevealTopCardEffect
+  | PutOnTopEffect
+  | DrawUntilHandSizeEffect
   // Control Flow
   | SequenceEffect
   | ChoiceEffect
@@ -627,7 +728,11 @@ export type Effect =
   | RepeatEffect
   // Reveal/Search
   | RevealHandEffect
-  | SearchDeckEffect;
+  | SearchDeckEffect
+  // Special State Modifications
+  | EntersPlayEffect
+  | WinConditionEffect
+  | PropertyModificationEffect;
 
 /**
  * Static effects (always active, used in static abilities)
@@ -637,7 +742,11 @@ export type StaticEffect =
   | ModifyStatEffect
   | GainKeywordEffect
   | RestrictionEffect
-  | GrantAbilityEffect;
+  | GrantAbilityEffect
+  | EntersPlayEffect
+  | WinConditionEffect
+  | PropertyModificationEffect
+  | CostReductionEffect;
 
 // ============================================================================
 // Type Guards

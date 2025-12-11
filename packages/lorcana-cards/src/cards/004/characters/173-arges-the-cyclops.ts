@@ -9,11 +9,11 @@ export const argesTheCyclops: CharacterCard = {
   inkType: ["steel"],
   franchise: "Hercules",
   set: "004",
-  cardNumber: "173",
   cost: 2,
   strength: 4,
   willpower: 1,
   lore: 1,
+  cardNumber: 173,
   inkable: true,
   vanilla: true,
   externalIds: {

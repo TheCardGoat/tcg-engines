@@ -9,11 +9,11 @@ export const liloGalacticHero: CharacterCard = {
   inkType: ["steel"],
   franchise: "Lilo and Stitch",
   set: "001",
-  cardNumber: "184",
   cost: 3,
   strength: 4,
   willpower: 2,
   lore: 2,
+  cardNumber: 184,
   inkable: true,
   vanilla: true,
   externalIds: {

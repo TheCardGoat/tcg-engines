@@ -1,7 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana";
 
 export const pinocchioStarAttraction: CharacterCard = {
-  id: "1mi",
+  id: "1mk",
   cardType: "character",
   name: "Pinocchio",
   version: "Star Attraction",
@@ -9,11 +9,11 @@ export const pinocchioStarAttraction: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Pinocchio",
   set: "002",
-  cardNumber: "056",
   cost: 2,
   strength: 1,
   willpower: 1,
   lore: 3,
+  cardNumber: 56,
   inkable: false,
   vanilla: true,
   externalIds: {
