@@ -58,6 +58,7 @@
         "noControlCharactersInRegex": "warn",
         "noDoubleEquals": "warn",
         "noImplicitAnyLet": "off",
+        "noThenProperty": "off",
         "noAssignInExpressions": "warn",
         "noExportsInTest": "off",
         "noConsole": { "level": "off", "options": { "allow": ["log"] } }

@@ -1,4 +1,4 @@
-import type { LorcanaGameState } from "../../types/move-params";
+import type { LorcanaGameState } from "../../types";
 
 /**
  * Lore Victory Win Condition

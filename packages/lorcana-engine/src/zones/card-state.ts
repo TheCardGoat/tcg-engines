@@ -8,7 +8,7 @@
  * - Drying state (summoning sickness)
  */
 
-import type { CardId } from "../types/game-state";
+import type { CardId } from "@tcg/core";
 
 /** Card ready/exerted state */
 export type CardReadyState = "ready" | "exerted";

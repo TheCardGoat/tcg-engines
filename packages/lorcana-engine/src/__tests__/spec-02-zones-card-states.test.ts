@@ -5,7 +5,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type { CardId } from "../types/game-state";
+import type { CardId } from "@tcg/core";
 import {
   addDamage,
   type CardInstanceState,
@@ -262,8 +262,8 @@ describe("Spec 2: Zones & Card States", () => {
       const { topCard } = createStack(topState, underState);
       const stackIds = getStackCardIds(topCard);
 
-      expect(stackIds).toContain("shifted-card");
-      expect(stackIds).toContain("original-card");
+      expect(stackIds).toContain(cardId("shifted-card"));
+      expect(stackIds).toContain(cardId("original-card"));
       expect(stackIds).toHaveLength(2);
     });
 
@@ -271,7 +271,7 @@ describe("Spec 2: Zones & Card States", () => {
       const state = createCardInstanceState(cardId("solo-card"));
       const stackIds = getStackCardIds(state);
 
-      expect(stackIds).toEqual(["solo-card"]);
+      expect(stackIds).toEqual([cardId("solo-card")]);
     });
   });
 

@@ -105,7 +105,7 @@ bun test packages/engines/core-engine/src/game-engine/engines/gundam/__tests__/r
 
 Linter passes:
 ```bash
-bunx @biomejs/biome check --write --unsafe packages/engines/core-engine/src/game-engine/engines/gundam/__tests__/rules/03-game-locations.test.ts
+bun x @biomejs/biome check --write --unsafe packages/engines/core-engine/src/game-engine/engines/gundam/__tests__/rules/03-game-locations.test.ts
 # Result: Checked 1 file, Fixed 1 file (removed unused import)
 ```
 

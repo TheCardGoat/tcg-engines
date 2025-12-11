@@ -7,7 +7,7 @@
   - [x] 1.2 Create test helper utilities in `__tests__/helpers/` directory
   - [x] 1.3 Create test data index cataloging all real cards by characteristics (HP ranges, keywords, costs, etc.)
   - [x] 1.4 Verify all tests for gundam-engine pass: `bun test packages/engines/core-engine/src/game-engine/engines/gundam`
-  - [x] 1.5 Verify linter rules pass for gundam-engine: `bunx @biomejs/biome check --fix packages/engines/core-engine/src/game-engine/engines/gundam`
+  - [x] 1.5 Verify linter rules pass for gundam-engine: `bun x @biomejs/biome check --fix packages/engines/core-engine/src/game-engine/engines/gundam`
   - [x] 1.6 Verify type safety, run typecheck: `bun run check-types --filter=@lorcanito/core-engine`
   - [ ] 1.7 Use the code-reviewer subagent to review the helper utilities code
   - [x] 1.8 Update tasks.md and mark task 1 as complete
