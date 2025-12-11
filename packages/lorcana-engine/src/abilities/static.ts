@@ -7,6 +7,7 @@
  * - Some abilities work outside of play
  */
 
+import { hasKeyword } from "../card-utils";
 import type { LorcanaCardDefinition } from "../types/card-types";
 import type { CardId, PlayerId } from "../types/game-state";
 import type {
@@ -96,8 +97,8 @@ export function getStaticAbilities(
 ): StaticAbilityDefinition[] {
   const abilities = card.abilities ?? [];
   return abilities.filter(
-    (a): a is StaticAbilityDefinition & { text: string } => a.type === "static",
-  ) as StaticAbilityDefinition[];
+    (a): boolean => a.type === "static",
+  ) as unknown as StaticAbilityDefinition[];
 }
 
 /**
@@ -248,13 +249,8 @@ export function matchesCardFilter(
     }
   }
 
-  if (filter.hasKeyword && card.keywords) {
-    const hasKeyword = card.keywords.some((k) =>
-      typeof k === "string"
-        ? k === filter.hasKeyword
-        : k.type === filter.hasKeyword,
-    );
-    if (!hasKeyword) {
+  if (filter.hasKeyword) {
+    if (!hasKeyword(card, filter.hasKeyword)) {
       return false;
     }
   }

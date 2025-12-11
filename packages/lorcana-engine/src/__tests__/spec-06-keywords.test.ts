@@ -9,6 +9,8 @@ import {
   getAllKeywords,
   getShiftCost,
   getShiftTargetName,
+  getSingerValue,
+  getSingTogetherValue,
   getTotalKeyword,
   hasBodyguard,
   hasEvasive,
@@ -37,13 +39,12 @@ import {
   needsDryRequirement,
   shouldVanishRedirect,
 } from "../keywords/keyword-effects";
-import type { LorcanaCardDefinition } from "../types/card-types";
+import type {
+  AbilityDefinition,
+  LorcanaCardDefinition,
+} from "../types/card-types";
 import type { CardId, PlayerId } from "../types/game-state";
-import {
-  getSingerValue,
-  getSingTogetherValue,
-  getTotalKeywordValue,
-} from "../types/keywords";
+import { getTotalKeywordValue, type Keyword } from "../types/keywords";
 import {
   clearDrying,
   createCardInstanceState,
@@ -55,22 +56,67 @@ const player2 = "player2" as PlayerId;
 const cardId = (id: string): CardId => id as CardId;
 
 // Helper to create mock cards
+// Helper to create mock cards
 function createMockCard(
-  overrides: Partial<LorcanaCardDefinition> = {},
+  overrides: Partial<LorcanaCardDefinition> & { keywords?: Keyword[] } = {},
 ): LorcanaCardDefinition {
+  const { keywords, ...rest } = overrides;
+  let abilities: AbilityDefinition[] = rest.abilities || [];
+
+  if (keywords) {
+    const keywordAbilities: AbilityDefinition[] = keywords.map((k, i) => {
+      if (typeof k === "string") {
+        return {
+          type: "keyword",
+          keyword: k,
+          id: `kw-${i}`,
+          text: k,
+        } as AbilityDefinition;
+      }
+      const { type: keywordType, ...kRest } = k;
+
+      // Handle Shift specifically
+      if (keywordType === "Shift") {
+        const shiftCost = (kRest as any).cost;
+        const target = (kRest as any).targetName;
+
+        const shiftAbility = {
+          type: "keyword",
+          keyword: "Shift",
+          cost: typeof shiftCost === "number" ? { ink: shiftCost } : shiftCost,
+          shiftTarget: target,
+          id: `kw-${i}`,
+          text: `Shift ${shiftCost} (${target || ""})`,
+        };
+        return shiftAbility as unknown as AbilityDefinition;
+      }
+
+      return {
+        type: "keyword",
+        keyword: keywordType,
+        ...kRest,
+        id: `kw-${i}`,
+        text: keywordType,
+      } as unknown as AbilityDefinition;
+    });
+    abilities = [...abilities, ...keywordAbilities];
+  }
+
   return {
     id: `card-${Math.random().toString(36).slice(2)}`,
     name: "Test Card",
     version: "Test Version",
     fullName: "Test Card - Test Version",
-    inkType: "amber",
+    inkType: ["amber"],
     cost: 3,
     inkable: true,
     cardType: "character",
     strength: 2,
     willpower: 3,
     lore: 1,
-    ...overrides,
+    set: "TFC",
+    abilities,
+    ...rest,
   };
 }
 
@@ -290,7 +336,7 @@ describe("Spec 6: Keywords", () => {
       const card = createMockCard({
         keywords: [{ type: "Singer", value: 4 }],
       });
-      expect(getSingerValue(card.keywords)).toBe(4);
+      expect(getSingerValue(card)).toBe(4);
     });
 
     it("can sing songs with cost <= singer value", () => {
@@ -324,7 +370,7 @@ describe("Spec 6: Keywords", () => {
 
     it("returns null for card without Singer", () => {
       const card = createMockCard({ keywords: [] });
-      expect(getSingerValue(card.keywords)).toBe(null);
+      expect(getSingerValue(card)).toBe(null);
     });
   });
 
@@ -333,7 +379,7 @@ describe("Spec 6: Keywords", () => {
       const card = createMockCard({
         keywords: [{ type: "SingTogether", value: 3 }],
       });
-      expect(getSingTogetherValue(card.keywords)).toBe(3);
+      expect(getSingTogetherValue(card)).toBe(3);
     });
 
     it("combines values to meet song cost", () => {
@@ -468,8 +514,10 @@ describe("Spec 6: Keywords", () => {
       const redirect = getVanishRedirect(cardId("card1"), card, "hand");
 
       expect(redirect).not.toBe(null);
-      expect(redirect!.originalDestination).toBe("hand");
-      expect(redirect!.actualDestination).toBe("discard");
+      if (redirect) {
+        expect(redirect.originalDestination).toBe("hand");
+        expect(redirect.actualDestination).toBe("discard");
+      }
     });
 
     it("returns null for card without Vanish", () => {

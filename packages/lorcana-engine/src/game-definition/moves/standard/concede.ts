@@ -3,7 +3,7 @@ import type {
   LorcanaCardMeta,
   LorcanaGameState,
   LorcanaMoveParams,
-} from "../../../types/move-params";
+} from "../../../types";
 import { lorcanaZones } from "../../zones/zone-configs";
 
 /**
@@ -34,7 +34,7 @@ export const concede = createMove<
   },
   reducer: (draft, context) => {
     // Get all players from the game state
-    const allPlayers = Object.keys(draft.loreScores) as PlayerId[];
+    const allPlayers = Object.keys(draft.external.loreScores) as PlayerId[];
 
     // Determine winner: the opponent who is NOT conceding
     // Try to find active players by checking zones

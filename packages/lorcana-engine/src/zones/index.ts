@@ -8,7 +8,6 @@
 export {
   addDamage,
   type CardInstanceState,
-  type CardReadyState,
   clearDrying,
   createCardInstanceState,
   createStack,
@@ -25,7 +24,6 @@ export {
   isUnderCard,
   readyCard,
   removeDamage,
-  type StackPosition,
   setAtLocation,
   setDamage,
   setDrying,

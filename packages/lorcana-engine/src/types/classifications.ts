@@ -17,7 +17,9 @@ export const CLASSIFICATIONS = [
   "Entangled",
   "Fairy",
   "Floodborn",
+  "Gargoyle",
   "Hero",
+  "Hunny",
   "Hyena",
   "Illusion",
   "Inventor",
@@ -39,6 +41,7 @@ export const CLASSIFICATIONS = [
   "Tigger",
   "Titan",
   "Villain",
+  "Whisper",
 ] as const;
 
 export type Classification = (typeof CLASSIFICATIONS)[number];

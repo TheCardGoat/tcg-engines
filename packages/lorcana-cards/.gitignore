@@ -1,0 +1,13 @@
+node_modules/
+build/
+turbo/
+
+# Input files (fetched from APIs)
+data/inputs/lorcast-input.json
+data/inputs/ravensburger-input.json
+
+# Generated auxiliary files are now tracked (like canonical-cards.json)
+# to avoid CI failures. Regenerate with `bun generate`
+
+# Verbose generation logs
+src/data/generation-verbose.log

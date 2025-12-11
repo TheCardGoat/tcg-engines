@@ -10,7 +10,6 @@ import type {
   TriggeredAbilityInstance,
 } from "../abilities/ability-types";
 import {
-  addToBag,
   addTriggeredAbilityToBag,
   type BagEntry,
   type BagState,
@@ -36,7 +35,6 @@ import {
   isBagEmpty,
   isGameOver,
   mustResolveBag,
-  needsGameStateCheck,
   performGameStateCheck,
   removeFromBag,
   shouldBanish,
@@ -62,13 +60,14 @@ function createMockCard(
     name: "Test Card",
     version: "Test Version",
     fullName: "Test Card - Test Version",
-    inkType: "amber",
+    inkType: ["amber"],
     cost: 3,
     inkable: true,
     cardType: "character",
     strength: 2,
     willpower: 3,
     lore: 1,
+    set: "TFC",
     ...overrides,
   };
 }
@@ -126,7 +125,7 @@ describe("Spec 8: Bag & Game State Check", () => {
 
       const entry = createBagEntry(ability, cardId("card1"), player1, event);
 
-      expect(entry.sourceCardId).toBe("card1");
+      expect(entry.sourceCardId).toBe(cardId("card1"));
       expect(entry.controllerId).toBe(player1);
       expect(entry.triggerEvent).toBe(event);
       expect(entry.id).toBeDefined();
@@ -244,7 +243,9 @@ describe("Spec 8: Bag & Game State Check", () => {
       bag = chooseToResolve(bag, entryId);
 
       expect(bag.currentlyResolving).not.toBe(null);
-      expect(bag.currentlyResolving!.id).toBe(entryId);
+      if (bag.currentlyResolving) {
+        expect(bag.currentlyResolving.id).toBe(entryId);
+      }
       expect(bag.entries).toHaveLength(0);
     });
 
@@ -325,7 +326,9 @@ describe("Spec 8: Bag & Game State Check", () => {
       const entry = getEntry(bag, entryId);
 
       expect(entry).toBeDefined();
-      expect(entry!.id).toBe(entryId);
+      if (entry) {
+        expect(entry.id).toBe(entryId);
+      }
     });
   });
 
@@ -500,8 +503,8 @@ describe("Spec 8: Bag & Game State Check", () => {
       const actions = getCardsExceedingWillpower(cards);
 
       expect(actions).toHaveLength(2);
-      expect(actions.map((a) => a.cardId)).toContain("c1");
-      expect(actions.map((a) => a.cardId)).toContain("c2");
+      expect(actions.map((a) => a.cardId)).toContain(cardId("c1"));
+      expect(actions.map((a) => a.cardId)).toContain(cardId("c2"));
     });
   });
 
@@ -586,7 +589,9 @@ describe("Spec 8: Bag & Game State Check", () => {
       );
 
       expect(entry.sourceCardSnapshot).toBeDefined();
-      expect(entry.sourceCardSnapshot!.name).toBe("Snapshot Card");
+      if (entry.sourceCardSnapshot) {
+        expect(entry.sourceCardSnapshot.name).toBe("Snapshot Card");
+      }
     });
   });
 });

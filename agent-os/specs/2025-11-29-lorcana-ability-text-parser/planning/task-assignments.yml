@@ -1,0 +1,69 @@
+task_assignments:
+  # Phase 1 (COMPLETE)
+  - task_group: "Task Group 1: Core Types and Utilities"
+    assigned_subagent: "api-engineer"
+    status: complete
+
+  - task_group: "Task Group 2: Pattern Registry and Classifier"
+    assigned_subagent: "api-engineer"
+    status: complete
+
+  - task_group: "Task Group 3: Keyword Ability Parser"
+    assigned_subagent: "api-engineer"
+    status: complete
+
+  - task_group: "Task Group 4: Effect, Target, and Condition Parsers"
+    assigned_subagent: "api-engineer"
+    status: complete
+
+  - task_group: "Task Group 5: Triggered, Activated, and Static Parsers"
+    assigned_subagent: "api-engineer"
+    status: complete
+
+  - task_group: "Task Group 6: Main Parser and Batch Processing"
+    assigned_subagent: "api-engineer"
+    status: complete
+
+  - task_group: "Task Group 7: Comprehensive Testing and Coverage"
+    assigned_subagent: "testing-engineer"
+    status: complete
+
+  # Phase 2 (Coverage Improvement)
+  - task_group: "Task Group 2.1: Fix {d} Placeholder Handling"
+    assigned_subagent: "api-engineer"
+    status: pending
+
+  - task_group: "Task Group 2.2: Fix Ability Classification"
+    assigned_subagent: "api-engineer"
+    status: pending
+
+  - task_group: "Task Group 2.3: Expand Trigger Patterns"
+    assigned_subagent: "api-engineer"
+    status: pending
+
+  - task_group: "Task Group 2.4: Fix Optional Effects in Triggered Abilities"
+    assigned_subagent: "api-engineer"
+    status: pending
+
+  - task_group: "Task Group 2.5: Simple Standalone Action Effects"
+    assigned_subagent: "api-engineer"
+    status: pending
+
+  - task_group: "Task Group 2.6: Simple Static Ability Patterns"
+    assigned_subagent: "api-engineer"
+    status: pending
+
+  - task_group: "Task Group 2.7: Named Ability Extraction Improvement"
+    assigned_subagent: "api-engineer"
+    status: pending
+
+  - task_group: "Task Group 2.8: Activated Ability Improvements"
+    assigned_subagent: "api-engineer"
+    status: pending
+
+verifiers:
+  - implementer: "api-engineer"
+    verified_by: "backend-verifier"
+
+  - implementer: "testing-engineer"
+    verified_by: "backend-verifier"

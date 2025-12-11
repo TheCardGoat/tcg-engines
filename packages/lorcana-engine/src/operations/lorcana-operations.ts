@@ -8,9 +8,9 @@
  * Each operation is pure and operates through the MoveContext API.
  */
 
-import type { CardId, MoveContext, PlayerId, ZoneId } from "@tcg/core";
+import type { CardId, MoveContext, PlayerId } from "@tcg/core";
 import type { Draft } from "immer";
-import type { LorcanaCardMeta, LorcanaGameState } from "../types/move-params";
+import type { LorcanaCardMeta, LorcanaGameState } from "../types";
 
 /**
  * Lorcana Operations Type
@@ -182,11 +182,11 @@ export function createLorcanaOperations<TParams>(
 ): LorcanaOperations {
   return {
     exertCard(cardId: CardId): void {
-      context.cards.updateCardMeta(cardId, { isExerted: true });
+      context.cards.updateCardMeta(cardId, { state: "exerted" });
     },
 
     readyCard(cardId: CardId): void {
-      context.cards.updateCardMeta(cardId, { isExerted: false });
+      context.cards.updateCardMeta(cardId, { state: "ready" });
     },
 
     addLore(
@@ -194,9 +194,9 @@ export function createLorcanaOperations<TParams>(
       playerId: PlayerId,
       amount: number,
     ): number {
-      const current = draft.loreScores[playerId] ?? 0;
+      const current = draft.external.loreScores[playerId] ?? 0;
       const newTotal = current + amount;
-      draft.loreScores[playerId] = newTotal;
+      draft.external.loreScores[playerId] = newTotal;
 
       // Check win condition (Rule 1.9.1.1)
       if (newTotal >= 20 && context.endGame) {
@@ -211,7 +211,7 @@ export function createLorcanaOperations<TParams>(
     },
 
     getLore(state: LorcanaGameState, playerId: PlayerId): number {
-      return state.loreScores[playerId] ?? 0;
+      return state.external.loreScores[playerId] ?? 0;
     },
 
     addDamage(cardId: CardId, amount: number): number {
@@ -234,19 +234,19 @@ export function createLorcanaOperations<TParams>(
     },
 
     markAsDrying(cardId: CardId): void {
-      context.cards.updateCardMeta(cardId, { playedThisTurn: true });
+      context.cards.updateCardMeta(cardId, { isDrying: true });
     },
 
     markAsDry(cardId: CardId): void {
-      context.cards.updateCardMeta(cardId, { playedThisTurn: false });
+      context.cards.updateCardMeta(cardId, { isDrying: false });
     },
 
     isDrying(cardId: CardId): boolean {
-      return context.cards.getCardMeta(cardId)?.playedThisTurn ?? false;
+      return context.cards.getCardMeta(cardId)?.isDrying ?? false;
     },
 
     isExerted(cardId: CardId): boolean {
-      return context.cards.getCardMeta(cardId)?.isExerted ?? false;
+      return context.cards.getCardMeta(cardId)?.state === "exerted";
     },
 
     getCardType(cardId: CardId): string | undefined {
@@ -255,15 +255,15 @@ export function createLorcanaOperations<TParams>(
     },
 
     moveToLocation(characterId: CardId, locationId: CardId): void {
-      context.cards.updateCardMeta(characterId, { atLocation: locationId });
+      context.cards.updateCardMeta(characterId, { atLocationId: locationId });
     },
 
     leaveLocation(characterId: CardId): void {
-      context.cards.updateCardMeta(characterId, { atLocation: undefined });
+      context.cards.updateCardMeta(characterId, { atLocationId: undefined });
     },
 
     getLocation(characterId: CardId): CardId | undefined {
-      return context.cards.getCardMeta(characterId)?.atLocation;
+      return context.cards.getCardMeta(characterId)?.atLocationId;
     },
   };
 }

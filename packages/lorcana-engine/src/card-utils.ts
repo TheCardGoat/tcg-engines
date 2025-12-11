@@ -4,18 +4,21 @@
  * Type guards and utility functions for working with Lorcana cards.
  */
 
-import type { LorcanaCardDefinition } from "./types/card-types";
-import { getFullName as cardGetFullName } from "./types/card-types";
+import type {
+  KeywordAbility,
+  ParameterizedKeywordType,
+} from "./cards/abilities/types/ability-types";
 import {
-  getShiftKeyword,
-  getTotalKeywordValue,
-  hasKeywordType,
-  type Keyword,
-  type KeywordType,
-  getSingerValue as keywordGetSingerValue,
-  getSingTogetherValue as keywordGetSingTogetherValue,
-  getKeywordValue as keywordGetValue,
-} from "./types/keywords";
+  isParameterizedKeywordAbility,
+  isShiftKeywordAbility,
+  isValueKeywordAbility,
+} from "./cards/abilities/types/ability-types";
+import type {
+  AbilityDefinition,
+  KeywordAbilityDefinition,
+  LorcanaCardDefinition,
+} from "./types/card-types";
+import { getFullName as cardGetFullName } from "./types/card-types";
 
 // Re-export getFullName for convenience
 export const getFullName = cardGetFullName;
@@ -57,6 +60,21 @@ export function isLocation(card: LorcanaCardDefinition): boolean {
   return card.cardType === "location";
 }
 
+// ============================================================================
+// Keyword Utilities (Updated for AbilityDefinition)
+// ============================================================================
+
+/**
+ * Helper to get all keyword abilities from a card
+ */
+function getKeywordAbilities(
+  card: LorcanaCardDefinition,
+): KeywordAbilityDefinition[] {
+  if (!card.abilities) return [];
+  return card.abilities.filter(
+    (a): a is KeywordAbilityDefinition => a.type === "keyword",
+  );
+}
 /**
  * Check if a card has a specific keyword
  */
@@ -64,7 +82,7 @@ export function hasKeyword(
   card: LorcanaCardDefinition,
   keyword: string,
 ): boolean {
-  return hasKeywordType(card.keywords, keyword as KeywordType);
+  return getKeywordAbilities(card).some((k) => k.keyword === keyword);
 }
 
 /**
@@ -73,9 +91,13 @@ export function hasKeyword(
  */
 export function getKeywordValue(
   card: LorcanaCardDefinition,
-  keyword: "Challenger" | "Resist",
+  keyword: ParameterizedKeywordType,
 ): number | null {
-  return keywordGetValue(card.keywords, keyword);
+  const kw = getKeywordAbilities(card).find(
+    (k) => k.keyword === keyword && isParameterizedKeywordAbility(k),
+  );
+  if (!(kw && isParameterizedKeywordAbility(kw))) return null;
+  return kw.value;
 }
 
 /**
@@ -83,44 +105,72 @@ export function getKeywordValue(
  */
 export function getTotalKeyword(
   card: LorcanaCardDefinition,
-  keyword: "Challenger" | "Resist",
+  keyword: ParameterizedKeywordType,
 ): number {
-  return getTotalKeywordValue(card.keywords, keyword);
+  return getKeywordAbilities(card)
+    .filter((k) => k.keyword === keyword && isParameterizedKeywordAbility(k))
+    .reduce((sum, k) => {
+      if (isParameterizedKeywordAbility(k)) {
+        return sum + k.value;
+      }
+      return sum;
+    }, 0);
 }
 
 /**
- * Get all keywords on a card
+ * Get all keywords on a card (as KeywordAbility objects)
  */
-export function getAllKeywords(card: LorcanaCardDefinition): Keyword[] {
-  return card.keywords ?? [];
+export function getAllKeywords(
+  card: LorcanaCardDefinition,
+): KeywordAbilityDefinition[] {
+  return getKeywordAbilities(card);
 }
 
 /**
  * Check if a card has Shift keyword
  */
 export function hasShift(card: LorcanaCardDefinition): boolean {
-  return getShiftKeyword(card.keywords) !== null;
+  return hasKeyword(card, "Shift");
 }
 
 /**
  * Get the Shift cost if present
+ * Note: Returns number if ink cost, or null. Logic simplified for ink cost.
+ * If cost is complex, this might need update, but for now assuming ink cost.
  */
 export function getShiftCost(card: LorcanaCardDefinition): number | null {
-  return getShiftKeyword(card.keywords)?.cost ?? null;
+  const shift = getKeywordAbilities(card).find(
+    (k) => k.keyword === "Shift" && isShiftKeywordAbility(k),
+  );
+  if (!(shift && isShiftKeywordAbility(shift))) return null;
+
+  // Assuming 'ink' cost for now as per previous types
+  if ("ink" in shift.cost) {
+    return shift.cost.ink ?? null;
+  }
+  return null;
 }
 
 /**
  * Get the Shift target name if present
  */
 export function getShiftTargetName(card: LorcanaCardDefinition): string | null {
-  return getShiftKeyword(card.keywords)?.targetName ?? null;
+  const shift = getKeywordAbilities(card).find(
+    (k) => k.keyword === "Shift" && isShiftKeywordAbility(k),
+  );
+  if (!(shift && isShiftKeywordAbility(shift))) return null;
+  return shift.shiftTarget ?? null;
 }
 
 /**
  * Get the Singer value if present
  */
 export function getSingerValue(card: LorcanaCardDefinition): number | null {
-  return keywordGetSingerValue(card.keywords);
+  const singer = getKeywordAbilities(card).find(
+    (k) => k.keyword === "Singer" && isValueKeywordAbility(k),
+  );
+  if (!(singer && isValueKeywordAbility(singer))) return null;
+  return singer.value;
 }
 
 /**
@@ -129,49 +179,53 @@ export function getSingerValue(card: LorcanaCardDefinition): number | null {
 export function getSingTogetherValue(
   card: LorcanaCardDefinition,
 ): number | null {
-  return keywordGetSingTogetherValue(card.keywords);
+  const singTogether = getKeywordAbilities(card).find(
+    (k) => k.keyword === "SingTogether" && isValueKeywordAbility(k),
+  );
+  if (!(singTogether && isValueKeywordAbility(singTogether))) return null;
+  return singTogether.value;
 }
 
 /**
  * Check if a character has Bodyguard
  */
 export function hasBodyguard(card: LorcanaCardDefinition): boolean {
-  return hasKeywordType(card.keywords, "Bodyguard");
+  return hasKeyword(card, "Bodyguard");
 }
 
 /**
  * Check if a character has Evasive
  */
 export function hasEvasive(card: LorcanaCardDefinition): boolean {
-  return hasKeywordType(card.keywords, "Evasive");
+  return hasKeyword(card, "Evasive");
 }
 
 /**
  * Check if a character has Reckless
  */
 export function hasReckless(card: LorcanaCardDefinition): boolean {
-  return hasKeywordType(card.keywords, "Reckless");
+  return hasKeyword(card, "Reckless");
 }
 
 /**
  * Check if a character has Rush
  */
 export function hasRush(card: LorcanaCardDefinition): boolean {
-  return hasKeywordType(card.keywords, "Rush");
+  return hasKeyword(card, "Rush");
 }
 
 /**
  * Check if a character has Ward
  */
 export function hasWard(card: LorcanaCardDefinition): boolean {
-  return hasKeywordType(card.keywords, "Ward");
+  return hasKeyword(card, "Ward");
 }
 
 /**
  * Check if a character has Vanish
  */
 export function hasVanish(card: LorcanaCardDefinition): boolean {
-  return hasKeywordType(card.keywords, "Vanish");
+  return hasKeyword(card, "Vanish");
 }
 
 /**

@@ -1,4 +1,4 @@
-import type { LorcanaGameState } from "../../types/move-params";
+import type { LorcanaGameState } from "../../types";
 
 /**
  * Lore Victory Win Condition
@@ -13,7 +13,7 @@ export function checkLoreVictory(
 ):
   | { winner: string; reason: string; metadata: { finalLore: number } }
   | undefined {
-  for (const [playerId, lore] of Object.entries(state.loreScores)) {
+  for (const [playerId, lore] of Object.entries(state.external.loreScores)) {
     if (lore >= 20) {
       return {
         winner: playerId,

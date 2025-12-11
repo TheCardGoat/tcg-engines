@@ -11,6 +11,7 @@
 
 import {
   getStrength,
+  getTotalKeyword,
   getWillpower,
   hasBodyguard,
   hasEvasive,
@@ -21,7 +22,6 @@ import type { MoveValidationResult } from "../moves/move-types";
 import { invalidMove, validMove } from "../moves/move-types";
 import type { LorcanaCardDefinition } from "../types/card-types";
 import type { CardId, PlayerId } from "../types/game-state";
-import { getTotalKeywordValue } from "../types/keywords";
 import type { CardInstanceState } from "../zones/card-state";
 import type { DamageCalculation, DamageModifier } from "./combat-types";
 
@@ -168,7 +168,7 @@ export function calculateChallengeDamage(
 
   // Challenger bonus only applies when attacking (Rule 10.3)
   if (isChallenger) {
-    const challengerBonus = getTotalKeywordValue(card.keywords, "Challenger");
+    const challengerBonus = getTotalKeyword(card, "Challenger");
     if (challengerBonus > 0) {
       modifiers.push({
         source: "keyword",
@@ -195,7 +195,7 @@ export function applyResist(
   incomingDamage: number,
   targetCard: LorcanaCardDefinition,
 ): number {
-  const resistValue = getTotalKeywordValue(targetCard.keywords, "Resist");
+  const resistValue = getTotalKeyword(targetCard, "Resist");
   return Math.max(0, incomingDamage - resistValue);
 }
 

@@ -9,6 +9,7 @@
  * - Ability modifiers
  */
 
+import type { Trigger } from "../cards";
 import type { CardId, PlayerId } from "../types/game-state";
 import type { Keyword } from "../types/keywords";
 
@@ -170,7 +171,7 @@ export interface TriggeredAbilityDefinition {
   id: string;
   name?: string;
   text: string;
-  trigger: TriggerCondition;
+  trigger: TriggerCondition | Trigger;
   effect: EffectDefinition;
   isFloating?: boolean; // Triggers even after leaving play
   isOptional?: boolean; // "may" keyword

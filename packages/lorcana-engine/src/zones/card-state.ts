@@ -8,40 +8,17 @@
  * - Drying state (summoning sickness)
  */
 
-import type { CardId } from "../types/game-state";
-
-/** Card ready/exerted state */
-export type CardReadyState = "ready" | "exerted";
-
-/**
- * Stack position for shifted cards (Rule 5.1.5-5.1.7)
- */
-export interface StackPosition {
-  /** Is this card underneath another card? */
-  isUnder: boolean;
-  /** If this is the top card, what's its ID? */
-  topCardId?: CardId;
-  /** If this is the top card, IDs of cards underneath */
-  cardsUnderneath?: CardId[];
-}
+import type { CardId } from "@tcg/core";
+import type { CardReadyState, LorcanaCardMeta } from "../types/game-state";
 
 /**
  * Runtime state for a card instance in play
+ * Combines the stored metadata with the instance ID for logical operations
  */
-export interface CardInstanceState {
+export type CardInstanceState = LorcanaCardMeta & {
   /** Unique instance ID */
   cardId: CardId;
-  /** Ready or exerted (Rule 5.1.1-5.1.2) */
-  state: CardReadyState;
-  /** Damage counters (Rule 5.1.3-5.1.4) */
-  damage: number;
-  /** Drying = summoning sickness - can't quest/challenge/use exert abilities */
-  isDrying: boolean;
-  /** Stack position for Shift (Rule 5.1.5-5.1.7) */
-  stackPosition?: StackPosition;
-  /** Location this character is at (if any) */
-  atLocationId?: CardId;
-}
+};
 
 /**
  * Create default card instance state for a newly played card
@@ -122,8 +99,7 @@ export function isTopOfStack(cardState: CardInstanceState): boolean {
  * Check if card is under another card in a stack
  */
 export function isUnderCard(cardState: CardInstanceState): boolean {
-  const stack = cardState.stackPosition;
-  return stack !== undefined && stack.isUnder;
+  return cardState.stackPosition?.isUnder ?? false;
 }
 
 /**

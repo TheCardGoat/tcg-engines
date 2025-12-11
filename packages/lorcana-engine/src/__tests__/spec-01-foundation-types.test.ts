@@ -37,20 +37,21 @@ function createMockCard(
     name: "Test Card",
     version: "Test Version",
     fullName: "Test Card - Test Version",
-    inkType: "amber",
+    inkType: ["amber"],
     cost: 3,
     inkable: true,
     cardType: "character",
     strength: 2,
     willpower: 3,
     lore: 1,
+    set: "TFC",
     ...overrides,
   };
 }
 
 // Helper to create a valid 60-card deck with given ink types
 function createValidDeck(
-  inkType: InkType = "amber",
+  inkType: InkType[] = ["amber"],
   secondInkType?: InkType,
 ): LorcanaCardDefinition[] {
   const cards: LorcanaCardDefinition[] = [];
@@ -76,7 +77,7 @@ function createValidDeck(
           name: `Character ${(i % 15) + 15}`,
           version: `Version ${Math.floor(i / 15)}`,
           fullName: `Character ${(i % 15) + 15} - Version ${Math.floor(i / 15)}`,
-          inkType: secondInkType,
+          inkType: [secondInkType],
         }),
       );
     }
@@ -124,21 +125,21 @@ describe("Spec 1: Foundation & Types", () => {
         deck.push(
           createMockCard({
             id: `amber-${i}`,
-            inkType: "amber",
+            inkType: ["amber"],
             fullName: `Amber ${i}`,
           }),
         );
         deck.push(
           createMockCard({
             id: `ruby-${i}`,
-            inkType: "ruby",
+            inkType: ["ruby"],
             fullName: `Ruby ${i}`,
           }),
         );
         deck.push(
           createMockCard({
             id: `sapphire-${i}`,
-            inkType: "sapphire",
+            inkType: ["sapphire"],
             fullName: `Sapphire ${i}`,
           }),
         );
@@ -153,7 +154,7 @@ describe("Spec 1: Foundation & Types", () => {
     });
 
     it("accepts mono-ink deck", () => {
-      const deck = createValidDeck("amber");
+      const deck = createValidDeck(["amber"]);
       const result = validateDeck(deck);
 
       expect(result.valid).toBe(true);
@@ -161,7 +162,7 @@ describe("Spec 1: Foundation & Types", () => {
     });
 
     it("accepts dual-ink deck", () => {
-      const deck = createValidDeck("amber", "ruby");
+      const deck = createValidDeck(["amber"], "ruby");
       const result = validateDeck(deck);
 
       expect(result.valid).toBe(true);
@@ -237,6 +238,77 @@ describe("Spec 1: Foundation & Types", () => {
       const result = validateDeck(deck);
       const copyErrors = result.errors.filter(
         (e) => e.type === "TOO_MANY_COPIES",
+      );
+
+      expect(copyErrors).toHaveLength(0);
+    });
+
+    it("allows unlimited copies when cardCopyLimit is 'no-limit'", () => {
+      const deck = createValidDeck();
+      // Replace 10 cards with Microbots (no limit)
+      for (let i = 0; i < 10; i++) {
+        deck[i] = createMockCard({
+          id: `microbots-${i}`,
+          name: "Microbots",
+          version: "Tiny Helpers",
+          fullName: "Microbots - Tiny Helpers",
+          cardCopyLimit: "no-limit",
+        });
+      }
+
+      const result = validateDeck(deck);
+      const copyErrors = result.errors.filter(
+        (e) => e.type === "TOO_MANY_COPIES",
+      );
+
+      expect(copyErrors).toHaveLength(0);
+    });
+
+    it("respects custom cardCopyLimit of 2 (Perfect Pair rule)", () => {
+      const deck = createValidDeck();
+      // Replace 3 cards with The Glass Slipper (limit 2)
+      for (let i = 0; i < 3; i++) {
+        deck[i] = createMockCard({
+          id: `glass-slipper-${i}`,
+          name: "The Glass Slipper",
+          version: "Perfect Fit",
+          fullName: "The Glass Slipper - Perfect Fit",
+          cardCopyLimit: 2,
+        });
+      }
+
+      const result = validateDeck(deck);
+
+      expect(result.valid).toBe(false);
+      expect(result.errors.some((e) => e.type === "TOO_MANY_COPIES")).toBe(
+        true,
+      );
+      const copyError = result.errors.find((e) => e.type === "TOO_MANY_COPIES");
+      if (copyError && copyError.type === "TOO_MANY_COPIES") {
+        expect(copyError.fullName).toBe("The Glass Slipper - Perfect Fit");
+        expect(copyError.count).toBe(3);
+        expect(copyError.maximum).toBe(2);
+      }
+    });
+
+    it("accepts exactly 2 copies when cardCopyLimit is 2", () => {
+      const deck = createValidDeck();
+      // Replace 2 cards with The Glass Slipper (limit 2)
+      for (let i = 0; i < 2; i++) {
+        deck[i] = createMockCard({
+          id: `glass-slipper-${i}`,
+          name: "The Glass Slipper",
+          version: "Perfect Fit",
+          fullName: "The Glass Slipper - Perfect Fit",
+          cardCopyLimit: 2,
+        });
+      }
+
+      const result = validateDeck(deck);
+      const copyErrors = result.errors.filter(
+        (e) =>
+          e.type === "TOO_MANY_COPIES" &&
+          e.fullName === "The Glass Slipper - Perfect Fit",
       );
 
       expect(copyErrors).toHaveLength(0);
@@ -342,7 +414,15 @@ describe("Spec 1: Foundation & Types", () => {
   describe("Keywords", () => {
     it("detects simple keywords (Bodyguard, Evasive, etc.)", () => {
       const card = createMockCard({
-        keywords: ["Bodyguard", "Ward"],
+        abilities: [
+          {
+            type: "keyword",
+            keyword: "Bodyguard",
+            id: "ab1",
+            text: "Bodyguard",
+          },
+          { type: "keyword", keyword: "Ward", id: "ab2", text: "Ward" },
+        ],
       });
 
       expect(hasKeyword(card, "Bodyguard")).toBe(true);
@@ -352,7 +432,15 @@ describe("Spec 1: Foundation & Types", () => {
 
     it("extracts value from parameterized keywords (Challenger +2)", () => {
       const card = createMockCard({
-        keywords: [{ type: "Challenger", value: 2 }],
+        abilities: [
+          {
+            type: "keyword",
+            keyword: "Challenger",
+            value: 2,
+            id: "ab1",
+            text: "Challenger +2",
+          },
+        ],
       });
 
       expect(getKeywordValue(card, "Challenger")).toBe(2);
@@ -361,10 +449,27 @@ describe("Spec 1: Foundation & Types", () => {
 
     it("handles multiple keywords on same card", () => {
       const card = createMockCard({
-        keywords: [
-          "Bodyguard",
-          { type: "Challenger", value: 2 },
-          { type: "Resist", value: 1 },
+        abilities: [
+          {
+            type: "keyword",
+            keyword: "Bodyguard",
+            id: "ab1",
+            text: "Bodyguard",
+          },
+          {
+            type: "keyword",
+            keyword: "Challenger",
+            value: 2,
+            id: "ab2",
+            text: "Challenger +2",
+          },
+          {
+            type: "keyword",
+            keyword: "Resist",
+            value: 1,
+            id: "ab3",
+            text: "Resist +1",
+          },
         ],
       });
 
@@ -374,7 +479,16 @@ describe("Spec 1: Foundation & Types", () => {
 
     it("detects Shift keyword and extracts cost", () => {
       const card = createMockCard({
-        keywords: [{ type: "Shift", cost: 4, targetName: "Elsa" }],
+        abilities: [
+          {
+            type: "keyword",
+            keyword: "Shift",
+            cost: { ink: 4 },
+            shiftTarget: "Elsa",
+            id: "ab1",
+            text: "Shift 4",
+          },
+        ],
       });
 
       expect(hasShift(card)).toBe(true);
@@ -383,7 +497,15 @@ describe("Spec 1: Foundation & Types", () => {
 
     it("detects Singer keyword and extracts value", () => {
       const card = createMockCard({
-        keywords: [{ type: "Singer", value: 5 }],
+        abilities: [
+          {
+            type: "keyword",
+            keyword: "Singer",
+            value: 5,
+            id: "ab1",
+            text: "Singer 5",
+          },
+        ],
       });
 
       expect(getSingerValue(card)).toBe(5);
@@ -392,7 +514,7 @@ describe("Spec 1: Foundation & Types", () => {
 
   describe("Deck Statistics", () => {
     it("calculates deck statistics correctly", () => {
-      const deck = createValidDeck("amber", "ruby");
+      const deck = createValidDeck(["amber"], "ruby");
       const stats = getDeckStats(deck);
 
       expect(stats.totalCards).toBe(60);

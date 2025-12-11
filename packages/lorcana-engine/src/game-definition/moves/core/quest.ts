@@ -4,7 +4,7 @@ import type {
   LorcanaCardMeta,
   LorcanaGameState,
   LorcanaMoveParams,
-} from "../../../types/move-params";
+} from "../../../types";
 import { and, canQuest, isMainPhase } from "../../../validators";
 
 /**

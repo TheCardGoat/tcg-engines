@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { createPlayerId } from "../branded-types";
+import { createCardId, createPlayerId } from "../branded-types";
 import type { LorcanaState } from "../lorcana-state";
 
 /**
@@ -83,7 +83,7 @@ describe("LorcanaState Type Structure", () => {
 
   it("should track character states including drying status", () => {
     const state = createBaseLorcanaState(["player1"], { phase: "main" });
-    const cardId = "card-character-1";
+    const cardId = createCardId("card-character-1");
 
     state.lorcana.characterStates[cardId] = {
       playedThisTurn: true, // "drying" character (Rule 4.2.2.1)
@@ -99,7 +99,7 @@ describe("LorcanaState Type Structure", () => {
 
   it("should track damage on characters", () => {
     const state = createBaseLorcanaState(["player1"], { phase: "main" });
-    const cardId = "card-character-1";
+    const cardId = createCardId("card-character-1");
 
     state.lorcana.characterStates[cardId] = {
       playedThisTurn: false,
@@ -112,8 +112,8 @@ describe("LorcanaState Type Structure", () => {
 
   it("should track turn metadata including cards played and characters questing", () => {
     const state = createBaseLorcanaState(["player1"], { phase: "main" });
-    const card1 = "card-1";
-    const card2 = "card-2";
+    const card1 = createCardId("card-1");
+    const card2 = createCardId("card-2");
 
     state.lorcana.turnMetadata = {
       cardsPlayedThisTurn: [card1],
@@ -128,8 +128,8 @@ describe("LorcanaState Type Structure", () => {
 
   it("should optionally track challenge state during challenges", () => {
     const state = createBaseLorcanaState(["player1"], { phase: "main" });
-    const attacker = "card-attacker";
-    const defender = "card-defender";
+    const attacker = createCardId("card-attacker");
+    const defender = createCardId("card-defender");
 
     state.lorcana.challengeState = {
       attacker,
@@ -146,7 +146,7 @@ describe("LorcanaState Type Structure", () => {
 
   it("should track location and item states separately from characters", () => {
     const state = createBaseLorcanaState(["player1"], { phase: "main" });
-    const locationId = "card-location-1";
+    const locationId = createCardId("card-location-1");
 
     state.lorcana.permanentStates[locationId] = {
       damage: 2, // Locations can take damage

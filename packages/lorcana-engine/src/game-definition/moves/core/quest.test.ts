@@ -78,14 +78,14 @@ describe("Move: Quest", () => {
 
       // Character should start ready (not exerted)
       const cardMeta = testEngine.getCardMeta(character);
-      expect(cardMeta?.isExerted).toBeFalsy();
+      expect(cardMeta?.state).toBe("ready");
 
       // Quest with the character
       testEngine.quest(character);
 
       // Character should now be exerted
       const newCardMeta = testEngine.getCardMeta(character);
-      expect(newCardMeta?.isExerted).toBe(true);
+      expect(newCardMeta?.state).toBe("exerted");
     });
 
     it("should mark character as having quested", () => {
@@ -384,7 +384,7 @@ describe("Move: Quest", () => {
       testEngine.quest(playZone[0]);
 
       // Game should still be ongoing
-      const state = testEngine.getState();
+      // Game should still be ongoing
       // Note: Win condition check happens at specific points in game flow
       // Just verify lore is less than 20
       expect(testEngine.getLore(PLAYER_ONE)).toBeLessThan(20);

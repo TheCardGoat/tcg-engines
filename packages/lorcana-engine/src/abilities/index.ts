@@ -50,7 +50,6 @@ export type {
 
 // Activated abilities
 export {
-  type ActivatedAbilityError,
   canPayDiscardCost,
   canPayExertCost,
   canPayInkCost,

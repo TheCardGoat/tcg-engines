@@ -60,8 +60,12 @@ import {
   type TriggeredAbilityDefinition,
   validateActivatedAbility,
 } from "../abilities";
-import type { LorcanaCardDefinition } from "../types/card-types";
+import type {
+  AbilityDefinition,
+  LorcanaCardDefinition,
+} from "../types/card-types";
 import type { CardId, PlayerId } from "../types/game-state";
+import type { Keyword } from "../types/keywords";
 import {
   clearDrying,
   createCardInstanceState,
@@ -74,21 +78,69 @@ const cardId = (id: string): CardId => id as CardId;
 
 // Helper to create mock cards
 function createMockCard(
-  overrides: Partial<LorcanaCardDefinition> = {},
+  overrides: Partial<LorcanaCardDefinition> & { keywords?: Keyword[] } = {},
 ): LorcanaCardDefinition {
+  const { keywords, ...rest } = overrides;
+  let abilities: AbilityDefinition[] = rest.abilities || [];
+
+  if (keywords) {
+    const keywordAbilities: AbilityDefinition[] = keywords.map((k, i) => {
+      // 1. Simple Keyword (string)
+      if (typeof k === "string") {
+        return {
+          type: "keyword",
+          keyword: k,
+          id: `kw-${i}`,
+          text: k,
+        } as AbilityDefinition;
+      }
+
+      // 2. Complex/Parameterized Keyword (object)
+      const { type: keywordType, ...kRest } = k;
+
+      // Handle Shift specifically
+      if (keywordType === "Shift") {
+        const shiftCost = (kRest as any).cost;
+        const target = (kRest as any).targetName;
+
+        const shiftAbility = {
+          type: "keyword",
+          keyword: "Shift",
+          cost: typeof shiftCost === "number" ? { ink: shiftCost } : shiftCost,
+          shiftTarget: target,
+          id: `kw-${i}`,
+          text: `Shift ${shiftCost} (${target || ""})`,
+        };
+        return shiftAbility as unknown as AbilityDefinition;
+      }
+
+      // Default for others
+      return {
+        type: "keyword",
+        keyword: keywordType,
+        ...kRest,
+        id: `kw-${i}`,
+        text: `${keywordType} ${(kRest as any).value || ""}`,
+      } as unknown as AbilityDefinition;
+    });
+    abilities = [...abilities, ...keywordAbilities];
+  }
+
   return {
     id: `card-${Math.random().toString(36).slice(2)}`,
     name: "Test Card",
     version: "Test Version",
     fullName: "Test Card - Test Version",
-    inkType: "amber",
+    inkType: ["amber"],
     cost: 3,
     inkable: true,
     cardType: "character",
     strength: 2,
     willpower: 3,
     lore: 1,
-    ...overrides,
+    set: "TFC",
+    abilities,
+    ...rest,
   };
 }
 
@@ -192,7 +244,7 @@ describe("Spec 7: Abilities System", () => {
         player1,
       );
 
-      expect(instance.sourceCardId).toBe("card1");
+      expect(instance.sourceCardId).toBe(cardId("card1"));
       expect(instance.controllerId).toBe(player1);
       expect(instance.isOptional).toBe(false);
       expect(instance.instanceId).toBeDefined();
@@ -381,7 +433,9 @@ describe("Spec 7: Abilities System", () => {
 
       const ability = findActivatedAbility(card, "exertDraw");
       expect(ability).toBeDefined();
-      expect(ability!.id).toBe("exertDraw");
+      if (ability) {
+        expect(ability.id).toBe("exertDraw");
+      }
     });
 
     it("isAbilityFree checks ink cost", () => {
@@ -458,7 +512,7 @@ describe("Spec 7: Abilities System", () => {
         [cardId("target1"), cardId("target2")],
       );
 
-      expect(effect.sourceCardId).toBe("source");
+      expect(effect.sourceCardId).toBe(cardId("source"));
       expect(effect.affectedCardIds).toHaveLength(2);
     });
 
@@ -587,7 +641,9 @@ describe("Spec 7: Abilities System", () => {
       };
       const modified = applyReplacementToEvent(replaceWithEffect, event);
       expect(modified).not.toBeNull();
-      expect(modified!.type).toBe("replaced_damage");
+      if (modified) {
+        expect(modified.type).toBe("replaced_damage");
+      }
     });
 
     it("creates replacement effect", () => {
@@ -619,7 +675,7 @@ describe("Spec 7: Abilities System", () => {
       );
 
       expect(modifier.type).toBe("gain");
-      expect(modifier.targetCardId).toBe("target");
+      expect(modifier.targetCardId).toBe(cardId("target"));
     });
 
     it("'lose' removes ability from card", () => {

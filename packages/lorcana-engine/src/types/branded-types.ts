@@ -3,8 +3,8 @@
  *
  * Task 1.2: Create branded types for domain-specific IDs
  *
- * Branded types provide compile-time type safety by making IDs
- * of different types incompatible, even though they're all strings at runtime.
+ * Re-exports core branded types from @tcg/core for consistency across the monorepo.
+ * Adds Lorcana-specific branded types using the same pattern.
  *
  * @example
  * ```typescript
@@ -16,38 +16,19 @@
  * ```
  */
 
+// Re-export core branded types for consistency
+export type { CardId, GameId, PlayerId, ZoneId } from "@tcg/core";
+
+// Import the Brand type from core for creating additional branded types
+import type { CardId, GameId, PlayerId, ZoneId } from "@tcg/core";
+
 /**
- * Brand<K, T> - Generic branded type helper
+ * AbilityId - Branded string for ability identification (Lorcana-specific)
  *
- * Creates a branded type by intersecting K with a unique brand property.
- * The brand property is never actually present at runtime, it's only for type checking.
+ * Uses the same pattern as @tcg/core branded types for compatibility.
  */
-export type Brand<K, T> = K & { readonly __brand: T };
-
-/**
- * PlayerId - Branded string for player identification
- */
-export type PlayerId = Brand<string, "PlayerId">;
-
-/**
- * CardId - Branded string for card identification
- */
-export type CardId = Brand<string, "CardId">;
-
-/**
- * ZoneId - Branded string for zone identification
- */
-export type ZoneId = Brand<string, "ZoneId">;
-
-/**
- * AbilityId - Branded string for ability identification
- */
-export type AbilityId = Brand<string, "AbilityId">;
-
-/**
- * GameId - Branded string for game identification
- */
-export type GameId = Brand<string, "GameId">;
+declare const abilityIdBrand: unique symbol;
+export type AbilityId = string & { readonly [abilityIdBrand]: "AbilityId" };
 
 /**
  * Create a PlayerId from a string

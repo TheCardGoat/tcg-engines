@@ -4,14 +4,17 @@
  * Implementations for keyword effect logic.
  */
 
-import { hasKeyword, hasRush, hasVanish, hasWard } from "../card-utils";
-import type { LorcanaCardDefinition } from "../types/card-types";
-import type { CardId, PlayerId } from "../types/game-state";
 import {
   getSingerValue,
   getSingTogetherValue,
-  getTotalKeywordValue,
-} from "../types/keywords";
+  getTotalKeyword,
+  hasKeyword,
+  hasRush,
+  hasVanish,
+  hasWard,
+} from "../card-utils";
+import type { LorcanaCardDefinition } from "../types/card-types";
+import type { CardId, PlayerId } from "../types/game-state";
 import type { CardInstanceState } from "../zones/card-state";
 import type {
   SingerPayment,
@@ -186,7 +189,7 @@ export function calculateTotalChallenger(
     amount: number;
   }> = [],
 ): StackingKeywordTotal {
-  const baseValue = getTotalKeywordValue(card.keywords, "Challenger");
+  const baseValue = getTotalKeyword(card, "Challenger");
   const allModifiers = [...additionalModifiers];
 
   const totalValue =
@@ -210,7 +213,7 @@ export function calculateTotalResist(
     amount: number;
   }> = [],
 ): StackingKeywordTotal {
-  const baseValue = getTotalKeywordValue(card.keywords, "Resist");
+  const baseValue = getTotalKeyword(card, "Resist");
   const allModifiers = [...additionalModifiers];
 
   const totalValue =
@@ -236,7 +239,7 @@ export function canSingSong(
   singerState: CardInstanceState,
   songCost: number,
 ): boolean {
-  const singerValue = getSingerValue(singerCard.keywords);
+  const singerValue = getSingerValue(singerCard);
   if (singerValue === null || singerValue < songCost) {
     return false;
   }
@@ -271,8 +274,8 @@ export function canSingTogether(
 
   // Calculate combined Singer/Sing Together value
   const totalValue = singers.reduce((sum, { card }) => {
-    const singerVal = getSingerValue(card.keywords) ?? 0;
-    const singTogetherVal = getSingTogetherValue(card.keywords) ?? 0;
+    const singerVal = getSingerValue(card) ?? 0;
+    const singTogetherVal = getSingTogetherValue(card) ?? 0;
     return sum + Math.max(singerVal, singTogetherVal);
   }, 0);
 
@@ -288,8 +291,8 @@ export function createSingerPayment(
   songCost: number,
 ): SingerPayment {
   const totalValue = singerCards.reduce((sum, card) => {
-    const singerVal = getSingerValue(card.keywords) ?? 0;
-    const singTogetherVal = getSingTogetherValue(card.keywords) ?? 0;
+    const singerVal = getSingerValue(card) ?? 0;
+    const singTogetherVal = getSingTogetherValue(card) ?? 0;
     return sum + Math.max(singerVal, singTogetherVal);
   }, 0);
 

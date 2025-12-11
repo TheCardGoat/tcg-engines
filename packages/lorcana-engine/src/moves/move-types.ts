@@ -77,7 +77,28 @@ export type MoveValidationError =
   | { type: "CARD_NOT_FOUND" }
   | { type: "SINGER_NOT_DRY" }
   | { type: "SINGER_VALUE_TOO_LOW"; singerValue: number; songCost: number }
-  | { type: "NOT_A_SONG" };
+  | { type: "NOT_A_SONG" }
+  | { type: "NOT_YOUR_CHARACTER" }
+  | { type: "NOT_IN_PLAY" }
+  | { type: "NOT_A_CHARACTER" }
+  | { type: "NOT_READY" }
+  | { type: "NOT_DRY" }
+  | { type: "HAS_RECKLESS" }
+  | { type: "INVALID_TARGET" }
+  | { type: "TARGET_NOT_IN_PLAY" }
+  | { type: "CANNOT_CHALLENGE_OWN" }
+  | { type: "TARGET_NOT_EXERTED" }
+  | { type: "BODYGUARD_BLOCKING"; bodyguardId: CardId }
+  | { type: "NOT_YOUR_CARD" }
+  | { type: "CARD_NOT_READY" }
+  | { type: "CARD_IS_DRYING" }
+  | {
+      type: "INSUFFICIENT_CARDS_TO_DISCARD";
+      required: number;
+      available: number;
+    }
+  | { type: "ABILITY_NOT_FOUND"; abilityId: string }
+  | { type: "CUSTOM_COST_NOT_MET" };
 
 /**
  * Cost calculation result

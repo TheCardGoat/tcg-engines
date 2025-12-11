@@ -8,15 +8,16 @@
  * - Actions resolve then discard
  */
 
-import { isSong } from "../card-utils";
-import type { TurnTrackers } from "../flow/turn-types";
-import type { LorcanaCardDefinition } from "../types/card-types";
-import type { CardId } from "../types/game-state";
 import {
-  getShiftKeyword,
+  getShiftCost,
+  getShiftTargetName,
   getSingerValue,
   getSingTogetherValue,
-} from "../types/keywords";
+  isSong,
+} from "../card-utils";
+import type { TurnTrackers } from "../flow/turn-types";
+import type { LorcanaCardDefinition } from "../types/card-types";
+
 import type { CardInstanceState } from "../zones/card-state";
 import {
   type CostCalculation,
@@ -56,9 +57,8 @@ export function calculateCost(
 
   // If using Shift, use shift cost instead
   if (isShiftPayment(payment)) {
-    const shiftKeyword = getShiftKeyword(card.keywords);
-    if (shiftKeyword) {
-      const shiftCost = shiftKeyword.cost;
+    const shiftCost = getShiftCost(card);
+    if (shiftCost !== null) {
       // Shift cost replaces base cost, but modifiers still apply
       const totalIncreases = increases.reduce((sum, m) => sum + m.amount, 0);
       const totalReductions = reductions.reduce((sum, m) => sum + m.amount, 0);
@@ -97,9 +97,9 @@ export function validateShiftPayment(
   targetCard: LorcanaCardDefinition | undefined,
   targetCardState: CardInstanceState | undefined,
 ): MoveValidationResult {
-  const shiftKeyword = getShiftKeyword(cardToPlay.keywords);
+  const shiftTargetName = getShiftTargetName(cardToPlay);
 
-  if (!shiftKeyword) {
+  if (shiftTargetName === null) {
     return invalidMove({
       type: "INVALID_SHIFT_TARGET",
       reason: "Card does not have Shift keyword",
@@ -114,10 +114,10 @@ export function validateShiftPayment(
   }
 
   // Target must have matching name
-  if (targetCard.name !== shiftKeyword.targetName) {
+  if (targetCard.name !== shiftTargetName) {
     return invalidMove({
       type: "INVALID_SHIFT_TARGET",
-      expectedName: shiftKeyword.targetName,
+      expectedName: shiftTargetName,
       actualName: targetCard.name,
     });
   }
@@ -159,7 +159,7 @@ export function validateSingerPayment(
   }
 
   // Singer must have Singer keyword with sufficient value
-  const singerValue = getSingerValue(singerCard.keywords);
+  const singerValue = getSingerValue(singerCard);
   if (singerValue === null) {
     return invalidMove({
       type: "INVALID_SINGER",
@@ -201,7 +201,7 @@ export function validateSingTogetherPayment(
       return invalidMove({ type: "SINGER_NOT_DRY" });
     }
 
-    const singTogetherValue = getSingTogetherValue(card.keywords);
+    const singTogetherValue = getSingTogetherValue(card);
     if (singTogetherValue === null) {
       return invalidMove({
         type: "INVALID_SINGER",
@@ -231,7 +231,7 @@ export function validatePlayCard(
   isInHand: boolean,
   payment: PaymentMethod,
   availableInk: number,
-  turnTrackers: TurnTrackers,
+  _turnTrackers: TurnTrackers,
   isActivePlayer: boolean,
   isMainPhase: boolean,
   costModifiers?: CostModifier[],
@@ -283,10 +283,7 @@ export function validatePlayCard(
       });
     }
   } else if (isShiftPayment(payment)) {
-    if (!context?.targetCard || !context?.targetCardState) {
-      // Missing context for validation
-      errors.push({ type: "INVALID_PAYMENT_METHOD" as const });
-    } else {
+    if (context?.targetCard && context?.targetCardState) {
       const shiftResult = validateShiftPayment(
         card,
         context.targetCard,
@@ -295,11 +292,12 @@ export function validatePlayCard(
       if (!shiftResult.valid) {
         errors.push(...shiftResult.errors);
       }
+    } else {
+      // Missing context for validation
+      errors.push({ type: "INVALID_PAYMENT_METHOD" as const });
     }
   } else if (isSingerPayment(payment)) {
-    if (!context?.singerCard || !context?.singerState) {
-      errors.push({ type: "INVALID_PAYMENT_METHOD" as const });
-    } else {
+    if (context?.singerCard && context?.singerState) {
       const singerResult = validateSingerPayment(
         card,
         context.singerCard,
@@ -308,11 +306,11 @@ export function validatePlayCard(
       if (!singerResult.valid) {
         errors.push(...singerResult.errors);
       }
+    } else {
+      errors.push({ type: "INVALID_PAYMENT_METHOD" as const });
     }
   } else if (isSingTogetherPayment(payment)) {
-    if (!context?.singers) {
-      errors.push({ type: "INVALID_PAYMENT_METHOD" as const });
-    } else {
+    if (context?.singers) {
       const singTogetherResult = validateSingTogetherPayment(
         card,
         context.singers,
@@ -320,6 +318,8 @@ export function validatePlayCard(
       if (!singTogetherResult.valid) {
         errors.push(...singTogetherResult.errors);
       }
+    } else {
+      errors.push({ type: "INVALID_PAYMENT_METHOD" as const });
     }
   }
 

@@ -8,30 +8,15 @@
  */
 
 import { hasRush, isItem } from "../card-utils";
-import type { MoveValidationResult } from "../moves/move-types";
+import type {
+  MoveValidationError,
+  MoveValidationResult,
+} from "../moves/move-types";
 import { invalidMove, validMove } from "../moves/move-types";
 import type { LorcanaCardDefinition } from "../types/card-types";
-import type { CardId, PlayerId } from "../types/game-state";
+import type { PlayerId } from "../types/game-state";
 import type { CardInstanceState } from "../zones/card-state";
 import type { AbilityCost, ActivatedAbilityDefinition } from "./ability-types";
-
-/**
- * Validation error types for activated abilities
- */
-export type ActivatedAbilityError =
-  | { type: "NOT_IN_PLAY" }
-  | { type: "NOT_YOUR_CARD" }
-  | { type: "NOT_MAIN_PHASE" }
-  | { type: "CARD_NOT_READY" }
-  | { type: "CARD_IS_DRYING" }
-  | { type: "INSUFFICIENT_INK"; required: number; available: number }
-  | {
-      type: "INSUFFICIENT_CARDS_TO_DISCARD";
-      required: number;
-      available: number;
-    }
-  | { type: "ABILITY_NOT_FOUND"; abilityId: string }
-  | { type: "CUSTOM_COST_NOT_MET" };
 
 /**
  * Check if an exert cost can be paid
@@ -90,7 +75,7 @@ export function validateActivatedAbility(
   availableInk: number,
   handSize: number,
 ): MoveValidationResult {
-  const errors: ActivatedAbilityError[] = [];
+  const errors: MoveValidationError[] = [];
 
   // Must be active player's card
   if (cardOwner !== activePlayerId) {
@@ -185,9 +170,8 @@ export function getActivatedAbilities(
 ): ActivatedAbilityDefinition[] {
   const abilities = card.abilities ?? [];
   return abilities.filter(
-    (a): a is ActivatedAbilityDefinition & { text: string } =>
-      a.type === "activated",
-  ) as ActivatedAbilityDefinition[];
+    (a): boolean => a.type === "activated",
+  ) as unknown as ActivatedAbilityDefinition[];
 }
 
 /**
