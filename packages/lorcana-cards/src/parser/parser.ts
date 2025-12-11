@@ -9,7 +9,12 @@
  */
 
 import { classifyAbility } from "./classifier";
-import { getManualEntries, tooComplexText } from "./manual-overrides";
+import {
+  getManualEntries,
+  resolveManualOverrideValues,
+  tooComplexText,
+} from "./manual-overrides";
+import { normalizeToPattern } from "./numeric-extractor";
 import { parseActionAbility } from "./parsers/action-parser";
 import { parseActivatedAbility } from "./parsers/activated-parser";
 import { parseKeywordAbility } from "./parsers/keyword-parser";
@@ -71,14 +76,26 @@ export function parseAbilityText(
   }
 
   // Step 1.5: Check for manual override (complex texts that bypass parsing)
-  if (tooComplexText(normalizedText)) {
-    const manualEntries = getManualEntries(normalizedText);
+  // Use pattern matching (convert numbers to {d}) to find entry
+  const patternText = normalizeToPattern(normalizedText);
+
+  if (tooComplexText(patternText)) {
+    const manualEntries = getManualEntries(patternText);
     if (manualEntries && manualEntries.length > 0) {
       // Return the first ability for single-parse compatibility
       // Use parseAbilityTextMulti for full multi-ability support
+
+      // Resolve numeric values using original text
+      const entry = manualEntries[0];
+      const resolvedEntry = resolveManualOverrideValues(
+        entry,
+        text,
+        patternText,
+      );
+
       return {
         success: true,
-        ability: manualEntries[0],
+        ability: resolvedEntry as AbilityWithText,
       };
     }
     return {
@@ -184,12 +201,24 @@ export function parseAbilityTextMulti(
   }
 
   // Step 2: Check for manual override (complex texts that bypass parsing)
-  if (tooComplexText(normalizedText)) {
-    const manualEntries = getManualEntries(normalizedText);
+  // Use pattern matching (convert numbers to {d}) to find entry
+  const patternText = normalizeToPattern(normalizedText);
+
+  if (tooComplexText(patternText)) {
+    const manualEntries = getManualEntries(patternText);
     if (manualEntries && manualEntries.length > 0) {
+      // Resolve numeric values using original text
+      const resolvedEntries = resolveManualOverrideValues(
+        manualEntries,
+        text,
+        patternText,
+      );
+
       return {
         success: true,
-        abilities: manualEntries,
+        abilities: Array.isArray(resolvedEntries)
+          ? resolvedEntries
+          : [resolvedEntries as AbilityWithText],
       };
     }
     return {

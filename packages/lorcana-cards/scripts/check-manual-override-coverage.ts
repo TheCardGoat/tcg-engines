@@ -5,9 +5,9 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { MANUAL_ENTRIES } from "../../src/parser/manual-overrides";
-import { normalizeToPattern } from "../../src/parser/numeric-extractor";
-import { normalizeText } from "../../src/parser/preprocessor";
+import { MANUAL_ENTRIES } from "../src/parser/manual-overrides";
+import { normalizeToPattern } from "../src/parser/numeric-extractor";
+import { normalizeText } from "../src/parser/preprocessor";
 import { hasManualOverride } from "./generators/parser-validator";
 import type { CanonicalCard } from "./types";
 
@@ -15,6 +15,13 @@ const CANONICAL_CARDS_PATH = path.resolve(
   __dirname,
   "../src/data/canonical-cards.json",
 );
+
+function stripAllParentheses(text: string): string {
+  return text
+    .replace(/\([^)]*\)/g, "")
+    .trim()
+    .replace(/\s+/g, " ");
+}
 
 function main(): void {
   const cards = JSON.parse(
@@ -30,14 +37,16 @@ function main(): void {
     if (hasManualOverride(card)) {
       cardsWithOverrides.push(card.fullName);
       // Find which key matched
-      const normalizedFull = normalizeText(card.rulesText.replace(/\n/g, " "));
+      const fullText = stripAllParentheses(card.rulesText.replace(/\n/g, " "));
+      const normalizedFull = normalizeText(fullText);
       const patternFull = normalizeToPattern(normalizedFull);
       if (patternFull in MANUAL_ENTRIES) {
         matchedKeys.add(patternFull);
       } else {
         const lines = card.rulesText.split("\n").filter((l) => l.trim());
         for (const line of lines) {
-          const normalized = normalizeText(line.trim());
+          const stripped = stripAllParentheses(line.trim());
+          const normalized = normalizeText(stripped);
           const pattern = normalizeToPattern(normalized);
           if (pattern in MANUAL_ENTRIES) {
             matchedKeys.add(pattern);

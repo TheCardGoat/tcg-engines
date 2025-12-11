@@ -22,7 +22,7 @@
  * type system extensions.
  */
 
-import { extractNumericValues } from "./numeric-extractor";
+import { extractNumericValues, replacePlaceholders } from "./numeric-extractor";
 import type { AbilityWithText } from "./types";
 
 /**
@@ -138,10 +138,10 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #3 - Score: 10.0 - Cost reduction + triggered draw/discard
-  "NOW IT'S A PARTY For each character you have in play, you pay {I} less to play this character. HOW'S PICKINGS? When you play this character, you may draw a card for each other character you have in play, then choose and ddiscard that many cards.":
+  "NOW IT'S A PARTY For each character you have in play, you pay {d} {I} less to play this character. HOW'S PICKINGS? When you play this character, you may draw a card for each other character you have in play, then choose and discard that many cards.":
     manualEntries([
       {
-        text: "NOW IT'S A PARTY For each character you have in play, you pay {I} less to play this character.",
+        text: "NOW IT'S A PARTY For each character you have in play, you pay {d} {I} less to play this character.",
         name: "NOW IT'S A PARTY",
         ability: {
           type: "static",
@@ -152,7 +152,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
         },
       },
       {
-        text: "HOW'S PICKINGS? When you play this character, you may draw a card for each other character you have in play, then choose and ddiscard that many cards.",
+        text: "HOW'S PICKINGS? When you play this character, you may draw a card for each other character you have in play, then choose and discard that many cards.",
         name: "HOW'S PICKINGS?",
         ability: {
           type: "triggered",
@@ -389,9 +389,9 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #10 - Score: 8.5 - Complex triggered with variable draw
-  "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of a chosen Ally character of yours. If you do, choose and discard {d} cards and banish that character.":
+  "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of chosen Ally character of yours. If you do, choose and discard {d} cards and banish that character.":
     manualEntry({
-      text: "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of a chosen Ally character of yours. If you do, choose and discard {d} cards and banish that character.",
+      text: "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of chosen Ally character of yours. If you do, choose and discard {d} cards and banish that character.",
       name: "STICK WITH ME",
       ability: {
         type: "triggered",
@@ -456,9 +456,9 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #12 - Score: 8.5 - Activated with named character buff + conditional
-  "DISPEL THE ENTANGLEMENT Banish this item − Chosen character named Beast gets +{d} {L} this turn. If you have a character named Belle in play, move up to {d} damage counters from chosen character to chosen opposing character.":
+  "DISPEL THE ENTANGLEMENT Banish this item — Chosen character named Beast gets +{d} {L} this turn. If you have a character named Belle in play, move up to {d} damage counters from chosen character to chosen opposing character.":
     manualEntry({
-      text: "DISPEL THE ENTANGLEMENT Banish this item − Chosen character named Beast gets +{d} {L} this turn. If you have a character named Belle in play, move up to {d} damage counters from chosen character to chosen opposing character.",
+      text: "DISPEL THE ENTANGLEMENT Banish this item — Chosen character named Beast gets +{d} {L} this turn. If you have a character named Belle in play, move up to {d} damage counters from chosen character to chosen opposing character.",
       name: "DISPEL THE ENTANGLEMENT",
       ability: {
         type: "activated",
@@ -572,9 +572,9 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #16 - Score: 8.0 - Activated look-at + put-in-hand
-  "FIND WHAT'S HIDDEN {E}, {d} {I} - Look at the top {d} cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.":
+  "FIND WHAT'S HIDDEN {E}, {d} {I} — Look at the top {d} cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.":
     manualEntry({
-      text: "FIND WHAT'S HIDDEN {E}, {d} {I} - Look at the top {d} cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+      text: "FIND WHAT'S HIDDEN {E}, {d} {I} — Look at the top {d} cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.",
       name: "FIND WHAT'S HIDDEN",
       ability: {
         type: "activated",
@@ -593,7 +593,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #17 - Score: 8.0 - Two location static abilities
-  'FOREST HOME Your characters named Robin Hood may move here for free. FAMILIAR TERRAIN Characters gain Ward and "{E} ,{d} {I} −Deal {d} damage to chosen damaged character" while here.':
+  'FOREST HOME Your characters named Robin Hood may move here for free. FAMILIAR TERRAIN Characters gain Ward and “{E}, {d} {I} — Deal {d} damage to chosen damaged character” while here.':
     manualEntries([
       {
         text: "FOREST HOME Your characters named Robin Hood may move here for free.",
@@ -607,7 +607,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
         },
       },
       {
-        text: 'FAMILIAR TERRAIN Characters gain Ward and "{E} ,{d} {I} −Deal {d} damage to chosen damaged character" while here.',
+        text: 'FAMILIAR TERRAIN Characters gain Ward and “{E}, {d} {I} — Deal {d} damage to chosen damaged character” while here.',
         name: "FAMILIAR TERRAIN",
         ability: {
           type: "static",
@@ -634,7 +634,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     ]),
 
   // #18 - Score: 8.0 - Two activated item abilities
-  "THE CAULDRON CALLS {E}, {d} {I} — Put a character card from your discard under this item faceup. RISE AND JOIN ME! {E}, {d} {I} — This turn, you may play characters from under this item.":
+  "THE CAULDRON CALLS {E}, {d} {I} — Put a character card from your discard under this item faceup. RISE AND JOIN ME! {E}, {d} {I} – This turn, you may play characters from under this item.":
     manualEntries([
       {
         text: "THE CAULDRON CALLS {E}, {d} {I} — Put a character card from your discard under this item faceup.",
@@ -651,7 +651,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
         },
       },
       {
-        text: "RISE AND JOIN ME! {E}, {d} {I} — This turn, you may play characters from under this item.",
+        text: "RISE AND JOIN ME! {E}, {d} {I} – This turn, you may play characters from under this item.",
         name: "RISE AND JOIN ME!",
         ability: {
           type: "activated",
@@ -2723,72 +2723,103 @@ export function resolveManualOverrideValues(
   normalizedText: string,
 ): ManualEntry {
   // Extract numeric values from original text
-  const values = extractNumericValues(originalText, normalizedText);
+  const allValues = extractNumericValues(originalText, normalizedText);
 
   // If extraction failed, return entry as-is
-  if (values.length === 0) {
+  if (allValues.length === 0) {
     return entry;
   }
 
   // Deep clone the entry to avoid mutating the original
   const resolved = JSON.parse(JSON.stringify(entry)) as ManualEntry;
 
-  // Replace {d} in text fields and 0 in numeric fields
-  let valueIndex = 0;
+  let globalValueIndex = 0;
 
-  function replacePlaceholders(obj: any, depth = 0): void {
-    if (typeof obj !== "object" || obj === null) {
-      return;
-    }
+  // Helper to replace values in structure (numeric fields only)
+  function fillNumericFields(obj: any, availableValues: number[]) {
+    let localIndex = 0;
 
-    // First, replace {d} in text fields
-    if (typeof obj.text === "string" && obj.text.includes("{d}")) {
-      // Replace {d} placeholders in text
-      obj.text = obj.text.replace(/\{d\}/g, () => {
-        if (valueIndex < values.length) {
-          return values[valueIndex++].toString();
+    function traverse(item: any) {
+      if (typeof item !== "object" || item === null) return;
+
+      const numericFields = [
+        "amount",
+        "value",
+        "modifier",
+        "size",
+        "count",
+        "ink",
+      ];
+
+      // Process numeric fields
+      for (const field of numericFields) {
+        if (
+          typeof item[field] === "number" &&
+          item[field] === 0 &&
+          localIndex < availableValues.length
+        ) {
+          item[field] = availableValues[localIndex++];
         }
-        return "{d}";
-      });
-    }
+      }
 
-    // Then, handle numeric fields
-    // Common fields that might have placeholders: amount, value, modifier, size, count, ink
-    const numericFields = [
-      "amount",
-      "value",
-      "modifier",
-      "size",
-      "count",
-      "ink",
-    ];
-    for (const field of numericFields) {
-      if (
-        typeof obj[field] === "number" &&
-        obj[field] === 0 &&
-        valueIndex < values.length
-      ) {
-        // Replace 0 with extracted value
-        obj[field] = values[valueIndex++];
+      // Recurse
+      for (const key in item) {
+        if (key !== "text" && !numericFields.includes(key)) {
+          // Skip text and already processed fields
+          traverse(item[key]);
+        }
       }
     }
 
-    // Recursively process nested objects and arrays
-    for (const key in obj) {
-      if (key !== "text" && !numericFields.includes(key)) {
-        if (Array.isArray(obj[key])) {
-          obj[key].forEach((item: any) => replacePlaceholders(item, depth + 1));
-        } else if (typeof obj[key] === "object") {
-          replacePlaceholders(obj[key], depth + 1);
-        }
+    traverse(obj);
+  }
+
+  function processEntry(obj: any) {
+    if (typeof obj !== "object" || obj === null) return;
+
+    // Check if this object has text with placeholders
+    if (typeof obj.text === "string" && obj.text.includes("{d}")) {
+      // Count placeholders
+      const matches = obj.text.match(/\{d\}/g);
+      const count = matches ? matches.length : 0;
+
+      if (count > 0) {
+        // Slice values for this entry
+        const entryValues = allValues.slice(
+          globalValueIndex,
+          globalValueIndex + count,
+        );
+        globalValueIndex += count;
+
+        // Replace in text
+        obj.text = replacePlaceholders(obj.text, entryValues);
+
+        // Replace in structure (using SAME values)
+        fillNumericFields(obj, entryValues);
+
+        // Do not recurse for further text processing inside this object?
+        // Assume nested objects don't define new text blocks that consume values?
+        // ManualEntries usually only have text at top level of AbilityWithText.
+        return;
+      }
+    }
+
+    // If no text or no placeholders, maybe children have them?
+    // E.g. array of abilities
+    if (Array.isArray(obj)) {
+      obj.forEach((item: any) => processEntry(item));
+    } else {
+      // Recurse object properties
+      for (const key in obj) {
+        processEntry(obj[key]);
       }
     }
   }
 
   if (Array.isArray(resolved)) {
-    resolved.forEach((item) => replacePlaceholders(item));
+    resolved.forEach((item) => processEntry(item));
   } else {
-    replacePlaceholders(resolved);
+    processEntry(resolved);
   }
 
   return resolved;
