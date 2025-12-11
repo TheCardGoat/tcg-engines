@@ -12,13 +12,20 @@ export * from "./card-types";
 export * from "./classifications";
 export * from "./deck-validation";
 
-// Game state - exclude PlayerId/CardId/ZoneId (use branded-types) and CharacterState (use lorcana-state)
-export {
+// Game state - exclude PlayerId/CardId/ZoneId (use branded-types)
+export type {
   ActiveEffect,
   BagEntry,
-  createDefaultCharacterState,
-  createInitialLorcanaState,
+  CardReadyState,
+  LorcanaCardMeta,
+  LorcanaExternalState,
   LorcanaGameState,
+  StackPosition,
+} from "./game-state";
+
+export {
+  createDefaultCardMeta,
+  createInitialLorcanaState,
 } from "./game-state";
 
 // Spec 1: Foundation & Types
@@ -29,8 +36,7 @@ export * from "./keywords";
 export * from "./lorcana-state";
 
 // Move params - exclude LorcanaGameState to avoid conflict with game-state.ts
-export {
-  LorcanaCardMeta,
+export type {
   LorcanaMoveParams,
   PlayCardCost,
 } from "./move-params";

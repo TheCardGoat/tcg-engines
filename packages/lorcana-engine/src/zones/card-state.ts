@@ -9,39 +9,20 @@
  */
 
 import type { CardId } from "@tcg/core";
-
-/** Card ready/exerted state */
-export type CardReadyState = "ready" | "exerted";
-
-/**
- * Stack position for shifted cards (Rule 5.1.5-5.1.7)
- */
-export interface StackPosition {
-  /** Is this card underneath another card? */
-  isUnder: boolean;
-  /** If this is the top card, what's its ID? */
-  topCardId?: CardId;
-  /** If this is the top card, IDs of cards underneath */
-  cardsUnderneath?: CardId[];
-}
+import type {
+  CardReadyState,
+  LorcanaCardMeta,
+  StackPosition,
+} from "../types/game-state";
 
 /**
  * Runtime state for a card instance in play
+ * Combines the stored metadata with the instance ID for logical operations
  */
-export interface CardInstanceState {
+export type CardInstanceState = LorcanaCardMeta & {
   /** Unique instance ID */
   cardId: CardId;
-  /** Ready or exerted (Rule 5.1.1-5.1.2) */
-  state: CardReadyState;
-  /** Damage counters (Rule 5.1.3-5.1.4) */
-  damage: number;
-  /** Drying = summoning sickness - can't quest/challenge/use exert abilities */
-  isDrying: boolean;
-  /** Stack position for Shift (Rule 5.1.5-5.1.7) */
-  stackPosition?: StackPosition;
-  /** Location this character is at (if any) */
-  atLocationId?: CardId;
-}
+};
 
 /**
  * Create default card instance state for a newly played card

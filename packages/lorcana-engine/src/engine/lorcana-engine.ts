@@ -428,7 +428,7 @@ export class LorcanaEngine extends RuleEngine<
   ): MoveParameterOptions | null {
     // Get all valid player IDs from game state
     const state = this.getState();
-    const validPlayers = Object.keys(state.loreScores) as PlayerId[];
+    const validPlayers = Object.keys(state.external.loreScores) as PlayerId[];
 
     // For each valid player choice, check if the move can be executed
     const validCombinations: Array<{ playerId: PlayerId }> = [];

@@ -26,10 +26,10 @@ export const resolveBag = createMove<
 >({
   condition: (state, _context) => {
     // Only available when there are bags to resolve
-    return state.bag && state.bag.length > 0;
+    return state.external.bag && state.external.bag.length > 0;
   },
   reducer: (draft, context) => {
     const { bagId } = context.params;
-    draft.bag = draft.bag.filter((b) => b.id !== bagId);
+    draft.external.bag = draft.external.bag.filter((b) => b.id !== bagId);
   },
 });

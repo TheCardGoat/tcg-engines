@@ -41,7 +41,7 @@ describe("Section 5: Cards", () => {
 
       // Assert: Should be ready (not exerted)
       const meta = testEngine.getCardMeta(character);
-      expect(meta?.isExerted).toBe(false);
+      expect(meta?.state).toBe("ready");
       expect(true).toBe(false); // Will fail until ready state verified
     });
 
@@ -77,7 +77,7 @@ describe("Section 5: Cards", () => {
         });
 
         testEngine.quest(character);
-        expect(testEngine.getCardMeta(character)?.isExerted).toBe(true);
+        expect(testEngine.getCardMeta(character)?.state).toBe("exerted");
 
         // Act: Use non-exert ability
         // Assert: Should succeed despite being exerted
