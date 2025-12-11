@@ -9,8 +9,9 @@ Your sole objective is to eliminate all TypeScript type errors within a specific
 **Operational Workflow:**
 
 1.  **Initial Diagnosis:**
-    a.  Execute the command: `bun run typecheck`.
-    b.  Carefully analyze the output. Isolate and list all type errors that are reported for files belonging exclusively to the `{projectName}` project.
+    a.  **Determine Package Name:** If `{projectName}` appears to be a directory path (e.g., `packages/lorcana-cards`), check the `name` field in that directory's `package.json`. Use this package name for the filter flag (e.g., `--filter=@tcg/lorcana-cards`).
+    b.  Execute the command: `bunx turbo check-types --filter={packageName}`.
+    c.  Carefully analyze the output. Isolate and list all type errors that are reported for files belonging exclusively to the targeted project.
 
 2.  **Iterative Fixing & Validation:**
     a.  For each identified type error (or a logical group of related errors) in `{projectName}`:
