@@ -24,6 +24,7 @@ import {
 import { normalizeToPattern } from "../../src/parser/numeric-extractor";
 import { normalizeText } from "../../src/parser/preprocessor";
 import type { CanonicalCard, SetDefinition } from "../types";
+import { normalizeForMatching } from "./parser-validator";
 
 const CARD_TYPES: CardType[] = ["character", "action", "item", "location"];
 
@@ -260,16 +261,9 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
 
     // Check if this card has a manual override entry (complex texts that bypass parsing)
     // Manual overrides are keyed by normalized text with {d} placeholders, so we need to:
-    // 1. Strip parentheses (reminder text) - manual override keys don't have reminder text
-    // 2. Normalize whitespace
-    // 3. Convert numbers to {d} placeholders
-    let fullText = card.rulesText.replace(/\n/g, " ");
-    fullText = fullText
-      .replace(/\([^)]*\)/g, "")
-      .trim()
-      .replace(/\s+/g, " ");
-    const normalizedFullText = normalizeText(fullText);
-    const patternText = normalizeToPattern(normalizedFullText);
+    // Use comprehensive normalization to handle formatting differences
+    const fullText = card.rulesText.replace(/\n/g, " ");
+    const patternText = normalizeForMatching(fullText);
     const isManualOverride = tooComplexText(patternText);
 
     if (isManualOverride) {
