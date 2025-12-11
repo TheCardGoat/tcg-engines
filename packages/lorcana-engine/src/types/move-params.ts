@@ -6,6 +6,7 @@
  */
 
 import type { CardId, PlayerId } from "./branded-types";
+import type { LorcanaCardMeta } from "./game-state";
 
 /**
  * Play Card Cost Types - Discriminated Union
@@ -210,57 +211,6 @@ export type LorcanaMoveParams = {
    * Rule 1.9.1.2: Player can concede at any time
    */
   concede: Record<string, never>;
-};
-
-/**
- * Card Metadata Types
- *
- * Dynamic runtime state for cards in play.
- * Replaces generic `any` metadata with explicit types.
- */
-export type LorcanaCardMeta = {
-  /**
-   * Exerted status
-   *
-   * Rule 5.1.2: Cards can be exerted (turned sideways)
-   */
-  isExerted?: boolean;
-
-  /**
-   * Played this turn (for "drying" characters)
-   *
-   * Rule 4.2.2.1: Characters are "drying" the turn they're played
-   */
-  playedThisTurn?: boolean;
-
-  /**
-   * Damage counters
-   *
-   * Rule 9: Damage represented by counters on cards
-   */
-  damage?: number;
-
-  /**
-   * Attached to another card (for items attached to characters)
-   */
-  attachedTo?: CardId;
-
-  /**
-   * Effects currently applied to this card
-   */
-  effectsApplied?: string[];
-
-  /**
-   * At a location (for characters at locations)
-   *
-   * Rule 6.5: Characters can move to locations
-   */
-  atLocation?: CardId;
-
-  /**
-   * Custom metadata for specific card effects
-   */
-  [key: string]: unknown;
 };
 
 // LorcanaGameState is exported from game-state.ts - import from there

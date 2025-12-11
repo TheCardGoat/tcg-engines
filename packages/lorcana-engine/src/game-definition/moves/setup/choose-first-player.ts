@@ -72,7 +72,7 @@ export const chooseWhoGoesFirstMove = createMove<
     }
 
     // 4. Validate player exists in the game
-    const validPlayers = Object.keys(state.loreScores) as PlayerId[];
+    const validPlayers = Object.keys(state.external.loreScores) as PlayerId[];
     if (!validPlayers.includes(playerId)) {
       return {
         reason: `Invalid player ID: ${playerId}. Valid players: ${validPlayers.join(", ")}`,
@@ -95,7 +95,7 @@ export const chooseWhoGoesFirstMove = createMove<
     // All players can mulligan after first player is chosen
     // Get all player IDs from the game state
     context.game.setPendingMulligan(
-      Object.keys(draft.loreScores) as PlayerId[],
+      Object.keys(draft.external.loreScores) as PlayerId[],
     );
 
     if (context.flow) {

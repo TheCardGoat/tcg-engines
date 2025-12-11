@@ -93,14 +93,14 @@ describe("Section 4: Turn Structure", () => {
 
           // Exert the character (e.g., by questing)
           testEngine.quest(character);
-          expect(testEngine.getCardMeta(character)?.isExerted).toBe(true);
+          expect(testEngine.getCardMeta(character)?.state).toBe("exerted");
 
           // Act: Pass turn and come back (triggers ready step)
           testEngine.passTurn();
           testEngine.passTurn();
 
           // Assert: Character should be ready
-          expect(testEngine.getCardMeta(character)?.isExerted).toBe(false);
+          expect(testEngine.getCardMeta(character)?.state).toBe("ready");
           expect(true).toBe(false); // Verify with actual ready step
         },
       );
@@ -455,7 +455,7 @@ describe("Section 4: Turn Structure", () => {
         testEngine.quest(character);
 
         // Assert: Character should be exerted
-        expect(testEngine.getCardMeta(character)?.isExerted).toBe(true);
+        expect(testEngine.getCardMeta(character)?.state).toBe("exerted");
         expect(true).toBe(false); // Verify with actual implementation
       });
 

@@ -23,8 +23,12 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.0.4",
+    "@commitlint/cli": "^20.2.0",
+    "@commitlint/config-conventional": "^20.2.0",
     "@evilmartians/lefthook": "1.11.2",
     "@types/seedrandom": "^3.0.8",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "turbo": "2.6.3",
     "typescript": "5.9.3"
   },
@@ -33,5 +37,10 @@
     "pino": "^9.4.0",
     "pino-pretty": "^11.2.2",
     "seedrandom": "^3.0.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
