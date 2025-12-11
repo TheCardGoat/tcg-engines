@@ -219,6 +219,12 @@ export interface TriggeredAbility {
    */
   name?: string;
 
+  /**
+   * If true, this trigger can fire even if the card is not in play
+   * e.g., "When this character is banished..."
+   */
+  isFloating?: boolean;
+
   /** When the ability triggers */
   trigger: Trigger;
 

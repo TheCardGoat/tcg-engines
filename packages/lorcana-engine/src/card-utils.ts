@@ -75,7 +75,6 @@ function getKeywordAbilities(
     (a): a is KeywordAbilityDefinition => a.type === "keyword",
   );
 }
-
 /**
  * Check if a card has a specific keyword
  */

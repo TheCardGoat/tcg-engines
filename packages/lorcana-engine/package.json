@@ -31,7 +31,8 @@
   },
   "dependencies": {
     "@tcg/core": "workspace:*",
-    "immer": "11.0.1"
+    "immer": "11.0.1",
+    "jscpd": "^4.0.5"
   },
   "devDependencies": {
     "@biomejs/biome": "2.0.4",

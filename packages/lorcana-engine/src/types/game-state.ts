@@ -6,6 +6,8 @@
  */
 
 import type { CardId, IState, PlayerId } from "@tcg/core";
+export type { CardId, PlayerId };
+
 import type { LorcanaCardDefinition } from "./card-types";
 
 /** Card ready/exerted state */

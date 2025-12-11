@@ -9,11 +9,7 @@
  */
 
 import type { CardId } from "@tcg/core";
-import type {
-  CardReadyState,
-  LorcanaCardMeta,
-  StackPosition,
-} from "../types/game-state";
+import type { CardReadyState, LorcanaCardMeta } from "../types/game-state";
 
 /**
  * Runtime state for a card instance in play
@@ -103,8 +99,7 @@ export function isTopOfStack(cardState: CardInstanceState): boolean {
  * Check if card is under another card in a stack
  */
 export function isUnderCard(cardState: CardInstanceState): boolean {
-  const stack = cardState.stackPosition;
-  return stack !== undefined && stack.isUnder;
+  return cardState.stackPosition?.isUnder ?? false;
 }
 
 /**

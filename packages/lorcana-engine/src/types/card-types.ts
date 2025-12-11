@@ -349,6 +349,7 @@ export function isLocationCard(card: LorcanaCard): card is LocationCard {
  * Use `LorcanaCard` discriminated union for type-safe access to
  * card-type-specific properties.
  *
+>>>>>>> main
  * All card properties including:
  * - id, name, version, fullName
  * - inkType (single or dual)
@@ -357,7 +358,11 @@ export function isLocationCard(card: LorcanaCard): card is LocationCard {
  * - Character-specific: strength, willpower, lore, classifications
  * - Action-specific: actionSubtype (Song)
  * - Location-specific: moveCost
+<<<<<<< HEAD
+ * - keywords, abilities
+=======
  * - abilities
+>>>>>>> main
  */
 export interface LorcanaCardDefinition {
   /** Unique identifier for the card */
