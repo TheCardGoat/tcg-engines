@@ -67,7 +67,10 @@ export type MoveValidationError =
   | { type: "CARD_NOT_INKABLE" }
   | { type: "INSUFFICIENT_INK"; required: number; available: number }
   | { type: "INVALID_SHIFT_TARGET"; reason: string }
+  | { type: "INVALID_SHIFT_TARGET"; expectedName: string; actualName?: string }
   | { type: "INVALID_SINGER"; reason: string }
+  | { type: "INVALID_SINGER"; expectedKeyword: string }
+  | { type: "INVALID_PAYMENT_METHOD" }
   | { type: "NOT_IN_HAND" }
   | { type: "NOT_YOUR_TURN" }
   | { type: "NOT_MAIN_PHASE" }
@@ -89,7 +92,8 @@ export interface CostCalculation {
 export interface CostModifier {
   source: CardId | "effect";
   amount: number;
-  reason: string;
+  reason: "cost_increase" | "cost_reduction" | "shift_alternate" | "other";
+  description?: string;
 }
 
 /**

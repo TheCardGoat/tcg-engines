@@ -25,6 +25,7 @@ import {
   isShiftPayment,
   isSingerPayment,
   isSingTogetherPayment,
+  type MoveValidationError,
   type MoveValidationResult,
   type PaymentMethod,
   validMove,
@@ -45,9 +46,9 @@ export function calculateCost(
   // Apply any external modifiers
   if (costModifiers) {
     for (const mod of costModifiers) {
-      if (mod.amount > 0) {
+      if (mod.amount >= 0) {
         increases.push(mod);
-      } else if (mod.amount < 0) {
+      } else {
         reductions.push({ ...mod, amount: Math.abs(mod.amount) });
       }
     }
@@ -116,7 +117,8 @@ export function validateShiftPayment(
   if (targetCard.name !== shiftKeyword.targetName) {
     return invalidMove({
       type: "INVALID_SHIFT_TARGET",
-      reason: `Target must be named "${shiftKeyword.targetName}"`,
+      expectedName: shiftKeyword.targetName,
+      actualName: targetCard.name,
     });
   }
 
@@ -233,8 +235,21 @@ export function validatePlayCard(
   isActivePlayer: boolean,
   isMainPhase: boolean,
   costModifiers?: CostModifier[],
+  context?: {
+    // For Shift
+    targetCard?: LorcanaCardDefinition;
+    targetCardState?: CardInstanceState;
+    // For Singer
+    singerCard?: LorcanaCardDefinition;
+    singerState?: CardInstanceState;
+    // For Sing Together
+    singers?: Array<{
+      card: LorcanaCardDefinition;
+      state: CardInstanceState;
+    }>;
+  },
 ): MoveValidationResult {
-  const errors = [];
+  const errors: MoveValidationError[] = [];
 
   // Must be active player's turn
   if (!isActivePlayer) {
@@ -267,6 +282,45 @@ export function validatePlayCard(
         available: availableInk,
       });
     }
+  } else if (isShiftPayment(payment)) {
+    if (!context?.targetCard || !context?.targetCardState) {
+      // Missing context for validation
+      errors.push({ type: "INVALID_PAYMENT_METHOD" as const });
+    } else {
+      const shiftResult = validateShiftPayment(
+        card,
+        context.targetCard,
+        context.targetCardState,
+      );
+      if (!shiftResult.valid) {
+        errors.push(...shiftResult.errors);
+      }
+    }
+  } else if (isSingerPayment(payment)) {
+    if (!context?.singerCard || !context?.singerState) {
+      errors.push({ type: "INVALID_PAYMENT_METHOD" as const });
+    } else {
+      const singerResult = validateSingerPayment(
+        card,
+        context.singerCard,
+        context.singerState,
+      );
+      if (!singerResult.valid) {
+        errors.push(...singerResult.errors);
+      }
+    }
+  } else if (isSingTogetherPayment(payment)) {
+    if (!context?.singers) {
+      errors.push({ type: "INVALID_PAYMENT_METHOD" as const });
+    } else {
+      const singTogetherResult = validateSingTogetherPayment(
+        card,
+        context.singers,
+      );
+      if (!singTogetherResult.valid) {
+        errors.push(...singTogetherResult.errors);
+      }
+    }
   }
 
   if (errors.length > 0) {
@@ -287,6 +341,17 @@ export function canPlayCard(
   turnTrackers: TurnTrackers,
   isActivePlayer: boolean,
   isMainPhase: boolean,
+  costModifiers?: CostModifier[],
+  context?: {
+    targetCard?: LorcanaCardDefinition;
+    targetCardState?: CardInstanceState;
+    singerCard?: LorcanaCardDefinition;
+    singerState?: CardInstanceState;
+    singers?: Array<{
+      card: LorcanaCardDefinition;
+      state: CardInstanceState;
+    }>;
+  },
 ): boolean {
   const result = validatePlayCard(
     card,
@@ -296,6 +361,8 @@ export function canPlayCard(
     turnTrackers,
     isActivePlayer,
     isMainPhase,
+    costModifiers,
+    context,
   );
   return result.valid;
 }
