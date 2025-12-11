@@ -200,8 +200,14 @@ export function getEffectiveKeywords(
         if (typeof k === "string" && typeof keywordToRemove === "string") {
           return k === keywordToRemove;
         }
-        if (typeof k === "object" && typeof keywordToRemove === "object") {
-          return (k as any).type === (keywordToRemove as any).type;
+        if (
+          typeof k === "object" &&
+          "type" in k &&
+          typeof keywordToRemove === "object" &&
+          "type" in keywordToRemove
+        ) {
+          // Both are KeywordAbilityDefinition objects, compare by type
+          return k.type === keywordToRemove.type;
         }
         return false;
       });

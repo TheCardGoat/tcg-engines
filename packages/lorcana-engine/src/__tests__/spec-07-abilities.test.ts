@@ -20,7 +20,6 @@ import {
   canPayInkCost,
   // Replacement
   canReplaceEvent,
-  canUseActivatedAbility,
   createCantModifier,
   createContinuousEffect,
   // Modifiers
@@ -37,8 +36,6 @@ import {
   getGainModifiers,
   getGrantedKeywords,
   getLoseModifiers,
-  getMatchingTriggers,
-  getStaticAbilities,
   getTriggeredAbilities,
   hasCantModifier,
   hasMustModifier,
