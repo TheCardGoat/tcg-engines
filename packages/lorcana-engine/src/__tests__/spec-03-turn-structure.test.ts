@@ -41,8 +41,12 @@ import {
 } from "../flow/turn-types";
 import type { PlayerId } from "../types/game-state";
 
-const player1 = "player1" as PlayerId;
-const player2 = "player2" as PlayerId;
+function createTestPlayer(id: string): PlayerId {
+  return id as PlayerId;
+}
+
+const player1 = createTestPlayer("player1");
+const player2 = createTestPlayer("player2");
 const players: [PlayerId, PlayerId] = [player1, player2];
 
 describe("Spec 3: Turn Structure & Flow", () => {

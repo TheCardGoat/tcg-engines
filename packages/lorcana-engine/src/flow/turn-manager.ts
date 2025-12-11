@@ -82,6 +82,9 @@ export function hasInkedThisTurn(trackers: TurnTrackers): boolean {
  * Mark that the active player has inked this turn
  */
 export function setHasInked(trackers: TurnTrackers): TurnTrackers {
+  if (trackers.hasInked) {
+    console.warn("Player has already inked this turn");
+  }
   return { ...trackers, hasInked: true };
 }
 
@@ -140,8 +143,6 @@ export function endTurn(
   const nextIndex = (currentIndex + 1) % 2;
   const nextPlayer = players[nextIndex];
 
-  const isFirstTurnOver = trackers.isFirstTurn && trackers.turnNumber === 1;
-
   return {
     ...trackers,
     turnNumber: trackers.turnNumber + 1,
@@ -159,7 +160,6 @@ export function endTurn(
 export function shouldSkipDraw(trackers: TurnTrackers): boolean {
   return (
     trackers.isFirstTurn &&
-    trackers.turnNumber === 1 &&
     trackers.activePlayerId === trackers.startingPlayerId
   );
 }
@@ -216,14 +216,23 @@ export function createGameEndState(
     case "LORE_VICTORY":
       winner = reason.playerId;
       loser = players.find((p) => p !== winner);
+      if (loser === undefined) {
+        throw new Error("Could not determine loser from players array");
+      }
       break;
     case "DECK_OUT":
       loser = reason.playerId;
       winner = players.find((p) => p !== loser);
+      if (winner === undefined) {
+        throw new Error("Could not determine winner from players array");
+      }
       break;
     case "CONCEDE":
       loser = reason.playerId;
       winner = players.find((p) => p !== loser);
+      if (winner === undefined) {
+        throw new Error("Could not determine winner from players array");
+      }
       break;
   }
 
@@ -293,5 +302,8 @@ export function selectStartingPlayer(
   randomValue?: number,
 ): PlayerId {
   const random = randomValue ?? Math.random();
+  if (random < 0 || random >= 1) {
+    throw new Error("Random value must be in range [0, 1)");
+  }
   return random < 0.5 ? players[0] : players[1];
 }
