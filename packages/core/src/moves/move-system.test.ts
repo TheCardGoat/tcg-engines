@@ -1,12 +1,13 @@
 import { describe, expect, it } from "bun:test";
+import type { Draft } from "immer";
 import { produce } from "immer";
+import type { GameMoveDefinition } from "../game-definition/move-definitions";
 import { createMockContext } from "../testing/test-context-factory";
 import type { CardId, PlayerId } from "../types";
 import { createCardId, createPlayerId } from "../types";
 import type {
   MoveCondition,
   MoveContext,
-  MoveDefinition,
   MoveReducer,
   MoveResult,
 } from "./move-system";
@@ -33,7 +34,7 @@ describe("Move System with Validation", () => {
     },
   };
 
-  describe("MoveDefinition", () => {
+  describe("GameMoveDefinition", () => {
     it("should define a move with reducer and condition", () => {
       const reducer: MoveReducer<TestGameState> = (draft, context) => {
         draft.players[context.playerId].mana -= 1;
@@ -43,14 +44,11 @@ describe("Move System with Validation", () => {
         return state.players[context.playerId].mana >= 1;
       };
 
-      const moveDef: MoveDefinition<TestGameState> = {
-        id: "spend-mana",
-        name: "Spend Mana",
+      const moveDef: GameMoveDefinition<TestGameState> = {
         reducer,
         condition,
       };
 
-      expect(moveDef.id).toBe("spend-mana");
       expect(moveDef.reducer).toBe(reducer);
       expect(moveDef.condition).toBe(condition);
     });
@@ -60,25 +58,24 @@ describe("Move System with Validation", () => {
         draft.currentPlayer = context.playerId;
       };
 
-      const moveDef: MoveDefinition<TestGameState> = {
-        id: "pass-turn",
-        name: "Pass Turn",
+      const moveDef: GameMoveDefinition<TestGameState> = {
         reducer,
       };
 
-      expect(moveDef.id).toBe("pass-turn");
+      expect(moveDef.reducer).toBe(reducer);
       expect(moveDef.condition).toBeUndefined();
     });
 
     it("should include metadata in move definition", () => {
-      const moveDef: MoveDefinition<TestGameState> = {
-        id: "draw-card",
-        name: "Draw Card",
-        description: "Draw a card from your deck",
-        reducer: (draft) => draft,
+      const moveDef: GameMoveDefinition<TestGameState> = {
+        reducer: (draft: Draft<TestGameState>) => draft,
+        metadata: {
+          category: "draw",
+          description: "Draw a card from your deck",
+        },
       };
 
-      expect(moveDef.description).toBe("Draw a card from your deck");
+      expect(moveDef.metadata?.description).toBe("Draw a card from your deck");
     });
   });
 
@@ -316,12 +313,10 @@ describe("Move System with Validation", () => {
 
   describe("Move Validation Flow", () => {
     it("should execute valid move successfully", () => {
-      const moveDef: MoveDefinition<TestGameState> = {
-        id: "spend-mana",
-        name: "Spend Mana",
-        condition: (state, context) =>
+      const moveDef: GameMoveDefinition<TestGameState> = {
+        condition: (state: TestGameState, context: MoveContext) =>
           state.players[context.playerId].mana >= 2,
-        reducer: (draft, context) => {
+        reducer: (draft: Draft<TestGameState>, context: MoveContext) => {
           draft.players[context.playerId].mana -= 2;
         },
       };
@@ -346,12 +341,10 @@ describe("Move System with Validation", () => {
     });
 
     it("should reject invalid move before execution", () => {
-      const moveDef: MoveDefinition<TestGameState> = {
-        id: "expensive-spell",
-        name: "Expensive Spell",
-        condition: (state, context) =>
+      const moveDef: GameMoveDefinition<TestGameState> = {
+        condition: (state: TestGameState, context: MoveContext) =>
           state.players[context.playerId].mana >= 5,
-        reducer: (draft, context) => {
+        reducer: (draft: Draft<TestGameState>, context: MoveContext) => {
           draft.players[context.playerId].mana -= 5;
         },
       };
@@ -368,10 +361,8 @@ describe("Move System with Validation", () => {
     });
 
     it("should handle moves without conditions", () => {
-      const moveDef: MoveDefinition<TestGameState> = {
-        id: "pass",
-        name: "Pass",
-        reducer: (_draft) => {
+      const moveDef: GameMoveDefinition<TestGameState> = {
+        reducer: (_draft: Draft<TestGameState>) => {
           // No-op move
         },
       };

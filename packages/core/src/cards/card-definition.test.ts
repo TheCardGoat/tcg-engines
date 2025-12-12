@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
+import { createCardRegistry } from "../operations/card-registry-impl";
 import type { CardDefinition } from "./card-definition";
-import { createDefinitionRegistry, getCardDefinition } from "./card-definition";
 
 describe("Card Definition", () => {
   describe("CardDefinition Type", () => {
@@ -94,10 +94,11 @@ describe("Card Definition", () => {
     });
   });
 
-  describe("Card Definition Registry", () => {
+  describe("Card Registry", () => {
     it("should create empty registry", () => {
-      const registry = createDefinitionRegistry([]);
+      const registry = createCardRegistry<CardDefinition>([]);
       expect(registry).toBeDefined();
+      expect(registry.getCardCount()).toBe(0);
     });
 
     it("should register single card definition", () => {
@@ -109,8 +110,8 @@ describe("Card Definition", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
-      const retrieved = getCardDefinition(registry, "fire-bolt");
+      const registry = createCardRegistry([definition]);
+      const retrieved = registry.getCard("fire-bolt");
 
       expect(retrieved).toBeDefined();
       expect(retrieved?.id).toBe("fire-bolt");
@@ -137,18 +138,18 @@ describe("Card Definition", () => {
         },
       ];
 
-      const registry = createDefinitionRegistry(definitions);
+      const registry = createCardRegistry(definitions);
 
-      const fireBolt = getCardDefinition(registry, "fire-bolt");
-      const bears = getCardDefinition(registry, "grizzly-bears");
+      const fireBolt = registry.getCard("fire-bolt");
+      const bears = registry.getCard("grizzly-bears");
 
       expect(fireBolt?.name).toBe("Fire Bolt");
       expect(bears?.name).toBe("Grizzly Bears");
     });
 
     it("should return undefined for non-existent definition", () => {
-      const registry = createDefinitionRegistry([]);
-      const retrieved = getCardDefinition(registry, "non-existent");
+      const registry = createCardRegistry<CardDefinition>([]);
+      const retrieved = registry.getCard("non-existent");
 
       expect(retrieved).toBeUndefined();
     });
@@ -171,15 +172,15 @@ describe("Card Definition", () => {
         },
       ];
 
-      const registry = createDefinitionRegistry(definitions);
-      const retrieved = getCardDefinition(registry, "fire-bolt");
+      const registry = createCardRegistry(definitions);
+      const retrieved = registry.getCard("fire-bolt");
 
       expect(retrieved?.name).toBe("Fire Bolt V2");
       expect(retrieved?.baseCost).toBe(2);
     });
   });
 
-  describe("getCardDefinition", () => {
+  describe("CardRegistry.getCard", () => {
     it("should retrieve definition by id", () => {
       const definition: CardDefinition = {
         id: "test-card",
@@ -188,8 +189,8 @@ describe("Card Definition", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
-      const retrieved = getCardDefinition(registry, "test-card");
+      const registry = createCardRegistry([definition]);
+      const retrieved = registry.getCard("test-card");
 
       expect(retrieved).toEqual(definition);
     });
@@ -202,10 +203,10 @@ describe("Card Definition", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
-      expect(getCardDefinition(registry, "TestCard")).toBeDefined();
-      expect(getCardDefinition(registry, "testcard")).toBeUndefined();
+      expect(registry.getCard("TestCard")).toBeDefined();
+      expect(registry.getCard("testcard")).toBeUndefined();
     });
 
     it("should handle definitions with zero values", () => {
@@ -217,10 +218,51 @@ describe("Card Definition", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
-      const retrieved = getCardDefinition(registry, "zero-cost");
+      const registry = createCardRegistry([definition]);
+      const retrieved = registry.getCard("zero-cost");
 
       expect(retrieved?.baseCost).toBe(0);
+    });
+  });
+
+  describe("CardRegistry additional methods", () => {
+    it("should check if card exists with hasCard", () => {
+      const registry = createCardRegistry([
+        { id: "card1", name: "Card 1", type: "creature" },
+      ]);
+
+      expect(registry.hasCard("card1")).toBe(true);
+      expect(registry.hasCard("nonexistent")).toBe(false);
+    });
+
+    it("should get all cards with getAllCards", () => {
+      const registry = createCardRegistry([
+        { id: "card1", name: "Card 1", type: "creature" },
+        { id: "card2", name: "Card 2", type: "instant" },
+      ]);
+
+      const allCards = registry.getAllCards();
+      expect(allCards).toHaveLength(2);
+    });
+
+    it("should query cards with predicate", () => {
+      const registry = createCardRegistry([
+        { id: "card1", name: "Card 1", type: "creature" },
+        { id: "card2", name: "Card 2", type: "instant" },
+        { id: "card3", name: "Card 3", type: "creature" },
+      ]);
+
+      const creatures = registry.queryCards((card) => card.type === "creature");
+      expect(creatures).toHaveLength(2);
+    });
+
+    it("should return card count", () => {
+      const registry = createCardRegistry([
+        { id: "card1", name: "Card 1", type: "creature" },
+        { id: "card2", name: "Card 2", type: "instant" },
+      ]);
+
+      expect(registry.getCardCount()).toBe(2);
     });
   });
 });

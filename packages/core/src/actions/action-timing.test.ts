@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
-import type { DefinitionRegistry } from "../cards/card-definition";
 import type { CardInstance } from "../cards/card-instance";
 import type { Modifier } from "../cards/modifiers";
+import { createCardRegistry } from "../operations/card-registry-impl";
 import { createCardId, createPlayerId, createZoneId } from "../types";
 import type { ActionDefinition, ActionInstance } from "./action-definition";
 import {
@@ -24,8 +24,8 @@ describe("Action Timing Validation", () => {
   const card2 = createCardId("card2");
   const playZone = createZoneId("play");
 
-  const registry: DefinitionRegistry = new Map([
-    ["creature1", { id: "creature1", name: "Test Creature", type: "creature" }],
+  const registry = createCardRegistry([
+    { id: "creature1", name: "Test Creature", type: "creature" },
   ]);
 
   const baseState: TestGameState = {

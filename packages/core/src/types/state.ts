@@ -37,20 +37,24 @@ export type InternalState<TCardDefinition = any, TCardMeta = any> = {
    *
    * Each card instance contains:
    * - definitionId: Reference to the static card definition
-   * - ownerId: Player who owns this card
-   * - zoneId: Current zone containing this card
+   * - owner: Player who owns this card (never changes)
+   * - controller: Player currently controlling this card (can change via effects)
+   * - zone: Current zone containing this card
    * - position: Optional position in zone (for ordered zones like decks)
    *
    * Card instances are created during game setup or through game actions.
+   * Note: Field names align with CardInstanceBase from cards/card-instance.ts
    */
   cards: {
     [cardId: string]: {
       /** Reference to card definition (static properties) */
       definitionId: string;
-      /** Player who owns this card */
-      ownerId: PlayerId;
+      /** Player who owns this card (never changes) */
+      owner: PlayerId;
+      /** Player currently controlling this card (can change via effects) */
+      controller: PlayerId;
       /** Current zone containing this card */
-      zoneId: ZoneId;
+      zone: ZoneId;
       /** Position in zone (for ordered zones) */
       position?: number;
     };

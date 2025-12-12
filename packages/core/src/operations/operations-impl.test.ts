@@ -53,30 +53,35 @@ describe("Operations Implementation", () => {
       cards: {
         "card-1": {
           definitionId: "monster-1",
-          ownerId: "player-1" as unknown as PlayerId,
-          zoneId: "hand" as ZoneId,
+          owner: "player-1" as unknown as PlayerId,
+          controller: "player-1" as unknown as PlayerId,
+          zone: "hand" as ZoneId,
         },
         "card-2": {
           definitionId: "monster-2",
-          ownerId: "player-1" as unknown as PlayerId,
-          zoneId: "hand" as ZoneId,
+          owner: "player-1" as unknown as PlayerId,
+          controller: "player-1" as unknown as PlayerId,
+          zone: "hand" as ZoneId,
         },
         "card-3": {
           definitionId: "spell-1",
-          ownerId: "player-1" as unknown as PlayerId,
-          zoneId: "deck" as ZoneId,
+          owner: "player-1" as unknown as PlayerId,
+          controller: "player-1" as unknown as PlayerId,
+          zone: "deck" as ZoneId,
           position: 0,
         },
         "card-4": {
           definitionId: "spell-2",
-          ownerId: "player-1" as unknown as PlayerId,
-          zoneId: "deck" as ZoneId,
+          owner: "player-1" as unknown as PlayerId,
+          controller: "player-1" as unknown as PlayerId,
+          zone: "deck" as ZoneId,
           position: 1,
         },
         "card-5": {
           definitionId: "spell-3",
-          ownerId: "player-1" as unknown as PlayerId,
-          zoneId: "deck" as ZoneId,
+          owner: "player-1" as unknown as PlayerId,
+          controller: "player-1" as unknown as PlayerId,
+          zone: "deck" as ZoneId,
           position: 2,
         },
       },
@@ -100,7 +105,7 @@ describe("Operations Implementation", () => {
 
         expect(state.zones.hand.cardIds).not.toContain("card-1");
         expect(state.zones.play.cardIds).toContain("card-1");
-        expect(state.cards["card-1"].zoneId).toBe("play" as ZoneId);
+        expect(state.cards["card-1"].zone).toBe("play" as ZoneId);
       });
 
       it("should move card to top of deck", () => {
@@ -175,8 +180,9 @@ describe("Operations Implementation", () => {
         state.zones.hand.cardIds.push("card-6" as CardId);
         state.cards["card-6"] = {
           definitionId: "monster-3",
-          ownerId: "player-2" as unknown as PlayerId,
-          zoneId: "hand" as ZoneId,
+          owner: "player-2" as unknown as PlayerId,
+          controller: "player-2" as unknown as PlayerId,
+          zone: "hand" as ZoneId,
         };
 
         const ops = createZoneOperations(state);

@@ -1,6 +1,6 @@
-import type { DefinitionRegistry } from "../cards/card-definition";
-import { getCardDefinition } from "../cards/card-definition";
+import type { CardDefinition } from "../cards/card-definition";
 import type { CardInstance } from "../cards/card-instance";
+import type { CardRegistry } from "../operations/card-registry";
 import type { CardFilter, NumberFilter, PropertyFilter } from "./card-filter";
 
 /**
@@ -116,9 +116,9 @@ export function matchesFilter<
   card: TGameState["cards"][string],
   filter: CardFilter<TGameState>,
   state: TGameState,
-  registry: DefinitionRegistry,
+  registry: CardRegistry<CardDefinition>,
 ): boolean {
-  const definition = getCardDefinition(registry, card.definitionId);
+  const definition = registry.getCard(card.definitionId);
 
   // Zone filtering
   if (filter.zone !== undefined) {
@@ -271,7 +271,7 @@ export function selectCards<
 >(
   state: TGameState,
   filter: CardFilter<TGameState>,
-  registry: DefinitionRegistry,
+  registry: CardRegistry<CardDefinition>,
 ): TGameState["cards"][string][] {
   const cards = Object.values(state.cards);
   return cards.filter((card) => matchesFilter(card, filter, state, registry));
@@ -290,7 +290,7 @@ export function countCards<
 >(
   state: TGameState,
   filter: CardFilter<TGameState>,
-  registry: DefinitionRegistry,
+  registry: CardRegistry<CardDefinition>,
 ): number {
   return selectCards(state, filter, registry).length;
 }
@@ -308,7 +308,7 @@ export function anyCard<
 >(
   state: TGameState,
   filter: CardFilter<TGameState>,
-  registry: DefinitionRegistry,
+  registry: CardRegistry<CardDefinition>,
 ): boolean {
   const cards = Object.values(state.cards);
   return cards.some((card) => matchesFilter(card, filter, state, registry));
