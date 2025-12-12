@@ -2,10 +2,20 @@
 
 ## Core Principles
 
-1. **Never throw in core logic** - Use Result types instead
-2. **Validate at boundaries** - Check inputs at API/user boundaries
+1. **Use Result types in core logic** - Return success/failure instead of throwing
+2. **Throw only at boundaries** - Assertion functions and input validation may throw
 3. **Fail fast with context** - Include helpful error messages
 4. **Type guards for safety** - Runtime type checking
+
+### When to Use Result Types vs Throwing
+
+| Scenario | Approach |
+|----------|----------|
+| Core game logic (moves, state changes) | Result types |
+| Move validation (`canMake`) | Return boolean |
+| Input validation at boundaries | Throw or Result |
+| Assertion functions (dev safety) | Throw |
+| Programming errors (impossible states) | Throw |
 
 ## Result Types
 

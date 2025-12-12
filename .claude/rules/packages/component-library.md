@@ -123,16 +123,16 @@ export const Primary: StoryObj<Button> = {
 
 ```bash
 # Development
-npm run dev          # Start dev server
-npm run storybook    # Start Storybook
+bun run dev          # Start dev server
+bun run storybook    # Start Storybook
 
 # Testing
-npm test             # Unit tests
-npm run test:e2e     # E2E tests with Playwright
+bun test             # Unit tests
+bun run test:e2e     # E2E tests with Playwright
 
 # Building
-npm run build        # Build library
-npm run build-storybook  # Build Storybook
+bun run build        # Build library
+bun run build-storybook  # Build Storybook
 ```
 
 ## Best Practices

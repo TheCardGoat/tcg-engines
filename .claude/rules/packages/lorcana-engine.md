@@ -121,12 +121,32 @@ const loreVictory: WinCondition = {
 Use LorcanaTestEngine for Lorcana-specific tests:
 
 ```typescript
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import {
+  LorcanaTestEngine,
+  PLAYER_ONE,
+  PLAYER_TWO,
+} from "@tcg/lorcana/testing";
 
-const engine = new LorcanaTestEngine()
-  .withPlayer("player1", { deck: testDeck })
-  .withPlayer("player2", { deck: testDeck })
-  .build();
+// Create test engine with initial state for each player
+const engine = new LorcanaTestEngine(
+  { hand: 7, deck: 53 },           // Player one state
+  { hand: 7, deck: 53 },           // Player two state
+  { skipPreGame: true, seed: "test-seed" }  // Options
+);
+
+// Access game state
+const state = engine.getState();
+
+// Execute moves
+engine.changeActivePlayer(PLAYER_ONE);
+engine.quest(characterId);
+engine.passTurn();
+
+// Create test characters with stats
+const charId = engine.createCharacterInPlay(PLAYER_ONE, {
+  strength: 5,
+  willpower: 7,
+});
 ```
 
 ## Extending

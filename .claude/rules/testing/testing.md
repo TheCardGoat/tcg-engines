@@ -19,7 +19,7 @@ bun test --watch
 bun test path/to/file.test.ts
 
 # Run tests matching pattern
-bun test --grep "pattern"
+bun test --filter "pattern"
 ```
 
 ## Test Structure
@@ -117,20 +117,28 @@ it("test1", () => {});
 
 ## Testing Utilities
 
-### TestEngineBuilder
+### createTestEngine
+
+Factory function for creating test engines:
 
 ```typescript
-import { TestEngineBuilder } from "@tcg/core/testing";
+import { createTestEngine, createTestPlayers } from "@tcg/core/testing";
 
 describe("Quest move", () => {
   let engine: RuleEngine;
 
   beforeEach(() => {
-    engine = new TestEngineBuilder(gameDefinition)
-      .withPlayer("player1", { deck: testDeck })
-      .withPlayer("player2", { deck: testDeck })
-      .setupGame()
-      .build();
+    // Create with default 2 players
+    engine = createTestEngine(gameDefinition);
+
+    // Or with custom players
+    const players = createTestPlayers(4, ["Alice", "Bob", "Charlie", "Dave"]);
+    engine = createTestEngine(gameDefinition, players);
+
+    // Or with seed for deterministic tests
+    engine = createTestEngine(gameDefinition, undefined, {
+      seed: "test-seed-123",
+    });
   });
 
   it("adds lore when character quests", () => {
@@ -139,35 +147,49 @@ describe("Quest move", () => {
 });
 ```
 
-### Assertions
+### Move Assertions
 
 ```typescript
 import {
-  assertZoneContains,
-  assertCardInZone,
-  assertPlayerHasLore,
+  expectMoveSuccess,
+  expectMoveFailure,
+  expectStateProperty,
 } from "@tcg/core/testing";
 
-// Zone assertions
-assertZoneContains(state, "player1", "hand", 7);
-assertCardInZone(state, cardId, "play");
+// Assert move succeeds
+const result = expectMoveSuccess(engine, "playCard", {
+  playerId: "p1",
+  data: { cardId: "card-123" },
+});
+expect(result.patches.length).toBeGreaterThan(0);
 
-// Player assertions
-assertPlayerHasLore(state, "player1", 5);
+// Assert move fails
+expectMoveFailure(engine, "invalidMove", { playerId: "p1" }, "CONDITION_FAILED");
+
+// Assert state property
+expectStateProperty(engine, "turnNumber", 1);
+expectStateProperty(engine, "players[0].score", 10);
 ```
 
 ### Test Card Factory
 
 ```typescript
-import { TestCardFactory } from "@tcg/core/testing";
+import { createTestCard, createTestCards } from "@tcg/core/testing";
 
-const factory = new TestCardFactory();
-const testCard = factory.createCharacter({
-  name: "Test Character",
-  cost: 3,
-  strength: 2,
-  willpower: 3,
+// Create single test card
+const card = createTestCard();
+
+// Create card with overrides
+const creature = createTestCard({
+  name: "Dragon",
+  type: "creature",
+  basePower: 5,
+  baseToughness: 5,
+  baseCost: 7,
 });
+
+// Create multiple cards
+const deck = createTestCards(60, { type: "creature" });
 ```
 
 ## Integration Tests
@@ -177,11 +199,14 @@ For testing game mechanics end-to-end:
 ```typescript
 describe("Full game scenario", () => {
   it("player wins by reaching 20 lore", () => {
-    const engine = createTestEngine();
+    const engine = createTestEngine(gameDefinition);
 
     // Play through turns
-    engine.executeMove({ type: "drawCard", playerId: "p1" });
-    engine.executeMove({ type: "playCard", playerId: "p1", cardId: "c1" });
+    expectMoveSuccess(engine, "drawCard", { playerId: "p1" });
+    expectMoveSuccess(engine, "playCard", {
+      playerId: "p1",
+      data: { cardId: "c1" },
+    });
 
     // ... continue game
 

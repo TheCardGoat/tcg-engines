@@ -144,26 +144,46 @@ drawCards(state, playerId, 7);
 
 ## Testing Utilities
 
-### TestEngineBuilder
+### createTestEngine
 
-Fluent API for test setup:
+Factory function for creating test engines:
 
 ```typescript
-import { TestEngineBuilder } from "@tcg/core/testing";
+import { createTestEngine, createTestPlayers } from "@tcg/core/testing";
 
-const engine = new TestEngineBuilder(gameDefinition)
-  .withPlayer("player1", { deck: testDeck })
-  .withPlayer("player2", { deck: testDeck })
-  .build();
+// Create with default 2 players
+const engine = createTestEngine(gameDefinition);
+
+// Create with custom players
+const players = createTestPlayers(4, ["Alice", "Bob", "Charlie", "Dave"]);
+const engine = createTestEngine(gameDefinition, players);
+
+// Create with seed for deterministic tests
+const engine = createTestEngine(gameDefinition, undefined, {
+  seed: "test-seed-123",
+});
 ```
 
-### Assertions
+### Move Assertions
 
 ```typescript
-import { assertZoneContains, assertCardInZone } from "@tcg/core/testing";
+import {
+  expectMoveSuccess,
+  expectMoveFailure,
+  expectStateProperty,
+} from "@tcg/core/testing";
 
-assertZoneContains(state, "player1", "hand", 7);
-assertCardInZone(state, cardId, "play");
+// Assert move succeeds
+expectMoveSuccess(engine, "playCard", {
+  playerId: "p1",
+  data: { cardId: "card-123" },
+});
+
+// Assert move fails with error code
+expectMoveFailure(engine, "invalidMove", { playerId: "p1" }, "CONDITION_FAILED");
+
+// Assert state property value
+expectStateProperty(engine, "turnNumber", 1);
 ```
 
 ## Best Practices

@@ -26,7 +26,7 @@ bun remove <package>
 bun test
 
 # Run tests for specific package
-cd packages/core && bun test
+bun test packages/core
 
 # Type checking
 bun run check-types

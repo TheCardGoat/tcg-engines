@@ -57,7 +57,7 @@ tcg-engines/
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| **Bun** | 1.2.18 | Package manager and runtime |
+| **Bun** | 1.3.3 | Package manager and runtime |
 | **TypeScript** | 5.9+ | Language (strict mode) |
 | **Turborepo** | 2.6.3 | Monorepo orchestration |
 | **Biome** | 2.0.4 | Linting and formatting |
