@@ -1,5 +1,6 @@
-import type { DefinitionRegistry } from "../cards/card-definition";
+import type { CardDefinition } from "../cards/card-definition";
 import type { CardInstance } from "../cards/card-instance";
+import type { CardRegistry } from "../operations/card-registry";
 import type { PlayerId, ZoneId } from "../types";
 import type { CardFilter, PropertyFilter } from "./card-filter";
 import { anyCard, countCards, selectCards } from "./filter-matching";
@@ -16,7 +17,7 @@ export class CardQuery<
 
   private constructor(
     private state: TGameState,
-    private registry: DefinitionRegistry,
+    private registry: CardRegistry<CardDefinition>,
   ) {}
 
   /**
@@ -28,7 +29,10 @@ export class CardQuery<
    */
   static create<
     TGameState extends { cards: Record<string, CardInstance<any>> },
-  >(state: TGameState, registry: DefinitionRegistry): CardQuery<TGameState> {
+  >(
+    state: TGameState,
+    registry: CardRegistry<CardDefinition>,
+  ): CardQuery<TGameState> {
     return new CardQuery(state, registry);
   }
 

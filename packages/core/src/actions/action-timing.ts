@@ -1,5 +1,6 @@
-import type { DefinitionRegistry } from "../cards/card-definition";
+import type { CardDefinition } from "../cards/card-definition";
 import type { CardInstance } from "../cards/card-instance";
+import type { CardRegistry } from "../operations/card-registry";
 import {
   type TargetContext,
   validateTargetSelection,
@@ -125,7 +126,7 @@ export function validateAction<
   definition: ActionDefinition<TGameState>,
   timingContext: TimingContext,
   state: TGameState,
-  registry: DefinitionRegistry,
+  registry: CardRegistry<CardDefinition>,
 ): ActionValidationResult {
   // Validate timing
   const timingValid = validateActionTiming(definition, timingContext, state);

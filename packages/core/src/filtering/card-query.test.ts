@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import type { CardDefinition } from "../cards/card-definition";
-import { createDefinitionRegistry } from "../cards/card-definition";
 import type { CardInstance } from "../cards/card-instance";
 import type { Modifier } from "../cards/modifiers";
+import { createCardRegistry } from "../operations/card-registry-impl";
 import { createCardId, createPlayerId, createZoneId } from "../types";
 import { CardQuery } from "./card-query";
 
@@ -45,7 +45,7 @@ describe("CardQuery Builder", () => {
     },
   ];
 
-  const registry = createDefinitionRegistry(definitions);
+  const registry = createCardRegistry(definitions);
 
   describe("Basic Filters", () => {
     it("should filter by zone", () => {
@@ -708,7 +708,7 @@ describe("CardQuery Builder", () => {
 
       const result = CardQuery.create(state, registry)
         .where((card, _state) => {
-          const definition = registry.get(card.definitionId);
+          const definition = registry.getCard(card.definitionId);
           return (
             definition?.baseCost !== undefined && definition.baseCost % 2 === 0
           );

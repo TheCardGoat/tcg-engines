@@ -1,10 +1,17 @@
 import { produce } from "immer";
-import type {
-  MoveContext,
-  MoveDefinition,
-  MoveMap,
-  MoveResult,
-} from "./move-system";
+import type { GameMoveDefinition } from "../game-definition/move-definitions";
+import type { MoveContext, MoveResult } from "./move-system";
+
+/**
+ * Generic move map type for runtime lookup
+ *
+ * Used by executor functions that need to look up moves by string ID.
+ * For type-safe move definitions in game definitions, use GameMoveDefinitions instead.
+ */
+type GenericMoveMap<TGameState> = Record<
+  string,
+  GameMoveDefinition<TGameState>
+>;
 
 /**
  * Execute a move with full validation pipeline
@@ -41,7 +48,7 @@ export function executeMove<TGameState>(
   state: TGameState,
   moveId: string,
   context: MoveContext,
-  moves: MoveMap<TGameState>,
+  moves: GenericMoveMap<TGameState>,
 ): MoveResult<TGameState> {
   // 1. Validate move exists
   const moveDef = moves[moveId];
@@ -63,7 +70,7 @@ export function executeMove<TGameState>(
           success: false,
           error: `Move '${moveId}' condition not met`,
           errorCode: "CONDITION_FAILED",
-          errorContext: { moveId, moveName: moveDef.name },
+          errorContext: { moveId },
         };
       }
     } catch (error) {
@@ -128,7 +135,7 @@ export function canExecuteMove<TGameState>(
   state: TGameState,
   moveId: string,
   context: MoveContext,
-  moves: MoveMap<TGameState>,
+  moves: GenericMoveMap<TGameState>,
 ): boolean {
   const moveDef = moves[moveId];
   if (!moveDef) {
@@ -156,8 +163,8 @@ export function canExecuteMove<TGameState>(
  */
 export function getMove<TGameState>(
   moveId: string,
-  moves: MoveMap<TGameState>,
-): MoveDefinition<TGameState> | undefined {
+  moves: GenericMoveMap<TGameState>,
+): GameMoveDefinition<TGameState> | undefined {
   return moves[moveId];
 }
 
@@ -167,7 +174,9 @@ export function getMove<TGameState>(
  * @param moves - Available moves
  * @returns Array of move IDs
  */
-export function getMoveIds<TGameState>(moves: MoveMap<TGameState>): string[] {
+export function getMoveIds<TGameState>(
+  moves: GenericMoveMap<TGameState>,
+): string[] {
   return Object.keys(moves);
 }
 
@@ -180,7 +189,7 @@ export function getMoveIds<TGameState>(moves: MoveMap<TGameState>): string[] {
  */
 export function moveExists<TGameState>(
   moveId: string,
-  moves: MoveMap<TGameState>,
+  moves: GenericMoveMap<TGameState>,
 ): boolean {
   return moveId in moves;
 }

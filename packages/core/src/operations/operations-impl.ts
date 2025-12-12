@@ -89,7 +89,7 @@ export const createZoneOperations = <TCardDef, TCardMeta>(
       // Update card's zone and position
       const card = state.cards[cardId as string];
       if (card) {
-        card.zoneId = targetZoneId;
+        card.zone = targetZoneId;
         card.position = targetPosition;
       }
     },
@@ -106,7 +106,7 @@ export const createZoneOperations = <TCardDef, TCardMeta>(
       if (ownerId !== undefined) {
         cards = cards.filter((cardId) => {
           const card = state.cards[cardId as string];
-          return card && card.ownerId === ownerId;
+          return card && card.owner === ownerId;
         }) as CardId[];
       }
 
@@ -148,7 +148,7 @@ export const createZoneOperations = <TCardDef, TCardMeta>(
 
     getCardZone: (cardId) => {
       const card = state.cards[cardId as string];
-      return card?.zoneId;
+      return card?.zone;
     },
 
     drawCards: ({ from, to, count, playerId }) => {
@@ -219,8 +219,9 @@ export const createZoneOperations = <TCardDef, TCardMeta>(
         // Add card to internal state
         state.cards[cardId as string] = {
           definitionId: "placeholder", // Games can customize this
-          ownerId: playerId,
-          zoneId,
+          owner: playerId,
+          controller: playerId, // Initially controller equals owner
+          zone: zoneId,
           position: i,
         };
 
@@ -277,7 +278,7 @@ export const createCardOperations = <TCardDef, TCardMeta>(
 
     getCardOwner: (cardId) => {
       const card = state.cards[cardId as string];
-      return card?.ownerId;
+      return card?.owner;
     },
 
     queryCards: (predicate) => {

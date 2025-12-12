@@ -1,4 +1,6 @@
 import { describe, expect, it } from "bun:test";
+import type { Draft } from "immer";
+import type { GameMoveDefinition } from "../game-definition/move-definitions";
 import { createMockContext } from "../testing/test-context-factory";
 import type { PlayerId } from "../types";
 import { createPlayerId } from "../types";
@@ -9,7 +11,7 @@ import {
   getMoveIds,
   moveExists,
 } from "./move-executor";
-import type { MoveContext, MoveDefinition, MoveMap } from "./move-system";
+import type { MoveContext } from "./move-system";
 
 describe("Move Executor", () => {
   type TestGameState = {
@@ -28,24 +30,21 @@ describe("Move Executor", () => {
     turnCount: 1,
   };
 
-  const testMoves: MoveMap<TestGameState> = {
+  const testMoves: Record<string, GameMoveDefinition<TestGameState>> = {
     "spend-mana": {
-      id: "spend-mana",
-      name: "Spend Mana",
-      condition: (state, context) => state.players[context.playerId].mana >= 2,
-      reducer: (draft, context) => {
+      condition: (state: TestGameState, context: MoveContext) =>
+        state.players[context.playerId].mana >= 2,
+      reducer: (draft: Draft<TestGameState>, context: MoveContext) => {
         draft.players[context.playerId].mana -= 2;
       },
     },
     "deal-damage": {
-      id: "deal-damage",
-      name: "Deal Damage",
-      condition: (state, context) => {
+      condition: (state: TestGameState, context: MoveContext) => {
         if (!context.targets?.[0]) return false;
         const targetId = context.targets[0][0] as PlayerId;
         return targetId in state.players;
       },
-      reducer: (draft, context) => {
+      reducer: (draft: Draft<TestGameState>, context: MoveContext) => {
         const targetId = context.targets?.[0]?.[0] as PlayerId;
         if (targetId) {
           draft.players[targetId].life -= 3;
@@ -53,10 +52,7 @@ describe("Move Executor", () => {
       },
     },
     "next-turn": {
-      id: "next-turn",
-      name: "Next Turn",
-      // No condition - always valid
-      reducer: (draft) => {
+      reducer: (draft: Draft<TestGameState>) => {
         draft.turnCount += 1;
       },
     },
@@ -161,13 +157,11 @@ describe("Move Executor", () => {
     });
 
     it("should handle condition errors gracefully", () => {
-      const brokenMove: MoveDefinition<TestGameState> = {
-        id: "broken",
-        name: "Broken Move",
+      const brokenMove: GameMoveDefinition<TestGameState> = {
         condition: () => {
           throw new Error("Condition error");
         },
-        reducer: (draft) => draft,
+        reducer: (draft: Draft<TestGameState>) => draft,
       };
 
       const moves = { ...testMoves, broken: brokenMove };
@@ -185,9 +179,7 @@ describe("Move Executor", () => {
     });
 
     it("should handle reducer errors gracefully", () => {
-      const brokenMove: MoveDefinition<TestGameState> = {
-        id: "broken-reducer",
-        name: "Broken Reducer",
+      const brokenMove: GameMoveDefinition<TestGameState> = {
         reducer: () => {
           throw new Error("Reducer error");
         },
@@ -305,13 +297,11 @@ describe("Move Executor", () => {
     });
 
     it("should handle condition errors by returning false", () => {
-      const brokenMove: MoveDefinition<TestGameState> = {
-        id: "broken",
-        name: "Broken",
+      const brokenMove: GameMoveDefinition<TestGameState> = {
         condition: () => {
           throw new Error("Condition error");
         },
-        reducer: (draft) => draft,
+        reducer: (draft: Draft<TestGameState>) => draft,
       };
 
       const moves = { ...testMoves, broken: brokenMove };
@@ -330,8 +320,7 @@ describe("Move Executor", () => {
       const move = getMove("spend-mana", testMoves);
 
       expect(move).toBeDefined();
-      expect(move?.id).toBe("spend-mana");
-      expect(move?.name).toBe("Spend Mana");
+      expect(move?.reducer).toBeDefined();
     });
 
     it("should return undefined if move does not exist", () => {

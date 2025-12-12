@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
-import { createDefinitionRegistry } from "../cards/card-definition";
 import type { CardInstance } from "../cards/card-instance";
 import type { Modifier } from "../cards/modifiers";
+import { createCardRegistry } from "../operations/card-registry-impl";
 import { createCardId, createPlayerId, createZoneId } from "../types";
 import type { TargetDefinition } from "./target-definition";
 import {
@@ -16,7 +16,7 @@ type TestGameState = {
 };
 
 describe("Target Validation", () => {
-  const registry = createDefinitionRegistry([
+  const registry = createCardRegistry([
     {
       id: "creature1",
       name: "Creature 1",
