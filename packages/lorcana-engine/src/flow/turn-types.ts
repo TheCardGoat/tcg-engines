@@ -116,10 +116,8 @@ export function isPhase(value: unknown): value is Phase {
  * Check if a beginning step is valid
  */
 export function isBeginningStep(value: unknown): value is BeginningStep {
-  return (
-    typeof value === "string" &&
-    BEGINNING_STEPS.includes(value as BeginningStep)
-  );
+  if (typeof value !== "string") return false;
+  return BEGINNING_STEPS.includes(value as BeginningStep);
 }
 
 /**
