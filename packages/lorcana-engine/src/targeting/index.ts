@@ -31,6 +31,21 @@ export {
   isLocationEnum,
   LOCATION_TARGET_ENUMS,
 } from "./enum-expansion";
+export {
+  type FilterHandler,
+  FilterRegistry,
+  filterRegistry,
+  registerDefaultFilters,
+} from "./filter-registry";
+// Filter matching logic
+export {
+  createTargetFiltersPredicate,
+  createTargetFiltersPredicateWithDebug,
+  type FilterDebugInfo,
+  matchesLorcanaFilter,
+  sortFilters,
+  validateFilters,
+} from "./filter-resolver";
 // Lorcana Target DSL types
 export {
   type AtLocationFilter,
@@ -67,6 +82,7 @@ export {
   type UndamagedFilter,
   type WillpowerFilter,
 } from "./lorcana-target-dsl";
+
 // UI utilities
 export {
   generateTargetDescription,

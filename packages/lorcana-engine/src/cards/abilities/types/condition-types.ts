@@ -212,6 +212,18 @@ export interface HasCardUnderCondition {
 }
 
 // ============================================================================
+// Zone Presence Conditions (Self)
+// ============================================================================
+
+export interface InInkwellCondition {
+  type: "in-inkwell";
+}
+
+export interface InPlayCondition {
+  type: "in-play";
+}
+
+// ============================================================================
 // Count/Comparison Conditions - Strict Variants
 // ============================================================================
 
@@ -501,7 +513,10 @@ export type Condition =
   // Card State
   | IsExertedCondition
   | IsReadyCondition
+  | IsReadyCondition
   | HasCardUnderCondition
+  | InInkwellCondition
+  | InPlayCondition
   // Count Conditions (strict variants)
   | ResourceCountCondition
   | KeywordCharacterCountCondition
@@ -527,7 +542,22 @@ export type Condition =
   // Logical
   | AndCondition
   | OrCondition
-  | NotCondition;
+  | NotCondition
+  // Legacy Resolution
+  | ResolutionCondition;
+
+// ============================================================================
+// Legacy Resolution Conditions
+// ============================================================================
+
+/**
+ * Check resolution context (Legacy support)
+ * Used for "If this was shifted" (legacy) or Bodyguard context
+ */
+export interface ResolutionCondition {
+  type: "resolution";
+  value: "bodyguard" | "shift";
+}
 
 // ============================================================================
 // Condition Builders (convenience)
