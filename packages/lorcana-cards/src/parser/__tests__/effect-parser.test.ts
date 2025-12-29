@@ -273,7 +273,7 @@ describe("Effect Parser", () => {
         type: "put-into-inkwell",
         source: "top-of-deck",
         target: "CONTROLLER",
-        exerted: false,
+        facedown: true,
       });
     });
 

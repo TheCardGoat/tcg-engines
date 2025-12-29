@@ -448,17 +448,22 @@ describe("Composite Effect Parser", () => {
       expect(effect).not.toHaveProperty("steps");
     });
 
-    it("should avoid splitting on 'They' after period - parse only ready effect", () => {
+    it("should parse sequence with ready and restriction effects", () => {
       const effect = parseEffect(
         "Ready chosen character. They can't quest this turn",
       );
 
-      // The parser correctly avoids splitting on "They"
-      // Since "can't quest" is not parsable yet, it only parses the first part
-      // This validates that the negative lookahead for "They" works
+      // Both parts are now parsable:
+      // 1. "Ready chosen character" → ready effect
+      // 2. "They can't quest this turn" → restriction effect
+      // So the parser correctly returns a sequence
       expect(effect).toBeDefined();
-      expect(effect?.type).toBe("ready");
-      expect(effect).not.toHaveProperty("steps");
+      expect(effect?.type).toBe("sequence");
+      if (effect?.type === "sequence") {
+        expect(effect.steps).toHaveLength(2);
+        expect(effect.steps[0].type).toBe("ready");
+        expect((effect.steps[1] as any).type).toBe("restriction");
+      }
     });
   });
 });

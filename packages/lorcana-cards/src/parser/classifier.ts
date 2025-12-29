@@ -126,6 +126,8 @@ function isActionEffect(text: string): boolean {
     /^All\s+locations/i,
     /^This\s+character\s+(?:gets|gains|can'?t|cannot)/i,
     /^If\s+/i,
+    // "Chosen X gains/gets" is a static targeted modification, not an action
+    /^Chosen\s+(?:character|item|location)s?\s+(?:gains?|gets?)\s+/i,
   ];
 
   const hasStaticStarter = staticStarters.some((pattern) => pattern.test(text));
@@ -269,12 +271,10 @@ function isLikelyStaticAbility(text: string): boolean {
   }
 
   // Check for "Chosen X gains/gets" patterns (static targeted modifications)
-  // e.g., "Chosen character gains Rush this turn"
+  // e.g., "Chosen character gains Rush" or "Chosen character gains Rush this turn"
+  // These are always static abilities (targeted continuous effects)
   if (
-    text.match(
-      /^Chosen\s+(?:character|item|location)s?\s+(?:gains?|gets?)\s+/i,
-    ) &&
-    !text.match(/\bthis turn\b/i)
+    text.match(/^Chosen\s+(?:character|item|location)s?\s+(?:gains?|gets?)\s+/i)
   ) {
     return true;
   }

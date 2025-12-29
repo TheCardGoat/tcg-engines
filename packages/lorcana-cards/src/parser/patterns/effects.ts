@@ -143,7 +143,7 @@ export const SEARCH_AND_SHUFFLE_PATTERN =
  * Put into inkwell patterns
  */
 export const PUT_INTO_INKWELL_PATTERN =
-  /[Pp]ut (?:the top card of your deck|(?:an )?additional card from your hand|(?:any )?card from your hand|(?:chosen )?(?:character|item|location)|this card|that card)\s+into (?:your|their|their player'?s?) inkwell(?: facedown)?(?: and exerted)?(?: facedown)?/;
+  /[Pp]ut (?:the top card of your deck|(?:an? )?additional card from your hand|(?:an?y? )?card from your hand|(?:chosen )?(?:character|item|location)|this card|that card)\s+into (?:your|their|their player'?s?) inkwell(?: facedown)?(?: and exerted)?(?: facedown)?/;
 export const PUT_INTO_INKWELL_FACEDOWN_PATTERN =
   /[Pp]ut (?:the top card of your deck|(?:any )?card from your hand|(?:chosen )?(?:opposing )?(?:character|item|location)|this card|that card)\s+into (?:your|their|their player'?s?) inkwell (?:facedown|face ?down)(?: and exerted)?/;
 export const YOU_MAY_PUT_INTO_INKWELL_PATTERN =

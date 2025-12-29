@@ -127,13 +127,18 @@ const DEFAULT_ALL_CHARACTERS_TARGET: CharacterTarget = {
 /**
  * Helper function to parse numeric values or {d} placeholders
  * Converts {d} to -1 as a placeholder value
+ * Handles +{d} and -{d} prefixes (multiplying -1 by the sign)
  *
- * @param value - String that might be a number or "{d}"
- * @returns Parsed number or -1 for {d} placeholder
+ * @param value - String that might be a number or "{d}" with optional +/- prefix
+ * @returns Parsed number or -1 for {d} placeholder (negated if -{d})
  */
 function parseNumericValue(value: string): number {
-  if (value === "{d}") {
-    return -1; // Placeholder value for {d}
+  // Handle {d} placeholder with optional sign prefix
+  if (value.includes("{d}")) {
+    if (value.startsWith("-")) {
+      return 1; // -{d} becomes positive 1 (sign will be applied)
+    }
+    return -1; // +{d} or {d} becomes -1 (placeholder)
   }
   return Number.parseInt(value, 10);
 }
@@ -865,13 +870,17 @@ function parseAtomicEffect(text: string): Effect | undefined {
     const exerted = text.includes("exerted");
     const facedown = text.includes("facedown") || text.includes("face down");
 
-    return {
+    const effect: any = {
       type: "put-into-inkwell",
       source,
       target: targetPlayer,
-      exerted,
-      facedown,
-    } as any;
+    };
+
+    // Only add exerted/facedown when true
+    if (exerted) effect.exerted = true;
+    if (facedown) effect.facedown = true;
+
+    return effect;
   }
 
   // Try shuffle into deck effect
@@ -1076,13 +1085,22 @@ function parseAtomicEffect(text: string): Effect | undefined {
       if (match) value = Number.parseInt(match[1], 10);
     }
 
-    return {
+    // Determine duration based on text
+    const duration = text.includes("this turn") ? "this-turn" : "permanent";
+
+    const effect: any = {
       type: "gain-keyword",
       keyword,
-      value,
       target,
-      duration: "turn",
-    } as any;
+      duration,
+    };
+
+    // Only add value if defined
+    if (value !== undefined) {
+      effect.value = value;
+    }
+
+    return effect;
   }
 
   // Try stat modification effect
@@ -1098,12 +1116,15 @@ function parseAtomicEffect(text: string): Effect | undefined {
           : "lore";
     const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
 
+    // Determine duration based on text
+    const duration = text.includes("this turn") ? "this-turn" : "permanent";
+
     return {
       type: "modify-stat",
       stat,
       modifier,
       target,
-      duration: "turn",
+      duration,
     } as any;
   }
 
