@@ -483,9 +483,9 @@ describe("Targets & Conditions Integration", () => {
         "opponent",
       ];
       const conditionTypes = [
-        { prefix: "if you have 5 lore", type: "if" },
-        { prefix: "during your turn", type: "during" },
-        { prefix: "at the start", type: "at" },
+        { prefix: "if you have 5 lore", type: "if" as const },
+        { prefix: "during your turn", type: "during" as const },
+        { prefix: "at the start", type: "at" as const },
       ];
 
       for (const modifier of modifiers) {
@@ -499,7 +499,7 @@ describe("Targets & Conditions Integration", () => {
           expect(condition?.type).toBe(type);
 
           expect(target).toBeDefined();
-          expect(target?.modifier).toBe(modifier);
+          expect(target?.modifier as string).toBe(modifier);
         }
       }
     });

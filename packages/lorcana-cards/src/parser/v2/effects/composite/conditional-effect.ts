@@ -6,11 +6,8 @@
 
 import type { CstNode } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
-import {
-  type Condition,
-  parseConditionFromText,
-} from "../../visitors/condition-visitor";
+import type { Condition, ConditionalEffect, Effect } from "../../types";
+import { parseConditionFromText } from "../../visitors/condition-visitor";
 import type { EffectParser } from "../atomic";
 import { parseAtomicEffect } from "../atomic";
 
@@ -18,7 +15,7 @@ import { parseAtomicEffect } from "../atomic";
  * Parse conditional effect from text string.
  * Identifies "if X, then Y" or "if X, Y" patterns.
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(text: string): ConditionalEffect | null {
   logger.debug("Attempting to parse conditional effect from text", { text });
 
   // Match "if X, then Y" or "if X, Y" patterns
@@ -41,58 +38,43 @@ function parseFromText(text: string): Effect | null {
   const parsedCondition = parseConditionFromText(`if ${conditionText}`);
 
   // Parse the effect part
-  const effect = parseAtomicEffect(effectText);
+  const thenEffect = parseAtomicEffect(effectText);
 
-  if (!effect) {
+  if (!thenEffect) {
     logger.warn("Failed to parse conditional effect", { effectText });
     return null;
   }
 
-  logger.info("Parsed conditional effect", {
-    condition: parsedCondition || conditionText,
-    effect,
-  });
-
-  const conditionalEffect: Effect = {
-    type: "conditional",
-    effect,
+  // We need a condition - if parsing failed, create a placeholder
+  const condition: Condition = parsedCondition || {
+    type: "has-character-count",
+    controller: "you",
+    comparison: "at-least",
+    count: 0,
   };
 
-  // Include parsed condition or raw text
-  if (parsedCondition) {
-    conditionalEffect.condition = parsedCondition;
-  } else {
-    conditionalEffect.conditionText = conditionText;
-  }
+  logger.info("Parsed conditional effect", {
+    condition,
+    then: thenEffect,
+  });
 
-  return conditionalEffect;
+  return {
+    type: "conditional",
+    condition,
+    then: thenEffect,
+  };
 }
 
 /**
  * Parse conditional effect from CST node (grammar-based parsing).
  * For now, returns null as conditional effects are better handled via text parsing.
  */
-function parseFromCst(ctx: {
+function parseFromCst(_ctx: {
   conditionClause?: CstNode[];
   effectPhrase?: CstNode[];
   [key: string]: unknown;
-}): Effect | null {
-  logger.debug("Attempting to parse conditional effect from CST", { ctx });
-
-  // TODO: Implement CST-based conditional parsing when grammar rules are connected
-  if (ctx.conditionClause && ctx.effectPhrase) {
-    logger.debug(
-      "Conditional effect CST parsing not fully implemented yet, using placeholder",
-    );
-    // Placeholder for future implementation
-    return {
-      type: "conditional",
-      conditionText: "placeholder",
-      effect: { type: "placeholder" },
-    };
-  }
-
-  logger.debug("Conditional effect CST missing required nodes");
+}): ConditionalEffect | null {
+  logger.debug("CST-based conditional parsing not yet implemented");
   return null;
 }
 
@@ -104,7 +86,7 @@ export const conditionalEffectParser: EffectParser = {
   description:
     "Parses conditional effects that only execute if a condition is met (e.g., 'if you have another character, gain 2 lore')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (input: CstNode | string): ConditionalEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }

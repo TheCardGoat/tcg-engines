@@ -6,7 +6,7 @@
 
 import type { CstNode } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
+import type { OptionalEffect } from "../../types";
 import type { EffectParser } from "../atomic";
 import { parseAtomicEffect } from "../atomic";
 
@@ -14,7 +14,7 @@ import { parseAtomicEffect } from "../atomic";
  * Parse optional effect from text string.
  * Identifies "You may" pattern and parses the optional effect.
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(text: string): OptionalEffect | null {
   logger.debug("Attempting to parse optional effect from text", { text });
 
   // Match "You may" pattern
@@ -49,7 +49,7 @@ function parseFromText(text: string): Effect | null {
  * Parse optional effect from CST node (grammar-based parsing).
  * For now, returns null as optional effects are better handled via text parsing.
  */
-function parseFromCst(ctx: CstNode): Effect | null {
+function parseFromCst(_ctx: CstNode): OptionalEffect | null {
   logger.debug("CST-based optional parsing not yet implemented");
   return null;
 }
@@ -62,7 +62,7 @@ export const optionalEffectParser: EffectParser = {
   description:
     "Parses optional effects where player can choose to execute (e.g., 'You may draw 2 cards')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (input: CstNode | string): OptionalEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }

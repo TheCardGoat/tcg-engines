@@ -12,7 +12,7 @@ import type { EffectParser } from "./index";
  * Parse stat modification effect from CST node (grammar-based parsing)
  */
 function parseFromCst(ctx: {
-  Number?: IToken[];
+  NumberToken?: IToken[];
   Identifier?: IToken[];
   [key: string]: unknown;
 }): ModifyStatEffect | null {
@@ -20,16 +20,16 @@ function parseFromCst(ctx: {
     ctx,
   });
 
-  if (!ctx.Number || ctx.Number.length === 0) {
-    logger.debug("Stat mod effect CST missing Number token");
+  if (!ctx.NumberToken || ctx.NumberToken.length === 0) {
+    logger.debug("Stat mod effect CST missing NumberToken");
     return null;
   }
 
-  const modifier = Number.parseInt(ctx.Number[0].image, 10);
+  const modifier = Number.parseInt(ctx.NumberToken[0].image, 10);
 
   if (Number.isNaN(modifier)) {
     logger.warn("Failed to parse number from stat mod effect CST", {
-      image: ctx.Number[0].image,
+      image: ctx.NumberToken[0].image,
     });
     return null;
   }
@@ -55,7 +55,8 @@ function parseFromText(text: string): ModifyStatEffect | null {
     text,
   });
 
-  const pattern = /gets?\s+([+-])(\d+)\s+(strength|willpower|lore)/i;
+  // Using (?:s)? makes the optional 's' more explicit than gets?
+  const pattern = /get(?:s)?\s+([+-])(\d+)\s+(strength|willpower|lore)/i;
   const match = text.match(pattern);
 
   if (!match) {
@@ -110,6 +111,8 @@ export const statModEffectParser: EffectParser = {
     if (typeof input === "string") {
       return parseFromText(input);
     }
-    return parseFromCst(input as { Number?: IToken[]; Identifier?: IToken[] });
+    return parseFromCst(
+      input as { NumberToken?: IToken[]; Identifier?: IToken[] },
+    );
   },
 };

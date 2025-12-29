@@ -6,7 +6,7 @@
 
 import type { CstNode } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
+import type { RepeatEffect } from "../../types";
 import type { EffectParser } from "../atomic";
 import { parseAtomicEffect } from "../atomic";
 
@@ -14,7 +14,7 @@ import { parseAtomicEffect } from "../atomic";
  * Parse repeat effect from text string.
  * Identifies patterns where an effect is repeated N times.
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(text: string): RepeatEffect | null {
   logger.debug("Attempting to parse repeat effect from text", { text });
 
   // Match "X, Y times" pattern - effect followed by count
@@ -91,7 +91,7 @@ function parseFromText(text: string): Effect | null {
  * Parse repeat effect from CST node (grammar-based parsing).
  * For now, returns null as repeat effects are better handled via text parsing.
  */
-function parseFromCst(ctx: CstNode): Effect | null {
+function parseFromCst(_ctx: CstNode): RepeatEffect | null {
   logger.debug("CST-based repeat parsing not yet implemented");
   return null;
 }
@@ -104,7 +104,7 @@ export const repeatEffectParser: EffectParser = {
   description:
     "Parses repeat effects that execute multiple times (e.g., 'draw 1 card, 3 times')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (input: CstNode | string): RepeatEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }

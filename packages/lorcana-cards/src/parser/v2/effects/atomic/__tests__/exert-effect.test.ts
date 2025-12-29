@@ -4,6 +4,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import type { CstNode } from "chevrotain";
 import type { Effect } from "../../../types";
 import { exertEffectParser } from "../exert-effect";
 
@@ -182,7 +183,7 @@ describe("exertEffectParser", () => {
     it("parses CST node with Exert token", () => {
       const cstNode = {
         Exert: [{ image: "exert" }],
-      };
+      } as unknown as CstNode;
 
       const result = exertEffectParser.parse(cstNode);
 
@@ -195,7 +196,7 @@ describe("exertEffectParser", () => {
     it("parses CST node with Ready token", () => {
       const cstNode = {
         Ready: [{ image: "ready" }],
-      };
+      } as unknown as CstNode;
 
       const result = exertEffectParser.parse(cstNode);
 
@@ -208,7 +209,7 @@ describe("exertEffectParser", () => {
     it("returns null when both Exert and Ready tokens are missing", () => {
       const cstNode = {
         OtherToken: [{ image: "something" }],
-      };
+      } as unknown as CstNode;
 
       const result = exertEffectParser.parse(cstNode);
 
@@ -216,7 +217,7 @@ describe("exertEffectParser", () => {
     });
 
     it("returns null for empty CST node", () => {
-      const cstNode = {};
+      const cstNode = {} as unknown as CstNode;
 
       const result = exertEffectParser.parse(cstNode);
 
@@ -229,7 +230,7 @@ describe("exertEffectParser", () => {
       const cstNode = {
         Exert: [{ image: "exert" }],
         Ready: [{ image: "ready" }],
-      };
+      } as unknown as CstNode;
 
       const result = exertEffectParser.parse(cstNode);
 
@@ -247,7 +248,7 @@ describe("exertEffectParser", () => {
     it("has description", () => {
       expect(exertEffectParser.description).toBeDefined();
       expect(typeof exertEffectParser.description).toBe("string");
-      expect(exertEffectParser.description.length).toBeGreaterThan(0);
+      expect(exertEffectParser.description?.length).toBeGreaterThan(0);
     });
 
     it("has parse function", () => {

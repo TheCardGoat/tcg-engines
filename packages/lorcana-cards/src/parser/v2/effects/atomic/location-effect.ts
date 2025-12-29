@@ -5,13 +5,13 @@
 
 import type { CstNode } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
+import type { CharacterTarget, MoveToLocationEffect } from "../../types";
 import type { EffectParser } from "./index";
 
 /**
  * Parse location effect from text string (regex-based parsing)
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(text: string): MoveToLocationEffect | null {
   logger.debug("Attempting to parse location effect from text", { text });
 
   // Pattern: "move (chosen character|...) to a location"
@@ -24,14 +24,14 @@ function parseFromText(text: string): Effect | null {
   }
 
   // Determine character target
-  let character = "chosen-character";
+  let character: CharacterTarget = "CHOSEN_CHARACTER";
 
   if (text.includes("chosen character of yours")) {
-    character = "chosen-character-of-yours";
+    character = "YOUR_CHOSEN_CHARACTER";
   } else if (text.includes("this character")) {
-    character = "self";
+    character = "SELF";
   } else if (text.includes("chosen character")) {
-    character = "chosen-character";
+    character = "CHOSEN_CHARACTER";
   }
 
   // Check if movement is free
@@ -39,11 +39,14 @@ function parseFromText(text: string): Effect | null {
 
   logger.info("Parsed move to location effect", { character, isFree });
 
-  return {
+  const effect: MoveToLocationEffect = {
     type: "move-to-location",
     character,
-    cost: isFree ? "free" : "normal",
   };
+  if (isFree) {
+    effect.cost = "free";
+  }
+  return effect;
 }
 
 /**
@@ -54,7 +57,7 @@ export const locationEffectParser: EffectParser = {
   description:
     "Parses location movement effects (e.g., 'move chosen character to a location')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (input: CstNode | string): MoveToLocationEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }

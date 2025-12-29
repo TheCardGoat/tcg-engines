@@ -4,6 +4,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import type { CstNode } from "chevrotain";
 import type { Effect } from "../../../types";
 import { loreEffectParser } from "../lore-effect";
 
@@ -13,7 +14,7 @@ describe("loreEffectParser", () => {
       const result = loreEffectParser.parse("gain 2 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
+      expect(result?.type).toBe("gain-lore");
       expect((result as Effect & { amount: number }).amount).toBe(2);
     });
 
@@ -21,7 +22,7 @@ describe("loreEffectParser", () => {
       const result = loreEffectParser.parse("gain 1 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
+      expect(result?.type).toBe("gain-lore");
       expect((result as Effect & { amount: number }).amount).toBe(1);
     });
 
@@ -29,7 +30,7 @@ describe("loreEffectParser", () => {
       const result = loreEffectParser.parse("gain 3 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
+      expect(result?.type).toBe("gain-lore");
       expect((result as Effect & { amount: number }).amount).toBe(3);
     });
 
@@ -37,42 +38,42 @@ describe("loreEffectParser", () => {
       const result = loreEffectParser.parse("gain 5 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
+      expect(result?.type).toBe("gain-lore");
       expect((result as Effect & { amount: number }).amount).toBe(5);
     });
   });
 
   describe("text parsing - lose lore (happy path)", () => {
-    it("parses 'lose 2 lore' correctly as negative", () => {
+    it("parses 'lose 2 lore' correctly", () => {
       const result = loreEffectParser.parse("lose 2 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
-      expect((result as Effect & { amount: number }).amount).toBe(-2);
+      expect(result?.type).toBe("lose-lore");
+      expect((result as Effect & { amount: number }).amount).toBe(2);
     });
 
     it("parses 'lose 1 lore' with single point", () => {
       const result = loreEffectParser.parse("lose 1 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
-      expect((result as Effect & { amount: number }).amount).toBe(-1);
+      expect(result?.type).toBe("lose-lore");
+      expect((result as Effect & { amount: number }).amount).toBe(1);
     });
 
     it("parses 'lose 3 lore' with larger number", () => {
       const result = loreEffectParser.parse("lose 3 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
-      expect((result as Effect & { amount: number }).amount).toBe(-3);
+      expect(result?.type).toBe("lose-lore");
+      expect((result as Effect & { amount: number }).amount).toBe(3);
     });
 
     it("parses 'lose 4 lore' with medium number", () => {
       const result = loreEffectParser.parse("lose 4 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
-      expect((result as Effect & { amount: number }).amount).toBe(-4);
+      expect(result?.type).toBe("lose-lore");
+      expect((result as Effect & { amount: number }).amount).toBe(4);
     });
   });
 
@@ -81,7 +82,7 @@ describe("loreEffectParser", () => {
       const result = loreEffectParser.parse("GAIN 2 LORE");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
+      expect(result?.type).toBe("gain-lore");
       expect((result as Effect & { amount: number }).amount).toBe(2);
     });
 
@@ -89,8 +90,8 @@ describe("loreEffectParser", () => {
       const result = loreEffectParser.parse("LOSE 2 LORE");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
-      expect((result as Effect & { amount: number }).amount).toBe(-2);
+      expect(result?.type).toBe("lose-lore");
+      expect((result as Effect & { amount: number }).amount).toBe(2);
     });
 
     it("parses 'Gain 3 Lore' in mixed case", () => {
@@ -104,7 +105,7 @@ describe("loreEffectParser", () => {
       const result = loreEffectParser.parse("LoSe 1 LoRe");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(-1);
+      expect((result as Effect & { amount: number }).amount).toBe(1);
     });
   });
 
@@ -120,7 +121,7 @@ describe("loreEffectParser", () => {
       const result = loreEffectParser.parse("lose  3  lore");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(-3);
+      expect((result as Effect & { amount: number }).amount).toBe(3);
     });
 
     it("parses gain with tabs", () => {
@@ -136,7 +137,7 @@ describe("loreEffectParser", () => {
       const result = loreEffectParser.parse("gain 0 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
+      expect(result?.type).toBe("gain-lore");
       expect((result as Effect & { amount: number }).amount).toBe(0);
     });
 
@@ -144,8 +145,8 @@ describe("loreEffectParser", () => {
       const result = loreEffectParser.parse("lose 0 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
-      expect((result as Effect & { amount: number }).amount).toBe(-0);
+      expect(result?.type).toBe("lose-lore");
+      expect((result as Effect & { amount: number }).amount).toBe(0);
     });
 
     it("parses large gain values", () => {
@@ -155,11 +156,11 @@ describe("loreEffectParser", () => {
       expect((result as Effect & { amount: number }).amount).toBe(20);
     });
 
-    it("parses large lose values as negative", () => {
+    it("parses large lose values", () => {
       const result = loreEffectParser.parse("lose 15 lore");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(-15);
+      expect((result as Effect & { amount: number }).amount).toBe(15);
     });
   });
 
@@ -211,21 +212,21 @@ describe("loreEffectParser", () => {
     it("parses CST node with Gain and Number tokens", () => {
       const cstNode = {
         Gain: [{ image: "gain" }],
-        Number: [{ image: "2" }],
-      };
+        NumberToken: [{ image: "2" }],
+      } as unknown as CstNode;
 
       const result = loreEffectParser.parse(cstNode);
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
+      expect(result?.type).toBe("gain-lore");
       expect((result as Effect & { amount: number }).amount).toBe(2);
     });
 
     it("parses CST node with single lore gain", () => {
       const cstNode = {
         Gain: [{ image: "gain" }],
-        Number: [{ image: "1" }],
-      };
+        NumberToken: [{ image: "1" }],
+      } as unknown as CstNode;
 
       const result = loreEffectParser.parse(cstNode);
 
@@ -238,26 +239,26 @@ describe("loreEffectParser", () => {
     it("parses CST node with Lose and Number tokens", () => {
       const cstNode = {
         Lose: [{ image: "lose" }],
-        Number: [{ image: "2" }],
-      };
+        NumberToken: [{ image: "2" }],
+      } as unknown as CstNode;
 
       const result = loreEffectParser.parse(cstNode);
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
-      expect((result as Effect & { amount: number }).amount).toBe(-2);
+      expect(result?.type).toBe("lose-lore");
+      expect((result as Effect & { amount: number }).amount).toBe(2);
     });
 
     it("parses CST node with single lore loss", () => {
       const cstNode = {
         Lose: [{ image: "lose" }],
-        Number: [{ image: "3" }],
-      };
+        NumberToken: [{ image: "3" }],
+      } as unknown as CstNode;
 
       const result = loreEffectParser.parse(cstNode);
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(-3);
+      expect((result as Effect & { amount: number }).amount).toBe(3);
     });
   });
 
@@ -265,7 +266,7 @@ describe("loreEffectParser", () => {
     it("returns null when Number token is missing", () => {
       const cstNode = {
         Gain: [{ image: "gain" }],
-      };
+      } as unknown as CstNode;
 
       const result = loreEffectParser.parse(cstNode);
 
@@ -274,8 +275,8 @@ describe("loreEffectParser", () => {
 
     it("returns null when both Gain and Lose are missing", () => {
       const cstNode = {
-        Number: [{ image: "2" }],
-      };
+        NumberToken: [{ image: "2" }],
+      } as unknown as CstNode;
 
       const result = loreEffectParser.parse(cstNode);
 
@@ -285,8 +286,8 @@ describe("loreEffectParser", () => {
     it("returns null when Number array is empty", () => {
       const cstNode = {
         Gain: [{ image: "gain" }],
-        Number: [],
-      };
+        NumberToken: [],
+      } as unknown as CstNode;
 
       const result = loreEffectParser.parse(cstNode);
 
@@ -296,8 +297,8 @@ describe("loreEffectParser", () => {
     it("returns null when number is not parseable", () => {
       const cstNode = {
         Gain: [{ image: "gain" }],
-        Number: [{ image: "xyz" }],
-      };
+        NumberToken: [{ image: "xyz" }],
+      } as unknown as CstNode;
 
       const result = loreEffectParser.parse(cstNode);
 
@@ -314,7 +315,7 @@ describe("loreEffectParser", () => {
     it("has description", () => {
       expect(loreEffectParser.description).toBeDefined();
       expect(typeof loreEffectParser.description).toBe("string");
-      expect(loreEffectParser.description.length).toBeGreaterThan(0);
+      expect(loreEffectParser.description?.length).toBeGreaterThan(0);
     });
 
     it("has parse function", () => {

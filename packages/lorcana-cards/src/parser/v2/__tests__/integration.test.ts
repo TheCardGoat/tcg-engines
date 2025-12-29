@@ -69,7 +69,7 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("draw");
-        expect(result?.amount).toBe(2);
+        expect((result as { amount?: number })?.amount).toBe(2);
       });
 
       it("parses discard effect through pipeline", () => {
@@ -77,24 +77,29 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("discard");
-        expect(result?.amount).toBe(1);
+        if (result && result.type === "discard") {
+          expect(result.amount).toBe(1);
+        }
       });
 
       it("parses damage effect through pipeline", () => {
         const result = parseEffect("deal 3 damage to chosen character");
 
         expect(result).not.toBeNull();
-        expect(result?.type).toBe("damage");
-        expect(result?.amount).toBe(3);
+        expect(result?.type).toBe("deal-damage");
+        if (result && result.type === "deal-damage") {
+          expect(result.amount).toBe(3);
+        }
       });
 
       it("parses lore gain effect through pipeline", () => {
         const result = parseEffect("gain 2 lore");
 
         expect(result).not.toBeNull();
-        expect(result?.type).toBe("lore");
-        expect(result?.amount).toBe(2);
-        // Lore uses positive/negative amounts, not isGain flag
+        expect(result?.type).toBe("gain-lore");
+        if (result && result.type === "gain-lore") {
+          expect(result.amount).toBe(2);
+        }
       });
 
       it("parses exert effect through pipeline", () => {
@@ -118,9 +123,11 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("sequence");
-        expect(result?.effects).toHaveLength(2);
-        expect(result?.effects[0].type).toBe("draw");
-        expect(result?.effects[1].type).toBe("discard");
+        if (result && result.type === "sequence") {
+          expect(result.steps).toHaveLength(2);
+          expect(result.steps[0].type).toBe("draw");
+          expect(result.steps[1].type).toBe("discard");
+        }
       });
 
       it("parses choice effect through pipeline", () => {
@@ -128,9 +135,11 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("choice");
-        expect(result?.options).toHaveLength(2);
-        expect(result?.options[0].type).toBe("draw");
-        expect(result?.options[1].type).toBe("lore");
+        if (result && result.type === "choice") {
+          expect(result.options).toHaveLength(2);
+          expect(result.options[0].type).toBe("draw");
+          expect(result.options[1].type).toBe("gain-lore");
+        }
       });
 
       it("parses optional effect through pipeline", () => {
@@ -138,7 +147,9 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("optional");
-        expect(result?.effect.type).toBe("draw");
+        if (result && result.type === "optional") {
+          expect(result.effect.type).toBe("draw");
+        }
       });
 
       it("parses for-each effect through pipeline", () => {
@@ -147,8 +158,10 @@ describe("Integration: Effect Parsing Pipeline", () => {
         );
 
         expect(result).not.toBeNull();
-        expect(result?.type).toBe("forEach"); // Type is "forEach" in camelCase
-        expect(result?.effect.type).toBe("lore");
+        expect(result?.type).toBe("for-each");
+        if (result && result.type === "for-each") {
+          expect(result.effect.type).toBe("gain-lore");
+        }
       });
 
       it("parses conditional effect through pipeline", () => {
@@ -158,7 +171,9 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("conditional");
-        expect(result?.effect.type).toBe("lore");
+        if (result && result.type === "conditional") {
+          expect(result.then.type).toBe("gain-lore");
+        }
       });
 
       it("parses repeat effect through pipeline", () => {
@@ -167,8 +182,10 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
         expect(result).not.toBeNull();
         expect(result?.type).toBe("repeat");
-        expect(result?.effect.type).toBe("draw");
-        expect(result?.times).toBe(3);
+        if (result && result.type === "repeat") {
+          expect(result.effect.type).toBe("draw");
+          expect(result.times).toBe(3);
+        }
       });
     });
 
@@ -229,8 +246,10 @@ describe("Integration: Effect Parsing Pipeline", () => {
       const result = parseEffect("deal 2 damage to chosen character");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
-      expect(result?.amount).toBe(2);
+      expect(result?.type).toBe("deal-damage");
+      if (result && result.type === "deal-damage") {
+        expect(result.amount).toBe(2);
+      }
     });
 
     it("parses Aladdin - Prince Ali ability", () => {
@@ -238,7 +257,9 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      expect(result?.effects).toHaveLength(2);
+      if (result && result.type === "sequence") {
+        expect(result.steps).toHaveLength(2);
+      }
     });
 
     it("parses Maleficent - Monstrous Dragon ability", () => {
@@ -248,7 +269,9 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      expect(result?.options).toHaveLength(2);
+      if (result && result.type === "choice") {
+        expect(result.options).toHaveLength(2);
+      }
     });
 
     it("parses Gaston - Arrogant Hunter ability", () => {
@@ -266,7 +289,7 @@ describe("Integration: Effect Parsing Pipeline", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach"); // Type is "forEach" in camelCase
+      expect(result?.type).toBe("for-each");
     });
 
     it("parses complex multi-step sequence", () => {
@@ -276,7 +299,9 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      expect(result?.effects).toHaveLength(3);
+      if (result && result.type === "sequence") {
+        expect(result.steps).toHaveLength(3);
+      }
     });
   });
 
@@ -364,12 +389,15 @@ describe("Integration: Effect Parsing Pipeline", () => {
     it("atomic parsers can parse their expected effect types", () => {
       // Test that parsers actually work
       const testCases = [
-        { text: "draw 2 cards", expectedType: "draw" },
-        { text: "discard 1 card", expectedType: "discard" },
-        { text: "deal 2 damage to chosen character", expectedType: "damage" },
-        { text: "gain 2 lore", expectedType: "lore" },
-        { text: "exert chosen character", expectedType: "exert" },
-        { text: "banish chosen character", expectedType: "banish" },
+        { text: "draw 2 cards", expectedType: "draw" as const },
+        { text: "discard 1 card", expectedType: "discard" as const },
+        {
+          text: "deal 2 damage to chosen character",
+          expectedType: "deal-damage" as const,
+        },
+        { text: "gain 2 lore", expectedType: "gain-lore" as const },
+        { text: "exert chosen character", expectedType: "exert" as const },
+        { text: "banish chosen character", expectedType: "banish" as const },
       ];
 
       for (const { text, expectedType } of testCases) {
@@ -381,18 +409,24 @@ describe("Integration: Effect Parsing Pipeline", () => {
 
     it("composite parsers can parse their expected effect types", () => {
       const testCases = [
-        { text: "draw 1 card, then discard 1 card", expectedType: "sequence" },
+        {
+          text: "draw 1 card, then discard 1 card",
+          expectedType: "sequence" as const,
+        },
         {
           text: "choose one: draw 1 card; or gain 1 lore",
-          expectedType: "choice",
+          expectedType: "choice" as const,
         },
-        { text: "you may draw 1 card", expectedType: "optional" },
-        { text: "for each character, gain 1 lore", expectedType: "forEach" }, // camelCase
+        { text: "you may draw 1 card", expectedType: "optional" as const },
+        {
+          text: "for each character, gain 1 lore",
+          expectedType: "for-each" as const,
+        },
         {
           text: "if you have another character, gain 1 lore",
-          expectedType: "conditional",
+          expectedType: "conditional" as const,
         },
-        { text: "draw 1 card, 2 times", expectedType: "repeat" }, // Requires comma
+        { text: "draw 1 card, 2 times", expectedType: "repeat" as const }, // Requires comma
       ];
 
       for (const { text, expectedType } of testCases) {

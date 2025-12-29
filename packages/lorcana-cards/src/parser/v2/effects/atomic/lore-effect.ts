@@ -12,23 +12,23 @@ import type { EffectParser } from "./index";
  * Parse lore effect from CST node (grammar-based parsing)
  */
 function parseFromCst(ctx: {
-  Number?: IToken[];
+  NumberToken?: IToken[];
   Gain?: IToken[];
   Lose?: IToken[];
   [key: string]: unknown;
 }): GainLoreEffect | LoseLoreEffect | null {
   logger.debug("Attempting to parse lore effect from CST", { ctx });
 
-  if (!ctx.Number || ctx.Number.length === 0) {
-    logger.debug("Lore effect CST missing Number token");
+  if (!ctx.NumberToken || ctx.NumberToken.length === 0) {
+    logger.debug("Lore effect CST missing NumberToken");
     return null;
   }
 
-  const amount = Number.parseInt(ctx.Number[0].image, 10);
+  const amount = Number.parseInt(ctx.NumberToken[0].image, 10);
 
   if (Number.isNaN(amount)) {
     logger.warn("Failed to parse number from lore effect CST", {
-      image: ctx.Number[0].image,
+      image: ctx.NumberToken[0].image,
     });
     return null;
   }
@@ -114,7 +114,7 @@ export const loreEffectParser: EffectParser = {
       return parseFromText(input);
     }
     return parseFromCst(
-      input as { Number?: IToken[]; Gain?: IToken[]; Lose?: IToken[] },
+      input as { NumberToken?: IToken[]; Gain?: IToken[]; Lose?: IToken[] },
     );
   },
 };

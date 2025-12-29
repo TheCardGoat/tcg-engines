@@ -252,7 +252,7 @@ describe("statModEffectParser", () => {
   describe("CST parsing", () => {
     it("parses CST node with Number token", () => {
       const cstNode = {
-        Number: [{ image: "2" }],
+        NumberToken: [{ image: "2" }],
       };
 
       const result = statModEffectParser.parse(cstNode);
@@ -264,7 +264,7 @@ describe("statModEffectParser", () => {
 
     it("parses CST node with single modifier", () => {
       const cstNode = {
-        Number: [{ image: "1" }],
+        NumberToken: [{ image: "1" }],
       };
 
       const result = statModEffectParser.parse(cstNode);
@@ -275,7 +275,7 @@ describe("statModEffectParser", () => {
 
     it("parses CST node with large modifier", () => {
       const cstNode = {
-        Number: [{ image: "7" }],
+        NumberToken: [{ image: "7" }],
       };
 
       const result = statModEffectParser.parse(cstNode);
@@ -296,7 +296,7 @@ describe("statModEffectParser", () => {
 
     it("returns null when Number array is empty", () => {
       const cstNode = {
-        Number: [],
+        NumberToken: [],
       };
 
       const result = statModEffectParser.parse(cstNode);
@@ -306,7 +306,7 @@ describe("statModEffectParser", () => {
 
     it("returns null when number is not parseable", () => {
       const cstNode = {
-        Number: [{ image: "abc" }],
+        NumberToken: [{ image: "abc" }],
       };
 
       const result = statModEffectParser.parse(cstNode);

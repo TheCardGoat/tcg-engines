@@ -6,7 +6,7 @@
 
 import type { CstNode } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
+import type { ChoiceEffect, Effect } from "../../types";
 import type { EffectParser } from "../atomic";
 import { parseAtomicEffect } from "../atomic";
 
@@ -14,7 +14,7 @@ import { parseAtomicEffect } from "../atomic";
  * Parse choice effect from text string.
  * Identifies "Choose one" pattern and splits options on "; or" separator.
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(text: string): ChoiceEffect | null {
   logger.debug("Attempting to parse choice effect from text", { text });
 
   // Match "Choose one" pattern (with : or -)
@@ -103,7 +103,7 @@ function parseFromText(text: string): Effect | null {
  * Parse choice effect from CST node (grammar-based parsing).
  * For now, returns null as choice effects are better handled via text parsing.
  */
-function parseFromCst(ctx: CstNode): Effect | null {
+function parseFromCst(_ctx: CstNode): ChoiceEffect | null {
   logger.debug("CST-based choice parsing not yet implemented");
   return null;
 }
@@ -116,7 +116,7 @@ export const choiceEffectParser: EffectParser = {
   description:
     "Parses choice effects where player selects one option (e.g., 'Choose one: Deal 3 damage; or gain 2 lore')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (input: CstNode | string): ChoiceEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }

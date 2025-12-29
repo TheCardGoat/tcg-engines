@@ -10,8 +10,23 @@ export type LogLevel = "debug" | "info" | "warn" | "error";
 class ParserLogger {
   private level: LogLevel = "info";
   private enabled = true;
+  private initialized = false;
+
+  /**
+   * Lazily initializes logger configuration from environment variables.
+   * Called automatically on first log operation.
+   */
+  private ensureInitialized(): void {
+    if (this.initialized) return;
+    this.initialized = true;
+
+    if (process.env.PARSER_DEBUG === "true") {
+      this.level = "debug";
+    }
+  }
 
   setLevel(level: LogLevel): void {
+    this.ensureInitialized();
     this.level = level;
   }
 
@@ -40,6 +55,7 @@ class ParserLogger {
   }
 
   private log(level: LogLevel, message: string, context?: LogContext): void {
+    this.ensureInitialized();
     if (!this.enabled) return;
     if (!this.shouldLog(level)) return;
 
@@ -69,8 +85,3 @@ class ParserLogger {
 }
 
 export const logger = new ParserLogger();
-
-// Configure based on environment
-if (process.env.PARSER_DEBUG === "true") {
-  logger.setLevel("debug");
-}

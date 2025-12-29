@@ -86,14 +86,18 @@ describe("LorcanaParserV2 - Integration", () => {
       const result = parserV2.parseAbility("when you play, draw 2");
 
       expect(result).not.toBeNull();
-      expect(result?.trigger).toBeDefined();
+      if (result && result.type === "triggered") {
+        expect(result.trigger).toBeDefined();
+      }
     });
 
     it("includes effect information", () => {
       const result = parserV2.parseAbility("when you play, draw 2");
 
       expect(result).not.toBeNull();
-      expect(result?.effect).toBeDefined();
+      if (result && result.type === "triggered") {
+        expect(result.effect).toBeDefined();
+      }
     });
   });
 
@@ -164,8 +168,10 @@ describe("LorcanaParserV2 - Integration", () => {
 
       expect(consoleLogSpy).toHaveBeenCalled();
       // Should have success log
-      const logs = consoleLogSpy.mock.calls.map((call) => JSON.parse(call[0]));
-      const successLog = logs.find((log) =>
+      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) =>
+        JSON.parse(call[0] as string),
+      );
+      const successLog = logs.find((log: { message: string }) =>
         log.message.includes("Successfully"),
       );
       expect(successLog).toBeDefined();
@@ -195,8 +201,12 @@ describe("LorcanaParserV2 - Integration", () => {
 
       expect(consoleLogSpy).toHaveBeenCalled();
       // Should include debug-level logs
-      const logs = consoleLogSpy.mock.calls.map((call) => JSON.parse(call[0]));
-      const debugLogs = logs.filter((log) => log.level === "debug");
+      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) =>
+        JSON.parse(call[0] as string),
+      );
+      const debugLogs = logs.filter(
+        (log: { level: string }) => log.level === "debug",
+      );
       expect(debugLogs.length).toBeGreaterThan(0);
     });
 
@@ -205,8 +215,12 @@ describe("LorcanaParserV2 - Integration", () => {
       parserV2.disableDebugLogging();
       parserV2.parseAbility("draw 2");
 
-      const logs = consoleLogSpy.mock.calls.map((call) => JSON.parse(call[0]));
-      const debugLogs = logs.filter((log) => log.level === "debug");
+      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) =>
+        JSON.parse(call[0] as string),
+      );
+      const debugLogs = logs.filter(
+        (log: { level: string }) => log.level === "debug",
+      );
       expect(debugLogs.length).toBe(0);
     });
 
@@ -215,8 +229,12 @@ describe("LorcanaParserV2 - Integration", () => {
       parserV2.parseAbility("when you play, draw 2");
 
       expect(consoleLogSpy).toHaveBeenCalled();
-      const logs = consoleLogSpy.mock.calls.map((call) => JSON.parse(call[0]));
-      const debugLogs = logs.filter((log) => log.level === "debug");
+      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) =>
+        JSON.parse(call[0] as string),
+      );
+      const debugLogs = logs.filter(
+        (log: { level: string }) => log.level === "debug",
+      );
 
       // Should have debug logs from visitor
       expect(debugLogs.length).toBeGreaterThan(0);
@@ -245,8 +263,10 @@ describe("LorcanaParserV2 - Integration", () => {
       expect(result).not.toBeNull();
       // Visitor transforms to proper structure
       expect(result?.type).toBe("triggered");
-      expect(result?.trigger).toBeDefined();
-      expect(result?.effect).toBeDefined();
+      if (result && result.type === "triggered") {
+        expect(result.trigger).toBeDefined();
+        expect(result.effect).toBeDefined();
+      }
     });
 
     it("produces complete ability object", () => {
@@ -254,10 +274,14 @@ describe("LorcanaParserV2 - Integration", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("triggered");
-      expect(result?.trigger).toHaveProperty("triggerWord");
-      expect(result?.effect).toHaveProperty("type");
-      expect(result?.effect?.type).toBe("draw");
-      expect(result?.effect?.amount).toBe(2);
+      if (result && result.type === "triggered") {
+        expect(result.trigger).toHaveProperty("triggerWord");
+        expect(result.effect).toHaveProperty("type");
+        expect(result.effect.type).toBe("draw");
+        if (result.effect.type === "draw") {
+          expect(result.effect.amount).toBe(2);
+        }
+      }
     });
   });
 
@@ -356,9 +380,13 @@ describe("LorcanaParserV2 - Integration", () => {
       parserV2.enableDebugLogging();
       parserV2.parseAbility("when you play, draw 2");
 
-      const logs = consoleLogSpy.mock.calls.map((call) => JSON.parse(call[0]));
+      const logs = consoleLogSpy.mock.calls.map((call: unknown[]) =>
+        JSON.parse(call[0] as string),
+      );
       // Some logs should include context
-      const logsWithStage = logs.filter((log) => log.stage !== undefined);
+      const logsWithStage = logs.filter(
+        (log: { stage?: string }) => log.stage !== undefined,
+      );
       // Debug logs from visitor should have context
       expect(logs.length).toBeGreaterThan(0);
     });
@@ -389,8 +417,10 @@ describe("LorcanaParserV2 - Integration", () => {
     it("exercises visitor", () => {
       const result = parserV2.parseAbility("when you play, draw 2");
       expect(result?.type).toBe("triggered");
-      expect(result?.trigger).toBeDefined();
-      expect(result?.effect).toBeDefined();
+      if (result && result.type === "triggered") {
+        expect(result.trigger).toBeDefined();
+        expect(result.effect).toBeDefined();
+      }
     });
 
     it("exercises logger", () => {

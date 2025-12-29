@@ -4,6 +4,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import type { CstNode } from "chevrotain";
 import type { Effect } from "../../../types";
 import {
   atomicEffectParsers,
@@ -33,7 +34,7 @@ describe("Effect Parser Registry", () => {
       for (const parser of atomicEffectParsers) {
         expect(parser.description).toBeDefined();
         expect(typeof parser.description).toBe("string");
-        expect(parser.description.length).toBeGreaterThan(0);
+        expect(parser.description?.length).toBeGreaterThan(0);
       }
     });
 
@@ -113,8 +114,8 @@ describe("Effect Parser Registry", () => {
 
     it("accepts CST node input", () => {
       const cstNode = {
-        Number: [{ image: "2" }],
-      };
+        NumberToken: [{ image: "2" }],
+      } as unknown as CstNode;
       const result = parseAtomicEffect(cstNode);
       // Should try all parsers, at least one might match
       expect(result).toBeDefined();
@@ -142,7 +143,7 @@ describe("Effect Parser Registry", () => {
       const result = parseAtomicEffect("deal 3 damage");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
+      expect(result?.type).toBe("deal-damage");
       expect((result as Effect & { amount: number }).amount).toBe(3);
     });
 
@@ -150,16 +151,16 @@ describe("Effect Parser Registry", () => {
       const result = parseAtomicEffect("gain 2 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
+      expect(result?.type).toBe("gain-lore");
       expect((result as Effect & { amount: number }).amount).toBe(2);
     });
 
-    it("returns lore effect with negative amount for lose lore text", () => {
+    it("returns lore effect for lose lore text", () => {
       const result = parseAtomicEffect("lose 1 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
-      expect((result as Effect & { amount: number }).amount).toBe(-1);
+      expect(result?.type).toBe("lose-lore");
+      expect((result as Effect & { amount: number }).amount).toBe(1);
     });
 
     it("returns exert effect for exert text", () => {
@@ -194,15 +195,15 @@ describe("Effect Parser Registry", () => {
       const result = parseAtomicEffect("gets +2 strength");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("statModification");
-      expect((result as Effect & { amount: number }).amount).toBe(2);
+      expect(result?.type).toBe("modify-stat");
+      expect((result as Effect & { modifier: number }).modifier).toBe(2);
     });
 
     it("returns keyword effect for keyword text", () => {
       const result = parseAtomicEffect("gains Evasive");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("keyword");
+      expect(result?.type).toBe("gain-keyword");
       expect((result as Effect & { keyword: string }).keyword).toBe("Evasive");
     });
   });
@@ -258,8 +259,8 @@ describe("Effect Parser Registry", () => {
       const result = parseAtomicEffect("gets +2 lore");
 
       expect(result).not.toBeNull();
-      // Should match statModification, not lore
-      expect(result?.type).toBe("statModification");
+      // Should match modify-stat, not gain-lore
+      expect(result?.type).toBe("modify-stat");
     });
 
     it("tries all parsers if none match", () => {
@@ -289,7 +290,7 @@ describe("Effect Parser Registry", () => {
       const result = parseAtomicEffect("deal 2 damage");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
+      expect(result?.type).toBe("deal-damage");
     });
   });
 
@@ -310,7 +311,7 @@ describe("Effect Parser Registry", () => {
       const result = parseAtomicEffect("deal 3 damage to chosen character");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
+      expect(result?.type).toBe("deal-damage");
       expect((result as Effect & { amount: number }).amount).toBe(3);
     });
 
@@ -320,7 +321,7 @@ describe("Effect Parser Registry", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("lore");
+      expect(result?.type).toBe("gain-lore");
       expect((result as Effect & { amount: number }).amount).toBe(2);
     });
   });

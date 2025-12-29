@@ -4,6 +4,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import type { CstNode } from "chevrotain";
 import type { Effect } from "../../../types";
 import { discardEffectParser } from "../discard-effect";
 
@@ -161,8 +162,8 @@ describe("discardEffectParser", () => {
   describe("CST parsing", () => {
     it("parses CST node with Number token", () => {
       const cstNode = {
-        Number: [{ image: "2" }],
-      };
+        NumberToken: [{ image: "2" }],
+      } as unknown as CstNode;
 
       const result = discardEffectParser.parse(cstNode);
 
@@ -173,8 +174,8 @@ describe("discardEffectParser", () => {
 
     it("parses CST node with single card", () => {
       const cstNode = {
-        Number: [{ image: "1" }],
-      };
+        NumberToken: [{ image: "1" }],
+      } as unknown as CstNode;
 
       const result = discardEffectParser.parse(cstNode);
 
@@ -184,8 +185,8 @@ describe("discardEffectParser", () => {
 
     it("parses CST node with large number", () => {
       const cstNode = {
-        Number: [{ image: "7" }],
-      };
+        NumberToken: [{ image: "7" }],
+      } as unknown as CstNode;
 
       const result = discardEffectParser.parse(cstNode);
 
@@ -196,7 +197,7 @@ describe("discardEffectParser", () => {
     it("returns null when Number token is missing", () => {
       const cstNode = {
         OtherToken: [{ image: "something" }],
-      };
+      } as unknown as CstNode;
 
       const result = discardEffectParser.parse(cstNode);
 
@@ -205,8 +206,8 @@ describe("discardEffectParser", () => {
 
     it("returns null when Number array is empty", () => {
       const cstNode = {
-        Number: [],
-      };
+        NumberToken: [],
+      } as unknown as CstNode;
 
       const result = discardEffectParser.parse(cstNode);
 
@@ -215,8 +216,8 @@ describe("discardEffectParser", () => {
 
     it("returns null when number is not parseable", () => {
       const cstNode = {
-        Number: [{ image: "xyz" }],
-      };
+        NumberToken: [{ image: "xyz" }],
+      } as unknown as CstNode;
 
       const result = discardEffectParser.parse(cstNode);
 
@@ -233,7 +234,7 @@ describe("discardEffectParser", () => {
     it("has description", () => {
       expect(discardEffectParser.description).toBeDefined();
       expect(typeof discardEffectParser.description).toBe("string");
-      expect(discardEffectParser.description.length).toBeGreaterThan(0);
+      expect(discardEffectParser.description?.length).toBeGreaterThan(0);
     });
 
     it("has parse function", () => {

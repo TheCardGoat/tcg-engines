@@ -80,6 +80,7 @@ export const Willpower = createToken({
 // Symbols
 export const Comma = createToken({ name: "Comma", pattern: /,/ });
 export const Period = createToken({ name: "Period", pattern: /\./ });
+export const Plus = createToken({ name: "Plus", pattern: /\+/ });
 export const Dash = createToken({ name: "Dash", pattern: /-/ });
 export const Colon = createToken({ name: "Colon", pattern: /:/ });
 export const Semicolon = createToken({ name: "Semicolon", pattern: /;/ });
@@ -135,6 +136,7 @@ export const allTokens: TokenType[] = [
   Character,
   Item,
   Location,
+  // Important: `Cards` must come before `Card` due to Chevrotain's longest-match-first token matching.
   Cards,
   Card,
   // Target modifiers
@@ -167,6 +169,7 @@ export const allTokens: TokenType[] = [
   // Symbols
   Comma,
   Period,
+  Plus,
   Dash,
   Colon,
   Semicolon,

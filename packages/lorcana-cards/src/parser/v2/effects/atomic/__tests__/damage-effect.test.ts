@@ -4,6 +4,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import type { CstNode } from "chevrotain";
 import type { Effect } from "../../../types";
 import { damageEffectParser } from "../damage-effect";
 
@@ -13,7 +14,7 @@ describe("damageEffectParser", () => {
       const result = damageEffectParser.parse("deal 2 damage");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
+      expect(result?.type).toBe("deal-damage");
       expect((result as Effect & { amount: number }).amount).toBe(2);
     });
 
@@ -21,7 +22,7 @@ describe("damageEffectParser", () => {
       const result = damageEffectParser.parse("deal 1 damage");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
+      expect(result?.type).toBe("deal-damage");
       expect((result as Effect & { amount: number }).amount).toBe(1);
     });
 
@@ -29,7 +30,7 @@ describe("damageEffectParser", () => {
       const result = damageEffectParser.parse("deal 3 damage");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
+      expect(result?.type).toBe("deal-damage");
       expect((result as Effect & { amount: number }).amount).toBe(3);
     });
 
@@ -37,7 +38,7 @@ describe("damageEffectParser", () => {
       const result = damageEffectParser.parse("deal 5 damage");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
+      expect(result?.type).toBe("deal-damage");
       expect((result as Effect & { amount: number }).amount).toBe(5);
     });
 
@@ -47,7 +48,7 @@ describe("damageEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
+      expect(result?.type).toBe("deal-damage");
       expect((result as Effect & { amount: number }).amount).toBe(2);
     });
   });
@@ -57,7 +58,7 @@ describe("damageEffectParser", () => {
       const result = damageEffectParser.parse("DEAL 2 DAMAGE");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
+      expect(result?.type).toBe("deal-damage");
       expect((result as Effect & { amount: number }).amount).toBe(2);
     });
 
@@ -65,7 +66,7 @@ describe("damageEffectParser", () => {
       const result = damageEffectParser.parse("Deal 2 Damage");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
+      expect(result?.type).toBe("deal-damage");
       expect((result as Effect & { amount: number }).amount).toBe(2);
     });
 
@@ -73,7 +74,7 @@ describe("damageEffectParser", () => {
       const result = damageEffectParser.parse("dEaL 3 DaMaGe");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
+      expect(result?.type).toBe("deal-damage");
       expect((result as Effect & { amount: number }).amount).toBe(3);
     });
   });
@@ -106,7 +107,7 @@ describe("damageEffectParser", () => {
       const result = damageEffectParser.parse("deal 0 damage");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
+      expect(result?.type).toBe("deal-damage");
       expect((result as Effect & { amount: number }).amount).toBe(0);
     });
 
@@ -178,20 +179,20 @@ describe("damageEffectParser", () => {
   describe("CST parsing", () => {
     it("parses CST node with Number token", () => {
       const cstNode = {
-        Number: [{ image: "2" }],
-      };
+        NumberToken: [{ image: "2" }],
+      } as unknown as CstNode;
 
       const result = damageEffectParser.parse(cstNode);
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("damage");
+      expect(result?.type).toBe("deal-damage");
       expect((result as Effect & { amount: number }).amount).toBe(2);
     });
 
     it("parses CST node with single damage", () => {
       const cstNode = {
-        Number: [{ image: "1" }],
-      };
+        NumberToken: [{ image: "1" }],
+      } as unknown as CstNode;
 
       const result = damageEffectParser.parse(cstNode);
 
@@ -201,8 +202,8 @@ describe("damageEffectParser", () => {
 
     it("parses CST node with large damage", () => {
       const cstNode = {
-        Number: [{ image: "8" }],
-      };
+        NumberToken: [{ image: "8" }],
+      } as unknown as CstNode;
 
       const result = damageEffectParser.parse(cstNode);
 
@@ -213,7 +214,7 @@ describe("damageEffectParser", () => {
     it("returns null when Number token is missing", () => {
       const cstNode = {
         OtherToken: [{ image: "something" }],
-      };
+      } as unknown as CstNode;
 
       const result = damageEffectParser.parse(cstNode);
 
@@ -222,8 +223,8 @@ describe("damageEffectParser", () => {
 
     it("returns null when Number array is empty", () => {
       const cstNode = {
-        Number: [],
-      };
+        NumberToken: [],
+      } as unknown as CstNode;
 
       const result = damageEffectParser.parse(cstNode);
 
@@ -232,8 +233,8 @@ describe("damageEffectParser", () => {
 
     it("returns null when number is not parseable", () => {
       const cstNode = {
-        Number: [{ image: "invalid" }],
-      };
+        NumberToken: [{ image: "invalid" }],
+      } as unknown as CstNode;
 
       const result = damageEffectParser.parse(cstNode);
 
@@ -250,7 +251,7 @@ describe("damageEffectParser", () => {
     it("has description", () => {
       expect(damageEffectParser.description).toBeDefined();
       expect(typeof damageEffectParser.description).toBe("string");
-      expect(damageEffectParser.description.length).toBeGreaterThan(0);
+      expect(damageEffectParser.description?.length).toBeGreaterThan(0);
     });
 
     it("has parse function", () => {

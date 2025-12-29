@@ -38,6 +38,14 @@ import {
 
 export class LorcanaAbilityParser extends CstParser {
   constructor() {
+    // We intentionally use maxLookahead: 3 here because the Lorcana ability grammar
+    // contains several constructs with overlapping token prefixes (for example,
+    // triggered abilities vs. other/activated abilities and multi-clause effect
+    // phrases). A smaller lookahead (1 or 2) is not sufficient to reliably
+    // disambiguate these alternatives and leads to Chevrotain lookahead/ambiguity
+    // errors in practice. The value 3 is the minimal lookahead that allows the
+    // current grammar to parse all supported ability texts without custom
+    // lookahead logic.
     super(allTokens, {
       maxLookahead: 3,
       // Skip validations that throw errors for ambiguous alternatives

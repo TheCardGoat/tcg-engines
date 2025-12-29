@@ -66,7 +66,7 @@ describe("banishEffectParser", () => {
       const result = banishEffectParser.parse("return this character to hand");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("return");
+      expect(result?.type).toBe("return-to-hand");
     });
 
     it("parses 'return chosen character to hand' correctly", () => {
@@ -75,7 +75,7 @@ describe("banishEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("return");
+      expect(result?.type).toBe("return-to-hand");
     });
 
     it("parses 'return another character to deck' correctly", () => {
@@ -84,21 +84,21 @@ describe("banishEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("return");
+      expect(result?.type).toBe("return-to-hand");
     });
 
     it("parses 'return a character to hand' correctly", () => {
       const result = banishEffectParser.parse("return a character to hand");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("return");
+      expect(result?.type).toBe("return-to-hand");
     });
 
     it("parses 'return this item to hand' correctly", () => {
       const result = banishEffectParser.parse("return this item to hand");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("return");
+      expect(result?.type).toBe("return-to-hand");
     });
   });
 
@@ -114,7 +114,7 @@ describe("banishEffectParser", () => {
       const result = banishEffectParser.parse("RETURN THIS CHARACTER TO HAND");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("return");
+      expect(result?.type).toBe("return-to-hand");
     });
 
     it("parses 'Banish Chosen Item' in mixed case", () => {
@@ -128,7 +128,7 @@ describe("banishEffectParser", () => {
       const result = banishEffectParser.parse("ReTuRn ThIs ChArAcTeR tO HaNd");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("return");
+      expect(result?.type).toBe("return-to-hand");
     });
   });
 
@@ -146,7 +146,7 @@ describe("banishEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("return");
+      expect(result?.type).toBe("return-to-hand");
     });
 
     it("parses banish with tabs", () => {
@@ -217,9 +217,9 @@ describe("banishEffectParser", () => {
     it("parses CST node with Banish token", () => {
       const cstNode = {
         Banish: [{ image: "banish" }],
-      };
+      } as unknown;
 
-      const result = banishEffectParser.parse(cstNode);
+      const result = banishEffectParser.parse(cstNode as string);
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("banish");
@@ -230,12 +230,12 @@ describe("banishEffectParser", () => {
     it("parses CST node with Return token", () => {
       const cstNode = {
         Return: [{ image: "return" }],
-      };
+      } as unknown;
 
-      const result = banishEffectParser.parse(cstNode);
+      const result = banishEffectParser.parse(cstNode as string);
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("return");
+      expect(result?.type).toBe("return-to-hand");
     });
   });
 
@@ -243,17 +243,17 @@ describe("banishEffectParser", () => {
     it("returns null when both Banish and Return tokens are missing", () => {
       const cstNode = {
         OtherToken: [{ image: "something" }],
-      };
+      } as unknown;
 
-      const result = banishEffectParser.parse(cstNode);
+      const result = banishEffectParser.parse(cstNode as string);
 
       expect(result).toBeNull();
     });
 
     it("returns null for empty CST node", () => {
-      const cstNode = {};
+      const cstNode = {} as unknown;
 
-      const result = banishEffectParser.parse(cstNode);
+      const result = banishEffectParser.parse(cstNode as string);
 
       expect(result).toBeNull();
     });
@@ -264,9 +264,9 @@ describe("banishEffectParser", () => {
       const cstNode = {
         Banish: [{ image: "banish" }],
         Return: [{ image: "return" }],
-      };
+      } as unknown;
 
-      const result = banishEffectParser.parse(cstNode);
+      const result = banishEffectParser.parse(cstNode as string);
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("banish");
@@ -281,8 +281,10 @@ describe("banishEffectParser", () => {
 
     it("has description", () => {
       expect(banishEffectParser.description).toBeDefined();
-      expect(typeof banishEffectParser.description).toBe("string");
-      expect(banishEffectParser.description.length).toBeGreaterThan(0);
+      if (banishEffectParser.description) {
+        expect(typeof banishEffectParser.description).toBe("string");
+        expect(banishEffectParser.description.length).toBeGreaterThan(0);
+      }
     });
 
     it("has parse function", () => {

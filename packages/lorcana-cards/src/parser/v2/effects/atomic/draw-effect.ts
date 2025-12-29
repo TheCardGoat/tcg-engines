@@ -12,21 +12,21 @@ import type { EffectParser } from "./index";
  * Parse draw effect from CST node (grammar-based parsing)
  */
 function parseFromCst(ctx: {
-  Number?: IToken[];
+  NumberToken?: IToken[];
   [key: string]: unknown;
 }): DrawEffect | null {
   logger.debug("Attempting to parse draw effect from CST", { ctx });
 
-  if (!ctx.Number || ctx.Number.length === 0) {
-    logger.debug("Draw effect CST missing Number token");
+  if (!ctx.NumberToken || ctx.NumberToken.length === 0) {
+    logger.debug("Draw effect CST missing NumberToken");
     return null;
   }
 
-  const amount = Number.parseInt(ctx.Number[0].image, 10);
+  const amount = Number.parseInt(ctx.NumberToken[0].image, 10);
 
   if (Number.isNaN(amount)) {
     logger.warn("Failed to parse number from draw effect CST", {
-      image: ctx.Number[0].image,
+      image: ctx.NumberToken[0].image,
     });
     return null;
   }
@@ -83,6 +83,6 @@ export const drawEffectParser: EffectParser = {
     if (typeof input === "string") {
       return parseFromText(input);
     }
-    return parseFromCst(input as { Number?: IToken[] });
+    return parseFromCst(input as { NumberToken?: IToken[] });
   },
 };

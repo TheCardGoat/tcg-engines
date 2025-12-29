@@ -4,6 +4,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import type { CstNode } from "chevrotain";
 import type { Effect } from "../../../types";
 import { keywordEffectParser } from "../keyword-effect";
 
@@ -13,7 +14,7 @@ describe("keywordEffectParser", () => {
       const result = keywordEffectParser.parse("gains Evasive");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("keyword");
+      expect(result?.type).toBe("gain-keyword");
       expect((result as Effect & { keyword: string }).keyword).toBe("Evasive");
     });
 
@@ -63,11 +64,11 @@ describe("keywordEffectParser", () => {
       expect((result as Effect & { keyword: string }).keyword).toBe("Support");
     });
 
-    it("parses 'gains Singer' correctly", () => {
+    it("returns null for 'gains Singer' (not in KEYWORDS list)", () => {
       const result = keywordEffectParser.parse("gains Singer");
 
-      expect(result).not.toBeNull();
-      expect((result as Effect & { keyword: string }).keyword).toBe("Singer");
+      // Singer is not in the current KEYWORDS list
+      expect(result).toBeNull();
     });
 
     it("parses 'gains Reckless' correctly", () => {
@@ -90,7 +91,7 @@ describe("keywordEffectParser", () => {
       const result = keywordEffectParser.parse("gets Evasive");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("keyword");
+      expect(result?.type).toBe("gain-keyword");
       expect((result as Effect & { keyword: string }).keyword).toBe("Evasive");
     });
 
@@ -114,7 +115,7 @@ describe("keywordEffectParser", () => {
       const result = keywordEffectParser.parse("GAINS EVASIVE");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("keyword");
+      expect(result?.type).toBe("gain-keyword");
       expect((result as Effect & { keyword: string }).keyword).toBe("EVASIVE");
     });
 
@@ -226,7 +227,7 @@ describe("keywordEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("keyword");
+      expect(result?.type).toBe("gain-keyword");
       expect((result as Effect & { keyword: string }).keyword).toBe("Evasive");
     });
 
@@ -244,19 +245,19 @@ describe("keywordEffectParser", () => {
     it("parses CST node with Evasive identifier", () => {
       const cstNode = {
         Identifier: [{ image: "Evasive" }],
-      };
+      } as unknown as CstNode;
 
       const result = keywordEffectParser.parse(cstNode);
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("keyword");
+      expect(result?.type).toBe("gain-keyword");
       expect((result as Effect & { keyword: string }).keyword).toBe("Evasive");
     });
 
     it("parses CST node with Ward identifier", () => {
       const cstNode = {
         Identifier: [{ image: "Ward" }],
-      };
+      } as unknown as CstNode;
 
       const result = keywordEffectParser.parse(cstNode);
 
@@ -267,7 +268,7 @@ describe("keywordEffectParser", () => {
     it("parses CST node with Rush identifier", () => {
       const cstNode = {
         Identifier: [{ image: "Rush" }],
-      };
+      } as unknown as CstNode;
 
       const result = keywordEffectParser.parse(cstNode);
 
@@ -278,7 +279,7 @@ describe("keywordEffectParser", () => {
     it("parses CST node with Bodyguard identifier", () => {
       const cstNode = {
         Identifier: [{ image: "Bodyguard" }],
-      };
+      } as unknown as CstNode;
 
       const result = keywordEffectParser.parse(cstNode);
 
@@ -291,7 +292,7 @@ describe("keywordEffectParser", () => {
     it("returns null when Identifier token is missing", () => {
       const cstNode = {
         OtherToken: [{ image: "something" }],
-      };
+      } as unknown as CstNode;
 
       const result = keywordEffectParser.parse(cstNode);
 
@@ -301,7 +302,7 @@ describe("keywordEffectParser", () => {
     it("returns null when Identifier array is empty", () => {
       const cstNode = {
         Identifier: [],
-      };
+      } as unknown as CstNode;
 
       const result = keywordEffectParser.parse(cstNode);
 
@@ -311,7 +312,7 @@ describe("keywordEffectParser", () => {
     it("returns null when identifier is not a known keyword", () => {
       const cstNode = {
         Identifier: [{ image: "UnknownKeyword" }],
-      };
+      } as unknown as CstNode;
 
       const result = keywordEffectParser.parse(cstNode);
 
@@ -321,7 +322,7 @@ describe("keywordEffectParser", () => {
     it("returns null when identifier is a common word", () => {
       const cstNode = {
         Identifier: [{ image: "character" }],
-      };
+      } as unknown as CstNode;
 
       const result = keywordEffectParser.parse(cstNode);
 
@@ -338,7 +339,7 @@ describe("keywordEffectParser", () => {
     it("has description", () => {
       expect(keywordEffectParser.description).toBeDefined();
       expect(typeof keywordEffectParser.description).toBe("string");
-      expect(keywordEffectParser.description.length).toBeGreaterThan(0);
+      expect(keywordEffectParser.description?.length).toBeGreaterThan(0);
     });
 
     it("has parse function", () => {

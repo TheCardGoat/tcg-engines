@@ -5,13 +5,33 @@
 
 import type { CstNode } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
+import type { CardType, PlayCardEffect } from "../../types";
 import type { EffectParser } from "./index";
+
+/**
+ * Parse card type from string
+ */
+function parseCardType(
+  str: string,
+): CardType | "song" | "floodborn" | undefined {
+  const normalized = str.toLowerCase();
+  if (
+    normalized === "character" ||
+    normalized === "action" ||
+    normalized === "item" ||
+    normalized === "location" ||
+    normalized === "song" ||
+    normalized === "floodborn"
+  ) {
+    return normalized as CardType | "song" | "floodborn";
+  }
+  return undefined;
+}
 
 /**
  * Parse play effect from text string (regex-based parsing)
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(text: string): PlayCardEffect | null {
   logger.debug("Attempting to parse play effect from text", { text });
 
   // Pattern: "play (a )?(character|action|item|card|...) (for free)?"
@@ -26,16 +46,24 @@ function parseFromText(text: string): Effect | null {
     const cardTypeMatch = text.match(
       /play\s+(?:a\s+)?(\w+)\s+(?:card\s+)?from/i,
     );
-    const cardType = cardTypeMatch ? cardTypeMatch[1].toLowerCase() : undefined;
+    const cardTypeStr = cardTypeMatch
+      ? cardTypeMatch[1].toLowerCase()
+      : undefined;
+    const cardType = cardTypeStr ? parseCardType(cardTypeStr) : undefined;
 
     logger.info("Parsed play from discard effect", { cardType, isFree });
 
-    return {
+    const effect: PlayCardEffect = {
       type: "play-card",
       from: "discard",
-      cardType,
-      cost: isFree ? "free" : "normal",
     };
+    if (cardType) {
+      effect.cardType = cardType;
+    }
+    if (isFree) {
+      effect.cost = "free";
+    }
+    return effect;
   }
 
   // Check for "play cost X or less for free"
@@ -46,11 +74,13 @@ function parseFromText(text: string): Effect | null {
 
       logger.info("Parsed play cost X or less for free effect", { maxCost });
 
-      return {
+      const effect: PlayCardEffect = {
         type: "play-card",
+        from: "hand",
         cost: "free",
-        filter: { cost: { lte: maxCost } },
+        costRestriction: { comparison: "less-or-equal", value: maxCost },
       };
+      return effect;
     }
   }
 
@@ -61,16 +91,23 @@ function parseFromText(text: string): Effect | null {
     return null;
   }
 
-  const cardType = match[1].toLowerCase();
+  const cardTypeStr = match[1].toLowerCase();
+  const cardType = parseCardType(cardTypeStr);
   const isFree = text.includes("for free");
 
   logger.info("Parsed play effect from text", { cardType, isFree });
 
-  return {
+  const effect: PlayCardEffect = {
     type: "play-card",
-    cardType,
-    cost: isFree ? "free" : "normal",
+    from: "hand",
   };
+  if (cardType) {
+    effect.cardType = cardType;
+  }
+  if (isFree) {
+    effect.cost = "free";
+  }
+  return effect;
 }
 
 /**
@@ -82,7 +119,7 @@ export const playEffectParser: EffectParser = {
   description:
     "Parses play card effects (e.g., 'play a character for free', 'play from discard')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (input: CstNode | string): PlayCardEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
