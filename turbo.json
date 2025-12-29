@@ -55,14 +55,26 @@
   },
   "boundaries": {
     "tags": {
-      "game-engine": {
+      "foundation": {
         "dependencies": {
-          "allow": ["@tcg/core", "@tcg/lorcana", "@jest/globals", "immer"]
+          "deny": ["game-engine", "card-data"]
+        },
+        "dependents": {
+          "allow": ["game-engine", "card-data", "foundation"]
         }
       },
-      "independent": {
+      "game-engine": {
         "dependencies": {
-          "allow": ["@tcg/core", "@jest/globals", "immer"]
+          "allow": ["foundation"],
+          "deny": ["card-data"]
+        },
+        "dependents": {
+          "allow": ["card-data", "game-engine"]
+        }
+      },
+      "card-data": {
+        "dependencies": {
+          "deny": ["foundation", "game-engine", "card-data"]
         }
       }
     }

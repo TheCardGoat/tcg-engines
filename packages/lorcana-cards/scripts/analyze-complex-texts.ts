@@ -22,7 +22,7 @@
  *   formatted as TypeScript code that can be copied into manual-overrides.ts
  */
 
-import { allCardsText } from "../../../.claude/skills/lorcana-rules/references/all-cards-text/all-lorcana-texts";
+import { allCardsText } from "../src/parser/__tests__/fixtures/all-lorcana-texts";
 import { parseAbilityText } from "../src/parser/parser";
 import { normalizeText } from "../src/parser/preprocessor";
 
