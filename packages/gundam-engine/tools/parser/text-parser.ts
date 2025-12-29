@@ -21,6 +21,7 @@ const KEYWORD_PATTERNS: Record<string, KeywordAbility["keyword"]> = {
   "<Breach(?: (\\d+))?>": "Breach",
   "<Support(?: (\\d+))?>": "Support",
   "<Blocker>": "Blocker",
+  "<Suppression>": "Suppression",
   "<First[- ]Strike>": "First-Strike",
   "<High[- ]Maneuver>": "High-Maneuver",
 };

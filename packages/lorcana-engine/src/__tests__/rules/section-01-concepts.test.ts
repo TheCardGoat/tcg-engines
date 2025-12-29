@@ -39,7 +39,7 @@ describe("Section 1: Concepts", () => {
         const state = testEngine.getState();
 
         // Assert: Both players should exist in the game
-        expect(Object.keys(state.loreScores)).toHaveLength(2);
+        expect(Object.keys(state.external.loreScores)).toHaveLength(2);
         expect(true).toBe(false); // Will fail until fully implemented
       },
     );
@@ -53,8 +53,8 @@ describe("Section 1: Concepts", () => {
       const state = testEngine.getState();
 
       // Assert: Lore tracking should exist for both players
-      expect(state.loreScores[PLAYER_ONE]).toBeDefined();
-      expect(state.loreScores[PLAYER_TWO]).toBeDefined();
+      expect(state.external.loreScores[PLAYER_ONE]).toBeDefined();
+      expect(state.external.loreScores[PLAYER_TWO]).toBeDefined();
       expect(true).toBe(false); // Will fail until fully implemented
     });
 

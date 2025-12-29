@@ -83,6 +83,12 @@ export interface ParserOptions {
    * Default: false (preserve placeholders)
    */
   resolveNumbers?: boolean;
+
+  /**
+   * Context: Name of the card being parsed
+   * Used for manual override lookups by card name
+   */
+  cardName?: string;
 }
 
 /**

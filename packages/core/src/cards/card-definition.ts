@@ -25,38 +25,3 @@ export type CardDefinition = {
   /** Static abilities this card has */
   abilities?: string[];
 };
-
-/**
- * Registry type for storing card definitions
- */
-export type DefinitionRegistry = Map<string, CardDefinition>;
-
-/**
- * Creates a definition registry from an array of card definitions
- * @param definitions - Array of card definitions to register
- * @returns Registry map of definition id to definition
- */
-export function createDefinitionRegistry(
-  definitions: CardDefinition[],
-): DefinitionRegistry {
-  const registry = new Map<string, CardDefinition>();
-
-  for (const definition of definitions) {
-    registry.set(definition.id, definition);
-  }
-
-  return registry;
-}
-
-/**
- * Retrieves a card definition from the registry by its id
- * @param registry - Definition registry to search
- * @param definitionId - ID of the definition to retrieve
- * @returns Card definition if found, undefined otherwise
- */
-export function getCardDefinition(
-  registry: DefinitionRegistry,
-  definitionId: string,
-): CardDefinition | undefined {
-  return registry.get(definitionId);
-}

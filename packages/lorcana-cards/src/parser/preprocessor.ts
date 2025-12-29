@@ -11,12 +11,15 @@
  * @returns Normalized text
  */
 export function normalizeText(text: string): string {
-  // Normalize quotes and collapse spaces
+  // Normalize to NFC (canonical composition) to ensure consistent string representation
+  // This is critical for matching manual overrides where keys might be composed differently than inputs
+  // Also normalize smart quotes to standard ASCII quotes
   return text
+    .normalize("NFC")
     .replace(/[\u2018\u2019]/g, "'") // Replace smart single quotes
     .replace(/[\u201C\u201D]/g, '"') // Replace smart double quotes
     .trim()
-    .replace(/\s+/g, " ");
+    .replace(/\s+/g, " "); // Collapse multiple spaces into one
 }
 
 /**

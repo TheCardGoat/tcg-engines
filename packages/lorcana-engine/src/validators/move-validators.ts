@@ -194,7 +194,7 @@ export const cardIsReady =
   <TParams = unknown>(cardId: CardId): Validator<TParams> =>
   (_state, context) => {
     const meta = context.cards.getCardMeta(cardId);
-    return !meta?.isExerted;
+    return meta?.state === "ready";
   };
 
 /**
@@ -204,7 +204,7 @@ export const cardIsExerted =
   <TParams = unknown>(cardId: CardId): Validator<TParams> =>
   (_state, context) => {
     const meta = context.cards.getCardMeta(cardId);
-    return meta?.isExerted ?? false;
+    return meta?.state === "exerted";
   };
 
 /**
@@ -220,7 +220,7 @@ export const cardIsDry =
   <TParams = unknown>(cardId: CardId): Validator<TParams> =>
   (_state, context) => {
     const meta = context.cards.getCardMeta(cardId);
-    return !meta?.playedThisTurn;
+    return !meta?.isDrying;
   };
 
 /**
@@ -230,7 +230,7 @@ export const cardIsDrying =
   <TParams = unknown>(cardId: CardId): Validator<TParams> =>
   (_state, context) => {
     const meta = context.cards.getCardMeta(cardId);
-    return meta?.playedThisTurn ?? false;
+    return meta?.isDrying ?? false;
   };
 
 // ===== Composite Validators =====

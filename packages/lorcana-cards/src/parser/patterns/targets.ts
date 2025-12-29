@@ -45,10 +45,15 @@ export const CHOSEN_LOCATION_PATTERN = /\bchosen location\b/i;
 export const YOUR_CHARACTERS_PATTERN = /\byour characters?\b/i;
 export const ALL_CHARACTERS_PATTERN = /\ball characters?\b/i;
 export const EACH_OPPOSING_CHARACTER_PATTERN = /\beach opposing character\b/i;
+
 export const ALL_OPPOSING_CHARACTERS_PATTERN = /\ball opposing characters?\b/i;
 export const THE_CHALLENGED_CHARACTER_PATTERN = /\bthe challenged character\b/i;
 export const THE_CHALLENGING_CHARACTER_PATTERN =
   /\bthe challenging character\b/i;
+export const ALL_ITEMS_PATTERN = /\ball items?\b/i;
+export const ALL_OPPOSING_ITEMS_PATTERN = /\ball opposing items?\b/i;
+export const ALL_LOCATIONS_PATTERN = /\ball locations?\b/i;
+export const ALL_OPPOSING_LOCATIONS_PATTERN = /\ball opposing locations?\b/i;
 
 /**
  * Player target patterns

@@ -36,11 +36,7 @@
 
 ## 7-5. Action Step
 
-<<<<<<< HEAD
 7-5-1. Taking turns starting with the standby player, players may activate 【Action】 Command cards and 【Activate･Action】 effects. (See [8. Action Steps](../08-action-steps/full.md))
-=======
-7-5-1. Taking turns starting with the standby player, players may activate 【Action】 Command cards and 【Activate・Action】 effects. (See 8. Action Steps)
->>>>>>> origin/main
 
 7-5-2. If both players have declared they are passing, end the action step and continue to damage step.
 
@@ -64,11 +60,7 @@
 
 7-6-2-3-1. Use counters to track damage received. If the Base's HP becomes zero, it is destroyed and placed into the trash.
 
-<<<<<<< HEAD
 7-6-2-3-2. If the attacking Unit has <First Strike>, it deals battle damage to the enemy Base before normal battle damage is managed. (See [11-1-5. <First Strike>](../11-keyword-effects-and-keywords/keyword-effects.md#first-strike))
-=======
-7-6-2-3-2. If the attacking Unit has <First Strike>, it deals battle damage to the enemy Base before normal battle damage is managed. (See 11-1-5. <First Strike>)
->>>>>>> origin/main
 
 7-6-2-4. If there is a Shield but no Base in the enemy shield area, the attacking Unit deals damage equal to its AP to the top Shield in the shield section of the shield area.
 
@@ -84,11 +76,7 @@
 
 7-6-3-2-1. Use counters to track damage received. If a Unit's HP becomes zero, it is destroyed and placed into the trash.
 
-<<<<<<< HEAD
 7-6-3-2-2. If the attacking Unit has <First Strike>, it deals battle damage to the enemy Unit before normal battle damage is managed. (See [11-1-5. <First Strike>](../11-keyword-effects-and-keywords/keyword-effects.md#first-strike))
-=======
-7-6-3-2-2. If the attacking Unit has <First Strike>, it deals battle damage to the enemy Unit before normal battle damage is managed. (See 11-1-5. <First Strike>)
->>>>>>> origin/main
 
 7-6-3-2-3. If both battling Units are destroyed, their destruction is treated as happening simultaneously.
 
@@ -98,8 +86,4 @@
 
 7-7-1. All effects worded "during this battle" lose effect.
 
-<<<<<<< HEAD
 7-7-2. When you have resolved all effects activated during this step, the battle ends, and you return to the main phase. (See [6-5. Main Phase](../06-game-progression/full.md#6-5-main-phase))
-=======
-7-7-2. When you have resolved all effects activated during this step, the battle ends, and you return to the main phase. (See 6-5. Main Phase)
->>>>>>> origin/main

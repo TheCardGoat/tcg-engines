@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
+import { createCardRegistry } from "../operations/card-registry-impl";
 import { createCardId, createPlayerId, createZoneId } from "../types";
 import type { CardDefinition } from "./card-definition";
-import { createDefinitionRegistry } from "./card-definition";
 import type { CardInstance } from "./card-instance";
 import {
   getCardCost,
@@ -26,7 +26,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),
@@ -55,7 +55,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),
@@ -85,7 +85,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),
@@ -124,7 +124,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),
@@ -163,7 +163,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),
@@ -210,7 +210,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),
@@ -260,7 +260,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),
@@ -289,7 +289,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),
@@ -319,7 +319,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),
@@ -360,7 +360,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),
@@ -389,7 +389,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),
@@ -419,7 +419,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),
@@ -458,7 +458,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),
@@ -497,7 +497,7 @@ describe("Computed Properties", () => {
         abilities: [],
       };
 
-      const registry = createDefinitionRegistry([definition]);
+      const registry = createCardRegistry([definition]);
 
       const card: CardInstance<{ modifiers: Modifier[] }> = {
         id: createCardId("card-1"),

@@ -40,18 +40,19 @@ describe("InternalState", () => {
       cards: {
         "card-1": {
           definitionId: "pikachu",
-          ownerId: "player-1" as unknown as PlayerId,
-          zoneId: "hand" as unknown as ZoneId,
+          owner: "player-1" as unknown as PlayerId,
+          controller: "player-1" as unknown as PlayerId,
+          zone: "hand" as unknown as ZoneId,
         },
       },
       cardMetas: {},
     };
 
     expect(internalState.cards["card-1"].definitionId).toBe("pikachu");
-    expect(internalState.cards["card-1"].ownerId).toBe(
+    expect(internalState.cards["card-1"].owner).toBe(
       "player-1" as unknown as PlayerId,
     );
-    expect(internalState.cards["card-1"].zoneId).toBe(
+    expect(internalState.cards["card-1"].zone).toBe(
       "hand" as unknown as ZoneId,
     );
   });
@@ -89,14 +90,16 @@ describe("InternalState", () => {
       cards: {
         "card-1": {
           definitionId: "card-def-1",
-          ownerId: "player-1" as unknown as PlayerId,
-          zoneId: "deck" as unknown as ZoneId,
+          owner: "player-1" as unknown as PlayerId,
+          controller: "player-1" as unknown as PlayerId,
+          zone: "deck" as unknown as ZoneId,
           position: 0, // Top of deck
         },
         "card-2": {
           definitionId: "card-def-2",
-          ownerId: "player-1" as unknown as PlayerId,
-          zoneId: "deck" as unknown as ZoneId,
+          owner: "player-1" as unknown as PlayerId,
+          controller: "player-1" as unknown as PlayerId,
+          zone: "deck" as unknown as ZoneId,
           position: 1,
         },
       },
@@ -164,8 +167,9 @@ describe("IState", () => {
         cards: {
           "card-1": {
             definitionId: "monster-1",
-            ownerId: "player-1" as unknown as PlayerId,
-            zoneId: "hand" as unknown as ZoneId,
+            owner: "player-1" as unknown as PlayerId,
+            controller: "player-1" as unknown as PlayerId,
+            zone: "hand" as unknown as ZoneId,
           },
         },
         cardMetas: {

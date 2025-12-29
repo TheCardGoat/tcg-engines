@@ -125,7 +125,6 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
             // This is a simplification for 2-player games
             // In production, you'd have a player list to iterate through
             const otpStr = String(otp);
-            const currentIndex = playerIds.indexOf(currentPlayer);
 
             // For now, just toggle between two players based on turn number
             // If turn is odd, OTP plays; if even, other player plays
@@ -171,8 +170,8 @@ export const lorcanaFlow: FlowDefinition<LorcanaGameState, LorcanaCardMeta> = {
                 const meta = context.cards.getCardMeta(cardId);
                 if (meta) {
                   context.cards.updateCardMeta(cardId, {
-                    isExerted: false,
-                    playedThisTurn: false, // Clear summoning sickness
+                    state: "ready",
+                    isDrying: false, // Clear summoning sickness
                   });
                 }
               }

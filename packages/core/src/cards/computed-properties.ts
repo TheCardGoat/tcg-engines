@@ -1,5 +1,5 @@
-import type { DefinitionRegistry } from "./card-definition";
-import { getCardDefinition } from "./card-definition";
+import type { CardRegistry } from "../operations/card-registry";
+import type { CardDefinition } from "./card-definition";
 import type { CardInstance } from "./card-instance";
 import type { Modifier } from "./modifiers";
 
@@ -15,9 +15,9 @@ import type { Modifier } from "./modifiers";
 export function getCardPower<TGameState = unknown>(
   card: CardInstance<{ modifiers: Modifier<TGameState>[] }>,
   state: TGameState,
-  registry: DefinitionRegistry,
+  registry: CardRegistry<CardDefinition>,
 ): number {
-  const definition = getCardDefinition(registry, card.definitionId);
+  const definition = registry.getCard(card.definitionId);
   const basePower = definition?.basePower ?? 0;
 
   // Sum all power modifiers
@@ -41,9 +41,9 @@ export function getCardPower<TGameState = unknown>(
 export function getCardToughness<TGameState = unknown>(
   card: CardInstance<{ modifiers: Modifier<TGameState>[] }>,
   state: TGameState,
-  registry: DefinitionRegistry,
+  registry: CardRegistry<CardDefinition>,
 ): number {
-  const definition = getCardDefinition(registry, card.definitionId);
+  const definition = registry.getCard(card.definitionId);
   const baseToughness = definition?.baseToughness ?? 0;
 
   // Sum all toughness modifiers
@@ -68,9 +68,9 @@ export function getCardToughness<TGameState = unknown>(
 export function getCardCost<TGameState = unknown>(
   card: CardInstance<{ modifiers: Modifier<TGameState>[] }>,
   state: TGameState,
-  registry: DefinitionRegistry,
+  registry: CardRegistry<CardDefinition>,
 ): number {
-  const definition = getCardDefinition(registry, card.definitionId);
+  const definition = registry.getCard(card.definitionId);
   const baseCost = definition?.baseCost ?? 0;
 
   // Sum all cost modifiers (can be negative for cost reduction)

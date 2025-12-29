@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import type { CardDefinition } from "../cards/card-definition";
-import { createDefinitionRegistry } from "../cards/card-definition";
 import type { CardInstance } from "../cards/card-instance";
 import type { Modifier } from "../cards/modifiers";
+import { createCardRegistry } from "../operations/card-registry-impl";
 import { createCardId, createPlayerId, createZoneId } from "../types";
 import type { CardFilter } from "./card-filter";
 import {
@@ -90,7 +90,7 @@ describe("Filter Matching", () => {
       },
     ];
 
-    const registry = createDefinitionRegistry(definitions);
+    const registry = createCardRegistry(definitions);
 
     it("should filter by zone", () => {
       const playZone = createZoneId("play");
@@ -364,7 +364,7 @@ describe("Filter Matching", () => {
         },
       ];
 
-      const registry = createDefinitionRegistry(definitions);
+      const registry = createCardRegistry(definitions);
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
@@ -433,7 +433,7 @@ describe("Filter Matching", () => {
         },
       ];
 
-      const registry = createDefinitionRegistry(definitions);
+      const registry = createCardRegistry(definitions);
 
       const cards: CardInstance<{ modifiers: Modifier[] }>[] = [
         {
@@ -494,7 +494,7 @@ describe("Filter Matching", () => {
       },
     ];
 
-    const registry = createDefinitionRegistry(definitions);
+    const registry = createCardRegistry(definitions);
 
     describe("AND filters", () => {
       it("should match when all sub-filters match", () => {
@@ -872,7 +872,7 @@ describe("Filter Matching", () => {
         // Custom filter: cards with even cost
         const filter: CardFilter<TestGameState> = {
           where: (card, _state) => {
-            const definition = registry.get(card.definitionId);
+            const definition = registry.getCard(card.definitionId);
             return (
               definition?.baseCost !== undefined &&
               definition.baseCost % 2 === 0
@@ -925,7 +925,7 @@ describe("Filter Matching", () => {
         const filter: CardFilter<TestGameState> = {
           tapped: false,
           where: (card, _state) => {
-            const definition = registry.get(card.definitionId);
+            const definition = registry.getCard(card.definitionId);
             return (
               definition?.baseCost !== undefined &&
               definition.baseCost % 2 === 0

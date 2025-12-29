@@ -90,14 +90,14 @@ describe("Move: Challenge", () => {
     it("should exert attacker after challenge", () => {
       // Attacker should start ready (not exerted)
       const initialMeta = testEngine.getCardMeta(attacker);
-      expect(initialMeta?.isExerted).toBeFalsy();
+      expect(initialMeta?.state).toBe("ready");
 
       // Challenge
       testEngine.challenge(attacker, defender);
 
       // Attacker should now be exerted
       const newMeta = testEngine.getCardMeta(attacker);
-      expect(newMeta?.isExerted).toBe(true);
+      expect(newMeta?.state).toBe("exerted");
     });
 
     it("should deal damage to both characters based on Strength", () => {
@@ -133,8 +133,8 @@ describe("Move: Challenge", () => {
       testEngine.challenge(attacker2, defender2);
 
       // Both attackers should be exerted
-      expect(testEngine.getCardMeta(attacker)?.isExerted).toBe(true);
-      expect(testEngine.getCardMeta(attacker2)?.isExerted).toBe(true);
+      expect(testEngine.getCardMeta(attacker)?.state).toBe("exerted");
+      expect(testEngine.getCardMeta(attacker2)?.state).toBe("exerted");
     });
   });
 
@@ -350,7 +350,7 @@ describe("Move: Challenge", () => {
       testEngine.challenge(attacker, defender2);
 
       // Verify second challenge succeeded
-      expect(testEngine.getCardMeta(attacker)?.isExerted).toBe(true);
+      expect(testEngine.getCardMeta(attacker)?.state).toBe("exerted");
       expect(testEngine.getDamage(defender2)).toBe(3);
     });
   });

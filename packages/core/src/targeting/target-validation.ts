@@ -1,6 +1,7 @@
-import type { DefinitionRegistry } from "../cards/card-definition";
+import type { CardDefinition } from "../cards/card-definition";
 import type { CardInstance } from "../cards/card-instance";
 import { matchesFilter } from "../filtering/filter-matching";
+import type { CardRegistry } from "../operations/card-registry";
 import type { PlayerId } from "../types";
 import type { TargetDefinition } from "./target-definition";
 
@@ -48,7 +49,7 @@ export function isLegalTarget<
   card: CardInstance<TCustomState>,
   targetDef: TargetDefinition,
   state: TGameState,
-  registry: DefinitionRegistry,
+  registry: CardRegistry<CardDefinition>,
   context: TargetContext<TCustomState>,
 ): boolean {
   // Check if card matches the filter
@@ -106,7 +107,7 @@ export function getLegalTargets<
 >(
   targetDef: TargetDefinition,
   state: TGameState,
-  registry: DefinitionRegistry,
+  registry: CardRegistry<CardDefinition>,
   context: TargetContext<TCustomState>,
 ): CardInstance<TCustomState>[] {
   const allCards = Object.values(state.cards);
@@ -135,7 +136,7 @@ export function validateTargetSelection<
   targets: CardInstance<TCustomState>[],
   targetDef: TargetDefinition,
   state: TGameState,
-  registry: DefinitionRegistry,
+  registry: CardRegistry<CardDefinition>,
   context: Omit<TargetContext<TCustomState>, "previousTargets">,
 ): ValidationResult {
   // Validate count
@@ -212,7 +213,7 @@ export function enumerateTargetCombinations<
 >(
   targetDef: TargetDefinition,
   state: TGameState,
-  registry: DefinitionRegistry,
+  registry: CardRegistry<CardDefinition>,
   context: TargetContext<TCustomState>,
   maxCombinations: number,
 ): CardInstance<TCustomState>[][] {

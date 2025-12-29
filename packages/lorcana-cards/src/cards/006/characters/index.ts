@@ -1,6 +1,5 @@
 export { gopherShipsCarpenter } from "./004-gopher-ships-carpenter";
 export { simbaHappygolucky } from "./005-simba-happy-go-lucky";
-export { princeNaveenVigilantFirstMate } from "./009-prince-naveen-vigilant-first-mate";
 export { princeNaveenCarefreeExplorer } from "./010-prince-naveen-carefree-explorer";
 export { montereyJackGoodheartedRanger } from "./013-monterey-jack-good-hearted-ranger";
 export { genieExcitedShipbuilder } from "./038-genie-excited-shipbuilder";
@@ -8,6 +7,7 @@ export { rafikiShamanOfTheSavanna } from "./042-rafiki-shaman-of-the-savanna";
 export { tinkerBellFastFlier } from "./043-tinker-bell-fast-flier";
 export { theWalrusGreedyGourmand } from "./046-the-walrus-greedy-gourmand";
 export { scarTempestuousLion } from "./047-scar-tempestuous-lion";
+export { diabloObedientRaven } from "./049-diablo-obedient-raven";
 export { marchHareAbsurdHost } from "./050-march-hare-absurd-host";
 export { magicCarpetAmazingFlier } from "./051-magic-carpet-amazing-flier";
 export { genieWishFulfilled } from "./053-genie-wish-fulfilled";
