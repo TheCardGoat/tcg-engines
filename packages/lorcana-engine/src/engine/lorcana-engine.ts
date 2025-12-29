@@ -571,7 +571,7 @@ export class LorcanaEngine extends RuleEngine<
     const handCards =
       internalState.zones?.hand?.cardIds.filter((cardId: string) => {
         const card = internalState.cards?.[cardId];
-        return card && String(card.ownerId) === String(playerId);
+        return card && String(card.owner) === String(playerId);
       }) || [];
 
     // Generate combinations: keep all (empty array) and mulligan all (all cards)

@@ -747,8 +747,9 @@ export class LorcanaTestEngine {
     internalState.zones["play"].cardIds.push(cardId);
     internalState.cards[cardId] = {
       definitionId: "placeholder",
-      ownerId: pid,
-      zoneId: "play" as any,
+      owner: pid,
+      controller: pid,
+      zone: "play" as any,
       position: internalState.zones["play"].cardIds.length - 1,
     };
 
