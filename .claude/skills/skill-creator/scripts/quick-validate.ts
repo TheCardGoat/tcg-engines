@@ -5,7 +5,6 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { parse as parseYaml } from "yaml";
 
 interface ValidationResult {
   valid: boolean;
@@ -13,9 +12,9 @@ interface ValidationResult {
 }
 
 interface Frontmatter {
-  name?: unknown;
-  description?: unknown;
-  license?: unknown;
+  name?: string;
+  description?: string;
+  license?: string;
   "allowed-tools"?: unknown;
   metadata?: unknown;
   [key: string]: unknown;
@@ -28,6 +27,38 @@ const ALLOWED_PROPERTIES = new Set([
   "allowed-tools",
   "metadata",
 ]);
+
+/**
+ * Simple YAML frontmatter parser for skill validation.
+ * Only handles the simple key: value format used in skill frontmatter.
+ */
+function parseSimpleYaml(yamlText: string): Frontmatter {
+  const result: Frontmatter = {};
+  const lines = yamlText.split("\n");
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+
+    const colonIndex = trimmed.indexOf(":");
+    if (colonIndex === -1) continue;
+
+    const key = trimmed.slice(0, colonIndex).trim();
+    let value = trimmed.slice(colonIndex + 1).trim();
+
+    // Handle quoted strings
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+
+    result[key] = value;
+  }
+
+  return result;
+}
 
 export function validateSkill(skillPath: string): ValidationResult {
   const resolvedPath = resolve(skillPath);
@@ -52,7 +83,7 @@ export function validateSkill(skillPath: string): ValidationResult {
 
   let frontmatter: Frontmatter;
   try {
-    frontmatter = parseYaml(frontmatterText) as Frontmatter;
+    frontmatter = parseSimpleYaml(frontmatterText);
     if (typeof frontmatter !== "object" || frontmatter === null) {
       return { valid: false, message: "Frontmatter must be a YAML dictionary" };
     }
@@ -151,4 +182,7 @@ function main(): void {
   process.exit(valid ? 0 : 1);
 }
 
-main();
+// Only run main when executed directly, not when imported
+if (import.meta.main) {
+  main();
+}
