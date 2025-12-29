@@ -158,10 +158,7 @@ export function endTurn(
  * Check if the starting player should skip draw on turn 1 (Rule 4.2.3.2)
  */
 export function shouldSkipDraw(trackers: TurnTrackers): boolean {
-  return (
-    trackers.isFirstTurn &&
-    trackers.activePlayerId === trackers.startingPlayerId
-  );
+  return trackers.isFirstTurn;
 }
 
 /**
