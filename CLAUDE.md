@@ -113,7 +113,7 @@ state.hand.splice(index, 1);
 
 ## Available Skills & Agents
 
-See `AGENTS.md` for the complete reference of available agents and skills.
+See `agents.md` for the complete reference of available agents and skills.
 
 ### Quick Reference
 

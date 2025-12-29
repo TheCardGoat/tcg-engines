@@ -33,6 +33,25 @@ Before writing implementation code:
 2. Check off items in the **Review Checklist** (The Gauntlet)
 3. Update **Status** to track overall progress
 
+### Date Ordering Rule
+
+**All implementation log entries must use `YYYY-MM-DD` format with newest entries first (prepended at top).**
+
+This ensures:
+- Chronological ordering is maintained
+- Recent context takes precedence when reading logs
+- Older entries naturally fall lower in priority
+
+```markdown
+## Implementation Log
+
+### 2025-12-29    ← NEW (add here)
+- [x] Completed feature X
+
+### 2025-12-28    ← OLDER (stays below)
+- [x] Initial setup
+```
+
 ## File Naming
 
 Use the feature branch name for your Memory Bank file:

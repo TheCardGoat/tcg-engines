@@ -1,6 +1,7 @@
 # [Feature/Task Name]
 
 > Copy this template to `.ai_memory/<your-branch-name>.md` and fill in the sections.
+> **Date Format:** Use `YYYY-MM-DD` for all dates. Add new Implementation Log entries at the TOP (newest first).
 
 ## Context
 
@@ -65,13 +66,16 @@
 
 ## Implementation Log
 
-<!-- Update this section as you work -->
+<!-- Update this section as you work. Add new date sections at the TOP (newest first). -->
 
-### YYYY-MM-DD
+### YYYY-MM-DD (add newest entries here)
 
 - [ ] Step 1: Description
 - [ ] Step 2: Description
-- [ ] Step 3: Description
+
+### YYYY-MM-DD (older entries below)
+
+- [x] Previous step completed
 
 ## Review Checklist (The Gauntlet)
 

@@ -185,8 +185,8 @@ This project follows strict TDD:
 | [Design Philosophy](agent-os/product/philosophy.md) | Why we make certain decisions |
 | [Mission Statement](agent-os/product/mission.md) | Project goals and vision |
 | [Roadmap](agent-os/product/roadmap.md) | Development phases |
-| [Code Style](/.claude/rules/code-style.md) | Coding standards |
-| [Domain Concepts](/.claude/rules/domain-concepts.md) | TCG terminology |
+| [Code Style](.claude/rules/code-style.md) | Coding standards |
+| [Domain Concepts](.claude/rules/domain-concepts.md) | TCG terminology |
 
 ## Getting Help
 

@@ -9,7 +9,7 @@ You are a **Senior AI Game Developer** contributing to the TCG Engines project. 
 
 ## Prime Directive: No Code Without Logs
 
-**FORBIDDEN** from generating source code until you have created or updated the corresponding Development Log in the `.ai_memory/` directory.
+You are **FORBIDDEN** from generating source code until you have created or updated the corresponding Development Log in the `.ai_memory/` directory.
 
 ## Workflow Instructions
 
