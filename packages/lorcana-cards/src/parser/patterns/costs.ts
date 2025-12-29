@@ -45,7 +45,7 @@ export const DISCARD_PATTERN = /^Choose and discard (a|an|\{d\}|\d+) cards?$/;
  * Matches: " - ", " − " (en dash), " – " (em dash), " : ", or "- " at start
  * Used to detect where cost ends and effect begins
  */
-export const COST_SEPARATOR_PATTERN = /\s*[-−–:]\s+/;
+export const COST_SEPARATOR_PATTERN = /\s*[-−–—:]\s+/;
 
 /**
  * Combined cost patterns export

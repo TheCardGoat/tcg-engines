@@ -46,11 +46,12 @@ describe("Triggered Ability Parser", () => {
     expect(result.success).toBe(true);
     const ability = result.ability?.ability;
     if (ability?.type === "triggered") {
-      // The effect is now correctly parsed as a conditional effect
-      expect(ability.effect.type).toBe("conditional");
-      if (ability.effect.type === "conditional") {
-        expect(ability.effect.condition.type).toBe("resource-count");
-        expect(ability.effect.then.type).toBe("draw");
+      // The condition is extracted separately and stored in ability.condition
+      // The effect is the action to take when condition is met
+      expect(ability.effect.type).toBe("draw");
+      expect(ability.condition).toBeDefined();
+      if (ability.condition) {
+        expect(ability.condition.type).toBe("resource-count");
       }
     }
   });

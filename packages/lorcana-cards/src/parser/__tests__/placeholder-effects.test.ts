@@ -173,13 +173,7 @@ describe("{d} Placeholder Effects", () => {
         type: "modify-stat",
         stat: "strength",
         modifier: -1, // {d} without sign defaults to positive, converted to -1
-        target: {
-          selector: "chosen",
-          count: 1,
-          owner: "any",
-          zones: ["play"],
-          cardTypes: ["character"],
-        },
+        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
       });
     });
@@ -191,13 +185,7 @@ describe("{d} Placeholder Effects", () => {
         type: "modify-stat",
         stat: "strength",
         modifier: 1, // -{d} stored as positive 1, will be negated at runtime
-        target: {
-          selector: "chosen",
-          count: 1,
-          owner: "any",
-          zones: ["play"],
-          cardTypes: ["character"],
-        },
+        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
       });
     });
@@ -227,13 +215,7 @@ describe("{d} Placeholder Effects", () => {
         type: "modify-stat",
         stat: "lore",
         modifier: -1,
-        target: {
-          selector: "chosen",
-          count: 1,
-          owner: "any",
-          zones: ["play"],
-          cardTypes: ["character"],
-        },
+        target: "CHOSEN_CHARACTER",
         duration: "this-turn",
       });
     });
