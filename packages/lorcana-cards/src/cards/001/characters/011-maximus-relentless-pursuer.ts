@@ -35,7 +35,7 @@ export const maximusRelentlessPursuer: CharacterCard = {
         stat: "strength",
         modifier: -2,
         target: "CHOSEN_CHARACTER",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

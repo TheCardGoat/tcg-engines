@@ -115,13 +115,14 @@ export function parseCharacterTarget(
     return "SELF";
   }
 
-  if (THE_CHALLENGED_CHARACTER_PATTERN.test(text)) {
-    return "THE_CHALLENGED_CHARACTER";
-  }
-
-  if (THE_CHALLENGING_CHARACTER_PATTERN.test(text)) {
-    return "THE_CHALLENGING_CHARACTER";
-  }
+  // TODO: Challenge-related targets need CardReference { ref: "defender" } or { ref: "attacker" }
+  // These don't fit into CharacterTarget type - need to handle at effect level
+  // if (THE_CHALLENGED_CHARACTER_PATTERN.test(text)) {
+  //   return { ref: "defender" } as any;
+  // }
+  // if (THE_CHALLENGING_CHARACTER_PATTERN.test(text)) {
+  //   return { ref: "attacker" } as any;
+  // }
 
   if (REFERENCED_PATTERNS.some((p) => p.test(text))) {
     return "REFERENCED" as any;

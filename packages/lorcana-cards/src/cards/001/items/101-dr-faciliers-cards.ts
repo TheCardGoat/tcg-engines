@@ -26,7 +26,9 @@ export const drFaciliersCards: ItemCard = {
       effect: {
         type: "cost-reduction",
         amount: 1,
-        target: "NEXT_ACTION",
+        cardType: "action",
+        target: "CONTROLLER",
+        duration: "next-play-this-turn",
       },
     },
   ],

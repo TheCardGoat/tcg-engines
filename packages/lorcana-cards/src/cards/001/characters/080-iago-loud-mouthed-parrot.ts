@@ -32,7 +32,7 @@ export const iagoLoudmouthedParrot: CharacterCard = {
         type: "gain-keyword",
         keyword: "Reckless",
         target: "CHOSEN_CHARACTER",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

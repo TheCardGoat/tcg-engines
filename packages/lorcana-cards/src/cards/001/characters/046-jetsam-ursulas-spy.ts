@@ -35,7 +35,7 @@ export const jetsamUrsulasSpy: CharacterCard = {
         type: "gain-keyword",
         keyword: "Evasive",
         target: "YOUR_CHARACTERS",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

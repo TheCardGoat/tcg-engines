@@ -35,7 +35,7 @@ export const captainHookRuthlessPirate: CharacterCard = {
         type: "gain-keyword",
         keyword: "Reckless",
         target: "SELF",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

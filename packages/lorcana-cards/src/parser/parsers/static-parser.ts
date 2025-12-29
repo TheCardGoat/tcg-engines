@@ -363,13 +363,15 @@ function parseSpecificStaticPattern(text: string): StaticEffect | undefined {
   }
 
   // Pattern: "During your turn, you may put an additional card..."
-  if (YOU_MAY_PUT_INTO_INKWELL_PATTERN.test(text)) {
-    return {
-      type: "grant-ability",
-      ability: "put-additional-ink",
-      target: "SELF",
-    };
-  }
+  // TODO: "put-additional-ink" is a custom ability not yet in GrantAbilityEffect type
+  // For now, skip this pattern until the type is extended
+  // if (YOU_MAY_PUT_INTO_INKWELL_PATTERN.test(text)) {
+  //   return {
+  //     type: "grant-ability",
+  //     ability: "put-additional-ink",
+  //     target: "SELF",
+  //   };
+  // }
 
   return undefined;
 }

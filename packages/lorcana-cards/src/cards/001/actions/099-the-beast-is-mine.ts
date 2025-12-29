@@ -23,7 +23,7 @@ export const theBeastIsMine: ActionCard = {
         type: "gain-keyword",
         keyword: "Reckless",
         target: "CHOSEN_CHARACTER",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

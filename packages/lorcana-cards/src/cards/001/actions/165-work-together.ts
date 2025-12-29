@@ -23,7 +23,7 @@ export const workTogether: ActionCard = {
         type: "gain-keyword",
         keyword: "Support",
         target: "CHOSEN_CHARACTER",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

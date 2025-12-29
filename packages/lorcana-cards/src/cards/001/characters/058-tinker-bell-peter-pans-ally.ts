@@ -36,7 +36,7 @@ export const tinkerBellPeterPansAlly: CharacterCard = {
         keyword: "Challenger",
         value: 1,
         target: "YOUR_CHARACTERS",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

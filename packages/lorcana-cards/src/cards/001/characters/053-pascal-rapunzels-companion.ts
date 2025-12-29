@@ -29,7 +29,7 @@ export const pascalRapunzelsCompanion: CharacterCard = {
         type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

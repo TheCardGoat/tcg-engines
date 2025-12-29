@@ -209,7 +209,7 @@ function parseTrigger(text: string): Trigger | undefined {
     return {
       event: "banish",
       timing,
-      on: "OPPOSING_CHARACTER", // Implied target of the banish
+      on: "OPPONENT_CHARACTERS", // Characters that can be banished
     };
   }
 

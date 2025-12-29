@@ -35,7 +35,7 @@ export const flotsamUrsulasSpy: CharacterCard = {
         type: "gain-keyword",
         keyword: "Rush",
         target: "YOUR_CHARACTERS",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

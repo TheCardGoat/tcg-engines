@@ -35,7 +35,7 @@ export const scarMastermind: CharacterCard = {
         stat: "strength",
         modifier: -5,
         target: "CHOSEN_OPPOSING_CHARACTER",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

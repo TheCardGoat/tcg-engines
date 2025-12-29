@@ -158,7 +158,7 @@ export function parseCondition(text: string): Condition | undefined {
       : "less-or-equal";
     return {
       type: "resource-count",
-      what: "inkwell",
+      what: "cards-in-inkwell",
       controller: "you",
       comparison,
       value: count,

@@ -397,8 +397,12 @@ export function isParseableCard(card: CanonicalCard): boolean {
       return true;
     }
 
-    // For action/triggered abilities, only allow simple draw effects
-    if (abilityType === "action" || abilityType === "triggered") {
+    // For action/triggered/activated abilities, only allow simple draw effects
+    if (
+      abilityType === "action" ||
+      abilityType === "triggered" ||
+      abilityType === "activated"
+    ) {
       const effect = result.ability.ability.effect;
       if (!effect) return false;
       return isSimpleDrawEffect(effect);

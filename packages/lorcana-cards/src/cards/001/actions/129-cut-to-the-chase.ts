@@ -22,7 +22,7 @@ export const cutToTheChase: ActionCard = {
         type: "gain-keyword",
         keyword: "Rush",
         target: "CHOSEN_CHARACTER",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

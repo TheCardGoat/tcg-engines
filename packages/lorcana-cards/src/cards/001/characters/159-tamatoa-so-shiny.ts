@@ -48,13 +48,8 @@ export const tamatoaSoShiny: CharacterCard = {
       effect: {
         type: "modify-stat",
         stat: "lore",
-        modifier: 0,
+        modifier: { type: "items-in-play", controller: "you" },
         target: "SELF",
-        scaling: {
-          base: 0,
-          factor: 1,
-          source: "item you have in play.",
-        },
       },
     },
   ],

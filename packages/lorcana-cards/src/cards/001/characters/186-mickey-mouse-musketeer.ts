@@ -35,7 +35,7 @@ export const mickeyMouseMusketeer: CharacterCard = {
         stat: "strength",
         modifier: 1,
         target: "CHOSEN_CHARACTER",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

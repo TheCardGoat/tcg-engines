@@ -28,7 +28,7 @@ export const lefouBumbler: CharacterCard = {
       effect: {
         type: "cost-reduction",
         amount: 1,
-        target: "SELF",
+        target: "CONTROLLER",
       },
     },
   ],

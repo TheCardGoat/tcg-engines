@@ -37,13 +37,12 @@ export const hadesKingOfOlympus: CharacterCard = {
       effect: {
         type: "modify-stat",
         stat: "lore",
-        modifier: 0,
-        target: "SELF",
-        scaling: {
-          base: 0,
-          factor: 1,
-          source: "other Villain character you have in play.",
+        modifier: {
+          type: "classification-character-count",
+          classification: "Villain",
+          controller: "you",
         },
+        target: "SELF",
       },
     },
   ],

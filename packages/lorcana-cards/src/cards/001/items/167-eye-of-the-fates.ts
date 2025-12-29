@@ -28,7 +28,7 @@ export const eyeOfTheFates: ItemCard = {
         stat: "lore",
         modifier: 1,
         target: "CHOSEN_CHARACTER",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

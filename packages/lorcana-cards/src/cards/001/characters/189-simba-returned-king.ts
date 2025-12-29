@@ -36,7 +36,7 @@ export const simbaReturnedKing: CharacterCard = {
         type: "gain-keyword",
         keyword: "Evasive",
         target: "SELF",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

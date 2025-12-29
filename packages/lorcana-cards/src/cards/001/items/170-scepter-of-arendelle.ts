@@ -27,7 +27,7 @@ export const scepterOfArendelle: ItemCard = {
         type: "gain-keyword",
         keyword: "Support",
         target: "CHOSEN_CHARACTER",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],

@@ -33,7 +33,9 @@ export const mauriceWorldfamousInventor: CharacterCard = {
       effect: {
         type: "cost-reduction",
         amount: 2,
-        target: "NEXT_ITEM",
+        cardType: "item",
+        target: "CONTROLLER",
+        duration: "next-play-this-turn",
       },
     },
     {

@@ -30,7 +30,7 @@ export const mulanImperialSoldier: CharacterCard = {
         stat: "lore",
         modifier: 1,
         target: "SELF",
-        duration: "turn",
+        duration: "this-turn",
       },
     },
   ],
