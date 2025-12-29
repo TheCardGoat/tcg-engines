@@ -4,6 +4,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import type { CstNode } from "chevrotain";
 import type { Effect } from "../../../types";
 import { statModEffectParser } from "../stat-mod-effect";
 
@@ -13,8 +14,8 @@ describe("statModEffectParser", () => {
       const result = statModEffectParser.parse("gets +2 strength");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("statModification");
-      expect((result as Effect & { amount: number }).amount).toBe(2);
+      expect(result?.type).toBe("modify-stat");
+      expect((result as Effect & { modifier: number }).modifier).toBe(2);
       expect((result as Effect & { stat: string }).stat).toBe("strength");
     });
 
@@ -22,8 +23,8 @@ describe("statModEffectParser", () => {
       const result = statModEffectParser.parse("gets +1 willpower");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("statModification");
-      expect((result as Effect & { amount: number }).amount).toBe(1);
+      expect(result?.type).toBe("modify-stat");
+      expect((result as Effect & { modifier: number }).modifier).toBe(1);
       expect((result as Effect & { stat: string }).stat).toBe("willpower");
     });
 
@@ -31,8 +32,8 @@ describe("statModEffectParser", () => {
       const result = statModEffectParser.parse("gets +3 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("statModification");
-      expect((result as Effect & { amount: number }).amount).toBe(3);
+      expect(result?.type).toBe("modify-stat");
+      expect((result as Effect & { modifier: number }).modifier).toBe(3);
       expect((result as Effect & { stat: string }).stat).toBe("lore");
     });
 
@@ -40,7 +41,7 @@ describe("statModEffectParser", () => {
       const result = statModEffectParser.parse("get +5 strength");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(5);
+      expect((result as Effect & { modifier: number }).modifier).toBe(5);
     });
   });
 
@@ -49,8 +50,8 @@ describe("statModEffectParser", () => {
       const result = statModEffectParser.parse("gets -2 strength");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("statModification");
-      expect((result as Effect & { amount: number }).amount).toBe(-2);
+      expect(result?.type).toBe("modify-stat");
+      expect((result as Effect & { modifier: number }).modifier).toBe(-2);
       expect((result as Effect & { stat: string }).stat).toBe("strength");
     });
 
@@ -58,8 +59,8 @@ describe("statModEffectParser", () => {
       const result = statModEffectParser.parse("gets -1 willpower");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("statModification");
-      expect((result as Effect & { amount: number }).amount).toBe(-1);
+      expect(result?.type).toBe("modify-stat");
+      expect((result as Effect & { modifier: number }).modifier).toBe(-1);
       expect((result as Effect & { stat: string }).stat).toBe("willpower");
     });
 
@@ -67,8 +68,8 @@ describe("statModEffectParser", () => {
       const result = statModEffectParser.parse("gets -3 lore");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("statModification");
-      expect((result as Effect & { amount: number }).amount).toBe(-3);
+      expect(result?.type).toBe("modify-stat");
+      expect((result as Effect & { modifier: number }).modifier).toBe(-3);
       expect((result as Effect & { stat: string }).stat).toBe("lore");
     });
 
@@ -76,7 +77,7 @@ describe("statModEffectParser", () => {
       const result = statModEffectParser.parse("get -4 willpower");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(-4);
+      expect((result as Effect & { modifier: number }).modifier).toBe(-4);
     });
   });
 
@@ -85,8 +86,8 @@ describe("statModEffectParser", () => {
       const result = statModEffectParser.parse("GETS +2 STRENGTH");
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("statModification");
-      expect((result as Effect & { amount: number }).amount).toBe(2);
+      expect(result?.type).toBe("modify-stat");
+      expect((result as Effect & { modifier: number }).modifier).toBe(2);
       expect((result as Effect & { stat: string }).stat).toBe("strength");
     });
 
@@ -94,7 +95,7 @@ describe("statModEffectParser", () => {
       const result = statModEffectParser.parse("Gets +3 Willpower");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(3);
+      expect((result as Effect & { modifier: number }).modifier).toBe(3);
       expect((result as Effect & { stat: string }).stat).toBe("willpower");
     });
 
@@ -102,7 +103,7 @@ describe("statModEffectParser", () => {
       const result = statModEffectParser.parse("gEtS -1 LoRe");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(-1);
+      expect((result as Effect & { modifier: number }).modifier).toBe(-1);
     });
   });
 
@@ -111,21 +112,21 @@ describe("statModEffectParser", () => {
       const result = statModEffectParser.parse("gets +2 strength");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(2);
+      expect((result as Effect & { modifier: number }).modifier).toBe(2);
     });
 
     it("parses with multiple spaces", () => {
       const result = statModEffectParser.parse("gets  +3  willpower");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(3);
+      expect((result as Effect & { modifier: number }).modifier).toBe(3);
     });
 
     it("parses with tabs", () => {
       const result = statModEffectParser.parse("gets\t+1\tlore");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(1);
+      expect((result as Effect & { modifier: number }).modifier).toBe(1);
     });
   });
 
@@ -134,42 +135,42 @@ describe("statModEffectParser", () => {
       const result = statModEffectParser.parse("gets +0 strength");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(0);
+      expect((result as Effect & { modifier: number }).modifier).toBe(0);
     });
 
     it("parses -0 modifier (edge case)", () => {
       const result = statModEffectParser.parse("gets -0 willpower");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(-0);
+      expect((result as Effect & { modifier: number }).modifier).toBe(-0);
     });
 
     it("parses large positive values", () => {
       const result = statModEffectParser.parse("gets +99 strength");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(99);
+      expect((result as Effect & { modifier: number }).modifier).toBe(99);
     });
 
     it("parses large negative values", () => {
       const result = statModEffectParser.parse("gets -50 willpower");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(-50);
+      expect((result as Effect & { modifier: number }).modifier).toBe(-50);
     });
 
     it("parses double-digit positive modifier", () => {
       const result = statModEffectParser.parse("gets +10 strength");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(10);
+      expect((result as Effect & { modifier: number }).modifier).toBe(10);
     });
 
     it("parses double-digit negative modifier", () => {
       const result = statModEffectParser.parse("gets -10 lore");
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(-10);
+      expect((result as Effect & { modifier: number }).modifier).toBe(-10);
     });
   });
 
@@ -253,41 +254,41 @@ describe("statModEffectParser", () => {
     it("parses CST node with Number token", () => {
       const cstNode = {
         NumberToken: [{ image: "2" }],
-      };
+      } as unknown as CstNode;
 
       const result = statModEffectParser.parse(cstNode);
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("statModification");
-      expect((result as Effect & { amount: number }).amount).toBe(2);
+      expect(result?.type).toBe("modify-stat");
+      expect((result as Effect & { modifier: number }).modifier).toBe(2);
     });
 
     it("parses CST node with single modifier", () => {
       const cstNode = {
         NumberToken: [{ image: "1" }],
-      };
+      } as unknown as CstNode;
 
       const result = statModEffectParser.parse(cstNode);
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(1);
+      expect((result as Effect & { modifier: number }).modifier).toBe(1);
     });
 
     it("parses CST node with large modifier", () => {
       const cstNode = {
         NumberToken: [{ image: "7" }],
-      };
+      } as unknown as CstNode;
 
       const result = statModEffectParser.parse(cstNode);
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { amount: number }).amount).toBe(7);
+      expect((result as Effect & { modifier: number }).modifier).toBe(7);
     });
 
     it("returns null when Number token is missing", () => {
       const cstNode = {
         OtherToken: [{ image: "something" }],
-      };
+      } as unknown as CstNode;
 
       const result = statModEffectParser.parse(cstNode);
 
@@ -297,7 +298,7 @@ describe("statModEffectParser", () => {
     it("returns null when Number array is empty", () => {
       const cstNode = {
         NumberToken: [],
-      };
+      } as unknown as CstNode;
 
       const result = statModEffectParser.parse(cstNode);
 
@@ -307,7 +308,7 @@ describe("statModEffectParser", () => {
     it("returns null when number is not parseable", () => {
       const cstNode = {
         NumberToken: [{ image: "abc" }],
-      };
+      } as unknown as CstNode;
 
       const result = statModEffectParser.parse(cstNode);
 
@@ -324,7 +325,7 @@ describe("statModEffectParser", () => {
     it("has description", () => {
       expect(statModEffectParser.description).toBeDefined();
       expect(typeof statModEffectParser.description).toBe("string");
-      expect(statModEffectParser.description.length).toBeGreaterThan(0);
+      expect(statModEffectParser.description?.length).toBeGreaterThan(0);
     });
 
     it("has parse function", () => {

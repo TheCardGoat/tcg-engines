@@ -277,7 +277,7 @@ export class AbilityVisitor
    * Parses "gain/lose X lore" effects
    */
   loreEffect(ctx: {
-    Number?: IToken[];
+    NumberToken?: IToken[];
     Gain?: IToken[];
     Lose?: IToken[];
   }): Effect {
@@ -333,7 +333,7 @@ export class AbilityVisitor
    * Parses "gets +/-X strength/willpower/lore" effects
    */
   statModEffect(ctx: {
-    Number?: IToken[];
+    NumberToken?: IToken[];
     Identifier?: IToken[];
     Strength?: IToken[];
     Willpower?: IToken[];

@@ -148,10 +148,13 @@ describe("exertEffectParser", () => {
       expect(result).toBeNull();
     });
 
-    it("returns null for missing 'character' keyword", () => {
+    it("parses 'exert chosen' without 'character' - parseFromText is lenient", () => {
       const result = exertEffectParser.parse("exert chosen");
 
-      expect(result).toBeNull();
+      // parseFromText pattern /exert\s+(.+?)(?:\.|,|$)/i matches anything after "exert"
+      // Only the pattern property requires "character"
+      expect(result).not.toBeNull();
+      expect(result?.type).toBe("exert");
     });
 
     it("returns null for empty string", () => {
@@ -166,10 +169,12 @@ describe("exertEffectParser", () => {
       expect(result).toBeNull();
     });
 
-    it("returns null for 'exert character' without target", () => {
+    it("parses 'exert character' without explicit target - parseFromText is lenient", () => {
       const result = exertEffectParser.parse("exert character");
 
-      expect(result).toBeNull();
+      // parseFromText pattern /exert\s+(.+?)(?:\.|,|$)/i matches "character"
+      expect(result).not.toBeNull();
+      expect(result?.type).toBe("exert");
     });
 
     it("returns null for 'tap' instead of exert", () => {

@@ -29,20 +29,23 @@ export function parseConditionFromCst(ctx: {
   logger.debug("Parsing condition from CST", { ctx });
 
   // Determine condition type
+  // biome-ignore lint/suspicious/noExplicitAny: CST children type casting
   if (ctx.ifCondition) {
-    return parseIfConditionFromCst(ctx.ifCondition[0]);
+    return parseIfConditionFromCst(ctx.ifCondition[0].children as any);
   }
   if (ctx.duringCondition) {
-    return parseDuringConditionFromCst(ctx.duringCondition[0]);
+    return parseDuringConditionFromCst(ctx.duringCondition[0].children as any);
   }
   if (ctx.atCondition) {
-    return parseAtConditionFromCst(ctx.atCondition[0]);
+    return parseAtConditionFromCst(ctx.atCondition[0].children as any);
   }
   if (ctx.withCondition) {
-    return parseWithConditionFromCst(ctx.withCondition[0]);
+    return parseWithConditionFromCst(ctx.withCondition[0].children as any);
   }
   if (ctx.withoutCondition) {
-    return parseWithoutConditionFromCst(ctx.withoutCondition[0]);
+    return parseWithoutConditionFromCst(
+      ctx.withoutCondition[0].children as any,
+    );
   }
 
   logger.debug("No recognized condition type found in CST");
@@ -197,7 +200,8 @@ function extractExpressionFromCst(
     return null;
   }
 
-  const ctx = expressionNodes[0] as {
+  // biome-ignore lint/suspicious/noExplicitAny: CST children type casting
+  const ctx = expressionNodes[0].children as any as {
     Identifier?: IToken[];
     NumberToken?: IToken[];
     Character?: IToken[];

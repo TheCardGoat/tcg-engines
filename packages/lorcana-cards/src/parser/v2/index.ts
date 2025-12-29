@@ -115,6 +115,9 @@ export class LorcanaParserV2 {
 
   /**
    * Wrap a parsed effect as an Ability object.
+   * Note: Uses type assertions because the parser produces intermediate
+   * representations that don't fully match the strict Ability types from
+   * @tcg/lorcana-types. These will be further processed by consuming code.
    */
   private wrapEffectAsAbility(effect: Effect, originalText: string): Ability {
     // Detect ability type from text patterns
@@ -124,9 +127,8 @@ export class LorcanaParserV2 {
     ) {
       return {
         type: "triggered",
-        text: originalText,
         effect,
-      };
+      } as unknown as Ability;
     }
 
     if (
@@ -136,9 +138,8 @@ export class LorcanaParserV2 {
     ) {
       return {
         type: "activated",
-        text: originalText,
         effect,
-      };
+      } as unknown as Ability;
     }
 
     if (
@@ -147,17 +148,15 @@ export class LorcanaParserV2 {
     ) {
       return {
         type: "static",
-        text: originalText,
         effect,
-      };
+      } as unknown as Ability;
     }
 
-    // Default to effect-only ability
+    // Default to action ability
     return {
-      type: "effect",
-      text: originalText,
+      type: "action",
       effect,
-    };
+    } as unknown as Ability;
   }
 
   /**

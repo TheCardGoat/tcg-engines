@@ -34,7 +34,7 @@ describe("optionalEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
       const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("lore");
+      expect(effect.type).toBe("gain-lore");
     });
 
     it("parses 'you may deal 3 damage' correctly", () => {
@@ -45,7 +45,7 @@ describe("optionalEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
       const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("damage");
+      expect(effect.type).toBe("deal-damage");
     });
 
     it("parses 'you may exert chosen character' correctly", () => {
@@ -170,7 +170,7 @@ describe("optionalEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("optional");
       const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("damage");
+      expect(effect.type).toBe("deal-damage");
     });
   });
 

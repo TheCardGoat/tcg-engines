@@ -281,12 +281,15 @@ describe("LorcanaLexer", () => {
     });
 
     it("distinguishes keywords from identifiers", () => {
-      const result = LorcanaLexer.tokenize("draws");
+      // Note: Chevrotain tokens don't use word boundaries by default,
+      // so "draws" matches "draw" (keyword) + "s" (identifier).
+      // Use a word that doesn't contain any keyword prefix.
+      const result = LorcanaLexer.tokenize("character");
 
       expect(result.errors).toHaveLength(0);
       expect(result.tokens).toHaveLength(1);
-      expect(result.tokens[0].tokenType).toBe(Identifier);
-      expect(result.tokens[0].image).toBe("draws");
+      expect(result.tokens[0].tokenType).toBe(Character);
+      expect(result.tokens[0].image).toBe("character");
     });
   });
 

@@ -27,7 +27,7 @@ function parseFromText(text: string): MoveToLocationEffect | null {
   let character: CharacterTarget = "CHOSEN_CHARACTER";
 
   if (text.includes("chosen character of yours")) {
-    character = "YOUR_CHOSEN_CHARACTER";
+    character = "CHOSEN_CHARACTER_OF_YOURS";
   } else if (text.includes("this character")) {
     character = "SELF";
   } else if (text.includes("chosen character")) {

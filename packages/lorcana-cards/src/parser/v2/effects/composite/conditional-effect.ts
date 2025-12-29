@@ -46,7 +46,7 @@ function parseFromText(text: string): ConditionalEffect | null {
   }
 
   // We need a condition - if parsing failed, create a placeholder
-  const condition: Condition = parsedCondition || {
+  const condition: Condition = (parsedCondition as unknown as Condition) || {
     type: "has-character-count",
     controller: "you",
     comparison: "at-least",

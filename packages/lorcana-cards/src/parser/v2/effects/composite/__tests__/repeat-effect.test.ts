@@ -30,7 +30,7 @@ describe("repeatEffectParser", () => {
       const times = (result as Effect & { times: number }).times;
       const effect = (result as Effect & { effect: Effect }).effect;
       expect(times).toBe(2);
-      expect(effect.type).toBe("damage");
+      expect(effect.type).toBe("deal-damage");
     });
 
     it("parses 'gain 1 lore, 5 times' correctly", () => {
@@ -41,7 +41,7 @@ describe("repeatEffectParser", () => {
       const times = (result as Effect & { times: number }).times;
       const effect = (result as Effect & { effect: Effect }).effect;
       expect(times).toBe(5);
-      expect(effect.type).toBe("lore");
+      expect(effect.type).toBe("gain-lore");
     });
 
     it("parses with singular 'time'", () => {
@@ -85,7 +85,7 @@ describe("repeatEffectParser", () => {
       const times = (result as Effect & { times: number }).times;
       const effect = (result as Effect & { effect: Effect }).effect;
       expect(times).toBe(2);
-      expect(effect.type).toBe("damage");
+      expect(effect.type).toBe("deal-damage");
     });
 
     it("parses 'do gain 1 lore 4 times' correctly", () => {
@@ -96,7 +96,7 @@ describe("repeatEffectParser", () => {
       const times = (result as Effect & { times: number }).times;
       const effect = (result as Effect & { effect: Effect }).effect;
       expect(times).toBe(4);
-      expect(effect.type).toBe("lore");
+      expect(effect.type).toBe("gain-lore");
     });
 
     it("parses 'do' pattern with singular 'time'", () => {

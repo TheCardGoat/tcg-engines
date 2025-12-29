@@ -18,8 +18,8 @@ describe("choiceEffectParser", () => {
       expect(result?.type).toBe("choice");
       const options = (result as Effect & { options: Effect[] }).options;
       expect(options).toHaveLength(2);
-      expect(options[0].type).toBe("damage");
-      expect(options[1].type).toBe("lore");
+      expect(options[0].type).toBe("deal-damage");
+      expect(options[1].type).toBe("gain-lore");
     });
 
     it("parses two-option choice with '- ' separator", () => {
@@ -44,7 +44,7 @@ describe("choiceEffectParser", () => {
       expect(options).toHaveLength(3);
       expect(options[0].type).toBe("draw");
       expect(options[1].type).toBe("discard");
-      expect(options[2].type).toBe("lore");
+      expect(options[2].type).toBe("gain-lore");
     });
 
     it("parses choice with semicolon separator without 'or'", () => {
@@ -67,7 +67,7 @@ describe("choiceEffectParser", () => {
       expect(result?.type).toBe("choice");
       const options = (result as Effect & { options: Effect[] }).options;
       expect(options).toHaveLength(2);
-      expect(options[0].type).toBe("damage");
+      expect(options[0].type).toBe("deal-damage");
       expect(options[1].type).toBe("draw");
     });
   });
@@ -151,7 +151,7 @@ describe("choiceEffectParser", () => {
       const options = (result as Effect & { options: Effect[] }).options;
       expect(options).toHaveLength(2);
       expect(options[0].type).toBe("draw");
-      expect(options[1].type).toBe("lore");
+      expect(options[1].type).toBe("gain-lore");
     });
 
     it("returns null when all options fail to parse", () => {

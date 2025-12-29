@@ -27,8 +27,8 @@ function parseFromText(text: string): Effect | null {
   const returnToHandPattern = /return.*?to\s+(?:your\s+|their\s+)?hand/i;
   const shuffleIntoDeckPattern = /shuffle.*?into\s+(?:your\s+|their\s+)?deck/i;
   const returnFromDiscardPattern =
-    /return\s+(?:a\s+)?(\w+)\s+card\s+from\s+your\s+discard/i;
-  const putOnBottomPattern = /put.*?(?:on\s+)?(?:the\s+)?bottom\s+of/i;
+    /return\s+(?:an?\s+)?(\w+)\s+card\s+from\s+your\s+discard/i;
+  const putOnBottomPattern = /put.*?(?:on\s+)?(?:the\s+)?bottom(?:\s+of)?/i;
 
   // Check for "return from discard"
   if (returnFromDiscardPattern.test(text)) {

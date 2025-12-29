@@ -67,7 +67,7 @@ function parseFromText(text: string): PutIntoInkwellEffect | null {
     effect.exerted = true;
   }
 
-  logger.info("Parsed inkwell effect", effect);
+  logger.info("Parsed inkwell effect", { effect });
 
   return effect;
 }

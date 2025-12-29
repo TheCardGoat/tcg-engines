@@ -23,8 +23,8 @@ describe("Nested Composite Effects Integration", () => {
 
       const options = (result as Effect & { options: Effect[] }).options;
       expect(options).toHaveLength(2);
-      expect(options[0].type).toBe("damage");
-      expect(options[1].type).toBe("lore");
+      expect(options[0].type).toBe("deal-damage");
+      expect(options[1].type).toBe("gain-lore");
     });
   });
 
@@ -94,8 +94,8 @@ describe("Nested Composite Effects Integration", () => {
 
       const options = (result as Effect & { options: Effect[] }).options;
       expect(options).toHaveLength(2);
-      expect(options[0].type).toBe("damage");
-      expect(options[1].type).toBe("lore");
+      expect(options[0].type).toBe("deal-damage");
+      expect(options[1].type).toBe("gain-lore");
     });
   });
 
@@ -166,7 +166,7 @@ describe("Nested Composite Effects Integration", () => {
       const result = parseCompositeEffect(forEachText);
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach");
+      expect(result?.type).toBe("for-each");
     });
 
     it("matches optional before sequence", () => {
@@ -219,8 +219,8 @@ describe("Nested Composite Effects Integration", () => {
       expect(result?.type).toBe("choice");
       const options = (result as Effect & { options: Effect[] }).options;
       expect(options).toHaveLength(2);
-      expect(options[0].type).toBe("damage");
-      expect(options[1].type).toBe("damage");
+      expect(options[0].type).toBe("deal-damage");
+      expect(options[1].type).toBe("deal-damage");
     });
 
     it("parses Aladdin-style sequence with draw and discard", () => {
@@ -230,10 +230,10 @@ describe("Nested Composite Effects Integration", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const effects = (result as Effect & { effects: Effect[] }).effects;
-      expect(effects).toHaveLength(2);
-      expect(effects[0].type).toBe("draw");
-      expect(effects[1].type).toBe("discard");
+      const steps = (result as Effect & { steps: Effect[] }).steps;
+      expect(steps).toHaveLength(2);
+      expect(steps[0].type).toBe("draw");
+      expect(steps[1].type).toBe("discard");
     });
 
     it("parses Gaston-style conditional with lore gain", () => {
@@ -243,8 +243,8 @@ describe("Nested Composite Effects Integration", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
-      const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("lore");
+      const thenEffect = (result as Effect & { then: Effect }).then;
+      expect(thenEffect.type).toBe("gain-lore");
     });
 
     it("parses Merlin-style for-each with lore scaling", () => {
@@ -253,9 +253,9 @@ describe("Nested Composite Effects Integration", () => {
       const result = parseCompositeEffect(text);
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach");
+      expect(result?.type).toBe("for-each");
       const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("lore");
+      expect(effect.type).toBe("gain-lore");
     });
   });
 

@@ -16,10 +16,10 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const effects = (result as Effect & { effects: Effect[] }).effects;
-      expect(effects).toHaveLength(2);
-      expect(effects[0].type).toBe("draw");
-      expect(effects[1].type).toBe("discard");
+      const steps = (result as Effect & { steps: Effect[] }).steps;
+      expect(steps).toHaveLength(2);
+      expect(steps[0].type).toBe("draw");
+      expect(steps[1].type).toBe("discard");
     });
 
     it("parses three-step sequence with multiple ', then ' separators", () => {
@@ -29,11 +29,11 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const effects = (result as Effect & { effects: Effect[] }).effects;
-      expect(effects).toHaveLength(3);
-      expect(effects[0].type).toBe("draw");
-      expect(effects[1].type).toBe("discard");
-      expect(effects[2].type).toBe("lore");
+      const steps = (result as Effect & { steps: Effect[] }).steps;
+      expect(steps).toHaveLength(3);
+      expect(steps[0].type).toBe("draw");
+      expect(steps[1].type).toBe("discard");
+      expect(steps[2].type).toBe("gain-lore");
     });
 
     it("parses sequence with '. Then ' separator (capital T)", () => {
@@ -43,10 +43,10 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const effects = (result as Effect & { effects: Effect[] }).effects;
-      expect(effects).toHaveLength(2);
-      expect(effects[0].type).toBe("draw");
-      expect(effects[1].type).toBe("discard");
+      const steps = (result as Effect & { steps: Effect[] }).steps;
+      expect(steps).toHaveLength(2);
+      expect(steps[0].type).toBe("draw");
+      expect(steps[1].type).toBe("discard");
     });
 
     it("parses sequence with ', and then ' separator", () => {
@@ -56,10 +56,10 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const effects = (result as Effect & { effects: Effect[] }).effects;
-      expect(effects).toHaveLength(2);
-      expect(effects[0].type).toBe("draw");
-      expect(effects[1].type).toBe("discard");
+      const steps = (result as Effect & { steps: Effect[] }).steps;
+      expect(steps).toHaveLength(2);
+      expect(steps[0].type).toBe("draw");
+      expect(steps[1].type).toBe("discard");
     });
 
     it("parses complex three-step sequence with different effects", () => {
@@ -69,11 +69,11 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const effects = (result as Effect & { effects: Effect[] }).effects;
-      expect(effects).toHaveLength(3);
-      expect(effects[0].type).toBe("damage");
-      expect(effects[1].type).toBe("draw");
-      expect(effects[2].type).toBe("exert");
+      const steps = (result as Effect & { steps: Effect[] }).steps;
+      expect(steps).toHaveLength(3);
+      expect(steps[0].type).toBe("deal-damage");
+      expect(steps[1].type).toBe("draw");
+      expect(steps[2].type).toBe("exert");
     });
   });
 
@@ -85,8 +85,8 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const effects = (result as Effect & { effects: Effect[] }).effects;
-      expect(effects).toHaveLength(2);
+      const steps = (result as Effect & { steps: Effect[] }).steps;
+      expect(steps).toHaveLength(2);
     });
 
     it("parses sequence with mixed case 'ThEn'", () => {
@@ -105,8 +105,8 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const effects = (result as Effect & { effects: Effect[] }).effects;
-      expect(effects).toHaveLength(2);
+      const steps = (result as Effect & { steps: Effect[] }).steps;
+      expect(steps).toHaveLength(2);
     });
   });
 
@@ -147,9 +147,9 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const effects = (result as Effect & { effects: Effect[] }).effects;
-      expect(effects).toHaveLength(1);
-      expect(effects[0].type).toBe("draw");
+      const steps = (result as Effect & { steps: Effect[] }).steps;
+      expect(steps).toHaveLength(1);
+      expect(steps[0].type).toBe("draw");
     });
 
     it("returns null when no steps can be parsed", () => {
@@ -170,10 +170,10 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const effects = (result as Effect & { effects: Effect[] }).effects;
-      expect(effects).toHaveLength(2);
-      expect(effects[0].type).toBe("draw");
-      expect(effects[1].type).toBe("discard");
+      const steps = (result as Effect & { steps: Effect[] }).steps;
+      expect(steps).toHaveLength(2);
+      expect(steps[0].type).toBe("draw");
+      expect(steps[1].type).toBe("discard");
     });
 
     it("handles leading and trailing whitespace", () => {

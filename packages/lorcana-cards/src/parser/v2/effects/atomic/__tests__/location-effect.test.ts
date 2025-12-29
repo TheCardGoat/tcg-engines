@@ -20,9 +20,10 @@ describe("locationEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
       expect((result as Effect & { character: string }).character).toBe(
-        "chosen-character",
+        "CHOSEN_CHARACTER",
       );
-      expect((result as Effect & { cost: string }).cost).toBe("normal");
+      // Cost is not set when "for free" is not present
+      expect((result as Effect & { cost?: string }).cost).toBeUndefined();
     });
 
     it("parses 'move chosen character to a location for free' correctly", () => {
@@ -33,7 +34,7 @@ describe("locationEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
       expect((result as Effect & { character: string }).character).toBe(
-        "chosen-character",
+        "CHOSEN_CHARACTER",
       );
       expect((result as Effect & { cost: string }).cost).toBe("free");
     });
@@ -46,7 +47,7 @@ describe("locationEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
       expect((result as Effect & { character: string }).character).toBe(
-        "chosen-character-of-yours",
+        "CHOSEN_CHARACTER_OF_YOURS",
       );
     });
 
@@ -191,7 +192,7 @@ describe("locationEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("move-to-location");
       expect((result as Effect & { character: string }).character).toBe(
-        "chosen-character-of-yours",
+        "CHOSEN_CHARACTER_OF_YOURS",
       );
       expect((result as Effect & { cost: string }).cost).toBe("free");
     });
@@ -205,13 +206,14 @@ describe("locationEffectParser", () => {
       expect(result?.type).toBe("move-to-location");
     });
 
-    it("defaults to 'normal' cost when 'for free' not present", () => {
+    it("cost is undefined when 'for free' not present", () => {
       const result = locationEffectParser.parse(
         "move chosen character to a location",
       );
 
       expect(result).not.toBeNull();
-      expect((result as Effect & { cost: string }).cost).toBe("normal");
+      // Cost property is only set when "for free" is present
+      expect((result as Effect & { cost?: string }).cost).toBeUndefined();
     });
 
     it("handles phrases with additional context", () => {
@@ -223,14 +225,14 @@ describe("locationEffectParser", () => {
       expect(result?.type).toBe("move-to-location");
     });
 
-    it("correctly identifies 'chosen-character-of-yours' over 'chosen-character'", () => {
+    it("correctly identifies 'CHOSEN_CHARACTER_OF_YOURS' over 'CHOSEN_CHARACTER'", () => {
       const result = locationEffectParser.parse(
         "move chosen character of yours to a location",
       );
 
       expect(result).not.toBeNull();
       expect((result as Effect & { character: string }).character).toBe(
-        "chosen-character-of-yours",
+        "CHOSEN_CHARACTER_OF_YOURS",
       );
     });
   });

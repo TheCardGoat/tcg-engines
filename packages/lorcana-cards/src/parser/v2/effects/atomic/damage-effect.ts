@@ -77,7 +77,7 @@ function parseFromText(text: string): DealDamageEffect | null {
   if (match[2]) {
     const parsedTarget = parseTargetFromText(match[2]);
     if (parsedTarget) {
-      target = parsedTarget as CharacterTarget;
+      target = parsedTarget as unknown as CharacterTarget;
       logger.debug("Parsed target from damage effect text", { target });
     }
   }

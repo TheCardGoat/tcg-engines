@@ -15,11 +15,12 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach");
-      const iterator = (result as Effect & { iterator: string }).iterator;
+      expect(result?.type).toBe("for-each");
+      const counter = (result as Effect & { counter: { type: string } })
+        .counter;
       const effect = (result as Effect & { effect: Effect }).effect;
-      expect(iterator).toBe("character you control");
-      expect(effect.type).toBe("lore");
+      expect(counter.type).toBe("characters");
+      expect(effect.type).toBe("gain-lore");
     });
 
     it("parses 'for each character, draw 1 card' correctly", () => {
@@ -28,10 +29,11 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach");
-      const iterator = (result as Effect & { iterator: string }).iterator;
+      expect(result?.type).toBe("for-each");
+      const counter = (result as Effect & { counter: { type: string } })
+        .counter;
       const effect = (result as Effect & { effect: Effect }).effect;
-      expect(iterator).toBe("character");
+      expect(counter.type).toBe("characters");
       expect(effect.type).toBe("draw");
     });
 
@@ -41,11 +43,12 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach");
-      const iterator = (result as Effect & { iterator: string }).iterator;
+      expect(result?.type).toBe("for-each");
+      const counter = (result as Effect & { counter: { type: string } })
+        .counter;
       const effect = (result as Effect & { effect: Effect }).effect;
-      expect(iterator).toBe("card in your hand");
-      expect(effect.type).toBe("lore");
+      expect(counter.type).toBe("cards-in-hand");
+      expect(effect.type).toBe("gain-lore");
     });
 
     it("parses 'for each damage counter, draw 1 card' correctly", () => {
@@ -54,10 +57,11 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach");
-      const iterator = (result as Effect & { iterator: string }).iterator;
+      expect(result?.type).toBe("for-each");
+      const counter = (result as Effect & { counter: { type: string } })
+        .counter;
       const effect = (result as Effect & { effect: Effect }).effect;
-      expect(iterator).toBe("damage counter");
+      expect(counter.type).toBe("damage-on-target");
       expect(effect.type).toBe("draw");
     });
 
@@ -67,11 +71,12 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach");
-      const iterator = (result as Effect & { iterator: string }).iterator;
+      expect(result?.type).toBe("for-each");
+      const counter = (result as Effect & { counter: { type: string } })
+        .counter;
       const effect = (result as Effect & { effect: Effect }).effect;
-      expect(iterator).toBe("item you have in play");
-      expect(effect.type).toBe("lore");
+      expect(counter.type).toBe("items");
+      expect(effect.type).toBe("gain-lore");
     });
   });
 
@@ -82,9 +87,9 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach");
+      expect(result?.type).toBe("for-each");
       const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("lore");
+      expect(effect.type).toBe("gain-lore");
     });
 
     it("parses 'FoR eAcH' in mixed case", () => {
@@ -93,7 +98,7 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach");
+      expect(result?.type).toBe("for-each");
     });
 
     it("parses 'For Each' with capital letters", () => {
@@ -102,7 +107,7 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach");
+      expect(result?.type).toBe("for-each");
     });
   });
 
@@ -163,9 +168,9 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach");
+      expect(result?.type).toBe("for-each");
       const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("lore");
+      expect(effect.type).toBe("gain-lore");
     });
 
     it("handles leading and trailing whitespace", () => {
@@ -174,7 +179,7 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach");
+      expect(result?.type).toBe("for-each");
     });
 
     it("handles multiple spaces in iterator", () => {
@@ -183,9 +188,10 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("forEach");
-      const iterator = (result as Effect & { iterator: string }).iterator;
-      expect(iterator).toContain("character");
+      expect(result?.type).toBe("for-each");
+      const counter = (result as Effect & { counter: { type: string } })
+        .counter;
+      expect(counter.type).toBe("characters");
     });
   });
 
@@ -217,36 +223,45 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("damage");
+      expect(effect.type).toBe("deal-damage");
     });
   });
 
-  describe("text parsing - iterator variations", () => {
-    it("preserves simple iterator text", () => {
+  describe("text parsing - counter variations", () => {
+    it("parses simple character counter", () => {
       const result = forEachEffectParser.parse(
         "for each character, gain 1 lore",
       );
 
-      const iterator = (result as Effect & { iterator: string }).iterator;
-      expect(iterator).toBe("character");
+      const counter = (
+        result as Effect & { counter: { type: string; controller?: string } }
+      ).counter;
+      expect(counter.type).toBe("characters");
+      expect(counter.controller).toBe("any");
     });
 
-    it("preserves complex iterator with modifiers", () => {
+    it("parses character counter with controller", () => {
       const result = forEachEffectParser.parse(
         "for each other character you control, gain 1 lore",
       );
 
-      const iterator = (result as Effect & { iterator: string }).iterator;
-      expect(iterator).toBe("other character you control");
+      const counter = (
+        result as Effect & { counter: { type: string; controller?: string } }
+      ).counter;
+      expect(counter.type).toBe("characters");
+      expect(counter.controller).toBe("you");
     });
 
-    it("preserves iterator with card type specification", () => {
+    it("parses cards in discard counter", () => {
       const result = forEachEffectParser.parse(
-        "for each character card in your discard, gain 1 lore",
+        "for each card in your discard, gain 1 lore",
       );
 
-      const iterator = (result as Effect & { iterator: string }).iterator;
-      expect(iterator).toBe("character card in your discard");
+      const counter = (
+        result as Effect & { counter: { type: string; controller?: string } }
+      ).counter;
+      expect(counter.type).toBe("cards-in-discard");
+      expect(counter.controller).toBe("you");
     });
   });
 

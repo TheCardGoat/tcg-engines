@@ -25,8 +25,13 @@ import {
 /**
  * Adds target-related grammar rules to the parser.
  * This function is called from the main parser class to mix in target rules.
+ * Note: Uses biome-ignore for the any cast - Chevrotain mixin pattern requires
+ * accessing protected parser methods which TypeScript cannot type properly.
  */
 export function addTargetRules(parser: CstParser): void {
+  // biome-ignore lint/suspicious/noExplicitAny: Chevrotain mixin requires accessing protected methods
+  const p = parser as any;
+
   /**
    * Target clause: Describes what/who is targeted by an effect.
    * Examples:
@@ -37,35 +42,35 @@ export function addTargetRules(parser: CstParser): void {
    * - "opponent's character"
    * - "each character"
    */
-  parser.RULE("targetClause", () => {
+  p.RULE("targetClause", () => {
     // Optional target modifier (your, opponent's, each, all, another, other)
-    parser.OPTION(() => {
-      parser.SUBRULE(parser.targetModifier);
+    p.OPTION(() => {
+      p.SUBRULE(p.targetModifier);
     });
 
     // Target type (character, item, location, card, player)
-    parser.SUBRULE(parser.targetType);
+    p.SUBRULE(p.targetType);
   });
 
   /**
    * Target modifier: Specifies whose/which targets are affected.
    * Examples: "your", "opponent's", "each", "all", "another", "other", "chosen", "this"
    */
-  parser.RULE("targetModifier", () => {
-    parser.OR([
-      { ALT: () => parser.CONSUME(Your) },
-      { ALT: () => parser.CONSUME(Opponent) },
-      { ALT: () => parser.CONSUME(Each) },
-      { ALT: () => parser.CONSUME(All) },
-      { ALT: () => parser.CONSUME(Another) },
-      { ALT: () => parser.CONSUME(Other) },
-      { ALT: () => parser.CONSUME(Chosen) },
-      { ALT: () => parser.CONSUME(This) },
+  p.RULE("targetModifier", () => {
+    p.OR([
+      { ALT: () => p.CONSUME(Your) },
+      { ALT: () => p.CONSUME(Opponent) },
+      { ALT: () => p.CONSUME(Each) },
+      { ALT: () => p.CONSUME(All) },
+      { ALT: () => p.CONSUME(Another) },
+      { ALT: () => p.CONSUME(Other) },
+      { ALT: () => p.CONSUME(Chosen) },
+      { ALT: () => p.CONSUME(This) },
     ]);
 
     // Handle possessive "'s" for opponent's
-    parser.OPTION(() => {
-      parser.CONSUME(Identifier); // catches "'s" or "s"
+    p.OPTION(() => {
+      p.CONSUME(Identifier); // catches "'s" or "s"
     });
   });
 
@@ -73,14 +78,14 @@ export function addTargetRules(parser: CstParser): void {
    * Target type: The type of game object being targeted.
    * Examples: character, item, location, card, player
    */
-  parser.RULE("targetType", () => {
-    parser.OR([
-      { ALT: () => parser.CONSUME(Character) },
-      { ALT: () => parser.CONSUME(Item) },
-      { ALT: () => parser.CONSUME(Location) },
-      { ALT: () => parser.CONSUME(Cards) },
-      { ALT: () => parser.CONSUME(Card) },
-      { ALT: () => parser.CONSUME(Identifier) }, // For "player" or other types
+  p.RULE("targetType", () => {
+    p.OR([
+      { ALT: () => p.CONSUME(Character) },
+      { ALT: () => p.CONSUME(Item) },
+      { ALT: () => p.CONSUME(Location) },
+      { ALT: () => p.CONSUME(Cards) },
+      { ALT: () => p.CONSUME(Card) },
+      { ALT: () => p.CONSUME(Identifier) }, // For "player" or other types
     ]);
   });
 }

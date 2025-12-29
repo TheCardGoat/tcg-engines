@@ -83,7 +83,7 @@ function parseFromText(text: string): ModifyStatEffect | null {
   if (text.includes("this character") || text.includes("this card")) {
     target = "SELF";
   } else if (text.includes("your characters")) {
-    target = "ALL_YOUR_CHARACTERS";
+    target = "YOUR_CHARACTERS";
   }
 
   logger.info("Parsed stat modification effect from text", {

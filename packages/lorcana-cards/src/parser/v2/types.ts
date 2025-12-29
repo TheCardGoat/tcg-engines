@@ -45,7 +45,6 @@ export type {
   HasCharacterCountCondition,
   HasCharacterWithClassificationCondition,
   HasNamedCharacterCondition,
-  HealEffect,
   // Ink and classification
   InkType,
   ItemCard,

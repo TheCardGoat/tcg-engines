@@ -18,8 +18,13 @@ import {
 /**
  * Adds condition-related grammar rules to the parser.
  * This function is called from the main parser class to mix in condition rules.
+ * Note: Uses biome-ignore for the any cast - Chevrotain mixin pattern requires
+ * accessing protected parser methods which TypeScript cannot type properly.
  */
 export function addConditionRules(parser: CstParser): void {
+  // biome-ignore lint/suspicious/noExplicitAny: Chevrotain mixin requires accessing protected methods
+  const p = parser as any;
+
   /**
    * Condition clause: Describes when/under what circumstances an effect applies.
    * Examples:
@@ -29,13 +34,13 @@ export function addConditionRules(parser: CstParser): void {
    * - "with X lore"
    * - "without abilities"
    */
-  parser.RULE("conditionClause", () => {
-    parser.OR([
-      { ALT: () => parser.SUBRULE(parser.ifCondition) },
-      { ALT: () => parser.SUBRULE(parser.duringCondition) },
-      { ALT: () => parser.SUBRULE(parser.atCondition) },
-      { ALT: () => parser.SUBRULE(parser.withCondition) },
-      { ALT: () => parser.SUBRULE(parser.withoutCondition) },
+  p.RULE("conditionClause", () => {
+    p.OR([
+      { ALT: () => p.SUBRULE(p.ifCondition) },
+      { ALT: () => p.SUBRULE(p.duringCondition) },
+      { ALT: () => p.SUBRULE(p.atCondition) },
+      { ALT: () => p.SUBRULE(p.withCondition) },
+      { ALT: () => p.SUBRULE(p.withoutCondition) },
     ]);
   });
 
@@ -43,31 +48,31 @@ export function addConditionRules(parser: CstParser): void {
    * If condition: "if <condition>"
    * Example: "if you have another character"
    */
-  parser.RULE("ifCondition", () => {
-    parser.CONSUME(If);
-    parser.SUBRULE(parser.conditionExpression);
+  p.RULE("ifCondition", () => {
+    p.CONSUME(If);
+    p.SUBRULE(p.conditionExpression);
   });
 
   /**
    * During condition: "during <phase/turn>"
    * Example: "during your turn"
    */
-  parser.RULE("duringCondition", () => {
-    parser.CONSUME(During);
-    parser.OPTION(() => {
-      parser.CONSUME(Your);
+  p.RULE("duringCondition", () => {
+    p.CONSUME(During);
+    p.OPTION(() => {
+      p.CONSUME(Your);
     });
-    parser.CONSUME(Identifier); // "turn", "phase", etc.
+    p.CONSUME(Identifier); // "turn", "phase", etc.
   });
 
   /**
    * At condition: "at <timing>"
    * Example: "at the start of your turn"
    */
-  parser.RULE("atCondition", () => {
-    parser.CONSUME(At);
-    parser.MANY(() => {
-      parser.CONSUME(Identifier); // "the", "start", "of", etc.
+  p.RULE("atCondition", () => {
+    p.CONSUME(At);
+    p.MANY(() => {
+      p.CONSUME(Identifier); // "the", "start", "of", etc.
     });
   });
 
@@ -75,18 +80,18 @@ export function addConditionRules(parser: CstParser): void {
    * With condition: "with <qualifier>"
    * Example: "with 5 or more lore"
    */
-  parser.RULE("withCondition", () => {
-    parser.CONSUME(Identifier); // "with"
-    parser.SUBRULE(parser.conditionExpression);
+  p.RULE("withCondition", () => {
+    p.CONSUME(Identifier); // "with"
+    p.SUBRULE(p.conditionExpression);
   });
 
   /**
    * Without condition: "without <qualifier>"
    * Example: "without abilities"
    */
-  parser.RULE("withoutCondition", () => {
-    parser.CONSUME(Identifier); // "without"
-    parser.SUBRULE(parser.conditionExpression);
+  p.RULE("withoutCondition", () => {
+    p.CONSUME(Identifier); // "without"
+    p.SUBRULE(p.conditionExpression);
   });
 
   /**
@@ -96,14 +101,14 @@ export function addConditionRules(parser: CstParser): void {
    * - "5 or more lore"
    * - "at least 3 cards in hand"
    */
-  parser.RULE("conditionExpression", () => {
+  p.RULE("conditionExpression", () => {
     // Flexible expression - consume tokens until we hit a terminator
-    parser.MANY(() => {
-      parser.OR([
-        { ALT: () => parser.CONSUME(Identifier) },
-        { ALT: () => parser.CONSUME(NumberToken) },
-        { ALT: () => parser.CONSUME(Character) },
-        { ALT: () => parser.CONSUME(Your) },
+    p.MANY(() => {
+      p.OR([
+        { ALT: () => p.CONSUME(Identifier) },
+        { ALT: () => p.CONSUME(NumberToken) },
+        { ALT: () => p.CONSUME(Character) },
+        { ALT: () => p.CONSUME(Your) },
         // Add more token types as needed
       ]);
     });

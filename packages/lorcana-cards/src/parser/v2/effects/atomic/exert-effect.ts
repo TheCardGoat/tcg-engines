@@ -76,7 +76,7 @@ function parseFromText(text: string): ExertEffect | ReadyEffect | null {
   if (match[1]) {
     const parsedTarget = parseTargetFromText(match[1]);
     if (parsedTarget) {
-      target = parsedTarget as CharacterTarget;
+      target = parsedTarget as unknown as CharacterTarget;
       logger.debug("Parsed target from exert effect text", { target });
     }
   }

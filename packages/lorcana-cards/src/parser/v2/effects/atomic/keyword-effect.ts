@@ -26,7 +26,7 @@ const KEYWORDS = [
 type GrantableKeyword = (typeof KEYWORDS)[number];
 
 function isGrantableKeyword(keyword: string): keyword is GrantableKeyword {
-  return KEYWORDS.includes(keyword as GrantableKeyword);
+  return KEYWORDS.some((k) => k.toLowerCase() === keyword.toLowerCase());
 }
 
 /**
@@ -90,7 +90,7 @@ function parseFromText(text: string): GainKeywordEffect | null {
   ) {
     target = "SELF";
   } else if (text.includes("your characters")) {
-    target = "ALL_YOUR_CHARACTERS";
+    target = "YOUR_CHARACTERS";
   }
 
   logger.info("Parsed keyword effect from text", { keyword, target });

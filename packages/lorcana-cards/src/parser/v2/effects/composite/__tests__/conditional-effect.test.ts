@@ -18,10 +18,10 @@ describe("conditionalEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
       const condition = (result as Effect & { condition: Condition }).condition;
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const thenEffect = (result as Effect & { then: Effect }).then;
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("you have another character");
-      expect(effect.type).toBe("lore");
+      expect(thenEffect.type).toBe("gain-lore");
     });
 
     it("parses 'if X, Y' pattern without 'then'", () => {
@@ -32,10 +32,10 @@ describe("conditionalEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
       const condition = (result as Effect & { condition: Condition }).condition;
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const thenEffect = (result as Effect & { then: Effect }).then;
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("you have another character");
-      expect(effect.type).toBe("lore");
+      expect(thenEffect.type).toBe("gain-lore");
     });
 
     it("parses conditional with draw effect", () => {
@@ -46,10 +46,10 @@ describe("conditionalEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
       const condition = (result as Effect & { condition: Condition }).condition;
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const thenEffect = (result as Effect & { then: Effect }).then;
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("you control 3 or more characters");
-      expect(effect.type).toBe("draw");
+      expect(thenEffect.type).toBe("draw");
     });
 
     it("parses conditional with damage effect", () => {
@@ -60,10 +60,10 @@ describe("conditionalEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
       const condition = (result as Effect & { condition: Condition }).condition;
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const thenEffect = (result as Effect & { then: Effect }).then;
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("this character is exerted");
-      expect(effect.type).toBe("damage");
+      expect(thenEffect.type).toBe("deal-damage");
     });
 
     it("parses conditional with discard effect", () => {
@@ -74,10 +74,10 @@ describe("conditionalEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
       const condition = (result as Effect & { condition: Condition }).condition;
-      const effect = (result as Effect & { effect: Effect }).effect;
+      const thenEffect = (result as Effect & { then: Effect }).then;
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("your hand has 5 or more cards");
-      expect(effect.type).toBe("discard");
+      expect(thenEffect.type).toBe("discard");
     });
   });
 
@@ -89,8 +89,8 @@ describe("conditionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
-      const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("lore");
+      const thenEffect = (result as Effect & { then: Effect }).then;
+      expect(thenEffect.type).toBe("gain-lore");
     });
 
     it("parses 'If' with capital letter", () => {
@@ -109,8 +109,8 @@ describe("conditionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
-      const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("lore");
+      const thenEffect = (result as Effect & { then: Effect }).then;
+      expect(thenEffect.type).toBe("gain-lore");
     });
 
     it("parses mixed case 'iF' and 'ThEn'", () => {
@@ -187,8 +187,8 @@ describe("conditionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
-      const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("lore");
+      const thenEffect = (result as Effect & { then: Effect }).then;
+      expect(thenEffect.type).toBe("gain-lore");
     });
 
     it("handles leading and trailing whitespace", () => {
@@ -219,8 +219,8 @@ describe("conditionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
-      const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("lore");
+      const thenEffect = (result as Effect & { then: Effect }).then;
+      expect(thenEffect.type).toBe("gain-lore");
     });
   });
 
@@ -264,8 +264,8 @@ describe("conditionalEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("exert");
+      const thenEffect = (result as Effect & { then: Effect }).then;
+      expect(thenEffect.type).toBe("exert");
     });
 
     it("parses conditional with banish effect", () => {
@@ -274,8 +274,8 @@ describe("conditionalEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("banish");
+      const thenEffect = (result as Effect & { then: Effect }).then;
+      expect(thenEffect.type).toBe("banish");
     });
 
     it("parses conditional with lore effect", () => {
@@ -284,8 +284,8 @@ describe("conditionalEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      const effect = (result as Effect & { effect: Effect }).effect;
-      expect(effect.type).toBe("lore");
+      const thenEffect = (result as Effect & { then: Effect }).then;
+      expect(thenEffect.type).toBe("gain-lore");
     });
   });
 
