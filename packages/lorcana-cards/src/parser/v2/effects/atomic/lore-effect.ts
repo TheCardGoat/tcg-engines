@@ -5,7 +5,7 @@
 
 import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
+import type { Effect, GainLoreEffect, LoseLoreEffect } from "../../types";
 import type { EffectParser } from "./index";
 
 /**
@@ -16,7 +16,7 @@ function parseFromCst(ctx: {
   Gain?: IToken[];
   Lose?: IToken[];
   [key: string]: unknown;
-}): Effect | null {
+}): GainLoreEffect | LoseLoreEffect | null {
   logger.debug("Attempting to parse lore effect from CST", { ctx });
 
   if (!ctx.Number || ctx.Number.length === 0) {
@@ -43,16 +43,23 @@ function parseFromCst(ctx: {
 
   logger.info("Parsed lore effect from CST", { amount, isGain });
 
+  if (isGain) {
+    return {
+      type: "gain-lore",
+      amount,
+    };
+  }
   return {
-    type: "lore",
-    amount: isLose ? -amount : amount,
+    type: "lose-lore",
+    amount,
+    target: "OPPONENT",
   };
 }
 
 /**
  * Parse lore effect from text string (regex-based parsing)
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(text: string): GainLoreEffect | LoseLoreEffect | null {
   logger.debug("Attempting to parse lore effect from text", { text });
 
   const gainPattern = /gain\s+(\d+)\s+lore/i;
@@ -82,9 +89,16 @@ function parseFromText(text: string): Effect | null {
 
   logger.info("Parsed lore effect from text", { amount, isGain });
 
+  if (isGain) {
+    return {
+      type: "gain-lore",
+      amount,
+    };
+  }
   return {
-    type: "lore",
-    amount: isGain ? amount : -amount,
+    type: "lose-lore",
+    amount,
+    target: "OPPONENT",
   };
 }
 

@@ -3,7 +3,15 @@
  * Ensures logging infrastructure works correctly.
  */
 
-import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  mock,
+  spyOn,
+} from "bun:test";
 import type { LogLevel } from "../logger";
 import { logger } from "../logger";
 
@@ -22,6 +30,13 @@ describe("ParserLogger", () => {
     consoleLogSpy = spyOn(console, "log").mockImplementation(() => {});
     consoleWarnSpy = spyOn(console, "warn").mockImplementation(() => {});
     consoleErrorSpy = spyOn(console, "error").mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    // Restore original console methods
+    consoleLogSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
+    consoleErrorSpy.mockRestore();
   });
 
   describe("log level filtering", () => {

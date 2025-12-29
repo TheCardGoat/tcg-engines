@@ -5,11 +5,8 @@
 
 import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
-import {
-  parseTargetFromText,
-  type Target,
-} from "../../visitors/target-visitor";
+import type { CharacterTarget, DealDamageEffect } from "../../types";
+import { parseTargetFromText } from "../../visitors/target-visitor";
 import type { EffectParser } from "./index";
 
 /**
@@ -19,7 +16,7 @@ function parseFromCst(ctx: {
   Number?: IToken[];
   targetClause?: CstNode[];
   [key: string]: unknown;
-}): Effect | null {
+}): DealDamageEffect | null {
   logger.debug("Attempting to parse damage effect from CST", { ctx });
 
   if (!ctx.Number || ctx.Number.length === 0) {
@@ -37,7 +34,7 @@ function parseFromCst(ctx: {
   }
 
   // Parse target if present (will be added in grammar integration)
-  let target: Target | undefined;
+  const target: CharacterTarget = "CHOSEN_CHARACTER";
   if (ctx.targetClause) {
     logger.debug("Target clause found in damage effect CST");
     // Target parsing will be integrated when grammar rules are connected
@@ -45,22 +42,17 @@ function parseFromCst(ctx: {
 
   logger.info("Parsed damage effect from CST", { amount, target });
 
-  const effect: Effect = {
-    type: "damage",
+  return {
+    type: "deal-damage",
     amount,
+    target,
   };
-
-  if (target) {
-    effect.target = target;
-  }
-
-  return effect;
 }
 
 /**
  * Parse damage effect from text string (regex-based parsing)
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(text: string): DealDamageEffect | null {
   logger.debug("Attempting to parse damage effect from text", { text });
 
   const pattern = /deal\s+(\d+)\s+damage(?:\s+to\s+(.+?))?(?:\.|,|$)/i;
@@ -80,28 +72,23 @@ function parseFromText(text: string): Effect | null {
     return null;
   }
 
-  // Parse target if present
-  let target: Target | undefined;
+  // Parse target if present, default to CHOSEN_CHARACTER
+  let target: CharacterTarget = "CHOSEN_CHARACTER";
   if (match[2]) {
     const parsedTarget = parseTargetFromText(match[2]);
     if (parsedTarget) {
-      target = parsedTarget;
+      target = parsedTarget as CharacterTarget;
       logger.debug("Parsed target from damage effect text", { target });
     }
   }
 
   logger.info("Parsed damage effect from text", { amount, target });
 
-  const effect: Effect = {
-    type: "damage",
+  return {
+    type: "deal-damage",
     amount,
+    target,
   };
-
-  if (target) {
-    effect.target = target;
-  }
-
-  return effect;
 }
 
 /**
@@ -112,7 +99,7 @@ export const damageEffectParser: EffectParser = {
   description:
     "Parses damage effects (e.g., 'deal 2 damage to chosen character')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (input: CstNode | string): DealDamageEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }

@@ -14,7 +14,7 @@
  * function removes the "if" prefix for conditional effects.
  */
 
-import type { Condition } from "@tcg/lorcana";
+import type { Condition } from "@tcg/lorcana-types";
 import {
   IF_CARDS_IN_HAND_PATTERN,
   IF_CARDS_IN_INKWELL_PATTERN,

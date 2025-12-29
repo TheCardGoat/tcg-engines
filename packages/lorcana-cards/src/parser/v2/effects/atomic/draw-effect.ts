@@ -5,7 +5,7 @@
 
 import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
+import type { DrawEffect } from "../../types";
 import type { EffectParser } from "./index";
 
 /**
@@ -14,7 +14,7 @@ import type { EffectParser } from "./index";
 function parseFromCst(ctx: {
   Number?: IToken[];
   [key: string]: unknown;
-}): Effect | null {
+}): DrawEffect | null {
   logger.debug("Attempting to parse draw effect from CST", { ctx });
 
   if (!ctx.Number || ctx.Number.length === 0) {
@@ -36,13 +36,14 @@ function parseFromCst(ctx: {
   return {
     type: "draw",
     amount,
+    target: "CONTROLLER",
   };
 }
 
 /**
  * Parse draw effect from text string (regex-based parsing)
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(text: string): DrawEffect | null {
   logger.debug("Attempting to parse draw effect from text", { text });
 
   const pattern = /draw\s+(\d+)\s+cards?/i;
@@ -67,6 +68,7 @@ function parseFromText(text: string): Effect | null {
   return {
     type: "draw",
     amount,
+    target: "CONTROLLER",
   };
 }
 
@@ -77,7 +79,7 @@ export const drawEffectParser: EffectParser = {
   pattern: /draw\s+(\d+)\s+cards?/i,
   description: "Parses draw card effects (e.g., 'draw 2 cards')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (input: CstNode | string): DrawEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }

@@ -12,7 +12,7 @@ import type {
   ItemTarget,
   LocationTarget,
   PlayerTarget,
-} from "@tcg/lorcana";
+} from "@tcg/lorcana-types";
 import {
   ALL_CHARACTERS_PATTERN,
   ALL_ITEMS_PATTERN,

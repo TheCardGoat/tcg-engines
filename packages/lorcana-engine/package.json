@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@tcg/core": "workspace:*",
+    "@tcg/lorcana-types": "workspace:*",
     "immer": "11.0.1"
   },
   "devDependencies": {

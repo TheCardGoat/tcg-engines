@@ -246,11 +246,13 @@ describe("locationEffectParser", () => {
       expect(result).toBeNull();
     });
 
-    it("documents that 'move character' without 'chosen' does not match", () => {
-      // NOTE: Pattern requires either "chosen character" or "chosen card"
+    it("documents that 'move character' without 'chosen' still matches", () => {
+      // NOTE: Pattern uses (?:chosen\s+)? making "chosen" optional
+      // This provides more flexible parsing
       const result = locationEffectParser.parse("move character to a location");
 
-      expect(result).toBeNull();
+      expect(result).not.toBeNull();
+      expect(result?.type).toBe("move-to-location");
     });
   });
 

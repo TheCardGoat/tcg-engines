@@ -55,8 +55,17 @@
   },
   "boundaries": {
     "tags": {
+      "types": {
+        "dependencies": {
+          "allow": ["types"]
+        },
+        "dependents": {
+          "allow": ["foundation", "game-engine", "card-data", "types"]
+        }
+      },
       "foundation": {
         "dependencies": {
+          "allow": ["types"],
           "deny": ["game-engine", "card-data"]
         },
         "dependents": {
@@ -65,7 +74,7 @@
       },
       "game-engine": {
         "dependencies": {
-          "allow": ["foundation"],
+          "allow": ["foundation", "types"],
           "deny": ["card-data"]
         },
         "dependents": {
@@ -74,6 +83,7 @@
       },
       "card-data": {
         "dependencies": {
+          "allow": ["types"],
           "deny": ["foundation", "game-engine", "card-data"]
         }
       }

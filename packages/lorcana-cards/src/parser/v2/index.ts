@@ -3,10 +3,12 @@
  * Provides a high-level API for parsing ability text into typed Ability objects.
  */
 
+import { parseAtomicEffect } from "./effects/atomic";
+import { parseCompositeEffect } from "./effects/composite";
 import { LorcanaAbilityParser } from "./grammar";
 import { LorcanaLexer } from "./lexer";
 import { logger } from "./logging";
-import type { Ability } from "./types";
+import type { Ability, Effect } from "./types";
 import { AbilityVisitor } from "./visitors";
 
 export class LorcanaParserV2 {
@@ -16,16 +18,45 @@ export class LorcanaParserV2 {
 
   /**
    * Parse ability text into typed Ability objects.
-   * Returns null if parsing fails.
+   * Uses a hybrid approach:
+   * 1. Try Chevrotain grammar-based parsing first
+   * 2. Fall back to text-based (regex) parsers if grammar fails
+   * Returns null if parsing fails completely.
    */
   parseAbility(text: string): Ability | null {
     logger.info("Parsing ability", { text });
 
+    if (!text || text.trim().length === 0) {
+      return null;
+    }
+
+    const trimmedText = text.trim();
+
+    // Try grammar-based parsing first
+    const grammarResult = this.tryGrammarParsing(trimmedText);
+    if (grammarResult) {
+      return grammarResult;
+    }
+
+    // Fall back to text-based parsing
+    const textResult = this.tryTextBasedParsing(trimmedText);
+    if (textResult) {
+      return textResult;
+    }
+
+    logger.debug("All parsing methods failed", { text });
+    return null;
+  }
+
+  /**
+   * Try parsing with Chevrotain grammar.
+   */
+  private tryGrammarParsing(text: string): Ability | null {
     try {
       // Lexing
       const lexResult = this.lexer.tokenize(text);
       if (lexResult.errors.length > 0) {
-        logger.error("Lexing failed", {
+        logger.debug("Lexing failed, trying text-based parsing", {
           text,
           errors: lexResult.errors,
         });
@@ -36,7 +67,7 @@ export class LorcanaParserV2 {
       this.parser.input = lexResult.tokens;
       const cst = this.parser.ability();
       if (this.parser.errors.length > 0) {
-        logger.error("Parsing failed", {
+        logger.debug("Grammar parsing failed, trying text-based parsing", {
           text,
           errors: this.parser.errors,
         });
@@ -45,15 +76,88 @@ export class LorcanaParserV2 {
 
       // Visiting
       const ability = this.visitor.visit(cst) as Ability;
-      logger.info("Successfully parsed ability", { ability });
+      logger.info("Successfully parsed ability via grammar", { ability });
       return ability;
     } catch (error) {
-      logger.error("Unexpected error during parsing", {
+      logger.debug("Grammar parsing threw error, trying text-based parsing", {
         text,
         error: error instanceof Error ? error.message : String(error),
       });
       return null;
     }
+  }
+
+  /**
+   * Try parsing with text-based (regex) parsers.
+   * These are more flexible and cover many common patterns.
+   */
+  private tryTextBasedParsing(text: string): Ability | null {
+    // Try composite effect parsing (sequences, choices, conditionals, etc.)
+    const compositeEffect = parseCompositeEffect(text);
+    if (compositeEffect) {
+      logger.info("Parsed ability via composite effect parser", {
+        effect: compositeEffect,
+      });
+      return this.wrapEffectAsAbility(compositeEffect, text);
+    }
+
+    // Try atomic effect parsing (draw, damage, lore, etc.)
+    const atomicEffect = parseAtomicEffect(text);
+    if (atomicEffect) {
+      logger.info("Parsed ability via atomic effect parser", {
+        effect: atomicEffect,
+      });
+      return this.wrapEffectAsAbility(atomicEffect, text);
+    }
+
+    return null;
+  }
+
+  /**
+   * Wrap a parsed effect as an Ability object.
+   */
+  private wrapEffectAsAbility(effect: Effect, originalText: string): Ability {
+    // Detect ability type from text patterns
+    if (
+      originalText.toLowerCase().startsWith("when ") ||
+      originalText.toLowerCase().startsWith("whenever ")
+    ) {
+      return {
+        type: "triggered",
+        text: originalText,
+        effect,
+      };
+    }
+
+    if (
+      originalText.includes("⟳") ||
+      originalText.includes("—") ||
+      originalText.includes("-")
+    ) {
+      return {
+        type: "activated",
+        text: originalText,
+        effect,
+      };
+    }
+
+    if (
+      originalText.toLowerCase().startsWith("while ") ||
+      /your\s+characters?\s+.*?get/i.test(originalText)
+    ) {
+      return {
+        type: "static",
+        text: originalText,
+        effect,
+      };
+    }
+
+    // Default to effect-only ability
+    return {
+      type: "effect",
+      text: originalText,
+      effect,
+    };
   }
 
   /**

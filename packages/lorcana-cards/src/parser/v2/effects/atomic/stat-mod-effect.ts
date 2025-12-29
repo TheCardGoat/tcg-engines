@@ -5,7 +5,7 @@
 
 import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
+import type { CharacterTarget, ModifyStatEffect } from "../../types";
 import type { EffectParser } from "./index";
 
 /**
@@ -13,8 +13,9 @@ import type { EffectParser } from "./index";
  */
 function parseFromCst(ctx: {
   Number?: IToken[];
+  Identifier?: IToken[];
   [key: string]: unknown;
-}): Effect | null {
+}): ModifyStatEffect | null {
   logger.debug("Attempting to parse stat modification effect from CST", {
     ctx,
   });
@@ -24,27 +25,32 @@ function parseFromCst(ctx: {
     return null;
   }
 
-  const amount = Number.parseInt(ctx.Number[0].image, 10);
+  const modifier = Number.parseInt(ctx.Number[0].image, 10);
 
-  if (Number.isNaN(amount)) {
+  if (Number.isNaN(modifier)) {
     logger.warn("Failed to parse number from stat mod effect CST", {
       image: ctx.Number[0].image,
     });
     return null;
   }
 
-  logger.info("Parsed stat modification effect from CST", { amount });
+  // Default stat if not specified
+  const stat: "strength" | "willpower" | "lore" = "strength";
+
+  logger.info("Parsed stat modification effect from CST", { modifier, stat });
 
   return {
-    type: "statModification",
-    amount,
+    type: "modify-stat",
+    stat,
+    modifier,
+    target: "CHOSEN_CHARACTER" as CharacterTarget,
   };
 }
 
 /**
  * Parse stat modification effect from text string (regex-based parsing)
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(text: string): ModifyStatEffect | null {
   logger.debug("Attempting to parse stat modification effect from text", {
     text,
   });
@@ -59,7 +65,7 @@ function parseFromText(text: string): Effect | null {
 
   const sign = match[1] === "-" ? -1 : 1;
   const value = Number.parseInt(match[2], 10);
-  const stat = match[3].toLowerCase();
+  const statStr = match[3].toLowerCase();
 
   if (Number.isNaN(value)) {
     logger.warn("Failed to extract number from stat mod effect text", {
@@ -68,17 +74,28 @@ function parseFromText(text: string): Effect | null {
     return null;
   }
 
-  const amount = sign * value;
+  const modifier = sign * value;
+  const stat = statStr as "strength" | "willpower" | "lore";
+
+  // Try to determine target from text
+  let target: CharacterTarget = "CHOSEN_CHARACTER";
+  if (text.includes("this character") || text.includes("this card")) {
+    target = "SELF";
+  } else if (text.includes("your characters")) {
+    target = "ALL_YOUR_CHARACTERS";
+  }
 
   logger.info("Parsed stat modification effect from text", {
-    amount,
+    modifier,
     stat,
+    target,
   });
 
   return {
-    type: "statModification",
-    amount,
+    type: "modify-stat",
     stat,
+    modifier,
+    target,
   };
 }
 
@@ -89,10 +106,10 @@ export const statModEffectParser: EffectParser = {
   pattern: /gets?\s+([+-])(\d+)\s+(strength|willpower|lore)/i,
   description: "Parses stat modification effects (e.g., 'gets +2 strength')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (input: CstNode | string): ModifyStatEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
-    return parseFromCst(input as { Number?: IToken[] });
+    return parseFromCst(input as { Number?: IToken[]; Identifier?: IToken[] });
   },
 };

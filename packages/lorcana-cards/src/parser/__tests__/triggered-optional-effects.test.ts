@@ -6,7 +6,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type { OptionalEffect, TriggeredAbility } from "@tcg/lorcana";
+import type { OptionalEffect, TriggeredAbility } from "@tcg/lorcana-types";
 import { parseAbilityText } from "../parser";
 
 describe("Task 2.4: Triggered Abilities with Optional Effects", () => {

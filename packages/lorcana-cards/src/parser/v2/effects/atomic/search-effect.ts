@@ -5,13 +5,20 @@
 
 import type { CstNode } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
+import type {
+  LookAtCardsEffect,
+  LookAtFollowUp,
+  PlayerTarget,
+  SearchDeckEffect,
+} from "../../types";
 import type { EffectParser } from "./index";
 
 /**
  * Parse search effect from text string (regex-based parsing)
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(
+  text: string,
+): SearchDeckEffect | LookAtCardsEffect | null {
   logger.debug("Attempting to parse search effect from text", { text });
 
   // Patterns for search effects
@@ -30,16 +37,20 @@ function parseFromText(text: string): Effect | null {
   if (searchAndShufflePattern.test(text)) {
     const match = text.match(searchAndShufflePattern);
     if (match) {
-      const cardType = match[1].toLowerCase();
+      const cardTypeStr = match[1].toLowerCase();
+      const cardType = parseCardType(cardTypeStr);
 
       logger.info("Parsed search deck and shuffle effect", { cardType });
 
-      return {
+      const effect: SearchDeckEffect = {
         type: "search-deck",
-        cardType,
         putInto: "hand",
         shuffle: true,
       };
+      if (cardType) {
+        effect.cardType = cardType;
+      }
+      return effect;
     }
   }
 
@@ -47,7 +58,8 @@ function parseFromText(text: string): Effect | null {
   if (searchDeckPutPattern.test(text)) {
     const match = text.match(searchDeckPutPattern);
     if (match) {
-      const cardType = match[1].toLowerCase();
+      const cardTypeStr = match[1].toLowerCase();
+      const cardType = parseCardType(cardTypeStr);
       let putInto: "hand" | "top-of-deck" | "play" = "hand";
 
       if (text.includes("into play")) {
@@ -58,12 +70,15 @@ function parseFromText(text: string): Effect | null {
 
       logger.info("Parsed search deck and put effect", { cardType, putInto });
 
-      return {
+      const effect: SearchDeckEffect = {
         type: "search-deck",
-        cardType,
         putInto,
         shuffle: false,
       };
+      if (cardType) {
+        effect.cardType = cardType;
+      }
+      return effect;
     }
   }
 
@@ -71,16 +86,20 @@ function parseFromText(text: string): Effect | null {
   if (searchDeckPattern.test(text)) {
     const match = text.match(searchDeckPattern);
     if (match) {
-      const cardType = match[1].toLowerCase();
+      const cardTypeStr = match[1].toLowerCase();
+      const cardType = parseCardType(cardTypeStr);
 
       logger.info("Parsed search deck effect", { cardType });
 
-      return {
+      const effect: SearchDeckEffect = {
         type: "search-deck",
-        cardType,
         putInto: "hand",
         shuffle: false,
       };
+      if (cardType) {
+        effect.cardType = cardType;
+      }
+      return effect;
     }
   }
 
@@ -91,8 +110,7 @@ function parseFromText(text: string): Effect | null {
       const amount = Number.parseInt(match[1], 10);
       const count = Number.parseInt(match[2], 10);
 
-      let thenAction: "put-in-hand" | "put-on-top" | "put-on-bottom" =
-        "put-in-hand";
+      let thenAction: LookAtFollowUp["action"] = "put-in-hand";
 
       if (text.includes("into your hand")) {
         thenAction = "put-in-hand";
@@ -108,13 +126,14 @@ function parseFromText(text: string): Effect | null {
         thenAction,
       });
 
-      return {
+      const effect: LookAtCardsEffect = {
         type: "look-at-cards",
         amount,
         from: "top-of-deck",
-        target: "controller",
+        target: "CONTROLLER" as PlayerTarget,
         then: { action: thenAction, count },
       };
+      return effect;
     }
   }
 
@@ -126,17 +145,45 @@ function parseFromText(text: string): Effect | null {
 
       logger.info("Parsed look at top cards effect", { amount });
 
-      return {
+      const effect: LookAtCardsEffect = {
         type: "look-at-cards",
         amount,
         from: "top-of-deck",
-        target: "controller",
+        target: "CONTROLLER" as PlayerTarget,
       };
+      return effect;
     }
   }
 
   logger.debug("Search effect pattern did not match");
   return null;
+}
+
+/**
+ * Parse card type from string
+ */
+function parseCardType(
+  str: string,
+):
+  | "character"
+  | "action"
+  | "item"
+  | "location"
+  | "song"
+  | "floodborn"
+  | undefined {
+  const normalized = str.toLowerCase();
+  if (
+    normalized === "character" ||
+    normalized === "action" ||
+    normalized === "item" ||
+    normalized === "location" ||
+    normalized === "song" ||
+    normalized === "floodborn"
+  ) {
+    return normalized;
+  }
+  return undefined;
 }
 
 /**
@@ -147,7 +194,9 @@ export const searchEffectParser: EffectParser = {
   description:
     "Parses search and look at effects (e.g., 'search your deck', 'look at the top 3 cards')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (
+    input: CstNode | string,
+  ): SearchDeckEffect | LookAtCardsEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }

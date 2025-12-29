@@ -1,34 +1,125 @@
-// We must use the real type during parsing, so we don't create duplicated types
-// To avoid cyclic dependencies, we must not import @tcg/lorcana from here, as @tcg/lorcana also import cards.
-// import type {
-//   Ability as LorcanaAbility,
-//   Condition as LorcanaCardCondition,
-//   AbilityCost as LorcanaCost,
-//   Effect as LorcanaEffect,
-//   CardTarget as LorcanaTarget,
-// } from "@tcg/lorcana";
-
 /**
+ * v2 Parser Type Definitions
  *
- * Internal type definitions for v2 parser.
- * These are temporary types used during parsing.
- * Final output types will come from @tcg/lorcana in later phases.
+ * Re-exports types from @tcg/lorcana-types for use in the parser.
+ * This allows the parser to work with proper types without depending
+ * on the game engine.
  */
 
-/**
- * Placeholder ability type for v2 parser.
- * Will be replaced with proper types from @tcg/lorcana.
- */
-export interface Ability {
-  type: "triggered" | "activated" | "static" | "keyword";
-  [key: string]: unknown;
-}
+// Re-export all types from @tcg/lorcana-types
+export type {
+  // Ability types
+  Ability,
+  // Cost types
+  AbilityCost,
+  AbilityDefinition,
+  ActionAbility,
+  ActionCard,
+  ActivatedAbility,
+  AndCondition,
+  BanishEffect,
+  CardTarget,
+  // Card types
+  CardType,
+  CharacterCard,
+  CharacterFilter,
+  // Target types
+  CharacterTarget,
+  CharacterTargetEnum,
+  CharacterTargetQuery,
+  ChoiceEffect,
+  Classification,
+  ComparisonCondition,
+  // Condition types
+  Condition,
+  ConditionalEffect,
+  DealDamageEffect,
+  DiscardEffect,
+  DrawEffect,
+  // Effect types
+  Effect,
+  ExertEffect,
+  ForEachEffect,
+  GainKeywordEffect,
+  GainLoreEffect,
+  HasCharacterCountCondition,
+  HasCharacterWithClassificationCondition,
+  HasNamedCharacterCondition,
+  HealEffect,
+  // Ink and classification
+  InkType,
+  ItemCard,
+  ItemTarget,
+  KeywordAbility,
+  KeywordType,
+  LocationCard,
+  LocationTarget,
+  LookAtCardsEffect,
+  LookAtFollowUp,
+  LorcanaCard,
+  LorcanaCardDefinition,
+  LoseLoreEffect,
+  ModifyStatEffect,
+  MoveToLocationEffect,
+  OptionalEffect,
+  OrCondition,
+  ParameterizedKeywordType,
+  PlayCardEffect,
+  PlayerChoiceCondition,
+  PlayerTarget,
+  PutIntoInkwellEffect,
+  PutOnBottomEffect,
+  ReadyEffect,
+  RepeatEffect,
+  ReplacementAbility,
+  ResourceCountCondition,
+  Restriction,
+  ReturnFromDiscardEffect,
+  ReturnToHandEffect,
+  RevealHandEffect,
+  RevealTopCardEffect,
+  SearchDeckEffect,
+  SequenceEffect,
+  ShuffleIntoDeckEffect,
+  SimpleKeywordType,
+  StaticAbility,
+  StaticEffect,
+  ThisTurnHappenedCondition,
+  // Trigger types
+  Trigger,
+  TriggerEvent,
+  TriggeredAbility,
+  TriggerSubject,
+  TriggerTiming,
+  ValueKeywordType,
+} from "@tcg/lorcana-types";
 
-/**
- * Placeholder effect type for v2 parser.
- * Will be replaced with proper types from @tcg/lorcana.
- */
-export interface Effect {
-  type: string;
-  [key: string]: unknown;
-}
+// Re-export utility functions
+export {
+  actionAbility,
+  activated,
+  // Common triggers
+  COMMON_TRIGGERS,
+  challenger,
+  exertAndInkCost,
+  // Cost utilities
+  exertCost,
+  isActionAbility,
+  isActionCard,
+  isActivatedAbility,
+  isCharacterCard,
+  isItemCard,
+  // Type guards
+  isKeywordAbility,
+  isLocationCard,
+  isReplacementAbility,
+  isStaticAbility,
+  isTriggeredAbility,
+  // Builders
+  keyword,
+  resist,
+  shift,
+  singer,
+  staticAbility,
+  triggered,
+} from "@tcg/lorcana-types";

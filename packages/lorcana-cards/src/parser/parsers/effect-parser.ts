@@ -24,7 +24,7 @@ import type {
   Effect,
   ForEachCounter,
   PlayerTarget,
-} from "@tcg/lorcana";
+} from "@tcg/lorcana-types";
 import {
   hasConditionalEffect,
   splitConditionalEffect,

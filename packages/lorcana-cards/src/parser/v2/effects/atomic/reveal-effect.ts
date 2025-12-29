@@ -5,66 +5,54 @@
 
 import type { CstNode } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
+import type {
+  Effect,
+  PlayerTarget,
+  RevealHandEffect,
+  RevealTopCardEffect,
+} from "../../types";
 import type { EffectParser } from "./index";
 
 /**
  * Parse reveal effect from text string (regex-based parsing)
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(
+  text: string,
+): RevealHandEffect | RevealTopCardEffect | Effect | null {
   logger.debug("Attempting to parse reveal effect from text", { text });
 
   // Pattern: "reveal (your )?(hand|top card|X cards)"
   const revealHandPattern = /reveal\s+(?:your\s+)?hand/i;
   const revealTopCardPattern = /reveal\s+the\s+top\s+card/i;
-  const revealCardsPattern = /reveal\s+(?:the\s+top\s+)?(\d+)\s+cards?/i;
-  const revealAndPutPattern =
-    /reveal\s+.*?\s+and\s+put\s+(?:it|them)\s+into\s+(?:your\s+)?hand/i;
 
   // Check for "reveal hand"
   if (revealHandPattern.test(text)) {
-    const target = text.includes("opponent") ? "opponent" : "controller";
+    const target: PlayerTarget = text.includes("opponent")
+      ? "OPPONENT"
+      : "CONTROLLER";
 
     logger.info("Parsed reveal hand effect", { target });
 
-    return {
+    const effect: RevealHandEffect = {
       type: "reveal-hand",
       target,
     };
-  }
-
-  // Check for "reveal and put in hand"
-  if (revealAndPutPattern.test(text)) {
-    logger.info("Parsed reveal and put in hand effect");
-
-    return {
-      type: "reveal-and-put-in-hand",
-      from: "look-at",
-    };
+    return effect;
   }
 
   // Check for "reveal top card"
   if (revealTopCardPattern.test(text)) {
-    logger.info("Parsed reveal top card effect");
+    const target: PlayerTarget = text.includes("opponent")
+      ? "OPPONENT"
+      : "CONTROLLER";
 
-    return {
+    logger.info("Parsed reveal top card effect", { target });
+
+    const effect: RevealTopCardEffect = {
       type: "reveal-top-card",
-      amount: 1,
+      target,
     };
-  }
-
-  // Check for "reveal X cards"
-  const match = text.match(revealCardsPattern);
-  if (match) {
-    const amount = Number.parseInt(match[1], 10);
-
-    logger.info("Parsed reveal cards effect", { amount });
-
-    return {
-      type: "reveal-cards",
-      amount,
-      from: "top-of-deck",
-    };
+    return effect;
   }
 
   logger.debug("Reveal effect pattern did not match");
@@ -79,7 +67,9 @@ export const revealEffectParser: EffectParser = {
   description:
     "Parses reveal effects (e.g., 'reveal your hand', 'reveal the top card')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (
+    input: CstNode | string,
+  ): RevealHandEffect | RevealTopCardEffect | Effect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }

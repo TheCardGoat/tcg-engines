@@ -9,7 +9,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type { ChoiceEffect } from "@tcg/lorcana";
+import type { ChoiceEffect } from "@tcg/lorcana-types";
 import { parseEffect } from "../parsers/effect-parser";
 
 describe("Choice Effect Parser", () => {

@@ -37,7 +37,7 @@
     "generate:all": "bun run fetch && bun run generate"
   },
   "dependencies": {
-    "@tcg/lorcana": "workspace:*",
+    "@tcg/lorcana-types": "workspace:*",
     "chevrotain": "^11.0.3"
   },
   "devDependencies": {

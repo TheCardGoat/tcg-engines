@@ -5,7 +5,12 @@
 
 import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
+import type {
+  BanishEffect,
+  CardTarget,
+  CharacterTarget,
+  ReturnToHandEffect,
+} from "../../types";
 import type { EffectParser } from "./index";
 
 /**
@@ -15,7 +20,7 @@ function parseFromCst(ctx: {
   Banish?: IToken[];
   Return?: IToken[];
   [key: string]: unknown;
-}): Effect | null {
+}): BanishEffect | ReturnToHandEffect | null {
   logger.debug("Attempting to parse banish effect from CST", { ctx });
 
   const isBanish = ctx.Banish !== undefined;
@@ -28,15 +33,22 @@ function parseFromCst(ctx: {
 
   logger.info("Parsed banish effect from CST", { isBanish });
 
+  if (isBanish) {
+    return {
+      type: "banish",
+      target: "CHOSEN_CHARACTER" as CharacterTarget,
+    };
+  }
   return {
-    type: isBanish ? "banish" : "return",
+    type: "return-to-hand",
+    target: "CHOSEN_CHARACTER" as CardTarget,
   };
 }
 
 /**
  * Parse banish effect from text string (regex-based parsing)
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(text: string): BanishEffect | ReturnToHandEffect | null {
   logger.debug("Attempting to parse banish effect from text", { text });
 
   const banishPattern =
@@ -59,8 +71,15 @@ function parseFromText(text: string): Effect | null {
 
   logger.info("Parsed banish effect from text", { isBanish });
 
+  if (isBanish) {
+    return {
+      type: "banish",
+      target: "CHOSEN_CHARACTER" as CharacterTarget,
+    };
+  }
   return {
-    type: isBanish ? "banish" : "return",
+    type: "return-to-hand",
+    target: "CHOSEN_CHARACTER" as CardTarget,
   };
 }
 
@@ -71,7 +90,9 @@ export const banishEffectParser: EffectParser = {
   pattern: /(banish|return)\s+(chosen|this|another|an?)\s+(character|item)/i,
   description: "Parses banish/return effects (e.g., 'banish chosen character')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (
+    input: CstNode | string,
+  ): BanishEffect | ReturnToHandEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }

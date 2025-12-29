@@ -1,4 +1,4 @@
-import type { ItemCard } from "@tcg/lorcana";
+import type { ItemCard } from "@tcg/lorcana-types";
 
 export const juniorWoodchuckGuidebook: ItemCard = {
   id: "ebe",

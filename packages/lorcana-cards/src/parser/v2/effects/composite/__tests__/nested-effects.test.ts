@@ -5,6 +5,7 @@
 
 import { describe, expect, it } from "bun:test";
 import type { Effect } from "../../../types";
+import type { Condition } from "../../../visitors/condition-visitor";
 import { parseCompositeEffect } from "../index";
 
 describe("Nested Composite Effects Integration", () => {
@@ -70,8 +71,9 @@ describe("Nested Composite Effects Integration", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
 
-      const condition = (result as Effect & { condition: string }).condition;
-      expect(condition).toBe("you have another character");
+      const condition = (result as Effect & { condition: Condition }).condition;
+      expect(condition.type).toBe("if");
+      expect(condition.expression).toBe("you have another character");
 
       // Effect part contains sequence text
       // Current implementation may not recursively parse the sequence

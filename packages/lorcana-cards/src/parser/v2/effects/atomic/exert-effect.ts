@@ -5,11 +5,8 @@
 
 import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
-import {
-  parseTargetFromText,
-  type Target,
-} from "../../visitors/target-visitor";
+import type { CharacterTarget, ExertEffect, ReadyEffect } from "../../types";
+import { parseTargetFromText } from "../../visitors/target-visitor";
 import type { EffectParser } from "./index";
 
 /**
@@ -20,7 +17,7 @@ function parseFromCst(ctx: {
   Ready?: IToken[];
   targetClause?: CstNode[];
   [key: string]: unknown;
-}): Effect | null {
+}): ExertEffect | ReadyEffect | null {
   logger.debug("Attempting to parse exert effect from CST", { ctx });
 
   const isExert = ctx.Exert !== undefined;
@@ -31,8 +28,8 @@ function parseFromCst(ctx: {
     return null;
   }
 
-  // Parse target if present (will be added in grammar integration)
-  let target: Target | undefined;
+  // Parse target if present, default to CHOSEN_CHARACTER
+  const target: CharacterTarget = "CHOSEN_CHARACTER";
   if (ctx.targetClause) {
     logger.debug("Target clause found in exert effect CST");
     // Target parsing will be integrated when grammar rules are connected
@@ -40,21 +37,22 @@ function parseFromCst(ctx: {
 
   logger.info("Parsed exert effect from CST", { isExert, target });
 
-  const effect: Effect = {
-    type: isExert ? "exert" : "ready",
-  };
-
-  if (target) {
-    effect.target = target;
+  if (isExert) {
+    return {
+      type: "exert",
+      target,
+    };
   }
-
-  return effect;
+  return {
+    type: "ready",
+    target,
+  };
 }
 
 /**
  * Parse exert effect from text string (regex-based parsing)
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(text: string): ExertEffect | ReadyEffect | null {
   logger.debug("Attempting to parse exert effect from text", { text });
 
   const exertPattern = /exert\s+(.+?)(?:\.|,|$)/i;
@@ -73,27 +71,28 @@ function parseFromText(text: string): Effect | null {
     return null;
   }
 
-  // Parse target if present
-  let target: Target | undefined;
+  // Parse target if present, default to CHOSEN_CHARACTER
+  let target: CharacterTarget = "CHOSEN_CHARACTER";
   if (match[1]) {
     const parsedTarget = parseTargetFromText(match[1]);
     if (parsedTarget) {
-      target = parsedTarget;
+      target = parsedTarget as CharacterTarget;
       logger.debug("Parsed target from exert effect text", { target });
     }
   }
 
   logger.info("Parsed exert effect from text", { isExert, target });
 
-  const effect: Effect = {
-    type: isExert ? "exert" : "ready",
-  };
-
-  if (target) {
-    effect.target = target;
+  if (isExert) {
+    return {
+      type: "exert",
+      target,
+    };
   }
-
-  return effect;
+  return {
+    type: "ready",
+    target,
+  };
 }
 
 /**
@@ -103,7 +102,7 @@ export const exertEffectParser: EffectParser = {
   pattern: /(exert|ready)\s+(chosen|this|another|an?)\s+character/i,
   description: "Parses exert/ready effects (e.g., 'exert chosen character')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (input: CstNode | string): ExertEffect | ReadyEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }

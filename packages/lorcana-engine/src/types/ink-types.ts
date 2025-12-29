@@ -1,31 +1,33 @@
 /**
  * Ink Types (Rule 2.1.1.2)
  *
- * Six ink colors that define card identity and deck building constraints.
- * A deck can contain cards of at most 2 different ink types.
+ * Re-exports ink types from @tcg/lorcana-types for backwards compatibility.
+ * This file maintains the existing API while delegating to the new types package.
  */
 
-export const INK_TYPES = [
-  "amber",
-  "amethyst",
-  "emerald",
-  "ruby",
-  "sapphire",
-  "steel",
-] as const;
+// Import for local use
+import {
+  INK_TYPES as _INK_TYPES,
+  isValidInkType as _isValidInkType,
+} from "@tcg/lorcana-types";
 
-export type InkType = (typeof INK_TYPES)[number];
+// Re-export from @tcg/lorcana-types
+export type { InkType } from "@tcg/lorcana-types";
 
-/**
- * Check if a value is a valid ink type
- */
-export function isInkType(value: unknown): value is InkType {
-  return typeof value === "string" && INK_TYPES.includes(value as InkType);
-}
+export {
+  getInkColor,
+  INK_COLORS,
+  INK_TYPES,
+  isValidInkType,
+} from "@tcg/lorcana-types";
 
+// Alias for backwards compatibility
+export const isInkType = _isValidInkType;
+
+// Local additions for backwards compatibility
 /**
  * Get all ink types
  */
-export function getAllInkTypes(): readonly InkType[] {
-  return INK_TYPES;
+export function getAllInkTypes(): readonly string[] {
+  return _INK_TYPES;
 }

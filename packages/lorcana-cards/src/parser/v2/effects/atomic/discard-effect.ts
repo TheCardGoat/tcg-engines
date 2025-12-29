@@ -5,7 +5,7 @@
 
 import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
-import type { Effect } from "../../types";
+import type { DiscardEffect } from "../../types";
 import type { EffectParser } from "./index";
 
 /**
@@ -14,7 +14,7 @@ import type { EffectParser } from "./index";
 function parseFromCst(ctx: {
   Number?: IToken[];
   [key: string]: unknown;
-}): Effect | null {
+}): DiscardEffect | null {
   logger.debug("Attempting to parse discard effect from CST", { ctx });
 
   if (!ctx.Number || ctx.Number.length === 0) {
@@ -36,13 +36,15 @@ function parseFromCst(ctx: {
   return {
     type: "discard",
     amount,
+    target: "CONTROLLER",
+    chosen: true,
   };
 }
 
 /**
  * Parse discard effect from text string (regex-based parsing)
  */
-function parseFromText(text: string): Effect | null {
+function parseFromText(text: string): DiscardEffect | null {
   logger.debug("Attempting to parse discard effect from text", { text });
 
   const pattern = /discard\s+(\d+)\s+cards?/i;
@@ -67,6 +69,8 @@ function parseFromText(text: string): Effect | null {
   return {
     type: "discard",
     amount,
+    target: "CONTROLLER",
+    chosen: true,
   };
 }
 
@@ -77,7 +81,7 @@ export const discardEffectParser: EffectParser = {
   pattern: /discard\s+(\d+)\s+cards?/i,
   description: "Parses discard card effects (e.g., 'discard 1 card')",
 
-  parse: (input: CstNode | string): Effect | null => {
+  parse: (input: CstNode | string): DiscardEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
