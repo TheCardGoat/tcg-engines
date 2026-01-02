@@ -13,11 +13,8 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import {
-  allCardsText,
-  totalUniqueTexts,
-} from "../../../../../.claude/skills/lorcana-rules/references/all-cards-text/all-lorcana-texts";
 import { parseAbilityTexts } from "../parser";
+import { allCardsText, totalUniqueTexts } from "./stubs/all-lorcana-texts";
 
 describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
   it("should validate total unique texts count", () => {
