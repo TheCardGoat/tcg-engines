@@ -83,7 +83,7 @@ describe("Move: Choose First Player", () => {
 
     // Verify that a choosing player was randomly designated
     expect(choosingPlayer).toBeDefined();
-    expect([PLAYER_ONE, PLAYER_TWO]).toContain(choosingPlayer);
+    expect([PLAYER_ONE, PLAYER_TWO]).toContain(choosingPlayer!);
 
     // The designated player should be able to choose
     if (choosingPlayer === PLAYER_ONE) {
@@ -136,7 +136,7 @@ describe("Move: Choose First Player", () => {
 
     // But priority should be the choosingFirstPlayer
     const ctx = testEngine.getCtx();
-    expect(testEngine.getPriorityPlayers()).toContain(ctx.choosingFirstPlayer);
+    expect(testEngine.getPriorityPlayers()).toContain(ctx.choosingFirstPlayer!);
   });
 
   it("should set turn player after OTP is chosen", () => {

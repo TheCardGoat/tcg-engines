@@ -1,0 +1,38 @@
+{
+  "name": "@tcg/core-types",
+  "version": "0.1.0",
+  "description": "Core type definitions shared across all TCG engines",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "src/"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./targeting": {
+      "types": "./src/targeting/index.ts",
+      "default": "./src/targeting/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
+    "lint": "bun x @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error ./src",
+    "test": "echo 'No tests for types-only package'",
+    "check": "turbo format lint check-types"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.4",
+    "@types/bun": "1.2.14",
+    "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "typescript": "5.8.3"
+  }
+}

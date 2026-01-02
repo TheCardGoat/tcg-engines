@@ -94,6 +94,9 @@ export interface LorcanaExternalState {
   hasInkedThisTurn: boolean;
   startingPlayerId: PlayerId;
 
+  /** Events that happened this turn (for conditions like "If you played a song this turn") */
+  turnHistory: TurnHistoryEvent[];
+
   /** Current phase and step */
   currentPhase: "beginning" | "main" | "end";
   currentStep?: "ready" | "set" | "draw";
@@ -102,6 +105,27 @@ export interface LorcanaExternalState {
   isGameOver: boolean;
   winner?: PlayerId;
   gameEndReason?: string;
+
+  /** Name of the card named by "Name a card" effects */
+  namedCard?: string;
+}
+
+export interface TurnHistoryEvent {
+  type:
+    | "played-song"
+    | "played-character"
+    | "played-action"
+    | "played-floodborn"
+    | "challenged"
+    | "quested"
+    | "banished-character"
+    | "damaged-character"
+    | "was-damaged"
+    | "inked";
+  sourceId?: CardId;
+  controllerId: PlayerId;
+  count: number; // For bulk events or just 1
+  params?: Record<string, any>;
 }
 
 /**
@@ -150,6 +174,7 @@ export function createInitialLorcanaState(
       turnNumber: 1,
       activePlayerId: startingPlayerId,
       hasInkedThisTurn: false,
+      turnHistory: [],
       startingPlayerId,
       currentPhase: "beginning",
       currentStep: "ready",

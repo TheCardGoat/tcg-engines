@@ -194,6 +194,7 @@ function getFilterAdjective(filter: LorcanaFilter): string | undefined {
     case "move-cost":
     case "and":
     case "or":
+    case "card-type":
     case "not":
       return undefined;
     default:
@@ -238,6 +239,7 @@ function getFilterSuffix(filter: LorcanaFilter): string | undefined {
     // Composite filters - recursively process
     case "and":
     case "or":
+    case "card-type":
     case "not":
       return undefined;
     default:
@@ -273,12 +275,12 @@ function getComparisonSymbol(
  */
 function pluralize(word: string): string {
   if (word.endsWith("y")) {
-    return word.slice(0, -1) + "ies";
+    return `${word.slice(0, -1)}ies`;
   }
   if (word.endsWith("s") || word.endsWith("x") || word.endsWith("ch")) {
-    return word + "es";
+    return `${word}es`;
   }
-  return word + "s";
+  return `${word}s`;
 }
 
 // ============================================================================
