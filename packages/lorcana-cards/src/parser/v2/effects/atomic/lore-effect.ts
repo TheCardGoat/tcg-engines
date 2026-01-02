@@ -11,16 +11,21 @@ import type { EffectParser } from "./index";
 /**
  * Parse lore effect from CST node (grammar-based parsing)
  */
-function parseFromCst(ctx: {
-  NumberToken?: IToken[];
-  Gain?: IToken[];
-  Lose?: IToken[];
-  [key: string]: unknown;
-}): GainLoreEffect | LoseLoreEffect | null {
+function parseFromCst(
+  ctx:
+    | {
+        NumberToken?: IToken[];
+        Gain?: IToken[];
+        Lose?: IToken[];
+        [key: string]: unknown;
+      }
+    | null
+    | undefined,
+): GainLoreEffect | LoseLoreEffect | null {
   logger.debug("Attempting to parse lore effect from CST", { ctx });
 
-  if (!ctx.NumberToken || ctx.NumberToken.length === 0) {
-    logger.debug("Lore effect CST missing NumberToken");
+  if (!(ctx && ctx.NumberToken) || ctx.NumberToken.length === 0) {
+    logger.debug("Lore effect CST missing NumberToken or invalid context");
     return null;
   }
 
@@ -114,7 +119,10 @@ export const loreEffectParser: EffectParser = {
       return parseFromText(input);
     }
     return parseFromCst(
-      input as { NumberToken?: IToken[]; Gain?: IToken[]; Lose?: IToken[] },
+      input as
+        | { NumberToken?: IToken[]; Gain?: IToken[]; Lose?: IToken[] }
+        | null
+        | undefined,
     );
   },
 };

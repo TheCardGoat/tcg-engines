@@ -12,13 +12,23 @@ import type { EffectParser } from "./index";
 /**
  * Parse exert effect from CST node (grammar-based parsing)
  */
-function parseFromCst(ctx: {
-  Exert?: IToken[];
-  Ready?: IToken[];
-  targetClause?: CstNode[];
-  [key: string]: unknown;
-}): ExertEffect | ReadyEffect | null {
+function parseFromCst(
+  ctx:
+    | {
+        Exert?: IToken[];
+        Ready?: IToken[];
+        targetClause?: CstNode[];
+        [key: string]: unknown;
+      }
+    | null
+    | undefined,
+): ExertEffect | ReadyEffect | null {
   logger.debug("Attempting to parse exert effect from CST", { ctx });
+
+  if (!ctx) {
+    logger.debug("Exert effect CST has invalid context");
+    return null;
+  }
 
   const isExert = ctx.Exert !== undefined;
   const isReady = ctx.Ready !== undefined;
@@ -107,11 +117,14 @@ export const exertEffectParser: EffectParser = {
       return parseFromText(input);
     }
     return parseFromCst(
-      input as {
-        Exert?: IToken[];
-        Ready?: IToken[];
-        targetClause?: CstNode[];
-      },
+      input as
+        | {
+            Exert?: IToken[];
+            Ready?: IToken[];
+            targetClause?: CstNode[];
+          }
+        | null
+        | undefined,
     );
   },
 };

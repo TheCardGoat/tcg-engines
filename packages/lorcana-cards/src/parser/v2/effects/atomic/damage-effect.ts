@@ -12,15 +12,20 @@ import type { EffectParser } from "./index";
 /**
  * Parse damage effect from CST node (grammar-based parsing)
  */
-function parseFromCst(ctx: {
-  NumberToken?: IToken[];
-  targetClause?: CstNode[];
-  [key: string]: unknown;
-}): DealDamageEffect | null {
+function parseFromCst(
+  ctx:
+    | {
+        NumberToken?: IToken[];
+        targetClause?: CstNode[];
+        [key: string]: unknown;
+      }
+    | null
+    | undefined,
+): DealDamageEffect | null {
   logger.debug("Attempting to parse damage effect from CST", { ctx });
 
-  if (!ctx.NumberToken || ctx.NumberToken.length === 0) {
-    logger.debug("Damage effect CST missing NumberToken");
+  if (!(ctx && ctx.NumberToken) || ctx.NumberToken.length === 0) {
+    logger.debug("Damage effect CST missing NumberToken or invalid context");
     return null;
   }
 
@@ -104,7 +109,10 @@ export const damageEffectParser: EffectParser = {
       return parseFromText(input);
     }
     return parseFromCst(
-      input as { NumberToken?: IToken[]; targetClause?: CstNode[] },
+      input as
+        | { NumberToken?: IToken[]; targetClause?: CstNode[] }
+        | null
+        | undefined,
     );
   },
 };

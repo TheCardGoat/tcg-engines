@@ -11,14 +11,19 @@ import type { EffectParser } from "./index";
 /**
  * Parse draw effect from CST node (grammar-based parsing)
  */
-function parseFromCst(ctx: {
-  NumberToken?: IToken[];
-  [key: string]: unknown;
-}): DrawEffect | null {
+function parseFromCst(
+  ctx:
+    | {
+        NumberToken?: IToken[];
+        [key: string]: unknown;
+      }
+    | null
+    | undefined,
+): DrawEffect | null {
   logger.debug("Attempting to parse draw effect from CST", { ctx });
 
-  if (!ctx.NumberToken || ctx.NumberToken.length === 0) {
-    logger.debug("Draw effect CST missing NumberToken");
+  if (!(ctx && ctx.NumberToken) || ctx.NumberToken.length === 0) {
+    logger.debug("Draw effect CST missing NumberToken or invalid context");
     return null;
   }
 
@@ -46,15 +51,23 @@ function parseFromCst(ctx: {
 function parseFromText(text: string): DrawEffect | null {
   logger.debug("Attempting to parse draw effect from text", { text });
 
-  const pattern = /draw\s+(\d+)\s+cards?/i;
-  const match = text.match(pattern);
+  // Try "draw N cards" pattern first
+  let pattern = /draw\s+(\d+)\s+cards?/i;
+  let match = text.match(pattern);
+
+  // Try "draw a card" or "draw 1 card" pattern
+  if (!match) {
+    pattern = /draw\s+(?:a|one|1)\s+card/i;
+    match = text.match(pattern);
+  }
 
   if (!match) {
     logger.debug("Draw effect pattern did not match");
     return null;
   }
 
-  const amount = Number.parseInt(match[1], 10);
+  // "draw a card" = 1 card
+  const amount = match[1] ? Number.parseInt(match[1], 10) : 1;
 
   if (Number.isNaN(amount)) {
     logger.warn("Failed to extract number from draw effect text", {
@@ -76,13 +89,13 @@ function parseFromText(text: string): DrawEffect | null {
  * Draw effect parser implementation
  */
 export const drawEffectParser: EffectParser = {
-  pattern: /draw\s+(\d+)\s+cards?/i,
-  description: "Parses draw card effects (e.g., 'draw 2 cards')",
+  pattern: /draw\s+(?:(\d+)\s+cards?|(?:a|one|1)\s+card)/i,
+  description: "Parses draw card effects (e.g., 'draw 2 cards', 'draw a card')",
 
   parse: (input: CstNode | string): DrawEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
-    return parseFromCst(input as { NumberToken?: IToken[] });
+    return parseFromCst(input as { NumberToken?: IToken[] } | null | undefined);
   },
 };

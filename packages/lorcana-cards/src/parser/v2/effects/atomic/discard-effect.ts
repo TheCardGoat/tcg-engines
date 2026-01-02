@@ -11,14 +11,19 @@ import type { EffectParser } from "./index";
 /**
  * Parse discard effect from CST node (grammar-based parsing)
  */
-function parseFromCst(ctx: {
-  NumberToken?: IToken[];
-  [key: string]: unknown;
-}): DiscardEffect | null {
+function parseFromCst(
+  ctx:
+    | {
+        NumberToken?: IToken[];
+        [key: string]: unknown;
+      }
+    | null
+    | undefined,
+): DiscardEffect | null {
   logger.debug("Attempting to parse discard effect from CST", { ctx });
 
-  if (!ctx.NumberToken || ctx.NumberToken.length === 0) {
-    logger.debug("Discard effect CST missing NumberToken");
+  if (!(ctx && ctx.NumberToken) || ctx.NumberToken.length === 0) {
+    logger.debug("Discard effect CST missing NumberToken or invalid context");
     return null;
   }
 
@@ -85,6 +90,6 @@ export const discardEffectParser: EffectParser = {
     if (typeof input === "string") {
       return parseFromText(input);
     }
-    return parseFromCst(input as { NumberToken?: IToken[] });
+    return parseFromCst(input as { NumberToken?: IToken[] } | null | undefined);
   },
 };

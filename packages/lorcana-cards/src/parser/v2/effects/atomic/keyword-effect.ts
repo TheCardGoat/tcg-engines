@@ -32,14 +32,21 @@ function isGrantableKeyword(keyword: string): keyword is GrantableKeyword {
 /**
  * Parse keyword effect from CST node (grammar-based parsing)
  */
-function parseFromCst(ctx: {
-  Identifier?: IToken[];
-  [key: string]: unknown;
-}): GainKeywordEffect | null {
+function parseFromCst(
+  ctx:
+    | {
+        Identifier?: IToken[];
+        [key: string]: unknown;
+      }
+    | null
+    | undefined,
+): GainKeywordEffect | null {
   logger.debug("Attempting to parse keyword effect from CST", { ctx });
 
-  if (!ctx.Identifier || ctx.Identifier.length === 0) {
-    logger.debug("Keyword effect CST missing Identifier token");
+  if (!(ctx && ctx.Identifier) || ctx.Identifier.length === 0) {
+    logger.debug(
+      "Keyword effect CST missing Identifier token or invalid context",
+    );
     return null;
   }
 
@@ -114,6 +121,6 @@ export const keywordEffectParser: EffectParser = {
     if (typeof input === "string") {
       return parseFromText(input);
     }
-    return parseFromCst(input as { Identifier?: IToken[] });
+    return parseFromCst(input as { Identifier?: IToken[] } | null | undefined);
   },
 };

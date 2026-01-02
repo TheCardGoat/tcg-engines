@@ -139,7 +139,10 @@ export class LorcanaParserV2 {
       /^[A-Z][A-Z\s]*(?:\s+[A-Z][A-Z\s]*)*\s+(?:(When|Whenever|At the (?:start|end) of|The first time) .+?|Once per turn, (?:when|whenever) .+?|During your turn, (?:when|whenever) .+?),\s*(.+)$/is,
     );
     if (namedAbilityMatch) {
-      return namedAbilityMatch[3];
+      // The effect text is the last capture group (could be index 2 or 3 depending on which alternative matched)
+      // namedAbilityMatch[2] is the effect when the first alternative matches
+      // namedAbilityMatch[3] would be the effect for other alternatives
+      return namedAbilityMatch[2] || "";
     }
 
     // If no match, return original text (not a triggered ability)
@@ -154,16 +157,27 @@ export class LorcanaParserV2 {
    * @tcg/lorcana-types. These will be further processed by consuming code.
    */
   private wrapEffectAsAbility(effect: Effect, originalText: string): Ability {
+    // Extract ability name if present (e.g., "NAME Whenever X, do Y")
+    // Allow common punctuation in names like "IT WORKS!", "FINE PRINT"
+    const nameMatch = originalText.match(
+      /^([A-Z][A-Z\s!?']+)\s+(When|Whenever)/,
+    );
+    const name = nameMatch ? nameMatch[1].trim() : undefined;
+
     // Check for triggered abilities first (when/whenever/at)
-    if (
+    const isTriggered =
       originalText.toLowerCase().startsWith("when ") ||
       originalText.toLowerCase().startsWith("whenever ") ||
       originalText.toLowerCase().startsWith("at the start of ") ||
       originalText.toLowerCase().startsWith("at the end of ") ||
       originalText.toLowerCase().startsWith("the first time ") ||
       /^Once per turn,\s+(?:when|whenever)\s+/i.test(originalText) ||
-      /^During your turn,\s+(?:when|whenever)\s+/i.test(originalText)
-    ) {
+      /^During your turn,\s+(?:when|whenever)\s+/i.test(originalText) ||
+      // Named abilities: "NAME Whenever X, do Y"
+      (name &&
+        /^(When|Whenever)/i.test(originalText.substring(name.length).trim()));
+
+    if (isTriggered) {
       // Try to parse trigger metadata
       const trigger = parseTrigger(originalText);
 
@@ -171,6 +185,7 @@ export class LorcanaParserV2 {
         // Successfully parsed trigger - create proper triggered ability
         return {
           type: "triggered",
+          name,
           trigger,
           effect,
         } as unknown as Ability;
@@ -181,6 +196,7 @@ export class LorcanaParserV2 {
       logger.debug("Failed to parse trigger metadata", { text: originalText });
       return {
         type: "triggered",
+        name,
         effect,
       } as unknown as Ability;
     }

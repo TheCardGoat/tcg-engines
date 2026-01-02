@@ -16,12 +16,22 @@ import type { EffectParser } from "./index";
 /**
  * Parse banish effect from CST node (grammar-based parsing)
  */
-function parseFromCst(ctx: {
-  Banish?: IToken[];
-  Return?: IToken[];
-  [key: string]: unknown;
-}): BanishEffect | ReturnToHandEffect | null {
+function parseFromCst(
+  ctx:
+    | {
+        Banish?: IToken[];
+        Return?: IToken[];
+        [key: string]: unknown;
+      }
+    | null
+    | undefined,
+): BanishEffect | ReturnToHandEffect | null {
   logger.debug("Attempting to parse banish effect from CST", { ctx });
+
+  if (!ctx) {
+    logger.debug("Banish effect CST has invalid context");
+    return null;
+  }
 
   const isBanish = ctx.Banish !== undefined;
   const isReturn = ctx.Return !== undefined;
@@ -96,6 +106,8 @@ export const banishEffectParser: EffectParser = {
     if (typeof input === "string") {
       return parseFromText(input);
     }
-    return parseFromCst(input as { Banish?: IToken[]; Return?: IToken[] });
+    return parseFromCst(
+      input as { Banish?: IToken[]; Return?: IToken[] } | null | undefined,
+    );
   },
 };

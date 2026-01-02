@@ -11,17 +11,23 @@ import type { EffectParser } from "./index";
 /**
  * Parse stat modification effect from CST node (grammar-based parsing)
  */
-function parseFromCst(ctx: {
-  NumberToken?: IToken[];
-  Identifier?: IToken[];
-  [key: string]: unknown;
-}): ModifyStatEffect | null {
+function parseFromCst(
+  ctx:
+    | {
+        NumberToken?: IToken[];
+        Identifier?: IToken[];
+        [key: string]: unknown;
+      }
+    | null
+    | undefined,
+): ModifyStatEffect | null {
   logger.debug("Attempting to parse stat modification effect from CST", {
     ctx,
   });
 
-  if (!ctx.NumberToken || ctx.NumberToken.length === 0) {
-    logger.debug("Stat mod effect CST missing NumberToken");
+  // Handle null/undefined context or missing expected structure
+  if (!(ctx && ctx.NumberToken) || ctx.NumberToken.length === 0) {
+    logger.debug("Stat mod effect CST missing NumberToken or invalid context");
     return null;
   }
 
@@ -111,7 +117,10 @@ export const statModEffectParser: EffectParser = {
       return parseFromText(input);
     }
     return parseFromCst(
-      input as { NumberToken?: IToken[]; Identifier?: IToken[] },
+      input as
+        | { NumberToken?: IToken[]; Identifier?: IToken[] }
+        | null
+        | undefined,
     );
   },
 };
