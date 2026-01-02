@@ -7,6 +7,7 @@ import { MANUAL_ENTRIES } from "../manual-overrides";
 import { parseAtomicEffect } from "./effects/atomic";
 import { parseCompositeEffect } from "./effects/composite";
 import { LorcanaAbilityParser } from "./grammar";
+import { parseKeywordAbility } from "./keyword-ability-parser";
 import { LorcanaLexer } from "./lexer";
 import { logger } from "./logging";
 import { parseTrigger } from "./trigger-parser";
@@ -26,8 +27,9 @@ export class LorcanaParserV2 {
    * Parse ability text into typed Ability objects.
    * Uses a hybrid approach:
    * 1. Check manual overrides first (if text is in MANUAL_ENTRIES)
-   * 2. Try Chevrotain grammar-based parsing
-   * 3. Fall back to text-based (regex) parsers if grammar fails
+   * 2. Check for keyword abilities (standalone keywords like "Rush", "Ward")
+   * 3. Try Chevrotain grammar-based parsing
+   * 4. Fall back to text-based (regex) parsers if grammar fails
    * Returns null if parsing fails completely.
    */
   parseAbility(text: string, options?: ParseAbilityOptions): Ability | null {
@@ -46,6 +48,15 @@ export class LorcanaParserV2 {
       // Handle both single entries and arrays of entries
       const abilityEntry = Array.isArray(entry) ? entry[0] : entry;
       return abilityEntry.ability as unknown as Ability;
+    }
+
+    // Try keyword abilities (standalone keywords like "Rush", "Ward", "Evasive")
+    const keywordAbility = parseKeywordAbility(trimmedText);
+    if (keywordAbility) {
+      logger.info("Parsed keyword ability", {
+        keyword: keywordAbility.keyword,
+      });
+      return keywordAbility as unknown as Ability;
     }
 
     // Try grammar-based parsing first
