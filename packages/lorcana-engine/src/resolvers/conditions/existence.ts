@@ -57,13 +57,13 @@ function getPlayZoneFilter(
 ): (card: CardInstance<LorcanaCardMeta>) => boolean {
   return (card) => {
     console.log("Filter check:", {
-      id: card.instanceId,
-      zone: card.zoneId,
-      ctrl: card.controllerId,
+      id: card.id,
+      zone: card.zone,
+      ctrl: card.controller,
       filterCtrl: controller,
     });
     // Check Zone (must be in play)
-    if (card.zoneId !== "play") return false;
+    if (card.zone !== "play") return false;
 
     // Check Controller
     if (controller === "you") {

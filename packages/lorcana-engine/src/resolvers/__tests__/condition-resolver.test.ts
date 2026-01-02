@@ -49,16 +49,18 @@ describe("Condition Resolver", () => {
     } as any;
 
     sourceCard = {
-      instanceId: "card-1",
+      id: "card-1",
       definitionId: "def-elsa",
-      ownerId: "player1",
-      controllerId: "player1",
-      zoneId: "play",
-      meta: {
-        state: "ready",
-        damage: 0,
-        isDrying: true,
-      },
+      owner: "player1",
+      controller: "player1",
+      zone: "play",
+      tapped: false,
+      flipped: false,
+      revealed: false,
+      phased: false,
+      state: "ready",
+      damage: 0,
+      isDrying: true,
     };
 
     state.internal.cards["card-1"] = sourceCard;
@@ -75,7 +77,7 @@ describe("Condition Resolver", () => {
     });
 
     it("should check exerted/ready", () => {
-      sourceCard.meta.state = "ready";
+      sourceCard.state = "ready";
       expect(
         isConditionMet({ type: "is-ready" }, sourceCard, state, registry),
       ).toBe(true);
@@ -83,7 +85,7 @@ describe("Condition Resolver", () => {
         isConditionMet({ type: "is-exerted" }, sourceCard, state, registry),
       ).toBe(false);
 
-      sourceCard.meta.state = "exerted";
+      sourceCard.state = "exerted";
       expect(
         isConditionMet({ type: "is-ready" }, sourceCard, state, registry),
       ).toBe(false);
@@ -109,7 +111,7 @@ describe("Condition Resolver", () => {
       const cond: UsedShiftCondition = { type: "used-shift" };
       expect(isConditionMet(cond, sourceCard, state, registry)).toBe(false);
 
-      sourceCard.meta.stackPosition = {
+      sourceCard.stackPosition = {
         isUnder: false,
         cardsUnderneath: ["card-under-1"],
         topCardId: "card-1",
@@ -139,11 +141,11 @@ describe("Condition Resolver", () => {
         conditions: [{ type: "is-ready" }, { type: "no-damage" }],
       };
 
-      sourceCard.meta.state = "ready";
-      sourceCard.meta.damage = 0;
+      sourceCard.state = "ready";
+      sourceCard.damage = 0;
       expect(isConditionMet(cond, sourceCard, state, registry)).toBe(true);
 
-      sourceCard.meta.damage = 1;
+      sourceCard.damage = 1;
       expect(isConditionMet(cond, sourceCard, state, registry)).toBe(false);
     });
 
@@ -152,7 +154,7 @@ describe("Condition Resolver", () => {
         type: "not",
         condition: { type: "is-exerted" },
       };
-      sourceCard.meta.state = "ready";
+      sourceCard.state = "ready";
       expect(isConditionMet(cond, sourceCard, state, registry)).toBe(true);
     });
 
@@ -165,8 +167,8 @@ describe("Condition Resolver", () => {
         ],
       };
 
-      sourceCard.meta.state = "ready";
-      sourceCard.meta.damage = 0;
+      sourceCard.state = "ready";
+      sourceCard.damage = 0;
       expect(isConditionMet(cond, sourceCard, state, registry)).toBe(true);
     });
   });
@@ -236,7 +238,7 @@ describe("Condition Resolver", () => {
 
   describe("Zone Conditions", () => {
     it("should check if character is at location", () => {
-      sourceCard.meta.atLocationId = "loc-1";
+      sourceCard.atLocationId = "loc-1";
 
       const condition: Condition = {
         type: "at-location",
@@ -244,7 +246,7 @@ describe("Condition Resolver", () => {
 
       expect(isConditionMet(condition, sourceCard, state, registry)).toBe(true);
 
-      sourceCard.meta.atLocationId = undefined;
+      sourceCard.atLocationId = undefined;
       expect(isConditionMet(condition, sourceCard, state, registry)).toBe(
         false,
       );
@@ -252,11 +254,18 @@ describe("Condition Resolver", () => {
 
     it("should check general zone content", () => {
       const discardCard: CardInstance<LorcanaCardMeta> = {
-        instanceId: "card-discard",
+        id: "card-discard",
         definitionId: "def-elsa",
-        controllerId: "player1",
-        zoneId: "discard",
-        meta: createDefaultCardMeta(),
+        owner: "player1",
+        controller: "player1",
+        zone: "discard",
+        tapped: false,
+        flipped: false,
+        revealed: false,
+        phased: false,
+        state: "ready",
+        damage: 0,
+        isDrying: true,
       };
       state.internal.cards["card-discard"] = discardCard;
 
@@ -275,10 +284,10 @@ describe("Condition Resolver", () => {
     it("should check for card under", () => {
       const cond: Condition = { type: "has-card-under" };
 
-      sourceCard.meta.stackPosition = undefined;
+      sourceCard.stackPosition = undefined;
       expect(isConditionMet(cond, sourceCard, state, registry)).toBe(false);
 
-      sourceCard.meta.stackPosition = {
+      sourceCard.stackPosition = {
         isUnder: false,
         cardsUnderneath: ["card-under"],
         topCardId: "card-1",
