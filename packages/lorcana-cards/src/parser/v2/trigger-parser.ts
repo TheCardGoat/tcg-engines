@@ -219,6 +219,15 @@ export function parseTrigger(text: string): Trigger | undefined {
     };
   }
 
+  // Check for "here" suffix before generic pattern
+  if (textToParse.match(/\byou play a character here\b/i)) {
+    return {
+      event: "play",
+      timing,
+      on: { controller: "you", cardType: "character", here: true },
+    };
+  }
+
   // Generic card type triggers (less specific)
   if (textToParse.match(/\byou play a character\b/i)) {
     return {
