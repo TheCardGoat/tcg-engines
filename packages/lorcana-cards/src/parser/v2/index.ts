@@ -159,8 +159,9 @@ export class LorcanaParserV2 {
   private wrapEffectAsAbility(effect: Effect, originalText: string): Ability {
     // Extract ability name if present (e.g., "NAME Whenever X, do Y")
     // Allow common punctuation in names like "IT WORKS!", "FINE PRINT"
+    // Also handle restriction prefixes: "NAME Once per turn, when X, do Y"
     const nameMatch = originalText.match(
-      /^([A-Z][A-Z\s!?']+)\s+(When|Whenever)/,
+      /^([A-Z][A-Z\s!?'-]+)\s+(?:Once per turn,\s*)?(?:During your turn,\s*)?(When|Whenever)/i,
     );
     const name = nameMatch ? nameMatch[1].trim() : undefined;
 
@@ -174,8 +175,15 @@ export class LorcanaParserV2 {
       /^Once per turn,\s+(?:when|whenever)\s+/i.test(originalText) ||
       /^During your turn,\s+(?:when|whenever)\s+/i.test(originalText) ||
       // Named abilities: "NAME Whenever X, do Y"
+      // Named abilities with restriction: "NAME Once per turn, when X, do Y"
       (name &&
-        /^(When|Whenever)/i.test(originalText.substring(name.length).trim()));
+        (/^(When|Whenever)/i.test(originalText.substring(name.length).trim()) ||
+          /^Once per turn,\s+(?:when|whenever)/i.test(
+            originalText.substring(name.length).trim(),
+          ) ||
+          /^During your turn,\s+(?:when|whenever)/i.test(
+            originalText.substring(name.length).trim(),
+          )));
 
     if (isTriggered) {
       // Try to parse trigger metadata

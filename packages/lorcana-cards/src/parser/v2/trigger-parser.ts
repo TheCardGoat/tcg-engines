@@ -14,13 +14,25 @@ import type { Trigger } from "@tcg/lorcana-types";
  */
 export function parseTrigger(text: string): Trigger | undefined {
   // Strip named ability prefix if present (e.g., "YOUR REWARD AWAITS Whenever X, do Y")
-  // Pattern: ALL_CAPS_NAME followed by trigger word
+  // Also handle restriction prefixes: "NAME Once per turn, when X, do Y"
+  // Pattern: ALL_CAPS_NAME followed by optional restriction prefix and trigger word
   // Allow common punctuation in names like "IT WORKS!", "FINE PRINT"
-  const nameMatch = text.match(/^([A-Z][A-Z\s!?']+)\s+(When|Whenever)/i);
+  const nameMatch = text.match(
+    /^([A-Z][A-Z\s!?'-]+)\s+(?:Once per turn,\s*)?(?:During your turn,\s*)?(When|Whenever)/i,
+  );
   let textToParse = text;
   if (nameMatch) {
     // Remove the name from the text for parsing
     textToParse = text.substring(nameMatch[1].length).trim();
+  }
+
+  // Strip restriction prefixes if present (for cases without names)
+  // e.g., "Once per turn, when X" or "During your turn, when X"
+  const restrictionMatch = textToParse.match(
+    /^(?:Once per turn|During your turn),\s*/i,
+  );
+  if (restrictionMatch) {
+    textToParse = textToParse.substring(restrictionMatch[0].length).trim();
   }
 
   // Determine timing

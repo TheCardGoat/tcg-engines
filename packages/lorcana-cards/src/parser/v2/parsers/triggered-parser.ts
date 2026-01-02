@@ -14,11 +14,14 @@ interface ParseResult {
 /**
  * Extract ability name from text if present.
  * Pattern: "NAME TRIGGER, EFFECT" where NAME is all caps.
+ * Also handles restriction prefixes: "NAME Once per turn, when X, do Y"
  */
 function extractAbilityName(text: string): string | undefined {
-  // Match pattern: ALL_CAPS_NAME followed by trigger word
+  // Match pattern: ALL_CAPS_NAME followed by optional restriction prefix and trigger word
   // Allow common punctuation in names like "IT WORKS!", "FINE PRINT"
-  const nameMatch = text.match(/^([A-Z][A-Z\s!?']+)\s+(When|Whenever)/);
+  const nameMatch = text.match(
+    /^([A-Z][A-Z\s!?'-]+)\s+(?:Once per turn,\s*)?(?:During your turn,\s*)?(When|Whenever)/i,
+  );
   if (nameMatch) {
     return nameMatch[1].trim();
   }

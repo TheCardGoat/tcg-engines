@@ -40,9 +40,11 @@ export function parseAbilityText(
 
   const ability = parserV2.parseAbility(text);
   if (ability) {
+    // Extract name from ability if present (for named abilities)
+    const name = (ability as { name?: string }).name;
     return {
       success: true,
-      ability: { ability },
+      ability: { name, ability },
       text,
       warnings: [],
     };
