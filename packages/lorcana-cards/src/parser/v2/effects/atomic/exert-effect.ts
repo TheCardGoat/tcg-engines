@@ -65,8 +65,10 @@ function parseFromCst(
 function parseFromText(text: string): ExertEffect | ReadyEffect | null {
   logger.debug("Attempting to parse exert effect from text", { text });
 
-  const exertPattern = /exert\s+(.+?)(?:\.|,|$)/i;
-  const readyPattern = /ready\s+(.+?)(?:\.|,|$)/i;
+  // More flexible patterns that don't require trailing separators
+  // This handles cases where sequence parser has already removed ". " etc.
+  const exertPattern = /^exert\s+(.+)$/i;
+  const readyPattern = /^ready\s+(.+)$/i;
 
   let match = text.match(exertPattern);
   let isExert = true;

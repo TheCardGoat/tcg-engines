@@ -34,6 +34,16 @@ function parseFromText(text: string): RestrictionEffect | null {
     };
   }
 
+  // Pattern: "can't quest" or "cannot quest"
+  if (/[Cc]an'?t quest|cannot quest/.test(text)) {
+    logger.info("Parsed 'can't quest' restriction");
+    return {
+      type: "restriction",
+      restriction: "cant-quest",
+      target: "SELF",
+    };
+  }
+
   // Pattern: "enters play exerted"
   if (/[Ee]nters? play exerted/.test(text)) {
     logger.info("Parsed 'enters play exerted' restriction");
@@ -72,9 +82,9 @@ function parseFromCst(_ctx: CstNode): RestrictionEffect | null {
  */
 export const restrictionEffectParser: EffectParser = {
   pattern:
-    /(?:[Cc]an'?t be challenged|[Cc]an'?t challenge|cannot challenge|[Ee]nters? play exerted|[Cc]an challenge ready characters)/,
+    /(?:[Cc]an'?t be challenged|[Cc]an'?t challenge|[Cc]an'?t quest|cannot challenge|cannot quest|[Ee]nters? play exerted|[Cc]an challenge ready characters)/,
   description:
-    "Parses restriction effects (e.g., 'can't be challenged', 'cannot challenge', 'enters play exerted')",
+    "Parses restriction effects (e.g., 'can't be challenged', 'cannot challenge', 'can't quest', 'enters play exerted')",
 
   parse: (input: CstNode | string): RestrictionEffect | null => {
     if (typeof input === "string") {

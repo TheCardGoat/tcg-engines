@@ -44,8 +44,12 @@ function parseFromText(text: string): SequenceEffect | null {
   // Find which separator is used (try in priority order)
   for (const separator of SEQUENCE_SEPARATORS) {
     if (text.toLowerCase().includes(separator.toLowerCase())) {
+      // Escape special regex characters in the separator
+      // This is needed because "." in the separator would match any character
+      const escapedSeparator = separator.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
       // Split while preserving case-insensitive matching
-      const regex = new RegExp(separator, "gi");
+      const regex = new RegExp(escapedSeparator, "gi");
       stepTexts = text.split(regex).map((s) => s.trim());
       separatorUsed = separator;
       logger.debug("Found sequence separator", {

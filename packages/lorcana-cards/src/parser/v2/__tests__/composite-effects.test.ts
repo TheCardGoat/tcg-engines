@@ -436,8 +436,8 @@ describe("Composite Effect Parser", () => {
       );
 
       // This should not parse as sequence because the 'and' is part of the sentence structure
-      // For now, this will return undefined since we can't parse this complex effect
-      expect(effect).toBeUndefined();
+      // For now, this will return null since we can't parse this complex effect
+      expect(effect).toBeNull();
     });
 
     it("should handle single effect without creating sequence", () => {
