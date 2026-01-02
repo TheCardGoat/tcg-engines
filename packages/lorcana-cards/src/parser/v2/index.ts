@@ -8,6 +8,7 @@ import { parseCompositeEffect } from "./effects/composite";
 import { LorcanaAbilityParser } from "./grammar";
 import { LorcanaLexer } from "./lexer";
 import { logger } from "./logging";
+import { parseTrigger } from "./trigger-parser";
 import type { Ability, Effect } from "./types";
 import { AbilityVisitor } from "./visitors";
 
@@ -92,8 +93,11 @@ export class LorcanaParserV2 {
    * These are more flexible and cover many common patterns.
    */
   private tryTextBasedParsing(text: string): Ability | null {
+    // Check if this is a triggered ability and extract effect text
+    const effectText = this.extractEffectTextFromTrigger(text);
+
     // Try composite effect parsing (sequences, choices, conditionals, etc.)
-    const compositeEffect = parseCompositeEffect(text);
+    const compositeEffect = parseCompositeEffect(effectText);
     if (compositeEffect) {
       logger.info("Parsed ability via composite effect parser", {
         effect: compositeEffect,
@@ -102,7 +106,7 @@ export class LorcanaParserV2 {
     }
 
     // Try atomic effect parsing (draw, damage, lore, etc.)
-    const atomicEffect = parseAtomicEffect(text);
+    const atomicEffect = parseAtomicEffect(effectText);
     if (atomicEffect) {
       logger.info("Parsed ability via atomic effect parser", {
         effect: atomicEffect,
@@ -114,17 +118,67 @@ export class LorcanaParserV2 {
   }
 
   /**
+   * Extract effect text from a triggered ability.
+   * For example: "Whenever you play a card, draw a card" → "draw a card"
+   * Also handles named abilities: "NAME Whenever you play a card, draw a card" → "draw a card"
+   */
+  private extractEffectTextFromTrigger(text: string): string {
+    // Try direct trigger pattern first (no name prefix)
+    // Pattern: (When|Whenever|At ...), effect
+    const triggerMatch = text.match(
+      /^(?:(When|Whenever|At the (?:start|end) of|The first time) .+?|Once per turn, (?:when|whenever) .+?|During your turn, (?:when|whenever) .+?),\s*(.+)$/is,
+    );
+    if (triggerMatch) {
+      return triggerMatch[2];
+    }
+
+    // Try to match named ability pattern
+    // Pattern: NAME[space]+TRIGGER[phrase]+,[space]+effect
+    // Where NAME is all caps until we hit a trigger word
+    const namedAbilityMatch = text.match(
+      /^[A-Z][A-Z\s]*(?:\s+[A-Z][A-Z\s]*)*\s+(?:(When|Whenever|At the (?:start|end) of|The first time) .+?|Once per turn, (?:when|whenever) .+?|During your turn, (?:when|whenever) .+?),\s*(.+)$/is,
+    );
+    if (namedAbilityMatch) {
+      return namedAbilityMatch[3];
+    }
+
+    // If no match, return original text (not a triggered ability)
+    return text;
+  }
+
+  /**
    * Wrap a parsed effect as an Ability object.
+   * Extracts trigger information for triggered abilities.
    * Note: Uses type assertions because the parser produces intermediate
    * representations that don't fully match the strict Ability types from
    * @tcg/lorcana-types. These will be further processed by consuming code.
    */
   private wrapEffectAsAbility(effect: Effect, originalText: string): Ability {
-    // Detect ability type from text patterns
+    // Check for triggered abilities first (when/whenever/at)
     if (
       originalText.toLowerCase().startsWith("when ") ||
-      originalText.toLowerCase().startsWith("whenever ")
+      originalText.toLowerCase().startsWith("whenever ") ||
+      originalText.toLowerCase().startsWith("at the start of ") ||
+      originalText.toLowerCase().startsWith("at the end of ") ||
+      originalText.toLowerCase().startsWith("the first time ") ||
+      /^Once per turn,\s+(?:when|whenever)\s+/i.test(originalText) ||
+      /^During your turn,\s+(?:when|whenever)\s+/i.test(originalText)
     ) {
+      // Try to parse trigger metadata
+      const trigger = parseTrigger(originalText);
+
+      if (trigger) {
+        // Successfully parsed trigger - create proper triggered ability
+        return {
+          type: "triggered",
+          trigger,
+          effect,
+        } as unknown as Ability;
+      }
+
+      // Failed to parse trigger - fall back to basic triggered ability
+      // This maintains backward compatibility while we improve trigger parsing
+      logger.debug("Failed to parse trigger metadata", { text: originalText });
       return {
         type: "triggered",
         effect,
