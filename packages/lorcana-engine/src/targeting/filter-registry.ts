@@ -82,7 +82,7 @@ export function registerDefaultFilters() {
   filterRegistry.register<LorcanaFilter & { type: "dry" }>({
     name: "dry",
     complexity: 0,
-    evaluate: (_, card) => card.isDrying ?? false,
+    evaluate: (_, card) => !(card.isDrying ?? false),
   });
 
   filterRegistry.register<LorcanaFilter & { type: "inkable"; value: boolean }>({
