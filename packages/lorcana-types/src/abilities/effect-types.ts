@@ -776,15 +776,37 @@ export function isControlFlowEffect(
 
 /**
  * Check if effect targets characters
+ *
+ * Handles both string character targets and query-based character targets.
+ * Query objects can be identified by character-specific properties like
+ * `owner` (yours/opponent) or the presence of character filters.
  */
 export function targetsCharacters(effect: Effect): boolean {
-  return (
-    "target" in effect &&
-    typeof effect.target === "string" &&
-    (effect.target.includes("CHARACTER") ||
-      effect.target === "SELF" ||
-      effect.target === "THIS_CHARACTER")
-  );
+  if (!("target" in effect)) {
+    return false;
+  }
+
+  const target = effect.target;
+
+  // String character targets
+  if (typeof target === "string") {
+    return (
+      target.includes("CHARACTER") ||
+      target === "SELF" ||
+      target === "THIS_CHARACTER"
+    );
+  }
+
+  // Query-based character targets - check for character-specific properties
+  // Character queries have 'owner' property or character filters
+  if (typeof target === "object" && target !== null) {
+    // Check for character query indicators
+    return (
+      "owner" in target || ("filter" in target && Array.isArray(target.filter))
+    );
+  }
+
+  return false;
 }
 
 /**

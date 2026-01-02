@@ -171,7 +171,7 @@ describe("Real Card Targeting Scenarios", () => {
     ];
 
     const results = filterCards(filters);
-    expect(results.map((c) => c.id)).toContain("c3"); // p2DamagedHero
+    expect(results.map((c) => c.id)).toContain("c3" as CardId); // p2DamagedHero
     expect(results).not.toContain(p1Villain); // Not damaged
   });
 
@@ -297,7 +297,7 @@ describe("Real Card Targeting Scenarios", () => {
     ];
 
     const results = filterCards(filters);
-    expect(results.map((c) => c.id)).toContain("c6");
+    expect(results.map((c) => c.id)).toContain("c6" as CardId);
     expect(results).not.toContain(p1Villain);
   });
 });

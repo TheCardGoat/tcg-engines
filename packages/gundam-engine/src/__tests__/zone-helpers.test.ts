@@ -153,8 +153,8 @@ describe("Gundam Zone Helpers - Using @tcg/core/testing", () => {
         unit.id as CardId,
       );
 
-      expect(result.hand.cards).not.toContain(unit.id);
-      expect(result.battleArea.cards).toContain(unit.id);
+      expect(result.hand.cards).not.toContain(unit.id as CardId);
+      expect(result.battleArea.cards).toContain(unit.id as CardId);
     });
 
     it("should respect battle area maximum size", () => {
@@ -191,8 +191,8 @@ describe("Gundam Zone Helpers - Using @tcg/core/testing", () => {
         resource.id as CardId,
       );
 
-      expect(result.hand.cards).not.toContain(resource.id);
-      expect(result.resourceArea.cards).toContain(resource.id);
+      expect(result.hand.cards).not.toContain(resource.id as CardId);
+      expect(result.resourceArea.cards).toContain(resource.id as CardId);
     });
 
     it("should respect resource area maximum size (15)", () => {
@@ -234,8 +234,8 @@ describe("Gundam Zone Helpers - Using @tcg/core/testing", () => {
         unit.id as CardId,
       );
 
-      expect(result.battleArea.cards).not.toContain(unit.id);
-      expect(result.trash.cards).toContain(unit.id);
+      expect(result.battleArea.cards).not.toContain(unit.id as CardId);
+      expect(result.trash.cards).toContain(unit.id as CardId);
     });
 
     it("should maintain trash order (newest on top)", () => {
@@ -361,7 +361,7 @@ describe("Gundam Zone Helpers - Using @tcg/core/testing", () => {
       hand = placeResult.hand;
       resourceArea = placeResult.resourceArea;
 
-      expect(resourceArea.cards).toContain(resourceCard.id);
+      expect(resourceArea.cards).toContain(resourceCard.id as CardId);
       expect(hand.cards).toHaveLength(2);
 
       // Step 3: Deploy unit
@@ -369,7 +369,7 @@ describe("Gundam Zone Helpers - Using @tcg/core/testing", () => {
       hand = deployResult.hand;
       battleArea = deployResult.battleArea;
 
-      expect(battleArea.cards).toContain(unitCard.id);
+      expect(battleArea.cards).toContain(unitCard.id as CardId);
       expect(hand.cards).toHaveLength(1); // Should have 1 card left (the drawn card)
     });
 
