@@ -1,0 +1,45 @@
+{
+  "name": "@tcg/lorcana-types",
+  "version": "0.1.0",
+  "description": "Lorcana-specific type definitions for abilities, effects, and cards",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "src/"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./abilities": {
+      "types": "./src/abilities/index.ts",
+      "default": "./src/abilities/index.ts"
+    },
+    "./cards": {
+      "types": "./src/cards/index.ts",
+      "default": "./src/cards/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
+    "lint": "bun x @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error ./src",
+    "test": "echo 'No tests for types-only package'",
+    "check": "turbo format lint check-types"
+  },
+  "dependencies": {
+    "@tcg/core-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.4",
+    "@types/bun": "1.2.14",
+    "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "typescript": "5.8.3"
+  }
+}
