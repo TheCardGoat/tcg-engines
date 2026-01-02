@@ -22,12 +22,16 @@ describe("Condition Resolver", () => {
   let sourceCard: CardInstance<LorcanaCardMeta>;
 
   beforeEach(() => {
-    state = createInitialLorcanaState("player1", "player2", "player1");
+    state = createInitialLorcanaState(
+      "player1" as any,
+      "player2" as any,
+      "player1" as any,
+    );
     // Explicitly seed lore scores for comparison tests
     state.external.loreScores = {
       player1: 10,
       player2: 5,
-    };
+    } as any;
 
     registry = {
       getCard: (id: string) => {
@@ -61,18 +65,18 @@ describe("Condition Resolver", () => {
       state: "ready",
       damage: 0,
       isDrying: true,
-    };
+    } as any;
 
     state.internal.cards["card-1"] = sourceCard;
   });
 
   describe("Basic Conditions", () => {
     it("should check turn correctly", () => {
-      state.external.activePlayerId = "player1";
+      state.external.activePlayerId = "player1" as any;
       const cond: TurnCondition = { type: "turn", whose: "your" };
       expect(isConditionMet(cond, sourceCard, state, registry)).toBe(true);
 
-      state.external.activePlayerId = "player2";
+      state.external.activePlayerId = "player2" as any;
       expect(isConditionMet(cond, sourceCard, state, registry)).toBe(false);
     });
 
@@ -113,9 +117,9 @@ describe("Condition Resolver", () => {
 
       sourceCard.stackPosition = {
         isUnder: false,
-        cardsUnderneath: ["card-under-1"],
-        topCardId: "card-1",
-      };
+        cardsUnderneath: ["card-under-1" as any],
+        topCardId: "card-1" as any,
+      } as any;
       expect(isConditionMet(cond, sourceCard, state, registry)).toBe(true);
     });
   });
@@ -178,13 +182,13 @@ describe("Condition Resolver", () => {
       const condition: Condition = {
         type: "comparison",
         left: { type: "lore", controller: "you" },
-        comparison: "gt",
+        comparison: "gt" as any,
         right: { type: "lore", controller: "opponent" },
       };
 
       expect(isConditionMet(condition, sourceCard, state, registry)).toBe(true);
 
-      state.external.loreScores.player2 = 15;
+      (state.external.loreScores as any).player2 = 15;
       expect(isConditionMet(condition, sourceCard, state, registry)).toBe(
         false,
       );
@@ -196,7 +200,7 @@ describe("Condition Resolver", () => {
       state.external.turnHistory = [
         {
           type: "played-song",
-          controllerId: "player1",
+          controllerId: "player1" as any,
           count: 1,
         },
       ];
@@ -214,12 +218,12 @@ describe("Condition Resolver", () => {
       state.external.turnHistory = [
         {
           type: "played-action",
-          controllerId: "player1",
+          controllerId: "player1" as any,
           count: 1,
         },
         {
           type: "played-action",
-          controllerId: "player1",
+          controllerId: "player1" as any,
           count: 1,
         },
       ];
@@ -228,7 +232,7 @@ describe("Condition Resolver", () => {
         type: "this-turn-count",
         event: "played-action",
         who: "you",
-        comparison: "gte",
+        comparison: "gte" as any,
         count: 2,
       };
 
@@ -238,7 +242,7 @@ describe("Condition Resolver", () => {
 
   describe("Zone Conditions", () => {
     it("should check if character is at location", () => {
-      sourceCard.atLocationId = "loc-1";
+      sourceCard.atLocationId = "loc-1" as any;
 
       const condition: Condition = {
         type: "at-location",
@@ -254,11 +258,11 @@ describe("Condition Resolver", () => {
 
     it("should check general zone content", () => {
       const discardCard: CardInstance<LorcanaCardMeta> = {
-        id: "card-discard",
+        id: "card-discard" as any,
         definitionId: "def-elsa",
-        owner: "player1",
-        controller: "player1",
-        zone: "discard",
+        owner: "player1" as any,
+        controller: "player1" as any,
+        zone: "discard" as any,
         tapped: false,
         flipped: false,
         revealed: false,
@@ -289,9 +293,9 @@ describe("Condition Resolver", () => {
 
       sourceCard.stackPosition = {
         isUnder: false,
-        cardsUnderneath: ["card-under"],
-        topCardId: "card-1",
-      };
+        cardsUnderneath: ["card-under" as any],
+        topCardId: "card-1" as any,
+      } as any;
       expect(isConditionMet(cond, sourceCard, state, registry)).toBe(true);
     });
   });
