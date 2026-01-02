@@ -22,47 +22,37 @@ import { parseAtomicEffect } from "../atomic";
 function parseFromText(text: string): ChoiceEffect | null {
   logger.debug("Attempting to parse choice effect from text", { text });
 
-  // First, check for "or" format without explicit "Choose one"
-  // This must come before the "Choose one" check to avoid matching "Choose one: X. Y or Z"
-  const orPattern = /^([^.!?]+)\s+or\s+([^.!?]+)$/i;
-  const orMatch = text.match(orPattern);
-  if (orMatch) {
-    const option1 = orMatch[1].trim();
-    const option2 = orMatch[2].trim();
+  // Trim whitespace from input
+  const trimmedText = text.trim();
 
-    const effect1 = parseAtomicEffect(option1);
-    const effect2 = parseAtomicEffect(option2);
+  // Check for "Choose one" pattern (with :, -, —, or space)
+  // The choice effect parser only handles explicit "Choose one" patterns
+  const choicePattern = /choose\s+one[\s:−—-]+(.+)/i;
+  const choiceMatch = trimmedText.match(choicePattern);
 
-    if (effect1 && effect2) {
-      logger.info("Parsed 'or' format choice effect", { option1, option2 });
-      return {
-        type: "choice",
-        options: [effect1, effect2],
-        optionLabels: [option1, option2],
-      };
-    }
-    logger.debug("'or' format choice effect did not parse both options");
-    return null;
-  }
-
-  // Match "Choose one" pattern (with : or -)
-  const choicePattern = /choose\s+one[\s:−-]+(.+)/i;
-  const match = text.match(choicePattern);
-
-  if (!match) {
+  if (!choiceMatch) {
     logger.debug("Choice effect pattern did not match");
     return null;
   }
 
-  const optionsText = match[1];
+  const optionsText = choiceMatch[1];
   logger.debug("Found choice pattern", { optionsText });
 
   // Try different separators in order
   let options: string[] = [];
 
+  // Normalize extra whitespace in options text
+  // "Choose one  :   deal 3 damage  ;   or   gain 2 lore" becomes "deal 3 damage; or gain 2 lore"
+  const normalizedText = optionsText
+    .replace(/\s+/g, " ") // Multiple spaces to single space
+    .replace(/\s*;\s*/g, "; ") // Normalize semicolons
+    .replace(/\s*;\s*or\s*/gi, "; or ") // Normalize semicolon-or
+    .replace(/\s*\.\s*/g, ". ") // Normalize periods
+    .trim();
+
   // 1. Bullet separator (•)
-  if (optionsText.includes("•")) {
-    options = optionsText
+  if (normalizedText.includes("•")) {
+    options = normalizedText
       .split("•")
       .map((s) => s.trim())
       .filter((s) => s.length > 0);
@@ -71,28 +61,50 @@ function parseFromText(text: string): ChoiceEffect | null {
     });
   }
 
-  // 2. Semicolon with "or" separator
+  // 2. Semicolon with "or" separator (case-insensitive, handles multiple "or" links)
   if (options.length < 2) {
-    const semicolonOrPattern = /;\s*or\s*/i;
-    if (semicolonOrPattern.test(optionsText)) {
-      options = optionsText.split(semicolonOrPattern).map((s) => s.trim());
+    // Check for pattern like: "X; or Y; or Z" or "X; or Y"
+    const semicolonOrPattern = /;\s*or\s+/gi;
+    if (semicolonOrPattern.test(normalizedText)) {
+      // Split on "; or" (case-insensitive)
+      options = normalizedText
+        .split(semicolonOrPattern)
+        .map((s) => s.replace(/^;\s*/, "").trim()) // Remove leading semicolon if any
+        .filter((s) => s.length > 0);
       logger.debug("Split choice options on semicolon-or", {
         optionCount: options.length,
       });
     }
   }
 
-  // 3. Period separator (only if not in "or" format)
+  // 3. Semicolon separator (without "or")
+  if (options.length < 2) {
+    // Check for pattern like: "X; Y; Z" (semicolon without "or")
+    if (
+      normalizedText.includes(";") &&
+      !normalizedText.toLowerCase().includes(" or ")
+    ) {
+      options = normalizedText
+        .split(";")
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0);
+      logger.debug("Split choice options on semicolons", {
+        optionCount: options.length,
+      });
+    }
+  }
+
+  // 4. Period separator (only if not in "or" format)
   if (options.length < 2) {
     // Split on period, but only if followed by another effect-like phrase
     // This avoids splitting on "X. Y or Z" where Y is part of an option
-    const periodParts = optionsText
+    const periodParts = normalizedText
       .split(".")
       .map((s) => s.trim())
       .filter((s) => s.length > 0);
     if (
       periodParts.length >= 2 &&
-      !optionsText.toLowerCase().includes(" or ")
+      !normalizedText.toLowerCase().includes(" or ")
     ) {
       options = periodParts;
       logger.debug("Split choice options on periods", {

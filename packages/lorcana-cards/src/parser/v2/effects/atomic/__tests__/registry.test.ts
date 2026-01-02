@@ -38,9 +38,9 @@ describe("Effect Parser Registry", () => {
       }
     });
 
-    it("contains exactly 14 parsers", () => {
+    it("contains exactly 15 parsers", () => {
       // Verify all expected parsers are registered
-      expect(atomicEffectParsers.length).toBe(14);
+      expect(atomicEffectParsers.length).toBe(15);
     });
   });
 
@@ -57,48 +57,52 @@ describe("Effect Parser Registry", () => {
       expect(atomicEffectParsers[2].description).toContain("keyword");
     });
 
-    it("has damageEffectParser fourth", () => {
-      expect(atomicEffectParsers[3].description).toContain("damage");
+    it("has restrictionEffectParser fourth", () => {
+      expect(atomicEffectParsers[3].description).toContain("restriction");
     });
 
-    it("has loreEffectParser fifth", () => {
-      expect(atomicEffectParsers[4].description).toContain("lore");
+    it("has damageEffectParser fifth", () => {
+      expect(atomicEffectParsers[4].description).toContain("damage");
     });
 
-    it("has exertEffectParser sixth", () => {
-      expect(atomicEffectParsers[5].description).toContain("exert");
+    it("has loreEffectParser sixth", () => {
+      expect(atomicEffectParsers[5].description).toContain("lore");
     });
 
-    it("has returnEffectParser seventh", () => {
-      expect(atomicEffectParsers[6].description).toContain("return");
+    it("has exertEffectParser seventh", () => {
+      expect(atomicEffectParsers[6].description).toContain("exert");
     });
 
-    it("has banishEffectParser eighth", () => {
-      expect(atomicEffectParsers[7].description).toContain("banish");
+    it("has returnEffectParser eighth", () => {
+      expect(atomicEffectParsers[7].description).toContain("return");
     });
 
-    it("has playEffectParser ninth", () => {
-      expect(atomicEffectParsers[8].description).toContain("play");
+    it("has banishEffectParser ninth", () => {
+      expect(atomicEffectParsers[8].description).toContain("banish");
     });
 
-    it("has revealEffectParser tenth", () => {
-      expect(atomicEffectParsers[9].description).toContain("reveal");
+    it("has playEffectParser tenth", () => {
+      expect(atomicEffectParsers[9].description).toContain("play");
     });
 
-    it("has inkwellEffectParser eleventh", () => {
-      expect(atomicEffectParsers[10].description).toContain("inkwell");
+    it("has revealEffectParser eleventh", () => {
+      expect(atomicEffectParsers[10].description).toContain("reveal");
     });
 
-    it("has locationEffectParser twelfth", () => {
-      expect(atomicEffectParsers[11].description).toContain("location");
+    it("has inkwellEffectParser twelfth", () => {
+      expect(atomicEffectParsers[11].description).toContain("inkwell");
     });
 
-    it("has drawEffectParser thirteenth", () => {
-      expect(atomicEffectParsers[12].description).toContain("draw");
+    it("has locationEffectParser thirteenth", () => {
+      expect(atomicEffectParsers[12].description).toContain("location");
     });
 
-    it("has discardEffectParser fourteenth", () => {
-      expect(atomicEffectParsers[13].description).toContain("discard");
+    it("has drawEffectParser fourteenth", () => {
+      expect(atomicEffectParsers[13].description).toContain("draw");
+    });
+
+    it("has discardEffectParser fifteenth", () => {
+      expect(atomicEffectParsers[14].description).toContain("discard");
     });
   });
 

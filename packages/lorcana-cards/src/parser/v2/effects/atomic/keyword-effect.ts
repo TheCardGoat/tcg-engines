@@ -157,7 +157,15 @@ function parseFromText(text: string): GainKeywordEffect | null {
     return null;
   }
 
-  const keyword = parsedKeyword.keyword;
+  // Extract just the keyword name from keywordText (without any parameters like "+3")
+  // Preserve original case from input
+  const originalKeyword = keywordText
+    .trim()
+    .replace(/\s*[+-]\d+.*$/, "") // Remove trailing "+3" or "-2" etc
+    .replace(/\s*\+\{d\}.*$/, "") // Remove trailing "+{d}"
+    .trim();
+
+  const keyword = originalKeyword;
 
   // Try to determine target from text
   // Order matters: check more specific patterns first

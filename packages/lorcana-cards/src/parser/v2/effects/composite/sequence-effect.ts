@@ -19,39 +19,17 @@ import { parseAtomicEffect } from "../atomic";
  *
  * Priority order:
  * 1. ", then" / ". then" / ", and then" - explicit sequence markers
- * 2. ". " - period-separated sentences
- * 3. " and " - conjunction (must be careful not to match phrases like "chosen character and deal")
+ * 2. ". " - period-separated sentences (only if not part of "or" format)
+ *
+ * Note: " and " is NOT a sequence separator - it's used within atomic effects
+ * like "draw 2 cards and discard 1 card" which should be parsed as a single effect.
  */
 const SEQUENCE_SEPARATORS = [
   ", then ",
   ". then ",
   ", and then ",
   ". ",
-  " and ",
 ] as const;
-
-/**
- * Check if " and " is actually a sequence separator or part of a phrase.
- * " and " should only split when it clearly separates two complete effects.
- */
-function isValidAndSplit(text: string): boolean {
-  // Don't split on common phrases that look like sequences but aren't
-  const invalidPatterns = [
-    /\bchoose and\b/i, // "choose and discard" is a single atomic effect
-    /\bselected and\b/i, // "selected and exert" is a single atomic effect
-    /\btouch and\b/i, // "touch and banish" might be a single effect
-  ];
-
-  for (const pattern of invalidPatterns) {
-    if (pattern.test(text)) {
-      return false;
-    }
-  }
-
-  // Valid if " and " is between two effect-like phrases
-  // This is a heuristic - we check if there's a verb on both sides
-  return true;
-}
 
 /**
  * Parse sequence effect from text string.
@@ -65,11 +43,6 @@ function parseFromText(text: string): SequenceEffect | null {
 
   // Find which separator is used (try in priority order)
   for (const separator of SEQUENCE_SEPARATORS) {
-    if (separator === " and " && !isValidAndSplit(text)) {
-      // Skip " and " if it doesn't look like a sequence separator
-      continue;
-    }
-
     if (text.toLowerCase().includes(separator.toLowerCase())) {
       // Split while preserving case-insensitive matching
       const regex = new RegExp(separator, "gi");
