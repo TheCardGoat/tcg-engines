@@ -45,7 +45,7 @@ conditionRegistry.register<ComparisonCondition>("comparison", {
     const left = resolve(condition.left);
     const right = resolve(condition.right);
 
-    // console.log("Comparison:", { left, right, op: condition.comparison, sourceCtrl: sourceCard.controllerId, keys: Object.keys(sourceCard) });
+    // console.log("Comparison:", { left, right, op: condition.comparison, sourceCtrl: sourceCard.controller, keys: Object.keys(sourceCard) });
 
     switch (condition.comparison) {
       // @ts-expect-error - comparison operators mismatch
