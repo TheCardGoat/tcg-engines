@@ -5,26 +5,7 @@ import type { LorcanaCardDefinition } from "../types/card-types";
 import type { LorcanaCardMeta, LorcanaGameState } from "../types/game-state";
 import { conditionRegistry } from "./condition-registry";
 
-// Cache for condition results
-// WeakMap: State -> Map<CacheKey, boolean>
-// CacheKey: `${conditionType}-${sourceId}-${JSON.stringify(condition)}`
-const conditionCache = new WeakMap<LorcanaGameState, Map<string, boolean>>();
-
 const MAX_RECURSION_DEPTH = 10;
-let recursionDepth = 0;
-
-/**
- * Get a unique key for caching the condition result
- */
-function getConditionCacheKey(
-  condition: Condition,
-  sourceCard: CardInstance<LorcanaCardMeta>,
-): string {
-  // We use JSON.stringify for the condition.
-  // For performance in hot paths, we might want a faster hash or ID if conditions had IDs.
-  // Given conditions are often small objects, this is usually acceptable.
-  return `${sourceCard.id}:${condition.type}:${JSON.stringify(condition)}`;
-}
 
 /**
  * Check if a condition is met
@@ -36,32 +17,22 @@ export function isConditionMet(
   registry: CardRegistry<LorcanaCardDefinition>,
   context?: LorcanaContext,
 ): boolean {
+  // Initialize context if needed
+  const ctx = context ?? ({} as LorcanaContext);
+  const depth = ctx.recursionDepth ?? 0;
+
   // 1. Recursion protection
-  if (recursionDepth > MAX_RECURSION_DEPTH) {
+  if (depth > MAX_RECURSION_DEPTH) {
     console.warn(
       `Max recursion depth ${MAX_RECURSION_DEPTH} reached evaluating condition for ${sourceCard.id}`,
     );
     return false; // Fail safe
   }
 
-  /*
-  // 2. Cache Lookup
-  let stateCache = conditionCache.get(state);
-  if (!stateCache) {
-    stateCache = new Map();
-    conditionCache.set(state, stateCache);
-  }
-
-  const cacheKey = getConditionCacheKey(condition, sourceCard);
-  const cachedResult = stateCache.get(cacheKey);
-  if (cachedResult !== undefined) {
-    return cachedResult;
-  }
-  */
-
-  // 3. Evaluation
+  // 2. Evaluation
   try {
-    recursionDepth++;
+    // Increment depth in context
+    ctx.recursionDepth = depth + 1;
 
     // Get handler
     const handler = conditionRegistry.get(condition.type);
@@ -73,17 +44,16 @@ export function isConditionMet(
     const result = handler.evaluate(condition, sourceCard, {
       state,
       registry,
-      context,
+      context: ctx,
     });
 
-    // 4. Cache Result
-    // stateCache.set(cacheKey, result);
     return result;
   } catch (error) {
     console.warn("Error evaluating condition", error);
     return false;
   } finally {
-    recursionDepth--;
+    // Restore depth
+    ctx.recursionDepth = depth;
   }
 }
 
