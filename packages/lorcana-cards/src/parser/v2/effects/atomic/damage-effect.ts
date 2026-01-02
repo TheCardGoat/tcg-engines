@@ -10,6 +10,63 @@ import { parseTargetFromText } from "../../visitors/target-visitor";
 import type { EffectParser } from "./index";
 
 /**
+ * Convert simple Target format to CharacterTargetQuery
+ * Copied from exert-effect.ts for consistency
+ */
+function convertToCharacterTarget(simpleTarget: {
+  type: string;
+  modifier?: string;
+}): CharacterTarget {
+  const { type, modifier } = simpleTarget;
+
+  // Map card type to proper name
+  const cardTypeMap: Record<string, string> = {
+    character: "character",
+    item: "item",
+    location: "location",
+    card: "card",
+  };
+
+  const cardType = cardTypeMap[type.toLowerCase()] || type;
+
+  // Map modifier to selector and owner
+  const modifierMap: Record<
+    string,
+    { selector: string; owner: string; count: number | "all" }
+  > = {
+    chosen: { selector: "chosen", owner: "any", count: 1 },
+    "chosen opposing": { selector: "chosen", owner: "opponent", count: 1 },
+    this: { selector: "self", owner: "any", count: 1 },
+    your: { selector: "all", owner: "you", count: "all" },
+    opponent: { selector: "all", owner: "opponent", count: "all" },
+    "opponent's": { selector: "all", owner: "opponent", count: "all" },
+    opposing: { selector: "all", owner: "opponent", count: "all" },
+    another: { selector: "chosen", owner: "any", count: 1 },
+    an: { selector: "chosen", owner: "any", count: 1 },
+    each: { selector: "all", owner: "any", count: "all" },
+    all: { selector: "all", owner: "any", count: "all" },
+    other: { selector: "all", owner: "any", count: "all" },
+    them: { selector: "chosen", owner: "opponent", count: 1 },
+  };
+
+  const mapping = modifier
+    ? modifierMap[modifier.toLowerCase()] ||
+      modifierMap[modifier.toLowerCase() + " " + type.toLowerCase()]
+    : modifierMap["chosen"];
+
+  // If no mapping found, default to chosen
+  const { selector, owner, count } = mapping || modifierMap.chosen;
+
+  return {
+    selector: selector as CharacterTarget["selector"],
+    count,
+    owner: owner as CharacterTarget["owner"],
+    zones: ["play"],
+    cardTypes: [cardType],
+  };
+}
+
+/**
  * Parse damage effect from CST node (grammar-based parsing)
  */
 function parseFromCst(
@@ -82,7 +139,7 @@ function parseFromText(text: string): DealDamageEffect | null {
   if (match[2]) {
     const parsedTarget = parseTargetFromText(match[2]);
     if (parsedTarget) {
-      target = parsedTarget as unknown as CharacterTarget;
+      target = convertToCharacterTarget(parsedTarget);
       logger.debug("Parsed target from damage effect text", { target });
     }
   }
