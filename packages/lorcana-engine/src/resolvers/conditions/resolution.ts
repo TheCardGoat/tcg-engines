@@ -10,8 +10,8 @@ conditionRegistry.register<UsedShiftCondition>("used-shift", {
   evaluate: (_condition, sourceCard) => {
     // A card is shifted if it has cards underneath it in the stack
     return !!(
-      sourceCard.meta.stackPosition?.cardsUnderneath &&
-      sourceCard.meta.stackPosition.cardsUnderneath.length > 0
+      sourceCard.stackPosition?.cardsUnderneath &&
+      sourceCard.stackPosition.cardsUnderneath.length > 0
     );
   },
 });
@@ -31,8 +31,8 @@ conditionRegistry.register<ResolutionCondition>("resolution", {
       // The old docs said "Checks sourceCard.hasShift && sourceCard.meta.shifted"
       // We'll treat it as "is currently a shifted character"
       return !!(
-        sourceCard.meta.stackPosition?.cardsUnderneath &&
-        sourceCard.meta.stackPosition.cardsUnderneath.length > 0
+        sourceCard.stackPosition?.cardsUnderneath &&
+        sourceCard.stackPosition.cardsUnderneath.length > 0
       );
     }
 

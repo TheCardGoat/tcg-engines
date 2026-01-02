@@ -17,16 +17,16 @@ conditionRegistry.register<ComparisonCondition>("comparison", {
       let targetController: string | undefined;
       if ("controller" in v) {
         if (v.controller === "you") {
-          targetController = sourceCard.controllerId;
+          targetController = sourceCard.controller;
         } else if (v.controller === "opponent") {
           const playerIds = Object.keys(state.external.loreScores);
           targetController = playerIds.find(
-            (id) => id !== sourceCard.controllerId,
+            (id) => id !== sourceCard.controller,
           );
         }
       }
 
-      if (v.type === "damage-on-self") return sourceCard.meta.damage || 0;
+      if (v.type === "damage-on-self") return sourceCard.damage || 0;
 
       if (!targetController && v.type !== "strength-of-self") return 0;
 
@@ -86,17 +86,17 @@ function resolveValueWithState(
   // Zone counts
   if (v.type === "cards-in-hand") {
     return Object.values(state.internal.cards).filter(
-      (c) => c.zoneId === "hand" && c.controllerId === targetOwnerId,
+      (c) => c.zone === "hand" && c.controller === targetOwnerId,
     ).length;
   }
   if (v.type === "cards-in-inkwell") {
     return Object.values(state.internal.cards).filter(
-      (c) => c.zoneId === "inkwell" && c.controllerId === targetOwnerId,
+      (c) => c.zone === "inkwell" && c.controller === targetOwnerId,
     ).length;
   }
   if (v.type === "character-count") {
     return Object.values(state.internal.cards).filter((c) => {
-      if (c.zoneId !== "play" || c.controllerId !== targetOwnerId) return false;
+      if (c.zone !== "play" || c.controller !== targetOwnerId) return false;
       const def = registry.getCard(c.definitionId);
       return def?.cardType === "character";
     }).length;

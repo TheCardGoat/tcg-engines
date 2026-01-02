@@ -57,7 +57,7 @@ conditionRegistry.register<AtLocationCondition>("at-location", {
 conditionRegistry.register<HasCharacterHereCondition>("has-character-here", {
   complexity: 30,
   evaluate: (_condition, sourceCard, { state }) => {
-    // Check all cards in play to see if their 'atLocationId' matches sourceCard.instanceId
+    // Check all cards in play to see if their 'atLocationId' matches sourceCard.id
     return Object.values(state.internal.cards).some((c) => {
       const card = c as CardInstance<LorcanaCardMeta>;
       return card.zone === "play" && card.atLocationId === sourceCard.id;

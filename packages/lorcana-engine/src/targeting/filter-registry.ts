@@ -58,13 +58,13 @@ export function registerDefaultFilters() {
   filterRegistry.register<LorcanaFilter & { type: "damaged" }>({
     name: "damaged",
     complexity: 0,
-    evaluate: (_, card) => card.damage > 0,
+    evaluate: (_, card) => (card.damage ?? 0) > 0,
   });
 
   filterRegistry.register<LorcanaFilter & { type: "undamaged" }>({
     name: "undamaged",
     complexity: 0,
-    evaluate: (_, card) => card.damage === 0,
+    evaluate: (_, card) => (card.damage ?? 0) === 0,
   });
 
   filterRegistry.register<LorcanaFilter & { type: "exerted" }>({
@@ -82,7 +82,7 @@ export function registerDefaultFilters() {
   filterRegistry.register<LorcanaFilter & { type: "dry" }>({
     name: "dry",
     complexity: 0,
-    evaluate: (_, card) => card.isDrying,
+    evaluate: (_, card) => card.isDrying ?? false,
   });
 
   filterRegistry.register<LorcanaFilter & { type: "inkable"; value: boolean }>({
@@ -119,7 +119,10 @@ export function registerDefaultFilters() {
       const def = registry.getCard(card.definitionId);
       if (!def || def.cardType !== "character") return false;
       return (
-        def.classifications?.includes(filter.classification as any) ?? false
+        def.classifications?.some(
+          (c: string) =>
+            c.toLowerCase() === filter.classification.toLowerCase(),
+        ) ?? false
       );
     },
   });
