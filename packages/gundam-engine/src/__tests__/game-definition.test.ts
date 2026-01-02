@@ -54,41 +54,41 @@ describe("Gundam Card Game", () => {
 });
 
 describe("Game Initialization", () => {
-  it.todo("creates game with correct initial state");
-  it.todo("assigns player one and player two correctly");
-  it.todo("shuffles decks deterministically with seed");
-  it.todo("deals 5 cards to each player");
+  it.todo("creates game with correct initial state", () => {});
+  it.todo("assigns player one and player two correctly", () => {});
+  it.todo("shuffles decks deterministically with seed", () => {});
+  it.todo("deals 5 cards to each player", () => {});
 });
 
 describe("Game Setup Phase", () => {
-  it.todo("allows player one to mulligan first");
-  it.todo("allows player two to mulligan second");
-  it.todo("places 6 shield cards face-down for each player");
-  it.todo("places EX Base in each player's base section");
-  it.todo("places EX Resource in player two's resource area");
-  it.todo("transitions to player one's first turn");
+  it.todo("allows player one to mulligan first", () => {});
+  it.todo("allows player two to mulligan second", () => {});
+  it.todo("places 6 shield cards face-down for each player", () => {});
+  it.todo("places EX Base in each player's base section", () => {});
+  it.todo("places EX Resource in player two's resource area", () => {});
+  it.todo("transitions to player one's first turn", () => {});
 });
 
 describe("Win Conditions", () => {
-  it.todo("player loses when receiving damage with no shields");
-  it.todo("player loses when deck is empty during draw");
-  it.todo("player loses when conceding");
+  it.todo("player loses when receiving damage with no shields", () => {});
+  it.todo("player loses when deck is empty during draw", () => {});
+  it.todo("player loses when conceding", () => {});
 });
 
 describe("Phase Progression", () => {
-  it.todo("progresses through phases in correct order");
-  it.todo("untaps cards at start of turn");
-  it.todo("draws card in draw phase");
-  it.todo("allows resource placement in resource phase");
-  it.todo("allows multiple actions in main phase");
-  it.todo("provides action step in end phase");
-  it.todo("enforces hand limit in end phase");
+  it.todo("progresses through phases in correct order", () => {});
+  it.todo("untaps cards at start of turn", () => {});
+  it.todo("draws card in draw phase", () => {});
+  it.todo("allows resource placement in resource phase", () => {});
+  it.todo("allows multiple actions in main phase", () => {});
+  it.todo("provides action step in end phase", () => {});
+  it.todo("enforces hand limit in end phase", () => {});
 });
 
 describe("Move Validation", () => {
-  it.todo("only allows moves for current player");
-  it.todo("only allows phase-appropriate moves");
-  it.todo("validates resource requirements for card play");
-  it.todo("validates level requirements for card play");
-  it.todo("validates zone capacity limits");
+  it.todo("only allows moves for current player", () => {});
+  it.todo("only allows phase-appropriate moves", () => {});
+  it.todo("validates resource requirements for card play", () => {});
+  it.todo("validates level requirements for card play", () => {});
+  it.todo("validates zone capacity limits", () => {});
 });
