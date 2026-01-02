@@ -69,6 +69,7 @@ export type {
   PutIntoInkwellEffect,
   PutOnBottomEffect,
   ReadyEffect,
+  RemoveDamageEffect,
   RepeatEffect,
   ReplacementAbility,
   ResourceCountCondition,

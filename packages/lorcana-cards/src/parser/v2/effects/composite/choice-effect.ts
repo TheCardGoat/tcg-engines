@@ -25,18 +25,52 @@ function parseFromText(text: string): ChoiceEffect | null {
   // Trim whitespace from input
   const trimmedText = text.trim();
 
+  let optionsText = "";
+  let isChooseOneFormat = false;
+
   // Check for "Choose one" pattern (with :, -, —, or space)
-  // The choice effect parser only handles explicit "Choose one" patterns
   const choicePattern = /choose\s+one[\s:−—-]+(.+)/i;
   const choiceMatch = trimmedText.match(choicePattern);
 
-  if (!choiceMatch) {
-    logger.debug("Choice effect pattern did not match");
-    return null;
-  }
+  if (choiceMatch) {
+    isChooseOneFormat = true;
+    optionsText = choiceMatch[1];
+    logger.debug("Found 'Choose one' pattern", { optionsText });
+  } else {
+    // Check for "or" format without "Choose one"
+    // Pattern: "X or Y" where X and Y are effects
+    // Need to be careful not to match "3 or more" or "3 or less"
+    const orPattern = /^(.+?)\s+or\s+(.+)$/i;
+    const orMatch = trimmedText.match(orPattern);
 
-  const optionsText = choiceMatch[1];
-  logger.debug("Found choice pattern", { optionsText });
+    if (orMatch) {
+      // Check if it's a valid "or" format (not "3 or more", "3 or less", etc.)
+      const firstPart = orMatch[1].toLowerCase();
+      const secondPart = orMatch[2].toLowerCase();
+
+      // Exclude patterns like "3 or more", "3 or less", "3 or fewer"
+      const excludedPatterns = [
+        /\d+\s+or\s+more/,
+        /\d+\s+or\s+less/,
+        /\d+\s+or\s+fewer/,
+        /more\s+or\s+less/,
+      ];
+
+      const isExcluded = excludedPatterns.some((pattern) =>
+        pattern.test(trimmedText.toLowerCase()),
+      );
+
+      if (!isExcluded) {
+        optionsText = trimmedText;
+        logger.debug("Found 'or' format pattern", { optionsText });
+      }
+    }
+
+    if (!optionsText) {
+      logger.debug("Choice effect pattern did not match");
+      return null;
+    }
+  }
 
   // Try different separators in order
   let options: string[] = [];
@@ -50,8 +84,20 @@ function parseFromText(text: string): ChoiceEffect | null {
     .replace(/\s*\.\s*/g, ". ") // Normalize periods
     .trim();
 
+  // Special handling for "or" format (without "Choose one")
+  if (!isChooseOneFormat && normalizedText.toLowerCase().includes(" or ")) {
+    // Split on " or " for simple "X or Y" format
+    options = normalizedText
+      .split(/\s+or\s+/i)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+    logger.debug("Split choice options on 'or'", {
+      optionCount: options.length,
+    });
+  }
+
   // 1. Bullet separator (•)
-  if (normalizedText.includes("•")) {
+  if (options.length < 2 && normalizedText.includes("•")) {
     options = normalizedText
       .split("•")
       .map((s) => s.trim())

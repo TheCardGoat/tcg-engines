@@ -50,8 +50,8 @@ interface ValueKeywordAbility {
 
 interface ShiftKeywordAbility {
   type: "keyword";
-  keyword: "Shift" | "Puppy Shift" | "Universal Shift";
-  value: number;
+  keyword: "Shift";
+  cost: { ink: number };
 }
 
 type KeywordAbility =
@@ -78,9 +78,17 @@ export function parseKeywordAbility(text: string): KeywordAbility | null {
   }
 
   // Try Challenger +N
-  const challengerMatch = text.match(/^Challenger \+(\d+)(.*)?$/);
+  const challengerMatch = text.match(/^Challenger \+(\d+|\{d\})(.*)?$/);
   if (challengerMatch) {
-    const value = Number.parseInt(challengerMatch[1], 10);
+    let value: number;
+    if (challengerMatch[1] === "{d}") {
+      value = 0;
+    } else {
+      value = Number.parseInt(challengerMatch[1], 10);
+      if (Number.isNaN(value)) {
+        value = 0;
+      }
+    }
     const condition = challengerMatch[2]?.trim();
     logger.info("Parsed Challenger keyword", { value, condition });
     return {
@@ -92,9 +100,17 @@ export function parseKeywordAbility(text: string): KeywordAbility | null {
   }
 
   // Try Resist +N
-  const resistMatch = text.match(/^Resist \+(\d+)(.*)?$/);
+  const resistMatch = text.match(/^Resist \+(\d+|\{d\})(.*)?$/);
   if (resistMatch) {
-    const value = Number.parseInt(resistMatch[1], 10);
+    let value: number;
+    if (resistMatch[1] === "{d}") {
+      value = 0;
+    } else {
+      value = Number.parseInt(resistMatch[1], 10);
+      if (Number.isNaN(value)) {
+        value = 0;
+      }
+    }
     const condition = resistMatch[2]?.trim();
     logger.info("Parsed Resist keyword", { value, condition });
     return {
@@ -108,10 +124,15 @@ export function parseKeywordAbility(text: string): KeywordAbility | null {
   // Try Singer N
   const singerMatch = text.match(SINGER_PATTERN);
   if (singerMatch) {
-    const value = Number.parseInt(
-      singerMatch[1].replace(/\{d\}|\d+/, singerMatch[1]),
-      10,
-    );
+    let value: number;
+    if (singerMatch[1] === "{d}") {
+      value = 0;
+    } else {
+      value = Number.parseInt(singerMatch[1], 10);
+      if (Number.isNaN(value)) {
+        value = 0;
+      }
+    }
     logger.info("Parsed Singer keyword", { value });
     return {
       type: "keyword",
@@ -123,10 +144,15 @@ export function parseKeywordAbility(text: string): KeywordAbility | null {
   // Try Sing Together N
   const singTogetherMatch = text.match(SING_TOGETHER_PATTERN);
   if (singTogetherMatch) {
-    const value = Number.parseInt(
-      singTogetherMatch[1].replace(/\{d\}|\d+/, singTogetherMatch[1]),
-      10,
-    );
+    let value: number;
+    if (singTogetherMatch[1] === "{d}") {
+      value = 0;
+    } else {
+      value = Number.parseInt(singTogetherMatch[1], 10);
+      if (Number.isNaN(value)) {
+        value = 0;
+      }
+    }
     logger.info("Parsed Sing Together keyword", { value });
     return {
       type: "keyword",
@@ -138,10 +164,15 @@ export function parseKeywordAbility(text: string): KeywordAbility | null {
   // Try Boost N
   const boostMatch = text.match(BOOST_PATTERN);
   if (boostMatch) {
-    const value = Number.parseInt(
-      boostMatch[1].replace(/\{d\}|\d+/, boostMatch[1]),
-      10,
-    );
+    let value: number;
+    if (boostMatch[1] === "{d}") {
+      value = 0;
+    } else {
+      value = Number.parseInt(boostMatch[1], 10);
+      if (Number.isNaN(value)) {
+        value = 0;
+      }
+    }
     logger.info("Parsed Boost keyword", { value });
     return {
       type: "keyword",
@@ -154,15 +185,16 @@ export function parseKeywordAbility(text: string): KeywordAbility | null {
   const shiftMatch = text.match(SHIFT_PATTERN);
   if (shiftMatch) {
     const keywordType = shiftMatch[1];
-    const value = Number.parseInt(
-      shiftMatch[2].replace(/\{d\}|\d+/, shiftMatch[2]),
-      10,
-    );
+    let value = Number.parseInt(shiftMatch[2], 10);
+    if (Number.isNaN(value) || shiftMatch[2] === "{d}") {
+      value = 0;
+    }
     logger.info("Parsed Shift keyword", { keywordType, value });
+    // Normalize all Shift variants to just "Shift" with cost property
     return {
       type: "keyword",
-      keyword: keywordType as ShiftKeywordAbility["keyword"],
-      value,
+      keyword: "Shift",
+      cost: { ink: value },
     };
   }
 

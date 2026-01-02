@@ -94,7 +94,7 @@ function parseFromText(text: string): DiscardEffect | null {
     type: "discard",
     amount,
     target: "CONTROLLER",
-    chosen: true,
+    chosen: false, // Default to false, only "choose and discard" sets to true
   };
 }
 

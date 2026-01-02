@@ -117,7 +117,8 @@ function parseFromCst(
 function parseFromText(text: string): DealDamageEffect | null {
   logger.debug("Attempting to parse damage effect from text", { text });
 
-  const pattern = /deal\s+(\d+)\s+damage(?:\s+to\s+(.+?))?(?:\.|,|$)/i;
+  // Pattern for both numeric amounts and {d} placeholders
+  const pattern = /deal\s+(\d+|\{d\})\s+damage(?:\s+to\s+(.+?))?(?:\.|,|$)/i;
   const match = text.match(pattern);
 
   if (!match) {
@@ -125,11 +126,12 @@ function parseFromText(text: string): DealDamageEffect | null {
     return null;
   }
 
-  const amount = Number.parseInt(match[1], 10);
+  const amountValue = match[1];
+  const amount = amountValue === "{d}" ? -1 : Number.parseInt(amountValue, 10);
 
   if (Number.isNaN(amount)) {
     logger.warn("Failed to extract number from damage effect text", {
-      match: match[1],
+      match: amountValue,
     });
     return null;
   }
@@ -157,9 +159,9 @@ function parseFromText(text: string): DealDamageEffect | null {
  * Damage effect parser implementation
  */
 export const damageEffectParser: EffectParser = {
-  pattern: /deal\s+(\d+)\s+damage/i,
+  pattern: /deal\s+(\d+|\{d\})\s+damage/i,
   description:
-    "Parses damage effects (e.g., 'deal 2 damage to chosen character')",
+    "Parses damage effects (e.g., 'deal 2 damage to chosen character', 'deal {d} damage')",
 
   parse: (input: CstNode | string): DealDamageEffect | null => {
     if (typeof input === "string") {

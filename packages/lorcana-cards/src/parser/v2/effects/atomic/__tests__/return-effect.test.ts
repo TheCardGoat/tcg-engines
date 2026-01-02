@@ -33,9 +33,13 @@ describe("returnEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("return-to-hand");
-      expect((result as Effect & { target: string }).target).toBe(
-        "CHOSEN_CHARACTER",
-      );
+      expect((result as Effect & { target: unknown }).target).toEqual({
+        selector: "chosen",
+        count: 1,
+        owner: "any",
+        zones: ["play"],
+        cardTypes: ["character"],
+      });
     });
 
     it("parses 'return this card to hand' correctly", () => {
@@ -107,9 +111,13 @@ describe("returnEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("shuffle-into-deck");
-      expect((result as Effect & { target: string }).target).toBe(
-        "CHOSEN_CHARACTER",
-      );
+      expect((result as Effect & { target: unknown }).target).toEqual({
+        selector: "chosen",
+        count: 1,
+        owner: "any",
+        zones: ["play"],
+        cardTypes: ["character"],
+      });
     });
 
     it("parses 'shuffle this card into deck' correctly", () => {

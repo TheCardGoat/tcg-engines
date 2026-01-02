@@ -2,15 +2,27 @@
  * Keyword ability parser stub for v2 tests.
  */
 
-import { parseAtomicEffect } from "../effects/atomic";
+import { parseKeywordAbility as parseKeywordAbilityInternal } from "../keyword-ability-parser";
+
+interface ParseResult {
+  success: boolean;
+  ability?: { ability: unknown };
+  error?: string;
+}
 
 /**
- * Parse keyword ability using the keyword effect parser.
+ * Parse keyword ability using the keyword ability parser.
  */
-export function parseKeywordAbility(text: string) {
-  const effect = parseAtomicEffect(text);
-  if (effect?.type === "keyword") {
-    return effect;
+export function parseKeywordAbility(text: string): ParseResult {
+  const ability = parseKeywordAbilityInternal(text);
+  if (ability) {
+    return {
+      success: true,
+      ability: { ability },
+    };
   }
-  return null;
+  return {
+    success: false,
+    error: "Failed to parse keyword ability",
+  };
 }
