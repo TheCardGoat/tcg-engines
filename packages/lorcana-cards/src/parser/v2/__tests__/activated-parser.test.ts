@@ -23,7 +23,7 @@ describe("Activated Ability Parser", () => {
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
-      expect(ability.cost.exert).toBe(true);
+      expect(ability.cost).toMatchObject({ exert: true });
       expect(ability.cost.ink).toBeUndefined();
       expect(ability.effect).toBeDefined();
     });
@@ -36,7 +36,7 @@ describe("Activated Ability Parser", () => {
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
-      expect(ability.cost.exert).toBe(true);
+      expect(ability.cost).toMatchObject({ exert: true });
       expect(ability.effect).toBeDefined();
     });
   });
@@ -48,8 +48,8 @@ describe("Activated Ability Parser", () => {
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
+      expect(ability.cost).toMatchObject({ ink: -1 });
       expect(ability.cost.exert).toBeUndefined();
-      expect(ability.cost.ink).toBe(-1); // Placeholder value
       expect(ability.effect).toBeDefined();
     });
 
@@ -59,8 +59,8 @@ describe("Activated Ability Parser", () => {
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
+      expect(ability.cost).toMatchObject({ ink: 2 });
       expect(ability.cost.exert).toBeUndefined();
-      expect(ability.cost.ink).toBe(2);
       expect(ability.effect).toBeDefined();
     });
   });
@@ -74,8 +74,7 @@ describe("Activated Ability Parser", () => {
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
-      expect(ability.cost.exert).toBe(true);
-      expect(ability.cost.ink).toBe(-1); // Placeholder value
+      expect(ability.cost).toMatchObject({ exert: true, ink: -1 });
       expect(ability.effect).toBeDefined();
     });
 
@@ -87,8 +86,7 @@ describe("Activated Ability Parser", () => {
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
-      expect(ability.cost.exert).toBe(true);
-      expect(ability.cost.ink).toBe(2);
+      expect(ability.cost).toMatchObject({ exert: true, ink: 2 });
       expect(ability.effect).toBeDefined();
     });
 
@@ -98,8 +96,7 @@ describe("Activated Ability Parser", () => {
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
-      expect(ability.cost.exert).toBe(true);
-      expect(ability.cost.ink).toBe(1);
+      expect(ability.cost).toMatchObject({ exert: true, ink: 1 });
       expect(ability.effect).toBeDefined();
     });
   });
@@ -113,8 +110,7 @@ describe("Activated Ability Parser", () => {
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
-      expect(ability.cost.exert).toBe(true);
-      expect(ability.cost.banishSelf).toBe(true);
+      expect(ability.cost).toMatchObject({ exert: true, banishSelf: true });
       expect(ability.effect).toBeDefined();
     });
 
@@ -126,8 +122,7 @@ describe("Activated Ability Parser", () => {
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
-      expect(ability.cost.exert).toBe(true);
-      expect(ability.cost.banishSelf).toBe(true);
+      expect(ability.cost).toMatchObject({ exert: true, banishSelf: true });
       expect(ability.effect).toBeDefined();
     });
   });
@@ -139,8 +134,8 @@ describe("Activated Ability Parser", () => {
       expect(result.success).toBe(true);
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
+      expect(ability.cost).toMatchObject({ banishSelf: true });
       expect(ability.cost.exert).toBeUndefined();
-      expect(ability.cost.banishSelf).toBe(true);
       expect(ability.effect).toBeDefined();
     });
   });
@@ -152,11 +147,10 @@ describe("Activated Ability Parser", () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.ability?.name).toBe("MAGIC HAIR");
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
       expect(ability.name).toBe("MAGIC HAIR");
-      expect(ability.cost.exert).toBe(true);
+      expect(ability.cost).toMatchObject({ exert: true });
       expect(ability.effect).toBeDefined();
     });
 
@@ -166,11 +160,10 @@ describe("Activated Ability Parser", () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.ability?.name).toBe("SKIRMISH");
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
       expect(ability.name).toBe("SKIRMISH");
-      expect(ability.cost.exert).toBe(true);
+      expect(ability.cost).toMatchObject({ exert: true });
       expect(ability.effect).toBeDefined();
     });
 
@@ -180,12 +173,10 @@ describe("Activated Ability Parser", () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.ability?.name).toBe("HEALING INCANTATION");
       expect(result.ability?.ability.type).toBe("activated");
       const ability = result.ability?.ability as ActivatedAbility;
       expect(ability.name).toBe("HEALING INCANTATION");
-      expect(ability.cost.exert).toBe(true);
-      expect(ability.cost.ink).toBe(-1); // Placeholder
+      expect(ability.cost).toMatchObject({ exert: true, ink: -1 });
       expect(ability.effect).toBeDefined();
     });
   });

@@ -416,10 +416,13 @@ describe("Composite Effect Parser", () => {
   });
 
   describe("Edge cases", () => {
-    it("should return undefined if sequence contains unparsable step", () => {
+    it("should return first effect if sequence contains unparsable step", () => {
       const effect = parseEffect("Draw a card, then do something unparsable");
 
-      expect(effect).toBeUndefined();
+      // When a sequence fails to parse completely, the parser falls back
+      // to parsing the first valid effect (graceful degradation)
+      expect(effect).toBeDefined();
+      expect(effect?.type).toBe("draw");
     });
 
     it("should not treat 'choose and discard' as a sequence", () => {

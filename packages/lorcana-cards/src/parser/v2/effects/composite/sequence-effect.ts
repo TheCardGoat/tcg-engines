@@ -28,6 +28,7 @@ const SEQUENCE_SEPARATORS = [
   ", then ",
   ". then ",
   ", and then ",
+  ". Then, ", // Capital T with comma
   ". ",
 ] as const;
 
@@ -41,7 +42,7 @@ function parseFromText(text: string): SequenceEffect | null {
   let stepTexts: string[] = [];
   let separatorUsed: string | undefined;
 
-  // Find which separator is used (try in priority order)
+  // First, try the standard separators
   for (const separator of SEQUENCE_SEPARATORS) {
     if (text.toLowerCase().includes(separator.toLowerCase())) {
       // Escape special regex characters in the separator
@@ -57,6 +58,32 @@ function parseFromText(text: string): SequenceEffect | null {
         stepCount: stepTexts.length,
       });
       break;
+    }
+  }
+
+  // If no standard separator found, check for " and " as a special case
+  // Only split on "and" if both parts are valid independent effects
+  if (stepTexts.length < 2 && /\s+and\s+/i.test(text)) {
+    const parts = text.split(/\s+and\s+/i).map((s) => s.trim());
+    if (parts.length === 2) {
+      // Check if both parts can be parsed as independent effects
+      const part1Effect = parseAtomicEffect(parts[0]);
+      const part2Effect = parseAtomicEffect(parts[1]);
+
+      // Only treat as sequence if both parts parse successfully
+      // AND the text doesn't match patterns that should stay together
+      const shouldStayTogether =
+        /choose\s+and\s+(?:discard|draw|gain)/i.test(text) ||
+        /draw\s+.+\s+and\s+discard/i.test(text) ||
+        /gain\s+.+\s+and\s+lose/i.test(text);
+
+      if (part1Effect && part2Effect && !shouldStayTogether) {
+        stepTexts = parts;
+        separatorUsed = " and ";
+        logger.debug("Found 'and' separator - both parts are valid effects", {
+          parts,
+        });
+      }
     }
   }
 
@@ -80,14 +107,18 @@ function parseFromText(text: string): SequenceEffect | null {
         effect,
       });
     } else {
-      logger.warn("Failed to parse sequence step", { stepIndex: i, stepText });
-      // Continue parsing other steps even if one fails
+      // If any step fails to parse, the entire sequence is invalid
+      logger.warn("Failed to parse sequence step - sequence invalid", {
+        stepIndex: i,
+        stepText,
+      });
+      return null;
     }
   }
 
-  // Need at least one successfully parsed effect
-  if (steps.length === 0) {
-    logger.warn("Sequence parsing produced no valid effects");
+  // All steps must parse successfully
+  if (steps.length !== stepTexts.length) {
+    logger.warn("Sequence parsing produced incomplete effects");
     return null;
   }
 

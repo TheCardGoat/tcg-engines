@@ -20,7 +20,10 @@ describe("Conditional Effect Parser", () => {
 
       expect(result).toMatchObject({
         type: "conditional",
-        condition: { type: "has-named-character" },
+        condition: {
+          type: "has-named-character",
+          characterName: "Elsa",
+        },
         then: { type: "draw" },
       });
       expect((result as { else?: unknown }).else).toBeUndefined();
@@ -33,8 +36,14 @@ describe("Conditional Effect Parser", () => {
 
       expect(result).toMatchObject({
         type: "conditional",
-        condition: { type: "has-item-count" },
-        then: { type: "deal-damage" },
+        condition: {
+          type: "has-item-count",
+          count: 3,
+        },
+        then: {
+          type: "deal-damage",
+          amount: 3,
+        },
       });
     });
 
@@ -44,7 +53,10 @@ describe("Conditional Effect Parser", () => {
       expect(result).toMatchObject({
         type: "conditional",
         condition: { type: "resource-count" },
-        then: { type: "gain-lore" },
+        then: {
+          type: "gain-lore",
+          amount: 2,
+        },
       });
     });
   });
@@ -57,9 +69,18 @@ describe("Conditional Effect Parser", () => {
 
       expect(result).toMatchObject({
         type: "conditional",
-        condition: { type: "has-item-count" },
-        then: { type: "deal-damage" },
-        else: { type: "deal-damage" },
+        condition: {
+          type: "has-item-count",
+          count: 3,
+        },
+        then: {
+          type: "deal-damage",
+          amount: 3,
+        },
+        else: {
+          type: "deal-damage",
+          amount: 2,
+        },
       });
     });
 
@@ -71,8 +92,14 @@ describe("Conditional Effect Parser", () => {
       expect(result).toMatchObject({
         type: "conditional",
         condition: { type: "resource-count" },
-        then: { type: "gain-lore" },
-        else: { type: "gain-lore" },
+        then: {
+          type: "gain-lore",
+          amount: 2,
+        },
+        else: {
+          type: "gain-lore",
+          amount: 1,
+        },
       });
     });
   });
@@ -96,7 +123,10 @@ describe("Conditional Effect Parser", () => {
       expect(result).toMatchObject({
         type: "conditional",
         condition: { type: "no-damage" },
-        then: { type: "draw" },
+        then: {
+          type: "draw",
+          amount: 2,
+        },
       });
     });
   });
@@ -110,7 +140,10 @@ describe("Conditional Effect Parser", () => {
       expect(result).toMatchObject({
         type: "conditional",
         condition: { type: "comparison" },
-        then: { type: "draw" },
+        then: {
+          type: "draw",
+          amount: 2,
+        },
       });
     });
 
@@ -122,7 +155,10 @@ describe("Conditional Effect Parser", () => {
       expect(result).toMatchObject({
         type: "conditional",
         condition: { type: "resource-count" },
-        then: { type: "gain-lore" },
+        then: {
+          type: "gain-lore",
+          amount: 3,
+        },
       });
     });
   });
@@ -135,7 +171,10 @@ describe("Conditional Effect Parser", () => {
 
       expect(result).toMatchObject({
         type: "conditional",
-        condition: { type: "resource-count" },
+        condition: {
+          type: "resource-count",
+          count: 3,
+        },
         then: { type: "draw" },
       });
     });
@@ -149,8 +188,14 @@ describe("Conditional Effect Parser", () => {
 
       expect(result).toMatchObject({
         type: "conditional",
-        condition: { type: "has-character-with-classification" },
-        then: { type: "draw" },
+        condition: {
+          type: "has-character-with-classification",
+          classification: "Floodborn",
+        },
+        then: {
+          type: "draw",
+          amount: 2,
+        },
       });
     });
 
@@ -162,8 +207,14 @@ describe("Conditional Effect Parser", () => {
       expect(result).toMatchObject({
         type: "conditional",
         condition: { type: "has-item-count" },
-        then: { type: "deal-damage" },
-        else: { type: "deal-damage" },
+        then: {
+          type: "deal-damage",
+          amount: 2,
+        },
+        else: {
+          type: "deal-damage",
+          amount: 1,
+        },
       });
     });
   });
