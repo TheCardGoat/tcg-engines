@@ -27,7 +27,7 @@ export const intoTheUnknown: ActionCard = {
           count: { exactly: 1 },
           filter: [{ type: "exerted" }],
         },
-        target: "card-owner",
+        target: "CARD_OWNER",
         exerted: true,
       },
     },

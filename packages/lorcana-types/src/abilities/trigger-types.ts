@@ -28,6 +28,8 @@
 import type {
   CardReference,
   CharacterFilter,
+  ItemFilter,
+  LocationFilter,
   TargetController,
 } from "./target-types";
 
@@ -127,8 +129,8 @@ export interface TriggerSubjectQuery {
   /** What type of card */
   cardType?: TriggerCardType;
 
-  /** Additional filters (e.g., damaged, has keyword) */
-  filters?: CharacterFilter[];
+  /** Additional filters (e.g., damaged, has keyword) - supports all card types */
+  filters?: (CharacterFilter | ItemFilter | LocationFilter)[];
 
   /** Exclude self from matching */
   excludeSelf?: boolean;

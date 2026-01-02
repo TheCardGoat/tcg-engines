@@ -601,9 +601,15 @@ export function isShiftKeywordAbility(
  */
 export function isNamedAbility(
   ability: Ability,
-): ability is Exclude<Ability, KeywordAbility> & { name: string } {
+): ability is (
+  | TriggeredAbility
+  | ActivatedAbility
+  | StaticAbility
+  | ReplacementAbility
+) & { name: string } {
   return (
     ability.type !== "keyword" &&
+    ability.type !== "action" &&
     "name" in ability &&
     ability.name !== undefined
   );
