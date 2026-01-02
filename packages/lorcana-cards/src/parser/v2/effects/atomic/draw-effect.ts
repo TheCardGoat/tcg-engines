@@ -1,6 +1,6 @@
 /**
  * Draw Effect Parser
- * Handles draw card effects like "draw 2 cards" or "draw 1 card"
+ * Handles draw card effects like "draw 2 cards", "Each player draws a card", "Each opponent draws 2 cards"
  */
 
 import type { CstNode, IToken } from "chevrotain";
@@ -51,13 +51,26 @@ function parseFromCst(
 function parseFromText(text: string): DrawEffect | null {
   logger.debug("Attempting to parse draw effect from text", { text });
 
+  // Determine target from text
+  let target: DrawEffect["target"] = "CONTROLLER";
+
+  if (/each player|all players/i.test(text)) {
+    target = "EACH_PLAYER";
+  } else if (/each opponent|all opponents/i.test(text)) {
+    target = "EACH_OPPONENT";
+  } else if (/chosen player/i.test(text)) {
+    target = "CHOSEN_PLAYER";
+  } else if (/opponent draws/i.test(text)) {
+    target = "OPPONENT";
+  }
+
   // Try "draw N cards" pattern first
-  let pattern = /draw\s+(\d+)\s+cards?/i;
+  let pattern = /draws?\s+(\d+)\s+cards?/i;
   let match = text.match(pattern);
 
   // Try "draw a card" or "draw 1 card" pattern
   if (!match) {
-    pattern = /draw\s+(?:a|one|1)\s+card/i;
+    pattern = /draws?\s+(?:a|one|1)\s+card/i;
     match = text.match(pattern);
   }
 
@@ -76,12 +89,12 @@ function parseFromText(text: string): DrawEffect | null {
     return null;
   }
 
-  logger.info("Parsed draw effect from text", { amount });
+  logger.info("Parsed draw effect from text", { amount, target });
 
   return {
     type: "draw",
     amount,
-    target: "CONTROLLER",
+    target,
   };
 }
 
@@ -89,8 +102,10 @@ function parseFromText(text: string): DrawEffect | null {
  * Draw effect parser implementation
  */
 export const drawEffectParser: EffectParser = {
-  pattern: /draw\s+(?:(\d+)\s+cards?|(?:a|one|1)\s+card)/i,
-  description: "Parses draw card effects (e.g., 'draw 2 cards', 'draw a card')",
+  pattern:
+    /(?:(?:each|all) (?:player|opponent) |chosen player )?[Dd]raw(?:s)? (?:\d+ cards?|(?:a|one|1) card)/i,
+  description:
+    "Parses draw card effects (e.g., 'draw 2 cards', 'Each player draws a card', 'Each opponent draws 2 cards')",
 
   parse: (input: CstNode | string): DrawEffect | null => {
     if (typeof input === "string") {

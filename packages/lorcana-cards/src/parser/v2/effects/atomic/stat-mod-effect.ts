@@ -1,12 +1,32 @@
 /**
  * Stat Modification Effect Parser
- * Handles stat modification effects like "chosen character gets +2 strength" or "-1 willpower"
+ * Handles stat modification effects like "chosen character gets +2 strength" or "Your characters get +1 {S}"
  */
 
 import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
 import type { CharacterTarget, ModifyStatEffect } from "../../types";
 import type { EffectParser } from "./index";
+
+/**
+ * Helper function to parse numeric values or {d} placeholders
+ * Converts {d} to -1 as a placeholder value
+ */
+function parseNumericValue(value: string): number {
+  if (value === "{d}") {
+    return -1; // Placeholder value for {d}
+  }
+
+  // Remove optional + prefix
+  const cleaned = value.replace(/^\+/, "");
+  const parsed = Number.parseInt(cleaned, 10);
+
+  if (Number.isNaN(parsed)) {
+    return -1; // Fallback for unparseable values
+  }
+
+  return parsed;
+}
 
 /**
  * Parse stat modification effect from CST node (grammar-based parsing)
@@ -61,56 +81,101 @@ function parseFromText(text: string): ModifyStatEffect | null {
     text,
   });
 
-  const pattern = /get(?:s)?\s+([+-])(\d+)\s+(strength|willpower|lore)/i;
-  const match = text.match(pattern);
+  // Try pattern with {S}/{L}/{W} notation first (e.g., "Your characters get +1 {S}")
+  let match = text.match(/get(?:s)?\s+([+-]?\d+|[+-]?\{d\})\s+\{([SLW])\}/i);
 
-  if (!match) {
-    logger.debug("Stat modification effect pattern did not match");
-    return null;
-  }
+  if (match) {
+    const modifier = parseNumericValue(match[1]);
+    const statSymbol = match[2];
+    const stat =
+      statSymbol === "S"
+        ? "strength"
+        : statSymbol === "W"
+          ? "willpower"
+          : "lore";
 
-  const sign = match[1] === "-" ? -1 : 1;
-  const value = Number.parseInt(match[2], 10);
-  const statStr = match[3].toLowerCase();
+    // Try to determine target from text
+    // Order matters: check more specific patterns first
+    let target: CharacterTarget = "CHOSEN_CHARACTER";
+    const lowerText = text.toLowerCase();
+    if (
+      lowerText.includes("this character") ||
+      lowerText.includes("this card")
+    ) {
+      target = "SELF";
+    } else if (/your\s+(?:\w+\s+)?characters/.test(lowerText)) {
+      // "Your characters", "Your Hero characters", "Your inkborn characters"
+      target = "YOUR_CHARACTERS";
+    } else if (lowerText.includes("your items")) {
+      target = "YOUR_ITEMS" as CharacterTarget;
+    } else if (lowerText.includes("while here")) {
+      target = "CHARACTERS_HERE" as CharacterTarget;
+    }
 
-  if (Number.isNaN(value)) {
-    logger.warn("Failed to extract number from stat mod effect text", {
-      match: match[2],
+    logger.info("Parsed stat modification effect from text", {
+      modifier,
+      stat,
+      target,
     });
-    return null;
+
+    return {
+      type: "modify-stat",
+      stat,
+      modifier,
+      target,
+    };
   }
 
-  const modifier = sign * value;
-  const stat = statStr as "strength" | "willpower" | "lore";
+  // Try pattern with full stat name (e.g., "chosen character gets +2 strength")
+  match = text.match(/get(?:s)?\s+([+-])(\d+)\s+(strength|willpower|lore)/i);
 
-  // Try to determine target from text
-  let target: CharacterTarget = "CHOSEN_CHARACTER";
-  if (text.includes("this character") || text.includes("this card")) {
-    target = "SELF";
-  } else if (text.includes("your characters")) {
-    target = "YOUR_CHARACTERS";
+  if (match) {
+    const sign = match[1] === "-" ? -1 : 1;
+    const value = Number.parseInt(match[2], 10);
+    const modifier = sign * value;
+    const stat = match[3].toLowerCase() as "strength" | "willpower" | "lore";
+
+    // Try to determine target from text
+    let target: CharacterTarget = "CHOSEN_CHARACTER";
+    const lowerText = text.toLowerCase();
+    if (
+      lowerText.includes("this character") ||
+      lowerText.includes("this card")
+    ) {
+      target = "SELF";
+    } else if (/your\s+(?:\w+\s+)?characters/.test(lowerText)) {
+      // "Your characters", "Your Hero characters", "Your inkborn characters"
+      target = "YOUR_CHARACTERS";
+    } else if (lowerText.includes("your items")) {
+      target = "YOUR_ITEMS" as CharacterTarget;
+    }
+
+    logger.info("Parsed stat modification effect from text", {
+      modifier,
+      stat,
+      target,
+    });
+
+    return {
+      type: "modify-stat",
+      stat,
+      modifier,
+      target,
+    };
   }
 
-  logger.info("Parsed stat modification effect from text", {
-    modifier,
-    stat,
-    target,
-  });
-
-  return {
-    type: "modify-stat",
-    stat,
-    modifier,
-    target,
-  };
+  logger.debug("Stat modification effect pattern did not match");
+  return null;
 }
 
 /**
  * Stat modification effect parser implementation
  */
 export const statModEffectParser: EffectParser = {
-  pattern: /gets?\s+([+-])(\d+)\s+(strength|willpower|lore)/i,
-  description: "Parses stat modification effects (e.g., 'gets +2 strength')",
+  pattern:
+    /gets?\s+([+-]?\d+|[+-]?\{d\})\s+(?:\{([SLW])\}|(strength|willpower|lore))/i,
+  description:
+    "Parses stat modification effects (e.g., 'gets +2 strength', 'Your characters get +1 {S}')",
 
   parse: (input: CstNode | string): ModifyStatEffect | null => {
     if (typeof input === "string") {

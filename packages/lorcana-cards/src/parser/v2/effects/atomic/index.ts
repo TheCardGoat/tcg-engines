@@ -16,6 +16,7 @@ import { keywordEffectParser } from "./keyword-effect";
 import { locationEffectParser } from "./location-effect";
 import { loreEffectParser } from "./lore-effect";
 import { playEffectParser } from "./play-effect";
+import { restrictionEffectParser } from "./restriction-effect";
 import { returnEffectParser } from "./return-effect";
 import { revealEffectParser } from "./reveal-effect";
 import { searchEffectParser } from "./search-effect";
@@ -59,6 +60,9 @@ export const atomicEffectParsers: EffectParser[] = [
 
   // Keyword grants (specific keyword names)
   keywordEffectParser,
+
+  // Restriction effects (specific restriction patterns)
+  restrictionEffectParser,
 
   // Damage effects (specific "deal X damage" pattern)
   damageEffectParser,

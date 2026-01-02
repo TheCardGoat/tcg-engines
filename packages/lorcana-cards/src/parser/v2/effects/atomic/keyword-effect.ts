@@ -1,6 +1,6 @@
 /**
  * Keyword Effect Parser
- * Handles keyword grants like "chosen character gains Evasive" or "gets Ward"
+ * Handles keyword grants like "chosen character gains Evasive" or "Your characters gain Ward"
  */
 
 import type { CstNode, IToken } from "chevrotain";
@@ -27,6 +27,69 @@ type GrantableKeyword = (typeof KEYWORDS)[number];
 
 function isGrantableKeyword(keyword: string): keyword is GrantableKeyword {
   return KEYWORDS.some((k) => k.toLowerCase() === keyword.toLowerCase());
+}
+
+/**
+ * Parse a keyword value from text (e.g., "Challenger +3", "Resist +{d}")
+ * Returns the keyword name and optional value
+ */
+function parseKeywordWithValue(text: string): {
+  keyword: string;
+  value?: number;
+} | null {
+  // Check for parameterized keywords: "Challenger +X" or "Resist +X"
+  const challengerMatch = text.match(
+    /Challenger\s*\+(\d+|\{d\})(?:\s+(.+))?$/i,
+  );
+  if (challengerMatch) {
+    const value = parseNumericValue(challengerMatch[1]);
+    const condition = challengerMatch[2]?.trim();
+    return {
+      keyword: "Challenger",
+      value,
+      ...(condition && { condition }),
+    };
+  }
+
+  const resistMatch = text.match(/Resist\s*\+(\d+|\{d\})(?:\s+(.+))?$/i);
+  if (resistMatch) {
+    const value = parseNumericValue(resistMatch[1]);
+    const condition = resistMatch[2]?.trim();
+    return {
+      keyword: "Resist",
+      value,
+      ...(condition && { condition }),
+    };
+  }
+
+  // Check for simple keywords
+  for (const keyword of KEYWORDS) {
+    if (text.toLowerCase() === keyword.toLowerCase()) {
+      return { keyword };
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Helper function to parse numeric values or {d} placeholders
+ * Converts {d} to -1 as a placeholder value
+ */
+function parseNumericValue(value: string): number {
+  if (value === "{d}") {
+    return -1; // Placeholder value for {d}
+  }
+
+  // Remove optional + prefix
+  const cleaned = value.replace(/^\+/, "");
+  const parsed = Number.parseInt(cleaned, 10);
+
+  if (Number.isNaN(parsed)) {
+    return -1; // Fallback for unparseable values
+  }
+
+  return parsed;
 }
 
 /**
@@ -72,8 +135,13 @@ function parseFromCst(
 function parseFromText(text: string): GainKeywordEffect | null {
   logger.debug("Attempting to parse keyword effect from text", { text });
 
+  // Updated pattern to support both singular and plural forms
+  // Pattern: "Your characters gain Ward", "chosen character gains Evasive"
   const keywordsPattern = KEYWORDS.join("|");
-  const pattern = new RegExp(`(gains?|gets?)\\s+(${keywordsPattern})`, "i");
+  const pattern = new RegExp(
+    `(gain|gains|gets?)\\s+((?:${keywordsPattern})(?:\\s*[+-]\\d+|\\s*\\+\\{d\\}|\\s*\\+\\d+\\s+[^.]*)?)`,
+    "i",
+  );
   const match = text.match(pattern);
 
   if (!match) {
@@ -81,32 +149,54 @@ function parseFromText(text: string): GainKeywordEffect | null {
     return null;
   }
 
-  const keyword = match[2];
+  const keywordText = match[2];
+  const parsedKeyword = parseKeywordWithValue(keywordText);
 
-  if (!isGrantableKeyword(keyword)) {
-    logger.debug("Matched keyword is not grantable", { keyword });
+  if (!(parsedKeyword && isGrantableKeyword(parsedKeyword.keyword))) {
+    logger.debug("Matched keyword is not grantable", { keyword: keywordText });
     return null;
   }
 
+  const keyword = parsedKeyword.keyword;
+
   // Try to determine target from text
+  // Order matters: check more specific patterns first
   let target: CharacterTarget = "CHOSEN_CHARACTER";
+  const lowerText = text.toLowerCase();
+
   if (
-    text.includes("this character") ||
-    text.includes("this card") ||
-    text.match(/^\s*(gains?|gets?)/i)
+    lowerText.includes("this character") ||
+    lowerText.includes("this card") ||
+    lowerText.match(/^\s*(gains?|gets?)/i)
   ) {
     target = "SELF";
-  } else if (text.includes("your characters")) {
+  } else if (/your\s+(?:\w+\s+)?characters/.test(lowerText)) {
+    // "Your characters", "Your Hero characters", "Your inkborn characters"
     target = "YOUR_CHARACTERS";
+  } else if (lowerText.includes("your items")) {
+    target = "YOUR_ITEMS" as CharacterTarget;
+  } else if (lowerText.includes("while here")) {
+    // "Characters gain Ward while here" (location effect)
+    target = "CHARACTERS_HERE" as CharacterTarget;
   }
 
-  logger.info("Parsed keyword effect from text", { keyword, target });
+  logger.info("Parsed keyword effect from text", {
+    keyword,
+    target,
+    value: parsedKeyword.value,
+  });
 
-  return {
+  const effect: GainKeywordEffect = {
     type: "gain-keyword",
     keyword,
     target,
   };
+
+  if (parsedKeyword.value !== undefined) {
+    effect.value = parsedKeyword.value;
+  }
+
+  return effect;
 }
 
 /**
@@ -114,8 +204,9 @@ function parseFromText(text: string): GainKeywordEffect | null {
  */
 export const keywordEffectParser: EffectParser = {
   pattern:
-    /(gains?|gets?)\s+(Evasive|Challenger|Rush|Ward|Bodyguard|Resist|Support|Reckless|Alert)/i,
-  description: "Parses keyword grant effects (e.g., 'gains Evasive')",
+    /(gain|gains|gets?)\s+(Evasive|Challenger|Rush|Ward|Bodyguard|Resist|Support|Reckless|Alert)(?:\s*[+-]\d+|\s*\+\{d\})?/i,
+  description:
+    "Parses keyword grant effects (e.g., 'gains Evasive', 'Your characters gain Ward')",
 
   parse: (input: CstNode | string): GainKeywordEffect | null => {
     if (typeof input === "string") {

@@ -186,10 +186,36 @@ export class LorcanaParserV2 {
     // Extract ability name if present (e.g., "NAME Whenever X, do Y")
     // Allow common punctuation in names like "IT WORKS!", "FINE PRINT"
     // Also handle restriction prefixes: "NAME Once per turn, when X, do Y"
-    const nameMatch = originalText.match(
+
+    // Try triggered ability name pattern first (with "When|Whenever")
+    let nameMatch = originalText.match(
       /^([A-Z][A-Z\s!?'-]+)\s+(?:Once per turn,\s*)?(?:During your turn,\s*)?(When|Whenever)/i,
     );
-    const name = nameMatch ? nameMatch[1].trim() : undefined;
+    let name = nameMatch ? nameMatch[1].trim() : undefined;
+
+    // Try static ability name pattern (with "This character/item can't/cannot/enters")
+    if (!name) {
+      nameMatch = originalText.match(
+        /^([A-Z][A-Z\s!?'-]+)\s+(?:This character|This item)\s+(?:can'?t|cannot|enters)/i,
+      );
+      name = nameMatch ? nameMatch[1].trim() : undefined;
+    }
+
+    // Try location/static effect name pattern (with "Characters gain/get while here")
+    if (!name) {
+      nameMatch = originalText.match(
+        /^([A-Z][A-Z\s!?'-]+)\s+Characters\s+(?:gain|get)/i,
+      );
+      name = nameMatch ? nameMatch[1].trim() : undefined;
+    }
+
+    // Try special ability grant name pattern (with "This character can challenge")
+    if (!name) {
+      nameMatch = originalText.match(
+        /^([A-Z][A-Z\s!?'-]+)\s+This character\s+can challenge/i,
+      );
+      name = nameMatch ? nameMatch[1].trim() : undefined;
+    }
 
     // Check for triggered abilities first (when/whenever/at)
     const isTriggered =
@@ -247,14 +273,30 @@ export class LorcanaParserV2 {
       } as unknown as Ability;
     }
 
-    if (
-      originalText.toLowerCase().startsWith("while ") ||
-      /your\s+characters?\s+.*?get/i.test(originalText)
-    ) {
-      return {
+    // Check for static abilities (these typically don't have a specific trigger)
+    // Static ability patterns:
+    // - "Your characters gain/get..." (global buffs)
+    // - "Each player/opponent..." (global effects)
+    // - "This character can't..." (restrictions without "while" condition)
+    // - "This character can challenge..." (special ability grants)
+    // - "enters play exerted" (enters effects)
+    const isStatic =
+      /^(?:While |Your characters |Your items |Each player |Each opponent |This character can'?t |This character cannot |This item can'?t |This item cannot |[A-Z][A-Z\s!?'-]+\s+(?:This character|This item|This character can'?t|This item can'?t|This character cannot|This item cannot))|(?:enters? play exerted)/i.test(
+        originalText,
+      ) ||
+      /characters?\s+(?:gain|get)\s+/i.test(originalText) ||
+      /items?\s+(?:gain|get)\s+/i.test(originalText) ||
+      /This character can challenge ready characters/i.test(originalText);
+
+    if (isStatic) {
+      const staticAbility: Record<string, unknown> = {
         type: "static",
         effect,
-      } as unknown as Ability;
+      };
+      if (name) {
+        staticAbility.name = name;
+      }
+      return staticAbility as unknown as Ability;
     }
 
     // Default to action ability
