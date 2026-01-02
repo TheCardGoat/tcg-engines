@@ -205,3 +205,135 @@ The project may use environment variables. Check for:
 - [Node.js Documentation](https://nodejs.org/docs)
 - [Project README](./README.md)
 
+---
+
+# AI Agent Reference
+
+This section documents all available AI agents and skills for the TCG Engines project.
+
+## AI-First Contribution Workflow
+
+This project uses a multi-agent architecture where specialized agents handle different aspects of development:
+
+- **Parallel execution** - Multiple agents can work simultaneously
+- **Context preservation** - Main context stays clean while sub-agents handle tasks
+- **Consistent procedures** - Skills ensure repeatable workflows
+
+**See `CLAUDE.md` for the contribution workflow and coding standards.**
+
+## Memory Bank System
+
+The Memory Bank (`.ai_memory/`) is the development log system for AI contributions.
+
+### Memory Bank Manager Agent
+
+**Agent:** `memory-bank-manager`
+
+Use this sub-agent to:
+- Create new Memory Bank logs for features
+- Update existing logs with progress
+- Validate log completeness before PR
+
+**Why sub-agent?** Keeps the main context clean while logging tasks run in parallel.
+
+### Memory Bank Skill
+
+**Command:** `/update-memory-bank`
+
+Creates or updates a Memory Bank log following the standard template. Ensures all required sections are completed.
+
+## The Gauntlet: 3-Agent Review
+
+Your code will be reviewed by three specialized agents before merging:
+
+| Agent | Focus | Standards |
+|-------|-------|-----------|
+| `gauntlet-linter` | Style, formatting, TypeScript | `.claude/rules/code-style.md` |
+| `gauntlet-analyst` | Game logic, rules, patterns | `.claude/rules/domain-concepts.md` |
+| `gauntlet-tech-lead` | Architecture, DRY, performance | `agent-os/product/philosophy.md` |
+
+### Running The Gauntlet
+
+Launch all 3 agents in parallel for comprehensive review:
+```
+Use Task tool with subagent_type for each:
+- gauntlet-linter
+- gauntlet-analyst
+- gauntlet-tech-lead
+```
+
+## Development Agents
+
+| Agent | Purpose | When to Use |
+|-------|---------|-------------|
+| `code-reviewer` | General code review | After completing implementation |
+| `debugger` | Investigate errors | When encountering bugs |
+| `tdd-orchestrator` | TDD coordination | When starting new features |
+| `test-runner` | Run and analyze tests | Before PR submission |
+| `architect-review` | Architecture review | For significant changes |
+| `backend-architect` | Backend design | New backend services |
+
+## Documentation Agents
+
+| Agent | Purpose |
+|-------|---------|
+| `api-documenter` | API documentation creation |
+| `docs-architect` | Technical docs from codebase |
+| `prompt-engineer` | Prompt engineering |
+
+## Specialized Agents
+
+| Agent | Purpose |
+|-------|---------|
+| `typescript-pro` | Advanced TypeScript |
+| `sql-pro` | Database optimization |
+| `graphql-architect` | GraphQL design |
+| `error-detective` | Production errors |
+
+## Agent OS Agents
+
+Located in `.claude/agents/agent-os/`:
+
+| Agent | Purpose |
+|-------|---------|
+| `spec-initializer` | Initialize spec folder |
+| `spec-writer` | Create specifications |
+| `spec-verifier` | Verify specs |
+| `spec-researcher` | Gather requirements |
+| `task-list-creator` | Strategic task lists |
+| `api-engineer` | API endpoints |
+| `ui-designer` | UI components |
+| `database-engineer` | DB migrations |
+| `testing-engineer` | Test coverage |
+| `implementation-verifier` | E2E verification |
+
+## Skills (Slash Commands)
+
+| Command | Purpose |
+|---------|---------|
+| `/update-memory-bank` | Update Memory Bank log |
+| `/review-pull-request` | Review PR comments |
+| `/review-pr-comments` | Handle PR comments |
+| `/fix-typescript` | Fix TS errors |
+| `/fix-ci` | Fix CI issues |
+| `/agent-os:new-spec` | New spec process |
+| `/agent-os:create-spec` | Create spec |
+| `/agent-os:implement-spec` | Implement spec |
+
+## Quick Reference
+
+### Invoke Agent
+```
+Use Task tool with subagent_type parameter
+```
+
+### Invoke Skill
+```
+Use /skill-name or Skill tool
+```
+
+### Agent Files
+- General: `.claude/agents/`
+- Agent OS: `.claude/agents/agent-os/`
+- Skills: `.claude/commands/`
+

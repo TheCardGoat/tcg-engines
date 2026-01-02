@@ -41,5 +41,6 @@ export { clawhauserDonutDetective } from "./175-clawhauser-donut-detective";
 export { francineEyeingTheEvidence } from "./176-francine-eyeing-the-evidence";
 export { nickWildeDeterminedDetective } from "./178-nick-wilde-determined-detective";
 export { blackHeronRealBadEgg } from "./182-black-heron-real-bad-egg";
+export { nickWildePersistentInvestigator } from "./187-nick-wilde-persistent-investigator";
 export { mayorWinddancerActorturnedpolitician } from "./188-mayor-winddancer-actor-turned-politician";
 export { fairyGodmotherMagicalBenefactor } from "./192-fairy-godmother-magical-benefactor";

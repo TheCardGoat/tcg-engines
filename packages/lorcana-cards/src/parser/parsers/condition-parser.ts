@@ -17,7 +17,9 @@
 import type { Condition } from "@tcg/lorcana";
 import {
   IF_CARDS_IN_HAND_PATTERN,
+  IF_CARDS_IN_INKWELL_PATTERN,
   IF_CHARACTERS_IN_PLAY_PATTERN,
+  IF_CHOSEN_CHARACTER_PATTERN,
   IF_NO_CARDS_IN_HAND_PATTERN,
   IF_OPPONENT_HAS_MORE_LORE_PATTERN,
   IF_OPPONENT_HAS_NO_CHARACTERS_PATTERN,
@@ -74,6 +76,17 @@ export function parseCondition(text: string): Condition | undefined {
       classification: "Floodborn",
       controller: "you",
     };
+  }
+
+  // Classification chosen condition
+  const chosenCharacterMatch = normalizedText.match(
+    IF_CHOSEN_CHARACTER_PATTERN,
+  );
+  if (chosenCharacterMatch) {
+    return {
+      type: "classification-chosen",
+      classification: chosenCharacterMatch[1],
+    } as any;
   }
 
   // Item conditions
@@ -133,6 +146,21 @@ export function parseCondition(text: string): Condition | undefined {
       what: "characters",
       controller: "you",
       comparison: "greater-or-equal",
+      value: count,
+    };
+  }
+
+  const cardsInInkwellMatch = normalizedText.match(IF_CARDS_IN_INKWELL_PATTERN);
+  if (cardsInInkwellMatch) {
+    const count = Number.parseInt(cardsInInkwellMatch[1], 10);
+    const comparison = normalizedText.includes("more")
+      ? "greater-or-equal"
+      : "less-or-equal";
+    return {
+      type: "resource-count",
+      what: "cards-in-inkwell",
+      controller: "you",
+      comparison,
       value: count,
     };
   }
@@ -216,12 +244,12 @@ export function parseCondition(text: string): Condition | undefined {
  */
 export function extractConditionText(text: string): string | undefined {
   // Match "if X" or "while X" patterns
-  const ifMatch = text.match(/,?\s+if (.+?)(?:[,.]|$)/i);
+  const ifMatch = text.match(/(?:^|[\s,])if (.+?)(?:[,.]|$)/i);
   if (ifMatch) {
     return ifMatch[1].trim();
   }
 
-  const whileMatch = text.match(/,?\s+while (.+?)(?:[,.]|$)/i);
+  const whileMatch = text.match(/(?:^|[\s,])while (.+?)(?:[,.]|$)/i);
   if (whileMatch) {
     return whileMatch[1].trim();
   }

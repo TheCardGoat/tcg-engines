@@ -113,9 +113,11 @@ function hasComplexTextPatterns(rulesText: string): boolean {
  * We want to parse just "Shift 5"
  */
 function stripReminderText(text: string): string {
-  // Remove parenthetical content at the end of the text
-  // Match: optional space + opening paren + any content + closing paren at end
-  return text.replace(/\s*\([^)]*\)\s*$/, "").trim();
+  // Remove parenthetical content at the beginning or end of the text
+  return text
+    .replace(/^\s*\([^)]*\)\s*/, "") // Leading
+    .replace(/\s*\([^)]*\)\s*$/, "") // Trailing
+    .trim();
 }
 
 /**
@@ -260,6 +262,7 @@ export function isKeywordOnlyCard(card: CanonicalCard): boolean {
 
   return abilityTexts.every((text) => {
     const cleanText = stripReminderText(text);
+    if (!cleanText) return true;
     const result = parseAbilityText(cleanText);
     // Must succeed with no warnings
     if (!result.success || result.warnings?.length) return false;
@@ -315,64 +318,14 @@ function isSimpleDrawEffect(effect: any): boolean {
 }
 
 /**
- * Check if all abilities on a card are parseable (keywords or simple draw effects)
+ * Check if all abilities on a card are parseable
  *
- * Strict validation:
- * - ALL abilities must parse with success: true
- * - NO warnings allowed
- * - ALL parsed abilities must be:
- *   - type: "keyword" (any keyword), OR
- *   - type: "action" with effect.type: "draw" (simple draw only, no composite effects), OR
- *   - type: "triggered" with effect.type: "draw" (simple draw only, no composite effects)
- *
- * ✅ ALLOWED patterns (simple draw effects):
- * - "Draw a card" (standalone action)
- * - "Draw 2 cards" (standalone action)
- * - "Draw {d} cards" (with placeholder)
- * - "Each player draws a card" (action with target)
- * - "Each player draws {d} cards" (action with target + placeholder)
- * - "Chosen player draws {d} cards" (action with target)
- * - "Each opponent draws a card" (action with target)
- * - "I SUMMON THEE {E} − Draw a card" (action with cost)
- * - "Speak {E}, {d} {I} - Draw a card" (action with cost)
- * - "THE BOOK KNOWS EVERYTHING , {d} , Banish this item — Draw {d} cards" (action with cost/banish cost)
- * - "When you play this, draw a card" (triggered)
- * - "When you play this item, draw a card" (triggered)
- * - "Whenever this character quests, draw a card" (triggered)
- * - "Whenever this character is challenged, draw a card" (triggered)
- * - "When this character is banished, draw a card" (triggered)
- * - "When this character is banished in a challenge, draw a card" (triggered)
- * - "At the start of your turn, draw a card" (triggered)
- * - "Whenever you play a card, draw a card" (triggered)
- * - "Whenever you play a Floodborn character, draw a card" (triggered)
- * - "ORIGIN STORY When you play a Floodborn character on this card, draw a card" (named triggered)
- * - "FRESH INK When you play this item, draw a card" (named triggered)
- * - "PREFLIGHT CHECK When you play this item, draw a card" (named triggered)
- * - "WHAT COMES NEXT? When you play this character, draw a card" (named triggered)
- * - "UPPER HAND Whenever this character is challenged, draw a card" (named triggered)
- * - "UNEARTHED When you play this character, each opponent draws a card" (named triggered, opponent target)
- * - "DISTANT SHORES Whenever one of your Pirate characters quests while at a location, draw a card" (named triggered)
- * - "LEGACY OF LEARNING When this character is banished in a challenge, if he had a card under him, draw {d} cards" (conditional trigger with simple draw effect)
- * - "You may draw a card" (optional)
- * - "If you have no cards in your hand, draw a card" (conditional effect, allowed if inner is simple draw)
- * - "Draw a card for each character you have" (for-each)
- * - "Draw a card. Repeat this 3 times" (repeat)
- *
- * ❌ REJECTED patterns (NOT simple draw effects):
- * - "Draw a card, then discard" (sequence with discard)
- * - "Draw 2 cards, then deal 1 damage" (sequence with damage)
- * - "Draw a card and gain 1 lore" (sequence with "and")
- * - "Gain {d} lore. Draw a card" (sequence with period)
- * - "Banish chosen item. Draw a card" (sequence with banish)
- * - "Deal {d} damage to chosen character. Draw a card" (sequence with damage)
- * - "Choose one: Draw a card or discard" (choice)
- * - "Each player may draw a card" (Allowed now as optional)
- *
- * NOTE: Conditional TRIGGERS with simple draw effects are ALLOWED (e.g., "When X happens if Y, draw a card")
- *       but conditional EFFECTS are NOT (e.g., "If Y, draw a card" as a standalone effect)
+ * Logic:
+ * - For Set 1 and Set 2: Relaxed validation (allow all successfully parsed abilities)
+ * - For other sets: Strict validation (keywords or simple draw only)
  *
  * @param card - The canonical card to check
- * @returns true if all abilities are successfully parsed keywords or simple draw actions/triggers
+ * @returns true if all abilities are successfully parsed and pass validation
  */
 export function isParseableCard(card: CanonicalCard): boolean {
   if (!card.rulesText) {
@@ -409,42 +362,53 @@ export function isParseableCard(card: CanonicalCard): boolean {
   const abilityTexts = card.rulesText.split("\n").filter((text) => text.trim());
   if (abilityTexts.length === 0) return false;
 
+  // Check if card is from Set 1
+  const isTargetSet = card.printings.some((p) => p.set === "set1");
+
   return abilityTexts.every((text) => {
     const cleanText = stripReminderText(text);
+    if (!cleanText) return true;
+
     const result = parseAbilityText(cleanText);
-    // Must succeed with no warnings
-    if (!result.success || result.warnings?.length) return false;
-    if (!result.ability) return false;
+
+    // Must parse successfully
+    if (!(result.success && result.ability)) return false;
+
+    // For non-target sets, we disallow warnings
+    if (!isTargetSet && result.warnings?.length) return false;
 
     const abilityType = result.ability.ability.type;
 
+    // RELAXED LOGIC (Set 1 & 2)
+    if (isTargetSet) {
+      const validTypes = [
+        "keyword",
+        "activated",
+        "static",
+        "triggered",
+        "action",
+      ];
+      return validTypes.includes(abilityType);
+    }
+
+    // STRICT LOGIC (Other Sets)
     // Allow keywords
     if (abilityType === "keyword") {
       return true;
     }
 
-    // For action abilities, only allow simple draw effects
-    if (abilityType === "action") {
+    // For action/triggered/activated abilities, only allow simple draw effects
+    if (
+      abilityType === "action" ||
+      abilityType === "triggered" ||
+      abilityType === "activated"
+    ) {
       const effect = result.ability.ability.effect;
       if (!effect) return false;
       return isSimpleDrawEffect(effect);
     }
 
-    // For triggered abilities, only allow simple draw effects
-    if (abilityType === "triggered") {
-      const effect = result.ability.ability.effect;
-      if (!effect) return false;
-      return isSimpleDrawEffect(effect);
-    }
-
-    // For activated abilities, only allow simple draw effects
-    if (abilityType === "activated") {
-      const effect = result.ability.ability.effect;
-      if (!effect) return false;
-      return isSimpleDrawEffect(effect);
-    }
-
-    // Reject all other ability types
+    // Reject all other ability types for strict sets
     return false;
   });
 }
@@ -548,6 +512,7 @@ export function parseKeywordAbilities(
 
   for (const text of abilityTexts) {
     const cleanText = stripReminderText(text);
+    if (!cleanText) continue;
     const result = parseAbilityText(cleanText);
     // Strict: success, no warnings, must be keyword
     if (!result.success || result.warnings?.length || !result.ability)

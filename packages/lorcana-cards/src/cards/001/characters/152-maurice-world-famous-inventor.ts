@@ -9,7 +9,7 @@ export const mauriceWorldfamousInventor: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Beauty and the Beast",
   set: "001",
-  text: "GIVE IT A TRY Whenever this character quests, you pay 2 less for the next item you play this turn. IT WORKS! Whenever you play an item, you may draw a card.",
+  text: "GIVE IT A TRY Whenever this character quests, you pay 2 {I} less for the next item you play this turn.\nIT WORKS! Whenever you play an item, you may draw a card.",
   cost: 6,
   strength: 2,
   willpower: 7,
@@ -22,13 +22,34 @@ export const mauriceWorldfamousInventor: CharacterCard = {
   abilities: [
     {
       id: "x5f-1",
-      text: "GIVE IT A TRY Whenever this character quests, you pay 2 less for the next item you play this turn. IT WORKS! Whenever you play an item, you may draw a card.",
+      text: "GIVE IT A TRY Whenever this character quests, you pay 2 {I} less for the next item you play this turn.",
       name: "GIVE IT A TRY",
       type: "triggered",
       trigger: {
         event: "quest",
         timing: "whenever",
         on: "SELF",
+      },
+      effect: {
+        type: "cost-reduction",
+        amount: 2,
+        cardType: "item",
+        target: "CONTROLLER",
+        duration: "next-play-this-turn",
+      },
+    },
+    {
+      id: "x5f-2",
+      text: "IT WORKS! Whenever you play an item, you may draw a card.",
+      name: "IT WORKS!",
+      type: "triggered",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "item",
+        },
       },
       effect: {
         type: "optional",

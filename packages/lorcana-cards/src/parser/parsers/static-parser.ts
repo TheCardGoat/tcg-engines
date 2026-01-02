@@ -18,9 +18,13 @@ import {
   CANT_BE_CHALLENGED_PATTERN,
   CANT_CHALLENGE_PATTERN,
   CANT_QUEST_PATTERN,
+  CANT_SING_PATTERN,
   CHARACTERS_GAIN_WHILE_HERE_PATTERN,
   CHARACTERS_GET_STAT_WHILE_HERE_PATTERN,
   ENTERS_PLAY_EXERTED_PATTERN,
+  PAY_LESS_TO_PLAY_PATTERN,
+  THIS_CHARACTER_GETS_STAT_PATTERN,
+  YOU_MAY_PUT_INTO_INKWELL_PATTERN,
   YOUR_CHARACTERS_GAIN_PATTERN,
   YOUR_CHARACTERS_GET_STAT_PATTERN,
   YOUR_ITEMS_GAIN_PATTERN,
@@ -287,6 +291,88 @@ function parseSpecificStaticPattern(text: string): StaticEffect | undefined {
     };
   }
 
+  // Pattern: "This character gets +X {S/W/L}..."
+  const thisCharacterGetsStatMatch = text.match(
+    THIS_CHARACTER_GETS_STAT_PATTERN,
+  );
+  if (thisCharacterGetsStatMatch) {
+    const modifier = parseNumericValue(thisCharacterGetsStatMatch[1]);
+    const statSymbol = thisCharacterGetsStatMatch[2];
+    const stat =
+      statSymbol === "S"
+        ? "strength"
+        : statSymbol === "W"
+          ? "willpower"
+          : "lore";
+
+    // Check for "for each" modifier
+    const forEachMatch = text.match(/for each (.*)/i);
+
+    // Construct the base effect
+    const effect: any = {
+      type: "modify-stat",
+      stat,
+      modifier,
+      target: "SELF",
+    };
+
+    // If it has a for-each clause, we need to handle it.
+    // Ideally this would be a separate effect type or a modifier property.
+    // For now, we'll mark it as a scaled modifier if needed, or rely on the text.
+    // In strict parser model, we might want a "scaled-modify-stat" type.
+    if (forEachMatch) {
+      effect.scaling = {
+        base: 0,
+        factor: modifier,
+        source: forEachMatch[1], // simplifying for now, ideally parsed
+      };
+      effect.modifier = 0; // Base modifier is 0 if it's purely per-X
+    }
+
+    return effect;
+  }
+
+  // Pattern: "You pay X {I} less to play..."
+  const payLessMatch = text.match(PAY_LESS_TO_PLAY_PATTERN);
+  if (payLessMatch) {
+    const amount = parseNumericValue(payLessMatch[1]);
+    const targetText = payLessMatch[2];
+
+    // Determine target
+    let target: any = "SELF";
+    if (targetText.includes("next action")) target = "NEXT_ACTION";
+    if (targetText.includes("next character")) target = "NEXT_CHARACTER";
+    if (targetText.includes("next item")) target = "NEXT_ITEM";
+    if (targetText.includes("Broom characters"))
+      target = "YOUR_BROOM_CHARACTERS"; // Specific case handling
+
+    return {
+      type: "cost-reduction",
+      amount,
+      target,
+    };
+  }
+
+  // Pattern: "This character can't {E} to sing songs"
+  if (CANT_SING_PATTERN.test(text)) {
+    return {
+      type: "restriction",
+      restriction: "cant-sing",
+      target: "SELF",
+    };
+  }
+
+  // Pattern: "During your turn, you may put an additional card..."
+  // TODO: "put-additional-ink" is a custom ability not yet in GrantAbilityEffect type
+  // For now, skip this pattern until the type is extended
+  // if (YOU_MAY_PUT_INTO_INKWELL_PATTERN.test(text)) {
+  //   return {
+  //     type: "grant-ability",
+  //     ability: "put-additional-ink",
+  //     target: "SELF",
+  //   };
+  // }
+
   return undefined;
 }
 
@@ -385,6 +471,7 @@ function isValidStaticEffect(effect: any): boolean {
     "modify-stat",
     "restriction",
     "grant-ability",
+    "cost-reduction",
   ];
 
   return validTypes.includes(effect.type);

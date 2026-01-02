@@ -205,6 +205,14 @@ function parseTrigger(text: string): Trigger | undefined {
     };
   }
 
+  if (text.match(/\bthis character banishes another character\b/i)) {
+    return {
+      event: "banish",
+      timing,
+      on: "OPPONENT_CHARACTERS", // Characters that can be banished
+    };
+  }
+
   // Parse "you play a card" (generic - any card type)
   if (text.match(/\byou play a card\b/i)) {
     return {
@@ -376,7 +384,7 @@ function parseTrigger(text: string): Trigger | undefined {
   }
 
   // Parse "your other characters" triggers
-  if (text.match(/\bone of your (?:other )?characters/i)) {
+  if (text.match(/\bone of your (?:other |.* )?characters/i)) {
     return {
       event: "banish", // Most common, could be other events
       timing,

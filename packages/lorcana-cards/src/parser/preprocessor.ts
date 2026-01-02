@@ -13,7 +13,13 @@
 export function normalizeText(text: string): string {
   // Normalize to NFC (canonical composition) to ensure consistent string representation
   // This is critical for matching manual overrides where keys might be composed differently than inputs
-  return text.normalize("NFC").trim().replace(/\s+/g, " "); // Collapse multiple spaces into one
+  // Also normalize smart quotes to standard ASCII quotes
+  return text
+    .normalize("NFC")
+    .replace(/[\u2018\u2019]/g, "'") // Replace smart single quotes
+    .replace(/[\u201C\u201D]/g, '"') // Replace smart double quotes
+    .trim()
+    .replace(/\s+/g, " "); // Collapse multiple spaces into one
 }
 
 /**

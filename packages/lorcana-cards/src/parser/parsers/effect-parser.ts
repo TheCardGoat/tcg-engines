@@ -32,8 +32,14 @@ import {
 import {
   BANISH_ALL_PATTERN,
   BANISH_PATTERN,
+  CANT_CHALLENGE_PATTERN,
+  CANT_QUEST_PATTERN,
+  CANT_READY_PATTERN,
+  CANT_SING_PATTERN,
   CHOOSE_AND_DISCARD_PATTERN,
+  CHOOSE_PATTERN,
   DEAL_DAMAGE_PATTERN,
+  DISCARD_HAND_PATTERN,
   DISCARD_PATTERN,
   DRAW_AMOUNT_PATTERN,
   EXERT_PATTERN,
@@ -44,9 +50,11 @@ import {
   FOR_EACH_CHARACTER_THAT_SANG_PATTERN,
   FOR_EACH_DAMAGE_ON_SELF_PATTERN,
   FOR_EACH_DAMAGE_ON_TARGET_PATTERN,
+  FOR_EACH_DAMAGE_REMOVED_PATTERN,
   FOR_EACH_DAMAGED_CHARACTER_PATTERN,
   FOR_EACH_ITEM_PATTERN,
   FOR_EACH_LOCATION_PATTERN,
+  FOR_EACH_LORE_LOST_PATTERN,
   GAIN_LORE_PATTERN,
   GRANT_KEYWORD_PATTERN,
   hasChoiceEffect,
@@ -59,17 +67,26 @@ import {
   LOOK_AT_TOP_PATTERN,
   LOSE_LORE_PATTERN,
   MOVE_TO_LOCATION_PATTERN,
+  PAY_LESS_TO_PLAY_PATTERN,
+  PLAY_COST_X_OR_LESS_FREE_PATTERN,
   PLAY_FROM_DISCARD_PATTERN,
+  PUT_BACK_ON_TOP_PATTERN,
   PUT_DAMAGE_PATTERN,
   PUT_INTO_INKWELL_FACEDOWN_PATTERN,
   PUT_INTO_INKWELL_PATTERN,
+  PUT_ONE_IN_HAND_AND_BOTTOM_PATTERN,
+  PUT_ONE_ON_TOP_AND_BOTTOM_PATTERN,
+  PUT_REST_ON_BOTTOM_PATTERN,
+  PUT_TOP_OR_BOTTOM_PATTERN,
   PUT_UNDER_PATTERN,
   READY_PATTERN,
   REMOVE_DAMAGE_PATTERN,
   REPEAT_PATTERN,
   REPEAT_UP_TO_PATTERN,
+  RETURN_COST_X_OR_LESS_PATTERN,
   RETURN_FROM_DISCARD_PATTERN,
   RETURN_TO_HAND_PATTERN,
+  REVEAL_AND_PUT_IN_HAND_PATTERN,
   REVEAL_HAND_PATTERN,
   SEARCH_AND_SHUFFLE_PATTERN,
   SEARCH_DECK_PATTERN,
@@ -80,6 +97,7 @@ import {
   splitOnForEach,
   splitOnIfYouDo,
   splitSequenceSteps,
+  THIS_CHARACTER_GETS_STAT_PATTERN,
   YOU_MAY_PUT_INTO_INKWELL_PATTERN,
 } from "../patterns/effects";
 import { parseCondition } from "./condition-parser";
@@ -109,13 +127,18 @@ const DEFAULT_ALL_CHARACTERS_TARGET: CharacterTarget = {
 /**
  * Helper function to parse numeric values or {d} placeholders
  * Converts {d} to -1 as a placeholder value
+ * Handles +{d} and -{d} prefixes (multiplying -1 by the sign)
  *
- * @param value - String that might be a number or "{d}"
- * @returns Parsed number or -1 for {d} placeholder
+ * @param value - String that might be a number or "{d}" with optional +/- prefix
+ * @returns Parsed number or -1 for {d} placeholder (negated if -{d})
  */
 function parseNumericValue(value: string): number {
-  if (value === "{d}") {
-    return -1; // Placeholder value for {d}
+  // Handle {d} placeholder with optional sign prefix
+  if (value.includes("{d}")) {
+    if (value.startsWith("-")) {
+      return 1; // -{d} becomes positive 1 (sign will be applied)
+    }
+    return -1; // +{d} or {d} becomes -1 (placeholder)
   }
   return Number.parseInt(value, 10);
 }
@@ -129,47 +152,109 @@ function parseNumericValue(value: string): number {
 export function parseEffect(text: string): Effect | undefined {
   if (!text) return undefined;
 
+  // Strip leading punctuation (commas, periods) that might be artifacts of splitting
+  const cleanText = text.trim().replace(/^[,.]\s*/, "");
+  if (!cleanText) return undefined;
+
   // Handle conditional effects first ("if X, Y" or "if X, Y instead")
   // Must be checked before choice and sequence effects
-  if (hasConditionalEffect(text)) {
-    const conditionalEffect = parseConditionalEffect(text);
+  if (hasConditionalEffect(cleanText)) {
+    const conditionalEffect = parseConditionalEffect(cleanText);
     if (conditionalEffect) return conditionalEffect;
   }
 
+  // Handle complex look-at effects (which might look like sequences but should be atomic)
+  // This must be checked before sequence splitting
+  if (LOOK_AT_CARDS_FULL_PATTERN.test(cleanText)) {
+    return parseAtomicEffect(cleanText);
+  }
+
   // Handle choice effects ("Choose one:" or "X or Y")
-  if (hasChoiceEffect(text)) {
-    return parseChoiceEffect(text);
+  if (hasChoiceEffect(cleanText)) {
+    return parseChoiceEffect(cleanText);
   }
 
   // Handle "if you do" patterns (optional with follow-up)
   // Must be checked before general optional and sequence checks
-  if (hasIfYouDoPattern(text) && hasOptionalEffect(text)) {
-    return parseOptionalWithFollowUp(text);
-  }
-
-  // Handle for-each effects (before sequence to avoid splitting on periods in "for each")
-  if (hasForEachEffect(text)) {
-    return parseForEachEffect(text);
+  if (hasIfYouDoPattern(cleanText) && hasOptionalEffect(cleanText)) {
+    return parseOptionalWithFollowUp(cleanText);
   }
 
   // Handle repeat effects (before sequence to handle "X. Repeat this Y times")
-  if (hasRepeatEffect(text)) {
-    return parseRepeatEffect(text);
+  if (hasRepeatEffect(cleanText)) {
+    return parseRepeatEffect(cleanText);
   }
 
   // Handle sequence effects ("X, then Y" or "X. Y" or "X and Y")
-  // Check this after for-each and repeat to handle those patterns correctly
-  if (hasSequenceEffect(text) && !hasOptionalEffect(text)) {
-    return parseSequenceEffect(text);
+  // Check this after repeat but BEFORE for-each to correctly split multi-sentence effects
+  if (hasSequenceEffect(cleanText)) {
+    return parseSequenceEffect(cleanText);
+  }
+
+  // Handle for-each effects
+  if (hasForEachEffect(cleanText)) {
+    return parseForEachEffect(cleanText);
   }
 
   // Handle optional effects ("you may")
-  if (hasOptionalEffect(text)) {
-    return parseOptionalEffect(text);
+  if (hasOptionalEffect(cleanText)) {
+    return parseOptionalEffect(cleanText);
+  }
+
+  // Handle restriction effects ("can't X") as atomic effects
+  // This must be checked before parseAtomicEffect which might return undefined
+  if (
+    CANT_QUEST_PATTERN.test(cleanText) ||
+    CANT_CHALLENGE_PATTERN.test(cleanText) ||
+    CANT_READY_PATTERN.test(cleanText) ||
+    CANT_SING_PATTERN.test(cleanText)
+  ) {
+    return parseRestrictionEffect(cleanText);
   }
 
   // Parse as single atomic effect
-  return parseAtomicEffect(text);
+  return parseAtomicEffect(cleanText);
+}
+
+/**
+ * Parse a restriction effect (can't quest/challenge/ready)
+ *
+ * @param text - Text containing restriction
+ * @returns Restriction Effect or undefined
+ */
+function parseRestrictionEffect(text: string): Effect | undefined {
+  let restriction:
+    | "cant-quest"
+    | "cant-challenge"
+    | "cant-ready"
+    | "cant-sing"
+    | undefined;
+
+  if (CANT_QUEST_PATTERN.test(text)) restriction = "cant-quest";
+  else if (CANT_CHALLENGE_PATTERN.test(text)) restriction = "cant-challenge";
+  else if (CANT_READY_PATTERN.test(text)) restriction = "cant-ready";
+  else if (CANT_SING_PATTERN.test(text)) restriction = "cant-sing";
+
+  if (!restriction) return undefined;
+
+  // Determine duration
+  let duration: "this-turn" | "next-turn" | undefined = "this-turn"; // Default to this turn?
+  if (text.includes("next turn")) {
+    duration = "next-turn";
+  } else if (text.includes("this turn")) {
+    duration = "this-turn";
+  }
+
+  // Target parsing (simplified for now)
+  // Reuse parseCharacterTarget or default to CHOSEN if not found, or implicit context
+  const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+
+  return {
+    type: "restriction",
+    restriction,
+    target,
+    duration,
+  } as any;
 }
 
 /**
@@ -190,7 +275,9 @@ function parseForEachEffect(text: string): Effect | undefined {
   if (!effect) return undefined;
 
   // Parse the counter type
-  const counter = parseForEachCounter(counterText);
+  // Remove trailing period from counter text if present
+  const cleanCounterText = counterText.replace(/\.\s*$/, "");
+  const counter = parseForEachCounter(cleanCounterText);
   if (!counter) return undefined;
 
   return {
@@ -315,6 +402,20 @@ function parseForEachCounter(text: string): ForEachCounter | undefined {
   if (FOR_EACH_CHARACTER_THAT_SANG_PATTERN.test(text)) {
     const thisTurn = text.includes("this turn");
     return { type: "characters-that-sang", thisTurn };
+  }
+
+  // Check damage removed pattern (Rapunzel)
+  if (FOR_EACH_DAMAGE_REMOVED_PATTERN.test(text)) {
+    const match = text.match(FOR_EACH_DAMAGE_REMOVED_PATTERN);
+    const amount = match && match[1] ? Number.parseInt(match[1], 10) : 1;
+    return { type: "damage-removed", amount } as any;
+  }
+
+  // Check lore lost pattern (Ursula)
+  if (FOR_EACH_LORE_LOST_PATTERN.test(text)) {
+    const match = text.match(FOR_EACH_LORE_LOST_PATTERN);
+    const amount = match && match[1] ? Number.parseInt(match[1], 10) : 1;
+    return { type: "lore-lost", amount } as any;
   }
 
   return undefined;
@@ -510,7 +611,7 @@ function parseSequenceEffect(text: string): Effect | undefined {
   const parsedSteps: Effect[] = [];
 
   for (const stepText of steps) {
-    const effect = parseAtomicEffect(stepText);
+    const effect = parseEffect(stepText);
     if (effect) {
       parsedSteps.push(effect);
     } else {
@@ -598,7 +699,7 @@ function parseAtomicEffect(text: string): Effect | undefined {
   if (LOOK_AT_CARDS_FULL_PATTERN.test(text)) {
     const match = text.match(LOOK_AT_CARDS_FULL_PATTERN);
     if (match) {
-      const amount = Number.parseInt(match[1], 10);
+      const amount = match[1] ? Number.parseInt(match[1], 10) : 1;
       const target = parsePlayerTarget(text) || "CONTROLLER";
       const effect: any = {
         type: "look-at-cards",
@@ -626,7 +727,7 @@ function parseAtomicEffect(text: string): Effect | undefined {
   if (LOOK_AT_TOP_PATTERN.test(text)) {
     const match = text.match(LOOK_AT_TOP_PATTERN);
     if (match) {
-      const amount = Number.parseInt(match[1], 10);
+      const amount = match[1] ? Number.parseInt(match[1], 10) : 1;
       const target = parsePlayerTarget(text) || "CONTROLLER";
       return {
         type: "look-at-cards",
@@ -637,7 +738,91 @@ function parseAtomicEffect(text: string): Effect | undefined {
     }
   }
 
-  // Try put into inkwell effects
+  // Look-and-put composite movement handlers
+  if (PUT_ONE_ON_TOP_AND_BOTTOM_PATTERN.test(text)) {
+    return {
+      type: "move-cards",
+      from: "look-at",
+      to: "top-and-bottom",
+      count: 2, // 1 on top, 1 on bottom
+    } as any;
+  }
+
+  if (PUT_ONE_IN_HAND_AND_BOTTOM_PATTERN.test(text)) {
+    return {
+      type: "move-cards",
+      from: "look-at",
+      to: "hand-and-bottom",
+      count: 2,
+    } as any;
+  }
+
+  if (PUT_TOP_OR_BOTTOM_PATTERN.test(text)) {
+    return {
+      type: "move-cards",
+      from: "look-at",
+      to: "top-or-bottom",
+      count: 1,
+    } as any;
+  }
+
+  if (PUT_REST_ON_BOTTOM_PATTERN.test(text)) {
+    return {
+      type: "move-cards",
+      from: "look-at",
+      to: "bottom-deck",
+      count: "rest",
+    } as any;
+  }
+
+  if (PUT_BACK_ON_TOP_PATTERN.test(text)) {
+    return {
+      type: "move-cards",
+      from: "look-at",
+      to: "top-of-deck",
+      count: "all",
+    } as any;
+  }
+
+  // Reveal and put in hand (Be Our Guest)
+  if (REVEAL_AND_PUT_IN_HAND_PATTERN.test(text)) {
+    const match = text.match(REVEAL_AND_PUT_IN_HAND_PATTERN);
+    if (match) {
+      // match[1] is e.g. "a character card" or "character card"
+      // We need to parse this filter if possible, or store as "filter"
+      return {
+        type: "reveal-and-put-in-hand",
+        filter: match[1],
+        from: "look-at",
+      } as any;
+    }
+  }
+
+  // Play for free (Just in Time)
+  if (PLAY_COST_X_OR_LESS_FREE_PATTERN.test(text)) {
+    const match = text.match(PLAY_COST_X_OR_LESS_FREE_PATTERN);
+    if (match) {
+      const cost = Number.parseInt(match[1], 10);
+      return {
+        type: "play-card",
+        cost: "free",
+        filter: { cost: { lte: cost } },
+      } as any;
+    }
+  }
+
+  // Return cost X or less (Befuddle)
+  if (RETURN_COST_X_OR_LESS_PATTERN.test(text)) {
+    const match = text.match(RETURN_COST_X_OR_LESS_PATTERN);
+    if (match) {
+      const cost = Number.parseInt(match[1], 10);
+      return {
+        type: "return-to-hand",
+        target: "CHOSEN_CHARACTER_OR_ITEM",
+        filter: { cost: { lte: cost } },
+      } as any;
+    }
+  }
   if (YOU_MAY_PUT_INTO_INKWELL_PATTERN.test(text)) {
     return {
       type: "put-into-inkwell",
@@ -646,50 +831,68 @@ function parseAtomicEffect(text: string): Effect | undefined {
     };
   }
 
-  if (PUT_INTO_INKWELL_FACEDOWN_PATTERN.test(text)) {
-    const source = text.includes("top card of your deck")
-      ? "top-of-deck"
-      : "hand";
-    const exerted = text.includes("exerted");
-    return {
-      type: "put-into-inkwell",
-      source,
-      target: "CONTROLLER",
-      exerted,
-    };
-  }
-
-  if (PUT_INTO_INKWELL_PATTERN.test(text)) {
+  if (
+    PUT_INTO_INKWELL_PATTERN.test(text) ||
+    PUT_INTO_INKWELL_FACEDOWN_PATTERN.test(text)
+  ) {
     let source:
       | "top-of-deck"
       | "hand"
       | "chosen-card-in-play"
-      | "chosen-character" = "hand";
+      | "chosen-character"
+      | "this-card"
+      | "referenced-card" = "hand";
 
     if (text.includes("top card of your deck")) {
       source = "top-of-deck";
-    } else if (text.includes("card from your hand")) {
+    } else if (
+      text.includes("card from your hand") ||
+      text.includes("additional card")
+    ) {
       source = "hand";
+    } else if (text.includes("this card")) {
+      source = "this-card";
+    } else if (text.includes("that card")) {
+      source = "referenced-card";
     } else if (text.includes("character")) {
       source = "chosen-character";
     }
 
-    return {
+    // Determine target player's inkwell
+    let targetPlayer: PlayerTarget = "CONTROLLER";
+    if (
+      text.includes("their player's inkwell") ||
+      text.includes("their inkwell")
+    ) {
+      targetPlayer = "OPPONENT";
+    }
+
+    const exerted = text.includes("exerted");
+    const facedown = text.includes("facedown") || text.includes("face down");
+
+    const effect: any = {
       type: "put-into-inkwell",
       source,
-      target: "CONTROLLER",
+      target: targetPlayer,
     };
+
+    // Only add exerted/facedown when true
+    if (exerted) effect.exerted = true;
+    if (facedown) effect.facedown = true;
+
+    return effect;
   }
 
   // Try shuffle into deck effect
   if (SHUFFLE_INTO_DECK_PATTERN.test(text)) {
-    const target =
-      parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
+    const target = text.includes("card from any discard")
+      ? "CARD_FROM_DISCARD"
+      : parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
     return {
       type: "shuffle-into-deck",
       target,
       intoDeck: "owner",
-    };
+    } as any;
   }
 
   // Try put under effect (Boost mechanic)
@@ -751,6 +954,17 @@ function parseAtomicEffect(text: string): Effect | undefined {
 
   // Try discard effect
   const discardMatch = text.match(DISCARD_PATTERN);
+  const discardHandMatch = text.match(DISCARD_HAND_PATTERN);
+
+  if (discardHandMatch) {
+    const target = parsePlayerTarget(text) || "CONTROLLER";
+    return {
+      type: "discard",
+      amount: "hand",
+      target,
+    } as any;
+  }
+
   if (discardMatch) {
     const amount =
       !discardMatch[1] || discardMatch[1] === "a"
@@ -829,30 +1043,153 @@ function parseAtomicEffect(text: string): Effect | undefined {
     };
   }
 
+  // Try cost reduction effect
+  const payLessMatch = text.match(PAY_LESS_TO_PLAY_PATTERN);
+  if (payLessMatch) {
+    const amount = parseNumericValue(payLessMatch[1]);
+    const targetText = payLessMatch[2];
+
+    // Determine target (simplistic for now)
+    let target: any = "SELF";
+    if (targetText.includes("next action")) target = "NEXT_ACTION";
+    if (targetText.includes("next character")) target = "NEXT_CHARACTER";
+    if (targetText.includes("next item")) target = "NEXT_ITEM";
+    if (targetText.includes("Broom characters"))
+      target = "YOUR_BROOM_CHARACTERS";
+
+    return {
+      type: "cost-reduction",
+      amount,
+      target,
+    } as any;
+  }
+
+  // Try keyword granting effect
+  const grantMatch = text.match(GRANT_KEYWORD_PATTERN);
+  if (grantMatch) {
+    const keywordRaw = grantMatch[1];
+    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+
+    // Parse keyword value if present
+    let keyword = keywordRaw;
+    let value: number | undefined;
+
+    // Handle parameterized keywords
+    if (keywordRaw.includes("Challenger")) {
+      keyword = "Challenger";
+      const match = keywordRaw.match(/Challenger \+(\d+)/);
+      if (match) value = Number.parseInt(match[1], 10);
+    } else if (keywordRaw.includes("Resist")) {
+      keyword = "Resist";
+      const match = keywordRaw.match(/Resist \+(\d+)/);
+      if (match) value = Number.parseInt(match[1], 10);
+    }
+
+    // Determine duration based on text
+    const duration = text.includes("this turn") ? "this-turn" : "permanent";
+
+    const effect: any = {
+      type: "gain-keyword",
+      keyword,
+      target,
+      duration,
+    };
+
+    // Only add value if defined
+    if (value !== undefined) {
+      effect.value = value;
+    }
+
+    return effect;
+  }
+
+  // Try stat modification effect
+  const statMatch = text.match(STAT_MODIFIER_PATTERN);
+  if (statMatch) {
+    const modifier = parseNumericValue(statMatch[1]);
+    const statSymbol = statMatch[2];
+    const stat =
+      statSymbol === "S"
+        ? "strength"
+        : statSymbol === "W"
+          ? "willpower"
+          : "lore";
+    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+
+    // Determine duration based on text
+    const duration = text.includes("this turn") ? "this-turn" : "permanent";
+
+    return {
+      type: "modify-stat",
+      stat,
+      modifier,
+      target,
+      duration,
+    } as any;
+  }
+
+  // Try self stat modification
+  const selfStatMatch = text.match(THIS_CHARACTER_GETS_STAT_PATTERN);
+  if (selfStatMatch) {
+    const modifier = parseNumericValue(selfStatMatch[1]);
+    const statSymbol = selfStatMatch[2];
+    const stat =
+      statSymbol === "S"
+        ? "strength"
+        : statSymbol === "W"
+          ? "willpower"
+          : "lore";
+
+    return {
+      type: "modify-stat",
+      stat,
+      modifier,
+      target: "SELF",
+      duration: "continuous", // explicit
+    } as any;
+  }
+
+  // Try move to location effect
+
+  // Try singer restriction
+  if (CANT_SING_PATTERN.test(text)) {
+    return {
+      type: "restriction",
+      restriction: "cant-sing",
+      target: "SELF",
+    } as any;
+  }
+
   // Try exert effect
   if (EXERT_PATTERN.test(text)) {
-    const target =
+    let target: any =
       parseCharacterTarget(text) ||
       parseItemTarget(text) ||
       parseLocationTarget(text) ||
       DEFAULT_CHOSEN_CHARACTER_TARGET;
+    if (text.includes("all opposing damaged characters")) {
+      target = "ALL_OPPOSING_DAMAGED_CHARACTERS";
+    }
     return {
       type: "exert",
       target,
-    };
+    } as any;
   }
 
   // Try ready effect
   if (READY_PATTERN.test(text)) {
-    const target =
+    let target: any =
       parseCharacterTarget(text) ||
       parseItemTarget(text) ||
       parseLocationTarget(text) ||
       DEFAULT_CHOSEN_CHARACTER_TARGET;
+    if (text.includes("this character")) {
+      target = "SELF";
+    }
     return {
       type: "ready",
       target,
-    };
+    } as any;
   }
 
   // Try banish effect
@@ -883,81 +1220,14 @@ function parseAtomicEffect(text: string): Effect | undefined {
 
   // Try return to hand effect
   if (RETURN_TO_HAND_PATTERN.test(text)) {
-    const target =
+    let target: any =
       parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
+    if (text.includes("this card")) target = "SELF";
+    if (text.includes("that card")) target = "REFERENCED";
+
     return {
       type: "return-to-hand",
       target,
-    };
-  }
-
-  // Try stat modification - with {d} placeholder support
-  const statModMatch = text.match(STAT_MODIFIER_PATTERN);
-  if (statModMatch) {
-    const modifierStr = statModMatch[1];
-    // Handle +{d}, -{d}, or {d} (which defaults to positive)
-    let modifier: number;
-    if (modifierStr === "{d}" || modifierStr === "+{d}") {
-      modifier = -1; // Placeholder for positive {d}
-    } else if (modifierStr === "-{d}") {
-      modifier = 1; // Placeholder for negative {d} (stored as positive, negated later)
-    } else {
-      modifier = Number.parseInt(modifierStr, 10);
-    }
-
-    const stat = statModMatch[2] as "S" | "W" | "L";
-    const target =
-      parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
-    const duration = text.includes("this turn") ? "this-turn" : "permanent";
-
-    return {
-      type: "modify-stat",
-      stat: stat === "S" ? "strength" : stat === "W" ? "willpower" : "lore",
-      modifier,
-      target,
-      duration,
-    };
-  }
-
-  // Try keyword grant - use "gain-keyword" effect type
-  const keywordMatch = text.match(GRANT_KEYWORD_PATTERN);
-  if (keywordMatch) {
-    const keywordText = keywordMatch[1];
-    const target =
-      parseCharacterTarget(text) || DEFAULT_CHOSEN_CHARACTER_TARGET;
-    const duration = text.includes("this turn") ? "this-turn" : "permanent";
-
-    // Parse the keyword name and value
-    let keyword:
-      | "Rush"
-      | "Ward"
-      | "Evasive"
-      | "Bodyguard"
-      | "Support"
-      | "Reckless"
-      | "Alert"
-      | "Challenger"
-      | "Resist";
-    let value: number | undefined;
-
-    if (keywordText.startsWith("Challenger")) {
-      keyword = "Challenger";
-      const valueMatch = keywordText.match(/\+(\d+)/);
-      value = valueMatch ? Number.parseInt(valueMatch[1], 10) : undefined;
-    } else if (keywordText.startsWith("Resist")) {
-      keyword = "Resist";
-      const valueMatch = keywordText.match(/\+(\d+)/);
-      value = valueMatch ? Number.parseInt(valueMatch[1], 10) : undefined;
-    } else {
-      keyword = keywordText as typeof keyword;
-    }
-
-    return {
-      type: "gain-keyword",
-      keyword,
-      value,
-      target,
-      duration,
     };
   }
 
@@ -979,6 +1249,15 @@ function parseAtomicEffect(text: string): Effect | undefined {
       type: "reveal-hand",
       target,
     };
+  }
+
+  // Try choose effect
+  if (CHOOSE_PATTERN.test(text)) {
+    const target = parseCharacterTarget(text) || "CHOSEN_CHARACTER";
+    return {
+      type: "choose",
+      target,
+    } as any;
   }
 
   // Could not parse effect

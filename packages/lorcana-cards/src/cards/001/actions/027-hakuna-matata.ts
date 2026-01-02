@@ -1,0 +1,31 @@
+import type { ActionCard } from "@tcg/lorcana";
+
+export const hakunaMatata: ActionCard = {
+  id: "10e",
+  cardType: "action",
+  name: "Hakuna Matata",
+  inkType: ["amber"],
+  franchise: "Lion King",
+  set: "001",
+  text: "Remove up to 3 damage from each of your characters.",
+  actionSubtype: "song",
+  cost: 4,
+  cardNumber: 27,
+  inkable: true,
+  externalIds: {
+    ravensburger: "820f02f5beebca54dc425f38c78f9f8bccea8dea",
+  },
+  abilities: [
+    {
+      id: "10e-1",
+      text: "Remove up to 3 damage from each of your characters.",
+      type: "action",
+      effect: {
+        type: "remove-damage",
+        amount: 3,
+        target: "YOUR_CHARACTERS",
+        upTo: true,
+      },
+    },
+  ],
+};
