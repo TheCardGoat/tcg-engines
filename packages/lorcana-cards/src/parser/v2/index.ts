@@ -3,6 +3,7 @@
  * Provides a high-level API for parsing ability text into typed Ability objects.
  */
 
+import { MANUAL_ENTRIES } from "../manual-overrides";
 import { parseAtomicEffect } from "./effects/atomic";
 import { parseCompositeEffect } from "./effects/composite";
 import { LorcanaAbilityParser } from "./grammar";
@@ -12,6 +13,10 @@ import { parseTrigger } from "./trigger-parser";
 import type { Ability, Effect } from "./types";
 import { AbilityVisitor } from "./visitors";
 
+interface ParseAbilityOptions {
+  cardName?: string;
+}
+
 export class LorcanaParserV2 {
   private lexer = LorcanaLexer;
   private parser = new LorcanaAbilityParser();
@@ -20,11 +25,12 @@ export class LorcanaParserV2 {
   /**
    * Parse ability text into typed Ability objects.
    * Uses a hybrid approach:
-   * 1. Try Chevrotain grammar-based parsing first
-   * 2. Fall back to text-based (regex) parsers if grammar fails
+   * 1. Check manual overrides first (if text is in MANUAL_ENTRIES)
+   * 2. Try Chevrotain grammar-based parsing
+   * 3. Fall back to text-based (regex) parsers if grammar fails
    * Returns null if parsing fails completely.
    */
-  parseAbility(text: string): Ability | null {
+  parseAbility(text: string, options?: ParseAbilityOptions): Ability | null {
     logger.info("Parsing ability", { text });
 
     if (!text || text.trim().length === 0) {
@@ -32,6 +38,15 @@ export class LorcanaParserV2 {
     }
 
     const trimmedText = text.trim();
+
+    // Check manual overrides first
+    if (trimmedText in MANUAL_ENTRIES) {
+      logger.info("Using manual override entry", { text: trimmedText });
+      const entry = MANUAL_ENTRIES[trimmedText];
+      // Handle both single entries and arrays of entries
+      const abilityEntry = Array.isArray(entry) ? entry[0] : entry;
+      return abilityEntry.ability as unknown as Ability;
+    }
 
     // Try grammar-based parsing first
     const grammarResult = this.tryGrammarParsing(trimmedText);
