@@ -52,8 +52,27 @@ function parseFromCst(
 function parseFromText(text: string): DiscardEffect | null {
   logger.debug("Attempting to parse discard effect from text", { text });
 
-  const pattern = /discard\s+(\d+)\s+cards?/i;
-  const match = text.match(pattern);
+  // Try "choose and discard a card" pattern first
+  const chooseAndDiscardPattern = /choose and discard a card/i;
+  const chooseMatch = text.match(chooseAndDiscardPattern);
+  if (chooseMatch) {
+    logger.info(
+      "Parsed discard effect from text (choose and discard pattern)",
+      {
+        amount: 1,
+      },
+    );
+    return {
+      type: "discard",
+      amount: 1,
+      target: "CONTROLLER",
+      chosen: true,
+    };
+  }
+
+  // Try "discard X cards" pattern
+  const discardPattern = /discard\s+(\d+)\s+cards?/i;
+  const match = text.match(discardPattern);
 
   if (!match) {
     logger.debug("Discard effect pattern did not match");

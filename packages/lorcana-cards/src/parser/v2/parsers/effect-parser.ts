@@ -3,7 +3,8 @@
  * Re-exports effect parsers from the new v2 structure.
  */
 
-import { parseAtomicEffect, parseCompositeEffect } from "../effects/atomic";
+import { parseAtomicEffect } from "../effects/atomic";
+import { parseCompositeEffect } from "../effects/composite";
 
 /**
  * Parse effect text using both atomic and composite effect parsers.
