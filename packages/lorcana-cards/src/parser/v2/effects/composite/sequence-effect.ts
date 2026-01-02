@@ -9,6 +9,7 @@ import { logger } from "../../logging";
 import type { Effect, SequenceEffect } from "../../types";
 import type { EffectParser } from "../atomic";
 import { parseAtomicEffect } from "../atomic";
+import { parseCompositeEffect } from "./index";
 
 /**
  * Sequence separators used in Lorcana ability text.
@@ -35,9 +36,60 @@ const SEQUENCE_SEPARATORS = [
 /**
  * Parse sequence effect from text string.
  * Splits the text on sequence separators and parses each step as an atomic effect.
+ * Also handles special patterns like "Effect. Repeat this/that N times" which convert to repeat effects.
  */
 function parseFromText(text: string): SequenceEffect | null {
   logger.debug("Attempting to parse sequence effect from text", { text });
+
+  // Check for "repeat this/that N times" pattern first (without "You may" - that's handled by optional parser)
+  // This should be converted to a repeat effect instead of a sequence
+  // "up to X times" patterns are implicitly optional
+  const repeatPattern =
+    /^(.+)\.\s+repeat\s+(?:this|that|the above effect)(?:\s+up\s+to\s+(\d+)\s+times|(?:\s+(\d+)\s+times?))?$/i;
+  const repeatMatch = text.match(repeatPattern);
+
+  if (repeatMatch) {
+    const effectText = repeatMatch[1].trim();
+    // Match group 1 is for "up to X times", group 2 is for "X times"
+    const timesStr = repeatMatch[2] || repeatMatch[3];
+    const times = timesStr ? Number.parseInt(timesStr, 10) : undefined;
+    const hasUpTo = repeatMatch[2] !== undefined; // Matched the "up to X times" group
+
+    if (times !== undefined && !Number.isNaN(times)) {
+      logger.debug("Found repeat pattern in sequence parser", {
+        effectText,
+        times,
+      });
+
+      // Parse the effect part
+      const effect = parseAtomicEffect(effectText);
+
+      if (effect) {
+        // Create a repeat effect
+        const repeatEffectResult = {
+          type: "repeat",
+          times,
+          effect,
+        };
+
+        // "up to X times" patterns are implicitly optional
+        const finalEffect = hasUpTo
+          ? {
+              type: "optional",
+              effect: repeatEffectResult,
+              chooser: "CONTROLLER",
+            }
+          : repeatEffectResult;
+
+        logger.info("Parsed repeat effect from sequence pattern", {
+          finalEffect,
+        });
+
+        // Return the result (repeat or optional) instead of a sequence
+        return finalEffect as unknown as SequenceEffect;
+      }
+    }
+  }
 
   let stepTexts: string[] = [];
   let separatorUsed: string | undefined;
@@ -87,19 +139,126 @@ function parseFromText(text: string): SequenceEffect | null {
     }
   }
 
+  // Check for special case: "Effect. (You may) repeat this/that up to X times"
+  // This should be converted to an optional repeat effect, not a sequence
+  if (stepTexts.length === 2) {
+    const step1 = stepTexts[0];
+    const step2 = stepTexts[1];
+
+    // Check if step 2 is "(You may) repeat this/that (up to X times)"
+    if (
+      /^(?:you may\s+)?repeat\s+(?:this|that|the above effect)(?:\s+up\s+to\s+(\d+)\s+times|(?:\s+(\d+)\s+times?))?$/i.test(
+        step2,
+      )
+    ) {
+      const repeatMatch = step2.match(
+        /^(?:you may\s+)?repeat\s+(?:this|that|the above effect)(?:\s+up\s+to\s+(\d+)\s+times|(?:\s+(\d+)\s+times?))?$/i,
+      );
+      if (repeatMatch) {
+        const timesStr = repeatMatch[1] || repeatMatch[2];
+        const times = timesStr ? Number.parseInt(timesStr, 10) : undefined;
+        const hasYouMay = /^you may/i.test(step2);
+        const hasUpTo = repeatMatch[1] !== undefined; // Matched the "up to X times" group
+
+        // "up to X times" patterns are implicitly optional even without "You may"
+        const isOptional = hasYouMay || hasUpTo;
+
+        if (times !== undefined && !Number.isNaN(times)) {
+          logger.debug("Found optional repeat pattern", {
+            step1,
+            step2,
+            times,
+            isOptional,
+          });
+
+          // Parse the first effect
+          const firstEffect = parseAtomicEffect(step1);
+
+          if (firstEffect) {
+            // Create a repeat effect that links to the first effect
+            const repeatEffect = {
+              type: "repeat",
+              times,
+              effect: firstEffect,
+            };
+
+            // If "You may" is present OR "up to" is present, wrap in optional effect
+            const finalEffect = isOptional
+              ? {
+                  type: "optional",
+                  effect: repeatEffect,
+                  chooser: "CONTROLLER",
+                }
+              : repeatEffect;
+
+            logger.info("Parsed optional repeat effect", { finalEffect });
+            return finalEffect as unknown as SequenceEffect;
+          }
+        }
+      }
+    }
+  }
+
   // No sequence pattern found
   if (stepTexts.length < 2) {
     logger.debug("No sequence pattern found - requires at least 2 steps");
     return null;
   }
 
-  // Parse each step as an atomic effect
+  // Parse each step - try composite parsers first (for for-each, optional, etc.), then atomic
   const steps: Effect[] = [];
   for (let i = 0; i < stepTexts.length; i++) {
     const stepText = stepTexts[i];
     logger.debug("Parsing sequence step", { stepIndex: i, stepText });
 
-    const effect = parseAtomicEffect(stepText);
+    // Special handling for "You may repeat this/that (up to X times)" pattern
+    // This needs to link to the previous effect in the sequence
+    if (
+      i > 0 &&
+      /^(?:you may\s+)?repeat\s+(?:this|that|the above effect)(?:\s+up\s+to\s+(\d+)\s+times|(?:\s+(\d+)\s+times?))?$/i.test(
+        stepText,
+      )
+    ) {
+      const repeatMatch = stepText.match(
+        /^(?:you may\s+)?repeat\s+(?:this|that|the above effect)(?:\s+up\s+to\s+(\d+)\s+times|(?:\s+(\d+)\s+times?))?$/i,
+      );
+      if (repeatMatch) {
+        const timesStr = repeatMatch[1] || repeatMatch[2];
+        const times = timesStr ? Number.parseInt(timesStr, 10) : undefined;
+        const isOptional = /^you may/i.test(stepText);
+
+        if (times !== undefined && !Number.isNaN(times) && steps.length > 0) {
+          // Create a repeat effect that links to the previous effect
+          const repeatEffect = {
+            type: "repeat",
+            times,
+            effect: steps[i - 1], // Link to previous effect
+          };
+
+          // If "You may" is present, wrap in optional effect
+          const finalEffect = isOptional
+            ? { type: "optional", effect: repeatEffect, chooser: "CONTROLLER" }
+            : repeatEffect;
+
+          // Replace the previous step with the repeat-enhanced version
+          steps[i] = finalEffect;
+          logger.debug("Successfully parsed repeat-this step", {
+            stepIndex: i,
+            finalEffect,
+          });
+          continue;
+        }
+      }
+    }
+
+    // Try composite parsers first (for for-each, optional, etc.)
+    let effect = parseCompositeEffect(stepText);
+
+    // If composite parsing fails, try atomic parsing
+    if (!effect) {
+      effect = parseAtomicEffect(stepText);
+    }
+
     if (effect) {
       steps.push(effect);
       logger.debug("Successfully parsed sequence step", {

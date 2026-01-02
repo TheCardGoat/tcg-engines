@@ -206,7 +206,12 @@ export class LorcanaParserV2 {
       nameMatch = originalText.match(
         /^([A-Z][A-Z\s!?'-]+)\s+Characters\s+(?:gain|get)/i,
       );
-      name = nameMatch ? nameMatch[1].trim() : undefined;
+      // Exclude common words that are not ability names
+      const invalidNames = ["Your", "Their", "Opponent's", "All"];
+      const extractedName = nameMatch ? nameMatch[1].trim() : undefined;
+      if (extractedName && !invalidNames.includes(extractedName)) {
+        name = extractedName;
+      }
     }
 
     // Try special ability grant name pattern (with "This character can challenge")
@@ -276,12 +281,18 @@ export class LorcanaParserV2 {
     // Check for static abilities (these typically don't have a specific trigger)
     // Static ability patterns:
     // - "Your characters gain/get..." (global buffs)
-    // - "Each player/opponent..." (global effects)
+    // - "Each player/opponent can't/cannot..." (global restrictions)
     // - "This character can't..." (restrictions without "while" condition)
     // - "This character can challenge..." (special ability grants)
     // - "enters play exerted" (enters effects)
+    //
+    // Note: "Each player/opponent" followed by action verbs (draw, discard, lose, gain) are
+    // action abilities, not static abilities. They are one-time effects when played.
     const isStatic =
-      /^(?:While |Your characters |Your items |Each player |Each opponent |This character can'?t |This character cannot |This item can'?t |This item cannot |[A-Z][A-Z\s!?'-]+\s+(?:This character|This item|This character can'?t|This item can'?t|This character cannot|This item cannot))|(?:enters? play exerted)/i.test(
+      /^(?:While |Your characters |Your items |This character can'?t |This character cannot |This item can'?t |This item cannot |[A-Z][A-Z\s!?'-]+\s+(?:This character|This item|This character can'?t|This item can'?t|This character cannot|This item cannot))|(?:enters? play exerted)/i.test(
+        originalText,
+      ) ||
+      /(?:Each player|Each opponent)\s+(?:can'?t|cannot|can)\s+/i.test(
         originalText,
       ) ||
       /characters?\s+(?:gain|get)\s+/i.test(originalText) ||
@@ -324,5 +335,6 @@ export class LorcanaParserV2 {
 export const parserV2 = new LorcanaParserV2();
 
 export { logger } from "./logging";
+export { parseAbilityText, parseAbilityTexts } from "./parser";
 // Re-export types and utilities
 export type { Ability, Effect } from "./types";

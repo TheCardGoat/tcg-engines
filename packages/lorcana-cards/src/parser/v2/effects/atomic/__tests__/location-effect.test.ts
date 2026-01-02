@@ -22,8 +22,8 @@ describe("locationEffectParser", () => {
       expect((result as Effect & { character: string }).character).toBe(
         "CHOSEN_CHARACTER",
       );
-      // Cost is not set when "for free" is not present
-      expect((result as Effect & { cost?: string }).cost).toBeUndefined();
+      // Cost defaults to "normal" when "for free" is not present
+      expect((result as Effect & { cost?: string }).cost).toBe("normal");
     });
 
     it("parses 'move chosen character to a location for free' correctly", () => {
@@ -206,14 +206,14 @@ describe("locationEffectParser", () => {
       expect(result?.type).toBe("move-to-location");
     });
 
-    it("cost is undefined when 'for free' not present", () => {
+    it("cost is 'normal' when 'for free' not present", () => {
       const result = locationEffectParser.parse(
         "move chosen character to a location",
       );
 
       expect(result).not.toBeNull();
-      // Cost property is only set when "for free" is present
-      expect((result as Effect & { cost?: string }).cost).toBeUndefined();
+      // Cost defaults to "normal" when "for free" is not present
+      expect((result as Effect & { cost?: string }).cost).toBe("normal");
     });
 
     it("handles phrases with additional context", () => {

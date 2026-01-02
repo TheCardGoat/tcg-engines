@@ -52,20 +52,30 @@ function parseFromCst(
 function parseFromText(text: string): DiscardEffect | null {
   logger.debug("Attempting to parse discard effect from text", { text });
 
-  // Try "choose and discard a card" pattern first
-  const chooseAndDiscardPattern = /choose and discard a card/i;
+  // Try "choose and discard a card" pattern first (handles both "choose" and "chooses")
+  // Also handles "discard" vs "discards" based on subject agreement
+  const chooseAndDiscardPattern = /chooses? and discards? a card/i;
   const chooseMatch = text.match(chooseAndDiscardPattern);
   if (chooseMatch) {
+    // Extract target (EACH_PLAYER, EACH_OPPONENT, or default to CONTROLLER)
+    let target: "CONTROLLER" | "EACH_PLAYER" | "EACH_OPPONENT" = "CONTROLLER";
+    if (text.toLowerCase().includes("each player")) {
+      target = "EACH_PLAYER";
+    } else if (text.toLowerCase().includes("each opponent")) {
+      target = "EACH_OPPONENT";
+    }
+
     logger.info(
       "Parsed discard effect from text (choose and discard pattern)",
       {
         amount: 1,
+        target,
       },
     );
     return {
       type: "discard",
       amount: 1,
-      target: "CONTROLLER",
+      target,
       chosen: true,
     };
   }

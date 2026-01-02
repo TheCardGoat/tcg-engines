@@ -14,9 +14,10 @@ import type { EffectParser } from "./index";
 function parseFromText(text: string): MoveToLocationEffect | null {
   logger.debug("Attempting to parse location effect from text", { text });
 
-  // Pattern: "move (chosen character|...) to a location"
+  // Pattern: "move (one of your characters|a character of yours|chosen character|...) to a/this location"
+  // Note: "a character" alone (without "of yours") should not parse - requires "chosen"
   const moveToLocationPattern =
-    /move\s+(?:chosen\s+)?(?:character|card).*?to\s+a\s+location/i;
+    /move\s+(?:one\s+of\s+your\s+|a\s+character\s+of yours\s+|your\s+|chosen\s+)?(?:characters?|card).*?to\s+(?:a|this)\s+location(?:\s+for free)?/i;
 
   if (!moveToLocationPattern.test(text)) {
     logger.debug("Location effect pattern did not match");
@@ -26,12 +27,22 @@ function parseFromText(text: string): MoveToLocationEffect | null {
   // Determine character target
   let character: CharacterTarget = "CHOSEN_CHARACTER";
 
-  if (text.includes("chosen character of yours")) {
+  if (
+    text.includes("one of your characters") ||
+    text.includes("a character of yours")
+  ) {
+    character = "CHOSEN_CHARACTER_OF_YOURS";
+  } else if (text.includes("chosen character of yours")) {
     character = "CHOSEN_CHARACTER_OF_YOURS";
   } else if (text.includes("this character")) {
     character = "SELF";
   } else if (text.includes("chosen character")) {
     character = "CHOSEN_CHARACTER";
+  } else if (
+    text.includes("your character") ||
+    text.includes("your characters")
+  ) {
+    character = "CHOSEN_CHARACTER_OF_YOURS";
   }
 
   // Check if movement is free
@@ -42,10 +53,8 @@ function parseFromText(text: string): MoveToLocationEffect | null {
   const effect: MoveToLocationEffect = {
     type: "move-to-location",
     character,
+    cost: isFree ? "free" : "normal",
   };
-  if (isFree) {
-    effect.cost = "free";
-  }
   return effect;
 }
 
@@ -53,9 +62,10 @@ function parseFromText(text: string): MoveToLocationEffect | null {
  * Location effect parser implementation
  */
 export const locationEffectParser: EffectParser = {
-  pattern: /move.*?to\s+a\s+location/i,
+  pattern:
+    /move\s+(?:one\s+of\s+your\s+|a\s+character\s+of yours\s+|your\s+|chosen\s+)?(?:characters?|card).*?to\s+(?:a|this)\s+location/i,
   description:
-    "Parses location movement effects (e.g., 'move chosen character to a location')",
+    "Parses location movement effects (e.g., 'move chosen character to a location', 'move a character of yours to a location')",
 
   parse: (input: CstNode | string): MoveToLocationEffect | null => {
     if (typeof input === "string") {

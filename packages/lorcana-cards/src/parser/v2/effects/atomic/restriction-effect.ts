@@ -37,11 +37,58 @@ function parseFromText(text: string): RestrictionEffect | null {
   // Pattern: "can't quest" or "cannot quest"
   if (/[Cc]an'?t quest|cannot quest/.test(text)) {
     logger.info("Parsed 'can't quest' restriction");
-    return {
+
+    // Check for duration modifiers
+    let duration: "this-turn" | "next-turn" | "their-next-turn" | undefined;
+    if (/this turn/i.test(text)) {
+      duration = "this-turn";
+    } else if (/their next turn/i.test(text)) {
+      duration = "their-next-turn";
+    } else if (/next turn/i.test(text)) {
+      duration = "next-turn";
+    }
+
+    const effect: RestrictionEffect = {
       type: "restriction",
       restriction: "cant-quest",
       target: "SELF",
     };
+
+    if (duration) {
+      (effect as { duration: typeof duration }).duration = duration;
+    }
+
+    return effect;
+  }
+
+  // Pattern: "can't ready" or "cannot ready"
+  if (/[Cc]an'?t ready|cannot ready/.test(text)) {
+    logger.info("Parsed 'can't ready' restriction");
+
+    // Check for duration modifiers
+    let duration: "this-turn" | "next-turn" | "their-next-turn" | undefined;
+    if (/this turn/i.test(text)) {
+      duration = "this-turn";
+    } else if (
+      /their next turn/i.test(text) ||
+      /at the start of their next turn/i.test(text)
+    ) {
+      duration = "their-next-turn";
+    } else if (/next turn/i.test(text)) {
+      duration = "next-turn";
+    }
+
+    const effect: RestrictionEffect = {
+      type: "restriction",
+      restriction: "cant-ready",
+      target: "SELF",
+    };
+
+    if (duration) {
+      (effect as { duration: typeof duration }).duration = duration;
+    }
+
+    return effect;
   }
 
   // Pattern: "enters play exerted"
@@ -82,9 +129,9 @@ function parseFromCst(_ctx: CstNode): RestrictionEffect | null {
  */
 export const restrictionEffectParser: EffectParser = {
   pattern:
-    /(?:[Cc]an'?t be challenged|[Cc]an'?t challenge|[Cc]an'?t quest|cannot challenge|cannot quest|[Ee]nters? play exerted|[Cc]an challenge ready characters)/,
+    /(?:[Cc]an'?t be challenged|[Cc]an'?t challenge|[Cc]an'?t quest|[Cc]an'?t ready|cannot challenge|cannot quest|cannot ready|[Ee]nters? play exerted|[Cc]an challenge ready characters)/,
   description:
-    "Parses restriction effects (e.g., 'can't be challenged', 'cannot challenge', 'can't quest', 'enters play exerted')",
+    "Parses restriction effects (e.g., 'can't be challenged', 'cannot challenge', 'can't quest', 'can't ready', 'enters play exerted')",
 
   parse: (input: CstNode | string): RestrictionEffect | null => {
     if (typeof input === "string") {

@@ -6,7 +6,7 @@ import { parserV2 } from "../index";
 
 interface ParseResult {
   success: boolean;
-  ability?: { ability: unknown };
+  ability?: { ability: unknown; name?: string; type?: string };
   warnings: string[];
 }
 
@@ -18,7 +18,10 @@ export function parseStaticAbility(text: string): ParseResult {
   if (ability?.type === "static") {
     return {
       success: true,
-      ability: { ability },
+      ability: {
+        ability,
+        name: (ability as { name?: string }).name,
+      },
       warnings: [],
     };
   }

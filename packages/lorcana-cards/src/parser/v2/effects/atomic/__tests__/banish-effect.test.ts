@@ -209,7 +209,9 @@ describe("banishEffectParser", () => {
     it("returns null for unsupported card type", () => {
       const result = banishEffectParser.parse("banish chosen location");
 
-      expect(result).toBeNull();
+      // Parser now supports location cards
+      expect(result).not.toBeNull();
+      expect(result?.type).toBe("banish");
     });
   });
 

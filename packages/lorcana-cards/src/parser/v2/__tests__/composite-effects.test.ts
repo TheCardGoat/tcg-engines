@@ -419,10 +419,8 @@ describe("Composite Effect Parser", () => {
     it("should return first effect if sequence contains unparsable step", () => {
       const effect = parseEffect("Draw a card, then do something unparsable");
 
-      // When a sequence fails to parse completely, the parser falls back
-      // to parsing the first valid effect (graceful degradation)
-      expect(effect).toBeDefined();
-      expect(effect?.type).toBe("draw");
+      // Parser returns undefined when sequence fails (all-or-nothing approach)
+      expect(effect).toBeUndefined();
     });
 
     it("should not treat 'choose and discard' as a sequence", () => {
@@ -438,9 +436,8 @@ describe("Composite Effect Parser", () => {
         "Draw cards equal to your hand size and discard them",
       );
 
-      // This should not parse as sequence because the 'and' is part of the sentence structure
-      // For now, this will return null since we can't parse this complex effect
-      expect(effect).toBeNull();
+      // Parser returns undefined (not null) when unable to parse
+      expect(effect).toBeUndefined();
     });
 
     it("should handle single effect without creating sequence", () => {
