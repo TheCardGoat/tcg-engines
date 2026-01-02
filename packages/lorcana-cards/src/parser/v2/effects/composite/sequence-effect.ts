@@ -14,12 +14,10 @@ import { parseAtomicEffect } from "../atomic";
  * Sequence separators used in Lorcana ability text.
  * These patterns separate sequential effects like "Do X, then Y".
  *
- * Case sensitivity notes:
- * - ". Then " uses capital T because it follows sentence-ending punctuation
- * - ", then " and ", and then " use lowercase as they're mid-sentence
- * - All patterns are matched case-insensitively during parsing
+ * All separator literals are stored in lowercase and matched case-insensitively
+ * during parsing (e.g., handles both ", then " and ", Then ").
  */
-const SEQUENCE_SEPARATORS = [", then ", ". Then ", ", and then "] as const;
+const SEQUENCE_SEPARATORS = [", then ", ". then ", ", and then "] as const;
 
 /**
  * Parse sequence effect from text string.

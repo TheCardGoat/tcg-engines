@@ -29,8 +29,8 @@ function parseFromText(text: string): ChoiceEffect | null {
   const optionsText = match[1];
   logger.debug("Found choice pattern", { optionsText });
 
-  // Split options on "; or" or similar separators
-  const separators = ["; or ", ";or ", "; Or ", "; OR "];
+  // Split options on "; or" or similar separators (matched case-insensitively)
+  const separators = ["; or ", ";or "];
   let options: string[] = [];
 
   for (const separator of separators) {

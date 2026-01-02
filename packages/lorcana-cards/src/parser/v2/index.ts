@@ -131,11 +131,12 @@ export class LorcanaParserV2 {
       } as unknown as Ability;
     }
 
-    if (
-      originalText.includes("⟳") ||
-      originalText.includes("—") ||
-      originalText.includes("-")
-    ) {
+    // Detect activated abilities by cost separator patterns
+    // - Em dash "—" is the primary indicator (e.g., "⟳ — Draw a card")
+    // - Hyphen "-" only counts when preceded by cost symbol "⟳" (not for negative numbers)
+    const hasEmDash = originalText.includes("—");
+    const hasCostSeparator = originalText.includes("⟳ -");
+    if (originalText.includes("⟳") || hasEmDash || hasCostSeparator) {
       return {
         type: "activated",
         effect,

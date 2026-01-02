@@ -55,7 +55,6 @@ function parseFromText(text: string): ModifyStatEffect | null {
     text,
   });
 
-  // Using (?:s)? makes the optional 's' more explicit than gets?
   const pattern = /get(?:s)?\s+([+-])(\d+)\s+(strength|willpower|lore)/i;
   const match = text.match(pattern);
 

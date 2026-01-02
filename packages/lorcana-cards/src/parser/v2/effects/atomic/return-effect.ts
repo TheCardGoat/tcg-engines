@@ -15,6 +15,7 @@ import type {
   ReturnToHandEffect,
   ShuffleIntoDeckEffect,
 } from "../../types";
+import { parseCardType } from "../utils";
 import type { EffectParser } from "./index";
 
 /**
@@ -35,14 +36,7 @@ function parseFromText(text: string): Effect | null {
     const match = text.match(returnFromDiscardPattern);
     if (match) {
       const cardTypeStr = match[1].toLowerCase();
-      // Map to valid CardType or undefined
-      const cardType: CardType | undefined =
-        cardTypeStr === "character" ||
-        cardTypeStr === "action" ||
-        cardTypeStr === "item" ||
-        cardTypeStr === "location"
-          ? (cardTypeStr as CardType)
-          : undefined;
+      const cardType = parseCardType(cardTypeStr);
 
       logger.info("Parsed return from discard effect", { cardType });
 
@@ -50,8 +44,9 @@ function parseFromText(text: string): Effect | null {
         type: "return-from-discard",
         target: "CONTROLLER",
       };
-      if (cardType) {
-        effect.cardType = cardType;
+      // Only assign valid card types for ReturnFromDiscardEffect (excludes floodborn)
+      if (cardType && cardType !== "floodborn") {
+        effect.cardType = cardType as CardType;
       }
       return effect;
     }

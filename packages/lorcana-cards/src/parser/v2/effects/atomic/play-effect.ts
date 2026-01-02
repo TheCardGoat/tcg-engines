@@ -6,27 +6,8 @@
 import type { CstNode } from "chevrotain";
 import { logger } from "../../logging";
 import type { CardType, PlayCardEffect } from "../../types";
+import { parseCardType } from "../utils";
 import type { EffectParser } from "./index";
-
-/**
- * Parse card type from string
- */
-function parseCardType(
-  str: string,
-): CardType | "song" | "floodborn" | undefined {
-  const normalized = str.toLowerCase();
-  if (
-    normalized === "character" ||
-    normalized === "action" ||
-    normalized === "item" ||
-    normalized === "location" ||
-    normalized === "song" ||
-    normalized === "floodborn"
-  ) {
-    return normalized as CardType | "song" | "floodborn";
-  }
-  return undefined;
-}
 
 /**
  * Parse play effect from text string (regex-based parsing)
