@@ -83,12 +83,16 @@ describe("Filter Resolver", () => {
   describe("Matching", () => {
     const char1Instance = {
       definitionId: "char-1",
-      meta: { ...createDefaultCardMeta(), state: "ready", damage: 0 },
+      ...createDefaultCardMeta(),
+      state: "ready",
+      damage: 0,
     } as any;
 
     const char1Exerted = {
       definitionId: "char-1",
-      meta: { ...createDefaultCardMeta(), state: "exerted", damage: 2 },
+      ...createDefaultCardMeta(),
+      state: "exerted",
+      damage: 2,
     } as any;
 
     it("should match state filters", () => {
@@ -165,12 +169,12 @@ describe("Filter Resolver", () => {
 
       const char2Instance = {
         definitionId: "char-2",
-        meta: createDefaultCardMeta(),
+        ...createDefaultCardMeta(),
       } as any;
       expect(
         matchesLorcanaFilter(
           char2Instance,
-          { type: "has-classification", classification: "hero" },
+          { type: "has-classification", classification: "Hero" },
           mockState,
           mockRegistry,
         ),
@@ -178,7 +182,7 @@ describe("Filter Resolver", () => {
       expect(
         matchesLorcanaFilter(
           char1Instance,
-          { type: "has-classification", classification: "hero" },
+          { type: "has-classification", classification: "Hero" },
           mockState,
           mockRegistry,
         ),
@@ -273,12 +277,14 @@ describe("Filter Resolver", () => {
 
       const char1Instance = {
         definitionId: "char-1",
-        meta: { ...createDefaultCardMeta(), state: "ready" },
+        ...createDefaultCardMeta(),
+        state: "ready",
       } as any;
 
       const char1Exerted = {
         definitionId: "char-1",
-        meta: { ...createDefaultCardMeta(), state: "exerted" },
+        ...createDefaultCardMeta(),
+        state: "exerted",
       } as any;
 
       expect(predicate(char1Instance)).toBe(true);

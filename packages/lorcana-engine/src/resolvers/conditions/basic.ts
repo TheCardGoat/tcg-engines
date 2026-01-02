@@ -14,7 +14,7 @@ conditionRegistry.register<TurnCondition>("turn", {
   complexity: 10,
   evaluate: (condition, sourceCard, { state }) => {
     const isActivePlayer =
-      state.external.activePlayerId === sourceCard.controllerId;
+      state.external.activePlayerId === sourceCard.controller;
     return condition.whose === "your" ? isActivePlayer : !isActivePlayer;
   },
 });
@@ -22,42 +22,42 @@ conditionRegistry.register<TurnCondition>("turn", {
 conditionRegistry.register<IsExertedCondition>("is-exerted", {
   complexity: 10,
   evaluate: (_condition, sourceCard) => {
-    return sourceCard.meta.state === "exerted";
+    return sourceCard.state === "exerted";
   },
 });
 
 conditionRegistry.register<IsReadyCondition>("is-ready", {
   complexity: 10,
   evaluate: (_condition, sourceCard) => {
-    return sourceCard.meta.state === "ready";
+    return sourceCard.state === "ready";
   },
 });
 
 conditionRegistry.register<InInkwellCondition>("in-inkwell", {
   complexity: 10,
   evaluate: (_condition, sourceCard) => {
-    return sourceCard.zoneId === "inkwell";
+    return sourceCard.zone === "inkwell";
   },
 });
 
 conditionRegistry.register<InPlayCondition>("in-play", {
   complexity: 10,
   evaluate: (_condition, sourceCard) => {
-    return sourceCard.zoneId === "play";
+    return sourceCard.zone === "play";
   },
 });
 
 conditionRegistry.register<HasAnyDamageCondition>("has-any-damage", {
   complexity: 2,
   evaluate: (_condition, sourceCard) => {
-    return (sourceCard.meta.damage || 0) > 0;
+    return (sourceCard.damage || 0) > 0;
   },
 });
 
 conditionRegistry.register<NoDamageCondition>("no-damage", {
   complexity: 2,
   evaluate: (_condition, sourceCard) => {
-    return (sourceCard.meta.damage || 0) === 0;
+    return (sourceCard.damage || 0) === 0;
   },
 });
 
