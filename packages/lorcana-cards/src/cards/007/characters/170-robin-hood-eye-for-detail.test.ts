@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { robinHoodEyeForDetail } from "./170-robin-hood-eye-for-detail";
 
 describe("Robin Hood - Eye for Detail", () => {

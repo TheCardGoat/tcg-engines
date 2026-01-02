@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { thePhantomBlotShadowyFigure } from "./135-the-phantom-blot-shadowy-figure";
 
 describe("The Phantom Blot - Shadowy Figure", () => {

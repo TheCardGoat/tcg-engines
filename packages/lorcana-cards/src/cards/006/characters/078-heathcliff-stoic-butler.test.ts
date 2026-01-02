@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { heathcliffStoicButler } from "./078-heathcliff-stoic-butler";
 
 describe("Heathcliff - Stoic Butler", () => {

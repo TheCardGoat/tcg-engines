@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { vanellopeVonSchweetzSpunkySpeedster } from "./124-vanellope-von-schweetz-spunky-speedster";
 
 describe("Vanellope Von Schweetz - Spunky Speedster", () => {

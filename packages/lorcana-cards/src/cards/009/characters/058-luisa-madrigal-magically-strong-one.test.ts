@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { luisaMadrigalMagicallyStrongOne } from "./058-luisa-madrigal-magically-strong-one";
 
 describe("Luisa Madrigal - Magically Strong One", () => {

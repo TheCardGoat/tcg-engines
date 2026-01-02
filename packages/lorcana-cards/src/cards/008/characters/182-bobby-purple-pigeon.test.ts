@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { bobbyPurplePigeon } from "./182-bobby-purple-pigeon";
 
 describe("Bobby - Purple Pigeon", () => {

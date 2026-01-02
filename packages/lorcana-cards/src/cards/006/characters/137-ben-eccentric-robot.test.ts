@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { benEccentricRobot } from "./137-ben-eccentric-robot";
 
 describe("B.E.N. - Eccentric Robot", () => {

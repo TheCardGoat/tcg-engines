@@ -1,4 +1,4 @@
-import type { CharacterCard, ItemCard, LocationCard } from "@tcg/lorcana";
+import type { CharacterCard, ItemCard, LocationCard } from "@tcg/lorcana-types";
 import * as characters from "./characters";
 import * as items from "./items";
 import * as locations from "./locations";

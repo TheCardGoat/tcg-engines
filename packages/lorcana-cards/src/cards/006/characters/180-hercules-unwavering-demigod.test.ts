@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { herculesUnwaveringDemigod } from "./180-hercules-unwavering-demigod";
 
 describe("Hercules - Unwavering Demigod", () => {

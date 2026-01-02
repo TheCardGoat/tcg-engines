@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { donaldDuckStruttingHisStuff } from "./144-donald-duck-strutting-his-stuff";
 
 describe("Donald Duck - Strutting His Stuff", () => {

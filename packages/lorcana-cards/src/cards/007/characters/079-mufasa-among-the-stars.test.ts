@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { mufasaAmongTheStars } from "./079-mufasa-among-the-stars";
 
 describe("Mufasa - Among the Stars", () => {

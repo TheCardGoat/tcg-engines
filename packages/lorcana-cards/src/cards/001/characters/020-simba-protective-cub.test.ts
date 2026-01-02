@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { simbaProtectiveCub } from "./020-simba-protective-cub";
 
 describe("Simba - Protective Cub", () => {

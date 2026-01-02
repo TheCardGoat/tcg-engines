@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { rajahGhostlyTiger } from "./062-rajah-ghostly-tiger";
 
 describe("Rajah - Ghostly Tiger", () => {

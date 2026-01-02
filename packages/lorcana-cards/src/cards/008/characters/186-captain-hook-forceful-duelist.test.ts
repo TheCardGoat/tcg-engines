@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { captainHookForcefulDuelist } from "./186-captain-hook-forceful-duelist";
 
 describe("Captain Hook - Forceful Duelist", () => {

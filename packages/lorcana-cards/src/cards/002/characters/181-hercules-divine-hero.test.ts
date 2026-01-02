@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { herculesDivineHero } from "./181-hercules-divine-hero";
 
 describe("Hercules - Divine Hero", () => {

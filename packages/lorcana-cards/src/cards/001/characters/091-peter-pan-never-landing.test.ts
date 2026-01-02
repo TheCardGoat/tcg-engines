@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { peterPanNeverLanding } from "./091-peter-pan-never-landing";
 
 describe("Peter Pan - Never Landing", () => {

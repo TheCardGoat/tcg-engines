@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { theNokkWaterSpirit } from "./160-the-nokk-water-spirit";
 
 describe("The Nokk - Water Spirit", () => {

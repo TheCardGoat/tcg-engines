@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { tukTukDisarminglyCute } from "./187-tuk-tuk-disarmingly-cute";
 
 describe("Tuk Tuk - Disarmingly Cute", () => {

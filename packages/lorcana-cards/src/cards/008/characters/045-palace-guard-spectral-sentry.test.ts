@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { palaceGuardSpectralSentry } from "./045-palace-guard-spectral-sentry";
 
 describe("Palace Guard - Spectral Sentry", () => {

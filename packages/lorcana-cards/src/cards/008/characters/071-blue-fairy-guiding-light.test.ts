@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { blueFairyGuidingLight } from "./071-blue-fairy-guiding-light";
 
 describe("Blue Fairy - Guiding Light", () => {

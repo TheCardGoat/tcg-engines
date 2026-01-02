@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { wasabiAlwaysPrepared } from "./158-wasabi-always-prepared";
 
 describe("Wasabi - Always Prepared", () => {

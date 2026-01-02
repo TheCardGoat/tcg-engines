@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { mrsBeakleyFormerShushAgent } from "./011-mrs-beakley-former-shush-agent";
 
 describe("Mrs. Beakley - Former S.H.U.S.H. Agent", () => {

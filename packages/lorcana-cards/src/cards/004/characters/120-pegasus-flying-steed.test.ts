@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { pegasusFlyingSteed } from "./120-pegasus-flying-steed";
 
 describe("Pegasus - Flying Steed", () => {

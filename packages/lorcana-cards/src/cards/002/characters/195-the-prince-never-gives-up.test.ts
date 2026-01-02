@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { thePrinceNeverGivesUp } from "./195-the-prince-never-gives-up";
 
 describe("The Prince - Never Gives Up", () => {

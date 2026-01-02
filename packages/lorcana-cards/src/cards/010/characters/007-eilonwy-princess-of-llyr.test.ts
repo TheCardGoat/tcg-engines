@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { eilonwyPrincessOfLlyr } from "./007-eilonwy-princess-of-llyr";
 
 describe("Eilonwy - Princess of Llyr", () => {

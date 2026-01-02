@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { pascalGardenChameleon } from "./019-pascal-garden-chameleon";
 
 describe("Pascal - Garden Chameleon", () => {

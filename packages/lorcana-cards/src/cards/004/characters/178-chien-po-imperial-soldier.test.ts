@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { chienpoImperialSoldier } from "./178-chien-po-imperial-soldier";
 
 describe("Chien-Po - Imperial Soldier", () => {

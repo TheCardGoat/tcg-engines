@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { thomasOmalleyFelineCharmer } from "./088-thomas-omalley-feline-charmer";
 
 describe("Thomas O'Malley - Feline Charmer", () => {

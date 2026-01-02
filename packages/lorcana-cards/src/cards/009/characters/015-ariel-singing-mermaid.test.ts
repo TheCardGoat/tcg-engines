@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { arielSingingMermaid } from "./015-ariel-singing-mermaid";
 
 describe("Ariel - Singing Mermaid", () => {

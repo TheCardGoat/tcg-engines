@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { princeEricSeafaringPrince } from "./021-prince-eric-seafaring-prince";
 
 describe("Prince Eric - Seafaring Prince", () => {

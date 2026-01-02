@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { clawhauserDonutDetective } from "./175-clawhauser-donut-detective";
 
 describe("Clawhauser - Donut Detective", () => {

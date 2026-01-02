@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { princeNaveenVigilantFirstMate } from "./009-prince-naveen-vigilant-first-mate";
 
 describe("Prince Naveen - Vigilant First Mate", () => {

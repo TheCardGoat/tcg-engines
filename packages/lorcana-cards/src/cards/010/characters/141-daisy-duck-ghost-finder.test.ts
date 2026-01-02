@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
 import { daisyDuckGhostFinder } from "./141-daisy-duck-ghost-finder";
 
 describe("Daisy Duck - Ghost Finder", () => {
