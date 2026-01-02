@@ -12,7 +12,7 @@
  * - "SKIRMISH {E} − Deal {d} damage to chosen character"
  */
 
-import type { AbilityCost, ActivatedAbility } from "@tcg/lorcana";
+import type { AbilityCost, ActivatedAbility } from "@tcg/lorcana-types";
 import { extractNamedAbilityPrefix } from "../preprocessor";
 import type { ParseResult } from "../types";
 import { parseEffect } from "./effect-parser";

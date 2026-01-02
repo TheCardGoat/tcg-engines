@@ -15,9 +15,9 @@ import type {
   GameDefinition,
   MoveContext,
   PlayerId,
-} from "@tcg/core";
+} from "../../src";
 
-import { createCardId, createPlayerId, RuleEngine } from "@tcg/core";
+import { createCardId, createPlayerId, RuleEngine } from "../../src";
 
 // ============================================================================
 // ZONE CONFIGURATION

@@ -3,7 +3,7 @@ import type {
   CharacterCard,
   ItemCard,
   LocationCard,
-} from "@tcg/lorcana";
+} from "@tcg/lorcana-types";
 import { all001Cards, all001CardsById } from "./001";
 import { all002Cards, all002CardsById } from "./002";
 import { all003Cards, all003CardsById } from "./003";

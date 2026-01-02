@@ -17,7 +17,7 @@ import type {
   SimpleKeywordAbility,
   SimpleKeywordType,
   ValueKeywordAbility,
-} from "@tcg/lorcana";
+} from "@tcg/lorcana-types";
 import {
   BOOST_PATTERN,
   SHIFT_PATTERN,

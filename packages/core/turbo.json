@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
-  "tags": ["independent"],
+  "tags": ["foundation"],
   "tasks": {
     "topo": {
       "dependsOn": []

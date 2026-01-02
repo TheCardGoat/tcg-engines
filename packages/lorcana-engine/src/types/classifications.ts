@@ -1,64 +1,28 @@
 /**
  * Classifications (Rule 6.2.6)
  *
- * Character classifications that appear on character cards.
- * Characters can have multiple classifications.
+ * Re-exports classifications from @tcg/lorcana-types for backwards compatibility.
+ * This file maintains the existing API while delegating to the new types package.
  */
 
-export const CLASSIFICATIONS = [
-  "Alien",
-  "Ally",
-  "Broom",
-  "Captain",
-  "Deity",
-  "Detective",
-  "Dragon",
-  "Dreamborn",
-  "Entangled",
-  "Fairy",
-  "Floodborn",
-  "Gargoyle",
-  "Hero",
-  "Hunny",
-  "Hyena",
-  "Illusion",
-  "Inventor",
-  "King",
-  "Knight",
-  "Madrigal",
-  "Mentor",
-  "Musketeer",
-  "Pirate",
-  "Prince",
-  "Princess",
-  "Puppy",
-  "Queen",
-  "Racer",
-  "Robot",
-  "Seven Dwarfs",
-  "Sorcerer",
-  "Storyborn",
-  "Tigger",
-  "Titan",
-  "Villain",
-  "Whisper",
-] as const;
+// Import for local use
+import { CLASSIFICATIONS as _CLASSIFICATIONS } from "@tcg/lorcana-types";
 
-export type Classification = (typeof CLASSIFICATIONS)[number];
+// Re-export from @tcg/lorcana-types
+export type { Classification } from "@tcg/lorcana-types";
 
-/**
- * Check if a value is a valid classification
- */
-export function isClassification(value: unknown): value is Classification {
-  return (
-    typeof value === "string" &&
-    CLASSIFICATIONS.includes(value as Classification)
-  );
-}
+export {
+  CLASSIFICATIONS,
+  isClassification,
+  isDreamborn,
+  isFloodborn,
+  isStoryborn,
+} from "@tcg/lorcana-types";
 
+// Local additions for backwards compatibility
 /**
  * Get all classifications
  */
-export function getAllClassifications(): readonly Classification[] {
-  return CLASSIFICATIONS;
+export function getAllClassifications(): readonly string[] {
+  return _CLASSIFICATIONS;
 }

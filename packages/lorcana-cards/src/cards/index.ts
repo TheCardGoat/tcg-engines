@@ -3,7 +3,7 @@ import type {
   CharacterCard,
   ItemCard,
   LocationCard,
-} from "@tcg/lorcana";
+} from "@tcg/lorcana-types";
 
 let allCardsCache:
   | (CharacterCard | ActionCard | ItemCard | LocationCard)[]

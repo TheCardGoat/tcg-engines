@@ -1,4 +1,4 @@
-import type { ActionCard } from "@tcg/lorcana";
+import type { ActionCard } from "@tcg/lorcana-types";
 
 export const fanTheFlames: ActionCard = {
   id: "1eo",

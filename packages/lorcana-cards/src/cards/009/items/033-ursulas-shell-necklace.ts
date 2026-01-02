@@ -1,4 +1,4 @@
-import type { ItemCard } from "@tcg/lorcana";
+import type { ItemCard } from "@tcg/lorcana-types";
 
 export const ursulasShellNecklace: ItemCard = {
   id: "xg1",

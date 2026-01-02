@@ -9,7 +9,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type { OptionalEffect, SequenceEffect } from "@tcg/lorcana";
+import type { OptionalEffect, SequenceEffect } from "@tcg/lorcana-types";
 import { parseEffect } from "../parsers/effect-parser";
 
 describe("Optional Effect Parser", () => {

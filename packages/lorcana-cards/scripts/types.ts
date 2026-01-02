@@ -21,7 +21,7 @@ export type {
   KeywordAbility,
   LocationCard,
   LorcanaCard,
-} from "@tcg/lorcana";
+} from "@tcg/lorcana-types";
 
 // Import types needed for internal use
 import type {
@@ -33,7 +33,7 @@ import type {
   KeywordAbility,
   LocationCard,
   LorcanaCard,
-} from "@tcg/lorcana";
+} from "@tcg/lorcana-types";
 
 // ============================================================================
 // Input Types (ravensburger-input.json structure)

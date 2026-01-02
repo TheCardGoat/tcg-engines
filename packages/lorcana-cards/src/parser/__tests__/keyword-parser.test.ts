@@ -9,7 +9,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type { KeywordAbility } from "@tcg/lorcana";
+import type { KeywordAbility } from "@tcg/lorcana-types";
 import { parseKeywordAbility } from "../parsers/keyword-parser";
 
 describe("Keyword Parser", () => {

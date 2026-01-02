@@ -38,6 +38,7 @@
     "check": "turbo format lint check-types test"
   },
   "dependencies": {
+    "@tcg/core-types": "workspace:*",
     "immer": "^10.0.0",
     "nanoid": "^5.0.0",
     "pino": "^10.0.0",

@@ -20,7 +20,7 @@ import {
   type MoveDefinition,
   type Player,
   RuleEngine,
-} from "@tcg/core";
+} from "../../src";
 
 // ============================================================================
 // GAME STATE TYPES

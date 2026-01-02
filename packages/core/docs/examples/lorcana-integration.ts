@@ -16,9 +16,9 @@ import type {
   GameDefinition,
   MoveContext,
   PlayerId,
-} from "@tcg/core";
+} from "../../src";
 
-import { createCardId, createPlayerId, RuleEngine } from "@tcg/core";
+import { createCardId, createPlayerId, RuleEngine } from "../../src";
 
 // Define AbilityId locally (game-specific type)
 export type AbilityId = string;
