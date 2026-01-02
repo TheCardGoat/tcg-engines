@@ -5,7 +5,6 @@ import type {
   HasNamedCharacterCondition,
   ResourceCountCondition,
 } from "../../cards/abilities/types/condition-types";
-import { matchesLorcanaFilter } from "../../targeting/filter-resolver";
 import type { LorcanaFilter } from "../../targeting/lorcana-target-dsl";
 import type { LorcanaCardMeta, LorcanaGameState } from "../../types/game-state";
 import { conditionRegistry } from "../condition-registry";
@@ -56,12 +55,6 @@ function getPlayZoneFilter(
   sourceCard: CardInstance<LorcanaCardMeta>,
 ): (card: CardInstance<LorcanaCardMeta>) => boolean {
   return (card) => {
-    console.log("Filter check:", {
-      id: card.id,
-      zone: card.zone,
-      ctrl: card.controller,
-      filterCtrl: controller,
-    });
     // Check Zone (must be in play)
     if (card.zone !== "play") return false;
 
@@ -89,10 +82,6 @@ conditionRegistry.register<HasNamedCharacterCondition>("has-named-character", {
       if (card.definitionId === undefined) return false;
 
       const def = registry.getCard(card.definitionId);
-      console.log("Named check:", {
-        defName: def?.name,
-        condName: condition.name,
-      });
       // Usually "named X" implies the name property.
       return (
         def && (def.name === condition.name || def.fullName === condition.name)

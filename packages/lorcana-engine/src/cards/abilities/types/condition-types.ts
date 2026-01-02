@@ -513,7 +513,6 @@ export type Condition =
   // Card State
   | IsExertedCondition
   | IsReadyCondition
-  | IsReadyCondition
   | HasCardUnderCondition
   | InInkwellCondition
   | InPlayCondition
