@@ -64,8 +64,8 @@ function parseFromText(text: string): DrawEffect | null {
     target = "OPPONENT";
   }
 
-  // Try "draw N cards" pattern first
-  let pattern = /draws?\s+(\d+)\s+cards?/i;
+  // Try "draw N cards" pattern first (including {d} placeholder)
+  let pattern = /draws?\s+(\d+|\{d\})\s+cards?/i;
   let match = text.match(pattern);
 
   // Try "draw a card" or "draw 1 card" pattern
@@ -79,8 +79,13 @@ function parseFromText(text: string): DrawEffect | null {
     return null;
   }
 
-  // "draw a card" = 1 card
-  const amount = match[1] ? Number.parseInt(match[1], 10) : 1;
+  // "draw a card" = 1 card, {d} = -1 sentinel
+  let amount: number;
+  if (match[1]) {
+    amount = match[1] === "{d}" ? -1 : Number.parseInt(match[1], 10);
+  } else {
+    amount = 1;
+  }
 
   if (Number.isNaN(amount)) {
     logger.warn("Failed to extract number from draw effect text", {
@@ -103,9 +108,9 @@ function parseFromText(text: string): DrawEffect | null {
  */
 export const drawEffectParser: EffectParser = {
   pattern:
-    /(?:(?:each|all) (?:player|opponent) |chosen player )?[Dd]raw(?:s)? (?:\d+ cards?|(?:a|one|1) card)/i,
+    /(?:(?:each|all) (?:player|opponent) |chosen player )?[Dd]raw(?:s)? (?:\d+|\{d\}) cards?|(?:a|one|1) card/i,
   description:
-    "Parses draw card effects (e.g., 'draw 2 cards', 'Each player draws a card', 'Each opponent draws 2 cards')",
+    "Parses draw card effects (e.g., 'draw 2 cards', 'Each player draws a card', 'Each opponent draws 2 cards', 'draw {d} cards')",
 
   parse: (input: CstNode | string): DrawEffect | null => {
     if (typeof input === "string") {

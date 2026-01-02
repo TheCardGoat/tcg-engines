@@ -81,12 +81,22 @@ function parseFromText(text: string): ModifyStatEffect | null {
     text,
   });
 
+  // Check for duration "this turn" clause
+  const hasDuration = /this turn/i.test(text);
+  const duration: "this-turn" | undefined = hasDuration
+    ? "this-turn"
+    : undefined;
+
   // Try pattern with {S}/{L}/{W} notation first (e.g., "Your characters get +1 {S}")
-  let match = text.match(/get(?:s)?\s+([+-]?\d+|[+-]?\{d\})\s+\{([SLW])\}/i);
+  let match = text.match(/get(?:s)?\s+([+-]?)(\d+|\{d\})\s+\{([SLW])\}/i);
 
   if (match) {
-    const modifier = parseNumericValue(match[1]);
-    const statSymbol = match[2];
+    const sign = match[1] === "-" ? -1 : 1;
+    const valueStr = match[2];
+    const value = valueStr === "{d}" ? -1 : Number.parseInt(valueStr, 10);
+    const modifier = sign * value;
+
+    const statSymbol = match[3];
     const stat =
       statSymbol === "S"
         ? "strength"
@@ -110,28 +120,47 @@ function parseFromText(text: string): ModifyStatEffect | null {
       target = "YOUR_ITEMS" as CharacterTarget;
     } else if (lowerText.includes("while here")) {
       target = "CHARACTERS_HERE" as CharacterTarget;
+    } else if (lowerText.includes("chosen character")) {
+      // Use detailed target format for "chosen character"
+      target = {
+        selector: "chosen",
+        count: 1,
+        owner: "any",
+        zones: ["play"],
+        cardTypes: ["character"],
+      };
     }
 
     logger.info("Parsed stat modification effect from text", {
       modifier,
       stat,
       target,
+      duration,
     });
 
-    return {
+    const effect: ModifyStatEffect = {
       type: "modify-stat",
       stat,
       modifier,
       target,
     };
+
+    if (duration) {
+      effect.duration = duration;
+    }
+
+    return effect;
   }
 
   // Try pattern with full stat name (e.g., "chosen character gets +2 strength")
-  match = text.match(/get(?:s)?\s+([+-])(\d+)\s+(strength|willpower|lore)/i);
+  match = text.match(
+    /get(?:s)?\s+([+-])(\d+|\{d\})\s+(strength|willpower|lore)/i,
+  );
 
   if (match) {
     const sign = match[1] === "-" ? -1 : 1;
-    const value = Number.parseInt(match[2], 10);
+    const valueStr = match[2];
+    const value = valueStr === "{d}" ? -1 : Number.parseInt(valueStr, 10);
     const modifier = sign * value;
     const stat = match[3].toLowerCase() as "strength" | "willpower" | "lore";
 
@@ -148,20 +177,36 @@ function parseFromText(text: string): ModifyStatEffect | null {
       target = "YOUR_CHARACTERS";
     } else if (lowerText.includes("your items")) {
       target = "YOUR_ITEMS" as CharacterTarget;
+    } else if (lowerText.includes("chosen character")) {
+      // Use detailed target format for "chosen character"
+      target = {
+        selector: "chosen",
+        count: 1,
+        owner: "any",
+        zones: ["play"],
+        cardTypes: ["character"],
+      };
     }
 
     logger.info("Parsed stat modification effect from text", {
       modifier,
       stat,
       target,
+      duration,
     });
 
-    return {
+    const effect: ModifyStatEffect = {
       type: "modify-stat",
       stat,
       modifier,
       target,
     };
+
+    if (duration) {
+      effect.duration = duration;
+    }
+
+    return effect;
   }
 
   logger.debug("Stat modification effect pattern did not match");

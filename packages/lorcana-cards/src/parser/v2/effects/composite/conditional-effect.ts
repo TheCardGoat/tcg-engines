@@ -18,6 +18,12 @@ import { parseAtomicEffect } from "../atomic";
 function parseFromText(text: string): ConditionalEffect | null {
   logger.debug("Attempting to parse conditional effect from text", { text });
 
+  // Exclude "if you do" patterns - those are part of optional effects
+  if (/if\s+you\s+do/i.test(text)) {
+    logger.debug("Skipping 'if you do' pattern (handled by optional effects)");
+    return null;
+  }
+
   // Match "if X, then Y" or "if X, Y" patterns
   // The condition is between "if" and the comma
   // The effect is after the comma (with optional "then")

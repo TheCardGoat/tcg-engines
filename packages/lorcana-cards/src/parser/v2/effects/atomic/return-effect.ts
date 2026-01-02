@@ -82,13 +82,15 @@ function parseFromText(text: string): Effect | null {
   logger.debug("Attempting to parse return effect from text", { text });
 
   // Patterns for return effects
-  const returnToHandPattern =
-    /return\s+(.+?)\s+to\s+(?:(?:your|their|player's)(?:\s+player's)?\s+)?hand|return\s+to\s+(?:your\s+|their\s+)?hand/i;
+  // IMPORTANT: Order matters! More specific patterns must be checked first.
+  // Return from discard pattern must be checked before return to hand pattern
+  const returnFromDiscardPattern =
+    /return\s+(?:an?\s+)?(\w+(?:\s+\w+)?)\s+card\s+from\s+your\s+discard/i;
   const shuffleIntoDeckPattern =
     /shuffle\s+(.+?)\s+into\s+(?:your\s+|their\s+)?deck|shuffle\s+into\s+(?:your\s+|their\s+)?deck/i;
-  const returnFromDiscardPattern =
-    /return\s+(?:an?\s+)?(\w+)\s+card\s+from\s+your\s+discard/i;
   const putOnBottomPattern = /put\s+(.+?)\s+(?:on\s+)?(?:the\s+)?bottom/i;
+  const returnToHandPattern =
+    /return\s+(.+?)\s+to\s+(?:(?:your|their|player's)(?:\s+player's)?\s+)?hand|return\s+to\s+(?:your\s+|their\s+)?hand/i;
 
   // Check for "return from discard"
   if (returnFromDiscardPattern.test(text)) {

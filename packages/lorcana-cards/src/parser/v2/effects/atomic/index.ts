@@ -16,6 +16,7 @@ import { keywordEffectParser } from "./keyword-effect";
 import { locationEffectParser } from "./location-effect";
 import { loreEffectParser } from "./lore-effect";
 import { playEffectParser } from "./play-effect";
+import { putDamageEffectParser } from "./put-damage-effect";
 import { removeDamageEffectParser } from "./remove-damage-effect";
 import { restrictionEffectParser } from "./restriction-effect";
 import { returnEffectParser } from "./return-effect";
@@ -67,6 +68,9 @@ export const atomicEffectParsers: EffectParser[] = [
 
   // Remove damage effects (specific "remove X damage" pattern)
   removeDamageEffectParser,
+
+  // Put damage effects (specific "put X damage counters" pattern)
+  putDamageEffectParser,
 
   // Damage effects (specific "deal X damage" pattern)
   damageEffectParser,

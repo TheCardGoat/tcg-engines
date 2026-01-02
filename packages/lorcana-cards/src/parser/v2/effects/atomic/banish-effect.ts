@@ -71,6 +71,59 @@ function convertToCharacterTarget(simpleTarget: {
 }
 
 /**
+ * Parse "all X" pattern directly (e.g., "all items", "all opposing characters")
+ */
+function parseAllPattern(text: string): CharacterTarget | null {
+  const lowerText = text.toLowerCase().trim();
+
+  // Pattern: "all [cardTypes]" or "all [modifier] [cardTypes]"
+  const allPattern = /^all(?:\s+(opposing|opponent's|opponent))?\s+(.+)$/;
+  const match = lowerText.match(allPattern);
+
+  if (!match) {
+    return null;
+  }
+
+  const modifier = match[1];
+  const cardTypeStr = match[2];
+
+  // Map card types
+  const cardTypeMap: Record<string, string[]> = {
+    items: ["item"],
+    item: ["item"],
+    characters: ["character"],
+    character: ["character"],
+    locations: ["location"],
+    location: ["location"],
+    "actions or songs": ["action", "song"],
+  };
+
+  const cardTypes = cardTypeMap[cardTypeStr];
+  if (!cardTypes) {
+    logger.debug("Unknown card type in 'all' pattern", { cardTypeStr });
+    return null;
+  }
+
+  // Determine owner from modifier
+  let owner: CharacterTarget["owner"] = "any";
+  if (
+    modifier === "opposing" ||
+    modifier === "opponent" ||
+    modifier === "opponent's"
+  ) {
+    owner = "opponent";
+  }
+
+  return {
+    selector: "all",
+    count: "all",
+    owner,
+    zones: ["play"],
+    cardTypes,
+  };
+}
+
+/**
  * Parse banish effect from CST node (grammar-based parsing)
  */
 function parseFromCst(
@@ -138,32 +191,37 @@ function parseFromText(text: string): BanishEffect | ReturnToHandEffect | null {
   // Parse target from the matched text
   let target: CharacterTarget = "CHOSEN_CHARACTER";
   if (match[1]) {
-    // Banish/return effects only support character and item types
-    // Check for unsupported types before parsing
-    const targetType = match[1].toLowerCase();
-    if (/location/i.test(targetType)) {
-      logger.debug("Banish/return effect does not support location type");
-      return null;
-    }
-
-    const parsedTarget = parseTargetFromText(match[1]);
-    if (parsedTarget) {
-      target = convertToCharacterTarget(parsedTarget);
-      logger.debug("Parsed target from banish effect text", { target });
+    // First try to parse "all X" pattern
+    const allPatternTarget = parseAllPattern(match[1]);
+    if (allPatternTarget) {
+      target = allPatternTarget;
+      logger.debug("Parsed 'all' pattern target from banish effect text", {
+        target,
+      });
     } else {
-      // If parseTargetFromText fails, check if the text looks like a valid target
-      // For tests like "missing card type", we should return null
-      if (isBanish) {
-        // Check if match[1] contains a valid card type
-        if (!/character|item/i.test(match[1])) {
-          logger.debug("Banish effect missing valid card type");
-          return null;
-        }
+      // Banish/return effects only support character and item types (except for "all" pattern which supports locations)
+      // Check for unsupported types before parsing
+      const targetType = match[1].toLowerCase();
+
+      const parsedTarget = parseTargetFromText(match[1]);
+      if (parsedTarget) {
+        target = convertToCharacterTarget(parsedTarget);
+        logger.debug("Parsed target from banish effect text", { target });
       } else {
-        // For return effects, also check for valid card type
-        if (!/character|item/i.test(match[1])) {
-          logger.debug("Return effect missing valid card type");
-          return null;
+        // If parseTargetFromText fails, check if the text looks like a valid target
+        // For tests like "missing card type", we should return null
+        if (isBanish) {
+          // Check if match[1] contains a valid card type
+          if (!/character|item|location/i.test(match[1])) {
+            logger.debug("Banish effect missing valid card type");
+            return null;
+          }
+        } else {
+          // For return effects, also check for valid card type
+          if (!/character|item/i.test(match[1])) {
+            logger.debug("Return effect missing valid card type");
+            return null;
+          }
         }
       }
     }
@@ -187,8 +245,10 @@ function parseFromText(text: string): BanishEffect | ReturnToHandEffect | null {
  * Banish effect parser implementation
  */
 export const banishEffectParser: EffectParser = {
-  pattern: /(banish|return)\s+(chosen|this|another|an?)\s+(character|item)/i,
-  description: "Parses banish/return effects (e.g., 'banish chosen character')",
+  pattern:
+    /(banish|return)\s+(all|chosen|this|another|an?)\s+(character|item|location|items|characters|locations)/i,
+  description:
+    "Parses banish/return effects (e.g., 'banish chosen character', 'banish all items')",
 
   parse: (
     input: CstNode | string,

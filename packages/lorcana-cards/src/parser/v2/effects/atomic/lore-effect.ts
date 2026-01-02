@@ -67,8 +67,8 @@ function parseFromCst(
 function parseFromText(text: string): GainLoreEffect | LoseLoreEffect | null {
   logger.debug("Attempting to parse lore effect from text", { text });
 
-  const gainPattern = /gain\s+(\d+)\s+lore/i;
-  const losePattern = /lose\s+(\d+)\s+lore/i;
+  const gainPattern = /gain\s+(\d+|\{d\})\s+lore/i;
+  const losePattern = /(?:loses?|each opponent loses?)\s+(\d+|\{d\})\s+lore/i;
 
   let match = text.match(gainPattern);
   let isGain = true;
@@ -83,16 +83,28 @@ function parseFromText(text: string): GainLoreEffect | LoseLoreEffect | null {
     return null;
   }
 
-  const amount = Number.parseInt(match[1], 10);
+  // Handle {d} placeholder as -1 sentinel
+  const amountValue = match[1];
+  const amount = amountValue === "{d}" ? -1 : Number.parseInt(amountValue, 10);
 
   if (Number.isNaN(amount)) {
     logger.warn("Failed to extract number from lore effect text", {
-      match: match[1],
+      match: amountValue,
     });
     return null;
   }
 
-  logger.info("Parsed lore effect from text", { amount, isGain });
+  // Determine target for lose-lore effects
+  let target: LoseLoreEffect["target"] = "OPPONENT";
+  if (!isGain) {
+    if (/each opponent|all opponents/i.test(text)) {
+      target = "EACH_OPPONENT";
+    } else if (/opponent loses?/i.test(text)) {
+      target = "OPPONENT";
+    }
+  }
+
+  logger.info("Parsed lore effect from text", { amount, isGain, target });
 
   if (isGain) {
     return {
@@ -103,7 +115,7 @@ function parseFromText(text: string): GainLoreEffect | LoseLoreEffect | null {
   return {
     type: "lose-lore",
     amount,
-    target: "OPPONENT",
+    target,
   };
 }
 
@@ -111,8 +123,9 @@ function parseFromText(text: string): GainLoreEffect | LoseLoreEffect | null {
  * Lore effect parser implementation
  */
 export const loreEffectParser: EffectParser = {
-  pattern: /(gain|lose)\s+(\d+)\s+lore/i,
-  description: "Parses lore gain/loss effects (e.g., 'gain 2 lore')",
+  pattern: /(gain|(?:each opponent )?lose(?:s)?)\s+(\d+|\{d\})\s+lore/i,
+  description:
+    "Parses lore gain/loss effects (e.g., 'gain 2 lore', 'each opponent loses {d} lore')",
 
   parse: (input: CstNode | string): Effect | null => {
     if (typeof input === "string") {

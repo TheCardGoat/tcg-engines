@@ -135,6 +135,12 @@ function parseFromCst(
 function parseFromText(text: string): GainKeywordEffect | null {
   logger.debug("Attempting to parse keyword effect from text", { text });
 
+  // Check for duration "this turn" clause
+  const hasDuration = /this turn/i.test(text);
+  const duration: "this-turn" | undefined = hasDuration
+    ? "this-turn"
+    : undefined;
+
   // Updated pattern to support both singular and plural forms
   // Pattern: "Your characters gain Ward", "chosen character gains Evasive"
   const keywordsPattern = KEYWORDS.join("|");
@@ -186,12 +192,22 @@ function parseFromText(text: string): GainKeywordEffect | null {
   } else if (lowerText.includes("while here")) {
     // "Characters gain Ward while here" (location effect)
     target = "CHARACTERS_HERE" as CharacterTarget;
+  } else if (lowerText.includes("chosen character")) {
+    // Use detailed target format for "chosen character"
+    target = {
+      selector: "chosen",
+      count: 1,
+      owner: "any",
+      zones: ["play"],
+      cardTypes: ["character"],
+    };
   }
 
   logger.info("Parsed keyword effect from text", {
     keyword,
     target,
     value: parsedKeyword.value,
+    duration,
   });
 
   const effect: GainKeywordEffect = {
@@ -202,6 +218,10 @@ function parseFromText(text: string): GainKeywordEffect | null {
 
   if (parsedKeyword.value !== undefined) {
     effect.value = parsedKeyword.value;
+  }
+
+  if (duration) {
+    effect.duration = duration;
   }
 
   return effect;
