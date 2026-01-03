@@ -1,14 +1,14 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine } from "@tcg/lorcana/testing";
-import { goofyDaredevil } from "./111-goofy-daredevil";
+import { GoofyDaredevil } from "./111-goofy-daredevil";
 
 describe("Goofy - Daredevil", () => {
   it("should have Evasive ability", () => {
     const testEngine = new LorcanaTestEngine({
-      play: [goofyDaredevil],
+      play: [GoofyDaredevil],
     });
 
-    const cardUnderTest = testEngine.getCardModel(goofyDaredevil);
+    const cardUnderTest = testEngine.getCardModel(GoofyDaredevil);
     expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

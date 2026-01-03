@@ -1,6 +1,6 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const ransack: ActionCard = {
+export const Ransack: ActionCard = {
   id: "1ux",
   cardType: "action",
   name: "Ransack",
