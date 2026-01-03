@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { rajahDevotedProtector } from "./006-rajah-devoted-protector";
 
 describe("Rajah - Devoted Protector", () => {

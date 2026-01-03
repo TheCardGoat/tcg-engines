@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { kaaSecretiveSnake } from "./212-kaa-secretive-snake";
 
 describe("Kaa - Secretive Snake", () => {

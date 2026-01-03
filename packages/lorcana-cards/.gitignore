@@ -11,3 +11,5 @@ data/inputs/ravensburger-input.json
 
 # Verbose generation logs
 src/data/generation-verbose.log
+
+src/legacy-cards/

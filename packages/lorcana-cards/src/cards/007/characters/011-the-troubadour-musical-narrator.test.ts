@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { theTroubadourMusicalNarrator } from "./011-the-troubadour-musical-narrator";
 
 describe("The Troubadour - Musical Narrator", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { teKTheBurningOne } from "./126-te-k-the-burning-one";
 
 describe("Te Kā - The Burning One", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { mickeyMouseFoodFightDefender } from "./176-mickey-mouse-food-fight-defender";
 
 describe("Mickey Mouse - Food Fight Defender", () => {

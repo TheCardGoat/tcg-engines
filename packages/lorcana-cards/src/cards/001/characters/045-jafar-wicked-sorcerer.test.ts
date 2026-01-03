@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { jafarWickedSorcerer } from "./045-jafar-wicked-sorcerer";
 
 describe("Jafar - Wicked Sorcerer", () => {

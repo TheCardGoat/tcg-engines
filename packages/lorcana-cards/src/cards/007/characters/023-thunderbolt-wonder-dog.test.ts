@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { thunderboltWonderDog } from "./023-thunderbolt-wonder-dog";
 
 describe("Thunderbolt - Wonder Dog", () => {

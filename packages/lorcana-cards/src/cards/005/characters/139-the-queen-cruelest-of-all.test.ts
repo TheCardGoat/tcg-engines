@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { theQueenCruelestOfAll } from "./139-the-queen-cruelest-of-all";
 
 describe("The Queen - Cruelest of All", () => {

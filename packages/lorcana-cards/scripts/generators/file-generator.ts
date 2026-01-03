@@ -949,7 +949,7 @@ export function generateTestFileContent(
   }
 
   return `import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { ${exportName} } from "${importPath}";
 
 describe("${card.fullName}", () => {

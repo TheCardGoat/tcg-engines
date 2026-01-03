@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { herculesClumsyKid } from "./108-hercules-clumsy-kid";
 
 describe("Hercules - Clumsy Kid", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { ladyKluckProtectiveConfidant } from "./172-lady-kluck-protective-confidant";
 
 describe("Lady Kluck - Protective Confidant", () => {

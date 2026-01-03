@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { gazellePopStar } from "./011-gazelle-pop-star";
 
 describe("Gazelle - Pop Star", () => {

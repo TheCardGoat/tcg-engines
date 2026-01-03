@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { shantiVillageGirl } from "./013-shanti-village-girl";
 
 describe("Shanti - Village Girl", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { mulanFreeSpirit } from "./010-mulan-free-spirit";
 
 describe("Mulan - Free Spirit", () => {

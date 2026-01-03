@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { sebastianCourtComposer } from "./019-sebastian-court-composer";
 
 describe("Sebastian - Court Composer", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { kidaRoyalWarrior } from "./177-kida-royal-warrior";
 
 describe("Kida - Royal Warrior", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { dukeWeaseltonSmalltimeCrook } from "./146-duke-weaselton-small-time-crook";
 
 describe("Duke Weaselton - Small-Time Crook", () => {

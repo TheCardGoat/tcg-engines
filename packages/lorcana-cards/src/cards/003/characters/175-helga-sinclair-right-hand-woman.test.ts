@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { helgaSinclairRighthandWoman } from "./175-helga-sinclair-right-hand-woman";
 
 describe("Helga Sinclair - Right-Hand Woman", () => {

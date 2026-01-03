@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { mulanSoldierInTraining } from "./117-mulan-soldier-in-training";
 
 describe("Mulan - Soldier in Training", () => {

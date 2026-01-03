@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { mirabelMadrigalProphecyFinder } from "./019-mirabel-madrigal-prophecy-finder";
 
 describe("Mirabel Madrigal - Prophecy Finder", () => {

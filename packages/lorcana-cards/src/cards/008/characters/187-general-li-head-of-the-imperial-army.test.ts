@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { generalLiHeadOfTheImperialArmy } from "./187-general-li-head-of-the-imperial-army";
 
 describe("General Li - Head of the Imperial Army", () => {

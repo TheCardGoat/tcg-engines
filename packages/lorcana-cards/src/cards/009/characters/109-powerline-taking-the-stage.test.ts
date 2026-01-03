@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaTestEngine } from "@tcg/lorcana-types/testing";
+import { LorcanaTestEngine } from "@tcg/lorcana/testing";
 import { powerlineTakingTheStage } from "./109-powerline-taking-the-stage";
 
 describe("Powerline - Taking the Stage", () => {
