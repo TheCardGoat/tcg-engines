@@ -16,7 +16,7 @@ import { describe, expect, it } from "bun:test";
 import {
   allCardsText,
   totalUniqueTexts,
-} from "../../../../../.claude/skills/lorcana-rules/references/all-cards-text/all-lorcana-texts";
+} from "../../../../../../.claude/skills/lorcana-rules/references/all-cards-text/all-lorcana-texts";
 import { parseAbilityTexts } from "../parser";
 
 describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
@@ -74,7 +74,7 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
       if (!result.success) {
         unparsedPatterns.push({
           text: allCardsText[index],
-          error: result.error,
+          error: result.warnings?.[0],
         });
       }
     });
@@ -136,7 +136,8 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
 
     results.results.forEach((result) => {
       if (result.success && result.ability) {
-        const type = result.ability.ability.type;
+        const ability = result.ability.ability as { type: string };
+        const type = ability.type;
         if (type in categoryCounts) {
           categoryCounts[type as keyof typeof categoryCounts]++;
         }
@@ -175,11 +176,8 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
       // Sample first few warnings
       withWarnings.slice(0, 5).forEach((result, index) => {
         console.log(`\nExample ${index + 1}:`);
-        console.log(`  Text: "${result.ability?.text}"`);
+        console.log(`  Text: "${result.text}"`);
         console.log(`  Warnings: ${result.warnings?.join(", ")}`);
-        if (result.unparsedSegments) {
-          console.log(`  Unparsed: ${result.unparsedSegments.join(", ")}`);
-        }
       });
     }
 
@@ -196,7 +194,10 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
 
     results.results.forEach((result) => {
       if (result.success && result.ability) {
-        const ability = result.ability.ability;
+        const ability = result.ability.ability as {
+          type: string;
+          keyword?: string;
+        };
         const type = ability.type;
 
         // Count ability types
@@ -206,7 +207,7 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
         );
 
         // Count specific keywords
-        if (ability.type === "keyword") {
+        if (ability.type === "keyword" && ability.keyword) {
           const keyword = ability.keyword;
           keywordFrequency.set(
             keyword,
@@ -280,7 +281,7 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
 
     results.results.forEach((result, index) => {
       if (result.success && result.ability) {
-        const type = result.ability.ability.type;
+        const type = (result.ability.ability as { type: string }).type;
         if (!validTypes.includes(type)) {
           invalidResults.push(
             `Text: "${allCardsText[index]}", Type: "${type}"`,
@@ -311,7 +312,7 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
 
     results.results.forEach((result, index) => {
       if (result.success && result.ability) {
-        const type = result.ability.ability.type;
+        const type = (result.ability.ability as { type: string }).type;
         if (
           type in examples &&
           examples[type as keyof typeof examples].length < 3

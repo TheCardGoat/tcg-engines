@@ -1,6 +1,6 @@
 {
   "include": ["src/**/*"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "src/legacy-cards"],
   "compilerOptions": {
     "types": ["bun-types"],
     "target": "ES2022",
