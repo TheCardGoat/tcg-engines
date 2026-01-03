@@ -122,6 +122,33 @@ function parseFromCst(
 function parseFromText(text: string): ExertEffect | ReadyEffect | null {
   logger.debug("Attempting to parse exert effect from text", { text });
 
+  // Check for "exert all your characters" pattern first
+  if (/exert\s+all\s+(?:your\s+)?characters/i.test(text)) {
+    logger.info("Parsed exert all characters effect");
+    return {
+      type: "exert",
+      target: "YOUR_CHARACTERS",
+    };
+  }
+
+  // Check for "exert each character" pattern
+  if (/exert\s+each\s+character/i.test(text)) {
+    logger.info("Parsed exert each character effect");
+    return {
+      type: "exert",
+      target: "ALL_CHARACTERS",
+    };
+  }
+
+  // Check for "ready all your characters" pattern
+  if (/ready\s+all\s+(?:your\s+)?characters/i.test(text)) {
+    logger.info("Parsed ready all characters effect");
+    return {
+      type: "ready",
+      target: "YOUR_CHARACTERS",
+    };
+  }
+
   // More flexible patterns that don't require trailing separators
   // This handles cases where sequence parser has already removed ". " etc.
   const exertPattern = /^exert\s+(.+)$/i;
@@ -168,8 +195,10 @@ function parseFromText(text: string): ExertEffect | ReadyEffect | null {
  * Exert effect parser implementation
  */
 export const exertEffectParser: EffectParser = {
-  pattern: /(exert|ready)\s+(chosen|this|another|an?)\s+character/i,
-  description: "Parses exert/ready effects (e.g., 'exert chosen character')",
+  pattern:
+    /(exert|ready)\s+(?:all\s+)?(?:your\s+)?(?:characters|chosen|this|another|an?)\s+character/i,
+  description:
+    "Parses exert/ready effects (e.g., 'exert chosen character', 'exert all your characters', 'ready all your characters')",
 
   parse: (input: CstNode | string): ExertEffect | ReadyEffect | null => {
     if (typeof input === "string") {
