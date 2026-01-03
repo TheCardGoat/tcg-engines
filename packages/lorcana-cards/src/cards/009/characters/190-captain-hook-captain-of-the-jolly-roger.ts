@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
   id: "1d2",

@@ -19,6 +19,12 @@ import {
   createZoneOperations,
   type RuleEngineOptions,
 } from "@tcg/core";
+import type {
+  ActionCard as LorcanaTypesActionCard,
+  CharacterCard as LorcanaTypesCharacterCard,
+  ItemCard as LorcanaTypesItemCard,
+  LocationCard as LorcanaTypesLocationCard,
+} from "@tcg/lorcana-types";
 import { LorcanaEngine } from "../engine/lorcana-engine";
 import { lorcanaGameDefinition } from "../game-definition/definition";
 import type {
@@ -27,6 +33,14 @@ import type {
   LorcanaMoveParams,
 } from "../types";
 import type { LorcanaCardDefinition } from "../types/card-types";
+
+// Union of engine types and types package types for compatibility
+type LorcanaCardDefinitionInput =
+  | LorcanaCardDefinition
+  | LorcanaTypesCharacterCard
+  | LorcanaTypesActionCard
+  | LorcanaTypesItemCard
+  | LorcanaTypesLocationCard;
 
 // Export player ID constants for tests
 export const PLAYER_ONE = createPlayerId("player_one");
@@ -37,19 +51,19 @@ export const PLAYER_TWO = createPlayerId("player_two");
  *
  * Simple zone configuration for setting up test games.
  * Zones can be configured with either a number (to create placeholder cards)
- * or an array of LorcanaCardDefinition (to create cards with actual definitions).
+ * or an array of LorcanaCardDefinitionInput (to create cards with actual definitions).
  */
 export type TestInitialState = {
   /** Cards in hand - number or card definitions */
-  hand?: number | LorcanaCardDefinition[];
+  hand?: number | LorcanaCardDefinitionInput[];
   /** Cards in deck - number or card definitions */
-  deck?: number | LorcanaCardDefinition[];
+  deck?: number | LorcanaCardDefinitionInput[];
   /** Cards in play - number or card definitions */
-  play?: number | LorcanaCardDefinition[];
+  play?: number | LorcanaCardDefinitionInput[];
   /** Cards in inkwell - number or card definitions */
-  inkwell?: number | LorcanaCardDefinition[];
+  inkwell?: number | LorcanaCardDefinitionInput[];
   /** Cards in discard - number or card definitions */
-  discard?: number | LorcanaCardDefinition[];
+  discard?: number | LorcanaCardDefinitionInput[];
   /** Starting lore */
   lore?: number;
 };
@@ -89,7 +103,7 @@ export type TestEngineOptions = {
  * Used for testing that cards have the expected keywords.
  */
 export class TestCardModel {
-  constructor(private readonly card: LorcanaCardDefinition) {}
+  constructor(private readonly card: LorcanaCardDefinitionInput) {}
 
   /** Check if card has a specific keyword */
   private hasKeywordAbility(keyword: string): boolean {
@@ -177,7 +191,8 @@ export class LorcanaTestEngine {
   private cardCounter = 0;
 
   /** Registry of Lorcana card definitions placed in play (for getCardModel) */
-  private playedCardDefinitions: Map<string, LorcanaCardDefinition> = new Map();
+  private playedCardDefinitions: Map<string, LorcanaCardDefinitionInput> =
+    new Map();
 
   constructor(
     _playerOneState: TestInitialState = {},
@@ -246,8 +261,8 @@ export class LorcanaTestEngine {
    * Check if a zone value is an array of card definitions
    */
   private isCardDefinitionsArray(
-    value: number | LorcanaCardDefinition[] | undefined,
-  ): value is LorcanaCardDefinition[] {
+    value: number | LorcanaCardDefinitionInput[] | undefined,
+  ): value is LorcanaCardDefinitionInput[] {
     return Array.isArray(value);
   }
 
@@ -300,7 +315,7 @@ export class LorcanaTestEngine {
     const initializeZone = (
       zoneId: string,
       playerId: string,
-      value: number | LorcanaCardDefinition[] | undefined,
+      value: number | LorcanaCardDefinitionInput[] | undefined,
       shuffle: boolean,
     ) => {
       if (value === undefined) return;
@@ -359,7 +374,7 @@ export class LorcanaTestEngine {
    * expect(cardUnderTest.hasSupport()).toBe(true);
    * ```
    */
-  getCardModel(cardDef: LorcanaCardDefinition): TestCardModel {
+  getCardModel(cardDef: LorcanaCardDefinitionInput): TestCardModel {
     const registered = this.playedCardDefinitions.get(cardDef.id);
     if (!registered) {
       // Card wasn't registered via play option, but we can still create a model for it

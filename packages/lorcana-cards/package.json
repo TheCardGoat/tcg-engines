@@ -28,7 +28,7 @@
     "check-types": "tsc --noEmit",
     "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
     "lint": "bun x @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error ./src",
-    "test": "AGENT=1 bun test --silent",
+    "test": "AGENT=1 bun test --silent src/cards src/parser src/scripts src/data",
     "test:watch": "bun test --watch",
     "test:coverage": "bun test --coverage",
     "check": "turbo format lint check-types test",

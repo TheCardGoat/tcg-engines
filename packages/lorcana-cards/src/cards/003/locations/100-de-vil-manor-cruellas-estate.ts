@@ -1,4 +1,4 @@
-import type { LocationCard } from "@tcg/lorcana";
+import type { LocationCard } from "@tcg/lorcana-types";
 
 export const deVilManorCruellasEstate: LocationCard = {
   id: "i5g",
