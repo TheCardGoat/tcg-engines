@@ -21,10 +21,18 @@ import type { CanonicalCard } from "../types";
  * technically parse but are too complex for our simple draw effect generator.
  */
 const COMPLEX_TEXT_PATTERNS = [
+  // Choice effects (Choose one: X or Y)
+  /choose one:/i,
+
   // Draw + discard sequences
   /draw.*then.*discard/i,
   /draw.*choose and discard/i,
   /draw.*then choose and discard/i,
+
+  // Draw + other action sequences (put, gain, deal, etc.)
+  /draw.*then.*put/i,
+  /draw.*and.*gain/i,
+  /draw.*and.*deal/i,
 
   // Discard + draw (in any order)
   /discard.*to draw/i,
@@ -397,11 +405,13 @@ export function isParseableCard(card: CanonicalCard): boolean {
       return true;
     }
 
-    // For action/triggered/activated abilities, only allow simple draw effects
+    // For action/triggered/activated/static abilities, only allow simple draw effects
+    // Static abilities include effects like "Each player draws a card"
     if (
       abilityType === "action" ||
       abilityType === "triggered" ||
-      abilityType === "activated"
+      abilityType === "activated" ||
+      abilityType === "static"
     ) {
       const effect = result.ability.ability.effect;
       if (!effect) return false;
