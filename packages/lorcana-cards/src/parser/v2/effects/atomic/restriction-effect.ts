@@ -15,10 +15,21 @@ type RestrictionEffect = {
   duration?: "this-turn" | "next-turn" | "their-next-turn";
 };
 
+// GrantAbilityEffect for effects that grant abilities to characters
+type GrantAbilityEffect = {
+  type: "grant-ability";
+  ability: string;
+  target: string;
+};
+
 /**
  * Parse restriction effect from text string (regex-based parsing)
+ * Note: Returns RestrictionEffect | GrantAbilityEffect union since this parser
+ * handles both restriction effects and ability-granting effects
  */
-function parseFromText(text: string): RestrictionEffect | null {
+function parseFromText(
+  text: string,
+): RestrictionEffect | GrantAbilityEffect | null {
   logger.debug("Attempting to parse restriction effect from text", { text });
 
   // Pattern: "can't be challenged" or "cannot be challenged"
@@ -111,11 +122,12 @@ function parseFromText(text: string): RestrictionEffect | null {
   // Pattern: "can challenge ready characters" (grant ability)
   if (/[Cc]an challenge ready characters/.test(text)) {
     logger.info("Parsed 'can challenge ready characters' grant ability");
-    return {
+    const grantEffect: GrantAbilityEffect = {
       type: "grant-ability",
       ability: "can-challenge-ready",
       target: "SELF",
-    } as any; // This is actually a GrantAbilityEffect, not RestrictionEffect
+    };
+    return grantEffect;
   }
 
   logger.debug("Restriction effect pattern did not match");
@@ -126,19 +138,23 @@ function parseFromText(text: string): RestrictionEffect | null {
  * Parse restriction effect from CST node (grammar-based parsing)
  * For now, delegates to text parsing
  */
-function parseFromCst(_ctx: CstNode): RestrictionEffect | null {
+function parseFromCst(
+  _ctx: CstNode,
+): RestrictionEffect | GrantAbilityEffect | null {
   logger.debug("CST-based restriction parsing delegates to text parsing");
   return null;
 }
 
 /**
  * Restriction effect parser implementation
+ * Note: Returns RestrictionEffect | GrantAbilityEffect union since this parser
+ * handles both restriction effects and ability-granting effects
  */
 export const restrictionEffectParser: EffectParser = {
   pattern:
     /(?:[Cc]an'?t be challenged|[Cc]an'?t challenge|[Cc]an'?t quest|[Cc]an'?t ready|cannot challenge|cannot quest|cannot ready|[Ee]nters? play exerted|[Cc]an challenge ready characters)/,
   description:
-    "Parses restriction effects (e.g., 'can't be challenged', 'cannot challenge', 'can't quest', 'can't ready', 'enters play exerted')",
+    "Parses restriction effects and ability-granting effects (e.g., 'can't be challenged', 'cannot challenge', 'can challenge ready characters')",
 
   parse: (input: CstNode | string) => {
     if (typeof input === "string") {

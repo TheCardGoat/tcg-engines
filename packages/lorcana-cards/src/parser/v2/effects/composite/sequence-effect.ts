@@ -20,16 +20,25 @@ import { parseCompositeEffect } from "./index";
  *
  * Priority order:
  * 1. ", then" / ". then" / ", and then" - explicit sequence markers
- * 2. ". " - period-separated sentences (only if not part of "or" format)
+ * 2. ". " - period-separated sentences (as fallback, with validation)
+ *
+ * KNOWN LIMITATION: The period separator ". " is intentionally generic and may
+ * incorrectly split text like "Draw 2 cards. Gain 1 lore" that could represent
+ * separate ability sentences rather than sequential steps. To mitigate false positives:
+ * - It's tried LAST, only after more specific patterns fail
+ * - All resulting parts must parse successfully as effects
+ * - It's skipped for "or" format choices (handled by choice parser)
+ * - Future improvement: Add validation to ensure period-separated parts are
+ *   genuinely sequential (e.g., check for temporal language, verify causality)
  *
  * Note: " and " is NOT a sequence separator - it's used within atomic effects
  * like "draw 2 cards and discard 1 card" which should be parsed as a single effect.
  */
 const SEQUENCE_SEPARATORS = [
   ", then ",
-  ". then ",
   ", and then ",
-  ". Then, ", // Capital T with comma
+  ". then ",
+  ". then, ", // Same pattern with comma (case-insensitive matching handles capitalization)
   ". ",
 ] as const;
 

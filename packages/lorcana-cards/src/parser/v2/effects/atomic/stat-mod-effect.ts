@@ -9,12 +9,19 @@ import type { CharacterTarget, ModifyStatEffect } from "../../types";
 import type { EffectParser } from "./index";
 
 /**
+ * Sentinel value to distinguish {d} placeholder from actual stat modifiers
+ * and from parse failures. This value is extremely unlikely to be a valid
+ * stat modifier in Lorcana (which typically range from -10 to +10).
+ */
+export const D_PLACEHOLDER = Number.MIN_SAFE_INTEGER; // -9007199254740991
+
+/**
  * Helper function to parse numeric values or {d} placeholders
- * Converts {d} to -1 as a placeholder value
+ * Converts {d} to a distinctive sentinel value, returns 0 for parse failures
  */
 function parseNumericValue(value: string): number {
   if (value === "{d}") {
-    return -1; // Placeholder value for {d}
+    return D_PLACEHOLDER;
   }
 
   // Remove optional + prefix
@@ -22,7 +29,7 @@ function parseNumericValue(value: string): number {
   const parsed = Number.parseInt(cleaned, 10);
 
   if (Number.isNaN(parsed)) {
-    return -1; // Fallback for unparseable values
+    return 0; // Fallback for unparseable values
   }
 
   return parsed;
@@ -93,8 +100,10 @@ function parseFromText(text: string): ModifyStatEffect | null {
   if (match) {
     const sign = match[1] === "-" ? -1 : 1;
     const valueStr = match[2];
-    const value = valueStr === "{d}" ? -1 : Number.parseInt(valueStr, 10);
-    const modifier = sign * value;
+    const value =
+      valueStr === "{d}" ? D_PLACEHOLDER : Number.parseInt(valueStr, 10);
+    // Don't modify D_PLACEHOLDER with sign - it's a sentinel value
+    const modifier = value === D_PLACEHOLDER ? D_PLACEHOLDER : sign * value;
 
     const statSymbol = match[3];
     const stat =
@@ -160,8 +169,10 @@ function parseFromText(text: string): ModifyStatEffect | null {
   if (match) {
     const sign = match[1] === "-" ? -1 : 1;
     const valueStr = match[2];
-    const value = valueStr === "{d}" ? -1 : Number.parseInt(valueStr, 10);
-    const modifier = sign * value;
+    const value =
+      valueStr === "{d}" ? D_PLACEHOLDER : Number.parseInt(valueStr, 10);
+    // Don't modify D_PLACEHOLDER with sign - it's a sentinel value
+    const modifier = value === D_PLACEHOLDER ? D_PLACEHOLDER : sign * value;
     const stat = match[3].toLowerCase() as "strength" | "willpower" | "lore";
 
     // Try to determine target from text

@@ -105,9 +105,9 @@ function parseFromText(text: string): Effect | null {
         type: "return-from-discard",
         target: "CONTROLLER",
       };
-      // Only assign valid card types for ReturnFromDiscardEffect (excludes floodborn)
-      if (cardType && cardType !== "floodborn") {
-        effect.cardType = cardType as CardType;
+      // Only assign valid card types for ReturnFromDiscardEffect
+      if (cardType) {
+        effect.cardType = cardType;
       }
       return effect;
     }

@@ -75,12 +75,14 @@ function parseCounter(text: string): ForEachCounter | null {
   }
 
   // "damage removed" - no controller property
-  if (normalized.includes("damage") && normalized.includes("removed")) {
+  // Use word boundary to avoid matching "undamaged"
+  if (/\bdamage\b/i.test(normalized) && /\bremoved\b/i.test(normalized)) {
     return { type: "damage-removed" };
   }
 
   // "lore lost" - no controller property
-  if (normalized.includes("lore") && normalized.includes("lost")) {
+  // Use word boundaries for precise matching
+  if (/\blore\b/i.test(normalized) && /\blost\b/i.test(normalized)) {
     return { type: "lore-lost" };
   }
 
@@ -88,11 +90,11 @@ function parseCounter(text: string): ForEachCounter | null {
   if (/\bdamaged\s+characters?\b/i.test(normalized)) {
     // For damaged characters, default to "any" if no explicit controller
     if (controller === "any") {
-      if (normalized.includes("opponent")) {
+      if (/\bopponent\b/i.test(normalized)) {
         controller = "opponent";
       } else if (
-        normalized.includes("you control") ||
-        normalized.includes("your")
+        /\byou\s+control\b/i.test(normalized) ||
+        /\byour\b/i.test(normalized)
       ) {
         controller = "you";
       }
@@ -102,16 +104,16 @@ function parseCounter(text: string): ForEachCounter | null {
   }
 
   // Regular characters - default to "you" if no controller specified
-  if (normalized.includes("character")) {
+  if (/\bcharacters?\b/i.test(normalized)) {
     // Determine controller (opponent from "their", or explicit keywords, default to "you")
     if (controller === "any") {
       // Change default from "any" to "you" for regular characters
       controller = "you";
-      if (normalized.includes("opponent")) {
+      if (/\bopponent\b/i.test(normalized)) {
         controller = "opponent";
       } else if (
-        normalized.includes("you control") ||
-        normalized.includes("your")
+        /\byou\s+control\b/i.test(normalized) ||
+        /\byour\b/i.test(normalized)
       ) {
         controller = "you";
       }
@@ -120,33 +122,33 @@ function parseCounter(text: string): ForEachCounter | null {
   }
 
   // Items
-  if (normalized.includes("item")) {
+  if (/\bitems?\b/i.test(normalized)) {
     if (controller === "any") {
-      controller = normalized.includes("opponent") ? "opponent" : "you";
+      controller = /\bopponent\b/i.test(normalized) ? "opponent" : "you";
     }
     return { type: "items", controller };
   }
 
   // Locations
-  if (normalized.includes("location")) {
+  if (/\blocations?\b/i.test(normalized)) {
     if (controller === "any") {
-      controller = normalized.includes("opponent") ? "opponent" : "you";
+      controller = /\bopponent\b/i.test(normalized) ? "opponent" : "you";
     }
     return { type: "locations", controller };
   }
 
   // Cards in hand
-  if (normalized.includes("card") && normalized.includes("hand")) {
+  if (/\bcards?\b/i.test(normalized) && /\bhand\b/i.test(normalized)) {
     if (controller === "any") {
-      controller = normalized.includes("opponent") ? "opponent" : "you";
+      controller = /\bopponent\b/i.test(normalized) ? "opponent" : "you";
     }
     return { type: "cards-in-hand", controller };
   }
 
   // Cards in discard
-  if (normalized.includes("card") && normalized.includes("discard")) {
+  if (/\bcards?\b/i.test(normalized) && /\bdiscard\b/i.test(normalized)) {
     if (controller === "any") {
-      controller = normalized.includes("opponent") ? "opponent" : "you";
+      controller = /\bopponent\b/i.test(normalized) ? "opponent" : "you";
     }
     return { type: "cards-in-discard", controller };
   }
@@ -157,7 +159,7 @@ function parseCounter(text: string): ForEachCounter | null {
     if (/\bdamaged\s+characters?\b/i.test(normalized)) {
       return null; // Let the character check above handle it
     }
-    if (normalized.includes("this") || normalized.includes("self")) {
+    if (/\bthis\b/i.test(normalized) || /\bself\b/i.test(normalized)) {
       return { type: "damage-on-self" };
     }
     return { type: "damage-on-target" };

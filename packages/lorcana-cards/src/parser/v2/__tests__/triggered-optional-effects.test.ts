@@ -17,14 +17,13 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("triggered");
+      const ability = result.ability?.ability as TriggeredAbility | undefined;
+      expect(ability?.type).toBe("triggered");
+      expect(ability!.trigger.event).toBe("play");
+      expect(ability!.trigger.timing).toBe("whenever");
+      expect(ability!.effect.type).toBe("optional");
 
-      const ability = result.ability?.ability as TriggeredAbility;
-      expect(ability.trigger.event).toBe("play");
-      expect(ability.trigger.timing).toBe("whenever");
-      expect(ability.effect.type).toBe("optional");
-
-      const effect = ability.effect as OptionalEffect;
+      const effect = ability!.effect as OptionalEffect;
       expect(effect.effect.type).toBe("draw");
     });
 
@@ -34,14 +33,13 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("triggered");
+      const ability = result.ability?.ability as TriggeredAbility | undefined;
+      expect(ability?.type).toBe("triggered");
+      expect(ability!.trigger.event).toBe("banish");
+      expect(ability!.trigger.timing).toBe("when");
+      expect(ability!.effect.type).toBe("optional");
 
-      const ability = result.ability?.ability as TriggeredAbility;
-      expect(ability.trigger.event).toBe("banish");
-      expect(ability.trigger.timing).toBe("when");
-      expect(ability.effect.type).toBe("optional");
-
-      const effect = ability.effect as OptionalEffect;
+      const effect = ability!.effect as OptionalEffect;
       expect(effect.effect.type).toBe("draw");
     });
 
@@ -51,13 +49,12 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("triggered");
+      const ability = result.ability?.ability as TriggeredAbility | undefined;
+      expect(ability?.type).toBe("triggered");
+      expect(ability!.trigger.event).toBe("quest");
+      expect(ability!.effect.type).toBe("optional");
 
-      const ability = result.ability?.ability as TriggeredAbility;
-      expect(ability.trigger.event).toBe("quest");
-      expect(ability.effect.type).toBe("optional");
-
-      const effect = ability.effect as OptionalEffect;
+      const effect = ability!.effect as OptionalEffect;
       expect(effect.effect.type).toBe("gain-lore");
     });
   });
@@ -69,15 +66,14 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("triggered");
+      const ability = result.ability?.ability as TriggeredAbility | undefined;
+      expect(ability?.type).toBe("triggered");
       expect(result.ability?.name).toBe("TEA PARTY");
+      expect(ability!.name).toBe("TEA PARTY");
+      expect(ability!.trigger.event).toBe("challenged");
+      expect(ability!.effect.type).toBe("optional");
 
-      const ability = result.ability?.ability as TriggeredAbility;
-      expect(ability.name).toBe("TEA PARTY");
-      expect(ability.trigger.event).toBe("challenged");
-      expect(ability.effect.type).toBe("optional");
-
-      const effect = ability.effect as OptionalEffect;
+      const effect = ability!.effect as OptionalEffect;
       expect(effect.effect.type).toBe("draw");
     });
 
@@ -87,13 +83,12 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("triggered");
+      const ability = result.ability?.ability as TriggeredAbility | undefined;
+      expect(ability?.type).toBe("triggered");
       expect(result.ability?.name).toBe("DARK KNOWLEDGE");
-
-      const ability = result.ability?.ability as TriggeredAbility;
-      expect(ability.name).toBe("DARK KNOWLEDGE");
-      expect(ability.trigger.event).toBe("quest");
-      expect(ability.effect.type).toBe("optional");
+      expect(ability!.name).toBe("DARK KNOWLEDGE");
+      expect(ability!.trigger.event).toBe("quest");
+      expect(ability!.effect.type).toBe("optional");
     });
   });
 
@@ -104,12 +99,11 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("triggered");
-
-      const ability = result.ability?.ability as TriggeredAbility;
-      expect(ability.trigger.event).toBe("play");
-      expect(ability.trigger.timing).toBe("when");
-      expect(ability.effect.type).toBe("optional");
+      const ability = result.ability?.ability as TriggeredAbility | undefined;
+      expect(ability?.type).toBe("triggered");
+      expect(ability!.trigger.event).toBe("play");
+      expect(ability!.trigger.timing).toBe("when");
+      expect(ability!.effect.type).toBe("optional");
     });
 
     it("should parse 'During your turn, when this character is banished, you may draw a card'", () => {
@@ -118,11 +112,10 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("triggered");
-
-      const ability = result.ability?.ability as TriggeredAbility;
-      expect(ability.trigger.event).toBe("banish");
-      expect(ability.effect.type).toBe("optional");
+      const ability = result.ability?.ability as TriggeredAbility | undefined;
+      expect(ability?.type).toBe("triggered");
+      expect(ability!.trigger.event).toBe("banish");
+      expect(ability!.effect.type).toBe("optional");
     });
 
     it("should parse named ability with restriction prefix", () => {
@@ -131,11 +124,10 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("triggered");
+      const ability = result.ability?.ability as TriggeredAbility | undefined;
+      expect(ability?.type).toBe("triggered");
       expect(result.ability?.name).toBe("NEW INFORMATION");
-
-      const ability = result.ability?.ability as TriggeredAbility;
-      expect(ability.effect.type).toBe("optional");
+      expect(ability!.effect.type).toBe("optional");
     });
   });
 
@@ -146,10 +138,10 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       );
 
       expect(result.success).toBe(true);
-      const ability = result.ability?.ability as TriggeredAbility;
-      expect(ability.effect.type).toBe("optional");
+      const ability = result.ability?.ability as TriggeredAbility | undefined;
+      expect(ability!.effect.type).toBe("optional");
 
-      const effect = ability.effect as OptionalEffect;
+      const effect = ability!.effect as OptionalEffect;
       expect(effect.effect.type).toBe("deal-damage");
     });
 
@@ -159,10 +151,10 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       );
 
       expect(result.success).toBe(true);
-      const ability = result.ability?.ability as TriggeredAbility;
-      expect(ability.effect.type).toBe("optional");
+      const ability = result.ability?.ability as TriggeredAbility | undefined;
+      expect(ability!.effect.type).toBe("optional");
 
-      const effect = ability.effect as OptionalEffect;
+      const effect = ability!.effect as OptionalEffect;
       expect(effect.effect.type).toBe("banish");
     });
 
@@ -172,10 +164,10 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       );
 
       expect(result.success).toBe(true);
-      const ability = result.ability?.ability as TriggeredAbility;
-      expect(ability.effect.type).toBe("optional");
+      const ability = result.ability?.ability as TriggeredAbility | undefined;
+      expect(ability!.effect.type).toBe("optional");
 
-      const effect = ability.effect as OptionalEffect;
+      const effect = ability!.effect as OptionalEffect;
       expect(effect.effect.type).toBe("exert");
     });
   });
@@ -187,11 +179,10 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("triggered");
+      const ability = result.ability?.ability as TriggeredAbility | undefined;
+      expect(ability?.type).toBe("triggered");
       expect(result.ability?.name).toBe("IT WORKS!");
-
-      const ability = result.ability?.ability as TriggeredAbility;
-      expect(ability.effect.type).toBe("optional");
+      expect(ability!.effect.type).toBe("optional");
     });
 
     it("should parse DOUBLE-CROSSING CROOK! ability", () => {
@@ -200,13 +191,12 @@ describe("Task 2.4: Triggered Abilities with Optional Effects", () => {
       );
 
       expect(result.success).toBe(true);
-      expect(result.ability?.ability.type).toBe("triggered");
+      const ability = result.ability?.ability as TriggeredAbility | undefined;
+      expect(ability?.type).toBe("triggered");
       expect(result.ability?.name).toBe("DOUBLE-CROSSING CROOK!");
+      expect(ability!.effect.type).toBe("optional");
 
-      const ability = result.ability?.ability as TriggeredAbility;
-      expect(ability.effect.type).toBe("optional");
-
-      const effect = ability.effect as OptionalEffect;
+      const effect = ability!.effect as OptionalEffect;
       expect(effect.effect.type).toBe("draw");
     });
   });

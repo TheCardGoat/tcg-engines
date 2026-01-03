@@ -7,6 +7,7 @@ import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
 import type { DrawEffect } from "../../types";
 import type { EffectParser } from "./index";
+import { D_PLACEHOLDER } from "./stat-mod-effect";
 
 /**
  * Parse draw effect from CST node (grammar-based parsing)
@@ -79,10 +80,10 @@ function parseFromText(text: string): DrawEffect | null {
     return null;
   }
 
-  // "draw a card" = 1 card, {d} = -1 sentinel
+  // "draw a card" = 1 card, {d} = D_PLACEHOLDER sentinel
   let amount: number;
   if (match[1]) {
-    amount = match[1] === "{d}" ? -1 : Number.parseInt(match[1], 10);
+    amount = match[1] === "{d}" ? D_PLACEHOLDER : Number.parseInt(match[1], 10);
   } else {
     amount = 1;
   }

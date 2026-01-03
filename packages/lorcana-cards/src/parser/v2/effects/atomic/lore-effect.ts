@@ -7,6 +7,7 @@ import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
 import type { Effect, GainLoreEffect, LoseLoreEffect } from "../../types";
 import type { EffectParser } from "./index";
+import { D_PLACEHOLDER } from "./stat-mod-effect";
 
 /**
  * Parse lore effect from CST node (grammar-based parsing)
@@ -83,9 +84,10 @@ function parseFromText(text: string): GainLoreEffect | LoseLoreEffect | null {
     return null;
   }
 
-  // Handle {d} placeholder as -1 sentinel
+  // Handle {d} placeholder as D_PLACEHOLDER sentinel
   const amountValue = match[1];
-  const amount = amountValue === "{d}" ? -1 : Number.parseInt(amountValue, 10);
+  const amount =
+    amountValue === "{d}" ? D_PLACEHOLDER : Number.parseInt(amountValue, 10);
 
   if (Number.isNaN(amount)) {
     logger.warn("Failed to extract number from lore effect text", {

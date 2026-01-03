@@ -257,7 +257,7 @@ export function parseTrigger(text: string): Trigger | undefined {
     return {
       event: "play",
       timing,
-      on: { controller: "you", cardType: "song" },
+      on: { controller: "you", cardType: "action" }, // "song" is mapped to "action"
     };
   }
 
@@ -274,7 +274,7 @@ export function parseTrigger(text: string): Trigger | undefined {
     return {
       event: "play",
       timing,
-      on: { controller: "opponent", cardType: "song" },
+      on: { controller: "opponent", cardType: "action" }, // "song" is mapped to "action"
     };
   }
 

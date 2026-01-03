@@ -13,6 +13,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import { D_PLACEHOLDER } from "../effects/atomic/stat-mod-effect";
 import { parseEffect } from "../parsers/effect-parser";
 
 describe("Action Effects - Task Group 2.5", () => {
@@ -32,7 +33,7 @@ describe("Action Effects - Task Group 2.5", () => {
 
       expect(effect).toEqual({
         type: "draw",
-        amount: -1, // {d} placeholder value
+        amount: D_PLACEHOLDER, // {d} placeholder value
         target: "CHOSEN_PLAYER",
       });
     });
@@ -106,7 +107,7 @@ describe("Action Effects - Task Group 2.5", () => {
 
       expect(effect).toEqual({
         type: "lose-lore",
-        amount: -1, // {d} placeholder value
+        amount: D_PLACEHOLDER, // {d} placeholder value
         target: "EACH_OPPONENT",
       });
     });
@@ -408,7 +409,7 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "modify-stat",
         stat: "willpower",
-        modifier: -1,
+        modifier: -1, // Real negative stat modifier, not a placeholder
         target: {
           selector: "chosen",
           count: 1,
@@ -444,7 +445,7 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "modify-stat",
         stat: "strength",
-        modifier: -1, // {d} placeholder value (positive)
+        modifier: D_PLACEHOLDER, // {d} placeholder value (positive)
         target: {
           selector: "chosen",
           count: 1,
@@ -462,7 +463,7 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "modify-stat",
         stat: "willpower",
-        modifier: 1, // {d} placeholder value stored positive, negated later
+        modifier: D_PLACEHOLDER, // {d} placeholder value (sign handled separately)
         target: {
           selector: "chosen",
           count: 1,
@@ -480,7 +481,7 @@ describe("Action Effects - Task Group 2.5", () => {
       expect(effect).toEqual({
         type: "modify-stat",
         stat: "lore",
-        modifier: -1, // {d} placeholder value (defaults to positive)
+        modifier: D_PLACEHOLDER, // {d} placeholder value (defaults to positive)
         target: {
           selector: "chosen",
           count: 1,

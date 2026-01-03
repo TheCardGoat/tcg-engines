@@ -29,35 +29,31 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      // Parser captures "character for" due to regex pattern (\w+(?:\s+\w+)?)
-      // but "character for" is not a valid cardType, so cardType is undefined
-      expect(
-        (result as Effect & { cardType?: string }).cardType,
-      ).toBeUndefined();
+      // Parser now correctly captures "character" (first word after article)
+      expect((result as Effect & { cardType?: string }).cardType).toBe(
+        "character",
+      );
       expect((result as Effect & { cost?: string }).cost).toBe("free");
     });
 
-    it("parses 'play an action' - 'an' captured instead of 'action'", () => {
+    it("parses 'play an action' correctly", () => {
       const result = playEffectParser.parse("play an action");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      // Parser captures "an action" but only first word "an" is used for cardType
-      // which is not a valid card type, so cardType is undefined
-      expect(
-        (result as Effect & { cardType?: string }).cardType,
-      ).toBeUndefined();
+      // Parser now correctly skips the article "an" and captures "action"
+      expect((result as Effect & { cardType?: string }).cardType).toBe(
+        "action",
+      );
     });
 
-    it("parses 'play an item' - 'an' captured instead of 'item'", () => {
+    it("parses 'play an item' correctly", () => {
       const result = playEffectParser.parse("play an item");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      // Parser captures "an item" but parseCardType only checks first word
-      expect(
-        (result as Effect & { cardType?: string }).cardType,
-      ).toBeUndefined();
+      // Parser now correctly skips the article "an" and captures "item"
+      expect((result as Effect & { cardType?: string }).cardType).toBe("item");
     });
 
     it("parses 'play a card' - 'card' is not a valid cardType", () => {
@@ -175,10 +171,10 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      // Parser captures "character for" but that's not a valid cardType
-      expect(
-        (result as Effect & { cardType?: string }).cardType,
-      ).toBeUndefined();
+      // Parser now correctly skips the article "A" and captures "character"
+      expect((result as Effect & { cardType?: string }).cardType).toBe(
+        "character",
+      );
       // text.includes("for free") is case-sensitive, so "For Free" doesn't match
       expect((result as Effect & { cost?: string }).cost).toBeUndefined();
     });
@@ -188,10 +184,10 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      // Parser captures "an action" but that's not a valid cardType
-      expect(
-        (result as Effect & { cardType?: string }).cardType,
-      ).toBeUndefined();
+      // Parser now correctly skips the article "aN" and captures "aCtIoN"
+      expect((result as Effect & { cardType?: string }).cardType).toBe(
+        "action",
+      );
     });
   });
 
@@ -269,10 +265,11 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      // "character card" is not a valid cardType, so it's undefined
-      expect(
-        (result as Effect & { cardType?: string }).cardType,
-      ).toBeUndefined();
+      // Parser now correctly captures "character" (first word after article)
+      // The second word "card" is ignored but "character" is a valid cardType
+      expect((result as Effect & { cardType?: string }).cardType).toBe(
+        "character",
+      );
     });
 
     it("handles play cost 0 for free", () => {

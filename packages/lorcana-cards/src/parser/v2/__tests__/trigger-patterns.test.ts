@@ -5,6 +5,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import type { TriggeredAbility } from "@tcg/lorcana";
 import { parseTriggeredAbility } from "../parsers/triggered-parser";
 
 describe("Trigger Pattern: Whenever you play a card", () => {
@@ -14,7 +15,7 @@ describe("Trigger Pattern: Whenever you play a card", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("play");
@@ -33,7 +34,7 @@ describe("Trigger Pattern: Whenever you play a card", () => {
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("YOUR REWARD AWAITS");
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.name).toBe("YOUR REWARD AWAITS");
       expect(ability.trigger.event).toBe("play");
@@ -52,13 +53,13 @@ describe("Trigger Pattern: Whenever an opponent plays X", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("play");
       expect(ability.trigger.on).toEqual({
         controller: "opponent",
-        cardType: "song",
+        cardType: "action", // "song" is mapped to "action" (songs are actions)
       });
       expect(ability.effect.type).toBe("optional");
     }
@@ -70,7 +71,7 @@ describe("Trigger Pattern: Whenever an opponent plays X", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.event).toBe("play");
       expect(ability.trigger.on).toEqual({
@@ -88,11 +89,11 @@ describe("Trigger Pattern: Whenever an opponent plays X", () => {
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("FINE PRINT");
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
         controller: "opponent",
-        cardType: "song",
+        cardType: "action", // "song" is mapped to "action" (songs are actions)
       });
     }
   });
@@ -105,7 +106,7 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("play");
@@ -124,7 +125,7 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
         controller: "you",
@@ -140,7 +141,7 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
         controller: "you",
@@ -157,7 +158,7 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("SHAMELESS PROMOTER");
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.name).toBe("SHAMELESS PROMOTER");
       expect(ability.trigger.on).toEqual({
@@ -174,7 +175,7 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
         controller: "you",
@@ -190,7 +191,7 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
         controller: "you",
@@ -206,7 +207,7 @@ describe("Trigger Pattern: Whenever you play a [Type] character", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
         controller: "you",
@@ -224,7 +225,7 @@ describe("Trigger Pattern: Whenever this character is challenged", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("challenged");
@@ -240,7 +241,7 @@ describe("Trigger Pattern: Whenever this character is challenged", () => {
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("TEA PARTY");
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.event).toBe("challenged");
       expect(ability.effect.type).toBe("optional");
@@ -255,7 +256,7 @@ describe("Trigger Pattern: Whenever you play an action", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("play");
@@ -274,7 +275,7 @@ describe("Trigger Pattern: Whenever you play an action", () => {
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("ACTION MASTER");
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
         controller: "you",
@@ -291,7 +292,7 @@ describe("Trigger Pattern: Whenever you play an item", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("play");
@@ -310,7 +311,7 @@ describe("Trigger Pattern: Whenever you play an item", () => {
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("IT WORKS!");
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
         controller: "you",
@@ -327,13 +328,13 @@ describe("Trigger Pattern: Whenever you play a song", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("play");
       expect(ability.trigger.on).toEqual({
         controller: "you",
-        cardType: "song",
+        cardType: "action", // "song" is mapped to "action" (songs are actions)
       });
       expect(ability.effect.type).toBe("gain-lore");
     }
@@ -346,12 +347,12 @@ describe("Trigger Pattern: Whenever you play a song", () => {
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("FAN FAVORITE");
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.name).toBe("FAN FAVORITE");
       expect(ability.trigger.on).toEqual({
         controller: "you",
-        cardType: "song",
+        cardType: "action", // "song" is mapped to "action" (songs are actions)
       });
     }
   });
@@ -362,11 +363,11 @@ describe("Trigger Pattern: Whenever you play a song", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toEqual({
         controller: "you",
-        cardType: "song",
+        cardType: "action", // "song" is mapped to "action" (songs are actions)
       });
       expect(ability.effect.type).toBe("optional");
     }
@@ -380,7 +381,7 @@ describe("Trigger Pattern: When this character is banished", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.timing).toBe("when");
       expect(ability.trigger.event).toBe("banish");
@@ -395,7 +396,7 @@ describe("Trigger Pattern: When this character is banished", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.timing).toBe("whenever");
       expect(ability.trigger.event).toBe("banish");
@@ -410,7 +411,7 @@ describe("Trigger Pattern: When this character is banished", () => {
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("LAST STAND");
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.event).toBe("banish");
       expect(ability.effect.type).toBe("optional");
@@ -430,8 +431,12 @@ describe("Integration: Complex trigger combinations", () => {
     expect(cardResult.success).toBe(true);
     expect(characterResult.success).toBe(true);
 
-    const cardAbility = cardResult.ability?.ability;
-    const characterAbility = characterResult.ability?.ability;
+    const cardAbility = cardResult.ability?.ability as
+      | TriggeredAbility
+      | undefined;
+    const characterAbility = characterResult.ability?.ability as
+      | TriggeredAbility
+      | undefined;
 
     if (cardAbility?.type === "triggered") {
       expect(cardAbility.trigger.on).toEqual({
@@ -459,8 +464,12 @@ describe("Integration: Complex trigger combinations", () => {
     expect(heroResult.success).toBe(true);
     expect(genericResult.success).toBe(true);
 
-    const heroAbility = heroResult.ability?.ability;
-    const genericAbility = genericResult.ability?.ability;
+    const heroAbility = heroResult.ability?.ability as
+      | TriggeredAbility
+      | undefined;
+    const genericAbility = genericResult.ability?.ability as
+      | TriggeredAbility
+      | undefined;
 
     if (heroAbility?.type === "triggered") {
       expect(heroAbility.trigger.on).toEqual({
@@ -484,7 +493,7 @@ describe("Integration: Complex trigger combinations", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as TriggeredAbility | undefined;
     if (ability?.type === "triggered") {
       expect(ability.trigger.on).toBe("SELF");
       expect(ability.trigger.on).not.toEqual({

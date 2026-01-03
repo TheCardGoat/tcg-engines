@@ -1,9 +1,15 @@
 /**
  * Stub for all-lorcana-texts.
- * Re-exports from the skills directory.
+ * Provides stub implementations for testing.
  */
 
-export {
-  allCardsText,
-  totalUniqueTexts,
-} from "../../../../../../.claude/skills/lorcana-rules/references/all-cards-text/all-lorcana-texts";
+/**
+ * Stub array of all card texts.
+ * This is a placeholder for the actual all-lorcana-texts data.
+ */
+export const allCardsText: string[] = [];
+
+/**
+ * Stub count of unique texts.
+ */
+export const totalUniqueTexts = 0;

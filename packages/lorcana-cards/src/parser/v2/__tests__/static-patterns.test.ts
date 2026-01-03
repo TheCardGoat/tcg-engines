@@ -12,6 +12,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import { D_PLACEHOLDER } from "../effects/atomic/stat-mod-effect";
 import { parseAbilityText } from "../index";
 
 describe("Static Ability Patterns - Restrictions", () => {
@@ -97,7 +98,7 @@ describe("Static Ability Patterns - Grant Patterns", () => {
     expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("gain-keyword");
     expect(staticAbility.effect.keyword).toBe("Challenger");
-    expect(staticAbility.effect.value).toBe(-1); // {d} placeholder
+    expect(staticAbility.effect.value).toBe(D_PLACEHOLDER); // {d} placeholder
     expect(staticAbility.effect.target).toBe("YOUR_CHARACTERS");
   });
 
@@ -135,7 +136,7 @@ describe("Static Ability Patterns - Stat Modifiers", () => {
     expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("modify-stat");
     expect(staticAbility.effect.stat).toBe("lore");
-    expect(staticAbility.effect.modifier).toBe(-1); // {d} placeholder
+    expect(staticAbility.effect.modifier).toBe(D_PLACEHOLDER); // {d} placeholder
     expect(staticAbility.effect.target).toBe("YOUR_CHARACTERS");
   });
 
@@ -163,7 +164,7 @@ describe("Static Ability Patterns - Location Effects", () => {
     expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("gain-keyword");
     expect(staticAbility.effect.keyword).toBe("Resist");
-    expect(staticAbility.effect.value).toBe(-1); // {d} placeholder
+    expect(staticAbility.effect.value).toBe(D_PLACEHOLDER); // {d} placeholder
     expect(staticAbility.effect.target).toBe("CHARACTERS_HERE");
     expect(staticAbility.name).toBe("ISOLATED");
   });
@@ -199,7 +200,7 @@ describe("Static Ability Patterns - Location Effects", () => {
     expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("modify-stat");
     expect(staticAbility.effect.stat).toBe("strength");
-    expect(staticAbility.effect.modifier).toBe(-1); // {d} placeholder
+    expect(staticAbility.effect.modifier).toBe(D_PLACEHOLDER); // {d} placeholder
     expect(staticAbility.effect.target).toBe("CHARACTERS_HERE");
   });
 });

@@ -7,6 +7,7 @@ import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
 import type { CharacterTarget, GainKeywordEffect } from "../../types";
 import type { EffectParser } from "./index";
+import { D_PLACEHOLDER } from "./stat-mod-effect";
 
 /**
  * Known Lorcana keywords that can be granted
@@ -74,11 +75,11 @@ function parseKeywordWithValue(text: string): {
 
 /**
  * Helper function to parse numeric values or {d} placeholders
- * Converts {d} to -1 as a placeholder value
+ * Converts {d} to D_PLACEHOLDER as a sentinel value
  */
 function parseNumericValue(value: string): number {
   if (value === "{d}") {
-    return -1; // Placeholder value for {d}
+    return D_PLACEHOLDER; // Sentinel value for {d}
   }
 
   // Remove optional + prefix
@@ -86,7 +87,7 @@ function parseNumericValue(value: string): number {
   const parsed = Number.parseInt(cleaned, 10);
 
   if (Number.isNaN(parsed)) {
-    return -1; // Fallback for unparseable values
+    return 0; // Fallback for unparseable values
   }
 
   return parsed;
