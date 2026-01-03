@@ -22,6 +22,8 @@ export const RapunzelGiftedWithHealing: CharacterCard = {
   abilities: [
     {
       type: "action",
+      id: "kro-1",
+      text: "**GLEAM AND GLOW** When you play this character, remove up to 3 damage from one of your characters. Draw a card for each 1 damage removed this way.",
       effect: {
         type: "sequence",
         steps: [

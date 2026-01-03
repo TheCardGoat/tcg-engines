@@ -31,5 +31,4 @@ export const OneJumpAheadUndefined: ActionCard = {
       },
     },
   ],
-  classifications: ["action", "song"],
 };

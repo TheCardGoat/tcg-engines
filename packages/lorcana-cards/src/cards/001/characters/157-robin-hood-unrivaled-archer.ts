@@ -32,8 +32,6 @@ export const RobinHoodUnrivaledArcher: CharacterCard = {
         },
         then: {
           type: "draw",
-          text: "**Feed The Poor** When you play this character, if an opponent has more cards in their hand than you, draw a card./n/n**Good Shot** During your turn, this character gains **Evasive**. (_They can challenge characters with Evasive._)",
-          id: "dq9-2",
           amount: 1,
           target: "CONTROLLER",
         },

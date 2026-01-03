@@ -22,6 +22,8 @@ export const TinkerBellGiantFairy: CharacterCard = {
   abilities: [
     {
       type: "action",
+      id: "c3s-1",
+      text: "**FAIRY DUST** When you play this character, you may deal 1 damage to each opposing character.",
       effect: {
         type: "optional",
         effect: {

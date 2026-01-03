@@ -34,8 +34,6 @@ export const TinkerBellTinyTactician: CharacterCard = {
           },
           {
             type: "discard",
-            text: "**Battle plans** {E} - Draw a card, then choose and discard a card.",
-            id: "s44-2",
             amount: 1,
             target: "CONTROLLER",
             chosen: true,

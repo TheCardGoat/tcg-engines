@@ -20,6 +20,8 @@ export const GrabYourSwordUndefined: ActionCard = {
   abilities: [
     {
       type: "action",
+      id: "u4k-1",
+      text: "_(A character with cost 5 or more can {E} to sing this song for free.)_\nDeal 2 damage to each opposing character.",
       effect: {
         type: "deal-damage",
         amount: 2,
@@ -33,5 +35,4 @@ export const GrabYourSwordUndefined: ActionCard = {
       },
     },
   ],
-  classifications: ["action", "song"],
 };

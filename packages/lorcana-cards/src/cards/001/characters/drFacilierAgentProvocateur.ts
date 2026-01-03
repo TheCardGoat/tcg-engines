@@ -22,6 +22,8 @@ export const DrFacilierAgentProvocateur: CharacterCard = {
   abilities: [
     {
       type: "action",
+      id: "c3l-1",
+      text: "**SLEIGHT OF HAND** When you play this character, you may return target character to their player's hand.",
       effect: {
         type: "optional",
         effect: {

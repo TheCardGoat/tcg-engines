@@ -32,8 +32,6 @@ export const DevelopYourBrainUndefined: ActionCard = {
           },
           {
             type: "put-on-bottom",
-            text: "Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.",
-            id: "yy9-2",
             target: "CHOSEN_CHARACTER",
           },
         ],

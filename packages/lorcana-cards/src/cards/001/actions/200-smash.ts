@@ -19,6 +19,8 @@ export const SmashUndefined: ActionCard = {
   abilities: [
     {
       type: "action",
+      id: "ub4-1",
+      text: "Deal 3 damage to chosen character.",
       effect: {
         type: "deal-damage",
         amount: 3,

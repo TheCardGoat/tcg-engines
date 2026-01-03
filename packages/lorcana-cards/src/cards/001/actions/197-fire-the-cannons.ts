@@ -19,6 +19,8 @@ export const FireTheCannonsUndefined: ActionCard = {
   abilities: [
     {
       type: "action",
+      id: "lhl-1",
+      text: "Deal 2 damage to chosen character.",
       effect: {
         type: "deal-damage",
         amount: 2,

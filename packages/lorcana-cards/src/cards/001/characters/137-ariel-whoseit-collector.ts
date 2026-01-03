@@ -22,6 +22,8 @@ export const ArielWhoseitCollector: CharacterCard = {
   abilities: [
     {
       type: "action",
+      id: "c6b-1",
+      text: "**PRINCE'S CHARM** You may ready this character.",
       effect: {
         type: "optional",
         effect: {

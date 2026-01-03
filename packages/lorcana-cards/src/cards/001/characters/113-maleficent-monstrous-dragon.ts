@@ -22,6 +22,8 @@ export const MaleficentMonstrousDragon: CharacterCard = {
   abilities: [
     {
       type: "action",
+      id: "b6l-1",
+      text: "**MALEFICENT'S SCEPTER** You may banish chosen character.",
       effect: {
         type: "optional",
         effect: {

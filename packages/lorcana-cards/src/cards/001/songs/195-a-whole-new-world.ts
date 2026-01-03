@@ -29,5 +29,4 @@ export const AWholeNewWorldUndefined: ActionCard = {
       },
     },
   ],
-  classifications: ["action", "song"],
 };

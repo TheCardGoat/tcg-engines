@@ -22,6 +22,8 @@ export const PrincePhillipDragonslayer: CharacterCard = {
   abilities: [
     {
       type: "action",
+      id: "c7p-1",
+      text: "**DRAGON SLAYER** When you play this character, you may banish chosen character.",
       effect: {
         type: "optional",
         effect: {

@@ -20,6 +20,8 @@ export const HakunaMatataUndefined: ActionCard = {
   abilities: [
     {
       type: "action",
+      id: "ege-1",
+      text: "_(A character with cost 2 or more can {E} to sing this\nsong for free.)_\nRemove up to 3 damage from each of your characters.",
       effect: {
         type: "remove-damage",
         amount: 3,
@@ -34,5 +36,4 @@ export const HakunaMatataUndefined: ActionCard = {
       },
     },
   ],
-  classifications: ["action", "song"],
 };

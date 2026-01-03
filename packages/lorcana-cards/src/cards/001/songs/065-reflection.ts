@@ -30,5 +30,4 @@ export const ReflectionUndefined: ActionCard = {
       },
     },
   ],
-  classifications: ["action", "song"],
 };

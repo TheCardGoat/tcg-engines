@@ -30,5 +30,4 @@ export const SuddenChillUndefined: ActionCard = {
       },
     },
   ],
-  classifications: ["action", "song"],
 };

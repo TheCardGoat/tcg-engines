@@ -18,5 +18,4 @@ export const MotherKnowsBestUndefined: ActionCard = {
     ravensburger: "",
   },
   abilities: [],
-  classifications: ["action", "song"],
 };

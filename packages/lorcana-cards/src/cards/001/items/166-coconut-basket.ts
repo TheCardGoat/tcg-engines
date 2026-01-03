@@ -19,6 +19,8 @@ export const CoconutBasketUndefined: ItemCard = {
   abilities: [
     {
       type: "action",
+      id: "d2s-1",
+      text: "**TREAT** You may remove up to 3 damage from chosen character.",
       effect: {
         type: "optional",
         effect: {

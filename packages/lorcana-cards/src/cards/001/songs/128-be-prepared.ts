@@ -18,5 +18,4 @@ export const BePreparedUndefined: ActionCard = {
     ravensburger: "",
   },
   abilities: [],
-  classifications: ["action", "song"],
 };

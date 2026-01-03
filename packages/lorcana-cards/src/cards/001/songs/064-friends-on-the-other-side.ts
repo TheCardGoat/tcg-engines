@@ -29,5 +29,4 @@ export const FriendsOnTheOtherSideUndefined: ActionCard = {
       },
     },
   ],
-  classifications: ["action", "song"],
 };

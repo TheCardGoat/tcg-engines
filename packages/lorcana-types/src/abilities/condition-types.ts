@@ -470,6 +470,21 @@ export interface NotCondition {
   condition: Condition;
 }
 
+/**
+ * IF condition - catch-all for parser conditions
+ *
+ * Used when the parser cannot determine a more specific condition type.
+ * This allows for flexible "if" expressions that will be refined later.
+ *
+ * @example "If a Villain character is chosen..."
+ * @deprecated Prefer using specific condition types when possible
+ */
+export interface IfCondition {
+  type: "if";
+  /** Natural language expression of the condition */
+  expression: string;
+}
+
 // ============================================================================
 // Combined Condition Type
 // ============================================================================
@@ -527,7 +542,9 @@ export type Condition =
   // Logical
   | AndCondition
   | OrCondition
-  | NotCondition;
+  | NotCondition
+  // Parser catch-all
+  | IfCondition;
 
 // ============================================================================
 // Condition Builders (convenience)

@@ -32,5 +32,4 @@ export const BeOurGuestUndefined: ActionCard = {
       },
     },
   ],
-  classifications: ["action", "song"],
 };

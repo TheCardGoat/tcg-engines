@@ -18,5 +18,4 @@ export const LetItGoUndefined: ActionCard = {
     ravensburger: "",
   },
   abilities: [],
-  classifications: ["action", "song"],
 };

@@ -22,6 +22,8 @@ export const MickeyMouseWaywardSorcerer: CharacterCard = {
   abilities: [
     {
       type: "action",
+      id: "kuw-1",
+      text: "**CEASELESS WORKER** Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.",
       effect: {
         type: "optional",
         effect: {

@@ -22,6 +22,8 @@ export const CaptainHookCaptainOfTheJollyRoger: CharacterCard = {
   abilities: [
     {
       type: "action",
+      id: "c2l-1",
+      text: "**CAPTAIN HOOK** You may return target character to their player's hand.",
       effect: {
         type: "optional",
         effect: {

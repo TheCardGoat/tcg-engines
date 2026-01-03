@@ -29,5 +29,4 @@ export const PartOfYourWorldUndefined: ActionCard = {
       },
     },
   ],
-  classifications: ["action", "song"],
 };

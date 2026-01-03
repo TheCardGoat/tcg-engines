@@ -29,8 +29,6 @@ export const BeastUndefined: ItemCard = {
         },
         then: {
           type: "draw",
-          text: "**SHOW ME** {E}, 3 {I} - If you have no cards in your hand, draw a card.",
-          id: "ysg-2",
           amount: 1,
           target: "CONTROLLER",
         },

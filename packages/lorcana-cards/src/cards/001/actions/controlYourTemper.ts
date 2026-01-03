@@ -19,6 +19,8 @@ export const ControlYourTemperUndefined: ActionCard = {
   abilities: [
     {
       type: "action",
+      id: "eny-1",
+      text: "Chosen character gets -2 {S} this turn.",
       effect: {
         type: "modify-stat",
         stat: "strength",

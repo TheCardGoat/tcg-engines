@@ -19,6 +19,8 @@ export const DragonFireUndefined: ActionCard = {
   abilities: [
     {
       type: "action",
+      id: "buy-1",
+      text: "Banish chosen character.",
       effect: {
         type: "banish",
         target: {

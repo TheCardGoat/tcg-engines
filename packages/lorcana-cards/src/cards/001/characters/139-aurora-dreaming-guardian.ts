@@ -21,16 +21,20 @@ export const AuroraDreamingGuardian: CharacterCard = {
   },
   abilities: [
     {
-      type: "static",
-      text: "**Shift** 3 (_You may pay 3 {I} to play this on top of one of your characters named Aurora._)\n**Protective Embrace** Your other characters gain **Ward**. _(Opponents can",
+      type: "keyword",
+      keyword: "Shift",
+      cost: { ink: 3 },
       id: "wb5-1",
+      text: "**Shift** 3 (_You may pay 3 {I} to play this on top of one of your characters named Aurora._)",
+    },
+    {
+      type: "static",
+      id: "wb5-2",
+      text: "**Protective Embrace** Your other characters gain **Ward**. _(Opponents can",
       effect: {
-        type: "optional",
-        effect: {
-          type: "play-card",
-          from: "hand",
-        },
-        chooser: "CONTROLLER",
+        type: "gain-keyword",
+        keyword: "Ward",
+        target: "YOUR_CHARACTERS",
       },
     },
   ],

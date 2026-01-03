@@ -29,8 +29,6 @@ export const ViciousBetrayalUndefined: ActionCard = {
         },
         then: {
           type: "modify-stat",
-          text: "Chosen character gets +2 {S} this turn. If a Villain character is chosen, they get +3 {S} instead.",
-          id: "e6i-2",
           stat: "strength",
           modifier: 3,
           target: "CHOSEN_CHARACTER",
