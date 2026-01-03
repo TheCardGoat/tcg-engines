@@ -115,8 +115,15 @@ export const atomicEffectParsers: EffectParser[] = [
  * Returns the first successful parse result, or null if no parser matches.
  */
 export function parseAtomicEffect(input: CstNode | string): Effect | null {
+  // Trim trailing periods and whitespace from string inputs
+  // This handles cases where effect text ends with a period like "draw a card."
+  let normalizedInput = input;
+  if (typeof input === "string") {
+    normalizedInput = input.replace(/\.\s*$/, "").trim();
+  }
+
   for (const parser of atomicEffectParsers) {
-    const result = parser.parse(input);
+    const result = parser.parse(normalizedInput);
     if (result !== null) {
       return result;
     }
