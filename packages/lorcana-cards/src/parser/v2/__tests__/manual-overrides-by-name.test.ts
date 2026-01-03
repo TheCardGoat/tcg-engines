@@ -2,27 +2,48 @@
  * Tests for Manual Overrides by Name
  */
 
-import { describe, expect, it } from "bun:test";
+import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { MANUAL_ENTRIES_BY_NAME } from "../manual-overrides";
 import { parseAbilityText } from "../parser";
 
 describe("Manual Overrides by Name", () => {
-  // Add a test entry to MANUAL_ENTRIES_BY_NAME
   const TEST_CARD_NAME = "Test Card For Manual Override";
   const TEST_ABILITY_TEXT = "Test ability text.";
 
-  // Register a manual entry for testing
-  MANUAL_ENTRIES_BY_NAME[TEST_CARD_NAME] = {
+  // Store original state for cleanup
+  let originalEntry: (typeof MANUAL_ENTRIES_BY_NAME)[string] | undefined;
+
+  // Register a manual entry for testing before each test
+  const testEntry: any = {
     text: TEST_ABILITY_TEXT,
     name: "TEST ABILITY",
     ability: {
       type: "static",
+      id: "test-1",
+      text: "Test static ability",
       effect: {
         type: "gain-keyword",
         keyword: "Ward",
+        target: "THIS_CHARACTER",
       },
     },
-  } as any; // Using 'as any' because test creates a simplified mock entry
+  };
+
+  beforeEach(() => {
+    // Save original entry if it exists
+    originalEntry = MANUAL_ENTRIES_BY_NAME[TEST_CARD_NAME];
+    // Register test entry
+    MANUAL_ENTRIES_BY_NAME[TEST_CARD_NAME] = testEntry;
+  });
+
+  afterEach(() => {
+    // Clean up: restore original state or delete the test entry
+    if (originalEntry) {
+      MANUAL_ENTRIES_BY_NAME[TEST_CARD_NAME] = originalEntry;
+    } else {
+      delete MANUAL_ENTRIES_BY_NAME[TEST_CARD_NAME];
+    }
+  });
 
   it("should look up manual entry by card name", () => {
     // The text passed doesn't match the manual entry text, but the name should trigger the override

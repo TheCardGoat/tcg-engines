@@ -375,12 +375,10 @@ export class LorcanaTestEngine {
    * ```
    */
   getCardModel(cardDef: LorcanaCardDefinitionInput): TestCardModel {
+    // Prefer the engine-registered definition if it exists, as it may have additional state
     const registered = this.playedCardDefinitions.get(cardDef.id);
-    if (!registered) {
-      // Card wasn't registered via play option, but we can still create a model for it
-      // This allows testing cards without explicitly adding them to the engine
-    }
-    return new TestCardModel(cardDef);
+    const cardDefToUse = registered ?? cardDef;
+    return new TestCardModel(cardDefToUse);
   }
 
   /**
