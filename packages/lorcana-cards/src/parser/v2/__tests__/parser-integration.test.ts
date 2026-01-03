@@ -3,7 +3,7 @@
  * Tests end-to-end parsing from text input to ability objects.
  */
 
-import { beforeEach, describe, expect, it, spyOn } from "bun:test";
+import { afterAll, beforeEach, describe, expect, it, spyOn } from "bun:test";
 import { logger, parserV2 } from "../index";
 
 describe("LorcanaParserV2 - Integration", () => {
@@ -20,6 +20,17 @@ describe("LorcanaParserV2 - Integration", () => {
     consoleLogSpy = spyOn(console, "log").mockImplementation(() => {});
     consoleWarnSpy = spyOn(console, "warn").mockImplementation(() => {});
     consoleErrorSpy = spyOn(console, "error").mockImplementation(() => {});
+  });
+
+  afterAll(() => {
+    // Restore all console spies to prevent leaking mocks to other test files
+    consoleLogSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
+    consoleErrorSpy.mockRestore();
+
+    // Reset logger to default state
+    logger.enable();
+    logger.setLevel("info");
   });
 
   describe("parser initialization", () => {
