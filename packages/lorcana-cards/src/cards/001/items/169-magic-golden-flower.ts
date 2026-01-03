@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const magicGoldenFlower: ItemCard = {
+export const MagicGoldenFlower: ItemCard = {
   id: "1dk",
   cardType: "item",
   name: "Magic Golden Flower",

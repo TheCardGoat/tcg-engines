@@ -1,6 +1,6 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const tangle: ActionCard = {
+export const Tangle: ActionCard = {
   id: "1ly",
   cardType: "action",
   name: "Tangle",

@@ -302,6 +302,27 @@ export class LorcanaParserV2 {
       /items?\s+(?:gain|get)\s+/i.test(originalText) ||
       /This character can challenge ready characters/i.test(originalText);
 
+    // ADDITIONAL FILTERS: Exclude patterns that indicate action abilities
+    // These abilities match static patterns but contain effects that aren't
+    // valid for static abilities (sequences, optional effects, standalone actions)
+    const isActuallyAction =
+      // Multi-sentence abilities (period + capital letter = sequence effect)
+      /\. [A-Z]/.test(originalText) ||
+      // Optional effects ("you may") indicate triggered/activated, not static
+      /(?:you|opponent)\s+may\s+/i.test(originalText) ||
+      // Sentences ending with standalone action verbs
+      /(?:\.|\s+—)\s*(?:Draw \d+ cards?|draw a card|Discard \d+|discard a card|Banish|banish|Gain \d+ lore|gain \d+ lore)$/i.test(
+        originalText.trim(),
+      );
+
+    // If matched by static patterns but actually an action, override
+    if (isStatic && isActuallyAction) {
+      return {
+        type: "action",
+        effect,
+      } as unknown as Ability;
+    }
+
     if (isStatic) {
       const staticAbility: Record<string, unknown> = {
         type: "static",

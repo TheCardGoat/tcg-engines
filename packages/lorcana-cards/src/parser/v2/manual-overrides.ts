@@ -3,4 +3,12 @@
  * Re-exports from the parent parser directory.
  */
 
-export { MANUAL_ENTRIES_BY_NAME } from "../manual-overrides";
+export {
+  getManualEntries,
+  getManualEntry,
+  MANUAL_ENTRIES,
+  MANUAL_ENTRIES_BY_NAME,
+  type ManualEntry,
+  resolveManualOverrideValues,
+  tooComplexText,
+} from "../manual-overrides";

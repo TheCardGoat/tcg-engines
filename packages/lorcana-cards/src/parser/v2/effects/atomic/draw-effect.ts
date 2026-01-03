@@ -69,10 +69,15 @@ function parseFromText(text: string): DrawEffect | null {
   let pattern = /draws?\s+(\d+|\{d\})\s+cards?/i;
   let match = text.match(pattern);
 
-  // Try "draw a card" or "draw 1 card" pattern
+  // Try "draw a card" or "draw 1 card" pattern (before numbered pattern)
+  // This needs to come after "draw N cards" to avoid partial matches
   if (!match) {
-    pattern = /draws?\s+(?:a|one|1)\s+card/i;
-    match = text.match(pattern);
+    // "draw a card" or "draw one card" or "draw 1 card"
+    // Must be standalone, not part of "draw 2 cards"
+    if (/^(?:.*?\s)?draws?\s+(?:a|one|1)\s+card(?:\s.*)?$/i.test(text)) {
+      pattern = /draws?\s+(?:a|one|1)\s+card/i;
+      match = text.match(pattern);
+    }
   }
 
   if (!match) {
@@ -109,9 +114,9 @@ function parseFromText(text: string): DrawEffect | null {
  */
 export const drawEffectParser: EffectParser = {
   pattern:
-    /(?:(?:each|all) (?:player|opponent) |chosen player )?[Dd]raw(?:s)? (?:\d+|\{d\}) cards?|(?:a|one|1) card/i,
+    /(?:(?:each|all) (?:player|opponent) |chosen player )?[Dd]raw(?:s)? (?:\d+|\{d\}) cards?|draws?\s+(?:a|one|1)\s+card/i,
   description:
-    "Parses draw card effects (e.g., 'draw 2 cards', 'Each player draws a card', 'Each opponent draws 2 cards', 'draw {d} cards')",
+    "Parses draw card effects (e.g., 'draw 2 cards', 'draw a card', 'Each player draws a card', 'Each opponent draws 2 cards', 'draw {d} cards')",
 
   parse: (input: CstNode | string): DrawEffect | null => {
     if (typeof input === "string") {
