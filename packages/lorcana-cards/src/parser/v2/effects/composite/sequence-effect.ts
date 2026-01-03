@@ -217,7 +217,9 @@ function parseFromText(text: string): SequenceEffect | null {
   // Parse each step - try composite parsers first (for for-each, optional, etc.), then atomic
   const steps: Effect[] = [];
   for (let i = 0; i < stepTexts.length; i++) {
-    const stepText = stepTexts[i];
+    // Trim trailing periods and whitespace from each step
+    // This handles cases like "Draw a card." which should parse as "Draw a card"
+    const stepText = stepTexts[i].replace(/\.\s*$/, "").trim();
     logger.debug("Parsing sequence step", { stepIndex: i, stepText });
 
     // Special handling for "You may repeat this/that (up to X times)" pattern

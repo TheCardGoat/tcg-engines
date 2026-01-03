@@ -33,7 +33,9 @@ function parseFromText(text: string): OptionalEffect | SequenceEffect | null {
     return null;
   }
 
-  const effectText = match[1].trim();
+  // Trim trailing periods and whitespace from the effect text
+  // This handles cases like "You may draw a card." which should parse as "draw a card"
+  const effectText = match[1].trim().replace(/\.\s*$/, "");
   logger.debug("Found optional pattern", { effectText });
 
   // Check for "if you do" follow-up (case-insensitive)
@@ -42,8 +44,9 @@ function parseFromText(text: string): OptionalEffect | SequenceEffect | null {
 
   if (ifYouDoMatch) {
     // Parse as sequence with optional first step
-    const firstStepText = ifYouDoMatch[1].trim();
-    const secondStepText = ifYouDoMatch[2].trim();
+    // Trim trailing periods from both steps
+    const firstStepText = ifYouDoMatch[1].trim().replace(/\.\s*$/, "");
+    const secondStepText = ifYouDoMatch[2].trim().replace(/\.\s*$/, "");
 
     logger.debug("Found 'if you do' follow-up pattern", {
       firstStepText,

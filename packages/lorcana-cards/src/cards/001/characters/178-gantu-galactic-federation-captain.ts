@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const gantuGalacticFederationCaptain: CharacterCard = {
+export const GantuGalacticFederationCaptain: CharacterCard = {
   id: "c3k",
   cardType: "character",
   name: "Gantu",

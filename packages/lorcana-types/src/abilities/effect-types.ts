@@ -287,6 +287,8 @@ export interface PutIntoInkwellEffect {
   target?: PlayerTarget;
   cardType?: CardType;
   exerted?: boolean;
+  /** Whether the card is placed facedown in the inkwell */
+  facedown?: boolean;
 }
 
 /**

@@ -1,0 +1,14 @@
+{
+  "runDate": "2026-01-03T12:12:25.601Z",
+  "set": "001",
+  "totalCards": 0,
+  "totalAbilities": 0,
+  "successfullyParsed": 0,
+  "manualOverrides": 0,
+  "grammarParsed": 0,
+  "textBasedParsed": 0,
+  "failedParses": 0,
+  "coveragePercentage": 0,
+  "results": [],
+  "failurePatterns": {}
+}

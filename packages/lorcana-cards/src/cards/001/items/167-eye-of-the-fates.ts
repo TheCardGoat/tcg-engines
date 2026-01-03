@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const eyeOfTheFates: ItemCard = {
+export const EyeOfTheFates: ItemCard = {
   id: "dun",
   cardType: "item",
   name: "Eye of the Fates",

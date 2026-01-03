@@ -38,9 +38,9 @@ describe("Effect Parser Registry", () => {
       }
     });
 
-    it("contains exactly 17 parsers", () => {
+    it("contains exactly 18 parsers", () => {
       // Verify all expected parsers are registered
-      expect(atomicEffectParsers.length).toBe(17);
+      expect(atomicEffectParsers.length).toBe(18);
     });
   });
 
@@ -105,12 +105,16 @@ describe("Effect Parser Registry", () => {
       expect(atomicEffectParsers[14].description).toContain("location");
     });
 
-    it("has drawEffectParser sixteenth", () => {
-      expect(atomicEffectParsers[15].description).toContain("draw");
+    it("has discardHandEffectParser sixteenth", () => {
+      expect(atomicEffectParsers[15].description).toContain("discard hand");
     });
 
-    it("has discardEffectParser seventeenth", () => {
-      expect(atomicEffectParsers[16].description).toContain("discard");
+    it("has drawEffectParser seventeenth", () => {
+      expect(atomicEffectParsers[16].description).toContain("draw");
+    });
+
+    it("has discardEffectParser eighteenth", () => {
+      expect(atomicEffectParsers[17].description).toContain("discard");
     });
   });
 
