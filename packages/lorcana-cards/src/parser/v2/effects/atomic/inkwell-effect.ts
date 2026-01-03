@@ -82,7 +82,7 @@ function parseFromText(text: string): PutIntoInkwellEffect | null {
   }
 
   if (facedown) {
-    (effect as { facedown: boolean }).facedown = true;
+    (effect as any).facedown = true;
   }
 
   logger.info("Parsed inkwell effect", { effect });

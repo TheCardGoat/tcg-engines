@@ -16,13 +16,11 @@ describe("Triggered Ability Parser", () => {
     );
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("triggered");
-    const ability = result.ability?.ability;
-    if (ability?.type === "triggered") {
-      expect(ability.trigger.timing).toBe("when");
-      expect(ability.trigger.event).toBeDefined();
-      expect(ability.effect.type).toBe("draw");
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("triggered");
+    expect(ability.trigger.timing).toBe("when");
+    expect(ability.trigger.event).toBeDefined();
+    expect(ability.effect.type).toBe("draw");
   });
 
   it("should parse triggered ability with whenever", () => {
@@ -31,11 +29,10 @@ describe("Triggered Ability Parser", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
-    if (ability?.type === "triggered") {
-      expect(ability.trigger.timing).toBe("whenever");
-      expect(ability.effect.type).toBe("gain-lore");
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("triggered");
+    expect(ability.trigger.timing).toBe("whenever");
+    expect(ability.effect.type).toBe("gain-lore");
   });
 
   // TODO: Condition parsing in triggered abilities is not fully implemented yet
@@ -45,7 +42,7 @@ describe("Triggered Ability Parser", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
+    const ability = result.ability?.ability as any;
     if (ability?.type === "triggered") {
       // When a condition is present, the effect is wrapped in a conditional type
       expect(ability.effect.type).toBe("conditional");
@@ -63,11 +60,10 @@ describe("Triggered Ability Parser", () => {
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("DARK KNOWLEDGE");
-    const ability = result.ability?.ability;
-    if (ability?.type === "triggered") {
-      expect(ability.name).toBe("DARK KNOWLEDGE");
-      expect(ability.effect.type).toBe("optional");
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("triggered");
+    expect(ability.name).toBe("DARK KNOWLEDGE");
+    expect(ability.effect.type).toBe("optional");
   });
 
   it("should parse at start of turn trigger", () => {
@@ -76,11 +72,10 @@ describe("Triggered Ability Parser", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
-    if (ability?.type === "triggered") {
-      expect(ability.trigger.timing).toBe("at");
-      expect(ability.trigger.event).toBe("start-turn");
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("triggered");
+    expect(ability.trigger.timing).toBe("at");
+    expect(ability.trigger.event).toBe("start-turn");
   });
 });
 
@@ -89,23 +84,20 @@ describe("Activated Ability Parser", () => {
     const result = parseActivatedAbility("{E} - Draw a card.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("activated");
-    const ability = result.ability?.ability;
-    if (ability?.type === "activated") {
-      expect(ability.cost.exert).toBe(true);
-      expect(ability.effect.type).toBe("draw");
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("activated");
+    expect(ability.cost.exert).toBe(true);
+    expect(ability.effect.type).toBe("draw");
   });
 
   it("should parse activated ability with ink cost", () => {
     const result = parseActivatedAbility("2 {I} - Draw 2 cards.");
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
-    if (ability?.type === "activated") {
-      expect(ability.cost.ink).toBe(2);
-      expect(ability.effect.type).toBe("draw");
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("activated");
+    expect(ability.cost.ink).toBe(2);
+    expect(ability.effect.type).toBe("draw");
   });
 
   it("should parse activated ability with combined cost", () => {
@@ -114,23 +106,21 @@ describe("Activated Ability Parser", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
-    if (ability?.type === "activated") {
-      expect(ability.cost.exert).toBe(true);
-      expect(ability.cost.ink).toBe(2);
-      expect(ability.effect.type).toBe("deal-damage");
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("activated");
+    expect(ability.cost.exert).toBe(true);
+    expect(ability.cost.ink).toBe(2);
+    expect(ability.effect.type).toBe("deal-damage");
   });
 
   it("should parse banish cost activated ability", () => {
     const result = parseActivatedAbility("Banish this item - Gain 3 lore.");
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
-    if (ability?.type === "activated") {
-      expect(ability.cost.banishSelf).toBe(true);
-      expect(ability.effect.type).toBe("gain-lore");
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("activated");
+    expect(ability.cost.banishSelf).toBe(true);
+    expect(ability.effect.type).toBe("gain-lore");
   });
 
   it("should parse named activated ability", () => {
@@ -140,22 +130,20 @@ describe("Activated Ability Parser", () => {
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("MAGIC HAIR");
-    const ability = result.ability?.ability;
-    if (ability?.type === "activated") {
-      expect(ability.name).toBe("MAGIC HAIR");
-      expect(ability.cost.exert).toBe(true);
-      expect(ability.effect.type).toBe("remove-damage");
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("activated");
+    expect(ability.name).toBe("MAGIC HAIR");
+    expect(ability.cost.exert).toBe(true);
+    expect(ability.effect.type).toBe("remove-damage");
   });
 
   it("should handle em dash separator", () => {
     const result = parseActivatedAbility("{E} − Draw a card.");
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
-    if (ability?.type === "activated") {
-      expect(ability.cost.exert).toBe(true);
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("activated");
+    expect(ability.cost.exert).toBe(true);
   });
 });
 
@@ -164,21 +152,18 @@ describe("Static Ability Parser", () => {
     const result = parseStaticAbility("Your characters gain Ward.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-    const ability = result.ability?.ability;
-    if (ability?.type === "static") {
-      expect(ability.effect.type).toBe("gain-keyword");
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("static");
+    expect(ability.effect.type).toBe("gain-keyword");
   });
 
   it("should parse stat modification static ability", () => {
     const result = parseStaticAbility("Your characters get +1 {S}.");
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
-    if (ability?.type === "static") {
-      expect(ability.effect.type).toBe("modify-stat");
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("static");
+    expect(ability.effect.type).toBe("modify-stat");
   });
 
   it("should parse conditional static ability", () => {
@@ -187,11 +172,10 @@ describe("Static Ability Parser", () => {
     );
 
     expect(result.success).toBe(true);
-    const ability = result.ability?.ability;
-    if (ability?.type === "static") {
-      // Condition extraction may need work, but main parsing should work
-      expect(ability.effect.type).toBe("modify-stat");
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("static");
+    // Condition extraction may need work, but main parsing should work
+    expect(ability.effect.type).toBe("modify-stat");
   });
 
   it("should parse named static ability", () => {
@@ -201,9 +185,8 @@ describe("Static Ability Parser", () => {
 
     expect(result.success).toBe(true);
     expect(result.ability?.name).toBe("HIDDEN AWAY");
-    const ability = result.ability?.ability;
-    if (ability?.type === "static") {
-      expect(ability.name).toBe("HIDDEN AWAY");
-    }
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("static");
+    expect(ability.name).toBe("HIDDEN AWAY");
   });
 });

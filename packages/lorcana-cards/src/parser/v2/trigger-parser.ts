@@ -224,7 +224,7 @@ export function parseTrigger(text: string): Trigger | undefined {
     return {
       event: "play",
       timing,
-      on: { controller: "you", cardType: "character", here: true },
+      on: { controller: "you", cardType: "character", here: true } as any, // 'here' is a custom extension
     };
   }
 

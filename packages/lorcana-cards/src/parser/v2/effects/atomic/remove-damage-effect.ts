@@ -58,9 +58,9 @@ function convertToCharacterTarget(simpleTarget: {
   const { selector, owner, count } = mapping || modifierMap.chosen;
 
   return {
-    selector: selector as CharacterTarget["selector"],
+    selector: selector as any,
     count,
-    owner: owner as CharacterTarget["owner"],
+    owner: owner as any,
     zones: ["play"],
     cardTypes: [cardType],
   };

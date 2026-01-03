@@ -47,13 +47,15 @@ describe("Manual Overrides by Name", () => {
     });
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("keyword");
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("keyword");
   });
 
   it("should ignore card name if not provided", () => {
     const result = parseAbilityText("Rush");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("keyword");
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("keyword");
   });
 });

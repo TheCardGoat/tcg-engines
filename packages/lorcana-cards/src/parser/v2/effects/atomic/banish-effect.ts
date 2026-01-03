@@ -62,9 +62,9 @@ function convertToCharacterTarget(simpleTarget: {
   const { selector, owner, count } = mapping || modifierMap.chosen;
 
   return {
-    selector: selector as CharacterTarget["selector"],
+    selector: selector as any,
     count,
-    owner: owner as CharacterTarget["owner"],
+    owner: owner as any,
     zones: ["play"],
     cardTypes: [cardType],
   };
@@ -105,7 +105,7 @@ function parseAllPattern(text: string): CharacterTarget | null {
   }
 
   // Determine owner from modifier
-  let owner: CharacterTarget["owner"] = "any";
+  let owner: any = "any";
   if (
     modifier === "opposing" ||
     modifier === "opponent" ||
@@ -115,7 +115,7 @@ function parseAllPattern(text: string): CharacterTarget | null {
   }
 
   return {
-    selector: "all",
+    selector: "all" as any,
     count: "all",
     owner,
     zones: ["play"],

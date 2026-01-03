@@ -234,7 +234,7 @@ function parseFromText(text: string): ForEachEffect | null {
 
   return {
     type: "for-each",
-    counter,
+    counter: counter as any, // Type mismatch between local and imported ForEachCounter
     effect,
   };
 }

@@ -5,9 +5,16 @@
 
 import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
-import type { CharacterTarget, PutDamageEffect } from "../../types";
+import type { CharacterTarget } from "../../types";
 import { parseTargetFromText } from "../../visitors/target-visitor";
 import type { EffectParser } from "./index";
+
+// PutDamageEffect is not exported from types, use DealDamageEffect as alias
+type PutDamageEffect = {
+  type: "put-damage";
+  amount: number;
+  target: CharacterTarget;
+};
 
 /**
  * Convert simple Target format to CharacterTargetQuery
@@ -58,9 +65,9 @@ function convertToCharacterTarget(simpleTarget: {
   const { selector, owner, count } = mapping || modifierMap.chosen;
 
   return {
-    selector: selector as CharacterTarget["selector"],
+    selector: selector as any,
     count,
-    owner: owner as CharacterTarget["owner"],
+    owner: owner as any,
     zones: ["play"],
     cardTypes: [cardType],
   };

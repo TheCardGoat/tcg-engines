@@ -212,7 +212,7 @@ function parseFromText(text: string): GainKeywordEffect | null {
 
   const effect: GainKeywordEffect = {
     type: "gain-keyword",
-    keyword,
+    keyword: keyword as GainKeywordEffect["keyword"],
     target,
   };
 

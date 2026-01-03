@@ -241,7 +241,7 @@ function parseFromText(text: string): SequenceEffect | null {
             : repeatEffect;
 
           // Replace the previous step with the repeat-enhanced version
-          steps[i] = finalEffect;
+          steps[i] = finalEffect as any; // Union type of repeat/optional effects
           logger.debug("Successfully parsed repeat-this step", {
             stepIndex: i,
             finalEffect,

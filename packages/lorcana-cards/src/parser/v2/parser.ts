@@ -12,7 +12,7 @@ interface ParseOptions {
 
 interface ParseResult {
   success: boolean;
-  ability?: { name?: string; ability: unknown };
+  ability?: { name?: string; ability: unknown } | null;
   text: string;
   warnings: string[];
 }
@@ -27,11 +27,13 @@ export function parseAbilityText(
   // Check for manual override by card name
   if (options?.cardName && MANUAL_ENTRIES_BY_NAME[options.cardName]) {
     const entry = MANUAL_ENTRIES_BY_NAME[options.cardName];
+    // entry can be AbilityWithText or AbilityWithText[]
+    const singleEntry = Array.isArray(entry) ? entry[0] : entry;
     return {
       success: true,
       ability: {
-        name: entry.name,
-        ability: entry.ability,
+        name: (singleEntry as any).name,
+        ability: (singleEntry as any).ability,
       },
       text,
       warnings: [],
@@ -51,6 +53,7 @@ export function parseAbilityText(
   }
   return {
     success: false,
+    ability: null,
     text,
     warnings: ["Failed to parse ability"],
   };

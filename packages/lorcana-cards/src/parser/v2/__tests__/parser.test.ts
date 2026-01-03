@@ -12,7 +12,8 @@ describe("Main Parser", () => {
     const result = parseAbilityText("Rush");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("keyword");
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("keyword");
   });
 
   it("should parse triggered ability", () => {
@@ -21,23 +22,26 @@ describe("Main Parser", () => {
     );
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("triggered");
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("triggered");
   });
 
   it("should parse activated ability", () => {
     const result = parseAbilityText("{E} - Draw a card.");
 
     expect(result.success).toBe(true);
+    const ability = result.ability?.ability as any;
     // Parser currently classifies this as "action" type with cost
     // TODO: Should be "activated" - this is a parser classification issue
-    expect(result.ability?.ability.type).toBe("action");
+    expect(ability.type).toBe("action");
   });
 
   it("should parse static ability", () => {
     const result = parseAbilityText("Your characters gain Ward.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("static");
   });
 
   it("should handle lenient mode with warnings", () => {
@@ -55,7 +59,8 @@ describe("Main Parser", () => {
     const result = parseAbilityText("  Rush  ");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("keyword");
+    const ability = result.ability?.ability as any;
+    expect(ability.type).toBe("keyword");
   });
 });
 

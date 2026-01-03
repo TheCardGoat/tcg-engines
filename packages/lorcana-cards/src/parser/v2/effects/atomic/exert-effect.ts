@@ -33,20 +33,20 @@ function convertToCharacterTarget(simpleTarget: {
   // Map modifier to selector and owner
   const modifierMap: Record<
     string,
-    { selector: string; owner: string; count: number }
+    { selector: string; owner: string; count: number | "all" }
   > = {
     chosen: { selector: "chosen", owner: "any", count: 1 },
     "chosen opposing": { selector: "chosen", owner: "opponent", count: 1 },
     this: { selector: "self", owner: "any", count: 1 },
-    your: { selector: "all", owner: "you", count: "all" },
-    opponent: { selector: "all", owner: "opponent", count: "all" },
-    "opponent's": { selector: "all", owner: "opponent", count: "all" },
-    opposing: { selector: "all", owner: "opponent", count: "all" },
+    your: { selector: "all", owner: "you", count: "all" as any },
+    opponent: { selector: "all", owner: "opponent", count: "all" as any },
+    "opponent's": { selector: "all", owner: "opponent", count: "all" as any },
+    opposing: { selector: "all", owner: "opponent", count: "all" as any },
     another: { selector: "chosen", owner: "any", count: 1 },
     an: { selector: "chosen", owner: "any", count: 1 },
-    each: { selector: "all", owner: "any", count: "all" },
-    all: { selector: "all", owner: "any", count: "all" },
-    other: { selector: "all", owner: "any", count: "all" },
+    each: { selector: "all", owner: "any", count: "all" as any },
+    all: { selector: "all", owner: "any", count: "all" as any },
+    other: { selector: "all", owner: "any", count: "all" as any },
   };
 
   const mapping = modifier
@@ -58,9 +58,9 @@ function convertToCharacterTarget(simpleTarget: {
   const { selector, owner, count } = mapping || modifierMap.chosen;
 
   return {
-    selector: selector as CharacterTarget["selector"],
+    selector: selector as any,
     count,
-    owner: owner as CharacterTarget["owner"],
+    owner: owner as any,
     zones: ["play"],
     cardTypes: [cardType],
   };

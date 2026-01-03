@@ -183,7 +183,7 @@ describe("Set 001 Parsing Fixes", () => {
       );
       expect(result.success).toBe(true);
       if (result.success && result.ability) {
-        const ability = result.ability.ability;
+        const ability = result.ability.ability as any;
         expect(ability.type).toBe("static");
         if (ability.type === "static") {
           expect(ability.condition).toBeDefined();
