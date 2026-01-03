@@ -122,8 +122,24 @@ export function parseTargetFromCst(ctx: {
 export function parseTargetFromText(text: string): Target | null {
   logger.debug("Parsing target from text", { text });
 
-  // Common target patterns
+  // Common target patterns - order matters, more specific patterns first
   const patterns = [
+    // Compound modifiers (must come before simple modifiers)
+    {
+      regex:
+        /(?:^|\s)(chosen\s+opposing(?:'s)?)\s+(character|item|location|card)s?/i,
+      modifier: "chosen opposing",
+    },
+    {
+      regex: /(?:^|\s)(chosen\s+your)\s+(character|item|location|card)s?/i,
+      modifier: "chosen your",
+    },
+    {
+      regex:
+        /(?:^|\s)(opponent(?:'s)?\s+chosen)\s+(character|item|location|card)s?/i,
+      modifier: "chosen opposing",
+    },
+    // Simple modifiers
     {
       regex: /(?:^|\s)(your)\s+(character|item|location|card)s?/i,
       modifier: "your",
@@ -131,6 +147,10 @@ export function parseTargetFromText(text: string): Target | null {
     {
       regex: /(?:^|\s)(opponent(?:'s)?)\s+(character|item|location|card)s?/i,
       modifier: "opponent",
+    },
+    {
+      regex: /(?:^|\s)(opposing)\s+(character|item|location|card)s?/i,
+      modifier: "opposing",
     },
     {
       regex: /(?:^|\s)(each)\s+(character|item|location|card)s?/i,
@@ -156,6 +176,7 @@ export function parseTargetFromText(text: string): Target | null {
       regex: /(?:^|\s)(this)\s+(character|item|location|card)/i,
       modifier: "this",
     },
+    // Fallback: just card type without modifier
     { regex: /(?:^|\s)(character|item|location|card)s?/i, modifier: undefined },
   ];
 

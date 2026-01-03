@@ -1047,7 +1047,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           type: "sequence",
           steps: [
             { type: "return-to-hand", target: { selector: "chosen" } },
-            { type: "discard", amount: 1, target: "card-owner", chosen: true },
+            { type: "discard", amount: 1, target: "CARD_OWNER", chosen: true },
           ],
         },
       },
@@ -1501,7 +1501,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
         effect: {
           type: "put-into-inkwell",
           source: "chosen-character",
-          target: "card-owner",
+          target: "CARD_OWNER",
           exerted: true,
           targetFilters: [{ type: "is-exerted" }],
         },

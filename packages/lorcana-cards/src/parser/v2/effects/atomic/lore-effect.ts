@@ -7,20 +7,26 @@ import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../../logging";
 import type { Effect, GainLoreEffect, LoseLoreEffect } from "../../types";
 import type { EffectParser } from "./index";
+import { D_PLACEHOLDER } from "./stat-mod-effect";
 
 /**
  * Parse lore effect from CST node (grammar-based parsing)
  */
-function parseFromCst(ctx: {
-  NumberToken?: IToken[];
-  Gain?: IToken[];
-  Lose?: IToken[];
-  [key: string]: unknown;
-}): GainLoreEffect | LoseLoreEffect | null {
+function parseFromCst(
+  ctx:
+    | {
+        NumberToken?: IToken[];
+        Gain?: IToken[];
+        Lose?: IToken[];
+        [key: string]: unknown;
+      }
+    | null
+    | undefined,
+): GainLoreEffect | LoseLoreEffect | null {
   logger.debug("Attempting to parse lore effect from CST", { ctx });
 
-  if (!ctx.NumberToken || ctx.NumberToken.length === 0) {
-    logger.debug("Lore effect CST missing NumberToken");
+  if (!(ctx && ctx.NumberToken) || ctx.NumberToken.length === 0) {
+    logger.debug("Lore effect CST missing NumberToken or invalid context");
     return null;
   }
 
@@ -62,8 +68,8 @@ function parseFromCst(ctx: {
 function parseFromText(text: string): GainLoreEffect | LoseLoreEffect | null {
   logger.debug("Attempting to parse lore effect from text", { text });
 
-  const gainPattern = /gain\s+(\d+)\s+lore/i;
-  const losePattern = /lose\s+(\d+)\s+lore/i;
+  const gainPattern = /gain\s+(\d+|\{d\})\s+lore/i;
+  const losePattern = /(?:loses?|each opponent loses?)\s+(\d+|\{d\})\s+lore/i;
 
   let match = text.match(gainPattern);
   let isGain = true;
@@ -78,16 +84,29 @@ function parseFromText(text: string): GainLoreEffect | LoseLoreEffect | null {
     return null;
   }
 
-  const amount = Number.parseInt(match[1], 10);
+  // Handle {d} placeholder as D_PLACEHOLDER sentinel
+  const amountValue = match[1];
+  const amount =
+    amountValue === "{d}" ? D_PLACEHOLDER : Number.parseInt(amountValue, 10);
 
   if (Number.isNaN(amount)) {
     logger.warn("Failed to extract number from lore effect text", {
-      match: match[1],
+      match: amountValue,
     });
     return null;
   }
 
-  logger.info("Parsed lore effect from text", { amount, isGain });
+  // Determine target for lose-lore effects
+  let target: LoseLoreEffect["target"] = "OPPONENT";
+  if (!isGain) {
+    if (/each opponent|all opponents/i.test(text)) {
+      target = "EACH_OPPONENT";
+    } else if (/opponent loses?/i.test(text)) {
+      target = "OPPONENT";
+    }
+  }
+
+  logger.info("Parsed lore effect from text", { amount, isGain, target });
 
   if (isGain) {
     return {
@@ -98,7 +117,7 @@ function parseFromText(text: string): GainLoreEffect | LoseLoreEffect | null {
   return {
     type: "lose-lore",
     amount,
-    target: "OPPONENT",
+    target,
   };
 }
 
@@ -106,15 +125,19 @@ function parseFromText(text: string): GainLoreEffect | LoseLoreEffect | null {
  * Lore effect parser implementation
  */
 export const loreEffectParser: EffectParser = {
-  pattern: /(gain|lose)\s+(\d+)\s+lore/i,
-  description: "Parses lore gain/loss effects (e.g., 'gain 2 lore')",
+  pattern: /(gain|(?:each opponent )?lose(?:s)?)\s+(\d+|\{d\})\s+lore/i,
+  description:
+    "Parses lore gain/loss effects (e.g., 'gain 2 lore', 'each opponent loses {d} lore')",
 
   parse: (input: CstNode | string): Effect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
     return parseFromCst(
-      input as { NumberToken?: IToken[]; Gain?: IToken[]; Lose?: IToken[] },
+      input as
+        | { NumberToken?: IToken[]; Gain?: IToken[]; Lose?: IToken[] }
+        | null
+        | undefined,
     );
   },
 };

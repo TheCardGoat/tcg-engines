@@ -41,19 +41,21 @@ export interface InkCost {
 /**
  * Banish cost - sacrifice a card
  */
-export interface BanishCost {
-  type: "banish";
-  /** What to banish */
-  target:
-    | "self" // Banish this card
-    | "item" // Banish one of your items
-    | "character" // Banish one of your characters
-    | "specific"; // Banish a specific card type/name
-  /** For "specific" target - card type required */
-  cardType?: CardType;
-  /** For "specific" target - card name required */
-  cardName?: string;
-}
+export type BanishCost =
+  | {
+      type: "banish";
+      /** Simple banish targets */
+      target: "self" | "item" | "character";
+    }
+  | {
+      type: "banish";
+      /** Banish a specific card type/name */
+      target: "specific";
+      /** For "specific" target - card type or name required */
+      cardType?: CardType;
+      /** For "specific" target - card name required */
+      cardName?: string;
+    };
 
 /**
  * Discard cost - discard cards from hand
@@ -151,33 +153,44 @@ export type CostComponent =
  * ```typescript
  * { discardCards: 1, discardChosen: true }
  * ```
+ *
+ * @remarks
+ * **Valid Cost Combinations:**
+ * - `exert` can be combined with any other cost
+ * - `ink` must be a positive number (omit if no ink cost)
+ * - Banish costs (`banishSelf`, `banishItem`, `banishCharacter`) are mutually exclusive
+ * - `discardChosen` requires `discardCards` to also be set
+ * - `discardCardType`/`discardCardName` require `discardCards` to also be set
+ * - Use `components` for complex costs not covered by simple fields
+ *
+ * @todo Consider refactoring to discriminated unions for better type safety in a future major version
  */
 export interface AbilityCost {
   /** Whether to exert this card */
   exert?: boolean;
 
-  /** Ink to pay from inkwell */
+  /** Ink to pay from inkwell (must be positive if present) */
   ink?: number;
 
-  /** Banish this card */
+  /** Banish this card (mutually exclusive with banishItem/banishCharacter) */
   banishSelf?: boolean;
 
-  /** Banish one of your items */
+  /** Banish one of your items (mutually exclusive with banishSelf/banishCharacter) */
   banishItem?: boolean;
 
-  /** Banish one of your characters */
+  /** Banish one of your characters (mutually exclusive with banishSelf/banishItem) */
   banishCharacter?: boolean;
 
   /** Number of cards to discard from hand */
   discardCards?: number;
 
-  /** Whether discarded cards are chosen (vs random) */
+  /** Whether discarded cards are chosen (requires discardCards) */
   discardChosen?: boolean;
 
-  /** Specific card type required for discard */
+  /** Specific card type required for discard (requires discardCards) */
   discardCardType?: CardType | "song";
 
-  /** Specific card name required for discard */
+  /** Specific card name required for discard (requires discardCards) */
   discardCardName?: string;
 
   /** Damage to deal to this character */

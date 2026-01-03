@@ -6,27 +6,8 @@
 import type { CstNode } from "chevrotain";
 import { logger } from "../../logging";
 import type { CardType, PlayCardEffect } from "../../types";
+import { parseCardType } from "../utils";
 import type { EffectParser } from "./index";
-
-/**
- * Parse card type from string
- */
-function parseCardType(
-  str: string,
-): CardType | "song" | "floodborn" | undefined {
-  const normalized = str.toLowerCase();
-  if (
-    normalized === "character" ||
-    normalized === "action" ||
-    normalized === "item" ||
-    normalized === "location" ||
-    normalized === "song" ||
-    normalized === "floodborn"
-  ) {
-    return normalized as CardType | "song" | "floodborn";
-  }
-  return undefined;
-}
 
 /**
  * Parse play effect from text string (regex-based parsing)
@@ -34,9 +15,10 @@ function parseCardType(
 function parseFromText(text: string): PlayCardEffect | null {
   logger.debug("Attempting to parse play effect from text", { text });
 
-  // Pattern: "play (a )?(character|action|item|card|...) (for free)?"
+  // Pattern: "play [a|an|the]? (character|action|item|card|...) (for free)?"
+  // Articles (a, an, the) are optional and skipped when capturing the card type
   const playPattern =
-    /play\s+(?:a\s+)?(\w+(?:\s+\w+)?)\s*(?:card)?(?:\s+for\s+free)?/i;
+    /play\s+(?:(?:a|an|the)\s+)?(\w+)(?:\s+(\w+))?\s*(?:card)?(?:\s+for\s+free)?/i;
   const playFromDiscardPattern = /play\s+.*?from\s+(?:your\s+)?discard/i;
   const playCostXPattern = /play\s+(?:a\s+)?.*?\s+(?:that\s+)?costs?\s+(\d+)/i;
 
@@ -91,6 +73,8 @@ function parseFromText(text: string): PlayCardEffect | null {
     return null;
   }
 
+  // match[1] is the first word after the article (e.g., "action" from "play an action")
+  // match[2] is an optional second word (e.g., "born" from "play a floodborn")
   const cardTypeStr = match[1].toLowerCase();
   const cardType = parseCardType(cardTypeStr);
   const isFree = text.includes("for free");

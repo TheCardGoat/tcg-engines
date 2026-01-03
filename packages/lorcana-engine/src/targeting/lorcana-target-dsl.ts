@@ -267,6 +267,13 @@ export interface LorcanaContext extends BaseContext {
 
   /** Reference cards revealed by an effect (e.g. "Look at the top card of your deck") */
   revealedCards?: string[];
+
+  /**
+   * Recursion depth tracking for condition evaluation
+   * Prevents infinite loops in recursive condition checks
+   * @internal
+   */
+  recursionDepth?: number;
 }
 
 // ============================================================================

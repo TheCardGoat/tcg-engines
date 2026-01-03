@@ -10,15 +10,82 @@ import { parseTargetFromText } from "../../visitors/target-visitor";
 import type { EffectParser } from "./index";
 
 /**
+ * Convert simple Target format to CharacterTargetQuery
+ * The parseTargetFromText returns {type, modifier} but tests expect
+ * the full CharacterTargetQuery format with selector, count, owner, zones, cardTypes
+ */
+function convertToCharacterTarget(simpleTarget: {
+  type: string;
+  modifier?: string;
+}): CharacterTarget {
+  const { type, modifier } = simpleTarget;
+
+  // Map card type to proper name
+  const cardTypeMap: Record<string, string> = {
+    character: "character",
+    item: "item",
+    location: "location",
+    card: "card",
+  };
+
+  const cardType = cardTypeMap[type.toLowerCase()] || type;
+
+  // Map modifier to selector and owner
+  const modifierMap: Record<
+    string,
+    { selector: string; owner: string; count: number | "all" }
+  > = {
+    chosen: { selector: "chosen", owner: "any", count: 1 },
+    "chosen opposing": { selector: "chosen", owner: "opponent", count: 1 },
+    this: { selector: "self", owner: "any", count: 1 },
+    your: { selector: "all", owner: "you", count: "all" as any },
+    opponent: { selector: "all", owner: "opponent", count: "all" as any },
+    "opponent's": { selector: "all", owner: "opponent", count: "all" as any },
+    opposing: { selector: "all", owner: "opponent", count: "all" as any },
+    another: { selector: "chosen", owner: "any", count: 1 },
+    an: { selector: "chosen", owner: "any", count: 1 },
+    each: { selector: "all", owner: "any", count: "all" as any },
+    all: { selector: "all", owner: "any", count: "all" as any },
+    other: { selector: "all", owner: "any", count: "all" as any },
+  };
+
+  const mapping = modifier
+    ? modifierMap[modifier.toLowerCase()] ||
+      modifierMap[modifier.toLowerCase() + " " + type.toLowerCase()]
+    : modifierMap["chosen"];
+
+  // If no mapping found, default to chosen
+  const { selector, owner, count } = mapping || modifierMap.chosen;
+
+  return {
+    selector: selector as any,
+    count,
+    owner: owner as any,
+    zones: ["play"],
+    cardTypes: [cardType],
+  };
+}
+
+/**
  * Parse exert effect from CST node (grammar-based parsing)
  */
-function parseFromCst(ctx: {
-  Exert?: IToken[];
-  Ready?: IToken[];
-  targetClause?: CstNode[];
-  [key: string]: unknown;
-}): ExertEffect | ReadyEffect | null {
+function parseFromCst(
+  ctx:
+    | {
+        Exert?: IToken[];
+        Ready?: IToken[];
+        targetClause?: CstNode[];
+        [key: string]: unknown;
+      }
+    | null
+    | undefined,
+): ExertEffect | ReadyEffect | null {
   logger.debug("Attempting to parse exert effect from CST", { ctx });
+
+  if (!ctx) {
+    logger.debug("Exert effect CST has invalid context");
+    return null;
+  }
 
   const isExert = ctx.Exert !== undefined;
   const isReady = ctx.Ready !== undefined;
@@ -55,8 +122,10 @@ function parseFromCst(ctx: {
 function parseFromText(text: string): ExertEffect | ReadyEffect | null {
   logger.debug("Attempting to parse exert effect from text", { text });
 
-  const exertPattern = /exert\s+(.+?)(?:\.|,|$)/i;
-  const readyPattern = /ready\s+(.+?)(?:\.|,|$)/i;
+  // More flexible patterns that don't require trailing separators
+  // This handles cases where sequence parser has already removed ". " etc.
+  const exertPattern = /^exert\s+(.+)$/i;
+  const readyPattern = /^ready\s+(.+)$/i;
 
   let match = text.match(exertPattern);
   let isExert = true;
@@ -76,7 +145,7 @@ function parseFromText(text: string): ExertEffect | ReadyEffect | null {
   if (match[1]) {
     const parsedTarget = parseTargetFromText(match[1]);
     if (parsedTarget) {
-      target = parsedTarget as unknown as CharacterTarget;
+      target = convertToCharacterTarget(parsedTarget);
       logger.debug("Parsed target from exert effect text", { target });
     }
   }
@@ -107,11 +176,14 @@ export const exertEffectParser: EffectParser = {
       return parseFromText(input);
     }
     return parseFromCst(
-      input as {
-        Exert?: IToken[];
-        Ready?: IToken[];
-        targetClause?: CstNode[];
-      },
+      input as
+        | {
+            Exert?: IToken[];
+            Ready?: IToken[];
+            targetClause?: CstNode[];
+          }
+        | null
+        | undefined,
     );
   },
 };

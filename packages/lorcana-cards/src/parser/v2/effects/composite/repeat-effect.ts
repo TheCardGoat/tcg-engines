@@ -50,13 +50,38 @@ function parseFromText(text: string): RepeatEffect | null {
     };
   }
 
-  // Match "do X Y times" pattern - explicit "do" keyword
-  const repeatPattern2 = /do\s+(.+)\s+(\d+)\s+times?/i;
+  // Match "repeat this/that Y times" pattern (with optional "up to")
+  const repeatPattern2 =
+    /(?:you may\s+)?repeat\s+(?:this|that|the above effect)(?:\s+up\s+to\s+(\d+)\s+times|(?:\s+(\d+)\s+times?))?/i;
   const match2 = text.match(repeatPattern2);
 
   if (match2) {
-    const effectText = match2[1].trim();
-    const timesStr = match2[2];
+    // Match group 1 is for "up to X times", group 2 is for "X times"
+    const timesStr = match2[1] || match2[2];
+    const times = timesStr ? Number.parseInt(timesStr, 10) : undefined;
+
+    if (times !== undefined && Number.isNaN(times)) {
+      logger.warn("Failed to parse repeat count", { timesStr });
+      return null;
+    }
+
+    logger.debug("Found repeat pattern (repeat this/that Y times)", { times });
+
+    // For "repeat this/that", we need the previous effect which isn't available here
+    // Return null to indicate this pattern needs to be handled at a higher level
+    logger.debug(
+      "Repeat this/that pattern requires context - not handling at this level",
+    );
+    return null;
+  }
+
+  // Match "do X Y times" pattern - explicit "do" keyword
+  const repeatPattern3 = /do\s+(.+)\s+(\d+)\s+times?/i;
+  const match3 = text.match(repeatPattern3);
+
+  if (match3) {
+    const effectText = match3[1].trim();
+    const timesStr = match3[2];
     const times = Number.parseInt(timesStr, 10);
 
     if (Number.isNaN(times)) {

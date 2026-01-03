@@ -109,7 +109,9 @@ describe("choiceEffectParser", () => {
     it("returns null for text without 'choose one' pattern", () => {
       const result = choiceEffectParser.parse("deal 3 damage or gain 2 lore");
 
-      expect(result).toBeNull();
+      // Parser now recognizes "or" as a choice pattern
+      expect(result).not.toBeNull();
+      expect(result?.type).toBe("choice");
     });
 
     it("returns null for single option", () => {

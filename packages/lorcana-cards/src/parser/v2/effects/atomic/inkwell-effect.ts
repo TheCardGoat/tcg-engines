@@ -15,8 +15,9 @@ function parseFromText(text: string): PutIntoInkwellEffect | null {
   logger.debug("Attempting to parse inkwell effect from text", { text });
 
   // Patterns for inkwell effects
+  // Matches: "put/add [something] into [your/their/their player's] inkwell"
   const putIntoInkwellPattern =
-    /(?:put|add)(?:.*?)into\s+(?:your\s+|their\s+)?inkwell/i;
+    /(?:put|add)(?:.*?)into\s+(?:your\s+|their\s+|their\s+player's\s+)?inkwell/i;
   const youMayPutIntoInkwellPattern = /you\s+may\s+put.*?into\s+inkwell/i;
 
   // Check for inkwell patterns
@@ -57,14 +58,31 @@ function parseFromText(text: string): PutIntoInkwellEffect | null {
 
   // Check for modifiers
   const exerted = text.includes("exerted");
+  const facedown = text.includes("facedown") || text.includes("face down");
+
+  // Determine target (who's inkwell is the target?)
+  let target: "CONTROLLER" | "OPPONENT" = "CONTROLLER";
+  if (
+    text.toLowerCase().includes("their") ||
+    text.toLowerCase().includes("opponent") ||
+    text.toLowerCase().includes("opponent's") ||
+    text.toLowerCase().includes("their player's")
+  ) {
+    target = "OPPONENT";
+  }
 
   const effect: PutIntoInkwellEffect = {
     type: "put-into-inkwell",
     source,
+    target,
   };
 
   if (exerted) {
     effect.exerted = true;
+  }
+
+  if (facedown) {
+    (effect as any).facedown = true;
   }
 
   logger.info("Parsed inkwell effect", { effect });
@@ -76,9 +94,10 @@ function parseFromText(text: string): PutIntoInkwellEffect | null {
  * Inkwell effect parser implementation
  */
 export const inkwellEffectParser: EffectParser = {
-  pattern: /(?:put|add)(?:.*?)into\s+(?:your\s+|their\s+)?inkwell/i,
+  pattern:
+    /(?:put|add)(?:.*?)into\s+(?:your\s+|their\s+|their\s+player's\s+)?inkwell/i,
   description:
-    "Parses inkwell effects (e.g., 'put into your inkwell', 'add to inkwell')",
+    "Parses inkwell effects (e.g., 'put into your inkwell', 'add to inkwell', 'put into their player's inkwell')",
 
   parse: (input: CstNode | string): PutIntoInkwellEffect | null => {
     if (typeof input === "string") {

@@ -11,6 +11,7 @@ import type {
   PlayerTarget,
   SearchDeckEffect,
 } from "../../types";
+import { parseCardType } from "../utils";
 import type { EffectParser } from "./index";
 
 /**
@@ -157,33 +158,6 @@ function parseFromText(
 
   logger.debug("Search effect pattern did not match");
   return null;
-}
-
-/**
- * Parse card type from string
- */
-function parseCardType(
-  str: string,
-):
-  | "character"
-  | "action"
-  | "item"
-  | "location"
-  | "song"
-  | "floodborn"
-  | undefined {
-  const normalized = str.toLowerCase();
-  if (
-    normalized === "character" ||
-    normalized === "action" ||
-    normalized === "item" ||
-    normalized === "location" ||
-    normalized === "song" ||
-    normalized === "floodborn"
-  ) {
-    return normalized;
-  }
-  return undefined;
 }
 
 /**

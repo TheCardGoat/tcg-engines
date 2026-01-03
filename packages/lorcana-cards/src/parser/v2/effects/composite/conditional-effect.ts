@@ -14,9 +14,73 @@ import { parseAtomicEffect } from "../atomic";
 /**
  * Parse conditional effect from text string.
  * Identifies "if X, then Y" or "if X, Y" patterns.
+ * Also handles "instead" patterns: "Base effect. If X, Y instead"
  */
 function parseFromText(text: string): ConditionalEffect | null {
   logger.debug("Attempting to parse conditional effect from text", { text });
+
+  // Exclude "if you do" patterns - those are part of optional effects
+  if (/if\s+you\s+do/i.test(text)) {
+    logger.debug("Skipping 'if you do' pattern (handled by optional effects)");
+    return null;
+  }
+
+  // First, check for "instead" pattern: "Base effect. If X, Y instead"
+  // This pattern means: do Y if X is true, otherwise do the base effect
+  const insteadPattern = /^(.+)\.\s+if\s+([^,]+),\s+(.+)\s+instead$/i;
+  const insteadMatch = text.match(insteadPattern);
+
+  if (insteadMatch) {
+    const baseEffectText = insteadMatch[1].trim();
+    const conditionText = insteadMatch[2].trim();
+    const thenEffectText = insteadMatch[3].trim();
+
+    logger.debug("Found 'instead' pattern", {
+      baseEffectText,
+      conditionText,
+      thenEffectText,
+    });
+
+    // Parse base effect as 'else' branch
+    const elseEffect = parseAtomicEffect(baseEffectText);
+    if (!elseEffect) {
+      logger.warn("Failed to parse base (else) effect", { baseEffectText });
+      return null;
+    }
+
+    // Parse conditional effect as 'then' branch
+    const thenEffect = parseAtomicEffect(thenEffectText);
+    if (!thenEffect) {
+      logger.warn("Failed to parse conditional (then) effect", {
+        thenEffectText,
+      });
+      return null;
+    }
+
+    // Parse the condition using the condition visitor
+    const parsedCondition = parseConditionFromText(`if ${conditionText}`);
+
+    // We need a condition - if parsing failed, create a placeholder
+    const condition: Condition = (parsedCondition as unknown as Condition) || {
+      type: "has-character-count",
+      controller: "you",
+      comparison: "at-least",
+      count: 0,
+    };
+
+    logger.info("Parsed conditional effect with 'else' branch", {
+      condition,
+      then: thenEffect,
+      else: elseEffect,
+    });
+
+    return {
+      type: "conditional",
+      condition,
+      then: thenEffect,
+      else: elseEffect,
+    };
+  }
 
   // Match "if X, then Y" or "if X, Y" patterns
   // The condition is between "if" and the comma
@@ -82,9 +146,9 @@ function parseFromCst(_ctx: {
  * Conditional effect parser implementation
  */
 export const conditionalEffectParser: EffectParser = {
-  pattern: /if\s+[^,]+,/i,
+  pattern: /(?:.+\.\s+)?if\s+[^,]+,/i,
   description:
-    "Parses conditional effects that only execute if a condition is met (e.g., 'if you have another character, gain 2 lore')",
+    "Parses conditional effects that only execute if a condition is met (e.g., 'if you have another character, gain 2 lore') and 'instead' clauses (e.g., 'Gain 1 lore. If X, gain 2 lore instead')",
 
   parse: (input: CstNode | string): ConditionalEffect | null => {
     if (typeof input === "string") {

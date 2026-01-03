@@ -145,11 +145,8 @@ describe("sequenceEffectParser", () => {
         "draw 2 cards, then invalid effect text",
       );
 
-      expect(result).not.toBeNull();
-      expect(result?.type).toBe("sequence");
-      const steps = (result as Effect & { steps: Effect[] }).steps;
-      expect(steps).toHaveLength(1);
-      expect(steps[0].type).toBe("draw");
+      // Parser now returns null if any step fails to parse (all-or-nothing approach)
+      expect(result).toBeNull();
     });
 
     it("returns null when no steps can be parsed", () => {

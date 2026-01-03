@@ -108,22 +108,24 @@ describe("inkwellEffectParser", () => {
   });
 
   describe("text parsing - target player variations", () => {
-    it("parses 'put into their inkwell' - implementation doesn't set target", () => {
+    it("parses 'put into their inkwell' - sets target to OPPONENT", () => {
       const result = inkwellEffectParser.parse("put into their inkwell");
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-into-inkwell");
-      // Implementation doesn't detect "their" to set target, just parses without target
-      expect((result as Effect & { target?: string }).target).toBeUndefined();
+      // Implementation now detects "their" and sets target to OPPONENT
+      expect((result as Effect & { target?: string }).target).toBe("OPPONENT");
     });
 
-    it("returns null for 'put into their player's inkwell' - pattern doesn't match", () => {
+    it("parses 'put into their player's inkwell' - sets target to OPPONENT", () => {
       const result = inkwellEffectParser.parse(
         "put into their player's inkwell",
       );
 
-      // Pattern only allows /(?:your\s+|their\s+)?inkwell/, "their player's" doesn't match
-      expect(result).toBeNull();
+      // Implementation now detects "their player's" and sets target to OPPONENT
+      expect(result).not.toBeNull();
+      expect(result?.type).toBe("put-into-inkwell");
+      expect((result as Effect & { target?: string }).target).toBe("OPPONENT");
     });
   });
 
@@ -136,33 +138,29 @@ describe("inkwellEffectParser", () => {
       expect((result as Effect & { exerted?: boolean }).exerted).toBe(true);
     });
 
-    it("parses 'put into your inkwell facedown' - facedown not implemented", () => {
+    it("parses 'put into your inkwell facedown' - facedown is now implemented", () => {
       const result = inkwellEffectParser.parse(
         "put into your inkwell facedown",
       );
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-into-inkwell");
-      // Implementation doesn't detect "facedown" modifier
-      expect(
-        (result as Effect & { facedown?: boolean }).facedown,
-      ).toBeUndefined();
+      // Implementation now detects "facedown" modifier
+      expect((result as Effect & { facedown?: boolean }).facedown).toBe(true);
     });
 
-    it("parses 'put into your inkwell face down' - facedown not implemented", () => {
+    it("parses 'put into your inkwell face down' - facedown is now implemented", () => {
       const result = inkwellEffectParser.parse(
         "put into your inkwell face down",
       );
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-into-inkwell");
-      // Implementation doesn't detect "face down" modifier
-      expect(
-        (result as Effect & { facedown?: boolean }).facedown,
-      ).toBeUndefined();
+      // Implementation now detects "face down" modifier
+      expect((result as Effect & { facedown?: boolean }).facedown).toBe(true);
     });
 
-    it("parses 'put into your inkwell exerted and facedown' - only exerted detected", () => {
+    it("parses 'put into your inkwell exerted and facedown' - both modifiers detected", () => {
       const result = inkwellEffectParser.parse(
         "put into your inkwell exerted and facedown",
       );
@@ -170,10 +168,8 @@ describe("inkwellEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("put-into-inkwell");
       expect((result as Effect & { exerted?: boolean }).exerted).toBe(true);
-      // Implementation doesn't detect "facedown" modifier
-      expect(
-        (result as Effect & { facedown?: boolean }).facedown,
-      ).toBeUndefined();
+      // Implementation now detects "facedown" modifier
+      expect((result as Effect & { facedown?: boolean }).facedown).toBe(true);
     });
 
     it("does not add exerted when not present", () => {

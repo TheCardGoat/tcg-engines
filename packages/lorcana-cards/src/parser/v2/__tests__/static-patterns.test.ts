@@ -12,6 +12,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
+import { D_PLACEHOLDER } from "../effects/atomic/stat-mod-effect";
 import { parseAbilityText } from "../index";
 
 describe("Static Ability Patterns - Restrictions", () => {
@@ -21,9 +22,8 @@ describe("Static Ability Patterns - Restrictions", () => {
     );
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("restriction");
     expect(staticAbility.effect.restriction).toBe("cant-be-challenged");
     expect(staticAbility.effect.target).toBe("SELF");
@@ -36,9 +36,8 @@ describe("Static Ability Patterns - Restrictions", () => {
     );
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("restriction");
     expect(staticAbility.effect.restriction).toBe("cant-challenge");
     expect(staticAbility.effect.target).toBe("SELF");
@@ -49,9 +48,8 @@ describe("Static Ability Patterns - Restrictions", () => {
     const result = parseAbilityText("ASLEEP This item enters play exerted.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("restriction");
     expect(staticAbility.effect.restriction).toBe("enters-play-exerted");
     expect(staticAbility.effect.target).toBe("SELF");
@@ -62,9 +60,8 @@ describe("Static Ability Patterns - Restrictions", () => {
     const result = parseAbilityText("This character can't be challenged.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("restriction");
     expect(staticAbility.effect.restriction).toBe("cant-be-challenged");
   });
@@ -75,9 +72,8 @@ describe("Static Ability Patterns - Grant Patterns", () => {
     const result = parseAbilityText("Your characters gain Ward.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("gain-keyword");
     expect(staticAbility.effect.keyword).toBe("Ward");
     expect(staticAbility.effect.target).toBe("YOUR_CHARACTERS");
@@ -87,9 +83,8 @@ describe("Static Ability Patterns - Grant Patterns", () => {
     const result = parseAbilityText("Your characters gain Evasive.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("gain-keyword");
     expect(staticAbility.effect.keyword).toBe("Evasive");
     expect(staticAbility.effect.target).toBe("YOUR_CHARACTERS");
@@ -99,12 +94,11 @@ describe("Static Ability Patterns - Grant Patterns", () => {
     const result = parseAbilityText("Your characters gain Challenger +{d}.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("gain-keyword");
     expect(staticAbility.effect.keyword).toBe("Challenger");
-    expect(staticAbility.effect.value).toBe(-1); // {d} placeholder
+    expect(staticAbility.effect.value).toBe(D_PLACEHOLDER); // {d} placeholder
     expect(staticAbility.effect.target).toBe("YOUR_CHARACTERS");
   });
 
@@ -112,9 +106,8 @@ describe("Static Ability Patterns - Grant Patterns", () => {
     const result = parseAbilityText("Your characters gain Resist +2.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("gain-keyword");
     expect(staticAbility.effect.keyword).toBe("Resist");
     expect(staticAbility.effect.value).toBe(2);
@@ -127,9 +120,8 @@ describe("Static Ability Patterns - Stat Modifiers", () => {
     const result = parseAbilityText("Your characters get +1 {S}.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("modify-stat");
     expect(staticAbility.effect.stat).toBe("strength");
     expect(staticAbility.effect.modifier).toBe(1);
@@ -140,12 +132,11 @@ describe("Static Ability Patterns - Stat Modifiers", () => {
     const result = parseAbilityText("Your characters get +{d} {L}.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("modify-stat");
     expect(staticAbility.effect.stat).toBe("lore");
-    expect(staticAbility.effect.modifier).toBe(-1); // {d} placeholder
+    expect(staticAbility.effect.modifier).toBe(D_PLACEHOLDER); // {d} placeholder
     expect(staticAbility.effect.target).toBe("YOUR_CHARACTERS");
   });
 
@@ -153,9 +144,8 @@ describe("Static Ability Patterns - Stat Modifiers", () => {
     const result = parseAbilityText("Your characters get +2 {W}.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("modify-stat");
     expect(staticAbility.effect.stat).toBe("willpower");
     expect(staticAbility.effect.modifier).toBe(2);
@@ -170,12 +160,11 @@ describe("Static Ability Patterns - Location Effects", () => {
     );
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("gain-keyword");
     expect(staticAbility.effect.keyword).toBe("Resist");
-    expect(staticAbility.effect.value).toBe(-1); // {d} placeholder
+    expect(staticAbility.effect.value).toBe(D_PLACEHOLDER); // {d} placeholder
     expect(staticAbility.effect.target).toBe("CHARACTERS_HERE");
     expect(staticAbility.name).toBe("ISOLATED");
   });
@@ -184,9 +173,8 @@ describe("Static Ability Patterns - Location Effects", () => {
     const result = parseAbilityText("Characters gain Ward while here.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("gain-keyword");
     expect(staticAbility.effect.keyword).toBe("Ward");
     expect(staticAbility.effect.target).toBe("CHARACTERS_HERE");
@@ -196,9 +184,8 @@ describe("Static Ability Patterns - Location Effects", () => {
     const result = parseAbilityText("Characters get +1 {L} while here.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("modify-stat");
     expect(staticAbility.effect.stat).toBe("lore");
     expect(staticAbility.effect.modifier).toBe(1);
@@ -209,12 +196,11 @@ describe("Static Ability Patterns - Location Effects", () => {
     const result = parseAbilityText("Characters get +{d} {S} while here.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("modify-stat");
     expect(staticAbility.effect.stat).toBe("strength");
-    expect(staticAbility.effect.modifier).toBe(-1); // {d} placeholder
+    expect(staticAbility.effect.modifier).toBe(D_PLACEHOLDER); // {d} placeholder
     expect(staticAbility.effect.target).toBe("CHARACTERS_HERE");
   });
 });
@@ -226,9 +212,8 @@ describe("Static Ability Patterns - Special Ability Grants", () => {
     );
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("grant-ability");
     expect(staticAbility.effect.ability).toBe("can-challenge-ready");
     expect(staticAbility.effect.target).toBe("SELF");
@@ -240,9 +225,8 @@ describe("Static Ability Patterns - Special Ability Grants", () => {
     );
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("grant-ability");
     expect(staticAbility.effect.ability).toBe("can-challenge-ready");
     expect(staticAbility.effect.target).toBe("SELF");
@@ -271,9 +255,8 @@ describe("Static Ability Patterns - Edge Cases", () => {
     const result = parseAbilityText("Your Hero characters gain Ward.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("gain-keyword");
     expect(staticAbility.effect.keyword).toBe("Ward");
     expect(staticAbility.effect.target).toBe("YOUR_CHARACTERS");
@@ -283,9 +266,8 @@ describe("Static Ability Patterns - Edge Cases", () => {
     const result = parseAbilityText("Your items gain Rush.");
 
     expect(result.success).toBe(true);
-    expect(result.ability?.ability.type).toBe("static");
-
     const staticAbility = result.ability?.ability as any;
+    expect(staticAbility.type).toBe("static");
     expect(staticAbility.effect.type).toBe("gain-keyword");
     expect(staticAbility.effect.keyword).toBe("Rush");
     expect(staticAbility.effect.target).toBe("YOUR_ITEMS");

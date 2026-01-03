@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.0.4",
+    "@tcg/lorcana": "workspace:*",
     "@types/bun": "1.2.14",
     "bun-types": "^1.3.4",
     "typescript": "5.8.3"

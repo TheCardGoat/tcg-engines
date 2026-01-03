@@ -1,6 +1,6 @@
 /**
  * Stat Modification Effect Parser
- * Handles stat modification effects like "chosen character gets +2 strength" or "-1 willpower"
+ * Handles stat modification effects like "chosen character gets +2 strength" or "Your characters get +1 {S}"
  */
 
 import type { CstNode, IToken } from "chevrotain";
@@ -9,19 +9,52 @@ import type { CharacterTarget, ModifyStatEffect } from "../../types";
 import type { EffectParser } from "./index";
 
 /**
+ * Sentinel value to distinguish {d} placeholder from actual stat modifiers
+ * and from parse failures. This value is extremely unlikely to be a valid
+ * stat modifier in Lorcana (which typically range from -10 to +10).
+ */
+export const D_PLACEHOLDER = Number.MIN_SAFE_INTEGER; // -9007199254740991
+
+/**
+ * Helper function to parse numeric values or {d} placeholders
+ * Converts {d} to a distinctive sentinel value, returns 0 for parse failures
+ */
+function parseNumericValue(value: string): number {
+  if (value === "{d}") {
+    return D_PLACEHOLDER;
+  }
+
+  // Remove optional + prefix
+  const cleaned = value.replace(/^\+/, "");
+  const parsed = Number.parseInt(cleaned, 10);
+
+  if (Number.isNaN(parsed)) {
+    return 0; // Fallback for unparseable values
+  }
+
+  return parsed;
+}
+
+/**
  * Parse stat modification effect from CST node (grammar-based parsing)
  */
-function parseFromCst(ctx: {
-  NumberToken?: IToken[];
-  Identifier?: IToken[];
-  [key: string]: unknown;
-}): ModifyStatEffect | null {
+function parseFromCst(
+  ctx:
+    | {
+        NumberToken?: IToken[];
+        Identifier?: IToken[];
+        [key: string]: unknown;
+      }
+    | null
+    | undefined,
+): ModifyStatEffect | null {
   logger.debug("Attempting to parse stat modification effect from CST", {
     ctx,
   });
 
-  if (!ctx.NumberToken || ctx.NumberToken.length === 0) {
-    logger.debug("Stat mod effect CST missing NumberToken");
+  // Handle null/undefined context or missing expected structure
+  if (!(ctx && ctx.NumberToken) || ctx.NumberToken.length === 0) {
+    logger.debug("Stat mod effect CST missing NumberToken or invalid context");
     return null;
   }
 
@@ -55,64 +88,160 @@ function parseFromText(text: string): ModifyStatEffect | null {
     text,
   });
 
-  // Using (?:s)? makes the optional 's' more explicit than gets?
-  const pattern = /get(?:s)?\s+([+-])(\d+)\s+(strength|willpower|lore)/i;
-  const match = text.match(pattern);
+  // Check for duration "this turn" clause
+  const hasDuration = /this turn/i.test(text);
+  const duration: "this-turn" | undefined = hasDuration
+    ? "this-turn"
+    : undefined;
 
-  if (!match) {
-    logger.debug("Stat modification effect pattern did not match");
-    return null;
-  }
+  // Try pattern with {S}/{L}/{W} notation first (e.g., "Your characters get +1 {S}")
+  let match = text.match(/get(?:s)?\s+([+-]?)(\d+|\{d\})\s+\{([SLW])\}/i);
 
-  const sign = match[1] === "-" ? -1 : 1;
-  const value = Number.parseInt(match[2], 10);
-  const statStr = match[3].toLowerCase();
+  if (match) {
+    const sign = match[1] === "-" ? -1 : 1;
+    const valueStr = match[2];
+    const value =
+      valueStr === "{d}" ? D_PLACEHOLDER : Number.parseInt(valueStr, 10);
+    // Don't modify D_PLACEHOLDER with sign - it's a sentinel value
+    const modifier = value === D_PLACEHOLDER ? D_PLACEHOLDER : sign * value;
 
-  if (Number.isNaN(value)) {
-    logger.warn("Failed to extract number from stat mod effect text", {
-      match: match[2],
+    const statSymbol = match[3];
+    const stat =
+      statSymbol === "S"
+        ? "strength"
+        : statSymbol === "W"
+          ? "willpower"
+          : "lore";
+
+    // Try to determine target from text
+    // Order matters: check more specific patterns first
+    let target: CharacterTarget = "CHOSEN_CHARACTER";
+    const lowerText = text.toLowerCase();
+    if (
+      lowerText.includes("this character") ||
+      lowerText.includes("this card")
+    ) {
+      target = "SELF";
+    } else if (/your\s+(?:\w+\s+)?characters/.test(lowerText)) {
+      // "Your characters", "Your Hero characters", "Your inkborn characters"
+      target = "YOUR_CHARACTERS";
+    } else if (lowerText.includes("your items")) {
+      target = "YOUR_ITEMS" as CharacterTarget;
+    } else if (lowerText.includes("while here")) {
+      target = "CHARACTERS_HERE" as CharacterTarget;
+    } else if (lowerText.includes("chosen character")) {
+      // Use detailed target format for "chosen character"
+      target = {
+        selector: "chosen",
+        count: 1,
+        owner: "any",
+        zones: ["play"],
+        cardTypes: ["character"],
+      };
+    }
+
+    logger.info("Parsed stat modification effect from text", {
+      modifier,
+      stat,
+      target,
+      duration,
     });
-    return null;
+
+    const effect: ModifyStatEffect = {
+      type: "modify-stat",
+      stat,
+      modifier,
+      target,
+    };
+
+    if (duration) {
+      effect.duration = duration;
+    }
+
+    return effect;
   }
 
-  const modifier = sign * value;
-  const stat = statStr as "strength" | "willpower" | "lore";
+  // Try pattern with full stat name (e.g., "chosen character gets +2 strength")
+  match = text.match(
+    /get(?:s)?\s+([+-])(\d+|\{d\})\s+(strength|willpower|lore)/i,
+  );
 
-  // Try to determine target from text
-  let target: CharacterTarget = "CHOSEN_CHARACTER";
-  if (text.includes("this character") || text.includes("this card")) {
-    target = "SELF";
-  } else if (text.includes("your characters")) {
-    target = "YOUR_CHARACTERS";
+  if (match) {
+    const sign = match[1] === "-" ? -1 : 1;
+    const valueStr = match[2];
+    const value =
+      valueStr === "{d}" ? D_PLACEHOLDER : Number.parseInt(valueStr, 10);
+    // Don't modify D_PLACEHOLDER with sign - it's a sentinel value
+    const modifier = value === D_PLACEHOLDER ? D_PLACEHOLDER : sign * value;
+    const stat = match[3].toLowerCase() as "strength" | "willpower" | "lore";
+
+    // Try to determine target from text
+    let target: CharacterTarget = "CHOSEN_CHARACTER";
+    const lowerText = text.toLowerCase();
+    if (
+      lowerText.includes("this character") ||
+      lowerText.includes("this card")
+    ) {
+      target = "SELF";
+    } else if (/your\s+(?:\w+\s+)?characters/.test(lowerText)) {
+      // "Your characters", "Your Hero characters", "Your inkborn characters"
+      target = "YOUR_CHARACTERS";
+    } else if (lowerText.includes("your items")) {
+      target = "YOUR_ITEMS" as CharacterTarget;
+    } else if (lowerText.includes("chosen character")) {
+      // Use detailed target format for "chosen character"
+      target = {
+        selector: "chosen",
+        count: 1,
+        owner: "any",
+        zones: ["play"],
+        cardTypes: ["character"],
+      };
+    }
+
+    logger.info("Parsed stat modification effect from text", {
+      modifier,
+      stat,
+      target,
+      duration,
+    });
+
+    const effect: ModifyStatEffect = {
+      type: "modify-stat",
+      stat,
+      modifier,
+      target,
+    };
+
+    if (duration) {
+      effect.duration = duration;
+    }
+
+    return effect;
   }
 
-  logger.info("Parsed stat modification effect from text", {
-    modifier,
-    stat,
-    target,
-  });
-
-  return {
-    type: "modify-stat",
-    stat,
-    modifier,
-    target,
-  };
+  logger.debug("Stat modification effect pattern did not match");
+  return null;
 }
 
 /**
  * Stat modification effect parser implementation
  */
 export const statModEffectParser: EffectParser = {
-  pattern: /gets?\s+([+-])(\d+)\s+(strength|willpower|lore)/i,
-  description: "Parses stat modification effects (e.g., 'gets +2 strength')",
+  pattern:
+    /gets?\s+([+-]?\d+|[+-]?\{d\})\s+(?:\{([SLW])\}|(strength|willpower|lore))/i,
+  description:
+    "Parses stat modification effects (e.g., 'gets +2 strength', 'Your characters get +1 {S}')",
 
   parse: (input: CstNode | string): ModifyStatEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
     return parseFromCst(
-      input as { NumberToken?: IToken[]; Identifier?: IToken[] },
+      input as
+        | { NumberToken?: IToken[]; Identifier?: IToken[] }
+        | null
+        | undefined,
     );
   },
 };
