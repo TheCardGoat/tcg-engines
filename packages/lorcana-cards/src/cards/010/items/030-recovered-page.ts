@@ -53,14 +53,18 @@ export const recoveredPage: ItemCard = {
         source: "top-of-deck",
         under: {
           selector: "chosen",
-          owner: "you",
           filter: [
             {
-              // @ts-expect-error: has-keyword filter not supported in LocationFilter
+              type: "owner",
+              owner: "you",
+            },
+            {
+              // @ts-expect-error has-keyword not supported for Locations
               type: "has-keyword",
               keyword: "Boost",
             },
           ],
+          cardTypes: ["character", "location"],
         },
       },
     },
