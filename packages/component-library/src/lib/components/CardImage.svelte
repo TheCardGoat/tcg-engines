@@ -4,7 +4,7 @@ let {
   number,
   lang = "EN",
   crop = "full",
-  alt = "",
+  alt,
   class: className = "",
   ...rest
 }: {
@@ -12,7 +12,7 @@ let {
   number: number;
   lang?: string;
   crop?: "full" | "art_only" | "art_and_name";
-  alt?: string;
+  alt: string;
   class?: string;
 } = $props();
 

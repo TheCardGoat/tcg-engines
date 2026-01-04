@@ -1,7 +1,7 @@
 import { allCanonicalCards, getPrinting } from "@tcg/lorcana-cards/data";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = () => {
   const cardsWithImageInfo = allCanonicalCards.map((card) => {
     // Use the first printing as the default for the image
     const defaultPrinting = card.printings[0] as
