@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { StealFromTheRich } from "./097-steal-from-the-rich";
+import { stealFromTheRich } from "./097-steal-from-the-rich";
 
 describe("Steal from the Rich - undefined", () => {
   // Add ability tests here

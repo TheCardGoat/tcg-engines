@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { GeniePowersUnleashed } from "./076-genie-powers-unleashed";
+import { geniepowersUnleashed } from "./076-genie-powers-unleashed";
 
 describe("Genie - Powers Unleashed", () => {
   // Add ability tests here

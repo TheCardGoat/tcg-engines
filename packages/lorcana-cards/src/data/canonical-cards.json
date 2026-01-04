@@ -16938,6 +16938,14 @@
         "type": "keyword"
       }
     ],
+    "parsedAbilities": [
+      {
+        "type": "keyword",
+        "keyword": "Challenger",
+        "value": 2,
+        "condition": "(While challenging, this character gets +2 {S})."
+      }
+    ],
     "strength": 1,
     "willpower": 3,
     "lore": 1,
@@ -31546,6 +31554,14 @@
         "type": "keyword"
       }
     ],
+    "parsedAbilities": [
+      {
+        "type": "keyword",
+        "keyword": "Challenger",
+        "value": 2,
+        "condition": "(While challenging, this character gets +2 {S})."
+      }
+    ],
     "strength": 3,
     "willpower": 6,
     "lore": 2,
@@ -35670,6 +35686,14 @@
         "name": null,
         "text": "Challenger +2 (While challenging, this character gets +2 {S}).",
         "type": "keyword"
+      }
+    ],
+    "parsedAbilities": [
+      {
+        "type": "keyword",
+        "keyword": "Challenger",
+        "value": 2,
+        "condition": "(While challenging, this character gets +2 {S})."
       }
     ],
     "strength": 2,

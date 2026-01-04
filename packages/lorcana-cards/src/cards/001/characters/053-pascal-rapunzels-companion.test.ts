@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { PascalRapunzelsCompanion } from "./053-pascal-rapunzels-companion";
+import { pascalrapunzelsCompanion } from "./053-pascal-rapunzels-companion";
 
-describe("Pascal - Rapunzel", () => {
+describe("Pascal - Rapunzel’s Companion", () => {
   // Add ability tests here
   // Examples:
   // it("has [Keyword]", () => {

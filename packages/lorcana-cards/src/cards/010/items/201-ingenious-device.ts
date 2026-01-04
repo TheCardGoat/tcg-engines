@@ -55,11 +55,7 @@ export const ingeniousDevice: ItemCard = {
       effect: {
         type: "deal-damage",
         amount: 3,
-        target: {
-          selector: "chosen",
-          count: { exactly: 1 },
-          cardTypes: ["character", "location"],
-        },
+        target: { selector: "chosen", count: 1 },
       },
       condition: {
         type: "turn",

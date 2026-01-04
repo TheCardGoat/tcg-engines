@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const DinglehopperUndefined: ItemCard = {
+export const dinglehopperundefined: ItemCard = {
   id: "qef",
   cardType: "item",
   name: "Dinglehopper",

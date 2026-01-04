@@ -4,6 +4,8 @@ export { eilonwyPrincessOfLlyr } from "./007-eilonwy-princess-of-llyr";
 export { bagheeraCautiousExplorer } from "./012-bagheera-cautious-explorer";
 export { shantiVillageGirl } from "./013-shanti-village-girl";
 export { sebastianLoyalCrab } from "./016-sebastian-loyal-crab";
+export { arielEtherealVoice } from "./017-ariel-ethereal-voice";
+export { minnieMouseAmethystChampion } from "./035-minnie-mouse-amethyst-champion";
 export { theHornedKingHeartlessDevil } from "./038-the-horned-king-heartless-devil";
 export { cauldronBornMindlessHorde } from "./039-cauldron-born-mindless-horde";
 export { iagoStompinMad } from "./043-iago-stompin-mad";

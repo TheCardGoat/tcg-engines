@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { FlotsamUrsulasSpy } from "./043-flotsam-ursulas-spy";
+import { flotsamursulasSpy } from "./043-flotsam-ursulas-spy";
 
-describe("Flotsam - Ursula", () => {
+describe("Flotsam - Ursula’s Spy", () => {
   // Add ability tests here
   // Examples:
   // it("has [Keyword]", () => {

@@ -1,13 +1,13 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { MaleficentUninvited } from "./151-maleficent-uninvited";
+import { maleficentuninvited } from "./151-maleficent-uninvited";
 
 describe("Maleficent - Uninvited", () => {
   // Add ability tests here
   // Examples:
   // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [MaleficentUninvited] });
-  //   expect(testEngine.getCardModel(MaleficentUninvited).hasKeyword()).toBe(true);
+  //   const testEngine = new LorcanaTestEngine({ play: [maleficentuninvited] });
+  //   expect(testEngine.getCardModel(maleficentuninvited).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

@@ -1,6 +1,6 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const DragonFireUndefined: ActionCard = {
+export const dragonFireundefined: ActionCard = {
   id: "buy",
   cardType: "action",
   name: "Dragon Fire",

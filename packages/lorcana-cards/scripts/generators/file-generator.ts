@@ -91,9 +91,13 @@ const RESERVED_WORDS = new Set([
 /**
  * Convert a string to camelCase for export names
  * Handles reserved words and identifiers starting with numbers
+ * Strips " - undefined" suffix which indicates missing version data
  */
 function toCamelCase(str: string): string {
-  let result = str
+  // Remove " - undefined" suffix before converting
+  const cleanStr = str.endsWith(" - undefined") ? str.slice(0, -11) : str;
+
+  let result = cleanStr
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, "") // Remove special chars except spaces
     .split(/\s+/)
@@ -199,11 +203,16 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
     id: card.id,
     cardType: card.cardType,
     name: card.name,
-    version: card.version,
   };
 
+  // Only include version if it's a valid non-empty string (not "undefined", not empty)
+  if (card.version && card.version !== "undefined") {
+    result.version = card.version;
+  }
+
   // Only include fullName if it differs from name (must come after version, before inkType)
-  if (card.fullName !== card.name) {
+  // Exclude fullName if it contains " - undefined" which indicates missing version data
+  if (card.fullName !== card.name && !card.fullName.endsWith(" - undefined")) {
     result.fullName = card.fullName;
   }
 

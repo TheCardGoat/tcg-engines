@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { HealingGlowUndefined } from "./healingGlow";
+import { healingGlowundefined } from "./healingGlow";
 
 describe("Healing Glow - undefined", () => {
   // Add ability tests here

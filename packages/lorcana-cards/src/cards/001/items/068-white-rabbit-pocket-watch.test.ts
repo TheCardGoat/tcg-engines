@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { WhiteRabbitUndefined } from "./068-white-rabbit-pocket-watch";
+import { whiteRabbitundefined } from "./068-white-rabbit-pocket-watch";
 
 describe("White Rabbit - undefined", () => {
   // Add ability tests here

@@ -1,6 +1,6 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const HealingGlowUndefined: ActionCard = {
+export const healingGlowundefined: ActionCard = {
   id: "ta0",
   cardType: "action",
   name: "Healing Glow",

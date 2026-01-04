@@ -22,8 +22,8 @@ export const earthGiantLivingMountain: CharacterCard = {
   abilities: [
     {
       id: "1xh-1",
-      text: "UNEARTHED When you play this character, each opponent draws a card.",
       name: "UNEARTHED",
+      text: "UNEARTHED When you play this character, each opponent draws a card.",
       type: "triggered",
       trigger: {
         event: "play",

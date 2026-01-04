@@ -71,6 +71,7 @@ export type TriggerEvent =
   | "ready" // A card is readied
   | "move" // A character moves to a location
   | "sing" // A character sings a song
+  | "be-chosen" // A card is chosen by an action or ability
 
   // Combat-specific
   | "banish-in-challenge" // Banished specifically during a challenge

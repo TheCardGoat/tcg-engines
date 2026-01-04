@@ -17,3 +17,26 @@ yarn.lock
 **/*.tsbuildinfo
 
 .claude/settings.local.json
+apps/card-database/.svelte-kit/ambient.d.ts
+apps/card-database/.svelte-kit/non-ambient.d.ts
+apps/card-database/.svelte-kit/tsconfig.json
+apps/card-database/.svelte-kit/generated/root.js
+apps/card-database/.svelte-kit/generated/root.svelte
+apps/card-database/.svelte-kit/generated/client/app.js
+apps/card-database/.svelte-kit/generated/client/matchers.js
+apps/card-database/.svelte-kit/generated/client/nodes/0.js
+apps/card-database/.svelte-kit/generated/client/nodes/1.js
+apps/card-database/.svelte-kit/generated/client/nodes/2.js
+apps/card-database/.svelte-kit/generated/client/nodes/3.js
+apps/card-database/.svelte-kit/generated/client/nodes/4.js
+apps/card-database/.svelte-kit/generated/server/internal.js
+apps/card-database/.svelte-kit/types/route_meta_data.json
+apps/card-database/.svelte-kit/types/src/routes/$types.d.ts
+apps/card-database/.svelte-kit/types/src/routes/proxy+page.server.ts
+apps/card-database/.svelte-kit/types/src/routes/demo/$types.d.ts
+apps/card-database/.svelte-kit/types/src/routes/demo/paraglide/$types.d.ts
+apps/card-database/project.inlang/cache/plugins/2sy648wh9sugi
+apps/card-database/project.inlang/cache/plugins/ygx0uiahq6uw
+.gitignore
+.gitignore
+apps/card-database/.env

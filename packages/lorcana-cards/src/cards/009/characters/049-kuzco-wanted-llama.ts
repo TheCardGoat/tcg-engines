@@ -22,8 +22,8 @@ export const kuzcoWantedLlama: CharacterCard = {
   abilities: [
     {
       id: "zpa-1",
-      text: "OK, WHERE AM I? When this character is banished, you may draw a card.",
       name: "OK, WHERE AM I?",
+      text: "OK, WHERE AM I? When this character is banished, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "banish",

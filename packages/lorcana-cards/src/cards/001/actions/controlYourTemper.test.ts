@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { ControlYourTemperUndefined } from "./controlYourTemper";
+import { controlYourTemperundefined } from "./controlYourTemper";
 
 describe("Control Your Temper! - undefined", () => {
   // Add ability tests here

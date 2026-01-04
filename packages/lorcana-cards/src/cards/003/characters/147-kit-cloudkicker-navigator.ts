@@ -22,7 +22,7 @@ export const kitCloudkickerNavigator: CharacterCard = {
   abilities: [
     {
       id: "jtu-1",
-      text: "Shift 3",
+      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {

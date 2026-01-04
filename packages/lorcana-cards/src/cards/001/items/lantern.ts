@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const LanternUndefined: ItemCard = {
+export const lanternundefined: ItemCard = {
   id: "ub2",
   cardType: "item",
   name: "Lantern",

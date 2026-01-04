@@ -9,7 +9,7 @@ export const herculesUnwaveringDemigod: CharacterCard = {
   inkType: ["steel"],
   franchise: "Hercules",
   set: "006",
-  text: "Challenger +2 (While challenging, this character gets +2.)",
+  text: "Challenger +2 (While challenging, this character gets +2 {S}).",
   cost: 4,
   strength: 2,
   willpower: 4,

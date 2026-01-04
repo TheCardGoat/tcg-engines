@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { DinglehopperUndefined } from "./dingleHopper";
+import { dinglehopperundefined } from "./dingleHopper";
 
 describe("Dinglehopper - undefined", () => {
   // Add ability tests here

@@ -28,7 +28,7 @@ export const theTroubadourMusicalNarrator: CharacterCard = {
     },
     {
       id: "1is-2",
-      text: "Singer 4",
+      text: "Singer +4",
       type: "keyword",
       keyword: "Singer",
       value: 4,

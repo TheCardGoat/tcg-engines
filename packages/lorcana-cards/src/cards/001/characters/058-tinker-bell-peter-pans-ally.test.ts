@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { TinkerBellPeterPansAlly } from "./058-tinker-bell-peter-pans-ally";
+import { tinkerBellpeterPansAlly } from "./058-tinker-bell-peter-pans-ally";
 
-describe("Tinker Bell - Peter Pan", () => {
+describe("Tinker Bell - Peter Pan’s Ally", () => {
   // Add ability tests here
   // Examples:
   // it("has [Keyword]", () => {

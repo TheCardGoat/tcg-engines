@@ -1,14 +1,14 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine } from "@tcg/lorcana/testing";
-import { TiggerWonderfulThing } from "./127-tigger-wonderful-thing";
+import { tiggerwonderfulThing } from "./127-tigger-wonderful-thing";
 
 describe("Tigger - Wonderful Thing", () => {
   it("should have Evasive ability", () => {
     const testEngine = new LorcanaTestEngine({
-      play: [TiggerWonderfulThing],
+      play: [tiggerwonderfulThing],
     });
 
-    const cardUnderTest = testEngine.getCardModel(TiggerWonderfulThing);
+    const cardUnderTest = testEngine.getCardModel(tiggerwonderfulThing);
     expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { BefuddleUndefined } from "./062-befuddle";
+import { befuddleundefined } from "./062-befuddle";
 
 describe("Befuddle - undefined", () => {
   // Add ability tests here

@@ -22,7 +22,7 @@ export const annaMagicalMission: CharacterCard = {
   abilities: [
     {
       id: "1w2-1",
-      text: "Shift 4",
+      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {
@@ -37,8 +37,8 @@ export const annaMagicalMission: CharacterCard = {
     },
     {
       id: "1w2-3",
-      text: "COORDINATED PLAN Whenever this character quests, if you have a character named Elsa in play, you may draw a card.",
       name: "COORDINATED PLAN",
+      text: "COORDINATED PLAN Whenever this character quests, if you have a character named Elsa in play, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "quest",
@@ -48,9 +48,8 @@ export const annaMagicalMission: CharacterCard = {
       effect: {
         type: "conditional",
         condition: {
-          type: "has-named-character",
-          name: "Elsa in play",
-          controller: "you",
+          type: "if",
+          expression: "you have a character named Elsa in play",
         },
         then: {
           type: "draw",

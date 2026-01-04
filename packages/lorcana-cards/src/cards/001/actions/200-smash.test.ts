@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { SmashUndefined } from "./200-smash";
+import { smashundefined } from "./200-smash";
 
 describe("Smash - undefined", () => {
   // Add ability tests here

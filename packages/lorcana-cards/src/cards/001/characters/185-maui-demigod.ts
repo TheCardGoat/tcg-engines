@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const MauiDemigod: CharacterCard = {
+export const mauidemigod: CharacterCard = {
   id: "1lg",
   cardType: "character",
   name: "Maui",

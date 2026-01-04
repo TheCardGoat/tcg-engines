@@ -1,6 +1,6 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const BefuddleUndefined: ActionCard = {
+export const befuddleundefined: ActionCard = {
   id: "teb",
   cardType: "action",
   name: "Befuddle",

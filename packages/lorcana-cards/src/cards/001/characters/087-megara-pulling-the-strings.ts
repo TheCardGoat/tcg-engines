@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const MegaraPullingTheStrings: CharacterCard = {
+export const megarapullingTheStrings: CharacterCard = {
   id: "kv6",
   cardType: "character",
   name: "Megara",

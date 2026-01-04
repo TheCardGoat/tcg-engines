@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { DevelopYourBrainUndefined } from "./161-develop-your-brain";
+import { developYourBrainundefined } from "./161-develop-your-brain";
 
 describe("Develop Your Brain - undefined", () => {
   // Add ability tests here

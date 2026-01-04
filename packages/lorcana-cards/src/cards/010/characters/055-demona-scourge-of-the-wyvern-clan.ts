@@ -38,7 +38,12 @@ export const demonaScourgeOfTheWyvernClan: CharacterCard = {
             target: {
               selector: "all",
               count: "all",
-              filter: [{ type: "owner", owner: "opponent" }],
+              owner: "opponent",
+              filter: {
+                // @ts-expect-error: card-type filter not supported in DSL but required here
+                type: "card-type",
+                cardType: "character",
+              },
             },
           },
           {

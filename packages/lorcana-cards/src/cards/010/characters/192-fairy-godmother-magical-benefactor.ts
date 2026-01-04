@@ -22,15 +22,15 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
   abilities: [
     {
       id: "45t-1",
-      text: "Boost 3 {I}",
+      text: "Boost 3",
       type: "keyword",
       keyword: "Boost",
       value: 3,
     },
     {
       id: "45t-2",
-      text: "STUNNING TRANSFORMATION Whenever you put a card under this character, you may banish chosen opposing character. If you do, their player may reveal the top card of their deck. If that card is a character or item card, they may play it for free. Otherwise, they put it on the bottom of their deck.",
       name: "STUNNING TRANSFORMATION",
+      text: "Whenever you put a card under this character, you may banish chosen opposing character. If you do, their player may reveal the top card of their deck. If that card is a character or item card, they may play it for free. Otherwise, they put it on the bottom of their deck.",
       type: "triggered",
       trigger: {
         event: "ink",
@@ -46,25 +46,21 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
               type: "banish",
               target: {
                 selector: "chosen",
-                count: { exactly: 1 },
-                filter: [{ type: "owner", owner: "opponent" }],
+                owner: "opponent",
+                count: 1,
               },
             },
             {
-              type: "look-at-cards",
-              amount: 1,
-              from: "top-of-deck",
-              target: "OPPONENT",
+              type: "conditional",
+              condition: {
+                type: "if",
+                expression: "you do",
+              },
               then: {
-                action: "reveal-and-play",
-                cost: "free",
-                filter: {
-                  type: "card-type",
-                  cardType: "character" /* or item */,
-                },
-                // The filter needs to allow character OR item. "cardType" usually single.
-                // "card-type" filter: string | string[].
-                // If not supported, use character.
+                type: "look-at-cards",
+                amount: 1,
+                from: "top-of-deck",
+                target: "OPPONENT",
               },
             },
           ],

@@ -7,7 +7,7 @@ export const juniorWoodchuckGuidebook: ItemCard = {
   inkType: ["amethyst"],
   franchise: "Ducktales",
   set: "010",
-  text: "THE BOOK KNOWS EVERYTHING {E}, 1 {I}, Banish this item – Draw 2 cards.",
+  text: "THE BOOK KNOWS EVERYTHING {E}, 1 {I}, Banish this item — Draw 2 cards.",
   cost: 2,
   cardNumber: 66,
   inkable: true,
@@ -17,8 +17,8 @@ export const juniorWoodchuckGuidebook: ItemCard = {
   abilities: [
     {
       id: "ebe-1",
-      text: "THE BOOK KNOWS EVERYTHING {E}, 1 {I}, Banish this item – Draw 2 cards.",
       name: "THE BOOK KNOWS EVERYTHING",
+      text: "{E}, 1 {I}, Banish this item — Draw 2 cards.",
       type: "activated",
       cost: {
         exert: true,

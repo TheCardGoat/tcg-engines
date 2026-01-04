@@ -1,13 +1,13 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { StarkeyHooksHenchman } from "./191-starkey-hooks-henchman";
+import { starkeyhooksHenchman } from "./191-starkey-hooks-henchman";
 
-describe("Starkey - Hook", () => {
+describe("Starkey - Hook’s Henchman", () => {
   // Add ability tests here
   // Examples:
   // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [StarkeyHooksHenchman] });
-  //   expect(testEngine.getCardModel(StarkeyHooksHenchman).hasKeyword()).toBe(true);
+  //   const testEngine = new LorcanaTestEngine({ play: [starkeyhooksHenchman] });
+  //   expect(testEngine.getCardModel(starkeyhooksHenchman).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

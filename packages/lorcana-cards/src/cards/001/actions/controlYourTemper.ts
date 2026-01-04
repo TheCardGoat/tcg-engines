@@ -1,6 +1,6 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const ControlYourTemperUndefined: ActionCard = {
+export const controlYourTemperundefined: ActionCard = {
   id: "eny",
   cardType: "action",
   name: "Control Your Temper!",

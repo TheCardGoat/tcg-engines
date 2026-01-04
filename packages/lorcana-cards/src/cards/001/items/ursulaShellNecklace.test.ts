@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { UrsulaUndefined } from "./ursulaShellNecklace";
+import { ursulaundefined } from "./ursulaShellNecklace";
 
 describe("Ursula - undefined", () => {
   // Add ability tests here

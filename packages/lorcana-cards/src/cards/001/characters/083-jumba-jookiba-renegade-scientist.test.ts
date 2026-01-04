@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { JumbaJookibaRenegadeScientist } from "./083-jumba-jookiba-renegade-scientist";
+import { jumbaJookibarenegadeScientist } from "./083-jumba-jookiba-renegade-scientist";
 
 describe("Jumba Jookiba - Renegade Scientist", () => {
   // Add ability tests here

@@ -22,7 +22,7 @@ export const mufasaAmongTheStars: CharacterCard = {
   abilities: [
     {
       id: "1c7-1",
-      text: "Shift 5",
+      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {
