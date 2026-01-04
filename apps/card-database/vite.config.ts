@@ -15,7 +15,9 @@ export default defineConfig({
       outdir: "./src/lib/paraglide",
     }) as any,
   ],
-
+  optimizeDeps: {
+    exclude: ["@tcg/component-library", "@tcg/lorcana-cards"],
+  },
   test: {
     expect: { requireAssertions: true },
 
