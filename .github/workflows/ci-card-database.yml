@@ -1,0 +1,51 @@
+name: CI Card Database
+
+on:
+  push:
+    branches: [main, production]
+    paths:
+      - 'apps/card-database/**'
+      - 'packages/lorcana-cards/**'
+      - 'packages/component-library/**'
+      - 'packages/lorcana-types/**'
+  pull_request:
+    branches: [main, production]
+    paths:
+      - 'apps/card-database/**'
+      - 'packages/lorcana-cards/**'
+      - 'packages/component-library/**'
+      - 'packages/lorcana-types/**'
+
+jobs:
+  build:
+    name: Build, Type Check, Format, Lint, and Test
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+      BUN_INSTALL_CACHE_DIR: ~/.bun/install/cache
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: ".bun-version"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Install Playwright Browsers
+        run: bunx playwright install --with-deps
+
+      - name: Run Checks
+        run: |
+          bun run --filter card-database check
+          bun turbo run lint test build --filter=card-database

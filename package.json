@@ -8,6 +8,7 @@
     "bun": "1.2.18"
   },
   "workspaces": [
+    "apps/*",
     "packages/engines/*",
     "packages/*"
   ],
