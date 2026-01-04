@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { ReflectionUndefined } from "./065-reflection";
+import { Reflection } from "./065-reflection";
 
-describe("Reflection - undefined", () => {
+describe("Reflection", () => {
   // Add ability tests here
   // Examples:
   // it("has [Keyword]", () => {

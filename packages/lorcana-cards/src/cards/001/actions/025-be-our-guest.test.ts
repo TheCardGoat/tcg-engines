@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { BeOurGuestUndefined } from "./beOurGuest";
+import { BeOurGuest } from "./025-be-our-guest";
 
-describe("Be Our Guest - undefined", () => {
+describe("Be Our Guest", () => {
   // Add ability tests here
   // Examples:
   // it("has [Keyword]", () => {

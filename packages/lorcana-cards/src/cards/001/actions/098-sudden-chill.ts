@@ -1,11 +1,9 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const SuddenChillUndefined: ActionCard = {
+export const SuddenChill: ActionCard = {
   id: "pz4",
   cardType: "action",
   name: "Sudden Chill",
-  version: "undefined",
-  fullName: "Sudden Chill - undefined",
   inkType: ["emerald"],
   franchise: "Disney",
   set: "001",

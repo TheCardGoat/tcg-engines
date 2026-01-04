@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { MotherKnowsBestUndefined } from "./095-mother-knows-best";
+import { MotherKnowsBest } from "./095-mother-knows-best";
 
 describe("Mother Knows Best - undefined", () => {
   // Add ability tests here

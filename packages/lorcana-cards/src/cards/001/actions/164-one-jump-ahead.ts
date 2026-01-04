@@ -1,11 +1,9 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const OneJumpAheadUndefined: ActionCard = {
+export const OneJumpAhead: ActionCard = {
   id: "gf6",
   cardType: "action",
   name: "One Jump Ahead",
-  version: "undefined",
-  fullName: "One Jump Ahead - undefined",
   inkType: ["sapphire"],
   franchise: "Disney",
   set: "001",

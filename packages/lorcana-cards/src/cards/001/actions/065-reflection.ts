@@ -1,11 +1,9 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const ReflectionUndefined: ActionCard = {
+export const Reflection: ActionCard = {
   id: "brz",
   cardType: "action",
   name: "Reflection",
-  version: "undefined",
-  fullName: "Reflection - undefined",
   inkType: ["amethyst"],
   franchise: "Disney",
   set: "001",

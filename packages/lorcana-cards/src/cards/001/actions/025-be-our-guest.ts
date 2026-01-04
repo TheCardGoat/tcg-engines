@@ -1,11 +1,9 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const BeOurGuestUndefined: ActionCard = {
+export const BeOurGuest: ActionCard = {
   id: "m6n",
   cardType: "action",
   name: "Be Our Guest",
-  version: "undefined",
-  fullName: "Be Our Guest - undefined",
   inkType: ["amber"],
   franchise: "Disney",
   set: "001",

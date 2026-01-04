@@ -1,11 +1,9 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const MotherKnowsBestUndefined: ActionCard = {
+export const MotherKnowsBest: ActionCard = {
   id: "rxk",
   cardType: "action",
   name: "Mother Knows Best",
-  version: "undefined",
-  fullName: "Mother Knows Best - undefined",
   inkType: ["emerald"],
   franchise: "Disney",
   set: "001",

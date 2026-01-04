@@ -1,11 +1,9 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const LetItGoUndefined: ActionCard = {
+export const LetItGo: ActionCard = {
   id: "n1y",
   cardType: "action",
   name: "Let It Go",
-  version: "undefined",
-  fullName: "Let It Go - undefined",
   inkType: ["sapphire"],
   franchise: "Disney",
   set: "001",

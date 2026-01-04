@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { OneJumpAheadUndefined } from "./164-one-jump-ahead";
+import { OneJumpAhead } from "./164-one-jump-ahead";
 
 describe("One Jump Ahead - undefined", () => {
   // Add ability tests here

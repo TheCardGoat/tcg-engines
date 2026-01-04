@@ -1,11 +1,9 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const AWholeNewWorldUndefined: ActionCard = {
+export const AWholeNewWorld: ActionCard = {
   id: "u8m",
   cardType: "action",
   name: "A Whole New World",
-  version: "undefined",
-  fullName: "A Whole New World - undefined",
   inkType: ["steel"],
   franchise: "Disney",
   set: "001",
