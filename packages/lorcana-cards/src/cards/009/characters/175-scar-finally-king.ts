@@ -23,6 +23,7 @@ export const scarFinallyKing: CharacterCard = {
     {
       id: "1vp-1",
       name: "BE GRATEFUL Your Ally",
+      text: "BE GRATEFUL Your Ally characters get +1 {S}.",
       type: "static",
       effect: {
         type: "modify-stat",
@@ -33,7 +34,14 @@ export const scarFinallyKing: CharacterCard = {
     },
     {
       id: "1vp-2",
-      type: "action",
+      name: "STICK WITH ME",
+      text: "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of chosen Ally character of yours. If you do, choose and discard 2 cards and banish that character.",
+      type: "triggered",
+      trigger: {
+        event: "end-turn",
+        timing: "at",
+        on: "YOU",
+      },
       effect: {
         type: "discard",
         amount: 2,

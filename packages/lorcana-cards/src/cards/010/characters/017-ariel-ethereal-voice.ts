@@ -29,7 +29,8 @@ export const arielEtherealVoice: CharacterCard = {
     },
     {
       id: "1l1-2",
-      name: "COMMAND PERFORMANCE Once",
+      name: "COMMAND PERFORMANCE",
+      text: "Once during your turn, whenever you play a song, if there's a card under this character, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "play",

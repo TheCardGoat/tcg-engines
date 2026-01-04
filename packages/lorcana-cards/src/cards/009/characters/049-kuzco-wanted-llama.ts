@@ -22,7 +22,14 @@ export const kuzcoWantedLlama: CharacterCard = {
   abilities: [
     {
       id: "zpa-1",
-      type: "action",
+      name: "OK, WHERE AM I?",
+      text: "OK, WHERE AM I? When this character is banished, you may draw a card.",
+      type: "triggered",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
       effect: {
         type: "optional",
         effect: {

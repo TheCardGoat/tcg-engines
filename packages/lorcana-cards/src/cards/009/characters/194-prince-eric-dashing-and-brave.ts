@@ -26,7 +26,6 @@ export const princeEricDashingAndBrave: CharacterCard = {
       type: "keyword",
       keyword: "Challenger",
       value: 2,
-      condition: ".",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

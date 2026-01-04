@@ -18,6 +18,7 @@ export const signedContract: ItemCard = {
     {
       id: "1y6-1",
       name: "FINE PRINT",
+      text: "FINE PRINT Whenever an opponent plays a song, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "play",

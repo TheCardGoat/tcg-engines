@@ -31,15 +31,29 @@ export const trampDapperRascal: CharacterCard = {
     },
     {
       id: "1x4-2",
-      type: "action",
+      name: "PLAY IT COOL",
+      text: "PLAY IT COOL During an opponent’s turn, whenever one of your characters is banished, you may draw a card.",
+      type: "triggered",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_CHARACTERS",
+      },
       effect: {
-        type: "optional",
-        effect: {
-          type: "draw",
-          amount: 1,
-          target: "CONTROLLER",
+        type: "conditional",
+        condition: {
+          type: "turn",
+          whose: "opponent",
         },
-        chooser: "CONTROLLER",
+        then: {
+          type: "optional",
+          effect: {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+          chooser: "CONTROLLER",
+        },
       },
     },
   ],

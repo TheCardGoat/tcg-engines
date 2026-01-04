@@ -47,6 +47,7 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
               target: {
                 selector: "chosen",
                 owner: "opponent",
+                count: 1,
               },
             },
             {

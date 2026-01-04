@@ -23,7 +23,13 @@ export const archimedesExceptionalOwl: CharacterCard = {
     {
       id: "crp-1",
       name: "MORE TO LEARN",
+      text: "MORE TO LEARN Whenever an opponent chooses this character for an action or ability, you may draw a card.",
       type: "triggered",
+      trigger: {
+        event: "be-chosen",
+        timing: "whenever",
+        on: "SELF",
+      },
       effect: {
         type: "optional",
         effect: {

@@ -17,6 +17,9 @@ export const medallionWeights: ItemCard = {
   abilities: [
     {
       id: "1rm-1",
+      name: "DISCIPLINE AND STRENGTH",
+      text: "DISCIPLINE AND STRENGTH {E}, 2 {I} — Chosen character gets +2 {S} this turn. Whenever they challenge another character this turn, you may draw a card.",
+      cost: { exert: true, ink: 2 },
       type: "activated",
       effect: {
         type: "optional",

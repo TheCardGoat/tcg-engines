@@ -23,6 +23,7 @@ export const bernardOverprepared: CharacterCard = {
     {
       id: "wn2-1",
       name: "GO DOWN THERE AND INVESTIGATE",
+      text: "GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "play",

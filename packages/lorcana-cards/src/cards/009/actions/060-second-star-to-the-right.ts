@@ -18,6 +18,7 @@ export const secondStarToTheRight: ActionCard = {
   abilities: [
     {
       id: "n2q-1",
+      text: "Sing Together 10 Chosen player draws 5 cards.",
       type: "action",
       effect: {
         type: "draw",

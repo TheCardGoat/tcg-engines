@@ -30,7 +30,14 @@ export const donaldDuckPerfectGentleman: CharacterCard = {
     },
     {
       id: "wjj-2",
-      type: "action",
+      name: "ALLOW ME",
+      text: "ALLOW ME At the start of your turn, each player may draw a card.",
+      type: "triggered",
+      trigger: {
+        event: "start-turn",
+        timing: "at",
+        on: "YOU",
+      },
       effect: {
         type: "draw",
         amount: 1,

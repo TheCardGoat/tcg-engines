@@ -23,6 +23,7 @@ export const doloresMadrigalEasyListener: CharacterCard = {
     {
       id: "n9k-1",
       name: "MAGICAL INFORMANT",
+      text: "MAGICAL INFORMANT When you play this character, if an opponent has an exerted character in play, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "play",

@@ -54,6 +54,7 @@ export const kuzcoSelfishEmperor: CharacterCard = {
         target: {
           controller: "you",
           excludeSelf: true,
+          count: "all",
         },
         duration: "until-start-of-next-turn",
       },

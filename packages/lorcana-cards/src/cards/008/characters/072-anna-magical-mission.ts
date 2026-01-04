@@ -38,6 +38,7 @@ export const annaMagicalMission: CharacterCard = {
     {
       id: "1w2-3",
       name: "COORDINATED PLAN",
+      text: "COORDINATED PLAN Whenever this character quests, if you have a character named Elsa in play, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "quest",

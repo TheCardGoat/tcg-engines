@@ -23,6 +23,8 @@ export const mrsPottsHeadHousekeeper: CharacterCard = {
     {
       id: "cpn-1",
       type: "activated",
+      text: "CLEAN UP {E}, Banish one of your items — Draw a card.",
+      cost: { exert: true, banishItem: true },
       effect: {
         type: "draw",
         amount: 1,

@@ -32,6 +32,7 @@ export const queenOfHeartsSensingWeakness: CharacterCard = {
     {
       id: "1je-2",
       name: "LET THE GAME BEGIN",
+      text: "LET THE GAME BEGIN Whenever one of your characters challenges another character, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "banish",

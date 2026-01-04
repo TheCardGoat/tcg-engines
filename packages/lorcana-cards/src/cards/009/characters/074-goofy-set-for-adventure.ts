@@ -23,6 +23,7 @@ export const goofySetForAdventure: CharacterCard = {
     {
       id: "1yc-1",
       name: "FAMILY VACATION Once",
+      text: "FAMILY VACATION Once during your turn, whenever this character moves to a location, you may move one of your other characters to that location for free. If you do, draw a card.",
       type: "triggered",
       trigger: {
         event: "banish",

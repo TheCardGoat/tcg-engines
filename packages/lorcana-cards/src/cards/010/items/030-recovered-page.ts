@@ -54,8 +54,9 @@ export const recoveredPage: ItemCard = {
         under: {
           selector: "chosen",
           owner: "you",
-          filters: [
+          filter: [
             {
+              // @ts-expect-error: has-keyword filter not supported in LocationFilter
               type: "has-keyword",
               keyword: "Boost",
             },

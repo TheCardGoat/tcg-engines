@@ -22,14 +22,17 @@ export const intoTheUnknown: ActionCard = {
       type: "action",
       effect: {
         type: "put-into-inkwell",
-        source: "chosen-character",
+        source: {
+          selector: "chosen",
+          count: 1,
+          filter: [
+            {
+              type: "exerted",
+            },
+          ],
+        },
         target: "CARD_OWNER",
         exerted: true,
-        targetFilters: [
-          {
-            type: "is-exerted",
-          },
-        ],
       },
     },
   ],

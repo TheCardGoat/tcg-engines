@@ -23,6 +23,7 @@ export const stitchCarefreeSurfer: CharacterCard = {
     {
       id: "fir-1",
       name: "OHANA",
+      text: "OHANA When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
       type: "triggered",
       trigger: {
         event: "play",

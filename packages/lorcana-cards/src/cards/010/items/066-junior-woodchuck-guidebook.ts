@@ -21,9 +21,9 @@ export const juniorWoodchuckGuidebook: ItemCard = {
       text: "{E}, 1 {I}, Banish this item — Draw 2 cards.",
       type: "activated",
       cost: {
-        ink: { amethyst: 1 },
-        total: 1,
-        additional: { exert: true, banishThis: true },
+        exert: true,
+        ink: 1,
+        banishSelf: true,
       },
       effect: {
         type: "draw",

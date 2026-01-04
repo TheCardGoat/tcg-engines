@@ -32,13 +32,15 @@ import type { TargetDSL } from "@tcg/core-types";
  * @example "draw 2 cards" targets CONTROLLER
  * @example "each opponent loses 1 lore" targets EACH_OPPONENT
  */
+
 export type PlayerTarget =
   | "CONTROLLER" // The player who controls this card
   | "OPPONENT" // A single opponent (2-player default)
   | "EACH_PLAYER" // All players including controller
   | "EACH_OPPONENT" // All opponents
   | "CHOSEN_PLAYER" // A player chosen by the controller
-  | "CARD_OWNER"; // The owner of the target card (context-dependent)
+  | "CARD_OWNER" // The owner of the target card (context-dependent)
+  | "CURRENT_TURN"; // The player whose turn it is
 
 // ============================================================================
 // Card References (Context-Aware)
@@ -139,7 +141,7 @@ export type TargetZone = "play" | "hand" | "discard" | "deck" | "inkwell";
 /**
  * Who controls the target
  */
-export type TargetController = "you" | "opponent" | "any";
+export type TargetController = "you" | "opponent" | "any" | "CURRENT_TURN";
 
 /**
  * Comparison operators for numeric filters
@@ -456,7 +458,10 @@ export type CharacterTargetQuery =
 /**
  * Union type for all character targeting options
  */
-export type CharacterTarget = CharacterTargetEnum | CharacterTargetQuery;
+export type CharacterTarget =
+  | CharacterTargetEnum
+  | CharacterTargetQuery
+  | CardReference;
 
 // ============================================================================
 // Location Targeting
@@ -518,7 +523,10 @@ export type LocationTargetQuery =
   | UpToCountLocationQuery
   | AllMatchingLocationQuery;
 
-export type LocationTarget = LocationTargetEnum | LocationTargetQuery;
+export type LocationTarget =
+  | LocationTargetEnum
+  | LocationTargetQuery
+  | CardReference;
 
 // ============================================================================
 // Item Targeting
@@ -582,7 +590,7 @@ export type ItemTargetQuery =
   | UpToCountItemQuery
   | AllMatchingItemQuery;
 
-export type ItemTarget = ItemTargetEnum | ItemTargetQuery;
+export type ItemTarget = ItemTargetEnum | ItemTargetQuery | CardReference;
 
 // ============================================================================
 // Card Targeting (any card type)
