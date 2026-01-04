@@ -84,8 +84,8 @@ test.describe("Card Database", () => {
     const resultsText = await page.getByText(/Results \d+/).textContent();
     const count = Number.parseInt(resultsText?.split(" ")[1] || "0");
 
-    // Relaxed assertion to avoid flakiness as data changes
-    expect(count).toBeGreaterThan(0);
+    // 35 was the verified number in manual test
+    expect(count).toBe(35);
   });
 
   test("should support OR logic", async ({ page }) => {

@@ -1,13 +1,10 @@
 import { allCanonicalCards, getPrinting } from "@tcg/lorcana-cards/data";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = () => {
+export const load: PageServerLoad = async () => {
   const cardsWithImageInfo = allCanonicalCards.map((card) => {
     // Use the first printing as the default for the image
-    const defaultPrinting = card.printings[0] as
-      | { set?: string; collectorNumber?: number }
-      | string
-      | undefined;
+    const defaultPrinting: any = card.printings[0];
 
     let set = "set1";
     let number = 1;

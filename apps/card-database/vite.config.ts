@@ -13,11 +13,9 @@ export default defineConfig({
     paraglideVitePlugin({
       project: "./project.inlang",
       outdir: "./src/lib/paraglide",
-    }) as any,
+    }),
   ],
-  optimizeDeps: {
-    exclude: ["@tcg/component-library", "@tcg/lorcana-cards"],
-  },
+
   test: {
     expect: { requireAssertions: true },
 
