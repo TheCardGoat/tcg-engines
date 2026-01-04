@@ -1,6 +1,6 @@
 ---
 name: lorcana-test-generation
-description: "Generate basic happy-path tests for Lorcana card abilities. Tests verify ability behavior only - NO property validation tests. Use when implementing or updating card tests. Effects are tested separately in the engine."
+description: Generate basic happy-path tests for Lorcana card abilities. Tests verify ability behavior only - NO property validation tests. Use when implementing or updating card tests. Effects are tested separately in the engine.
 ---
 
 # Lorcana Test Generation

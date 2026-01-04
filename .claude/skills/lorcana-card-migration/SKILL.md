@@ -1,6 +1,6 @@
 ---
 name: lorcana-card-migration
-description: "Interactive Lorcana card migration from legacy @lorcanito/lorcana-engine format to new @tcg/lorcana-types format. Use when implementing cards from legacy-cards/001/. Parses abilities, asks for clarification on complex cases, generates new card files, and handles legacy file cleanup."
+description: Interactive Lorcana card migration from legacy @lorcanito/lorcana-engine format to new @tcg/lorcana format. Use when implementing cards from packages/lorcana-cards. Parses abilities, asks for clarification on complex cases, generates new card files, and handles legacy file cleanup.
 ---
 
 # Lorcana Card Migration
@@ -10,7 +10,7 @@ Interactive migration of Lorcana card definitions from legacy format to the new 
 ## When to Use
 
 - User requests to migrate a specific card from legacy format
-- User wants to implement cards from `src/legacy-cards/001/`
+- User wants to implement cards from `packages/lorcana-cards`
 - Batch migration of successfully-parsed cards is needed
 - Interactive card development with parser validation
 
