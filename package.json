@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "TheCardGoat",
+  "name": "the-card-goat",
   "packageManager": "bun@1.2.18",
   "version": "1.0.0",
   "volta": {
@@ -9,7 +9,8 @@
   },
   "workspaces": [
     "packages/engines/*",
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "scripts": {
     "build": "turbo run build",
