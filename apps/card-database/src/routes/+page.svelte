@@ -1,212 +1,221 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import { fade, fly } from 'svelte/transition';
-	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
-	import { browser } from '$app/environment';
-	import { onMount } from 'svelte';
+import { browser } from "$app/environment";
+import { goto } from "$app/navigation";
+import { page } from "$app/stores";
+import { CardImage } from "@tcg/component-library";
+import { onMount } from "svelte";
+import { fade, fly } from "svelte/transition";
+import type { PageData } from "./$types";
 
-	import { CardImage } from '@tcg/component-library';
+const { data }: { data: PageData } = $props();
 
-	let { data }: { data: PageData } = $props();
+// Constants
+const inks = ["amber", "amethyst", "emerald", "ruby", "sapphire", "steel"];
+const costs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // Simplified for now
+const types = ["character", "action", "item", "location"];
+const inkClasses: Record<string, string> = {
+  amber:
+    "bg-amber-500/20 border-amber-500 text-amber-200 shadow-[0_0_10px_rgba(var(--color-amber-500),0.3)]",
+  amethyst:
+    "bg-amethyst-500/20 border-amethyst-500 text-amethyst-200 shadow-[0_0_10px_rgba(var(--color-amethyst-500),0.3)]",
+  emerald:
+    "bg-emerald-500/20 border-emerald-500 text-emerald-200 shadow-[0_0_10px_rgba(var(--color-emerald-500),0.3)]",
+  ruby: "bg-ruby-500/20 border-ruby-500 text-ruby-200 shadow-[0_0_10px_rgba(var(--color-ruby-500),0.3)]",
+  sapphire:
+    "bg-sapphire-500/20 border-sapphire-500 text-sapphire-200 shadow-[0_0_10px_rgba(var(--color-sapphire-500),0.3)]",
+  steel:
+    "bg-steel-500/20 border-steel-500 text-steel-200 shadow-[0_0_10px_rgba(var(--color-steel-500),0.3)]",
+};
+const STORAGE_KEY = "lorcana-filters";
 
-	// Constants
-	const inks = ['amber', 'amethyst', 'emerald', 'ruby', 'sapphire', 'steel'];
-	const costs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // Simplified for now
-	const types = ['character', 'action', 'item', 'location'];
-	const inkClasses: Record<string, string> = {
-		amber:
-			'bg-amber-500/20 border-amber-500 text-amber-200 shadow-[0_0_10px_rgba(var(--color-amber-500),0.3)]',
-		amethyst:
-			'bg-amethyst-500/20 border-amethyst-500 text-amethyst-200 shadow-[0_0_10px_rgba(var(--color-amethyst-500),0.3)]',
-		emerald:
-			'bg-emerald-500/20 border-emerald-500 text-emerald-200 shadow-[0_0_10px_rgba(var(--color-emerald-500),0.3)]',
-		ruby:
-			'bg-ruby-500/20 border-ruby-500 text-ruby-200 shadow-[0_0_10px_rgba(var(--color-ruby-500),0.3)]',
-		sapphire:
-			'bg-sapphire-500/20 border-sapphire-500 text-sapphire-200 shadow-[0_0_10px_rgba(var(--color-sapphire-500),0.3)]',
-		steel:
-			'bg-steel-500/20 border-steel-500 text-steel-200 shadow-[0_0_10px_rgba(var(--color-steel-500),0.3)]'
-	};
-	const STORAGE_KEY = 'lorcana-filters';
+// Helper to parse URL params
+function getParamsFromUrl(url: URL) {
+  return {
+    q: url.searchParams.get("q") || "",
+    ink: url.searchParams.getAll("ink"),
+    cost: url.searchParams.getAll("cost").map(Number),
+    type: url.searchParams.getAll("type"),
+    set: url.searchParams.getAll("set"),
+    crop:
+      (url.searchParams.get("crop") as "full" | "art_only" | "art_and_name") ||
+      "full",
+    logic: (url.searchParams.get("logic") as "AND" | "OR") || "AND",
+  };
+}
 
-	// Helper to parse URL params
-	function getParamsFromUrl(url: URL) {
-		return {
-			q: url.searchParams.get('q') || '',
-			ink: url.searchParams.getAll('ink'),
-			cost: url.searchParams.getAll('cost').map(Number),
-			type: url.searchParams.getAll('type'),
-			set: url.searchParams.getAll('set'),
-			crop: (url.searchParams.get('crop') as 'full' | 'art_only' | 'art_and_name') || 'full',
-			logic: (url.searchParams.get('logic') as 'AND' | 'OR') || 'AND'
-		};
-	}
+// Initial state from URL (SSR safe)
+const initialParams = getParamsFromUrl($page.url);
 
-	// Initial state from URL (SSR safe)
-	const initialParams = getParamsFromUrl($page.url);
+// State
+let searchQuery = $state(initialParams.q);
+let selectedInk = $state<string[]>(initialParams.ink);
+let selectedCost = $state<number[]>(initialParams.cost);
+let selectedType = $state<string[]>(initialParams.type);
+let selectedSets = $state<string[]>(initialParams.set);
+let selectedCrop = $state<"full" | "art_only" | "art_and_name">(
+  initialParams.crop,
+);
+let filterLogic = $state<"AND" | "OR">(initialParams.logic);
 
-	// State
-	let searchQuery = $state(initialParams.q);
-	let selectedInk = $state<string[]>(initialParams.ink);
-	let selectedCost = $state<number[]>(initialParams.cost);
-	let selectedType = $state<string[]>(initialParams.type);
-	let selectedSets = $state<string[]>(initialParams.set);
-	let selectedCrop = $state<'full' | 'art_only' | 'art_and_name'>(initialParams.crop);
-	let filterLogic = $state<'AND' | 'OR'>(initialParams.logic);
+let isInitialized = false;
 
-	let isInitialized = false;
+// Hydrate from session storage if URL params are empty
+onMount(() => {
+  if (!browser) return;
 
-	// Hydrate from session storage if URL params are empty
-	onMount(() => {
-		if (!browser) return;
+  const hasUrlParams = $page.url.searchParams.toString().length > 0;
+  if (!hasUrlParams) {
+    const stored = sessionStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        const s = JSON.parse(stored);
+        searchQuery = s.q ?? "";
+        selectedInk = s.ink ?? [];
+        selectedCost = s.cost ?? [];
+        selectedType = s.type ?? [];
+        selectedSets = s.set ?? [];
+        selectedCrop = s.crop ?? "full";
+        filterLogic = s.logic ?? "AND";
+      } catch (e) {
+        console.error("Failed to parse session storage", e);
+      }
+    }
+  }
+  isInitialized = true;
+});
 
-		const hasUrlParams = $page.url.searchParams.toString().length > 0;
-		if (!hasUrlParams) {
-			const stored = sessionStorage.getItem(STORAGE_KEY);
-			if (stored) {
-				try {
-					const s = JSON.parse(stored);
-					searchQuery = s.q ?? '';
-					selectedInk = s.ink ?? [];
-					selectedCost = s.cost ?? [];
-					selectedType = s.type ?? [];
-					selectedSets = s.set ?? [];
-					selectedCrop = s.crop ?? 'full';
-					filterLogic = s.logic ?? 'AND';
-				} catch (e) {
-					console.error('Failed to parse session storage', e);
-				}
-			}
-		}
-		isInitialized = true;
-	});
+// Sync state to URL and SessionStorage
+$effect(() => {
+  if (!(browser && isInitialized)) return;
 
-	// Sync state to URL and SessionStorage
-	$effect(() => {
-		if (!browser || !isInitialized) return;
+  const state = {
+    q: searchQuery,
+    ink: selectedInk,
+    cost: selectedCost,
+    type: selectedType,
+    set: selectedSets,
+    crop: selectedCrop,
+    logic: filterLogic,
+  };
 
-		const state = {
-			q: searchQuery,
-			ink: selectedInk,
-			cost: selectedCost,
-			type: selectedType,
-			set: selectedSets,
-			crop: selectedCrop,
-			logic: filterLogic
-		};
+  // 1. Persist to Session Storage
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 
-		// 1. Persist to Session Storage
-		sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  // 2. Update URL
+  const params = new URLSearchParams();
+  if (state.q) params.set("q", state.q);
+  state.ink.forEach((i) => params.append("ink", i));
+  state.cost.forEach((c) => params.append("cost", c.toString()));
+  state.type.forEach((t) => params.append("type", t));
+  state.set.forEach((s) => params.append("set", s));
+  if (state.crop !== "full") params.set("crop", state.crop);
+  if (state.logic !== "AND") params.set("logic", state.logic);
 
-		// 2. Update URL
-		const params = new URLSearchParams();
-		if (state.q) params.set('q', state.q);
-		state.ink.forEach((i) => params.append('ink', i));
-		state.cost.forEach((c) => params.append('cost', c.toString()));
-		state.type.forEach((t) => params.append('type', t));
-		state.set.forEach((s) => params.append('set', s));
-		if (state.crop !== 'full') params.set('crop', state.crop);
-		if (state.logic !== 'AND') params.set('logic', state.logic);
+  const queryString = params.toString();
+  const currentUrl = $page.url.searchParams.toString();
 
-		const queryString = params.toString();
-		const currentUrl = $page.url.searchParams.toString();
+  if (queryString !== currentUrl) {
+    // use replaceState to avoid cluttering history stack for every filter change
+    goto(`?${queryString}`, {
+      replaceState: true,
+      keepFocus: true,
+      noScroll: true,
+    });
+  }
+});
 
-		if (queryString !== currentUrl) {
-			// use replaceState to avoid cluttering history stack for every filter change
-			goto(`?${queryString}`, { replaceState: true, keepFocus: true, noScroll: true });
-		}
-	});
+// Reactive filtered cards
+const availableSets = $derived.by(() => {
+  const sets = new Set<string>();
+  data.cards.forEach((c) => {
+    if (c.paramSet) sets.add(c.paramSet);
+  });
+  return Array.from(sets).sort();
+});
 
-	// Reactive filtered cards
-	const availableSets = $derived.by(() => {
-		const sets = new Set<string>();
-		data.cards.forEach((c) => {
-			if (c.paramSet) sets.add(c.paramSet);
-		});
-		return Array.from(sets).sort();
-	});
+const filteredCards = $derived.by(() => {
+  const cards = data.cards;
 
-	let filteredCards = $derived.by(() => {
-		const cards = data.cards;
+  // Text search (always AND)
+  let result = cards;
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    result = result.filter(
+      (c) =>
+        (c.name && c.name.toLowerCase().includes(q)) ||
+        (c.fullName && c.fullName.toLowerCase().includes(q)) ||
+        (c.rulesText && c.rulesText.toLowerCase().includes(q)),
+    );
+  }
 
-		// Text search (always AND)
-		let result = cards;
-		if (searchQuery) {
-			const q = searchQuery.toLowerCase();
-			result = result.filter(
-				(c) =>
-					(c.name && c.name.toLowerCase().includes(q)) ||
-					(c.fullName && c.fullName.toLowerCase().includes(q)) ||
-					(c.rulesText && c.rulesText.toLowerCase().includes(q))
-			);
-		}
+  // Property filters
+  const hasInk = selectedInk.length > 0;
+  const hasCost = selectedCost.length > 0;
+  const hasType = selectedType.length > 0;
+  const hasSet = selectedSets.length > 0;
 
-		// Property filters
-		const hasInk = selectedInk.length > 0;
-		const hasCost = selectedCost.length > 0;
-		const hasType = selectedType.length > 0;
-		const hasSet = selectedSets.length > 0;
+  if (!(hasInk || hasCost || hasType || hasSet)) {
+    return result;
+  }
 
-		if (!hasInk && !hasCost && !hasType && !hasSet) {
-			return result;
-		}
+  return result.filter((c) => {
+    // Helper to check individual criteria
+    // Normalize to lowercase for comparison just in case
+    const cInk = c.inkType
+      ? Array.isArray(c.inkType)
+        ? c.inkType.map((k) => k.toLowerCase())
+        : c.inkType.toLowerCase()
+      : "";
+    const cType = c.cardType ? c.cardType.toLowerCase() : "";
 
-		return result.filter((c) => {
-			// Helper to check individual criteria
-			// Normalize to lowercase for comparison just in case
-			const cInk = c.inkType
-				? Array.isArray(c.inkType)
-					? c.inkType.map((k) => k.toLowerCase())
-					: c.inkType.toLowerCase()
-				: '';
-			const cType = c.cardType ? c.cardType.toLowerCase() : '';
+    const matchInk = hasInk
+      ? Array.isArray(cInk)
+        ? cInk.some((i: string) => selectedInk.includes(i))
+        : selectedInk.includes(cInk)
+      : false;
+    const matchCost = hasCost ? selectedCost.includes(c.cost) : false;
+    const matchType = hasType ? selectedType.includes(cType) : false;
+    const matchSet = hasSet
+      ? c.paramSet
+        ? selectedSets.includes(c.paramSet)
+        : false
+      : false;
 
-			const matchInk = hasInk
-				? Array.isArray(cInk)
-					? cInk.some((i: string) => selectedInk.includes(i))
-					: selectedInk.includes(cInk)
-				: false;
-			const matchCost = hasCost ? selectedCost.includes(c.cost) : false;
-			const matchType = hasType ? selectedType.includes(cType) : false;
-			const matchSet = hasSet ? (c.paramSet ? selectedSets.includes(c.paramSet) : false) : false;
+    if (filterLogic === "AND") {
+      if (hasInk && !matchInk) return false;
+      if (hasCost && !matchCost) return false;
+      if (hasType && !matchType) return false;
+      if (hasSet && !matchSet) return false;
+      return true;
+    }
+    // OR logic
+    return matchInk || matchCost || matchType || matchSet;
+  });
+});
 
-			if (filterLogic === 'AND') {
-				if (hasInk && !matchInk) return false;
-				if (hasCost && !matchCost) return false;
-				if (hasType && !matchType) return false;
-				if (hasSet && !matchSet) return false;
-				return true;
-			} else {
-				// OR logic
-				return matchInk || matchCost || matchType || matchSet;
-			}
-		});
-	});
+function toggleInk(ink: string) {
+  selectedInk = selectedInk.includes(ink)
+    ? selectedInk.filter((i) => i !== ink)
+    : [...selectedInk, ink];
+}
 
-	function toggleInk(ink: string) {
-		selectedInk = selectedInk.includes(ink)
-			? selectedInk.filter((i) => i !== ink)
-			: [...selectedInk, ink];
-	}
+function toggleCost(cost: number) {
+  selectedCost = selectedCost.includes(cost)
+    ? selectedCost.filter((c) => c !== cost)
+    : [...selectedCost, cost];
+}
 
-	function toggleCost(cost: number) {
-		selectedCost = selectedCost.includes(cost)
-			? selectedCost.filter((c) => c !== cost)
-			: [...selectedCost, cost];
-	}
+function toggleType(type: string) {
+  selectedType = selectedType.includes(type)
+    ? selectedType.filter((t) => t !== type)
+    : [...selectedType, type];
+}
 
-	function toggleType(type: string) {
-		selectedType = selectedType.includes(type)
-			? selectedType.filter((t) => t !== type)
-			: [...selectedType, type];
-	}
-
-	function toggleSet(set: string) {
-		selectedSets = selectedSets.includes(set)
-			? selectedSets.filter((s) => s !== set)
-			: [...selectedSets, set];
-	}
+function toggleSet(set: string) {
+  selectedSets = selectedSets.includes(set)
+    ? selectedSets.filter((s) => s !== set)
+    : [...selectedSets, set];
+}
 </script>
 
 <div
@@ -374,8 +383,8 @@
 								>
 							</label>
 						{/each}
+					</div>
 				</div>
-			</div>
 
 				<!-- Set Filter -->
 				<div>
@@ -454,7 +463,9 @@
 									{/if}
 								</div>
 
-								<div class="mt-2 line-clamp-4 text-xs leading-relaxed text-slate-300 opacity-90 whitespace-pre-line">
+								<div
+									class="mt-2 line-clamp-4 text-xs leading-relaxed whitespace-pre-line text-slate-300 opacity-90"
+								>
 									{card.rulesText}
 								</div>
 

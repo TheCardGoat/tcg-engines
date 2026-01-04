@@ -7,7 +7,9 @@
   "scripts": {
     "test": "bun test",
     "lint": "biome check .",
+    "format": "biome check --write .",
     "lint:fix": "biome check --write .",
+    "check-types": "tsc --noEmit",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

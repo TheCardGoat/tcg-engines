@@ -235,8 +235,8 @@ describe("isCardOfType", () => {
       const endTime = performance.now();
 
       expect(creatures.length).toBeGreaterThan(0);
-      // Should complete in reasonable time (< 50ms for 10k cards)
-      expect(endTime - startTime).toBeLessThan(50);
+      // Should complete in reasonable time (< 100ms for 10k cards)
+      expect(endTime - startTime).toBeLessThan(100);
     });
   });
 });

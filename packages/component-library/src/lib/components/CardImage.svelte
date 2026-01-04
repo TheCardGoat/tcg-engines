@@ -1,5 +1,5 @@
 <script lang="ts">
-let {
+const {
   set,
   number,
   lang = "EN",
@@ -34,7 +34,7 @@ function getPaddedSet(s: string | number): string {
   return setStr.padStart(3, "0");
 }
 
-let imageUrl = $derived.by(() => {
+const imageUrl = $derived.by(() => {
   const paddedSet = getPaddedSet(set);
   const safeLang = lang.toUpperCase();
 
