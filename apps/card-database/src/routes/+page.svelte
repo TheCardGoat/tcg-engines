@@ -14,6 +14,20 @@
 	const inks = ['amber', 'amethyst', 'emerald', 'ruby', 'sapphire', 'steel'];
 	const costs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // Simplified for now
 	const types = ['character', 'action', 'item', 'location'];
+	const inkClasses: Record<string, string> = {
+		amber:
+			'bg-amber-500/20 border-amber-500 text-amber-200 shadow-[0_0_10px_rgba(var(--color-amber-500),0.3)]',
+		amethyst:
+			'bg-amethyst-500/20 border-amethyst-500 text-amethyst-200 shadow-[0_0_10px_rgba(var(--color-amethyst-500),0.3)]',
+		emerald:
+			'bg-emerald-500/20 border-emerald-500 text-emerald-200 shadow-[0_0_10px_rgba(var(--color-emerald-500),0.3)]',
+		ruby:
+			'bg-ruby-500/20 border-ruby-500 text-ruby-200 shadow-[0_0_10px_rgba(var(--color-ruby-500),0.3)]',
+		sapphire:
+			'bg-sapphire-500/20 border-sapphire-500 text-sapphire-200 shadow-[0_0_10px_rgba(var(--color-sapphire-500),0.3)]',
+		steel:
+			'bg-steel-500/20 border-steel-500 text-steel-200 shadow-[0_0_10px_rgba(var(--color-steel-500),0.3)]'
+	};
 	const STORAGE_KEY = 'lorcana-filters';
 
 	// Helper to parse URL params
@@ -299,7 +313,7 @@
 							<button
 								class="cursor-pointer rounded-full border px-3 py-1.5 text-xs font-medium tracking-wide uppercase transition-all duration-200
 								{selectedInk.includes(ink)
-									? `bg-${ink === 'ink' ? 'slate' : ink}-500/20 border-${ink === 'ink' ? 'slate' : ink}-500 text-${ink === 'ink' ? 'slate' : ink}-200 shadow-[0_0_10px_rgba(var(--color-${ink}-500),0.3)]`
+									? inkClasses[ink]
 									: 'border-slate-700 bg-slate-800 text-slate-400 hover:border-slate-600 hover:text-slate-300'}"
 								onclick={() => toggleInk(ink)}
 								data-testid="filter-ink-{ink}"
@@ -361,6 +375,7 @@
 							</label>
 						{/each}
 				</div>
+			</div>
 
 				<!-- Set Filter -->
 				<div>
@@ -439,8 +454,8 @@
 									{/if}
 								</div>
 
-								<div class="mt-2 line-clamp-4 text-xs leading-relaxed text-slate-300 opacity-90">
-									{@html card.rulesText?.replace(/\n/g, '<br/>')}
+								<div class="mt-2 line-clamp-4 text-xs leading-relaxed text-slate-300 opacity-90 whitespace-pre-line">
+									{card.rulesText}
 								</div>
 
 								<div
