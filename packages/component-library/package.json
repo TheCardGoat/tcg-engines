@@ -7,7 +7,7 @@
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
     "prepack": "svelte-kit sync && svelte-package && publint",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check": "paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check-types": "npm run check",
     "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false .",
     "lint": "bun x @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error .",
@@ -63,7 +63,8 @@
     "vite": "7.1.7",
     "vite-plugin-devtools-json": "1.0.0",
     "vitest": "3.2.4",
-    "vitest-browser-svelte": "1.1.0"
+    "vitest-browser-svelte": "1.1.0",
+    "bun-types": "1.2.18"
   },
   "keywords": [
     "svelte"
