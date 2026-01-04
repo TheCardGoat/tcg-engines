@@ -4,7 +4,10 @@ import type { PageServerLoad } from "./$types";
 export const load: PageServerLoad = async () => {
   const cardsWithImageInfo = allCanonicalCards.map((card) => {
     // Use the first printing as the default for the image
-    const defaultPrinting: any = card.printings[0];
+    const defaultPrinting = card.printings[0] as
+      | { set?: string; collectorNumber?: number }
+      | string
+      | undefined;
 
     let set = "set1";
     let number = 1;
