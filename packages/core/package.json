@@ -4,7 +4,7 @@
   "description": "Core TCG engine framework with declarative game definitions",
   "private": true,
   "main": "./src/index.ts",
-  "types": "./src/index.d.ts",
+  "types": "./src/index.ts",
   "files": [
     "src/"
   ],
