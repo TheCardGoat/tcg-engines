@@ -1,0 +1,439 @@
+[
+  {
+    "searchText": "YOU LOOK REGAL If you have a character named Prince John in play, you pay {d} {I} less to play this item. A FEELING OF POWER At the end of each opponent's turn, if they have more than {d} cards in their hand, they discard until they have {d} cards in their hand.",
+    "found": true,
+    "cardName": "Prince John's Mirror",
+    "values": [1, 3, 3],
+    "actualText": "YOU LOOK REGAL If you have a character named Prince John in play, you pay 1 {I} less to play this item.\nA FEELING OF POWER At the end of each opponent's turn, if they have more than 3 cards in their hand, they discard until they have 3 cards in their hand."
+  },
+  {
+    "searchText": "STUNNING TRANSFORMATION Whenever you put a card under this character, you may banish chosen opposing character. If you do, their player may reveal the top card of their deck. If that card is a character or item card, they may play it for free. Otherwise, they put it on the bottom of their deck.",
+    "found": true,
+    "cardName": "Fairy Godmother",
+    "values": [],
+    "actualText": "Boost 3 {I} (Once during your turn, you may pay 3 {I} to put the top card of your deck facedown under this character.)\nSTUNNING TRANSFORMATION Whenever you put a card under this character, you may banish chosen opposing character. If you do, their player may reveal the top card of their deck. If that card is a character or item card, they may play it for free. Otherwise, they put it on the bottom of their deck."
+  },
+  {
+    "searchText": "NOW IT'S A PARTY For each character you have in play, you pay {I} less to play this character. HOW'S PICKINGS? When you play this character, you may draw a card for each other character you have in play, then choose and ddiscard that many cards.",
+    "found": false
+  },
+  {
+    "searchText": "WHAT IS TO COME When you play this item, look at the top {d} cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order. WHISPERED POWER {d} {I}, Banish this item — Put the top card of your deck facedown under one of your characters or locations with Boost.",
+    "found": true,
+    "cardName": "Recovered Page",
+    "values": [4, 1],
+    "actualText": "WHAT IS TO COME When you play this item, look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.\nWHISPERED POWER 1 {I}, Banish this item — Put the top card of your deck facedown under one of your characters or locations with Boost."
+  },
+  {
+    "searchText": "SUBTERRANEAN NETWORK While you have a character here, this location gets +{d} {L} for each other location you have in play. LOCUS While you have a character here, you pay {d} {I} less to play locations.",
+    "found": true,
+    "cardName": "Illuminary Tunnels",
+    "values": [1, 1],
+    "actualText": "SUBTERRANEAN NETWORK While you have a character here, this location gets +1 {L} for each other location you have in play.\nLOCUS While you have a character here, you pay 1 {I} less to play locations."
+  },
+  {
+    "searchText": "STICK AROUND FOR DINNER This character gets +{d} {S} for each other Hyena character you have in play. WHAT HAVE WE GOT HERE? Whenever one of your Hyena characters challenges a damaged character, gain {d} lore.",
+    "found": true,
+    "cardName": "Shenzi",
+    "values": [1, 2],
+    "actualText": "STICK AROUND FOR DINNER This character gets +1 {S} for each other Hyena character you have in play.\nWHAT HAVE WE GOT HERE? Whenever one of your Hyena characters challenges a damaged character, gain 2 lore."
+  },
+  {
+    "searchText": "AD SAXUM COMMUTATE When you play this character, exert all opposing characters. Then, each player with fewer than {d} cards in their hand draws until they have {d}. STONE BY DAY If you have {d} or more cards in your hand, this character can't ready.",
+    "found": true,
+    "cardName": "Demona",
+    "values": [3, 3, 3],
+    "actualText": "AD SAXUM COMMUTATE When you play this character, exert all opposing characters. Then, each player with fewer than 3 cards in their hand draws until they have 3.\nSTONE BY DAY If you have 3 or more cards in your hand, this character can't ready."
+  },
+  {
+    "searchText": "WHY DO WE EVEN HAVE THAT LEVER? When you play this character, if you have a card named Pull the Lever! in your discard, you may search your deck for a card named Wrong Lever! and reveal that card to all players. Put that card into your hand and shuffle your deck.",
+    "found": true,
+    "cardName": "Yzma",
+    "values": [],
+    "actualText": "WHY DO WE EVEN HAVE THAT LEVER? When you play this character, if you have a card named Pull the Lever! in your discard, you may search your deck for a card named Wrong Lever! and reveal that card to all players. Put that card into your hand and shuffle your deck."
+  },
+  {
+    "searchText": "BUSINESS EXPERTISE {E} – Choose one: You pay {d} {I} less to play your next action this turn. You pay {d} {I} less to play your next item this turn. You pay {d} {I} less to play your next location this turn.",
+    "found": false
+  },
+  {
+    "searchText": "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of a chosen Ally character of yours. If you do, choose and discard {d} cards and banish that character.",
+    "found": false
+  },
+  {
+    "searchText": "PRESTIDIGITONIUM Whenever this character quests, name a card, then reveal the top card of your deck. If it's the named card, put it into your inkwell facedown and exerted. Otherwise, put it on the top of your deck.",
+    "found": true,
+    "cardName": "Merlin",
+    "values": [],
+    "actualText": "PRESTIDIGITONIUM Whenever this character quests, name a card, then reveal the top card of your deck. If it's the named card, put it into your inkwell facedown and exerted. Otherwise, put it on the top of your deck."
+  },
+  {
+    "searchText": "DISPEL THE ENTANGLEMENT Banish this item − Chosen character named Beast gets +{d} {L} this turn. If you have a character named Belle in play, move up to {d} damage counters from chosen character to chosen opposing character.",
+    "found": false
+  },
+  {
+    "searchText": "DUSK TO DAWN At the end of each player's turn, if they have more than {d} cards in their hand, they choose and discard cards until they have {d}. If they have fewer than {d} cards in their hand, they draw until they have {d}.",
+    "found": true,
+    "cardName": "Goliath",
+    "values": [2, 2, 2, 2],
+    "actualText": "DUSK TO DAWN At the end of each player's turn, if they have more than 2 cards in their hand, they choose and discard cards until they have 2. If they have fewer than 2 cards in their hand, they draw until they have 2.\nSTONE BY DAY If you have 3 or more cards in your hand, this character can't ready."
+  },
+  {
+    "searchText": "GATHERER OF THE WICKED When you play this character, look at the top {d} cards of your deck. You may reveal any number of character cards named The Queen and put them into your hand. Put the rest on the bottom of your deck in any order.",
+    "found": true,
+    "cardName": "The Queen",
+    "values": [3],
+    "actualText": "Ward (Opponents can't choose this character except to challenge.)\nGATHERER OF THE WICKED When you play this character, look at the top 3 cards of your deck. You may reveal any number of character cards named The Queen and put them into your hand. Put the rest on the bottom of your deck in any order."
+  },
+  {
+    "searchText": "DOUBLE THE POWDER! When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.",
+    "found": true,
+    "cardName": "Captain Hook",
+    "values": [],
+    "actualText": "DOUBLE THE POWDER! When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand."
+  },
+  {
+    "searchText": "FIND WHAT'S HIDDEN {E}, {d} {I} - Look at the top {d} cards of your deck. You may reveal an item card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    "found": false
+  },
+  {
+    "searchText": "THE CAULDRON CALLS {E}, {d} {I} — Put a character card from your discard under this item faceup. RISE AND JOIN ME! {E}, {d} {I} — This turn, you may play characters from under this item.",
+    "found": true,
+    "cardName": "The Black Cauldron",
+    "values": [1, 1],
+    "actualText": "THE CAULDRON CALLS {E}, 1 {I} — Put a character card from your discard under this item faceup.\nRISE AND JOIN ME! {E}, 1 {I} — This turn, you may play characters from under this item."
+  },
+  {
+    "searchText": "SOUVENIR {E}, {d} {I}, banish this item — Draw a card, then choose and discard a card. TIME FLIES During your turn, when this item is banished, deal {d} damage to a character or a location of your choice.",
+    "found": false
+  },
+  {
+    "searchText": "Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.",
+    "found": true,
+    "cardName": "We Know the Way",
+    "values": [],
+    "actualText": "(A character with cost 3 or more can {E} to sing this song for free.)\nShuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand."
+  },
+  {
+    "searchText": "HELPFUL SUPPLIES At the start of your turn, if you have an item in play, gain {d} lore. PERFECT DIRECTIONS At the start of your turn, if you have a location in play, gain {d} lore.",
+    "found": true,
+    "cardName": "Pacha",
+    "values": [1, 1],
+    "actualText": "HELPFUL SUPPLIES At the start of your turn, if you have an item in play, gain 1 lore.\nPERFECT DIRECTIONS At the start of your turn, if you have a location in play, gain 1 lore."
+  },
+  {
+    "searchText": "BE CAREFUL, ALL OF YOU Whenever one of your Gargoyle characters challenges another character, gain {d} lore. STONE BY DAY If you have {d} or more cards in your hand, this character can't ready.",
+    "found": true,
+    "cardName": "Goliath",
+    "values": [1, 3],
+    "actualText": "BE CAREFUL, ALL OF YOU Whenever one of your Gargoyle characters challenges another character, gain 1 lore.\nSTONE BY DAY If you have 3 or more cards in your hand, this character can't ready."
+  },
+  {
+    "searchText": "HUMBLE PIE When you play this character, if you used Shift to play him, each opponent loses {d} lore. RAGING DUCK While an opponent has {d} or more lore, this character gets +{d} {S}.",
+    "found": true,
+    "cardName": "Donald Duck",
+    "values": [2, 10, 6],
+    "actualText": "Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Donald Duck.)\nHUMBLE PIE When you play this character, if you used Shift to play him, each opponent loses 2 lore.\nRAGING DUCK While an opponent has 10 or more lore, this character gets +6 {S}."
+  },
+  {
+    "searchText": "EVEN THE SCORE Whenever one of your other Emerald characters is challenged and banished, banish the challenging character. PROVIDE COVER Your other Emerald characters gain Ward.",
+    "found": true,
+    "cardName": "Goofy",
+    "values": [],
+    "actualText": "EVEN THE SCORE Whenever one of your other Emerald characters is challenged and banished, banish the challenging character.\nPROVIDE COVER Your other Emerald characters gain Ward. (Opponents can't choose them except to challenge.)"
+  },
+  {
+    "searchText": "OUTPLACEMENT When you play this character, you may put chosen item or location into its player's inkwell facedown and exerted. BY INVITE ONLY {d} {I} − Your other characters gain Resist +{d} until the start of your next turn.",
+    "found": false
+  },
+  {
+    "searchText": "HOIST THE FLAG Whenever a character of yours sings a song here, each opponent loses {d} lore. GATHERING YOUR FORCES While you have a character here, your songs cost {d} {I} less to play.",
+    "found": false
+  },
+  {
+    "searchText": "ONCE UPON A TIME When you play this character, you may look at the top {d} cards of your deck. HAPPILY EVER AFTER When this character is banished, you may reveal the top card of your deck. If it's a character, you may play it for free.",
+    "found": false
+  },
+  {
+    "searchText": "WISDOM OF AGES This character gets +{d} {S} for each card in your hand. STUDY UP {E}, {d} {I} − Draw {d} cards, then choose and discard a card.",
+    "found": false
+  },
+  {
+    "searchText": "I'LL MAKE A MAN OUT OF YOU When you play this character, chosen character of yours gets +{d} {S} this turn. That character can challenge ready characters this turn.",
+    "found": false
+  },
+  {
+    "searchText": "Return chosen character to their player's hand. That player chooses and discards a card.",
+    "found": false
+  },
+  {
+    "searchText": "WHAT'S NEW? When you play this character, you may draw a card. WHAT'S THAT? Whenever this character quests, you may play a song with cost {d} or less for free.",
+    "found": false
+  },
+  {
+    "searchText": "FEEDING TIME Your damaged characters have Resist +{d}. BAYING PACK Whenever this character challenges and banishes another character, gain {d} lore.",
+    "found": false
+  },
+  {
+    "searchText": "THE CIRCLE OF LIFE Whenever one of your characters is banished, ready this character. REMEMBER When you play this character, return a character card from your discard to your hand.",
+    "found": false
+  },
+  {
+    "searchText": "PROTECT THE TOWN Your other characters with cost {d} or less gain Bodyguard. RALLYING CRY Whenever you play another character, you may exert that character to draw a card.",
+    "found": false
+  },
+  {
+    "searchText": "MOMENT'S PEACE Exert chosen character. HEALING WATERS Remove up to {d} damage from chosen character.",
+    "found": false
+  },
+  {
+    "searchText": "UNBRIDLED WRATH Whenever this character challenges another character, deal {d} damage to all opposing characters. FRIGHTFUL PRESENCE Opposing characters can't be healed.",
+    "found": false
+  },
+  {
+    "searchText": "TIME FOR GAMES At the start of your turn, you may exert this character to draw a card. WHAT NOW? When this character is banished, look at the top card of your deck. You may put it into your inkwell facedown and exerted.",
+    "found": false
+  },
+  {
+    "searchText": "BEST OF BOTH WORLDS While you have {d} or more cards in your hand, this character gets +{d} {S}. UNDER THE SEA While you have {d} or fewer cards in your hand, this character gains Evasive.",
+    "found": false
+  },
+  {
+    "searchText": "POWER OF MUSIC When you play this character, you may draw a card for each song in your discard. STAGE PRESENCE Your songs cost {d} {I} less to play.",
+    "found": false
+  },
+  {
+    "searchText": "FOLLOW MY LEAD Your other characters gain Support. ONWARD! When you play this character, ready all your other characters.",
+    "found": false
+  },
+  {
+    "searchText": "Deal {d} damage to each opposing character. Banish each character that was dealt damage this way and has {d} or less {W}.",
+    "found": false
+  },
+  {
+    "searchText": "Return chosen character with {d} {S} or less to their player's hand. Draw a card for each character returned to your hand this way.",
+    "found": false
+  },
+  {
+    "searchText": "Each player chooses and discards a card. If they discarded a character, they draw a card.",
+    "found": false
+  },
+  {
+    "searchText": "Put chosen exerted character into their player's inkwell facedown and exerted.",
+    "found": true,
+    "cardName": "Into the Unknown",
+    "values": [],
+    "actualText": "(A character with cost 3 or more can {E} to sing this song for free.)\nPut chosen exerted character into their player's inkwell facedown and exerted."
+  },
+  {
+    "searchText": "Banish chosen character. Its controller draws {d} cards.",
+    "found": false
+  },
+  {
+    "searchText": "Deal {d} damage to chosen character. If a Villain dealt damage this way, deal {d} damage to another chosen character.",
+    "found": false
+  },
+  {
+    "searchText": "Reveal the top {d} cards of your deck. Put any number of character cards from among them into your hand. Put the rest on the bottom of your deck in any order.",
+    "found": false
+  },
+  {
+    "searchText": "Chosen character can't quest during their next turn.",
+    "found": false
+  },
+  {
+    "searchText": "Exert all characters. They can't ready during their next turn.",
+    "found": false
+  },
+  {
+    "searchText": "Banish all characters. Each player loses {d} lore for each of their characters banished this way.",
+    "found": false
+  },
+  {
+    "searchText": "MASTER TACTICIAN When you play this character, draw {d} cards. STRATEGIC PLANNING Whenever this character quests, chosen character can't challenge during their next turn.",
+    "found": false
+  },
+  {
+    "searchText": "MAGICAL BARRIER This character can't be challenged while you have a location in play. MYSTICAL INSIGHT Whenever you play a song, you may draw a card.",
+    "found": false
+  },
+  {
+    "searchText": "Put the top {d} cards of your deck into your inkwell facedown and exerted. Draw a card for each card put into your inkwell this way.",
+    "found": false
+  },
+  {
+    "searchText": "Ready all your characters. They can't quest for the rest of this turn.",
+    "found": true,
+    "cardName": "Don't Let the Frostbite Bite",
+    "values": [],
+    "actualText": "(A character with cost 7 or more can {E} to sing this song for free.)\nReady all your characters. They can't quest for the rest of this turn."
+  },
+  {
+    "searchText": "Deal {d} damage to chosen character. If that character is banished this way, draw {d} cards.",
+    "found": false
+  },
+  {
+    "searchText": "PRIME REAL ESTATE While you have a character here, your locations get +{d} {L}. LAND GRAB {E}, {d} {I} − Gain {d} lore.",
+    "found": false
+  },
+  {
+    "searchText": "Each player discards their hand, then draws {d} cards.",
+    "found": false
+  },
+  {
+    "searchText": "Deal {d} damage to chosen character. If that character is a Hero, deal {d} additional damage to it.",
+    "found": false
+  },
+  {
+    "searchText": "Move chosen character of yours to this location for free. That character gets +{d} {S} this turn.",
+    "found": false
+  },
+  {
+    "searchText": "ANCIENT KNOWLEDGE {E} − Draw a card. FORBIDDEN SECRETS {E}, {d} {I} − Draw {d} cards, then choose and discard {d} cards.",
+    "found": false
+  },
+  {
+    "searchText": "Banish chosen character of yours to banish chosen opposing character.",
+    "found": false
+  },
+  {
+    "searchText": "Return chosen character with {d} {W} or less to their player's hand.",
+    "found": false
+  },
+  {
+    "searchText": "Banish chosen item to draw {d} cards.",
+    "found": false
+  },
+  {
+    "searchText": "Chosen opponent reveals their hand. You choose a non-character card from it and that player discards it.",
+    "found": false
+  },
+  {
+    "searchText": "Deal {d} damage to each of up to {d} chosen characters.",
+    "found": false
+  },
+  {
+    "searchText": "DESPAIR Opponents need {d} more lore to win the game. ENDLESS GLOOM Your opponent's characters get -{d} {L}.",
+    "found": false
+  },
+  {
+    "searchText": "LAST WORDS When this character is banished, each opponent discards a card.",
+    "found": false
+  },
+  {
+    "searchText": "Chosen character gains all abilities of another chosen character this turn.",
+    "found": false
+  },
+  {
+    "searchText": "Search your deck for a character card with cost {d} or less, reveal it, and put it into your hand. Shuffle your deck.",
+    "found": false
+  },
+  {
+    "searchText": "Return chosen character to their player's hand. If that character had Ward, draw a card.",
+    "found": false
+  },
+  {
+    "searchText": "ENCOURAGING WORDS Your Floodborn characters get +{d} {S}. INSPIRING PRESENCE Your Storyborn characters get +{d} {W}.",
+    "found": false
+  },
+  {
+    "searchText": "Draw {d} cards. Banish the top {d} cards of your deck.",
+    "found": false
+  },
+  {
+    "searchText": "Your characters gain Evasive this turn. Draw a card.",
+    "found": false
+  },
+  {
+    "searchText": "FERTILE GROUND Whenever a card is put into your inkwell, you may pay {d} {I}. If you do, draw a card.",
+    "found": false
+  },
+  {
+    "searchText": "If this character would be banished, you may return it to your hand instead.",
+    "found": false
+  },
+  {
+    "searchText": "RESILIENT Whenever this character takes damage, you may ready it.",
+    "found": false
+  },
+  {
+    "searchText": "TRAINING GROUNDS Characters gain Challenger +{d} while here. BATTLE ARENA Characters can challenge ready characters while here.",
+    "found": false
+  },
+  {
+    "searchText": "Chosen character challenges chosen other character this turn.",
+    "found": false
+  },
+  {
+    "searchText": "If you have {d} or more characters in play, you may play a character from your discard for free.",
+    "found": false
+  },
+  {
+    "searchText": "Gain {d} lore for each character you have in play.",
+    "found": false
+  },
+  {
+    "searchText": "GUARDIAN ANGEL Whenever another character of yours would be banished, you may banish this character instead.",
+    "found": false
+  },
+  {
+    "searchText": "Banish all characters except chosen character.",
+    "found": false
+  },
+  {
+    "searchText": "PACK TACTICS This character gets +{d} {S} while you have another Wolf character in play.",
+    "found": false
+  },
+  {
+    "searchText": "COUNTERATTACK Whenever this character is challenged, deal {d} damage to the challenging character before the challenge.",
+    "found": false
+  },
+  {
+    "searchText": "Exert all opposing characters. Gain {d} lore for each character exerted this way.",
+    "found": false
+  },
+  {
+    "searchText": "SAFE HAVEN Characters gain Ward while here. SANCTUARY Characters can't be challenged while here.",
+    "found": false
+  },
+  {
+    "searchText": "Draw cards equal to the number of cards in an opponent's hand.",
+    "found": false
+  },
+  {
+    "searchText": "Chosen character gets +{d} {S} this turn. If that character has Rush, it gets +{d} {S} instead.",
+    "found": false
+  },
+  {
+    "searchText": "Return chosen item from your discard to your hand. You may play an item with cost {d} or less for free.",
+    "found": false
+  },
+  {
+    "searchText": "PERFECT TRANSFORMATION When you play this character using Shift, deal {d} damage to each opposing character.",
+    "found": false
+  },
+  {
+    "searchText": "Deal {d} damage to each character. Each player draws a card for each of their characters banished this way.",
+    "found": false
+  },
+  {
+    "searchText": "BATTLE HARDENED This character gets +{d} {W} for each damage counter on it.",
+    "found": false
+  },
+  {
+    "searchText": "GATHER POWER Whenever you play a character, you may put the top card of your deck under this character. UNLEASH At the end of your turn, draw a card for each card under this character.",
+    "found": false
+  },
+  {
+    "searchText": "RALLY POINT Whenever a character of yours quests while here, gain {d} additional lore. STAGING AREA Move costs for your characters to move here are reduced by {d}.",
+    "found": false
+  },
+  {
+    "searchText": "Chosen character costs {d} less to play this turn. You may play that character.",
+    "found": false
+  },
+  {
+    "searchText": "If you have less lore than each opponent, draw {d} cards. Otherwise, each opponent draws a card.",
+    "found": false
+  }
+]
