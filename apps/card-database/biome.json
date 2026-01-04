@@ -1,0 +1,51 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.0.4/schema.json",
+  "extends": ["../../biome.json"],
+  "files": {
+    "includes": [
+      "**",
+      "!**/dist/**/*",
+      "!**/build/**/*",
+      "!**/node_modules/**/*",
+      "!**/.svelte-kit/**/*",
+      "!**/storybook-static/**/*",
+      "!**/src/lib/paraglide/**/*"
+    ]
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.svelte"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useConst": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedImports": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.stories.svelte"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedVariables": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/e2e/**/*", "**/*.spec.ts", "**/*.test.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExportsInTest": "off"
+          }
+        }
+      }
+    }
+  ]
+}
