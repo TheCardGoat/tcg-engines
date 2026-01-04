@@ -23,11 +23,15 @@ export const madHattergraciousHost: CharacterCard = {
     {
       id: "hej-1",
       name: "TEA PARTY",
+      text: "TEA PARTY Whenever this character is challenged, you may draw a card.",
       type: "triggered",
       trigger: {
-        event: "challenged",
+        event: "challenge",
         timing: "whenever",
-        on: "SELF",
+        on: "OPPONENT_CHARACTERS",
+        defender: {
+          filters: [{ type: "source", ref: "self" }],
+        },
       },
       effect: {
         type: "optional",

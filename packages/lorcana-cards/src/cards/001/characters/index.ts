@@ -59,7 +59,7 @@ export { geniepowersUnleashed } from "./076-genie-powers-unleashed";
 export { genietheEverImpressive } from "./077-genie-the-ever-impressive";
 export { hansschemingPrince } from "./078-hans-scheming-prince";
 export { horacenoGoodScoundrel } from "./079-horace-no-good-scoundrel";
-export { horacenoGoodScoundrel } from "./079-horace-nogood-scoundrel";
+
 export { iagoloudMouthedParrot } from "./080-iago-loudmouthed-parrot";
 export { jaspercommonCrook } from "./081-jasper-common-crook";
 export { johnSilveralienPirate } from "./082-john-silver-alien-pirate";
@@ -117,7 +117,7 @@ export { maleficentsinisterVisitor } from "./150-maleficent-sinister-visitor";
 export { maleficentuninvited } from "./151-maleficent-uninvited";
 export { mauriceworldFamousInventor } from "./152-maurice-worldfamous-inventor";
 export { merlinselfAppointedMentor } from "./153-merlin-self-appointed-mentor";
-export { merlinselfAppointedMentor } from "./153-merlin-selfappointed-mentor";
+
 export { mickeyMousedetective } from "./154-mickey-mouse-detective";
 export { mufasakingOfThePrideLands } from "./155-mufasa-king-of-the-pride-lands";
 export { philoctetestrainerOfHeroes } from "./156-philoctetes-trainer-of-heroes";
@@ -131,7 +131,7 @@ export { captainHookcaptainOfTheJollyRoger } from "./173-captain-hook-captain-of
 export { captainHookforcefulDuelist } from "./174-captain-hook-forceful-duelist";
 export { captainHookthinkingAHappyThought } from "./175-captain-hook-thinking-a-happy-thought";
 export { cerberusthreeHeadedDog } from "./176-cerberus-three-headed-dog";
-export { cerberusthreeHeadedDog } from "./176-cerberus-threeheaded-dog";
+
 export { donaldDuckmusketeer } from "./177-donald-duck-musketeer";
 export { gantugalacticFederationCaptain } from "./178-gantu-galactic-federation-captain";
 export { goonsmaleficentsUnderlings } from "./179-goons-maleficents-underlings";
@@ -139,7 +139,7 @@ export { hansthirteenthInLine } from "./180-hans-thirteenth-in-line";
 export { herculestrueHero } from "./181-hercules-true-hero";
 export { kristoffofficialIceMaster } from "./182-kristoff-official-ice-master";
 export { kronkrightHandMan } from "./183-kronk-right-hand-man";
-export { kronkrightHandMan } from "./183-kronk-righthand-man";
+
 export { lilogalacticHero } from "./184-lilo-galactic-hero";
 export { mauidemigod } from "./185-maui-demigod";
 export { mickeyMousemusketeer } from "./186-mickey-mouse-musketeer";

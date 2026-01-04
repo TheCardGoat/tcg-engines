@@ -26,7 +26,6 @@ export const sisuInHerElement: CharacterCard = {
       type: "keyword",
       keyword: "Challenger",
       value: 2,
-      condition: ".",
     },
   ],
   classifications: ["Storyborn", "Hero", "Deity", "Dragon"],

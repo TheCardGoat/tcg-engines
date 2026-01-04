@@ -32,6 +32,7 @@ export const jafarDreadnought: CharacterCard = {
     {
       id: "22g-2",
       name: "NOW WHERE WERE WE?",
+      text: "During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "banish",

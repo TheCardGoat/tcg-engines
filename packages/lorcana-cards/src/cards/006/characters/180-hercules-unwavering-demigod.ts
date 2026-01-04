@@ -26,7 +26,6 @@ export const herculesUnwaveringDemigod: CharacterCard = {
       type: "keyword",
       keyword: "Challenger",
       value: 2,
-      condition: ".",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Prince"],

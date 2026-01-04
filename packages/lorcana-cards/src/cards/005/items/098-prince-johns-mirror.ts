@@ -51,7 +51,7 @@ export const princeJohnsMirror: ItemCard = {
         type: "resource-count",
         what: "cards-in-hand",
         controller: "opponent",
-        comparison: "greater-than",
+        comparison: "greater",
         value: 0,
       },
     },

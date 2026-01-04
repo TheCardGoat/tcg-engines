@@ -23,6 +23,7 @@ export const treasureGuardianForebodingSentry: CharacterCard = {
     {
       id: "9vb-1",
       name: "UNTOLD TREASURE",
+      text: "UNTOLD TREASURE When you play this character, if you have an Illusion character in play, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "play",

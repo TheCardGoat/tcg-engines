@@ -18,6 +18,7 @@ export const sumerianTalisman: ItemCard = {
     {
       id: "xe8-1",
       name: "SOURCE OF MAGIC",
+      text: "During your turn, whenever one of your characters is banished in a challenge, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "banish",

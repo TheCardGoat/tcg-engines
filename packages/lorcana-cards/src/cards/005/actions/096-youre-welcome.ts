@@ -18,6 +18,7 @@ export const youreWelcome: ActionCard = {
   abilities: [
     {
       id: "1my-1",
+      text: "Shuffle chosen character, item, or location into their player's deck. That player draws 2 cards.",
       type: "action",
       effect: {
         type: "draw",

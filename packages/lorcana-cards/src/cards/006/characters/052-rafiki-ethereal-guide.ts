@@ -32,7 +32,13 @@ export const rafikiEtherealGuide: CharacterCard = {
     {
       id: "yg2-2",
       name: "ASTRAL ATTUNEMENT",
+      text: "ASTRAL ATTUNEMENT During your turn, whenever a card is put into your inkwell, you may draw a card.",
       type: "triggered",
+      trigger: {
+        event: "ink",
+        timing: "whenever",
+        on: "YOU",
+      },
       effect: {
         type: "optional",
         effect: {

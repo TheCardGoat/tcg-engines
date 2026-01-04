@@ -37,6 +37,7 @@ export const rayaUnstoppableForce: CharacterCard = {
     {
       id: "jk9-3",
       name: "YOU GAVE IT YOUR BEST",
+      text: "YOU GAVE IT YOUR BEST During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "banish",

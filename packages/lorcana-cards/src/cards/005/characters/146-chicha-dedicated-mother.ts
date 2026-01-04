@@ -29,7 +29,13 @@ export const chichaDedicatedMother: CharacterCard = {
     {
       id: "q5f-2",
       name: "ONE ON THE WAY",
+      text: "ONE ON THE WAY During your turn, when you put a card into your inkwell, if it's the second card you've put into your inkwell this turn, you may draw a card.",
       type: "triggered",
+      trigger: {
+        event: "ink",
+        timing: "when",
+        on: "YOU",
+      },
       effect: {
         type: "conditional",
         condition: {

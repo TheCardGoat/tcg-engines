@@ -29,6 +29,7 @@ export const bruniFireSalamander: CharacterCard = {
     {
       id: "29y-2",
       name: "PARTING GIFT",
+      text: "PARTING GIFT When this character is banished, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "banish",

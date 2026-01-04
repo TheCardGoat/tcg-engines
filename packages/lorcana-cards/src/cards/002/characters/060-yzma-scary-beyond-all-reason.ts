@@ -32,6 +32,7 @@ export const yzmaScaryBeyondAllReason: CharacterCard = {
     {
       id: "1c0-2",
       name: "CRUEL IRONY",
+      text: "CRUEL IRONY When you play this character, shuffle another chosen character into their player's deck. That player draws 2 cards.",
       type: "triggered",
       trigger: {
         event: "play",

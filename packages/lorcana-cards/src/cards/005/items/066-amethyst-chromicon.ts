@@ -17,6 +17,8 @@ export const amethystChromicon: ItemCard = {
   abilities: [
     {
       id: "1nk-1",
+      text: "AMETHYST LIGHT {E} — Each player may draw a card.",
+      cost: { exert: true },
       type: "activated",
       effect: {
         type: "draw",

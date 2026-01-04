@@ -23,6 +23,7 @@ export const maleficentsorceress: CharacterCard = {
     {
       id: "1la-1",
       name: "CAST MY SPELL!",
+      text: "CAST MY SPELL! When you play this character, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "play",

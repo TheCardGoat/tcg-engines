@@ -21,7 +21,14 @@ export const theQueensCastleMirrorChamber: LocationCard = {
   abilities: [
     {
       id: "16x-1",
-      type: "action",
+      name: "USING THE MIRROR",
+      text: "At the start of your turn, for each character you have here, you may draw a card.",
+      type: "triggered",
+      trigger: {
+        event: "start-turn",
+        timing: "at",
+        on: "YOU",
+      },
       effect: {
         type: "for-each",
         counter: {

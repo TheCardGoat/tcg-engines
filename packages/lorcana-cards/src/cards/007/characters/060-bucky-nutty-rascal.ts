@@ -23,9 +23,10 @@ export const buckyNuttyRascal: CharacterCard = {
     {
       id: "17v-1",
       name: "POP!",
+      text: "POP! When this character is banished in a challenge, you may draw a card.",
       type: "triggered",
       trigger: {
-        event: "banish",
+        event: "banish-in-challenge",
         timing: "when",
         on: "SELF",
       },
