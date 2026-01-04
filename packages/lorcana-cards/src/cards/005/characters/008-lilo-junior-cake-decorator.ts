@@ -22,6 +22,7 @@ export const liloJuniorCakeDecorator: CharacterCard = {
   abilities: [
     {
       id: "183-1",
+      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

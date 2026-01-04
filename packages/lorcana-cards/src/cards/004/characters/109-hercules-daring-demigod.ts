@@ -22,11 +22,13 @@ export const herculesDaringDemigod: CharacterCard = {
   abilities: [
     {
       id: "1s3-1",
+      text: "Rush",
       type: "keyword",
       keyword: "Rush",
     },
     {
       id: "1s3-2",
+      text: "Reckless",
       type: "keyword",
       keyword: "Reckless",
     },

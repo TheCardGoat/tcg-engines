@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const mauiHeroToAll: CharacterCard = {
+export const mauiheroToAll: CharacterCard = {
   id: "1s6",
   cardType: "character",
   name: "Maui",
@@ -22,11 +22,13 @@ export const mauiHeroToAll: CharacterCard = {
   abilities: [
     {
       id: "1s6-1",
+      text: "Rush",
       type: "keyword",
       keyword: "Rush",
     },
     {
       id: "1s6-2",
+      text: "Reckless",
       type: "keyword",
       keyword: "Reckless",
     },

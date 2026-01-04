@@ -22,6 +22,7 @@ export const crikeeGoodLuckCharm: CharacterCard = {
   abilities: [
     {
       id: "1gx-1",
+      text: "Alert",
       type: "keyword",
       keyword: "Alert",
     },

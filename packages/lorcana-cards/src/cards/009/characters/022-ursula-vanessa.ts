@@ -22,6 +22,7 @@ export const ursulaVanessa: CharacterCard = {
   abilities: [
     {
       id: "lsj-1",
+      text: "Singer +4",
       type: "keyword",
       keyword: "Singer",
       value: 4,

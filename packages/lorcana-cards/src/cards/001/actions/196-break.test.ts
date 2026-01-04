@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { Break } from "./196-break";
+import { breakCard } from "./196-break";
 
-describe("Break - undefined", () => {
+describe("breakCard - undefined", () => {
   // Add ability tests here
   // Examples:
   // it("has [Keyword]", () => {

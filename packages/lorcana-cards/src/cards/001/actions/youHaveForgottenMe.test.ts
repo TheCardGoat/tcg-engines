@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { YouHaveForgottenMeUndefined } from "./youHaveForgottenMe";
+import { youHaveForgottenMeundefined } from "./youHaveForgottenMe";
 
 describe("You Have Forgotten Me - undefined", () => {
   // Add ability tests here

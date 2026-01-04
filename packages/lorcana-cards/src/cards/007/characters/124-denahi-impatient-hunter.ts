@@ -22,11 +22,13 @@ export const denahiImpatientHunter: CharacterCard = {
   abilities: [
     {
       id: "8xy-1",
+      text: "Reckless",
       type: "keyword",
       keyword: "Reckless",
     },
     {
       id: "8xy-2",
+      text: "Resist +2",
       type: "keyword",
       keyword: "Resist",
       value: 2,

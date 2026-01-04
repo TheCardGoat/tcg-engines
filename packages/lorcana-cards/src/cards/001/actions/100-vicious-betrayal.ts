@@ -1,6 +1,6 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const ViciousBetrayalUndefined: ActionCard = {
+export const viciousBetrayalundefined: ActionCard = {
   id: "e6i",
   cardType: "action",
   name: "Vicious Betrayal",

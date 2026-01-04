@@ -22,6 +22,7 @@ export const annaMagicalMission: CharacterCard = {
   abilities: [
     {
       id: "1w2-1",
+      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {
@@ -30,6 +31,7 @@ export const annaMagicalMission: CharacterCard = {
     },
     {
       id: "1w2-2",
+      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

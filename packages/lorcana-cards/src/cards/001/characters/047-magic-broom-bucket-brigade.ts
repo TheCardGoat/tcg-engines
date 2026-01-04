@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const MagicBroomBucketBrigade: CharacterCard = {
+export const magicBroombucketBrigade: CharacterCard = {
   id: "zyc",
   cardType: "character",
   name: "Magic Broom",

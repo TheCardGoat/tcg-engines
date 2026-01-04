@@ -22,6 +22,7 @@ export const bruniFireSalamander: CharacterCard = {
   abilities: [
     {
       id: "29y-1",
+      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const MusketeerTabard: ItemCard = {
+export const musketeerTabard: ItemCard = {
   id: "8a5",
   cardType: "item",
   name: "Musketeer Tabard",

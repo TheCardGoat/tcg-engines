@@ -22,6 +22,7 @@ export const arthurNoviceSparrow: CharacterCard = {
   abilities: [
     {
       id: "bn1-1",
+      text: "Reckless",
       type: "keyword",
       keyword: "Reckless",
     },

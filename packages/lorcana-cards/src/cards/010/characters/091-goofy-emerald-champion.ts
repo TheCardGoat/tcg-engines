@@ -31,13 +31,13 @@ export const goofyEmeraldChampion: CharacterCard = {
           controller: "you",
           excludeSelf: true,
         },
-        challengeContext: {
+        defender: {
           role: "defender",
         },
       },
       effect: {
         type: "banish",
-        target: "challenging-character",
+        target: { ref: "attacker" },
       },
     },
     {
@@ -48,10 +48,11 @@ export const goofyEmeraldChampion: CharacterCard = {
       effect: {
         type: "gain-keyword",
         keyword: "Ward",
-      },
-      affects: {
-        controller: "you",
-        excludeSelf: true,
+        target: {
+          selector: "all",
+          owner: "you",
+          excludeSelf: true,
+        },
       },
     },
   ],

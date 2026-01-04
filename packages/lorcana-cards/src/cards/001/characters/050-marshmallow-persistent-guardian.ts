@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const MarshmallowPersistentGuardian: CharacterCard = {
+export const marshmallowpersistentGuardian: CharacterCard = {
   id: "it5",
   cardType: "character",
   name: "Marshmallow",

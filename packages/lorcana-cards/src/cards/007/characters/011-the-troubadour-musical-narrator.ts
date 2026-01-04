@@ -21,12 +21,14 @@ export const theTroubadourMusicalNarrator: CharacterCard = {
   abilities: [
     {
       id: "1is-1",
+      text: "Resist +1",
       type: "keyword",
       keyword: "Resist",
       value: 1,
     },
     {
       id: "1is-2",
+      text: "Singer +4",
       type: "keyword",
       keyword: "Singer",
       value: 4,

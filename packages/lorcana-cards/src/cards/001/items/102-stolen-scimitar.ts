@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const StolenScimitar: ItemCard = {
+export const stolenScimitar: ItemCard = {
   id: "17q",
   cardType: "item",
   name: "Stolen Scimitar",

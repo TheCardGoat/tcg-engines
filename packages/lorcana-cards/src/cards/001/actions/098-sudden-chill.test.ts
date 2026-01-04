@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { SuddenChill } from "./098-sudden-chill";
+import { suddenChill } from "./098-sudden-chill";
 
 describe("Sudden Chill - undefined", () => {
   // Add ability tests here

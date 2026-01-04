@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { BeastUndefined } from "./201-beast-mirror";
+import { beastundefined } from "./201-beast-mirror";
 
 describe("Beast - undefined", () => {
   // Add ability tests here

@@ -22,6 +22,7 @@ export const kakamoraBoardingParty: CharacterCard = {
   abilities: [
     {
       id: "7k1-1",
+      text: "Rush",
       type: "keyword",
       keyword: "Rush",
     },

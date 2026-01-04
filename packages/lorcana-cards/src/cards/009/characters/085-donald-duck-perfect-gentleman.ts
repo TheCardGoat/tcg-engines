@@ -21,6 +21,7 @@ export const donaldDuckPerfectGentleman: CharacterCard = {
   abilities: [
     {
       id: "wjj-1",
+      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {

@@ -22,6 +22,7 @@ export const jiminyCricketPinocchiosConscience: CharacterCard = {
   abilities: [
     {
       id: "tfc-1",
+      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

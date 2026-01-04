@@ -22,11 +22,13 @@ export const perlaNimbleSeamstress: CharacterCard = {
   abilities: [
     {
       id: "wjh-1",
+      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },
     {
       id: "wjh-2",
+      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

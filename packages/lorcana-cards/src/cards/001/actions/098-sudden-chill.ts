@@ -1,6 +1,6 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const SuddenChill: ActionCard = {
+export const suddenChill: ActionCard = {
   id: "pz4",
   cardType: "action",
   name: "Sudden Chill",

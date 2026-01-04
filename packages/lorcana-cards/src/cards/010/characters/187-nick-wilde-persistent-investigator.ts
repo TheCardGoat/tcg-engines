@@ -22,6 +22,7 @@ export const nickWildePersistentInvestigator: CharacterCard = {
   abilities: [
     {
       id: "17t-1",
+      text: "Shift 3",
       type: "keyword",
       keyword: "Shift",
       cost: {
@@ -31,6 +32,7 @@ export const nickWildePersistentInvestigator: CharacterCard = {
     {
       id: "17t-2",
       name: "CASE CLOSED",
+      text: "During your turn, whenever one of your Detective characters banishes another character in a challenge, draw a card.",
       type: "triggered",
       trigger: {
         event: "banish",

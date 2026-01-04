@@ -1,6 +1,6 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const IfItsNotBaroque: ActionCard = {
+export const ifItsNotBaroque: ActionCard = {
   id: "v94",
   cardType: "action",
   name: "If it’s Not Baroque",

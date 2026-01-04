@@ -22,6 +22,7 @@ export const theQueenCrownOfTheCouncil: CharacterCard = {
   abilities: [
     {
       id: "vdv-1",
+      text: "Ward",
       type: "keyword",
       keyword: "Ward",
     },

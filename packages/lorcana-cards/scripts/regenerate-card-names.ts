@@ -1,9 +1,10 @@
 #!/usr/bin/env bun
 /**
- * Regenerate Card Files with Fully Qualified Export Names
+ * Regenerate Card Files with Fully Qualified Export Names (camelCase)
  *
  * Regenerates all card files to use fully qualified export names
  * (card name + version) to avoid duplicate identifier issues.
+ * Export names use camelCase convention (first word lowercase).
  */
 
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -20,27 +21,84 @@ interface CardInfo {
 }
 
 /**
- * Convert a string to PascalCase
- * Removes special characters like !, ?, etc.
+ * Reserved words in JavaScript/TypeScript that cannot be used as identifiers
  */
-function toPascalCase(str: string): string {
-  return (
-    str
-      .toLowerCase()
-      // Remove special characters first
-      .replace(/[^\w\s-]/g, "")
-      .split(/[\s-]+/)
-      .filter((word) => word.length > 0)
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join("")
-  );
+const RESERVED_WORDS = new Set([
+  "break",
+  "case",
+  "catch",
+  "continue",
+  "debugger",
+  "default",
+  "delete",
+  "do",
+  "else",
+  "finally",
+  "for",
+  "function",
+  "if",
+  "in",
+  "instanceof",
+  "new",
+  "return",
+  "switch",
+  "this",
+  "throw",
+  "try",
+  "typeof",
+  "var",
+  "void",
+  "while",
+  "with",
+  "class",
+  "const",
+  "enum",
+  "export",
+  "extends",
+  "import",
+  "super",
+  "implements",
+  "interface",
+  "let",
+  "package",
+  "private",
+  "protected",
+  "public",
+  "static",
+  "yield",
+]);
+
+/**
+ * Convert a string to camelCase
+ * Removes special characters like !, ?, etc.
+ * First word is lowercase, subsequent words are capitalized.
+ * Handles reserved words by suffixing with "Card".
+ */
+function toCamelCase(str: string): string {
+  let result = str
+    .toLowerCase()
+    // Remove special characters first
+    .replace(/[^\w\s-]/g, "")
+    .split(/[\s-]+/)
+    .filter((word) => word.length > 0)
+    .map((word, index) =>
+      index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1),
+    )
+    .join("");
+
+  // If it's a reserved word, suffix with "Card"
+  if (RESERVED_WORDS.has(result)) {
+    result = `${result}Card`;
+  }
+
+  return result;
 }
 
 /**
  * Generate fully qualified export name
  */
 function generateExportName(name: string, version: string): string {
-  return toPascalCase(name) + toPascalCase(version);
+  return toCamelCase(name) + toCamelCase(version);
 }
 
 /**
@@ -85,7 +143,7 @@ function parseCardFile(filePath: string): CardInfo | null {
   // If no version, use name only for export
   const newExportName = version
     ? generateExportName(name, version)
-    : toPascalCase(name);
+    : toCamelCase(name);
 
   return {
     filePath,

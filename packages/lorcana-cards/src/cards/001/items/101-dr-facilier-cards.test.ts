@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { DrFacilierUndefined } from "./101-dr-facilier-cards";
+import { drFacilierundefined } from "./101-dr-facilier-cards";
 
 describe("Dr. Facilier - undefined", () => {
   // Add ability tests here

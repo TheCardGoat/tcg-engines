@@ -22,6 +22,7 @@ export const rafikiEtherealGuide: CharacterCard = {
   abilities: [
     {
       id: "yg2-1",
+      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {

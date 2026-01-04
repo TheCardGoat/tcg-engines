@@ -22,6 +22,7 @@ export const queenOfHeartsSensingWeakness: CharacterCard = {
   abilities: [
     {
       id: "1je-1",
+      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {

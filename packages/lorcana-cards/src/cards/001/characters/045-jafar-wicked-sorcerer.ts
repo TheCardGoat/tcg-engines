@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const jafarWickedSorcerer: CharacterCard = {
+export const jafarwickedSorcerer: CharacterCard = {
   id: "1dn",
   cardType: "character",
   name: "Jafar",
@@ -22,6 +22,7 @@ export const jafarWickedSorcerer: CharacterCard = {
   abilities: [
     {
       id: "1dn-1",
+      text: "Challenger +3",
       type: "keyword",
       keyword: "Challenger",
       value: 3,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { CoconutBasketUndefined } from "./166-coconut-basket";
+import { coconutBasketundefined } from "./166-coconut-basket";
 
 describe("Coconut Basket - undefined", () => {
   // Add ability tests here

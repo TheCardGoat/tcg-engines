@@ -22,6 +22,7 @@ export const kaaSuspiciousSerpent: CharacterCard = {
   abilities: [
     {
       id: "xkn-1",
+      text: "Ward",
       type: "keyword",
       keyword: "Ward",
     },

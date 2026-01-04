@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const SimbaRightfulHeir: CharacterCard = {
+export const simbarightfulHeir: CharacterCard = {
   id: "ac0",
   cardType: "character",
   name: "Simba",

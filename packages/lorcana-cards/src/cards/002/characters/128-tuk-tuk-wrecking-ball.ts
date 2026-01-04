@@ -22,6 +22,7 @@ export const tukTukWreckingBall: CharacterCard = {
   abilities: [
     {
       id: "1or-1",
+      text: "Reckless",
       type: "keyword",
       keyword: "Reckless",
     },

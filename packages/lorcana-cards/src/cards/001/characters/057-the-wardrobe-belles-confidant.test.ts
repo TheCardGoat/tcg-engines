@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { TheWardrobeBellesConfidant } from "./057-the-wardrobe-belles-confidant";
+import { theWardrobebellesConfidant } from "./057-the-wardrobe-belles-confidant";
 
-describe("The Wardrobe - Belle", () => {
+describe("The Wardrobe - Belle’s Confidant", () => {
   // Add ability tests here
   // Examples:
   // it("has [Keyword]", () => {

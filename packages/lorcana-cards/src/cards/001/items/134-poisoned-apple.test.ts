@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { PoisonedAppleUndefined } from "./134-poisoned-apple";
+import { poisonedAppleundefined } from "./134-poisoned-apple";
 
 describe("Poisoned Apple - undefined", () => {
   // Add ability tests here

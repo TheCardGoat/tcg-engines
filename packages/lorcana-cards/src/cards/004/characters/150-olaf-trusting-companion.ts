@@ -22,6 +22,7 @@ export const olafTrustingCompanion: CharacterCard = {
   abilities: [
     {
       id: "1ki-1",
+      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

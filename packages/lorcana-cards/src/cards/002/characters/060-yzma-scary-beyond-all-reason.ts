@@ -22,6 +22,7 @@ export const yzmaScaryBeyondAllReason: CharacterCard = {
   abilities: [
     {
       id: "1c0-1",
+      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {

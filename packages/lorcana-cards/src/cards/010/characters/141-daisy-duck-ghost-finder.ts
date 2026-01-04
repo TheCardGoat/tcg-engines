@@ -21,6 +21,7 @@ export const daisyDuckGhostFinder: CharacterCard = {
   abilities: [
     {
       id: "1m1-1",
+      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

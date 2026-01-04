@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const PlasmaBlaster: ItemCard = {
+export const plasmaBlaster: ItemCard = {
   id: "vmw",
   cardType: "item",
   name: "Plasma Blaster",

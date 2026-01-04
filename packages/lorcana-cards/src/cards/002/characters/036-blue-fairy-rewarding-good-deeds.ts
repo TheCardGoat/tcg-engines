@@ -22,6 +22,7 @@ export const blueFairyRewardingGoodDeeds: CharacterCard = {
   abilities: [
     {
       id: "tv6-1",
+      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

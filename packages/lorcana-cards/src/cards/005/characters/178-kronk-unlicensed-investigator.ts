@@ -22,6 +22,7 @@ export const kronkUnlicensedInvestigator: CharacterCard = {
   abilities: [
     {
       id: "kit-1",
+      text: "Challenger +1",
       type: "keyword",
       keyword: "Challenger",
       value: 1,

@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const zeusGodOfLightning: CharacterCard = {
+export const zeusgodOfLightning: CharacterCard = {
   id: "1o1",
   cardType: "character",
   name: "Zeus",
@@ -22,11 +22,13 @@ export const zeusGodOfLightning: CharacterCard = {
   abilities: [
     {
       id: "1o1-1",
+      text: "Rush",
       type: "keyword",
       keyword: "Rush",
     },
     {
       id: "1o1-2",
+      text: "Challenger +4",
       type: "keyword",
       keyword: "Challenger",
       value: 4,

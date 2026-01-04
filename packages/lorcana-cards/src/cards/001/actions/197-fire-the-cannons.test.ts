@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { FireTheCannonsUndefined } from "./197-fire-the-cannons";
+import { fireTheCannonsundefined } from "./197-fire-the-cannons";
 
 describe("Fire the Cannons! - undefined", () => {
   // Add ability tests here

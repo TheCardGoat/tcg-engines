@@ -22,6 +22,7 @@ export const arielEtherealVoice: CharacterCard = {
   abilities: [
     {
       id: "1l1-1",
+      text: "Boost +1",
       type: "keyword",
       keyword: "Boost",
       value: 1,

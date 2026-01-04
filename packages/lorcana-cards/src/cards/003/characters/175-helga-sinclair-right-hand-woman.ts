@@ -22,6 +22,7 @@ export const helgaSinclairRighthandWoman: CharacterCard = {
   abilities: [
     {
       id: "1fd-1",
+      text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",
       value: 2,

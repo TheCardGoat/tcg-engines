@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const teKTheBurningOne: CharacterCard = {
+export const teKtheBurningOne: CharacterCard = {
   id: "14n",
   cardType: "character",
   name: "Te Kā",
@@ -22,6 +22,7 @@ export const teKTheBurningOne: CharacterCard = {
   abilities: [
     {
       id: "14n-1",
+      text: "Reckless",
       type: "keyword",
       keyword: "Reckless",
     },

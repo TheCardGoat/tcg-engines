@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const ScepterOfArendelle: ItemCard = {
+export const scepterOfArendelle: ItemCard = {
   id: "1j9",
   cardType: "item",
   name: "Scepter of Arendelle",

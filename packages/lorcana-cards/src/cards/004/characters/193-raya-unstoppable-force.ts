@@ -22,12 +22,14 @@ export const rayaUnstoppableForce: CharacterCard = {
   abilities: [
     {
       id: "jk9-1",
+      text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",
       value: 2,
     },
     {
       id: "jk9-2",
+      text: "Resist +2",
       type: "keyword",
       keyword: "Resist",
       value: 2,

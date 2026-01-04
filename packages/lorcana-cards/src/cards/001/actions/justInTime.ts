@@ -1,6 +1,6 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const JustInTimeUndefined: ActionCard = {
+export const justInTimeundefined: ActionCard = {
   id: "gir",
   cardType: "action",
   name: "Just in Time",

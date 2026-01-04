@@ -22,6 +22,7 @@ export const louieChillNephew: CharacterCard = {
   abilities: [
     {
       id: "1ac-1",
+      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

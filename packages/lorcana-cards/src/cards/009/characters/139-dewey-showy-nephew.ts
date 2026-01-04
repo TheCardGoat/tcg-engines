@@ -22,6 +22,7 @@ export const deweyShowyNephew: CharacterCard = {
   abilities: [
     {
       id: "32f-1",
+      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

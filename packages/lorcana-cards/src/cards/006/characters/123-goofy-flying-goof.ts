@@ -21,11 +21,13 @@ export const goofyFlyingGoof: CharacterCard = {
   abilities: [
     {
       id: "1i6-1",
+      text: "Rush",
       type: "keyword",
       keyword: "Rush",
     },
     {
       id: "1i6-2",
+      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

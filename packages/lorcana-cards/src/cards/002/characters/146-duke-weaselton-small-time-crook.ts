@@ -22,6 +22,7 @@ export const dukeWeaseltonSmalltimeCrook: CharacterCard = {
   abilities: [
     {
       id: "1e8-1",
+      text: "Ward",
       type: "keyword",
       keyword: "Ward",
     },

@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const DrFacilierUndefined: ItemCard = {
+export const drFacilierundefined: ItemCard = {
   id: "s8n",
   cardType: "item",
   name: "Dr. Facilier",

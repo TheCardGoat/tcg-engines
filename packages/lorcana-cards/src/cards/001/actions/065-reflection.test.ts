@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { Reflection } from "./065-reflection";
+import { reflection } from "./065-reflection";
 
-describe("Reflection", () => {
+describe("reflection", () => {
   // Add ability tests here
   // Examples:
   // it("has [Keyword]", () => {

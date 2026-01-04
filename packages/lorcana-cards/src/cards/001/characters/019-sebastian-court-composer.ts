@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const sebastianCourtComposer: CharacterCard = {
+export const sebastiancourtComposer: CharacterCard = {
   id: "8rz",
   cardType: "character",
   name: "Sebastian",
@@ -22,6 +22,7 @@ export const sebastianCourtComposer: CharacterCard = {
   abilities: [
     {
       id: "8rz-1",
+      text: "Singer +4",
       type: "keyword",
       keyword: "Singer",
       value: 4,

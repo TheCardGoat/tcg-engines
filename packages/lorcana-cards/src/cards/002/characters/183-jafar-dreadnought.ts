@@ -22,6 +22,7 @@ export const jafarDreadnought: CharacterCard = {
   abilities: [
     {
       id: "22g-1",
+      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {

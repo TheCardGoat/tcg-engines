@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const MagicMirrorUndefined: ItemCard = {
+export const magicMirrorundefined: ItemCard = {
   id: "bql",
   cardType: "item",
   name: "Magic Mirror",

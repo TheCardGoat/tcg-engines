@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const tritonTheSeaKing: CharacterCard = {
+export const tritontheSeaKing: CharacterCard = {
   id: "1cv",
   cardType: "character",
   name: "Triton",

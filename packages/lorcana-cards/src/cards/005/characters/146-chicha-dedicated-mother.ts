@@ -22,6 +22,7 @@ export const chichaDedicatedMother: CharacterCard = {
   abilities: [
     {
       id: "q5f-1",
+      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

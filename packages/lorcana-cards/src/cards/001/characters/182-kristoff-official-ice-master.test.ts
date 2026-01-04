@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { KristoffOfficialIceMaster } from "./182-kristoff-official-ice-master";
+import { kristoffofficialIceMaster } from "./182-kristoff-official-ice-master";
 
 describe("Kristoff - Official Ice Master", () => {
   // Add ability tests here

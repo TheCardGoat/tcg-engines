@@ -22,6 +22,7 @@ export const merlinCompletingHisResearch: CharacterCard = {
   abilities: [
     {
       id: "mr7-1",
+      text: "Boost +2",
       type: "keyword",
       keyword: "Boost",
       value: 2,

@@ -22,6 +22,7 @@ export const trampDapperRascal: CharacterCard = {
   abilities: [
     {
       id: "1x4-1",
+      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {

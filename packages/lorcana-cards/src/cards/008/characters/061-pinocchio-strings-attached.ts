@@ -22,6 +22,7 @@ export const pinocchioStringsAttached: CharacterCard = {
   abilities: [
     {
       id: "1m2-1",
+      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

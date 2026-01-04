@@ -22,6 +22,7 @@ export const ursulaMadSeaWitch: CharacterCard = {
   abilities: [
     {
       id: "ui8-1",
+      text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",
       value: 2,

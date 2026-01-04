@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { GoonsMaleficentsUnderlings } from "./179-goons-maleficents-underlings";
+import { goonsmaleficentsUnderlings } from "./179-goons-maleficents-underlings";
 
-describe("Goons - Maleficent", () => {
+describe("Goons - Maleficent’s Underlings", () => {
   // Add ability tests here
   // Examples:
   // it("has [Keyword]", () => {

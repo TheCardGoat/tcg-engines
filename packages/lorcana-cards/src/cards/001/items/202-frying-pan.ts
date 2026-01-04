@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const FryingPanUndefined: ItemCard = {
+export const fryingPanundefined: ItemCard = {
   id: "r9f",
   cardType: "item",
   name: "Frying Pan",
