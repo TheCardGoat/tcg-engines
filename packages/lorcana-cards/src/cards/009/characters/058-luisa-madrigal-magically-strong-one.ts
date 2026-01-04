@@ -22,7 +22,6 @@ export const luisaMadrigalMagicallyStrongOne: CharacterCard = {
   abilities: [
     {
       id: "1rs-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
     },

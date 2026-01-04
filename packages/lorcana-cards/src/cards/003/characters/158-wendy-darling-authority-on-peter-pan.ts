@@ -22,13 +22,11 @@ export const wendyDarlingAuthorityOnPeterPan: CharacterCard = {
   abilities: [
     {
       id: "st9-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
     },
     {
       id: "st9-2",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

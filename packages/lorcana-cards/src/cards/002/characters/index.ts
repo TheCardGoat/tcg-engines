@@ -10,6 +10,7 @@ export { drFacilierSavvyOpportunist } from "./038-dr-facilier-savvy-opportunist"
 export { fairyGodmotherHereToHelp } from "./040-fairy-godmother-here-to-help";
 export { jiminyCricketPinocchiosConscience } from "./044-jiminy-cricket-pinocchios-conscience";
 export { pinocchioStarAttraction } from "./056-pinocchio-star-attraction";
+export { yzmaScaryBeyondAllReason } from "./060-yzma-scary-beyond-all-reason";
 export { yzmaWithoutBeautySleep } from "./061-yzma-without-beauty-sleep";
 export { arthurTrainedSwordsman } from "./069-arthur-trained-swordsman";
 export { cheshireCatAlwaysGrinning } from "./074-cheshire-cat-always-grinning";
@@ -41,4 +42,5 @@ export { eliLaBouffBigDaddy } from "./179-eli-la-bouff-big-daddy";
 export { goofyKnightForADay } from "./180-goofy-knight-for-a-day";
 export { herculesDivineHero } from "./181-hercules-divine-hero";
 export { herculesHeroInTraining } from "./182-hercules-hero-in-training";
+export { jafarDreadnought } from "./183-jafar-dreadnought";
 export { pachaVillageLeader } from "./190-pacha-village-leader";

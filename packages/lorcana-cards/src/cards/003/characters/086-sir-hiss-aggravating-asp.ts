@@ -22,7 +22,6 @@ export const sirHissAggravatingAsp: CharacterCard = {
   abilities: [
     {
       id: "1vd-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

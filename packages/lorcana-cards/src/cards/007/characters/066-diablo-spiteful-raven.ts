@@ -22,13 +22,11 @@ export const diabloSpitefulRaven: CharacterCard = {
   abilities: [
     {
       id: "1v4-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },
     {
       id: "1v4-2",
-      text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",
       value: 2,

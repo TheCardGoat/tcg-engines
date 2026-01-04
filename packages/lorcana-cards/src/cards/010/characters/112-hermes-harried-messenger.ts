@@ -22,7 +22,6 @@ export const hermesHarriedMessenger: CharacterCard = {
   abilities: [
     {
       id: "17j-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
     },

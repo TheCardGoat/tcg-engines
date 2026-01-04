@@ -22,7 +22,6 @@ export const lenaSabrewingRebelliousTeenager: CharacterCard = {
   abilities: [
     {
       id: "1j4-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
     },

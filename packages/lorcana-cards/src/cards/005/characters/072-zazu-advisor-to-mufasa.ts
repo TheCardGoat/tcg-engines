@@ -22,7 +22,6 @@ export const zazuAdvisorToMufasa: CharacterCard = {
   abilities: [
     {
       id: "7uk-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

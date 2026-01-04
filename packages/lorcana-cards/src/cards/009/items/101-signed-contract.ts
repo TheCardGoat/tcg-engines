@@ -17,7 +17,6 @@ export const signedContract: ItemCard = {
   abilities: [
     {
       id: "1y6-1",
-      text: "FINE PRINT Whenever an opponent plays a song, you may draw a card.",
       name: "FINE PRINT",
       type: "triggered",
       trigger: {
@@ -25,7 +24,7 @@ export const signedContract: ItemCard = {
         timing: "whenever",
         on: {
           controller: "opponent",
-          cardType: "song",
+          cardType: "action",
         },
       },
       effect: {

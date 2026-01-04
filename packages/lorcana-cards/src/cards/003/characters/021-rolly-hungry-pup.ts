@@ -22,7 +22,6 @@ export const rollyHungryPup: CharacterCard = {
   abilities: [
     {
       id: "evp-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

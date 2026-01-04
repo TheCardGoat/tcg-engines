@@ -9,7 +9,7 @@ export const sisuInHerElement: CharacterCard = {
   inkType: ["amethyst"],
   franchise: "Raya and the Last Dragon",
   set: "006",
-  text: "Challenger +2 (While challenging, this character gets +2.)",
+  text: "Challenger +2 (While challenging, this character gets +2 {S}).",
   cost: 5,
   strength: 3,
   willpower: 6,
@@ -22,10 +22,10 @@ export const sisuInHerElement: CharacterCard = {
   abilities: [
     {
       id: "39b-1",
-      text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",
       value: 2,
+      condition: ".",
     },
   ],
   classifications: ["Storyborn", "Hero", "Deity", "Dragon"],

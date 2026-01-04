@@ -22,7 +22,6 @@ export const stitchLittleRocket: CharacterCard = {
   abilities: [
     {
       id: "cgj-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
     },

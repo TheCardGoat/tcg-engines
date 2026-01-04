@@ -22,13 +22,11 @@ export const bruniFireSalamander: CharacterCard = {
   abilities: [
     {
       id: "29y-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },
     {
       id: "29y-2",
-      text: "PARTING GIFT When this character is banished, you may draw a card.",
       name: "PARTING GIFT",
       type: "triggered",
       trigger: {

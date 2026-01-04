@@ -22,7 +22,6 @@ export const drFacilierSavvyOpportunist: CharacterCard = {
   abilities: [
     {
       id: "z5l-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

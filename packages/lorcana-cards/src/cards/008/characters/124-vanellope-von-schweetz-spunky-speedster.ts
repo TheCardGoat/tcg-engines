@@ -22,7 +22,6 @@ export const vanellopeVonSchweetzSpunkySpeedster: CharacterCard = {
   abilities: [
     {
       id: "1we-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

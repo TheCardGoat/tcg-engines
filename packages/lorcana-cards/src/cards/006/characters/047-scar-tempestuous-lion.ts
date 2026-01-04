@@ -22,13 +22,11 @@ export const scarTempestuousLion: CharacterCard = {
   abilities: [
     {
       id: "ug5-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
     },
     {
       id: "ug5-2",
-      text: "Challenger +3",
       type: "keyword",
       keyword: "Challenger",
       value: 3,

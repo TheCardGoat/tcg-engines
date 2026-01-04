@@ -22,7 +22,6 @@ export const herculesDivineHero: CharacterCard = {
   abilities: [
     {
       id: "5e9-1",
-      text: "Shift 4",
       type: "keyword",
       keyword: "Shift",
       cost: {
@@ -31,7 +30,6 @@ export const herculesDivineHero: CharacterCard = {
     },
     {
       id: "5e9-2",
-      text: "Resist +2",
       type: "keyword",
       keyword: "Resist",
       value: 2,

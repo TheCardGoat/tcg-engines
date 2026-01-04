@@ -17,7 +17,6 @@ export const showMeMore: ActionCard = {
   abilities: [
     {
       id: "11i-1",
-      text: "Each player draws 3 cards.",
       type: "action",
       effect: {
         type: "draw",

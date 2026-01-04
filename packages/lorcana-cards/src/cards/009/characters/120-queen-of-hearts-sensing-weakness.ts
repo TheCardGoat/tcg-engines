@@ -22,7 +22,6 @@ export const queenOfHeartsSensingWeakness: CharacterCard = {
   abilities: [
     {
       id: "1je-1",
-      text: "Shift 2 {I}",
       type: "keyword",
       keyword: "Shift",
       cost: {
@@ -31,7 +30,6 @@ export const queenOfHeartsSensingWeakness: CharacterCard = {
     },
     {
       id: "1je-2",
-      text: "LET THE GAME BEGIN Whenever one of your characters challenges another character, you may draw a card.",
       name: "LET THE GAME BEGIN",
       type: "triggered",
       trigger: {

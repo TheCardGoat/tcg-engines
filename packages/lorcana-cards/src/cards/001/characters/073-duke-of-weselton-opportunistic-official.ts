@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const DukeOfWeseltonOpportunisticOfficial: CharacterCard = {
+export const dukeOfWeseltonOpportunisticOfficial: CharacterCard = {
   id: "128",
   cardType: "character",
   name: "Duke of Weselton",

@@ -22,7 +22,6 @@ export const moanaUndeterredVoyager: CharacterCard = {
   abilities: [
     {
       id: "d5c-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

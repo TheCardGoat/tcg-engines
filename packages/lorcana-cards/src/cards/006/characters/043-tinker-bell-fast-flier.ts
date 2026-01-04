@@ -22,7 +22,6 @@ export const tinkerBellFastFlier: CharacterCard = {
   abilities: [
     {
       id: "1k9-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

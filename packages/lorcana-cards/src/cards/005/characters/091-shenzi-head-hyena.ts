@@ -45,13 +45,11 @@ export const shenziHeadHyena: CharacterCard = {
         event: "challenge",
         timing: "whenever",
         on: {
-          filters: [
-            { type: "owner", owner: "you" },
-            { type: "has-classification", classification: "Hyena" },
-          ],
+          controller: "you",
+          classification: "Hyena",
         },
-        defender: {
-          filters: [{ type: "damaged" }],
+        challengeContext: {
+          defenderState: "damaged",
         },
       },
       effect: {

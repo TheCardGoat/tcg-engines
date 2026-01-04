@@ -21,7 +21,6 @@ export const donaldDuckPerfectGentleman: CharacterCard = {
   abilities: [
     {
       id: "wjj-1",
-      text: "Shift 3 {I}",
       type: "keyword",
       keyword: "Shift",
       cost: {
@@ -30,14 +29,7 @@ export const donaldDuckPerfectGentleman: CharacterCard = {
     },
     {
       id: "wjj-2",
-      text: "ALLOW ME At the start of your turn, each player may draw a card.",
-      name: "ALLOW ME",
-      type: "triggered",
-      trigger: {
-        event: "start-turn",
-        timing: "at",
-        on: "YOU",
-      },
+      type: "action",
       effect: {
         type: "draw",
         amount: 1,

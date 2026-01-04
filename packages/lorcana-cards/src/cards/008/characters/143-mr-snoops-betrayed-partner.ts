@@ -22,7 +22,6 @@ export const mrSnoopsBetrayedPartner: CharacterCard = {
   abilities: [
     {
       id: "1iu-1",
-      text: "DOUBLE-CROSSING CROOK! During your turn, when this character is banished, you may draw a card.",
       name: "DOUBLE-CROSSING CROOK!",
       type: "triggered",
       trigger: {

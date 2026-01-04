@@ -22,7 +22,6 @@ export const princePhillipRoyalExplorer: CharacterCard = {
   abilities: [
     {
       id: "11j-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
     },

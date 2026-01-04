@@ -22,7 +22,6 @@ export const elsaExploringTheUnknown: CharacterCard = {
   abilities: [
     {
       id: "744-1",
-      text: "CLOSER LOOK When you play this character, you may draw a card.",
       name: "CLOSER LOOK",
       type: "triggered",
       trigger: {

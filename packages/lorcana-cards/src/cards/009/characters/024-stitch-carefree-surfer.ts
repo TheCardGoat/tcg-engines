@@ -22,7 +22,6 @@ export const stitchCarefreeSurfer: CharacterCard = {
   abilities: [
     {
       id: "fir-1",
-      text: "OHANA When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
       name: "OHANA",
       type: "triggered",
       trigger: {
@@ -31,13 +30,16 @@ export const stitchCarefreeSurfer: CharacterCard = {
         on: "SELF",
       },
       effect: {
-        type: "optional",
-        effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have 2 or more other characters in play",
+        },
+        then: {
           type: "draw",
           amount: 2,
           target: "CONTROLLER",
         },
-        chooser: "CONTROLLER",
       },
     },
   ],

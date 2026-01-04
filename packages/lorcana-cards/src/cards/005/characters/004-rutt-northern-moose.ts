@@ -22,7 +22,6 @@ export const ruttNorthernMoose: CharacterCard = {
   abilities: [
     {
       id: "sqf-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

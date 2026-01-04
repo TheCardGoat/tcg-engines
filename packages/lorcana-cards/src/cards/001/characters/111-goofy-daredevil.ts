@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const GoofyDaredevil: CharacterCard = {
+export const goofyDaredevil: CharacterCard = {
   id: "cgx",
   cardType: "character",
   name: "Goofy",
@@ -21,7 +21,6 @@ export const GoofyDaredevil: CharacterCard = {
   abilities: [
     {
       id: "cgx-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

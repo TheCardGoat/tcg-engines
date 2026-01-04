@@ -22,7 +22,6 @@ export const iagoStompinMad: CharacterCard = {
   abilities: [
     {
       id: "87v-1",
-      text: "Challenger +5",
       type: "keyword",
       keyword: "Challenger",
       value: 5,

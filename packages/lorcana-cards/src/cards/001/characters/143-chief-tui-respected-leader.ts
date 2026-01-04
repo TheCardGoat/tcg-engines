@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const ChiefTuiRespectedLeader: CharacterCard = {
+export const chiefTuiRespectedLeader: CharacterCard = {
   id: "qai",
   cardType: "character",
   name: "Chief Tui",
@@ -22,7 +22,6 @@ export const ChiefTuiRespectedLeader: CharacterCard = {
   abilities: [
     {
       id: "qai-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

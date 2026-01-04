@@ -17,7 +17,6 @@ export const findersKeepers: ActionCard = {
   abilities: [
     {
       id: "q4f-1",
-      text: "Draw 3 cards.",
       type: "action",
       effect: {
         type: "draw",

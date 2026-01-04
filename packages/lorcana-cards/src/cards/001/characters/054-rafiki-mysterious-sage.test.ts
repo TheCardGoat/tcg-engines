@@ -1,14 +1,14 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine } from "@tcg/lorcana/testing";
-import { RafikiMysteriousSage } from "./054-rafiki-mysterious-sage";
+import { rafikiMysteriousSage } from "./054-rafiki-mysterious-sage";
 
 describe("Rafiki - Mysterious Sage", () => {
   it("should have Rush ability", () => {
     const testEngine = new LorcanaTestEngine({
-      play: [RafikiMysteriousSage],
+      play: [rafikiMysteriousSage],
     });
 
-    const cardUnderTest = testEngine.getCardModel(RafikiMysteriousSage);
+    const cardUnderTest = testEngine.getCardModel(rafikiMysteriousSage);
     expect(cardUnderTest.hasRush).toBe(true);
   });
 });

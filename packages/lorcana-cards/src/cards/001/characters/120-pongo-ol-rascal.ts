@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const PongoOlRascal: CharacterCard = {
+export const pongoOlRascal: CharacterCard = {
   id: "37j",
   cardType: "character",
   name: "Pongo",
@@ -22,7 +22,6 @@ export const PongoOlRascal: CharacterCard = {
   abilities: [
     {
       id: "37j-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

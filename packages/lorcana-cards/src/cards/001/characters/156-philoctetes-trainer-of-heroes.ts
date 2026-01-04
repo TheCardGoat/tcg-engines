@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const PhiloctetesTrainerOfHeroes: CharacterCard = {
+export const philoctetesTrainerOfHeroes: CharacterCard = {
   id: "1g8",
   cardType: "character",
   name: "Philoctetes",
@@ -22,7 +22,6 @@ export const PhiloctetesTrainerOfHeroes: CharacterCard = {
   abilities: [
     {
       id: "1g8-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

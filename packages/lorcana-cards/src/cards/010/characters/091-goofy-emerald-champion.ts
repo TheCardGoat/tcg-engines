@@ -28,20 +28,16 @@ export const goofyEmeraldChampion: CharacterCard = {
         event: "banish-in-challenge",
         timing: "whenever",
         on: {
-          filters: [
-            { type: "owner", owner: "you" },
-            { type: "challenge-role", role: "defender" },
-            { type: "source", ref: "other" },
-          ],
+          controller: "you",
+          excludeSelf: true,
+        },
+        challengeContext: {
+          role: "defender",
         },
       },
       effect: {
         type: "banish",
-        target: {
-          selector: "all",
-          count: "all",
-          filter: [{ type: "challenge-role", role: "attacker" }],
-        },
+        target: "challenging-character",
       },
     },
     {
@@ -52,14 +48,10 @@ export const goofyEmeraldChampion: CharacterCard = {
       effect: {
         type: "gain-keyword",
         keyword: "Ward",
-        target: {
-          selector: "all",
-          count: "all",
-          filter: [
-            { type: "owner", owner: "you" },
-            { type: "source", ref: "other" },
-          ],
-        },
+      },
+      affects: {
+        controller: "you",
+        excludeSelf: true,
       },
     },
   ],

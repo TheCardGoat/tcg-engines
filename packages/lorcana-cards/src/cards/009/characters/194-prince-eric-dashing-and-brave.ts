@@ -9,7 +9,7 @@ export const princeEricDashingAndBrave: CharacterCard = {
   inkType: ["steel"],
   franchise: "Little Mermaid",
   set: "009",
-  text: "Challenger +2 (While challenging, this character gets +2.)",
+  text: "Challenger +2 (While challenging, this character gets +2 {S}).",
   cost: 2,
   strength: 1,
   willpower: 3,
@@ -22,10 +22,10 @@ export const princeEricDashingAndBrave: CharacterCard = {
   abilities: [
     {
       id: "1cu-1",
-      text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",
       value: 2,
+      condition: ".",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

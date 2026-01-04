@@ -57,7 +57,6 @@ export const ingeniousDevice: ItemCard = {
         amount: 3,
         target: {
           selector: "chosen",
-          count: { exactly: 1 },
           cardTypes: ["character", "location"],
         },
       },

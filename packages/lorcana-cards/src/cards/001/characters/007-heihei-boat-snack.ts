@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const HeiheiBoatSnack: CharacterCard = {
+export const heiheiBoatSnack: CharacterCard = {
   id: "uio",
   cardType: "character",
   name: "HeiHei",
@@ -22,7 +22,6 @@ export const HeiheiBoatSnack: CharacterCard = {
   abilities: [
     {
       id: "uio-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
     },

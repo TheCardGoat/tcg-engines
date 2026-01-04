@@ -22,13 +22,11 @@ export const iagoGiantSpectralParrot: CharacterCard = {
   abilities: [
     {
       id: "145-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },
     {
       id: "145-2",
-      text: "Vanish",
       type: "keyword",
       keyword: "Vanish",
     },

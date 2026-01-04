@@ -22,7 +22,6 @@ export const donKarnagePrinceOfPirates: CharacterCard = {
   abilities: [
     {
       id: "a8q-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },

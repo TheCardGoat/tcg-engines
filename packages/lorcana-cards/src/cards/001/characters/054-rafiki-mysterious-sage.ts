@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const RafikiMysteriousSage: CharacterCard = {
+export const rafikiMysteriousSage: CharacterCard = {
   id: "zqh",
   cardType: "character",
   name: "Rafiki",
@@ -22,7 +22,6 @@ export const RafikiMysteriousSage: CharacterCard = {
   abilities: [
     {
       id: "zqh-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
     },

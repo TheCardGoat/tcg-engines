@@ -22,13 +22,11 @@ export const theQueenCrownOfTheCouncil: CharacterCard = {
   abilities: [
     {
       id: "vdv-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
     },
     {
       id: "vdv-2",
-      text: "GATHERER OF THE WICKED When you play this character, look at the top 3 cards of your deck. You may reveal any number of character cards named The Queen and put them into your hand. Put the rest on the bottom of your deck in any order.",
       name: "GATHERER OF THE WICKED",
       type: "triggered",
       trigger: {
@@ -39,14 +37,8 @@ export const theQueenCrownOfTheCouncil: CharacterCard = {
       effect: {
         type: "optional",
         effect: {
-          type: "look-at-cards",
-          amount: 3,
-          from: "top-of-deck",
-          target: "CONTROLLER",
-          then: {
-            action: "put-in-hand",
-            count: 1,
-          },
+          type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
         },
         chooser: "CONTROLLER",
       },

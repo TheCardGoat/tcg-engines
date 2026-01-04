@@ -22,7 +22,6 @@ export const queenOfHeartsImpulsiveRuler: CharacterCard = {
   abilities: [
     {
       id: "106-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
     },

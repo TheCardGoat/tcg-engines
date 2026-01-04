@@ -22,7 +22,6 @@ export const archimedesElectrifiedOwl: CharacterCard = {
   abilities: [
     {
       id: "oah-1",
-      text: "Shift 3",
       type: "keyword",
       keyword: "Shift",
       cost: {
@@ -31,13 +30,11 @@ export const archimedesElectrifiedOwl: CharacterCard = {
     },
     {
       id: "oah-2",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
     },
     {
       id: "oah-3",
-      text: "Challenger +3",
       type: "keyword",
       keyword: "Challenger",
       value: 3,
