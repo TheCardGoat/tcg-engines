@@ -119,7 +119,7 @@ function parseFromText(
     };
   }
 
-  // Pattern: "can challenge ready characters" (grant ability)
+  // Pattern: "can't challenge ready characters" (grant ability)
   if (/[Cc]an challenge ready characters/.test(text)) {
     logger.info("Parsed 'can challenge ready characters' grant ability");
     const grantEffect: GrantAbilityEffect = {
@@ -128,6 +128,76 @@ function parseFromText(
       target: "SELF",
     };
     return grantEffect;
+  }
+
+  // Pattern: "can't {E} to sing songs" or "cannot exert to sing"
+  if (
+    /[Cc]an'?t\s*\{E\}\s+to\s+sing\s+songs|[Cc]annot\s+(?:exert|{E})\s+to\s+sing/i.test(
+      text,
+    )
+  ) {
+    logger.info("Parsed 'can't sing' restriction");
+    return {
+      type: "restriction",
+      restriction: "cant-sing",
+      target: "SELF",
+    };
+  }
+
+  // Pattern: "can't sing" (general singing restriction)
+  // Must not be followed by "songs" as that's handled by a different pattern
+  if (/(?:[Cc]an'?t\s+sing|cannot\s+sing)(?!\s+songs)/i.test(text)) {
+    logger.info("Parsed 'can't sing' restriction");
+    return {
+      type: "restriction",
+      restriction: "cant-sing",
+      target: "SELF",
+    };
+  }
+
+  // Pattern: "opponents can't be healed" or "opposing characters can't be healed"
+  if (
+    /[Oo]pponents? can'?t be healed|[Oo]pposing characters can'?t be healed/i.test(
+      text,
+    )
+  ) {
+    logger.info("Parsed 'can't be healed' restriction");
+    return {
+      type: "restriction",
+      restriction: "cant-be-healed",
+      target: "OPPONENT",
+    };
+  }
+
+  // Pattern: "can't be healed"
+  if (/[Cc]an'?t be healed/i.test(text)) {
+    logger.info("Parsed 'can't be healed' restriction");
+    const effect: RestrictionEffect = {
+      type: "restriction",
+      restriction: "cant-be-healed",
+    };
+
+    // Determine target
+    if (/opposing characters/i.test(text)) {
+      effect.target = "OPPOSING_CHARACTER";
+    } else if (/chosen character/i.test(text)) {
+      effect.target = "CHOSEN_CHARACTER";
+    } else {
+      effect.target = "SELF";
+    }
+
+    return effect;
+  }
+
+  // Pattern: "can't ready during their next turn"
+  if (/[Cc]an'?t ready during their next turn/i.test(text)) {
+    logger.info("Parsed 'can't ready during next turn' restriction");
+    return {
+      type: "restriction",
+      restriction: "cant-ready",
+      target: "SELF",
+      duration: "their-next-turn",
+    };
   }
 
   logger.debug("Restriction effect pattern did not match");
@@ -152,9 +222,9 @@ function parseFromCst(
  */
 export const restrictionEffectParser: EffectParser = {
   pattern:
-    /(?:[Cc]an'?t be challenged|[Cc]an'?t challenge|[Cc]an'?t quest|[Cc]an'?t ready|cannot challenge|cannot quest|cannot ready|[Ee]nters? play exerted|[Cc]an challenge ready characters)/,
+    /(?:[Cc]an'?t be challenged|[Cc]an'?t challenge|[Cc]an'?t quest|[Cc]an'?t ready|[Cc]an'?t\s*\{E\}\s+to\s+sing|[Cc]an'?t\s+sing|[Cc]an'?t be healed|cannot challenge|cannot quest|cannot ready|cannot\s+sing|[Ee]nters? play exerted|[Cc]an challenge ready characters)/,
   description:
-    "Parses restriction effects and ability-granting effects (e.g., 'can't be challenged', 'cannot challenge', 'can challenge ready characters')",
+    "Parses restriction effects and ability-granting effects (e.g., 'can't be challenged', 'cannot challenge', 'can challenge ready characters', 'can't sing', 'can't be healed')",
 
   parse: (input: CstNode | string) => {
     if (typeof input === "string") {

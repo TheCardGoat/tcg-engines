@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const maleficentSorceress: CharacterCard = {
+export const maleficentsorceress: CharacterCard = {
   id: "1la",
   cardType: "character",
   name: "Maleficent",
@@ -22,8 +22,8 @@ export const maleficentSorceress: CharacterCard = {
   abilities: [
     {
       id: "1la-1",
-      text: "CAST MY SPELL! When you play this character, you may draw a card.",
       name: "CAST MY SPELL!",
+      text: "CAST MY SPELL! When you play this character, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "play",

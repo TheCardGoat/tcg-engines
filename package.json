@@ -29,7 +29,7 @@
     "@types/seedrandom": "^3.0.8",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
-    "turbo": "2.6.3",
+    "turbo": "^2.7.2",
     "typescript": "5.9.3"
   },
   "dependencies": {

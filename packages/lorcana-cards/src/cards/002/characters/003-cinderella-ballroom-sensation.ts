@@ -22,7 +22,7 @@ export const cinderellaBallroomSensation: CharacterCard = {
   abilities: [
     {
       id: "4j3-1",
-      text: "Singer 3",
+      text: "Singer +3",
       type: "keyword",
       keyword: "Singer",
       value: 3,

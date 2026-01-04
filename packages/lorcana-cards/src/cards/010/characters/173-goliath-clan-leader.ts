@@ -28,25 +28,60 @@ export const goliathClanLeader: CharacterCard = {
       trigger: {
         event: "end-turn",
         timing: "at",
-        on: "ANY_PLAYER",
+        on: "YOU",
       },
       effect: {
         type: "conditional",
         condition: {
           type: "resource-count",
-          what: "cards-in-hand",
-          controller: "opponent",
           comparison: "greater",
           value: 2,
+          controller: "you",
+          what: "cards-in-hand",
         },
         then: {
           type: "discard",
+          target: "CONTROLLER",
           amount: {
-            type: "cards-in-discard", // Placeholder for actual calculation logic
+            type: "cards-in-hand",
             controller: "you",
-          } as any,
+            modifier: -2,
+          },
+        },
+        else: {
+          type: "draw-until-hand-size",
+          size: 2,
+          target: "CONTROLLER",
+        },
+      },
+    },
+    {
+      id: "1uq-3",
+      name: "DUSK TO DAWN",
+      text: "DUSK TO DAWN At the end of each player's turn, if they have more than 2 cards in their hand, they choose and discard cards until they have 2. If they have fewer than 2 cards in their hand, they draw until they have 2.",
+      type: "triggered",
+      trigger: {
+        event: "end-turn",
+        timing: "at",
+        on: "OPPONENT",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "resource-count",
+          comparison: "greater",
+          value: 2,
+          controller: "opponent",
+          what: "cards-in-hand",
+        },
+        then: {
+          type: "discard",
           target: "OPPONENT",
-          chosen: true,
+          amount: {
+            type: "cards-in-hand",
+            controller: "opponent",
+            modifier: -2,
+          },
         },
         else: {
           type: "draw-until-hand-size",
@@ -54,24 +89,22 @@ export const goliathClanLeader: CharacterCard = {
           target: "OPPONENT",
         },
       },
-      // Re-doing the fix to be minimal valid typescript first.
     },
     {
       id: "1uq-2",
-      name: "STONE BY DAY",
       text: "STONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
-      type: "static",
-      condition: {
-        type: "resource-count",
-        what: "cards-in-hand",
-        controller: "you",
-        comparison: "greater-or-equal",
-        value: 3,
-      },
+      type: "action",
       effect: {
-        type: "restriction",
-        restriction: "cant-ready",
-        target: "SELF",
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have 3 or more cards in your hand",
+        },
+        then: {
+          type: "restriction",
+          restriction: "cant-ready",
+          target: "SELF",
+        },
       },
     },
   ],

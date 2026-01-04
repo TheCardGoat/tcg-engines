@@ -1,15 +1,15 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const drFacilierRemarkableGentleman: CharacterCard = {
-  id: "bmx",
+export const drFacilierremarkableGentleman: CharacterCard = {
+  id: "xhk",
   cardType: "character",
   name: "Dr. Facilier",
   version: "Remarkable Gentleman",
   fullName: "Dr. Facilier - Remarkable Gentleman",
   inkType: ["amethyst"],
-  franchise: "Princess and the Frog",
+  franchise: "Disney",
   set: "001",
-  text: "DREAMS MADE REAL Whenever you play a song, you may look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+  text: "**DREAMS MADE REAL** Whenever you play a song, you may look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
   cost: 3,
   strength: 2,
   willpower: 4,
@@ -17,22 +17,13 @@ export const drFacilierRemarkableGentleman: CharacterCard = {
   cardNumber: 39,
   inkable: true,
   externalIds: {
-    ravensburger: "29f0a5ba87ff15dad595a8947b198bb7319d02f8",
+    ravensburger: "",
   },
   abilities: [
     {
-      id: "bmx-1",
-      text: "DREAMS MADE REAL Whenever you play a song, you may look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
-      name: "DREAMS MADE REAL",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "whenever",
-        on: {
-          controller: "you",
-          cardType: "song",
-        },
-      },
+      type: "action",
+      text: "**DREAMS MADE REAL** Whenever you play a song, you may look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+      id: "xhk-1",
       effect: {
         type: "optional",
         effect: {
@@ -40,14 +31,10 @@ export const drFacilierRemarkableGentleman: CharacterCard = {
           amount: 2,
           from: "top-of-deck",
           target: "CONTROLLER",
-          then: {
-            action: "put-on-top",
-            count: 1,
-          },
         },
         chooser: "CONTROLLER",
       },
     },
   ],
-  classifications: ["Storyborn", "Villain", "Sorcerer"],
+  classifications: ["Sorcerer", "Storyborn", "Villain"],
 };

@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const madHatterGraciousHost: CharacterCard = {
+export const madHattergraciousHost: CharacterCard = {
   id: "hej",
   cardType: "character",
   name: "Mad Hatter",
@@ -22,13 +22,16 @@ export const madHatterGraciousHost: CharacterCard = {
   abilities: [
     {
       id: "hej-1",
-      text: "TEA PARTY Whenever this character is challenged, you may draw a card.",
       name: "TEA PARTY",
+      text: "TEA PARTY Whenever this character is challenged, you may draw a card.",
       type: "triggered",
       trigger: {
-        event: "challenged",
+        event: "challenge",
         timing: "whenever",
-        on: "SELF",
+        on: "OPPONENT_CHARACTERS",
+        defender: {
+          filters: [{ type: "source", ref: "self" }],
+        },
       },
       effect: {
         type: "optional",

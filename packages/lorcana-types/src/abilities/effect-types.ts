@@ -44,7 +44,7 @@ export type Amount = number | VariableAmount;
 export type VariableAmount =
   | { type: "damage-on-target" }
   | { type: "damage-on-self" }
-  | { type: "cards-in-hand"; controller: "you" | "opponent" }
+  | { type: "cards-in-hand"; controller: "you" | "opponent"; modifier?: number }
   | { type: "characters-in-play"; controller: "you" | "opponent" }
   | { type: "items-in-play"; controller: "you" | "opponent" }
   | { type: "cards-in-discard"; controller: "you" | "opponent" }
@@ -287,6 +287,8 @@ export interface PutIntoInkwellEffect {
   target?: PlayerTarget;
   cardType?: CardType;
   exerted?: boolean;
+  /** Whether the card is placed facedown in the inkwell */
+  facedown?: boolean;
 }
 
 /**

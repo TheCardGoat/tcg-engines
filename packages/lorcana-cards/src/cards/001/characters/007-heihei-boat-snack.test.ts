@@ -1,14 +1,14 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine } from "@tcg/lorcana/testing";
-import { heiheiBoatSnack } from "./007-heihei-boat-snack";
+import { heiheiboatSnack } from "./007-heihei-boat-snack";
 
 describe("HeiHei - Boat Snack", () => {
   it("should have Support ability", () => {
     const testEngine = new LorcanaTestEngine({
-      play: [heiheiBoatSnack],
+      play: [heiheiboatSnack],
     });
 
-    const cardUnderTest = testEngine.getCardModel(heiheiBoatSnack);
+    const cardUnderTest = testEngine.getCardModel(heiheiboatSnack);
     expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

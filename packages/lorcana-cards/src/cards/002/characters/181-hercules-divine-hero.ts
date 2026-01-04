@@ -22,7 +22,7 @@ export const herculesDivineHero: CharacterCard = {
   abilities: [
     {
       id: "5e9-1",
-      text: "Shift 4",
+      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {

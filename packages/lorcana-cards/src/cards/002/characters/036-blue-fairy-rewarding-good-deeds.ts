@@ -28,8 +28,8 @@ export const blueFairyRewardingGoodDeeds: CharacterCard = {
     },
     {
       id: "tv6-2",
-      text: "ETHEREAL GLOW Whenever you play a Floodborn character, you may draw a card.",
       name: "ETHEREAL GLOW",
+      text: "ETHEREAL GLOW Whenever you play a Floodborn character, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "play",

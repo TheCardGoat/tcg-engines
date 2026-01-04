@@ -1,4 +1,3 @@
-export { stitchRockStar } from "./003-stitch-rock-star";
 export { theQueenRegalMonarch } from "./007-the-queen-regal-monarch";
 export { stitchAlienDancer } from "./009-stitch-alien-dancer";
 export { mulanFreeSpirit } from "./010-mulan-free-spirit";
@@ -6,6 +5,7 @@ export { mickeyMouseTrueFriend } from "./013-mickey-mouse-true-friend";
 export { arielSingingMermaid } from "./015-ariel-singing-mermaid";
 export { ursulaVanessa } from "./022-ursula-vanessa";
 export { stitchCarefreeSurfer } from "./024-stitch-carefree-surfer";
+export { theQueenWickedAndVain } from "./035-the-queen-wicked-and-vain";
 export { winnieThePoohHunnyWizard } from "./041-winnie-the-pooh-hunny-wizard";
 export { elsaGlovesOff } from "./048-elsa-gloves-off";
 export { kuzcoWantedLlama } from "./049-kuzco-wanted-llama";
@@ -15,6 +15,7 @@ export { olafFriendlySnowman } from "./055-olaf-friendly-snowman";
 export { svenOfficialIceDeliverer } from "./056-sven-official-ice-deliverer";
 export { luisaMadrigalMagicallyStrongOne } from "./058-luisa-madrigal-magically-strong-one";
 export { robinHoodDaydreamer } from "./070-robin-hood-daydreamer";
+export { goofySetForAdventure } from "./074-goofy-set-for-adventure";
 export { mickeyMouseSteamboatPilot } from "./080-mickey-mouse-steamboat-pilot";
 export { viranaFangChief } from "./082-virana-fang-chief";
 export { pegasusGiftForHercules } from "./084-pegasus-gift-for-hercules";
@@ -40,3 +41,4 @@ export { princeNaveenPennilessRoyal } from "./182-prince-naveen-penniless-royal"
 export { eeyoreOverstuffedDonkey } from "./183-eeyore-overstuffed-donkey";
 export { captainHookCaptainOfTheJollyRoger } from "./190-captain-hook-captain-of-the-jolly-roger";
 export { liShangImperialCaptain } from "./193-li-shang-imperial-captain";
+export { princeEricDashingAndBrave } from "./194-prince-eric-dashing-and-brave";

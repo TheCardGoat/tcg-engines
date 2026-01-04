@@ -28,8 +28,8 @@ export const jiminyCricketPinocchiosConscience: CharacterCard = {
     },
     {
       id: "tfc-2",
-      text: "THAT STILL, SMALL VOICE When you play this character, if you have a character named Pinocchio in play, you may draw a card.",
       name: "THAT STILL, SMALL VOICE",
+      text: "THAT STILL, SMALL VOICE When you play this character, if you have a character named Pinocchio in play, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "play",
@@ -39,9 +39,8 @@ export const jiminyCricketPinocchiosConscience: CharacterCard = {
       effect: {
         type: "conditional",
         condition: {
-          type: "has-named-character",
-          name: "Pinocchio in play",
-          controller: "you",
+          type: "if",
+          expression: "you have a character named Pinocchio in play",
         },
         then: {
           type: "draw",

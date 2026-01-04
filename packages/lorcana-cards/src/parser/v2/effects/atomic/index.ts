@@ -9,6 +9,7 @@ import type { Effect } from "../../types";
 import { banishEffectParser } from "./banish-effect";
 import { damageEffectParser } from "./damage-effect";
 import { discardEffectParser } from "./discard-effect";
+import { discardHandEffectParser } from "./discard-hand-effect";
 import { drawEffectParser } from "./draw-effect";
 import { exertEffectParser } from "./exert-effect";
 import { inkwellEffectParser } from "./inkwell-effect";
@@ -78,7 +79,7 @@ export const atomicEffectParsers: EffectParser[] = [
   // Lore effects (specific "gain/lose X lore" pattern)
   loreEffectParser,
 
-  // Exert/ready effects (specific state changes)
+  // Exert effects (specific state changes)
   exertEffectParser,
 
   // Return effects (specific return to hand/deck patterns)
@@ -99,6 +100,9 @@ export const atomicEffectParsers: EffectParser[] = [
   // Location effects (specific location movement patterns)
   locationEffectParser,
 
+  // Discard hand effects (specific discard hand patterns)
+  discardHandEffectParser,
+
   // Draw effects (common pattern)
   drawEffectParser,
 
@@ -111,8 +115,15 @@ export const atomicEffectParsers: EffectParser[] = [
  * Returns the first successful parse result, or null if no parser matches.
  */
 export function parseAtomicEffect(input: CstNode | string): Effect | null {
+  // Trim trailing periods and whitespace from string inputs
+  // This handles cases where effect text ends with a period like "draw a card."
+  let normalizedInput = input;
+  if (typeof input === "string") {
+    normalizedInput = input.replace(/\.\s*$/, "").trim();
+  }
+
   for (const parser of atomicEffectParsers) {
-    const result = parser.parse(input);
+    const result = parser.parse(normalizedInput);
     if (result !== null) {
       return result;
     }

@@ -22,8 +22,8 @@ export const treasureGuardianForebodingSentry: CharacterCard = {
   abilities: [
     {
       id: "9vb-1",
-      text: "UNTOLD TREASURE When you play this character, if you have an Illusion character in play, you may draw a card.",
       name: "UNTOLD TREASURE",
+      text: "UNTOLD TREASURE When you play this character, if you have an Illusion character in play, you may draw a card.",
       type: "triggered",
       trigger: {
         event: "play",
@@ -31,13 +31,16 @@ export const treasureGuardianForebodingSentry: CharacterCard = {
         on: "SELF",
       },
       effect: {
-        type: "optional",
-        effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have an Illusion character in play",
+        },
+        then: {
           type: "draw",
           amount: 1,
           target: "CONTROLLER",
         },
-        chooser: "CONTROLLER",
       },
     },
   ],

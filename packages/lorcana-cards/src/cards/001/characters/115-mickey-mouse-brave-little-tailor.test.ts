@@ -1,14 +1,14 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine } from "@tcg/lorcana/testing";
-import { mickeyMouseBraveLittleTailor } from "./115-mickey-mouse-brave-little-tailor";
+import { mickeyMousebraveLittleTailor } from "./115-mickey-mouse-brave-little-tailor";
 
 describe("Mickey Mouse - Brave Little Tailor", () => {
   it("should have Evasive ability", () => {
     const testEngine = new LorcanaTestEngine({
-      play: [mickeyMouseBraveLittleTailor],
+      play: [mickeyMousebraveLittleTailor],
     });
 
-    const cardUnderTest = testEngine.getCardModel(mickeyMouseBraveLittleTailor);
+    const cardUnderTest = testEngine.getCardModel(mickeyMousebraveLittleTailor);
     expect(cardUnderTest.hasEvasive).toBe(true);
   });
 });

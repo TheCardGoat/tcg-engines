@@ -5,7 +5,6 @@ export { mirabelMadrigalProphecyFinder } from "./019-mirabel-madrigal-prophecy-f
 export { antonioMadrigalAnimalExpert } from "./035-antonio-madrigal-animal-expert";
 export { magicBroomLivelySweeper } from "./049-magic-broom-lively-sweeper";
 export { magicalMaidFeatherDuster } from "./050-magical-maid-feather-duster";
-export { mrsPottsEnchantedTeapot } from "./052-mrs-potts-enchanted-teapot";
 export { picoHelpfulToucan } from "./055-pico-helpful-toucan";
 export { ursulaMadSeaWitch } from "./057-ursula-mad-sea-witch";
 export { gusChampionOfCheese } from "./073-gus-champion-of-cheese";
@@ -30,4 +29,5 @@ export { aladdinResoluteSwordsman } from "./172-aladdin-resolute-swordsman";
 export { argesTheCyclops } from "./173-arges-the-cyclops";
 export { beastThickskinned } from "./176-beast-thick-skinned";
 export { mulanArmoredFighter } from "./189-mulan-armored-fighter";
+export { rayaUnstoppableForce } from "./193-raya-unstoppable-force";
 export { yaoImperialSoldier } from "./194-yao-imperial-soldier";

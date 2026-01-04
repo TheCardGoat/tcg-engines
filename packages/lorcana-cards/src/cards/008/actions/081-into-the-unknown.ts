@@ -24,8 +24,12 @@ export const intoTheUnknown: ActionCard = {
         type: "put-into-inkwell",
         source: {
           selector: "chosen",
-          count: { exactly: 1 },
-          filter: [{ type: "exerted" }],
+          count: 1,
+          filter: [
+            {
+              type: "exerted",
+            },
+          ],
         },
         target: "CARD_OWNER",
         exerted: true,
