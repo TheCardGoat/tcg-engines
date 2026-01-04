@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const ShieldOfVirtue: ItemCard = {
+export const shieldOfVirtue: ItemCard = {
   id: "f35",
   cardType: "item",
   name: "Shield of Virtue",

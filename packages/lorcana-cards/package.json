@@ -34,8 +34,7 @@
     "check": "turbo format lint check-types test",
     "fetch": "bun scripts/fetch-inputs.ts",
     "generate": "bun scripts/generate-cards.ts && bun run format",
-    "generate:all": "bun run fetch && bun run generate",
-    "validate-parser": "bun scripts/validate-parser-coverage.ts"
+    "generate:all": "bun run fetch && bun run generate"
   },
   "dependencies": {
     "@tcg/lorcana-types": "workspace:*",

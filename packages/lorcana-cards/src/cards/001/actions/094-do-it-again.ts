@@ -1,6 +1,6 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const DoItAgain: ActionCard = {
+export const doItAgain: ActionCard = {
   id: "8s5",
   cardType: "action",
   name: "Do It Again!",
