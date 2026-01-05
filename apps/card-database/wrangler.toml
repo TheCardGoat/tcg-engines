@@ -1,0 +1,13 @@
+# Cloudflare Pages configuration
+# See: https://developers.cloudflare.com/workers/configuration/compatibility-flags/
+# See: https://inlang.com/m/dxnzrydw/paraglide-sveltekit-i18n/deployment
+
+name = "card-database"
+
+# Enable Node.js AsyncLocalStorage support (required by paraglide-js)
+# and general Node.js compatibility for crypto (used by SvelteKit)
+compatibility_flags = ["nodejs_als", "nodejs_compat"]
+
+# Compatibility date for latest Node.js API support
+compatibility_date = "2024-09-23"
+
