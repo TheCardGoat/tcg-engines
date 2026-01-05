@@ -1,12 +1,6 @@
 # Cloudflare Pages configuration
 # See: https://developers.cloudflare.com/pages/functions/wrangler-configuration/
 # See: https://inlang.com/m/dxnzrydw/paraglide-sveltekit-i18n/deployment
-#
-# NOTE: Build settings (command, environment variables) must be configured
-# in the Cloudflare Pages dashboard, not in this file.
-# Required dashboard settings:
-#   - Build command: bun install && bun run build
-#   - Environment variable: SKIP_DEPENDENCY_INSTALL=true
 
 name = "card-database"
 
