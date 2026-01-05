@@ -29,7 +29,13 @@
     "build": {
       "dependsOn": ["^build"],
       "outputLogs": "errors-only",
-      "outputs": ["dist/**", ".next/**", "build/**", "!.next/cache/**"],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "build/**",
+        ".svelte-kit/output/**",
+        "!.next/cache/**"
+      ],
       "inputs": [
         "src/**",
         "public/**",

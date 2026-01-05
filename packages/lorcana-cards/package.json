@@ -23,7 +23,7 @@
     }
   },
   "scripts": {
-    "build": "tsc --noEmit",
+    "build": "tsc --noEmit && mkdir -p dist",
     "typecheck": "tsc --noEmit",
     "check-types": "tsc --noEmit",
     "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false ./src",
