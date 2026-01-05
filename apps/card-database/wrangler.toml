@@ -1,6 +1,12 @@
 # Cloudflare Pages configuration
 # See: https://developers.cloudflare.com/pages/functions/wrangler-configuration/
 # See: https://inlang.com/m/dxnzrydw/paraglide-sveltekit-i18n/deployment
+#
+# NOTE: Build settings (command, environment variables) must be configured
+# in the Cloudflare Pages dashboard, not in this file.
+# Required dashboard settings:
+#   - Build command: bun install && bun run build
+#   - Environment variable: SKIP_DEPENDENCY_INSTALL=true
 
 name = "card-database"
 
@@ -13,13 +19,4 @@ compatibility_flags = ["nodejs_als", "nodejs_compat"]
 
 # Compatibility date for latest Node.js API support
 compatibility_date = "2024-09-23"
-
-# Build configuration
-[build]
-# Skip npm install (we use bun in the build command)
-# This is a monorepo using workspace:* protocol which npm doesn't support
-command = "bun install && bun run build"
-
-[build.environment]
-SKIP_DEPENDENCY_INSTALL = "true"
 
