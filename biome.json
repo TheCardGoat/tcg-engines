@@ -74,7 +74,7 @@
         "useNodejsImportProtocol": "off",
         "noParameterAssign": "warn",
         "useSingleVarDeclarator": "warn",
-        "useConst": "off",
+        "useConst": "warn",
         "useTemplate": "warn",
         "noNegationElse": "warn",
         "noNonNullAssertion": "warn",

@@ -26,17 +26,17 @@
   "sideEffects": [
     "**/*.css"
   ],
-  "main": "./src/lib/index.ts",
-  "module": "./src/lib/index.ts",
-  "svelte": "./src/lib/index.ts",
-  "types": "./src/lib/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "svelte": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./src/lib/index.ts",
-      "import": "./src/lib/index.ts",
-      "svelte": "./src/lib/index.ts",
-      "default": "./src/lib/index.ts"
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     }
   },
   "peerDependencies": {
@@ -57,6 +57,8 @@
     "@tailwindcss/typography": "0.5.18",
     "@tailwindcss/vite": "4.1.13",
     "@vitest/browser": "3.2.4",
+    "bun-types": "1.2.18",
+    "esm-env": "^1.2.2",
     "playwright": "1.55.1",
     "publint": "0.3.13",
     "storybook": "10.0.1",
@@ -67,8 +69,7 @@
     "vite": "7.1.7",
     "vite-plugin-devtools-json": "1.0.0",
     "vitest": "3.2.4",
-    "vitest-browser-svelte": "1.1.0",
-    "bun-types": "1.2.18"
+    "vitest-browser-svelte": "1.1.0"
   },
   "keywords": [
     "svelte"
@@ -78,7 +79,6 @@
     "@unpic/svelte": "^1.0.0",
     "bits-ui": "^2.14.1",
     "clsx": "^2.1.1",
-
     "tailwind-merge": "^3.4.0"
   }
 }
