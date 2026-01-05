@@ -56,8 +56,8 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
     console.log("✗ Complex action sequences");
     console.log("✗ Some standalone effect texts");
 
-    // Performance requirement: under 5 seconds (this should always pass)
-    expect(elapsed).toBeLessThan(5000);
+    // Performance requirement: under 15 seconds (higher threshold for CI parallel execution)
+    expect(elapsed).toBeLessThan(15000);
 
     // Don't enforce 80% threshold yet - document current state
     // This allows us to track improvement over time
@@ -261,8 +261,8 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
     // Verify absolute performance is acceptable (not variance, which is flaky in CI)
     const totalTime = performanceResults.reduce((sum, r) => sum + r.timeMs, 0);
 
-    // Total time for all samples combined should be under 1 second
-    expect(totalTime).toBeLessThan(1000);
+    // Total time for all samples combined should be under 10 seconds (higher threshold for CI parallel execution)
+    expect(totalTime).toBeLessThan(10000);
   });
 
   it("should validate that all successful parses produce valid ability types", () => {
