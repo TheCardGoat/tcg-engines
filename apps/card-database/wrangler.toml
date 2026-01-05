@@ -1,8 +1,11 @@
 # Cloudflare Pages configuration
-# See: https://developers.cloudflare.com/workers/configuration/compatibility-flags/
+# See: https://developers.cloudflare.com/pages/functions/wrangler-configuration/
 # See: https://inlang.com/m/dxnzrydw/paraglide-sveltekit-i18n/deployment
 
 name = "card-database"
+
+# Required for Cloudflare Pages - points to SvelteKit's build output
+pages_build_output_dir = ".svelte-kit/cloudflare"
 
 # Enable Node.js AsyncLocalStorage support (required by paraglide-js)
 # and general Node.js compatibility for crypto (used by SvelteKit)
