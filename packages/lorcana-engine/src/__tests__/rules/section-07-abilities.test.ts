@@ -78,17 +78,14 @@ describe("Section 7: Abilities", () => {
     /**
      * Rule 7.1.5: Playing cards while resolving abilities requires explicit permission.
      */
-    test.failing(
-      "Rule 7.1.5 - Cannot play cards during ability resolution",
-      () => {
-        // Arrange: Resolving an ability
+    test.failing("Rule 7.1.5 - Cannot play cards during ability resolution", () => {
+      // Arrange: Resolving an ability
 
-        // Act: Try to play a card
+      // Act: Try to play a card
 
-        // Assert: Should fail unless ability grants permission
-        expect(true).toBe(false); // Will fail until resolution timing implemented
-      },
-    );
+      // Assert: Should fail unless ability grants permission
+      expect(true).toBe(false); // Will fail until resolution timing implemented
+    });
 
     /**
      * Rule 7.1.6: Loops - If a loop would occur with no way to end, it ends immediately.
@@ -182,32 +179,26 @@ describe("Section 7: Abilities", () => {
     /**
      * Rule 7.4.2: Abilities with two trigger conditions need both to be met.
      */
-    test.failing(
-      "Rule 7.4.2 - Multiple trigger conditions must all be met",
-      () => {
-        // Arrange: Ability with "When X and Y"
+    test.failing("Rule 7.4.2 - Multiple trigger conditions must all be met", () => {
+      // Arrange: Ability with "When X and Y"
 
-        // Act: Only satisfy one condition
+      // Act: Only satisfy one condition
 
-        // Assert: Should not trigger
-        expect(true).toBe(false); // Will fail until compound triggers implemented
-      },
-    );
+      // Assert: Should not trigger
+      expect(true).toBe(false); // Will fail until compound triggers implemented
+    });
 
     /**
      * Rule 7.4.3: Floating triggered abilities exist temporarily after source leaves.
      */
-    test.failing(
-      "Rule 7.4.3 - Floating triggers persist after source leaves",
-      () => {
-        // Arrange: Character with "When this character is banished" trigger
+    test.failing("Rule 7.4.3 - Floating triggers persist after source leaves", () => {
+      // Arrange: Character with "When this character is banished" trigger
 
-        // Act: Banish the character
+      // Act: Banish the character
 
-        // Assert: Trigger should still resolve
-        expect(true).toBe(false); // Will fail until floating triggers implemented
-      },
-    );
+      // Assert: Trigger should still resolve
+      expect(true).toBe(false); // Will fail until floating triggers implemented
+    });
 
     /**
      * Rule 7.4.4: Delayed triggered abilities are set up by effects.

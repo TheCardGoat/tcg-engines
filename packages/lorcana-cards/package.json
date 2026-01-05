@@ -20,6 +20,10 @@
     "./data": {
       "types": "./src/data/index.ts",
       "default": "./src/data/index.ts"
+    },
+    "./cards": {
+      "types": "./src/cards/index.ts",
+      "default": "./src/cards/index.ts"
     }
   },
   "scripts": {
@@ -41,7 +45,7 @@
     "chevrotain": "^11.0.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.0.4",
+    "@biomejs/biome": "2.3.11",
     "@tcg/lorcana": "workspace:*",
     "@types/bun": "1.2.14",
     "bun-types": "^1.3.4",

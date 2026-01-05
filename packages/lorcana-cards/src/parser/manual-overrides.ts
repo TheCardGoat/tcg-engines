@@ -2826,7 +2826,7 @@ export function resolveManualOverrideValues(
     for (const key in obj) {
       if (key !== "text" && !numericFields.includes(key)) {
         if (Array.isArray(obj[key])) {
-          obj[key].forEach((item: any) => replacePlaceholders(item, depth + 1));
+          for (const item of obj[key]) replacePlaceholders(item, depth + 1);
         } else if (typeof obj[key] === "object") {
           replacePlaceholders(obj[key], depth + 1);
         }
@@ -2835,7 +2835,7 @@ export function resolveManualOverrideValues(
   }
 
   if (Array.isArray(resolved)) {
-    resolved.forEach((item) => replacePlaceholders(item));
+    for (const item of resolved) replacePlaceholders(item);
   } else {
     replacePlaceholders(resolved);
   }

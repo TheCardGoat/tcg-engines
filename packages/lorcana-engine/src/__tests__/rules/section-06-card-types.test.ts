@@ -34,33 +34,27 @@ describe("Section 6: Card Types", () => {
      * Rule 6.1.1: Characters are a type of card that can be in play.
      * A character card in the Play zone is a character; in other zones it's a character card.
      */
-    test.failing(
-      "Rule 6.1.1 - Character card becomes character when in play",
-      () => {
-        // Arrange: Character in hand (card) vs in play (character)
+    test.failing("Rule 6.1.1 - Character card becomes character when in play", () => {
+      // Arrange: Character in hand (card) vs in play (character)
 
-        // Assert: Terminology distinction should apply
-        expect(true).toBe(false); // Will fail until zone-based terminology implemented
-      },
-    );
+      // Assert: Terminology distinction should apply
+      expect(true).toBe(false); // Will fail until zone-based terminology implemented
+    });
 
     /**
      * Rule 6.1.2.1: A character has a Strength value and a Willpower value.
      */
-    test.failing(
-      "Rule 6.1.2.1 - Characters have Strength and Willpower",
-      () => {
-        // Arrange: Create character with stats
-        const character = testEngine.createCharacterInPlay(PLAYER_ONE, {
-          strength: 3,
-          willpower: 4,
-        });
+    test.failing("Rule 6.1.2.1 - Characters have Strength and Willpower", () => {
+      // Arrange: Create character with stats
+      const character = testEngine.createCharacterInPlay(PLAYER_ONE, {
+        strength: 3,
+        willpower: 4,
+      });
 
-        // Assert: Character should have both values accessible
-        // Would need getStrength/getWillpower helpers
-        expect(true).toBe(false); // Will fail until stat access implemented
-      },
-    );
+      // Assert: Character should have both values accessible
+      // Would need getStrength/getWillpower helpers
+      expect(true).toBe(false); // Will fail until stat access implemented
+    });
 
     /**
      * Rule 6.1.2.2: A character has at least one classification
@@ -83,22 +77,19 @@ describe("Section 6: Card Types", () => {
      * Rule 6.1.4: A character must have been in play at the beginning of the Set step
      * to quest, challenge, or exert as part of a cost.
      */
-    test.failing(
-      "Rule 6.1.4 - Fresh characters cannot quest/challenge (drying)",
-      () => {
-        // Arrange: Create fresh character
-        const character = testEngine.createCharacterInPlay(PLAYER_ONE, {
-          strength: 2,
-          willpower: 3,
-        });
+    test.failing("Rule 6.1.4 - Fresh characters cannot quest/challenge (drying)", () => {
+      // Arrange: Create fresh character
+      const character = testEngine.createCharacterInPlay(PLAYER_ONE, {
+        strength: 2,
+        willpower: 3,
+      });
 
-        // Act: Try to quest immediately (this test uses a backdoor that skips drying)
-        // In real gameplay, fresh characters can't quest
+      // Act: Try to quest immediately (this test uses a backdoor that skips drying)
+      // In real gameplay, fresh characters can't quest
 
-        // Assert: Should be blocked until dry
-        expect(true).toBe(false); // Will fail until drying properly enforced in moves
-      },
-    );
+      // Assert: Should be blocked until dry
+      expect(true).toBe(false); // Will fail until drying properly enforced in moves
+    });
   });
 
   describe("6.2. Parts of a Card", () => {
@@ -134,15 +125,12 @@ describe("Section 6: Card Types", () => {
      * Rule 6.2.4.1: Some characters have two names (separated by &).
      * Effect looking for specified name only needs to match one.
      */
-    test.failing(
-      "Rule 6.2.4.1 - Dual-name characters match either name",
-      () => {
-        // Arrange: "Flotsam & Jetsam" should match both "Flotsam" and "Jetsam"
+    test.failing("Rule 6.2.4.1 - Dual-name characters match either name", () => {
+      // Arrange: "Flotsam & Jetsam" should match both "Flotsam" and "Jetsam"
 
-        // Assert: Effect targeting "Flotsam" should find this character
-        expect(true).toBe(false); // Will fail until dual-name matching implemented
-      },
-    );
+      // Assert: Effect targeting "Flotsam" should find this character
+      expect(true).toBe(false); // Will fail until dual-name matching implemented
+    });
 
     /**
      * Rule 6.2.4.2: A character with multiple names is still a single character.
@@ -217,15 +205,12 @@ describe("Section 6: Card Types", () => {
     /**
      * Rule 6.3.1: Actions are a type of card that can be played but can't be in play.
      */
-    test.failing(
-      "Rule 6.3.1 - Actions are not in play after resolution",
-      () => {
-        // Arrange: Play an action card
+    test.failing("Rule 6.3.1 - Actions are not in play after resolution", () => {
+      // Arrange: Play an action card
 
-        // Assert: Action should not be in play zone after resolving
-        expect(true).toBe(false); // Will fail until action zone handling implemented
-      },
-    );
+      // Assert: Action should not be in play zone after resolving
+      expect(true).toBe(false); // Will fail until action zone handling implemented
+    });
 
     /**
      * Rule 6.3.1.2: Actions are played from hand but not considered in play.
@@ -262,17 +247,14 @@ describe("Section 6: Card Types", () => {
     /**
      * Rule 6.3.4: Effects triggered by playing action wait until action resolves.
      */
-    test.failing(
-      "Rule 6.3.4 - Triggers from action wait for resolution",
-      () => {
-        // Arrange: Effect that triggers when action is played
+    test.failing("Rule 6.3.4 - Triggers from action wait for resolution", () => {
+      // Arrange: Effect that triggers when action is played
 
-        // Act: Play action
+      // Act: Play action
 
-        // Assert: Trigger should resolve after action effect
-        expect(true).toBe(false); // Will fail until trigger ordering implemented
-      },
-    );
+      // Assert: Trigger should resolve after action effect
+      expect(true).toBe(false); // Will fail until trigger ordering implemented
+    });
   });
 
   describe("6.4. Items", () => {
