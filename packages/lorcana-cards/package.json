@@ -20,6 +20,10 @@
     "./data": {
       "types": "./src/data/index.ts",
       "default": "./src/data/index.ts"
+    },
+    "./cards": {
+      "types": "./src/cards/index.ts",
+      "default": "./src/cards/index.ts"
     }
   },
   "scripts": {

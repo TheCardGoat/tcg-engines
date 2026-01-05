@@ -9,8 +9,16 @@ const config = {
   preprocess: [vitePreprocess(), mdsvex()],
 
   kit: {
-    // Cloudflare Pages adapter - see https://svelte.dev/docs/kit/adapter-cloudflare
-    adapter: adapter(),
+    // Cloudflare Pages adapter
+    // See https://svelte.dev/docs/kit/adapter-cloudflare for more information
+    adapter: adapter({
+      // Render a plaintext 404 page for non-matching asset requests
+      fallback: "plaintext",
+      routes: {
+        include: ["/*"],
+        exclude: ["<all>"],
+      },
+    }),
   },
 
   extensions: [".svelte", ".svx"],
