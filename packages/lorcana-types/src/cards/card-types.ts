@@ -237,6 +237,18 @@ export interface BaseCardProperties {
     collectorNumber: number;
     id: string;
   }>;
+
+  /**
+   * Flag indicating that the card logic is not yet fully implemented
+   * Used for stubbed cards during development
+   */
+  missingImplementation?: boolean;
+
+  /**
+   * Flag indicating that the card lacks comprehensive tests
+   * Used for stubbed cards during development
+   */
+  missingTests?: boolean;
 }
 
 // ============================================================================

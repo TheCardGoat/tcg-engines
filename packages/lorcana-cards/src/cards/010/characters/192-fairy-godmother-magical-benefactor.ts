@@ -22,10 +22,10 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
   abilities: [
     {
       id: "45t-1",
-      text: "Boost 3",
       type: "keyword",
       keyword: "Boost",
       value: 3,
+      text: "Boost 3 {I}",
     },
     {
       id: "45t-2",

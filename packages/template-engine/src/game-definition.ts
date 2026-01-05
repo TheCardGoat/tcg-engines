@@ -32,28 +32,28 @@ const moves: GameMoveDefinitions<TemplateGameState, TemplateGameMoves> = {
   playCard: {
     condition: (state, context) => {
       if (state.phase !== "main") return false;
-      if (!context.data?.cardId) return false;
+      const cardId = context.params.cardId;
+      if (!cardId) return false;
 
-      const cardId = String(context.data.cardId);
       const hand = state.zones.hand[context.playerId];
 
-      return hand?.some((c) => String(c) === cardId) ?? false;
+      return hand?.some((c) => c === cardId) ?? false;
     },
     reducer: (draft, context) => {
       const playerId = context.playerId;
-      const cardId = String(context.data?.cardId);
+      const cardId = context.params.cardId;
 
       // Remove from hand
       const hand = draft.zones.hand[playerId];
       if (hand) {
-        const index = hand.findIndex((c) => String(c) === cardId);
+        const index = hand.findIndex((c) => c === cardId);
         if (index >= 0) {
-          const card = hand[index];
+          const cardIdInHand = hand[index];
           hand.splice(index, 1);
           // Add to field
           const field = draft.zones.field[playerId];
-          if (field && card) {
-            field.push(card);
+          if (field && cardIdInHand) {
+            field.push(cardIdInHand);
           }
         }
       }
@@ -64,14 +64,14 @@ const moves: GameMoveDefinitions<TemplateGameState, TemplateGameMoves> = {
     condition: (state, context) => {
       if (state.phase !== "main") return false;
 
-      const attackerId = context.data?.attackerId as string;
+      const attackerId = context.params.attackerId;
       const attacker = state.cards[attackerId];
 
       return attacker !== undefined && !attacker.tapped;
     },
     reducer: (draft, context) => {
-      const attackerId = context.data?.attackerId as string;
-      const targetId = context.data?.targetId as string;
+      const attackerId = context.params.attackerId;
+      const targetId = context.params.targetId;
 
       // Tap attacker
       const attacker = draft.cards[attackerId];

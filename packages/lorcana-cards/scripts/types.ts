@@ -220,6 +220,12 @@ export interface CanonicalCardMetadata {
 
   /** External IDs for cross-referencing with other systems */
   externalIds?: ExternalIds;
+
+  /** Flag indicating if the card is missing implementation */
+  missingImplementation?: boolean;
+
+  /** Flag indicating if the card is missing tests */
+  missingTests?: boolean;
 }
 
 /**

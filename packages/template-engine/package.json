@@ -7,7 +7,9 @@
   "scripts": {
     "test": "bun test",
     "lint": "biome check .",
+    "format": "biome check --write .",
     "lint:fix": "biome check --write .",
+    "check-types": "tsc --noEmit",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -16,6 +18,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.0.4",
     "@types/bun": "1.2.14",
+    "bun-types": "1.2.18",
     "typescript": "5.8.3"
   }
 }

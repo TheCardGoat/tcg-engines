@@ -18,8 +18,8 @@ export const juniorWoodchuckGuidebook: ItemCard = {
     {
       id: "ebe-1",
       name: "THE BOOK KNOWS EVERYTHING",
-      text: "{E}, 1 {I}, Banish this item — Draw 2 cards.",
       type: "activated",
+      text: "THE BOOK KNOWS EVERYTHING {E}, 1 {I}, Banish this item — Draw 2 cards.",
       cost: {
         exert: true,
         ink: 1,

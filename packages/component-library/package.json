@@ -7,7 +7,10 @@
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
     "prepack": "svelte-kit sync && svelte-package && publint",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check": "paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check-types": "npm run check",
+    "format": "bun x @biomejs/biome check --fix --max-diagnostics=none --diagnostic-level=error --linter-enabled=false .",
+    "lint": "bun x @biomejs/biome lint --fix --max-diagnostics=none --diagnostic-level=error .",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "test:unit": "bun test",
     "test": "bun test",
@@ -23,13 +26,17 @@
   "sideEffects": [
     "**/*.css"
   ],
-  "svelte": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./src/lib/index.ts",
+  "module": "./src/lib/index.ts",
+  "svelte": "./src/lib/index.ts",
+  "types": "./src/lib/index.ts",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "svelte": "./dist/index.js"
+      "types": "./src/lib/index.ts",
+      "svelte": "./src/lib/index.ts",
+      "import": "./src/lib/index.ts",
+      "default": "./src/lib/index.ts"
     }
   },
   "peerDependencies": {
@@ -50,6 +57,8 @@
     "@tailwindcss/typography": "0.5.18",
     "@tailwindcss/vite": "4.1.13",
     "@vitest/browser": "3.2.4",
+    "bun-types": "1.2.18",
+    "esm-env": "^1.2.2",
     "playwright": "1.55.1",
     "publint": "0.3.13",
     "storybook": "10.0.1",
@@ -69,6 +78,7 @@
     "@iconify/svelte": "^5.0.2",
     "@unpic/svelte": "^1.0.0",
     "bits-ui": "^2.14.1",
-    "install": "^0.13.0"
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.4.0"
   }
 }

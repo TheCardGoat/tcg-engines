@@ -223,6 +223,13 @@ async function main() {
       } else {
         cardCategories.otherParseable.push(cardName);
       }
+    } else {
+      // Stubbed cards (not supported by parser yet)
+      card.missingImplementation = true;
+      card.missingTests = true;
+      generatableCards[id] = card;
+      // We'll track them if we add a category, but for now just adding them is enough to generate.
+      // Let's add logging for them too.
     }
   }
 

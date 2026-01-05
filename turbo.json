@@ -11,7 +11,13 @@
       "dependsOn": ["topo"],
       "cache": true,
       "outputLogs": "errors-only",
-      "inputs": ["**/*.ts", "**/*.tsx", "tsconfig.json", "tsconfig.*.json"]
+      "inputs": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.svelte",
+        "tsconfig.json",
+        "tsconfig.*.json"
+      ]
     },
     "format": {
       "outputs": [],
@@ -29,7 +35,13 @@
     "build": {
       "dependsOn": ["^build"],
       "outputLogs": "errors-only",
-      "outputs": ["dist/**", ".next/**", "build/**", "!.next/cache/**"],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "build/**",
+        ".svelte-kit/output/**",
+        "!.next/cache/**"
+      ],
       "inputs": [
         "src/**",
         "public/**",

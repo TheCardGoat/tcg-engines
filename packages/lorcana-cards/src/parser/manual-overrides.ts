@@ -58,6 +58,47 @@ function manualEntries(raws: UntypedAbilityWithText[]): AbilityWithText[] {
  */
 export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   // ============================================================================
+  // ============================================================================
+  // MANUALLY RESTORED CARDS
+  // ============================================================================
+
+  // Hakuna Matata
+  "Remove up to {d} damage from each of your characters.": manualEntry({
+    text: "Remove up to 3 damage from each of your characters.",
+    name: "Hakuna Matata",
+    ability: {
+      type: "action",
+      effect: {
+        type: "remove-damage",
+        amount: 3,
+        target: { selector: "all", controller: "you", cardType: "character" },
+        upTo: true,
+      },
+    },
+  }),
+
+  // Be Our Guest
+  "Look at the top {d} cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.":
+    manualEntry({
+      text: "Look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+      name: "Be Our Guest",
+      ability: {
+        type: "action",
+        effect: {
+          type: "look-at-cards",
+          amount: 4,
+          from: "top-of-deck",
+          target: "CONTROLLER",
+          then: {
+            action: "put-in-hand",
+            filter: { type: "card-type", cardType: "character" },
+            reveal: true,
+          },
+        },
+      },
+    }),
+
+  // ============================================================================
   // TOP 100 COMPLEX TEXTS - Manually Implemented
   // ============================================================================
 
