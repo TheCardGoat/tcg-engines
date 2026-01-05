@@ -11,7 +11,13 @@
       "dependsOn": ["topo"],
       "cache": true,
       "outputLogs": "errors-only",
-      "inputs": ["**/*.ts", "**/*.tsx", "tsconfig.json", "tsconfig.*.json"]
+      "inputs": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.svelte",
+        "tsconfig.json",
+        "tsconfig.*.json"
+      ]
     },
     "format": {
       "outputs": [],
