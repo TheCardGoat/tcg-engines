@@ -292,7 +292,7 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
 
     if (invalidResults.length > 0) {
       console.log("\n=== Invalid Ability Types ===");
-      invalidResults.slice(0, 10).forEach((msg) => console.log(msg));
+      for (const msg of invalidResults.slice(0, 10)) console.log(msg);
     }
 
     // All successful parses must produce valid types

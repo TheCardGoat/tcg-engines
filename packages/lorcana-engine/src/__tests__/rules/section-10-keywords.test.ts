@@ -62,16 +62,13 @@ describe("Section 10: Keywords", () => {
      * Rule 10.2.1: Bodyguard - When this character is exerted, opposing characters
      * must challenge this character if able.
      */
-    test.failing(
-      "Rule 10.2.1 - Bodyguard forces challenges to this character",
-      () => {
-        // Arrange: Bodyguard character (exerted), other character
-        // Opponent has character that could challenge either
+    test.failing("Rule 10.2.1 - Bodyguard forces challenges to this character", () => {
+      // Arrange: Bodyguard character (exerted), other character
+      // Opponent has character that could challenge either
 
-        // Assert: Opponent must challenge Bodyguard
-        expect(true).toBe(false); // Will fail until Bodyguard implemented
-      },
-    );
+      // Assert: Opponent must challenge Bodyguard
+      expect(true).toBe(false); // Will fail until Bodyguard implemented
+    });
 
     /**
      * Bodyguard only applies when exerted.
@@ -98,18 +95,15 @@ describe("Section 10: Keywords", () => {
     /**
      * Rule 10.3.1: Challenger +X - This character gets +X Strength while challenging.
      */
-    test.failing(
-      "Rule 10.3.1 - Challenger adds Strength when challenging",
-      () => {
-        // Arrange: Character with Challenger +2 (base strength 3)
-        // Defender with 4 willpower
+    test.failing("Rule 10.3.1 - Challenger adds Strength when challenging", () => {
+      // Arrange: Character with Challenger +2 (base strength 3)
+      // Defender with 4 willpower
 
-        // Act: Challenge
+      // Act: Challenge
 
-        // Assert: Should deal 5 damage (3 + 2 from Challenger)
-        expect(true).toBe(false); // Will fail until Challenger implemented
-      },
-    );
+      // Assert: Should deal 5 damage (3 + 2 from Challenger)
+      expect(true).toBe(false); // Will fail until Challenger implemented
+    });
 
     /**
      * Rule 10.3.2: Challenger stacks - multiple sources add together.
@@ -350,17 +344,14 @@ describe("Section 10: Keywords", () => {
      * Rule 10.10.1: Sing Together X - Multiple characters can exert together
      * to sing this song if their total ink costs meet or exceed X.
      */
-    test.failing(
-      "Rule 10.10.1 - Sing Together combines character costs",
-      () => {
-        // Arrange: Two characters (cost 2 each), Song with Sing Together 4
+    test.failing("Rule 10.10.1 - Sing Together combines character costs", () => {
+      // Arrange: Two characters (cost 2 each), Song with Sing Together 4
 
-        // Act: Exert both to sing
+      // Act: Exert both to sing
 
-        // Assert: Should succeed (2 + 2 = 4 >= required 4)
-        expect(true).toBe(false); // Will fail until Sing Together implemented
-      },
-    );
+      // Assert: Should succeed (2 + 2 = 4 >= required 4)
+      expect(true).toBe(false); // Will fail until Sing Together implemented
+    });
 
     /**
      * Sing Together uses character ink cost, not Singer value.

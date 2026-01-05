@@ -1,10 +1,10 @@
 <script lang="ts">
-import { browser } from "$app/environment";
-import { goto } from "$app/navigation";
-import { page } from "$app/stores";
 import { CardImage } from "@tcg/component-library";
 import { onMount } from "svelte";
 import { fade, fly } from "svelte/transition";
+import { browser } from "$app/environment";
+import { goto } from "$app/navigation";
+import { page } from "$app/stores";
 import type { PageData } from "./$types";
 
 const { data }: { data: PageData } = $props();
@@ -104,10 +104,10 @@ $effect(() => {
   // 2. Update URL
   const params = new URLSearchParams();
   if (state.q) params.set("q", state.q);
-  state.ink.forEach((i) => params.append("ink", i));
-  state.cost.forEach((c) => params.append("cost", c.toString()));
-  state.type.forEach((t) => params.append("type", t));
-  state.set.forEach((s) => params.append("set", s));
+  for (const i of state.ink) params.append("ink", i);
+  for (const c of state.cost) params.append("cost", c.toString());
+  for (const t of state.type) params.append("type", t);
+  for (const s of state.set) params.append("set", s);
   if (state.crop !== "full") params.set("crop", state.crop);
   if (state.logic !== "AND") params.set("logic", state.logic);
 
@@ -144,7 +144,7 @@ const filteredCards = $derived.by(() => {
       (c) =>
         (c.name && c.name.toLowerCase().includes(q)) ||
         (c.fullName && c.fullName.toLowerCase().includes(q)) ||
-        (c.rulesText && c.rulesText.toLowerCase().includes(q)),
+        (c.text && c.text.toLowerCase().includes(q)),
     );
   }
 
@@ -161,17 +161,12 @@ const filteredCards = $derived.by(() => {
   return result.filter((c) => {
     // Helper to check individual criteria
     // Normalize to lowercase for comparison just in case
-    const cInk = c.inkType
-      ? Array.isArray(c.inkType)
-        ? c.inkType.map((k) => k.toLowerCase())
-        : c.inkType.toLowerCase()
-      : "";
+    // inkType is always an array in the current type system
+    const cInk = c.inkType ? c.inkType.map((k) => k.toLowerCase()) : [];
     const cType = c.cardType ? c.cardType.toLowerCase() : "";
 
     const matchInk = hasInk
-      ? Array.isArray(cInk)
-        ? cInk.some((i: string) => selectedInk.includes(i))
-        : selectedInk.includes(cInk)
+      ? cInk.some((i: string) => selectedInk.includes(i))
       : false;
     const matchCost = hasCost ? selectedCost.includes(c.cost) : false;
     const matchType = hasType ? selectedType.includes(cType) : false;
@@ -466,24 +461,24 @@ function toggleSet(set: string) {
 								<div
 									class="mt-2 line-clamp-4 text-xs leading-relaxed whitespace-pre-line text-slate-300 opacity-90"
 								>
-									{card.rulesText}
+									{card.text ?? ''}
 								</div>
 
-								<div
-									class="mt-auto flex items-center justify-between border-t border-slate-700/50 pt-4 text-xs text-slate-500"
-								>
-									<span class="capitalize">{card.cardType}</span>
-									<div class="flex gap-2">
-										{#if card.strength !== undefined}<span class="text-slate-300"
-												>⚔️ {card.strength}</span
-											>{/if}
-										{#if card.willpower !== undefined}<span class="text-slate-300"
-												>🛡️ {card.willpower}</span
-											>{/if}
-										{#if card.lore !== undefined}<span class="text-slate-300">💎 {card.lore}</span
-											>{/if}
-									</div>
+							<div
+								class="mt-auto flex items-center justify-between border-t border-slate-700/50 pt-4 text-xs text-slate-500"
+							>
+								<span class="capitalize">{card.cardType}</span>
+								<div class="flex gap-2">
+									{#if 'strength' in card && card.strength !== undefined}<span class="text-slate-300"
+											>⚔️ {card.strength}</span
+										>{/if}
+									{#if 'willpower' in card && card.willpower !== undefined}<span class="text-slate-300"
+											>🛡️ {card.willpower}</span
+										>{/if}
+									{#if 'lore' in card && card.lore !== undefined}<span class="text-slate-300">💎 {card.lore}</span
+										>{/if}
 								</div>
+							</div>
 							</div>
 						</div>
 					{/each}

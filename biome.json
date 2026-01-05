@@ -1,5 +1,6 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.4/schema.json",
+  "root": true,
+  "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -14,7 +15,10 @@
       "!**/node_modules/**/*",
       "!**/.turbo/**/*",
       "!**/.next/**/*",
-      "!**/public/**/*"
+      "!**/public/**/*",
+      "!**/.svelte-kit/**/*",
+      "!**/storybook-static/**/*",
+      "!**/src/lib/paraglide/**/*"
     ]
   },
   "formatter": {
@@ -26,9 +30,6 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "nursery": {
-        "useUniqueElementIds": "off"
-      },
       "correctness": {
         "useExhaustiveDependencies": "warn",
         "noChildrenProp": "warn",
@@ -99,6 +100,11 @@
       "quoteStyle": "double"
     }
   },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
   "overrides": [
     {
       "includes": ["**/*.svelte"],
@@ -106,6 +112,10 @@
         "rules": {
           "style": {
             "useConst": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedImports": "off"
           }
         }
       }
