@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.11",
+    "@tcg/lorcana-types": "workspace:*",
     "@inlang/paraglide-js": "^2.6.0",
     "@playwright/test": "^1.57.0",
     "@storybook/addon-svelte-csf": "^5.0.10",

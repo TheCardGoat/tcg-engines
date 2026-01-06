@@ -129,7 +129,7 @@
   // Reactive filtered cards
   const availableSets = $derived.by(() => {
     const sets = new Set<string>();
-    data.cards.forEach((c) => {
+    data.cards.forEach((c: { paramSet?: string }) => {
       if (c.paramSet) sets.add(c.paramSet);
     });
     return Array.from(sets).sort();
@@ -143,7 +143,7 @@
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       result = result.filter(
-        (c) =>
+        (c: { name?: string; fullName?: string; text?: string }) =>
           (c.name && c.name.toLowerCase().includes(q)) ||
           (c.fullName && c.fullName.toLowerCase().includes(q)) ||
           (c.text && c.text.toLowerCase().includes(q)),
@@ -160,34 +160,43 @@
       return result;
     }
 
-    return result.filter((c) => {
-      // Helper to check individual criteria
-      // Normalize to lowercase for comparison just in case
-      // inkType is always an array in the current type system
-      const cInk = c.inkType ? c.inkType.map((k) => k.toLowerCase()) : [];
-      const cType = c.cardType ? c.cardType.toLowerCase() : "";
+    return result.filter(
+      (c: {
+        inkType?: string[];
+        cardType?: string;
+        cost: number;
+        paramSet?: string;
+      }) => {
+        // Helper to check individual criteria
+        // Normalize to lowercase for comparison just in case
+        // inkType is always an array in the current type system
+        const cInk = c.inkType
+          ? c.inkType.map((k: string) => k.toLowerCase())
+          : [];
+        const cType = c.cardType ? c.cardType.toLowerCase() : "";
 
-      const matchInk = hasInk
-        ? cInk.some((i: string) => selectedInk.includes(i))
-        : false;
-      const matchCost = hasCost ? selectedCost.includes(c.cost) : false;
-      const matchType = hasType ? selectedType.includes(cType) : false;
-      const matchSet = hasSet
-        ? c.paramSet
-          ? selectedSets.includes(c.paramSet)
-          : false
-        : false;
+        const matchInk = hasInk
+          ? cInk.some((i: string) => selectedInk.includes(i))
+          : false;
+        const matchCost = hasCost ? selectedCost.includes(c.cost) : false;
+        const matchType = hasType ? selectedType.includes(cType) : false;
+        const matchSet = hasSet
+          ? c.paramSet
+            ? selectedSets.includes(c.paramSet)
+            : false
+          : false;
 
-      if (filterLogic === "AND") {
-        if (hasInk && !matchInk) return false;
-        if (hasCost && !matchCost) return false;
-        if (hasType && !matchType) return false;
-        if (hasSet && !matchSet) return false;
-        return true;
-      }
-      // OR logic
-      return matchInk || matchCost || matchType || matchSet;
-    });
+        if (filterLogic === "AND") {
+          if (hasInk && !matchInk) return false;
+          if (hasCost && !matchCost) return false;
+          if (hasType && !matchType) return false;
+          if (hasSet && !matchSet) return false;
+          return true;
+        }
+        // OR logic
+        return matchInk || matchCost || matchType || matchSet;
+      },
+    );
   });
 
   function toggleInk(ink: string) {
