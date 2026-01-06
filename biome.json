@@ -1,6 +1,6 @@
 {
   "root": true,
-  "$schema": "https://biomejs.dev/schemas/2.3.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.1.3/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -10,7 +10,7 @@
     "ignoreUnknown": true,
     "includes": [
       "**",
-      "!!**/dist/**/*",
+      "!**/dist/**/*",
       "!**/build/**/*",
       "!**/node_modules/**/*",
       "!**/.turbo/**/*",
@@ -18,7 +18,8 @@
       "!**/public/**/*",
       "!**/.svelte-kit/**/*",
       "!**/storybook-static/**/*",
-      "!**/src/lib/paraglide/**/*"
+      "!**/src/lib/paraglide/**/*",
+      "!**/.claude/**/*"
     ]
   },
   "formatter": {
@@ -27,7 +28,6 @@
     "indentWidth": 2
   },
   "html": {
-    "experimentalFullSupportEnabled": true,
     "formatter": {
       "enabled": true,
       "indentScriptAndStyle": true
@@ -39,9 +39,7 @@
     }
   },
   "css": {
-    "parser": {
-      "tailwindDirectives": true
-    }
+    "parser": {}
   },
   "linter": {
     "enabled": true,
