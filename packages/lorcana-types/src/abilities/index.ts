@@ -99,8 +99,13 @@ export type {
   HasNamedCharacterCondition,
   HasNamedItemCondition,
   HasNamedLocationCondition,
+  // Parser catch-all
+  IfCondition,
   // Combat conditions
   InChallengeCondition,
+  // Zone presence conditions
+  InInkwellCondition,
+  InPlayCondition,
   // State conditions
   IsExertedCondition,
   IsReadyCondition,
@@ -110,6 +115,8 @@ export type {
   OrCondition,
   // Choice conditions
   PlayerChoiceCondition,
+  // Legacy resolution (deprecated)
+  ResolutionCondition,
   ResourceCountCondition,
   RevealedMatchesNamedCondition,
   // This-turn conditions

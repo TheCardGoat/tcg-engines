@@ -1,9 +1,10 @@
 export { AbilityVisitor } from "./ability-visitor";
 export { BaseVisitor } from "./base-visitor";
 export {
-  type Condition,
   parseConditionFromCst,
   parseConditionFromText,
+  toCondition,
+  type VisitorCondition,
 } from "./condition-visitor";
 export {
   parseTargetFromCst,

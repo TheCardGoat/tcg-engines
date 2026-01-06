@@ -31,7 +31,7 @@ export interface ParseResult {
   success: boolean;
 
   /** Parsed ability (if successful or partially successful) */
-  ability?: AbilityWithText;
+  ability?: AbilityWithText | null;
 
   /**
    * Non-fatal warnings encountered during parsing

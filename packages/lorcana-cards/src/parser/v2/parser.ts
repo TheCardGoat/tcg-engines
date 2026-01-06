@@ -43,7 +43,12 @@ export function parseAbilityText(
       success: true,
       ability: {
         name,
-        ability,
+        // TODO: Type assertion needed because @tcg/lorcana-engine and @tcg/lorcana-types
+        // have incompatible Ability, Trigger, and Target types. This is a broader
+        // architectural issue that needs to be resolved by re-exporting all ability
+        // types from lorcana-types in the engine, similar to what was done for Condition.
+        // See: packages/lorcana-engine/src/cards/abilities/types/condition-types.ts
+        ability: ability as any,
         text, // Include original text
       },
       warnings: [],
@@ -51,7 +56,7 @@ export function parseAbilityText(
   }
   return {
     success: false,
-    ability: undefined,
+    ability: null,
     warnings: ["Failed to parse ability"],
   };
 }
