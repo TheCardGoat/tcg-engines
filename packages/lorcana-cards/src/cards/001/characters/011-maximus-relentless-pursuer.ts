@@ -9,7 +9,7 @@ export const maximusRelentlessPursuer: CharacterCard = {
   inkType: ["amber"],
   franchise: "Tangled",
   set: "001",
-  text: "HORSE KICK When you play this character, chosen character gets -2 {S} this turn.",
+  text: "Rush HORSE KICK When you play this character, chosen character gets -2 {S} this turn.",
   cost: 3,
   strength: 3,
   willpower: 3,
@@ -22,6 +22,12 @@ export const maximusRelentlessPursuer: CharacterCard = {
   abilities: [
     {
       id: "2z0-1",
+      type: "keyword",
+      keyword: "Rush",
+      text: "Rush",
+    },
+    {
+      id: "2z0-2",
       text: "HORSE KICK When you play this character, chosen character gets -2 {S} this turn.",
       name: "HORSE KICK",
       type: "triggered",

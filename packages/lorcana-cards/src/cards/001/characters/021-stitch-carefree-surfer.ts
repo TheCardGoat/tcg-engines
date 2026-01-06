@@ -21,19 +21,36 @@ export const stitchCarefreeSurfer: CharacterCard = {
   },
   abilities: [
     {
-      type: "action",
-      text: "**OHANA** When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
       id: "jzu-1",
+      type: "triggered",
+      name: "OHANA",
+      text: "When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
       effect: {
         type: "conditional",
         condition: {
-          type: "if",
-          expression: "you have 2 or more other characters in play",
+          type: "zone-count",
+          zone: "play",
+          player: "you",
+          cardType: "character",
+          comparison: {
+            operator: ">=",
+            value: 3,
+            excludeSelf: true,
+          },
         },
         then: {
-          type: "draw",
-          amount: 2,
-          target: "CONTROLLER",
+          type: "optional",
+          effect: {
+            type: "draw",
+            amount: 2,
+            target: "CONTROLLER",
+          },
+          chooser: "CONTROLLER",
         },
       },
     },
