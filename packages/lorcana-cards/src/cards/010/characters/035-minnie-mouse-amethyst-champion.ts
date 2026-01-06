@@ -21,9 +21,8 @@ export const minnieMouseAmethystChampion: CharacterCard = {
   abilities: [
     {
       id: "1kv-1",
-      name: "MYSTICAL BALANCE",
-      text: "Whenever one of your other Amethyst characters is banished in a challenge, you may draw a card.",
       type: "triggered",
+      name: "MYSTICAL BALANCE",
       trigger: {
         event: "banish",
         timing: "whenever",
@@ -38,6 +37,7 @@ export const minnieMouseAmethystChampion: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "MYSTICAL BALANCE Whenever one of your other Amethyst characters is banished in a challenge, you may draw a card.",
     },
   ],
   classifications: ["Dreamborn", "Hero"],

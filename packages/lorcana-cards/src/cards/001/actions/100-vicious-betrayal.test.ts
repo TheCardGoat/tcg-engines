@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { viciousBetrayalundefined } from "./100-vicious-betrayal";
+import { viciousBetrayal } from "./100-vicious-betrayal";
 
 describe("Vicious Betrayal - undefined", () => {
   // Add ability tests here

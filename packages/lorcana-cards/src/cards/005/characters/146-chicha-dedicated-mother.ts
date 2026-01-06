@@ -22,19 +22,18 @@ export const chichaDedicatedMother: CharacterCard = {
   abilities: [
     {
       id: "q5f-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
     {
       id: "q5f-2",
-      name: "ONE ON THE WAY",
-      text: "ONE ON THE WAY During your turn, when you put a card into your inkwell, if it's the second card you've put into your inkwell this turn, you may draw a card.",
       type: "triggered",
+      name: "ONE ON THE WAY",
       trigger: {
         event: "ink",
         timing: "when",
-        on: "YOU",
+        on: "SELF",
       },
       effect: {
         type: "conditional",
@@ -49,6 +48,7 @@ export const chichaDedicatedMother: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      text: "ONE ON THE WAY During your turn, when you put a card into your inkwell, if it's the second card you've put into your inkwell this turn, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

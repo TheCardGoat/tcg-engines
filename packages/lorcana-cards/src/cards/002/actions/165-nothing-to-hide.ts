@@ -17,13 +17,13 @@ export const nothingToHide: ActionCard = {
   abilities: [
     {
       id: "1tm-1",
-      text: "Each opponent reveals their hand. Draw a card.",
       type: "action",
       effect: {
         type: "draw",
         amount: 1,
         target: "EACH_OPPONENT",
       },
+      text: "Each opponent reveals their hand. Draw a card.",
     },
   ],
 };

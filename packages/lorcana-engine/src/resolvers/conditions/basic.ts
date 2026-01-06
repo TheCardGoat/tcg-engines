@@ -1,5 +1,6 @@
 import type {
   HasAnyDamageCondition,
+  IfCondition,
   InChallengeCondition,
   InInkwellCondition,
   InPlayCondition,
@@ -65,5 +66,16 @@ conditionRegistry.register<InChallengeCondition>("in-challenge", {
   complexity: 5,
   evaluate: (_condition, _sourceCard, { context }) => {
     return !!(context?.attacker || context?.defender);
+  },
+});
+
+// Register IfCondition handler (parser catch-all)
+conditionRegistry.register<IfCondition>("if", {
+  complexity: 99,
+  evaluate: (_condition, _sourceCard, _context) => {
+    // IfCondition is a parser catch-all for unparseable expressions
+    // It should be converted to specific conditions before evaluation
+    // For now, always return false to indicate it cannot be evaluated
+    return false;
   },
 });

@@ -1,0 +1,26 @@
+import type { CharacterCard } from "@tcg/lorcana-types";
+
+export const grumpyBadtempered: CharacterCard = {
+  id: "11e",
+  cardType: "character",
+  name: "Grumpy",
+  version: "Bad-Tempered",
+  fullName: "Grumpy - Bad-Tempered",
+  inkType: ["amber"],
+  franchise: "Snow White",
+  set: "002",
+  text: "THERE'S TROUBLE A-BREWIN' Your other Seven Dwarfs characters get +1 {S}.",
+  cost: 4,
+  strength: 3,
+  willpower: 4,
+  lore: 1,
+  cardNumber: 10,
+  inkable: true,
+  missingImplementation: true,
+  missingTests: true,
+  externalIds: {
+    ravensburger: "86c738780547edd83463f5cab7ae01ef47d47e64",
+  },
+  abilities: [],
+  classifications: ["Storyborn", "Ally", "Seven Dwarfs"],
+};

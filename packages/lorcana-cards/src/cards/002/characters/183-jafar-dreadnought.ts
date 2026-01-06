@@ -22,18 +22,17 @@ export const jafarDreadnought: CharacterCard = {
   abilities: [
     {
       id: "22g-1",
-      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {
         ink: 2,
       },
+      text: "Shift 2",
     },
     {
       id: "22g-2",
-      name: "NOW WHERE WERE WE?",
-      text: "During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
       type: "triggered",
+      name: "NOW WHERE WERE WE?",
       trigger: {
         event: "banish",
         timing: "whenever",
@@ -48,6 +47,7 @@ export const jafarDreadnought: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "NOW WHERE WERE WE? During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
     },
   ],
   classifications: ["Floodborn", "Villain", "Sorcerer"],

@@ -22,9 +22,9 @@ export const rayEasygoingFirefly: CharacterCard = {
   abilities: [
     {
       id: "1bk-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

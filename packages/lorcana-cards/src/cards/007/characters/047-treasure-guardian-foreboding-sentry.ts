@@ -22,9 +22,8 @@ export const treasureGuardianForebodingSentry: CharacterCard = {
   abilities: [
     {
       id: "9vb-1",
-      name: "UNTOLD TREASURE",
-      text: "UNTOLD TREASURE When you play this character, if you have an Illusion character in play, you may draw a card.",
       type: "triggered",
+      name: "UNTOLD TREASURE",
       trigger: {
         event: "play",
         timing: "when",
@@ -42,6 +41,7 @@ export const treasureGuardianForebodingSentry: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      text: "UNTOLD TREASURE When you play this character, if you have an Illusion character in play, you may draw a card.",
     },
   ],
   classifications: ["Storyborn"],

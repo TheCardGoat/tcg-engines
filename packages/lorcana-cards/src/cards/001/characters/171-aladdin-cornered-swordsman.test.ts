@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { aladdincorneredSwordsman } from "./171-aladdin-cornered-swordsman";
+import { aladdinCorneredSwordsman } from "./171-aladdin-cornered-swordsman";
 
 describe("Aladdin - Cornered Swordsman", () => {
   // Add ability tests here

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { fryingPanundefined } from "./202-frying-pan";
+import { fryingPan } from "./202-frying-pan";
 
 describe("Frying Pan - undefined", () => {
   // Add ability tests here

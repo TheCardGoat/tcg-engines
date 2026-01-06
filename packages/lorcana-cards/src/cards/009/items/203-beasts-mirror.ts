@@ -18,11 +18,7 @@ export const beastsMirror: ItemCard = {
     {
       id: "6wc-1",
       type: "activated",
-      text: "If you have no cards in your hand, draw a card.",
-      cost: {
-        exert: true,
-        ink: 3,
-      },
+      cost: {},
       effect: {
         type: "conditional",
         condition: {
@@ -35,6 +31,7 @@ export const beastsMirror: ItemCard = {
           target: "CONTROLLER",
         },
       },
+      text: "SHOW ME {E}, 3 {I} — If you have no cards in your hand, draw a card.",
     },
   ],
 };

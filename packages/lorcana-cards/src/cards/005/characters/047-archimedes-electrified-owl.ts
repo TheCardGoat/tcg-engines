@@ -22,25 +22,25 @@ export const archimedesElectrifiedOwl: CharacterCard = {
   abilities: [
     {
       id: "oah-1",
-      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {
         ink: 3,
       },
+      text: "Shift 3",
     },
     {
       id: "oah-2",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
     {
       id: "oah-3",
-      text: "Challenger +3",
       type: "keyword",
       keyword: "Challenger",
       value: 3,
+      text: "Challenger +3",
     },
   ],
   classifications: ["Floodborn", "Ally"],

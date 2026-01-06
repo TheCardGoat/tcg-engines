@@ -22,9 +22,8 @@ export const simbaLostPrince: CharacterCard = {
   abilities: [
     {
       id: "1e1-1",
-      name: "FACE THE PAST",
-      text: "FACE THE PAST During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
       type: "triggered",
+      name: "FACE THE PAST",
       trigger: {
         event: "banish",
         timing: "whenever",
@@ -39,6 +38,7 @@ export const simbaLostPrince: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "FACE THE PAST During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

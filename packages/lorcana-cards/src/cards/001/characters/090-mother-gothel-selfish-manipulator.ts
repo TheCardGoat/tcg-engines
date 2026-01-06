@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const motherGothelselfishManipulator: CharacterCard = {
+export const motherGothelSelfishManipulator: CharacterCard = {
   id: "xse",
   cardType: "character",
   name: "Mother Gothel",

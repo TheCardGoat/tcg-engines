@@ -22,9 +22,8 @@ export const stitchCarefreeSurfer: CharacterCard = {
   abilities: [
     {
       id: "fir-1",
-      name: "OHANA",
-      text: "OHANA When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
       type: "triggered",
+      name: "OHANA",
       trigger: {
         event: "play",
         timing: "when",
@@ -42,6 +41,7 @@ export const stitchCarefreeSurfer: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      text: "OHANA When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Alien"],

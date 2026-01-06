@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const madHattergraciousHost: CharacterCard = {
+export const madHatterGraciousHost: CharacterCard = {
   id: "hej",
   cardType: "character",
   name: "Mad Hatter",
@@ -22,16 +22,12 @@ export const madHattergraciousHost: CharacterCard = {
   abilities: [
     {
       id: "hej-1",
-      name: "TEA PARTY",
-      text: "TEA PARTY Whenever this character is challenged, you may draw a card.",
       type: "triggered",
+      name: "TEA PARTY",
       trigger: {
-        event: "challenge",
+        event: "challenged",
         timing: "whenever",
-        on: "OPPONENT_CHARACTERS",
-        defender: {
-          filters: [{ type: "source", ref: "self" }],
-        },
+        on: "SELF",
       },
       effect: {
         type: "optional",
@@ -42,6 +38,7 @@ export const madHattergraciousHost: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "TEA PARTY Whenever this character is challenged, you may draw a card.",
     },
   ],
   classifications: ["Storyborn"],

@@ -212,6 +212,40 @@ export interface HasCardUnderCondition {
 }
 
 // ============================================================================
+// Zone Presence Conditions (Self)
+// ============================================================================
+
+/**
+ * Check if this card is in inkwell
+ * Used for abilities that only work while card is in inkwell
+ */
+export interface InInkwellCondition {
+  type: "in-inkwell";
+}
+
+/**
+ * Check if this card is in play
+ * Used for abilities that only work while card is in play
+ */
+export interface InPlayCondition {
+  type: "in-play";
+}
+
+// ============================================================================
+// Legacy Resolution Conditions
+// ============================================================================
+
+/**
+ * Check resolution context (Legacy support)
+ * @deprecated Will be removed after Bodyguard/Shift refactoring
+ * Used for "If this was shifted" (legacy) or Bodyguard context
+ */
+export interface ResolutionCondition {
+  type: "resolution";
+  value: "bodyguard" | "shift";
+}
+
+// ============================================================================
 // Count/Comparison Conditions - Strict Variants
 // ============================================================================
 
@@ -517,6 +551,8 @@ export type Condition =
   | IsExertedCondition
   | IsReadyCondition
   | HasCardUnderCondition
+  | InInkwellCondition
+  | InPlayCondition
   // Count Conditions (strict variants)
   | ResourceCountCondition
   | KeywordCharacterCountCondition
@@ -544,7 +580,9 @@ export type Condition =
   | OrCondition
   | NotCondition
   // Parser catch-all
-  | IfCondition;
+  | IfCondition
+  // Legacy Resolution (deprecated)
+  | ResolutionCondition;
 
 // ============================================================================
 // Condition Builders (convenience)

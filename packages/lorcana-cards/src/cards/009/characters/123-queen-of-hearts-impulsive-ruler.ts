@@ -22,9 +22,9 @@ export const queenOfHeartsImpulsiveRuler: CharacterCard = {
   abilities: [
     {
       id: "106-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
+      text: "Rush",
     },
   ],
   classifications: ["Storyborn", "Villain", "Queen"],

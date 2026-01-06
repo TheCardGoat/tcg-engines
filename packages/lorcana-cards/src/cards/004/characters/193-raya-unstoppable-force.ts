@@ -22,23 +22,22 @@ export const rayaUnstoppableForce: CharacterCard = {
   abilities: [
     {
       id: "jk9-1",
-      text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",
       value: 2,
+      text: "Challenger +2",
     },
     {
       id: "jk9-2",
-      text: "Resist +2",
       type: "keyword",
       keyword: "Resist",
       value: 2,
+      text: "Resist +2",
     },
     {
       id: "jk9-3",
-      name: "YOU GAVE IT YOUR BEST",
-      text: "YOU GAVE IT YOUR BEST During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
       type: "triggered",
+      name: "YOU GAVE IT YOUR BEST",
       trigger: {
         event: "banish",
         timing: "whenever",
@@ -53,6 +52,7 @@ export const rayaUnstoppableForce: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "YOU GAVE IT YOUR BEST During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Princess"],

@@ -17,13 +17,13 @@ export const makingMagic: ActionCard = {
   abilities: [
     {
       id: "1ci-1",
-      text: "Move 1 damage counter from chosen character to chosen opposing character. Draw a card.",
       type: "action",
       effect: {
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
       },
+      text: "Move 1 damage counter from chosen character to chosen opposing character. Draw a card.",
     },
   ],
 };

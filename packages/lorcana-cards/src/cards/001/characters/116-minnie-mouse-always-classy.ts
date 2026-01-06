@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const minnieMousealwaysClassy: CharacterCard = {
+export const minnieMouseAlwaysClassy: CharacterCard = {
   id: "wo8",
   cardType: "character",
   name: "Minnie Mouse",

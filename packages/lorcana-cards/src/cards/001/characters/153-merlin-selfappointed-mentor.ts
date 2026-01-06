@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const merlinselfAppointedMentor: CharacterCard = {
+export const merlinSelfappointedMentor: CharacterCard = {
   id: "y4v",
   cardType: "character",
   name: "Merlin",

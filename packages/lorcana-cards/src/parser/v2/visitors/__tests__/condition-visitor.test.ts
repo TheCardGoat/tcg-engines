@@ -5,7 +5,7 @@
  * NOTE: The CST-based tests (parseConditionFromCst) are skipped because the
  * conditionClause grammar rule is defined in condition-grammar.ts but not yet
  * integrated into the LorcanaAbilityParser class. The mixin function
- * addConditionRules() exists but is never called.
+ * addVisitorConditionRules() exists but is never called.
  *
  * TODO: Integrate condition grammar rules into the parser to enable these tests.
  */
@@ -14,18 +14,18 @@ import { describe, expect, it } from "bun:test";
 import { LorcanaAbilityParser } from "../../grammar";
 import { LorcanaLexer } from "../../lexer";
 import {
-  type Condition,
   parseConditionFromCst,
   parseConditionFromText,
+  type VisitorCondition,
 } from "../condition-visitor";
 
-describe("Condition Visitor", () => {
+describe("VisitorCondition Visitor", () => {
   const parser = new LorcanaAbilityParser();
 
   /**
    * Helper to lex and parse text into CST
    */
-  function parseConditionClause(text: string) {
+  function parseVisitorConditionClause(text: string) {
     const lexResult = LorcanaLexer.tokenize(text);
     parser.input = lexResult.tokens;
     // biome-ignore lint/suspicious/noExplicitAny: Dynamic rule access for testing
@@ -44,7 +44,9 @@ describe("Condition Visitor", () => {
   describe.skip("parseConditionFromCst", () => {
     describe("if conditions", () => {
       it("parses 'if you have another character'", () => {
-        const cst = parseConditionClause("if you have another character");
+        const cst = parseVisitorConditionClause(
+          "if you have another character",
+        );
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -55,7 +57,7 @@ describe("Condition Visitor", () => {
       });
 
       it("parses 'if you have 5 lore'", () => {
-        const cst = parseConditionClause("if you have 5 lore");
+        const cst = parseVisitorConditionClause("if you have 5 lore");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -64,7 +66,7 @@ describe("Condition Visitor", () => {
       });
 
       it("parses 'if your character'", () => {
-        const cst = parseConditionClause("if your character");
+        const cst = parseVisitorConditionClause("if your character");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -74,7 +76,7 @@ describe("Condition Visitor", () => {
       });
 
       it("handles complex if expression", () => {
-        const cst = parseConditionClause("if you have 3 characters");
+        const cst = parseVisitorConditionClause("if you have 3 characters");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -87,7 +89,7 @@ describe("Condition Visitor", () => {
 
     describe("during conditions", () => {
       it("parses 'during your turn'", () => {
-        const cst = parseConditionClause("during your turn");
+        const cst = parseVisitorConditionClause("during your turn");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -96,7 +98,7 @@ describe("Condition Visitor", () => {
       });
 
       it("parses 'during turn' (without 'your')", () => {
-        const cst = parseConditionClause("during turn");
+        const cst = parseVisitorConditionClause("during turn");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -105,7 +107,7 @@ describe("Condition Visitor", () => {
       });
 
       it("parses 'during your phase'", () => {
-        const cst = parseConditionClause("during your phase");
+        const cst = parseVisitorConditionClause("during your phase");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -117,7 +119,7 @@ describe("Condition Visitor", () => {
 
     describe("at conditions", () => {
       it("parses 'at the start of your turn'", () => {
-        const cst = parseConditionClause("at the start of your turn");
+        const cst = parseVisitorConditionClause("at the start of your turn");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -128,7 +130,7 @@ describe("Condition Visitor", () => {
       });
 
       it("parses 'at the beginning'", () => {
-        const cst = parseConditionClause("at the beginning");
+        const cst = parseVisitorConditionClause("at the beginning");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -137,7 +139,7 @@ describe("Condition Visitor", () => {
       });
 
       it("parses 'at start'", () => {
-        const cst = parseConditionClause("at start");
+        const cst = parseVisitorConditionClause("at start");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -146,7 +148,7 @@ describe("Condition Visitor", () => {
       });
 
       it("handles multiple identifiers in at condition", () => {
-        const cst = parseConditionClause("at the end of the turn");
+        const cst = parseVisitorConditionClause("at the end of the turn");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -157,7 +159,7 @@ describe("Condition Visitor", () => {
 
     describe("with conditions", () => {
       it("parses 'with 5 lore'", () => {
-        const cst = parseConditionClause("with 5 lore");
+        const cst = parseVisitorConditionClause("with 5 lore");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -166,7 +168,7 @@ describe("Condition Visitor", () => {
       });
 
       it("parses 'with strength'", () => {
-        const cst = parseConditionClause("with strength");
+        const cst = parseVisitorConditionClause("with strength");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -175,7 +177,7 @@ describe("Condition Visitor", () => {
       });
 
       it("parses 'with 3 or more characters'", () => {
-        const cst = parseConditionClause("with 3 or more characters");
+        const cst = parseVisitorConditionClause("with 3 or more characters");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -186,7 +188,7 @@ describe("Condition Visitor", () => {
 
     describe("without conditions", () => {
       it("parses 'without abilities'", () => {
-        const cst = parseConditionClause("without abilities");
+        const cst = parseVisitorConditionClause("without abilities");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -195,7 +197,7 @@ describe("Condition Visitor", () => {
       });
 
       it("parses 'without strength'", () => {
-        const cst = parseConditionClause("without strength");
+        const cst = parseVisitorConditionClause("without strength");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -204,7 +206,7 @@ describe("Condition Visitor", () => {
       });
 
       it("parses 'without evasive'", () => {
-        const cst = parseConditionClause("without evasive");
+        const cst = parseVisitorConditionClause("without evasive");
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
@@ -232,11 +234,11 @@ describe("Condition Visitor", () => {
       ];
 
       for (const { text, expectedType } of conditionTexts) {
-        const cst = parseConditionClause(text);
+        const cst = parseVisitorConditionClause(text);
         const condition = parseConditionFromCst(cst.children);
 
         expect(condition).toBeDefined();
-        expect(condition?.type).toBe(expectedType as Condition["type"]);
+        expect(condition?.type).toBe(expectedType as VisitorCondition["type"]);
       }
     });
   });
@@ -461,12 +463,12 @@ describe("Condition Visitor", () => {
       for (const { text, expectedType } of conditionTexts) {
         const condition = parseConditionFromText(text);
         expect(condition).toBeDefined();
-        expect(condition?.type).toBe(expectedType as Condition["type"]);
+        expect(condition?.type).toBe(expectedType as VisitorCondition["type"]);
       }
     });
 
     it("handles complex expressions", () => {
-      const complexConditions = [
+      const complexVisitorConditions = [
         "if you have 3 or more characters",
         "during your opponent's turn",
         "at the start of your next turn",
@@ -474,7 +476,7 @@ describe("Condition Visitor", () => {
         "without any abilities",
       ];
 
-      for (const text of complexConditions) {
+      for (const text of complexVisitorConditions) {
         const condition = parseConditionFromText(text);
         expect(condition).toBeDefined();
         expect(condition?.expression).toBeDefined();
@@ -509,13 +511,13 @@ describe("Condition Visitor", () => {
   });
 
   describe("type safety", () => {
-    it("returns Condition type with correct structure", () => {
+    it("returns VisitorCondition type with correct structure", () => {
       const condition = parseConditionFromText("if you have character");
 
       expect(condition).toBeDefined();
       if (condition) {
         // Type check
-        const typed: Condition = condition;
+        const typed: VisitorCondition = condition;
         expect(typed.type).toBeDefined();
         expect(typed.expression).toBeDefined();
         expect(typeof typed.type).toBe("string");
@@ -524,7 +526,7 @@ describe("Condition Visitor", () => {
     });
 
     it("type field matches expected values", () => {
-      const validTypes: Condition["type"][] = [
+      const validTypes: VisitorCondition["type"][] = [
         "if",
         "during",
         "at",

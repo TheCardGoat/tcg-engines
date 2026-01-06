@@ -5,7 +5,7 @@
 
 import { describe, expect, it } from "bun:test";
 import type { Effect } from "../../../types";
-import type { Condition } from "../../../visitors/condition-visitor";
+import type { VisitorCondition } from "../../../visitors/condition-visitor";
 import { parseCompositeEffect } from "../index";
 
 describe("Nested Composite Effects Integration", () => {
@@ -71,7 +71,8 @@ describe("Nested Composite Effects Integration", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
 
-      const condition = (result as Effect & { condition: Condition }).condition;
+      const condition = (result as Effect & { condition: VisitorCondition })
+        .condition;
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("you have another character");
 

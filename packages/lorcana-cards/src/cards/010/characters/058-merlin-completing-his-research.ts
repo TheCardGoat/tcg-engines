@@ -22,16 +22,15 @@ export const merlinCompletingHisResearch: CharacterCard = {
   abilities: [
     {
       id: "mr7-1",
-      text: "Boost +2",
       type: "keyword",
       keyword: "Boost",
       value: 2,
+      text: "Boost 2 {I}",
     },
     {
       id: "mr7-2",
-      name: "LEGACY OF LEARNING",
-      text: "When this character is banished in a challenge, if he had a card under him, draw 2 cards.",
       type: "triggered",
+      name: "LEGACY OF LEARNING",
       trigger: {
         event: "banish",
         timing: "when",
@@ -49,6 +48,7 @@ export const merlinCompletingHisResearch: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      text: "LEGACY OF LEARNING When this character is banished in a challenge, if he had a card under him, draw 2 cards.",
     },
   ],
   classifications: ["Storyborn", "Mentor", "Sorcerer", "Whisper"],

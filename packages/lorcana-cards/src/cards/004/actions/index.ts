@@ -1,1 +1,13 @@
+export { firstAid } from "./027-first-aid";
+export { signTheScroll } from "./030-sign-the-scroll";
+export { swingIntoAction } from "./062-swing-into-action";
+export { ursulasPlan } from "./063-ursulas-plan";
+export { dodge } from "./093-dodge";
+export { ursulasTrickery } from "./096-ursulas-trickery";
 export { weDontTalkAboutBruno } from "./097-we-dont-talk-about-bruno";
+export { brawl } from "./130-brawl";
+export { glean } from "./163-glean";
+export { seldomAllTheySeem } from "./164-seldom-all-they-seem";
+export { treasuresUntold } from "./165-treasures-untold";
+export { avalanche } from "./195-avalanche";
+export { tritonsDecree } from "./199-tritons-decree";

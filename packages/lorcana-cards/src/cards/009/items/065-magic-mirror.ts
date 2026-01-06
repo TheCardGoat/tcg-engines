@@ -17,14 +17,14 @@ export const magicMirror: ItemCard = {
   abilities: [
     {
       id: "6c3-1",
-      text: "SPEAK! {E}, 4 {I} — Draw a card.",
-      cost: { exert: true, ink: 4 },
       type: "activated",
+      cost: {},
       effect: {
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
       },
+      text: "SPEAK! {E}, 4 {I} — Draw a card.",
     },
   ],
 };

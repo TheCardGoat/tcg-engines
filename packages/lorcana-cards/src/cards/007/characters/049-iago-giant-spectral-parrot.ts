@@ -22,15 +22,15 @@ export const iagoGiantSpectralParrot: CharacterCard = {
   abilities: [
     {
       id: "145-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
     {
       id: "145-2",
-      text: "Vanish",
       type: "keyword",
       keyword: "Vanish",
+      text: "Vanish",
     },
   ],
   classifications: ["Dreamborn", "Ally", "Illusion"],

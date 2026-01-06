@@ -31,9 +31,6 @@ export async function getAllCardsById(): Promise<
   return allCardsByIdCache;
 }
 
-// Synchronous exports
-export { allCards, allCardsById } from "./cards";
-
 // Export all types
 export type {
   AbilityDefinition,

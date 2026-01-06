@@ -1,3 +1,16 @@
+export { cleansingRainwater } from "./029-cleansing-rainwater";
+export { heartOfAtlantis } from "./030-heart-of-atlantis";
+export { wildcatsWrench } from "./031-wildcats-wrench";
+export { theLamp } from "./064-the-lamp";
+export { theSorcerersHat } from "./065-the-sorcerers-hat";
 export { airfoil } from "./097-airfoil";
+export { robinsBow } from "./098-robins-bow";
+export { starlightVial } from "./099-starlight-vial";
+export { mauisFishHook } from "./132-mauis-fish-hook";
 export { sumerianTalisman } from "./133-sumerian-talisman";
+export { luckyDime } from "./165-lucky-dime";
 export { scroogesTopHat } from "./166-scrooges-top-hat";
+export { vaultDoor } from "./167-vault-door";
+export { captainHooksRapier } from "./199-captain-hooks-rapier";
+export { gizmosuit } from "./200-gizmosuit";
+export { mapOfTreasurePlanet } from "./201-map-of-treasure-planet";

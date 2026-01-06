@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { mufasakingOfThePrideLands } from "./155-mufasa-king-of-the-pride-lands";
+import { mufasaKingOfThePrideLands } from "./155-mufasa-king-of-the-pride-lands";
 
 describe("Mufasa - King of the Pride Lands", () => {
   // Add ability tests here

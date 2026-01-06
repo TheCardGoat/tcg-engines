@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const donaldDuckstruttingHisStuff: CharacterCard = {
+export const donaldDuckStruttingHisStuff: CharacterCard = {
   id: "10b",
   cardType: "character",
   name: "Donald Duck",
@@ -21,9 +21,9 @@ export const donaldDuckstruttingHisStuff: CharacterCard = {
   abilities: [
     {
       id: "10b-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
+      text: "Ward",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Inventor"],

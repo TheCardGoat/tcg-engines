@@ -29,8 +29,6 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
     },
     {
       id: "45t-2",
-      name: "STUNNING TRANSFORMATION",
-      text: "Whenever you put a card under this character, you may banish chosen opposing character. If you do, their player may reveal the top card of their deck. If that card is a character or item card, they may play it for free. Otherwise, they put it on the bottom of their deck.",
       type: "triggered",
       trigger: {
         event: "ink",
@@ -54,7 +52,7 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
               type: "conditional",
               condition: {
                 type: "if",
-                expression: "you do",
+                expression: "target banished",
               },
               then: {
                 type: "look-at-cards",
@@ -66,6 +64,7 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
           ],
         },
       },
+      text: "STUNNING TRANSFORMATION Whenever you put a card under this character, you may banish chosen opposing character. If you do, their player may reveal the top card of their deck. If that card is a character or item card, they may play it for free. Otherwise, they put it on the bottom of their deck.",
     },
   ],
   classifications: ["Storyborn", "Ally", "Fairy", "Sorcerer", "Whisper"],

@@ -1,0 +1,26 @@
+import type { CharacterCard } from "@tcg/lorcana-types";
+
+export const dopeyAlwaysPlayful: CharacterCard = {
+  id: "7r7",
+  cardType: "character",
+  name: "Dopey",
+  version: "Always Playful",
+  fullName: "Dopey - Always Playful",
+  inkType: ["amber"],
+  franchise: "Snow White",
+  set: "002",
+  text: "ODD ONE OUT When this character is banished, your other Seven Dwarfs characters get +2 {S} until the start of your next turn.",
+  cost: 3,
+  strength: 2,
+  willpower: 2,
+  lore: 1,
+  cardNumber: 6,
+  inkable: true,
+  missingImplementation: true,
+  missingTests: true,
+  externalIds: {
+    ravensburger: "1bf42885e3bfca3782dbf920f153ae8a775eaa03",
+  },
+  abilities: [],
+  classifications: ["Storyborn", "Ally", "Seven Dwarfs"],
+};

@@ -1,14 +1,14 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine } from "@tcg/lorcana/testing";
-import { philoctetestrainerOfHeroes } from "./156-philoctetes-trainer-of-heroes";
+import { philoctetesTrainerOfHeroes } from "./156-philoctetes-trainer-of-heroes";
 
 describe("Philoctetes - Trainer of Heroes", () => {
   it("should have Support ability", () => {
     const testEngine = new LorcanaTestEngine({
-      play: [philoctetestrainerOfHeroes],
+      play: [philoctetesTrainerOfHeroes],
     });
 
-    const cardUnderTest = testEngine.getCardModel(philoctetestrainerOfHeroes);
+    const cardUnderTest = testEngine.getCardModel(philoctetesTrainerOfHeroes);
     expect(cardUnderTest.hasSupport()).toBe(true);
   });
 });

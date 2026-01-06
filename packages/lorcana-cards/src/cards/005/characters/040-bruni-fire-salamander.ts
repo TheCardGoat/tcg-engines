@@ -22,15 +22,14 @@ export const bruniFireSalamander: CharacterCard = {
   abilities: [
     {
       id: "29y-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
     {
       id: "29y-2",
-      name: "PARTING GIFT",
-      text: "PARTING GIFT When this character is banished, you may draw a card.",
       type: "triggered",
+      name: "PARTING GIFT",
       trigger: {
         event: "banish",
         timing: "when",
@@ -45,6 +44,7 @@ export const bruniFireSalamander: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "PARTING GIFT When this character is banished, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

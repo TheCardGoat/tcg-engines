@@ -27,8 +27,8 @@ export const weKnowTheWay: ActionCard = {
             type: "shuffle-into-deck",
             target: {
               selector: "chosen",
-              count: 1,
               filter: [{ type: "zone", zone: "discard" }],
+              count: 1,
             },
           },
           {
@@ -50,7 +50,7 @@ export const weKnowTheWay: ActionCard = {
             },
             else: {
               type: "return-to-hand",
-              target: "revealed",
+              target: { ref: "previous-target" },
             },
           },
         ],

@@ -22,9 +22,9 @@ export const palaceGuardSpectralSentry: CharacterCard = {
   abilities: [
     {
       id: "1v0-1",
-      text: "Vanish",
       type: "keyword",
       keyword: "Vanish",
+      text: "Vanish",
     },
   ],
   classifications: ["Dreamborn", "Ally", "Illusion"],

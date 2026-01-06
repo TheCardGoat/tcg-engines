@@ -7,7 +7,10 @@
 import type { CstNode } from "chevrotain";
 import { logger } from "../../logging";
 import type { Condition, ConditionalEffect, Effect } from "../../types";
-import { parseConditionFromText } from "../../visitors/condition-visitor";
+import {
+  parseConditionFromText,
+  toCondition,
+} from "../../visitors/condition-visitor";
 import type { EffectParser } from "../atomic";
 import { parseAtomicEffect } from "../atomic";
 
@@ -60,11 +63,11 @@ function parseFromText(text: string): ConditionalEffect | null {
     // Parse the condition using the condition visitor
     const parsedCondition = parseConditionFromText(`if ${conditionText}`);
 
-    // We need a condition - if parsing failed, create a placeholder
-    const condition: Condition = (parsedCondition as unknown as Condition) || {
+    // Convert VisitorCondition to full Condition type
+    const condition: Condition = toCondition(parsedCondition) || {
       type: "has-character-count",
       controller: "you",
-      comparison: "at-least",
+      comparison: "greater-or-equal",
       count: 0,
     };
 
@@ -109,11 +112,11 @@ function parseFromText(text: string): ConditionalEffect | null {
     return null;
   }
 
-  // We need a condition - if parsing failed, create a placeholder
-  const condition: Condition = (parsedCondition as unknown as Condition) || {
+  // Convert VisitorCondition to full Condition type
+  const condition: Condition = toCondition(parsedCondition) || {
     type: "has-character-count",
     controller: "you",
-    comparison: "at-least",
+    comparison: "greater-or-equal",
     count: 0,
   };
 

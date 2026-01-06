@@ -19,11 +19,17 @@ export const hakunaMatata: ActionCard = {
     {
       id: "10e-1",
       text: "Remove up to 3 damage from each of your characters.",
+      name: "Hakuna Matata",
       type: "action",
       effect: {
         type: "remove-damage",
         amount: 3,
-        target: "YOUR_CHARACTERS",
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "you",
+          cardTypes: ["character"],
+        },
         upTo: true,
       },
     },

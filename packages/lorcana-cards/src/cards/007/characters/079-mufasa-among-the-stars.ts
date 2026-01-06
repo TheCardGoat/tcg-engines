@@ -22,25 +22,25 @@ export const mufasaAmongTheStars: CharacterCard = {
   abilities: [
     {
       id: "1c7-1",
-      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {
         ink: 5,
       },
+      text: "Shift 5",
     },
     {
       id: "1c7-2",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
     {
       id: "1c7-3",
-      text: "Resist +1",
       type: "keyword",
       keyword: "Resist",
       value: 1,
+      text: "Resist +1",
     },
   ],
   classifications: ["Floodborn", "Mentor", "King"],

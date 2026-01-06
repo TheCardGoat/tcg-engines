@@ -1,0 +1,26 @@
+import type { CharacterCard } from "@tcg/lorcana-types";
+
+export const ursulaWhisperOfVanessa: CharacterCard = {
+  id: "86p",
+  cardType: "character",
+  name: "Ursula",
+  version: "Whisper of Vanessa",
+  fullName: "Ursula - Whisper of Vanessa",
+  inkType: ["amethyst"],
+  franchise: "Little Mermaid",
+  set: "010",
+  text: "Boost 1 {I} (Once during your turn, you may pay 1 {I} to put the top card of your deck facedown under this character.)\nSLIPPERY SPELL While there's a card under this character, she gets +1 {L} and gains Evasive. (Only characters with Evasive can challenge them.)",
+  cost: 5,
+  strength: 4,
+  willpower: 5,
+  lore: 2,
+  cardNumber: 59,
+  inkable: true,
+  missingImplementation: true,
+  missingTests: true,
+  externalIds: {
+    ravensburger: "1d80b7ef4fbf39b61830fba896f5c20514ed5e87",
+  },
+  abilities: [],
+  classifications: ["Storyborn", "Villain", "Sorcerer", "Whisper"],
+};

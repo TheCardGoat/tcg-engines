@@ -22,9 +22,9 @@ export const mulanSoldierInTraining: CharacterCard = {
   abilities: [
     {
       id: "x7m-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
+      text: "Rush",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess"],

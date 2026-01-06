@@ -352,12 +352,12 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
             const abilityName = parseResult.ability.name;
 
             // Build ability object with parsed structure by spreading parsed properties
-            // This ensures we capture cost, trigger, condition, etc.
+            // Spread parsedAbility first so we can override properties like text/name if needed
             const engineAbility = {
               id: abilityId,
-              text: parseResult.ability.text,
-              ...(abilityName && { name: abilityName }),
               ...parsedAbility,
+              text: parseResult.ability.text || text, // Fallback to raw text if parser result is empty
+              ...(abilityName && { name: abilityName }),
             } as AbilityDefinition;
 
             engineAbilities.push(engineAbility);
@@ -532,7 +532,6 @@ export function generateCardFileContent(
   depth: number,
 ): string {
   const typeName = getCanonicalTypeName(card.cardType);
-
   // Convert canonical card to lorcana format
   const lorcanaCard = convertToLorcanaCard(card);
 

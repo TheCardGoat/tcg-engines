@@ -22,15 +22,7 @@ export const intoTheUnknown: ActionCard = {
       type: "action",
       effect: {
         type: "put-into-inkwell",
-        source: {
-          selector: "chosen",
-          count: 1,
-          filter: [
-            {
-              type: "exerted",
-            },
-          ],
-        },
+        source: "chosen-character",
         target: "CARD_OWNER",
         exerted: true,
       },

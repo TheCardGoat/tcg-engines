@@ -22,9 +22,8 @@ export const goofySetForAdventure: CharacterCard = {
   abilities: [
     {
       id: "1yc-1",
-      name: "FAMILY VACATION Once",
-      text: "FAMILY VACATION Once during your turn, whenever this character moves to a location, you may move one of your other characters to that location for free. If you do, draw a card.",
       type: "triggered",
+      name: "FAMILY VACATION Once",
       trigger: {
         event: "banish",
         timing: "whenever",
@@ -35,6 +34,7 @@ export const goofySetForAdventure: CharacterCard = {
         amount: 1,
         target: "CONTROLLER",
       },
+      text: "FAMILY VACATION Once during your turn, whenever this character moves to a location, you may move one of your other characters to that location for free. If you do, draw a card.",
     },
   ],
   classifications: ["Storyborn", "Hero"],

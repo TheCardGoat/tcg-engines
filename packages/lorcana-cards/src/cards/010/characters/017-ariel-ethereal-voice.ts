@@ -22,16 +22,15 @@ export const arielEtherealVoice: CharacterCard = {
   abilities: [
     {
       id: "1l1-1",
-      text: "Boost +1",
       type: "keyword",
       keyword: "Boost",
       value: 1,
+      text: "Boost 1 {I}",
     },
     {
       id: "1l1-2",
-      name: "COMMAND PERFORMANCE",
-      text: "Once during your turn, whenever you play a song, if there's a card under this character, you may draw a card.",
       type: "triggered",
+      name: "COMMAND PERFORMANCE Once",
       trigger: {
         event: "play",
         timing: "whenever",
@@ -52,6 +51,7 @@ export const arielEtherealVoice: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      text: "COMMAND PERFORMANCE Once during your turn, whenever you play a song, if there's a card under this character, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess", "Whisper"],

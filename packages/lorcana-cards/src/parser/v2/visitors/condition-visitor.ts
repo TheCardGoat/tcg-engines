@@ -3,13 +3,15 @@
  * Transforms CST nodes for condition clauses into typed condition objects.
  */
 
+import type { IfCondition } from "@tcg/lorcana-types/abilities";
 import type { CstNode, IToken } from "chevrotain";
 import { logger } from "../logging";
 
 /**
- * Condition object representing when/under what circumstances an effect applies.
+ * Intermediate condition object representing when/under what circumstances an effect applies.
+ * This is converted to full Condition types from @tcg/lorcana-types before use.
  */
-export interface Condition {
+export interface VisitorCondition {
   type: "if" | "during" | "at" | "with" | "without";
   expression: string;
 }
@@ -25,7 +27,7 @@ export function parseConditionFromCst(ctx: {
   withCondition?: CstNode[];
   withoutCondition?: CstNode[];
   [key: string]: unknown;
-}): Condition | null {
+}): VisitorCondition | null {
   logger.debug("Parsing condition from CST", { ctx });
 
   // Determine condition type
@@ -58,7 +60,7 @@ export function parseConditionFromCst(ctx: {
 function parseIfConditionFromCst(ctx: {
   conditionExpression?: CstNode[];
   [key: string]: unknown;
-}): Condition | null {
+}): VisitorCondition | null {
   logger.debug("Parsing 'if' condition from CST", { ctx });
 
   const expression = extractExpressionFromCst(ctx.conditionExpression);
@@ -68,7 +70,7 @@ function parseIfConditionFromCst(ctx: {
     return null;
   }
 
-  const condition: Condition = {
+  const condition: VisitorCondition = {
     type: "if",
     expression,
   };
@@ -84,7 +86,7 @@ function parseDuringConditionFromCst(ctx: {
   Your?: IToken[];
   Identifier?: IToken[];
   [key: string]: unknown;
-}): Condition | null {
+}): VisitorCondition | null {
   logger.debug("Parsing 'during' condition from CST", { ctx });
 
   const parts: string[] = [];
@@ -104,7 +106,7 @@ function parseDuringConditionFromCst(ctx: {
     return null;
   }
 
-  const condition: Condition = {
+  const condition: VisitorCondition = {
     type: "during",
     expression,
   };
@@ -119,7 +121,7 @@ function parseDuringConditionFromCst(ctx: {
 function parseAtConditionFromCst(ctx: {
   Identifier?: IToken[];
   [key: string]: unknown;
-}): Condition | null {
+}): VisitorCondition | null {
   logger.debug("Parsing 'at' condition from CST", { ctx });
 
   if (!ctx.Identifier || ctx.Identifier.length === 0) {
@@ -131,7 +133,7 @@ function parseAtConditionFromCst(ctx: {
     .join(" ")
     .toLowerCase();
 
-  const condition: Condition = {
+  const condition: VisitorCondition = {
     type: "at",
     expression,
   };
@@ -146,7 +148,7 @@ function parseAtConditionFromCst(ctx: {
 function parseWithConditionFromCst(ctx: {
   conditionExpression?: CstNode[];
   [key: string]: unknown;
-}): Condition | null {
+}): VisitorCondition | null {
   logger.debug("Parsing 'with' condition from CST", { ctx });
 
   const expression = extractExpressionFromCst(ctx.conditionExpression);
@@ -156,7 +158,7 @@ function parseWithConditionFromCst(ctx: {
     return null;
   }
 
-  const condition: Condition = {
+  const condition: VisitorCondition = {
     type: "with",
     expression,
   };
@@ -171,7 +173,7 @@ function parseWithConditionFromCst(ctx: {
 function parseWithoutConditionFromCst(ctx: {
   conditionExpression?: CstNode[];
   [key: string]: unknown;
-}): Condition | null {
+}): VisitorCondition | null {
   logger.debug("Parsing 'without' condition from CST", { ctx });
 
   const expression = extractExpressionFromCst(ctx.conditionExpression);
@@ -181,7 +183,7 @@ function parseWithoutConditionFromCst(ctx: {
     return null;
   }
 
-  const condition: Condition = {
+  const condition: VisitorCondition = {
     type: "without",
     expression,
   };
@@ -244,12 +246,14 @@ function extractExpressionFromCst(
 /**
  * Parse condition from text string (regex-based fallback).
  * Used when grammar-based parsing is not available.
+ *
+ * Returns VisitorCondition which can be converted to full Condition types.
  */
-export function parseConditionFromText(text: string): Condition | null {
+export function parseConditionFromText(text: string): VisitorCondition | null {
   logger.debug("Parsing condition from text", { text });
 
   // Common condition patterns
-  const patterns: Array<{ regex: RegExp; type: Condition["type"] }> = [
+  const patterns: Array<{ regex: RegExp; type: VisitorCondition["type"] }> = [
     { regex: /\bif\s+(.+?)(?:,|$)/i, type: "if" },
     { regex: /\bduring\s+(.+?)(?:,|$)/i, type: "during" },
     { regex: /\bat\s+(.+?)(?:,|$)/i, type: "at" },
@@ -260,7 +264,7 @@ export function parseConditionFromText(text: string): Condition | null {
   for (const pattern of patterns) {
     const match = text.match(pattern.regex);
     if (match) {
-      const condition: Condition = {
+      const condition: VisitorCondition = {
         type: pattern.type,
         expression: match[1].trim(),
       };
@@ -272,4 +276,20 @@ export function parseConditionFromText(text: string): Condition | null {
 
   logger.debug("No condition pattern matched in text");
   return null;
+}
+
+/**
+ * Convert VisitorCondition to full Condition type from @tcg/lorcana-types.
+ * All variants are converted to IfCondition as the catch-all type.
+ * The expression is preserved without adding the type prefix.
+ */
+export function toCondition(
+  visitor: VisitorCondition | null,
+): IfCondition | null {
+  if (!visitor) return null;
+
+  return {
+    type: "if",
+    expression: visitor.expression,
+  };
 }

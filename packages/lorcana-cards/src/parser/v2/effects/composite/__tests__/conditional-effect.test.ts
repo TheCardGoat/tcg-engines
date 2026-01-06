@@ -1,11 +1,11 @@
 /**
- * Tests for Conditional Effect Parser
+ * Tests for VisitorConditional Effect Parser
  * Ensures conditional effects like "if X, then Y" are parsed correctly.
  */
 
 import { describe, expect, it } from "bun:test";
 import type { Effect } from "../../../types";
-import type { Condition } from "../../../visitors/condition-visitor";
+import type { VisitorCondition } from "../../../visitors/condition-visitor";
 import { conditionalEffectParser } from "../conditional-effect";
 
 describe("conditionalEffectParser", () => {
@@ -17,7 +17,8 @@ describe("conditionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
-      const condition = (result as Effect & { condition: Condition }).condition;
+      const condition = (result as Effect & { condition: VisitorCondition })
+        .condition;
       const thenEffect = (result as Effect & { then: Effect }).then;
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("you have another character");
@@ -31,7 +32,8 @@ describe("conditionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
-      const condition = (result as Effect & { condition: Condition }).condition;
+      const condition = (result as Effect & { condition: VisitorCondition })
+        .condition;
       const thenEffect = (result as Effect & { then: Effect }).then;
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("you have another character");
@@ -45,7 +47,8 @@ describe("conditionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
-      const condition = (result as Effect & { condition: Condition }).condition;
+      const condition = (result as Effect & { condition: VisitorCondition })
+        .condition;
       const thenEffect = (result as Effect & { then: Effect }).then;
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("you control 3 or more characters");
@@ -59,7 +62,8 @@ describe("conditionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
-      const condition = (result as Effect & { condition: Condition }).condition;
+      const condition = (result as Effect & { condition: VisitorCondition })
+        .condition;
       const thenEffect = (result as Effect & { then: Effect }).then;
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("this character is exerted");
@@ -73,7 +77,8 @@ describe("conditionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
-      const condition = (result as Effect & { condition: Condition }).condition;
+      const condition = (result as Effect & { condition: VisitorCondition })
+        .condition;
       const thenEffect = (result as Effect & { then: Effect }).then;
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("your hand has 5 or more cards");
@@ -207,7 +212,8 @@ describe("conditionalEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("conditional");
-      const condition = (result as Effect & { condition: Condition }).condition;
+      const condition = (result as Effect & { condition: VisitorCondition })
+        .condition;
       expect(condition.expression).toContain("you");
       expect(condition.expression).toContain("have");
     });
@@ -230,7 +236,8 @@ describe("conditionalEffectParser", () => {
         "if you have another character, gain 2 lore",
       );
 
-      const condition = (result as Effect & { condition: Condition }).condition;
+      const condition = (result as Effect & { condition: VisitorCondition })
+        .condition;
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("you have another character");
     });
@@ -240,7 +247,8 @@ describe("conditionalEffectParser", () => {
         "if you control 3 or more characters, gain 2 lore",
       );
 
-      const condition = (result as Effect & { condition: Condition }).condition;
+      const condition = (result as Effect & { condition: VisitorCondition })
+        .condition;
       expect(condition.type).toBe("if");
       expect(condition.expression).toBe("you control 3 or more characters");
     });
@@ -250,7 +258,8 @@ describe("conditionalEffectParser", () => {
         "if you have another character in play and 5 or more cards in hand, gain 2 lore",
       );
 
-      const condition = (result as Effect & { condition: Condition }).condition;
+      const condition = (result as Effect & { condition: VisitorCondition })
+        .condition;
       expect(condition.type).toBe("if");
       expect(condition.expression).toContain("another character in play");
       expect(condition.expression).toContain("5 or more cards in hand");

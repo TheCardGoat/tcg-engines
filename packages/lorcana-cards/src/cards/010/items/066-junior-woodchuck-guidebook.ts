@@ -17,19 +17,14 @@ export const juniorWoodchuckGuidebook: ItemCard = {
   abilities: [
     {
       id: "ebe-1",
-      name: "THE BOOK KNOWS EVERYTHING",
       type: "activated",
-      text: "THE BOOK KNOWS EVERYTHING {E}, 1 {I}, Banish this item — Draw 2 cards.",
-      cost: {
-        exert: true,
-        ink: 1,
-        banishSelf: true,
-      },
+      cost: {},
       effect: {
         type: "draw",
         amount: 2,
         target: "CONTROLLER",
       },
+      text: "THE BOOK KNOWS EVERYTHING {E}, 1 {I}, Banish this item — Draw 2 cards.",
     },
   ],
 };

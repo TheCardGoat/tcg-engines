@@ -31,10 +31,15 @@ export const goofyEmeraldChampion: CharacterCard = {
           controller: "you",
           excludeSelf: true,
         },
+        defender: {
+          controller: "you",
+        },
       },
       effect: {
         type: "banish",
-        target: { ref: "attacker" },
+        target: {
+          ref: "attacker",
+        },
       },
     },
     {
@@ -48,12 +53,8 @@ export const goofyEmeraldChampion: CharacterCard = {
         target: {
           selector: "all",
           owner: "you",
-          excludeSelf: true,
-          filter: {
-            // @ts-expect-error: ink filter not supported in CharacterFilter but required for logic
-            type: "ink",
-            ink: "emerald",
-          },
+          filter: [{ type: "source", ref: "other" }],
+          count: "all",
         },
       },
     },

@@ -22,9 +22,9 @@ export const thomasOmalleyFelineCharmer: CharacterCard = {
   abilities: [
     {
       id: "14m-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
+      text: "Ward",
     },
   ],
   classifications: ["Storyborn", "Hero"],

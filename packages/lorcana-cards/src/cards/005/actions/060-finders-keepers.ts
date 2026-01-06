@@ -18,12 +18,12 @@ export const findersKeepers: ActionCard = {
     {
       id: "q4f-1",
       type: "action",
-      text: "Draw 3 cards.",
       effect: {
         type: "draw",
         amount: 3,
         target: "CONTROLLER",
       },
+      text: "Draw 3 cards.",
     },
   ],
 };

@@ -22,9 +22,9 @@ export const rajahGhostlyTiger: CharacterCard = {
   abilities: [
     {
       id: "1ba-1",
-      text: "Vanish",
       type: "keyword",
       keyword: "Vanish",
+      text: "Vanish",
     },
   ],
   classifications: ["Dreamborn", "Ally", "Illusion"],

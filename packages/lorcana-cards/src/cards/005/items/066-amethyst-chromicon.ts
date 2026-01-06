@@ -17,14 +17,14 @@ export const amethystChromicon: ItemCard = {
   abilities: [
     {
       id: "1nk-1",
-      text: "AMETHYST LIGHT {E} — Each player may draw a card.",
-      cost: { exert: true },
       type: "activated",
+      cost: {},
       effect: {
         type: "draw",
         amount: 1,
         target: "EACH_PLAYER",
       },
+      text: "AMETHYST LIGHT {E} — Each player may draw a card.",
     },
   ],
 };

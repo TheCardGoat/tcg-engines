@@ -22,16 +22,16 @@ export const scarTempestuousLion: CharacterCard = {
   abilities: [
     {
       id: "ug5-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
+      text: "Rush",
     },
     {
       id: "ug5-2",
-      text: "Challenger +3",
       type: "keyword",
       keyword: "Challenger",
       value: 3,
+      text: "Challenger +3",
     },
   ],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],

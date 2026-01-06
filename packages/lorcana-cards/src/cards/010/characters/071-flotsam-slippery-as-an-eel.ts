@@ -22,9 +22,9 @@ export const flotsamSlipperyAsAnEel: CharacterCard = {
   abilities: [
     {
       id: "3ma-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

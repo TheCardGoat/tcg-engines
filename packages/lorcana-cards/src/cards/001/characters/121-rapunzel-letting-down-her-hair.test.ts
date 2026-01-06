@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { rapunzellettingDownHerHair } from "./121-rapunzel-letting-down-her-hair";
+import { rapunzelLettingDownHerHair } from "./121-rapunzel-letting-down-her-hair";
 
 describe("Rapunzel - Letting Down Her Hair", () => {
   // Add ability tests here

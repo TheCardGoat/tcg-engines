@@ -22,18 +22,17 @@ export const queenOfHeartsSensingWeakness: CharacterCard = {
   abilities: [
     {
       id: "1je-1",
-      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {
         ink: 2,
       },
+      text: "Shift 2 {I}",
     },
     {
       id: "1je-2",
-      name: "LET THE GAME BEGIN",
-      text: "LET THE GAME BEGIN Whenever one of your characters challenges another character, you may draw a card.",
       type: "triggered",
+      name: "LET THE GAME BEGIN",
       trigger: {
         event: "banish",
         timing: "whenever",
@@ -48,6 +47,7 @@ export const queenOfHeartsSensingWeakness: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "LET THE GAME BEGIN Whenever one of your characters challenges another character, you may draw a card.",
     },
   ],
   classifications: ["Floodborn", "Villain", "Queen"],

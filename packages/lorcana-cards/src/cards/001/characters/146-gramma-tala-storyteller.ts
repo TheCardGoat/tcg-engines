@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const grammaTalastoryteller: CharacterCard = {
+export const grammaTalaStoryteller: CharacterCard = {
   id: "n00",
   cardType: "character",
   name: "Gramma Tala",

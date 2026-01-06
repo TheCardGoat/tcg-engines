@@ -21,9 +21,9 @@ export const thePhantomBlotShadowyFigure: CharacterCard = {
   abilities: [
     {
       id: "1wy-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
+      text: "Rush",
     },
   ],
   classifications: ["Storyborn", "Villain"],

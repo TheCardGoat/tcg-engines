@@ -22,9 +22,9 @@ export const basilOfBakerStreet: CharacterCard = {
   abilities: [
     {
       id: "1xt-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Detective"],

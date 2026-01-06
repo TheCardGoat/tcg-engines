@@ -22,9 +22,8 @@ export const elsaExploringTheUnknown: CharacterCard = {
   abilities: [
     {
       id: "744-1",
-      name: "CLOSER LOOK",
-      text: "When you play this character, you may draw a card.",
       type: "triggered",
+      name: "CLOSER LOOK",
       trigger: {
         event: "play",
         timing: "when",
@@ -39,6 +38,7 @@ export const elsaExploringTheUnknown: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "CLOSER LOOK When you play this character, you may draw a card.",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Queen", "Sorcerer"],

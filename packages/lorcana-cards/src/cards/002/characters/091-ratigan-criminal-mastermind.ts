@@ -22,9 +22,9 @@ export const ratiganCriminalMastermind: CharacterCard = {
   abilities: [
     {
       id: "952-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Villain"],
