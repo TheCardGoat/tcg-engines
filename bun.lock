@@ -204,11 +204,13 @@
     "packages/shared": {
       "name": "@tcg/shared",
       "version": "0.1.0",
+      "dependencies": {
+        "pino": "9.7.0",
+        "pino-pretty": "13.0.0",
+      },
       "devDependencies": {
         "@biomejs/biome": "2.3.11",
         "@lorcanito/typescript-config": "workspace:*",
-        "pino": "9.7.0",
-        "pino-pretty": "13.0.0",
       },
     },
     "packages/template-engine": {
