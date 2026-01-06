@@ -22,10 +22,10 @@ export const missBiancaRescueAidSocietyAgent: CharacterCard = {
   abilities: [
     {
       id: "113-1",
-      text: "Singer +4",
       type: "keyword",
       keyword: "Singer",
       value: 4,
+      text: "Singer 4",
     },
   ],
   classifications: ["Storyborn", "Hero"],

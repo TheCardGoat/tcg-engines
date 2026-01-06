@@ -22,17 +22,8 @@ export const madHatterUnrulyEccentric: CharacterCard = {
   abilities: [
     {
       id: "11o-1",
-      name: "UNBIRTHDAY PRESENT",
-      text: "UNBIRTHDAY PRESENT Whenever a damaged character challenges another character, you may draw a card.",
       type: "triggered",
-      trigger: {
-        event: "challenge",
-        timing: "whenever",
-        on: "ANY_CHARACTER",
-        attacker: {
-          filters: [{ type: "damaged" }],
-        },
-      },
+      name: "UNBIRTHDAY PRESENT",
       effect: {
         type: "optional",
         effect: {
@@ -42,6 +33,7 @@ export const madHatterUnrulyEccentric: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "UNBIRTHDAY PRESENT Whenever a damaged character challenges another character, you may draw a card.",
     },
   ],
   classifications: ["Storyborn"],

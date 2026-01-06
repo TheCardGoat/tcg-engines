@@ -22,10 +22,10 @@ export const shantiVillageGirl: CharacterCard = {
   abilities: [
     {
       id: "lyq-1",
-      text: "Singer +5",
       type: "keyword",
       keyword: "Singer",
       value: 5,
+      text: "Singer 5",
     },
   ],
   classifications: ["Storyborn", "Ally"],

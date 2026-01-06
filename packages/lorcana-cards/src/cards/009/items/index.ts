@@ -1,4 +1,14 @@
+export { lantern } from "./032-lantern";
+export { ursulasShellNecklace } from "./033-ursulas-shell-necklace";
+export { theMagicFeather } from "./064-the-magic-feather";
 export { magicMirror } from "./065-magic-mirror";
+export { whiteRabbitsPocketWatch } from "./066-white-rabbits-pocket-watch";
+export { roseLantern } from "./067-rose-lantern";
+export { familyFishingPole } from "./100-family-fishing-pole";
 export { signedContract } from "./101-signed-contract";
 export { medallionWeights } from "./134-medallion-weights";
+export { dinnerBell } from "./135-dinner-bell";
+export { aurelianGyrosensor } from "./167-aurelian-gyrosensor";
+export { heartOfTeFiti } from "./168-heart-of-te-fiti";
+export { coconutBasket } from "./169-coconut-basket";
 export { beastsMirror } from "./203-beasts-mirror";

@@ -22,9 +22,9 @@ export const theNokkWaterSpirit: CharacterCard = {
   abilities: [
     {
       id: "q84-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
+      text: "Ward",
     },
   ],
   classifications: ["Storyborn"],

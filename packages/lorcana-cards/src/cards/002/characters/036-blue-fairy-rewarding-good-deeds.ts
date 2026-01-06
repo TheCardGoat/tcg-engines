@@ -22,15 +22,14 @@ export const blueFairyRewardingGoodDeeds: CharacterCard = {
   abilities: [
     {
       id: "tv6-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
     {
       id: "tv6-2",
-      name: "ETHEREAL GLOW",
-      text: "ETHEREAL GLOW Whenever you play a Floodborn character, you may draw a card.",
       type: "triggered",
+      name: "ETHEREAL GLOW",
       trigger: {
         event: "play",
         timing: "whenever",
@@ -49,6 +48,7 @@ export const blueFairyRewardingGoodDeeds: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "ETHEREAL GLOW Whenever you play a Floodborn character, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "Ally", "Fairy"],

@@ -51,7 +51,10 @@ export const kuzcoSelfishEmperor: CharacterCard = {
         type: "gain-keyword",
         keyword: "Resist",
         value: 0,
-        target: "YOUR_OTHER_CHARACTERS",
+        target: {
+          controller: "you",
+          excludeSelf: true,
+        },
         duration: "until-start-of-next-turn",
       },
     },

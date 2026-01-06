@@ -22,19 +22,19 @@ export const herculesDivineHero: CharacterCard = {
   abilities: [
     {
       id: "5e9-1",
-      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {
         ink: 4,
       },
+      text: "Shift 4",
     },
     {
       id: "5e9-2",
-      text: "Resist +2",
       type: "keyword",
       keyword: "Resist",
       value: 2,
+      text: "Resist +2",
     },
   ],
   classifications: ["Floodborn", "Hero", "Prince", "Deity"],

@@ -1,0 +1,26 @@
+import type { CharacterCard } from "@tcg/lorcana-types";
+
+export const liShangValorousGeneral: CharacterCard = {
+  id: "hga",
+  cardType: "character",
+  name: "Li Shang",
+  version: "Valorous General",
+  fullName: "Li Shang - Valorous General",
+  inkType: ["ruby"],
+  franchise: "Mulan",
+  set: "004",
+  text: "Shift: Discard a character card (You may discard a character card to play this on top of one of your characters named Li Shang.)\nLEAD THE CHARGE Your characters with 4 {S} or more get +1 {L}.",
+  cost: 3,
+  strength: 3,
+  willpower: 2,
+  lore: 1,
+  cardNumber: 112,
+  inkable: true,
+  missingImplementation: true,
+  missingTests: true,
+  externalIds: {
+    ravensburger: "3ee66a487e0da6e7e8f7e34d90b9a4c6ca3d5865",
+  },
+  abilities: [],
+  classifications: ["Floodborn", "Hero"],
+};

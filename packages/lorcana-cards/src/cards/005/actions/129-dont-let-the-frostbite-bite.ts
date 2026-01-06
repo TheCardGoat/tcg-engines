@@ -25,12 +25,18 @@ export const dontLetTheFrostbiteBite: ActionCard = {
         steps: [
           {
             type: "ready",
-            target: "YOUR_CHARACTERS",
+            target: {
+              selector: "all",
+              controller: "you",
+            },
           },
           {
             type: "restriction",
             restriction: "cant-quest",
-            target: "YOUR_CHARACTERS",
+            target: {
+              selector: "all",
+              controller: "you",
+            },
             duration: "this-turn",
           },
         ],

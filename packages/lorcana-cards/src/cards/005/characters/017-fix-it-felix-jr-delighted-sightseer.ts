@@ -22,14 +22,7 @@ export const fixitFelixJrDelightedSightseer: CharacterCard = {
   abilities: [
     {
       id: "108-1",
-      name: "OH, MY LAND!",
-      text: "OH, MY LAND! When you play this character, if you have a location in play, draw a card.",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
+      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -42,6 +35,7 @@ export const fixitFelixJrDelightedSightseer: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      text: "OH, MY LAND! When you play this character, if you have a location in play, draw a card.",
     },
   ],
   classifications: ["Storyborn", "Hero"],

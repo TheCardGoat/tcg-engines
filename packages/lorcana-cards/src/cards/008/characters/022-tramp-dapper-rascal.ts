@@ -22,39 +22,26 @@ export const trampDapperRascal: CharacterCard = {
   abilities: [
     {
       id: "1x4-1",
-      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {
         ink: 4,
       },
+      text: "Shift 4",
     },
     {
       id: "1x4-2",
-      name: "PLAY IT COOL",
-      text: "PLAY IT COOL During an opponent’s turn, whenever one of your characters is banished, you may draw a card.",
-      type: "triggered",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "YOUR_CHARACTERS",
-      },
+      type: "action",
       effect: {
-        type: "conditional",
-        condition: {
-          type: "turn",
-          whose: "opponent",
+        type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
         },
-        then: {
-          type: "optional",
-          effect: {
-            type: "draw",
-            amount: 1,
-            target: "CONTROLLER",
-          },
-          chooser: "CONTROLLER",
-        },
+        chooser: "CONTROLLER",
       },
+      text: "PLAY IT COOL During an opponent’s turn, whenever one of your characters is banished, you may draw a card.",
     },
   ],
   classifications: ["Floodborn", "Hero"],

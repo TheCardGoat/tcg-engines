@@ -22,10 +22,10 @@ export const yaoImperialSoldier: CharacterCard = {
   abilities: [
     {
       id: "ayj-1",
-      text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",
       value: 2,
+      text: "Challenger +2",
     },
   ],
   classifications: ["Storyborn", "Ally"],

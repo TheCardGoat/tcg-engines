@@ -207,7 +207,7 @@ export interface CanonicalCardMetadata {
   abilities?: AbilityDefinition[];
 
   /** Structured keyword abilities parsed from rules text */
-  parsedAbilities?: KeywordAbility[];
+  parsedAbilities?: AbilityDefinition[];
 
   /** References to all printings of this card */
   printings: CardPrintingRef[];
@@ -364,7 +364,11 @@ export interface AbilityDefinition {
   id?: string;
   name?: string | null;
   text: string;
-  type: "triggered" | "activated" | "static" | "keyword";
+  type: "triggered" | "activated" | "static" | "keyword" | "action";
+  keyword?: string;
+  value?: number;
+  cost?: unknown;
+  shiftTarget?: string;
 }
 
 /**

@@ -22,9 +22,9 @@ export const tipoJuniorChipmunk: CharacterCard = {
   abilities: [
     {
       id: "y4v-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

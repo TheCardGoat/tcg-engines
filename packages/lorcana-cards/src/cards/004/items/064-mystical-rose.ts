@@ -32,8 +32,7 @@ export const mysticalRose: ItemCard = {
             modifier: 0,
             target: {
               selector: "chosen",
-              count: 1,
-              filter: [{ type: "has-name", name: "Beast" }],
+              name: "Beast",
             },
             duration: "this-turn",
           },
@@ -49,12 +48,10 @@ export const mysticalRose: ItemCard = {
               amount: 0,
               from: {
                 selector: "chosen",
-                count: 1,
               },
               to: {
                 selector: "chosen",
-                count: 1,
-                owner: "opponent",
+                controller: "opponent",
               },
             },
           },

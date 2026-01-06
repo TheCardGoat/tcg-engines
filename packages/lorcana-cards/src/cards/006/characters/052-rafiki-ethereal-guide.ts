@@ -22,23 +22,17 @@ export const rafikiEtherealGuide: CharacterCard = {
   abilities: [
     {
       id: "yg2-1",
-      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {
         ink: 7,
       },
+      text: "Shift 7",
     },
     {
       id: "yg2-2",
-      name: "ASTRAL ATTUNEMENT",
-      text: "ASTRAL ATTUNEMENT During your turn, whenever a card is put into your inkwell, you may draw a card.",
       type: "triggered",
-      trigger: {
-        event: "ink",
-        timing: "whenever",
-        on: "YOU",
-      },
+      name: "ASTRAL ATTUNEMENT",
       effect: {
         type: "optional",
         effect: {
@@ -48,6 +42,7 @@ export const rafikiEtherealGuide: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "ASTRAL ATTUNEMENT During your turn, whenever a card is put into your inkwell, you may draw a card.",
     },
   ],
   classifications: ["Floodborn", "Mentor", "Sorcerer"],

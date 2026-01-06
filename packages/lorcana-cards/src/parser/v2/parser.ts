@@ -3,18 +3,12 @@
  * Provides compatibility with the old parser API.
  */
 
+import type { ParseResult } from "../types";
 import { parserV2 } from "./index";
 import { MANUAL_ENTRIES_BY_NAME } from "./manual-overrides";
 
 interface ParseOptions {
   cardName?: string;
-}
-
-interface ParseResult {
-  success: boolean;
-  ability?: { name?: string; ability: unknown } | null;
-  text: string;
-  warnings: string[];
 }
 
 /**
@@ -29,13 +23,14 @@ export function parseAbilityText(
     const entry = MANUAL_ENTRIES_BY_NAME[options.cardName];
     // entry can be AbilityWithText or AbilityWithText[]
     const singleEntry = Array.isArray(entry) ? entry[0] : entry;
+    // Ensure we return the entry as AbilityWithText structure
     return {
       success: true,
       ability: {
         name: (singleEntry as any).name,
         ability: (singleEntry as any).ability,
+        text: (singleEntry as any).text || text,
       },
-      text,
       warnings: [],
     };
   }
@@ -46,15 +41,17 @@ export function parseAbilityText(
     const name = (ability as { name?: string }).name;
     return {
       success: true,
-      ability: { name, ability },
-      text,
+      ability: {
+        name,
+        ability,
+        text, // Include original text
+      },
       warnings: [],
     };
   }
   return {
     success: false,
-    ability: null,
-    text,
+    ability: undefined,
     warnings: ["Failed to parse ability"],
   };
 }

@@ -22,20 +22,14 @@ export const pinocchioStringsAttached: CharacterCard = {
   abilities: [
     {
       id: "1m2-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
     {
       id: "1m2-2",
-      name: "GOT TO KEEP REAL QUIET Once",
-      text: "GOT TO KEEP REAL QUIET Once during your turn, whenever you ready this character, you may draw a card.",
       type: "triggered",
-      trigger: {
-        event: "ready",
-        timing: "whenever",
-        on: "SELF",
-      },
+      name: "GOT TO KEEP REAL QUIET Once",
       effect: {
         type: "optional",
         effect: {
@@ -45,6 +39,7 @@ export const pinocchioStringsAttached: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "GOT TO KEEP REAL QUIET Once during your turn, whenever you ready this character, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "Hero"],

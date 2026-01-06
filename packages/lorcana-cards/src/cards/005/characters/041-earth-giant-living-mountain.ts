@@ -22,9 +22,8 @@ export const earthGiantLivingMountain: CharacterCard = {
   abilities: [
     {
       id: "1xh-1",
-      name: "UNEARTHED",
-      text: "UNEARTHED When you play this character, each opponent draws a card.",
       type: "triggered",
+      name: "UNEARTHED",
       trigger: {
         event: "play",
         timing: "when",
@@ -35,6 +34,7 @@ export const earthGiantLivingMountain: CharacterCard = {
         amount: 1,
         target: "EACH_OPPONENT",
       },
+      text: "UNEARTHED When you play this character, each opponent draws a card.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

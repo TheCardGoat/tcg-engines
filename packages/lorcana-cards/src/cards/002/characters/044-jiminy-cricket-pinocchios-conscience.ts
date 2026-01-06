@@ -22,20 +22,13 @@ export const jiminyCricketPinocchiosConscience: CharacterCard = {
   abilities: [
     {
       id: "tfc-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
     {
       id: "tfc-2",
-      name: "THAT STILL, SMALL VOICE",
-      text: "THAT STILL, SMALL VOICE When you play this character, if you have a character named Pinocchio in play, you may draw a card.",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
+      type: "action",
       effect: {
         type: "conditional",
         condition: {
@@ -48,6 +41,7 @@ export const jiminyCricketPinocchiosConscience: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      text: "THAT STILL, SMALL VOICE When you play this character, if you have a character named Pinocchio in play, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "Mentor"],

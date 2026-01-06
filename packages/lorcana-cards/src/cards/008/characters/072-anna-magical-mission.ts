@@ -22,24 +22,23 @@ export const annaMagicalMission: CharacterCard = {
   abilities: [
     {
       id: "1w2-1",
-      text: "Shift",
       type: "keyword",
       keyword: "Shift",
       cost: {
         ink: 4,
       },
+      text: "Shift 4",
     },
     {
       id: "1w2-2",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
     {
       id: "1w2-3",
-      name: "COORDINATED PLAN",
-      text: "COORDINATED PLAN Whenever this character quests, if you have a character named Elsa in play, you may draw a card.",
       type: "triggered",
+      name: "COORDINATED PLAN",
       trigger: {
         event: "quest",
         timing: "whenever",
@@ -57,6 +56,7 @@ export const annaMagicalMission: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      text: "COORDINATED PLAN Whenever this character quests, if you have a character named Elsa in play, you may draw a card.",
     },
   ],
   classifications: ["Floodborn", "Hero", "Queen", "Sorcerer"],

@@ -22,15 +22,14 @@ export const theQueenCrownOfTheCouncil: CharacterCard = {
   abilities: [
     {
       id: "vdv-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
+      text: "Ward",
     },
     {
       id: "vdv-2",
-      name: "GATHERER OF THE WICKED",
-      text: "GATHERER OF THE WICKED When you play this character, look at the top 3 cards of your deck. You may reveal any number of character cards named The Queen and put them into your hand. Put the rest on the bottom of your deck in any order.",
       type: "triggered",
+      name: "GATHERER OF THE WICKED",
       trigger: {
         event: "play",
         timing: "when",
@@ -44,6 +43,7 @@ export const theQueenCrownOfTheCouncil: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "GATHERER OF THE WICKED When you play this character, look at the top 3 cards of your deck. You may reveal any number of character cards named The Queen and put them into your hand. Put the rest on the bottom of your deck in any order.",
     },
   ],
   classifications: ["Storyborn", "Villain", "Queen", "Sorcerer"],

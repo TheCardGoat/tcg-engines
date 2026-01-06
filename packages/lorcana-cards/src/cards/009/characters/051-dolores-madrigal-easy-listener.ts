@@ -22,9 +22,8 @@ export const doloresMadrigalEasyListener: CharacterCard = {
   abilities: [
     {
       id: "n9k-1",
-      name: "MAGICAL INFORMANT",
-      text: "MAGICAL INFORMANT When you play this character, if an opponent has an exerted character in play, you may draw a card.",
       type: "triggered",
+      name: "MAGICAL INFORMANT",
       trigger: {
         event: "play",
         timing: "when",
@@ -42,6 +41,7 @@ export const doloresMadrigalEasyListener: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      text: "MAGICAL INFORMANT When you play this character, if an opponent has an exerted character in play, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "Ally", "Madrigal"],

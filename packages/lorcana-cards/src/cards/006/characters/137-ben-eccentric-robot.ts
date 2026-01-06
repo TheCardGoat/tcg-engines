@@ -22,9 +22,9 @@ export const benEccentricRobot: CharacterCard = {
   abilities: [
     {
       id: "1b2-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
   ],
   classifications: ["Storyborn", "Ally", "Robot", "Pirate"],

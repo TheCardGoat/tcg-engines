@@ -22,8 +22,6 @@ export const pegNaturalPerformer: CharacterCard = {
   abilities: [
     {
       id: "wsf-1",
-      text: "CAPTIVE AUDIENCE {E} — If you have 3 or more other characters in play, draw a card.",
-      cost: { exert: true },
       type: "activated",
       effect: {
         type: "conditional",
@@ -37,6 +35,7 @@ export const pegNaturalPerformer: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      text: "CAPTIVE AUDIENCE {E} — If you have 3 or more other characters in play, draw a card.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

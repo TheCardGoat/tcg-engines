@@ -22,9 +22,8 @@ export const bernardOverprepared: CharacterCard = {
   abilities: [
     {
       id: "wn2-1",
-      name: "GO DOWN THERE AND INVESTIGATE",
-      text: "GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.",
       type: "triggered",
+      name: "GO DOWN THERE AND INVESTIGATE",
       trigger: {
         event: "play",
         timing: "when",
@@ -42,6 +41,7 @@ export const bernardOverprepared: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      text: "GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "Hero"],

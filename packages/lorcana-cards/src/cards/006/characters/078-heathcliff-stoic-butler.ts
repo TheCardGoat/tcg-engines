@@ -22,9 +22,9 @@ export const heathcliffStoicButler: CharacterCard = {
   abilities: [
     {
       id: "fob-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
+      text: "Ward",
     },
   ],
   classifications: ["Storyborn", "Ally"],

@@ -1,0 +1,20 @@
+import type { ActionCard } from "@tcg/lorcana-types";
+
+export const magicalAid: ActionCard = {
+  id: "6tm",
+  cardType: "action",
+  name: "Magical Aid",
+  inkType: ["amethyst"],
+  franchise: "Aladdin",
+  set: "005",
+  text: "Chosen character gains Challenger +3 and “When this character is banished in a challenge, return this card to your hand” this turn. (They get +3 {S} while challenging.)",
+  cost: 3,
+  cardNumber: 63,
+  inkable: true,
+  missingImplementation: true,
+  missingTests: true,
+  externalIds: {
+    ravensburger: "18972399651ab2488a78e778fd0a9da89decc429",
+  },
+  abilities: [],
+};

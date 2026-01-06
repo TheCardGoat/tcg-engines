@@ -22,9 +22,9 @@ export const marchHareAbsurdHost: CharacterCard = {
   abilities: [
     {
       id: "110-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
+      text: "Rush",
     },
   ],
   classifications: ["Storyborn"],

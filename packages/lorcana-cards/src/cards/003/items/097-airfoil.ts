@@ -17,12 +17,7 @@ export const airfoil: ItemCard = {
   abilities: [
     {
       id: "1kp-1",
-      name: "I GOT TO BE GOING",
-      text: "If you've played 2 or more actions this turn, draw a card.",
       type: "activated",
-      cost: {
-        exert: true,
-      },
       effect: {
         type: "conditional",
         condition: {
@@ -35,6 +30,7 @@ export const airfoil: ItemCard = {
           target: "CONTROLLER",
         },
       },
+      text: "I GOT TO BE GOING {E} — If you've played 2 or more actions this turn, draw a card.",
     },
   ],
 };

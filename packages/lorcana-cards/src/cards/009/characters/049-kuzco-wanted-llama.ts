@@ -22,14 +22,7 @@ export const kuzcoWantedLlama: CharacterCard = {
   abilities: [
     {
       id: "zpa-1",
-      name: "OK, WHERE AM I?",
-      text: "OK, WHERE AM I? When this character is banished, you may draw a card.",
-      type: "triggered",
-      trigger: {
-        event: "banish",
-        timing: "when",
-        on: "SELF",
-      },
+      type: "action",
       effect: {
         type: "optional",
         effect: {
@@ -39,6 +32,7 @@ export const kuzcoWantedLlama: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "OK, WHERE AM I? When this character is banished, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "King"],

@@ -22,11 +22,10 @@ export const buckyNuttyRascal: CharacterCard = {
   abilities: [
     {
       id: "17v-1",
-      name: "POP!",
-      text: "POP! When this character is banished in a challenge, you may draw a card.",
       type: "triggered",
+      name: "POP!",
       trigger: {
-        event: "banish-in-challenge",
+        event: "banish",
         timing: "when",
         on: "SELF",
       },
@@ -39,6 +38,7 @@ export const buckyNuttyRascal: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "POP! When this character is banished in a challenge, you may draw a card.",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

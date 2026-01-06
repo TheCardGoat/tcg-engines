@@ -22,9 +22,9 @@ export const robinHoodEyeForDetail: CharacterCard = {
   abilities: [
     {
       id: "193-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero"],

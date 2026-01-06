@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const peterPanneverLanding: CharacterCard = {
+export const peterPanNeverLanding: CharacterCard = {
   id: "1g6",
   cardType: "character",
   name: "Peter Pan",
@@ -22,9 +22,9 @@ export const peterPanneverLanding: CharacterCard = {
   abilities: [
     {
       id: "1g6-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Hero"],

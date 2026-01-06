@@ -22,10 +22,10 @@ export const francineEyeingTheEvidence: CharacterCard = {
   abilities: [
     {
       id: "1bg-1",
-      text: "Resist +1",
       type: "keyword",
       keyword: "Resist",
       value: 1,
+      text: "Resist +1",
     },
   ],
   classifications: ["Storyborn", "Ally", "Detective"],

@@ -18,13 +18,13 @@ export const friendsOnTheOtherSide: ActionCard = {
   abilities: [
     {
       id: "a41-1",
-      text: "Draw 2 cards.",
       type: "action",
       effect: {
         type: "draw",
         amount: 2,
         target: "CONTROLLER",
       },
+      text: "Draw 2 cards.",
     },
   ],
 };

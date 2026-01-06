@@ -23,13 +23,12 @@ export const theQueenWickedAndVain: CharacterCard = {
     {
       id: "2kk-1",
       type: "activated",
-      text: "I SUMMON THEE {E} — Draw a card.",
-      cost: { exert: true },
       effect: {
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
       },
+      text: "I SUMMON THEE {E} — Draw a card.",
     },
   ],
   classifications: ["Storyborn", "Villain", "Queen"],

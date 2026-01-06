@@ -22,9 +22,9 @@ export const pascalGardenChameleon: CharacterCard = {
   abilities: [
     {
       id: "1oz-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],

@@ -27,7 +27,6 @@ import type {
   IdMapping,
   InkType,
   InputCard,
-  KeywordAbility,
 } from "../types";
 import { parseKeywordAbilities } from "./parser-validator";
 
@@ -117,19 +116,6 @@ function cleanRulesText(text: string): string {
 }
 
 /**
- * Check if text is song helper text (parenthetical text about singing)
- */
-function isSongHelperText(text: string): boolean {
-  const trimmed = text.trim();
-  // Check if it's parenthetical text that mentions singing
-  return (
-    trimmed.startsWith("(") &&
-    trimmed.endsWith(")") &&
-    trimmed.toLowerCase().includes("sing this song")
-  );
-}
-
-/**
  * Parse abilities from rules_text
  * This is a simplified parser - the actual ability parsing would use the full parser
  */
@@ -166,15 +152,6 @@ function parseAbilities(rulesText: string): AbilityDefinition[] {
   }
 
   return abilities;
-}
-
-/**
- * Filter out song helper text from abilities
- */
-function filterSongHelperText(
-  abilities: AbilityDefinition[],
-): AbilityDefinition[] {
-  return abilities.filter((ability) => !isSongHelperText(ability.text));
 }
 
 /**
@@ -325,7 +302,8 @@ function buildExternalIds(
     externalIds.ravensburger = card.deck_building_id;
   }
 
-  // Lorcast IDs (if we have a match)
+  // TODO: Fix Lorcast index usage - usage does not match LorcastTextIndex type (Map<string, string>)
+  /*
   if (lorcastIndex) {
     const key = `${card.name}|${card.subtitle || ""}`.toLowerCase();
     const lorcastEntry = lorcastIndex.get(key);
@@ -338,6 +316,7 @@ function buildExternalIds(
       }
     }
   }
+  */
 
   // Only return if we have at least one ID
   return Object.keys(externalIds).length > 0 ? externalIds : undefined;
@@ -372,9 +351,9 @@ interface CommonCardProperties {
   keywords?: string[];
   rulesText?: string;
   abilities?: AbilityDefinition[];
-  parsedAbilities?: KeywordAbility[];
+  parsedAbilities?: AbilityDefinition[];
   classifications?: string[];
-  printings?: CardPrintingRef[];
+  printings: CardPrintingRef[];
 }
 
 function buildCommonCardProperties(
@@ -440,7 +419,12 @@ function buildCommonCardProperties(
       vanilla: false,
     } as CanonicalCard);
     if (parsed && parsed.length > 0) {
-      props.parsedAbilities = parsed.map((a) => a.ability as KeywordAbility);
+      // AbilityWithText is compatible with AbilityDefinition structure (id, text, type, etc)
+      props.parsedAbilities = parsed.map((a) => ({
+        ...a.ability,
+        text: a.text,
+        name: a.name || undefined,
+      })) as AbilityDefinition[];
     }
   }
 
@@ -528,7 +512,7 @@ export function transformToCanonicalCard(
     case "character": {
       const card: CanonicalCharacterCard = {
         // === STRING PROPERTIES (from common) ===
-        ...common,
+        ...(common as CommonCardProperties),
         cardType: "character",
 
         // === NUMERIC PROPERTIES ===
@@ -558,7 +542,7 @@ export function transformToCanonicalCard(
       cleanedAbilities = cleanAbilitiesForAction(cleanedAbilities);
 
       const card: CanonicalActionCard = {
-        ...commonWithoutAbilities,
+        ...(commonWithoutAbilities as CommonCardProperties),
         cardType: "action",
         ...(isSong && { actionSubtype: "song" as const }),
         ...(cleanedAbilities.length > 0 && { abilities: cleanedAbilities }),
@@ -568,7 +552,7 @@ export function transformToCanonicalCard(
 
     case "item": {
       const card: CanonicalItemCard = {
-        ...common,
+        ...(common as CommonCardProperties),
         cardType: "item",
       };
       return card;
@@ -577,7 +561,7 @@ export function transformToCanonicalCard(
     case "location": {
       const card: CanonicalLocationCard = {
         // === STRING PROPERTIES (from common) ===
-        ...common,
+        ...(common as CommonCardProperties),
         cardType: "location",
 
         // === NUMERIC PROPERTIES ===
