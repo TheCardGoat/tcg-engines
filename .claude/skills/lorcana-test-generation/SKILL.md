@@ -23,7 +23,7 @@ Generate test files for Lorcana card definitions using `LorcanaTestEngine`.
 ### Workflow
 
 1. **Read Card Definition**
-   - Load card file from `src/cards/001/`
+   - Load card file from `src/cards/` and its corresponding legacy card from `src/legacy-cards/`
    - Extract abilities array
 
 2. **Identify Ability Types**
