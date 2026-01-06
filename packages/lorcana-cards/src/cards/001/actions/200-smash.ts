@@ -6,9 +6,7 @@ export const smash: ActionCard = {
   name: "Smash",
   version: "",
   fullName: "Smash",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "General",
   set: "001",
   text: "Deal 3 damage to chosen character.",
@@ -24,10 +22,10 @@ export const smash: ActionCard = {
     {
       type: "action",
       effect: {
-          type: "deal-damage",
-          amount: 3,
-          target: "CHOSEN_CHARACTER",
-        },
+        type: "deal-damage",
+        amount: 3,
+        target: "CHOSEN_CHARACTER",
+      },
       id: "ub4-1",
       text: "Deal 3 damage to chosen character.",
     },

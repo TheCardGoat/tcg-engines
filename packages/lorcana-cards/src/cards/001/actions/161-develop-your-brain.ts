@@ -6,9 +6,7 @@ export const developYourBrain: ActionCard = {
   name: "Develop Your Brain",
   version: "",
   fullName: "Develop Your Brain",
-  inkType: [
-    "sapphire",
-  ],
+  inkType: ["sapphire"],
   franchise: "General",
   set: "001",
   text: "Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.",
@@ -24,14 +22,14 @@ export const developYourBrain: ActionCard = {
     {
       type: "action",
       effect: {
-          type: "look-at-cards",
-          amount: 2,
-          from: "top-of-deck",
-          target: "CONTROLLER",
-          then: {
-            action: "put-on-bottom",
-          },
+        type: "look-at-cards",
+        amount: 2,
+        from: "top-of-deck",
+        target: "CONTROLLER",
+        then: {
+          action: "put-on-bottom",
         },
+      },
       id: "yy9-1",
       text: "Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.",
     },

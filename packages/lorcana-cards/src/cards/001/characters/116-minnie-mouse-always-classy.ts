@@ -6,9 +6,7 @@ export const minnieMouse: CharacterCard = {
   name: "Minnie Mouse",
   version: "Always Classy",
   fullName: "Minnie Mouse - Always Classy",
-  inkType: [
-    "ruby",
-  ],
+  inkType: ["ruby"],
   franchise: "General",
   set: "001",
   cost: 1,
@@ -22,8 +20,5 @@ export const minnieMouse: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 505967,
   },
-  classifications: [
-    "Hero",
-    "Storyborn",
-  ],
+  classifications: ["Hero", "Storyborn"],
 };

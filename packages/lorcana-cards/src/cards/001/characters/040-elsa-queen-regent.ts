@@ -6,9 +6,7 @@ export const elsa: CharacterCard = {
   name: "Elsa",
   version: "Queen Regent",
   fullName: "Elsa - Queen Regent",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "Frozen",
   set: "001",
   cost: 4,
@@ -22,10 +20,5 @@ export const elsa: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 507276,
   },
-  classifications: [
-    "Hero",
-    "Queen",
-    "Sorcerer",
-    "Storyborn",
-  ],
+  classifications: ["Hero", "Queen", "Sorcerer", "Storyborn"],
 };

@@ -6,9 +6,7 @@ export const maui: CharacterCard = {
   name: "Maui",
   version: "Demigod",
   fullName: "Maui - Demigod",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "Moana",
   set: "001",
   cost: 8,
@@ -22,9 +20,5 @@ export const maui: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 502018,
   },
-  classifications: [
-    "Hero",
-    "Storyborn",
-    "Deity",
-  ],
+  classifications: ["Hero", "Storyborn", "Deity"],
 };

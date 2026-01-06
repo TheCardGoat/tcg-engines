@@ -6,9 +6,7 @@ export const healingGlow: ActionCard = {
   name: "Healing Glow",
   version: "",
   fullName: "Healing Glow",
-  inkType: [
-    "amber",
-  ],
+  inkType: ["amber"],
   franchise: "General",
   set: "001",
   text: "Remove up to 2 damage from chosen character.",
@@ -24,11 +22,11 @@ export const healingGlow: ActionCard = {
     {
       type: "action",
       effect: {
-          type: "remove-damage",
-          amount: 2,
-          upTo: true,
-          target: "CHOSEN_CHARACTER",
-        },
+        type: "remove-damage",
+        amount: 2,
+        upTo: true,
+        target: "CHOSEN_CHARACTER",
+      },
       id: "ta0-1",
       text: "Remove up to 2 damage from chosen character.",
     },

@@ -6,9 +6,7 @@ export const theQueen: CharacterCard = {
   name: "The Queen",
   version: "Wicked and Vain",
   fullName: "The Queen - Wicked and Vain",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "General",
   set: "001",
   text: "**I SUMMON THEE** {E} − Draw a card.",
@@ -23,24 +21,20 @@ export const theQueen: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508751,
   },
-  classifications: [
-    "Queen",
-    "Storyborn",
-    "Villain",
-  ],
+  classifications: ["Queen", "Storyborn", "Villain"],
   abilities: [
     {
       type: "activated",
       cost: {
-          exert: true,
-        },
+        exert: true,
+      },
       effect: {
-          type: "draw",
-          amount: 1,
-          target: {
-            ref: "controller",
-          },
+        type: "draw",
+        amount: 1,
+        target: {
+          ref: "controller",
         },
+      },
       name: "I Summon Thee",
       id: "y32-1",
       text: "Draw a card.",

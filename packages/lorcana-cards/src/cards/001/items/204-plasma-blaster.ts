@@ -6,9 +6,7 @@ export const plasmaBlaster: ItemCard = {
   name: "Plasma Blaster",
   version: "",
   fullName: "Plasma Blaster",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "General",
   set: "001",
   text: "**QUICK SHOT** {E}, 2 {I} − Deal 1 damage to chosen character.",
@@ -23,14 +21,14 @@ export const plasmaBlaster: ItemCard = {
     {
       type: "activated",
       cost: {
-          exert: true,
-          ink: 2,
-        },
+        exert: true,
+        ink: 2,
+      },
       effect: {
-          type: "deal-damage",
-          amount: 1,
-          target: "CHOSEN_CHARACTER",
-        },
+        type: "deal-damage",
+        amount: 1,
+        target: "CHOSEN_CHARACTER",
+      },
       name: "Quick Shot",
       id: "t4y-1",
       text: "Deal 1 damage to chosen character.",

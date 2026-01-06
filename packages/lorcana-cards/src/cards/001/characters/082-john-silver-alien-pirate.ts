@@ -6,9 +6,7 @@ export const johnSilver: CharacterCard = {
   name: "John Silver",
   version: "Alien Pirate",
   fullName: "John Silver - Alien Pirate",
-  inkType: [
-    "emerald",
-  ],
+  inkType: ["emerald"],
   franchise: "General",
   set: "001",
   text: "**PICK YOUR FIGHTS** When you play this character and whenever he quests, chosen opposing character gains **Reckless** during their next turn. _(They can't quest and must challenge if able.)_",
@@ -23,11 +21,5 @@ export const johnSilver: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 507476,
   },
-  classifications: [
-    "Alien",
-    "Storyborn",
-    "Villain",
-    "Pirate",
-    "Captain",
-  ],
+  classifications: ["Alien", "Storyborn", "Villain", "Pirate", "Captain"],
 };

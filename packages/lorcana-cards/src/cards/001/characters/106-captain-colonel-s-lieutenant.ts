@@ -6,9 +6,7 @@ export const captain: CharacterCard = {
   name: "Captain",
   version: "Colonel's Lieutenant",
   fullName: "Captain - Colonel's Lieutenant",
-  inkType: [
-    "ruby",
-  ],
+  inkType: ["ruby"],
   franchise: "General",
   set: "001",
   cost: 5,
@@ -22,9 +20,5 @@ export const captain: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508779,
   },
-  classifications: [
-    "Storyborn",
-    "Captain",
-    "Ally",
-  ],
+  classifications: ["Storyborn", "Captain", "Ally"],
 };

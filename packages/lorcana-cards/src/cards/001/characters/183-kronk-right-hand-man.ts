@@ -6,9 +6,7 @@ export const kronk: CharacterCard = {
   name: "Kronk",
   version: "Right-Hand Man",
   fullName: "Kronk - Right-Hand Man",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "General",
   set: "001",
   cost: 6,
@@ -22,8 +20,5 @@ export const kronk: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 503320,
   },
-  classifications: [
-    "Storyborn",
-    "Ally",
-  ],
+  classifications: ["Storyborn", "Ally"],
 };

@@ -6,9 +6,7 @@ export const sven: CharacterCard = {
   name: "Sven",
   version: "Official Ice Deliverer",
   fullName: "Sven - Official Ice Deliverer",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "General",
   set: "001",
   cost: 6,
@@ -22,8 +20,5 @@ export const sven: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 502010,
   },
-  classifications: [
-    "Storyborn",
-    "Ally",
-  ],
+  classifications: ["Storyborn", "Ally"],
 };

@@ -6,9 +6,7 @@ export const lilo: CharacterCard = {
   name: "Lilo",
   version: "Galactic Hero",
   fullName: "Lilo - Galactic Hero",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "Lilo & Stitch",
   set: "001",
   cost: 3,
@@ -22,8 +20,5 @@ export const lilo: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508920,
   },
-  classifications: [
-    "Hero",
-    "Dreamborn",
-  ],
+  classifications: ["Hero", "Dreamborn"],
 };

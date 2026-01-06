@@ -6,9 +6,7 @@ export const dukeOfWeselton: CharacterCard = {
   name: "Duke Of Weselton",
   version: "Opportunistic Official",
   fullName: "Duke Of Weselton - Opportunistic Official",
-  inkType: [
-    "emerald",
-  ],
+  inkType: ["emerald"],
   franchise: "General",
   set: "001",
   cost: 1,
@@ -22,8 +20,5 @@ export const dukeOfWeselton: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 505971,
   },
-  classifications: [
-    "Storyborn",
-    "Villain",
-  ],
+  classifications: ["Storyborn", "Villain"],
 };

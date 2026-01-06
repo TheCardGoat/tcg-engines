@@ -6,9 +6,7 @@ export const drFacilier: CharacterCard = {
   name: "Dr. Facilier",
   version: "Charlatan",
   fullName: "Dr. Facilier - Charlatan",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "General",
   set: "001",
   text: "**Challenger** +2 (_When challenging, this character get +2 {S}._)",
@@ -23,19 +21,15 @@ export const drFacilier: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 494099,
   },
-  classifications: [
-    "Sorcerer",
-    "Storyborn",
-    "Villain",
-  ],
+  classifications: ["Sorcerer", "Storyborn", "Villain"],
   abilities: [
     {
       type: "static",
       effect: {
-          type: "restriction",
-          restriction: "cant-sing",
-          target: "SELF",
-        },
+        type: "restriction",
+        restriction: "cant-sing",
+        target: "SELF",
+      },
       id: "fov-1",
       text: "**Challenger** +2 (_When challenging, this character get +2 {S}._)",
     },

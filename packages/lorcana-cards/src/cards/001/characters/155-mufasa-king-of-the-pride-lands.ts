@@ -6,9 +6,7 @@ export const mufasa: CharacterCard = {
   name: "Mufasa",
   version: "King of the Pride Lands",
   fullName: "Mufasa - King of the Pride Lands",
-  inkType: [
-    "sapphire",
-  ],
+  inkType: ["sapphire"],
   franchise: "The Lion King",
   set: "001",
   cost: 6,
@@ -22,9 +20,5 @@ export const mufasa: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508868,
   },
-  classifications: [
-    "Storyborn",
-    "King",
-    "Mentor",
-  ],
+  classifications: ["Storyborn", "King", "Mentor"],
 };

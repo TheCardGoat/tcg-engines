@@ -16,19 +16,15 @@ export const break: ActionCard = {
   cardNumber: 196,
   inkable: true,
   rarity: "common",
-  externalIds: {
+  externalIds: 
     ravensburger: "",
-    tcgPlayer: 506000,
-  },
+    tcgPlayer: 506000,,
   abilities: [
-    {
       type: "action",
-      effect: {
+      effect: 
           type: "banish",
-          target: "CHOSEN_CHARACTER",
-        },
+          target: "CHOSEN_CHARACTER",,
       id: "whn-1",
-      text: "",
-    },
+      text: "",,
   ],
 };

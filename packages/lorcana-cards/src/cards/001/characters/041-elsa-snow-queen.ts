@@ -6,9 +6,7 @@ export const elsa: CharacterCard = {
   name: "Elsa",
   version: "Snow Queen",
   fullName: "Elsa - Snow Queen",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "Frozen",
   set: "001",
   text: "**Freeze** {E} - Exert chosen opposing character.",
@@ -23,22 +21,17 @@ export const elsa: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 492705,
   },
-  classifications: [
-    "Hero",
-    "Dreamborn",
-    "Queen",
-    "Sorcerer",
-  ],
+  classifications: ["Hero", "Dreamborn", "Queen", "Sorcerer"],
   abilities: [
     {
       type: "activated",
       cost: {
-          exert: true,
-        },
+        exert: true,
+      },
       effect: {
-          type: "exert",
-          target: "CHOSEN_CHARACTER",
-        },
+        type: "exert",
+        target: "CHOSEN_CHARACTER",
+      },
       name: "Freeze",
       id: "u2z-1",
       text: "Exert chosen opposing character.",

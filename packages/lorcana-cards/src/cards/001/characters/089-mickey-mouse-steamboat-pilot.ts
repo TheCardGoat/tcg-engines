@@ -6,9 +6,7 @@ export const mickeyMouse: CharacterCard = {
   name: "Mickey Mouse",
   version: "Steamboat Pilot",
   fullName: "Mickey Mouse - Steamboat Pilot",
-  inkType: [
-    "emerald",
-  ],
+  inkType: ["emerald"],
   franchise: "General",
   set: "001",
   cost: 3,
@@ -22,9 +20,5 @@ export const mickeyMouse: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 492709,
   },
-  classifications: [
-    "Hero",
-    "Storyborn",
-    "Captain",
-  ],
+  classifications: ["Hero", "Storyborn", "Captain"],
 };

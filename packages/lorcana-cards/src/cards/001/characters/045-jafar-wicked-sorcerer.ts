@@ -6,9 +6,7 @@ export const jafar: CharacterCard = {
   name: "Jafar",
   version: "Wicked Sorcerer",
   fullName: "Jafar - Wicked Sorcerer",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "Aladdin",
   set: "001",
   text: "**Challenger** +3 (_When challenging, this character get +3 {S}._)",
@@ -23,19 +21,15 @@ export const jafar: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 494098,
   },
-  classifications: [
-    "Dreamborn",
-    "Sorcerer",
-    "Villain",
-  ],
+  classifications: ["Dreamborn", "Sorcerer", "Villain"],
   abilities: [
     {
       type: "static",
       effect: {
-          type: "restriction",
-          restriction: "cant-sing",
-          target: "SELF",
-        },
+        type: "restriction",
+        restriction: "cant-sing",
+        target: "SELF",
+      },
       id: "fh0-1",
       text: "**Challenger** +3 (_When challenging, this character get +3 {S}._)",
     },

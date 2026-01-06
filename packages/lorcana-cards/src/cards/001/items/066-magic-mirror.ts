@@ -6,9 +6,7 @@ export const magicMirror: ItemCard = {
   name: "Magic Mirror",
   version: "",
   fullName: "Magic Mirror",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "Snow White and the Seven Dwarfs",
   set: "001",
   text: "**Speak** {E}, 4 {I} - Draw a card.",
@@ -23,16 +21,16 @@ export const magicMirror: ItemCard = {
     {
       type: "activated",
       cost: {
-          exert: true,
-          ink: 4,
-        },
+        exert: true,
+        ink: 4,
+      },
       effect: {
-          type: "draw",
-          amount: 1,
-          target: {
-            ref: "controller",
-          },
+        type: "draw",
+        amount: 1,
+        target: {
+          ref: "controller",
         },
+      },
       name: "Speak",
       id: "bql-1",
       text: "{E}, 4 {I} - Draw a card.",

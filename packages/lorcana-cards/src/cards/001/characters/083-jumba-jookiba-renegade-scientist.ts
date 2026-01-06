@@ -6,9 +6,7 @@ export const jumbaJookiba: CharacterCard = {
   name: "Jumba Jookiba",
   version: "Renegade Scientist",
   fullName: "Jumba Jookiba - Renegade Scientist",
-  inkType: [
-    "emerald",
-  ],
+  inkType: ["emerald"],
   franchise: "General",
   set: "001",
   cost: 5,
@@ -22,9 +20,5 @@ export const jumbaJookiba: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 485366,
   },
-  classifications: [
-    "Dreamborn",
-    "Alien",
-    "Inventor",
-  ],
+  classifications: ["Dreamborn", "Alien", "Inventor"],
 };

@@ -6,9 +6,7 @@ export const cerberus: CharacterCard = {
   name: "Cerberus",
   version: "Three-Headed Dog",
   fullName: "Cerberus - Three-Headed Dog",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "General",
   set: "001",
   cost: 5,
@@ -22,7 +20,5 @@ export const cerberus: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 497206,
   },
-  classifications: [
-    "Storyborn",
-  ],
+  classifications: ["Storyborn"],
 };

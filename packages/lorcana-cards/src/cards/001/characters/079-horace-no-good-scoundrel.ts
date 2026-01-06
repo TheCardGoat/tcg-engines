@@ -6,9 +6,7 @@ export const horace: CharacterCard = {
   name: "Horace",
   version: "No-Good Scoundrel",
   fullName: "Horace - No-Good Scoundrel",
-  inkType: [
-    "emerald",
-  ],
+  inkType: ["emerald"],
   franchise: "General",
   set: "001",
   cost: 3,
@@ -22,8 +20,5 @@ export const horace: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 507494,
   },
-  classifications: [
-    "Storyborn",
-    "Ally",
-  ],
+  classifications: ["Storyborn", "Ally"],
 };

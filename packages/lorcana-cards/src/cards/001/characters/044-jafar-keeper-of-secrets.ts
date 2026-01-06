@@ -6,9 +6,7 @@ export const jafar: CharacterCard = {
   name: "Jafar",
   version: "Keeper of Secrets",
   fullName: "Jafar - Keeper of Secrets",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "Aladdin",
   set: "001",
   text: "**HIDDEN WONDERS** This character gets +1 {S} for each card in your hand.",
@@ -23,19 +21,15 @@ export const jafar: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 507719,
   },
-  classifications: [
-    "Dreamborn",
-    "Sorcerer",
-    "Villain",
-  ],
+  classifications: ["Dreamborn", "Sorcerer", "Villain"],
   abilities: [
     {
       type: "static",
       effect: {
-          type: "restriction",
-          restriction: "cant-sing",
-          target: "SELF",
-        },
+        type: "restriction",
+        restriction: "cant-sing",
+        target: "SELF",
+      },
       name: "Hidden Wonders",
       id: "rau-1",
       text: "This character gets +1 {S} for each card in your hand.",

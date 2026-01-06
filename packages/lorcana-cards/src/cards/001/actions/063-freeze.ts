@@ -6,9 +6,7 @@ export const freeze: ActionCard = {
   name: "Freeze",
   version: "",
   fullName: "Freeze",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "General",
   set: "001",
   text: "Exert chosen opposing character.",
@@ -23,9 +21,9 @@ export const freeze: ActionCard = {
     {
       type: "action",
       effect: {
-          type: "exert",
-          target: "CHOSEN_CHARACTER",
-        },
+        type: "exert",
+        target: "CHOSEN_CHARACTER",
+      },
       id: "e7s-1",
       text: "Exert chosen opposing character.",
     },

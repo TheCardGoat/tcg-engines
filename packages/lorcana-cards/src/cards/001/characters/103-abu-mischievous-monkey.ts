@@ -6,9 +6,7 @@ export const abu: CharacterCard = {
   name: "Abu",
   version: "Mischievous Monkey",
   fullName: "Abu - Mischievous Monkey",
-  inkType: [
-    "ruby",
-  ],
+  inkType: ["ruby"],
   franchise: "General",
   set: "001",
   cost: 3,
@@ -22,8 +20,5 @@ export const abu: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 507461,
   },
-  classifications: [
-    "Storyborn",
-    "Ally",
-  ],
+  classifications: ["Storyborn", "Ally"],
 };

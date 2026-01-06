@@ -33,24 +33,20 @@ export const belle: CharacterCard = {
   abilities: [
     {
       type: "static",
-      effect: {
+      effect: 
           type: "restriction",
           restriction: "cant-sing",
-          target: "SELF",
-        },
+          target: "SELF",,
       id: "uxx-1",
-      text: {
+      text: 
           name: "My Favourite Part!",
           text: "While you have 10 or more cards in your inkwell, this character gets +4 {L}.",
           conditions: [
-            {
               type: "inkwell",
-              amount: 10,
-            },
+              amount: 10,,
           ],
           attribute: "lore",
-          amount: 4,
-        },
+          amount: 4,,
     },
   ],
 };

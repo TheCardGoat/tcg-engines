@@ -6,9 +6,7 @@ export const beastSMirror: ItemCard = {
   name: "Beast's Mirror",
   version: "",
   fullName: "Beast's Mirror",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "General",
   set: "001",
   text: "**SHOW ME** {E}, 3 {I} - If you have no cards in your hand, draw a card.",
@@ -24,16 +22,16 @@ export const beastSMirror: ItemCard = {
     {
       type: "activated",
       cost: {
-          exert: true,
-          ink: 3,
-        },
+        exert: true,
+        ink: 3,
+      },
       effect: {
-          type: "draw",
-          amount: 1,
-          target: {
-            ref: "controller",
-          },
+        type: "draw",
+        amount: 1,
+        target: {
+          ref: "controller",
         },
+      },
       name: "Show Me",
       id: "ysg-1",
       text: "If you have no cards in your hand, draw a card.",

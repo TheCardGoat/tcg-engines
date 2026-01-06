@@ -6,9 +6,7 @@ export const goons: CharacterCard = {
   name: "Goons",
   version: "Maleficent's Underlings",
   fullName: "Goons - Maleficent's Underlings",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "General",
   set: "001",
   cost: 1,
@@ -22,8 +20,5 @@ export const goons: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508915,
   },
-  classifications: [
-    "Storyborn",
-    "Ally",
-  ],
+  classifications: ["Storyborn", "Ally"],
 };

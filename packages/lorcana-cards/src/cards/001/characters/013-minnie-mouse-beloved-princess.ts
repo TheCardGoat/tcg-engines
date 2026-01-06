@@ -6,9 +6,7 @@ export const minnieMouse: CharacterCard = {
   name: "Minnie Mouse",
   version: "Beloved Princess",
   fullName: "Minnie Mouse - Beloved Princess",
-  inkType: [
-    "amber",
-  ],
+  inkType: ["amber"],
   franchise: "General",
   set: "001",
   cost: 2,
@@ -22,8 +20,5 @@ export const minnieMouse: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 493498,
   },
-  classifications: [
-    "Dreamborn",
-    "Princess",
-  ],
+  classifications: ["Dreamborn", "Princess"],
 };

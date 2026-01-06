@@ -6,9 +6,7 @@ export const mrSmee: CharacterCard = {
   name: "Mr. Smee",
   version: "Loyal First Mate",
   fullName: "Mr. Smee - Loyal First Mate",
-  inkType: [
-    "amber",
-  ],
+  inkType: ["amber"],
   franchise: "General",
   set: "001",
   cost: 3,
@@ -22,9 +20,5 @@ export const mrSmee: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508697,
   },
-  classifications: [
-    "Dreamborn",
-    "Pirate",
-    "Ally",
-  ],
+  classifications: ["Dreamborn", "Pirate", "Ally"],
 };

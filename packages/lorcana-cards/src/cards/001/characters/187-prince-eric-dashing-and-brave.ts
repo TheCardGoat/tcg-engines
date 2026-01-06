@@ -6,9 +6,7 @@ export const princeEric: CharacterCard = {
   name: "Prince Eric",
   version: "Dashing and Brave",
   fullName: "Prince Eric - Dashing and Brave",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "The Little Mermaid",
   set: "001",
   text: "**Challenger** +2 _(While challenging, this character gets +2 {S}.)_",
@@ -23,19 +21,15 @@ export const princeEric: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508933,
   },
-  classifications: [
-    "Hero",
-    "Storyborn",
-    "Prince",
-  ],
+  classifications: ["Hero", "Storyborn", "Prince"],
   abilities: [
     {
       type: "static",
       effect: {
-          type: "restriction",
-          restriction: "cant-sing",
-          target: "SELF",
-        },
+        type: "restriction",
+        restriction: "cant-sing",
+        target: "SELF",
+      },
       id: "omx-1",
       text: "**Challenger** +2 (_When challenging, this character get +2 {S}._)",
     },

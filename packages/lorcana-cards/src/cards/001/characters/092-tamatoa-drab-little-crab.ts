@@ -6,9 +6,7 @@ export const tamatoa: CharacterCard = {
   name: "Tamatoa",
   version: "Drab Little Crab",
   fullName: "Tamatoa - Drab Little Crab",
-  inkType: [
-    "emerald",
-  ],
+  inkType: ["emerald"],
   franchise: "Moana",
   set: "001",
   cost: 2,
@@ -22,7 +20,5 @@ export const tamatoa: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508774,
   },
-  classifications: [
-    "Dreamborn",
-  ],
+  classifications: ["Dreamborn"],
 };

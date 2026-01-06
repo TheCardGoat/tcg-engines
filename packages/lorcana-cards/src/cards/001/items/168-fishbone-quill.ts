@@ -6,9 +6,7 @@ export const fishboneQuill: ItemCard = {
   name: "Fishbone Quill",
   version: "",
   fullName: "Fishbone Quill",
-  inkType: [
-    "sapphire",
-  ],
+  inkType: ["sapphire"],
   franchise: "General",
   set: "001",
   text: "**GO AHEAD AND SIGN** {E} − Put any card from your hand into your inkwell facedown.",
@@ -24,12 +22,12 @@ export const fishboneQuill: ItemCard = {
     {
       type: "activated",
       cost: {
-          exert: true,
-        },
+        exert: true,
+      },
       effect: {
-          type: "banish",
-          target: "CHOSEN_CHARACTER",
-        },
+        type: "banish",
+        target: "CHOSEN_CHARACTER",
+      },
       name: "Go Ahead And Sign",
       id: "k4a-1",
       text: "Put any card from your hand into your inkwell facedown.",

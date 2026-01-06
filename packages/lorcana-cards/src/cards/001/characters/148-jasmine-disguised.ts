@@ -6,9 +6,7 @@ export const jasmine: CharacterCard = {
   name: "Jasmine",
   version: "Disguised",
   fullName: "Jasmine - Disguised",
-  inkType: [
-    "sapphire",
-  ],
+  inkType: ["sapphire"],
   franchise: "Aladdin",
   set: "001",
   cost: 3,
@@ -22,8 +20,5 @@ export const jasmine: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508851,
   },
-  classifications: [
-    "Storyborn",
-    "Princess",
-  ],
+  classifications: ["Storyborn", "Princess"],
 };

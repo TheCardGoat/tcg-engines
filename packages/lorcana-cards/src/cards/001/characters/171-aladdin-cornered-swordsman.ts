@@ -6,9 +6,7 @@ export const aladdin: CharacterCard = {
   name: "Aladdin",
   version: "Cornered Swordsman",
   fullName: "Aladdin - Cornered Swordsman",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "Aladdin",
   set: "001",
   cost: 2,
@@ -22,8 +20,5 @@ export const aladdin: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508895,
   },
-  classifications: [
-    "Hero",
-    "Storyborn",
-  ],
+  classifications: ["Hero", "Storyborn"],
 };

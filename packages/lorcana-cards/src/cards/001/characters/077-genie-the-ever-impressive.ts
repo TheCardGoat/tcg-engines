@@ -6,9 +6,7 @@ export const genie: CharacterCard = {
   name: "Genie",
   version: "The Ever Impressive",
   fullName: "Genie - The Ever Impressive",
-  inkType: [
-    "emerald",
-  ],
+  inkType: ["emerald"],
   franchise: "Aladdin",
   set: "001",
   cost: 2,
@@ -22,8 +20,5 @@ export const genie: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 507515,
   },
-  classifications: [
-    "Dreamborn",
-    "Ally",
-  ],
+  classifications: ["Dreamborn", "Ally"],
 };

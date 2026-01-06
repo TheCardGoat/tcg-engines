@@ -6,9 +6,7 @@ export const magicGoldenFlower: ItemCard = {
   name: "Magic Golden Flower",
   version: "",
   fullName: "Magic Golden Flower",
-  inkType: [
-    "sapphire",
-  ],
+  inkType: ["sapphire"],
   franchise: "General",
   set: "001",
   text: "**HEALING POLLEN** Banish this item - Remove up to 3 damage from chosen character.",
@@ -24,14 +22,14 @@ export const magicGoldenFlower: ItemCard = {
     {
       type: "activated",
       cost: {
-          banishSelf: true,
-        },
+        banishSelf: true,
+      },
       effect: {
-          type: "remove-damage",
-          amount: 3,
-          upTo: true,
-          target: "CHOSEN_CHARACTER",
-        },
+        type: "remove-damage",
+        amount: 3,
+        upTo: true,
+        target: "CHOSEN_CHARACTER",
+      },
       name: "Healing Pollen",
       id: "foq-1",
       text: "Banish this item - Remove up to 3 damage from chosen character.",

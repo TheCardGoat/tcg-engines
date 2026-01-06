@@ -6,9 +6,7 @@ export const maleficent: CharacterCard = {
   name: "Maleficent",
   version: "Uninvited",
   fullName: "Maleficent - Uninvited",
-  inkType: [
-    "sapphire",
-  ],
+  inkType: ["sapphire"],
   franchise: "Sleeping Beauty",
   set: "001",
   cost: 5,
@@ -22,9 +20,5 @@ export const maleficent: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 505949,
   },
-  classifications: [
-    "Dreamborn",
-    "Sorcerer",
-    "Villain",
-  ],
+  classifications: ["Dreamborn", "Sorcerer", "Villain"],
 };

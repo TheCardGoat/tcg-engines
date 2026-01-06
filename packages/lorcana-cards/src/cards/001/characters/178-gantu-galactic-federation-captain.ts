@@ -6,9 +6,7 @@ export const gantu: CharacterCard = {
   name: "Gantu",
   version: "Galactic Federation Captain",
   fullName: "Gantu - Galactic Federation Captain",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "General",
   set: "001",
   text: "**Under arrest** Characters with cost 2 or less can't challenge your characters.",
@@ -23,19 +21,15 @@ export const gantu: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 488097,
   },
-  classifications: [
-    "Alien",
-    "Storyborn",
-    "Captain",
-  ],
+  classifications: ["Alien", "Storyborn", "Captain"],
   abilities: [
     {
       type: "static",
       effect: {
-          type: "restriction",
-          restriction: "cant-sing",
-          target: "SELF",
-        },
+        type: "restriction",
+        restriction: "cant-sing",
+        target: "SELF",
+      },
       id: "ucw-1",
       text: "Characters with cost [object Object] or less can't challenge this character.",
     },

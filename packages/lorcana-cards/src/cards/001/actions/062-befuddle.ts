@@ -6,9 +6,7 @@ export const befuddle: ActionCard = {
   name: "Befuddle",
   version: "",
   fullName: "Befuddle",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "General",
   set: "001",
   text: "Return a character or item with cost 2 or less to their player's hand.",
@@ -24,9 +22,9 @@ export const befuddle: ActionCard = {
     {
       type: "action",
       effect: {
-          type: "return-to-hand",
-          target: "CHOSEN_CHARACTER",
-        },
+        type: "return-to-hand",
+        target: "CHOSEN_CHARACTER",
+      },
       id: "teb-1",
       text: "Return a character or item with cost 2 or less to their player's hand.",
     },

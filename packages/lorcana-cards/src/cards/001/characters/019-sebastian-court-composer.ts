@@ -6,9 +6,7 @@ export const sebastian: CharacterCard = {
   name: "Sebastian",
   version: "Court Composer",
   fullName: "Sebastian - Court Composer",
-  inkType: [
-    "amber",
-  ],
+  inkType: ["amber"],
   franchise: "The Little Mermaid",
   set: "001",
   text: "**Singer** 4 _(This character counts as cost 4 to sing songs.)_",
@@ -23,10 +21,7 @@ export const sebastian: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 504540,
   },
-  classifications: [
-    "Storyborn",
-    "Ally",
-  ],
+  classifications: ["Storyborn", "Ally"],
   abilities: [
     {
       type: "keyword",

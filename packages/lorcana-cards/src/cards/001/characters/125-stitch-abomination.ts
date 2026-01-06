@@ -6,9 +6,7 @@ export const stitch: CharacterCard = {
   name: "Stitch",
   version: "Abomination",
   fullName: "Stitch - Abomination",
-  inkType: [
-    "ruby",
-  ],
+  inkType: ["ruby"],
   franchise: "Lilo & Stitch",
   set: "001",
   cost: 6,
@@ -22,9 +20,5 @@ export const stitch: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508790,
   },
-  classifications: [
-    "Hero",
-    "Alien",
-    "Storyborn",
-  ],
+  classifications: ["Hero", "Alien", "Storyborn"],
 };

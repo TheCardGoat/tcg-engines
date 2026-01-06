@@ -6,9 +6,7 @@ export const hans: CharacterCard = {
   name: "Hans",
   version: "Scheming Prince",
   fullName: "Hans - Scheming Prince",
-  inkType: [
-    "emerald",
-  ],
+  inkType: ["emerald"],
   franchise: "Frozen",
   set: "001",
   cost: 4,
@@ -22,9 +20,5 @@ export const hans: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 505954,
   },
-  classifications: [
-    "Storyborn",
-    "Villain",
-    "Prince",
-  ],
+  classifications: ["Storyborn", "Villain", "Prince"],
 };

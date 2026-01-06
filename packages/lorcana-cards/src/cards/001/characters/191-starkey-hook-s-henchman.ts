@@ -6,9 +6,7 @@ export const starkey: CharacterCard = {
   name: "Starkey",
   version: "Hook's Henchman",
   fullName: "Starkey - Hook's Henchman",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "General",
   set: "001",
   text: "**AYE AYE, CAPTAIN** While you have a Captain character in play, this character gets +1 {L}.",
@@ -23,32 +21,28 @@ export const starkey: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508947,
   },
-  classifications: [
-    "Storyborn",
-    "Pirate",
-    "Ally",
-  ],
+  classifications: ["Storyborn", "Pirate", "Ally"],
   abilities: [
     {
       type: "static",
       effect: {
-          type: "restriction",
-          restriction: "cant-sing",
-          target: "SELF",
-        },
+        type: "restriction",
+        restriction: "cant-sing",
+        target: "SELF",
+      },
       id: "wxx-1",
       text: {
-          name: "Ay Aye, Captain",
-          text: "While you have a Captain character in play, this character gets +1 {L}.",
-          conditions: [
-            {
-              type: "condition",
-              text: "if you have a Captain in play",
-            },
-          ],
-          attribute: "lore",
-          amount: 1,
-        },
+        name: "Ay Aye, Captain",
+        text: "While you have a Captain character in play, this character gets +1 {L}.",
+        conditions: [
+          {
+            type: "condition",
+            text: "if you have a Captain in play",
+          },
+        ],
+        attribute: "lore",
+        amount: 1,
+      },
     },
   ],
 };

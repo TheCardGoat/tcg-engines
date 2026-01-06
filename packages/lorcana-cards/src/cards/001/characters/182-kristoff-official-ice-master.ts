@@ -6,9 +6,7 @@ export const kristoff: CharacterCard = {
   name: "Kristoff",
   version: "Official Ice Master",
   fullName: "Kristoff - Official Ice Master",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "Frozen",
   set: "001",
   cost: 3,
@@ -22,8 +20,5 @@ export const kristoff: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 492998,
   },
-  classifications: [
-    "Storyborn",
-    "Ally",
-  ],
+  classifications: ["Storyborn", "Ally"],
 };

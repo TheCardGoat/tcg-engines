@@ -6,9 +6,7 @@ export const motherGothel: CharacterCard = {
   name: "Mother Gothel",
   version: "Selfish Manipulator",
   fullName: "Mother Gothel - Selfish Manipulator",
-  inkType: [
-    "emerald",
-  ],
+  inkType: ["emerald"],
   franchise: "Tangled",
   set: "001",
   text: "**SKIP THE DRAMA, STAY WITH MAMA** While this character is exerted, opposing character can't quest.",
@@ -23,51 +21,48 @@ export const motherGothel: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508772,
   },
-  classifications: [
-    "Storyborn",
-    "Villain",
-  ],
+  classifications: ["Storyborn", "Villain"],
   abilities: [
     {
       type: "static",
       effect: {
-          type: "restriction",
-          restriction: "cant-sing",
-          target: "SELF",
-        },
+        type: "restriction",
+        restriction: "cant-sing",
+        target: "SELF",
+      },
       id: "opl-1",
       text: {
-          name: "Skip the Drama, Stay with Mama",
-          text: "While this character is exerted, opposing character can't quest.",
-          conditions: [
+        name: "Skip the Drama, Stay with Mama",
+        text: "While this character is exerted, opposing character can't quest.",
+        conditions: [
+          {
+            type: "exerted",
+          },
+        ],
+        target: {
+          type: "opposingCharacters",
+          text: "opposing characters",
+        },
+        ability: {
+          type: "static",
+          ability: "effects",
+          target: {
+            type: "thisCharacter",
+            text: "this character",
+          },
+          effects: [
             {
-              type: "exerted",
+              type: "restriction",
+              restriction: "quest",
+              duration: "static",
+              target: {
+                type: "opposingCharacters",
+                text: "opposing characters",
+              },
             },
           ],
-          target: {
-            type: "opposingCharacters",
-            text: "opposing characters",
-          },
-          ability: {
-            type: "static",
-            ability: "effects",
-            target: {
-              type: "thisCharacter",
-              text: "this character",
-            },
-            effects: [
-              {
-                type: "restriction",
-                restriction: "quest",
-                duration: "static",
-                target: {
-                  type: "opposingCharacters",
-                  text: "opposing characters",
-                },
-              },
-            ],
-          },
         },
+      },
     },
   ],
 };

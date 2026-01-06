@@ -6,9 +6,7 @@ export const mickeyMouse: CharacterCard = {
   name: "Mickey Mouse",
   version: "True Friend",
   fullName: "Mickey Mouse - True Friend",
-  inkType: [
-    "amber",
-  ],
+  inkType: ["amber"],
   franchise: "General",
   set: "001",
   cost: 3,
@@ -22,8 +20,5 @@ export const mickeyMouse: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 493476,
   },
-  classifications: [
-    "Hero",
-    "Storyborn",
-  ],
+  classifications: ["Hero", "Storyborn"],
 };

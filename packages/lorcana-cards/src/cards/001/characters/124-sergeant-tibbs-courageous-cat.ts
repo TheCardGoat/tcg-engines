@@ -6,9 +6,7 @@ export const sergeantTibbs: CharacterCard = {
   name: "Sergeant Tibbs",
   version: "Courageous Cat",
   fullName: "Sergeant Tibbs - Courageous Cat",
-  inkType: [
-    "ruby",
-  ],
+  inkType: ["ruby"],
   franchise: "General",
   set: "001",
   cost: 1,
@@ -22,7 +20,5 @@ export const sergeantTibbs: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 497203,
   },
-  classifications: [
-    "Storyborn",
-  ],
+  classifications: ["Storyborn"],
 };

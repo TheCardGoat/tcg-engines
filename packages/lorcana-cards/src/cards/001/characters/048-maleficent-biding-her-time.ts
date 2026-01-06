@@ -6,9 +6,7 @@ export const maleficent: CharacterCard = {
   name: "Maleficent",
   version: "Biding Her Time",
   fullName: "Maleficent - Biding Her Time",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "Sleeping Beauty",
   set: "001",
   cost: 1,
@@ -21,9 +19,5 @@ export const maleficent: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 493485,
   },
-  classifications: [
-    "Dreamborn",
-    "Sorcerer",
-    "Villain",
-  ],
+  classifications: ["Dreamborn", "Sorcerer", "Villain"],
 };

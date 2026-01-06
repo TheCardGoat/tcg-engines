@@ -6,9 +6,7 @@ export const swordOfTruth: ItemCard = {
   name: "Sword of Truth",
   version: "",
   fullName: "Sword of Truth",
-  inkType: [
-    "ruby",
-  ],
+  inkType: ["ruby"],
   franchise: "General",
   set: "001",
   text: "**FINAL ENCHANTMENT** Banish this item − Banish chosen Villain character.",
@@ -23,12 +21,12 @@ export const swordOfTruth: ItemCard = {
     {
       type: "activated",
       cost: {
-          banishSelf: true,
-        },
+        banishSelf: true,
+      },
       effect: {
-          type: "banish",
-          target: "CHOSEN_CHARACTER",
-        },
+        type: "banish",
+        target: "CHOSEN_CHARACTER",
+      },
       name: "Final Enchantment",
       id: "jpg-1",
       text: "Banish this item − Banish chosen Villain character.",

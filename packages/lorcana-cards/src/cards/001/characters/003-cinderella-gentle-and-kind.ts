@@ -33,15 +33,13 @@ export const cinderella: CharacterCard = {
   abilities: [
     {
       type: "activated",
-      cost: {
-          exert: true,
-        },
-      effect: {
+      cost: 
+          exert: true,,
+      effect: 
           type: "remove-damage",
           amount: 3,
           upTo: true,
-          target: "CHOSEN_CHARACTER",
-        },
+          target: "CHOSEN_CHARACTER",,
       name: "A WONDERFUL DREAM",
       id: "qil-1",
       text: "{E}− Remove up to 3 damage from chosen Princess character.",

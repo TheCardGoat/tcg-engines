@@ -6,9 +6,7 @@ export const donaldDuck: CharacterCard = {
   name: "Donald Duck",
   version: "Boisterous Fowl",
   fullName: "Donald Duck - Boisterous Fowl",
-  inkType: [
-    "ruby",
-  ],
+  inkType: ["ruby"],
   franchise: "General",
   set: "001",
   cost: 2,
@@ -22,7 +20,5 @@ export const donaldDuck: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 493487,
   },
-  classifications: [
-    "Storyborn",
-  ],
+  classifications: ["Storyborn"],
 };

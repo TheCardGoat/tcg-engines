@@ -6,9 +6,7 @@ export const olaf: CharacterCard = {
   name: "Olaf",
   version: "Friendly Snowman",
   fullName: "Olaf - Friendly Snowman",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "Frozen",
   set: "001",
   cost: 1,
@@ -22,8 +20,5 @@ export const olaf: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 485381,
   },
-  classifications: [
-    "Storyborn",
-    "Ally",
-  ],
+  classifications: ["Storyborn", "Ally"],
 };

@@ -6,9 +6,7 @@ export const flounder: CharacterCard = {
   name: "Flounder",
   version: "Voice of Reason",
   fullName: "Flounder - Voice of Reason",
-  inkType: [
-    "sapphire",
-  ],
+  inkType: ["sapphire"],
   franchise: "The Little Mermaid",
   set: "001",
   cost: 1,
@@ -22,8 +20,5 @@ export const flounder: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 493496,
   },
-  classifications: [
-    "Storyborn",
-    "Ally",
-  ],
+  classifications: ["Storyborn", "Ally"],
 };

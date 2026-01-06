@@ -6,9 +6,7 @@ export const archimedes: CharacterCard = {
   name: "Archimedes",
   version: "Highly Educated Owl",
   fullName: "Archimedes - Highly Educated Owl",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "General",
   set: "001",
   cost: 1,
@@ -22,8 +20,5 @@ export const archimedes: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 501406,
   },
-  classifications: [
-    "Dreamborn",
-    "Ally",
-  ],
+  classifications: ["Dreamborn", "Ally"],
 };

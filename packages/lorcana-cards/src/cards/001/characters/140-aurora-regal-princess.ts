@@ -6,9 +6,7 @@ export const aurora: CharacterCard = {
   name: "Aurora",
   version: "Regal Princess",
   fullName: "Aurora - Regal Princess",
-  inkType: [
-    "sapphire",
-  ],
+  inkType: ["sapphire"],
   franchise: "Sleeping Beauty",
   set: "001",
   cost: 2,
@@ -22,9 +20,5 @@ export const aurora: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 493484,
   },
-  classifications: [
-    "Hero",
-    "Storyborn",
-    "Princess",
-  ],
+  classifications: ["Hero", "Storyborn", "Princess"],
 };

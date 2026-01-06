@@ -6,9 +6,7 @@ export const theWardrobe: CharacterCard = {
   name: "The Wardrobe",
   version: "Belle's Confidant",
   fullName: "The Wardrobe - Belle's Confidant",
-  inkType: [
-    "amethyst",
-  ],
+  inkType: ["amethyst"],
   franchise: "General",
   set: "001",
   cost: 3,
@@ -22,8 +20,5 @@ export const theWardrobe: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 485363,
   },
-  classifications: [
-    "Dreamborn",
-    "Ally",
-  ],
+  classifications: ["Dreamborn", "Ally"],
 };

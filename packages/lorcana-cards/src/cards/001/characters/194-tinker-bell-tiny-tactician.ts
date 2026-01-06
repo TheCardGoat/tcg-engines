@@ -6,9 +6,7 @@ export const tinkerBell: CharacterCard = {
   name: "Tinker Bell",
   version: "Tiny Tactician",
   fullName: "Tinker Bell - Tiny Tactician",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "Peter Pan",
   set: "001",
   text: "**Battle plans** {E} - Draw a card, then choose and discard a card.",
@@ -23,21 +21,17 @@ export const tinkerBell: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 488544,
   },
-  classifications: [
-    "Dreamborn",
-    "Ally",
-    "Fairy",
-  ],
+  classifications: ["Dreamborn", "Ally", "Fairy"],
   abilities: [
     {
       type: "activated",
       cost: {
-          exert: true,
-        },
+        exert: true,
+      },
       effect: {
-          type: "sequence",
-          steps: [],
-        },
+        type: "sequence",
+        steps: [],
+      },
       name: "Battle plans",
       id: "s44-1",
       text: "Draw a card, then choose and discard a card.",

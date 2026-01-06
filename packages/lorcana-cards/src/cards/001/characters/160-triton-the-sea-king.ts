@@ -6,9 +6,7 @@ export const triton: CharacterCard = {
   name: "Triton",
   version: "The Sea King",
   fullName: "Triton - The Sea King",
-  inkType: [
-    "sapphire",
-  ],
+  inkType: ["sapphire"],
   franchise: "General",
   set: "001",
   cost: 7,
@@ -22,8 +20,5 @@ export const triton: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 506023,
   },
-  classifications: [
-    "Storyborn",
-    "King",
-  ],
+  classifications: ["Storyborn", "King"],
 };

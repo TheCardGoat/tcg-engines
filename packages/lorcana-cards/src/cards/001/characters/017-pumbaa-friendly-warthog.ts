@@ -6,9 +6,7 @@ export const pumbaa: CharacterCard = {
   name: "Pumbaa",
   version: "Friendly Warthog",
   fullName: "Pumbaa - Friendly Warthog",
-  inkType: [
-    "amber",
-  ],
+  inkType: ["amber"],
   franchise: "The Lion King",
   set: "001",
   cost: 4,
@@ -22,8 +20,5 @@ export const pumbaa: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 508701,
   },
-  classifications: [
-    "Storyborn",
-    "Ally",
-  ],
+  classifications: ["Storyborn", "Ally"],
 };

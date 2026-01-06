@@ -6,9 +6,7 @@ export const scar: CharacterCard = {
   name: "Scar",
   version: "Fiery Usurper",
   fullName: "Scar - Fiery Usurper",
-  inkType: [
-    "ruby",
-  ],
+  inkType: ["ruby"],
   franchise: "The Lion King",
   set: "001",
   cost: 4,
@@ -22,8 +20,5 @@ export const scar: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 492711,
   },
-  classifications: [
-    "Dreamborn",
-    "Villain",
-  ],
+  classifications: ["Dreamborn", "Villain"],
 };

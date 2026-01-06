@@ -6,9 +6,7 @@ export const dinglehopper: ItemCard = {
   name: "Dinglehopper",
   version: "",
   fullName: "Dinglehopper",
-  inkType: [
-    "amber",
-  ],
+  inkType: ["amber"],
   franchise: "General",
   set: "001",
   text: "**STRAIGHTEN HAIR** {E} - Remove up to 1 damage from chosen character.",
@@ -24,14 +22,14 @@ export const dinglehopper: ItemCard = {
     {
       type: "activated",
       cost: {
-          exert: true,
-        },
+        exert: true,
+      },
       effect: {
-          type: "remove-damage",
-          amount: 1,
-          upTo: true,
-          target: "CHOSEN_CHARACTER",
-        },
+        type: "remove-damage",
+        amount: 1,
+        upTo: true,
+        target: "CHOSEN_CHARACTER",
+      },
       name: "Straighten Hair",
       id: "qef-1",
       text: "{E} - Remove up to 1 damage from chosen character.",

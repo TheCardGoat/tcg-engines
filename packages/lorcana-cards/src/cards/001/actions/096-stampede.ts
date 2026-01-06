@@ -6,9 +6,7 @@ export const stampede: ActionCard = {
   name: "Stampede",
   version: "",
   fullName: "Stampede",
-  inkType: [
-    "emerald",
-  ],
+  inkType: ["emerald"],
   franchise: "General",
   set: "001",
   text: "Deal 2 damage to chosen damaged character.",
@@ -23,10 +21,10 @@ export const stampede: ActionCard = {
     {
       type: "action",
       effect: {
-          type: "deal-damage",
-          amount: 2,
-          target: "CHOSEN_CHARACTER",
-        },
+        type: "deal-damage",
+        amount: 2,
+        target: "CHOSEN_CHARACTER",
+      },
       id: "eje-1",
       text: "Deal 2 damage to chosen damaged character.",
     },

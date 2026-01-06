@@ -6,9 +6,7 @@ export const ifItSNotBaroque: ActionCard = {
   name: "If It's Not Baroque",
   version: "",
   fullName: "If It's Not Baroque",
-  inkType: [
-    "sapphire",
-  ],
+  inkType: ["sapphire"],
   franchise: "General",
   set: "001",
   text: "Return an item card from your discard to your hand.",
@@ -23,9 +21,9 @@ export const ifItSNotBaroque: ActionCard = {
     {
       type: "action",
       effect: {
-          type: "return-to-hand",
-          target: "CHOSEN_CHARACTER",
-        },
+        type: "return-to-hand",
+        target: "CHOSEN_CHARACTER",
+      },
       id: "m65-1",
       text: "",
     },

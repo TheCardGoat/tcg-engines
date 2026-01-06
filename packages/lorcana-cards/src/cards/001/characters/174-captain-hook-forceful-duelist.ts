@@ -6,9 +6,7 @@ export const captainHook: CharacterCard = {
   name: "Captain Hook",
   version: "Forceful Duelist",
   fullName: "Captain Hook - Forceful Duelist",
-  inkType: [
-    "steel",
-  ],
+  inkType: ["steel"],
   franchise: "Peter Pan",
   set: "001",
   text: "**Challenger** +2 (_While challenging, this character get +2 {S}._)",
@@ -23,20 +21,15 @@ export const captainHook: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 492704,
   },
-  classifications: [
-    "Dreamborn",
-    "Villain",
-    "Pirate",
-    "Captain",
-  ],
+  classifications: ["Dreamborn", "Villain", "Pirate", "Captain"],
   abilities: [
     {
       type: "static",
       effect: {
-          type: "restriction",
-          restriction: "cant-sing",
-          target: "SELF",
-        },
+        type: "restriction",
+        restriction: "cant-sing",
+        target: "SELF",
+      },
       id: "uk5-1",
       text: "**Challenger** +2 (_When challenging, this character get +2 {S}._)",
     },

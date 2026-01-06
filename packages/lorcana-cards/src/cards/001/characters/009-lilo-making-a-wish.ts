@@ -6,9 +6,7 @@ export const lilo: CharacterCard = {
   name: "Lilo",
   version: "Making a Wish",
   fullName: "Lilo - Making a Wish",
-  inkType: [
-    "amber",
-  ],
+  inkType: ["amber"],
   franchise: "Lilo & Stitch",
   set: "001",
   cost: 1,
@@ -21,8 +19,5 @@ export const lilo: CharacterCard = {
     ravensburger: "",
     tcgPlayer: 503315,
   },
-  classifications: [
-    "Hero",
-    "Storyborn",
-  ],
+  classifications: ["Hero", "Storyborn"],
 };
