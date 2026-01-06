@@ -1,13 +1,13 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { kuzcotemperamentalEmperor } from "./084-kuzco-temperamental-emperor";
+import { kuzcoTemperamentalEmperor } from "./084-kuzco-temperamental-emperor";
 
 describe("Kuzco - Temperamental Emperor", () => {
   // Add ability tests here
   // Examples:
   // it("has [Keyword]", () => {
-  //   const testEngine = new LorcanaTestEngine({ play: [kuzcotemperamentalEmperor] });
-  //   expect(testEngine.getCardModel(kuzcotemperamentalEmperor).hasKeyword()).toBe(true);
+  //   const testEngine = new LorcanaTestEngine({ play: [kuzcoTemperamentalEmperor] });
+  //   expect(testEngine.getCardModel(kuzcoTemperamentalEmperor).hasKeyword()).toBe(true);
   // });
   // TODO: Add tests for abilities
 });

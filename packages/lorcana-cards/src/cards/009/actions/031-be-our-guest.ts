@@ -32,7 +32,6 @@ export const beOurGuest: ActionCard = {
             type: "card-type",
             cardType: "character",
           },
-          reveal: true,
         },
       },
     },

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { dukeOfWeseltonopportunisticOfficial } from "./073-duke-of-weselton-opportunistic-official";
+import { dukeOfWeseltonOpportunisticOfficial } from "./073-duke-of-weselton-opportunistic-official";
 
 describe("Duke of Weselton - Opportunistic Official", () => {
   // Add ability tests here

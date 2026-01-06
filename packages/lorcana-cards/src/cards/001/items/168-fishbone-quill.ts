@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const fishboneQuillundefined: ItemCard = {
+export const fishboneQuill: ItemCard = {
   id: "k4a",
   cardType: "item",
   name: "Fishbone Quill",

@@ -30,6 +30,11 @@ export const pinocchioStringsAttached: CharacterCard = {
       id: "1m2-2",
       type: "triggered",
       name: "GOT TO KEEP REAL QUIET Once",
+      trigger: {
+        event: "ready",
+        timing: "whenever",
+        on: "SELF",
+      },
       effect: {
         type: "optional",
         effect: {

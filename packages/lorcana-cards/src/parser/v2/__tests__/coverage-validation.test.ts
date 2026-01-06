@@ -176,7 +176,7 @@ describe("Coverage Validation: All 1552 Unique Ability Texts", () => {
       // Sample first few warnings
       withWarnings.slice(0, 5).forEach((result, index) => {
         console.log(`\nExample ${index + 1}:`);
-        console.log(`  Text: "${result.text}"`);
+        console.log(`  Text: "${result.ability?.text}"`);
         console.log(`  Warnings: ${result.warnings?.join(", ")}`);
       });
     }

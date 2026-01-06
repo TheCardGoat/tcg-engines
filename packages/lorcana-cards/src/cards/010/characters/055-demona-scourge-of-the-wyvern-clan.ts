@@ -37,7 +37,8 @@ export const demonaScourgeOfTheWyvernClan: CharacterCard = {
             type: "exert",
             target: {
               selector: "all",
-              controller: "opponent",
+              owner: "opponent",
+              count: "all",
             },
           },
           {

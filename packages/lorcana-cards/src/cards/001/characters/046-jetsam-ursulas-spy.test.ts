@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { jetsamursulasSpy } from "./046-jetsam-ursulas-spy";
+import { jetsamUrsulasSpy } from "./046-jetsam-ursulas-spy";
 
 describe("Jetsam - Ursula’s Spy", () => {
   // Add ability tests here

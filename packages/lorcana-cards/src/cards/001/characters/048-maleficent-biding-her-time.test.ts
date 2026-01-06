@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { maleficentbidingHerTime } from "./048-maleficent-biding-her-time";
+import { maleficentBidingHerTime } from "./048-maleficent-biding-her-time";
 
 describe("Maleficent - Biding Her Time", () => {
   // Add ability tests here

@@ -8,6 +8,7 @@ export const peteBadGuy: CharacterCard = {
   fullName: "Pete - Bad Guy",
   inkType: ["emerald"],
   set: "002",
+  franchise: "Mickey and Friends",
   text: "Ward (Opponents can't choose this character except to challenge.)\nTAKE THAT! Whenever you play an action, this character gets +2 {S} this turn.\nWHO'S NEXT? While this character has 7 {S} or more, he gets +2 {L}.",
   cost: 5,
   strength: 3,

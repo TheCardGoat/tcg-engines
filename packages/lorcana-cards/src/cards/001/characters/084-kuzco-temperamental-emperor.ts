@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const kuzcotemperamentalEmperor: CharacterCard = {
+export const kuzcoTemperamentalEmperor: CharacterCard = {
   id: "j7u",
   cardType: "character",
   name: "Kuzco",

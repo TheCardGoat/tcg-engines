@@ -8,6 +8,7 @@ export const mickeyMouseFriendlyFace: CharacterCard = {
   fullName: "Mickey Mouse - Friendly Face",
   inkType: ["amber"],
   set: "002",
+  franchise: "Mickey Mouse & Friends",
   text: "GLAD YOU'RE HERE! Whenever this character quests, you pay 3 {I} less for the next character you play this turn.",
   cost: 6,
   strength: 1,

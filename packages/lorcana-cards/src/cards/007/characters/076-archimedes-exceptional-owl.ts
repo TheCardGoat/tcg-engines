@@ -24,6 +24,11 @@ export const archimedesExceptionalOwl: CharacterCard = {
       id: "crp-1",
       type: "triggered",
       name: "MORE TO LEARN",
+      trigger: {
+        event: "challenged",
+        timing: "whenever",
+        on: "SELF",
+      },
       effect: {
         type: "optional",
         effect: {

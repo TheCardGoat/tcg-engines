@@ -22,5 +22,5 @@ export const duckworthGhostButler: CharacterCard = {
     ravensburger: "a61ffd6081ddf7abbd9f662708d7db139dedca28",
   },
   abilities: [],
-  classifications: ["Storyborn", "Ally", "Ghost"],
+  classifications: ["Storyborn", "Ally"],
 };

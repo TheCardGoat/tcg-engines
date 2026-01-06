@@ -18,6 +18,7 @@ export const airfoil: ItemCard = {
     {
       id: "1kp-1",
       type: "activated",
+      cost: {},
       effect: {
         type: "conditional",
         condition: {

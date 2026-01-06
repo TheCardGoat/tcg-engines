@@ -18,6 +18,7 @@ export const beastsMirror: ItemCard = {
     {
       id: "6wc-1",
       type: "activated",
+      cost: {},
       effect: {
         type: "conditional",
         condition: {

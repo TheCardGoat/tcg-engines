@@ -8,6 +8,7 @@ export const minnieMouseWideeyedDiver: CharacterCard = {
   fullName: "Minnie Mouse - Wide-Eyed Diver",
   inkType: ["ruby"],
   set: "002",
+  franchise: "Mickey and Friends",
   text: "Shift 2 (You may pay 2 {I} to play this on top of one of your characters named Minnie Mouse.)\nEvasive (Only characters with Evasive can challenge this character.)\nUNDERSEA ADVENTURE Whenever you play a second action in a turn, this character gets +2 {L} this turn.",
   cost: 4,
   strength: 2,

@@ -52,8 +52,10 @@ export const kuzcoSelfishEmperor: CharacterCard = {
         keyword: "Resist",
         value: 0,
         target: {
-          controller: "you",
-          excludeSelf: true,
+          selector: "all",
+          owner: "you",
+          filter: [{ type: "source", ref: "other" }],
+          count: "all",
         },
         duration: "until-start-of-next-turn",
       },

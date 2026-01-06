@@ -346,15 +346,6 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
           // Try to parse using the ability parser
           const parseResult = parseAbilityText(text);
 
-          if (card.name === "Goofy") {
-            console.log("Goofy Debug:", {
-              text,
-              success: parseResult.success,
-              abilityText: parseResult.ability?.text,
-              hasAbility: !!parseResult.ability,
-            });
-          }
-
           if (parseResult.success && parseResult.ability) {
             // Parser succeeded - use structured ability
             const parsedAbility = parseResult.ability.ability;

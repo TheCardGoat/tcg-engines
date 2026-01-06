@@ -8,6 +8,7 @@ export const donaldDuckNotAgain: CharacterCard = {
   fullName: "Donald Duck - Not Again!",
   inkType: ["ruby"],
   set: "002",
+  franchise: "Mickey Mouse & Friends",
   text: "Evasive (Only characters with Evasive can challenge this character.)\nPHOOEY! This character gets +1 {L} for each 1 damage on him.",
   cost: 5,
   strength: 1,

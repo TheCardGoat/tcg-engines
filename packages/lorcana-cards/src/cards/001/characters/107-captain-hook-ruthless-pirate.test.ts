@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { captainHookruthlessPirate } from "./107-captain-hook-ruthless-pirate";
+import { captainHookRuthlessPirate } from "./107-captain-hook-ruthless-pirate";
 
 describe("Captain Hook - Ruthless Pirate", () => {
   // Add ability tests here

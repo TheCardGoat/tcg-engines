@@ -23,6 +23,7 @@ export const pegNaturalPerformer: CharacterCard = {
     {
       id: "wsf-1",
       type: "activated",
+      cost: {},
       effect: {
         type: "conditional",
         condition: {

@@ -44,13 +44,15 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
               type: "banish",
               target: {
                 selector: "chosen",
-                controller: "opponent",
+                owner: "opponent",
+                count: 1,
               },
             },
             {
               type: "conditional",
               condition: {
-                type: "if-you-do",
+                type: "if",
+                expression: "target banished",
               },
               then: {
                 type: "look-at-cards",

@@ -26,8 +26,9 @@ export const hakunaMatata: ActionCard = {
         amount: 3,
         target: {
           selector: "all",
-          controller: "you",
-          cardType: "character",
+          count: "all",
+          owner: "you",
+          cardTypes: ["character"],
         },
         upTo: true,
       },

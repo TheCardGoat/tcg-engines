@@ -18,6 +18,7 @@ export const medallionWeights: ItemCard = {
     {
       id: "1rm-1",
       type: "activated",
+      cost: {},
       effect: {
         type: "optional",
         effect: {

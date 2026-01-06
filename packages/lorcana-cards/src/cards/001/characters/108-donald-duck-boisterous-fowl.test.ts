@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaTestEngine, PLAYER_ONE } from "@tcg/lorcana/testing";
-import { donaldDuckboisterousFowl } from "./108-donald-duck-boisterous-fowl";
+import { donaldDuckBoisterousFowl } from "./108-donald-duck-boisterous-fowl";
 
 describe("Donald Duck - Boisterous Fowl", () => {
   // Add ability tests here

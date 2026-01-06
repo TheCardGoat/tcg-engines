@@ -23,6 +23,7 @@ export const theQueenWickedAndVain: CharacterCard = {
     {
       id: "2kk-1",
       type: "activated",
+      cost: {},
       effect: {
         type: "draw",
         amount: 1,

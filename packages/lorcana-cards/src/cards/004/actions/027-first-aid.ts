@@ -24,8 +24,8 @@ export const firstAid: ActionCard = {
         amount: 3,
         target: {
           selector: "all",
-          controller: "you",
-          cardType: "character",
+          owner: "you",
+          count: "all",
         },
         upTo: true,
       },

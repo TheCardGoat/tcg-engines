@@ -18,6 +18,7 @@ export const amethystChromicon: ItemCard = {
     {
       id: "1nk-1",
       type: "activated",
+      cost: {},
       effect: {
         type: "draw",
         amount: 1,

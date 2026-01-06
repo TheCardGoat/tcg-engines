@@ -25,21 +25,27 @@ export const goliathClanLeader: CharacterCard = {
       name: "DUSK TO DAWN",
       text: "DUSK TO DAWN At the end of each player's turn, if they have more than 2 cards in their hand, they choose and discard cards until they have 2. If they have fewer than 2 cards in their hand, they draw until they have 2.",
       type: "triggered",
+      trigger: {
+        event: "end-turn",
+        timing: "at",
+        on: "ANY_PLAYER",
+      },
+      effect: {
+        type: "sequence",
+        steps: [],
+      },
     },
     {
       id: "1uq-2",
-      type: "action",
+      type: "static",
       effect: {
-        type: "conditional",
-        condition: {
-          type: "if",
-          expression: "you have 3 or more cards in your hand",
-        },
-        then: {
-          type: "restriction",
-          restriction: "cant-ready",
-          target: "SELF",
-        },
+        type: "restriction",
+        restriction: "cant-ready",
+        target: "SELF",
+      },
+      condition: {
+        type: "if",
+        expression: "you have 3 or more cards in your hand",
       },
       text: "STONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
     },

@@ -1,6 +1,6 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const swordOfTruthundefined: ItemCard = {
+export const swordOfTruth: ItemCard = {
   id: "jpg",
   cardType: "item",
   name: "Sword of Truth",

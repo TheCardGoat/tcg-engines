@@ -1,6 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 
-export const cruellaDeVilmiserableAsUsual: CharacterCard = {
+export const cruellaDeVilMiserableAsUsual: CharacterCard = {
   id: "cw0",
   cardType: "character",
   name: "Cruella De Vil",
