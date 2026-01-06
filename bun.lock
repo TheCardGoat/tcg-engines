@@ -1,6 +1,5 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "TheCardGoat",
@@ -70,6 +69,7 @@
         "tailwind-merge": "^3.4.0",
       },
       "devDependencies": {
+        "@biomejs/biome": "2.3.11",
         "@chromatic-com/storybook": "4.1.2",
         "@inlang/paraglide-js": "2.3.2",
         "@playwright/test": "1.55.1",
@@ -204,7 +204,8 @@
     "packages/shared": {
       "name": "@tcg/shared",
       "version": "0.1.0",
-      "dependencies": {
+      "devDependencies": {
+        "@biomejs/biome": "2.3.11",
         "@lorcanito/typescript-config": "workspace:*",
         "pino": "9.7.0",
         "pino-pretty": "13.0.0",

@@ -1,6 +1,6 @@
 {
   "root": true,
-  "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.0/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -10,7 +10,7 @@
     "ignoreUnknown": true,
     "includes": [
       "**",
-      "!**/dist/**/*",
+      "!!**/dist/**/*",
       "!**/build/**/*",
       "!**/node_modules/**/*",
       "!**/.turbo/**/*",
@@ -25,6 +25,23 @@
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2
+  },
+  "html": {
+    "experimentalFullSupportEnabled": true,
+    "formatter": {
+      "enabled": true,
+      "indentScriptAndStyle": true
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
   },
   "linter": {
     "enabled": true,
@@ -93,16 +110,6 @@
       "security": {
         "noDangerouslySetInnerHtml": "warn"
       }
-    }
-  },
-  "javascript": {
-    "formatter": {
-      "quoteStyle": "double"
-    }
-  },
-  "css": {
-    "parser": {
-      "tailwindDirectives": true
     }
   },
   "overrides": [

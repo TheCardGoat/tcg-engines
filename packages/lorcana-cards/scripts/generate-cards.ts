@@ -268,7 +268,9 @@ async function main() {
 
   if (cardCategories.vanilla.length > 0) {
     verboseLog.push(`VANILLA CARDS (${cardCategories.vanilla.length}):`);
-    cardCategories.vanilla.forEach((name) => verboseLog.push(`  - ${name}`));
+    cardCategories.vanilla.forEach((name) => {
+      verboseLog.push(`  - ${name}`);
+    });
     verboseLog.push("");
   }
 
@@ -276,9 +278,9 @@ async function main() {
     verboseLog.push(
       `MANUAL OVERRIDE CARDS (${cardCategories.manualOverride.length}):`,
     );
-    cardCategories.manualOverride.forEach((name) =>
-      verboseLog.push(`  - ${name}`),
-    );
+    cardCategories.manualOverride.forEach((name) => {
+      verboseLog.push(`  - ${name}`);
+    });
     verboseLog.push("");
   }
 
@@ -286,9 +288,9 @@ async function main() {
     verboseLog.push(
       `KEYWORD-ONLY CARDS (${cardCategories.keywordOnly.length}):`,
     );
-    cardCategories.keywordOnly.forEach((name) =>
-      verboseLog.push(`  - ${name}`),
-    );
+    cardCategories.keywordOnly.forEach((name) => {
+      verboseLog.push(`  - ${name}`);
+    });
     verboseLog.push("");
   }
 
@@ -296,7 +298,9 @@ async function main() {
     verboseLog.push(
       `SIMPLE DRAW EFFECT CARDS (${cardCategories.simpleDraw.length}):`,
     );
-    cardCategories.simpleDraw.forEach((name) => verboseLog.push(`  - ${name}`));
+    cardCategories.simpleDraw.forEach((name) => {
+      verboseLog.push(`  - ${name}`);
+    });
     verboseLog.push("");
   }
 
@@ -304,9 +308,9 @@ async function main() {
     verboseLog.push(
       `OTHER PARSEABLE CARDS (${cardCategories.otherParseable.length}):`,
     );
-    cardCategories.otherParseable.forEach((name) =>
-      verboseLog.push(`  - ${name}`),
-    );
+    cardCategories.otherParseable.forEach((name) => {
+      verboseLog.push(`  - ${name}`);
+    });
     verboseLog.push("");
   }
 
