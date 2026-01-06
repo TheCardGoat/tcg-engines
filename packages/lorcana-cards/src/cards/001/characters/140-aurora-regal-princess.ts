@@ -1,24 +1,30 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const auroraRegalPrincess: CharacterCard = {
+export const aurora: CharacterCard = {
   id: "b2e",
   cardType: "character",
   name: "Aurora",
   version: "Regal Princess",
   fullName: "Aurora - Regal Princess",
-  inkType: ["sapphire"],
-  franchise: "Disney",
+  inkType: [
+    "sapphire",
+  ],
+  franchise: "Sleeping Beauty",
   set: "001",
-  text: "",
   cost: 2,
   strength: 2,
   willpower: 2,
   lore: 2,
   cardNumber: 140,
   inkable: true,
+  rarity: "uncommon",
   externalIds: {
     ravensburger: "",
+    tcgPlayer: 493484,
   },
-  abilities: [],
-  classifications: ["Hero", "Storyborn", "Princess"],
+  classifications: [
+    "Hero",
+    "Storyborn",
+    "Princess",
+  ],
 };

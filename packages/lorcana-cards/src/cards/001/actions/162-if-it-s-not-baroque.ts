@@ -1,33 +1,32 @@
 import type { ActionCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const break: ActionCard = {
-  id: "whn",
+export const ifItSNotBaroque: ActionCard = {
+  id: "m65",
   cardType: "action",
-  name: "Break",
+  name: "If It's Not Baroque",
   version: "",
-  fullName: "Break",
+  fullName: "If It's Not Baroque",
   inkType: [
-    "steel",
+    "sapphire",
   ],
   franchise: "General",
   set: "001",
-  text: "Banish chosen item.",
-  cost: 2,
-  cardNumber: 196,
-  inkable: true,
-  rarity: "common",
+  text: "Return an item card from your discard to your hand.",
+  cost: 3,
+  cardNumber: 162,
+  rarity: "rare",
   externalIds: {
     ravensburger: "",
-    tcgPlayer: 506000,
+    tcgPlayer: 505980,
   },
   abilities: [
     {
       type: "action",
       effect: {
-          type: "banish",
+          type: "return-to-hand",
           target: "CHOSEN_CHARACTER",
         },
-      id: "whn-1",
+      id: "m65-1",
       text: "",
     },
   ],

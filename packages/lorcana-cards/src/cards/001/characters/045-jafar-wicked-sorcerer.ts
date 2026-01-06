@@ -1,32 +1,43 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const jafarWickedSorcerer: CharacterCard = {
-  id: "1dn",
+export const jafar: CharacterCard = {
+  id: "fh0",
   cardType: "character",
   name: "Jafar",
   version: "Wicked Sorcerer",
   fullName: "Jafar - Wicked Sorcerer",
-  inkType: ["amethyst"],
+  inkType: [
+    "amethyst",
+  ],
   franchise: "Aladdin",
   set: "001",
-  text: "Challenger +3 (While challenging, this character gets +3 {S}.)",
+  text: "**Challenger** +3 (_When challenging, this character get +3 {S}._)",
   cost: 4,
   strength: 2,
   willpower: 5,
   lore: 1,
   cardNumber: 45,
   inkable: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "b3001090c82926f995dda5332ff5f0546257b061",
+    ravensburger: "",
+    tcgPlayer: 494098,
   },
+  classifications: [
+    "Dreamborn",
+    "Sorcerer",
+    "Villain",
+  ],
   abilities: [
     {
-      id: "1dn-1",
-      type: "keyword",
-      keyword: "Challenger",
-      value: 3,
-      text: "Challenger +3",
+      type: "static",
+      effect: {
+          type: "restriction",
+          restriction: "cant-sing",
+          target: "SELF",
+        },
+      id: "fh0-1",
+      text: "**Challenger** +3 (_When challenging, this character get +3 {S}._)",
     },
   ],
-  classifications: ["Dreamborn", "Villain", "Sorcerer"],
 };

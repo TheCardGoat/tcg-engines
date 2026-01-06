@@ -1,12 +1,14 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const hansSchemingPrince: CharacterCard = {
-  id: "11k",
+export const hans: CharacterCard = {
+  id: "s45",
   cardType: "character",
   name: "Hans",
   version: "Scheming Prince",
   fullName: "Hans - Scheming Prince",
-  inkType: ["emerald"],
+  inkType: [
+    "emerald",
+  ],
   franchise: "Frozen",
   set: "001",
   cost: 4,
@@ -15,9 +17,14 @@ export const hansSchemingPrince: CharacterCard = {
   lore: 3,
   cardNumber: 78,
   inkable: true,
-  vanilla: true,
+  rarity: "rare",
   externalIds: {
-    ravensburger: "876b55e02b4709468c83197733991be728f92bfd",
+    ravensburger: "",
+    tcgPlayer: 505954,
   },
-  classifications: ["Storyborn", "Villain", "Prince"],
+  classifications: [
+    "Storyborn",
+    "Villain",
+    "Prince",
+  ],
 };

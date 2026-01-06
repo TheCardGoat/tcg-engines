@@ -1,13 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const stitchAbomination: CharacterCard = {
-  id: "qq8",
+export const stitch: CharacterCard = {
+  id: "jhe",
   cardType: "character",
   name: "Stitch",
   version: "Abomination",
   fullName: "Stitch - Abomination",
-  inkType: ["ruby"],
-  franchise: "Lilo and Stitch",
+  inkType: [
+    "ruby",
+  ],
+  franchise: "Lilo & Stitch",
   set: "001",
   cost: 6,
   strength: 4,
@@ -15,9 +17,14 @@ export const stitchAbomination: CharacterCard = {
   lore: 3,
   cardNumber: 125,
   inkable: true,
-  vanilla: true,
+  rarity: "rare",
   externalIds: {
-    ravensburger: "605537d5b0a89487a307dd83926907cdd96aa2fc",
+    ravensburger: "",
+    tcgPlayer: 508790,
   },
-  classifications: ["Storyborn", "Hero", "Alien"],
+  classifications: [
+    "Hero",
+    "Alien",
+    "Storyborn",
+  ],
 };

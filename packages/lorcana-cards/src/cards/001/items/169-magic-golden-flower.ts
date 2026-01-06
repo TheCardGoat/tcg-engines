@@ -1,34 +1,40 @@
-import type { ItemCard } from "@tcg/lorcana-types";
+import type { ItemCard } from "@tcg/lorcana-types/cards/card-types";
 
 export const magicGoldenFlower: ItemCard = {
-  id: "1dk",
+  id: "foq",
   cardType: "item",
   name: "Magic Golden Flower",
-  inkType: ["sapphire"],
-  franchise: "Tangled",
+  version: "",
+  fullName: "Magic Golden Flower",
+  inkType: [
+    "sapphire",
+  ],
+  franchise: "General",
   set: "001",
-  text: "HEALING POLLEN Banish this item — Remove up to 3 damage from chosen character.",
+  text: "**HEALING POLLEN** Banish this item - Remove up to 3 damage from chosen character.",
   cost: 1,
   cardNumber: 169,
   inkable: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "b14e84279a07a659f613dce649d53864d810ff65",
+    ravensburger: "",
+    tcgPlayer: 508860,
   },
   abilities: [
     {
-      id: "1dk-1",
-      text: "HEALING POLLEN Banish this item — Remove up to 3 damage from chosen character.",
-      name: "HEALING POLLEN",
       type: "activated",
       cost: {
-        banishSelf: true,
-      },
+          banishSelf: true,
+        },
       effect: {
-        type: "remove-damage",
-        amount: 3,
-        target: "CHOSEN_CHARACTER",
-        upTo: true,
-      },
+          type: "remove-damage",
+          amount: 3,
+          upTo: true,
+          target: "CHOSEN_CHARACTER",
+        },
+      name: "Healing Pollen",
+      id: "foq-1",
+      text: "Banish this item - Remove up to 3 damage from chosen character.",
     },
   ],
 };

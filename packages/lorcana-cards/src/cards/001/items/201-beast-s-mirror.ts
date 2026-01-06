@@ -1,30 +1,31 @@
 import type { ItemCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const magicMirror: ItemCard = {
-  id: "bql",
+export const beastSMirror: ItemCard = {
+  id: "ysg",
   cardType: "item",
-  name: "Magic Mirror",
+  name: "Beast's Mirror",
   version: "",
-  fullName: "Magic Mirror",
+  fullName: "Beast's Mirror",
   inkType: [
-    "amethyst",
+    "steel",
   ],
-  franchise: "Snow White and the Seven Dwarfs",
+  franchise: "General",
   set: "001",
-  text: "**Speak** {E}, 4 {I} - Draw a card.",
+  text: "**SHOW ME** {E}, 3 {I} - If you have no cards in your hand, draw a card.",
   cost: 2,
-  cardNumber: 66,
-  rarity: "rare",
+  cardNumber: 201,
+  inkable: true,
+  rarity: "common",
   externalIds: {
     ravensburger: "",
-    tcgPlayer: 492714,
+    tcgPlayer: 493486,
   },
   abilities: [
     {
       type: "activated",
       cost: {
           exert: true,
-          ink: 4,
+          ink: 3,
         },
       effect: {
           type: "draw",
@@ -33,9 +34,9 @@ export const magicMirror: ItemCard = {
             ref: "controller",
           },
         },
-      name: "Speak",
-      id: "bql-1",
-      text: "{E}, 4 {I} - Draw a card.",
+      name: "Show Me",
+      id: "ysg-1",
+      text: "If you have no cards in your hand, draw a card.",
     },
   ],
 };

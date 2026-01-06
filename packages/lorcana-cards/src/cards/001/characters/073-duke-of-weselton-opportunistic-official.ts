@@ -1,13 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const dukeOfWeseltonOpportunisticOfficial: CharacterCard = {
-  id: "128",
+export const dukeOfWeselton: CharacterCard = {
+  id: "fji",
   cardType: "character",
-  name: "Duke of Weselton",
+  name: "Duke Of Weselton",
   version: "Opportunistic Official",
-  fullName: "Duke of Weselton - Opportunistic Official",
-  inkType: ["emerald"],
-  franchise: "Frozen",
+  fullName: "Duke Of Weselton - Opportunistic Official",
+  inkType: [
+    "emerald",
+  ],
+  franchise: "General",
   set: "001",
   cost: 1,
   strength: 2,
@@ -15,9 +17,13 @@ export const dukeOfWeseltonOpportunisticOfficial: CharacterCard = {
   lore: 1,
   cardNumber: 73,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "8b4fd5b66b54e7069a367ca9e58ca43303833526",
+    ravensburger: "",
+    tcgPlayer: 505971,
   },
-  classifications: ["Storyborn", "Villain"],
+  classifications: [
+    "Storyborn",
+    "Villain",
+  ],
 };

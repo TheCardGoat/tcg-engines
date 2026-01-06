@@ -1,30 +1,36 @@
-import type { ActionCard } from "@tcg/lorcana-types";
+import type { ActionCard } from "@tcg/lorcana-types/cards/card-types";
 
 export const grabYourSword: ActionCard = {
-  id: "fa7",
+  id: "u4k",
   cardType: "action",
   name: "Grab Your Sword",
-  inkType: ["steel"],
-  franchise: "Beauty and the Beast",
+  version: "",
+  fullName: "Grab Your Sword",
+  inkType: [
+    "steel",
+  ],
+  franchise: "General",
   set: "001",
-  text: "Deal 2 damage to each opposing character.",
-  actionSubtype: "song",
+  text: "_(A character with cost 5 or more can {E} to sing this song for free.)_
+Deal 2 damage to each opposing character.",
   cost: 5,
   cardNumber: 198,
-  inkable: false,
+  rarity: "rare",
   externalIds: {
-    ravensburger: "371502073092025bab3c49038c7809151c636ad4",
+    ravensburger: "",
+    tcgPlayer: 503469,
   },
+  actionSubtype: "song",
   abilities: [
     {
-      id: "fa7-1",
-      text: "Deal 2 damage to each opposing character.",
       type: "action",
       effect: {
-        type: "deal-damage",
-        amount: 2,
-        target: "ALL_OPPOSING_CHARACTERS",
-      },
+          type: "deal-damage",
+          amount: 2,
+          target: "CHOSEN_CHARACTER",
+        },
+      id: "u4k-1",
+      text: "Deal 2 damage to each opposing character.",
     },
   ],
 };

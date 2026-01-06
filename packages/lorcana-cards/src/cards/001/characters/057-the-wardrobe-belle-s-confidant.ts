@@ -1,29 +1,29 @@
 import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const horace: CharacterCard = {
-  id: "jyy",
+export const theWardrobe: CharacterCard = {
+  id: "qvy",
   cardType: "character",
-  name: "Horace",
-  version: "No-Good Scoundrel",
-  fullName: "Horace - No-Good Scoundrel",
+  name: "The Wardrobe",
+  version: "Belle's Confidant",
+  fullName: "The Wardrobe - Belle's Confidant",
   inkType: [
-    "emerald",
+    "amethyst",
   ],
   franchise: "General",
   set: "001",
   cost: 3,
-  strength: 4,
-  willpower: 3,
+  strength: 3,
+  willpower: 4,
   lore: 1,
-  cardNumber: 79,
+  cardNumber: 57,
   inkable: true,
   rarity: "common",
   externalIds: {
     ravensburger: "",
-    tcgPlayer: 507494,
+    tcgPlayer: 485363,
   },
   classifications: [
-    "Storyborn",
+    "Dreamborn",
     "Ally",
   ],
 };

@@ -1,13 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const cerberusThreeheadedDog: CharacterCard = {
-  id: "bw5",
+export const cerberus: CharacterCard = {
+  id: "zie",
   cardType: "character",
   name: "Cerberus",
   version: "Three-Headed Dog",
   fullName: "Cerberus - Three-Headed Dog",
-  inkType: ["steel"],
-  franchise: "Hercules",
+  inkType: [
+    "steel",
+  ],
+  franchise: "General",
   set: "001",
   cost: 5,
   strength: 5,
@@ -15,9 +17,12 @@ export const cerberusThreeheadedDog: CharacterCard = {
   lore: 1,
   cardNumber: 176,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "2add282ac5daf44f5999ad575d4fa8946c666208",
+    ravensburger: "",
+    tcgPlayer: 497206,
   },
-  classifications: ["Storyborn"],
+  classifications: [
+    "Storyborn",
+  ],
 };

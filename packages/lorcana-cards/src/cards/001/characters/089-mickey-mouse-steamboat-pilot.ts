@@ -1,24 +1,30 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const mickeyMouseSteamboatPilot: CharacterCard = {
+export const mickeyMouse: CharacterCard = {
   id: "p7k",
   cardType: "character",
   name: "Mickey Mouse",
   version: "Steamboat Pilot",
   fullName: "Mickey Mouse - Steamboat Pilot",
-  inkType: ["emerald"],
-  franchise: "Disney",
+  inkType: [
+    "emerald",
+  ],
+  franchise: "General",
   set: "001",
-  text: "",
   cost: 3,
   strength: 3,
   willpower: 4,
   lore: 1,
   cardNumber: 89,
   inkable: true,
+  rarity: "common",
   externalIds: {
     ravensburger: "",
+    tcgPlayer: 492709,
   },
-  abilities: [],
-  classifications: ["Hero", "Storyborn", "Captain"],
+  classifications: [
+    "Hero",
+    "Storyborn",
+    "Captain",
+  ],
 };

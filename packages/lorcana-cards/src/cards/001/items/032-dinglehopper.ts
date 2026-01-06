@@ -1,34 +1,40 @@
-import type { ItemCard } from "@tcg/lorcana-types";
+import type { ItemCard } from "@tcg/lorcana-types/cards/card-types";
 
 export const dinglehopper: ItemCard = {
-  id: "7r6",
+  id: "qef",
   cardType: "item",
   name: "Dinglehopper",
-  inkType: ["amber"],
-  franchise: "Little Mermaid",
+  version: "",
+  fullName: "Dinglehopper",
+  inkType: [
+    "amber",
+  ],
+  franchise: "General",
   set: "001",
-  text: "STRAIGHTEN HAIR {E} — Remove up to 1 damage from chosen character.",
+  text: "**STRAIGHTEN HAIR** {E} - Remove up to 1 damage from chosen character.",
   cost: 1,
   cardNumber: 32,
   inkable: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "00c6be6408d3d9e54f25ef26b390b9087bf722cb",
+    ravensburger: "",
+    tcgPlayer: 492733,
   },
   abilities: [
     {
-      id: "7r6-1",
-      text: "STRAIGHTEN HAIR {E} — Remove up to 1 damage from chosen character.",
-      name: "STRAIGHTEN HAIR",
       type: "activated",
       cost: {
-        exert: true,
-      },
+          exert: true,
+        },
       effect: {
-        type: "remove-damage",
-        amount: 1,
-        target: "CHOSEN_CHARACTER",
-        upTo: true,
-      },
+          type: "remove-damage",
+          amount: 1,
+          upTo: true,
+          target: "CHOSEN_CHARACTER",
+        },
+      name: "Straighten Hair",
+      id: "qef-1",
+      text: "{E} - Remove up to 1 damage from chosen character.",
     },
   ],
 };

@@ -1,12 +1,14 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const maleficentBidingHerTime: CharacterCard = {
-  id: "134",
+export const maleficent: CharacterCard = {
+  id: "d0r",
   cardType: "character",
   name: "Maleficent",
   version: "Biding Her Time",
   fullName: "Maleficent - Biding Her Time",
-  inkType: ["amethyst"],
+  inkType: [
+    "amethyst",
+  ],
   franchise: "Sleeping Beauty",
   set: "001",
   cost: 1,
@@ -14,10 +16,14 @@ export const maleficentBidingHerTime: CharacterCard = {
   willpower: 1,
   lore: 2,
   cardNumber: 48,
-  inkable: false,
-  vanilla: true,
+  rarity: "rare",
   externalIds: {
-    ravensburger: "8e5d2579bbefbbf47af0d10c5c66ccaf2c3e4a95",
+    ravensburger: "",
+    tcgPlayer: 493485,
   },
-  classifications: ["Dreamborn", "Villain", "Sorcerer"],
+  classifications: [
+    "Dreamborn",
+    "Sorcerer",
+    "Villain",
+  ],
 };

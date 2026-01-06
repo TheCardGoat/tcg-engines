@@ -1,13 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const abuMischievousMonkey: CharacterCard = {
-  id: "mz8",
+export const abu: CharacterCard = {
+  id: "pbo",
   cardType: "character",
   name: "Abu",
   version: "Mischievous Monkey",
   fullName: "Abu - Mischievous Monkey",
-  inkType: ["ruby"],
-  franchise: "Aladdin",
+  inkType: [
+    "ruby",
+  ],
+  franchise: "General",
   set: "001",
   cost: 3,
   strength: 3,
@@ -15,9 +17,13 @@ export const abuMischievousMonkey: CharacterCard = {
   lore: 2,
   cardNumber: 103,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "52d0e83a0a5688158a89ac1eb53cde7bc4755a38",
+    ravensburger: "",
+    tcgPlayer: 507461,
   },
-  classifications: ["Storyborn", "Ally"],
+  classifications: [
+    "Storyborn",
+    "Ally",
+  ],
 };

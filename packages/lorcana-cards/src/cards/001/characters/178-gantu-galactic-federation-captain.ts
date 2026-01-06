@@ -1,36 +1,43 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const gantuGalacticFederationCaptain: CharacterCard = {
-  id: "c3k",
+export const gantu: CharacterCard = {
+  id: "ucw",
   cardType: "character",
   name: "Gantu",
   version: "Galactic Federation Captain",
   fullName: "Gantu - Galactic Federation Captain",
-  inkType: ["steel"],
-  franchise: "Lilo and Stitch",
+  inkType: [
+    "steel",
+  ],
+  franchise: "General",
   set: "001",
-  text: "UNDER ARREST Characters with cost 2 or less can't challenge your characters.",
+  text: "**Under arrest** Characters with cost 2 or less can't challenge your characters.",
   cost: 8,
   strength: 6,
   willpower: 6,
   lore: 2,
   cardNumber: 178,
   inkable: true,
+  rarity: "legendary",
   externalIds: {
-    ravensburger: "2b9addfb94c8f45cfa1bb249ef2d1021ddee733e",
+    ravensburger: "",
+    tcgPlayer: 488097,
   },
+  classifications: [
+    "Alien",
+    "Storyborn",
+    "Captain",
+  ],
   abilities: [
     {
-      id: "c3k-1",
-      text: "UNDER ARREST Characters with cost 2 or less can't challenge your characters.",
-      name: "UNDER ARREST",
       type: "static",
       effect: {
-        type: "restriction",
-        restriction: "cant-challenge",
-        target: "SELF",
-      },
+          type: "restriction",
+          restriction: "cant-sing",
+          target: "SELF",
+        },
+      id: "ucw-1",
+      text: "Characters with cost [object Object] or less can't challenge this character.",
     },
   ],
-  classifications: ["Storyborn", "Alien", "Captain"],
 };

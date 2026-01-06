@@ -1,33 +1,35 @@
 import type { ActionCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const break: ActionCard = {
-  id: "whn",
+export const heSGotASword!: ActionCard = {
+  id: "wmw",
   cardType: "action",
-  name: "Break",
+  name: "He's Got a Sword!",
   version: "",
-  fullName: "Break",
+  fullName: "He's Got a Sword!",
   inkType: [
-    "steel",
+    "ruby",
   ],
   franchise: "General",
   set: "001",
-  text: "Banish chosen item.",
-  cost: 2,
-  cardNumber: 196,
+  text: "Chosen character gets +2 {S} this turn.",
+  cost: 1,
+  cardNumber: 132,
   inkable: true,
   rarity: "common",
   externalIds: {
     ravensburger: "",
-    tcgPlayer: 506000,
+    tcgPlayer: 508782,
   },
   abilities: [
     {
       type: "action",
       effect: {
-          type: "banish",
+          type: "modify-stat",
+          stat: undefined,
+          modifier: 2,
           target: "CHOSEN_CHARACTER",
         },
-      id: "whn-1",
+      id: "wmw-1",
       text: "",
     },
   ],

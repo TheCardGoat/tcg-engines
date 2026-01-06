@@ -1,32 +1,43 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const drFacilierCharlatan: CharacterCard = {
-  id: "8u0",
+export const drFacilier: CharacterCard = {
+  id: "fov",
   cardType: "character",
   name: "Dr. Facilier",
   version: "Charlatan",
   fullName: "Dr. Facilier - Charlatan",
-  inkType: ["amethyst"],
-  franchise: "Princess and the Frog",
+  inkType: [
+    "amethyst",
+  ],
+  franchise: "General",
   set: "001",
-  text: "Challenger +2 (While challenging, this character gets +2 {S}.)",
+  text: "**Challenger** +2 (_When challenging, this character get +2 {S}._)",
   cost: 2,
   strength: 0,
   willpower: 4,
   lore: 1,
   cardNumber: 38,
   inkable: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "1fd605fe2fe7ee5b8de1e22cc92998c2f04e0304",
+    ravensburger: "",
+    tcgPlayer: 494099,
   },
+  classifications: [
+    "Sorcerer",
+    "Storyborn",
+    "Villain",
+  ],
   abilities: [
     {
-      id: "8u0-1",
-      type: "keyword",
-      keyword: "Challenger",
-      value: 2,
-      text: "Challenger +2",
+      type: "static",
+      effect: {
+          type: "restriction",
+          restriction: "cant-sing",
+          target: "SELF",
+        },
+      id: "fov-1",
+      text: "**Challenger** +2 (_When challenging, this character get +2 {S}._)",
     },
   ],
-  classifications: ["Storyborn", "Villain", "Sorcerer"],
 };

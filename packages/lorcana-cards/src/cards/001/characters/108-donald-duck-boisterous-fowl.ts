@@ -1,12 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const donaldDuckBoisterousFowl: CharacterCard = {
-  id: "ok1",
+export const donaldDuck: CharacterCard = {
+  id: "ni4",
   cardType: "character",
   name: "Donald Duck",
   version: "Boisterous Fowl",
   fullName: "Donald Duck - Boisterous Fowl",
-  inkType: ["ruby"],
+  inkType: [
+    "ruby",
+  ],
+  franchise: "General",
   set: "001",
   cost: 2,
   strength: 2,
@@ -14,9 +17,12 @@ export const donaldDuckBoisterousFowl: CharacterCard = {
   lore: 1,
   cardNumber: 108,
   inkable: true,
-  vanilla: true,
+  rarity: "uncommon",
   externalIds: {
-    ravensburger: "5880e4814c3c2fb5e6a2d48ca24bf6960f564337",
+    ravensburger: "",
+    tcgPlayer: 493487,
   },
-  classifications: ["Storyborn"],
+  classifications: [
+    "Storyborn",
+  ],
 };

@@ -1,29 +1,36 @@
-import type { ActionCard } from "@tcg/lorcana-types";
+import type { ActionCard } from "@tcg/lorcana-types/cards/card-types";
 
 export const bePrepared: ActionCard = {
-  id: "j9z",
+  id: "z06",
   cardType: "action",
   name: "Be Prepared",
-  inkType: ["ruby"],
-  franchise: "Lion King",
+  version: "",
+  fullName: "Be Prepared",
+  inkType: [
+    "ruby",
+  ],
+  franchise: "General",
   set: "001",
-  text: "Banish all characters.",
-  actionSubtype: "song",
+  text: "_(A character with cost 7 or more can {E} to sing this
+song for free.)_
+Banish all characters.",
   cost: 7,
   cardNumber: 128,
-  inkable: false,
+  rarity: "rare",
   externalIds: {
-    ravensburger: "4579dd841c902f1f7a336b3776c97a974e5f3369",
+    ravensburger: "",
+    tcgPlayer: 506077,
   },
+  actionSubtype: "song",
   abilities: [
     {
-      id: "j9z-1",
-      text: "Banish all characters.",
       type: "action",
       effect: {
-        type: "banish",
-        target: "ALL_CHARACTERS",
-      },
+          type: "banish",
+          target: "CHOSEN_CHARACTER",
+        },
+      id: "z06-1",
+      text: "Banish all characters.",
     },
   ],
 };

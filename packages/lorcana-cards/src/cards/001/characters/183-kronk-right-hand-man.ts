@@ -1,13 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const kronkRighthandMan: CharacterCard = {
-  id: "6aj",
+export const kronk: CharacterCard = {
+  id: "qie",
   cardType: "character",
   name: "Kronk",
   version: "Right-Hand Man",
   fullName: "Kronk - Right-Hand Man",
-  inkType: ["steel"],
-  franchise: "Emperors New Groove",
+  inkType: [
+    "steel",
+  ],
+  franchise: "General",
   set: "001",
   cost: 6,
   strength: 6,
@@ -15,9 +17,13 @@ export const kronkRighthandMan: CharacterCard = {
   lore: 2,
   cardNumber: 183,
   inkable: true,
-  vanilla: true,
+  rarity: "uncommon",
   externalIds: {
-    ravensburger: "16ae0c63dad8f7e9a23de31e17f65ff2e726a9e2",
+    ravensburger: "",
+    tcgPlayer: 503320,
   },
-  classifications: ["Storyborn", "Ally"],
+  classifications: [
+    "Storyborn",
+    "Ally",
+  ],
 };

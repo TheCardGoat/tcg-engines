@@ -1,13 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const scarFieryUsurper: CharacterCard = {
-  id: "yul",
+export const scar: CharacterCard = {
+  id: "fsu",
   cardType: "character",
   name: "Scar",
   version: "Fiery Usurper",
   fullName: "Scar - Fiery Usurper",
-  inkType: ["ruby"],
-  franchise: "Lion King",
+  inkType: [
+    "ruby",
+  ],
+  franchise: "The Lion King",
   set: "001",
   cost: 4,
   strength: 5,
@@ -15,9 +17,13 @@ export const scarFieryUsurper: CharacterCard = {
   lore: 1,
   cardNumber: 122,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "7d99fe23e8c2e603315ea08fde248d7d2782459a",
+    ravensburger: "",
+    tcgPlayer: 492711,
   },
-  classifications: ["Dreamborn", "Villain"],
+  classifications: [
+    "Dreamborn",
+    "Villain",
+  ],
 };

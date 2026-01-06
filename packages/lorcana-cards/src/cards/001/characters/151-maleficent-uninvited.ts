@@ -1,12 +1,14 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const maleficentUninvited: CharacterCard = {
-  id: "tio",
+export const maleficent: CharacterCard = {
+  id: "ncw",
   cardType: "character",
   name: "Maleficent",
   version: "Uninvited",
   fullName: "Maleficent - Uninvited",
-  inkType: ["sapphire"],
+  inkType: [
+    "sapphire",
+  ],
   franchise: "Sleeping Beauty",
   set: "001",
   cost: 5,
@@ -15,9 +17,14 @@ export const maleficentUninvited: CharacterCard = {
   lore: 3,
   cardNumber: 151,
   inkable: true,
-  vanilla: true,
+  rarity: "rare",
   externalIds: {
-    ravensburger: "6a637ad79b7ce9fad777fb8a1163379b2f2e1f9e",
+    ravensburger: "",
+    tcgPlayer: 505949,
   },
-  classifications: ["Dreamborn", "Villain", "Sorcerer"],
+  classifications: [
+    "Dreamborn",
+    "Sorcerer",
+    "Villain",
+  ],
 };

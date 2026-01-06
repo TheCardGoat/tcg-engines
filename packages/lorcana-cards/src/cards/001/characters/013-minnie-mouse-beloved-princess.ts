@@ -1,12 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const minnieMouseBelovedPrincess: CharacterCard = {
-  id: "1h4",
+export const minnieMouse: CharacterCard = {
+  id: "ycw",
   cardType: "character",
   name: "Minnie Mouse",
   version: "Beloved Princess",
   fullName: "Minnie Mouse - Beloved Princess",
-  inkType: ["amber"],
+  inkType: [
+    "amber",
+  ],
+  franchise: "General",
   set: "001",
   cost: 2,
   strength: 2,
@@ -14,9 +17,13 @@ export const minnieMouseBelovedPrincess: CharacterCard = {
   lore: 1,
   cardNumber: 13,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "c1441a9388ffdf1a914448f9272ae60e6e971869",
+    ravensburger: "",
+    tcgPlayer: 493498,
   },
-  classifications: ["Dreamborn", "Princess"],
+  classifications: [
+    "Dreamborn",
+    "Princess",
+  ],
 };

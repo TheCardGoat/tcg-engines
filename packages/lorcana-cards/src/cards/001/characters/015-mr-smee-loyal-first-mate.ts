@@ -1,13 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const mrSmeeLoyalFirstMate: CharacterCard = {
-  id: "ufb",
+export const mrSmee: CharacterCard = {
+  id: "avd",
   cardType: "character",
   name: "Mr. Smee",
   version: "Loyal First Mate",
   fullName: "Mr. Smee - Loyal First Mate",
-  inkType: ["amber"],
-  franchise: "Peter Pan",
+  inkType: [
+    "amber",
+  ],
+  franchise: "General",
   set: "001",
   cost: 3,
   strength: 2,
@@ -15,9 +17,14 @@ export const mrSmeeLoyalFirstMate: CharacterCard = {
   lore: 1,
   cardNumber: 15,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "6da7dcf840af520dd86dd608720bcfcb84825627",
+    ravensburger: "",
+    tcgPlayer: 508697,
   },
-  classifications: ["Dreamborn", "Ally", "Pirate"],
+  classifications: [
+    "Dreamborn",
+    "Pirate",
+    "Ally",
+  ],
 };

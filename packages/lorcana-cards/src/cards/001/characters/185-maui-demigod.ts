@@ -1,12 +1,14 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const mauiDemigod: CharacterCard = {
-  id: "1lg",
+export const maui: CharacterCard = {
+  id: "ehe",
   cardType: "character",
   name: "Maui",
   version: "Demigod",
   fullName: "Maui - Demigod",
-  inkType: ["steel"],
+  inkType: [
+    "steel",
+  ],
   franchise: "Moana",
   set: "001",
   cost: 8,
@@ -15,9 +17,14 @@ export const mauiDemigod: CharacterCard = {
   lore: 3,
   cardNumber: 185,
   inkable: true,
-  vanilla: true,
+  rarity: "rare",
   externalIds: {
-    ravensburger: "cdecdf5b7e02dbb11db38244fc5321e8744cadf5",
+    ravensburger: "",
+    tcgPlayer: 502018,
   },
-  classifications: ["Storyborn", "Hero", "Deity"],
+  classifications: [
+    "Hero",
+    "Storyborn",
+    "Deity",
+  ],
 };

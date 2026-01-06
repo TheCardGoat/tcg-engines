@@ -1,12 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const minnieMouseAlwaysClassy: CharacterCard = {
-  id: "wo8",
+export const minnieMouse: CharacterCard = {
+  id: "nwa",
   cardType: "character",
   name: "Minnie Mouse",
   version: "Always Classy",
   fullName: "Minnie Mouse - Always Classy",
-  inkType: ["ruby"],
+  inkType: [
+    "ruby",
+  ],
+  franchise: "General",
   set: "001",
   cost: 1,
   strength: 1,
@@ -14,9 +17,13 @@ export const minnieMouseAlwaysClassy: CharacterCard = {
   lore: 1,
   cardNumber: 116,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "75c1ac4c95df0e008ea454975ee2641680d4f4c0",
+    ravensburger: "",
+    tcgPlayer: 505967,
   },
-  classifications: ["Storyborn", "Hero"],
+  classifications: [
+    "Hero",
+    "Storyborn",
+  ],
 };

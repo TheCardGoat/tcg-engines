@@ -1,28 +1,33 @@
-import type { ActionCard } from "@tcg/lorcana-types";
+import type { ActionCard } from "@tcg/lorcana-types/cards/card-types";
 
 export const freeze: ActionCard = {
-  id: "1cq",
+  id: "e7s",
   cardType: "action",
   name: "Freeze",
-  inkType: ["amethyst"],
-  franchise: "Frozen",
+  version: "",
+  fullName: "Freeze",
+  inkType: [
+    "amethyst",
+  ],
+  franchise: "General",
   set: "001",
   text: "Exert chosen opposing character.",
   cost: 2,
   cardNumber: 63,
-  inkable: false,
+  rarity: "common",
   externalIds: {
-    ravensburger: "adcdee7c29e76d6c7249456e6ff99ae44efe9e6e",
+    ravensburger: "",
+    tcgPlayer: 508733,
   },
   abilities: [
     {
-      id: "1cq-1",
-      text: "Exert chosen opposing character.",
       type: "action",
       effect: {
-        type: "exert",
-        target: "CHOSEN_OPPOSING_CHARACTER",
-      },
+          type: "exert",
+          target: "CHOSEN_CHARACTER",
+        },
+      id: "e7s-1",
+      text: "Exert chosen opposing character.",
     },
   ],
 };

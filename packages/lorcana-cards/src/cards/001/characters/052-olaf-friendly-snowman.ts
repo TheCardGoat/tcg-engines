@@ -1,24 +1,29 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const olafFriendlySnowman: CharacterCard = {
+export const olaf: CharacterCard = {
   id: "cul",
   cardType: "character",
   name: "Olaf",
   version: "Friendly Snowman",
   fullName: "Olaf - Friendly Snowman",
-  inkType: ["amethyst"],
-  franchise: "Disney",
+  inkType: [
+    "amethyst",
+  ],
+  franchise: "Frozen",
   set: "001",
-  text: "",
   cost: 1,
   strength: 1,
   willpower: 3,
   lore: 1,
   cardNumber: 52,
   inkable: true,
+  rarity: "uncommon",
   externalIds: {
     ravensburger: "",
+    tcgPlayer: 485381,
   },
-  abilities: [],
-  classifications: ["Storyborn", "Ally"],
+  classifications: [
+    "Storyborn",
+    "Ally",
+  ],
 };

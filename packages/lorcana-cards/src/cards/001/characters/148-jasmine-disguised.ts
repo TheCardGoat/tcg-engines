@@ -1,12 +1,14 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const jasmineDisguised: CharacterCard = {
-  id: "1k8",
+export const jasmine: CharacterCard = {
+  id: "k91",
   cardType: "character",
   name: "Jasmine",
   version: "Disguised",
   fullName: "Jasmine - Disguised",
-  inkType: ["sapphire"],
+  inkType: [
+    "sapphire",
+  ],
   franchise: "Aladdin",
   set: "001",
   cost: 3,
@@ -15,9 +17,13 @@ export const jasmineDisguised: CharacterCard = {
   lore: 2,
   cardNumber: 148,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "cd31b0163fb61bbfa637936de6f1c4a2ac6d20d5",
+    ravensburger: "",
+    tcgPlayer: 508851,
   },
-  classifications: ["Storyborn", "Princess"],
+  classifications: [
+    "Storyborn",
+    "Princess",
+  ],
 };

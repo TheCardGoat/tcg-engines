@@ -1,23 +1,28 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const liloMakingAWish: CharacterCard = {
-  id: "1uc",
+export const lilo: CharacterCard = {
+  id: "ep8",
   cardType: "character",
   name: "Lilo",
   version: "Making a Wish",
   fullName: "Lilo - Making a Wish",
-  inkType: ["amber"],
-  franchise: "Lilo and Stitch",
+  inkType: [
+    "amber",
+  ],
+  franchise: "Lilo & Stitch",
   set: "001",
   cost: 1,
   strength: 1,
   willpower: 1,
   lore: 2,
   cardNumber: 9,
-  inkable: false,
-  vanilla: true,
+  rarity: "rare",
   externalIds: {
-    ravensburger: "ee5f2dc07c2b61b8bbe2f489417909ba9cc495f2",
+    ravensburger: "",
+    tcgPlayer: 503315,
   },
-  classifications: ["Storyborn", "Hero"],
+  classifications: [
+    "Hero",
+    "Storyborn",
+  ],
 };

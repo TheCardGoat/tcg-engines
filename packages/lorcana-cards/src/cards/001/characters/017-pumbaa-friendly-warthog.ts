@@ -1,13 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const pumbaaFriendlyWarthog: CharacterCard = {
-  id: "e5b",
+export const pumbaa: CharacterCard = {
+  id: "b1f",
   cardType: "character",
   name: "Pumbaa",
   version: "Friendly Warthog",
   fullName: "Pumbaa - Friendly Warthog",
-  inkType: ["amber"],
-  franchise: "Lion King",
+  inkType: [
+    "amber",
+  ],
+  franchise: "The Lion King",
   set: "001",
   cost: 4,
   strength: 3,
@@ -15,9 +17,13 @@ export const pumbaaFriendlyWarthog: CharacterCard = {
   lore: 1,
   cardNumber: 17,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "32fd3b35af3bf2b32dc0ef71e6096d08e28b2b30",
+    ravensburger: "",
+    tcgPlayer: 508701,
   },
-  classifications: ["Storyborn", "Ally"],
+  classifications: [
+    "Storyborn",
+    "Ally",
+  ],
 };

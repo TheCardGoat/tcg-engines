@@ -1,12 +1,14 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const aladdinCorneredSwordsman: CharacterCard = {
-  id: "1ud",
+export const aladdin: CharacterCard = {
+  id: "izd",
   cardType: "character",
   name: "Aladdin",
   version: "Cornered Swordsman",
   fullName: "Aladdin - Cornered Swordsman",
-  inkType: ["steel"],
+  inkType: [
+    "steel",
+  ],
   franchise: "Aladdin",
   set: "001",
   cost: 2,
@@ -15,9 +17,13 @@ export const aladdinCorneredSwordsman: CharacterCard = {
   lore: 2,
   cardNumber: 171,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "eebe1c4ff92d2e3ba65cbbd98be63816dfdd9b5b",
+    ravensburger: "",
+    tcgPlayer: 508895,
   },
-  classifications: ["Storyborn", "Hero"],
+  classifications: [
+    "Hero",
+    "Storyborn",
+  ],
 };

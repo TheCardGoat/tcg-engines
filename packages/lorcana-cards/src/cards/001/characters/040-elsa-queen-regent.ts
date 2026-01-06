@@ -1,12 +1,14 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const elsaQueenRegent: CharacterCard = {
-  id: "3fv",
+export const elsa: CharacterCard = {
+  id: "oqx",
   cardType: "character",
   name: "Elsa",
   version: "Queen Regent",
   fullName: "Elsa - Queen Regent",
-  inkType: ["amethyst"],
+  inkType: [
+    "amethyst",
+  ],
   franchise: "Frozen",
   set: "001",
   cost: 4,
@@ -15,9 +17,15 @@ export const elsaQueenRegent: CharacterCard = {
   lore: 1,
   cardNumber: 40,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "0c66ceaa85ceec0fa1c10c4146b02d093fa8d2a4",
+    ravensburger: "",
+    tcgPlayer: 507276,
   },
-  classifications: ["Storyborn", "Hero", "Queen", "Sorcerer"],
+  classifications: [
+    "Hero",
+    "Queen",
+    "Sorcerer",
+    "Storyborn",
+  ],
 };

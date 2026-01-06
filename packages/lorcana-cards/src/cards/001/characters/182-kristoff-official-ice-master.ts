@@ -1,12 +1,14 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const kristoffOfficialIceMaster: CharacterCard = {
-  id: "1pd",
+export const kristoff: CharacterCard = {
+  id: "gpq",
   cardType: "character",
   name: "Kristoff",
   version: "Official Ice Master",
   fullName: "Kristoff - Official Ice Master",
-  inkType: ["steel"],
+  inkType: [
+    "steel",
+  ],
   franchise: "Frozen",
   set: "001",
   cost: 3,
@@ -15,9 +17,13 @@ export const kristoffOfficialIceMaster: CharacterCard = {
   lore: 2,
   cardNumber: 182,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "dcc435a4545c40e6dfe713fe317f78e418982a15",
+    ravensburger: "",
+    tcgPlayer: 492998,
   },
-  classifications: ["Storyborn", "Ally"],
+  classifications: [
+    "Storyborn",
+    "Ally",
+  ],
 };

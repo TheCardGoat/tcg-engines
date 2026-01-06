@@ -1,12 +1,14 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const maleficentSinisterVisitor: CharacterCard = {
-  id: "1c4",
+export const maleficent: CharacterCard = {
+  id: "zkp",
   cardType: "character",
   name: "Maleficent",
   version: "Sinister Visitor",
   fullName: "Maleficent - Sinister Visitor",
-  inkType: ["sapphire"],
+  inkType: [
+    "sapphire",
+  ],
   franchise: "Sleeping Beauty",
   set: "001",
   cost: 4,
@@ -15,9 +17,14 @@ export const maleficentSinisterVisitor: CharacterCard = {
   lore: 2,
   cardNumber: 150,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "adecc4b6ee1d237ebac87d8e0f1e47f2dd689564",
+    ravensburger: "",
+    tcgPlayer: 493493,
   },
-  classifications: ["Storyborn", "Villain", "Sorcerer"],
+  classifications: [
+    "Sorcerer",
+    "Storyborn",
+    "Villain",
+  ],
 };

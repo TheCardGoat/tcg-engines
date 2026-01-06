@@ -1,13 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const tritonTheSeaKing: CharacterCard = {
-  id: "1cv",
+export const triton: CharacterCard = {
+  id: "boi",
   cardType: "character",
   name: "Triton",
   version: "The Sea King",
   fullName: "Triton - The Sea King",
-  inkType: ["sapphire"],
-  franchise: "Little Mermaid",
+  inkType: [
+    "sapphire",
+  ],
+  franchise: "General",
   set: "001",
   cost: 7,
   strength: 5,
@@ -15,9 +17,13 @@ export const tritonTheSeaKing: CharacterCard = {
   lore: 2,
   cardNumber: 160,
   inkable: true,
-  vanilla: true,
+  rarity: "uncommon",
   externalIds: {
-    ravensburger: "b02a117d318568eba0e9424b437a3c859e60618a",
+    ravensburger: "",
+    tcgPlayer: 506023,
   },
-  classifications: ["Storyborn", "King"],
+  classifications: [
+    "Storyborn",
+    "King",
+  ],
 };

@@ -1,37 +1,34 @@
-import type { ActionCard } from "@tcg/lorcana-types";
+import type { ActionCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const fireTheCannonsundefined: ActionCard = {
+export const fireTheCannons!: ActionCard = {
   id: "lhl",
   cardType: "action",
   name: "Fire the Cannons!",
-  version: "undefined",
-  fullName: "Fire the Cannons! - undefined",
-  inkType: ["steel"],
-  franchise: "Disney",
+  version: "",
+  fullName: "Fire the Cannons!",
+  inkType: [
+    "steel",
+  ],
+  franchise: "General",
   set: "001",
   text: "Deal 2 damage to chosen character.",
   cost: 1,
   cardNumber: 197,
-  inkable: true,
+  rarity: "common",
   externalIds: {
     ravensburger: "",
+    tcgPlayer: 493483,
   },
   abilities: [
     {
       type: "action",
+      effect: {
+          type: "deal-damage",
+          amount: 2,
+          target: "CHOSEN_CHARACTER",
+        },
       id: "lhl-1",
       text: "Deal 2 damage to chosen character.",
-      effect: {
-        type: "deal-damage",
-        amount: 2,
-        target: {
-          selector: "chosen",
-          count: 1,
-          owner: "any",
-          zones: ["play"],
-          cardTypes: ["character"],
-        },
-      },
     },
   ],
 };

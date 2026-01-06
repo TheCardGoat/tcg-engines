@@ -1,29 +1,34 @@
-import type { ActionCard } from "@tcg/lorcana-types";
+import type { ActionCard } from "@tcg/lorcana-types/cards/card-types";
 
 export const stampede: ActionCard = {
-  id: "1fs",
+  id: "eje",
   cardType: "action",
   name: "Stampede",
-  inkType: ["emerald"],
-  franchise: "Lion King",
+  version: "",
+  fullName: "Stampede",
+  inkType: [
+    "emerald",
+  ],
+  franchise: "General",
   set: "001",
   text: "Deal 2 damage to chosen damaged character.",
   cost: 1,
   cardNumber: 96,
-  inkable: false,
+  rarity: "common",
   externalIds: {
-    ravensburger: "b7ee67706e4c50411acea0e129205737bfde9ac9",
+    ravensburger: "",
+    tcgPlayer: 505953,
   },
   abilities: [
     {
-      id: "1fs-1",
-      text: "Deal 2 damage to chosen damaged character.",
       type: "action",
       effect: {
-        type: "deal-damage",
-        amount: 2,
-        target: "CHOSEN_CHARACTER",
-      },
+          type: "deal-damage",
+          amount: 2,
+          target: "CHOSEN_CHARACTER",
+        },
+      id: "eje-1",
+      text: "Deal 2 damage to chosen damaged character.",
     },
   ],
 };

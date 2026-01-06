@@ -1,12 +1,14 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const genieTheEverImpressive: CharacterCard = {
-  id: "175",
+export const genie: CharacterCard = {
+  id: "oy4",
   cardType: "character",
   name: "Genie",
   version: "The Ever Impressive",
   fullName: "Genie - The Ever Impressive",
-  inkType: ["emerald"],
+  inkType: [
+    "emerald",
+  ],
   franchise: "Aladdin",
   set: "001",
   cost: 2,
@@ -15,9 +17,13 @@ export const genieTheEverImpressive: CharacterCard = {
   lore: 1,
   cardNumber: 77,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "9b79f3f2091291724aca48822463ad7cac92b860",
+    ravensburger: "",
+    tcgPlayer: 507515,
   },
-  classifications: ["Dreamborn", "Ally"],
+  classifications: [
+    "Dreamborn",
+    "Ally",
+  ],
 };

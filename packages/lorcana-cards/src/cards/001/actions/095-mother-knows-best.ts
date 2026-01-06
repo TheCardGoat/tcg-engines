@@ -1,19 +1,36 @@
-import type { ActionCard } from "@tcg/lorcana-types";
+import type { ActionCard } from "@tcg/lorcana-types/cards/card-types";
 
 export const motherKnowsBest: ActionCard = {
   id: "rxk",
   cardType: "action",
   name: "Mother Knows Best",
-  inkType: ["emerald"],
-  franchise: "Disney",
+  version: "",
+  fullName: "Mother Knows Best",
+  inkType: [
+    "emerald",
+  ],
+  franchise: "General",
   set: "001",
-  text: "_(A character with cost 3 or more can {E} to sing this\nsong for free.)_\nReturn chosen character to their player",
+  text: "_(A character with cost 3 or more can {E} to sing this
+song for free.)_
+Return chosen character to their player's hand.",
   cost: 3,
-  actionSubtype: "song",
   cardNumber: 95,
-  inkable: true,
+  rarity: "uncommon",
   externalIds: {
     ravensburger: "",
+    tcgPlayer: 506100,
   },
-  abilities: [],
+  actionSubtype: "song",
+  abilities: [
+    {
+      type: "action",
+      effect: {
+          type: "return-to-hand",
+          target: "CHOSEN_CHARACTER",
+        },
+      id: "rxk-1",
+      text: "Return chosen character to their player's hand.",
+    },
+  ],
 };

@@ -1,13 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const liloGalacticHero: CharacterCard = {
-  id: "1y5",
+export const lilo: CharacterCard = {
+  id: "x99",
   cardType: "character",
   name: "Lilo",
   version: "Galactic Hero",
   fullName: "Lilo - Galactic Hero",
-  inkType: ["steel"],
-  franchise: "Lilo and Stitch",
+  inkType: [
+    "steel",
+  ],
+  franchise: "Lilo & Stitch",
   set: "001",
   cost: 3,
   strength: 4,
@@ -15,9 +17,13 @@ export const liloGalacticHero: CharacterCard = {
   lore: 2,
   cardNumber: 184,
   inkable: true,
-  vanilla: true,
+  rarity: "uncommon",
   externalIds: {
-    ravensburger: "fc9c030eb04c07f2819aa821557e1f7f0e1f354b",
+    ravensburger: "",
+    tcgPlayer: 508920,
   },
-  classifications: ["Dreamborn", "Hero"],
+  classifications: [
+    "Hero",
+    "Dreamborn",
+  ],
 };

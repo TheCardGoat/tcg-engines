@@ -1,26 +1,26 @@
 import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const horace: CharacterCard = {
-  id: "jyy",
+export const goons: CharacterCard = {
+  id: "blh",
   cardType: "character",
-  name: "Horace",
-  version: "No-Good Scoundrel",
-  fullName: "Horace - No-Good Scoundrel",
+  name: "Goons",
+  version: "Maleficent's Underlings",
+  fullName: "Goons - Maleficent's Underlings",
   inkType: [
-    "emerald",
+    "steel",
   ],
   franchise: "General",
   set: "001",
-  cost: 3,
-  strength: 4,
-  willpower: 3,
+  cost: 1,
+  strength: 2,
+  willpower: 2,
   lore: 1,
-  cardNumber: 79,
+  cardNumber: 179,
   inkable: true,
   rarity: "common",
   externalIds: {
     ravensburger: "",
-    tcgPlayer: 507494,
+    tcgPlayer: 508915,
   },
   classifications: [
     "Storyborn",

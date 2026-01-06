@@ -1,12 +1,14 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const tamatoaDrabLittleCrab: CharacterCard = {
-  id: "12d",
+export const tamatoa: CharacterCard = {
+  id: "pme",
   cardType: "character",
   name: "Tamatoa",
   version: "Drab Little Crab",
   fullName: "Tamatoa - Drab Little Crab",
-  inkType: ["emerald"],
+  inkType: [
+    "emerald",
+  ],
   franchise: "Moana",
   set: "001",
   cost: 2,
@@ -15,9 +17,12 @@ export const tamatoaDrabLittleCrab: CharacterCard = {
   lore: 1,
   cardNumber: 92,
   inkable: true,
-  vanilla: true,
+  rarity: "uncommon",
   externalIds: {
-    ravensburger: "8a4c535c40d66910291c4f04f91b676ad823c1c3",
+    ravensburger: "",
+    tcgPlayer: 508774,
   },
-  classifications: ["Dreamborn"],
+  classifications: [
+    "Dreamborn",
+  ],
 };

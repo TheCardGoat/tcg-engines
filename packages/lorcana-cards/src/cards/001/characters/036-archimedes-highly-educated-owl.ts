@@ -1,13 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const archimedesHighlyEducatedOwl: CharacterCard = {
-  id: "1n9",
+export const archimedes: CharacterCard = {
+  id: "doy",
   cardType: "character",
   name: "Archimedes",
   version: "Highly Educated Owl",
   fullName: "Archimedes - Highly Educated Owl",
-  inkType: ["amethyst"],
-  franchise: "Sword in the Stone",
+  inkType: [
+    "amethyst",
+  ],
+  franchise: "General",
   set: "001",
   cost: 1,
   strength: 2,
@@ -15,9 +17,13 @@ export const archimedesHighlyEducatedOwl: CharacterCard = {
   lore: 1,
   cardNumber: 36,
   inkable: true,
-  vanilla: true,
+  rarity: "common",
   externalIds: {
-    ravensburger: "d5d8e83c23339a91ca0c28486ec60caa97153511",
+    ravensburger: "",
+    tcgPlayer: 501406,
   },
-  classifications: ["Dreamborn", "Ally"],
+  classifications: [
+    "Dreamborn",
+    "Ally",
+  ],
 };

@@ -1,30 +1,35 @@
-import type { ActionCard } from "@tcg/lorcana-types";
+import type { ActionCard } from "@tcg/lorcana-types/cards/card-types";
 
 export const partOfYourWorld: ActionCard = {
-  id: "fn0",
+  id: "ztz",
   cardType: "action",
   name: "Part of Your World",
-  inkType: ["amber"],
-  franchise: "Little Mermaid",
+  version: "",
+  fullName: "Part of Your World",
+  inkType: [
+    "amber",
+  ],
+  franchise: "General",
   set: "001",
-  text: "Return a character card from your discard to your hand.",
-  actionSubtype: "song",
+  text: "_(A character with cost 3 or more can {E} to sing this songfor free.)_
+ Return a character card from your discard to your hand.",
   cost: 3,
   cardNumber: 30,
-  inkable: false,
+  rarity: "rare",
   externalIds: {
-    ravensburger: "385d2d6b1f6d4093408da9cd744c87865c9a538b",
+    ravensburger: "",
+    tcgPlayer: 493481,
   },
+  actionSubtype: "song",
   abilities: [
     {
-      id: "fn0-1",
-      text: "Return a character card from your discard to your hand.",
       type: "action",
       effect: {
-        type: "return-from-discard",
-        cardType: "character",
-        target: "CONTROLLER",
-      },
+          type: "return-to-hand",
+          target: "CHOSEN_CHARACTER",
+        },
+      id: "ztz-1",
+      text: "Return a character card from your discard to your hand.",
     },
   ],
 };

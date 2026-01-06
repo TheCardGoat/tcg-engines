@@ -1,29 +1,30 @@
 import type { CharacterCard } from "@tcg/lorcana-types/cards/card-types";
 
-export const horace: CharacterCard = {
-  id: "jyy",
+export const captain: CharacterCard = {
+  id: "t2f",
   cardType: "character",
-  name: "Horace",
-  version: "No-Good Scoundrel",
-  fullName: "Horace - No-Good Scoundrel",
+  name: "Captain",
+  version: "Colonel's Lieutenant",
+  fullName: "Captain - Colonel's Lieutenant",
   inkType: [
-    "emerald",
+    "ruby",
   ],
   franchise: "General",
   set: "001",
-  cost: 3,
-  strength: 4,
-  willpower: 3,
+  cost: 5,
+  strength: 6,
+  willpower: 5,
   lore: 1,
-  cardNumber: 79,
+  cardNumber: 106,
   inkable: true,
-  rarity: "common",
+  rarity: "uncommon",
   externalIds: {
     ravensburger: "",
-    tcgPlayer: 507494,
+    tcgPlayer: 508779,
   },
   classifications: [
     "Storyborn",
+    "Captain",
     "Ally",
   ],
 };
