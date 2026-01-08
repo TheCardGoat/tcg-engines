@@ -22,3 +22,19 @@ export const atlanticaConcertHall: LocationCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+// import { atlanticaConcertHall as ogAtlanticaConcertHall } from "@lorcanito/lorcana-engine/cards/004/locations/33-atlantica-concert-hall";
+//
+// export const atlanticaConcertHall: LorcanitoLocationCard = {
+//   ...ogAtlanticaConcertHall,
+//   id: "wzf",
+//   reprints: [ogAtlanticaConcertHall.id],
+//   number: 34,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649981,
+//   },
+// };
+//

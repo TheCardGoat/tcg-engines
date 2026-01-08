@@ -29,3 +29,32 @@ export const rayEasygoingFirefly: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const rayEasygoingFirefly: LorcanitoCharacterCard = {
+//   id: "fdk",
+//   name: "Ray",
+//   title: "Easygoing Firefly",
+//   characteristics: ["storyborn", "ally"],
+//   text: "**Evasive** _(Only characters with Evasive can challenge this character.)_",
+//   type: "character",
+//   abilities: [evasiveAbility],
+//   flavour: "He may be hard to follow, but his heart isn't.",
+//   inkwell: true,
+//   colors: ["emerald"],
+//   cost: 5,
+//   strength: 3,
+//   willpower: 3,
+//   lore: 3,
+//   illustrator: "Filipe Laurentino",
+//   number: 92,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 527250,
+//   },
+//   rarity: "common",
+// };
+//

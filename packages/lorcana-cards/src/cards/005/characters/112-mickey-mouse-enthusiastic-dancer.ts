@@ -23,3 +23,49 @@ export const mickeyMouseEnthusiasticDancer: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// import { whileYouHaveACharacterNamedThisCharGets } from "@lorcanito/lorcana-engine/abilities/whileAbilities";
+//
+// export const mickeyMouseEnthusiasticDancer: LorcanitoCharacterCard = {
+//   id: "giv",
+//   missingTestCase: true,
+//   name: "Mickey Mouse",
+//   title: "Enthusiastic Dancer",
+//   characteristics: ["hero", "dreamborn"],
+//   text: "**PERFECT PARTNERS** While you have a character named Minnie Mouse in play, this character gets +2 {S}.",
+//   type: "character",
+//   abilities: [
+//     whileYouHaveACharacterNamedThisCharGets({
+//       name: "Perfect Partners",
+//       text: "While you have a character named Minnie Mouse in play, this character gets +2 {S}.",
+//       characterName: "Minnie Mouse",
+//       effects: [
+//         {
+//           type: "attribute",
+//           attribute: "strength",
+//           amount: 2,
+//           modifier: "add",
+//           target: thisCharacter,
+//         },
+//       ],
+//     }),
+//   ],
+//   flavour: "He loves to share the spotlight with a star like Minnie.",
+//   inkwell: true,
+//   colors: ["ruby"],
+//   cost: 4,
+//   strength: 2,
+//   willpower: 4,
+//   lore: 2,
+//   illustrator: "Raquel Villanueva",
+//   number: 112,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 557293,
+//   },
+//   rarity: "common",
+// };
+//

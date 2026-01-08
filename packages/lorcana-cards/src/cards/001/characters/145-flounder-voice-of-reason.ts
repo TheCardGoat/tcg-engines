@@ -22,3 +22,32 @@ export const flounderVoiceOfReason: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const flounderVoiceOfReason: LorcanitoCharacterCard = {
+//   id: "yxl",
+//   reprints: ["yyq"],
+//
+//   name: "Flounder",
+//   title: "Voice of Reason",
+//   characteristics: ["storyborn", "ally"],
+//   type: "character",
+//   flavour:
+//     "„Excitment... adventure... danger lurking around every cor- AAAAAGGH!",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 1,
+//   strength: 2,
+//   willpower: 2,
+//   lore: 1,
+//   illustrator: "Brian Weisz",
+//   number: 145,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 493496,
+//   },
+//   rarity: "common",
+// };
+//

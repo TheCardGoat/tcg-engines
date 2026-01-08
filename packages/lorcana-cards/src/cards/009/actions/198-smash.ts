@@ -18,3 +18,19 @@ export const smash: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { smash as ogSmash } from "@lorcanito/lorcana-engine/cards/001/actions/200-smash";
+//
+// export const smash: LorcanitoActionCard = {
+//   ...ogSmash,
+//   id: "zfz",
+//   reprints: [ogSmash.id],
+//   number: 198,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650131,
+//   },
+// };
+//

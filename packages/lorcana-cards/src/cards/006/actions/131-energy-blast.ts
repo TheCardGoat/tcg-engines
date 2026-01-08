@@ -18,3 +18,38 @@ export const energyBlast: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// import {
+//   drawACard,
+//   mayBanish,
+// } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const energyBlast: LorcanitoActionCard = {
+//   id: "e8s",
+//   name: "Energy Blast",
+//   characteristics: ["action"],
+//   text: "Banish chosen character. Draw a card.",
+//   type: "action",
+//   abilities: [
+//     {
+//       type: "resolution",
+//       resolveEffectsIndividually: true,
+//       effects: [mayBanish(chosenCharacter), drawACard],
+//     },
+//   ],
+//   inkwell: false,
+//   colors: ["ruby"],
+//   cost: 7,
+//   strength: 0,
+//   illustrator: "Marco Giorgini",
+//   number: 131,
+//   set: "006",
+//   externalIds: {
+//     tcgPlayer: 591982,
+//   },
+//   rarity: "rare",
+// };
+//

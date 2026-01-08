@@ -24,3 +24,19 @@ export const hueySavvyNephew: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { hueySavvyNephew as hueySavvyNephewAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const hueySavvyNephew: LorcanitoCharacterCard = {
+//   ...hueySavvyNephewAsOrig,
+//   id: "ksz",
+//   reprints: [hueySavvyNephewAsOrig.id],
+//   number: 138,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650073,
+//   },
+// };
+//

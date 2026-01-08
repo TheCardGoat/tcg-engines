@@ -56,3 +56,54 @@ export const arielEtherealVoice: CharacterCard = {
   ],
   classifications: ["Storyborn", "Hero", "Princess", "Whisper"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import {
+//   boostAbility,
+//   ifThereIsACardUnder,
+// } from "@lorcanito/lorcana-engine/abilities/boostAbility";
+// import { wheneverYouPlayASong } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+//
+// export const arielEtherealVoice: LorcanitoCharacterCard = {
+//   id: "hqa",
+//   name: "Ariel",
+//   title: "Ethereal Voice",
+//   characteristics: ["storyborn", "hero", "princess", "whisper"],
+//   text: "Boost 1\n COMMAND PERFORMANCE Once during your turn, whenever you play a song, if there's a card under this character, you may draw a card.",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 4,
+//   strength: 3,
+//   willpower: 4,
+//   illustrator: "Clio Wolfensberger",
+//   number: 17,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 658214,
+//   },
+//   rarity: "rare",
+//   lore: 2,
+//   abilities: [
+//     boostAbility(1),
+//     wheneverYouPlayASong({
+//       name: "COMMAND PERFORMANCE",
+//       text: "Once during your turn, whenever you play a song, if there's a card under this character, you may draw a card.",
+//       optional: true,
+//       oncePerTurn: true,
+//       conditions: [ifThereIsACardUnder],
+//       effects: [
+//         {
+//           type: "draw",
+//           amount: 1,
+//           target: {
+//             type: "player",
+//             value: "self",
+//           },
+//         },
+//       ],
+//     }),
+//   ],
+// };
+//

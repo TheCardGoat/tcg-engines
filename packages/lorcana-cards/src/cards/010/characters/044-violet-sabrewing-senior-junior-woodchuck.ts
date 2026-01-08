@@ -29,3 +29,31 @@ export const violetSabrewingSeniorJuniorWoodchuck: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const violetSabrewingSeniorJuniorWoodchuck: LorcanitoCharacterCard = {
+//   id: "cff",
+//   name: "Violet Sabrewing",
+//   title: "Senior Junior Woodchuck",
+//   characteristics: ["storyborn", "ally"],
+//   text: "Evasive (Only characters with Evasive can challenge this character.)",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 2,
+//   strength: 3,
+//   willpower: 1,
+//   illustrator: "Lauren Levering",
+//   number: 44,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 658458,
+//   },
+//   rarity: "common",
+//   abilities: [evasiveAbility],
+//   lore: 1,
+// };
+//

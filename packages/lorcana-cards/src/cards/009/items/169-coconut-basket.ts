@@ -18,3 +18,19 @@ export const coconutBasket: ItemCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// import { coconutbasket as ogCoconutBasket } from "@lorcanito/lorcana-engine/cards/001/items/166-coconut-basket";
+//
+// export const coconutBasket: LorcanitoItemCard = {
+//   ...ogCoconutBasket,
+//   id: "bxv",
+//   reprints: [ogCoconutBasket.id],
+//   number: 169,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650103,
+//   },
+// };
+//

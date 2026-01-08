@@ -24,3 +24,19 @@ export const elsaSnowQueen: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Hero", "Queen", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { elsaSnowQueen as elsaSnowQueenAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/041-elsa-snow-queen";
+//
+// export const elsaSnowQueen: LorcanitoCharacterCard = {
+//   ...elsaSnowQueenAsOrig,
+//   id: "hcz",
+//   reprints: [elsaSnowQueenAsOrig.id],
+//   number: 53,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649997,
+//   },
+// };
+//

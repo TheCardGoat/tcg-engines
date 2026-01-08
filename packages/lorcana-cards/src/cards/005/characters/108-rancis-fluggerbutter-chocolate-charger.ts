@@ -21,3 +21,30 @@ export const rancisFluggerbutterChocolateCharger: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally", "Racer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const rancisFluggerbutterChocolateCharger: LorcanitoCharacterCard = {
+//   id: "kcc",
+//   name: "Rancis Fluggerbutter",
+//   title: "Chocolate Charger",
+//   characteristics: ["storyborn", "ally", "racer"],
+//   type: "character",
+//   flavour:
+//     "Ingredients: Butter, sugar, unsweetened chocolate, vanilla, and arrogance.",
+//   inkwell: true,
+//   colors: ["ruby"],
+//   cost: 4,
+//   strength: 4,
+//   willpower: 4,
+//   lore: 1,
+//   illustrator: "Ellie Horie",
+//   number: 108,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 555266,
+//   },
+//   rarity: "common",
+// };
+//

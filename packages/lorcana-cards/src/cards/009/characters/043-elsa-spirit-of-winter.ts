@@ -24,3 +24,19 @@ export const elsaSpiritOfWinter: CharacterCard = {
   abilities: [],
   classifications: ["Floodborn", "Hero", "Queen", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { elsaSpiritOfWinter as ogElsaSpiritOfWinter } from "@lorcanito/lorcana-engine/cards/001/characters/042-elsa-spirit-of-winter";
+//
+// export const elsaSpiritOfWinter: LorcanitoCharacterCard = {
+//   ...ogElsaSpiritOfWinter,
+//   id: "qun",
+//   reprints: [ogElsaSpiritOfWinter.id],
+//   number: 43,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649990,
+//   },
+// };
+//

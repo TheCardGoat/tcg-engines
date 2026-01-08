@@ -46,3 +46,19 @@ export const stitchCarefreeSurfer: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Hero", "Alien"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { stichtCarefreeSurfer as ogStichtCarefreeSurfer } from "@lorcanito/lorcana-engine/cards/001/characters/021-stitch-carefree-surfer";
+//
+// export const stitchCarefreeSurfer: LorcanitoCharacterCard = {
+//   ...ogStichtCarefreeSurfer,
+//   id: "jdo",
+//   reprints: [ogStichtCarefreeSurfer.id],
+//   number: 24,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649972,
+//   },
+// };
+//

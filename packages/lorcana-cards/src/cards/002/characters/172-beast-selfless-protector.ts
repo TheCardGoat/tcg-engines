@@ -24,3 +24,39 @@ export const beastSelflessProtector: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { protectorAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const beastSelflessProtector: LorcanitoCharacterCard = {
+//   id: "njt",
+//
+//   name: "Beast",
+//   title: "Selfless Protector",
+//   characteristics: ["hero", "storyborn", "prince"],
+//   text: "**SHIELD ANOTHER** Whenever one of your other characters would be dealt damage, put that many damage counters on this character instead.",
+//   type: "character",
+//   abilities: [
+//     {
+//       ...protectorAbility,
+//       name: "Shield Another",
+//       text: "Whenever one of your other characters would be dealt damage, put that many damage counters on this character instead.",
+//     },
+//   ],
+//   flavour: "You'll have to go through me first.",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 6,
+//   strength: 2,
+//   willpower: 8,
+//   lore: 1,
+//   illustrator: "Matthew Robert Davies",
+//   number: 172,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 527772,
+//   },
+//   rarity: "super_rare",
+// };
+//

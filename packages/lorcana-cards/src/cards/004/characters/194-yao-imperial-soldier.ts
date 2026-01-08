@@ -30,3 +30,32 @@ export const yaoImperialSoldier: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const yaoImperialSoldier: LorcanitoCharacterCard = {
+//   id: "wch",
+//   name: "Yao",
+//   title: "Imperial Soldier",
+//   characteristics: ["storyborn", "ally"],
+//   text: "**Challenger +2** _(While challenging, this character gets +2 {S}.)_",
+//   type: "character",
+//   abilities: [challengerAbility(2)],
+//   flavour: "I'm gonna hit you so hard, it'll make your ancestors dizzy.",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 4,
+//   strength: 2,
+//   willpower: 5,
+//   lore: 1,
+//   illustrator: "Michela Cacciatore / Giulia Priori",
+//   number: 194,
+//   set: "URR",
+//   externalIds: {
+//     tcgPlayer: 550622,
+//   },
+//   rarity: "common",
+// };
+//

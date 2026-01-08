@@ -29,3 +29,33 @@ export const theNokkWaterSpirit: CharacterCard = {
   ],
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const theNokkWaterSpirit: LorcanitoCharacterCard = {
+//   id: "vrs",
+//
+//   name: "The Nokk",
+//   title: "Water Spirit",
+//   characteristics: ["storyborn"],
+//   text: "**Ward** _(Opponents can't choose this character except to challenge.)_",
+//   type: "character",
+//   abilities: [wardAbility],
+//   flavour: "As elusive as water.",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 4,
+//   strength: 4,
+//   willpower: 3,
+//   lore: 1,
+//   illustrator: "Hadjie Joos",
+//   number: 160,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 527768,
+//   },
+//   rarity: "common",
+// };
+//

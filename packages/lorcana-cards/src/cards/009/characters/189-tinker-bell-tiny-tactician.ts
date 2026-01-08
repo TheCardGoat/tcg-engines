@@ -24,3 +24,19 @@ export const tinkerBellTinyTactician: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Ally", "Fairy"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { tinkerBellTinyTactician as tinkerBellTinyTacticianAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+//
+// export const tinkerBellTinyTactician: LorcanitoCharacterCard = {
+//   ...tinkerBellTinyTacticianAsOrig,
+//   id: "ahg",
+//   reprints: [tinkerBellTinyTacticianAsOrig.id],
+//   number: 189,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650122,
+//   },
+// };
+//

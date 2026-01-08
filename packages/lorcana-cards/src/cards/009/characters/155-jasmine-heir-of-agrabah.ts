@@ -24,3 +24,19 @@ export const jasmineHeirOfAgrabah: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { jasmineHeirOfAgrabah as jasmineHeirOfAgrabahAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/151-jasmine-heir-of-agrabah";
+//
+// export const jasmineHeirOfAgrabah: LorcanitoCharacterCard = {
+//   ...jasmineHeirOfAgrabahAsOrig,
+//   id: "cqu",
+//   reprints: [jasmineHeirOfAgrabahAsOrig.id],
+//   number: 155,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650090,
+//   },
+// };
+//

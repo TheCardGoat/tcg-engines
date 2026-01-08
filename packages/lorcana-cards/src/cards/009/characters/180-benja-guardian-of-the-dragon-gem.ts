@@ -24,3 +24,19 @@ export const benjaGuardianOfTheDragonGem: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Mentor", "King"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { benjaGuardianOfTheDragonGem as ogBenjaGuardianOfTheDragonGem } from "@lorcanito/lorcana-engine/cards/002/characters/174-benja-guardian-of-the-dragon-gem";
+//
+// export const benjaGuardianOfTheDragonGem: LorcanitoCharacterCard = {
+//   ...ogBenjaGuardianOfTheDragonGem,
+//   id: "tik",
+//   reprints: [ogBenjaGuardianOfTheDragonGem.id],
+//   number: 180,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650113,
+//   },
+// };
+//

@@ -18,3 +18,56 @@ export const swoopingStrike: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+//
+// export const swoopingStrike: LorcanitoActionCard = {
+//   id: "r3n",
+//   name: "Swooping Strike",
+//   characteristics: ["action"],
+//   text: "Each opponent chooses and exerts one of their ready characters.",
+//   type: "action",
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 1,
+//   illustrator: "Gabriel Nascimento",
+//   number: 63,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659417,
+//   },
+//   rarity: "common",
+//   abilities: [
+//     {
+//       type: "resolution",
+//       responder: "opponent",
+//       effects: [
+//         {
+//           type: "exert",
+//           exert: true,
+//           target: {
+//             type: "card",
+//             value: 1,
+//             filters: [
+//               {
+//                 filter: "type",
+//                 value: "character",
+//               },
+//               {
+//                 filter: "zone",
+//                 value: "play",
+//               },
+//               {
+//                 filter: "owner",
+//                 value: "self",
+//               },
+//               { filter: "status", value: "ready" },
+//             ],
+//           },
+//         },
+//       ],
+//     },
+//   ],
+// };
+//

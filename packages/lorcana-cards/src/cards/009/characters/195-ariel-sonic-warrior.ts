@@ -24,3 +24,19 @@ export const arielSonicWarrior: CharacterCard = {
   abilities: [],
   classifications: ["Floodborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { arielSonicWarrior as ogArielSonicWarrior } from "@lorcanito/lorcana-engine/cards/004/characters/175-ariel-sonic-warrior";
+//
+// export const arielSonicWarrior: LorcanitoCharacterCard = {
+//   ...ogArielSonicWarrior,
+//   id: "hbk",
+//   reprints: [ogArielSonicWarrior.id],
+//   number: 195,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650128,
+//   },
+// };
+//

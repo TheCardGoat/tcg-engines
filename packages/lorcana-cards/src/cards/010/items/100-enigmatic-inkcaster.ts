@@ -18,3 +18,58 @@ export const enigmaticInkcaster: ItemCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+//
+// export const enigmaticInkcaster: LorcanitoItemCard = {
+//   id: "eb0",
+//   name: "Enigmatic Inkcaster",
+//   characteristics: ["item"],
+//   text: "ITS OWN REWARD — If you've played 2 or more cards this turn, gain 1 lore.",
+//   type: "item",
+//   inkwell: false,
+//   colors: ["emerald"],
+//   cost: 2,
+//   illustrator: "Rizal Badar",
+//   number: 100,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659453,
+//   },
+//   rarity: "rare",
+//   abilities: [
+//     {
+//       type: "activated",
+//       name: "ITS OWN REWARD",
+//       text: "If you've played 2 or more cards this turn, gain 1 lore.",
+//       costs: [{ type: "exert" }],
+//       conditions: [
+//         {
+//           type: "played-card",
+//           filters: [
+//             {
+//               filter: "type",
+//               value: ["character", "item", "action", "location"],
+//             },
+//           ],
+//           comparison: { operator: "gte", value: 2 },
+//         },
+//       ],
+//       effects: [
+//         {
+//           type: "lore",
+//           modifier: "add",
+//           amount: 1,
+//           target: {
+//             type: "player",
+//             value: "self",
+//           },
+//         },
+//       ],
+//       resolveEffectsIndividually: false,
+//       dependentEffects: false,
+//     },
+//   ],
+// };
+//

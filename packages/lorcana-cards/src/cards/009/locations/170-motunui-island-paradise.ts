@@ -22,3 +22,19 @@ export const motunuiIslandParadise: LocationCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+// import { motunuiIslandParadise as ogMotunuiIslandParadise } from "@lorcanito/lorcana-engine/cards/003/locations/170-motunui-island-paradise";
+//
+// export const motunuiIslandParadise: LorcanitoLocationCard = {
+//   ...ogMotunuiIslandParadise,
+//   id: "jiu",
+//   reprints: [ogMotunuiIslandParadise.id],
+//   number: 170,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650104,
+//   },
+// };
+//

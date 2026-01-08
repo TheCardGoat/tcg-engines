@@ -29,3 +29,19 @@ export const naniProtectiveSister: CharacterCard = {
   ],
   classifications: ["Storyborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { naniProtectiveSister as ogNaniProtectiveSister } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const naniProtectiveSister: LorcanitoCharacterCard = {
+//   ...ogNaniProtectiveSister,
+//   id: "pws",
+//   reprints: [ogNaniProtectiveSister.id],
+//   number: 17,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649965,
+//   },
+// };
+//

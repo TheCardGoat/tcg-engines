@@ -24,3 +24,19 @@ export const kuzcoTemperamentalEmperor: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "King"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { kuzcoTemperamentalEmperor as ogKuzcoTemperamentalEmperor } from "@lorcanito/lorcana-engine/cards/001/characters/084-kuzco-temperamental-emperor";
+//
+// export const kuzcoTemperamentalEmperor: LorcanitoCharacterCard = {
+//   ...ogKuzcoTemperamentalEmperor,
+//   id: "l2r",
+//   reprints: [ogKuzcoTemperamentalEmperor.id],
+//   number: 69,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650011,
+//   },
+// };
+//

@@ -29,3 +29,33 @@ export const ratiganCriminalMastermind: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Villain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const ratiganCriminalMastermind: LorcanitoCharacterCard = {
+//   id: "r5c",
+//   name: "Ratigan",
+//   title: "Criminal Mastermind",
+//   characteristics: ["dreamborn", "villain"],
+//   text: "**Evasive** _(Only characters with Evasive can challenge this character.)_",
+//   type: "character",
+//   abilities: [evasiveAbility],
+//   flavour:
+//     "I've outdone myself this time! Soon I will have everything I deserve. Riches . . . power . . . an entire kingdom at my feet!",
+//   inkwell: true,
+//   colors: ["emerald"],
+//   cost: 4,
+//   strength: 4,
+//   willpower: 1,
+//   lore: 2,
+//   illustrator: "Michaela Martin",
+//   number: 91,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 527750,
+//   },
+//   rarity: "common",
+// };
+//

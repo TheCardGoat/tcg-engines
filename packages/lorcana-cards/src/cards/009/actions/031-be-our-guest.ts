@@ -37,3 +37,19 @@ export const beOurGuest: ActionCard = {
     },
   ],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { beOurGuest as ogBeOurGuest } from "@lorcanito/lorcana-engine/cards/001/songs/025-be-our-guest";
+//
+// export const beOurGuest: LorcanitoActionCard = {
+//   ...ogBeOurGuest,
+//   id: "cwb",
+//   reprints: [ogBeOurGuest.id],
+//   number: 31,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649978,
+//   },
+// };
+//

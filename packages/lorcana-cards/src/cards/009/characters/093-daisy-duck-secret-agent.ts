@@ -23,3 +23,19 @@ export const daisyDuckSecretAgent: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { daisyDuckSecretAgent as daisyDuckSecretAgentAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/076-daisy-duck-secret-agent";
+//
+// export const daisyDuckSecretAgent: LorcanitoCharacterCard = {
+//   ...daisyDuckSecretAgentAsOrig,
+//   id: "pqa",
+//   reprints: [daisyDuckSecretAgentAsOrig.id],
+//   number: 93,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650032,
+//   },
+// };
+//

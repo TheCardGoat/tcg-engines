@@ -22,3 +22,31 @@ export const mickeyMouseTrueFriend: CharacterCard = {
   abilities: [],
   classifications: ["Hero", "Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const mickeyMouseTrueFriend: LorcanitoCharacterCard = {
+//   id: "dr0",
+//   reprints: ["c2m"],
+//   name: "Mickey Mouse",
+//   title: "True Friend",
+//   characteristics: ["hero", "storyborn"],
+//   type: "character",
+//   flavour:
+//     "As long as he's around, newcomers to the Great Illuminary will always get a warm welcome.",
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 3,
+//   strength: 3,
+//   willpower: 3,
+//   lore: 2,
+//   illustrator: "Dave Beauchene",
+//   number: 12,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 493476,
+//   },
+//   rarity: "uncommon",
+// };
+//

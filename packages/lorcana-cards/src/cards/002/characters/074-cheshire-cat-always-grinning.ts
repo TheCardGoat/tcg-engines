@@ -21,3 +21,31 @@ export const cheshireCatAlwaysGrinning: CharacterCard = {
   },
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const cheshireCatAlwaysGrinning: LorcanitoCharacterCard = {
+//   id: "ctv",
+//
+//   name: "Cheshire Cat",
+//   title: "Always Grinning",
+//   characteristics: ["storyborn"],
+//   type: "character",
+//   flavour:
+//     'Alice felt quite confused. "But I don\'t see much ink here at all. How can the flood still be changing the Inklands?" \\n\\n"Things are always changing, you know," said the Cat. "It would be quite a change if they didn\'t."',
+//   inkwell: true,
+//   colors: ["emerald"],
+//   cost: 2,
+//   strength: 3,
+//   willpower: 2,
+//   lore: 1,
+//   illustrator: "Alex Accorsi",
+//   number: 74,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 527271,
+//   },
+//   rarity: "uncommon",
+// };
+//

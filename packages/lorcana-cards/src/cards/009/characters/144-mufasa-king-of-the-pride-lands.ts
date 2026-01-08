@@ -21,3 +21,19 @@ export const mufasaKingOfThePrideLands: CharacterCard = {
   },
   classifications: ["Storyborn", "Mentor", "King"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { mufasaKingOfProudLands as mufasaKingOfThePrideLandsAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+//
+// export const mufasaKingOfThePrideLands: LorcanitoCharacterCard = {
+//   ...mufasaKingOfThePrideLandsAsOrig,
+//   id: "adw",
+//   reprints: [mufasaKingOfThePrideLandsAsOrig.id],
+//   number: 144,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650079,
+//   },
+// };
+//

@@ -24,3 +24,19 @@ export const belleUntrainedMystic: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { belleUntrainedMystic as ogBelleUntrainedMystic } from "@lorcanito/lorcana-engine/cards/004/characters/037-belle-untrained-mystic";
+//
+// export const belleUntrainedMystic: LorcanitoCharacterCard = {
+//   ...ogBelleUntrainedMystic,
+//   id: "k6t",
+//   reprints: [ogBelleUntrainedMystic.id],
+//   number: 39,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649986,
+//   },
+// };
+//

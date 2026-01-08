@@ -18,3 +18,51 @@ export const revive: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+//
+// export const revive: LorcanitoActionCard = {
+//   id: "xie",
+//   missingTestCase: true,
+//   name: "Revive",
+//   characteristics: ["action"],
+//   text: "Play a character card with cost 5 or less from your discard for free.",
+//   type: "action",
+//   abilities: [
+//     {
+//       type: "resolution",
+//       effects: [
+//         {
+//           type: "play",
+//           forFree: true,
+//           target: {
+//             type: "card",
+//             value: 1,
+//             filters: [
+//               { filter: "owner", value: "self" },
+//               { filter: "zone", value: "discard" },
+//               { filter: "type", value: "character" },
+//               {
+//                 filter: "attribute",
+//                 value: "cost",
+//                 comparison: { operator: "lte", value: 5 },
+//               },
+//             ],
+//           },
+//         },
+//       ],
+//     },
+//   ],
+//   flavour: "Not all that is lost is gone forever.",
+//   colors: ["amber"],
+//   cost: 5,
+//   illustrator: "Jared Matthews",
+//   number: 27,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 561469,
+//   },
+//   rarity: "rare",
+// };
+//

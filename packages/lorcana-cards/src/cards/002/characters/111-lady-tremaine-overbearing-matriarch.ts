@@ -24,3 +24,50 @@ export const ladyTremaineOverbearingMatriarch: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Villain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const ladyTremaineOverbearingMatriarch: LorcanitoCharacterCard = {
+//   id: "yy6",
+//
+//   name: "Lady Tremaine",
+//   title: "Overbearing Matriarch",
+//   characteristics: ["storyborn", "villain"],
+//   text: "**NOT FOR YOU** When you play this character, each opponent with more lore than you loses 1 lore.",
+//   type: "character",
+//   abilities: [
+//     {
+//       type: "resolution",
+//       name: "Not for You",
+//       text: "When you play this character, each opponent with more lore than you loses 1 lore.",
+//       // TODO: Add condition have less lore
+//       effects: [
+//         {
+//           type: "lore",
+//           amount: 1,
+//           modifier: "subtract",
+//           target: {
+//             type: "player",
+//             value: "opponent",
+//           },
+//         },
+//       ],
+//     },
+//   ],
+//   flavour:
+//     "Make no mistake: this time I will make certain the key remains safe!",
+//   colors: ["ruby"],
+//   cost: 2,
+//   strength: 2,
+//   willpower: 2,
+//   lore: 1,
+//   illustrator: "Samanta Erdini",
+//   number: 111,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 522698,
+//   },
+//   rarity: "common",
+// };
+//

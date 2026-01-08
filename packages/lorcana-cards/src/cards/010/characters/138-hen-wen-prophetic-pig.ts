@@ -24,3 +24,51 @@ export const henWenPropheticPig: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { wheneverThisCharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+//
+// export const henWenPropheticPig: LorcanitoCharacterCard = {
+//   id: "v1a",
+//   name: "Hen Wen",
+//   title: "Prophetic Pig",
+//   characteristics: ["storyborn", "ally"],
+//   text: "FUTURE SIGHT Whenever this character quests, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 2,
+//   strength: 1,
+//   willpower: 4,
+//   illustrator: "Kapik",
+//   number: 138,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 657890,
+//   },
+//   rarity: "common",
+//   abilities: [
+//     wheneverThisCharacterQuests({
+//       name: "FUTURE SIGHT",
+//       text: "Whenever this character quests, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+//       effects: [
+//         {
+//           type: "scry",
+//           amount: 1,
+//           mode: "both",
+//           limits: {
+//             top: 1,
+//             bottom: 1,
+//           },
+//           target: {
+//             type: "player",
+//             value: "self",
+//           },
+//         },
+//       ],
+//     }),
+//   ],
+//   lore: 1,
+// };
+//

@@ -1,0 +1,46 @@
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// /**
+//  * @jest-environment node
+//  */
+//
+// import { describe, expect, it } from "@jest/globals";
+// import {
+//   beastGraciousPrince,
+//   liloBestExplorerEver,
+//   stitchRockStar,
+// } from "@lorcanito/lorcana-engine/cards/009";
+// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+//
+// describe("Lilo - Best Explorer Ever", () => {
+//   it("COME ON, PEOPLE, LET'S MOVE When you play this character, your other characters gain Challenger +2 this turn. (They get +2 {S} while challenging.)", async () => {
+//     const testEngine = new TestEngine({
+//       inkwell: liloBestExplorerEver.cost,
+//       hand: [liloBestExplorerEver],
+//       play: [beastGraciousPrince],
+//     });
+//
+//     expect(testEngine.getCardModel(beastGraciousPrince).hasChallenger).toBe(
+//       false,
+//     );
+//     await testEngine.playCard(liloBestExplorerEver);
+//     expect(testEngine.getCardModel(beastGraciousPrince).hasChallenger).toBe(
+//       true,
+//     );
+//   });
+//
+//   it("GO GET 'EM Whenever this character quests, chosen Alien character gains Challenger +2 and 'This character can challenge ready characters' this turn.", async () => {
+//     const testEngine = new TestEngine({
+//       play: [liloBestExplorerEver, stitchRockStar],
+//     });
+//
+//     await testEngine.questCard(liloBestExplorerEver);
+//
+//     expect(testEngine.getCardModel(stitchRockStar).hasChallenger).toBe(false);
+//     await testEngine.resolveTopOfStack({ targets: [stitchRockStar] });
+//     expect(testEngine.getCardModel(stitchRockStar).hasChallenger).toBe(true);
+//     expect(
+//       testEngine.getCardModel(stitchRockStar).canChallengeReadyCharacters,
+//     ).toBe(true);
+//   });
+// });
+//

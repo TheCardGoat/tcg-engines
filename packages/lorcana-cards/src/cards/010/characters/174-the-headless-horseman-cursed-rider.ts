@@ -24,3 +24,58 @@ export const theHeadlessHorsemanCursedRider: CharacterCard = {
   abilities: [],
   classifications: ["Floodborn", "Villain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import { allPlayers } from "@lorcanito/lorcana-engine/abilities/targets";
+// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// import type { DrawDiscardCountActionsEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+//
+// const witchingHourEffect: DrawDiscardCountActionsEffect = {
+//   type: "draw-discard-count-actions",
+//   target: allPlayers,
+//   drawAmount: 3,
+//   discardAmount: 3,
+//   damagePerAction: 2,
+//   damageTarget: {
+//     type: "card",
+//     value: 1,
+//     filters: [
+//       { filter: "zone", value: "play" },
+//       { filter: "owner", value: "opponent" },
+//       { filter: "type", value: "character" },
+//     ],
+//   },
+// };
+//
+// export const theHeadlessHorsemanCursedRider: LorcanitoCharacterCard = {
+//   id: "od7",
+//   name: "The Headless Horseman",
+//   title: "Cursed Rider",
+//   characteristics: ["floodborn", "villain"],
+//   text: "Shift 5\n\nWITCHING HOUR When you play this character, each player draws 3 cards, then discards 3 cards at random. Choose an opposing character and deal 2 damage to them for each action card discarded this way.",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 8,
+//   strength: 5,
+//   willpower: 7,
+//   illustrator: "Marcel Berg",
+//   number: 174,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 660020,
+//   },
+//   rarity: "super_rare",
+//   lore: 2,
+//   abilities: [
+//     shiftAbility(5, "The Headless Horseman"),
+//     whenYouPlayThisCharacter({
+//       name: "WITCHING HOUR",
+//       text: "When you play this character, each player draws 3 cards, then discards 3 cards at random. Choose an opposing character and deal 2 damage to them for each action card discarded this way.",
+//       effects: [witchingHourEffect],
+//     }),
+//   ],
+// };
+//

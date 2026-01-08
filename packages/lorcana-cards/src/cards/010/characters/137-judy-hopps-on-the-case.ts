@@ -24,3 +24,58 @@ export const judyHoppsOnTheCase: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Detective"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { chosenItem } from "@lorcanito/lorcana-engine/abilities/target";
+// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+//
+// export const judyHoppsOnTheCase: LorcanitoCharacterCard = {
+//   id: "zeq",
+//   missingTestCase: true,
+//   name: "Judy Hopps",
+//   title: "On the Case",
+//   characteristics: ["storyborn", "hero", "detective"],
+//   text: "HIDDEN CLUES When you play this character, if you have another Detective character in play, you may put chosen item into its player's inkwell facedown and exerted.",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 3,
+//   strength: 4,
+//   willpower: 3,
+//   illustrator: "Andrew Chesworth",
+//   number: 137,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659617,
+//   },
+//   rarity: "uncommon",
+//   lore: 1,
+//   abilities: [
+//     whenYouPlayThis({
+//       name: "HIDDEN CLUES",
+//       text: "If you have another Detective character in play, you may put chosen item into its player's inkwell facedown and exerted.",
+//       optional: true,
+//       conditions: [
+//         {
+//           type: "filter",
+//           filters: [
+//             { filter: "characteristics", value: ["detective"] },
+//             { filter: "owner", value: "self" },
+//             { filter: "zone", value: "play" },
+//           ],
+//           comparison: { operator: "gte", value: 2 },
+//         },
+//       ],
+//       effects: [
+//         {
+//           type: "move",
+//           to: "inkwell",
+//           exerted: true,
+//           target: chosenItem,
+//         },
+//       ],
+//     }),
+//   ],
+// };
+//

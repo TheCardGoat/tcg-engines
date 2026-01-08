@@ -24,3 +24,32 @@ export const bronxFerociousBeast: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally", "Gargoyle"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { recklessAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import { stoneByDayAbility } from "@lorcanito/lorcana-engine/cards/010/abilities/stoneByDay";
+//
+// export const bronxFerociousBeast: LorcanitoCharacterCard = {
+//   id: "krn",
+//   name: "Bronx",
+//   title: "Ferocious Beast",
+//   characteristics: ["storyborn", "ally", "gargoyle"],
+//   text: "Reckless\n\nSTONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["ruby"],
+//   cost: 3,
+//   strength: 6,
+//   willpower: 4,
+//   illustrator: "Michaela Martin / Livio Cacciatore",
+//   number: 114,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 658328,
+//   },
+//   rarity: "common",
+//   abilities: [recklessAbility, stoneByDayAbility],
+//   lore: 0,
+// };
+//

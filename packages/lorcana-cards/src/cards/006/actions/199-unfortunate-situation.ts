@@ -18,3 +18,35 @@ export const unfortunateSituation: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
+// import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const unfortunateSituation: LorcanitoActionCard = {
+//   id: "wcu",
+//   missingTestCase: true,
+//   name: "Unfortunate Situation",
+//   characteristics: ["action"],
+//   text: "Each opponent chooses one of their characters and deals 4 damage to them.",
+//   type: "action",
+//   abilities: [
+//     {
+//       type: "resolution",
+//       responder: "opponent",
+//       effects: [dealDamageEffect(4, chosenCharacterOfYours)],
+//     },
+//   ],
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 4,
+//   illustrator: "Mariano Moreno",
+//   number: 199,
+//   set: "006",
+//   externalIds: {
+//     tcgPlayer: 587974,
+//   },
+//   rarity: "uncommon",
+// };
+//

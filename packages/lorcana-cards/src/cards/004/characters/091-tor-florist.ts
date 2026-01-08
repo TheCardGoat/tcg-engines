@@ -21,3 +21,30 @@ export const torFlorist: CharacterCard = {
   },
   classifications: ["Dreamborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const torFlorist: LorcanitoCharacterCard = {
+//   id: "g1b",
+//   name: "Tor",
+//   title: "Florist",
+//   characteristics: ["dreamborn", "ally"],
+//   type: "character",
+//   flavour:
+//     "They say that his arrangements are exquisite, \nHis composites and bouquets are so divine. \nBut when the crowds try to come and visit, \nThere's always quite a fight to form a line.",
+//   inkwell: true,
+//   colors: ["emerald"],
+//   cost: 5,
+//   strength: 4,
+//   willpower: 7,
+//   lore: 1,
+//   illustrator: "Anderson Mahanski",
+//   number: 91,
+//   set: "URR",
+//   externalIds: {
+//     tcgPlayer: 547775,
+//   },
+//   rarity: "common",
+// };
+//

@@ -18,3 +18,27 @@ export const wakeUpAlice: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { wakeUpAliceAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+//
+// export const wakeUpAlice: LorcanitoActionCard = {
+//   id: "a3c",
+//   name: "Wake Up, Alice!",
+//   characteristics: ["action"],
+//   text: "Return chosen damaged character to their player's hand.",
+//   type: "action",
+//   abilities: [wakeUpAliceAbility],
+//   inkwell: true,
+//   colors: ["emerald"],
+//   cost: 1,
+//   illustrator: "Valentina Graziano",
+//   number: 116,
+//   set: "007",
+//   externalIds: {
+//     tcgPlayer: 618258,
+//   },
+//   rarity: "common",
+// };
+//
