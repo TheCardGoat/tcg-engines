@@ -22,3 +22,28 @@ export const cerberusThreeheadedDog: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const cerberusThreeHeadedDog: LorcanitoCharacterCard = {
+//   id: "zie",
+//   name: "Cerberus",
+//   title: "Three-Headed Dog",
+//   characteristics: ["storyborn"],
+//   type: "character",
+//   inkwell: true,
+//   colors: ["steel"],
+//   illustrator: "Oleg Yurkov",
+//   cost: 5,
+//   strength: 5,
+//   willpower: 6,
+//   lore: 1,
+//   number: 176,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 497206,
+//   },
+//   rarity: "common",
+// };
+//

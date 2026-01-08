@@ -24,3 +24,19 @@ export const jafarRoyalVizier: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Villain", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { jafarRoyalVizier as jafarRoyalVizierAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/184-jafar-royal-vizier";
+//
+// export const jafarRoyalVizier: LorcanitoCharacterCard = {
+//   ...jafarRoyalVizierAsOrig,
+//   id: "xva",
+//   reprints: [jafarRoyalVizierAsOrig.id],
+//   number: 181,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650114,
+//   },
+// };
+//

@@ -1,0 +1,44 @@
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { withCostXorLess } from "@lorcanito/lorcana-engine/abilities/targets";
+//
+// export const poorUnfortunateSouls: LorcanitoActionCard = {
+//   id: "d2i",
+//   reprints: ["k1n"],
+//   name: "Poor Unfortunate Souls",
+//   characteristics: ["action", "song"],
+//   text: "_(A character with cost 2 or more can {E} to sing this song for free.)_\n\n\nReturn a character, item or location with cost 2 or less to their player's hand.",
+//   type: "action",
+//   abilities: [
+//     {
+//       type: "resolution",
+//       effects: [
+//         {
+//           type: "move",
+//           to: "hand",
+//           target: {
+//             type: "card",
+//             value: 1,
+//             filters: [
+//               { filter: "type", value: ["character", "location", "item"] },
+//               { filter: "zone", value: "play" },
+//               withCostXorLess(2),
+//             ],
+//           },
+//         },
+//       ],
+//     },
+//   ],
+//   flavour: "It's sad but true",
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 2,
+//   illustrator: "Denny Minonne",
+//   number: 60,
+//   set: "URR",
+//   externalIds: {
+//     tcgPlayer: 550518,
+//   },
+//   rarity: "common",
+// };
+//

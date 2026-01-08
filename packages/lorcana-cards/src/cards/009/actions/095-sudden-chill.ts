@@ -19,3 +19,19 @@ export const suddenChill: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { suddenChill as suddenChillAsOrig } from "@lorcanito/lorcana-engine/cards/001/songs/098-sudden-chill";
+//
+// export const suddenChill: LorcanitoActionCard = {
+//   ...suddenChillAsOrig,
+//   id: "f3l",
+//   reprints: [suddenChillAsOrig.id],
+//   number: 95,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650033,
+//   },
+// };
+//

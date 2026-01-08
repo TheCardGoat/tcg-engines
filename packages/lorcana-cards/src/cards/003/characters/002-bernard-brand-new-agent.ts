@@ -24,3 +24,44 @@ export const bernardBrandnewAgent: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { atTheEndOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
+// import { ifThisCharacterIsExerted } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
+// import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const bernardBrandNewAgent: LorcanitoCharacterCard = {
+//   id: "bzq",
+//   missingTestCase: true,
+//   name: "Bernard",
+//   title: "Brand-New Agent",
+//   characteristics: ["hero", "storyborn"],
+//   text: "**I'LL CHECK IT OUT** At the end of your turn, if this character is exerted, you may ready another chosen character of yours.",
+//   type: "character",
+//   abilities: [
+//     atTheEndOfYourTurn({
+//       name: "I'll Check it Out",
+//       text: "At the end of your turn, if this character is exerted, you may ready another chosen character of yours.",
+//       conditions: [ifThisCharacterIsExerted],
+//       optional: true,
+//       effects: readyAndCantQuest(chosenCharacterOfYours),
+//     }),
+//   ],
+//   flavour: "You stay there. I'll look for scattered lore.",
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 4,
+//   strength: 1,
+//   willpower: 5,
+//   lore: 2,
+//   illustrator: "Jacob McAlister",
+//   number: 2,
+//   set: "ITI",
+//   externalIds: {
+//     tcgPlayer: 537218,
+//   },
+//   rarity: "rare",
+// };
+//

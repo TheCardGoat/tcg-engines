@@ -24,3 +24,19 @@ export const princePhillipWardenOfTheWoods: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Hero", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { princePhillipWardenOfTheWoods as ogPrincePhillipWardenOfTheWoods } from "@lorcanito/lorcana-engine/cards/004/characters/088-prince-phillip-warden-of-the-woods";
+//
+// export const princePhillipWardenOfTheWoods: LorcanitoCharacterCard = {
+//   ...ogPrincePhillipWardenOfTheWoods,
+//   id: "l8f",
+//   reprints: [ogPrincePhillipWardenOfTheWoods.id],
+//   number: 72,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650014,
+//   },
+// };
+//

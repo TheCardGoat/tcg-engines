@@ -24,3 +24,38 @@ export const madamMimSnake: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Villain", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { madameMimAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const madamMimSnake: LorcanitoCharacterCard = {
+//   id: "fo8",
+//   name: "Madam Mim",
+//   title: "Snake",
+//   characteristics: ["sorcerer", "storyborn", "villain"],
+//   text: "**JUST YOU WAIT** When you play this character, banish her or return another chosen character of yours to your hand.",
+//   type: "character",
+//   abilities: [
+//     {
+//       ...madameMimAbility,
+//       name: "Just You Wait",
+//       text: "When you play this character, banish her or return another chosen character of yours to your hand.",
+//     },
+//   ],
+//   flavour: "I’ve got you rattled now!",
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 2,
+//   strength: 3,
+//   willpower: 3,
+//   lore: 1,
+//   illustrator: "Brian Weisz",
+//   number: 49,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 522651,
+//   },
+//   rarity: "uncommon",
+// };
+//

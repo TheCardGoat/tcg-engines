@@ -24,3 +24,19 @@ export const ursulaDeceiver: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Villain", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { ursulaDeceiver as ogUrsulaDeceiver } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const ursulaDeceiver: LorcanitoCharacterCard = {
+//   ...ogUrsulaDeceiver,
+//   id: "r8u",
+//   reprints: [ogUrsulaDeceiver.id],
+//   number: 90,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650029,
+//   },
+// };
+//

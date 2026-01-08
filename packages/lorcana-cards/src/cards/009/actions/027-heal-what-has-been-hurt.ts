@@ -19,3 +19,19 @@ export const healWhatHasBeenHurt: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { healWhatHasBeenHurt as ogHealWhatHasBeenHurt } from "@lorcanito/lorcana-engine/cards/003/actions/026-heal-what-has-been-hurt";
+//
+// export const healWhatHasBeenHurt: LorcanitoActionCard = {
+//   ...ogHealWhatHasBeenHurt,
+//   id: "z47",
+//   reprints: [ogHealWhatHasBeenHurt.id],
+//   number: 27,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649974,
+//   },
+// };
+//

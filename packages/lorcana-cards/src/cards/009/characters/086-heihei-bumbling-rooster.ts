@@ -24,3 +24,19 @@ export const heiheiBumblingRooster: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { heiheiBumblingRooster as ogHeiheiBumblingRooster } from "@lorcanito/lorcana-engine/cards/004/characters/075-heihei-bumbling-rooster";
+//
+// export const heiheiBumblingRooster: LorcanitoCharacterCard = {
+//   ...ogHeiheiBumblingRooster,
+//   id: "yeh",
+//   reprints: ["rmn"],
+//   number: 86,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650026,
+//   },
+// };
+//

@@ -18,3 +18,19 @@ export const aurelianGyrosensor: ItemCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// import { aurelianGyrosensor as ogAurelianGyrosensor } from "@lorcanito/lorcana-engine/cards/003/items/163-aurelian-gyrosensor";
+//
+// export const aurelianGyrosensor: LorcanitoItemCard = {
+//   ...ogAurelianGyrosensor,
+//   id: "dbv",
+//   reprints: [ogAurelianGyrosensor.id],
+//   number: 167,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650101,
+//   },
+// };
+//

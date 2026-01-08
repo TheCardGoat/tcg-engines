@@ -21,3 +21,30 @@ export const blackHeronRealBadEgg: CharacterCard = {
   },
   classifications: ["Storyborn", "Villain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const blackHeronRealBadEgg: LorcanitoCharacterCard = {
+//   id: "md2",
+//   name: "Black Heron",
+//   title: "Real Bad Egg",
+//   characteristics: ["storyborn", "villain"],
+//   text: "",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 2,
+//   strength: 3,
+//   willpower: 3,
+//   illustrator: "Mara Tango",
+//   number: 182,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659456,
+//   },
+//   rarity: "uncommon",
+//   abilities: [],
+//   lore: 1,
+// };
+//

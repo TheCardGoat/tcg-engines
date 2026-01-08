@@ -61,3 +61,64 @@ export const goofyEmeraldChampion: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import {
+//   gainAbilityWhileHere,
+//   wardAbility,
+// } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import { wheneverOneOfYourCharactersIsBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// import { banishChallengingCharacter } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const goofyEmeraldChampion: LorcanitoCharacterCard = {
+//   id: "s1r",
+//   name: "Goofy",
+//   title: "Emerald Champion",
+//   characteristics: ["dreamborn", "hero"],
+//   text: "EVEN THE SCORE Whenever one of your other Emerald characters is challenged and banished, banish the challenging character. PROVIDE COVER Your other Emerald characters gain Ward. (Opponents can't choose them except to challenge.)",
+//   type: "character",
+//   inkwell: false,
+//   colors: ["emerald"],
+//   cost: 5,
+//   strength: 3,
+//   willpower: 5,
+//   illustrator: "Lisa Parfenova",
+//   number: 91,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 658463,
+//   },
+//   rarity: "rare",
+//   abilities: [
+//     wheneverOneOfYourCharactersIsBanishedInAChallenge({
+//       name: "EVEN THE SCORE",
+//       text: "Whenever one of your other Emerald characters is challenged and banished, banish the challenging character.",
+//       triggerFilter: [
+//         { filter: "owner", value: "self" },
+//         { filter: "type", value: "character" },
+//         { filter: "color", value: "emerald" },
+//         { filter: "source", value: "other" },
+//       ],
+//       effects: [banishChallengingCharacter],
+//     }),
+//     gainAbilityWhileHere({
+//       name: "PROVIDE COVER",
+//       text: "Your other Emerald characters gain Ward.",
+//       ability: wardAbility,
+//       target: {
+//         type: "card",
+//         value: "all",
+//         excludeSelf: true,
+//         filters: [
+//           { filter: "owner", value: "self" },
+//           { filter: "type", value: "character" },
+//           { filter: "zone", value: "play" },
+//           { filter: "color", value: "emerald" },
+//         ],
+//       },
+//     }),
+//   ],
+//   lore: 2,
+// };
+//

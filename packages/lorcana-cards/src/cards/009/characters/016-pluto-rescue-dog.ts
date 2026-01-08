@@ -23,3 +23,19 @@ export const plutoRescueDog: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { plutoRescueDog as ogPlutoRescueDog } from "@lorcanito/lorcana-engine/cards/004/characters/20-pluto-rescue-dog";
+//
+// export const plutoRescueDog: LorcanitoCharacterCard = {
+//   ...ogPlutoRescueDog,
+//   id: "baa",
+//   reprints: [ogPlutoRescueDog.id],
+//   number: 16,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649964,
+//   },
+// };
+//

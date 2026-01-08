@@ -24,3 +24,19 @@ export const rafikiMysticalFighter: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Mentor", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { rafikiMysticalFighter as ogRafikiMysticalFighter } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const rafikiMysticalFighter: LorcanitoCharacterCard = {
+//   ...ogRafikiMysticalFighter,
+//   id: "b7e",
+//   reprints: [ogRafikiMysticalFighter.id],
+//   number: 36,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649983,
+//   },
+// };
+//

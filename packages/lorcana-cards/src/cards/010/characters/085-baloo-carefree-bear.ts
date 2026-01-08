@@ -24,3 +24,85 @@ export const balooCarefreeBear: CharacterCard = {
   abilities: [],
   classifications: ["Floodborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
+// import { opponent, self } from "@lorcanito/lorcana-engine/abilities/targets";
+// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// import {
+//   discardACard,
+//   drawXCards,
+// } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const balooCarefreeBear: LorcanitoCharacterCard = {
+//   id: "aoe",
+//   name: "Baloo",
+//   title: "Carefree Bear",
+//   characteristics: ["floodborn", "ally"],
+//   text: "Shift 3\n\nROLL WITH IT When you play this character, choose one: • Each player draws a card. • Each player chooses and discards a card.",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["emerald"],
+//   cost: 5,
+//   strength: 4,
+//   willpower: 5,
+//   illustrator: "Luis Huerta",
+//   number: 85,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 658345,
+//   },
+//   rarity: "rare",
+//   lore: 2,
+//   abilities: [
+//     shiftAbility(3, "Baloo"),
+//     whenYouPlayThisCharacter({
+//       name: "ROLL WITH IT",
+//       text: "When you play this character, choose one: • Each player draws a card. • Each player chooses and discards a card.",
+//       effects: [
+//         {
+//           type: "modal",
+//           // TODO: Get rid of target
+//           target: chosenCharacter,
+//           modes: [
+//             {
+//               id: "1",
+//               text: "Each player draws a card.",
+//               effects: [drawXCards(1, self), drawXCards(1, opponent)],
+//             },
+//             {
+//               id: "2",
+//               text: "Each player chooses and discards a card.",
+//               effects: [
+//                 {
+//                   type: "create-layer-for-player",
+//                   target: opponent,
+//                   layer: {
+//                     type: "resolution",
+//                     responder: "opponent",
+//                     name: "ROLL WITH IT",
+//                     text: "Each player chooses and discards a card.",
+//                     effects: [discardACard],
+//                   },
+//                 },
+//                 {
+//                   type: "create-layer-for-player",
+//                   target: self,
+//                   layer: {
+//                     type: "resolution",
+//                     name: "ROLL WITH IT",
+//                     text: "Each player chooses and discards a card.",
+//                     effects: [discardACard],
+//                   },
+//                 },
+//               ],
+//             },
+//           ],
+//         },
+//       ],
+//     }),
+//   ],
+// };
+//

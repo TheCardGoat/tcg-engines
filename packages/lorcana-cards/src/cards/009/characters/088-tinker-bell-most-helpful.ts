@@ -24,3 +24,19 @@ export const tinkerBellMostHelpful: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally", "Fairy"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { tinkerBellMostHelpful as ogTinkerBellMostHelpful } from "@lorcanito/lorcana-engine/cards/001/characters/093-tinker-bell-most-helpful";
+//
+// export const tinkerBellMostHelpful: LorcanitoCharacterCard = {
+//   ...ogTinkerBellMostHelpful,
+//   id: "rxt",
+//   reprints: [ogTinkerBellMostHelpful.id],
+//   number: 88,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650028,
+//   },
+// };
+//

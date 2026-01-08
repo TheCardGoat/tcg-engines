@@ -29,3 +29,31 @@ export const eilonwyPrincessOfLlyr: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { supportAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const eilonwyPrincessOfLlyr: LorcanitoCharacterCard = {
+//   id: "ttt",
+//   name: "Eilonwy",
+//   title: "Princess of Llyr",
+//   characteristics: ["storyborn", "ally", "princess"],
+//   text: "Support",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 1,
+//   strength: 2,
+//   willpower: 1,
+//   illustrator: "Pix Smith",
+//   number: 7,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659763,
+//   },
+//   rarity: "common",
+//   abilities: [supportAbility],
+//   lore: 1,
+// };
+//

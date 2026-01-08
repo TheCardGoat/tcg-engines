@@ -22,3 +22,54 @@ export const mysticalTreeMamaOdiesHome: LocationCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+// import { atTheStartOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
+// import {
+//   chosenCharacter,
+//   chosenOpposingCharacter,
+// } from "@lorcanito/lorcana-engine/abilities/targets";
+// import { moveDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const mysticalTreeMamaOdiesHome: LorcanitoLocationCard = {
+//   id: "ghp",
+//   missingTestCase: true,
+//   name: "Mystical Tree",
+//   title: "Mama Odie's Home",
+//   characteristics: [],
+//   text: "NOT BAD At the start of your turn, you may move 1 damage counter from chosen character here to chosen opposing character.\n\nHARD-EARNED WISDOM At the start of your turn, if you have a character named Mama Odie here, gain 1 lore.",
+//   type: "location",
+//   abilities: [
+//     atTheStartOfYourTurn({
+//       name: "Not Bad",
+//       text: "At the start of your turn, you may move 1 damage counter from chosen character here to chosen opposing character.",
+//       conditions: [
+//         {
+//           type: "chars-at-location",
+//           comparison: { operator: "gte", value: 1 },
+//         },
+//       ],
+//       effects: [
+//         moveDamageEffect({
+//           amount: 1,
+//           from: chosenCharacter,
+//           to: chosenOpposingCharacter,
+//         }),
+//       ],
+//     }),
+//   ],
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 2,
+//   moveCost: 1,
+//   willpower: 7,
+//   illustrator: "Roberto Gatto",
+//   number: 69,
+//   set: "006",
+//   externalIds: {
+//     tcgPlayer: 586978,
+//   },
+//   rarity: "rare",
+// };
+//

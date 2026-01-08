@@ -18,3 +18,27 @@ export const sapphireCoil: ItemCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// import { sapphireCoilAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+//
+// export const sapphireCoil: LorcanitoItemCard = {
+//   id: "xyq",
+//   name: "Sapphire Coil",
+//   characteristics: ["item"],
+//   text: "BRILLIANT SHINE During your turn, whenever a card is put into your inkwell, you may give chosen character -2 {S} this turn.",
+//   type: "item",
+//   abilities: [sapphireCoilAbility],
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 2,
+//   illustrator: "Francesco Colucci",
+//   number: 179,
+//   set: "007",
+//   externalIds: {
+//     tcgPlayer: 619510,
+//   },
+//   rarity: "uncommon",
+// };
+//

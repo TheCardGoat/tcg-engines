@@ -22,3 +22,37 @@ export const elsasIcePalacePlaceOfSolitude: LocationCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+// import { chosenExertedCharacterCantReadyWhileThisIsInPlace } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const elsasIcePalacePlaceOfSolitude: LorcanitoLocationCard = {
+//   id: "f0m",
+//   missingTestCase: true,
+//   name: "Elsa's Ice Palace",
+//   title: "Place of Solitude",
+//   characteristics: ["location"],
+//   text: "**ETERNAL WINTER** When you play this location, choose an exerted character. While this location is in play, that character can't ready at the start of their turn.",
+//   type: "location",
+//   colors: ["amethyst"],
+//   cost: 3,
+//   willpower: 4,
+//   lore: 1,
+//   illustrator: "Wietse Treurniet",
+//   number: 67,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 560547,
+//   },
+//   rarity: "rare",
+//   moveCost: 1,
+//   abilities: [
+//     {
+//       ...chosenExertedCharacterCantReadyWhileThisIsInPlace,
+//       name: "Eternal Winter",
+//       text: "When you play this location, choose an exerted character. While this location is in play, that character can't ready at the start of their turn.",
+//     },
+//   ],
+// };
+//

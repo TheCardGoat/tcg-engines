@@ -24,3 +24,19 @@ export const jafarKeeperOfSecrets: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { jafarKeeperOfSecrets as ogJafarKeeperOfTheSecrets } from "@lorcanito/lorcana-engine/cards/001/characters/044-jafar-keeper-of-secrets";
+//
+// export const jafarKeeperOfSecrets: LorcanitoCharacterCard = {
+//   ...ogJafarKeeperOfTheSecrets,
+//   id: "f6f",
+//   reprints: [ogJafarKeeperOfTheSecrets.id],
+//   number: 38,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649985,
+//   },
+// };
+//

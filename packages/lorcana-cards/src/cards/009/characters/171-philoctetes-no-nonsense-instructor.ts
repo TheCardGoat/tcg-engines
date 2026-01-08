@@ -24,3 +24,19 @@ export const philoctetesNononsenseInstructor: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { philoctetesNoNonsenseInstructor as philoctetesNononsenseInstructorAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/190-philoctetes-no-nonsense-instructor";
+//
+// export const philoctetesNononsenseInstructor: LorcanitoCharacterCard = {
+//   ...philoctetesNononsenseInstructorAsOrig,
+//   id: "g10",
+//   reprints: [philoctetesNononsenseInstructorAsOrig.id],
+//   number: 171,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650105,
+//   },
+// };
+//

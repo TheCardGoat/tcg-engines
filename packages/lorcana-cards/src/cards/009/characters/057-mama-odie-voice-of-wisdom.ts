@@ -24,3 +24,19 @@ export const mamaOdieVoiceOfWisdom: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Ally", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { mamaOdieVoiceOfWisdom as mamaOdieVoiceOfWisdomAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/052-mama-odie-voice-of-wisdom";
+//
+// export const mamaOdieVoiceOfWisdom: LorcanitoCharacterCard = {
+//   ...mamaOdieVoiceOfWisdomAsOrig,
+//   id: "ozw",
+//   reprints: [mamaOdieVoiceOfWisdomAsOrig.id],
+//   number: 57,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650001,
+//   },
+// };
+//

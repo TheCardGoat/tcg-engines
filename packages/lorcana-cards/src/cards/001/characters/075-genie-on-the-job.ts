@@ -48,3 +48,49 @@ export const genieOnTheJob: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const genieOnTheJob: LorcanitoCharacterCard = {
+//   id: "tgk",
+//   name: "Genie",
+//   title: "On the Job",
+//   characteristics: ["storyborn", "ally"],
+//   text: "**Evasive** (_Only characters with Evasive can challenge this character._)\n**DISAPPEAR** When you play this character, you may return chosen character to their player's hand.",
+//   type: "character",
+//   abilities: [
+//     evasiveAbility,
+//     whenYouPlayThisCharAbility({
+//       type: "resolution",
+//       name: "Disappear",
+//       text: "When you play this character, you may return chosen character to their player's hand.",
+//       optional: true,
+//       effects: [
+//         {
+//           type: "move",
+//           to: "hand",
+//           target: chosenCharacter,
+//         },
+//       ],
+//     }),
+//   ],
+//   flavour:
+//     "Can your friends go ‘Abracadabra, let ’er rip’ and then make the sucker disappear?",
+//   colors: ["emerald"],
+//   cost: 6,
+//   strength: 3,
+//   willpower: 4,
+//   lore: 2,
+//   illustrator: "Giulia Riva",
+//   number: 75,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 501228,
+//   },
+//   rarity: "super_rare",
+// };
+//

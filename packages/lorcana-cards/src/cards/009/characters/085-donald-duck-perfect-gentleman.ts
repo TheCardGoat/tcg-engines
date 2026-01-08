@@ -41,3 +41,19 @@ export const donaldDuckPerfectGentleman: CharacterCard = {
   ],
   classifications: ["Floodborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { donaldDuckPerfectGentleman as donaldDuckPerfectGentlemanAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/077-donald-duck-perfect-gentleman";
+//
+// export const donaldDuckPerfectGentleman: LorcanitoCharacterCard = {
+//   ...donaldDuckPerfectGentlemanAsOrig,
+//   id: "g8a",
+//   reprints: [donaldDuckPerfectGentlemanAsOrig.id],
+//   number: 85,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650025,
+//   },
+// };
+//

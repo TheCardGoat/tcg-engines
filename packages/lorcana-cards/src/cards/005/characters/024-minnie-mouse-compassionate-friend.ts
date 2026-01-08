@@ -23,3 +23,47 @@ export const minnieMouseCompassionateFriend: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
+// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+//
+// export const minnieMouseCompassionateFriend: LorcanitoCharacterCard = {
+//   id: "our",
+//   missingTestCase: true,
+//   name: "Minnie Mouse",
+//   title: "Compassionate Friend",
+//   characteristics: ["hero", "storyborn"],
+//   text: "**PATCH THEM UP** Whenever this character quests, you may remove up to 2 damage from chosen character.",
+//   type: "character",
+//   abilities: [
+//     wheneverQuests({
+//       name: "Patch them up",
+//       text: "Whenever this character quests, you may remove up to 2 damage from chosen character.",
+//       effects: [
+//         {
+//           type: "heal",
+//           amount: 2,
+//           upTo: true,
+//           target: chosenCharacter,
+//         },
+//       ],
+//     }),
+//   ],
+//   flavour: "Oh my! Is that part of the Illuminary? I have to go help!",
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 4,
+//   strength: 1,
+//   willpower: 5,
+//   lore: 2,
+//   illustrator: "Gonzalo Kenny",
+//   number: 24,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 561949,
+//   },
+//   rarity: "common",
+// };
+//

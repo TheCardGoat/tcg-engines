@@ -21,3 +21,29 @@ export const kidaAtlantean: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const kidaAtlantean: LorcanitoCharacterCard = {
+//   id: "sro",
+//   name: "Kida",
+//   title: "Atlantean",
+//   characteristics: ["hero", "storyborn", "princess"],
+//   type: "character",
+//   flavour: "Welcome to the Inklands. (Atlantean language)",
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 1,
+//   strength: 2,
+//   willpower: 2,
+//   lore: 1,
+//   illustrator: "Nicoletta Baldari",
+//   number: 6,
+//   set: "ITI",
+//   externalIds: {
+//     tcgPlayer: 536275,
+//   },
+//   rarity: "common",
+// };
+//

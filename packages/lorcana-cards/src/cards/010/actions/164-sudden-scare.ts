@@ -17,3 +17,45 @@ export const suddenScare: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+// import { putTopCardOfOpponentDeckIntoTheirInkwell } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const suddenScare: LorcanitoActionCard = {
+//   id: "e24",
+//   name: "Sudden Scare",
+//   characteristics: ["action"],
+//   text: "Put chosen opposing character into their player's inkwell facedown. That player puts the top card of their deck into their inkwell facedown.",
+//   type: "action",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 4,
+//   illustrator: "Federico Maria Cugliari",
+//   number: 164,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 660039,
+//   },
+//   rarity: "uncommon",
+//   abilities: [
+//     {
+//       type: "resolution",
+//       name: "Sudden Scare",
+//       text: "Put chosen opposing character into their player's inkwell facedown. That player puts the top card of their deck into their inkwell facedown.",
+//       resolveEffectsIndividually: true,
+//       dependentEffects: true,
+//       effects: [
+//         putTopCardOfOpponentDeckIntoTheirInkwell,
+//         {
+//           type: "move",
+//           to: "inkwell",
+//           exerted: true,
+//           target: chosenOpposingCharacter,
+//         },
+//       ],
+//     },
+//   ],
+// };
+//

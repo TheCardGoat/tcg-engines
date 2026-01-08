@@ -24,3 +24,48 @@ export const vanellopeVonSchweetzRandomRosterRacer: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Princess", "Racer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { rushAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+//
+// export const vanellopeVonSchweetzRandomRosterRacer: LorcanitoCharacterCard = {
+//   id: "zv7",
+//   name: "Vanellope von Schweetz",
+//   title: "Random Roster Racer",
+//   characteristics: ["hero", "storyborn", "princess", "racer"],
+//   text: "**Rush** _(This character can challenge the turn they’re played.)_ **PIXLEXIA** When you play this character, she gains **Evasive** until the start of your next turn. _(Only characters with Evasive can challenge them.)_",
+//   type: "character",
+//   abilities: [
+//     rushAbility,
+//     {
+//       type: "resolution",
+//       name: "PIXLEXIA",
+//       text: "When you play this character, she gains **Evasive** until the start of your next turn. _(Only characters with Evasive can challenge them.)_",
+//       effects: [
+//         {
+//           type: "ability",
+//           ability: "evasive",
+//           modifier: "add",
+//           duration: "next_turn",
+//           until: true,
+//           target: thisCharacter,
+//         },
+//       ],
+//     },
+//   ],
+//   colors: ["ruby"],
+//   cost: 4,
+//   strength: 3,
+//   willpower: 3,
+//   lore: 2,
+//   illustrator: "Hyuna Lee",
+//   number: 124,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 555271,
+//   },
+//   rarity: "rare",
+// };
+//

@@ -53,3 +53,44 @@ export const merlinCompletingHisResearch: CharacterCard = {
   ],
   classifications: ["Storyborn", "Mentor", "Sorcerer", "Whisper"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import {
+//   boostAbility,
+//   ifThereIsACardUnder,
+// } from "@lorcanito/lorcana-engine/abilities/boostAbility";
+// import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const merlinCompletingHisResearch: LorcanitoCharacterCard = {
+//   id: "vd0",
+//   name: "Merlin",
+//   title: "Completing His Research",
+//   characteristics: ["storyborn", "mentor", "sorcerer", "whisper"],
+//   text: "Boost 2 {I}\n\nLEGACY OF LEARNING When this character is banished in a challenge, if he had a card under him, draw 2 cards.",
+//   type: "character",
+//   inkwell: false,
+//   colors: ["amethyst"],
+//   cost: 2,
+//   strength: 0,
+//   willpower: 3,
+//   illustrator: "Gaku Kumatori",
+//   number: 58,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659597,
+//   },
+//   rarity: "uncommon",
+//   lore: 2,
+//   abilities: [
+//     boostAbility(2),
+//     whenThisCharacterBanishedInAChallenge({
+//       name: "LEGACY OF LEARNING",
+//       text: "When this character is banished in a challenge, if he had a card under him, draw 2 cards.",
+//       conditions: [ifThereIsACardUnder],
+//       effects: [drawXCards(2)],
+//     }),
+//   ],
+// };
+//

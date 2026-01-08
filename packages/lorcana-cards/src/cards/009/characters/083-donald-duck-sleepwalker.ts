@@ -23,3 +23,19 @@ export const donaldDuckSleepwalker: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { donaldDuckSleepwalker as donaldDuckSleepwalkerAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/078-donald-duck-sleepwalker";
+//
+// export const donaldDuckSleepwalker: LorcanitoCharacterCard = {
+//   ...donaldDuckSleepwalkerAsOrig,
+//   id: "w9x",
+//   reprints: [donaldDuckSleepwalkerAsOrig.id],
+//   number: 83,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650023,
+//   },
+// };
+//

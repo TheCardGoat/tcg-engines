@@ -24,3 +24,37 @@ export const princePhillipGallantDefender: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { supportAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const princePhillipGallantDefender: LorcanitoCharacterCard = {
+//   id: "emu",
+//   missingTestCase: true,
+//   name: "Prince Phillip",
+//   title: "Gallant Defender",
+//   characteristics: ["hero", "storyborn", "prince"],
+//   text: "**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_\n\n \n**BEST DEFENSE** Whenver one of your characters is chosen for **Support**, they gain **Resist** +1 this turn. _(Damage dealt to them is reduced by 1.)_",
+//   type: "character",
+//   abilities: [
+//     supportAbility,
+//     {
+//       name: "**BEST DEFENSE** Whenver one of your characters is chosen for **Support**, they gain **Resist** +1 this turn. _(Damage dealt to them is reduced by 1.)_",
+//     },
+//   ],
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 3,
+//   strength: 1,
+//   willpower: 3,
+//   lore: 2,
+//   illustrator: "Mike Parker",
+//   number: 152,
+//   set: "URR",
+//   externalIds: {
+//     tcgPlayer: 549517,
+//   },
+//   rarity: "rare",
+// };
+//

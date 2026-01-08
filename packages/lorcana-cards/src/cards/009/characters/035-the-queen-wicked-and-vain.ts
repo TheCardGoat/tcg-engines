@@ -34,3 +34,19 @@ export const theQueenWickedAndVain: CharacterCard = {
   ],
   classifications: ["Storyborn", "Villain", "Queen"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { theQueenWickedAndVain as ogTheQueenWickedAndVain } from "@lorcanito/lorcana-engine/cards/001/characters/056-the-queen-wicked-and-vain";
+//
+// export const theQueenWickedAndVain: LorcanitoCharacterCard = {
+//   ...ogTheQueenWickedAndVain,
+//   id: "k4l",
+//   reprints: [ogTheQueenWickedAndVain.id],
+//   number: 35,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649982,
+//   },
+// };
+//

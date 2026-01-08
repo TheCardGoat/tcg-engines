@@ -21,3 +21,30 @@ export const herculesHeroInTraining: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const herculesHeroInTraining: LorcanitoCharacterCard = {
+//   id: "keh",
+//
+//   name: "Hercules",
+//   title: "Hero in Training",
+//   characteristics: ["hero", "storyborn", "prince"],
+//   type: "character",
+//   flavour: "No need to call IX-I-I!",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 2,
+//   strength: 2,
+//   willpower: 3,
+//   lore: 1,
+//   illustrator: "Eva Widermann",
+//   number: 182,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 527774,
+//   },
+//   rarity: "common",
+// };
+//

@@ -21,3 +21,29 @@ export const chacaImpressiveDaughter: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const chacaImpressiveDaughter: LorcanitoCharacterCard = {
+//   id: "ioz",
+//   name: "Chaca",
+//   title: "Impressive Daughter",
+//   characteristics: ["storyborn", "ally"],
+//   type: "character",
+//   flavour: "Look, look! My tooth is even looser today!",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 4,
+//   strength: 4,
+//   willpower: 3,
+//   lore: 2,
+//   illustrator: "Rianti Hidayat",
+//   number: 138,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 560507,
+//   },
+//   rarity: "common",
+// };
+//

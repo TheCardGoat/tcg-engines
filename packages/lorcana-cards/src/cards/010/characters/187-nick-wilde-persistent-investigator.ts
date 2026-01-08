@@ -48,3 +48,54 @@ export const nickWildePersistentInvestigator: CharacterCard = {
   ],
   classifications: ["Floodborn", "Ally", "Detective"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import { wheneverOpposingCharIsBanishedInChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const nickWildePersistentInvestigator: LorcanitoCharacterCard = {
+//   id: "f1z",
+//   name: "Nick Wilde",
+//   title: "Persistent Investigator",
+//   missingTestCase: true,
+//   characteristics: ["floodborn", "ally", "detective"],
+//   text: "Shift 3 (You may pay 3 to play this on top of one of your characters named Nick Wilde.) CASE CLOSED During your turn, whenever one of your Detective characters banishes another character in a challenge, draw a card.",
+//   type: "character",
+//   inkwell: false,
+//   colors: ["steel"],
+//   cost: 5,
+//   strength: 5,
+//   willpower: 4,
+//   illustrator: "César Vergara / Alex Accorsi",
+//   number: 187,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 653915,
+//   },
+//   rarity: "rare",
+//   lore: 2,
+//   abilities: [
+//     shiftAbility(3, "Nick Wilde"),
+//     wheneverOpposingCharIsBanishedInChallenge({
+//       name: "CASE CLOSED",
+//       text: "During your turn, whenever one of your Detective characters banishes another character in a challenge, draw a card.",
+//       conditions: [
+//         {
+//           type: "during-turn",
+//           value: "self",
+//         },
+//       ],
+//       attackerFilters: [
+//         { filter: "owner", value: "self" },
+//         { filter: "type", value: "character" },
+//         { filter: "characteristics", value: ["detective"] },
+//         { filter: "zone", value: "play" },
+//         { filter: "challenge", value: "attacker" },
+//       ],
+//       effects: [drawACard],
+//     }),
+//   ],
+// };
+//

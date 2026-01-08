@@ -29,3 +29,31 @@ export const inspectorTezukaResoluteOfficer: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally", "Detective"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const inspectorTezukaResoluteOfficer: LorcanitoCharacterCard = {
+//   id: "e5q",
+//   name: "Inspector Tezuka",
+//   title: "Resolute Officer",
+//   characteristics: ["storyborn", "ally", "detective"],
+//   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 2,
+//   strength: 2,
+//   willpower: 3,
+//   illustrator: "SOWSOW",
+//   number: 177,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659404,
+//   },
+//   rarity: "common",
+//   abilities: [bodyguardAbility],
+//   lore: 1,
+// };
+//

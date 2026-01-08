@@ -22,3 +22,31 @@ export const sergeantTibbsCourageousCat: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const seargentTibbies: LorcanitoCharacterCard = {
+//   id: "bpd",
+//   reprints: ["cz0"],
+//
+//   name: "Sergeant Tibbs",
+//   title: "Courageous Cat",
+//   characteristics: ["storyborn"],
+//   type: "character",
+//   flavour: "Yes, sir. Righto, sir. Right away, sir...",
+//   inkwell: true,
+//   colors: ["ruby"],
+//   cost: 1,
+//   strength: 2,
+//   willpower: 2,
+//   lore: 1,
+//   illustrator: "Cory Godbey",
+//   number: 124,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 497203,
+//   },
+//   rarity: "common",
+// };
+//

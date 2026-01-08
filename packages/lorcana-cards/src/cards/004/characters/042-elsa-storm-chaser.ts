@@ -24,3 +24,56 @@ export const elsaStormChaser: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Queen", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+//
+// export const elsaStormChaser: LorcanitoCharacterCard = {
+//   id: "m70",
+//   missingTestCase: true,
+//   name: "Elsa",
+//   title: "Storm Chaser",
+//   characteristics: ["hero", "queen", "sorcerer", "storyborn"],
+//   text: "**TEMPEST** {E}− Chosen character gains **Challenger** +2 and **Rush** this turn. _(They get +2 {S} while challenging. They can challenge the turn they're played.)_",
+//   type: "character",
+//   abilities: [
+//     {
+//       type: "activated",
+//       name: "Tempest",
+//       text: "Chosen character gains **Challenger** +2 and **Rush** this turn.",
+//       costs: [{ type: "exert" }],
+//       effects: [
+//         {
+//           type: "ability",
+//           ability: "challenger",
+//           modifier: "add",
+//           amount: 2,
+//           duration: "turn",
+//           target: chosenCharacter,
+//         },
+//         {
+//           type: "ability",
+//           ability: "rush",
+//           modifier: "add",
+//           duration: "turn",
+//           target: chosenCharacter,
+//         },
+//       ],
+//     },
+//   ],
+//   flavour: "After Elsa dispersed Ursula's storm, Anna was nowhere to be found.",
+//   colors: ["amethyst"],
+//   cost: 3,
+//   strength: 1,
+//   willpower: 4,
+//   lore: 1,
+//   illustrator: "Mariana Mareno",
+//   number: 42,
+//   set: "URR",
+//   externalIds: {
+//     tcgPlayer: 547847,
+//   },
+//   rarity: "rare",
+// };
+//

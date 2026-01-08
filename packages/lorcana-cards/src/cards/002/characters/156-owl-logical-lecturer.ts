@@ -21,3 +21,30 @@ export const owlLogicalLecturer: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const owlLogicalLecturer: LorcanitoCharacterCard = {
+//   id: "iei",
+//   name: "Owl",
+//   title: "Logical Lecturer",
+//   characteristics: ["storyborn", "ally"],
+//   type: "character",
+//   flavour:
+//     "For instance, based on the quality of the light and the subtle change in wind direction, I can safely say that it is time for tea.",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 1,
+//   strength: 2,
+//   willpower: 2,
+//   lore: 1,
+//   illustrator: "Agnes Christianson",
+//   number: 156,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 527278,
+//   },
+//   rarity: "common",
+// };
+//

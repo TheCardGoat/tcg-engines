@@ -24,3 +24,19 @@ export const queenOfHeartsWonderlandEmpress: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Villain", "Queen"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { queenOfHeartsWonderlandEmpress as ogQueenOfHeartsWonderlandEmpress } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const queenOfHeartsWonderlandEmpress: LorcanitoCharacterCard = {
+//   ...ogQueenOfHeartsWonderlandEmpress,
+//   id: "ifp",
+//   reprints: [ogQueenOfHeartsWonderlandEmpress.id],
+//   number: 23,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649971,
+//   },
+// };
+//

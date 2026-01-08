@@ -21,3 +21,30 @@ export const arthurWart: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const arthurWart: LorcanitoCharacterCard = {
+//   id: "szj",
+//   name: "Arthur",
+//   title: "Wart",
+//   characteristics: ["hero", "storyborn"],
+//   type: "character",
+//   flavour:
+//     "That boy's get real spark. Lots of spirit. Throws himself heart and soul into everything he does.\n−Merlin",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 2,
+//   strength: 2,
+//   willpower: 2,
+//   lore: 2,
+//   illustrator: "Kasia Brzezinska",
+//   number: 190,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 561298,
+//   },
+//   rarity: "uncommon",
+// };
+//

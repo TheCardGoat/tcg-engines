@@ -18,3 +18,34 @@ export const gatheringKnowledgeAndWisdom: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const gatheringKnowledgeAndWisdom: LorcanitoActionCard = {
+//   id: "uuj",
+//   name: "Gathering Knowledge And Wisdom",
+//   characteristics: ["action"],
+//   text: "Gain 2 lore.",
+//   type: "action",
+//   abilities: [
+//     {
+//       type: "resolution",
+//       text: "Gain 2 lore.",
+//       effects: [youGainLore(2)],
+//     },
+//   ],
+//   flavour:
+//     "Just think! All this knowledge was under our noses the whole time. We only had to look in the right place.",
+//   colors: ["amethyst"],
+//   cost: 2,
+//   illustrator: "Heidi Neunhoeffer",
+//   number: 62,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 561620,
+//   },
+//   rarity: "common",
+// };
+//

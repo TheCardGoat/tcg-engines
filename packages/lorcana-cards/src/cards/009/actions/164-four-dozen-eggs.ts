@@ -19,3 +19,19 @@ export const fourDozenEggs: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { fourDozenEggs as ogFourDozenEggs } from "@lorcanito/lorcana-engine/cards/002/actions/163-four-dozen-eggs";
+//
+// export const fourDozenEggs: LorcanitoActionCard = {
+//   ...ogFourDozenEggs,
+//   id: "wfa",
+//   reprints: [ogFourDozenEggs.id],
+//   number: 164,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650098,
+//   },
+// };
+//

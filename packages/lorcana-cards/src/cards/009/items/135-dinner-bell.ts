@@ -18,3 +18,19 @@ export const dinnerBell: ItemCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// import { dinnerBell as ogDinnerBell } from "@lorcanito/lorcana-engine/cards/002/items/134-dinner-bell";
+//
+// export const dinnerBell: LorcanitoItemCard = {
+//   ...ogDinnerBell,
+//   id: "box",
+//   reprints: [ogDinnerBell.id],
+//   number: 135,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650070,
+//   },
+// };
+//

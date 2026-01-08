@@ -21,3 +21,29 @@ export const denahiAvengingBrother: CharacterCard = {
   },
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const denahiAvengingBrother: LorcanitoCharacterCard = {
+//   id: "bt9",
+//   name: "Denahi",
+//   title: "Avenging Brother",
+//   characteristics: ["storyborn"],
+//   type: "character",
+//   flavour:
+//     "You’ll pay for what you’ve done! I’ll track you all the way to the Azurite Sea if I have to!",
+//   colors: ["ruby"],
+//   cost: 5,
+//   strength: 7,
+//   willpower: 5,
+//   lore: 2,
+//   illustrator: "Mike Parker",
+//   number: 115,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 560491,
+//   },
+//   rarity: "rare",
+// };
+//

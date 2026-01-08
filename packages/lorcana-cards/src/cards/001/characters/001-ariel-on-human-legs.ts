@@ -34,3 +34,32 @@ export const arielOnHumanLegs: CharacterCard = {
   ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import { voicelessAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const arielOnHumanLegs: LorcanitoCharacterCard = {
+//   id: "d6b",
+//   name: "Ariel",
+//   title: "On Human Legs",
+//   characteristics: ["hero", "storyborn", "princess"],
+//   text: "**VOICELESS** This character can't {E} to sing songs.",
+//   type: "character",
+//   abilities: [voicelessAbility],
+//   flavour: '". . ."',
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 4,
+//   strength: 3,
+//   willpower: 4,
+//   lore: 2,
+//   illustrator: "Matthew Robert Davies",
+//   number: 1,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 494102,
+//   },
+//   rarity: "uncommon",
+// };
+//

@@ -24,3 +24,43 @@ export const scarEerilyPrepared: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Villain", "Whisper"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import {
+//   boostAbility,
+//   wheneverYouPutACardUnder,
+// } from "@lorcanito/lorcana-engine/abilities/boostAbility";
+// import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/target";
+// import { getStrengthThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const scarEerilyPrepared: LorcanitoCharacterCard = {
+//   id: "zn6",
+//   name: "Scar",
+//   title: "Eerily Prepared",
+//   characteristics: ["storyborn", "villain", "whisper"],
+//   text: "Boost 2\n SURVIVAL OF THE FITTEST Whenever you put a card under this character, chosen opposing character gets -5 this turn.",
+//   type: "character",
+//   inkwell: false,
+//   colors: ["sapphire"],
+//   cost: 5,
+//   strength: 6,
+//   willpower: 5,
+//   illustrator: "Lisanne Koeteeuw",
+//   number: 153,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659384,
+//   },
+//   rarity: "super_rare",
+//   lore: 2,
+//   abilities: [
+//     boostAbility(2),
+//     wheneverYouPutACardUnder({
+//       name: "SURVIVAL OF THE FITTEST",
+//       text: "Whenever you put a card under this character, chosen opposing character gets -5 this turn.",
+//       effects: [getStrengthThisTurn(-5, chosenOpposingCharacter)],
+//     }),
+//   ],
+// };
+//

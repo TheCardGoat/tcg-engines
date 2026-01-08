@@ -42,3 +42,44 @@ export const minnieMouseAmethystChampion: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { wheneverOneOfYourCharactersIsBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const minnieMouseAmethystChampion: LorcanitoCharacterCard = {
+//   id: "egg",
+//   name: "Minnie Mouse",
+//   title: "Amethyst Champion",
+//   characteristics: ["dreamborn", "hero"],
+//   text: "MYSTICAL BALANCE Whenever one of your other Amethyst characters is banished in a challenge, you may draw a card.",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 4,
+//   strength: 2,
+//   willpower: 3,
+//   illustrator: "Lisa Parfenova",
+//   number: 35,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659760,
+//   },
+//   rarity: "rare",
+//   lore: 2,
+//   abilities: [
+//     wheneverOneOfYourCharactersIsBanishedInAChallenge({
+//       name: "MYSTICAL BALANCE",
+//       text: "Whenever one of your other Amethyst characters is banished in a challenge, you may draw a card.",
+//       optional: true,
+//       triggerFilter: [
+//         { filter: "owner", value: "self" },
+//         { filter: "type", value: "character" },
+//         { filter: "color", value: "amethyst" },
+//       ],
+//       effects: [drawACard],
+//     }),
+//   ],
+// };
+//

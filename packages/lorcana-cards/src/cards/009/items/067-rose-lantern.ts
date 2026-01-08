@@ -18,3 +18,19 @@ export const roseLantern: ItemCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// import { roseLantern as ogRoseLantern } from "@lorcanito/lorcana-engine/cards/004/items/065-rose-lantern";
+//
+// export const roseLantern: LorcanitoItemCard = {
+//   ...ogRoseLantern,
+//   id: "j0w",
+//   reprints: [ogRoseLantern.id],
+//   number: 67,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 647667,
+//   },
+// };
+//

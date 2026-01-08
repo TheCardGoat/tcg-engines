@@ -24,3 +24,20 @@ export const arielAdventurousCollector: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// import { arielAdventurousCollector as arielAdventurousCollectorAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const arielAdventurousCollector: LorcanitoCharacterCard = {
+//   ...arielAdventurousCollectorAsOrig,
+//   id: "uny",
+//   reprints: [arielAdventurousCollectorAsOrig.id],
+//   number: 107,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650045,
+//   },
+// };
+//

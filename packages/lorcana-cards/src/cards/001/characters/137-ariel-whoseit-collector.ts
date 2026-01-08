@@ -42,3 +42,56 @@ export const arielWhoseitCollector: CharacterCard = {
   ],
   classifications: ["Hero", "Storyborn", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import { wheneverPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const arielWhoseitCollector: LorcanitoCharacterCard = {
+//   id: "df2",
+//   name: "Ariel",
+//   title: "Whoseit Collector",
+//   characteristics: ["hero", "storyborn", "princess"],
+//   text: "**LOOK AT THIS STUFF** Whenever you play an item, you may ready this character.",
+//   type: "character",
+//   abilities: [
+//     wheneverPlays({
+//       name: "Look at This Stuff",
+//       text: "Whenever you play an item, you may ready this character.",
+//       optional: true,
+//       triggerTarget: {
+//         type: "card",
+//         value: 1,
+//         filters: [
+//           { filter: "type", value: "item" },
+//           { filter: "owner", value: "self" },
+//         ],
+//       },
+//       effects: [
+//         {
+//           type: "exert",
+//           exert: false,
+//           target: {
+//             type: "card",
+//             value: "all",
+//             filters: [{ filter: "source", value: "self" }],
+//           },
+//         },
+//       ],
+//     }),
+//   ],
+//   flavour: "You want thingamabobs? I got twenty.",
+//   colors: ["sapphire"],
+//   cost: 4,
+//   strength: 3,
+//   willpower: 3,
+//   lore: 1,
+//   illustrator: "Hedvig Häggman-Sund",
+//   number: 137,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 502532,
+//   },
+//   rarity: "rare",
+// };
+//

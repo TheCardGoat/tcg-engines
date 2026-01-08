@@ -24,3 +24,19 @@ export const rayaHeadstrong: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { rayaHeadstrong as rayaHeadstrongAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/122-raya-headstrong";
+//
+// export const rayaHeadstrong: LorcanitoCharacterCard = {
+//   ...rayaHeadstrongAsOrig,
+//   id: "g6t",
+//   reprints: [rayaHeadstrongAsOrig.id],
+//   number: 127,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650062,
+//   },
+// };
+//

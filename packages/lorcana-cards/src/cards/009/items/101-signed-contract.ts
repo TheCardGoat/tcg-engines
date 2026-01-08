@@ -40,3 +40,19 @@ export const signedContract: ItemCard = {
     },
   ],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// import { signedContract as signedContractAsOrig } from "@lorcanito/lorcana-engine/cards/004/items/099-signed-contract";
+//
+// export const signedContract: LorcanitoItemCard = {
+//   ...signedContractAsOrig,
+//   id: "no1",
+//   reprints: [signedContractAsOrig.id],
+//   number: 101,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650039,
+//   },
+// };
+//

@@ -24,3 +24,41 @@ export const stitchTeamUnderdog: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Alien"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
+// import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const stitchTeamUnderdog: LorcanitoCharacterCard = {
+//   id: "ovo",
+//   missingTestCase: true,
+//   name: "Stitch",
+//   title: "Team Underdog",
+//   characteristics: ["hero", "alien", "storyborn"],
+//   text: "**HEAVE HO!** When you play this character, you may deal 2 damage to chosen character.",
+//   type: "character",
+//   abilities: [
+//     {
+//       type: "resolution",
+//       name: "HEAVE HO!",
+//       text: "When you play this character, you may deal 2 damage to chosen character.",
+//       effects: [dealDamageEffect(2, chosenCharacter)],
+//     },
+//   ],
+//   flavour:
+//     "He's not the biggest glimmer on the team, but he still packs a wallop.",
+//   colors: ["steel"],
+//   cost: 4,
+//   strength: 1,
+//   willpower: 4,
+//   lore: 1,
+//   illustrator: "Karen Hellon",
+//   number: 171,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 557295,
+//   },
+//   rarity: "uncommon",
+// };
+//

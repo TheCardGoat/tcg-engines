@@ -1,0 +1,53 @@
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import {
+//   bodyguardAbility,
+//   shiftAbility,
+//   supportAbility,
+// } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const mickeyMouseMusketeerCaptain: LorcanitoCharacterCard = {
+//   id: "pjf",
+//   missingTestCase: true,
+//   name: "Mickey Mouse",
+//   title: "Musketeer Captain",
+//   characteristics: ["hero", "floodborn", "captain", "musketeer"],
+//   text: "**Shift** 5 _You may pay 5 {I} to play this on top of one of your characters named Mickey Mouse.)_\n\n**Bodyguard**, **Support**\n\n\n**MUSKETEERS UNITED** When you play this character, if you used **Shift** to play him, you may draw a chard for each character with **Bodyguard** you have in play.",
+//   type: "character",
+//   abilities: [
+//     shiftAbility(5, "mickey mouse"),
+//     bodyguardAbility,
+//     supportAbility,
+//     {
+//       type: "resolution",
+//       resolutionConditions: [{ type: "resolution", value: "shift" }],
+//       name: "Musketeers United",
+//       text: "When you play this character, if you used **Shift** to play him, you may draw a chard for each character with **Bodyguard** you have in play.",
+//       effects: [
+//         drawXCards({
+//           dynamic: true,
+//           filters: [
+//             { filter: "type", value: "character" },
+//             { filter: "ability", value: "bodyguard" },
+//             { filter: "zone", value: "play" },
+//             { filter: "owner", value: "self" },
+//           ],
+//         }),
+//       ],
+//     },
+//   ],
+//   colors: ["amber"],
+//   cost: 7,
+//   strength: 3,
+//   willpower: 6,
+//   lore: 2,
+//   illustrator: "Jochem van Gool",
+//   number: 16,
+//   set: "URR",
+//   externalIds: {
+//     tcgPlayer: 549534,
+//   },
+//   rarity: "legendary",
+// };
+//

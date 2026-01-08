@@ -24,3 +24,19 @@ export const lumiereFieryFriend: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { lumiereFieryFriend as ogLumiereFieryFriend } from "@lorcanito/lorcana-engine/cards/004/characters/113-lumiere-fiery-friend";
+//
+// export const lumiereFieryFriend: LorcanitoCharacterCard = {
+//   ...ogLumiereFieryFriend,
+//   id: "bk1",
+//   reprints: [ogLumiereFieryFriend.id],
+//   number: 121,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650056,
+//   },
+// };
+//

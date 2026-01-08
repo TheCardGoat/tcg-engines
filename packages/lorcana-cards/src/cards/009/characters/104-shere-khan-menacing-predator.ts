@@ -24,3 +24,19 @@ export const shereKhanMenacingPredator: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Villain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { shereKhanMenacingPredator as ogShereKhanMenacingPredator } from "@lorcanito/lorcana-engine/cards/002/characters/126-shere-khan-menacing-predator";
+//
+// export const shereKhanMenacingPredator: LorcanitoCharacterCard = {
+//   ...ogShereKhanMenacingPredator,
+//   id: "nzy",
+//   reprints: [ogShereKhanMenacingPredator.id],
+//   number: 104,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650042,
+//   },
+// };
+//
