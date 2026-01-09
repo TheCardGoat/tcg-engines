@@ -47,19 +47,19 @@ describe("Set 001 Parsing Fixes", () => {
 
     // Yzma - Alchemist
     // "Exert - Look at the top card of your deck. Put it on either the top or the bottom of your deck."
-    // TODO: "either X or Y" choice pattern is not yet implemented in the parser
-    // Currently parses as move-cards, needs choice effect parsing for deck positioning
-    it.skip("should parse Yzma's look and put top/bottom", () => {
+    // TODO: Parser currently doesn't handle "look at the top card" without a number
+    // The scry parser expects "look at the top X cards" pattern
+    // This would need enhancement to handle "the top card" as equivalent to "the top 1 card"
+    it.skip("should parse Yzma's look and put top/bottom as scry", () => {
       const effect = parseEffect(
         "Look at the top card of your deck. Put it on either the top or the bottom of your deck",
       );
 
       expect(effect).toBeDefined();
-      expect(effect?.type).toBe("sequence");
-      if (effect?.type === "sequence") {
-        expect(effect.steps[0].type).toBe("look-at-cards");
-        // Second step is a choice to put on top or bottom
-        expect(effect.steps[1].type).toBe("choice");
+      expect(effect?.type).toBe("scry");
+      if (effect?.type === "scry") {
+        expect(effect.amount).toBe(1);
+        expect(effect.destinations.length).toBeGreaterThan(0);
       }
     });
 
