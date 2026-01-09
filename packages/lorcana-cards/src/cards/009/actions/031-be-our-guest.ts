@@ -22,34 +22,19 @@ export const beOurGuest: ActionCard = {
       name: "Be Our Guest",
       type: "action",
       effect: {
-        type: "look-at-cards",
+        type: "scry",
         amount: 4,
-        from: "top-of-deck",
-        target: "CONTROLLER",
-        then: {
-          action: "put-in-hand",
-          filter: {
-            type: "card-type",
-            cardType: "character",
+        destinations: [
+          {
+            zone: "hand",
+            min: 0,
+            max: 1,
+            filter: { type: "card-type", cardType: "character" },
+            reveal: true,
           },
-        },
+          { zone: "deck-bottom", remainder: true, ordering: "player-choice" },
+        ],
       },
     },
   ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { beOurGuest as ogBeOurGuest } from "@lorcanito/lorcana-engine/cards/001/songs/025-be-our-guest";
-//
-// export const beOurGuest: LorcanitoActionCard = {
-//   ...ogBeOurGuest,
-//   id: "cwb",
-//   reprints: [ogBeOurGuest.id],
-//   number: 31,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649978,
-//   },
-// };
-//
