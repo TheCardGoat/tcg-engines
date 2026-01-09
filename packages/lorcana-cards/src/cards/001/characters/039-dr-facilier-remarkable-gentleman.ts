@@ -30,7 +30,7 @@ export const drFacilierRemarkableGentleman: CharacterCard = {
         timing: "whenever",
         on: {
           controller: "you",
-          cardType: "action",
+          cardType: "song",
         },
       },
       effect: {

@@ -222,11 +222,10 @@ function parseScryEffect(text: string): ScryEffect | null {
 
   // Determine target player (default: CONTROLLER)
   let target: PlayerTarget = "CONTROLLER";
-  if (
-    lowerText.includes("chosen player's deck") ||
-    lowerText.includes("opponent's deck")
-  ) {
+  if (lowerText.includes("chosen player's deck")) {
     target = "CHOSEN_PLAYER";
+  } else if (lowerText.includes("opponent's deck")) {
+    target = "OPPONENT";
   }
 
   // ========================================================================

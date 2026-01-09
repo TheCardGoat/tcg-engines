@@ -1,11 +1,11 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const developYourBrainundefined: ActionCard = {
+export const developYourBrain: ActionCard = {
   id: "yy9",
   cardType: "action",
   name: "Develop Your Brain",
-  version: "undefined",
-  fullName: "Develop Your Brain - undefined",
+  version: "",
+  fullName: "Develop Your Brain",
   inkType: ["sapphire"],
   franchise: "Disney",
   set: "001",

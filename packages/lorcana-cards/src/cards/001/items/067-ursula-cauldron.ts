@@ -1,11 +1,11 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const ursulaundefined: ItemCard = {
+export const ursulasCauldron: ItemCard = {
   id: "fkd",
   cardType: "item",
-  name: "Ursula",
-  version: "undefined",
-  fullName: "Ursula - undefined",
+  name: "Ursula's Cauldron",
+  version: "",
+  fullName: "Ursula's Cauldron",
   inkType: ["amethyst"],
   franchise: "Disney",
   set: "001",
