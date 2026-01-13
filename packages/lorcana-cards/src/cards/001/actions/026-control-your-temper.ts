@@ -11,12 +11,29 @@ export const controlYourTemper: ActionCard = {
   cost: 1,
   cardNumber: 26,
   inkable: true,
-  missingImplementation: true,
-  missingTests: true,
   externalIds: {
     ravensburger: "55f9630150960925f548c841768e0cd6ac3aa1ef",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "nur-1",
+      type: "action",
+      text: "Chosen character gets -2 {S} this turn.",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: -2,
+        duration: "this-turn",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+    },
+  ],
 };
 
 // LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!

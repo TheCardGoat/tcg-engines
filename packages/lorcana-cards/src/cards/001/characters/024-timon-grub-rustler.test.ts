@@ -1,40 +1,44 @@
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// /**
-//  * @jest-environment node
-//  */
-//
-// import { describe, expect, it } from "@jest/globals";
-// import {
-//   donaldDuckMusketeer,
-//   timonGrubRustler,
-// } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
-//
-// describe("Timon - Grub Rustler", () => {
-//   describe("When you play this \rcharacter, you may remove up to 1 damage from \rchosen character.", () => {
-//     it("Healing 1 damage from character", () => {
-//       const testStore = new TestStore({
-//         inkwell: timonGrubRustler.cost,
-//         hand: [timonGrubRustler],
-//         play: [donaldDuckMusketeer],
-//       });
-//
-//       const cardUnderTest = testStore.getByZoneAndId(
-//         "hand",
-//         timonGrubRustler.id,
-//       );
-//       const target = testStore.getByZoneAndId("play", donaldDuckMusketeer.id);
-//
-//       target.updateCardMeta({ damage: 2 });
-//
-//       cardUnderTest.playFromHand();
-//
-//       testStore.resolveOptionalAbility();
-//       testStore.resolveTopOfStack({ targetId: target.instanceId });
-//
-//       expect(cardUnderTest.zone).toEqual("play");
-//       expect(target.meta.damage).toEqual(1);
-//     });
-//   });
-// });
-//
+import { describe, expect, it } from "bun:test";
+import { timonGrubRustler } from "./024-timon-grub-rustler";
+
+describe("Timon - Grub Rustler", () => {
+  it("has optional remove-damage triggered ability when played", () => {
+    expect(timonGrubRustler.abilities).toHaveLength(1);
+    // biome-ignore lint/style/noNonNullAssertion: length check above guarantees existence
+    const ability = timonGrubRustler.abilities![0] as {
+      type: string;
+      name: string;
+      trigger: unknown;
+      effect?: {
+        type: string;
+        effect: unknown;
+        chooser: string;
+      };
+    };
+
+    // Verify ability type and name
+    expect(ability.type).toBe("triggered");
+    expect(ability.name).toBe("TASTES LIKE CHICKEN");
+
+    // Verify trigger is "when you play this character"
+    expect(ability.trigger).toMatchObject({
+      event: "play",
+      timing: "when",
+      on: "SELF",
+    });
+
+    // Verify effect is optional
+    expect(ability.effect?.type).toBe("optional");
+
+    // Verify nested effect is remove-damage
+    expect(ability.effect?.effect).toMatchObject({
+      type: "remove-damage",
+      amount: 1,
+      upTo: true,
+      target: "CHOSEN_CHARACTER",
+    });
+
+    // Verify chooser is controller
+    expect(ability.effect?.chooser).toBe("CONTROLLER");
+  });
+});

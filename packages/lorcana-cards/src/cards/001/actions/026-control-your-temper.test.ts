@@ -1,30 +1,35 @@
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// /**
-//  * @jest-environment node
-//  */
-// import { describe, expect, it } from "@jest/globals";
-// import { controlYourTemper } from "@lorcanito/lorcana-engine/cards/001/actions/actions";
-// import { mickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-// import { TestStore } from "@lorcanito/lorcana-engine/rules/testStore";
-//
-// describe("Control Your Temper!", () => {
-//   it("Chosen characters gets -2 {S} this turn.", () => {
-//     const testStore = new TestStore({
-//       inkwell: controlYourTemper.cost,
-//       hand: [controlYourTemper],
-//       play: [mickeyMouseTrueFriend],
-//     });
-//
-//     const cardUnderTest = testStore.getByZoneAndId(
-//       "hand",
-//       controlYourTemper.id,
-//     );
-//     const target = testStore.getByZoneAndId("play", mickeyMouseTrueFriend.id);
-//
-//     cardUnderTest.playFromHand();
-//     testStore.resolveTopOfStack({ targetId: target.instanceId });
-//
-//     expect(target.strength).toEqual((target.lorcanitoCard.strength || 0) - 2);
-//   });
-// });
-//
+import { describe, expect, it } from "bun:test";
+import { controlYourTemper } from "./026-control-your-temper";
+
+describe("Control Your Temper!", () => {
+  it("has strength debuff action ability", () => {
+    expect(controlYourTemper.abilities).toHaveLength(1);
+    // biome-ignore lint/style/noNonNullAssertion: length check above guarantees existence
+    const ability = controlYourTemper.abilities![0] as {
+      type: string;
+      effect?: {
+        type: string;
+        stat: string;
+        modifier: number;
+        duration: string;
+        target: unknown;
+      };
+    };
+
+    // Verify ability type
+    expect(ability.type).toBe("action");
+
+    // Verify effect is stat modification
+    expect(ability.effect?.type).toBe("modify-stat");
+    expect(ability.effect?.stat).toBe("strength");
+    expect(ability.effect?.modifier).toBe(-2);
+    expect(ability.effect?.duration).toBe("this-turn");
+
+    // Verify target is chosen character
+    expect(ability.effect?.target).toMatchObject({
+      selector: "chosen",
+      count: 1,
+      cardTypes: ["character"],
+    });
+  });
+});

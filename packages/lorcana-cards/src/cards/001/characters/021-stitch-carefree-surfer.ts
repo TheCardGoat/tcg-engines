@@ -21,19 +21,33 @@ export const stitchCarefreeSurfer: CharacterCard = {
   },
   abilities: [
     {
-      type: "action",
-      text: "**OHANA** When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
       id: "jzu-1",
+      type: "triggered",
+      name: "OHANA",
+      text: "When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
       effect: {
         type: "conditional",
         condition: {
-          type: "if",
-          expression: "you have 2 or more other characters in play",
+          type: "has-character-count",
+          controller: "you",
+          comparison: "greater-or-equal",
+          count: 2,
+          // Note: The ability text says "2 or more OTHER characters"
+          // The engine should check characters excluding self when resolving
         },
         then: {
-          type: "draw",
-          amount: 2,
-          target: "CONTROLLER",
+          type: "optional",
+          effect: {
+            type: "draw",
+            amount: 2,
+            target: "CONTROLLER",
+          },
+          chooser: "CONTROLLER",
         },
       },
     },
