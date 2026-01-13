@@ -38,11 +38,11 @@ export const annaHeirToArendelle: CharacterCard = {
       effect: {
         type: "restriction",
         restriction: "cant-ready",
-        duration: "next-turn",
+        duration: "until-start-of-next-turn",
         target: {
           selector: "chosen",
           count: 1,
-          controller: "opponent",
+          owner: "opponent",
           zones: ["play"],
           cardTypes: ["character"],
         },

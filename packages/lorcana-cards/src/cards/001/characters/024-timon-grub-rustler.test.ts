@@ -4,7 +4,17 @@ import { timonGrubRustler } from "./024-timon-grub-rustler";
 describe("Timon - Grub Rustler", () => {
   it("has optional remove-damage triggered ability when played", () => {
     expect(timonGrubRustler.abilities).toHaveLength(1);
-    const ability = timonGrubRustler.abilities[0];
+    // biome-ignore lint/style/noNonNullAssertion: length check above guarantees existence
+    const ability = timonGrubRustler.abilities![0] as {
+      type: string;
+      name: string;
+      trigger: unknown;
+      effect?: {
+        type: string;
+        effect: unknown;
+        chooser: string;
+      };
+    };
 
     // Verify ability type and name
     expect(ability.type).toBe("triggered");

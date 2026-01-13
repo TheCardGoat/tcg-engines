@@ -33,15 +33,12 @@ export const stitchCarefreeSurfer: CharacterCard = {
       effect: {
         type: "conditional",
         condition: {
-          type: "zone-count",
-          zone: "play",
-          player: "you",
-          cardType: "character",
-          comparison: {
-            operator: ">=",
-            value: 3,
-            excludeSelf: true,
-          },
+          type: "has-character-count",
+          controller: "you",
+          comparison: "greater-or-equal",
+          count: 2,
+          // Note: The ability text says "2 or more OTHER characters"
+          // The engine should check characters excluding self when resolving
         },
         then: {
           type: "optional",

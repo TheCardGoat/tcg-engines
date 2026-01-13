@@ -4,7 +4,17 @@ import { controlYourTemper } from "./026-control-your-temper";
 describe("Control Your Temper!", () => {
   it("has strength debuff action ability", () => {
     expect(controlYourTemper.abilities).toHaveLength(1);
-    const ability = controlYourTemper.abilities[0];
+    // biome-ignore lint/style/noNonNullAssertion: length check above guarantees existence
+    const ability = controlYourTemper.abilities![0] as {
+      type: string;
+      effect?: {
+        type: string;
+        stat: string;
+        modifier: number;
+        duration: string;
+        target: unknown;
+      };
+    };
 
     // Verify ability type
     expect(ability.type).toBe("action");
