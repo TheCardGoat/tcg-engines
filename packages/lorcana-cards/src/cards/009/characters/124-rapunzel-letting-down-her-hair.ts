@@ -24,3 +24,19 @@ export const rapunzelLettingDownHerHair: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { rapunzelLettingHerHairDown as rapunzelLettingDownHerHairAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/121-rapunzel-letting-down-her-hair";
+//
+// export const rapunzelLettingDownHerHair: LorcanitoCharacterCard = {
+//   ...rapunzelLettingDownHerHairAsOrig,
+//   id: "aq6",
+//   reprints: [rapunzelLettingDownHerHairAsOrig.id],
+//   number: 124,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650059,
+//   },
+// };
+//

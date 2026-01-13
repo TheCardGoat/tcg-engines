@@ -24,3 +24,19 @@ export const maleficentMonstrousDragon: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Villain", "Dragon"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { maleficentMonstrousDragon as ogMaleficentMonstrousDragon } from "@lorcanito/lorcana-engine/cards/001/characters/113-maleficent-monstrous-dragon";
+//
+// export const maleficentMonstrousDragon: LorcanitoCharacterCard = {
+//   ...ogMaleficentMonstrousDragon,
+//   id: "c6o",
+//   reprints: [ogMaleficentMonstrousDragon.id],
+//   number: 108,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650046,
+//   },
+// };
+//

@@ -24,3 +24,19 @@ export const wildcatMechanic: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { wildcatMechanic as wildcatMechanicAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const wildcatMechanic: LorcanitoCharacterCard = {
+//   ...wildcatMechanicAsOrig,
+//   id: "lmm",
+//   reprints: [wildcatMechanicAsOrig.id],
+//   number: 91,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650030,
+//   },
+// };
+//

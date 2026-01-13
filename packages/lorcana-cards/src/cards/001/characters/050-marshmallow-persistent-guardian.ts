@@ -36,3 +36,40 @@ export const marshmallowPersistentGuardian: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const marshmallowPersistentGuardian: LorcanitoCharacterCard = {
+//   id: "it5",
+//   name: "Marshmallow",
+//   title: "Persistent Guardian",
+//   characteristics: ["storyborn", "ally"],
+//   text: "**DURABLE** When this character is banished in a challenge, you may return this card to your hand.",
+//   type: "character",
+//   abilities: [
+//     whenThisCharacterBanishedInAChallenge({
+//       name: "Durable",
+//       optional: true,
+//       text: "When this character is banished in a challenge, you may return this card to your hand.",
+//       effects: [returnThisCardToHand],
+//     }),
+//   ],
+//   flavour:
+//     "Hey! We were just talking about you! All good things, all good things. −Olaf",
+//   colors: ["amethyst"],
+//   cost: 6,
+//   strength: 5,
+//   willpower: 5,
+//   lore: 1,
+//   illustrator: "Kendall Hale",
+//   number: 50,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 505955,
+//   },
+//   rarity: "super_rare",
+// };
+//

@@ -38,18 +38,18 @@ export const arielSpectacularSinger: CharacterCard = {
         on: "SELF",
       },
       effect: {
-        type: "optional",
-        effect: {
-          type: "look-at-cards",
-          amount: 4,
-          from: "top-of-deck",
-          target: "CONTROLLER",
-          then: {
-            action: "put-in-hand",
-            count: 1,
+        type: "scry",
+        amount: 4,
+        destinations: [
+          {
+            zone: "hand",
+            min: 0,
+            max: 1,
+            filter: { type: "song" },
+            reveal: true,
           },
-        },
-        chooser: "CONTROLLER",
+          { zone: "deck-bottom", remainder: true, ordering: "player-choice" },
+        ],
       },
     },
   ],

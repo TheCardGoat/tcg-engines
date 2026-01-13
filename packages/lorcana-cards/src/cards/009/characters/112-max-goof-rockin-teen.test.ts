@@ -1,0 +1,43 @@
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// /**
+//  * @jest-environment node
+//  */
+//
+// import { describe, expect, it } from "@jest/globals";
+// import {
+//   hiddenCoveTranquilHaven,
+//   maxGoofRockinTeen,
+// } from "@lorcanito/lorcana-engine/cards/009";
+// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+//
+// describe("Max Goof - Rockin' Teen", () => {
+//   it("Singer 5 (This character counts as cost 5 to sing songs.)", async () => {
+//     const testEngine = new TestEngine({
+//       play: [maxGoofRockinTeen],
+//     });
+//
+//     const cardUnderTest = testEngine.getCardModel(maxGoofRockinTeen);
+//     expect(cardUnderTest.hasSinger).toBe(true);
+//   });
+//
+//   it("I JUST WANNA STAY HOME This character can't move to locations.", async () => {
+//     const testEngine = new TestEngine({
+//       inkwell: hiddenCoveTranquilHaven.moveCost,
+//       play: [maxGoofRockinTeen, hiddenCoveTranquilHaven],
+//     });
+//
+//     const maxGoof = testEngine.getCardModel(maxGoofRockinTeen);
+//     const hiddenCove = testEngine.getCardModel(hiddenCoveTranquilHaven);
+//
+//     expect(maxGoof.canEnterLocation(hiddenCove)).toBe(false);
+//
+//     await testEngine.moveToLocation({
+//       location: hiddenCove,
+//       character: maxGoof,
+//       skipAssertion: true,
+//     });
+//
+//     expect(maxGoof.isAtLocation(hiddenCove)).toBe(false);
+//   });
+// });
+//

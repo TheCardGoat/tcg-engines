@@ -24,3 +24,42 @@ export const princeJohnGreediestOfAll: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Villain", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import { wheneverYourOpponentDiscardsOneOrMore } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const princeJohnGreediestOfAll: LorcanitoCharacterCard = {
+//   id: "j3m",
+//
+//   name: "Prince John",
+//   title: "Greediest of All",
+//   characteristics: ["dreamborn", "villain", "prince"],
+//   text: "**Ward** _(Opponents can't choose this character except to challenge.)_\n\n**I SENTENCE YOU** Whenever your opponent discards 1 or more cards, you may draw a card for each card discarded.",
+//   type: "character",
+//   abilities: [
+//     wheneverYourOpponentDiscardsOneOrMore({
+//       name: "I Sentence You",
+//       text: "Whenever your opponent discards 1 or more cards, you may draw a card for each card discarded.",
+//       optional: true,
+//       effects: [drawACard],
+//     }),
+//     wardAbility,
+//   ],
+//   flavour: "Taxes! Taxes! Beautiful, lovely taxes!",
+//   colors: ["emerald"],
+//   cost: 3,
+//   strength: 1,
+//   willpower: 2,
+//   lore: 2,
+//   illustrator: "Koni",
+//   number: 89,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 522737,
+//   },
+//   rarity: "rare",
+// };
+//

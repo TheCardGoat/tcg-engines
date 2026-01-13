@@ -19,3 +19,19 @@ export const motherKnowsBest: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { motherKnowsBest as motherKnowsBestAsOrig } from "@lorcanito/lorcana-engine/cards/001/songs/095-mother-knows-best";
+//
+// export const motherKnowsBest: LorcanitoActionCard = {
+//   ...motherKnowsBestAsOrig,
+//   id: "px0",
+//   reprints: [motherKnowsBestAsOrig.id],
+//   number: 99,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650037,
+//   },
+// };
+//

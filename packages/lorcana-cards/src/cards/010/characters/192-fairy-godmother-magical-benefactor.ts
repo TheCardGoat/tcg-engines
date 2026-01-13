@@ -55,10 +55,26 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
                 expression: "target banished",
               },
               then: {
-                type: "look-at-cards",
+                type: "scry",
                 amount: 1,
-                from: "top-of-deck",
                 target: "OPPONENT",
+                revealAll: true,
+                destinations: [
+                  {
+                    zone: "play",
+                    min: 0,
+                    max: 1,
+                    filter: {
+                      type: "or",
+                      filters: [
+                        { type: "card-type", cardType: "character" },
+                        { type: "card-type", cardType: "item" },
+                      ],
+                    },
+                    cost: "free",
+                  },
+                  { zone: "deck-bottom", remainder: true },
+                ],
               },
             },
           ],

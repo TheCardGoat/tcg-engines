@@ -1,11 +1,11 @@
 import type { ItemCard } from "@tcg/lorcana-types";
 
-export const ursulaundefined: ItemCard = {
+export const ursulasCauldron: ItemCard = {
   id: "fkd",
   cardType: "item",
-  name: "Ursula",
-  version: "undefined",
-  fullName: "Ursula - undefined",
+  name: "Ursula's Cauldron",
+  version: "",
+  fullName: "Ursula's Cauldron",
   inkType: ["amethyst"],
   franchise: "Disney",
   set: "001",
@@ -18,22 +18,19 @@ export const ursulaundefined: ItemCard = {
   },
   abilities: [
     {
-      type: "action",
+      type: "activated",
+      name: "PEER INTO THE DEPTHS",
       text: "**PEER INTO THE DEPTHS** {E} − Look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
       id: "fkd-1",
+      cost: {
+        exert: true,
+      },
       effect: {
-        type: "sequence",
-        steps: [
-          {
-            type: "look-at-cards",
-            amount: 2,
-            from: "top-of-deck",
-            target: "CONTROLLER",
-          },
-          {
-            type: "put-on-bottom",
-            target: "CHOSEN_CHARACTER",
-          },
+        type: "scry",
+        amount: 2,
+        destinations: [
+          { zone: "deck-top", min: 1, max: 1 },
+          { zone: "deck-bottom", remainder: true },
         ],
       },
     },

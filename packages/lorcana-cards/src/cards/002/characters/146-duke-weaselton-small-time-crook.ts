@@ -29,3 +29,33 @@ export const dukeWeaseltonSmalltimeCrook: CharacterCard = {
   ],
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const dukeWeaseltonSmallTimeCrook: LorcanitoCharacterCard = {
+//   id: "b5u",
+//
+//   name: "Duke Weaselton",
+//   title: "Small-Time Crook",
+//   characteristics: ["storyborn"],
+//   text: "**Ward** _(Opponents can't choose this character except to challenge.)_",
+//   type: "character",
+//   abilities: [wardAbility],
+//   flavour: "It's Wee-sel-ton.",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 2,
+//   strength: 1,
+//   willpower: 2,
+//   lore: 2,
+//   illustrator: "Rosa la Barbera / Leonardo Giammichele",
+//   number: 146,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 527763,
+//   },
+//   rarity: "common",
+// };
+//

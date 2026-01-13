@@ -18,3 +18,53 @@ export const ghostlyTale: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+//
+// export const ghostlyTale: LorcanitoActionCard = {
+//   id: "rdc",
+//   name: "Ghostly Tale",
+//   characteristics: ["action"],
+//   text: "Exert all opposing characters with 2 {S} or less.",
+//   type: "action",
+//   inkwell: true,
+//   colors: ["ruby"],
+//   cost: 4,
+//   illustrator: "Sara Storino",
+//   number: 132,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 660016,
+//   },
+//   rarity: "common",
+//   abilities: [
+//     {
+//       type: "resolution",
+//       resolveEffectsIndividually: false,
+//       dependentEffects: false,
+//       text: "Exert all opposing characters with 2 {S} or less.",
+//       effects: [
+//         {
+//           type: "exert",
+//           exert: true,
+//           target: {
+//             type: "card",
+//             value: "all",
+//             filters: [
+//               { filter: "owner", value: "opponent" },
+//               { filter: "type", value: "character" },
+//               { filter: "zone", value: "play" },
+//               {
+//                 filter: "attribute",
+//                 value: "strength",
+//                 comparison: { operator: "lte", value: 2 },
+//               },
+//             ],
+//           },
+//         },
+//       ],
+//     },
+//   ],
+// };
+//

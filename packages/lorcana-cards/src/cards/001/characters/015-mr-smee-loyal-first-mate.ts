@@ -21,3 +21,28 @@ export const mrSmeeLoyalFirstMate: CharacterCard = {
   },
   classifications: ["Dreamborn", "Ally", "Pirate"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const mrSmee: LorcanitoCharacterCard = {
+//   id: "avd",
+//   name: "Mr. Smee",
+//   title: "Loyal First Mate",
+//   characteristics: ["dreamborn", "pirate", "ally"],
+//   type: "character",
+//   inkwell: true,
+//   illustrator: "Kamil Murzyn / Eri Welli",
+//   colors: ["amber"],
+//   cost: 3,
+//   strength: 2,
+//   willpower: 5,
+//   lore: 1,
+//   number: 15,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 508697,
+//   },
+//   rarity: "common",
+// };
+//

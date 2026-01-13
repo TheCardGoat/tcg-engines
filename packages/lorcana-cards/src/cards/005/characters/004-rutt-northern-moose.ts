@@ -29,3 +29,32 @@ export const ruttNorthernMoose: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { supportAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const ruttNorthernMoose: LorcanitoCharacterCard = {
+//   id: "l3d",
+//   name: "Rutt",
+//   title: "Northern Moose",
+//   characteristics: ["storyborn", "ally"],
+//   text: "**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_",
+//   type: "character",
+//   abilities: [supportAbility],
+//   flavour: "Let's find some nice twigs, eh? I could use a snack!",
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 4,
+//   strength: 3,
+//   willpower: 4,
+//   lore: 1,
+//   illustrator: "Ron Baird",
+//   number: 4,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 560498,
+//   },
+//   rarity: "common",
+// };
+//

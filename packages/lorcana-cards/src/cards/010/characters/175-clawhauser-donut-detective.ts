@@ -30,3 +30,31 @@ export const clawhauserDonutDetective: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Ally", "Detective"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const clawhauserDonutDetective: LorcanitoCharacterCard = {
+//   id: "kvl",
+//   name: "Clawhauser",
+//   title: "Donut Detective",
+//   characteristics: ["dreamborn", "ally", "detective"],
+//   text: "Challenger +2",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 6,
+//   strength: 5,
+//   willpower: 6,
+//   illustrator: "SGeer",
+//   number: 175,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 660033,
+//   },
+//   rarity: "common",
+//   abilities: [challengerAbility(2)],
+//   lore: 2,
+// };
+//

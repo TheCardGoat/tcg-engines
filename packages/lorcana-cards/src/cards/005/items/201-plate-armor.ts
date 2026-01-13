@@ -18,3 +18,35 @@ export const plateArmor: ItemCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// import { chosenCharacterGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const plateArmor: LorcanitoItemCard = {
+//   id: "pwi",
+//   missingTestCase: true,
+//   name: "Plate Armor",
+//   characteristics: ["item"],
+//   text: "**WELL CRAFTED** {E} – Chosen character gains **Resist** +2 until the start of your next turn. _(Damage dealt to them is reduced by 2.)_",
+//   type: "item",
+//   abilities: [
+//     {
+//       type: "activated",
+//       name: "Well Crafted",
+//       text: " {E} – Chosen character gains **Resist** +2 until the start of your next turn. _(Damage dealt to them is reduced by 2.)_",
+//       costs: [{ type: "exert" }],
+//       effects: [chosenCharacterGainsResist(2)],
+//     },
+//   ],
+//   colors: ["steel"],
+//   cost: 4,
+//   illustrator: "Gaku Kumatori",
+//   number: 201,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 561195,
+//   },
+//   rarity: "rare",
+// };
+//

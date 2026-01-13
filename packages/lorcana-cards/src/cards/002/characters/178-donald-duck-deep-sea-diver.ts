@@ -20,3 +20,31 @@ export const donaldDuckDeepseaDiver: CharacterCard = {
   },
   classifications: ["Dreamborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const donaldDuckDeepSeaDiver: LorcanitoCharacterCard = {
+//   id: "hoc",
+//
+//   name: "Donald Duck",
+//   title: "Deep-Sea Diver",
+//   characteristics: ["hero", "dreamborn"],
+//   type: "character",
+//   flavour:
+//     "You go ahead, Minnie! I'm going to see if there's any lore over here.",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 5,
+//   strength: 6,
+//   willpower: 5,
+//   lore: 1,
+//   illustrator: "Nicholas Kole",
+//   number: 178,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 524218,
+//   },
+//   rarity: "common",
+// };
+//

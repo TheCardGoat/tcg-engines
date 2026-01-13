@@ -19,3 +19,19 @@ export const iFindEmIFlattenEm: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { iFindEmIFlattenEm as ogIFindEmIFlattenEm } from "@lorcanito/lorcana-engine/cards/004/actions/196-i-find-em-i-flatten-em";
+//
+// export const iFindEmIFlattenEm: LorcanitoActionCard = {
+//   ...ogIFindEmIFlattenEm,
+//   id: "eok",
+//   reprints: [ogIFindEmIFlattenEm.id],
+//   number: 199,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650132,
+//   },
+// };
+//

@@ -231,26 +231,24 @@ describe("Effect Parser", () => {
     });
   });
 
-  describe("Look At Cards Effects", () => {
+  describe("Scry Effects", () => {
     it("should parse look at top 3 cards", () => {
       const effect = parseEffect("look at the top 3 cards of your deck");
 
-      expect(effect).toEqual({
-        type: "look-at-cards",
-        amount: 3,
-        from: "top-of-deck",
-        target: "CONTROLLER",
-      });
+      expect(effect?.type).toBe("scry");
+      if (effect?.type === "scry") {
+        expect(effect.amount).toBe(3);
+        expect(effect.destinations).toBeDefined();
+      }
     });
 
-    it("should parse look at top 4 with sequences", () => {
+    it("should parse look at top 4 cards", () => {
       const effect = parseEffect("look at the top 4 cards of your deck");
 
-      // This should just parse as a basic look-at-cards effect
-      expect(effect?.type).toBe("look-at-cards");
-      if (effect?.type === "look-at-cards") {
+      expect(effect?.type).toBe("scry");
+      if (effect?.type === "scry") {
         expect(effect.amount).toBe(4);
-        expect(effect.from).toBe("top-of-deck");
+        expect(effect.destinations).toBeDefined();
       }
     });
   });

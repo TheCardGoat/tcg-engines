@@ -26,17 +26,18 @@ export const recoveredPage: ItemCard = {
         on: "SELF",
       },
       effect: {
-        type: "look-at-cards",
-        amount: 1,
-        from: "top-of-deck",
-        target: "CONTROLLER",
-        then: {
-          action: "put-in-hand",
-          filter: {
-            type: "card-type",
-            cardType: "character",
+        type: "scry",
+        amount: 4,
+        destinations: [
+          {
+            zone: "hand",
+            min: 0,
+            max: 1,
+            filter: { type: "card-type", cardType: "character" },
+            reveal: true,
           },
-        },
+          { zone: "deck-bottom", remainder: true, ordering: "player-choice" },
+        ],
       },
     },
     {

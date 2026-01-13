@@ -188,7 +188,6 @@ export type {
   // Amount types
   Amount,
   BanishEffect,
-  CardTypeFilter,
   ChoiceEffect,
   ConditionalEffect,
   CostReductionEffect,
@@ -214,8 +213,6 @@ export type {
   // Lore effects
   GainLoreEffect,
   GrantAbilityEffect,
-  LookAtCardsEffect,
-  LookAtFollowUp,
   LoseKeywordEffect,
   LoseLoreEffect,
   // Stat modification effects
@@ -244,6 +241,27 @@ export type {
   RevealHandEffect,
   // Reveal effects
   RevealTopCardEffect,
+  // Scry effect (look at top X cards)
+  ScryAndFilter,
+  ScryCardFilter,
+  ScryCardOrdering,
+  ScryCardTypeFilter,
+  ScryClassificationFilter,
+  ScryCostComparisonFilter,
+  ScryDeckBottomDestination,
+  ScryDeckTopDestination,
+  ScryDestination,
+  ScryDiscardDestination,
+  ScryEffect,
+  ScryFloodbornFilter,
+  ScryHandDestination,
+  ScryInkwellDestination,
+  ScryKeywordFilter,
+  ScryNameFilter,
+  ScryNotFilter,
+  ScryOrFilter,
+  ScryPlayDestination,
+  ScrySongFilter,
   // Search effects
   SearchDeckEffect,
   // Control flow effects
@@ -258,6 +276,14 @@ export type {
 export {
   // Type guards
   isControlFlowEffect,
+  isScryDeckBottomDestination,
+  isScryDeckTopDestination,
+  isScryDiscardDestination,
+  isScryEffect,
+  isScryHandDestination,
+  isScryInkwellDestination,
+  isScryPlayDestination,
+  isScryRemainderDestination,
   isVariableAmount,
   targetsCharacters,
 } from "./effect-types";

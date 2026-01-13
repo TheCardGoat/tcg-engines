@@ -18,3 +18,19 @@ export const developYourBrain: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { developYourBrain as ogDevelopYourBrain } from "@lorcanito/lorcana-engine/cards/001/actions/161-develop-your-brain";
+//
+// export const developYourBrain: LorcanitoActionCard = {
+//   ...ogDevelopYourBrain,
+//   id: "ph9",
+//   reprints: [ogDevelopYourBrain.id],
+//   number: 163,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650097,
+//   },
+// };
+//

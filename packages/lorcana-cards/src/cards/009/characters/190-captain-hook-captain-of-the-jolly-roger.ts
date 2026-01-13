@@ -43,3 +43,19 @@ export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
   ],
   classifications: ["Storyborn", "Villain", "Pirate", "Captain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { captainHookCaptainOfTheJollyRoger as captainHookCaptainOfTheJollyRogerAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+//
+// export const captainHookCaptainOfTheJollyRoger: LorcanitoCharacterCard = {
+//   ...captainHookCaptainOfTheJollyRogerAsOrig,
+//   id: "kc5",
+//   reprints: [captainHookCaptainOfTheJollyRogerAsOrig.id],
+//   number: 190,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650123,
+//   },
+// };
+//

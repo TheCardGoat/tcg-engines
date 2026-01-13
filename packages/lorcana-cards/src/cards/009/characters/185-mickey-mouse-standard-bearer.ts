@@ -23,3 +23,19 @@ export const mickeyMouseStandardBearer: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { mickeyMouseStandardBearer as ogMickeyMouseStandardBearer } from "@lorcanito/lorcana-engine/cards/004/characters/188-mickey-mouse-standard-bearer";
+//
+// export const mickeyMouseStandardBearer: LorcanitoCharacterCard = {
+//   ...ogMickeyMouseStandardBearer,
+//   id: "fax", // New ID for this card
+//   reprints: [ogMickeyMouseStandardBearer.id],
+//   number: 185,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650118,
+//   },
+// };
+//

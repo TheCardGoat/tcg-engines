@@ -19,3 +19,19 @@ export const lostInTheWoods: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { lostInTheWoods as ogLostInTheWoods } from "@lorcanito/lorcana-engine/cards/004/actions/029-lost-in-the-woods";
+//
+// export const lostInTheWoods: LorcanitoActionCard = {
+//   ...ogLostInTheWoods,
+//   id: "vre",
+//   reprints: [ogLostInTheWoods.id],
+//   number: 28,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649975,
+//   },
+// };
+//

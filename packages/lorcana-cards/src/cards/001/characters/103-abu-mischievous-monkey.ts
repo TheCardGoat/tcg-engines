@@ -21,3 +21,30 @@ export const abuMischievousMonkey: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const abuMischievenusMonkey: LorcanitoCharacterCard = {
+//   id: "pbo",
+//   name: "Abu",
+//   title: "Mischievous Monkey",
+//   illustrator: "Oleg Yurkov",
+//   characteristics: ["storyborn", "ally"],
+//   type: "character",
+//   flavour:
+//     "Someday, Abu, things are gonna change. We'll be rich, live in a palace, and never have any problems at all.\n−Aladdin",
+//   inkwell: true,
+//   colors: ["ruby"],
+//   cost: 3,
+//   strength: 3,
+//   willpower: 2,
+//   lore: 2,
+//   number: 103,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 507461,
+//   },
+//   rarity: "common",
+// };
+//

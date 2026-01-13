@@ -21,3 +21,19 @@ export const theQueenRegalMonarch: CharacterCard = {
   },
   classifications: ["Storyborn", "Villain", "Queen"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { theQueenRegalMonarch as ogTheQueenRegalMonarch } from "@lorcanito/lorcana-engine/cards/002/characters/027-the-queen-regal-monarch";
+//
+// export const theQueenRegalMonarch: LorcanitoCharacterCard = {
+//   ...ogTheQueenRegalMonarch,
+//   id: "ifu",
+//   reprints: [ogTheQueenRegalMonarch.id],
+//   number: 7,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649956,
+//   },
+// };
+//

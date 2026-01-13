@@ -36,3 +36,19 @@ export const herculesBelovedHero: CharacterCard = {
   ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { herculesBelovedHero as herculesBelovedHeroAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/180-hercules-beloved-hero";
+//
+// export const herculesBelovedHero: LorcanitoCharacterCard = {
+//   ...herculesBelovedHeroAsOrig,
+//   id: "p5o",
+//   reprints: [herculesBelovedHeroAsOrig.id],
+//   number: 186,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650119,
+//   },
+// };
+//

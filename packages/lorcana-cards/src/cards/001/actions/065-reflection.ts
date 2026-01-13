@@ -21,10 +21,11 @@ export const reflection: ActionCard = {
       text: "_(A character with cost 2 or more can {E} to sing this\nsong for free.)_\nLook at the top 3 cards of your deck. Put them back on the top of your deck in any order.",
       id: "brz-1",
       effect: {
-        type: "look-at-cards",
+        type: "scry",
         amount: 3,
-        from: "top-of-deck",
-        target: "CONTROLLER",
+        destinations: [
+          { zone: "deck-top", remainder: true, ordering: "player-choice" },
+        ],
       },
     },
   ],

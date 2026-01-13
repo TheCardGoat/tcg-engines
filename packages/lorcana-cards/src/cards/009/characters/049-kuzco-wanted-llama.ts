@@ -37,3 +37,19 @@ export const kuzcoWantedLlama: CharacterCard = {
   ],
   classifications: ["Storyborn", "King"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { kuzcoWantedLlama as ogKuzcoWantedLlama } from "@lorcanito/lorcana-engine/cards/002/characters/045-kuzco-wanted-llama";
+//
+// export const kuzcoWantedLlama: LorcanitoCharacterCard = {
+//   ...ogKuzcoWantedLlama,
+//   id: "q3b",
+//   reprints: [ogKuzcoWantedLlama.id],
+//   number: 49,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649993,
+//   },
+// };
+//

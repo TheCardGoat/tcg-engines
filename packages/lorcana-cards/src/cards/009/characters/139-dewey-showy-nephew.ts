@@ -29,3 +29,19 @@ export const deweyShowyNephew: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { deweyShowyNephew as deweyShowyNephewAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const deweyShowyNephew: LorcanitoCharacterCard = {
+//   ...deweyShowyNephewAsOrig,
+//   id: "kyd",
+//   reprints: [deweyShowyNephewAsOrig.id],
+//   number: 139,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650074,
+//   },
+// };
+//

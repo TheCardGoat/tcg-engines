@@ -1,11 +1,11 @@
 import type { ActionCard } from "@tcg/lorcana-types";
 
-export const developYourBrainundefined: ActionCard = {
+export const developYourBrain: ActionCard = {
   id: "yy9",
   cardType: "action",
   name: "Develop Your Brain",
-  version: "undefined",
-  fullName: "Develop Your Brain - undefined",
+  version: "",
+  fullName: "Develop Your Brain",
   inkType: ["sapphire"],
   franchise: "Disney",
   set: "001",
@@ -22,18 +22,11 @@ export const developYourBrainundefined: ActionCard = {
       text: "Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.",
       id: "yy9-1",
       effect: {
-        type: "sequence",
-        steps: [
-          {
-            type: "look-at-cards",
-            amount: 2,
-            from: "top-of-deck",
-            target: "CONTROLLER",
-          },
-          {
-            type: "put-on-bottom",
-            target: "CHOSEN_CHARACTER",
-          },
+        type: "scry",
+        amount: 2,
+        destinations: [
+          { zone: "hand", min: 1, max: 1 },
+          { zone: "deck-bottom", remainder: true },
         ],
       },
     },

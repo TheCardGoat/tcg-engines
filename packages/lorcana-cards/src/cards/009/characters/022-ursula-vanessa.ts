@@ -30,3 +30,19 @@ export const ursulaVanessa: CharacterCard = {
   ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { ursulaVanessa as ogUrsulaVanessa } from "@lorcanito/lorcana-engine/cards/004/characters/25-ursula-vanessa";
+//
+// export const ursulaVanessa: LorcanitoCharacterCard = {
+//   ...ogUrsulaVanessa,
+//   id: "iye",
+//   reprints: [ogUrsulaVanessa.id],
+//   number: 22,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649970,
+//   },
+// };
+//

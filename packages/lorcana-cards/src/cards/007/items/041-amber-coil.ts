@@ -18,3 +18,27 @@ export const amberCoil: ItemCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// import { amberCoilAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
+//
+// export const amberCoil: LorcanitoItemCard = {
+//   id: "e7x",
+//   name: "Amber Coil",
+//   characteristics: ["item"],
+//   text: "HEALING AURA During your turn, whenever a card is put into your inkwell, you may remove up to 2 damage from chosen character.",
+//   type: "item",
+//   abilities: [amberCoilAbility],
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 1,
+//   illustrator: "Francesco Colucci",
+//   number: 41,
+//   set: "007",
+//   externalIds: {
+//     tcgPlayer: 619430,
+//   },
+//   rarity: "uncommon",
+// };
+//

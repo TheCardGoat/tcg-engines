@@ -24,3 +24,19 @@ export const robinHoodChampionOfSherwood: CharacterCard = {
   abilities: [],
   classifications: ["Floodborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { robinHoodChampionOfSherwood as robinHoodChampionOfSherwoodAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const robinHoodChampionOfSherwood: LorcanitoCharacterCard = {
+//   ...robinHoodChampionOfSherwoodAsOrig,
+//   id: "mfa",
+//   reprints: [robinHoodChampionOfSherwoodAsOrig.id],
+//   number: 177,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650110,
+//   },
+// };
+//

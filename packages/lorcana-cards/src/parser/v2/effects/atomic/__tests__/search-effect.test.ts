@@ -1,10 +1,10 @@
 /**
  * Tests for Search Effect Parser
- * Ensures search and look-at effects are parsed correctly from text.
+ * Ensures search and scry effects are parsed correctly from text.
  */
 
 import { describe, expect, it } from "bun:test";
-import type { Effect } from "../../../types";
+import type { Effect, ScryEffect, SearchDeckEffect } from "../../../types";
 import { searchEffectParser } from "../search-effect";
 
 describe("searchEffectParser", () => {
@@ -16,11 +16,9 @@ describe("searchEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
-      expect((result as Effect & { cardType: string }).cardType).toBe(
-        "character",
-      );
-      expect((result as Effect & { putInto: string }).putInto).toBe("hand");
-      expect((result as Effect & { shuffle: boolean }).shuffle).toBe(true);
+      expect((result as SearchDeckEffect).cardType).toBe("character");
+      expect((result as SearchDeckEffect).putInto).toBe("hand");
+      expect((result as SearchDeckEffect).shuffle).toBe(true);
     });
 
     it("parses 'search your deck for an action, then shuffle' correctly", () => {
@@ -31,10 +29,8 @@ describe("searchEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
       // 'an' is captured instead of 'action', so cardType is undefined
-      expect(
-        (result as Effect & { cardType?: string }).cardType,
-      ).toBeUndefined();
-      expect((result as Effect & { shuffle: boolean }).shuffle).toBe(true);
+      expect((result as SearchDeckEffect).cardType).toBeUndefined();
+      expect((result as SearchDeckEffect).shuffle).toBe(true);
     });
 
     it("parses 'search your deck for item and shuffle your deck' correctly", () => {
@@ -44,8 +40,8 @@ describe("searchEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
-      expect((result as Effect & { cardType: string }).cardType).toBe("item");
-      expect((result as Effect & { shuffle: boolean }).shuffle).toBe(true);
+      expect((result as SearchDeckEffect).cardType).toBe("item");
+      expect((result as SearchDeckEffect).shuffle).toBe(true);
     });
   });
 
@@ -57,11 +53,9 @@ describe("searchEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
-      expect((result as Effect & { cardType: string }).cardType).toBe(
-        "character",
-      );
-      expect((result as Effect & { putInto: string }).putInto).toBe("hand");
-      expect((result as Effect & { shuffle: boolean }).shuffle).toBe(false);
+      expect((result as SearchDeckEffect).cardType).toBe("character");
+      expect((result as SearchDeckEffect).putInto).toBe("hand");
+      expect((result as SearchDeckEffect).shuffle).toBe(false);
     });
 
     it("parses 'search your deck for a card and put it into play' correctly", () => {
@@ -71,8 +65,8 @@ describe("searchEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
-      expect((result as Effect & { putInto: string }).putInto).toBe("play");
-      expect((result as Effect & { shuffle: boolean }).shuffle).toBe(false);
+      expect((result as SearchDeckEffect).putInto).toBe("play");
+      expect((result as SearchDeckEffect).shuffle).toBe(false);
     });
 
     it("parses 'search your deck for a character and put it on top' correctly", () => {
@@ -82,10 +76,8 @@ describe("searchEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
-      expect((result as Effect & { putInto: string }).putInto).toBe(
-        "top-of-deck",
-      );
-      expect((result as Effect & { shuffle: boolean }).shuffle).toBe(false);
+      expect((result as SearchDeckEffect).putInto).toBe("top-of-deck");
+      expect((result as SearchDeckEffect).shuffle).toBe(false);
     });
   });
 
@@ -97,11 +89,9 @@ describe("searchEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
-      expect((result as Effect & { cardType: string }).cardType).toBe(
-        "character",
-      );
-      expect((result as Effect & { putInto: string }).putInto).toBe("hand");
-      expect((result as Effect & { shuffle: boolean }).shuffle).toBe(false);
+      expect((result as SearchDeckEffect).cardType).toBe("character");
+      expect((result as SearchDeckEffect).putInto).toBe("hand");
+      expect((result as SearchDeckEffect).shuffle).toBe(false);
     });
 
     it("parses 'search your deck for an item' correctly", () => {
@@ -110,9 +100,7 @@ describe("searchEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
       // 'an' is captured instead of 'item', so cardType is undefined
-      expect(
-        (result as Effect & { cardType?: string }).cardType,
-      ).toBeUndefined();
+      expect((result as SearchDeckEffect).cardType).toBeUndefined();
     });
 
     it("parses 'search your deck for card' without 'a' correctly", () => {
@@ -121,72 +109,20 @@ describe("searchEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
       // 'card' is not a valid card type (character, action, item, etc.)
-      expect(
-        (result as Effect & { cardType?: string }).cardType,
-      ).toBeUndefined();
+      expect((result as SearchDeckEffect).cardType).toBeUndefined();
     });
   });
 
-  describe("text parsing - look at top X with action", () => {
-    it("parses 'look at the top 3 cards of your deck, put 1 into your hand' correctly", () => {
-      const result = searchEffectParser.parse(
-        "look at the top 3 cards of your deck, put 1 into your hand",
-      );
-
-      expect(result).not.toBeNull();
-      expect(result?.type).toBe("look-at-cards");
-      expect((result as Effect & { amount: number }).amount).toBe(3);
-      expect((result as Effect & { from: string }).from).toBe("top-of-deck");
-      expect((result as Effect & { target: string }).target).toBe("CONTROLLER");
-      const then = (
-        result as Effect & { then?: { action: string; count: number } }
-      ).then;
-      expect(then?.action).toBe("put-in-hand");
-      expect(then?.count).toBe(1);
-    });
-
-    it("parses 'look at the top 5 cards, put 2 on top' correctly", () => {
-      const result = searchEffectParser.parse(
-        "look at the top 5 cards of your deck, put 2 on top",
-      );
-
-      expect(result).not.toBeNull();
-      expect(result?.type).toBe("look-at-cards");
-      expect((result as Effect & { amount: number }).amount).toBe(5);
-      const then = (
-        result as Effect & { then?: { action: string; count: number } }
-      ).then;
-      expect(then?.action).toBe("put-on-top");
-      expect(then?.count).toBe(2);
-    });
-
-    it("parses 'look at the top 4 cards, put 1 on the bottom' correctly", () => {
-      const result = searchEffectParser.parse(
-        "look at the top 4 cards of your deck, put 1 on the bottom",
-      );
-
-      expect(result).not.toBeNull();
-      expect(result?.type).toBe("look-at-cards");
-      expect((result as Effect & { amount: number }).amount).toBe(4);
-      const then = (
-        result as Effect & { then?: { action: string; count: number } }
-      ).then;
-      expect(then?.action).toBe("put-on-bottom");
-      expect(then?.count).toBe(1);
-    });
-  });
-
-  describe("text parsing - look at top X basic", () => {
+  describe("text parsing - scry effects (look at top X)", () => {
     it("parses 'look at the top 3 cards of your deck' correctly", () => {
       const result = searchEffectParser.parse(
         "look at the top 3 cards of your deck",
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("look-at-cards");
-      expect((result as Effect & { amount: number }).amount).toBe(3);
-      expect((result as Effect & { from: string }).from).toBe("top-of-deck");
-      expect((result as Effect & { target: string }).target).toBe("CONTROLLER");
+      expect(result?.type).toBe("scry");
+      expect((result as ScryEffect).amount).toBe(3);
+      expect((result as ScryEffect).destinations).toBeDefined();
     });
 
     it("parses 'look at the top 1 card' with singular form", () => {
@@ -195,8 +131,8 @@ describe("searchEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("look-at-cards");
-      expect((result as Effect & { amount: number }).amount).toBe(1);
+      expect(result?.type).toBe("scry");
+      expect((result as ScryEffect).amount).toBe(1);
     });
 
     it("parses 'look at the top 10 cards' with double-digit number", () => {
@@ -205,8 +141,35 @@ describe("searchEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("look-at-cards");
-      expect((result as Effect & { amount: number }).amount).toBe(10);
+      expect(result?.type).toBe("scry");
+      expect((result as ScryEffect).amount).toBe(10);
+    });
+
+    it("parses reveal character and put into hand pattern", () => {
+      const result = searchEffectParser.parse(
+        "look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom in any order.",
+      );
+
+      expect(result).not.toBeNull();
+      expect(result?.type).toBe("scry");
+      const scry = result as ScryEffect;
+      expect(scry.amount).toBe(4);
+      // Should have hand destination with filter and remainder destination
+      expect(scry.destinations.length).toBeGreaterThanOrEqual(2);
+    });
+
+    it("parses put back on top in any order", () => {
+      const result = searchEffectParser.parse(
+        "look at the top 3 cards of your deck. Put them back on top in any order.",
+      );
+
+      expect(result).not.toBeNull();
+      expect(result?.type).toBe("scry");
+      const scry = result as ScryEffect;
+      expect(scry.amount).toBe(3);
+      // Should have deck-top destination with player-choice ordering
+      const topDest = scry.destinations.find((d) => d.zone === "deck-top");
+      expect(topDest).toBeDefined();
     });
   });
 
@@ -218,9 +181,7 @@ describe("searchEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
-      expect((result as Effect & { cardType: string }).cardType).toBe(
-        "character",
-      );
+      expect((result as SearchDeckEffect).cardType).toBe("character");
     });
 
     it("parses 'Look At The Top 3 Cards' in mixed case", () => {
@@ -229,7 +190,7 @@ describe("searchEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("look-at-cards");
+      expect(result?.type).toBe("scry");
     });
 
     it("parses 'sEaRcH yOuR dEcK' in random case", () => {
@@ -308,8 +269,8 @@ describe("searchEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      expect(result?.type).toBe("look-at-cards");
-      expect((result as Effect & { amount: number }).amount).toBe(0);
+      expect(result?.type).toBe("scry");
+      expect((result as ScryEffect).amount).toBe(0);
     });
 
     it("prioritizes search-and-shuffle over search-and-put", () => {
@@ -319,7 +280,7 @@ describe("searchEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
-      expect((result as Effect & { shuffle: boolean }).shuffle).toBe(true);
+      expect((result as SearchDeckEffect).shuffle).toBe(true);
     });
 
     it("prioritizes search-and-put over basic search", () => {
@@ -329,18 +290,7 @@ describe("searchEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("search-deck");
-      expect((result as Effect & { putInto: string }).putInto).toBe("play");
-    });
-
-    it("prioritizes look-at-with-action over basic look-at", () => {
-      const result = searchEffectParser.parse(
-        "look at the top 3 cards of your deck and put 1 into your hand",
-      );
-
-      expect(result).not.toBeNull();
-      expect(result?.type).toBe("look-at-cards");
-      const then = (result as Effect & { then?: { action: string } }).then;
-      expect(then?.action).toBe("put-in-hand");
+      expect((result as SearchDeckEffect).putInto).toBe("play");
     });
   });
 

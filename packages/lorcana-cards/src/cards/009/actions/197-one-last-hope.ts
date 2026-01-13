@@ -19,3 +19,19 @@ export const oneLastHope: ActionCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
+// import { oneLastHope as ogOneLastHope } from "@lorcanito/lorcana-engine/cards/004/actions/197-one-last-hope";
+//
+// export const oneLastHope: LorcanitoActionCard = {
+//   ...ogOneLastHope,
+//   id: "i3n",
+//   reprints: [ogOneLastHope.id],
+//   number: 197,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650130,
+//   },
+// };
+//

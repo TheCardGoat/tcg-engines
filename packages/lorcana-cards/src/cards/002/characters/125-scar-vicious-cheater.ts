@@ -24,3 +24,45 @@ export const scarViciousCheater: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Villain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { rushAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import { wheneverBanishesAnotherCharacterInChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const scarViciousCheater: LorcanitoCharacterCard = {
+//   id: "i4t",
+//   name: "Scar",
+//   title: "Vicious Cheater",
+//   characteristics: ["storyborn", "villain"],
+//   text: "**Rush** _(This character can challenge the turn they're played.)_\n\n**DADDY ISN'T HERE TO SAVE YOU** During your turn, whenever this character banishes another character in a challenge, you may ready this character. He can't quest for the rest of this turn.",
+//   type: "character",
+//   abilities: [
+//     rushAbility,
+//     wheneverBanishesAnotherCharacterInChallenge({
+//       name: "Daddy Isn't Here to Save You",
+//       text: "During your turn, whenever this character banishes another character in a challenge, you may ready this character. He can't quest for the rest of this turn.",
+//       effects: [
+//         ...readyAndCantQuest({
+//           type: "card",
+//           value: "all",
+//           filters: [{ filter: "source", value: "self" }],
+//         }),
+//       ],
+//     }),
+//   ],
+//   colors: ["ruby"],
+//   cost: 7,
+//   strength: 6,
+//   willpower: 5,
+//   lore: 2,
+//   illustrator: "Nicholas Kole",
+//   number: 125,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 523760,
+//   },
+//   rarity: "legendary",
+// };
+//

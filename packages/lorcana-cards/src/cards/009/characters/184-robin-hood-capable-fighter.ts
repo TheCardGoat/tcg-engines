@@ -24,3 +24,19 @@ export const robinHoodCapableFighter: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { robinHoodCapableFighter as ogRobinHoodCapableFighter } from "@lorcanito/lorcana-engine/cards/002/characters/193-robin-hood-capable-fighter";
+//
+// export const robinHoodCapableFighter: LorcanitoCharacterCard = {
+//   ...ogRobinHoodCapableFighter,
+//   id: "kjo",
+//   reprints: [ogRobinHoodCapableFighter.id],
+//   number: 184,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650117,
+//   },
+// };
+//

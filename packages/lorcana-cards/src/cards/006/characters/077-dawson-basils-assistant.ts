@@ -21,3 +21,30 @@ export const dawsonBasilsAssistant: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// // TODO: Once the set is released, we organize the cards by set and type
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const dawsonBasilsAssistant: LorcanitoCharacterCard = {
+//   id: "nga",
+//   name: "Dawson",
+//   title: "Basil's Assistant",
+//   characteristics: ["storyborn", "ally"],
+//   type: "character",
+//   abilities: [],
+//   inkwell: true,
+//   colors: ["emerald"],
+//   cost: 4,
+//   strength: 3,
+//   willpower: 4,
+//   lore: 2,
+//   illustrator: "Brittney Hackett",
+//   number: 77,
+//   set: "006",
+//   externalIds: {
+//     tcgPlayer: 591115,
+//   },
+//   rarity: "common",
+// };
+//

@@ -24,3 +24,19 @@ export const lefouInstigator: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { lefouInstigator as ogLefouInstigator } from "@lorcanito/lorcana-engine/cards/001/characters/112-lefou-instigator";
+//
+// export const lefouInstigator: LorcanitoCharacterCard = {
+//   ...ogLefouInstigator,
+//   id: "bmd",
+//   reprints: [ogLefouInstigator.id],
+//   number: 103,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650041,
+//   },
+// };
+//

@@ -18,3 +18,19 @@ export const heartOfTeFiti: ItemCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// import { heartOfTeFiti as heartOfTeFitiAsOrig } from "@lorcanito/lorcana-engine/cards/003/items/164-heart-of-te-fiti";
+//
+// export const heartOfTeFiti: LorcanitoItemCard = {
+//   ...heartOfTeFitiAsOrig,
+//   id: "cl8",
+//   reprints: [heartOfTeFitiAsOrig.id],
+//   number: 168,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650102,
+//   },
+// };
+//

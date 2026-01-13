@@ -18,3 +18,28 @@ export const jumboPop: ItemCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// import { thereYouGo } from "@lorcanito/lorcana-engine/cards/006/items/abilities";
+//
+// export const jumboPop: LorcanitoItemCard = {
+//   id: "z6k",
+//   missingTestCase: true,
+//   name: "Jumbo Pop",
+//   characteristics: ["item"],
+//   text: "HERE YOU GO Banish this item – Remove up to 2 damage from each of your characters. Draw a card.",
+//   type: "item",
+//   abilities: [thereYouGo],
+//   inkwell: false,
+//   colors: ["sapphire"],
+//   cost: 3,
+//   illustrator: "Alexandra Hefez",
+//   number: 168,
+//   set: "006",
+//   externalIds: {
+//     tcgPlayer: 591138,
+//   },
+//   rarity: "common",
+// };
+//

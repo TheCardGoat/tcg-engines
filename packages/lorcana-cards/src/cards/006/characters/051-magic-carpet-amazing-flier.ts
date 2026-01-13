@@ -21,3 +21,29 @@ export const magicCarpetAmazingFlier: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// // TODO: Once the set is released, we organize the cards by set and type
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const magicCarpetAmazingFlier: LorcanitoCharacterCard = {
+//   id: "f37",
+//   name: "Magic Carpet",
+//   title: "Amazing Flier",
+//   characteristics: ["storyborn", "ally"],
+//   type: "character",
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 3,
+//   strength: 1,
+//   willpower: 3,
+//   lore: 3,
+//   illustrator: "Ron Baird",
+//   number: 51,
+//   set: "006",
+//   externalIds: {
+//     tcgPlayer: 592026,
+//   },
+//   rarity: "uncommon",
+// };
+//

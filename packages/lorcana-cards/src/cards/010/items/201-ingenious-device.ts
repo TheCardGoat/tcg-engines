@@ -68,3 +68,68 @@ export const ingeniousDevice: ItemCard = {
     },
   ],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// import {
+//   discardACard,
+//   drawACard,
+// } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const ingeniousDevice: LorcanitoItemCard = {
+//   id: "t7m",
+//   name: "Ingenious Device",
+//   characteristics: ["item"],
+//   text: "SOUVENIR {E}, 2 {I}, banish this item — Draw a card, then choose and discard a card. TIME FLIES During your turn, when this item is banished, deal 3 damage to a character or a location of your choice.",
+//   type: "item",
+//   inkwell: false,
+//   colors: ["steel"],
+//   cost: 3,
+//   illustrator: "Giulia Bernardelli",
+//   number: 201,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659410,
+//   },
+//   rarity: "uncommon",
+//   abilities: [
+//     {
+//       type: "activated",
+//       name: "Souvenir",
+//       text: "{E}, 2 {I}, banish this item — Draw a card, then choose and discard a card.",
+//       costs: [
+//         { type: "exert" },
+//         { type: "ink", amount: 2 },
+//         { type: "banish" },
+//       ],
+//       resolveEffectsIndividually: true,
+//       effects: [drawACard, discardACard],
+//     },
+//     whenThisCharacterBanished({
+//       name: "Time Flies",
+//       text: "During your turn, when this item is banished, deal 3 damage to a character or a location of your choice.",
+//       conditions: [
+//         {
+//           type: "during-turn",
+//           value: "self",
+//         },
+//       ],
+//       effects: [
+//         {
+//           type: "damage",
+//           amount: 3,
+//           target: {
+//             type: "card",
+//             value: 1,
+//             filters: [
+//               { filter: "type", value: ["character", "location"] },
+//               { filter: "zone", value: "play" },
+//             ],
+//           },
+//         },
+//       ],
+//     }),
+//   ],
+// };
+//

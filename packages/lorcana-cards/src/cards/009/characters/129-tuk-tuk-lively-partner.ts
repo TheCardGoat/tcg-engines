@@ -24,3 +24,19 @@ export const tukTukLivelyPartner: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { tukTukLivelyPartner as ogTukTukLivelyPartner } from "@lorcanito/lorcana-engine/cards/004/characters/127-tuk-tuk-lively-partner";
+//
+// export const tukTukLivelyPartner: LorcanitoCharacterCard = {
+//   ...ogTukTukLivelyPartner,
+//   id: "lts", // New ID for this card
+//   reprints: [ogTukTukLivelyPartner.id],
+//   number: 129,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650064,
+//   },
+// };
+//

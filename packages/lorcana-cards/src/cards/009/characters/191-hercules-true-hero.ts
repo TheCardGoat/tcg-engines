@@ -29,3 +29,19 @@ export const herculesTrueHero: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Hero", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { herculesTrueHero as ogHerculesTrueHero } from "@lorcanito/lorcana-engine/cards/001/characters/181-hercules-true-hero";
+//
+// export const herculesTrueHero: LorcanitoCharacterCard = {
+//   ...ogHerculesTrueHero,
+//   id: "s5k",
+//   reprints: [ogHerculesTrueHero.id],
+//   number: 191,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650124,
+//   },
+// };
+//

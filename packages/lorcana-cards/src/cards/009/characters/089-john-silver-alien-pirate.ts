@@ -24,3 +24,19 @@ export const johnSilverAlienPirate: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Villain", "Alien", "Pirate", "Captain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { johnSilverAlienPirate as ogJohnSilverAlienPirate } from "@lorcanito/lorcana-engine/cards/001/characters/082-john-silver-alien-pirate";
+//
+// export const johnSilverAlienPirate: LorcanitoCharacterCard = {
+//   ...ogJohnSilverAlienPirate,
+//   id: "hsz",
+//   reprints: [ogJohnSilverAlienPirate.id],
+//   number: 89,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 647668,
+//   },
+// };
+//

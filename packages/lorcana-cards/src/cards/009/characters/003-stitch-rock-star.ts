@@ -55,3 +55,19 @@ export const stitchRockStar: CharacterCard = {
   ],
   classifications: ["Floodborn", "Hero", "Alien"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { stitchRockStar as ogStitchRockStar } from "@lorcanito/lorcana-engine/cards/001/characters/023-stitch-rock-star";
+//
+// export const stitchRockStar: LorcanitoCharacterCard = {
+//   ...ogStitchRockStar,
+//   id: "yom",
+//   reprints: [ogStitchRockStar.id],
+//   number: 3,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649952,
+//   },
+// };
+//

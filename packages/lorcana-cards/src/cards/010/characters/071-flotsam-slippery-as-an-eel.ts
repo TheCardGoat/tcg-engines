@@ -29,3 +29,31 @@ export const flotsamSlipperyAsAnEel: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const flotsamSlipperyAsAnEel: LorcanitoCharacterCard = {
+//   id: "qyc",
+//   name: "Flotsam",
+//   title: "Slippery as an Eel",
+//   characteristics: ["storyborn", "ally"],
+//   text: "Evasive",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["emerald"],
+//   cost: 3,
+//   strength: 4,
+//   willpower: 2,
+//   illustrator: "Ricardo Caria",
+//   number: 71,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659421,
+//   },
+//   rarity: "common",
+//   abilities: [evasiveAbility],
+//   lore: 1,
+// };
+//

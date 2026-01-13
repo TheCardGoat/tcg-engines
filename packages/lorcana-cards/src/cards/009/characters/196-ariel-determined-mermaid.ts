@@ -24,3 +24,19 @@ export const arielDeterminedMermaid: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { arielDeterminedMermaid as ogArielDeterminedMermaid } from "@lorcanito/lorcana-engine/cards/004/characters/174-ariel-determined-mermaid";
+//
+// export const arielDeterminedMermaid: LorcanitoCharacterCard = {
+//   ...ogArielDeterminedMermaid,
+//   id: "b8l",
+//   reprints: [ogArielDeterminedMermaid.id],
+//   number: 196,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650129,
+//   },
+// };
+//

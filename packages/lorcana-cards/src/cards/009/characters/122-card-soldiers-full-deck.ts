@@ -21,3 +21,19 @@ export const cardSoldiersFullDeck: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { cardSoldiersFullDeck as cardSoldiersFullDeckAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/105-card-soldiers-full-deck";
+//
+// export const cardSoldiersFullDeck: LorcanitoCharacterCard = {
+//   ...cardSoldiersFullDeckAsOrig,
+//   id: "yi4",
+//   reprints: [cardSoldiersFullDeckAsOrig.id],
+//   number: 122,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650057,
+//   },
+// };
+//

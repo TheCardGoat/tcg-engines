@@ -24,3 +24,46 @@ export const beastWounded: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
+//
+// export const beastWounded: LorcanitoCharacterCard = {
+//   id: "jrk",
+//   name: "Beast",
+//   title: "Wounded",
+//   characteristics: ["hero", "storyborn", "prince"],
+//   text: "**THAT HURTS!** This character enters play with 4 damage.",
+//   type: "character",
+//   abilities: [
+//     {
+//       type: "resolution",
+//       name: "THAT HURTS!",
+//       text: "This character enters play with 4 damage.",
+//       effects: [
+//         {
+//           type: "damage",
+//           amount: 4,
+//           target: thisCharacter,
+//         },
+//       ],
+//     },
+//   ],
+//   flavour:
+//     "It wasn't the severity of the wounds but the sickly substance that caused such unbearable pain.",
+//   inkwell: true,
+//   colors: ["ruby"],
+//   cost: 3,
+//   strength: 2,
+//   willpower: 6,
+//   lore: 2,
+//   illustrator: "Ian MacDonald",
+//   number: 103,
+//   set: "URR",
+//   externalIds: {
+//     tcgPlayer: 550588,
+//   },
+//   rarity: "uncommon",
+// };
+//

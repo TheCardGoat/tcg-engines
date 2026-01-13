@@ -43,3 +43,38 @@ export const archimedesExceptionalOwl: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import { whenThisIsTargeted } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const archimedesExceptionalOwl: LorcanitoCharacterCard = {
+//   id: "vig",
+//   name: "Archimedes",
+//   title: "Exceptional Owl",
+//   characteristics: ["storyborn", "ally"],
+//   text: "LEARN MORE Whenever an opponent chooses this character for an action or ability, you may draw a card.",
+//   type: "character",
+//   abilities: [
+//     whenThisIsTargeted({
+//       name: "LEARN MORE",
+//       text: "Whenever an opponent chooses this character for an action or ability, you may draw a card.",
+//       effects: drawACard,
+//     }),
+//   ],
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 2,
+//   strength: 2,
+//   willpower: 2,
+//   illustrator: "Luis Huerta",
+//   number: 76,
+//   set: "007",
+//   externalIds: {
+//     tcgPlayer: 618700,
+//   },
+//   rarity: "uncommon",
+//   lore: 1,
+// };
+//

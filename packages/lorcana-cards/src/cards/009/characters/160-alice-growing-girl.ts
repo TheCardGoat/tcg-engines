@@ -24,3 +24,19 @@ export const aliceGrowingGirl: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { aliceGrowingGirl as ogAliceGrowingGirl } from "@lorcanito/lorcana-engine/cards/002/characters/137-alice-growing-girl";
+//
+// export const aliceGrowingGirl: LorcanitoCharacterCard = {
+//   ...ogAliceGrowingGirl,
+//   id: "rtw", // New ID for this card
+//   reprints: [ogAliceGrowingGirl.id],
+//   number: 160,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 647672,
+//   },
+// };
+//

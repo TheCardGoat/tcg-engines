@@ -1,0 +1,20 @@
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// export { recoveredPage } from "./030-recovered-page";
+// export { webbysDiary } from "./031-webby-s-diary";
+// export { theBlackCauldron } from "./032-the-black-cauldron";
+// export { munchingsAndCrunchings } from "./033-munchings-and-crunchings";
+// export { juniorWoodchuckGuidebook } from "./066-junior-woodchuck-guidebook";
+// export { grimorumArcanorum } from "./067-grimorum-arcanorum";
+// export { potionOfMalice } from "./098-potion-of-malice";
+// export { inscrutableMap } from "./099-inscrutable-map";
+// export { enigmaticInkcaster } from "./100-enigmatic-inkcaster";
+// export { blessedBagpipes } from "./101-blessed-bagpipes";
+// export { mushusRocket } from "./134-mushu-s-rocket";
+// export { detectivesBadge } from "./166-detective-s-badge";
+// export { inkAmplifier } from "./167-ink-amplifier";
+// export { fairyGodmothersWand } from "./168-fairy-godmother-s-wand";
+// export { inkrunner } from "./169-inkrunner";
+// export { theRobotQueen } from "./199-the-robot-queen";
+// export { theSwordOfHercules } from "./200-the-sword-of-hercules";
+// export { ingeniousDevice } from "./201-ingenious-device";
+//

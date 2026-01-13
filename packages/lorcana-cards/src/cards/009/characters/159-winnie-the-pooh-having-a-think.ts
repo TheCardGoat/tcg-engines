@@ -24,3 +24,19 @@ export const winnieThePoohHavingAThink: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { winnieThePoohHavingAThink as winnieThePoohHavingAThinkAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/161-winnie-the-pooh-having-a-think";
+//
+// export const winnieThePoohHavingAThink: LorcanitoCharacterCard = {
+//   ...winnieThePoohHavingAThinkAsOrig,
+//   id: "vvd",
+//   reprints: [winnieThePoohHavingAThinkAsOrig.id],
+//   number: 159,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650094,
+//   },
+// };
+//

@@ -29,3 +29,19 @@ export const auroraTranquilPrincess: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { auroraTranquilPrincess as auroraTranquilPrincessAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/141-aurora-tranquil-princess";
+//
+// export const auroraTranquilPrincess: LorcanitoCharacterCard = {
+//   ...auroraTranquilPrincessAsOrig,
+//   id: "u0u",
+//   reprints: [auroraTranquilPrincessAsOrig.id],
+//   number: 154,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650089,
+//   },
+// };
+//

@@ -24,3 +24,19 @@ export const jafarLampThief: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Villain", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { jafarLampThief as jafarLampThiefAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const jafarLampThief: LorcanitoCharacterCard = {
+//   ...jafarLampThiefAsOrig,
+//   id: "rv8",
+//   reprints: [jafarLampThiefAsOrig.id],
+//   number: 59,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650003,
+//   },
+// };
+//

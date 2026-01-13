@@ -24,3 +24,19 @@ export const camiloMadrigalPrankster: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally", "Madrigal"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { camiloMadrigalPrankster as ogCamiloMadrigalPrankster } from "@lorcanito/lorcana-engine/cards/004/characters/040-camilo-madrigal-prankster";
+//
+// export const camiloMadrigalPrankster: LorcanitoCharacterCard = {
+//   ...ogCamiloMadrigalPrankster,
+//   id: "bij",
+//   reprints: [ogCamiloMadrigalPrankster.id],
+//   number: 52,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649996,
+//   },
+// };
+//

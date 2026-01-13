@@ -24,3 +24,19 @@ export const belleInventiveEngineer: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Hero", "Princess", "Inventor"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { belleInventive as belleInventiveEngineerAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+//
+// export const belleInventiveEngineer: LorcanitoCharacterCard = {
+//   ...belleInventiveEngineerAsOrig,
+//   id: "siv",
+//   reprints: [belleInventiveEngineerAsOrig.id],
+//   number: 156,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650091,
+//   },
+// };
+//

@@ -18,3 +18,19 @@ export const lantern: ItemCard = {
   },
   abilities: [],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// import { lantern as ogLantern } from "@lorcanito/lorcana-engine/cards/001/items/033-lantern";
+//
+// export const lantern: LorcanitoItemCard = {
+//   ...ogLantern,
+//   id: "aa1",
+//   reprints: [ogLantern.id],
+//   number: 32,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649979,
+//   },
+// };
+//

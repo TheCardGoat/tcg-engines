@@ -21,3 +21,30 @@ export const mushuBragginDragon: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally", "Dragon"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const mushuBragginDragon: LorcanitoCharacterCard = {
+//   id: "c1f",
+//   name: "Mushu",
+//   title: "Braggin' Dragon",
+//   characteristics: ["storyborn", "ally", "dragon"],
+//   text: "",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 4,
+//   strength: 4,
+//   willpower: 4,
+//   illustrator: "Giorgio Di Santo",
+//   number: 46,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 660001,
+//   },
+//   rarity: "common",
+//   abilities: [],
+//   lore: 2,
+// };
+//
