@@ -1,11 +1,11 @@
 ---
 name: lorcana-test-generation
-description: Generate basic happy-path tests for Lorcana card abilities. Tests verify ability structure only - NO property validation tests. Use when implementing or updating card tests. Effects are tested separately in the engine.
+description: Generate basic happy-path tests for Lorcana card abilities. Tests verify ability behavior only - NO property validation tests. Use when implementing or updating card tests. Effects are tested separately in the engine.
 ---
 
 # Lorcana Test Generation
 
-Generate test files for Lorcana card definitions.
+Generate test files for Lorcana card definitions using `LorcanaTestEngine`.
 
 ## When to Use
 
@@ -25,272 +25,62 @@ Generate test files for Lorcana card definitions.
 1. **Read Card Definition**
    - Load card file from `src/cards/001/`
    - Extract abilities array
-   - Identify ability types
 
-2. **Generate Tests**
-   - For each ability: generate appropriate test based on type
-   - Use direct card import (not LorcanaTestEngine wrapper)
-   - Test ability structure, not behavior
+2. **Identify Ability Types**
+   - Keyword: Simple presence check
+   - Triggered: When/whenever triggers
+   - Activated: Cost → effect abilities
+   - Static: Continuous effects
 
-3. **Write Test File**
+3. **Generate Tests (Interactive)**
+   - For each ability: show template, ask for confirmation
+   - User can: generate, skip, or customize
+   - Compile confirmed tests into single file
+
+4. **Write Test File**
    - Create at same location as card: `{file}.test.ts`
-   - Use `describe`/`it` from `bun:test`
+   - Use `LorcanaTestEngine` and `PLAYER_ONE` from `@tcg/lorcana/testing`
 
-## ⚠️ IMPORTANT: Test Ability Structure, Not Behavior
+## Test Templates
 
-**DO NOT use LorcanaTestEngine.getCardModel()** - it doesn't expose the abilities array.
-
-**DO import the card directly**:
+### Keyword Test
 ```typescript
-import { cardName } from "./xxx-card-name";
-```
-
-**DO test ability structure directly**:
-```typescript
-expect(cardName.abilities).toHaveLength(1);
-expect(ability.type).toBe("triggered");
-```
-
-## Test Templates by Ability Type
-
-### 1. Vanilla Card (No Abilities)
-```typescript
-import { describe, expect, it } from "bun:test";
-import { cardName } from "./xxx-card-name";
-
-describe("Card - Version", () => {
-  it("is a vanilla card (no abilities)", () => {
-    expect(cardName.vanilla).toBe(true);
-    expect(cardName.abilities).toBeUndefined();
-  });
+it("has [Keyword] keyword", () => {
+  const testEngine = new LorcanaTestEngine({ play: [cardUnderTest] });
+  const card = testEngine.getCardModel(cardUnderTest);
+  expect(card.hasKeyword()).toBe(true);
 });
 ```
 
-### 2. Keyword Ability
+### Triggered Test (When You Play)
 ```typescript
-import { describe, expect, it } from "bun:test";
-import { cardName } from "./xxx-card-name";
+it("triggers effect when played", () => {
+  const testEngine = new LorcanaTestEngine({ hand: [cardUnderTest] });
+  const before = testEngine.getZone("hand", PLAYER_ONE).length;
 
-describe("Card - Version", () => {
-  it("has [Keyword] keyword", () => {
-    expect(cardName.abilities).toHaveLength(1);
-    const ability = cardName.abilities[0];
+  testEngine.playCard(cardUnderTest.id);
 
-    expect(ability.type).toBe("keyword");
-    expect(ability.keyword).toBe("[Keyword]");
-  });
+  const after = testEngine.getZone("hand", PLAYER_ONE).length;
+  expect(after).toBe(before + 1); // Drew 1, played 1
 });
 ```
 
-### 3. Triggered Ability (When You Play)
+### Activated Test
 ```typescript
-import { describe, expect, it } from "bun:test";
-import { cardName } from "./xxx-card-name";
+it("activates ability when cost is paid", () => {
+  const testEngine = new LorcanaTestEngine({ play: [cardUnderTest] });
 
-describe("Card - Version", () => {
-  it("has triggered ability when played", () => {
-    expect(cardName.abilities).toHaveLength(1);
-    const ability = cardName.abilities[0];
+  // Exert to activate
+  testEngine.quest(cardUnderTest.id);
 
-    expect(ability.type).toBe("triggered");
-    expect(ability.name).toBe("[ABILITY NAME]");
-
-    // Verify trigger
-    expect(ability.trigger).toMatchObject({
-      event: "play",
-      timing: "when",
-      on: "SELF",
-    });
-
-    // Verify effect
-    expect(ability.effect?.type).toBe("[effect-type]");
-  });
-});
-```
-
-### 4. Triggered + Conditional
-```typescript
-import { describe, expect, it } from "bun:test";
-import { cardName } from "./xxx-card-name";
-
-describe("Card - Version", () => {
-  it("has conditional triggered ability when played", () => {
-    expect(cardName.abilities).toHaveLength(1);
-    const ability = cardName.abilities[0];
-
-    expect(ability.type).toBe("triggered");
-    expect(ability.trigger).toMatchObject({
-      event: "play",
-      timing: "when",
-      on: "SELF",
-    });
-
-    // Verify condition
-    expect(ability.condition).toMatchObject({
-      type: "zone-count",
-      zone: "play",
-      comparison: {
-        operator: ">=",
-        value: 3,
-        excludeSelf: true,
-      },
-    });
-
-    // Verify effect is optional
-    expect(ability.effect?.type).toBe("optional");
-  });
-});
-```
-
-### 5. Triggered + Named Character Condition
-```typescript
-import { describe, expect, it } from "bun:test";
-import { cardName } from "./xxx-card-name";
-
-describe("Card - Version", () => {
-  it("has triggered ability with named character condition", () => {
-    expect(cardName.abilities).toHaveLength(1);
-    const ability = cardName.abilities[0];
-
-    expect(ability.type).toBe("triggered");
-
-    // Verify condition checks for specific character
-    expect(ability.condition).toMatchObject({
-      type: "has-named-character",
-      name: "[CharacterName]",
-      controller: "you",
-    });
-
-    // Verify effect
-    expect(ability.effect?.type).toBe("restriction");
-    expect(ability.effect?.restriction).toBe("[restriction-type]");
-    expect(ability.effect?.duration).toBe("[duration]");
-  });
-});
-```
-
-### 6. Static Ability with Condition
-```typescript
-import { describe, expect, it } from "bun:test";
-import { cardName } from "./xxx-card-name";
-
-describe("Card - Version", () => {
-  it("has static cost reduction ability with condition", () => {
-    expect(cardName.abilities).toHaveLength(1);
-    const ability = cardName.abilities[0];
-
-    expect(ability.type).toBe("static");
-    expect(ability.name).toBe("[ABILITY NAME]");
-
-    // Verify effect
-    expect(ability.effect?.type).toBe("cost-reduction");
-    expect(ability.effect?.amount).toBe(1);
-    expect(ability.effect?.cardType).toBe("character");
-
-    // Verify condition
-    expect(ability.condition?.type).toBe("has-named-character");
-    expect(ability.condition?.name).toBe("[CharacterName]");
-  });
-});
-```
-
-### 7. Static Restriction Ability
-```typescript
-import { describe, expect, it } from "bun:test";
-import { cardName } from "./xxx-card-name";
-
-describe("Card - Version", () => {
-  it("has VOICELESS restriction ability", () => {
-    expect(cardName.abilities).toHaveLength(1);
-    const ability = cardName.abilities[0];
-
-    expect(ability.type).toBe("static");
-    expect(ability.name).toBe("VOICELESS");
-
-    // Verify effect is a restriction
-    expect(ability.effect?.type).toBe("restriction");
-    expect(ability.effect?.restriction).toBe("cant-sing");
-    expect(ability.effect?.target).toBe("SELF");
-  });
-});
-```
-
-### 8. Action Card (One-time Effect)
-```typescript
-import { describe, expect, it } from "bun:test";
-import { cardName } from "./xxx-card-name";
-
-describe("Action Name!", () => {
-  it("has stat debuff action ability", () => {
-    expect(cardName.abilities).toHaveLength(1);
-    const ability = cardName.abilities[0];
-
-    expect(ability.type).toBe("action");
-
-    // Verify effect
-    expect(ability.effect?.type).toBe("modify-stat");
-    expect(ability.effect?.stat).toBe("strength");
-    expect(ability.effect?.modifier).toBe(-2);
-    expect(ability.effect?.duration).toBe("this-turn");
-
-    // Verify target
-    expect(ability.effect?.target).toMatchObject({
-      selector: "chosen",
-      count: 1,
-      cardTypes: ["character"],
-    });
-  });
-});
-```
-
-### 9. Multiple Abilities (Keyword + Triggered)
-```typescript
-import { describe, expect, it } from "bun:test";
-import { cardName } from "./xxx-card-name";
-
-describe("Card - Version", () => {
-  it("has Rush keyword and triggered ability", () => {
-    expect(cardName.abilities).toHaveLength(2);
-
-    // Verify Rush keyword
-    const rushAbility = cardName.abilities[0];
-    expect(rushAbility.type).toBe("keyword");
-    expect(rushAbility.keyword).toBe("Rush");
-
-    // Verify triggered ability
-    const triggeredAbility = cardName.abilities[1];
-    expect(triggeredAbility.type).toBe("triggered");
-    expect(triggeredAbility.name).toBe("[ABILITY NAME]");
-    expect(triggeredAbility.trigger).toMatchObject({
-      event: "play",
-      timing: "when",
-      on: "SELF",
-    });
-  });
+  const state = testEngine.getCardMeta(cardUnderTest.id);
+  expect(state?.state).toBe("exerted");
 });
 ```
 
 ## What NOT to Test
 
 **Do NOT test property values** (cost, strength, willpower, lore, cardNumber, etc.) - these are data, not behavior.
-
-**Do NOT test gameplay behavior** (questing, challenging, drawing, etc.) - these are tested in the engine.
-
-**DO test ability structure** - type, name, trigger, condition, effect structure.
-
-## Test File Structure
-
-```typescript
-import { describe, expect, it } from "bun:test";
-import { cardName } from "./xxx-card-name";
-
-describe("Card Full Name", () => {
-  it("has [ability description]", () => {
-    // Import card directly
-    // Test ability structure
-  });
-});
-```
 
 ## Output Format
 
@@ -303,8 +93,8 @@ File: src/cards/001/characters/xxx-name.test.ts
 Tests Generated: X
 - Keywords: Y
 - Triggered: Z
-- Static: W
-- Action: V
+- Activated: W
+- Skipped: V
 
 Run Tests: bun test src/cards/001/characters/xxx-name.test.ts
 ```
