@@ -21,29 +21,3 @@ export const scarFieryUsurper: CharacterCard = {
   },
   classifications: ["Dreamborn", "Villain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const scarFieryUsurper: LorcanitoCharacterCard = {
-//   id: "fsu",
-//   name: "Scar",
-//   title: "Fiery Usurper",
-//   characteristics: ["dreamborn", "villain"],
-//   type: "character",
-//   flavour: "Consumed by the flames of ambition.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 4,
-//   strength: 5,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Amber Kommavongsa",
-//   number: 122,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 492711,
-//   },
-//   rarity: "common",
-// };
-//

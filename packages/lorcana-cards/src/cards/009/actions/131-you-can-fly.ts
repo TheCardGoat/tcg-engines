@@ -19,19 +19,3 @@ export const youCanFly: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { youCanFly as youCanFlyAsOrig } from "@lorcanito/lorcana-engine/cards/002/actions/133-you-can-fly";
-//
-// export const youCanFly: LorcanitoActionCard = {
-//   ...youCanFlyAsOrig,
-//   id: "uv6",
-//   reprints: [youCanFlyAsOrig.id],
-//   number: 131,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650066,
-//   },
-// };
-//

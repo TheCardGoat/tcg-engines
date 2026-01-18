@@ -29,19 +29,3 @@ export const pegasusGiftForHercules: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { pegasusGiftForHercules as pegasusGiftForHerculesAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/084-pegasus-gift-for-hercules";
-//
-// export const pegasusGiftForHercules: LorcanitoCharacterCard = {
-//   ...pegasusGiftForHerculesAsOrig,
-//   id: "w64",
-//   reprints: [pegasusGiftForHerculesAsOrig.id],
-//   number: 84,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650024,
-//   },
-// };
-//

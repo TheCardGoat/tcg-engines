@@ -23,33 +23,3 @@ export const tiggerWonderfulThing: CharacterCard = {
   abilities: [evasive("1cg-1")],
   classifications: ["Storyborn", "Tigger"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const tiggerWonderfulThing: LorcanitoCharacterCard = {
-//   id: "a3y",
-//
-//   name: "Tigger",
-//   title: "Wonderful Thing",
-//   characteristics: ["storyborn", "tigger"],
-//   text: "**Evasive** (_Only characters with Evasive can challenge this character._)",
-//   type: "character",
-//   rarity: "uncommon",
-//   abilities: [evasiveAbility],
-//   flavour: '"I\'m the bounciest bouncer that ever bounced!"',
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 6,
-//   strength: 4,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Kenneth Anderson",
-//   number: 127,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 489638,
-//   },
-// };
-//

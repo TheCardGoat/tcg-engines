@@ -30,33 +30,3 @@ export const ursulaMadSeaWitch: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const ursulaMadSeaWitch: LorcanitoCharacterCard = {
-//   id: "l0q",
-//   name: "Ursula",
-//   title: "Mad Sea Witch",
-//   characteristics: ["dreamborn", "sorcerer", "villain"],
-//   text: "**Challenger +2** _(While challenging, this character gets +2 {S}.)_",
-//   type: "character",
-//   abilities: [challengerAbility(2)],
-//   flavour:
-//     "After her, Flotsam! I can't rule Lorcana without the Hexwell Crown!",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Adam Ford",
-//   number: 57,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550570,
-//   },
-//   rarity: "uncommon",
-// };
-//

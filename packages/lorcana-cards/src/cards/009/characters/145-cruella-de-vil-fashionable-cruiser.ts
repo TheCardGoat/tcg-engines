@@ -24,19 +24,3 @@ export const cruellaDeVilFashionableCruiser: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Villain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { cruellaDeVilFashionableCruiser as cruellaDeVilFashionableCruiserAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/144-cruella-de-vil-fashionable-cruiser";
-//
-// export const cruellaDeVilFashionableCruiser: LorcanitoCharacterCard = {
-//   ...cruellaDeVilFashionableCruiserAsOrig,
-//   id: "ej7",
-//   reprints: [cruellaDeVilFashionableCruiserAsOrig.id],
-//   number: 145,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650080,
-//   },
-// };
-//

@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { restrict, staticAbility } from "../../ability-helpers";
 
 export const motherGothelSelfishManipulator: CharacterCard = {
   id: "xse",
@@ -20,17 +21,11 @@ export const motherGothelSelfishManipulator: CharacterCard = {
     ravensburger: "79c6e202cddc31d783bd416c273e9fed9f7a7eb2",
   },
   abilities: [
-    {
-      id: "xse-1",
-      text: "SKIP THE DRAMA, STAY WITH MAMA While this character is exerted, opposing characters can't quest.",
+    staticAbility("xse-1", {
       name: "SKIP THE DRAMA, STAY WITH MAMA",
-      type: "static",
-      effect: {
-        type: "restriction",
-        restriction: "cant-quest",
-        target: "SELF",
-      },
-    },
+      text: "SKIP THE DRAMA, STAY WITH MAMA While this character is exerted, opposing characters can't quest.",
+      effect: restrict("cant-quest", "SELF"),
+    }),
   ],
   classifications: ["Storyborn", "Villain"],
 };

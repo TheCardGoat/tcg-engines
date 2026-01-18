@@ -24,19 +24,3 @@ export const princePhillipVanquisherOfFoes: CharacterCard = {
   abilities: [],
   classifications: ["Floodborn", "Hero", "Prince"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { princePhillipVanquisherOfFoes as ogPrincePhillipVanquisherOfFoes } from "@lorcanito/lorcana-engine/cards/004/characters/087-prince-phillip-vanquisher-of-foes";
-//
-// export const princePhillipVanquisherOfFoes: LorcanitoCharacterCard = {
-//   ...ogPrincePhillipVanquisherOfFoes,
-//   id: "wj7",
-//   reprints: [ogPrincePhillipVanquisherOfFoes.id],
-//   number: 73,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650015,
-//   },
-// };
-//

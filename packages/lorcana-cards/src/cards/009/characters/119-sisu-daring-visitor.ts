@@ -24,19 +24,3 @@ export const sisuDaringVisitor: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Deity", "Dragon"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { sisuDaringVisitor as sisuDaringVisitorAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/123-sisu-daring-visitor";
-//
-// export const sisuDaringVisitor: LorcanitoCharacterCard = {
-//   ...sisuDaringVisitorAsOrig,
-//   id: "eyu",
-//   reprints: [sisuDaringVisitorAsOrig.id],
-//   number: 119,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650055,
-//   },
-// };
-//

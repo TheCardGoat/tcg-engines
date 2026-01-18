@@ -21,28 +21,3 @@ export const mayorWinddancerActorturnedpolitician: CharacterCard = {
   },
   classifications: ["Storyborn"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const mayorWinddancerActorturnedpolitician: LorcanitoCharacterCard = {
-//   id: "dai",
-//   name: "Mayor Winddancer",
-//   title: "Actor-Turned-Politician",
-//   characteristics: ["storyborn"],
-//   type: "character",
-//   inkwell: false,
-//   colors: ["steel"],
-//   cost: 4,
-//   strength: 5,
-//   willpower: 7,
-//   illustrator: "Simone Giovanardi",
-//   number: 188,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659457,
-//   },
-//   rarity: "rare",
-//   lore: 1,
-// };
-//

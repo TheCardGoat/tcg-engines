@@ -21,30 +21,3 @@ export const bigNoseLovesickPoet: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const bigNoseLovesickPoet: LorcanitoCharacterCard = {
-//   id: "l7i",
-//   name: "Big Nose",
-//   title: "Lovesick Poet",
-//   characteristics: ["storyborn", "ally"],
-//   text: "",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 3,
-//   illustrator: "Jochem van Gool",
-//   number: 70,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659183,
-//   },
-//   rarity: "common",
-//   abilities: [],
-//   lore: 1,
-// };
-//

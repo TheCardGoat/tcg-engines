@@ -24,19 +24,3 @@ export const rapunzelSunshine: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { rapunzelSunshine as ogRapunzelSunshine } from "@lorcanito/lorcana-engine/cards/002/characters/020-rapunzel-sunshine";
-//
-// export const rapunzelSunshine: LorcanitoCharacterCard = {
-//   ...ogRapunzelSunshine,
-//   id: "p6p",
-//   reprints: [ogRapunzelSunshine.id],
-//   number: 8,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649957,
-//   },
-// };
-//

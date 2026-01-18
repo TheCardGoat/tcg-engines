@@ -23,19 +23,3 @@ export const daisyDuckMusketeerSpy: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Hero", "Musketeer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { daisyDuckMusketeerSpy as ogDaisyDuckMusketeerSpy } from "@lorcanito/lorcana-engine/cards/004/characters/7-daisy-duck-musketeer-spy";
-//
-// export const daisyDuckMusketeerSpy: LorcanitoCharacterCard = {
-//   ...ogDaisyDuckMusketeerSpy,
-//   id: "ex3",
-//   reprints: [ogDaisyDuckMusketeerSpy.id],
-//   number: 11,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649960,
-//   },
-// };
-//

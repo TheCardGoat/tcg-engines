@@ -24,19 +24,3 @@ export const hadesInfernalSchemer: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Villain", "Deity"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { hadesInfernalSchemer as hadesInfernalSchemerAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/147-hades-infernal-schemer";
-//
-// export const hadesInfernalSchemer: LorcanitoCharacterCard = {
-//   ...hadesInfernalSchemerAsOrig,
-//   id: "a03",
-//   reprints: [hadesInfernalSchemerAsOrig.id],
-//   number: 151,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650086,
-//   },
-// };
-//

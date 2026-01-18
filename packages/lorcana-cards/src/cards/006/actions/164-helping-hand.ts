@@ -18,38 +18,3 @@ export const helpingHand: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenCharacterGainsSupport,
-//   drawACard,
-// } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const helpingHand: LorcanitoActionCard = {
-//   id: "vl0",
-//   name: "Helping Hand",
-//   characteristics: ["action"],
-//   text: "Chosen character gains Support this turn. Draw a card.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       name: "Helping Hand",
-//       text: "Chosen character gains Support this turn. Draw a card.",
-//       resolveEffectsIndividually: true,
-//       effects: [chosenCharacterGainsSupport("turn"), drawACard],
-//     },
-//   ],
-//   inkwell: false,
-//   colors: ["sapphire"],
-//   cost: 1,
-//   illustrator: "Therese Vildefall",
-//   number: 164,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 586975,
-//   },
-//   rarity: "common",
-// };
-//

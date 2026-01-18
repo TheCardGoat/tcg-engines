@@ -30,19 +30,3 @@ export const arielSingingMermaid: CharacterCard = {
   ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { arielSingingMermaid as ogArielSingingMermaid } from "@lorcanito/lorcana-engine/cards/004/characters/003-ariel-singing-mermaid";
-//
-// export const arielSingingMermaid: LorcanitoCharacterCard = {
-//   ...ogArielSingingMermaid,
-//   id: "vqa",
-//   reprints: [ogArielSingingMermaid.id],
-//   number: 15,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 647652,
-//   },
-// };
-//

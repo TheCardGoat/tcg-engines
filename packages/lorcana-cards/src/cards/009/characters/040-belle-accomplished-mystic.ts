@@ -24,19 +24,3 @@ export const belleAccomplishedMystic: CharacterCard = {
   abilities: [],
   classifications: ["Floodborn", "Hero", "Princess", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { belleAccomplishedMystic as ogBelleAccomplishedMystic } from "@lorcanito/lorcana-engine/cards/004/characters/036-belle-accomplished-mystic";
-//
-// export const belleAccomplishedMystic: LorcanitoCharacterCard = {
-//   ...ogBelleAccomplishedMystic,
-//   id: "cqp",
-//   reprints: [ogBelleAccomplishedMystic.id],
-//   number: 40,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649987,
-//   },
-// };
-//

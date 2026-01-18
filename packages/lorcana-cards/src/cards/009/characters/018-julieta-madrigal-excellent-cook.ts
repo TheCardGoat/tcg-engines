@@ -24,19 +24,3 @@ export const julietaMadrigalExcellentCook: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Mentor", "Madrigal"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { julietaMadrigalExcellentCook as ogJulietaMadrigalExcellentCook } from "@lorcanito/lorcana-engine/cards/004/characters/13-julieta-madrigal-excellent-cook";
-//
-// export const julietaMadrigalExcellentCook: LorcanitoCharacterCard = {
-//   ...ogJulietaMadrigalExcellentCook,
-//   id: "gxo",
-//   reprints: [ogJulietaMadrigalExcellentCook.id],
-//   number: 18,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649966,
-//   },
-// };
-//

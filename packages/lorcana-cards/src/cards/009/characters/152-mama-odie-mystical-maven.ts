@@ -24,19 +24,3 @@ export const mamaOdieMysticalMaven: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Mentor"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { mamaOdieMysticalMaven as mamaOdieMysticalMavenAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const mamaOdieMysticalMaven: LorcanitoCharacterCard = {
-//   ...mamaOdieMysticalMavenAsOrig,
-//   id: "j6p",
-//   reprints: [mamaOdieMysticalMavenAsOrig.id],
-//   number: 152,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650087,
-//   },
-// };
-//

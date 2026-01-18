@@ -24,36 +24,3 @@ export const turboRoyalHack: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Villain", "Racer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { rushAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const turboRoyalHack: LorcanitoCharacterCard = {
-//   id: "k3a",
-//   name: "Turbo",
-//   title: "Royal Hack",
-//   characteristics: ["storyborn", "villain", "racer"],
-//   text: "**Rush** _(This character can challenge the turn they’re played.)_ **GAME JUMP** This character also counts as being named King Candy for **Shift**.",
-//   type: "character",
-//   abilities: [
-//     rushAbility,
-//     // {
-//     //   implemented directly on canShift
-//     //   name: "**GAME JUMP** This character also counts as being named King Candy for **Shift**.",
-//     // },
-//   ],
-//   colors: ["ruby"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Juan Diego Leon",
-//   number: 106,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 555260,
-//   },
-//   rarity: "uncommon",
-// };
-//

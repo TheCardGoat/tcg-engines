@@ -24,19 +24,3 @@ export const hansNobleScoundrel: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Villain", "Prince"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { hansNobleScoundrel as hansNobleScoundrelAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/146-hans-noble-scoundrel";
-//
-// export const hansNobleScoundrel: LorcanitoCharacterCard = {
-//   ...hansNobleScoundrelAsOrig,
-//   id: "e93",
-//   reprints: [hansNobleScoundrelAsOrig.id],
-//   number: 148,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650083,
-//   },
-// };
-//

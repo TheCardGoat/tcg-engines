@@ -24,19 +24,3 @@ export const cinderellaGentleAndKind: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { cinderellaGentleAndKind as ogCinderellaGentleAndKind } from "@lorcanito/lorcana-engine/cards/001/characters/003-cinderella-gentle-and-kind";
-//
-// export const cinderellaGentleAndKind: LorcanitoCharacterCard = {
-//   ...ogCinderellaGentleAndKind,
-//   id: "xks",
-//   reprints: [ogCinderellaGentleAndKind.id],
-//   number: 19,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649967,
-//   },
-// };
-//

@@ -24,32 +24,3 @@ export const bobbyZimuruskiSprayCheeseKid: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const bobbyZimuruskiSprayCheeseKid: LorcanitoCharacterCard = {
-//   id: "wcd",
-//   missingTestCase: true,
-//   name: "Bobby Zimuruski",
-//   title: "Spray Cheese Kid",
-//   characteristics: ["storyborn", "ally"],
-//   text: "SO CHEESY When you play this character, you may draw a card, then choose and discard a card.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 2,
-//   illustrator: "Stefano Spagnuolo",
-//   number: 78,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650018,
-//   },
-//   rarity: "uncommon",
-//   abilities: [youMayDrawThenChooseAndDiscard],
-//   lore: 1,
-// };
-//

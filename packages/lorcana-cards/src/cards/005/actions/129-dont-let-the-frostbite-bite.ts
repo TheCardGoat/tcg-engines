@@ -27,8 +27,7 @@ export const dontLetTheFrostbiteBite: ActionCard = {
             type: "ready",
             target: {
               selector: "all",
-              owner: "you",
-              count: "all",
+              controller: "you",
             },
           },
           {
@@ -36,8 +35,7 @@ export const dontLetTheFrostbiteBite: ActionCard = {
             restriction: "cant-quest",
             target: {
               selector: "all",
-              owner: "you",
-              count: "all",
+              controller: "you",
             },
             duration: "this-turn",
           },
@@ -46,36 +44,3 @@ export const dontLetTheFrostbiteBite: ActionCard = {
     },
   ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { allYourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const dontLetTheFrostbiteBite: LorcanitoActionCard = {
-//   id: "rdl",
-//   missingTestCase: true,
-//   name: "Don't Let the Frostbite Bite",
-//   characteristics: ["action", "song"],
-//   text: "_(A character with cost 7 or more can \n {E} to sing this song for free.)_<br>Ready all your characters. They can’t quest for the rest of this turn.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       text: "Ready all your characters. They can’t quest for the rest of this turn.",
-//       effects: readyAndCantQuest(allYourCharacters),
-//     },
-//   ],
-//   flavour: "Let’s call it a night",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 7,
-//   illustrator: "Linh Dang",
-//   number: 129,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 560524,
-//   },
-//   rarity: "rare",
-// };
-//

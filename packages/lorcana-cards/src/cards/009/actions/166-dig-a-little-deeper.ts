@@ -19,19 +19,3 @@ export const digALittleDeeper: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { digALittleDeeper as ogDigALittleDeeper } from "@lorcanito/lorcana-engine/cards/004/actions/162-dig-a-little-deeper";
-//
-// export const digALittleDeeper: LorcanitoActionCard = {
-//   ...ogDigALittleDeeper,
-//   id: "pbu",
-//   reprints: [ogDigALittleDeeper.id],
-//   number: 166,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650100,
-//   },
-// };
-//

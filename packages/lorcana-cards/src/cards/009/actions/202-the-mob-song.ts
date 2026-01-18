@@ -19,19 +19,3 @@ export const theMobSong: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { theMobSong as ogTheMobSong } from "@lorcanito/lorcana-engine/cards/004/actions/198-the-mob-song";
-//
-// export const theMobSong: LorcanitoActionCard = {
-//   ...ogTheMobSong,
-//   id: "fj5",
-//   reprints: [ogTheMobSong.id],
-//   number: 202,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650134,
-//   },
-// };
-//

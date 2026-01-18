@@ -21,30 +21,3 @@ export const genieInvestigativeMind: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally", "Detective"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const genieInvestigativeMind: LorcanitoCharacterCard = {
-//   id: "uey",
-//   name: "Genie",
-//   title: "Investigative Mind",
-//   characteristics: ["storyborn", "ally", "detective"],
-//   text: "",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 7,
-//   illustrator: "Veronica Di Lorenzo / Livio Cacciatore",
-//   number: 146,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659382,
-//   },
-//   rarity: "common",
-//   abilities: [],
-//   lore: 2,
-// };
-//

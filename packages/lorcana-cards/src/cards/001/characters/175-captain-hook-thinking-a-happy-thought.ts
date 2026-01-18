@@ -1,5 +1,10 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { challenger, shift } from "../../ability-helpers";
+import {
+  challenger,
+  restrict,
+  shift,
+  staticAbility,
+} from "../../ability-helpers";
 
 export const captainHookThinkingAHappyThought: CharacterCard = {
   id: "4hp",
@@ -23,17 +28,11 @@ export const captainHookThinkingAHappyThought: CharacterCard = {
   abilities: [
     shift("4hp-1", 3, "Captain Hook"),
     challenger("4hp-2", 3),
-    {
-      id: "4hp-3",
-      text: "STOLEN DUST Characters with cost 3 or less can't challenge this character.",
+    staticAbility("4hp-3", {
       name: "STOLEN DUST",
-      type: "static",
-      effect: {
-        type: "restriction",
-        restriction: "cant-challenge",
-        target: "SELF",
-      },
-    },
+      text: "STOLEN DUST Characters with cost 3 or less can't challenge this character.",
+      effect: restrict("cant-challenge", "SELF"),
+    }),
   ],
   classifications: ["Floodborn", "Villain", "Pirate", "Captain"],
 };

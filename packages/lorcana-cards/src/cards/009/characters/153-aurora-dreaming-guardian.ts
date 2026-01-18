@@ -24,19 +24,3 @@ export const auroraDreamingGuardian: CharacterCard = {
   abilities: [],
   classifications: ["Floodborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { auroraDreamingGuardian as ogAuroraDreamingGuardian } from "@lorcanito/lorcana-engine/cards/001/characters/139-aurora-dreaming-guardian";
-//
-// export const auroraDreamingGuardian: LorcanitoCharacterCard = {
-//   ...ogAuroraDreamingGuardian,
-//   id: "kjf",
-//   reprints: ["wb5"],
-//   number: 153,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650088,
-//   },
-// };
-//

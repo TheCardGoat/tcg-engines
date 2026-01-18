@@ -24,19 +24,3 @@ export const robinHoodUnrivaledArcher: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { robinHoodUnrivaledArcher as robinHoodUnrivaledArcherAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-//
-// export const robinHoodUnrivaledArcher: LorcanitoCharacterCard = {
-//   ...robinHoodUnrivaledArcherAsOrig,
-//   id: "l10",
-//   reprints: [robinHoodUnrivaledArcherAsOrig.id],
-//   number: 162,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650096,
-//   },
-// };
-//

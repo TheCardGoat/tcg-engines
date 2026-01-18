@@ -95,6 +95,7 @@ import type {
   DiscardEffect,
   DrawEffect,
   Effect,
+  EffectDuration,
   ExertEffect,
   GainKeywordEffect,
   LocationTarget,
@@ -102,6 +103,7 @@ import type {
   OptionalEffect,
   PlayerTarget,
   ReadyEffect,
+  RestrictionEffect,
   StaticEffect,
   TriggerCardType,
   TriggerSubject,
@@ -857,6 +859,52 @@ export function hasCardUnder(): Condition {
 export function hasAnyDamage(): Condition {
   return {
     type: "has-any-damage",
+  };
+}
+
+// ============================================================================
+// Restriction Helpers
+// ============================================================================
+
+/**
+ * Create a restriction effect
+ *
+ * @param restriction - Type of restriction to apply
+ * @param target - Target for the restriction (defaults to "SELF")
+ * @param duration - Optional duration (defaults to "permanent")
+ *
+ * @example
+ * ```typescript
+ * // This character can't sing songs
+ * restrict("cant-sing", "SELF")
+ *
+ * // Chosen character can't quest until start of their next turn
+ * restrict("cant-quest", "CHOSEN_CHARACTER", "until-start-of-next-turn")
+ *
+ * // Opposing characters can't challenge this character
+ * restrict("cant-challenge", "SELF")
+ * ```
+ */
+export function restrict(
+  restriction:
+    | "cant-quest"
+    | "cant-challenge"
+    | "cant-be-challenged"
+    | "cant-ready"
+    | "cant-quest-or-challenge"
+    | "cant-be-dealt-damage"
+    | "cant-sing"
+    | "cant-move"
+    | "enters-play-exerted"
+    | "skip-draw-step",
+  target: CharacterTarget | PlayerTarget = "SELF",
+  duration?: EffectDuration,
+): RestrictionEffect {
+  return {
+    type: "restriction",
+    restriction,
+    target,
+    ...(duration && { duration }),
   };
 }
 

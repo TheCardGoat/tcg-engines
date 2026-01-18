@@ -24,19 +24,3 @@ export const pongoDeterminedFather: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { pongoDeterminedFather as ogPongoDeterminedFather } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const pongoDeterminedFather: LorcanitoCharacterCard = {
-//   ...ogPongoDeterminedFather,
-//   id: "nn4",
-//   reprints: [ogPongoDeterminedFather.id],
-//   number: 2,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649951,
-//   },
-// };
-//

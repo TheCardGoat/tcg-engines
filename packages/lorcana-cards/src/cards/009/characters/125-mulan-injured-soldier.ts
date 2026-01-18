@@ -24,19 +24,3 @@ export const mulanInjuredSoldier: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { mulanInjuredSoldier as mulanInjuredSoldierAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/116-mulan-injured-soldier";
-//
-// export const mulanInjuredSoldier: LorcanitoCharacterCard = {
-//   ...mulanInjuredSoldierAsOrig,
-//   id: "jmn",
-//   reprints: [mulanInjuredSoldierAsOrig.id],
-//   number: 125,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650060,
-//   },
-// };
-//

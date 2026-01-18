@@ -22,19 +22,3 @@ export const casaMadrigalCasita: LocationCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { casaMadrigalCasita as ogCasaMadrigalCasita } from "@lorcanito/lorcana-engine/cards/004/locations/67-casa-madrigal-casita";
-//
-// export const casaMadrigalCasita: LorcanitoLocationCard = {
-//   ...ogCasaMadrigalCasita,
-//   id: "jx4",
-//   reprints: [ogCasaMadrigalCasita.id],
-//   number: 68,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650010,
-//   },
-// };
-//

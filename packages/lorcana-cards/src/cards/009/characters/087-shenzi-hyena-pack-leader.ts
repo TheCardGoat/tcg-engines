@@ -24,19 +24,3 @@ export const shenziHyenaPackLeader: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally", "Hyena"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shenziHyenaPackLeader as shenziHyenaPackLeaderAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const shenziHyenaPackLeader: LorcanitoCharacterCard = {
-//   ...shenziHyenaPackLeaderAsOrig,
-//   id: "bh1",
-//   reprints: [shenziHyenaPackLeaderAsOrig.id],
-//   number: 87,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650027,
-//   },
-// };
-//

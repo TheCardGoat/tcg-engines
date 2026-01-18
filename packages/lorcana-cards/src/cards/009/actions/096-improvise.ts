@@ -18,19 +18,3 @@ export const improvise: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { improvise as ogImprovise } from "@lorcanito/lorcana-engine/cards/002/actions/099-improvise";
-//
-// export const improvise: LorcanitoActionCard = {
-//   ...ogImprovise,
-//   id: "tdy",
-//   reprints: [ogImprovise.id],
-//   number: 96,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650034,
-//   },
-// };
-//

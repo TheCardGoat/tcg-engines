@@ -19,19 +19,3 @@ export const oneJumpAhead: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { oneJumpAhead as ogOneJumpAhead } from "@lorcanito/lorcana-engine/cards/001/songs/164-one-jump-ahead";
-//
-// export const oneJumpAhead: LorcanitoActionCard = {
-//   ...ogOneJumpAhead,
-//   id: "uhq",
-//   reprints: [ogOneJumpAhead.id],
-//   number: 165,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650099,
-//   },
-// };
-//

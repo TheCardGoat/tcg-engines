@@ -24,19 +24,3 @@ export const annaTruehearted: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Hero", "Queen", "Knight"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { annaTrueHearted as annaTrueheartedAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/138-anna-true-hearted";
-//
-// export const annaTruehearted: LorcanitoCharacterCard = {
-//   ...annaTrueheartedAsOrig,
-//   id: "p5i",
-//   reprints: [annaTrueheartedAsOrig.id],
-//   number: 137,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650072,
-//   },
-// };
-//

@@ -1,4 +1,5 @@
 import type { ActionCard } from "@tcg/lorcana-types";
+import { ready, restrict, sequence } from "../../ability-helpers";
 
 export const fanTheFlames: ActionCard = {
   id: "1eo",
@@ -18,12 +19,8 @@ export const fanTheFlames: ActionCard = {
     {
       id: "1eo-1",
       text: "Ready chosen character. They can't quest for the rest of this turn.",
-      type: "static",
-      effect: {
-        type: "restriction",
-        restriction: "cant-quest",
-        target: "SELF",
-      },
+      type: "action",
+      effect: sequence(ready("CHOSEN_CHARACTER", "cant-quest")),
     },
   ],
 };

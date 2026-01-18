@@ -19,19 +19,3 @@ export const underTheSea: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { underTheSea as ogUnderTheSea } from "@lorcanito/lorcana-engine/cards/004/actions/095-under-the-sea";
-//
-// export const underTheSea: LorcanitoActionCard = {
-//   ...ogUnderTheSea,
-//   id: "wlg",
-//   reprints: [ogUnderTheSea.id],
-//   number: 97,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650035,
-//   },
-// };
-//

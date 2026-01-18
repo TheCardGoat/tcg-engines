@@ -24,16 +24,3 @@ export const brunoMadrigalUndetectedUncle: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally", "Madrigal"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { brunoMadrigalUndetectedUncle as ogBrunoMadrigalUndetectedUncle } from "@lorcanito/lorcana-engine/cards/004/characters/039-bruno-madrigal-undetected-uncle";
-//
-// export const brunoMadrigalUndetectedUncle: LorcanitoCharacterCard = {
-//   ...ogBrunoMadrigalUndetectedUncle,
-//   id: "tiq",
-//   reprints: [ogBrunoMadrigalUndetectedUncle.id],
-//   number: 0,
-//   set: "009",
-// };
-//

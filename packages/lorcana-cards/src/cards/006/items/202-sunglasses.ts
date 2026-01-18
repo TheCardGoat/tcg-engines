@@ -18,28 +18,3 @@ export const sunglasses: ItemCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { spycraft } from "@lorcanito/lorcana-engine/cards/006/items/abilities";
-//
-// export const sunglasses: LorcanitoItemCard = {
-//   id: "lqp",
-//   missingTestCase: true,
-//   name: "Sunglasses",
-//   characteristics: ["item"],
-//   text: "SPYCRAFT {E} - Draw a card, then choose and discard a card.",
-//   type: "item",
-//   abilities: [spycraft],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 4,
-//   illustrator: "Kuya Jaypi",
-//   number: 202,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 587753,
-//   },
-//   rarity: "common",
-// };
-//

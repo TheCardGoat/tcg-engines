@@ -18,28 +18,3 @@ export const poohPirateShip: ItemCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { makeARescue } from "@lorcanito/lorcana-engine/cards/006/items/abilities";
-//
-// export const poohPirateShip: LorcanitoItemCard = {
-//   id: "snl",
-//   missingTestCase: true,
-//   name: "Pooh Pirate Ship",
-//   characteristics: ["item"],
-//   text: "MAKE A RESCUE {E}, 3 {I} – Return a Pirate character card from your discard to your hand.",
-//   type: "item",
-//   abilities: [makeARescue],
-//   inkwell: false,
-//   colors: ["amber"],
-//   cost: 1,
-//   illustrator: "Kaitlin Cuthbertson",
-//   number: 32,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 587239,
-//   },
-//   rarity: "rare",
-// };
-//

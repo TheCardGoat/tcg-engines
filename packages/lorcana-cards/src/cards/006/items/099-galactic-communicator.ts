@@ -18,28 +18,3 @@ export const galacticCommunicator: ItemCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { resourceAllocation } from "@lorcanito/lorcana-engine/cards/006/items/abilities";
-//
-// export const galacticCommunicator: LorcanitoItemCard = {
-//   id: "ryf",
-//   missingTestCase: true,
-//   name: "Galactic Communicator",
-//   characteristics: ["item"],
-//   text: "RESOURCE ALLOCATION 1 {I}, Banish this item - Return chosen character with 2 {S} or less to their player's hand.",
-//   type: "item",
-//   abilities: [resourceAllocation],
-//   inkwell: false,
-//   colors: ["emerald"],
-//   cost: 2,
-//   illustrator: "Jiahui Eva Gao",
-//   number: 99,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 588088,
-//   },
-//   rarity: "common",
-// };
-//

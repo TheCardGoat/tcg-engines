@@ -24,19 +24,3 @@ export const lawrenceJealousManservant: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { lawrenceJealousManservant as lawrenceJealousManservantAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/186-lawrence-jealous-manservant";
-//
-// export const lawrenceJealousManservant: LorcanitoCharacterCard = {
-//   ...lawrenceJealousManservantAsOrig,
-//   id: "b85",
-//   reprints: [lawrenceJealousManservantAsOrig.id],
-//   number: 187,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650120,
-//   },
-// };
-//

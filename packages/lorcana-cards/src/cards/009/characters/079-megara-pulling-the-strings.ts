@@ -24,19 +24,3 @@ export const megaraPullingTheStrings: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { megaraPullingTheStrings as ogMegaraPullingTheStrings } from "@lorcanito/lorcana-engine/cards/001/characters/087-megara-pulling-the-strings";
-//
-// export const megaraPullingTheStrings: LorcanitoCharacterCard = {
-//   ...ogMegaraPullingTheStrings,
-//   id: "g7m",
-//   reprints: ["kv6"],
-//   number: 79,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650019,
-//   },
-// };
-//

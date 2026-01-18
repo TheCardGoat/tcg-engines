@@ -24,19 +24,3 @@ export const judyHoppsOptimisticOfficer: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { judyHoppsOptimisticOfficer as judyHoppsOptimisticOfficerAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/152-judy-hopps-optimistic-officer";
-//
-// export const judyHoppsOptimisticOfficer: LorcanitoCharacterCard = {
-//   ...judyHoppsOptimisticOfficerAsOrig,
-//   id: "bcu",
-//   reprints: [judyHoppsOptimisticOfficerAsOrig.id],
-//   number: 157,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650092,
-//   },
-// };
-//

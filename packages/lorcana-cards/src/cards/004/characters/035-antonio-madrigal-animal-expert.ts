@@ -21,30 +21,3 @@ export const antonioMadrigalAnimalExpert: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally", "Madrigal"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const antonioMadrigalAnimalExpert: LorcanitoCharacterCard = {
-//   id: "zij",
-//   name: "Antonio Madrigal",
-//   title: "Animal Expert",
-//   characteristics: ["storyborn", "ally", "madrigal"],
-//   type: "character",
-//   flavour:
-//     "Once upon a time, there was a casita in the mountains with a very special family. . . .",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Ellie Horie",
-//   number: 35,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550521,
-//   },
-//   rarity: "uncommon",
-// };
-//

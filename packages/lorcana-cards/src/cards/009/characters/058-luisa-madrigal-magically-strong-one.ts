@@ -29,19 +29,3 @@ export const luisaMadrigalMagicallyStrongOne: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally", "Madrigal"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { luisaMadrigalMagicallyStrongOne as ogLuisaMadrigalMagicallyStrongOne } from "@lorcanito/lorcana-engine/cards/004/characters/047-luisa-madrigal-magically-strong-one";
-//
-// export const luisaMadrigalMagicallyStrongOne: LorcanitoCharacterCard = {
-//   ...ogLuisaMadrigalMagicallyStrongOne,
-//   id: "utw",
-//   reprints: ["kcf"],
-//   number: 58,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650002,
-//   },
-// };
-//

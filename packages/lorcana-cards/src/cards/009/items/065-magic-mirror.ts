@@ -18,7 +18,6 @@ export const magicMirror: ItemCard = {
     {
       id: "6c3-1",
       type: "activated",
-      cost: {},
       effect: {
         type: "draw",
         amount: 1,
@@ -28,19 +27,3 @@ export const magicMirror: ItemCard = {
     },
   ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { magicMirror as ogMagicMirror } from "@lorcanito/lorcana-engine/cards/001/items/066-magic-mirror";
-//
-// export const magicMirror: LorcanitoItemCard = {
-//   ...ogMagicMirror,
-//   id: "z3v",
-//   reprints: [ogMagicMirror.id],
-//   number: 65,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650008,
-//   },
-// };
-//

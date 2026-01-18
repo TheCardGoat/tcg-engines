@@ -24,19 +24,3 @@ export const enchantressUnexpectedJudge: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { enchantressUnexpectedJudge as enchantressUnexpectedJudgeAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/080-enchantress-unexpected-judge";
-//
-// export const enchantressUnexpectedJudge: LorcanitoCharacterCard = {
-//   ...enchantressUnexpectedJudgeAsOrig,
-//   id: "b7r",
-//   reprints: [enchantressUnexpectedJudgeAsOrig.id],
-//   number: 81,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650021,
-//   },
-// };
-//

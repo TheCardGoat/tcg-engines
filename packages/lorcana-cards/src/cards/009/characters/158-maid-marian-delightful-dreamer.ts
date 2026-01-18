@@ -24,19 +24,3 @@ export const maidMarianDelightfulDreamer: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { ladyMarianAdorableDreamer } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const maidMarianDelightfulDreamer: LorcanitoCharacterCard = {
-//   ...ladyMarianAdorableDreamer,
-//   id: "c8w",
-//   reprints: [ladyMarianAdorableDreamer.id],
-//   number: 158,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650093,
-//   },
-// };
-//

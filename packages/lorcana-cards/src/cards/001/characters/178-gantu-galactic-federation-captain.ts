@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { restrict, staticAbility } from "../../ability-helpers";
 
 export const gantuGalacticFederationCaptain: CharacterCard = {
   id: "c3k",
@@ -20,17 +21,11 @@ export const gantuGalacticFederationCaptain: CharacterCard = {
     ravensburger: "2b9addfb94c8f45cfa1bb249ef2d1021ddee733e",
   },
   abilities: [
-    {
-      id: "c3k-1",
-      text: "UNDER ARREST Characters with cost 2 or less can't challenge your characters.",
+    staticAbility("c3k-1", {
       name: "UNDER ARREST",
-      type: "static",
-      effect: {
-        type: "restriction",
-        restriction: "cant-challenge",
-        target: "SELF",
-      },
-    },
+      text: "UNDER ARREST Characters with cost 2 or less can't challenge your characters.",
+      effect: restrict("cant-challenge", "SELF"),
+    }),
   ],
   classifications: ["Storyborn", "Alien", "Captain"],
 };
