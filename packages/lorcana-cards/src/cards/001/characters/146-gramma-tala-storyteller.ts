@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { moveCards, optional } from "../../ability-helpers";
 
 export const grammaTalaStoryteller: CharacterCard = {
   id: "n00",
@@ -24,17 +25,13 @@ export const grammaTalaStoryteller: CharacterCard = {
       type: "action",
       text: "**I WILL BE WITH YOU** When this character is banished, you may put this card into your inkwell facedown and exerted.",
       id: "n00-1",
-      effect: {
-        type: "optional",
-        effect: {
-          type: "put-into-inkwell",
-          source: "this-card",
-          target: "CONTROLLER",
+      effect: optional(
+        moveCards("play", "inkwell", {
+          target: "SELF",
           exerted: true,
           facedown: true,
-        },
-        chooser: "CONTROLLER",
-      },
+        }),
+      ),
     },
   ],
   classifications: ["Storyborn", "Mentor"],

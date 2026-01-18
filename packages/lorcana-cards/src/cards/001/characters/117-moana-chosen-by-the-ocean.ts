@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { banish, optional, whenPlay } from "../../ability-helpers";
 
 export const moanaChosenByTheOcean: CharacterCard = {
   id: "176",
@@ -20,25 +21,13 @@ export const moanaChosenByTheOcean: CharacterCard = {
     ravensburger: "045c9d82ec1f6de1fc7e93d21807204b5adf2985",
   },
   abilities: [
-    {
-      id: "176-1",
-      text: "THIS IS NOT WHO YOU ARE When you play this character, you may banish chosen character named Te Kā.",
+    whenPlay("176-1", {
       name: "THIS IS NOT WHO YOU ARE",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      effect: {
-        type: "optional",
-        effect: {
-          type: "banish",
-          target: "CHOSEN_CHARACTER",
-        },
-        chooser: "CONTROLLER",
-      },
-    },
+      text: "THIS IS NOT WHO YOU ARE When you play this character, you may banish chosen character named Te Kā.",
+      playedBy: "you",
+      playedCard: "SELF",
+      then: optional(banish("CHOSEN_CHARACTER")),
+    }),
   ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };

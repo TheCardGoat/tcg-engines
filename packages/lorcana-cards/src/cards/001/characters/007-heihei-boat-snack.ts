@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { support } from "../../ability-helpers";
 
 export const heiheiBoatSnack: CharacterCard = {
   id: "uio",
@@ -19,14 +20,7 @@ export const heiheiBoatSnack: CharacterCard = {
   externalIds: {
     ravensburger: "6dfdbf904cb6a8f2f700f9839e50902b7dd4bcad",
   },
-  abilities: [
-    {
-      id: "uio-1",
-      type: "keyword",
-      keyword: "Support",
-      text: "Support",
-    },
-  ],
+  abilities: [support("uio-1")],
   classifications: ["Storyborn", "Ally"],
 };
 

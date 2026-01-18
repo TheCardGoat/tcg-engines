@@ -1,11 +1,12 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { evasive } from "../../ability-helpers";
 
 export const pongoOlRascal: CharacterCard = {
   id: "37j",
   cardType: "character",
   name: "Pongo",
-  version: "Ol’ Rascal",
-  fullName: "Pongo - Ol’ Rascal",
+  version: "Ol' Rascal",
+  fullName: "Pongo - Ol' Rascal",
   inkType: ["ruby"],
   franchise: "101 Dalmatians",
   set: "001",
@@ -19,14 +20,7 @@ export const pongoOlRascal: CharacterCard = {
   externalIds: {
     ravensburger: "0b91137c16607aa4f8e758e7b1ffc78257c42cd4",
   },
-  abilities: [
-    {
-      id: "37j-1",
-      type: "keyword",
-      keyword: "Evasive",
-      text: "Evasive",
-    },
-  ],
+  abilities: [evasive("37j-1")],
   classifications: ["Storyborn", "Hero"],
 };
 

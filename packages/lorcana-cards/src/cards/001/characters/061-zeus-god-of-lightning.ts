@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { challenger, rush } from "../../ability-helpers";
 
 export const zeusGodOfLightning: CharacterCard = {
   id: "1o1",
@@ -19,21 +20,7 @@ export const zeusGodOfLightning: CharacterCard = {
   externalIds: {
     ravensburger: "dadb267eccd432e2568673dafcf9b187459bc477",
   },
-  abilities: [
-    {
-      id: "1o1-1",
-      type: "keyword",
-      keyword: "Rush",
-      text: "Rush",
-    },
-    {
-      id: "1o1-2",
-      type: "keyword",
-      keyword: "Challenger",
-      value: 4,
-      text: "Challenger +4",
-    },
-  ],
+  abilities: [rush("1o1-1"), challenger("1o1-2", 4)],
   classifications: ["Storyborn", "Deity"],
 };
 

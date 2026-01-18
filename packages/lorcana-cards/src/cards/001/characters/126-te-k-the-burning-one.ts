@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { reckless } from "../../ability-helpers";
 
 export const teKTheBurningOne: CharacterCard = {
   id: "14n",
@@ -19,13 +20,6 @@ export const teKTheBurningOne: CharacterCard = {
   externalIds: {
     ravensburger: "92788505267291d061bce171dae43b361f5c9eca",
   },
-  abilities: [
-    {
-      id: "14n-1",
-      type: "keyword",
-      keyword: "Reckless",
-      text: "Reckless",
-    },
-  ],
+  abilities: [reckless("14n-1")],
   classifications: ["Storyborn", "Villain", "Deity"],
 };

@@ -1,11 +1,12 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { evasive } from "../../ability-helpers";
 
 export const tinkerBellPeterPansAlly: CharacterCard = {
   id: "oug",
   cardType: "character",
   name: "Tinker Bell",
-  version: "Peter Pan’s Ally",
-  fullName: "Tinker Bell - Peter Pan’s Ally",
+  version: "Peter Pan's Ally",
+  fullName: "Tinker Bell - Peter Pan's Ally",
   inkType: ["amethyst"],
   franchise: "Peter Pan",
   set: "001",
@@ -20,12 +21,7 @@ export const tinkerBellPeterPansAlly: CharacterCard = {
     ravensburger: "598be1e1fde814f7659cf509dad4db7131a68730",
   },
   abilities: [
-    {
-      id: "oug-1",
-      text: "Evasive",
-      type: "keyword",
-      keyword: "Evasive",
-    },
+    evasive("oug-1"),
     {
       id: "oug-2",
       text: "LOYAL AND DEVOTED Your characters named Peter Pan gain Challenger +1.",

@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { singer } from "../../ability-helpers";
 
 export const sebastianCourtComposer: CharacterCard = {
   id: "8rz",
@@ -19,15 +20,7 @@ export const sebastianCourtComposer: CharacterCard = {
   externalIds: {
     ravensburger: "1fa28a7f4b2398c8cc72ea121b01ac0cccdda582",
   },
-  abilities: [
-    {
-      id: "8rz-1",
-      type: "keyword",
-      keyword: "Singer",
-      value: 4,
-      text: "Singer 4",
-    },
-  ],
+  abilities: [singer("8rz-1", 4)],
   classifications: ["Storyborn", "Ally"],
 };
 

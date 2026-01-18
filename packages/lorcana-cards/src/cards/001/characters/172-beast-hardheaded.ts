@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { banish, optional, whenPlay } from "../../ability-helpers";
 
 export const beastHardheaded: CharacterCard = {
   id: "m8v",
@@ -20,25 +21,13 @@ export const beastHardheaded: CharacterCard = {
     ravensburger: "502da9f4533484bfe02fb51fd83498e2d63e3275",
   },
   abilities: [
-    {
-      id: "m8v-1",
-      text: "BREAK When you play this character, you may banish chosen item.",
+    whenPlay("m8v-1", {
       name: "BREAK",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      effect: {
-        type: "optional",
-        effect: {
-          type: "banish",
-          target: "CHOSEN_CHARACTER",
-        },
-        chooser: "CONTROLLER",
-      },
-    },
+      text: "BREAK When you play this character, you may banish chosen item.",
+      playedBy: "you",
+      playedCard: "SELF",
+      then: optional(banish("CHOSEN_CHARACTER")),
+    }),
   ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };

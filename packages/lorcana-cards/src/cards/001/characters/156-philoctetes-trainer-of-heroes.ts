@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { support } from "../../ability-helpers";
 
 export const philoctetesTrainerOfHeroes: CharacterCard = {
   id: "1g8",
@@ -19,14 +20,7 @@ export const philoctetesTrainerOfHeroes: CharacterCard = {
   externalIds: {
     ravensburger: "bc5a3301196e31a727216ba5bd0ecf0f0dcae69a",
   },
-  abilities: [
-    {
-      id: "1g8-1",
-      type: "keyword",
-      keyword: "Support",
-      text: "Support",
-    },
-  ],
+  abilities: [support("1g8-1")],
   classifications: ["Storyborn", "Mentor"],
 };
 

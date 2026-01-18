@@ -1,4 +1,5 @@
 import type { ItemCard } from "@tcg/lorcana-types";
+import { activated, gainKeyword } from "../../ability-helpers";
 
 export const scepterOfArendelle: ItemCard = {
   id: "1j9",
@@ -15,21 +16,12 @@ export const scepterOfArendelle: ItemCard = {
     ravensburger: "c727888823a011c91f8ab8c27400f74ffd775c06",
   },
   abilities: [
-    {
-      id: "1j9-1",
-      text: "COMMAND {E} — Chosen character gains Support this turn.",
+    activated("1j9-1", {
       name: "COMMAND",
-      type: "activated",
-      cost: {
-        exert: true,
-      },
-      effect: {
-        type: "gain-keyword",
-        keyword: "Support",
-        target: "CHOSEN_CHARACTER",
-        duration: "this-turn",
-      },
-    },
+      text: "COMMAND {E} — Chosen character gains Support this turn.",
+      cost: { exert: true },
+      effect: gainKeyword("Support", "CHOSEN_CHARACTER"),
+    }),
   ],
 };
 

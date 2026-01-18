@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { challenger } from "../../ability-helpers";
 
 export const jafarWickedSorcerer: CharacterCard = {
   id: "1dn",
@@ -19,15 +20,7 @@ export const jafarWickedSorcerer: CharacterCard = {
   externalIds: {
     ravensburger: "b3001090c82926f995dda5332ff5f0546257b061",
   },
-  abilities: [
-    {
-      id: "1dn-1",
-      type: "keyword",
-      keyword: "Challenger",
-      value: 3,
-      text: "Challenger +3",
-    },
-  ],
+  abilities: [challenger("1dn-1", 3)],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],
 };
 

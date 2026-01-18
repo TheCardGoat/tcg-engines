@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { rush } from "../../ability-helpers";
 
 export const peterPanFearlessFighter: CharacterCard = {
   id: "czp",
@@ -19,14 +20,7 @@ export const peterPanFearlessFighter: CharacterCard = {
   externalIds: {
     ravensburger: "2ed2d4d7295557a864451ec395c78721255c0c17",
   },
-  abilities: [
-    {
-      id: "czp-1",
-      type: "keyword",
-      keyword: "Rush",
-      text: "Rush",
-    },
-  ],
+  abilities: [rush("czp-1")],
   classifications: ["Storyborn", "Hero"],
 };
 

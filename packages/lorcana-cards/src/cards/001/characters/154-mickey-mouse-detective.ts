@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { moveCards, optional } from "../../ability-helpers";
 
 export const mickeyMouseDetective: CharacterCard = {
   id: "aec",
@@ -24,17 +25,14 @@ export const mickeyMouseDetective: CharacterCard = {
       type: "action",
       text: "**GET A CLUE** When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
       id: "aec-1",
-      effect: {
-        type: "optional",
-        effect: {
-          type: "put-into-inkwell",
-          source: "top-of-deck",
+      effect: optional(
+        moveCards("top-of-deck", "inkwell", {
+          amount: 1,
           target: "CONTROLLER",
           exerted: true,
           facedown: true,
-        },
-        chooser: "CONTROLLER",
-      },
+        }),
+      ),
     },
   ],
   classifications: ["Hero", "Dreamborn", "Detective"],

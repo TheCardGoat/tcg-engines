@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { draw, optional, whenPlay } from "../../ability-helpers";
 
 export const maleficentSorceress: CharacterCard = {
   id: "1la",
@@ -20,26 +21,13 @@ export const maleficentSorceress: CharacterCard = {
     ravensburger: "cfeceefcaf48b610eb3bfdce490c108d8cc86302",
   },
   abilities: [
-    {
-      id: "1la-1",
-      type: "triggered",
+    whenPlay("1la-1", {
       name: "CAST MY SPELL!",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      effect: {
-        type: "optional",
-        effect: {
-          type: "draw",
-          amount: 1,
-          target: "CONTROLLER",
-        },
-        chooser: "CONTROLLER",
-      },
       text: "CAST MY SPELL! When you play this character, you may draw a card.",
-    },
+      playedBy: "you",
+      playedCard: "SELF",
+      then: optional(draw(1)),
+    }),
   ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],
 };

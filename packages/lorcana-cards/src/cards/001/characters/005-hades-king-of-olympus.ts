@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { shift } from "../../ability-helpers";
 
 export const hadesKingOfOlympus: CharacterCard = {
   id: "1e5",
@@ -20,15 +21,7 @@ export const hadesKingOfOlympus: CharacterCard = {
     ravensburger: "b49576fe526d49f6abcdf5af9e3eb03f64505194",
   },
   abilities: [
-    {
-      id: "1e5-1",
-      text: "Shift 6",
-      type: "keyword",
-      keyword: "Shift",
-      cost: {
-        ink: 6,
-      },
-    },
+    shift("1e5-1", 6, "Hades"),
     {
       id: "1e5-2",
       text: "SINISTER PLOT This character gets +1 {L} for each other Villain character you have in play.",

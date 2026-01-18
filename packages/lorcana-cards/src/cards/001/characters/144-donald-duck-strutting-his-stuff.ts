@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { ward } from "../../ability-helpers";
 
 export const donaldDuckStruttingHisStuff: CharacterCard = {
   id: "10b",
@@ -18,14 +19,7 @@ export const donaldDuckStruttingHisStuff: CharacterCard = {
   externalIds: {
     ravensburger: "827efa2d86fedbf475bd6d3956aa3b8d96bb21fc",
   },
-  abilities: [
-    {
-      id: "10b-1",
-      type: "keyword",
-      keyword: "Ward",
-      text: "Ward",
-    },
-  ],
+  abilities: [ward("10b-1")],
   classifications: ["Dreamborn", "Hero", "Inventor"],
 };
 

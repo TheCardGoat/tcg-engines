@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { singer } from "../../ability-helpers";
 
 export const cinderellaGentleAndKind: CharacterCard = {
   id: "qil",
@@ -20,10 +21,15 @@ export const cinderellaGentleAndKind: CharacterCard = {
     ravensburger: "",
   },
   abilities: [
+    singer("qil-1", 5),
     {
-      type: "action",
-      id: "qil-1",
-      text: "**Singer** 5 _(This character counts as cost 5 to sing songs.)_\n\n**A WONDERFUL DREAM** {E}− Remove up to 3 damage from chosen Princess character.",
+      type: "activated",
+      id: "qil-2",
+      name: "A WONDERFUL DREAM",
+      text: "A WONDERFUL DREAM {E}− Remove up to 3 damage from chosen Princess character.",
+      cost: {
+        exert: true,
+      },
       effect: {
         type: "remove-damage",
         amount: 3,
@@ -34,6 +40,12 @@ export const cinderellaGentleAndKind: CharacterCard = {
           owner: "any",
           zones: ["play"],
           cardTypes: ["character"],
+          filter: [
+            {
+              type: "has-classification",
+              classification: "Princess",
+            },
+          ],
         },
       },
     },

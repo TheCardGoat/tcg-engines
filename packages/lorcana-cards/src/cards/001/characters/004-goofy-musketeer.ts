@@ -1,4 +1,11 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import {
+  allYourCharactersWithClassification,
+  bodyguard,
+  optional,
+  removeDamage,
+  whenPlay,
+} from "../../ability-helpers";
 
 export const goofyMusketeer: CharacterCard = {
   id: "11w",
@@ -19,33 +26,16 @@ export const goofyMusketeer: CharacterCard = {
     ravensburger: "88974b7ccdf603a29b402df56365c9ac1c82289f",
   },
   abilities: [
-    {
-      id: "11w-1",
-      text: "Bodyguard",
-      type: "keyword",
-      keyword: "Bodyguard",
-    },
-    {
-      id: "11w-2",
-      text: "AND TWO FOR TEA! When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
+    bodyguard("11w-1"),
+    whenPlay("11w-2", {
       name: "AND TWO FOR TEA!",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      effect: {
-        type: "optional",
-        effect: {
-          type: "remove-damage",
-          amount: 2,
-          target: "CHOSEN_CHARACTER",
-          upTo: true,
-        },
-        chooser: "CONTROLLER",
-      },
-    },
+      text: "When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
+      playedBy: "you",
+      playedCard: "SELF",
+      then: optional(
+        removeDamage(2, allYourCharactersWithClassification("Musketeer"), true),
+      ),
+    }),
   ],
   classifications: ["Dreamborn", "Hero", "Musketeer"],
 };

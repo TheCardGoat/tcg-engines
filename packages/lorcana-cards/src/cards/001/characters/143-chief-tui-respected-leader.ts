@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { support } from "../../ability-helpers";
 
 export const chiefTuiRespectedLeader: CharacterCard = {
   id: "qai",
@@ -19,14 +20,7 @@ export const chiefTuiRespectedLeader: CharacterCard = {
   externalIds: {
     ravensburger: "5ec21d0830840f21954cd2a68de6906e36a893ed",
   },
-  abilities: [
-    {
-      id: "qai-1",
-      type: "keyword",
-      keyword: "Support",
-      text: "Support",
-    },
-  ],
+  abilities: [support("qai-1")],
   classifications: ["Storyborn", "Mentor", "King"],
 };
 

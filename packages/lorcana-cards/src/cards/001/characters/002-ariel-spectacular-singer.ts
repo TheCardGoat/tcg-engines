@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { singer, whenPlay } from "../../ability-helpers";
 
 export const arielSpectacularSinger: CharacterCard = {
   id: "1k6",
@@ -20,24 +21,13 @@ export const arielSpectacularSinger: CharacterCard = {
     ravensburger: "cae9d71be6c7f2ae989356aff5c1d3e307890630",
   },
   abilities: [
-    {
-      id: "1k6-1",
-      text: "Singer 5",
-      type: "keyword",
-      keyword: "Singer",
-      value: 5,
-    },
-    {
-      id: "1k6-2",
-      text: "MUSICAL DEBUT When you play this character, look at the top 4 cards of your deck. You may reveal a song card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    singer("1k6-1", 5),
+    whenPlay("1k6-2", {
       name: "MUSICAL DEBUT",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      effect: {
+      text: "MUSICAL DEBUT When you play this character, look at the top 4 cards of your deck. You may reveal a song card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+      playedBy: "you",
+      playedCard: "SELF",
+      then: {
         type: "scry",
         amount: 4,
         destinations: [
@@ -51,7 +41,7 @@ export const arielSpectacularSinger: CharacterCard = {
           { zone: "deck-bottom", remainder: true, ordering: "player-choice" },
         ],
       },
-    },
+    }),
   ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };

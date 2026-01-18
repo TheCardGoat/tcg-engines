@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { evasive } from "../../ability-helpers";
 
 export const goofyDaredevil: CharacterCard = {
   id: "cgx",
@@ -18,14 +19,7 @@ export const goofyDaredevil: CharacterCard = {
   externalIds: {
     ravensburger: "2cf1d9fb4a6212482783f1497e8c8a756df859b0",
   },
-  abilities: [
-    {
-      id: "cgx-1",
-      type: "keyword",
-      keyword: "Evasive",
-      text: "Evasive",
-    },
-  ],
+  abilities: [evasive("cgx-1")],
   classifications: ["Dreamborn", "Hero"],
 };
 

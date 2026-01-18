@@ -1,11 +1,12 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { rush } from "../../ability-helpers";
 
 export const flotsamUrsulasSpy: CharacterCard = {
   id: "4d0",
   cardType: "character",
   name: "Flotsam",
-  version: "Ursula’s Spy",
-  fullName: "Flotsam - Ursula’s Spy",
+  version: "Ursula's Spy",
+  fullName: "Flotsam - Ursula's Spy",
   inkType: ["amethyst"],
   franchise: "Little Mermaid",
   set: "001",
@@ -20,12 +21,7 @@ export const flotsamUrsulasSpy: CharacterCard = {
     ravensburger: "0fb84ba893dbb130cedf653b49ff8e2427440270",
   },
   abilities: [
-    {
-      id: "4d0-1",
-      text: "Rush",
-      type: "keyword",
-      keyword: "Rush",
-    },
+    rush("4d0-1"),
     {
       id: "4d0-2",
       text: "DEXTEROUS LUNGE Your characters named Jetsam gain Rush.",

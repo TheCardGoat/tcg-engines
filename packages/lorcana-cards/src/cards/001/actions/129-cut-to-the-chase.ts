@@ -1,4 +1,5 @@
 import type { ActionCard } from "@tcg/lorcana-types";
+import { gainKeyword, staticAbility } from "../../ability-helpers";
 
 export const cutToTheChase: ActionCard = {
   id: "5a0",
@@ -14,17 +15,10 @@ export const cutToTheChase: ActionCard = {
     ravensburger: "13057e6bb6112157b88c4ebbaec83cc1a20d9e5c",
   },
   abilities: [
-    {
-      id: "5a0-1",
+    staticAbility("5a0-1", {
       text: "Chosen character gains Rush this turn.",
-      type: "static",
-      effect: {
-        type: "gain-keyword",
-        keyword: "Rush",
-        target: "CHOSEN_CHARACTER",
-        duration: "this-turn",
-      },
-    },
+      effect: gainKeyword("Rush", "CHOSEN_CHARACTER"),
+    }),
   ],
 };
 

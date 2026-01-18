@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { dealDamage, optional, whenPlay } from "../../ability-helpers";
 
 export const tinkerBellGiantFairy: CharacterCard = {
   id: "kvc",
@@ -20,26 +21,21 @@ export const tinkerBellGiantFairy: CharacterCard = {
     ravensburger: "",
   },
   abilities: [
-    {
-      type: "action",
-      id: "c3s-1",
-      text: "**FAIRY DUST** When you play this character, you may deal 1 damage to each opposing character.",
-      effect: {
-        type: "optional",
-        effect: {
-          type: "deal-damage",
-          amount: 1,
-          target: {
-            selector: "all",
-            count: "all",
-            owner: "opponent",
-            zones: ["play"],
-            cardTypes: ["character"],
-          },
-        },
-        chooser: "CONTROLLER",
-      },
-    },
+    whenPlay("kvc-1", {
+      name: "ROCK THE BOAT",
+      text: "ROCK THE BOAT When you play this character, deal 1 damage to each opposing character.",
+      playedBy: "you",
+      playedCard: "SELF",
+      then: optional(
+        dealDamage(1, {
+          selector: "all",
+          count: "all",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        }),
+      ),
+    }),
   ],
   classifications: ["Floodborn", "Ally", "Fairy"],
 };

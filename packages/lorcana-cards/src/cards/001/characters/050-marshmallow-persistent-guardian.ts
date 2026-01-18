@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { moveCards, optional } from "../../ability-helpers";
 
 export const marshmallowPersistentGuardian: CharacterCard = {
   id: "it5",
@@ -24,14 +25,11 @@ export const marshmallowPersistentGuardian: CharacterCard = {
       type: "action",
       text: "**DURABLE** When this character is banished in a challenge, you may return this card to your hand.",
       id: "it5-1",
-      effect: {
-        type: "optional",
-        effect: {
-          type: "return-to-hand",
+      effect: optional(
+        moveCards("play", "hand", {
           target: "SELF",
-        },
-        chooser: "CONTROLLER",
-      },
+        }),
+      ),
     },
   ],
   classifications: ["Storyborn", "Ally"],

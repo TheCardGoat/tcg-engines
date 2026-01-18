@@ -1,4 +1,5 @@
 import type { ActionCard } from "@tcg/lorcana-types";
+import { dealDamage } from "../../ability-helpers";
 
 export const smashundefined: ActionCard = {
   id: "ub4",
@@ -21,17 +22,13 @@ export const smashundefined: ActionCard = {
       type: "action",
       id: "ub4-1",
       text: "Deal 3 damage to chosen character.",
-      effect: {
-        type: "deal-damage",
-        amount: 3,
-        target: {
-          selector: "chosen",
-          count: 1,
-          owner: "any",
-          zones: ["play"],
-          cardTypes: ["character"],
-        },
-      },
+      effect: dealDamage(3, {
+        selector: "chosen",
+        count: 1,
+        owner: "any",
+        zones: ["play"],
+        cardTypes: ["character"],
+      }),
     },
   ],
 };

@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { whenPlay } from "../../ability-helpers";
 
 export const auroraBriarRose: CharacterCard = {
   id: "v54",
@@ -20,24 +21,19 @@ export const auroraBriarRose: CharacterCard = {
     ravensburger: "703d2d0c9e63fb69fed427dac99aa1f1f589898f",
   },
   abilities: [
-    {
-      id: "v54-1",
-      text: "DISARMING BEAUTY When you play this character, chosen character gets -2 {S} this turn.",
+    whenPlay("v54-1", {
       name: "DISARMING BEAUTY",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      effect: {
+      text: "DISARMING BEAUTY When you play this character, chosen character gets -2 {S} this turn.",
+      playedBy: "you",
+      playedCard: "SELF",
+      then: {
         type: "modify-stat",
         stat: "strength",
         modifier: -2,
         target: "CHOSEN_CHARACTER",
         duration: "this-turn",
       },
-    },
+    }),
   ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };

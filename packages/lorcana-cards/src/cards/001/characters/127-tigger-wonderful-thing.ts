@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { evasive } from "../../ability-helpers";
 
 export const tiggerWonderfulThing: CharacterCard = {
   id: "1cg",
@@ -19,14 +20,7 @@ export const tiggerWonderfulThing: CharacterCard = {
   externalIds: {
     ravensburger: "aeb12d5f9810897355e57f169ef318f584e11c64",
   },
-  abilities: [
-    {
-      id: "1cg-1",
-      type: "keyword",
-      keyword: "Evasive",
-      text: "Evasive",
-    },
-  ],
+  abilities: [evasive("1cg-1")],
   classifications: ["Storyborn", "Tigger"],
 };
 

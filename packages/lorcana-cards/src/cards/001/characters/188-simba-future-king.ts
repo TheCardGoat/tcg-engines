@@ -1,4 +1,11 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import {
+  discard,
+  draw,
+  optional,
+  sequence,
+  whenPlay,
+} from "../../ability-helpers";
 
 export const simbaFutureKing: CharacterCard = {
   id: "q21",
@@ -20,26 +27,13 @@ export const simbaFutureKing: CharacterCard = {
     ravensburger: "5de9049716db6093e203ad3ba87b04894b400848",
   },
   abilities: [
-    {
-      id: "q21-1",
-      text: "GUESS WHAT? When you play this character, you may draw a card, then choose and discard a card.",
+    whenPlay("q21-1", {
       name: "GUESS WHAT?",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      effect: {
-        type: "optional",
-        effect: {
-          type: "draw",
-          amount: 1,
-          target: "CONTROLLER",
-        },
-        chooser: "CONTROLLER",
-      },
-    },
+      text: "GUESS WHAT? When you play this character, you may draw a card, then choose and discard a card.",
+      playedBy: "you",
+      playedCard: "SELF",
+      then: optional(sequence(draw(1), discard(1, "CONTROLLER", true))),
+    }),
   ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };

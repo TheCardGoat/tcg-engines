@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { bodyguard } from "../../ability-helpers";
 
 export const donaldDuckMusketeer: CharacterCard = {
   id: "1te",
@@ -19,12 +20,7 @@ export const donaldDuckMusketeer: CharacterCard = {
     ravensburger: "eb0f321c8ffffb426862310ebc9a55e6e2d2d5df",
   },
   abilities: [
-    {
-      id: "1te-1",
-      text: "Bodyguard",
-      type: "keyword",
-      keyword: "Bodyguard",
-    },
+    bodyguard("1te-1"),
     {
       id: "1te-2",
       text: "STAY ALERT! During your turn, your Musketeer characters gain Evasive.",

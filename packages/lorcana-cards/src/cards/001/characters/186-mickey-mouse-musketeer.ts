@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { bodyguard } from "../../ability-helpers";
 
 export const mickeyMouseMusketeer: CharacterCard = {
   id: "9h9",
@@ -19,12 +20,7 @@ export const mickeyMouseMusketeer: CharacterCard = {
     ravensburger: "222a49ab00ebfa5c98e9df4f600b676cbbeb4f6d",
   },
   abilities: [
-    {
-      id: "9h9-1",
-      text: "Bodyguard",
-      type: "keyword",
-      keyword: "Bodyguard",
-    },
+    bodyguard("9h9-1"),
     {
       id: "9h9-2",
       text: "ALL FOR ONE Your other Musketeer characters get +1 {S}.",

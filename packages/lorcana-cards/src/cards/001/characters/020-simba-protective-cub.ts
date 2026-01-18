@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { bodyguard } from "../../ability-helpers";
 
 export const simbaProtectiveCub: CharacterCard = {
   id: "rvm",
@@ -19,14 +20,7 @@ export const simbaProtectiveCub: CharacterCard = {
   externalIds: {
     ravensburger: "6479a6ae550768c207018562ce6f687ec41e7c86",
   },
-  abilities: [
-    {
-      id: "rvm-1",
-      text: "Bodyguard",
-      type: "keyword",
-      keyword: "Bodyguard",
-    },
-  ],
+  abilities: [bodyguard("rvm-1")],
   classifications: ["Storyborn", "Hero", "Prince"],
 };
 
