@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { tick } from "svelte";
   import { os } from "../os.svelte";
 
   type MenuItem =
@@ -59,6 +60,30 @@
 
     os.focusWindow(id);
   }
+
+  let activeTabElement = $state<HTMLElement | null>(null);
+
+  const activeWindowId = $derived.by(() => {
+    if (os.activeWindowId) return os.activeWindowId;
+    const candidates = os.windows.slice().sort((a, b) => b.zIndex - a.zIndex);
+    return candidates[0]?.id ?? null;
+  });
+
+  function activeTab(node: HTMLElement, isActive: boolean) {
+    if (isActive) activeTabElement = node;
+    return {
+      update(next: boolean) {
+        if (next) activeTabElement = node;
+      },
+    };
+  }
+
+  $effect(() => {
+    if (!activeWindowId) return;
+    tick().then(() => {
+      activeTabElement?.scrollIntoView({ block: "nearest", inline: "nearest" });
+    });
+  });
 
   const menus = $derived<Menu[]>([
     {
@@ -148,37 +173,48 @@
       <div class="flex-1 min-w-0 overflow-x-auto">
         <div class="h-full flex items-center gap-1">
           {#each os.windows as win (win.id)}
-            <div class="relative shrink-0">
+            {#if win.id === activeWindowId}
+              <div class="relative shrink-0" use:activeTab={true}>
+                <button
+                  class="h-9 px-3 pr-8 rounded-xl border border-black/20 bg-white flex items-center gap-2 max-w-[240px]"
+                  onclick={() => onWindowTabClick(win.id)}
+                  aria-label={win.title}
+                >
+                  <span
+                    class={"text-base " + (win.isMinimized ? "opacity-50" : "opacity-90")}
+                    >{win.icon}</span
+                  >
+                  <span
+                    class={"text-xs font-semibold truncate " +
+                      (win.isMinimized ? "text-black/40" : "text-black/70")}
+                    >{win.title}</span
+                  >
+                </button>
+
+                <button
+                  class="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-6 grid place-items-center rounded-md hover:bg-black/10 transition-colors"
+                  aria-label="Close"
+                  onclick={(e) => {
+                    e.stopPropagation();
+                    os.closeWindow(win.id);
+                  }}
+                >
+                  <span class="text-sm text-black/60">×</span>
+                </button>
+              </div>
+            {:else}
               <button
-                class={"h-9 px-3 pr-8 rounded-xl border flex items-center gap-2 max-w-[240px] transition-colors " +
-                  (os.activeWindowId === win.id
-                    ? "bg-white border-black/20"
-                    : "bg-black/5 hover:bg-black/10 border-black/10")}
+                class={"h-9 w-9 rounded-xl border transition-colors grid place-items-center shrink-0 bg-black/5 hover:bg-black/10 border-black/10"}
                 onclick={() => onWindowTabClick(win.id)}
                 aria-label={win.title}
+                title={win.title}
               >
                 <span
                   class={"text-base " + (win.isMinimized ? "opacity-50" : "opacity-90")}
                   >{win.icon}</span
                 >
-                <span
-                  class={"text-xs font-semibold truncate " +
-                    (win.isMinimized ? "text-black/40" : "text-black/70")}
-                  >{win.title}</span
-                >
               </button>
-
-              <button
-                class="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-6 grid place-items-center rounded-md hover:bg-black/10 transition-colors"
-                aria-label="Close"
-                onclick={(e) => {
-                  e.stopPropagation();
-                  os.closeWindow(win.id);
-                }}
-              >
-                <span class="text-sm text-black/60">×</span>
-              </button>
-            </div>
+            {/if}
           {/each}
         </div>
       </div>
