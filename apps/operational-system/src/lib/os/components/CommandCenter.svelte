@@ -1,8 +1,17 @@
 <script lang="ts">
     import { os } from '../os.svelte';
     import { fade, scale } from 'svelte/transition';
+    import { tick } from 'svelte';
 
     let searchQuery = $state('');
+    let searchInput = $state<HTMLInputElement | null>(null);
+
+    $effect(() => {
+        if (!os.isCommandCenterOpen) return;
+        tick().then(() => {
+            searchInput?.focus();
+        });
+    });
 
     let filteredApps = $derived(
         os.desktopIcons.filter(app => 
@@ -30,6 +39,9 @@
     <div 
         class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-[9999] flex flex-col max-h-[80vh]"
         transition:scale={{ duration: 200, start: 0.95 }}
+        role="dialog"
+        aria-label="Command Center"
+        aria-modal="true"
     >
         <!-- Search -->
         <div class="p-4 border-b border-gray-100">
@@ -40,7 +52,7 @@
                     placeholder="Search apps..." 
                     class="w-full pl-10 pr-4 py-2 bg-gray-50 rounded-lg border-transparent focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
                     bind:value={searchQuery}
-                    autofocus
+                    bind:this={searchInput}
                 />
             </div>
         </div>

@@ -30,6 +30,8 @@
         defaultHeight: 600,
       });
     }
+
+    os.hydrateFromStorage();
   });
 </script>
 

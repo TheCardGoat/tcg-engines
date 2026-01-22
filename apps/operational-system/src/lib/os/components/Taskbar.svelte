@@ -25,12 +25,15 @@
 
 <div
   class="h-12 bg-white/80 backdrop-blur-md border-t border-gray-200 fixed bottom-0 left-0 right-0 flex items-center justify-between px-4 z-[9999]"
+  role="navigation"
+  aria-label="Taskbar"
 >
   <div class="flex items-center gap-4">
     <!-- Start Button -->
     <button
       class="p-2 rounded hover:bg-gray-100 transition-colors {os.isCommandCenterOpen ? 'bg-gray-200' : ''}"
       onclick={() => os.toggleCommandCenter()}
+      aria-label={os.isCommandCenterOpen ? 'Close Command Center' : 'Open Command Center'}
     >
       <span class="text-xl">🐐</span>
     </button>
