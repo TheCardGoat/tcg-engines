@@ -29,11 +29,16 @@ class OperatingSystem {
   windows = $state<WindowState[]>([]);
   activeWindowId = $state<string | null>(null);
   desktopIcons = $state<AppDefinition[]>([]);
+  isCommandCenterOpen = $state(false);
 
   private nextZIndex = 100;
 
   constructor() {
     // Initialize with some default desktop icons if needed
+  }
+
+  toggleCommandCenter() {
+    this.isCommandCenterOpen = !this.isCommandCenterOpen;
   }
 
   registerApp(app: AppDefinition) {
