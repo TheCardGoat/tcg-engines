@@ -144,7 +144,7 @@
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-  class={"absolute flex flex-col bg-white rounded-lg overflow-hidden border transition-all duration-150 " +
+  class={"absolute flex flex-col bg-white rounded-lg overflow-hidden border transition-shadow transition-colors duration-150 " +
     (os.activeWindowId === windowState.id
       ? "border-white/40 ring-2 ring-[#f59e0b]/70 shadow-[0_30px_80px_rgba(0,0,0,0.45)]"
       : "border-black/10 shadow-xl")}
