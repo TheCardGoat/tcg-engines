@@ -24,11 +24,15 @@ test("restores open windows after reload", async ({ page }) => {
     page.getByRole("heading", { name: "Hello World! 👋", level: 1 }),
   ).toBeVisible();
 
-  await page.waitForFunction(() => {
-    return (
-      window.localStorage.getItem("tcg.operational-system.osState") !== null
-    );
-  });
+  await page.waitForFunction(
+    () => {
+      return (
+        window.localStorage.getItem("tcg.operational-system.osState") !== null
+      );
+    },
+    undefined,
+    { timeout: 2000 },
+  );
 
   await page.reload();
   await expect(

@@ -67,7 +67,7 @@ class OperatingSystem {
   dragSnapTarget = $state<WindowSnapTarget | null>(null);
 
   private nextZIndex = 100;
-  private persistTimer: number | null = null;
+  private persistTimer: ReturnType<typeof globalThis.setTimeout> | null = null;
   private persistLastAt = 0;
   private storageKey = "tcg.operational-system.osState";
 
@@ -332,7 +332,7 @@ class OperatingSystem {
     const now = Date.now();
     const dueIn = Math.max(0, minIntervalMs - (now - this.persistLastAt));
 
-    this.persistTimer = window.setTimeout(() => {
+    this.persistTimer = globalThis.setTimeout(() => {
       this.persistTimer = null;
       this.persistLastAt = Date.now();
       this.persistNow();

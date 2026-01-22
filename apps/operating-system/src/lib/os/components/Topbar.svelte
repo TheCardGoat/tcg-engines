@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Bell, Search, X } from "lucide-svelte";
   import { tick } from "svelte";
   import { os } from "../os.svelte";
 
@@ -69,6 +70,16 @@
     return candidates[0]?.id ?? null;
   });
 
+  const commandCenterShortcutLabel = $derived.by(() => {
+    if (typeof navigator === "undefined") return "Ctrl K";
+    const uaPlatform =
+      (navigator as unknown as { userAgentData?: { platform?: string } })
+        .userAgentData?.platform ?? "";
+    const ua = navigator.userAgent || "";
+    const platform = uaPlatform || ua;
+    return /Mac|iPhone|iPad|iPod/i.test(platform) ? "⌘K" : "Ctrl K";
+  });
+
   function activeTab(node: HTMLElement, isActive: boolean) {
     if (isActive) activeTabElement = node;
     return {
@@ -103,7 +114,7 @@
           type: "link",
           label: "Search apps",
           action: openCommandCenter,
-          rightLabel: "⌘K",
+          rightLabel: commandCenterShortcutLabel,
         },
       ],
     },
@@ -199,7 +210,7 @@
                     os.closeWindow(win.id);
                   }}
                 >
-                  <span class="i-lucide-x text-base text-black/60"></span>
+                  <X size={16} class="text-black/60" />
                 </button>
               </div>
             {:else}
@@ -228,7 +239,7 @@
         aria-label="Open Command Center"
         onclick={openCommandCenter}
       >
-        <span class="i-lucide-search text-lg text-black/70"></span>
+        <Search size={18} class="text-black/70" />
       </button>
 
       <button
@@ -236,7 +247,7 @@
         aria-label="Open Notifications"
         onclick={openRightPanel}
       >
-        <span class="i-lucide-bell text-lg text-black/70"></span>
+        <Bell size={18} class="text-black/70" />
       </button>
     </div>
   </div>

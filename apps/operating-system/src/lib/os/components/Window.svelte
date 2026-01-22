@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onDestroy } from "svelte";
   import { scale } from "svelte/transition";
   import type { WindowSnapTarget, WindowState } from "../os.svelte";
   import { os } from "../os.svelte";
@@ -140,6 +141,13 @@
     window.removeEventListener("mousemove", handleResize);
     window.removeEventListener("mouseup", stopResize);
   }
+
+  onDestroy(() => {
+    window.removeEventListener("mousemove", handleDrag);
+    window.removeEventListener("mouseup", stopDrag);
+    window.removeEventListener("mousemove", handleResize);
+    window.removeEventListener("mouseup", stopResize);
+  });
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->

@@ -1,9 +1,14 @@
 <script lang="ts">
-  import { os } from "../os.svelte";
+  import { Copy } from "lucide-svelte";
   import { tick } from "svelte";
+  import { os } from "../os.svelte";
 
   let shareInput = $state<HTMLInputElement | null>(null);
   let shareValue = $state("");
+  let copyStatus = $state<"idle" | "copied" | "error">("idle");
+  let copyResetTimer = $state<ReturnType<typeof globalThis.setTimeout> | null>(
+    null,
+  );
 
   let activeWindows = $derived(
     os.windows
@@ -19,8 +24,16 @@
 
     try {
       await navigator.clipboard.writeText(text);
+      copyStatus = "copied";
     } catch {
+      copyStatus = "error";
       return;
+    } finally {
+      if (copyResetTimer) globalThis.clearTimeout(copyResetTimer);
+      copyResetTimer = globalThis.setTimeout(() => {
+        copyStatus = "idle";
+        copyResetTimer = null;
+      }, 2000);
     }
   }
 
@@ -72,7 +85,7 @@
     </div>
 
     <div class="p-3 flex-1 overflow-auto">
-      {#if os.windows.length === 0}
+      {#if activeWindows.length === 0}
         <div class="p-3 text-sm text-black/50">No active windows</div>
       {:else}
         <div class="space-y-2">
@@ -97,7 +110,7 @@
     <div class="p-4 border-t border-black/10">
       <div class="text-sm font-semibold text-black/80">Share your windows</div>
       <div class="mt-1 text-xs text-black/50">
-        Copy the URL to share your open windows & layout.
+        Copy the URL for this OS page.
       </div>
 
       <div class="mt-3 flex items-center gap-2">
@@ -113,9 +126,15 @@
           aria-label="Copy"
           onclick={copyShareLink}
         >
-          <span class="text-lg">⧉</span>
+          <Copy size={18} class="text-black/70" />
         </button>
       </div>
+
+      {#if copyStatus === "copied"}
+        <div class="mt-2 text-xs text-green-700">Copied</div>
+      {:else if copyStatus === "error"}
+        <div class="mt-2 text-xs text-red-700">Copy failed</div>
+      {/if}
 
       <div class="mt-2 text-xs text-black/40">
         Tip: Press

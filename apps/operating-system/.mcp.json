@@ -1,5 +1,9 @@
 {
   "mcpServers": {
+    "daisyui": {
+      "type": "sse",
+      "url": "https://gitmcp.io/saadeghi/daisyui"
+    },
     "svelte": {
       "type": "http",
       "url": "https://mcp.svelte.dev/mcp"
