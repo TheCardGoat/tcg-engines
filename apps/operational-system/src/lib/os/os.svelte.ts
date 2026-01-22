@@ -45,11 +45,26 @@ export type PersistedOSStateV1 = {
   isCommandCenterOpen: boolean;
 };
 
+export type PersistedOSStateV2 = {
+  version: 2;
+  windows: PersistedWindowStateV1[];
+  activeWindowId: string | null;
+  isCommandCenterOpen: boolean;
+  apps: Record<string, unknown>;
+};
+
+export type WindowSnapTarget = "left" | "right";
+
 class OperatingSystem {
   windows = $state<WindowState[]>([]);
   activeWindowId = $state<string | null>(null);
   desktopIcons = $state<AppDefinition[]>([]);
   isCommandCenterOpen = $state(false);
+  isRightPanelOpen = $state(false);
+  appsState = $state<Record<string, unknown>>({});
+
+  draggingWindowId = $state<string | null>(null);
+  dragSnapTarget = $state<WindowSnapTarget | null>(null);
 
   private nextZIndex = 100;
   private persistScheduled = false;
@@ -64,6 +79,34 @@ class OperatingSystem {
     this.schedulePersist();
   }
 
+  toggleRightPanel() {
+    this.isRightPanelOpen = !this.isRightPanelOpen;
+  }
+
+  startWindowDrag(windowId: string) {
+    this.draggingWindowId = windowId;
+    this.dragSnapTarget = null;
+  }
+
+  setDragSnapTarget(target: WindowSnapTarget | null) {
+    this.dragSnapTarget = target;
+  }
+
+  endWindowDrag() {
+    this.draggingWindowId = null;
+    this.dragSnapTarget = null;
+  }
+
+  closeRightPanel() {
+    this.isRightPanelOpen = false;
+  }
+
+  closeAllWindows() {
+    this.windows = [];
+    this.activeWindowId = null;
+    this.schedulePersist();
+  }
+
   registerApp(app: AppDefinition) {
     this.desktopIcons.push(app);
   }
@@ -74,14 +117,8 @@ class OperatingSystem {
     const raw = window.localStorage.getItem(this.storageKey);
     if (!raw) return;
 
-    let parsed: unknown;
-    try {
-      parsed = JSON.parse(raw);
-    } catch {
-      return;
-    }
-
-    if (!this.isPersistedOSStateV1(parsed)) return;
+    const parsed = this.parsePersistedState(raw);
+    if (!parsed) return;
 
     const hydratedWindows: WindowState[] = [];
 
@@ -107,6 +144,7 @@ class OperatingSystem {
 
     this.windows = hydratedWindows;
     this.isCommandCenterOpen = parsed.isCommandCenterOpen;
+    this.appsState = parsed.apps;
     this.activeWindowId = hydratedWindows.some(
       (w) => w.id === parsed.activeWindowId,
     )
@@ -214,17 +252,36 @@ class OperatingSystem {
           width: win.width,
           height: win.height,
         };
+        const chromeHeight = 48;
         win.x = 0;
-        win.y = 0;
+        win.y = chromeHeight;
         // We'll need to know the desktop bounds, but for now let's assume full available space
-        // This might need adjustment based on taskbar height
+        // This might need adjustment based on top chrome height
         win.width = window.innerWidth;
-        win.height = window.innerHeight - 48; // Assume 48px taskbar
+        win.height = window.innerHeight - chromeHeight;
         win.isMaximized = true;
       }
       this.focusWindow(id);
       this.schedulePersist();
     }
+  }
+
+  snapWindowToHalf(id: string, side: WindowSnapTarget) {
+    const win = this.windows.find((w) => w.id === id);
+    if (!win) return;
+
+    const chromeHeight = 48;
+    const fullWidth = window.innerWidth;
+    const fullHeight = window.innerHeight - chromeHeight;
+
+    win.isMaximized = false;
+    win.x = side === "left" ? 0 : Math.floor(fullWidth / 2);
+    win.y = chromeHeight;
+    win.width = Math.floor(fullWidth / 2);
+    win.height = fullHeight;
+
+    this.focusWindow(id);
+    this.schedulePersist();
   }
 
   updateWindowBounds(
@@ -239,6 +296,15 @@ class OperatingSystem {
       if (bounds.height !== undefined) win.height = bounds.height;
       this.schedulePersist();
     }
+  }
+
+  getAppState<T>(appId: string): T | undefined {
+    return this.appsState[appId] as T | undefined;
+  }
+
+  setAppState(appId: string, next: unknown) {
+    this.appsState[appId] = next;
+    this.schedulePersist();
   }
 
   private canUseStorage() {
@@ -262,8 +328,8 @@ class OperatingSystem {
   private persistNow() {
     if (!this.canUseStorage()) return;
 
-    const persisted: PersistedOSStateV1 = {
-      version: 1,
+    const persisted: PersistedOSStateV2 = {
+      version: 2,
       windows: this.windows.map((w) => ({
         id: w.id,
         appId: w.appId,
@@ -278,6 +344,7 @@ class OperatingSystem {
       })),
       activeWindowId: this.activeWindowId,
       isCommandCenterOpen: this.isCommandCenterOpen,
+      apps: this.appsState,
     };
 
     try {
@@ -297,6 +364,42 @@ class OperatingSystem {
     }
     if (typeof v.isCommandCenterOpen !== "boolean") return false;
     return true;
+  }
+
+  private isPersistedOSStateV2(value: unknown): value is PersistedOSStateV2 {
+    if (!value || typeof value !== "object") return false;
+    const v = value as Record<string, unknown>;
+    if (v.version !== 2) return false;
+    if (!Array.isArray(v.windows)) return false;
+    if (!(typeof v.activeWindowId === "string" || v.activeWindowId === null)) {
+      return false;
+    }
+    if (typeof v.isCommandCenterOpen !== "boolean") return false;
+    if (!v.apps || typeof v.apps !== "object" || Array.isArray(v.apps))
+      return false;
+    return true;
+  }
+
+  private parsePersistedState(raw: string): PersistedOSStateV2 | null {
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return null;
+    }
+
+    if (this.isPersistedOSStateV2(parsed)) return parsed;
+    if (this.isPersistedOSStateV1(parsed)) {
+      return {
+        version: 2,
+        windows: parsed.windows,
+        activeWindowId: parsed.activeWindowId,
+        isCommandCenterOpen: parsed.isCommandCenterOpen,
+        apps: {},
+      };
+    }
+
+    return null;
   }
 }
 

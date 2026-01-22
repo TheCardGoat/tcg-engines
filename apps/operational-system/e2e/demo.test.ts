@@ -1,27 +1,27 @@
 import { expect, test } from "@playwright/test";
 
-test("home page renders taskbar start button", async ({ page }) => {
+test("home page renders topbar search button", async ({ page }) => {
   await page.goto("/");
 
-  const taskbar = page.getByRole("navigation", { name: "Taskbar" });
+  const topbar = page.getByRole("navigation", { name: "Topbar" });
   await expect(
-    taskbar.getByRole("button", { name: "Open Command Center" }),
+    topbar.getByRole("button", { name: "Open Command Center" }),
   ).toBeVisible();
 });
 
 test("restores open windows after reload", async ({ page }) => {
   await page.goto("/");
 
-  const taskbar = page.getByRole("navigation", { name: "Taskbar" });
+  const topbar = page.getByRole("navigation", { name: "Topbar" });
 
-  await taskbar.getByRole("button", { name: "Open Command Center" }).click();
+  await topbar.getByRole("button", { name: "Open Command Center" }).click();
   await page
     .getByRole("dialog", { name: "Command Center" })
     .getByRole("button", { name: /Hello World/ })
     .click();
 
   await expect(
-    taskbar.getByRole("button", { name: /Hello World/ }),
+    page.getByRole("heading", { name: "Hello World! 👋", level: 1 }),
   ).toBeVisible();
 
   await page.waitForFunction(() => {
@@ -32,6 +32,6 @@ test("restores open windows after reload", async ({ page }) => {
 
   await page.reload();
   await expect(
-    taskbar.getByRole("button", { name: /Hello World/ }),
+    page.getByRole("heading", { name: "Hello World! 👋", level: 1 }),
   ).toBeVisible();
 });

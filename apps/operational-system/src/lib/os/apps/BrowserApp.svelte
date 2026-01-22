@@ -1,7 +1,7 @@
 <script lang="ts">
-    let url = $state('https://posthog.com');
-    let inputUrl = $state('https://posthog.com');
-    let iframeSrc = $state('https://posthog.com');
+    let url = $state('https://cardgoat.org');
+    let inputUrl = $state('https://cardgoat.org');
+    let iframeSrc = $state('https://cardgoat.org');
 
     function navigate() {
         if (!inputUrl.startsWith('http')) {

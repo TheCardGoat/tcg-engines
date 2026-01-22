@@ -1,14 +1,15 @@
 <script lang="ts">
-  import { os } from "../os.svelte";
-  import Window from "./Window.svelte";
-  import Taskbar from "./Taskbar.svelte";
-  import DesktopIcon from "./DesktopIcon.svelte";
-  import CommandCenter from "./CommandCenter.svelte";
   import { onMount } from "svelte";
 
   // Import Apps
-  import HelloApp from "../apps/HelloApp.svelte";
   import BrowserApp from "../apps/BrowserApp.svelte";
+  import HelloApp from "../apps/HelloApp.svelte";
+  import { os } from "../os.svelte";
+  import CommandCenter from "./CommandCenter.svelte";
+  import DesktopIcon from "./DesktopIcon.svelte";
+  import RightPanel from "./RightPanel.svelte";
+  import Topbar from "./Topbar.svelte";
+  import Window from "./Window.svelte";
 
   onMount(() => {
     // Register default apps if empty
@@ -40,7 +41,7 @@
 >
   <!-- Desktop Icons Grid -->
   <div
-    class="absolute inset-0 p-4 grid grid-flow-col grid-rows-[repeat(auto-fill,6rem)] gap-4 content-start items-start justify-start w-fit"
+    class="absolute inset-0 p-4 pt-16 grid grid-flow-col grid-rows-[repeat(auto-fill,6rem)] gap-4 content-start items-start justify-start w-fit"
   >
     {#each os.desktopIcons as app (app.id)}
       <DesktopIcon {app} />
@@ -49,6 +50,13 @@
 
   <!-- Windows Layer -->
   <div class="absolute inset-0 pointer-events-none">
+    {#if os.dragSnapTarget}
+      <div
+        class={"absolute top-12 bottom-0 border border-white bg-white/20 backdrop-blur-sm z-[9990] transition-opacity duration-150 " +
+          (os.dragSnapTarget === "left" ? "left-0 right-1/2" : "left-1/2 right-0")}
+      ></div>
+    {/if}
+
     {#each os.windows as win (win.id)}
       <!-- Pointer events need to be enabled for windows specifically -->
       <div class="pointer-events-auto contents">
@@ -57,9 +65,10 @@
     {/each}
   </div>
 
-  <!-- Taskbar -->
-  <Taskbar />
+  <Topbar />
 
   <!-- Command Center -->
   <CommandCenter />
+
+  <RightPanel />
 </div>
