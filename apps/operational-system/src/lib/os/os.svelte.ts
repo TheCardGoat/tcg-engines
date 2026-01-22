@@ -25,6 +25,26 @@ export type WindowState = {
   prevBounds?: { x: number; y: number; width: number; height: number };
 };
 
+export type PersistedWindowStateV1 = {
+  id: string;
+  appId: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  isMinimized: boolean;
+  isMaximized: boolean;
+  zIndex: number;
+  prevBounds?: { x: number; y: number; width: number; height: number };
+};
+
+export type PersistedOSStateV1 = {
+  version: 1;
+  windows: PersistedWindowStateV1[];
+  activeWindowId: string | null;
+  isCommandCenterOpen: boolean;
+};
+
 class OperatingSystem {
   windows = $state<WindowState[]>([]);
   activeWindowId = $state<string | null>(null);
@@ -32,6 +52,8 @@ class OperatingSystem {
   isCommandCenterOpen = $state(false);
 
   private nextZIndex = 100;
+  private persistScheduled = false;
+  private storageKey = "tcg.operational-system.osState";
 
   constructor() {
     // Initialize with some default desktop icons if needed
@@ -39,10 +61,63 @@ class OperatingSystem {
 
   toggleCommandCenter() {
     this.isCommandCenterOpen = !this.isCommandCenterOpen;
+    this.schedulePersist();
   }
 
   registerApp(app: AppDefinition) {
     this.desktopIcons.push(app);
+  }
+
+  hydrateFromStorage() {
+    if (!this.canUseStorage()) return;
+
+    const raw = window.localStorage.getItem(this.storageKey);
+    if (!raw) return;
+
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return;
+    }
+
+    if (!this.isPersistedOSStateV1(parsed)) return;
+
+    const hydratedWindows: WindowState[] = [];
+
+    for (const w of parsed.windows) {
+      const app = this.desktopIcons.find((a) => a.id === w.appId);
+      if (!app) continue;
+      hydratedWindows.push({
+        id: w.id,
+        appId: w.appId,
+        title: app.title,
+        icon: app.icon,
+        component: app.component,
+        x: w.x,
+        y: w.y,
+        width: w.width,
+        height: w.height,
+        isMinimized: w.isMinimized,
+        isMaximized: w.isMaximized,
+        zIndex: w.zIndex,
+        prevBounds: w.prevBounds,
+      });
+    }
+
+    this.windows = hydratedWindows;
+    this.isCommandCenterOpen = parsed.isCommandCenterOpen;
+    this.activeWindowId = hydratedWindows.some(
+      (w) => w.id === parsed.activeWindowId,
+    )
+      ? parsed.activeWindowId
+      : null;
+
+    const maxZ = hydratedWindows.reduce(
+      (max, w) => (w.zIndex > max ? w.zIndex : max),
+      99,
+    );
+    this.nextZIndex = maxZ + 1;
   }
 
   openWindow(appId: string) {
@@ -75,6 +150,7 @@ class OperatingSystem {
 
     this.windows.push(newWindow);
     this.focusWindow(id);
+    this.schedulePersist();
   }
 
   closeWindow(id: string) {
@@ -91,6 +167,8 @@ class OperatingSystem {
         this.activeWindowId = null;
       }
     }
+
+    this.schedulePersist();
   }
 
   focusWindow(id: string) {
@@ -101,6 +179,7 @@ class OperatingSystem {
       if (win.isMinimized) {
         win.isMinimized = false;
       }
+      this.schedulePersist();
     }
   }
 
@@ -111,6 +190,7 @@ class OperatingSystem {
       if (this.activeWindowId === id) {
         this.activeWindowId = null; // Or focus next
       }
+      this.schedulePersist();
     }
   }
 
@@ -143,6 +223,7 @@ class OperatingSystem {
         win.isMaximized = true;
       }
       this.focusWindow(id);
+      this.schedulePersist();
     }
   }
 
@@ -156,7 +237,66 @@ class OperatingSystem {
       if (bounds.y !== undefined) win.y = bounds.y;
       if (bounds.width !== undefined) win.width = bounds.width;
       if (bounds.height !== undefined) win.height = bounds.height;
+      this.schedulePersist();
     }
+  }
+
+  private canUseStorage() {
+    return (
+      typeof window !== "undefined" &&
+      typeof window.localStorage !== "undefined"
+    );
+  }
+
+  private schedulePersist() {
+    if (!this.canUseStorage()) return;
+    if (this.persistScheduled) return;
+    this.persistScheduled = true;
+
+    queueMicrotask(() => {
+      this.persistScheduled = false;
+      this.persistNow();
+    });
+  }
+
+  private persistNow() {
+    if (!this.canUseStorage()) return;
+
+    const persisted: PersistedOSStateV1 = {
+      version: 1,
+      windows: this.windows.map((w) => ({
+        id: w.id,
+        appId: w.appId,
+        x: w.x,
+        y: w.y,
+        width: w.width,
+        height: w.height,
+        isMinimized: w.isMinimized,
+        isMaximized: w.isMaximized,
+        zIndex: w.zIndex,
+        prevBounds: w.prevBounds,
+      })),
+      activeWindowId: this.activeWindowId,
+      isCommandCenterOpen: this.isCommandCenterOpen,
+    };
+
+    try {
+      window.localStorage.setItem(this.storageKey, JSON.stringify(persisted));
+    } catch {
+      return;
+    }
+  }
+
+  private isPersistedOSStateV1(value: unknown): value is PersistedOSStateV1 {
+    if (!value || typeof value !== "object") return false;
+    const v = value as Record<string, unknown>;
+    if (v.version !== 1) return false;
+    if (!Array.isArray(v.windows)) return false;
+    if (!(typeof v.activeWindowId === "string" || v.activeWindowId === null)) {
+      return false;
+    }
+    if (typeof v.isCommandCenterOpen !== "boolean") return false;
+    return true;
   }
 }
 

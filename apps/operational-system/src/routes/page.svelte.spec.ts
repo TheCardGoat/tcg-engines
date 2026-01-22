@@ -4,10 +4,12 @@ import { render } from "vitest-browser-svelte";
 import Page from "./+page.svelte";
 
 describe("/+page.svelte", () => {
-  it("should render h1", async () => {
+  it("should render the taskbar start button", async () => {
     render(Page);
 
-    const heading = page.getByRole("heading", { level: 1 });
-    await expect.element(heading).toBeInTheDocument();
+    const startButton = page.getByRole("button", {
+      name: "Open Command Center",
+    });
+    await expect.element(startButton).toBeInTheDocument();
   });
 });
