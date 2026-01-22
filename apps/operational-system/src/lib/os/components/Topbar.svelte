@@ -199,7 +199,7 @@
                     os.closeWindow(win.id);
                   }}
                 >
-                  <span class="text-sm text-black/60">×</span>
+                  <span class="i-lucide-x text-base text-black/60"></span>
                 </button>
               </div>
             {:else}
@@ -224,18 +224,11 @@
 
     <div class="flex items-center gap-2 shrink-0">
       <button
-        class="h-9 px-3 rounded-full bg-[#f59e0b] text-black text-sm font-semibold hover:bg-[#f59e0b]/90 transition-colors"
-        onclick={() => launchApp("hello")}
-      >
-        Get started – free
-      </button>
-
-      <button
         class="h-9 w-9 grid place-items-center rounded-md hover:bg-black/5 transition-colors"
         aria-label="Open Command Center"
         onclick={openCommandCenter}
       >
-        <span class="text-lg">⌕</span>
+        <span class="i-lucide-search text-lg text-black/70"></span>
       </button>
 
       <button
@@ -243,7 +236,7 @@
         aria-label="Open Notifications"
         onclick={openRightPanel}
       >
-        <span class="text-lg">🔔</span>
+        <span class="i-lucide-bell text-lg text-black/70"></span>
       </button>
     </div>
   </div>

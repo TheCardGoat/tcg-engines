@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { locales, localizeHref } from '$lib/paraglide/runtime';
-	import './layout.css';
+	import '@unocss/reset/tailwind.css';
+	import 'virtual:uno.css';
 	import favicon from '$lib/assets/favicon.svg';
 
 	let { children } = $props();

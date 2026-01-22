@@ -67,7 +67,8 @@ class OperatingSystem {
   dragSnapTarget = $state<WindowSnapTarget | null>(null);
 
   private nextZIndex = 100;
-  private persistScheduled = false;
+  private persistTimer: number | null = null;
+  private persistLastAt = 0;
   private storageKey = "tcg.operational-system.osState";
 
   constructor() {
@@ -316,13 +317,17 @@ class OperatingSystem {
 
   private schedulePersist() {
     if (!this.canUseStorage()) return;
-    if (this.persistScheduled) return;
-    this.persistScheduled = true;
+    if (this.persistTimer !== null) return;
 
-    queueMicrotask(() => {
-      this.persistScheduled = false;
+    const minIntervalMs = 250;
+    const now = Date.now();
+    const dueIn = Math.max(0, minIntervalMs - (now - this.persistLastAt));
+
+    this.persistTimer = window.setTimeout(() => {
+      this.persistTimer = null;
+      this.persistLastAt = Date.now();
       this.persistNow();
-    });
+    }, dueIn);
   }
 
   private persistNow() {
