@@ -2,6 +2,7 @@
   import { Bell, Search, X } from "lucide-svelte";
   import { tick } from "svelte";
   import { os } from "../os.svelte";
+  import { theme } from "$lib/theme.svelte";
 
   type MenuItem =
     | { type: "link"; label: string; action: () => void; rightLabel?: string }
@@ -116,6 +117,30 @@
           action: openCommandCenter,
           rightLabel: commandCenterShortcutLabel,
         },
+        {
+          type: "submenu",
+          label: "Settings",
+          items: [
+            {
+              type: "link",
+              label: "Theme: Light",
+              action: () => {
+                theme.set("light");
+                closeMenus();
+              },
+              rightLabel: theme.current === "light" ? "✓" : undefined,
+            },
+            {
+              type: "link",
+              label: "Theme: Dark",
+              action: () => {
+                theme.set("dark");
+                closeMenus();
+              },
+              rightLabel: theme.current === "dark" ? "✓" : undefined,
+            },
+          ],
+        },
       ],
     },
     {
@@ -153,14 +178,14 @@
 </script>
 
 <div
-  class="fixed top-0 left-0 right-0 h-12 bg-[#efe7d6]/90 backdrop-blur-md border-b border-black/10 z-[10000]"
+  class="fixed top-0 left-0 right-0 h-12 bg-base-100/90 backdrop-blur-md border-b border-base-300/60 z-[10000]"
   role="navigation"
   aria-label="Topbar"
 >
   <div class="h-full px-3 flex items-center gap-3">
     <div class="flex items-center gap-1 shrink-0">
       <button
-        class="h-9 px-2 rounded-md hover:bg-black/5 transition-colors text-sm font-semibold"
+        class="h-9 px-2 rounded-md hover:bg-base-200 transition-colors text-sm font-semibold"
         onclick={() => toggleMenu("product-os")}
         aria-haspopup="menu"
         aria-expanded={openMenuId === "product-os"}
@@ -170,7 +195,7 @@
 
       {#each menus.filter((m) => m.id !== 'product-os') as menu (menu.id)}
         <button
-          class="h-9 px-2 rounded-md hover:bg-black/5 transition-colors text-sm font-semibold"
+          class="h-9 px-2 rounded-md hover:bg-base-200 transition-colors text-sm font-semibold"
           onclick={() => toggleMenu(menu.id)}
           aria-haspopup="menu"
           aria-expanded={openMenuId === menu.id}
@@ -187,7 +212,7 @@
             {#if win.id === activeWindowId}
               <div class="relative shrink-0" use:activeTab={true}>
                 <button
-                  class="h-9 px-3 pr-8 rounded-xl border border-black/20 bg-white flex items-center gap-2 max-w-[240px]"
+                  class="h-9 px-3 pr-8 rounded-xl border border-base-300 bg-base-100 flex items-center gap-2 max-w-[240px]"
                   onclick={() => onWindowTabClick(win.id)}
                   aria-label={win.title}
                 >
@@ -197,25 +222,25 @@
                   >
                   <span
                     class={"text-xs font-semibold truncate " +
-                      (win.isMinimized ? "text-black/40" : "text-black/70")}
+                      (win.isMinimized ? "text-base-content/50" : "text-base-content/70")}
                     >{win.title}</span
                   >
                 </button>
 
                 <button
-                  class="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-6 grid place-items-center rounded-md hover:bg-black/10 transition-colors"
+                  class="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-6 grid place-items-center rounded-md hover:bg-base-200 transition-colors"
                   aria-label="Close"
                   onclick={(e) => {
                     e.stopPropagation();
                     os.closeWindow(win.id);
                   }}
                 >
-                  <X size={16} class="text-black/60" />
+                  <X size={16} class="text-base-content/60" />
                 </button>
               </div>
             {:else}
               <button
-                class={"h-9 w-9 rounded-xl border transition-colors grid place-items-center shrink-0 bg-black/5 hover:bg-black/10 border-black/10"}
+                class={"h-9 w-9 rounded-xl border transition-colors grid place-items-center shrink-0 bg-base-200 hover:bg-base-300 border-base-300"}
                 onclick={() => onWindowTabClick(win.id)}
                 aria-label={win.title}
                 title={win.title}
@@ -235,19 +260,19 @@
 
     <div class="flex items-center gap-2 shrink-0">
       <button
-        class="h-9 w-9 grid place-items-center rounded-md hover:bg-black/5 transition-colors"
+        class="h-9 w-9 grid place-items-center rounded-md hover:bg-base-200 transition-colors"
         aria-label="Open Command Center"
         onclick={openCommandCenter}
       >
-        <Search size={18} class="text-black/70" />
+        <Search size={18} class="text-base-content/70" />
       </button>
 
       <button
-        class="h-9 w-9 grid place-items-center rounded-md hover:bg-black/5 transition-colors"
+        class="h-9 w-9 grid place-items-center rounded-md hover:bg-base-200 transition-colors"
         aria-label="Open Notifications"
         onclick={openRightPanel}
       >
-        <Bell size={18} class="text-black/70" />
+        <Bell size={18} class="text-base-content/70" />
       </button>
     </div>
   </div>
@@ -261,52 +286,65 @@
 
     {#each menus.filter((m) => m.id === openMenuId) as active (active.id)}
       <div
-        class="absolute top-12 left-3 w-[320px] bg-white rounded-xl shadow-2xl border border-black/10 overflow-hidden z-[10001]"
+        class="absolute top-12 left-3 w-[320px] bg-base-100 rounded-box shadow-2xl border border-base-300 overflow-visible z-[10001]"
         role="menu"
         aria-label={active.label}
       >
-        <div class="px-4 py-3 border-b border-black/10">
-          <div class="text-sm font-semibold text-black/80">{active.label}</div>
+        <div class="px-4 py-3 border-b border-base-300">
+          <div class="text-sm font-semibold text-base-content/80">
+            {active.label}
+          </div>
         </div>
 
         <div class="p-2">
           {#each active.items as item}
             {#if item.type === 'link'}
               <button
-                class="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg hover:bg-black/5 transition-colors text-left"
+                class="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-box hover:bg-base-200 transition-colors text-left"
                 role="menuitem"
                 onclick={() => item.action()}
               >
-                <span class="text-sm font-medium text-black/80 truncate"
+                <span class="text-sm font-medium text-base-content/80 truncate"
                   >{item.label}</span
                 >
                 {#if item.rightLabel}
-                  <span class="text-xs text-black/50">{item.rightLabel}</span>
+                  <span class="text-xs text-base-content/60"
+                    >{item.rightLabel}</span
+                  >
                 {/if}
               </button>
             {:else}
-              <div class="relative">
+              <div
+                class="relative"
+                role="presentation"
+                onmouseenter={() => (openSubmenuLabel = item.label)}
+                onmouseleave={() => {
+                  if (openSubmenuLabel === item.label) openSubmenuLabel = null;
+                }}
+              >
                 <button
-                  class="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg hover:bg-black/5 transition-colors text-left"
+                  class="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-box hover:bg-base-200 transition-colors text-left"
                   role="menuitem"
                   aria-haspopup="menu"
                   aria-expanded={openSubmenuLabel === item.label}
                   onclick={() => openMenuSubmenu(item.label)}
+                  onfocus={() => (openSubmenuLabel = item.label)}
                 >
-                  <span class="text-sm font-medium text-black/80 truncate"
+                  <span
+                    class="text-sm font-medium text-base-content/80 truncate"
                     >{item.label}</span
                   >
-                  <span class="text-black/40">›</span>
+                  <span class="text-base-content/50">›</span>
                 </button>
 
                 {#if openSubmenuLabel === item.label}
                   <div
-                    class="absolute top-0 left-full ml-2 w-[320px] bg-white rounded-xl shadow-2xl border border-black/10 overflow-hidden"
+                    class="absolute top-0 left-full ml-2 w-[320px] bg-base-100 rounded-box shadow-2xl border border-base-300 overflow-hidden"
                     role="menu"
                     aria-label={item.label}
                   >
-                    <div class="px-4 py-3 border-b border-black/10">
-                      <div class="text-sm font-semibold text-black/80">
+                    <div class="px-4 py-3 border-b border-base-300">
+                      <div class="text-sm font-semibold text-base-content/80">
                         {item.label}
                       </div>
                     </div>
@@ -314,16 +352,16 @@
                       {#each item.items as sub}
                         {#if sub.type === 'link'}
                           <button
-                            class="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg hover:bg-black/5 transition-colors text-left"
+                            class="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-box hover:bg-base-200 transition-colors text-left"
                             role="menuitem"
                             onclick={() => sub.action()}
                           >
                             <span
-                              class="text-sm font-medium text-black/80 truncate"
+                              class="text-sm font-medium text-base-content/80 truncate"
                               >{sub.label}</span
                             >
                             {#if sub.rightLabel}
-                              <span class="text-xs text-black/50"
+                              <span class="text-xs text-base-content/60"
                                 >{sub.rightLabel}</span
                               >
                             {/if}

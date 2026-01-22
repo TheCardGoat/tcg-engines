@@ -152,10 +152,10 @@
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-  class={"absolute flex flex-col bg-white rounded-lg overflow-hidden border transition-shadow transition-colors duration-150 " +
+  class={"absolute flex flex-col bg-base-100 rounded-box overflow-hidden border transition-shadow transition-colors duration-150 " +
     (os.activeWindowId === windowState.id
-      ? "border-white/40 ring-2 ring-[#f59e0b]/70 shadow-[0_30px_80px_rgba(0,0,0,0.45)]"
-      : "border-black/10 shadow-xl")}
+      ? "border-base-300 ring-2 ring-primary/50 shadow-[0_30px_80px_rgba(0,0,0,0.45)]"
+      : "border-base-300 shadow-xl")}
   style="
         left: {windowState.x}px; 
         top: {windowState.y}px; 
@@ -170,7 +170,7 @@
 >
   <!-- Title Bar -->
   <div
-    class="h-9 bg-gray-100 border-b border-gray-200 flex items-center justify-between px-3 select-none cursor-default"
+    class="h-9 bg-base-200 border-b border-base-300 flex items-center justify-between px-3 select-none cursor-default"
     onmousedown={startDrag}
     ondblclick={() => os.maximizeWindow(windowState.id)}
   >
@@ -178,7 +178,9 @@
       {#if windowState.icon}
         <span class="text-lg">{windowState.icon}</span>
       {/if}
-      <span class="text-sm font-medium text-gray-700">{windowState.title}</span>
+      <span class="text-sm font-medium text-base-content/80"
+        >{windowState.title}</span
+      >
     </div>
 
     <div class="window-controls flex items-center gap-2">
@@ -201,12 +203,12 @@
   </div>
 
   <!-- Content -->
-  <div class="flex-1 overflow-auto bg-white relative">
+  <div class="flex-1 overflow-auto bg-base-100 relative">
     <windowState.component />
 
     <!-- Overlay to capture clicks when not focused, ensuring click-to-focus works smoothly -->
     {#if os.activeWindowId !== windowState.id}
-      <div class="absolute inset-0 bg-black/5"></div>
+      <div class="absolute inset-0 bg-black/10"></div>
     {/if}
   </div>
 

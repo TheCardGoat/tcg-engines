@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { Copy } from "lucide-svelte";
+  import { Copy, Moon, Sun } from "lucide-svelte";
   import { tick } from "svelte";
   import { os } from "../os.svelte";
+  import { theme } from "$lib/theme.svelte";
 
   let shareInput = $state<HTMLInputElement | null>(null);
   let shareValue = $state("");
@@ -60,91 +61,117 @@
   ></button>
 
   <aside
-    class="fixed top-12 right-0 bottom-0 w-[360px] max-w-[90vw] bg-white rounded-tl-2xl border-l border-black/10 shadow-2xl z-[9999] flex flex-col"
+    class="fixed top-12 right-0 bottom-0 w-[360px] max-w-[90vw] bg-base-100 rounded-tl-2xl border-l border-base-300 shadow-2xl z-[9999] flex flex-col"
     aria-label="Notifications"
   >
     <div
-      class="px-4 py-3 border-b border-black/10 flex items-center justify-between gap-3"
+      class="px-4 py-3 border-b border-base-300 flex items-center justify-between gap-3"
     >
-      <div class="text-sm font-semibold text-black/80">Active windows</div>
+      <div class="text-sm font-semibold text-base-content/80">
+        Active windows
+      </div>
       <div class="flex items-center gap-3">
         <button
-          class="text-xs text-black/50 hover:text-black/70 transition-colors"
+          class="btn btn-ghost btn-xs"
           onclick={() => os.closeAllWindows()}
         >
           Close all
         </button>
         <button
-          class="h-8 w-8 grid place-items-center rounded-md hover:bg-black/5 transition-colors"
+          class="btn btn-ghost btn-sm btn-square"
           aria-label="Close"
           onclick={close}
         >
-          <span class="text-lg">›</span>
+          <span class="text-lg text-base-content/70">›</span>
         </button>
       </div>
     </div>
 
     <div class="p-3 flex-1 overflow-auto">
       {#if activeWindows.length === 0}
-        <div class="p-3 text-sm text-black/50">No active windows</div>
+        <div class="p-3 text-sm text-base-content/60">No active windows</div>
       {:else}
         <div class="space-y-2">
           {#each activeWindows as win (win.id)}
             <button
-              class="w-full px-3 py-2 rounded-xl bg-black/5 hover:bg-black/10 transition-colors text-left flex items-center justify-between gap-2"
+              class="btn btn-ghost w-full justify-between"
               onclick={() => {
                 os.focusWindow(win.id);
                 os.closeRightPanel();
               }}
             >
-              <span class="text-sm font-semibold text-black/80 truncate">
+              <span class="text-sm font-semibold text-base-content/80 truncate">
                 {win.title}
               </span>
-              <span class="text-black/40">›</span>
+              <span class="text-base-content/50">›</span>
             </button>
           {/each}
         </div>
       {/if}
     </div>
 
-    <div class="p-4 border-t border-black/10">
-      <div class="text-sm font-semibold text-black/80">Share your windows</div>
-      <div class="mt-1 text-xs text-black/50">
-        Copy the URL for this OS page.
+    <div class="p-4 border-t border-base-300 space-y-5">
+      <div class="space-y-2">
+        <div class="text-sm font-semibold text-base-content/80">Appearance</div>
+        <div class="flex items-center justify-between gap-3">
+          <div class="text-xs text-base-content/60">Theme</div>
+          <button
+            class="btn btn-ghost btn-sm gap-2"
+            onclick={() => theme.toggle()}
+            aria-label="Toggle theme"
+          >
+            {#if theme.current === "dark"}
+              <Moon size={16} class="text-base-content/70" />
+              <span class="text-xs">Dark</span>
+            {:else}
+              <Sun size={16} class="text-base-content/70" />
+              <span class="text-xs">Light</span>
+            {/if}
+          </button>
+        </div>
       </div>
 
-      <div class="mt-3 flex items-center gap-2">
-        <input
-          class="flex-1 h-10 px-3 rounded-xl bg-black/5 border border-black/10 font-mono text-xs text-black/70"
-          readonly
-          value={shareValue}
-          bind:this={shareInput}
-          aria-label="Share URL"
-        >
-        <button
-          class="h-10 w-10 grid place-items-center rounded-xl bg-black/5 hover:bg-black/10 transition-colors"
-          aria-label="Copy"
-          onclick={copyShareLink}
-        >
-          <Copy size={18} class="text-black/70" />
-        </button>
-      </div>
+      <div class="space-y-2">
+        <div class="text-sm font-semibold text-base-content/80">
+          Share your windows
+        </div>
+        <div class="mt-1 text-xs text-base-content/60">
+          Copy the URL for this OS page.
+        </div>
 
-      {#if copyStatus === "copied"}
-        <div class="mt-2 text-xs text-green-700">Copied</div>
-      {:else if copyStatus === "error"}
-        <div class="mt-2 text-xs text-red-700">Copy failed</div>
-      {/if}
+        <div class="mt-3 flex items-center gap-2">
+          <input
+            class="input input-bordered flex-1 font-mono text-xs"
+            readonly
+            value={shareValue}
+            bind:this={shareInput}
+            aria-label="Share URL"
+          >
+          <button
+            class="btn btn-ghost btn-square"
+            aria-label="Copy"
+            onclick={copyShareLink}
+          >
+            <Copy size={18} class="text-base-content/70" />
+          </button>
+        </div>
 
-      <div class="mt-2 text-xs text-black/40">
-        Tip: Press
-        <span class="px-1.5 py-0.5 rounded bg-black/5 border border-black/10"
-          >Shift</span
-        >
-        <span class="px-1.5 py-0.5 rounded bg-black/5 border border-black/10"
-          >C</span
-        >
-        to copy instantly.
+        {#if copyStatus === "copied"}
+          <div class="mt-2 text-xs text-success">Copied</div>
+        {:else if copyStatus === "error"}
+          <div class="mt-2 text-xs text-error">Copy failed</div>
+        {/if}
+
+        <div class="mt-2 text-xs text-base-content/50">
+          Tip: Press
+          <span class="px-1.5 py-0.5 rounded bg-base-200 border border-base-300"
+            >Shift</span
+          >
+          <span class="px-1.5 py-0.5 rounded bg-base-200 border border-base-300"
+            >C</span
+          >
+          to copy instantly.
+        </div>
       </div>
     </div>
   </aside>
