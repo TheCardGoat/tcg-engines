@@ -163,6 +163,15 @@ class OperatingSystem {
     const app = this.desktopIcons.find((a) => a.id === appId);
     if (!app) return;
 
+    const existing = this.windows.filter((w) => w.appId === appId);
+    if (existing.length > 0) {
+      const top = existing.reduce((prev, current) =>
+        prev.zIndex > current.zIndex ? prev : current,
+      );
+      this.focusWindow(top.id);
+      return;
+    }
+
     const id = crypto.randomUUID();
     const width = app.defaultWidth || 800;
     const height = app.defaultHeight || 600;
