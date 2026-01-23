@@ -111,7 +111,7 @@ export const cardInHand = <TParams = unknown>(
  */
 export const cardInPlay = <TParams = unknown>(
   cardId: CardId,
-): Validator<TParams> => cardInZone(cardId, "play" as ZoneId);
+): Validator<TParams> => cardInZone(cardId, "battleArea" as ZoneId);
 
 /**
  * Validate card exists in any zone
