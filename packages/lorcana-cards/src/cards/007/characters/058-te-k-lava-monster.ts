@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const teKLavaMonster: CharacterCard = {
   id: "84p",
@@ -22,10 +22,10 @@ export const teKLavaMonster: CharacterCard = {
   abilities: [
     {
       id: "84p-1",
-      text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",
       value: 2,
+      text: "Challenger +2",
     },
   ],
   classifications: ["Storyborn", "Villain", "Deity"],

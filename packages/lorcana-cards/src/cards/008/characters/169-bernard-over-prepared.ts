@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const bernardOverprepared: CharacterCard = {
   id: "wn2",
@@ -22,23 +22,26 @@ export const bernardOverprepared: CharacterCard = {
   abilities: [
     {
       id: "wn2-1",
-      text: "GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.",
-      name: "GO DOWN THERE AND INVESTIGATE",
       type: "triggered",
+      name: "GO DOWN THERE AND INVESTIGATE",
       trigger: {
         event: "play",
         timing: "when",
         on: "SELF",
       },
       effect: {
-        type: "optional",
-        effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have an Ally character in play",
+        },
+        then: {
           type: "draw",
           amount: 1,
           target: "CONTROLLER",
         },
-        chooser: "CONTROLLER",
       },
+      text: "GO DOWN THERE AND INVESTIGATE When you play this character, if you have an Ally character in play, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "Hero"],

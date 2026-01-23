@@ -1,0 +1,33 @@
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// /**
+//  * @jest-environment node
+//  */
+//
+// import { describe, expect, it } from "@jest/globals";
+// import { zipperAstuteDecoy } from "@lorcanito/lorcana-engine/cards/006/characters/characters";
+// import { TestEngine } from "@lorcanito/lorcana-engine/rules/testEngine";
+//
+// describe("Zipper - Astute Decoy", () => {
+//   it.skip("Ward (Opponents can't choose this character except to challenge.)", async () => {
+//     const testEngine = new TestEngine({
+//       play: [zipperAstuteDecoy],
+//     });
+//
+//     const cardUnderTest = testEngine.getCardModel(zipperAstuteDecoy);
+//     expect(cardUnderTest.hasWard).toBe(true);
+//   });
+//
+//   it.skip("RUN INTERFERENCE During your turn, whenever a card is put into your inkwell, another chosen character gains Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)", async () => {
+//     const testEngine = new TestEngine({
+//       inkwell: zipperAstuteDecoy.cost,
+//       play: [zipperAstuteDecoy],
+//       hand: [zipperAstuteDecoy],
+//     });
+//
+//     await testEngine.playCard(zipperAstuteDecoy);
+//
+//     await testEngine.resolveOptionalAbility();
+//     await testEngine.resolveTopOfStack({});
+//   });
+// });
+//

@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const daisyDuckSpotlessFoodfighter: CharacterCard = {
   id: "1d8",
@@ -21,9 +21,9 @@ export const daisyDuckSpotlessFoodfighter: CharacterCard = {
   abilities: [
     {
       id: "1d8-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Hero"],

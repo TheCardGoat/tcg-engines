@@ -1,0 +1,78 @@
+import type { CharacterCard } from "@tcg/lorcana-types";
+
+export const simbaRightfulHeir: CharacterCard = {
+  id: "ac0",
+  cardType: "character",
+  name: "Simba",
+  version: "Rightful Heir",
+  fullName: "Simba - Rightful Heir",
+  inkType: ["steel"],
+  franchise: "Disney",
+  set: "001",
+  text: "**I KNOW WHAT I HAVE TO DO** During your turn, whenever this character banishes another character in a challenge, you gain 1 lore.",
+  cost: 5,
+  strength: 3,
+  willpower: 5,
+  lore: 2,
+  cardNumber: 190,
+  inkable: true,
+  externalIds: {
+    ravensburger: "",
+  },
+  abilities: [
+    {
+      type: "action",
+      text: "**I KNOW WHAT I HAVE TO DO** During your turn, whenever this character banishes another character in a challenge, you gain 1 lore.",
+      id: "ac0-1",
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+      },
+    },
+  ],
+  classifications: ["Hero", "Storyborn", "Prince"],
+};
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import { wheneverBanishesAnotherCharacterInChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const simbaRightfulHeir: LorcanitoCharacterCard = {
+//   id: "ac0",
+//   name: "Simba",
+//   title: "Rightful Heir",
+//   characteristics: ["hero", "storyborn", "prince"],
+//   text: "**I KNOW WHAT I HAVE TO DO** During your turn, whenever this character banishes another character in a challenge, you gain 1 lore.",
+//   type: "character",
+//   abilities: [
+//     wheneverBanishesAnotherCharacterInChallenge({
+//       name: "I Know What I Have To Do",
+//       text: "During your turn, whenever this character banishes another character in a challenge, you gain 1 lore.",
+//       effects: [
+//         {
+//           type: "lore",
+//           amount: 1,
+//           modifier: "add",
+//           target: {
+//             type: "player",
+//             value: "self",
+//           },
+//         },
+//       ],
+//     }),
+//   ],
+//   flavour: "I can't hide anymore. It's time to accept my destiny.",
+//   colors: ["steel"],
+//   cost: 5,
+//   strength: 3,
+//   willpower: 5,
+//   lore: 2,
+//   illustrator: "Cookie",
+//   number: 190,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 508941,
+//   },
+//   rarity: "uncommon",
+// };
+//

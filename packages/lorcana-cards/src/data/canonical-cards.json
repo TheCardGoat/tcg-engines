@@ -264,7 +264,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 2,
@@ -431,7 +432,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 2,
@@ -547,7 +549,8 @@
       {
         "type": "keyword",
         "keyword": "Singer",
-        "value": 4
+        "value": 4,
+        "text": "Singer 4"
       }
     ],
     "strength": 2,
@@ -1633,11 +1636,13 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       },
       {
         "type": "keyword",
-        "keyword": "Vanish"
+        "keyword": "Vanish",
+        "text": "Vanish"
       }
     ],
     "strength": 4,
@@ -2419,7 +2424,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -2704,11 +2710,13 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       },
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 4,
@@ -3024,7 +3032,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 1,
@@ -3401,7 +3410,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 3,
@@ -4045,7 +4055,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 2,
@@ -4179,7 +4190,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 4,
@@ -4283,11 +4295,13 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       },
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 3,
@@ -4496,7 +4510,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 3,
@@ -4543,7 +4558,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 2,
@@ -4705,7 +4721,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 2,
@@ -4784,7 +4801,8 @@
       {
         "type": "keyword",
         "keyword": "Singer",
-        "value": 5
+        "value": 5,
+        "text": "Singer 5"
       }
     ],
     "strength": 0,
@@ -5688,7 +5706,8 @@
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 5
+        "value": 5,
+        "text": "Challenger +5"
       }
     ],
     "strength": 0,
@@ -5735,7 +5754,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -6479,7 +6499,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 4,
@@ -6526,7 +6547,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 3,
@@ -6804,7 +6826,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 6,
@@ -7497,7 +7520,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 1,
@@ -7720,7 +7744,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 3,
@@ -8483,7 +8508,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 4,
@@ -8565,7 +8591,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 2,
@@ -8613,7 +8640,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Alert"
+        "keyword": "Alert",
+        "text": "Alert"
       }
     ],
     "strength": 3,
@@ -8801,7 +8829,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 5,
@@ -9556,7 +9585,8 @@
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 2
+        "value": 2,
+        "text": "Challenger +2"
       }
     ],
     "strength": 5,
@@ -9605,7 +9635,8 @@
       {
         "type": "keyword",
         "keyword": "Resist",
-        "value": 1
+        "value": 1,
+        "text": "Resist +1"
       }
     ],
     "strength": 4,
@@ -9653,7 +9684,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 2,
@@ -10370,7 +10402,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 4,
@@ -10842,7 +10875,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 2,
@@ -11074,7 +11108,8 @@
       {
         "type": "keyword",
         "keyword": "Singer",
-        "value": 7
+        "value": 7,
+        "text": "Singer 7"
       }
     ],
     "strength": 3,
@@ -11127,7 +11162,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 3,
@@ -11362,7 +11398,8 @@
       {
         "type": "keyword",
         "keyword": "Singer",
-        "value": 4
+        "value": 4,
+        "text": "Singer 4"
       }
     ],
     "strength": 1,
@@ -11999,7 +12036,8 @@
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 3
+        "value": 3,
+        "text": "Challenger +3"
       }
     ],
     "strength": 3,
@@ -12101,7 +12139,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 4,
@@ -12372,7 +12411,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 4,
@@ -13131,7 +13171,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 1,
@@ -13829,7 +13870,8 @@
       {
         "type": "keyword",
         "keyword": "Singer",
-        "value": 4
+        "value": 4,
+        "text": "Singer 4"
       }
     ],
     "strength": 3,
@@ -14120,7 +14162,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Reckless"
+        "keyword": "Reckless",
+        "text": "Reckless"
       }
     ],
     "strength": 4,
@@ -14172,7 +14215,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -14873,7 +14917,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 2,
@@ -14925,7 +14970,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 3,
@@ -15568,7 +15614,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 1,
@@ -16400,7 +16447,8 @@
       {
         "type": "keyword",
         "keyword": "Resist",
-        "value": 1
+        "value": 1,
+        "text": "Resist +1"
       }
     ],
     "strength": 4,
@@ -16553,12 +16601,14 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       },
       {
         "type": "keyword",
         "keyword": "Resist",
-        "value": 1
+        "value": 1,
+        "text": "Resist +1"
       }
     ],
     "strength": 6,
@@ -16805,7 +16855,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 3,
@@ -16936,6 +16987,15 @@
         "name": null,
         "text": "Challenger +2 (While challenging, this character gets +2 {S}).",
         "type": "keyword"
+      }
+    ],
+    "parsedAbilities": [
+      {
+        "type": "keyword",
+        "keyword": "Challenger",
+        "value": 2,
+        "condition": "(While challenging, this character gets +2 {S}).",
+        "text": "Challenger +2 (While challenging, this character gets +2 {S})."
       }
     ],
     "strength": 1,
@@ -17479,7 +17539,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 0,
@@ -18424,12 +18485,14 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       },
       {
         "type": "keyword",
         "keyword": "Singer",
-        "value": 4
+        "value": 4,
+        "text": "Singer 4"
       }
     ],
     "strength": 1,
@@ -18591,7 +18654,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Vanish"
+        "keyword": "Vanish",
+        "text": "Vanish"
       }
     ],
     "strength": 1,
@@ -18640,7 +18704,8 @@
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 4
+        "value": 4,
+        "text": "Challenger +4"
       }
     ],
     "strength": 1,
@@ -19049,7 +19114,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -19661,11 +19727,13 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       },
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 2,
@@ -20083,7 +20151,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 2,
@@ -21155,7 +21224,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -22286,7 +22356,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 3,
@@ -23014,7 +23085,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 4,
@@ -23149,7 +23221,8 @@
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 2
+        "value": 2,
+        "text": "Challenger +2"
       }
     ],
     "strength": 1,
@@ -23199,7 +23272,8 @@
       {
         "type": "keyword",
         "keyword": "Resist",
-        "value": 1
+        "value": 1,
+        "text": "Resist +1"
       }
     ],
     "strength": 2,
@@ -23246,7 +23320,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 4,
@@ -23910,7 +23985,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 2,
@@ -24124,12 +24200,14 @@
       {
         "type": "keyword",
         "keyword": "Resist",
-        "value": 1
+        "value": 1,
+        "text": "Resist +1"
       },
       {
         "type": "keyword",
         "keyword": "Singer",
-        "value": 4
+        "value": 4,
+        "text": "Singer 4"
       }
     ],
     "strength": 1,
@@ -24438,7 +24516,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 2,
@@ -24486,7 +24565,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -24663,11 +24743,13 @@
         "keyword": "Shift",
         "cost": {
           "ink": 3
-        }
+        },
+        "text": "Puppy Shift 3"
       },
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 3,
@@ -24714,7 +24796,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 0,
@@ -25013,11 +25096,13 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       },
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 3,
@@ -25675,7 +25760,8 @@
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 2
+        "value": 2,
+        "text": "Challenger +2"
       }
     ],
     "strength": 5,
@@ -25789,7 +25875,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Vanish"
+        "keyword": "Vanish",
+        "text": "Vanish"
       }
     ],
     "strength": 3,
@@ -25978,12 +26065,14 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       },
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 2
+        "value": 2,
+        "text": "Challenger +2"
       }
     ],
     "strength": 1,
@@ -26575,16 +26664,19 @@
         "keyword": "Shift",
         "cost": {
           "ink": 5
-        }
+        },
+        "text": "Shift 5"
       },
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       },
       {
         "type": "keyword",
         "keyword": "Resist",
-        "value": 1
+        "value": 1,
+        "text": "Resist +1"
       }
     ],
     "strength": 5,
@@ -26741,7 +26833,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 4,
@@ -27985,12 +28078,14 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Reckless"
+        "keyword": "Reckless",
+        "text": "Reckless"
       },
       {
         "type": "keyword",
         "keyword": "Resist",
-        "value": 2
+        "value": 2,
+        "text": "Resist +2"
       }
     ],
     "strength": 3,
@@ -28407,7 +28502,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 3,
@@ -29543,11 +29639,13 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       },
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 2,
@@ -29963,12 +30061,14 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       },
       {
         "type": "keyword",
         "keyword": "Resist",
-        "value": 2
+        "value": 2,
+        "text": "Resist +2"
       }
     ],
     "strength": 0,
@@ -30755,11 +30855,13 @@
         "keyword": "Shift",
         "cost": {
           "ink": 3
-        }
+        },
+        "text": "Shift 3"
       },
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 2,
@@ -31546,6 +31648,15 @@
         "type": "keyword"
       }
     ],
+    "parsedAbilities": [
+      {
+        "type": "keyword",
+        "keyword": "Challenger",
+        "value": 2,
+        "condition": "(While challenging, this character gets +2 {S}).",
+        "text": "Challenger +2 (While challenging, this character gets +2 {S})."
+      }
+    ],
     "strength": 3,
     "willpower": 6,
     "lore": 2,
@@ -31699,7 +31810,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 1,
@@ -31858,12 +31970,14 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       },
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 3
+        "value": 3,
+        "text": "Challenger +3"
       }
     ],
     "strength": 4,
@@ -32710,7 +32824,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 3,
@@ -32757,7 +32872,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -32917,7 +33033,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 3,
@@ -33344,7 +33461,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 5,
@@ -33705,7 +33823,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -33752,7 +33871,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 4,
@@ -34117,11 +34237,13 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       },
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 5,
@@ -34350,7 +34472,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 4,
@@ -35672,6 +35795,15 @@
         "type": "keyword"
       }
     ],
+    "parsedAbilities": [
+      {
+        "type": "keyword",
+        "keyword": "Challenger",
+        "value": 2,
+        "condition": "(While challenging, this character gets +2 {S}).",
+        "text": "Challenger +2 (While challenging, this character gets +2 {S})."
+      }
+    ],
     "strength": 2,
     "willpower": 4,
     "lore": 2,
@@ -35759,7 +35891,8 @@
       {
         "type": "keyword",
         "keyword": "Resist",
-        "value": 1
+        "value": 1,
+        "text": "Resist +1"
       }
     ],
     "strength": 1,
@@ -36392,7 +36525,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 3,
@@ -36581,7 +36715,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 2,
@@ -36629,7 +36764,8 @@
       {
         "type": "keyword",
         "keyword": "Singer",
-        "value": 5
+        "value": 5,
+        "text": "Singer 5"
       }
     ],
     "strength": 2,
@@ -37288,7 +37424,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 2,
@@ -37632,16 +37769,19 @@
         "keyword": "Shift",
         "cost": {
           "ink": 3
-        }
+        },
+        "text": "Shift 3"
       },
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       },
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 3
+        "value": 3,
+        "text": "Challenger +3"
       }
     ],
     "strength": 1,
@@ -38259,7 +38399,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -39425,7 +39566,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 2,
@@ -39472,7 +39614,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 2,
@@ -39866,7 +40009,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Reckless"
+        "keyword": "Reckless",
+        "text": "Reckless"
       }
     ],
     "strength": 2,
@@ -40190,7 +40334,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 0,
@@ -40689,7 +40834,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 2,
@@ -41183,7 +41329,8 @@
       {
         "type": "keyword",
         "keyword": "Resist",
-        "value": 1
+        "value": 1,
+        "text": "Resist +1"
       }
     ],
     "strength": 1,
@@ -41230,7 +41377,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 0,
@@ -41280,7 +41428,8 @@
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 1
+        "value": 1,
+        "text": "Challenger +1"
       }
     ],
     "strength": 1,
@@ -41327,7 +41476,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 4,
@@ -42602,7 +42752,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 2,
@@ -42650,7 +42801,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 3,
@@ -43342,7 +43494,8 @@
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 2
+        "value": 2,
+        "text": "Challenger +2"
       }
     ],
     "strength": 1,
@@ -44412,7 +44565,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 3,
@@ -44466,11 +44620,13 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       },
       {
         "type": "keyword",
-        "keyword": "Reckless"
+        "keyword": "Reckless",
+        "text": "Reckless"
       }
     ],
     "strength": 7,
@@ -44773,7 +44929,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -44951,7 +45108,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Reckless"
+        "keyword": "Reckless",
+        "text": "Reckless"
       }
     ],
     "strength": 3,
@@ -45241,7 +45399,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 1,
@@ -45833,7 +45992,8 @@
       {
         "type": "keyword",
         "keyword": "Resist",
-        "value": 1
+        "value": 1,
+        "text": "Resist +1"
       }
     ],
     "strength": 2,
@@ -45919,7 +46079,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 4,
@@ -46437,7 +46598,8 @@
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 2
+        "value": 2,
+        "text": "Challenger +2"
       }
     ],
     "strength": 2,
@@ -46616,7 +46778,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 1,
@@ -46966,7 +47129,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 3,
@@ -47197,7 +47361,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -47302,7 +47467,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 1,
@@ -47813,7 +47979,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 4,
@@ -48348,7 +48515,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -48395,7 +48563,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 2,
@@ -48685,7 +48854,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Reckless"
+        "keyword": "Reckless",
+        "text": "Reckless"
       }
     ],
     "strength": 3,
@@ -49311,7 +49481,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 3,
@@ -49713,11 +49884,13 @@
         "keyword": "Shift",
         "cost": {
           "ink": 3
-        }
+        },
+        "text": "Shift 3"
       },
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 2,
@@ -49764,7 +49937,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 0,
@@ -50010,11 +50184,13 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       },
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 3,
@@ -50175,7 +50351,8 @@
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 2
+        "value": 2,
+        "text": "Challenger +2"
       }
     ],
     "strength": 2,
@@ -50222,7 +50399,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 2,
@@ -50891,7 +51069,8 @@
       {
         "type": "keyword",
         "keyword": "Singer",
-        "value": 3
+        "value": 3,
+        "text": "Singer 3"
       }
     ],
     "strength": 1,
@@ -51080,7 +51259,8 @@
       {
         "type": "keyword",
         "keyword": "Singer",
-        "value": 5
+        "value": 5,
+        "text": "Singer 5"
       }
     ],
     "strength": 3,
@@ -51166,7 +51346,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 3,
@@ -51837,7 +52018,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 4,
@@ -53274,7 +53456,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -53499,7 +53682,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Reckless"
+        "keyword": "Reckless",
+        "text": "Reckless"
       }
     ],
     "strength": 3,
@@ -53704,7 +53888,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 1,
@@ -53819,7 +54004,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 4,
@@ -54107,7 +54293,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Reckless"
+        "keyword": "Reckless",
+        "text": "Reckless"
       }
     ],
     "strength": 4,
@@ -54201,7 +54388,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 2,
@@ -54395,7 +54583,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 1,
@@ -54816,7 +55005,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 4,
@@ -55185,12 +55375,14 @@
         "keyword": "Shift",
         "cost": {
           "ink": 4
-        }
+        },
+        "text": "Shift 4"
       },
       {
         "type": "keyword",
         "keyword": "Resist",
-        "value": 2
+        "value": 2,
+        "text": "Resist +2"
       }
     ],
     "strength": 6,
@@ -55606,12 +55798,14 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       },
       {
         "type": "keyword",
         "keyword": "Resist",
-        "value": 1
+        "value": 1,
+        "text": "Resist +1"
       }
     ],
     "strength": 1,
@@ -55930,7 +56124,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 1,
@@ -56217,7 +56412,8 @@
       {
         "type": "keyword",
         "keyword": "Singer",
-        "value": 4
+        "value": 4,
+        "text": "Singer 4"
       }
     ],
     "strength": 2,
@@ -56264,7 +56460,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Bodyguard"
+        "keyword": "Bodyguard",
+        "text": "Bodyguard"
       }
     ],
     "strength": 2,
@@ -56461,7 +56658,8 @@
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 2
+        "value": 2,
+        "text": "Challenger +2"
       }
     ],
     "strength": 0,
@@ -56628,7 +56826,8 @@
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 3
+        "value": 3,
+        "text": "Challenger +3"
       }
     ],
     "strength": 2,
@@ -56922,7 +57121,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 3,
@@ -57132,12 +57332,14 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       },
       {
         "type": "keyword",
         "keyword": "Challenger",
-        "value": 4
+        "value": 4,
+        "text": "Challenger +4"
       }
     ],
     "strength": 0,
@@ -57782,7 +57984,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -58127,7 +58330,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 3,
@@ -58185,11 +58389,13 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       },
       {
         "type": "keyword",
-        "keyword": "Reckless"
+        "keyword": "Reckless",
+        "text": "Reckless"
       }
     ],
     "strength": 6,
@@ -58236,7 +58442,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 5,
@@ -58352,7 +58559,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Rush"
+        "keyword": "Rush",
+        "text": "Rush"
       }
     ],
     "strength": 3,
@@ -58399,7 +58607,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 2,
@@ -58556,7 +58765,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Reckless"
+        "keyword": "Reckless",
+        "text": "Reckless"
       }
     ],
     "strength": 8,
@@ -58604,7 +58814,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Evasive"
+        "keyword": "Evasive",
+        "text": "Evasive"
       }
     ],
     "strength": 4,
@@ -58778,7 +58989,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 3,
@@ -58825,7 +59037,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Ward"
+        "keyword": "Ward",
+        "text": "Ward"
       }
     ],
     "strength": 4,
@@ -59098,7 +59311,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 3,
@@ -59146,7 +59360,8 @@
     "parsedAbilities": [
       {
         "type": "keyword",
-        "keyword": "Support"
+        "keyword": "Support",
+        "text": "Support"
       }
     ],
     "strength": 3,

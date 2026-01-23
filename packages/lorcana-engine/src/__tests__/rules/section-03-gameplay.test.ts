@@ -18,51 +18,45 @@ describe("Section 3: Gameplay", () => {
      * Rule 3.1.1: Starting a game involves several steps that all players follow.
      * Once these steps are completed, the game is considered to be started.
      */
-    test.failing(
-      "Rule 3.1.1 - Game start requires completing all setup steps",
-      () => {
-        // Arrange: Create engine without skipping pre-game
-        const testEngine = new LorcanaTestEngine(
-          { hand: 0, deck: 60 },
-          { hand: 0, deck: 60 },
-          { skipPreGame: false },
-        );
+    test.failing("Rule 3.1.1 - Game start requires completing all setup steps", () => {
+      // Arrange: Create engine without skipping pre-game
+      const testEngine = new LorcanaTestEngine(
+        { hand: 0, deck: 60 },
+        { hand: 0, deck: 60 },
+        { skipPreGame: false },
+      );
 
-        try {
-          // Assert: Game should require setup steps before main game
-          const segment = testEngine.getGameSegment();
-          expect(segment).toBe("startingAGame");
-          expect(true).toBe(false); // Will fail until fully verified
-        } finally {
-          testEngine.dispose();
-        }
-      },
-    );
+      try {
+        // Assert: Game should require setup steps before main game
+        const segment = testEngine.getGameSegment();
+        expect(segment).toBe("startingAGame");
+        expect(true).toBe(false); // Will fail until fully verified
+      } finally {
+        testEngine.dispose();
+      }
+    });
 
     /**
      * Rule 3.1.2: First, use a method for randomly determining who chooses
      * who is the starting player. If this is next in a best-of series,
      * the losing player of the previous game chooses.
      */
-    test.failing(
-      "Rule 3.1.2 - Random determination of starting player chooser",
-      () => {
-        const testEngine = new LorcanaTestEngine(
-          { hand: 0, deck: 60 },
-          { hand: 0, deck: 60 },
-          { skipPreGame: false },
-        );
+    test.failing("Rule 3.1.2 - Random determination of starting player chooser", () => {
+      const testEngine = new LorcanaTestEngine(
+        { hand: 0, deck: 60 },
+        { hand: 0, deck: 60 },
+        { skipPreGame: false },
+      );
 
-        try {
-          // Assert: One player should be designated to choose first player
-          const ctx = testEngine.getCtx();
-          expect(ctx.choosingFirstPlayer).toBeDefined();
-          expect(true).toBe(false); // Will fail until fully verified
-        } finally {
-          testEngine.dispose();
-        }
-      },
-    );
+      try {
+        // Assert: One player should be designated to choose first player
+        const ctx = testEngine.getCtx();
+        expect(ctx.choosingFirstPlayer).toBeDefined();
+        expect(true).toBe(false); // Will fail until fully verified
+      } finally {
+        testEngine.dispose();
+      }
+    });
 
     /**
      * Rule 3.1.3: Second, each player randomizes (shuffles) their deck.
@@ -224,34 +218,31 @@ describe("Section 3: Gameplay", () => {
      * Rule 3.1.7: Once all players have altered or chosen not to alter their hand,
      * the game officially starts with the starting player's Beginning Phase.
      */
-    test.failing(
-      "Rule 3.1.7 - Game starts after all mulligans complete",
-      () => {
-        const testEngine = new LorcanaTestEngine(
-          { hand: 7, deck: 53 },
-          { hand: 7, deck: 53 },
-          { skipPreGame: false },
-        );
+    test.failing("Rule 3.1.7 - Game starts after all mulligans complete", () => {
+      const testEngine = new LorcanaTestEngine(
+        { hand: 7, deck: 53 },
+        { hand: 7, deck: 53 },
+        { skipPreGame: false },
+      );
 
-        try {
-          // Complete all setup
-          const ctx = testEngine.getCtx();
-          testEngine.changeActivePlayer(ctx.choosingFirstPlayer || PLAYER_ONE);
-          testEngine.chooseWhoGoesFirst(PLAYER_ONE);
-          testEngine.changeActivePlayer(PLAYER_ONE);
-          testEngine.alterHand([]);
-          testEngine.changeActivePlayer(PLAYER_TWO);
-          testEngine.alterHand([]);
+      try {
+        // Complete all setup
+        const ctx = testEngine.getCtx();
+        testEngine.changeActivePlayer(ctx.choosingFirstPlayer || PLAYER_ONE);
+        testEngine.chooseWhoGoesFirst(PLAYER_ONE);
+        testEngine.changeActivePlayer(PLAYER_ONE);
+        testEngine.alterHand([]);
+        testEngine.changeActivePlayer(PLAYER_TWO);
+        testEngine.alterHand([]);
 
-          // Assert: Game should now be in mainGame segment
-          const segment = testEngine.getGameSegment();
-          expect(segment).toBe("mainGame");
-          expect(true).toBe(false); // Will fail until transition verified
-        } finally {
-          testEngine.dispose();
-        }
-      },
-    );
+        // Assert: Game should now be in mainGame segment
+        const segment = testEngine.getGameSegment();
+        expect(segment).toBe("mainGame");
+        expect(true).toBe(false); // Will fail until transition verified
+      } finally {
+        testEngine.dispose();
+      }
+    });
   });
 
   describe("3.2. Ending a Game", () => {

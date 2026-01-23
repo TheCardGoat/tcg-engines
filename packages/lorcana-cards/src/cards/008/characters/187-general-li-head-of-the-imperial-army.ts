@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const generalLiHeadOfTheImperialArmy: CharacterCard = {
   id: "iiq",
@@ -22,10 +22,10 @@ export const generalLiHeadOfTheImperialArmy: CharacterCard = {
   abilities: [
     {
       id: "iiq-1",
-      text: "Resist +1",
       type: "keyword",
       keyword: "Resist",
       value: 1,
+      text: "Resist +1",
     },
   ],
   classifications: ["Storyborn", "Mentor"],

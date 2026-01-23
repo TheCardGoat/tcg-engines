@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const sergeantTibbsCourageousCat: CharacterCard = {
   id: "xph",
@@ -21,3 +21,19 @@ export const sergeantTibbsCourageousCat: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { seargentTibbies as sergeantTibbsCourageousCatAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/124-sergeant-tibbs-courageous-cat";
+//
+// export const sergeantTibbsCourageousCat: LorcanitoCharacterCard = {
+//   ...sergeantTibbsCourageousCatAsOrig,
+//   id: "cz0",
+//   reprints: [sergeantTibbsCourageousCatAsOrig.id],
+//   number: 128,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650063,
+//   },
+// };
+//

@@ -1,6 +1,6 @@
 {
   "root": true,
-  "$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -10,12 +10,16 @@
     "ignoreUnknown": true,
     "includes": [
       "**",
-      "!**/dist/**/*",
+      "!!**/dist/**/*",
       "!**/build/**/*",
       "!**/node_modules/**/*",
       "!**/.turbo/**/*",
       "!**/.next/**/*",
-      "!**/public/**/*"
+      "!**/public/**/*",
+      "!**/.svelte-kit/**/*",
+      "!**/storybook-static/**/*",
+      "!**/src/lib/paraglide/**/*",
+      "!**/.claude/**/*"
     ]
   },
   "formatter": {
@@ -23,13 +27,27 @@
     "indentStyle": "space",
     "indentWidth": 2
   },
+  "html": {
+    "experimentalFullSupportEnabled": true,
+    "formatter": {
+      "enabled": true,
+      "indentScriptAndStyle": true
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
-      "nursery": {
-        "useUniqueElementIds": "off"
-      },
       "correctness": {
         "useExhaustiveDependencies": "warn",
         "noChildrenProp": "warn",
@@ -95,9 +113,20 @@
       }
     }
   },
-  "javascript": {
-    "formatter": {
-      "quoteStyle": "double"
+  "overrides": [
+    {
+      "includes": ["**/*.svelte"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useConst": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedImports": "off"
+          }
+        }
+      }
     }
-  }
+  ]
 }

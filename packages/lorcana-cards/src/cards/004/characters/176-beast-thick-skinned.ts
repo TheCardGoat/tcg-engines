@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const beastThickskinned: CharacterCard = {
   id: "qz9",
@@ -22,11 +22,40 @@ export const beastThickskinned: CharacterCard = {
   abilities: [
     {
       id: "qz9-1",
-      text: "Resist +1",
       type: "keyword",
       keyword: "Resist",
       value: 1,
+      text: "Resist +1",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { resistAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const beastThickSkinned: LorcanitoCharacterCard = {
+//   id: "xyo",
+//   name: "Beast",
+//   title: "Thick-Skinned",
+//   characteristics: ["hero", "storyborn", "prince"],
+//   text: "**Resist** +1 _(Damage dealt to this character is reduced by 1 )_",
+//   type: "character",
+//   abilities: [resistAbility(1)],
+//   flavour: "He's even tougher than he looks.",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 3,
+//   strength: 2,
+//   willpower: 3,
+//   lore: 1,
+//   illustrator: "Simangaliso Sibaya",
+//   number: 176,
+//   set: "URR",
+//   externalIds: {
+//     tcgPlayer: 549654,
+//   },
+//   rarity: "common",
+// };
+//

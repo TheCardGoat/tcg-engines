@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const robinHoodDaydreamer: CharacterCard = {
   id: "1lp",
@@ -21,3 +21,19 @@ export const robinHoodDaydreamer: CharacterCard = {
   },
   classifications: ["Dreamborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { robinHoodDaydreamer as ogRobinHoodDaydreamer } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const robinHoodDaydreamer: LorcanitoCharacterCard = {
+//   ...ogRobinHoodDaydreamer,
+//   id: "x4m",
+//   reprints: [ogRobinHoodDaydreamer.id],
+//   number: 70,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650012,
+//   },
+// };
+//

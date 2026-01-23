@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const chiefTuiRespectedLeader: CharacterCard = {
   id: "qai",
@@ -22,10 +22,40 @@ export const chiefTuiRespectedLeader: CharacterCard = {
   abilities: [
     {
       id: "qai-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
   ],
   classifications: ["Storyborn", "Mentor", "King"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import { supportAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const chiefTui: LorcanitoCharacterCard = {
+//   id: "ugn",
+//
+//   name: "Chief Tui",
+//   title: "Respected Leader",
+//   characteristics: ["storyborn", "king", "mentor"],
+//   text: "**Support** _(Whenever this character quests, you\u0003 may add their {S} to another chosen character's {S} this turn.)_",
+//   type: "character",
+//   abilities: [supportAbility],
+//   illustrator: "Pirel",
+//   flavour: "You can always rely on the strength of those who love you.",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 7,
+//   strength: 3,
+//   willpower: 6,
+//   lore: 3,
+//   number: 143,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 508819,
+//   },
+//   rarity: "uncommon",
+// };
+//

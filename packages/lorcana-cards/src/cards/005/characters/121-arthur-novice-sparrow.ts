@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const arthurNoviceSparrow: CharacterCard = {
   id: "bn1",
@@ -22,10 +22,38 @@ export const arthurNoviceSparrow: CharacterCard = {
   abilities: [
     {
       id: "bn1-1",
-      text: "Reckless",
       type: "keyword",
       keyword: "Reckless",
+      text: "Reckless",
     },
   ],
   classifications: ["Storyborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { recklessAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const arthurNoviceSparrow: LorcanitoCharacterCard = {
+//   id: "b3l",
+//   name: "Arthur",
+//   title: "Novice Sparrow",
+//   characteristics: ["hero", "storyborn"],
+//   text: "**Reckless** _(This character can't quest and must challenge each turn if able.)_",
+//   type: "character",
+//   abilities: [recklessAbility],
+//   flavour: "Hold it boy. Not so fast.\n−Merlin",
+//   colors: ["ruby"],
+//   cost: 1,
+//   strength: 2,
+//   willpower: 3,
+//   lore: 0,
+//   illustrator: "Brian Weisz",
+//   number: 121,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 561466,
+//   },
+//   rarity: "uncommon",
+// };
+//

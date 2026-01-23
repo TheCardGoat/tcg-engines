@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mrArrowLegacysFirstMate: CharacterCard = {
   id: "1am",
@@ -22,11 +22,40 @@ export const mrArrowLegacysFirstMate: CharacterCard = {
   abilities: [
     {
       id: "1am-1",
-      text: "Resist +1",
       type: "keyword",
       keyword: "Resist",
       value: 1,
+      text: "Resist +1",
     },
   ],
   classifications: ["Storyborn", "Ally", "Alien"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// // TODO: Once the set is released, we organize the cards by set and type
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { resistAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const mrArrowLegacysFirstMate: LorcanitoCharacterCard = {
+//   id: "l9e",
+//   name: "Mr. Arrow",
+//   title: "Legacy's First Mate",
+//   characteristics: ["storyborn", "ally", "alien"],
+//   text: "Resist +1 (Damage dealt to this character is reduced by 1.)",
+//   type: "character",
+//   abilities: [resistAbility(1)],
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 2,
+//   strength: 1,
+//   willpower: 2,
+//   lore: 2,
+//   illustrator: "Michela Cacciatore / Giulia Priori",
+//   number: 182,
+//   set: "006",
+//   externalIds: {
+//     tcgPlayer: 587970,
+//   },
+//   rarity: "common",
+// };
+//

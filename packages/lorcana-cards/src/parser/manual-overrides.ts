@@ -58,6 +58,47 @@ function manualEntries(raws: UntypedAbilityWithText[]): AbilityWithText[] {
  */
 export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   // ============================================================================
+  // ============================================================================
+  // MANUALLY RESTORED CARDS
+  // ============================================================================
+
+  // Hakuna Matata
+  "Remove up to {d} damage from each of your characters.": manualEntry({
+    text: "Remove up to 3 damage from each of your characters.",
+    name: "Hakuna Matata",
+    ability: {
+      type: "action",
+      effect: {
+        type: "remove-damage",
+        amount: 3,
+        target: { selector: "all", controller: "you", cardType: "character" },
+        upTo: true,
+      },
+    },
+  }),
+
+  // Be Our Guest
+  "Look at the top {d} cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.":
+    manualEntry({
+      text: "Look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+      name: "Be Our Guest",
+      ability: {
+        type: "action",
+        effect: {
+          type: "look-at-cards",
+          amount: 4,
+          from: "top-of-deck",
+          target: "CONTROLLER",
+          then: {
+            action: "put-in-hand",
+            filter: { type: "card-type", cardType: "character" },
+            reveal: true,
+          },
+        },
+      },
+    }),
+
+  // ============================================================================
   // TOP 100 COMPLEX TEXTS - Manually Implemented
   // ============================================================================
 
@@ -1047,7 +1088,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           type: "sequence",
           steps: [
             { type: "return-to-hand", target: { selector: "chosen" } },
-            { type: "discard", amount: 1, target: "card-owner", chosen: true },
+            { type: "discard", amount: 1, target: "CARD_OWNER", chosen: true },
           ],
         },
       },
@@ -1501,7 +1542,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
         effect: {
           type: "put-into-inkwell",
           source: "chosen-character",
-          target: "card-owner",
+          target: "CARD_OWNER",
           exerted: true,
           targetFilters: [{ type: "is-exerted" }],
         },
@@ -2785,7 +2826,7 @@ export function resolveManualOverrideValues(
     for (const key in obj) {
       if (key !== "text" && !numericFields.includes(key)) {
         if (Array.isArray(obj[key])) {
-          obj[key].forEach((item: any) => replacePlaceholders(item, depth + 1));
+          for (const item of obj[key]) replacePlaceholders(item, depth + 1);
         } else if (typeof obj[key] === "object") {
           replacePlaceholders(obj[key], depth + 1);
         }
@@ -2794,7 +2835,7 @@ export function resolveManualOverrideValues(
   }
 
   if (Array.isArray(resolved)) {
-    resolved.forEach((item) => replacePlaceholders(item));
+    for (const item of resolved) replacePlaceholders(item);
   } else {
     replacePlaceholders(resolved);
   }

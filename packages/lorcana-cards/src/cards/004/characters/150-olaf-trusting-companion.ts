@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const olafTrustingCompanion: CharacterCard = {
   id: "1ki",
@@ -22,10 +22,40 @@ export const olafTrustingCompanion: CharacterCard = {
   abilities: [
     {
       id: "1ki-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { supportAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const olafTrustingCompanion: LorcanitoCharacterCard = {
+//   id: "tln",
+//   name: "Olaf",
+//   title: "Trusting Companion",
+//   characteristics: ["storyborn", "ally"],
+//   text: "**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_",
+//   type: "character",
+//   abilities: [supportAbility],
+//   flavour:
+//     "Isn't this Kristoff's hat? If he went this way, he'll be caught in that storm!",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 1,
+//   strength: 1,
+//   willpower: 2,
+//   lore: 1,
+//   illustrator: "Brian Kesinger",
+//   number: 150,
+//   set: "URR",
+//   externalIds: {
+//     tcgPlayer: 550609,
+//   },
+//   rarity: "common",
+// };
+//

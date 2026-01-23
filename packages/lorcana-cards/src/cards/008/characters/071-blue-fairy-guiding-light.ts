@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const blueFairyGuidingLight: CharacterCard = {
   id: "1iq",
@@ -22,15 +22,15 @@ export const blueFairyGuidingLight: CharacterCard = {
   abilities: [
     {
       id: "1iq-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
     {
       id: "1iq-2",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
   ],
   classifications: ["Storyborn", "Ally", "Fairy"],

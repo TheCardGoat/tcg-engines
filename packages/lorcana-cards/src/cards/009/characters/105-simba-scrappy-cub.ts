@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const simbaScrappyCub: CharacterCard = {
   id: "1e0",
@@ -21,3 +21,19 @@ export const simbaScrappyCub: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { simbaScrappyCub as ogSimbaScrappyCub } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const simbaScrappyCub: LorcanitoCharacterCard = {
+//   ...ogSimbaScrappyCub,
+//   id: "bt1",
+//   reprints: [ogSimbaScrappyCub.id],
+//   number: 105,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650043,
+//   },
+// };
+//

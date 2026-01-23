@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const chefLouisInOverHisHead: CharacterCard = {
   id: "1j1",
@@ -21,3 +21,30 @@ export const chefLouisInOverHisHead: CharacterCard = {
   },
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const chefLouisInOverHisHead: LorcanitoCharacterCard = {
+//   id: "xmi",
+//   name: "Chef Louis",
+//   title: "In Over His Head",
+//   characteristics: ["storyborn"],
+//   text: "",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 7,
+//   strength: 6,
+//   willpower: 8,
+//   illustrator: "Alibeth Zermeno",
+//   number: 140,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659460,
+//   },
+//   rarity: "uncommon",
+//   abilities: [],
+//   lore: 3,
+// };
+//

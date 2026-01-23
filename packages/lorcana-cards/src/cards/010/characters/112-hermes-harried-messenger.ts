@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const hermesHarriedMessenger: CharacterCard = {
   id: "17j",
@@ -22,10 +22,38 @@ export const hermesHarriedMessenger: CharacterCard = {
   abilities: [
     {
       id: "17j-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
+      text: "Rush",
     },
   ],
   classifications: ["Storyborn", "Deity"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { rushAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const hermesHarriedMessenger: LorcanitoCharacterCard = {
+//   id: "n57",
+//   name: "Hermes",
+//   title: "Harried Messenger",
+//   characteristics: ["storyborn", "deity"],
+//   text: "Rush (This character can challenge the turn they're played.)",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["ruby"],
+//   cost: 3,
+//   strength: 3,
+//   willpower: 3,
+//   illustrator: "Rodrigo Camilo",
+//   number: 112,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 658878,
+//   },
+//   rarity: "common",
+//   abilities: [rushAbility],
+//   lore: 1,
+// };
+//

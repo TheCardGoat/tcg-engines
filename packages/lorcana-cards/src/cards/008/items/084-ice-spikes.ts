@@ -1,0 +1,20 @@
+import type { ItemCard } from "@tcg/lorcana-types";
+
+export const iceSpikes: ItemCard = {
+  id: "k20",
+  cardType: "item",
+  name: "Ice Spikes",
+  inkType: ["amethyst", "sapphire"],
+  franchise: "Frozen",
+  set: "008",
+  text: "HOLD STILL When you play this item, exert chosen opposing character.\nIT'S STUCK {E}, 1 {I} – Exert chosen opposing item. It can’t ready at the start of its next turn.",
+  cost: 2,
+  cardNumber: 84,
+  inkable: true,
+  missingImplementation: true,
+  missingTests: true,
+  externalIds: {
+    ravensburger: "4848962185abb4d5b4c61baa3a86c31313853f72",
+  },
+  abilities: [],
+};

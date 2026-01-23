@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const denahiImpatientHunter: CharacterCard = {
   id: "8xy",
@@ -22,17 +22,48 @@ export const denahiImpatientHunter: CharacterCard = {
   abilities: [
     {
       id: "8xy-1",
-      text: "Reckless",
       type: "keyword",
       keyword: "Reckless",
+      text: "Reckless",
     },
     {
       id: "8xy-2",
-      text: "Resist +2",
       type: "keyword",
       keyword: "Resist",
       value: 2,
+      text: "Resist +2",
     },
   ],
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import {
+//   recklessAbility,
+//   resistAbility,
+// } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const denahiImpatientHunter: LorcanitoCharacterCard = {
+//   id: "lb2",
+//   name: "Denahi",
+//   title: "Impatient Hunter",
+//   characteristics: ["storyborn"],
+//   text: "Reckless\nResist +2",
+//   type: "character",
+//   abilities: [recklessAbility, resistAbility(2)],
+//   inkwell: true,
+//   colors: ["ruby", "steel"],
+//   cost: 3,
+//   strength: 3,
+//   willpower: 2,
+//   illustrator: "Brian Weisz",
+//   number: 124,
+//   set: "007",
+//   externalIds: {
+//     tcgPlayer: 618144,
+//   },
+//   rarity: "uncommon",
+//   lore: 0,
+// };
+//

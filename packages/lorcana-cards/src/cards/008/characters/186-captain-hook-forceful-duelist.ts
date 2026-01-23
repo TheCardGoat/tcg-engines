@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const captainHookForcefulDuelist: CharacterCard = {
   id: "bhv",
@@ -22,10 +22,10 @@ export const captainHookForcefulDuelist: CharacterCard = {
   abilities: [
     {
       id: "bhv-1",
-      text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",
       value: 2,
+      text: "Challenger +2",
     },
   ],
   classifications: ["Dreamborn", "Villain", "Pirate", "Captain"],

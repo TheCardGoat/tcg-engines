@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const fixitFelixJrDelightedSightseer: CharacterCard = {
   id: "108",
@@ -22,19 +22,20 @@ export const fixitFelixJrDelightedSightseer: CharacterCard = {
   abilities: [
     {
       id: "108-1",
-      text: "OH, MY LAND! When you play this character, if you have a location in play, draw a card.",
-      name: "OH, MY LAND!",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
+      type: "action",
       effect: {
-        type: "draw",
-        amount: 1,
-        target: "CONTROLLER",
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have a location in play",
+        },
+        then: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
       },
+      text: "OH, MY LAND! When you play this character, if you have a location in play, draw a card.",
     },
   ],
   classifications: ["Storyborn", "Hero"],

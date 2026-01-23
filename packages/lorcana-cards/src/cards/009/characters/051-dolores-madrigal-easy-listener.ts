@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const doloresMadrigalEasyListener: CharacterCard = {
   id: "n9k",
@@ -22,24 +22,43 @@ export const doloresMadrigalEasyListener: CharacterCard = {
   abilities: [
     {
       id: "n9k-1",
-      text: "MAGICAL INFORMANT When you play this character, if an opponent has an exerted character in play, you may draw a card.",
-      name: "MAGICAL INFORMANT",
       type: "triggered",
+      name: "MAGICAL INFORMANT",
       trigger: {
         event: "play",
         timing: "when",
         on: "SELF",
       },
       effect: {
-        type: "optional",
-        effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "an opponent has an exerted character in play",
+        },
+        then: {
           type: "draw",
           amount: 1,
-          target: "OPPONENT",
+          target: "CONTROLLER",
         },
-        chooser: "CONTROLLER",
       },
+      text: "MAGICAL INFORMANT When you play this character, if an opponent has an exerted character in play, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "Ally", "Madrigal"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { doloresMadrigalEasyListener as ogDoloresMadrigalEasyListener } from "@lorcanito/lorcana-engine/cards/004/characters/041-dolores-madrigal-easy-listener";
+//
+// export const doloresMadrigalEasyListener: LorcanitoCharacterCard = {
+//   ...ogDoloresMadrigalEasyListener,
+//   id: "yvi",
+//   reprints: [ogDoloresMadrigalEasyListener.id],
+//   number: 51,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649995,
+//   },
+// };
+//

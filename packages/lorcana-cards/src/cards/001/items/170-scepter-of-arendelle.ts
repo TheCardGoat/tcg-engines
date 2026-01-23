@@ -1,4 +1,4 @@
-import type { ItemCard } from "@tcg/lorcana";
+import type { ItemCard } from "@tcg/lorcana-types";
 
 export const scepterOfArendelle: ItemCard = {
   id: "1j9",
@@ -32,3 +32,52 @@ export const scepterOfArendelle: ItemCard = {
     },
   ],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// import type { AbilityEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
+//
+// export const scepterOfArendelle: LorcanitoItemCard = {
+//   characteristics: ["item"],
+//   id: "ao2",
+//
+//   name: "Scepter Of Arendelle",
+//   text: "**COMMAND** {E} − Chosen character gains **Support** this turn. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_",
+//   type: "item",
+//   abilities: [
+//     {
+//       type: "activated",
+//       name: "Command",
+//       text: "Chosen character gains **Support** this turn.",
+//       costs: [{ type: "exert" }],
+//       effects: [
+//         {
+//           type: "ability",
+//           ability: "support",
+//           modifier: "add",
+//           duration: "turn",
+//           target: {
+//             type: "card",
+//             value: 1,
+//             filters: [
+//               { filter: "zone", value: "play" },
+//               { filter: "type", value: "character" },
+//             ],
+//           },
+//         } as AbilityEffect,
+//       ],
+//     } as ActivatedAbility,
+//   ],
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 1,
+//   illustrator: "Grace Tran",
+//   number: 170,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 505963,
+//   },
+//   rarity: "uncommon",
+// };
+//

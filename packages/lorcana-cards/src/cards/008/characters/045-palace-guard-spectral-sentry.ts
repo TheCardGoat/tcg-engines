@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const palaceGuardSpectralSentry: CharacterCard = {
   id: "1v0",
@@ -22,9 +22,9 @@ export const palaceGuardSpectralSentry: CharacterCard = {
   abilities: [
     {
       id: "1v0-1",
-      text: "Vanish",
       type: "keyword",
       keyword: "Vanish",
+      text: "Vanish",
     },
   ],
   classifications: ["Dreamborn", "Ally", "Illusion"],

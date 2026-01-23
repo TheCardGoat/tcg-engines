@@ -5,7 +5,7 @@
  * - Input JSON structure (lorcana-input.json)
  * - Output JSON structures (canonical cards, printings, sets)
  *
- * Uses types from @tcg/lorcana for card definitions to ensure
+ * Uses types from @tcg/lorcana-types for card definitions to ensure
  * compatibility between generated cards and the game engine.
  */
 
@@ -21,7 +21,7 @@ export type {
   KeywordAbility,
   LocationCard,
   LorcanaCard,
-} from "@tcg/lorcana";
+} from "@tcg/lorcana-types";
 
 // Import types needed for internal use
 import type {
@@ -33,7 +33,7 @@ import type {
   KeywordAbility,
   LocationCard,
   LorcanaCard,
-} from "@tcg/lorcana";
+} from "@tcg/lorcana-types";
 
 // ============================================================================
 // Input Types (ravensburger-input.json structure)
@@ -154,7 +154,7 @@ export type LorcanaInputJson = RavensburgerInputJson;
 // Output Types (Generated JSON structures)
 // ============================================================================
 
-// CardType and InkType are now imported from @tcg/lorcana
+// CardType and InkType are now imported from @tcg/lorcana-types
 
 export type Rarity =
   | "common"
@@ -207,7 +207,7 @@ export interface CanonicalCardMetadata {
   abilities?: AbilityDefinition[];
 
   /** Structured keyword abilities parsed from rules text */
-  parsedAbilities?: KeywordAbility[];
+  parsedAbilities?: AbilityDefinition[];
 
   /** References to all printings of this card */
   printings: CardPrintingRef[];
@@ -220,6 +220,12 @@ export interface CanonicalCardMetadata {
 
   /** External IDs for cross-referencing with other systems */
   externalIds?: ExternalIds;
+
+  /** Flag indicating if the card is missing implementation */
+  missingImplementation?: boolean;
+
+  /** Flag indicating if the card is missing tests */
+  missingTests?: boolean;
 }
 
 /**
@@ -358,7 +364,11 @@ export interface AbilityDefinition {
   id?: string;
   name?: string | null;
   text: string;
-  type: "triggered" | "activated" | "static" | "keyword";
+  type: "triggered" | "activated" | "static" | "keyword" | "action";
+  keyword?: string;
+  value?: number;
+  cost?: unknown;
+  shiftTarget?: string;
 }
 
 /**

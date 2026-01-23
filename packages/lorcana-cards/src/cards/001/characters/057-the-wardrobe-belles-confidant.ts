@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const theWardrobeBellesConfidant: CharacterCard = {
   id: "1s4",
@@ -21,3 +21,30 @@ export const theWardrobeBellesConfidant: CharacterCard = {
   },
   classifications: ["Dreamborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const theWardrobeBelleConfident: LorcanitoCharacterCard = {
+//   id: "qvy",
+//
+//   name: "The Wardrobe",
+//   title: "Belle's Confidant",
+//   characteristics: ["dreamborn", "ally"],
+//   type: "character",
+//   flavour: "When you simply must have the hautest couture.",
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 3,
+//   strength: 3,
+//   willpower: 4,
+//   lore: 1,
+//   illustrator: "Giulia Riva",
+//   number: 57,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 485363,
+//   },
+//   rarity: "common",
+// };
+//

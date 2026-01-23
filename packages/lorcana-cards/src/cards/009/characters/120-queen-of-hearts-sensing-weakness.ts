@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const queenOfHeartsSensingWeakness: CharacterCard = {
   id: "1je",
@@ -22,18 +22,17 @@ export const queenOfHeartsSensingWeakness: CharacterCard = {
   abilities: [
     {
       id: "1je-1",
-      text: "Shift 2 {I}",
       type: "keyword",
       keyword: "Shift",
       cost: {
         ink: 2,
       },
+      text: "Shift 2 {I}",
     },
     {
       id: "1je-2",
-      text: "LET THE GAME BEGIN Whenever one of your characters challenges another character, you may draw a card.",
-      name: "LET THE GAME BEGIN",
       type: "triggered",
+      name: "LET THE GAME BEGIN",
       trigger: {
         event: "banish",
         timing: "whenever",
@@ -48,7 +47,24 @@ export const queenOfHeartsSensingWeakness: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "LET THE GAME BEGIN Whenever one of your characters challenges another character, you may draw a card.",
     },
   ],
   classifications: ["Floodborn", "Villain", "Queen"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { queenOfHeartsSensingWeakness as ogQueenOfHeartsSensingWeakness } from "@lorcanito/lorcana-engine/cards/002/characters/120-queen-of-hearts-sensing-weakness";
+//
+// export const queenOfHeartsSensingWeakness: LorcanitoCharacterCard = {
+//   ...ogQueenOfHeartsSensingWeakness,
+//   id: "a6w",
+//   reprints: [ogQueenOfHeartsSensingWeakness.id],
+//   number: 120,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 647670,
+//   },
+// };
+//

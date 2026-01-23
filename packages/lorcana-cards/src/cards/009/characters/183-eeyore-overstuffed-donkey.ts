@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const eeyoreOverstuffedDonkey: CharacterCard = {
   id: "16o",
@@ -22,11 +22,27 @@ export const eeyoreOverstuffedDonkey: CharacterCard = {
   abilities: [
     {
       id: "16o-1",
-      text: "Resist +1",
       type: "keyword",
       keyword: "Resist",
       value: 1,
+      text: "Resist +1",
     },
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { eeyoreOverstuffedDonkey as eeyoreOverstuffedDonkeyAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/172-eeyore-overstuffed-donkey";
+//
+// export const eeyoreOverstuffedDonkey: LorcanitoCharacterCard = {
+//   ...eeyoreOverstuffedDonkeyAsOrig,
+//   id: "k3s",
+//   reprints: [eeyoreOverstuffedDonkeyAsOrig.id],
+//   number: 183,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650116,
+//   },
+// };
+//

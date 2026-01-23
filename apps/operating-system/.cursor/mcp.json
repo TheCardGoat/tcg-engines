@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "daisyui": {
+      "url": "https://gitmcp.io/saadeghi/daisyui"
+    },
+    "svelte": {
+      "url": "https://mcp.svelte.dev/mcp"
+    }
+  }
+}

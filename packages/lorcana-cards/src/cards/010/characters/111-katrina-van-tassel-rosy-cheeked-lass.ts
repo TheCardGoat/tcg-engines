@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const katrinaVanTasselRosycheekedLass: CharacterCard = {
   id: "47l",
@@ -21,3 +21,28 @@ export const katrinaVanTasselRosycheekedLass: CharacterCard = {
   },
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const katrinaVanTasselRosycheekedLass: LorcanitoCharacterCard = {
+//   id: "pkq",
+//   name: "Katrina Van Tassel",
+//   title: "Rosy-Cheeked Lass",
+//   characteristics: ["storyborn"],
+//   type: "character",
+//   inkwell: true,
+//   colors: ["ruby"],
+//   cost: 3,
+//   strength: 6,
+//   willpower: 4,
+//   illustrator: "Celeste Jamneck",
+//   number: 111,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 660022,
+//   },
+//   rarity: "uncommon",
+//   lore: 1,
+// };
+//

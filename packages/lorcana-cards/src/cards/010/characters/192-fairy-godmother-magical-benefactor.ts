@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const fairyGodmotherMagicalBenefactor: CharacterCard = {
   id: "45t",
@@ -22,15 +22,13 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
   abilities: [
     {
       id: "45t-1",
-      text: "Boost 3 {I}",
       type: "keyword",
       keyword: "Boost",
       value: 3,
+      text: "Boost 3 {I}",
     },
     {
       id: "45t-2",
-      text: "STUNNING TRANSFORMATION Whenever you put a card under this character, you may banish chosen opposing character. If you do, their player may reveal the top card of their deck. If that card is a character or item card, they may play it for free. Otherwise, they put it on the bottom of their deck.",
-      name: "STUNNING TRANSFORMATION",
       type: "triggered",
       trigger: {
         event: "ink",
@@ -46,30 +44,43 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
               type: "banish",
               target: {
                 selector: "chosen",
-                count: { exactly: 1 },
-                filter: [{ type: "owner", owner: "opponent" }],
+                owner: "opponent",
+                count: 1,
               },
             },
             {
-              type: "look-at-cards",
-              amount: 1,
-              from: "top-of-deck",
-              target: "OPPONENT",
+              type: "conditional",
+              condition: {
+                type: "if",
+                expression: "target banished",
+              },
               then: {
-                action: "reveal-and-play",
-                cost: "free",
-                filter: {
-                  type: "card-type",
-                  cardType: "character" /* or item */,
-                },
-                // The filter needs to allow character OR item. "cardType" usually single.
-                // "card-type" filter: string | string[].
-                // If not supported, use character.
+                type: "scry",
+                amount: 1,
+                target: "OPPONENT",
+                revealAll: true,
+                destinations: [
+                  {
+                    zone: "play",
+                    min: 0,
+                    max: 1,
+                    filter: {
+                      type: "or",
+                      filters: [
+                        { type: "card-type", cardType: "character" },
+                        { type: "card-type", cardType: "item" },
+                      ],
+                    },
+                    cost: "free",
+                  },
+                  { zone: "deck-bottom", remainder: true },
+                ],
               },
             },
           ],
         },
       },
+      text: "STUNNING TRANSFORMATION Whenever you put a card under this character, you may banish chosen opposing character. If you do, their player may reveal the top card of their deck. If that card is a character or item card, they may play it for free. Otherwise, they put it on the bottom of their deck.",
     },
   ],
   classifications: ["Storyborn", "Ally", "Fairy", "Sorcerer", "Whisper"],

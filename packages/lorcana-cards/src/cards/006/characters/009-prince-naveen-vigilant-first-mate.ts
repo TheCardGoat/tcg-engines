@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const princeNaveenVigilantFirstMate: CharacterCard = {
   id: "1hg",
@@ -38,3 +38,35 @@ export const princeNaveenVigilantFirstMate: CharacterCard = {
   ],
   classifications: ["Floodborn", "Hero", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// // TODO: Once the set is released, we organize the cards by set and type
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import {
+//   bodyguardAbility,
+//   shiftAbility,
+// } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const princeNaveenVigilantFirstMate: LorcanitoCharacterCard = {
+//   id: "o4d",
+//   name: "Prince Naveen",
+//   title: "Vigilant First Mate",
+//   characteristics: ["floodborn", "hero", "prince"],
+//   text: "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Prince Naveen.)\nBodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+//   type: "character",
+//   abilities: [shiftAbility(3, "Prince Naveen"), bodyguardAbility],
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 5,
+//   strength: 2,
+//   willpower: 6,
+//   lore: 2,
+//   illustrator: "Francesco Colucci",
+//   number: 9,
+//   set: "006",
+//   externalIds: {
+//     tcgPlayer: 592016,
+//   },
+//   rarity: "uncommon",
+// };
+//

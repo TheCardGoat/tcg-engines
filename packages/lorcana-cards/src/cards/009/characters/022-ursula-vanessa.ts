@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const ursulaVanessa: CharacterCard = {
   id: "lsj",
@@ -22,11 +22,27 @@ export const ursulaVanessa: CharacterCard = {
   abilities: [
     {
       id: "lsj-1",
-      text: "Singer 4",
       type: "keyword",
       keyword: "Singer",
       value: 4,
+      text: "Singer 4",
     },
   ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { ursulaVanessa as ogUrsulaVanessa } from "@lorcanito/lorcana-engine/cards/004/characters/25-ursula-vanessa";
+//
+// export const ursulaVanessa: LorcanitoCharacterCard = {
+//   ...ogUrsulaVanessa,
+//   id: "iye",
+//   reprints: [ogUrsulaVanessa.id],
+//   number: 22,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649970,
+//   },
+// };
+//

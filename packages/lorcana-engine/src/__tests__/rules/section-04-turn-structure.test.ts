@@ -44,13 +44,10 @@ describe("Section 4: Turn Structure", () => {
      * Effects that end at the start end, effects that begin at start happen.
      * Has three steps: Ready, Set, and Draw.
      */
-    test.failing(
-      "Rule 4.1.2 - Beginning Phase has Ready, Set, Draw steps",
-      () => {
-        // Assert: Beginning phase should contain all three steps
-        expect(true).toBe(false); // Will fail until step tracking implemented
-      },
-    );
+    test.failing("Rule 4.1.2 - Beginning Phase has Ready, Set, Draw steps", () => {
+      // Assert: Beginning phase should contain all three steps
+      expect(true).toBe(false); // Will fail until step tracking implemented
+    });
 
     /**
      * Rule 4.1.3: The Main Phase is where a player can act on their turn,
@@ -82,28 +79,25 @@ describe("Section 4: Turn Structure", () => {
       /**
        * Rule 4.2.1.1: The active player readies all their cards in play and inkwell.
        */
-      test.failing(
-        "Rule 4.2.1.1 - Ready step readies all exerted cards",
-        () => {
-          // Arrange: Create exerted character
-          const character = testEngine.createCharacterInPlay(PLAYER_ONE, {
-            strength: 2,
-            willpower: 3,
-          });
+      test.failing("Rule 4.2.1.1 - Ready step readies all exerted cards", () => {
+        // Arrange: Create exerted character
+        const character = testEngine.createCharacterInPlay(PLAYER_ONE, {
+          strength: 2,
+          willpower: 3,
+        });
 
-          // Exert the character (e.g., by questing)
-          testEngine.quest(character);
-          expect(testEngine.getCardMeta(character)?.state).toBe("exerted");
+        // Exert the character (e.g., by questing)
+        testEngine.quest(character);
+        expect(testEngine.getCardMeta(character)?.state).toBe("exerted");
 
-          // Act: Pass turn and come back (triggers ready step)
-          testEngine.passTurn();
-          testEngine.passTurn();
+        // Act: Pass turn and come back (triggers ready step)
+        testEngine.passTurn();
+        testEngine.passTurn();
 
-          // Assert: Character should be ready
-          expect(testEngine.getCardMeta(character)?.state).toBe("ready");
-          expect(true).toBe(false); // Verify with actual ready step
-        },
-      );
+        // Assert: Character should be ready
+        expect(testEngine.getCardMeta(character)?.state).toBe("ready");
+        expect(true).toBe(false); // Verify with actual ready step
+      });
 
       /**
        * Rule 4.2.1.2: Effects that apply "During your turn" start applying.
@@ -134,17 +128,14 @@ describe("Section 4: Turn Structure", () => {
        * Rule 4.2.1.4: Effects that trigger "at the start of your turn" trigger
        * but do not yet resolve (see Set step).
        */
-      test.failing(
-        "Rule 4.2.1.4 - Start of turn triggers queue but don't resolve",
-        () => {
-          // Arrange: Create card with "at the start of your turn" trigger
+      test.failing("Rule 4.2.1.4 - Start of turn triggers queue but don't resolve", () => {
+        // Arrange: Create card with "at the start of your turn" trigger
 
-          // Act: Enter Ready step
+        // Act: Enter Ready step
 
-          // Assert: Trigger should be queued, not resolved
-          expect(true).toBe(false); // Will fail until trigger queuing implemented
-        },
-      );
+        // Assert: Trigger should be queued, not resolved
+        expect(true).toBe(false); // Will fail until trigger queuing implemented
+      });
     });
 
     describe("4.2.2. Set Step", () => {
@@ -183,17 +174,14 @@ describe("Section 4: Turn Structure", () => {
        * Rule 4.2.2.3: Effects that would occur "At the start of your turn"
        * and abilities from Ready step are added to bag and resolve.
        */
-      test.failing(
-        "Rule 4.2.2.3 - Start of turn triggers resolve at Set step",
-        () => {
-          // Arrange: Create card with start of turn trigger
+      test.failing("Rule 4.2.2.3 - Start of turn triggers resolve at Set step", () => {
+        // Arrange: Create card with start of turn trigger
 
-          // Act: Complete Set step
+        // Act: Complete Set step
 
-          // Assert: Trigger should have resolved
-          expect(true).toBe(false); // Will fail until Set step resolution implemented
-        },
-      );
+        // Assert: Trigger should have resolved
+        expect(true).toBe(false); // Will fail until Set step resolution implemented
+      });
     });
 
     describe("4.2.3. Draw Step", () => {
@@ -250,17 +238,14 @@ describe("Section 4: Turn Structure", () => {
        * Rule 4.3.2: The active player may take turn actions in any order during
        * Main Phase. Each action can be taken any number of times with resources.
        */
-      test.failing(
-        "Rule 4.3.2 - Turn actions can be taken in any order",
-        () => {
-          // Arrange: Set up multiple possible actions
+      test.failing("Rule 4.3.2 - Turn actions can be taken in any order", () => {
+        // Arrange: Set up multiple possible actions
 
-          // Act: Take actions in various orders
+        // Act: Take actions in various orders
 
-          // Assert: Order should be flexible
-          expect(true).toBe(false); // Will fail until action order verified
-        },
-      );
+        // Assert: Order should be flexible
+        expect(true).toBe(false); // Will fail until action order verified
+      });
     });
 
     describe("4.3.3. Put Card Into Inkwell", () => {
@@ -291,17 +276,14 @@ describe("Section 4: Turn Structure", () => {
        * Rule 4.3.3.1: Player declares they're putting a card into inkwell,
        * chooses and reveals a card with the inkwell symbol.
        */
-      test.failing(
-        "Rule 4.3.3.1 - Only inkable cards can go to inkwell",
-        () => {
-          // Arrange: Need a non-inkable card
+      test.failing("Rule 4.3.3.1 - Only inkable cards can go to inkwell", () => {
+        // Arrange: Need a non-inkable card
 
-          // Act: Try to put non-inkable card in inkwell
+        // Act: Try to put non-inkable card in inkwell
 
-          // Assert: Should fail
-          expect(true).toBe(false); // Will fail until inkable check implemented
-        },
-      );
+        // Assert: Should fail
+        expect(true).toBe(false); // Will fail until inkable check implemented
+      });
 
       /**
        * Rule 4.3.3.2: The player places the revealed card in their inkwell
@@ -340,31 +322,25 @@ describe("Section 4: Turn Structure", () => {
        * Rule 4.3.4.2: Cards can normally be played only from a player's hand.
        * Only the active player can play cards.
        */
-      test.failing(
-        "Rule 4.3.4.2 - Only active player can play from hand",
-        () => {
-          // Act: Non-active player tries to play
+      test.failing("Rule 4.3.4.2 - Only active player can play from hand", () => {
+        // Act: Non-active player tries to play
 
-          // Assert: Should fail
-          expect(true).toBe(false); // Will fail until active player check implemented
-        },
-      );
+        // Assert: Should fail
+        expect(true).toBe(false); // Will fail until active player check implemented
+      });
 
       /**
        * Rule 4.3.4.5: The total cost is ink cost or alternate cost plus modifiers.
        * Apply additional costs first, then increases, then reductions.
        */
-      test.failing(
-        "Rule 4.3.4.5 - Cost calculation order: additional, increase, reduction",
-        () => {
-          // Arrange: Card with multiple cost modifiers
+      test.failing("Rule 4.3.4.5 - Cost calculation order: additional, increase, reduction", () => {
+        // Arrange: Card with multiple cost modifiers
 
-          // Act: Calculate total cost
+        // Act: Calculate total cost
 
-          // Assert: Order should be additional -> increase -> reduction
-          expect(true).toBe(false); // Will fail until cost calculation implemented
-        },
-      );
+        // Assert: Order should be additional -> increase -> reduction
+        expect(true).toBe(false); // Will fail until cost calculation implemented
+      });
 
       /**
        * Rule 4.3.4.6: The player pays the total cost by exerting ready ink cards.
@@ -382,30 +358,24 @@ describe("Section 4: Turn Structure", () => {
        * Rule 4.3.4.7: Once cost is paid, card is "played". Characters enter Play zone.
        * Actions resolve immediately and go to discard.
        */
-      test.failing(
-        "Rule 4.3.4.7 - Character enters play, action goes to discard",
-        () => {
-          // For characters: should be in play zone
-          // For actions: should resolve and go to discard
-          expect(true).toBe(false); // Will fail until zone placement verified
-        },
-      );
+      test.failing("Rule 4.3.4.7 - Character enters play, action goes to discard", () => {
+        // For characters: should be in play zone
+        // For actions: should resolve and go to discard
+        expect(true).toBe(false); // Will fail until zone placement verified
+      });
 
       /**
        * Rule 4.3.4.10: If a card can be played "for free," ignore all ink costs.
        * Other steps and non-ink costs still apply.
        */
-      test.failing(
-        "Rule 4.3.4.10 - Free play ignores ink, not other costs",
-        () => {
-          // Arrange: Card with free play available but additional cost
+      test.failing("Rule 4.3.4.10 - Free play ignores ink, not other costs", () => {
+        // Arrange: Card with free play available but additional cost
 
-          // Act: Play for free
+        // Act: Play for free
 
-          // Assert: Ink not spent, additional cost still required
-          expect(true).toBe(false); // Will fail until free play implemented
-        },
-      );
+        // Assert: Ink not spent, additional cost still required
+        expect(true).toBe(false); // Will fail until free play implemented
+      });
     });
 
     describe("4.3.5. Quest", () => {
@@ -463,26 +433,23 @@ describe("Section 4: Turn Structure", () => {
        * Rule 4.3.5.8: The quest completes and questing player gains lore equal
        * to the character's lore value.
        */
-      test.failing(
-        "Rule 4.3.5.8 - Gain lore equal to character's lore value",
-        () => {
-          // Arrange: Character with lore value 2
-          const character = testEngine.createCharacterInPlay(PLAYER_ONE, {
-            strength: 2,
-            willpower: 3,
-            lore: 2,
-          });
+      test.failing("Rule 4.3.5.8 - Gain lore equal to character's lore value", () => {
+        // Arrange: Character with lore value 2
+        const character = testEngine.createCharacterInPlay(PLAYER_ONE, {
+          strength: 2,
+          willpower: 3,
+          lore: 2,
+        });
 
-          const initialLore = testEngine.getLore(PLAYER_ONE);
+        const initialLore = testEngine.getLore(PLAYER_ONE);
 
-          // Act: Quest
-          testEngine.quest(character);
+        // Act: Quest
+        testEngine.quest(character);
 
-          // Assert: Lore should increase by character's lore value
-          expect(testEngine.getLore(PLAYER_ONE)).toBe(initialLore + 2);
-          expect(true).toBe(false); // Will fail until lore value properly used
-        },
-      );
+        // Assert: Lore should increase by character's lore value
+        expect(testEngine.getLore(PLAYER_ONE)).toBe(initialLore + 2);
+        expect(true).toBe(false); // Will fail until lore value properly used
+      });
     });
 
     describe("4.3.6. Challenge", () => {
@@ -517,33 +484,30 @@ describe("Section 4: Turn Structure", () => {
       /**
        * Rule 4.3.6.7: The player chooses an exerted opposing character to challenge.
        */
-      test.failing(
-        "Rule 4.3.6.7 - Can only challenge exerted characters",
-        () => {
-          // Arrange: Attacker and ready defender
-          const attacker = testEngine.createCharacterInPlay(PLAYER_ONE, {
-            strength: 3,
-            willpower: 4,
-          });
-          const readyDefender = testEngine.createCharacterInPlay(PLAYER_TWO, {
-            strength: 2,
-            willpower: 3,
-          });
+      test.failing("Rule 4.3.6.7 - Can only challenge exerted characters", () => {
+        // Arrange: Attacker and ready defender
+        const attacker = testEngine.createCharacterInPlay(PLAYER_ONE, {
+          strength: 3,
+          willpower: 4,
+        });
+        const readyDefender = testEngine.createCharacterInPlay(PLAYER_TWO, {
+          strength: 2,
+          willpower: 3,
+        });
 
-          // Act: Try to challenge ready defender
-          const result = testEngine.engine.executeMove("challenge", {
-            playerId: createPlayerId(PLAYER_ONE),
-            params: {
-              attackerId: attacker,
-              defenderId: readyDefender,
-            },
-          });
+        // Act: Try to challenge ready defender
+        const result = testEngine.engine.executeMove("challenge", {
+          playerId: createPlayerId(PLAYER_ONE),
+          params: {
+            attackerId: attacker,
+            defenderId: readyDefender,
+          },
+        });
 
-          // Assert: Should fail - can't challenge ready character
-          expect(result.success).toBe(false);
-          expect(true).toBe(false); // Verify with actual implementation
-        },
-      );
+        // Assert: Should fail - can't challenge ready character
+        expect(result.success).toBe(false);
+        expect(true).toBe(false); // Verify with actual implementation
+      });
 
       /**
        * Rule 4.3.6.9: Fourth, the challenging player exerts the challenging character.
@@ -557,29 +521,23 @@ describe("Section 4: Turn Structure", () => {
        * Rule 4.3.6.13: Both characters deal damage equal to their Strength
        * to the other character (Challenge Damage step).
        */
-      test.failing(
-        "Rule 4.3.6.13 - Both characters deal damage in challenge",
-        () => {
-          // After challenge, both should have taken damage equal to other's strength
-          expect(true).toBe(false); // Will fail until damage dealing verified
-        },
-      );
+      test.failing("Rule 4.3.6.13 - Both characters deal damage in challenge", () => {
+        // After challenge, both should have taken damage equal to other's strength
+        expect(true).toBe(false); // Will fail until damage dealing verified
+      });
 
       /**
        * Rule 4.3.6.14: If a character's Strength is negative, it counts as 0
        * for determining damage.
        */
-      test.failing(
-        "Rule 4.3.6.14 - Negative strength counts as 0 damage",
-        () => {
-          // Arrange: Character with 0 or negative strength
+      test.failing("Rule 4.3.6.14 - Negative strength counts as 0 damage", () => {
+        // Arrange: Character with 0 or negative strength
 
-          // Act: Challenge
+        // Act: Challenge
 
-          // Assert: Should deal 0 damage
-          expect(true).toBe(false); // Will fail until negative strength handled
-        },
-      );
+        // Assert: Should deal 0 damage
+        expect(true).toBe(false); // Will fail until negative strength handled
+      });
 
       /**
        * Rule 4.3.6.19-22: Players can challenge locations.
@@ -598,17 +556,14 @@ describe("Section 4: Turn Structure", () => {
       /**
        * Rule 4.3.6.23: If a character is removed from challenge, that challenge ends.
        */
-      test.failing(
-        "Rule 4.3.6.23 - Challenge ends if character removed",
-        () => {
-          // Arrange: Set up ability that removes character from challenge
+      test.failing("Rule 4.3.6.23 - Challenge ends if character removed", () => {
+        // Arrange: Set up ability that removes character from challenge
 
-          // Act: Trigger removal during challenge
+        // Act: Trigger removal during challenge
 
-          // Assert: Challenge should end without damage step completing
-          expect(true).toBe(false); // Will fail until challenge removal implemented
-        },
-      );
+        // Assert: Challenge should end without damage step completing
+        expect(true).toBe(false); // Will fail until challenge removal implemented
+      });
     });
 
     describe("4.3.7. Move a Character to a Location", () => {
@@ -616,14 +571,11 @@ describe("Section 4: Turn Structure", () => {
        * Rule 4.3.7.1: A player can move only their characters to their locations.
        * Can't move opposing characters or to opposing locations.
        */
-      test.failing(
-        "Rule 4.3.7.1 - Can only move own characters to own locations",
-        () => {
-          // Assert: Moving opponent's character should fail
-          // Assert: Moving to opponent's location should fail
-          expect(true).toBe(false); // Will fail until move restrictions implemented
-        },
-      );
+      test.failing("Rule 4.3.7.1 - Can only move own characters to own locations", () => {
+        // Assert: Moving opponent's character should fail
+        // Assert: Moving to opponent's location should fail
+        expect(true).toBe(false); // Will fail until move restrictions implemented
+      });
 
       /**
        * Rule 4.3.7.4: The player pays the location's move cost.
@@ -642,32 +594,26 @@ describe("Section 4: Turn Structure", () => {
       /**
        * Rule 4.3.8.1: The use of activated abilities is a turn action.
        */
-      test.failing(
-        "Rule 4.3.8.1 - Activated abilities are turn actions",
-        () => {
-          // Arrange: Card with activated ability
+      test.failing("Rule 4.3.8.1 - Activated abilities are turn actions", () => {
+        // Arrange: Card with activated ability
 
-          // Act: Use the ability
+        // Act: Use the ability
 
-          // Assert: Ability should execute
-          expect(true).toBe(false); // Will fail until activated abilities implemented
-        },
-      );
+        // Assert: Ability should execute
+        expect(true).toBe(false); // Will fail until activated abilities implemented
+      });
 
       /**
        * Rule 4.3.8.2: Exert abilities of characters can only be used if dry.
        */
-      test.failing(
-        "Rule 4.3.8.2 - Exert abilities require character to be dry",
-        () => {
-          // Arrange: Fresh character with exert ability
+      test.failing("Rule 4.3.8.2 - Exert abilities require character to be dry", () => {
+        // Arrange: Fresh character with exert ability
 
-          // Act: Try to use exert ability (should fail - not dry)
+        // Act: Try to use exert ability (should fail - not dry)
 
-          // Assert: Should not be usable until dry
-          expect(true).toBe(false); // Will fail until drying check implemented
-        },
-      );
+        // Assert: Should not be usable until dry
+        expect(true).toBe(false); // Will fail until drying check implemented
+      });
 
       /**
        * Rule 4.3.8.3: Activated abilities of items can be used the turn played.
@@ -684,17 +630,14 @@ describe("Section 4: Turn Structure", () => {
       /**
        * Rule 4.3.8.4: If activated ability can be used "for free," ignore ink costs.
        */
-      test.failing(
-        "Rule 4.3.8.4 - Free activated ability ignores ink cost",
-        () => {
-          // Arrange: Ability with ink cost that can be used for free
+      test.failing("Rule 4.3.8.4 - Free activated ability ignores ink cost", () => {
+        // Arrange: Ability with ink cost that can be used for free
 
-          // Act: Use for free
+        // Act: Use for free
 
-          // Assert: Ink not spent
-          expect(true).toBe(false); // Will fail until free ability implemented
-        },
-      );
+        // Assert: Ink not spent
+        expect(true).toBe(false); // Will fail until free ability implemented
+      });
     });
   });
 
@@ -702,17 +645,14 @@ describe("Section 4: Turn Structure", () => {
     /**
      * Rule 4.4.1: To end a turn, there must be no abilities waiting to resolve.
      */
-    test.failing(
-      "Rule 4.4.1 - Cannot end turn with unresolved abilities",
-      () => {
-        // Arrange: Trigger an ability that adds to bag
+    test.failing("Rule 4.4.1 - Cannot end turn with unresolved abilities", () => {
+      // Arrange: Trigger an ability that adds to bag
 
-        // Act: Try to end turn
+      // Act: Try to end turn
 
-        // Assert: Should not end until bag is empty
-        expect(true).toBe(false); // Will fail until bag check implemented
-      },
-    );
+      // Assert: Should not end until bag is empty
+      expect(true).toBe(false); // Will fail until bag check implemented
+    });
 
     /**
      * Rule 4.4.1.1: Effects that would occur "At the end of the turn"
@@ -739,17 +679,14 @@ describe("Section 4: Turn Structure", () => {
      * Rule 4.4.1.3: Effects with "this turn" duration end.
      * If this causes new triggers, return to resolving bag.
      */
-    test.failing(
-      "Rule 4.4.1.3 - 'This turn' effects end at end of turn",
-      () => {
-        // Arrange: Apply "this turn" effect
+    test.failing("Rule 4.4.1.3 - 'This turn' effects end at end of turn", () => {
+      // Arrange: Apply "this turn" effect
 
-        // Act: End turn
+      // Act: End turn
 
-        // Assert: Effect should no longer apply
-        expect(true).toBe(false); // Will fail until turn duration effects implemented
-      },
-    );
+      // Assert: Effect should no longer apply
+      expect(true).toBe(false); // Will fail until turn duration effects implemented
+    });
 
     /**
      * Rule 4.4.1.4: The turn ends for the active player, and the next player

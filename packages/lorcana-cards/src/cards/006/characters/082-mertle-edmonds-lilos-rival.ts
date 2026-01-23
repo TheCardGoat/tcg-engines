@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mertleEdmondsLilosRival: CharacterCard = {
   id: "y9q",
@@ -21,3 +21,29 @@ export const mertleEdmondsLilosRival: CharacterCard = {
   },
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// // TODO: Once the set is released, we organize the cards by set and type
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const mertleEdmondsLilosRival: LorcanitoCharacterCard = {
+//   id: "mkl",
+//   name: "Mertle Edmonds",
+//   title: "Lilo's Rival",
+//   characteristics: ["storyborn"],
+//   type: "character",
+//   inkwell: true,
+//   colors: ["emerald"],
+//   cost: 1,
+//   strength: 1,
+//   willpower: 3,
+//   lore: 1,
+//   illustrator: "Gonzalo Kenny",
+//   number: 82,
+//   set: "006",
+//   externalIds: {
+//     tcgPlayer: 588339,
+//   },
+//   rarity: "uncommon",
+// };
+//

@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const diabloSpitefulRaven: CharacterCard = {
   id: "1v4",
@@ -22,17 +22,48 @@ export const diabloSpitefulRaven: CharacterCard = {
   abilities: [
     {
       id: "1v4-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
     {
       id: "1v4-2",
-      text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",
       value: 2,
+      text: "Challenger +2",
     },
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import {
+//   challengerAbility,
+//   evasiveAbility,
+// } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const diabloSpitefulRaven: LorcanitoCharacterCard = {
+//   id: "lzu",
+//   name: "Diablo",
+//   title: "Spiteful Raven",
+//   characteristics: ["storyborn", "ally"],
+//   text: "Evasive\nChallenger +2",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["amethyst", "emerald"],
+//   cost: 2,
+//   strength: 1,
+//   willpower: 2,
+//   illustrator: "Mike Packer",
+//   number: 66,
+//   set: "007",
+//   externalIds: {
+//     tcgPlayer: 618721,
+//   },
+//   rarity: "uncommon",
+//   lore: 1,
+//   abilities: [evasiveAbility, challengerAbility(2)],
+// };
+//

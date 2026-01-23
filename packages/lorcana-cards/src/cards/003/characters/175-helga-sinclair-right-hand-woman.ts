@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const helgaSinclairRighthandWoman: CharacterCard = {
   id: "1fd",
@@ -22,10 +22,10 @@ export const helgaSinclairRighthandWoman: CharacterCard = {
   abilities: [
     {
       id: "1fd-1",
-      text: "Challenger +2",
       type: "keyword",
       keyword: "Challenger",
       value: 2,
+      text: "Challenger +2",
     },
   ],
   classifications: ["Storyborn", "Villain"],

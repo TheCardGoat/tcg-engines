@@ -1,0 +1,20 @@
+import type { ItemCard } from "@tcg/lorcana-types";
+
+export const whiteRabbitsPocketWatch: ItemCard = {
+  id: "ecf",
+  cardType: "item",
+  name: "White Rabbit’s Pocket Watch",
+  inkType: ["amethyst"],
+  franchise: "Alice in Wonderland",
+  set: "009",
+  text: "I'M LATE! {E}, 1 {I} — Chosen character gains Rush this turn. (They can challenge the turn they're played.)",
+  cost: 3,
+  cardNumber: 66,
+  inkable: true,
+  missingImplementation: true,
+  missingTests: true,
+  externalIds: {
+    ravensburger: "33b357a4ae708cc24a69167fda5f9129aa942bb6",
+  },
+  abilities: [],
+};

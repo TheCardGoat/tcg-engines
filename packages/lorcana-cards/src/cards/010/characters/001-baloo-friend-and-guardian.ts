@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const balooFriendAndGuardian: CharacterCard = {
   id: "qnc",
@@ -35,3 +35,34 @@ export const balooFriendAndGuardian: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import {
+//   bodyguardAbility,
+//   supportAbility,
+// } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const balooFriendAndGuardian: LorcanitoCharacterCard = {
+//   id: "oox",
+//   name: "Baloo",
+//   title: "Friend and Guardian",
+//   characteristics: ["storyborn", "ally"],
+//   text: "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nSupport (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 6,
+//   strength: 3,
+//   willpower: 8,
+//   illustrator: "Amanda Duarte / Julio Cesar",
+//   number: 1,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659178,
+//   },
+//   rarity: "rare",
+//   abilities: [bodyguardAbility, supportAbility],
+//   lore: 2,
+// };
+//

@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const kuzcoSelfishEmperor: CharacterCard = {
   id: "c7f",
@@ -53,11 +53,9 @@ export const kuzcoSelfishEmperor: CharacterCard = {
         value: 0,
         target: {
           selector: "all",
+          owner: "you",
+          filter: [{ type: "source", ref: "other" }],
           count: "all",
-          filter: [
-            { type: "owner", owner: "you" },
-            { type: "source", ref: "other" },
-          ],
         },
         duration: "until-start-of-next-turn",
       },
@@ -65,3 +63,70 @@ export const kuzcoSelfishEmperor: CharacterCard = {
   ],
   classifications: ["Storyborn", "King"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { yourOtherCharacters } from "@lorcanito/lorcana-engine/abilities/target";
+//
+// export const kuzcoSelfishEmperor: LorcanitoCharacterCard = {
+//   id: "v40",
+//   name: "Kuzco",
+//   title: "Selfish Emperor",
+//   characteristics: ["storyborn", "king"],
+//   text: "**OUTPLACEMENT** When you play this character, you may put chosen item or location into its player’s inkwell facedown and exerted. **BY INVITE ONLY** 4 {I} − Your other characters gain **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_",
+//   type: "character",
+//   abilities: [
+//     {
+//       type: "resolution",
+//       name: "Outplacement",
+//       text: "When you play this character, you may put chosen item or location into its player’s inkwell facedown and exerted.",
+//       optional: true,
+//       effects: [
+//         {
+//           type: "move",
+//           to: "inkwell",
+//           exerted: true,
+//           target: {
+//             type: "card",
+//             value: 1,
+//             filters: [
+//               { filter: "type", value: ["item", "location"] },
+//               { filter: "zone", value: "play" },
+//             ],
+//           },
+//         },
+//       ],
+//     },
+//     {
+//       type: "activated",
+//       name: "**BY INVITE ONLY**",
+//       text: "4 {I} − Your other characters gain **Resist** +1 until the start of your next turn. _(Damage dealt to them is reduced by 1.)_",
+//       costs: [{ type: "ink", amount: 4 }],
+//       effects: [
+//         {
+//           type: "ability",
+//           ability: "resist",
+//           modifier: "add",
+//           duration: "next_turn",
+//           amount: 1,
+//           until: true,
+//           target: yourOtherCharacters,
+//         },
+//       ],
+//     },
+//   ],
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 6,
+//   strength: 3,
+//   willpower: 5,
+//   lore: 2,
+//   illustrator: "Carlos Ruiz",
+//   number: 149,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 561164,
+//   },
+//   rarity: "super_rare",
+// };
+//

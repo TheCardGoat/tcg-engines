@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const wendyDarlingAuthorityOnPeterPan: CharacterCard = {
   id: "st9",
@@ -22,16 +22,47 @@ export const wendyDarlingAuthorityOnPeterPan: CharacterCard = {
   abilities: [
     {
       id: "st9-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
+      text: "Ward",
     },
     {
       id: "st9-2",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import {
+//   supportAbility,
+//   wardAbility,
+// } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const wendyDarlingAuthorityOnPeterPan: LorcanitoCharacterCard = {
+//   id: "s1z",
+//   name: "Wendy Darling",
+//   title: "Authority on Peter Pan",
+//   characteristics: ["hero", "storyborn"],
+//   text: "**Ward** _(Opponents can't choose this character except to challenge.)_\n\n**Support** _(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)_",
+//   type: "character",
+//   abilities: [wardAbility, supportAbility],
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 3,
+//   strength: 3,
+//   willpower: 1,
+//   lore: 2,
+//   illustrator: "Julie Vu",
+//   number: 158,
+//   set: "ITI",
+//   externalIds: {
+//     tcgPlayer: 531826,
+//   },
+//   rarity: "super_rare",
+// };
+//

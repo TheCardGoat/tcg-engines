@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const princePhillipRoyalExplorer: CharacterCard = {
   id: "11j",
@@ -22,10 +22,39 @@ export const princePhillipRoyalExplorer: CharacterCard = {
   abilities: [
     {
       id: "11j-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
+      text: "Ward",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// // TODO: Once the set is released, we organize the cards by set and type
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const princePhillipRoyalExplorer: LorcanitoCharacterCard = {
+//   id: "p99",
+//   name: "Prince Phillip",
+//   title: "Royal Explorer",
+//   characteristics: ["storyborn", "hero", "prince"],
+//   text: "Ward (Opponents can't choose this character except to challenge.)",
+//   type: "character",
+//   abilities: [wardAbility],
+//   inkwell: true,
+//   colors: ["emerald"],
+//   cost: 3,
+//   strength: 3,
+//   willpower: 2,
+//   lore: 2,
+//   illustrator: "Gaku Kumatori",
+//   number: 83,
+//   set: "006",
+//   externalIds: {
+//     tcgPlayer: 593039,
+//   },
+//   rarity: "uncommon",
+// };
+//

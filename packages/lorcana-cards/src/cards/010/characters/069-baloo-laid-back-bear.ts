@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const balooLaidbackBear: CharacterCard = {
   id: "tso",
@@ -21,3 +21,30 @@ export const balooLaidbackBear: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const balooLaidbackBear: LorcanitoCharacterCard = {
+//   id: "jqk",
+//   name: "Baloo",
+//   title: "Laid-Back Bear",
+//   characteristics: ["storyborn", "ally"],
+//   text: "",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["emerald"],
+//   cost: 2,
+//   strength: 2,
+//   willpower: 4,
+//   illustrator: "Laura Pauselli",
+//   number: 69,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659450,
+//   },
+//   rarity: "common",
+//   abilities: [],
+//   lore: 1,
+// };
+//

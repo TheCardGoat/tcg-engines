@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const winnieThePoohHunnyWizard: CharacterCard = {
   id: "1e9",
@@ -21,3 +21,19 @@ export const winnieThePoohHunnyWizard: CharacterCard = {
   },
   classifications: ["Dreamborn", "Hero", "Sorcerer", "Hunny"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { winnieThePoohHunnyWizard as ogWinnieThePoohHunnyWizard } from "@lorcanito/lorcana-engine/cards/002/characters/059-winnie-the-pooh-hunny-wizard";
+//
+// export const winnieThePoohHunnyWizard: LorcanitoCharacterCard = {
+//   ...ogWinnieThePoohHunnyWizard,
+//   id: "emh",
+//   reprints: [ogWinnieThePoohHunnyWizard.id],
+//   number: 41,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649988,
+//   },
+// };
+//

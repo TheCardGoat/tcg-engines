@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const basilOfBakerStreet: CharacterCard = {
   id: "1xt",
@@ -22,10 +22,41 @@ export const basilOfBakerStreet: CharacterCard = {
   abilities: [
     {
       id: "1xt-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Detective"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { supportAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const basilOfBakerStreet: LorcanitoCharacterCard = {
+//   id: "ne2",
+//
+//   name: "Basil",
+//   title: "Of Baker Street",
+//   characteristics: ["hero", "dreamborn", "detective"],
+//   text: "**Support** _(Whenever this character quests, you\u0003 may add their {S} to another chosen character‘s {S} this turn.)_",
+//   type: "character",
+//   abilities: [supportAbility],
+//   flavour:
+//     "What an ingenious device! If its light is refracted through these, then its images must resolve somewhere below.",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 2,
+//   strength: 2,
+//   willpower: 2,
+//   lore: 1,
+//   illustrator: "Jake Parker",
+//   number: 139,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 525239,
+//   },
+//   rarity: "common",
+// };
+//

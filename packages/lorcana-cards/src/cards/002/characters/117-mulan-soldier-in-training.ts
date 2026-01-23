@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mulanSoldierInTraining: CharacterCard = {
   id: "x7m",
@@ -22,10 +22,38 @@ export const mulanSoldierInTraining: CharacterCard = {
   abilities: [
     {
       id: "x7m-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
+      text: "Rush",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { rushAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const mulanSoldierInTraining: LorcanitoCharacterCard = {
+//   id: "tzn",
+//   name: "Mulan",
+//   title: "Soldier in Training",
+//   characteristics: ["hero", "storyborn", "princess"],
+//   text: "**Rush** _(This character can challenge the turn they're played.)_",
+//   type: "character",
+//   abilities: [rushAbility],
+//   flavour: '"I have to do something!"',
+//   colors: ["ruby"],
+//   cost: 4,
+//   strength: 4,
+//   willpower: 3,
+//   lore: 1,
+//   illustrator: 'Michael "Cookie" Niewiadomy',
+//   number: 117,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 518786,
+//   },
+//   rarity: "common",
+// };
+//

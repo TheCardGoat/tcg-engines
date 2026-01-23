@@ -1,0 +1,42 @@
+import type { CharacterCard } from "@tcg/lorcana-types";
+
+export const belleAccomplishedMystic: CharacterCard = {
+  id: "12p",
+  cardType: "character",
+  name: "Belle",
+  version: "Accomplished Mystic",
+  fullName: "Belle - Accomplished Mystic",
+  inkType: ["amethyst"],
+  franchise: "Beauty and the Beast",
+  set: "009",
+  text: "Shift 3 {I} (You may pay 3 {I} to play this on top of one of your characters named Belle.)\nENHANCED HEALING When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.",
+  cost: 5,
+  strength: 4,
+  willpower: 4,
+  lore: 2,
+  cardNumber: 40,
+  inkable: true,
+  missingImplementation: true,
+  missingTests: true,
+  externalIds: {
+    ravensburger: "8b86289e61950b00539d3ef5740fe6097f42fc88",
+  },
+  abilities: [],
+  classifications: ["Floodborn", "Hero", "Princess", "Sorcerer"],
+};
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { belleAccomplishedMystic as ogBelleAccomplishedMystic } from "@lorcanito/lorcana-engine/cards/004/characters/036-belle-accomplished-mystic";
+//
+// export const belleAccomplishedMystic: LorcanitoCharacterCard = {
+//   ...ogBelleAccomplishedMystic,
+//   id: "cqp",
+//   reprints: [ogBelleAccomplishedMystic.id],
+//   number: 40,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649987,
+//   },
+// };
+//

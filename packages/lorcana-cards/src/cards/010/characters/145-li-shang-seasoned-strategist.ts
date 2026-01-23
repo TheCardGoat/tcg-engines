@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const liShangSeasonedStrategist: CharacterCard = {
   id: "b3a",
@@ -21,3 +21,30 @@ export const liShangSeasonedStrategist: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero", "Captain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const liShangSeasonedStrategist: LorcanitoCharacterCard = {
+//   id: "hid",
+//   name: "Li Shang",
+//   title: "Seasoned Strategist",
+//   characteristics: ["storyborn", "hero", "captain"],
+//   text: "",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 3,
+//   strength: 2,
+//   willpower: 4,
+//   illustrator: "Kasia Brzezinska",
+//   number: 145,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 660002,
+//   },
+//   rarity: "common",
+//   abilities: [],
+//   lore: 2,
+// };
+//

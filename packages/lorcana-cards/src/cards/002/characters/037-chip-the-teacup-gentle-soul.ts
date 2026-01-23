@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const chipTheTeacupGentleSoul: CharacterCard = {
   id: "1a8",
@@ -21,3 +21,29 @@ export const chipTheTeacupGentleSoul: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const chipTheTeacupGentleSoul: LorcanitoCharacterCard = {
+//   id: "v6d",
+//   name: "Chip the Teacup",
+//   title: "Gentle Soul",
+//   characteristics: ["storyborn", "ally"],
+//   type: "character",
+//   flavour: "Wanna see me do a trick?",
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 1,
+//   strength: 2,
+//   willpower: 2,
+//   lore: 1,
+//   illustrator: "Aubrey Archer",
+//   number: 37,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 525108,
+//   },
+//   rarity: "common",
+// };
+//

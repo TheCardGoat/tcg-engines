@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const pachaVillageLeader: CharacterCard = {
   id: "1g5",
@@ -21,3 +21,30 @@ export const pachaVillageLeader: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const pachaVillageLeader: LorcanitoCharacterCard = {
+//   id: "lxx",
+//
+//   name: "Pacha",
+//   title: "Village Leader",
+//   characteristics: ["hero", "storyborn"],
+//   type: "character",
+//   flavour: "Don't be fooled by the folksy peasant look. \n−Kuzco",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 6,
+//   strength: 4,
+//   willpower: 8,
+//   lore: 2,
+//   illustrator: "Koni",
+//   number: 190,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 527778,
+//   },
+//   rarity: "uncommon",
+// };
+//

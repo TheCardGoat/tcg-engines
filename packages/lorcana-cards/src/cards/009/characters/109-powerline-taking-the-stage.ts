@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const powerlineTakingTheStage: CharacterCard = {
   id: "1t6",
@@ -22,11 +22,39 @@ export const powerlineTakingTheStage: CharacterCard = {
   abilities: [
     {
       id: "1t6-1",
-      text: "Singer 4",
       type: "keyword",
       keyword: "Singer",
       value: 4,
+      text: "Singer 4",
     },
   ],
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { singerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const powerlineTakingTheStage: LorcanitoCharacterCard = {
+//   id: "mpw",
+//   name: "Powerline",
+//   title: "Taking the Stage",
+//   characteristics: ["storyborn"],
+//   text: "Singer 4 (This character counts as cost 4 to sing songs.)",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["ruby"],
+//   cost: 2,
+//   strength: 3,
+//   willpower: 2,
+//   illustrator: "Stefano Spagnuolo",
+//   number: 109,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 647682,
+//   },
+//   rarity: "common",
+//   abilities: [singerAbility(4)],
+//   lore: 1,
+// };
+//

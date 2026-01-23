@@ -1,4 +1,4 @@
-import type { ActionCard } from "@tcg/lorcana";
+import type { ActionCard } from "@tcg/lorcana-types";
 
 export const workTogether: ActionCard = {
   id: "118",
@@ -28,3 +28,36 @@ export const workTogether: ActionCard = {
     },
   ],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// import { chosenCharacterGainsSupport } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const workTogether: LorcanitoActionCard = {
+//   id: "cxh",
+//   name: "Work Together",
+//   characteristics: ["action"],
+//   text: "Chosen character gains **Support** this turn. _(Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)_",
+//   type: "action",
+//   abilities: [
+//     {
+//       type: "resolution",
+//       name: "Work Together",
+//       text: "Chosen character gains **Support** this turn.",
+//       effects: [chosenCharacterGainsSupport("turn")],
+//     },
+//   ],
+//   flavour:
+//     "Pacha: Put your whole back into it! \nKuzco: This is my whole back!",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 1,
+//   illustrator: "Bill Robinson",
+//   number: 165,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 508889,
+//   },
+//   rarity: "common",
+// };
+//

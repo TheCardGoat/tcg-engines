@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const scarFinallyKing: CharacterCard = {
   id: "1vp",
@@ -22,38 +22,132 @@ export const scarFinallyKing: CharacterCard = {
   abilities: [
     {
       id: "1vp-1",
-      text: "BE GRATEFUL Your Ally characters get +1 {S}.",
-      name: "BE GRATEFUL",
       type: "static",
       effect: {
         type: "modify-stat",
         stat: "strength",
         modifier: 1,
         target: "YOUR_CHARACTERS",
-        duration: "while-condition",
       },
+      name: "BE GRATEFUL Your Ally",
+      text: "BE GRATEFUL Your Ally characters get +1 {S}.",
     },
     {
       id: "1vp-2",
-      text: "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of chosen Ally character of yours. If you do, choose and discard 2 cards and banish that character.",
-      name: "STICK WITH ME",
-      type: "triggered",
-      trigger: {
-        event: "end-turn",
-        timing: "at",
-        on: "YOU",
-      },
+      type: "action",
       effect: {
-        type: "optional",
-        effect: {
-          type: "discard",
-          amount: 2,
-          target: "CONTROLLER",
-          chosen: true,
-        },
-        chooser: "CONTROLLER",
+        type: "discard",
+        amount: 2,
+        target: "CONTROLLER",
+        chosen: false,
       },
+      text: "STICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of chosen Ally character of yours. If you do, choose and discard 2 cards and banish that character.",
     },
   ],
   classifications: ["Storyborn", "Villain", "King"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type {
+//   CardEffectTarget,
+//   LorcanitoCharacterCard,
+// } from "@lorcanito/lorcana-engine";
+// import { atTheEndOfYourTurn } from "@lorcanito/lorcana-engine/abilities/atTheAbilities";
+// import { ifThisCharacterIsExerted } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
+// import { sourceTarget } from "@lorcanito/lorcana-engine/abilities/targets";
+// import {
+//   discardTwoCards,
+//   drawXCards,
+//   mayBanish,
+// } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// const chosenAllyOfYours: CardEffectTarget = {
+//   type: "card",
+//   value: 1,
+//   filters: [
+//     { filter: "type", value: "character" },
+//     { filter: "owner", value: "self" },
+//     { filter: "zone", value: "play" },
+//     {
+//       filter: "characteristics",
+//       value: ["ally"],
+//     },
+//   ],
+// };
+//
+// export const scarFinallyKing: LorcanitoCharacterCard = {
+//   id: "sfk",
+//   name: "Scar",
+//   title: "Finally King",
+//   characteristics: ["storyborn", "villain"],
+//   text: "BE GRATEFUL Your Ally characters get +1 {S}.\nSTICK WITH ME At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of a chosen Ally character of yours. If you do, choose and discard 2 cards and banish that character.",
+//   type: "character",
+//   colors: ["steel"],
+//   cost: 5,
+//   strength: 5,
+//   willpower: 4,
+//   illustrator: "",
+//   number: 175,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650108,
+//   },
+//   rarity: "common",
+//   abilities: [
+//     {
+//       type: "static",
+//       ability: "effects",
+//       name: "BE GRATEFUL",
+//       text: "Your Ally characters get +1 {S}.",
+//       effects: [
+//         {
+//           type: "attribute",
+//           attribute: "strength",
+//           amount: 1,
+//           modifier: "add",
+//           target: {
+//             type: "card",
+//             value: "all",
+//             filters: [
+//               { filter: "type", value: "character" },
+//               { filter: "zone", value: "play" },
+//               { filter: "characteristics", value: ["ally"] },
+//               { filter: "owner", value: "self" },
+//             ],
+//           },
+//         },
+//       ],
+//     },
+//     atTheEndOfYourTurn({
+//       name: "STICK WITH ME",
+//       text: "At the end of your turn, if this character is exerted, you may draw cards equal to the {S} of a chosen Ally character of yours. If you do, choose and discard 2 cards and banish that character.",
+//       optional: true,
+//       conditions: [ifThisCharacterIsExerted],
+//       effects: [
+//         {
+//           type: "create-layer-based-on-target",
+//           target: chosenAllyOfYours,
+//           resolveEffectsIndividually: true,
+//           resolveAmountBeforeCreatingLayer: true,
+//           afterEffect: [
+//             {
+//               type: "create-layer-based-on-target",
+//               target: chosenAllyOfYours,
+//               replaceEffectTarget: true,
+//               effects: [mayBanish(sourceTarget)],
+//             },
+//           ],
+//           effects: [
+//             drawXCards({
+//               dynamic: true,
+//               target: { attribute: "strength" },
+//             }),
+//             discardTwoCards,
+//           ],
+//         },
+//       ],
+//     }),
+//   ],
+//   lore: 2,
+// };
+//

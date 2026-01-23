@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const svenOfficialIceDeliverer: CharacterCard = {
   id: "1rq",
@@ -21,3 +21,19 @@ export const svenOfficialIceDeliverer: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { svenOficialIceDeliverer as svenOfficialIceDelivererAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/055-sven-official-ice-deliverer";
+//
+// export const svenOfficialIceDeliverer: LorcanitoCharacterCard = {
+//   ...svenOfficialIceDelivererAsOrig,
+//   id: "tf5",
+//   reprints: [svenOfficialIceDelivererAsOrig.id],
+//   number: 56,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650000,
+//   },
+// };
+//

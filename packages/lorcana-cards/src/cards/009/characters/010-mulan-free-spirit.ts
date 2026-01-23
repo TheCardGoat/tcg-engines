@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mulanFreeSpirit: CharacterCard = {
   id: "roa",
@@ -22,10 +22,26 @@ export const mulanFreeSpirit: CharacterCard = {
   abilities: [
     {
       id: "roa-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { mulanFreeSpirit as ogMulanFreeSpirit } from "@lorcanito/lorcana-engine/cards/002/characters/015-mulan-free-spirit";
+//
+// export const mulanFreeSpirit: LorcanitoCharacterCard = {
+//   ...ogMulanFreeSpirit,
+//   id: "efk",
+//   reprints: [ogMulanFreeSpirit.id],
+//   number: 10,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649959,
+//   },
+// };
+//

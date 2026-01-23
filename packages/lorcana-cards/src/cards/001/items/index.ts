@@ -1,9 +1,14 @@
 export { dinglehopper } from "./032-dinglehopper";
+export { ursulasCauldron } from "./067-ursulas-cauldron";
 export { drFaciliersCards } from "./101-dr-faciliers-cards";
 export { stolenScimitar } from "./102-stolen-scimitar";
+export { poisonedApple } from "./134-poisoned-apple";
 export { shieldOfVirtue } from "./135-shield-of-virtue";
+export { swordOfTruth } from "./136-sword-of-truth";
 export { eyeOfTheFates } from "./167-eye-of-the-fates";
+export { fishboneQuill } from "./168-fishbone-quill";
 export { magicGoldenFlower } from "./169-magic-golden-flower";
 export { scepterOfArendelle } from "./170-scepter-of-arendelle";
+export { fryingPan } from "./202-frying-pan";
 export { musketeerTabard } from "./203-musketeer-tabard";
 export { plasmaBlaster } from "./204-plasma-blaster";

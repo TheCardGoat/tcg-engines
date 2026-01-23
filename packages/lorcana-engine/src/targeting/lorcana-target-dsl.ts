@@ -1,22 +1,4 @@
-/**
- * Lorcana Target DSL
- *
- * Extends the core Target DSL with Lorcana-specific targeting capabilities:
- * - Game-specific filters (damaged, exerted, keywords, etc.)
- * - Context references (trigger-source, attacker, defender)
- * - Card type constraints (character, item, location, action)
- *
- * @module targeting/lorcana-target-dsl
- */
-
-import type {
-  BaseContext,
-  OwnerScope,
-  PlayerTargetDSL,
-  SelectorScope,
-  TargetCount,
-  TargetDSL,
-} from "@tcg/core";
+import type { BaseContext, PlayerTargetDSL, TargetDSL } from "@tcg/core";
 import type { KeywordType } from "../types/keywords";
 
 /** Lorcana zone IDs */
@@ -91,45 +73,87 @@ export interface InkableFilter {
 
 // --- Numeric Comparison Filters ---
 
-type ComparisonOperator = "eq" | "ne" | "gt" | "gte" | "lt" | "lte";
+export type ComparisonOperator = "eq" | "ne" | "gt" | "gte" | "lt" | "lte";
+
+export interface NumericComparison {
+  operator: ComparisonOperator;
+  value: number;
+}
+
+export interface RelativeComparison {
+  operator: ComparisonOperator;
+  value: "target"; // Compares against the target of the ability (parent context)
+}
 
 /**
  * Filter by strength value
  */
-export interface StrengthFilter {
-  type: "strength";
-  comparison: ComparisonOperator;
-  value: number;
-  /** Ignore temporary bonuses when comparing */
-  ignoreBonuses?: boolean;
-}
+export type StrengthFilter =
+  | {
+      type: "strength";
+      comparison: ComparisonOperator;
+      value: number;
+      ignoreBonuses?: boolean;
+      compareWithParentsTarget?: never;
+    }
+  | {
+      type: "strength";
+      comparison: ComparisonOperator;
+      value: "target";
+      ignoreBonuses?: boolean;
+      compareWithParentsTarget: true;
+    };
 
 /**
  * Filter by willpower value
  */
-export interface WillpowerFilter {
-  type: "willpower";
-  comparison: ComparisonOperator;
-  value: number;
-}
+export type WillpowerFilter =
+  | {
+      type: "willpower";
+      comparison: ComparisonOperator;
+      value: number;
+      compareWithParentsTarget?: never;
+    }
+  | {
+      type: "willpower";
+      comparison: ComparisonOperator;
+      value: "target";
+      compareWithParentsTarget: true;
+    };
 
 /**
  * Filter by ink cost
  */
-export interface CostFilter {
-  type: "cost";
-  comparison: ComparisonOperator;
-  value: number;
-}
+export type CostFilter =
+  | {
+      type: "cost";
+      comparison: ComparisonOperator;
+      value: number;
+      compareWithParentsTarget?: never;
+    }
+  | {
+      type: "cost";
+      comparison: ComparisonOperator;
+      value: "target";
+      compareWithParentsTarget: true;
+    };
 
 /**
  * Filter by lore value
  */
-export interface LoreValueFilter {
-  type: "lore-value";
-  comparison: ComparisonOperator;
-  value: number;
-}
+export type LoreValueFilter =
+  | {
+      type: "lore-value";
+      comparison: ComparisonOperator;
+      value: number;
+      compareWithParentsTarget?: never;
+    }
+  | {
+      type: "lore-value";
+      comparison: ComparisonOperator;
+      value: "target";
+      compareWithParentsTarget: true;
+    };
 
 // --- Location Filters ---
 
@@ -160,6 +184,16 @@ export type NameFilter =
   | { type: "name"; equals: string }
   | { type: "name"; contains: string };
 
+// --- Card Type Filters ---
+
+/**
+ * Filter by card type (character, item, location, action)
+ */
+export interface CardTypeFilter {
+  type: "card-type";
+  value: LorcanaCardType;
+}
+
 // --- Combined Lorcana Filter Type ---
 
 /**
@@ -186,6 +220,8 @@ export type LorcanaFilter =
   | MoveCostFilter
   // Name filter
   | NameFilter
+  // Card Type filter
+  | CardTypeFilter
   // Composite filters
   | { type: "and"; filters: LorcanaFilter[] }
   | { type: "or"; filters: LorcanaFilter[] }
@@ -222,6 +258,22 @@ export interface LorcanaContext extends BaseContext {
 
   /** Reference the song being sung */
   song?: boolean;
+
+  /**
+   * Resolution context for resolution conditions
+   * Used for checking if we are currently resolving a specific mechanic (e.g. Bodyguard)
+   */
+  resolutionContext?: "bodyguard" | "shift" | string;
+
+  /** Reference cards revealed by an effect (e.g. "Look at the top card of your deck") */
+  revealedCards?: string[];
+
+  /**
+   * Recursion depth tracking for condition evaluation
+   * Prevents infinite loops in recursive condition checks
+   * @internal
+   */
+  recursionDepth?: number;
 }
 
 // ============================================================================

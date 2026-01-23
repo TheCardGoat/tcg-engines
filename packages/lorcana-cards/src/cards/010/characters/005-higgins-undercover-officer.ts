@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const higginsUndercoverOfficer: CharacterCard = {
   id: "1fo",
@@ -21,3 +21,30 @@ export const higginsUndercoverOfficer: CharacterCard = {
   },
   classifications: ["Dreamborn", "Ally", "Detective"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const higginsUndercoverOfficer: LorcanitoCharacterCard = {
+//   id: "ced",
+//   name: "Higgins",
+//   title: "Undercover Officer",
+//   characteristics: ["dreamborn", "ally", "detective"],
+//   text: "",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 1,
+//   strength: 2,
+//   willpower: 2,
+//   illustrator: "Narges Jafari",
+//   number: 5,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 660275,
+//   },
+//   rarity: "common",
+//   abilities: [],
+//   lore: 1,
+// };
+//

@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const auroraBriarRose: CharacterCard = {
   id: "v54",
@@ -41,3 +41,56 @@ export const auroraBriarRose: CharacterCard = {
   ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const auroraBriarRose: LorcanitoCharacterCard = {
+//   id: "du8",
+//
+//   name: "Aurora",
+//   title: "Briar Rose",
+//   characteristics: ["hero", "storyborn", "princess"],
+//   text: "**DISTURBING BEAUTY** When you play this character, chosen character gets -2 {S} this turn.",
+//   type: "character",
+//   abilities: [
+//     whenYouPlayThisCharAbility({
+//       type: "resolution",
+//       name: "DISTURBING BEAUTY",
+//       text: "When you play this character, chosen character gets -2 {S} this turn.",
+//       effects: [
+//         {
+//           type: "attribute",
+//           attribute: "strength",
+//           amount: 2,
+//           modifier: "subtract",
+//           target: {
+//             type: "card",
+//             value: 1,
+//             filters: [
+//               { filter: "type", value: "character" },
+//               { filter: "zone", value: "play" },
+//             ],
+//           },
+//         },
+//       ],
+//     }),
+//   ],
+//   flavour:
+//     "There was something strange about that voice. Too beautiful to be real . . .",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 4,
+//   strength: 2,
+//   willpower: 5,
+//   lore: 1,
+//   illustrator: "Rosalia Radosti",
+//   number: 138,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 508809,
+//   },
+//   rarity: "common",
+// };
+//

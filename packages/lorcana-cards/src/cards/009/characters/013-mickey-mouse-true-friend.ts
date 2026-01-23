@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mickeyMouseTrueFriend: CharacterCard = {
   id: "19d",
@@ -20,3 +20,19 @@ export const mickeyMouseTrueFriend: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { mickeyMouseTrueFriend as ogMickeyMouseTrueFriend } from "@lorcanito/lorcana-engine/cards/001/characters/012-mickey-mouse-true-friend";
+//
+// export const mickeyMouseTrueFriend: LorcanitoCharacterCard = {
+//   ...ogMickeyMouseTrueFriend,
+//   id: "c2m",
+//   reprints: [ogMickeyMouseTrueFriend.id],
+//   number: 13,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649962,
+//   },
+// };
+//

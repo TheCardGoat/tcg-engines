@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mickeyMouseSteamboatPilot: CharacterCard = {
   id: "16f",
@@ -20,3 +20,19 @@ export const mickeyMouseSteamboatPilot: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero", "Captain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { mickeyMouseSteamBoatPilot as mickeyMouseSteamboatPilotAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/089-mickey-mouse-steamboat-pilot";
+//
+// export const mickeyMouseSteamboatPilot: LorcanitoCharacterCard = {
+//   ...mickeyMouseSteamboatPilotAsOrig,
+//   id: "y3c",
+//   reprints: [mickeyMouseSteamboatPilotAsOrig.id],
+//   number: 80,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650020,
+//   },
+// };
+//

@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const auroraTranquilPrincess: CharacterCard = {
   id: "1sr",
@@ -22,10 +22,26 @@ export const auroraTranquilPrincess: CharacterCard = {
   abilities: [
     {
       id: "1sr-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
+      text: "Ward",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { auroraTranquilPrincess as auroraTranquilPrincessAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/141-aurora-tranquil-princess";
+//
+// export const auroraTranquilPrincess: LorcanitoCharacterCard = {
+//   ...auroraTranquilPrincessAsOrig,
+//   id: "u0u",
+//   reprints: [auroraTranquilPrincessAsOrig.id],
+//   number: 154,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650089,
+//   },
+// };
+//

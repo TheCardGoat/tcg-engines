@@ -47,6 +47,7 @@ describe("Template Game", () => {
         // Should succeed in draw phase
         const result = game.executeMove("drawCard", {
           playerId: createPlayerId("p1"),
+          params: {},
         });
 
         // Will succeed (condition met) even though deck is empty
@@ -60,10 +61,14 @@ describe("Template Game", () => {
         ]);
 
         // Move to main phase
-        game.executeMove("endPhase", { playerId: createPlayerId("p1") });
+        game.executeMove("endPhase", {
+          playerId: createPlayerId("p1"),
+          params: {},
+        });
 
         const result = game.executeMove("drawCard", {
           playerId: createPlayerId("p1"),
+          params: {},
         });
 
         expect(result.success).toBe(false);
@@ -78,10 +83,16 @@ describe("Template Game", () => {
 
         expect(game.getState().phase).toBe("draw");
 
-        game.executeMove("endPhase", { playerId: createPlayerId("p1") });
+        game.executeMove("endPhase", {
+          playerId: createPlayerId("p1"),
+          params: {},
+        });
         expect(game.getState().phase).toBe("main");
 
-        game.executeMove("endPhase", { playerId: createPlayerId("p1") });
+        game.executeMove("endPhase", {
+          playerId: createPlayerId("p1"),
+          params: {},
+        });
         expect(game.getState().phase).toBe("end");
       });
 
@@ -95,9 +106,18 @@ describe("Template Game", () => {
         expect(game.getState().turnNumber).toBe(1);
 
         // End all phases to advance turn
-        game.executeMove("endPhase", { playerId: createPlayerId("p1") }); // draw -> main
-        game.executeMove("endPhase", { playerId: createPlayerId("p1") }); // main -> end
-        game.executeMove("endPhase", { playerId: createPlayerId("p1") }); // end -> next turn
+        game.executeMove("endPhase", {
+          playerId: createPlayerId("p1"),
+          params: {},
+        }); // draw -> main
+        game.executeMove("endPhase", {
+          playerId: createPlayerId("p1"),
+          params: {},
+        }); // main -> end
+        game.executeMove("endPhase", {
+          playerId: createPlayerId("p1"),
+          params: {},
+        }); // end -> next turn
 
         const state = game.getState();
         expect(state.currentPlayerIndex).toBe(1);
@@ -173,8 +193,14 @@ describe("Template Game", () => {
       );
 
       // Execute same moves
-      game1.executeMove("endPhase", { playerId: createPlayerId("p1") });
-      game2.executeMove("endPhase", { playerId: createPlayerId("p1") });
+      game1.executeMove("endPhase", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
+      game2.executeMove("endPhase", {
+        playerId: createPlayerId("p1"),
+        params: {},
+      });
 
       const state1 = game1.getState();
       const state2 = game2.getState();

@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const taffytaMuttonfudgeRuthlessRival: CharacterCard = {
   id: "1d7",
@@ -21,3 +21,30 @@ export const taffytaMuttonfudgeRuthlessRival: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally", "Racer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const taffytaMuttonfudgeRuthlessRival: LorcanitoCharacterCard = {
+//   id: "smx",
+//   name: "Taffyta Muttonfudge",
+//   title: "Ruthless Rival",
+//   characteristics: ["storyborn", "ally", "racer"],
+//   type: "character",
+//   flavour:
+//     "There’s not a glimmer that can keep up with me. You might as well quit now.",
+//   inkwell: true,
+//   colors: ["ruby"],
+//   cost: 2,
+//   strength: 2,
+//   willpower: 2,
+//   lore: 2,
+//   illustrator: "Koni",
+//   number: 103,
+//   set: "SSK",
+//   externalIds: {
+//     tcgPlayer: 555252,
+//   },
+//   rarity: "uncommon",
+// };
+//

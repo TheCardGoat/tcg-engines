@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const sirHissAggravatingAsp: CharacterCard = {
   id: "1vd",
@@ -22,9 +22,9 @@ export const sirHissAggravatingAsp: CharacterCard = {
   abilities: [
     {
       id: "1vd-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

@@ -1,4 +1,4 @@
-import type { ItemCard } from "@tcg/lorcana";
+import type { ItemCard } from "@tcg/lorcana-types";
 
 export const signedContract: ItemCard = {
   id: "1y6",
@@ -17,15 +17,14 @@ export const signedContract: ItemCard = {
   abilities: [
     {
       id: "1y6-1",
-      text: "FINE PRINT Whenever an opponent plays a song, you may draw a card.",
-      name: "FINE PRINT",
       type: "triggered",
+      name: "FINE PRINT",
       trigger: {
         event: "play",
         timing: "whenever",
         on: {
           controller: "opponent",
-          cardType: "song",
+          cardType: "action",
         },
       },
       effect: {
@@ -37,6 +36,23 @@ export const signedContract: ItemCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "FINE PRINT Whenever an opponent plays a song, you may draw a card.",
     },
   ],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
+// import { signedContract as signedContractAsOrig } from "@lorcanito/lorcana-engine/cards/004/items/099-signed-contract";
+//
+// export const signedContract: LorcanitoItemCard = {
+//   ...signedContractAsOrig,
+//   id: "no1",
+//   reprints: [signedContractAsOrig.id],
+//   number: 101,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650039,
+//   },
+// };
+//

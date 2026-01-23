@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const dellaDuckUnstoppableMom: CharacterCard = {
   id: "1xa",
@@ -22,9 +22,9 @@ export const dellaDuckUnstoppableMom: CharacterCard = {
   abilities: [
     {
       id: "1xa-1",
-      text: "Reckless",
       type: "keyword",
       keyword: "Reckless",
+      text: "Reckless",
     },
   ],
   classifications: ["Storyborn", "Ally"],

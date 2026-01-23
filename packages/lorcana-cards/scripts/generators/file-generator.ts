@@ -14,7 +14,7 @@ import type {
   CharacterCard,
   ItemCard,
   LocationCard,
-} from "@tcg/lorcana";
+} from "@tcg/lorcana-types";
 import { parseAbilityText } from "../../src/parser";
 import {
   getManualEntry,
@@ -91,9 +91,13 @@ const RESERVED_WORDS = new Set([
 /**
  * Convert a string to camelCase for export names
  * Handles reserved words and identifiers starting with numbers
+ * Strips " - undefined" suffix which indicates missing version data
  */
 function toCamelCase(str: string): string {
-  let result = str
+  // Remove " - undefined" suffix before converting
+  const cleanStr = str.endsWith(" - undefined") ? str.slice(0, -11) : str;
+
+  let result = cleanStr
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, "") // Remove special chars except spaces
     .split(/\s+/)
@@ -199,11 +203,16 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
     id: card.id,
     cardType: card.cardType,
     name: card.name,
-    version: card.version,
   };
 
+  // Only include version if it's a valid non-empty string (not "undefined", not empty)
+  if (card.version && card.version !== "undefined") {
+    result.version = card.version;
+  }
+
   // Only include fullName if it differs from name (must come after version, before inkType)
-  if (card.fullName !== card.name) {
+  // Exclude fullName if it contains " - undefined" which indicates missing version data
+  if (card.fullName !== card.name && !card.fullName.endsWith(" - undefined")) {
     result.fullName = card.fullName;
   }
 
@@ -241,6 +250,13 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
     result.vanilla = true;
   }
 
+  if (card.missingImplementation) {
+    result.missingImplementation = true;
+  }
+  if (card.missingTests) {
+    result.missingTests = true;
+  }
+
   // === OBJECT PROPERTIES ===
   if (card.externalIds) {
     result.externalIds = card.externalIds;
@@ -257,187 +273,191 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
   // AbilityDefinition requires: id, text, type (triggered|activated|static|keyword|action)
   // Now uses parser to extract structured effects
   if (card.rulesText && !card.vanilla) {
-    const engineAbilities: Array<AbilityDefinition> = [];
+    if (card.missingImplementation) {
+      result.abilities = [];
+    } else {
+      const engineAbilities: Array<AbilityDefinition> = [];
 
-    // Check if this card has a manual override entry (complex texts that bypass parsing)
-    // Manual overrides are keyed by normalized text with {d} placeholders, so we need to:
-    // Use comprehensive normalization to handle formatting differences
-    const fullText = card.rulesText.replace(/\n/g, " ");
-    const patternText = normalizeForMatching(fullText);
-    const isManualOverride = tooComplexText(patternText);
+      // Check if this card has a manual override entry (complex texts that bypass parsing)
+      // Manual overrides are keyed by normalized text with {d} placeholders, so we need to:
+      // Use comprehensive normalization to handle formatting differences
+      const fullText = card.rulesText.replace(/\n/g, " ");
+      const patternText = normalizeForMatching(fullText);
+      const isManualOverride = tooComplexText(patternText);
 
-    if (isManualOverride) {
-      // Get manual override entry (can be single or array)
-      const manualEntry = getManualEntry(patternText);
-      if (manualEntry) {
-        // Resolve numeric values from original card text
-        const resolvedEntry = resolveManualOverrideValues(
-          manualEntry,
-          card.rulesText,
-          patternText,
-        );
+      if (isManualOverride) {
+        // Get manual override entry (can be single or array)
+        const manualEntry = getManualEntry(patternText);
+        if (manualEntry) {
+          // Resolve numeric values from original card text
+          const resolvedEntry = resolveManualOverrideValues(
+            manualEntry,
+            card.rulesText,
+            patternText,
+          );
 
-        // Convert resolved entries to AbilityDefinition format
-        const resolvedAbilities = Array.isArray(resolvedEntry)
-          ? resolvedEntry
-          : [resolvedEntry];
+          // Convert resolved entries to AbilityDefinition format
+          const resolvedAbilities = Array.isArray(resolvedEntry)
+            ? resolvedEntry
+            : [resolvedEntry];
 
-        for (let i = 0; i < resolvedAbilities.length; i++) {
-          const resolvedAbility = resolvedAbilities[i];
+          for (let i = 0; i < resolvedAbilities.length; i++) {
+            const resolvedAbility = resolvedAbilities[i];
+            const abilityId = `${card.id}-${i + 1}`;
+
+            // Build ability object from resolved manual override entry
+            const engineAbility = {
+              id: abilityId,
+              text: resolvedAbility.text,
+              ...(resolvedAbility.name && { name: resolvedAbility.name }),
+              ...resolvedAbility.ability,
+            } as AbilityDefinition;
+
+            engineAbilities.push(engineAbility);
+          }
+        }
+      } else {
+        // Not a manual override - use line-by-line parsing
+        const abilityTexts = card.rulesText.split("\n").filter((t) => t.trim());
+
+        // Simple keywords (no value) - keep for fallback
+        const simpleKeywords = [
+          "bodyguard",
+          "evasive",
+          "reckless",
+          "rush",
+          "support",
+          "vanish",
+          "ward",
+          "alert",
+        ];
+        // Parameterized keywords (have a +N value) - keep for fallback
+        const parameterizedKeywords = ["challenger", "resist", "singer"];
+
+        for (let i = 0; i < abilityTexts.length; i++) {
+          const rawText = abilityTexts[i].trim();
           const abilityId = `${card.id}-${i + 1}`;
 
-          // Build ability object from resolved manual override entry
-          const engineAbility = {
-            id: abilityId,
-            text: resolvedAbility.text,
-            ...(resolvedAbility.name && { name: resolvedAbility.name }),
-            ...resolvedAbility.ability,
-          } as AbilityDefinition;
+          // Remove reminder text (parenthetical explanations)
+          // Note: In Lorcana, reminder text always appears in parentheses after keywords/abilities
+          // e.g., "Challenger +2 (While challenging, this character gets +2.)"
+          const text = rawText.replace(/\s*\([^)]*\)/g, "").trim();
 
-          engineAbilities.push(engineAbility);
-        }
-      }
-    } else {
-      // Not a manual override - use line-by-line parsing
-      const abilityTexts = card.rulesText.split("\n").filter((t) => t.trim());
+          // Try to parse using the ability parser
+          const parseResult = parseAbilityText(text);
 
-      // Simple keywords (no value) - keep for fallback
-      const simpleKeywords = [
-        "bodyguard",
-        "evasive",
-        "reckless",
-        "rush",
-        "support",
-        "vanish",
-        "ward",
-        "alert",
-      ];
-      // Parameterized keywords (have a +N value) - keep for fallback
-      const parameterizedKeywords = ["challenger", "resist", "singer"];
+          if (parseResult.success && parseResult.ability) {
+            // Parser succeeded - use structured ability
+            const parsedAbility = parseResult.ability.ability;
+            const abilityName = parseResult.ability.name;
 
-      for (let i = 0; i < abilityTexts.length; i++) {
-        const rawText = abilityTexts[i].trim();
-        const abilityId = `${card.id}-${i + 1}`;
+            // Build ability object with parsed structure by spreading parsed properties
+            // Spread parsedAbility first so we can override properties like text/name if needed
+            const engineAbility = {
+              id: abilityId,
+              ...parsedAbility,
+              text: parseResult.ability.text || text, // Fallback to raw text if parser result is empty
+              ...(abilityName && { name: abilityName }),
+            } as AbilityDefinition;
 
-        // Remove reminder text (parenthetical explanations)
-        // Note: In Lorcana, reminder text always appears in parentheses after keywords/abilities
-        // e.g., "Challenger +2 (While challenging, this character gets +2.)"
-        const text = rawText.replace(/\s*\([^)]*\)/g, "").trim();
+            engineAbilities.push(engineAbility);
+          } else {
+            // Parser failed - fall back to simple text-based detection
+            // Try to extract ability name (all caps at start)
+            const namedMatch = text.match(/^([A-Z][A-Z\s]+[A-Z])\s+(.+)$/);
+            const name = namedMatch ? namedMatch[1].trim() : undefined;
 
-        // Try to parse using the ability parser
-        const parseResult = parseAbilityText(text);
+            // Determine ability type
+            let abilityType: "triggered" | "activated" | "static" | "keyword" =
+              "static";
+            const lower = text.toLowerCase();
+            let keyword: string | undefined;
+            let value: number | undefined;
 
-        if (parseResult.success && parseResult.ability) {
-          // Parser succeeded - use structured ability
-          const parsedAbility = parseResult.ability.ability;
-          const abilityName = parseResult.ability.name;
-
-          // Build ability object with parsed structure by spreading parsed properties
-          // This ensures we capture cost, trigger, condition, etc.
-          const engineAbility = {
-            id: abilityId,
-            text: parseResult.ability.text,
-            ...(abilityName && { name: abilityName }),
-            ...parsedAbility,
-          } as AbilityDefinition;
-
-          engineAbilities.push(engineAbility);
-        } else {
-          // Parser failed - fall back to simple text-based detection
-          // Try to extract ability name (all caps at start)
-          const namedMatch = text.match(/^([A-Z][A-Z\s]+[A-Z])\s+(.+)$/);
-          const name = namedMatch ? namedMatch[1].trim() : undefined;
-
-          // Determine ability type
-          let abilityType: "triggered" | "activated" | "static" | "keyword" =
-            "static";
-          const lower = text.toLowerCase();
-          let keyword: string | undefined;
-          let value: number | undefined;
-
-          // Check for simple keywords
-          const simpleKeywordMatch = simpleKeywords.find((kw) =>
-            lower.startsWith(kw),
-          );
-          if (simpleKeywordMatch) {
-            abilityType = "keyword";
-            keyword =
-              simpleKeywordMatch.charAt(0).toUpperCase() +
-              simpleKeywordMatch.slice(1);
-          }
-          // Check for parameterized keywords (e.g., "Challenger +3", "Resist +2", "Singer 5")
-          else if (parameterizedKeywords.some((kw) => lower.startsWith(kw))) {
-            const paramMatch = text.match(
-              /^(Challenger|Resist|Singer)\s*\+?(\d+)/i,
+            // Check for simple keywords
+            const simpleKeywordMatch = simpleKeywords.find((kw) =>
+              lower.startsWith(kw),
             );
-            if (paramMatch) {
+            if (simpleKeywordMatch) {
               abilityType = "keyword";
               keyword =
-                paramMatch[1].charAt(0).toUpperCase() +
-                paramMatch[1].slice(1).toLowerCase();
-              value = Number.parseInt(paramMatch[2], 10);
+                simpleKeywordMatch.charAt(0).toUpperCase() +
+                simpleKeywordMatch.slice(1);
             }
-          }
-          // Check for Shift keyword (e.g., "Shift 5")
-          else if (lower.startsWith("shift")) {
-            const shiftMatch = text.match(/^Shift\s+(\d+)/i);
-            if (shiftMatch) {
-              abilityType = "keyword";
-              keyword = "Shift";
-              // For Shift, we need to construct a cost object
-              const shiftValue = Number.parseInt(shiftMatch[1], 10);
-              engineAbilities.push({
-                id: abilityId,
-                ...(name && { name }),
-                text,
-                type: "keyword",
-                keyword: "Shift",
-                cost: { ink: shiftValue },
-              } as AbilityDefinition);
-              continue;
+            // Check for parameterized keywords (e.g., "Challenger +3", "Resist +2", "Singer 5")
+            else if (parameterizedKeywords.some((kw) => lower.startsWith(kw))) {
+              const paramMatch = text.match(
+                /^(Challenger|Resist|Singer)\s*\+?(\d+)/i,
+              );
+              if (paramMatch) {
+                abilityType = "keyword";
+                keyword =
+                  paramMatch[1].charAt(0).toUpperCase() +
+                  paramMatch[1].slice(1).toLowerCase();
+                value = Number.parseInt(paramMatch[2], 10);
+              }
             }
-          }
-          // Not a keyword - check for triggered/activated
-          else {
-            // Triggered abilities
-            if (
-              lower.includes("whenever") ||
-              lower.includes("when you play") ||
-              lower.includes("when this") ||
-              lower.includes("at the start") ||
-              lower.includes("at the end")
-            ) {
-              abilityType = "triggered";
+            // Check for Shift keyword (e.g., "Shift 5")
+            else if (lower.startsWith("shift")) {
+              const shiftMatch = text.match(/^Shift\s+(\d+)/i);
+              if (shiftMatch) {
+                abilityType = "keyword";
+                keyword = "Shift";
+                // For Shift, we need to construct a cost object
+                const shiftValue = Number.parseInt(shiftMatch[1], 10);
+                engineAbilities.push({
+                  id: abilityId,
+                  ...(name && { name }),
+                  text,
+                  type: "keyword",
+                  keyword: "Shift",
+                  cost: { ink: shiftValue },
+                } as AbilityDefinition);
+                continue;
+              }
             }
-            // Activated abilities (have exert cost)
-            else if (lower.includes("{e}") || lower.includes("⬡")) {
-              abilityType = "activated";
+            // Not a keyword - check for triggered/activated
+            else {
+              // Triggered abilities
+              if (
+                lower.includes("whenever") ||
+                lower.includes("when you play") ||
+                lower.includes("when this") ||
+                lower.includes("at the start") ||
+                lower.includes("at the end")
+              ) {
+                abilityType = "triggered";
+              }
+              // Activated abilities (have exert cost)
+              else if (lower.includes("{e}") || lower.includes("⬡")) {
+                abilityType = "activated";
+              }
+              // For action cards, default to "action" type if no other match
+              else if (card.cardType === "action") {
+                abilityType = "static"; // Keep as static for backwards compatibility in fallback
+              }
             }
-            // For action cards, default to "action" type if no other match
-            else if (card.cardType === "action") {
-              abilityType = "static"; // Keep as static for backwards compatibility in fallback
-            }
-          }
 
-          const fallbackAbility: any = {
-            id: abilityId,
-            ...(name && { name }),
-            text,
-            type: abilityType,
-            ...(keyword && { keyword }),
-            ...(value !== undefined && { value }),
-          };
+            const fallbackAbility: any = {
+              id: abilityId,
+              ...(name && { name }),
+              text,
+              type: abilityType,
+              ...(keyword && { keyword }),
+              ...(value !== undefined && { value }),
+            };
 
-          // For fallback non-keyword abilities, we might be missing required fields like 'trigger' or 'cost'
-          // Ideally we shouldn't hit fallback often if the parser is good.
-          // If we do, these objects might not fully satisfy AbilityDefinition, but we cast to satisfy TS in generator.
-          engineAbilities.push(fallbackAbility as AbilityDefinition);
+            // For fallback non-keyword abilities, we might be missing required fields like 'trigger' or 'cost'
+            // Ideally we shouldn't hit fallback often if the parser is good.
+            // If we do, these objects might not fully satisfy AbilityDefinition, but we cast to satisfy TS in generator.
+            engineAbilities.push(fallbackAbility as AbilityDefinition);
+          }
         }
       }
-    }
 
-    if (engineAbilities.length > 0) {
-      result.abilities = engineAbilities;
+      if (engineAbilities.length > 0) {
+        result.abilities = engineAbilities;
+      }
     }
   }
   if ("classifications" in card && card.classifications?.length) {
@@ -512,7 +532,6 @@ export function generateCardFileContent(
   depth: number,
 ): string {
   const typeName = getCanonicalTypeName(card.cardType);
-
   // Convert canonical card to lorcana format
   const lorcanaCard = convertToLorcanaCard(card);
 
@@ -521,7 +540,7 @@ export function generateCardFileContent(
     .replace(/"([^"]+)":/g, "$1:") // Remove quotes from keys
     .replace(/"/g, '"'); // Use double quotes for strings
 
-  return `import type { ${typeName} } from "@tcg/lorcana";
+  return `import type { ${typeName} } from "@tcg/lorcana-types";
 
 export const ${exportName}: ${typeName} = ${cardJson};
 `;
@@ -577,7 +596,7 @@ export function generateSetIndexContent(
     .join("\n");
 
   const importedTypes = typeUnion.split(" | ").join(", ");
-  return `import type { ${importedTypes} } from "@tcg/lorcana";
+  return `import type { ${importedTypes} } from "@tcg/lorcana-types";
 ${imports}
 
 export const all${setFolderName}Cards: (${typeUnion})[] = [
@@ -612,7 +631,7 @@ export function generateMainCardsContent(setFolderNames: string[]): string {
     .map((name) => `  ...all${name}CardsById,`)
     .join("\n");
 
-  return `import type { CharacterCard, ActionCard, ItemCard, LocationCard } from "@tcg/lorcana";
+  return `import type { CharacterCard, ActionCard, ItemCard, LocationCard } from "@tcg/lorcana-types";
 ${imports}
 
 export const allCards: (CharacterCard | ActionCard | ItemCard | LocationCard)[] = [
@@ -629,7 +648,7 @@ ${byIdSpreads}
  * Generate content for index.ts entry point
  */
 export function generateEntryPointContent(): string {
-  return `import type { CharacterCard, ActionCard, ItemCard, LocationCard } from "@tcg/lorcana";
+  return `import type { CharacterCard, ActionCard, ItemCard, LocationCard } from "@tcg/lorcana-types";
 
 let allCardsCache: (CharacterCard | ActionCard | ItemCard | LocationCard)[] | null = null;
 let allCardsByIdCache: Record<string, CharacterCard | ActionCard | ItemCard | LocationCard> | null = null;
@@ -891,8 +910,8 @@ export function generateTestFileContent(
   exportName: string,
   cardFileName: string,
 ): string | null {
-  // Don't generate tests for vanilla cards
-  if (card.vanilla) {
+  // Don't generate tests for vanilla cards or cards explicitly missing tests
+  if (card.vanilla || card.missingTests) {
     return null;
   }
 
@@ -1077,12 +1096,26 @@ export function generateCardFiles(
       let testFilesGenerated = 0;
       for (const cardInfo of cards) {
         const filePath = path.join(typeDir, cardInfo.fileName);
-        const content = generateCardFileContent(
-          cardInfo.card,
-          cardInfo.exportName,
-          2, // Depth: set/type/card.ts -> types.ts is 2 levels up
-        );
-        writeFile(filePath, content);
+
+        let shouldWrite = true;
+        // If we are about to write a stub (missingImplementation), check if a valid implementation exists
+        if (cardInfo.card.missingImplementation && fs.existsSync(filePath)) {
+          const existingContent = fs.readFileSync(filePath, "utf-8");
+          // If existing content does NOT have missingImplementation: true, preserve it
+          if (!existingContent.includes("missingImplementation: true")) {
+            shouldWrite = false;
+            // console.log(`Skipping overwrite of implemented card: ${cardInfo.fileName}`);
+          }
+        }
+
+        if (shouldWrite) {
+          const content = generateCardFileContent(
+            cardInfo.card,
+            cardInfo.exportName,
+            2, // Depth: set/type/card.ts -> types.ts is 2 levels up
+          );
+          writeFile(filePath, content);
+        }
 
         // Generate test file for non-vanilla cards with keywords
         const testContent = generateTestFileContent(

@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const drFacilierSavvyOpportunist: CharacterCard = {
   id: "z5l",
@@ -22,10 +22,39 @@ export const drFacilierSavvyOpportunist: CharacterCard = {
   abilities: [
     {
       id: "z5l-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const drFacilierSavvyOpportunist: LorcanitoCharacterCard = {
+//   id: "pda",
+//
+//   name: "Dr. Facilier",
+//   title: "Savvy Opportunist",
+//   characteristics: ["sorcerer", "storyborn", "villain"],
+//   text: "**Evasive** _(Only characters with Evasive can challenge this character.)_",
+//   type: "character",
+//   abilities: [evasiveAbility],
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 4,
+//   strength: 4,
+//   willpower: 2,
+//   lore: 1,
+//   illustrator: "Leonardo Giammichele",
+//   number: 38,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 527731,
+//   },
+//   rarity: "common",
+// };
+//

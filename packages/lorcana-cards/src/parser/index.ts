@@ -3,6 +3,8 @@
  *
  * Public API for parsing Lorcana card ability text into type-safe Ability objects.
  *
+ * Now using v2 parser by default - see @tcg/lorcana/parser/v2 for implementation.
+ *
  * @example Basic usage
  * ```typescript
  * import { parseAbilityText } from "@tcg/lorcana/parser";
@@ -23,14 +25,26 @@
  * ```
  */
 
-export { classifyAbility } from "./classifier";
-export type { MultiParseResult } from "./parser";
-// Main parser functions
+// ============================================================================
+// V2 PARSER EXPORTS (Primary)
+// ============================================================================
+
+// Main v2 parser class
+export { LorcanaParserV2, parserV2 } from "./v2/index";
+
+// Main parser functions (v2 compatibility wrappers)
 export {
   parseAbilityText,
-  parseAbilityTextMulti,
   parseAbilityTexts,
-} from "./parser";
+} from "./v2/parser";
+
+// ============================================================================
+// V1 PARSER EXPORTS (Deprecated - use v2)
+// ============================================================================
+
+export { classifyAbility } from "./classifier";
+export type { MultiParseResult } from "./parser";
+export { parseAbilityTextMulti } from "./parser";
 export { parseActivatedAbility } from "./parsers/activated-parser";
 export {
   extractConditionText,

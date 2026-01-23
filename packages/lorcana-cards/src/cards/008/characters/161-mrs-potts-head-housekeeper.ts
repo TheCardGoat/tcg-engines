@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mrsPottsHeadHousekeeper: CharacterCard = {
   id: "cpn",
@@ -9,7 +9,7 @@ export const mrsPottsHeadHousekeeper: CharacterCard = {
   inkType: ["sapphire"],
   franchise: "Beauty and the Beast",
   set: "008",
-  text: "CLEAN UP , Banish one of your items — Draw a card.",
+  text: "CLEAN UP {E}, Banish one of your items — Draw a card.",
   cost: 3,
   strength: 2,
   willpower: 4,
@@ -22,13 +22,14 @@ export const mrsPottsHeadHousekeeper: CharacterCard = {
   abilities: [
     {
       id: "cpn-1",
-      text: "CLEAN UP , Banish one of your items — Draw a card.",
-      type: "action",
+      type: "activated",
+      cost: {},
       effect: {
         type: "draw",
         amount: 1,
         target: "CONTROLLER",
       },
+      text: "CLEAN UP {E}, Banish one of your items — Draw a card.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const headlessManhorseManny: CharacterCard = {
   id: "wfp",
@@ -21,3 +21,30 @@ export const headlessManhorseManny: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const headlessManhorseManny: LorcanitoCharacterCard = {
+//   id: "yjw",
+//   name: "Headless Manhorse",
+//   title: "Manny",
+//   characteristics: ["storyborn", "ally"],
+//   text: undefined,
+//   type: "character",
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 6,
+//   strength: 5,
+//   willpower: 10,
+//   illustrator: "Gabriel Quinn / Jules Dubost",
+//   number: 4,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 660014,
+//   },
+//   rarity: "common",
+//   abilities: [],
+//   lore: 1,
+// };
+//

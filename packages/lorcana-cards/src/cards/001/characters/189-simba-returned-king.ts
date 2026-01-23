@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const simbaReturnedKing: CharacterCard = {
   id: "nj8",
@@ -42,3 +42,43 @@ export const simbaReturnedKing: CharacterCard = {
   ],
   classifications: ["Storyborn", "Hero", "King"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import {
+//   challengerAbility,
+//   duringYourTurnGains,
+//   evasiveAbility,
+// } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const simbaReturnedKing: LorcanitoCharacterCard = {
+//   id: "hgu",
+//   name: "Simba",
+//   title: "Returned King",
+//   characteristics: ["hero", "storyborn", "king"],
+//   text: "**Challenger** +4 (While challenging, this character gets\r+4 {S}.)\n**POUNCE** During your turn, this character gains \r**Evasive**. _(They can challenge characters with Evasive.)_",
+//   type: "character",
+//   abilities: [
+//     challengerAbility(4),
+//     duringYourTurnGains(
+//       "Pounce",
+//       "During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_",
+//       evasiveAbility,
+//     ),
+//   ],
+//   flavour: "„I‘ll do whatever it takes to save my kingdom.",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 7,
+//   strength: 4,
+//   willpower: 6,
+//   lore: 2,
+//   illustrator: "Nicholas Kole",
+//   number: 189,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 492741,
+//   },
+//   rarity: "rare",
+// };
+//

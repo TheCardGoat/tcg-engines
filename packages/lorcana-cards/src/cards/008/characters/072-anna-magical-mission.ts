@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const annaMagicalMission: CharacterCard = {
   id: "1w2",
@@ -22,24 +22,23 @@ export const annaMagicalMission: CharacterCard = {
   abilities: [
     {
       id: "1w2-1",
-      text: "Shift 4",
       type: "keyword",
       keyword: "Shift",
       cost: {
         ink: 4,
       },
+      text: "Shift 4",
     },
     {
       id: "1w2-2",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
     {
       id: "1w2-3",
-      text: "COORDINATED PLAN Whenever this character quests, if you have a character named Elsa in play, you may draw a card.",
-      name: "COORDINATED PLAN",
       type: "triggered",
+      name: "COORDINATED PLAN",
       trigger: {
         event: "quest",
         timing: "whenever",
@@ -48,9 +47,8 @@ export const annaMagicalMission: CharacterCard = {
       effect: {
         type: "conditional",
         condition: {
-          type: "has-named-character",
-          name: "Elsa in play",
-          controller: "you",
+          type: "if",
+          expression: "you have a character named Elsa in play",
         },
         then: {
           type: "draw",
@@ -58,6 +56,7 @@ export const annaMagicalMission: CharacterCard = {
           target: "CONTROLLER",
         },
       },
+      text: "COORDINATED PLAN Whenever this character quests, if you have a character named Elsa in play, you may draw a card.",
     },
   ],
   classifications: ["Floodborn", "Hero", "Queen", "Sorcerer"],

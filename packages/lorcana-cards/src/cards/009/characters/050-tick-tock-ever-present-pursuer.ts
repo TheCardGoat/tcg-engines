@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const ticktockEverpresentPursuer: CharacterCard = {
   id: "16h",
@@ -22,10 +22,26 @@ export const ticktockEverpresentPursuer: CharacterCard = {
   abilities: [
     {
       id: "16h-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { ticktockEverpresentPursuer as ogTickTockEverPresentPursuer } from "@lorcanito/lorcana-engine/cards/004/characters/056-tick-tock-ever-present-pursuer";
+//
+// export const ticktockEverpresentPursuer: LorcanitoCharacterCard = {
+//   ...ogTickTockEverPresentPursuer,
+//   id: "znh",
+//   reprints: [ogTickTockEverPresentPursuer.id],
+//   number: 50,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649994,
+//   },
+// };
+//

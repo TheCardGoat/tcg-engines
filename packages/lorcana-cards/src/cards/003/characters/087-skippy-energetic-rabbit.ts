@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const skippyEnergeticRabbit: CharacterCard = {
   id: "1ma",
@@ -22,9 +22,9 @@ export const skippyEnergeticRabbit: CharacterCard = {
   abilities: [
     {
       id: "1ma-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
+      text: "Ward",
     },
   ],
   classifications: ["Storyborn", "Ally"],

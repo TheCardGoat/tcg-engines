@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const tukTukBigBuddy: CharacterCard = {
   id: "19s",
@@ -21,3 +21,29 @@ export const tukTukBigBuddy: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// // TODO: Once the set is released, we organize the cards by set and type
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const tukTukBigBuddy: LorcanitoCharacterCard = {
+//   id: "kxy",
+//   name: "Tuk Tuk",
+//   title: "Big Buddy",
+//   characteristics: ["storyborn", "ally"],
+//   type: "character",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 5,
+//   strength: 6,
+//   willpower: 5,
+//   lore: 1,
+//   illustrator: "Mariana Moreno",
+//   number: 184,
+//   set: "006",
+//   externalIds: {
+//     tcgPlayer: 593049,
+//   },
+//   rarity: "uncommon",
+// };
+//

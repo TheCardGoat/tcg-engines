@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const kitCloudkickerNavigator: CharacterCard = {
   id: "jtu",
@@ -22,18 +22,18 @@ export const kitCloudkickerNavigator: CharacterCard = {
   abilities: [
     {
       id: "jtu-1",
-      text: "Shift 3",
       type: "keyword",
       keyword: "Shift",
       cost: {
         ink: 3,
       },
+      text: "Shift 3",
     },
     {
       id: "jtu-2",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
+      text: "Ward",
     },
   ],
   classifications: ["Floodborn", "Ally"],

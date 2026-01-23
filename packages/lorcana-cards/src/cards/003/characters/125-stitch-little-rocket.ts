@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const stitchLittleRocket: CharacterCard = {
   id: "cgj",
@@ -22,9 +22,9 @@ export const stitchLittleRocket: CharacterCard = {
   abilities: [
     {
       id: "cgj-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
+      text: "Rush",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Alien"],

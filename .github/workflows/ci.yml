@@ -55,8 +55,8 @@ jobs:
 #        run: bun install --backend=hardlink --linker isolated --frozen-lockfile
         run: bun install
 
-      # - name: Install playwright
-      #   run: bunx playwright install
+      - name: Install Playwright Browsers
+        run: bunx playwright install --with-deps
 
       - name: Run Continuous Integration
         run: bun run ci-check

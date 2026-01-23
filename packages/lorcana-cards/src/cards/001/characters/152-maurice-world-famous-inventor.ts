@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mauriceWorldfamousInventor: CharacterCard = {
   id: "x5f",
@@ -16,51 +16,11 @@ export const mauriceWorldfamousInventor: CharacterCard = {
   lore: 2,
   cardNumber: 152,
   inkable: true,
+  missingImplementation: true,
+  missingTests: true,
   externalIds: {
     ravensburger: "777a87e05133c7c929f30c24ced7fa867c084c8e",
   },
-  abilities: [
-    {
-      id: "x5f-1",
-      text: "GIVE IT A TRY Whenever this character quests, you pay 2 {I} less for the next item you play this turn.",
-      name: "GIVE IT A TRY",
-      type: "triggered",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
-      effect: {
-        type: "cost-reduction",
-        amount: 2,
-        cardType: "item",
-        target: "CONTROLLER",
-        duration: "next-play-this-turn",
-      },
-    },
-    {
-      id: "x5f-2",
-      text: "IT WORKS! Whenever you play an item, you may draw a card.",
-      name: "IT WORKS!",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "whenever",
-        on: {
-          controller: "you",
-          cardType: "item",
-        },
-      },
-      effect: {
-        type: "optional",
-        effect: {
-          type: "draw",
-          amount: 1,
-          target: "CONTROLLER",
-        },
-        chooser: "CONTROLLER",
-      },
-    },
-  ],
+  abilities: [],
   classifications: ["Dreamborn", "Mentor", "Inventor"],
 };

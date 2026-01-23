@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const cauldronBornMindlessHorde: CharacterCard = {
   id: "5uf",
@@ -21,3 +21,30 @@ export const cauldronBornMindlessHorde: CharacterCard = {
   },
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const cauldronBornMindlessHorde: LorcanitoCharacterCard = {
+//   id: "rq1",
+//   name: "Cauldron Born",
+//   title: "Mindless Horde",
+//   characteristics: ["storyborn"],
+//   text: "",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 5,
+//   strength: 6,
+//   willpower: 7,
+//   illustrator: "Kendall Hale",
+//   number: 39,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659446,
+//   },
+//   rarity: "common",
+//   abilities: [],
+//   lore: 1,
+// };
+//

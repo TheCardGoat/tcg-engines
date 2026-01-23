@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const zeusGodOfLightning: CharacterCard = {
   id: "1o1",
@@ -22,17 +22,48 @@ export const zeusGodOfLightning: CharacterCard = {
   abilities: [
     {
       id: "1o1-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
+      text: "Rush",
     },
     {
       id: "1o1-2",
-      text: "Challenger +4",
       type: "keyword",
       keyword: "Challenger",
       value: 4,
+      text: "Challenger +4",
     },
   ],
   classifications: ["Storyborn", "Deity"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import {
+//   challengerAbility,
+//   rushAbility,
+// } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const zeusGodOfLightning: LorcanitoCharacterCard = {
+//   id: "wvl",
+//   name: "Zeus",
+//   title: "God of Lightning",
+//   characteristics: ["storyborn", "deity"],
+//   text: "**Rush** _(This character can challenge the turn they're played.)_\n**Challenger** +4 (_When challenging, this character get +4 {S}._)",
+//   type: "character",
+//   strength: 0,
+//   abilities: [challengerAbility(4), rushAbility],
+//   flavour: "A little lightning solves a whole lot of problems.",
+//   colors: ["amethyst"],
+//   cost: 4,
+//   willpower: 4,
+//   lore: 2,
+//   illustrator: "Koni",
+//   number: 61,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 502540,
+//   },
+//   rarity: "rare",
+// };
+//

@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const luisaMadrigalMagicallyStrongOne: CharacterCard = {
   id: "1rs",
@@ -22,10 +22,26 @@ export const luisaMadrigalMagicallyStrongOne: CharacterCard = {
   abilities: [
     {
       id: "1rs-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
+      text: "Rush",
     },
   ],
   classifications: ["Storyborn", "Ally", "Madrigal"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { luisaMadrigalMagicallyStrongOne as ogLuisaMadrigalMagicallyStrongOne } from "@lorcanito/lorcana-engine/cards/004/characters/047-luisa-madrigal-magically-strong-one";
+//
+// export const luisaMadrigalMagicallyStrongOne: LorcanitoCharacterCard = {
+//   ...ogLuisaMadrigalMagicallyStrongOne,
+//   id: "utw",
+//   reprints: ["kcf"],
+//   number: 58,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650002,
+//   },
+// };
+//

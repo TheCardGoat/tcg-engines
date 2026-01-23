@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const louieChillNephew: CharacterCard = {
   id: "1ac",
@@ -22,10 +22,26 @@ export const louieChillNephew: CharacterCard = {
   abilities: [
     {
       id: "1ac-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
   ],
   classifications: ["Dreamborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { louieChillNephew as louieChillNephewAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const louieChillNephew: LorcanitoCharacterCard = {
+//   ...louieChillNephewAsOrig,
+//   id: "pec",
+//   reprints: [louieChillNephewAsOrig.id],
+//   number: 140,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650075,
+//   },
+// };
+//

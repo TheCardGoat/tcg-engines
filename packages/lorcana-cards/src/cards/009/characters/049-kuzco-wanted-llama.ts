@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const kuzcoWantedLlama: CharacterCard = {
   id: "zpa",
@@ -22,14 +22,7 @@ export const kuzcoWantedLlama: CharacterCard = {
   abilities: [
     {
       id: "zpa-1",
-      text: "OK, WHERE AM I? When this character is banished, you may draw a card.",
-      name: "OK, WHERE AM I?",
-      type: "triggered",
-      trigger: {
-        event: "banish",
-        timing: "when",
-        on: "SELF",
-      },
+      type: "action",
       effect: {
         type: "optional",
         effect: {
@@ -39,7 +32,24 @@ export const kuzcoWantedLlama: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "OK, WHERE AM I? When this character is banished, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "King"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { kuzcoWantedLlama as ogKuzcoWantedLlama } from "@lorcanito/lorcana-engine/cards/002/characters/045-kuzco-wanted-llama";
+//
+// export const kuzcoWantedLlama: LorcanitoCharacterCard = {
+//   ...ogKuzcoWantedLlama,
+//   id: "q3b",
+//   reprints: [ogKuzcoWantedLlama.id],
+//   number: 49,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649993,
+//   },
+// };
+//

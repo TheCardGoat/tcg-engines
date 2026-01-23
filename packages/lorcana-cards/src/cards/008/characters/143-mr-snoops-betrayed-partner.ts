@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mrSnoopsBetrayedPartner: CharacterCard = {
   id: "1iu",
@@ -22,9 +22,8 @@ export const mrSnoopsBetrayedPartner: CharacterCard = {
   abilities: [
     {
       id: "1iu-1",
-      text: "DOUBLE-CROSSING CROOK! During your turn, when this character is banished, you may draw a card.",
-      name: "DOUBLE-CROSSING CROOK!",
       type: "triggered",
+      name: "DOUBLE-CROSSING CROOK!",
       trigger: {
         event: "banish",
         timing: "when",
@@ -39,6 +38,7 @@ export const mrSnoopsBetrayedPartner: CharacterCard = {
         },
         chooser: "CONTROLLER",
       },
+      text: "DOUBLE-CROSSING CROOK! During your turn, when this character is banished, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

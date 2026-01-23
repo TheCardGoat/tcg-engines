@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const aladdinPrinceAli: CharacterCard = {
   id: "820",
@@ -22,10 +22,26 @@ export const aladdinPrinceAli: CharacterCard = {
   abilities: [
     {
       id: "820-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
+      text: "Ward",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { aladdinPrinceAli as aladdinPrinceAliAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/069-aladdin-prince-ali";
+//
+// export const aladdinPrinceAli: LorcanitoCharacterCard = {
+//   ...aladdinPrinceAliAsOrig,
+//   id: "n78",
+//   reprints: [aladdinPrinceAliAsOrig.id],
+//   number: 92,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650031,
+//   },
+// };
+//

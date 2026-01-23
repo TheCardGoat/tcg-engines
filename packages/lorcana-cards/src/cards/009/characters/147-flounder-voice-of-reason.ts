@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const flounderVoiceOfReason: CharacterCard = {
   id: "gyk",
@@ -21,3 +21,19 @@ export const flounderVoiceOfReason: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { flounderVoiceOfReason as flounderVoiceOfReasonAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
+//
+// export const flounderVoiceOfReason: LorcanitoCharacterCard = {
+//   ...flounderVoiceOfReasonAsOrig,
+//   id: "yyq",
+//   reprints: [flounderVoiceOfReasonAsOrig.id],
+//   number: 147,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650082,
+//   },
+// };
+//

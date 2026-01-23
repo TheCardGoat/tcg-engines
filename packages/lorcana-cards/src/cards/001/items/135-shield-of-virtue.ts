@@ -1,4 +1,4 @@
-import type { ItemCard } from "@tcg/lorcana";
+import type { ItemCard } from "@tcg/lorcana-types";
 
 export const shieldOfVirtue: ItemCard = {
   id: "f35",
@@ -31,3 +31,49 @@ export const shieldOfVirtue: ItemCard = {
     },
   ],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
+// import type { CardEffectTarget } from "@lorcanito/lorcana-engine/effects/effectTargets";
+//
+// const chosenCharacter: CardEffectTarget = {
+//   type: "card",
+//   value: 1,
+//   filters: [
+//     { filter: "type", value: "character" },
+//     { filter: "zone", value: "play" },
+//   ],
+// };
+//
+// export const shieldOfVirtue: LorcanitoItemCard = {
+//   characteristics: ["item"],
+//   id: "pn4",
+//
+//   name: "Shield of Virtue",
+//   text: "**FIREPROOF** {E}, 3 {I} − Ready chosen character. They can't quest for the rest of this turn.",
+//   type: "item",
+//   abilities: [
+//     {
+//       type: "activated",
+//       name: "Fireproof",
+//       text: "Ready chosen character. They can't quest for the rest of this turn.",
+//       costs: [{ type: "exert" }, { type: "ink", amount: 3 }],
+//       effects: readyAndCantQuest(chosenCharacter),
+//     } as ActivatedAbility,
+//   ],
+//   flavour:
+//     "Arm thyself with this enchanted Shield of Virtue and this mighty Sword of Truth, for these weapons of righteousness will triumph over evil. \n−Flora",
+//   inkwell: true,
+//   colors: ["ruby"],
+//   cost: 1,
+//   illustrator: "Eri Welli",
+//   number: 135,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 508789,
+//   },
+//   rarity: "uncommon",
+// };
+//

@@ -1,4 +1,4 @@
-import type { LocationCard } from "@tcg/lorcana";
+import type { LocationCard } from "@tcg/lorcana-types";
 
 export const zootopiaPoliceHeadquarters: LocationCard = {
   id: "98y",
@@ -44,3 +44,49 @@ export const zootopiaPoliceHeadquarters: LocationCard = {
     },
   ],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+// import { whenYouMoveACharacterHere } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const zootopiaPoliceHeadquarters: LorcanitoLocationCard = {
+//   id: "moe",
+//   name: "Zootopia",
+//   title: "Police Headquarters",
+//   characteristics: ["location"],
+//   text: "NEW INFORMATION Once during your turn, whenever you move a character here, you may draw a card, then choose and discard a card.",
+//   type: "location",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 1,
+//   willpower: 4,
+//   illustrator: "",
+//   number: 203,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 659415,
+//   },
+//   rarity: "super_rare",
+//   moveCost: 1,
+//   lore: 1,
+//   abilities: [
+//     whenYouMoveACharacterHere({
+//       name: "NEW INFORMATION",
+//       text: "Once during your turn, whenever you move a character here, you may draw a card, then choose and discard a card.",
+//       optional: true,
+//       oncePerTurn: true,
+//       conditions: [
+//         { type: "first-time-move-to-location" },
+//         {
+//           type: "during-turn",
+//           value: "self",
+//         },
+//       ],
+//       resolveEffectsIndividually:
+//         youMayDrawThenChooseAndDiscard.resolveEffectsIndividually,
+//       effects: youMayDrawThenChooseAndDiscard.effects,
+//     }),
+//   ],
+// };
+//

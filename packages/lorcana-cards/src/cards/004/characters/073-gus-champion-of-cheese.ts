@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const gusChampionOfCheese: CharacterCard = {
   id: "1e3",
@@ -21,3 +21,29 @@ export const gusChampionOfCheese: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const gusChampionOfCheese: LorcanitoCharacterCard = {
+//   id: "zja",
+//   name: "Gus",
+//   title: "Champion of Cheese",
+//   characteristics: ["storyborn", "ally"],
+//   type: "character",
+//   flavour: "You can always rely on him when it comes to cheese.",
+//   inkwell: true,
+//   colors: ["emerald"],
+//   cost: 2,
+//   strength: 2,
+//   willpower: 3,
+//   lore: 1,
+//   illustrator: "Maddie Shilt",
+//   number: 73,
+//   set: "URR",
+//   externalIds: {
+//     tcgPlayer: 549680,
+//   },
+//   rarity: "common",
+// };
+//

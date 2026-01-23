@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const gastonArrogantHunter: CharacterCard = {
   id: "enf",
@@ -22,10 +22,26 @@ export const gastonArrogantHunter: CharacterCard = {
   abilities: [
     {
       id: "enf-1",
-      text: "Reckless",
       type: "keyword",
       keyword: "Reckless",
+      text: "Reckless",
     },
   ],
   classifications: ["Storyborn", "Villain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { gastonArrogantHunter as gastonArrogantHunterAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/110-gaston-arrogant-hunter";
+//
+// export const gastonArrogantHunter: LorcanitoCharacterCard = {
+//   ...gastonArrogantHunterAsOrig,
+//   id: "k2n",
+//   reprints: [gastonArrogantHunterAsOrig.id],
+//   number: 115,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650051,
+//   },
+// };
+//

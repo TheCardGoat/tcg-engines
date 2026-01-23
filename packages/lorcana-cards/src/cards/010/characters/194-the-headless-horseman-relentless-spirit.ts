@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const theHeadlessHorsemanRelentlessSpirit: CharacterCard = {
   id: "i51",
@@ -29,3 +29,31 @@ export const theHeadlessHorsemanRelentlessSpirit: CharacterCard = {
   ],
   classifications: ["Storyborn", "Villain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const theHeadlessHorsemanRelentlessSpirit: LorcanitoCharacterCard = {
+//   id: "cbk",
+//   name: "The Headless Horseman",
+//   title: "Relentless Spirit",
+//   characteristics: ["storyborn", "villain"],
+//   text: "Bodyguard",
+//   type: "character",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 4,
+//   strength: 4,
+//   willpower: 4,
+//   illustrator: "Cristian Romero",
+//   number: 194,
+//   set: "010",
+//   externalIds: {
+//     tcgPlayer: 660017,
+//   },
+//   rarity: "common",
+//   abilities: [bodyguardAbility],
+//   lore: 1,
+// };
+//

@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const gastonBaritoneBully: CharacterCard = {
   id: "6hk",
@@ -22,11 +22,40 @@ export const gastonBaritoneBully: CharacterCard = {
   abilities: [
     {
       id: "6hk-1",
-      text: "Singer 5",
       type: "keyword",
       keyword: "Singer",
       value: 5,
+      text: "Singer 5",
     },
   ],
   classifications: ["Dreamborn", "Villain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { singerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const gastonBaritoneBully: LorcanitoCharacterCard = {
+//   id: "j47",
+//   name: "Gaston",
+//   title: "Baritone Bully",
+//   characteristics: ["dreamborn", "villain"],
+//   text: "**Singer** 5 _(This character counts as cost 5 to sing songs.)_",
+//   type: "character",
+//   abilities: [singerAbility(5)],
+//   flavour: "No one . . . sings like Gaston!",
+//   inkwell: true,
+//   colors: ["amber"],
+//   cost: 3,
+//   strength: 3,
+//   willpower: 3,
+//   lore: 1,
+//   illustrator: "Jochem Van Gool",
+//   number: 8,
+//   set: "ROF",
+//   externalIds: {
+//     tcgPlayer: 527713,
+//   },
+//   rarity: "uncommon",
+// };
+//

@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const tritonTheSeaKing: CharacterCard = {
   id: "1cv",
@@ -21,3 +21,30 @@ export const tritonTheSeaKing: CharacterCard = {
   },
   classifications: ["Storyborn", "King"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const tritonTheSeaKing: LorcanitoCharacterCard = {
+//   id: "boi",
+//
+//   name: "Triton",
+//   title: "The Sea King",
+//   characteristics: ["storyborn", "king"],
+//   type: "character",
+//   flavour: "Isn't ‘Because I said so’ enough of a reason?",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 7,
+//   strength: 5,
+//   willpower: 9,
+//   lore: 2,
+//   illustrator: "Cristian Romero",
+//   number: 160,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 506023,
+//   },
+//   rarity: "uncommon",
+// };
+//

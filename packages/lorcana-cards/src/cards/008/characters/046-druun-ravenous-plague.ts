@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const druunRavenousPlague: CharacterCard = {
   id: "c4i",
@@ -22,10 +22,10 @@ export const druunRavenousPlague: CharacterCard = {
   abilities: [
     {
       id: "c4i-1",
-      text: "Challenger +4",
       type: "keyword",
       keyword: "Challenger",
       value: 4,
+      text: "Challenger +4",
     },
   ],
   classifications: ["Storyborn", "Villain"],

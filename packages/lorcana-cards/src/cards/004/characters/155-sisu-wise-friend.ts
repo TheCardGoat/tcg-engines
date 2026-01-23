@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const sisuWiseFriend: CharacterCard = {
   id: "1x9",
@@ -21,3 +21,30 @@ export const sisuWiseFriend: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero", "Deity", "Dragon"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+//
+// export const sisuWiseFriend: LorcanitoCharacterCard = {
+//   id: "lgb",
+//   name: "Sisu",
+//   title: "Wise Friend",
+//   characteristics: ["hero", "storyborn", "dragon", "deity"],
+//   type: "character",
+//   flavour:
+//     "It may feel impossible, but sometimes, you just have to take the first step, even before you're ready.",
+//   inkwell: true,
+//   colors: ["sapphire"],
+//   cost: 6,
+//   strength: 6,
+//   willpower: 6,
+//   lore: 2,
+//   illustrator: "Roger Pérez / Hayley Evans",
+//   number: 155,
+//   set: "URR",
+//   externalIds: {
+//     tcgPlayer: 550527,
+//   },
+//   rarity: "uncommon",
+// };
+//

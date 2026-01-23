@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const princeNaveenPennilessRoyal: CharacterCard = {
   id: "121",
@@ -21,3 +21,19 @@ export const princeNaveenPennilessRoyal: CharacterCard = {
   },
   classifications: ["Storyborn", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { princeNaveenPennilessRoyal as princeNaveenPennilessRoyalAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/191-prince-naveen-penniless-royal";
+//
+// export const princeNaveenPennilessRoyal: LorcanitoCharacterCard = {
+//   ...princeNaveenPennilessRoyalAsOrig,
+//   id: "lx6",
+//   reprints: [princeNaveenPennilessRoyalAsOrig.id],
+//   number: 182,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650115,
+//   },
+// };
+//

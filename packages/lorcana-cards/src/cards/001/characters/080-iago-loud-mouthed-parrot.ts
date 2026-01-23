@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const iagoLoudmouthedParrot: CharacterCard = {
   id: "j24",
@@ -16,25 +16,11 @@ export const iagoLoudmouthedParrot: CharacterCard = {
   lore: 1,
   cardNumber: 80,
   inkable: true,
+  missingImplementation: true,
+  missingTests: true,
   externalIds: {
     ravensburger: "44b0d2526e203d60174ddce6f251da6c54c72691",
   },
-  abilities: [
-    {
-      id: "j24-1",
-      text: "YOU GOT A PROBLEM? {E} — Chosen character gains Reckless during their next turn.",
-      name: "YOU GOT A PROBLEM?",
-      type: "activated",
-      cost: {
-        exert: true,
-      },
-      effect: {
-        type: "gain-keyword",
-        keyword: "Reckless",
-        target: "CHOSEN_CHARACTER",
-        duration: "this-turn",
-      },
-    },
-  ],
+  abilities: [],
   classifications: ["Storyborn", "Ally"],
 };

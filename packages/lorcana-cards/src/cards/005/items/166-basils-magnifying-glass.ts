@@ -1,4 +1,4 @@
-import type { ItemCard } from "@tcg/lorcana";
+import type { ItemCard } from "@tcg/lorcana-types";
 
 export const basilsMagnifyingGlass: ItemCard = {
   id: "pnm",
@@ -22,20 +22,21 @@ export const basilsMagnifyingGlass: ItemCard = {
       type: "activated",
       cost: {
         exert: true,
-        ink: 0,
+        ink: 2,
       },
       effect: {
-        type: "look-at-cards",
-        amount: 0,
-        from: "top-of-deck",
-        target: "CONTROLLER",
-        then: {
-          action: "put-in-hand",
-          filter: {
-            type: "card-type",
-            cardType: "item",
+        type: "scry",
+        amount: 3,
+        destinations: [
+          {
+            zone: "hand",
+            min: 0,
+            max: 1,
+            filter: { type: "card-type", cardType: "item" },
+            reveal: true,
           },
-        },
+          { zone: "deck-bottom", remainder: true, ordering: "player-choice" },
+        ],
       },
     },
   ],

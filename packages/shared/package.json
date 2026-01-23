@@ -15,9 +15,12 @@
     "test": "echo 'No tests'"
   },
   "dependencies": {
-    "@lorcanito/typescript-config": "workspace:*",
     "pino": "9.7.0",
     "pino-pretty": "13.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.3.11",
+    "@lorcanito/typescript-config": "workspace:*"
   },
   "exports": {
     ".": "./src/index.ts",

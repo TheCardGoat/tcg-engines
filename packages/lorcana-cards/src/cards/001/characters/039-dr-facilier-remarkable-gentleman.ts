@@ -1,15 +1,15 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const drFacilierRemarkableGentleman: CharacterCard = {
-  id: "bmx",
+  id: "xhk",
   cardType: "character",
   name: "Dr. Facilier",
   version: "Remarkable Gentleman",
   fullName: "Dr. Facilier - Remarkable Gentleman",
   inkType: ["amethyst"],
-  franchise: "Princess and the Frog",
+  franchise: "Disney",
   set: "001",
-  text: "DREAMS MADE REAL Whenever you play a song, you may look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+  text: "**DREAMS MADE REAL** Whenever you play a song, you may look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
   cost: 3,
   strength: 2,
   willpower: 4,
@@ -17,14 +17,14 @@ export const drFacilierRemarkableGentleman: CharacterCard = {
   cardNumber: 39,
   inkable: true,
   externalIds: {
-    ravensburger: "29f0a5ba87ff15dad595a8947b198bb7319d02f8",
+    ravensburger: "",
   },
   abilities: [
     {
-      id: "bmx-1",
-      text: "DREAMS MADE REAL Whenever you play a song, you may look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
-      name: "DREAMS MADE REAL",
       type: "triggered",
+      name: "DREAMS MADE REAL",
+      text: "**DREAMS MADE REAL** Whenever you play a song, you may look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+      id: "xhk-1",
       trigger: {
         event: "play",
         timing: "whenever",
@@ -36,18 +36,16 @@ export const drFacilierRemarkableGentleman: CharacterCard = {
       effect: {
         type: "optional",
         effect: {
-          type: "look-at-cards",
+          type: "scry",
           amount: 2,
-          from: "top-of-deck",
-          target: "CONTROLLER",
-          then: {
-            action: "put-on-top",
-            count: 1,
-          },
+          destinations: [
+            { zone: "deck-top", min: 1, max: 1 },
+            { zone: "deck-bottom", remainder: true },
+          ],
         },
         chooser: "CONTROLLER",
       },
     },
   ],
-  classifications: ["Storyborn", "Villain", "Sorcerer"],
+  classifications: ["Sorcerer", "Storyborn", "Villain"],
 };

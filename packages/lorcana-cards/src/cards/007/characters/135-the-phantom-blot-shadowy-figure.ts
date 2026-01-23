@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const thePhantomBlotShadowyFigure: CharacterCard = {
   id: "1wy",
@@ -21,10 +21,38 @@ export const thePhantomBlotShadowyFigure: CharacterCard = {
   abilities: [
     {
       id: "1wy-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
+      text: "Rush",
     },
   ],
   classifications: ["Storyborn", "Villain"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import { rushAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+//
+// export const thePhantomBlotShadowyFigure: LorcanitoCharacterCard = {
+//   id: "f3g",
+//   name: "The Phantom Blot",
+//   title: "Shadowy Figure",
+//   characteristics: ["storyborn", "villain"],
+//   text: "Rush",
+//   type: "character",
+//   abilities: [rushAbility],
+//   inkwell: false,
+//   colors: ["ruby"],
+//   cost: 2,
+//   strength: 3,
+//   willpower: 1,
+//   illustrator: "Luca Pinelli",
+//   number: 135,
+//   set: "007",
+//   externalIds: {
+//     tcgPlayer: 619481,
+//   },
+//   rarity: "uncommon",
+//   lore: 1,
+// };
+//

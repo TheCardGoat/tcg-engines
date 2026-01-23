@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const treasureGuardianForebodingSentry: CharacterCard = {
   id: "9vb",
@@ -22,24 +22,75 @@ export const treasureGuardianForebodingSentry: CharacterCard = {
   abilities: [
     {
       id: "9vb-1",
-      text: "UNTOLD TREASURE When you play this character, if you have an Illusion character in play, you may draw a card.",
-      name: "UNTOLD TREASURE",
       type: "triggered",
+      name: "UNTOLD TREASURE",
       trigger: {
         event: "play",
         timing: "when",
         on: "SELF",
       },
       effect: {
-        type: "optional",
-        effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have an Illusion character in play",
+        },
+        then: {
           type: "draw",
           amount: 1,
           target: "CONTROLLER",
         },
-        chooser: "CONTROLLER",
       },
+      text: "UNTOLD TREASURE When you play this character, if you have an Illusion character in play, you may draw a card.",
     },
   ],
   classifications: ["Storyborn"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const treasureGuardianForebodingSentry: LorcanitoCharacterCard = {
+//   id: "ptw",
+//   name: "Treasure Guardian",
+//   title: "Foreboding Sentry",
+//   characteristics: ["storyborn"],
+//   text: "UNTOLD TREASURE When you play this character, if you have an Illusion character in play, you may draw a card.",
+//   type: "character",
+//   abilities: [
+//     {
+//       name: "UNTOLD TREASURE",
+//       text: "When you play this character, if you have an Illusion character in play, you may draw a card.",
+//       optional: true,
+//       type: "resolution",
+//       resolutionConditions: [
+//         {
+//           type: "filter",
+//           comparison: { operator: "gte", value: 1 },
+//           filters: [
+//             { filter: "owner", value: "self" },
+//             { filter: "type", value: "character" },
+//             { filter: "zone", value: "play" },
+//             { filter: "characteristics", value: ["illusion"] },
+//           ],
+//         },
+//       ],
+//       effects: [drawACard],
+//     },
+//   ],
+//   inkwell: true,
+//   colors: ["amethyst"],
+//   cost: 4,
+//   strength: 3,
+//   willpower: 3,
+//   illustrator: "Alexandra Neonakis",
+//   number: 47,
+//   set: "007",
+//   externalIds: {
+//     tcgPlayer: 619431,
+//   },
+//   rarity: "common",
+//   lore: 2,
+// };
+//

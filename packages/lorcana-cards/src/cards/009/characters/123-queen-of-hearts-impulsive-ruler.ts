@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const queenOfHeartsImpulsiveRuler: CharacterCard = {
   id: "106",
@@ -22,10 +22,26 @@ export const queenOfHeartsImpulsiveRuler: CharacterCard = {
   abilities: [
     {
       id: "106-1",
-      text: "Rush",
       type: "keyword",
       keyword: "Rush",
+      text: "Rush",
     },
   ],
   classifications: ["Storyborn", "Villain", "Queen"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { queenOfHeartsImpulsiveRuler as queenOfHeartsImpulsiveRulerAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/119-queen-of-hearts-impulsive-ruler";
+//
+// export const queenOfHeartsImpulsiveRuler: LorcanitoCharacterCard = {
+//   ...queenOfHeartsImpulsiveRulerAsOrig,
+//   id: "tge",
+//   reprints: [queenOfHeartsImpulsiveRulerAsOrig.id],
+//   number: 123,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650058,
+//   },
+// };
+//

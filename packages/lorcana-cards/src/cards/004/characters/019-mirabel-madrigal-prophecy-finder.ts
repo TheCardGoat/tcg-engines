@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const mirabelMadrigalProphecyFinder: CharacterCard = {
   id: "1lv",
@@ -22,9 +22,9 @@ export const mirabelMadrigalProphecyFinder: CharacterCard = {
   abilities: [
     {
       id: "1lv-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
   ],
   classifications: ["Storyborn", "Hero", "Madrigal"],

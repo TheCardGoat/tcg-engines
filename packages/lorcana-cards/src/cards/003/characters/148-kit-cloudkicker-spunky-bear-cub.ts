@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const kitCloudkickerSpunkyBearCub: CharacterCard = {
   id: "hkt",
@@ -22,9 +22,9 @@ export const kitCloudkickerSpunkyBearCub: CharacterCard = {
   abilities: [
     {
       id: "hkt-1",
-      text: "Ward",
       type: "keyword",
       keyword: "Ward",
+      text: "Ward",
     },
   ],
   classifications: ["Storyborn", "Ally"],

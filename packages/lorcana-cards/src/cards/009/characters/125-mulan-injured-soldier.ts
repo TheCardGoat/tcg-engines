@@ -1,0 +1,42 @@
+import type { CharacterCard } from "@tcg/lorcana-types";
+
+export const mulanInjuredSoldier: CharacterCard = {
+  id: "1g0",
+  cardType: "character",
+  name: "Mulan",
+  version: "Injured Soldier",
+  fullName: "Mulan - Injured Soldier",
+  inkType: ["ruby"],
+  franchise: "Mulan",
+  set: "009",
+  text: "BATTLE WOUND This character enters play with 2 damage.",
+  cost: 1,
+  strength: 2,
+  willpower: 3,
+  lore: 1,
+  cardNumber: 125,
+  inkable: true,
+  missingImplementation: true,
+  missingTests: true,
+  externalIds: {
+    ravensburger: "bb7a79d70c819d07b5aa5eeea67d67b342b43405",
+  },
+  abilities: [],
+  classifications: ["Storyborn", "Hero", "Princess"],
+};
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { mulanInjuredSoldier as mulanInjuredSoldierAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/116-mulan-injured-soldier";
+//
+// export const mulanInjuredSoldier: LorcanitoCharacterCard = {
+//   ...mulanInjuredSoldierAsOrig,
+//   id: "jmn",
+//   reprints: [mulanInjuredSoldierAsOrig.id],
+//   number: 125,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650060,
+//   },
+// };
+//

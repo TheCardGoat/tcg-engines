@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const viranaFangChief: CharacterCard = {
   id: "1xq",
@@ -21,3 +21,19 @@ export const viranaFangChief: CharacterCard = {
   },
   classifications: ["Storyborn", "Villain", "Queen"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { viranaFangChief as ogViranaFangChief } from "@lorcanito/lorcana-engine/cards/002/characters/095-virana-fang-chief";
+//
+// export const viranaFangChief: LorcanitoCharacterCard = {
+//   ...ogViranaFangChief,
+//   id: "q5j",
+//   reprints: ["ryo"],
+//   number: 82,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650022,
+//   },
+// };
+//

@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const deweyShowyNephew: CharacterCard = {
   id: "32f",
@@ -22,10 +22,26 @@ export const deweyShowyNephew: CharacterCard = {
   abilities: [
     {
       id: "32f-1",
-      text: "Support",
       type: "keyword",
       keyword: "Support",
+      text: "Support",
     },
   ],
   classifications: ["Dreamborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { deweyShowyNephew as deweyShowyNephewAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const deweyShowyNephew: LorcanitoCharacterCard = {
+//   ...deweyShowyNephewAsOrig,
+//   id: "kyd",
+//   reprints: [deweyShowyNephewAsOrig.id],
+//   number: 139,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650074,
+//   },
+// };
+//

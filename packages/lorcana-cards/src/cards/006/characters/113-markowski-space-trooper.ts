@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const markowskiSpaceTrooper: CharacterCard = {
   id: "1t3",
@@ -22,10 +22,39 @@ export const markowskiSpaceTrooper: CharacterCard = {
   abilities: [
     {
       id: "1t3-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// // TODO: Once the set is released, we organize the cards by set and type
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
+//
+// export const markowskiSpaceTrooper: LorcanitoCharacterCard = {
+//   id: "okv",
+//   name: "Markowski",
+//   title: "Space Trooper",
+//   characteristics: ["storyborn", "ally"],
+//   text: "Evasive (Only characters with Evasive can challenge this character.)",
+//   type: "character",
+//   abilities: [evasiveAbility],
+//   inkwell: true,
+//   colors: ["ruby"],
+//   cost: 4,
+//   strength: 3,
+//   willpower: 2,
+//   lore: 2,
+//   illustrator: "Kevin Sidharta",
+//   number: 113,
+//   set: "006",
+//   externalIds: {
+//     tcgPlayer: 592019,
+//   },
+//   rarity: "common",
+// };
+//

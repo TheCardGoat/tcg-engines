@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const elsaGlovesOff: CharacterCard = {
   id: "77o",
@@ -22,11 +22,27 @@ export const elsaGlovesOff: CharacterCard = {
   abilities: [
     {
       id: "77o-1",
-      text: "Challenger +3",
       type: "keyword",
       keyword: "Challenger",
       value: 3,
+      text: "Challenger +3",
     },
   ],
   classifications: ["Storyborn", "Hero", "Queen", "Sorcerer"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { elsaGlovesOff as ogElsaGlovesOff } from "@lorcanito/lorcana-engine/cards/002/characters/039-elsa-gloves-off";
+//
+// export const elsaGlovesOff: LorcanitoCharacterCard = {
+//   ...ogElsaGlovesOff,
+//   id: "b83", // New ID for this card
+//   reprints: [ogElsaGlovesOff.id],
+//   number: 48,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 649992,
+//   },
+// };
+//

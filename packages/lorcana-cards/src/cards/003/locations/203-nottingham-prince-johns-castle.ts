@@ -1,4 +1,4 @@
-import type { LocationCard } from "@tcg/lorcana";
+import type { LocationCard } from "@tcg/lorcana-types";
 
 export const nottinghamPrinceJohnsCastle: LocationCard = {
   id: "kic",
@@ -19,3 +19,30 @@ export const nottinghamPrinceJohnsCastle: LocationCard = {
     ravensburger: "49eaf235e4c4e6023ea58dbe1ef6315db3948ef4",
   },
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
+//
+// export const nottinghamPrinceJohnsCastle: LorcanitoLocationCard = {
+//   id: "jc5",
+//   type: "location",
+//   name: "Nottingham",
+//   title: "Prince John's Castle",
+//   characteristics: ["location"],
+//   flavour:
+//     "Sir Hiss: I say, ssssire, your mother's castle would be the perfect place to bring our plan to life! \nPrince John: Mummy!",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 2,
+//   willpower: 6,
+//   lore: 1,
+//   moveCost: 1,
+//   illustrator: "Bryn Jones",
+//   number: 203,
+//   set: "ITI",
+//   externalIds: {
+//     tcgPlayer: 539118,
+//   },
+//   rarity: "common",
+// };
+//

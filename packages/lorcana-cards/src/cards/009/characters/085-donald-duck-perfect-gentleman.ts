@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const donaldDuckPerfectGentleman: CharacterCard = {
   id: "wjj",
@@ -21,29 +21,39 @@ export const donaldDuckPerfectGentleman: CharacterCard = {
   abilities: [
     {
       id: "wjj-1",
-      text: "Shift 3 {I}",
       type: "keyword",
       keyword: "Shift",
       cost: {
         ink: 3,
       },
+      text: "Shift 3 {I}",
     },
     {
       id: "wjj-2",
-      text: "ALLOW ME At the start of your turn, each player may draw a card.",
-      name: "ALLOW ME",
-      type: "triggered",
-      trigger: {
-        event: "start-turn",
-        timing: "at",
-        on: "YOU",
-      },
+      type: "action",
       effect: {
         type: "draw",
         amount: 1,
         target: "EACH_PLAYER",
       },
+      text: "ALLOW ME At the start of your turn, each player may draw a card.",
     },
   ],
   classifications: ["Floodborn", "Ally"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { donaldDuckPerfectGentleman as donaldDuckPerfectGentlemanAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/077-donald-duck-perfect-gentleman";
+//
+// export const donaldDuckPerfectGentleman: LorcanitoCharacterCard = {
+//   ...donaldDuckPerfectGentlemanAsOrig,
+//   id: "g8a",
+//   reprints: [donaldDuckPerfectGentlemanAsOrig.id],
+//   number: 85,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650025,
+//   },
+// };
+//

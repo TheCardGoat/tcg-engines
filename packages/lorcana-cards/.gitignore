@@ -11,3 +11,6 @@ data/inputs/ravensburger-input.json
 
 # Verbose generation logs
 src/data/generation-verbose.log
+
+# Legacy cards from the old engine, it's kept here for reference only
+src/legacy-cards/

@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const donKarnagePrinceOfPirates: CharacterCard = {
   id: "a8q",
@@ -22,9 +22,9 @@ export const donKarnagePrinceOfPirates: CharacterCard = {
   abilities: [
     {
       id: "a8q-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Dreamborn", "Villain", "Prince", "Pirate"],

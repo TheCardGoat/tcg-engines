@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const tinkerBellFastFlier: CharacterCard = {
   id: "1k9",
@@ -22,9 +22,9 @@ export const tinkerBellFastFlier: CharacterCard = {
   abilities: [
     {
       id: "1k9-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Ally", "Fairy"],

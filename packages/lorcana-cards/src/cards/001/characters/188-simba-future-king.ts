@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const simbaFutureKing: CharacterCard = {
   id: "q21",
@@ -43,3 +43,40 @@ export const simbaFutureKing: CharacterCard = {
   ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import { whenYouPlayThisCharAbility } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
+// import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
+//
+// export const simbaFutureKing: LorcanitoCharacterCard = {
+//   id: "umu",
+//   name: "Simba",
+//   title: "Future King",
+//   characteristics: ["hero", "storyborn", "prince"],
+//   text: "**GUESS WHAT?** When you play this character, you may draw a card, then choose and discard a card.",
+//   type: "character",
+//   abilities: [
+//     whenYouPlayThisCharAbility({
+//       ...youMayDrawThenChooseAndDiscard,
+//       name: "Guess What?",
+//       text: "When you play this character, you may draw a card, then choose and discard a card.",
+//       type: "resolution",
+//     }),
+//   ],
+//   flavour: "I'm gonna be the best king the Pride Lands have ever seen!",
+//   inkwell: true,
+//   colors: ["steel"],
+//   cost: 1,
+//   strength: 1,
+//   willpower: 2,
+//   lore: 1,
+//   illustrator: "Nicholas Kole",
+//   number: 188,
+//   set: "TFC",
+//   externalIds: {
+//     tcgPlayer: 502536,
+//   },
+//   rarity: "common",
+// };
+//

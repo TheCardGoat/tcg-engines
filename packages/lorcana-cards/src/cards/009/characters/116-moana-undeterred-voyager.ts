@@ -1,4 +1,4 @@
-import type { CharacterCard } from "@tcg/lorcana";
+import type { CharacterCard } from "@tcg/lorcana-types";
 
 export const moanaUndeterredVoyager: CharacterCard = {
   id: "d5c",
@@ -22,10 +22,26 @@ export const moanaUndeterredVoyager: CharacterCard = {
   abilities: [
     {
       id: "d5c-1",
-      text: "Evasive",
       type: "keyword",
       keyword: "Evasive",
+      text: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
+
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
+// import { moanaUndeterredVoyager as ogMoanaUndeterredVoyager } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
+//
+// export const moanaUndeterredVoyager: LorcanitoCharacterCard = {
+//   ...ogMoanaUndeterredVoyager,
+//   id: "n3t",
+//   reprints: [ogMoanaUndeterredVoyager.id],
+//   number: 116,
+//   set: "009",
+//   externalIds: {
+//     tcgPlayer: 650052,
+//   },
+// };
+//
