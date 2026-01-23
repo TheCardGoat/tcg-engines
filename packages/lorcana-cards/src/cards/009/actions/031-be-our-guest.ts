@@ -22,18 +22,18 @@ export const beOurGuest: ActionCard = {
       name: "Be Our Guest",
       type: "action",
       effect: {
-        type: "scry",
+        type: "look-at-cards",
         amount: 4,
-        destinations: [
-          {
-            zone: "hand",
-            min: 0,
-            max: 1,
-            filter: { type: "card-type", cardType: "character" },
-            reveal: true,
+        from: "top-of-deck",
+        target: "CONTROLLER",
+        then: {
+          action: "put-in-hand",
+          filter: {
+            type: "card-type",
+            cardType: "character",
           },
-          { zone: "deck-bottom", remainder: true, ordering: "player-choice" },
-        ],
+          reveal: true,
+        },
       },
     },
   ],

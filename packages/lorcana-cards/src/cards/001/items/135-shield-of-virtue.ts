@@ -1,4 +1,5 @@
 import type { ItemCard } from "@tcg/lorcana-types";
+import { ready } from "../../ability-helpers";
 
 export const shieldOfVirtue: ItemCard = {
   id: "f35",
@@ -24,10 +25,7 @@ export const shieldOfVirtue: ItemCard = {
         exert: true,
         ink: 3,
       },
-      effect: {
-        type: "ready",
-        target: "CHOSEN_CHARACTER",
-      },
+      effect: ready("CHOSEN_CHARACTER", "cant-quest"),
     },
   ],
 };

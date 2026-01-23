@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { bodyguard } from "../../ability-helpers";
 
 export const herculesTrueHero: CharacterCard = {
   id: "uyj",
@@ -19,18 +20,7 @@ export const herculesTrueHero: CharacterCard = {
   externalIds: {
     ravensburger: "",
   },
-  abilities: [
-    {
-      type: "static",
-      text: "**Bodyguard** _(This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)_",
-      id: "uyj-1",
-      effect: {
-        type: "restriction",
-        restriction: "enters-play-exerted",
-        target: "SELF",
-      },
-    },
-  ],
+  abilities: [bodyguard("uyj-1")],
   classifications: ["Hero", "Dreamborn", "Prince"],
 };
 

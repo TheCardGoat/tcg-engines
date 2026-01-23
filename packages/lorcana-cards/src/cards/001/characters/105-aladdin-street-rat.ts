@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { whenPlay } from "../../ability-helpers";
 
 export const aladdinStreetRat: CharacterCard = {
   id: "ec0",
@@ -20,22 +21,17 @@ export const aladdinStreetRat: CharacterCard = {
     ravensburger: "33a8b4eedbcab6c827f3eb65178e48bf29d42142",
   },
   abilities: [
-    {
-      id: "ec0-1",
-      text: "IMPROVISE When you play this character, each opponent loses 1 lore.",
+    whenPlay("ec0-1", {
       name: "IMPROVISE",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      effect: {
+      text: "IMPROVISE When you play this character, each opponent loses 1 lore.",
+      playedBy: "you",
+      playedCard: "SELF",
+      then: {
         type: "lose-lore",
         amount: 1,
         target: "EACH_OPPONENT",
       },
-    },
+    }),
   ],
   classifications: ["Storyborn", "Hero"],
 };

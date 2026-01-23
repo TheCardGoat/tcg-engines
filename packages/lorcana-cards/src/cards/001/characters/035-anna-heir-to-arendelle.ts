@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { hasCharacterNamed, restrict, whenPlay } from "../../ability-helpers";
 
 export const annaHeirToArendelle: CharacterCard = {
   id: "ibd",
@@ -20,34 +21,24 @@ export const annaHeirToArendelle: CharacterCard = {
     ravensburger: "",
   },
   abilities: [
-    {
-      id: "ibd-1",
-      type: "triggered",
+    whenPlay("ibd-1", {
       name: "LOVING HEART",
       text: "When you play this character, if you have a character named Elsa in play, choose an opposing character. The chosen character doesn't ready at the start of their next turn.",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      condition: {
-        type: "has-named-character",
-        name: "Elsa",
-        controller: "you",
-      },
-      effect: {
-        type: "restriction",
-        restriction: "cant-ready",
-        duration: "until-start-of-next-turn",
-        target: {
+      playedBy: "you",
+      playedCard: "SELF",
+      if: hasCharacterNamed("Elsa", "you"),
+      then: restrict(
+        "cant-ready",
+        {
           selector: "chosen",
           count: 1,
           owner: "opponent",
           zones: ["play"],
           cardTypes: ["character"],
         },
-      },
-    },
+        "until-start-of-next-turn",
+      ),
+    }),
   ],
   classifications: ["Hero", "Queen", "Storyborn"],
 };

@@ -21,30 +21,3 @@ export const caterpillarCalmAndCollected: CharacterCard = {
   },
   classifications: ["Dreamborn"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const caterpillarCalmAndCollected: LorcanitoCharacterCard = {
-//   id: "uaw",
-//
-//   name: "Caterpillar",
-//   title: "Calm and Collected",
-//   characteristics: ["dreamborn"],
-//   type: "character",
-//   flavour: "Keep your tempo.",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 3,
-//   lore: 3,
-//   illustrator: "Cory Godbey",
-//   number: 141,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527762,
-//   },
-//   rarity: "uncommon",
-// };
-//

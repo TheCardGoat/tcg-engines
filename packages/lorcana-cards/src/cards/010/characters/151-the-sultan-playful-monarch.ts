@@ -21,30 +21,3 @@ export const theSultanPlayfulMonarch: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally", "King"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const theSultanPlayfulMonarch: LorcanitoCharacterCard = {
-//   id: "pc7",
-//   name: "The Sultan",
-//   title: "Playful Monarch",
-//   characteristics: ["storyborn", "ally", "king"],
-//   text: "",
-//   type: "character",
-//   inkwell: false,
-//   colors: ["sapphire"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 1,
-//   illustrator: 'Victor "Yano" Covarrubias',
-//   number: 151,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659416,
-//   },
-//   rarity: "rare",
-//   abilities: [],
-//   lore: 2,
-// };
-//

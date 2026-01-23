@@ -1,4 +1,5 @@
 import type { ItemCard } from "@tcg/lorcana-types";
+import { draw, optional, whenBanished } from "../../ability-helpers";
 
 export const musketeerTabard: ItemCard = {
   id: "8a5",
@@ -14,26 +15,13 @@ export const musketeerTabard: ItemCard = {
     ravensburger: "1dd9513f5330b41950fea67f21d19e751b9551a2",
   },
   abilities: [
-    {
-      id: "8a5-1",
-      text: "ALL FOR ONE AND ONE FOR ALL Whenever one of your characters with Bodyguard is banished, you may draw a card.",
+    whenBanished("8a5-1", {
       name: "ALL FOR ONE AND ONE FOR ALL",
-      type: "triggered",
-      trigger: {
-        event: "banish",
-        timing: "whenever",
-        on: "YOUR_OTHER_CHARACTERS",
-      },
-      effect: {
-        type: "optional",
-        effect: {
-          type: "draw",
-          amount: 1,
-          target: "CONTROLLER",
-        },
-        chooser: "CONTROLLER",
-      },
-    },
+      text: "ALL FOR ONE AND ONE FOR ALL Whenever one of your characters with Bodyguard is banished, you may draw a card.",
+      timing: "whenever",
+      on: "YOUR_OTHER_CHARACTERS",
+      then: optional(draw(1)),
+    }),
   ],
 };
 

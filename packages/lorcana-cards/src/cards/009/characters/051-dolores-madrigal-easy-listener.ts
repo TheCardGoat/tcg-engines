@@ -46,19 +46,3 @@ export const doloresMadrigalEasyListener: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally", "Madrigal"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { doloresMadrigalEasyListener as ogDoloresMadrigalEasyListener } from "@lorcanito/lorcana-engine/cards/004/characters/041-dolores-madrigal-easy-listener";
-//
-// export const doloresMadrigalEasyListener: LorcanitoCharacterCard = {
-//   ...ogDoloresMadrigalEasyListener,
-//   id: "yvi",
-//   reprints: [ogDoloresMadrigalEasyListener.id],
-//   number: 51,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649995,
-//   },
-// };
-//

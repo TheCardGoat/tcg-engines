@@ -24,19 +24,3 @@ export const ursulaSeaWitch: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { ursulaSeaWitch as ogUrsulaSeaWitch } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const ursulaSeaWitch: LorcanitoCharacterCard = {
-//   ...ogUrsulaSeaWitch,
-//   id: "i2h",
-//   reprints: [ogUrsulaSeaWitch.id],
-//   number: 37,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649984,
-//   },
-// };
-//

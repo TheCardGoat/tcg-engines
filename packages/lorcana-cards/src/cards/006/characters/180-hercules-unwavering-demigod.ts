@@ -25,37 +25,9 @@ export const herculesUnwaveringDemigod: CharacterCard = {
       type: "keyword",
       keyword: "Challenger",
       value: 2,
+      condition: ".",
       text: "Challenger +2.",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Prince"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const herculesUnwaveringDemigod: LorcanitoCharacterCard = {
-//   id: "f61",
-//   name: "Hercules",
-//   title: "Unwavering Demigod",
-//   characteristics: ["dreamborn", "hero", "prince"],
-//   text: "Challenger +2 (While challenging, this character gets +2 {S}.)",
-//   type: "character",
-//   abilities: [challengerAbility(2)],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 4,
-//   strength: 2,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Stefano Zanchi",
-//   number: 180,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 593011,
-//   },
-//   rarity: "common",
-// };
-//

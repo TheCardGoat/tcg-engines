@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { challenger } from "../../ability-helpers";
 
 export const simbaReturnedKing: CharacterCard = {
   id: "nj8",
@@ -20,13 +21,7 @@ export const simbaReturnedKing: CharacterCard = {
     ravensburger: "54d1da804f89e6da94d1e9a335acf6a5baa79ff5",
   },
   abilities: [
-    {
-      id: "nj8-1",
-      text: "Challenger +4",
-      type: "keyword",
-      keyword: "Challenger",
-      value: 4,
-    },
+    challenger("nj8-1", 4),
     {
       id: "nj8-2",
       text: "POUNCE During your turn, this character gains Evasive.",

@@ -21,19 +21,3 @@ export const tianaDiligentWaitress: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { tianaDiligentWaitress as tianaDiligentWaitressAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/197-tiana-diligent-waitress";
-//
-// export const tianaDiligentWaitress: LorcanitoCharacterCard = {
-//   ...tianaDiligentWaitressAsOrig,
-//   id: "ljv",
-//   reprints: [tianaDiligentWaitressAsOrig.id],
-//   number: 179,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650112,
-//   },
-// };
-//

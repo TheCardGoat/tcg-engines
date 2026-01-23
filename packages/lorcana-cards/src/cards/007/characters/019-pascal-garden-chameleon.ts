@@ -29,32 +29,3 @@ export const pascalGardenChameleon: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const pascalGardenChameleon: LorcanitoCharacterCard = {
-//   id: "a5o",
-//   name: "Pascal",
-//   title: "Garden Chameleon",
-//   characteristics: ["storyborn", "ally"],
-//   text: "Evasive",
-//   type: "character",
-//   abilities: [evasiveAbility],
-//   inkwell: false,
-//
-//   colors: ["amber", "amethyst"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Aubrey Archer",
-//   number: 19,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618129,
-//   },
-//   rarity: "uncommon",
-//   lore: 3,
-// };
-//

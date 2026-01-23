@@ -21,29 +21,3 @@ export const sirEctorCastleLord: CharacterCard = {
   },
   classifications: ["Storyborn", "Knight"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const sirEctorCastleLord: LorcanitoCharacterCard = {
-//   id: "q1j",
-//   name: "Sir Ector",
-//   title: "Castle Lord",
-//   characteristics: ["storyborn", "knight"],
-//   type: "character",
-//   flavour:
-//     "Well, by Jove. Don't just stand there. Raise a glass to my son Kay... and may we be rid of the trickster wizard Marvin, or whatever his blasted name was.",
-//   colors: ["steel"],
-//   cost: 7,
-//   strength: 7,
-//   willpower: 10,
-//   lore: 3,
-//   illustrator: "Brian Weisz",
-//   number: 188,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 561973,
-//   },
-//   rarity: "rare",
-// };
-//

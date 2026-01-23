@@ -22,19 +22,3 @@ export const hiddenCoveTranquilHaven: LocationCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { hiddenCoveTranquilHaven as ogHiddenCoveTranquilHaven } from "@lorcanito/lorcana-engine/cards/004/locations/101-hidden-cove-tranquil-haven";
-//
-// export const hiddenCoveTranquilHaven: LorcanitoLocationCard = {
-//   ...ogHiddenCoveTranquilHaven,
-//   id: "sxr",
-//   reprints: [ogHiddenCoveTranquilHaven.id],
-//   number: 102,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650040,
-//   },
-// };
-//

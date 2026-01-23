@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { restrict, staticAbility } from "../../ability-helpers";
 
 export const arielOnHumanLegs: CharacterCard = {
   id: "2c9",
@@ -20,17 +21,11 @@ export const arielOnHumanLegs: CharacterCard = {
     ravensburger: "086f72176bc2fbb2a19898745a8218e1fe826c00",
   },
   abilities: [
-    {
-      id: "2c9-1",
-      text: "VOICELESS This character can't {E} to sing songs.",
+    staticAbility("2c9-1", {
       name: "VOICELESS",
-      type: "static",
-      effect: {
-        type: "restriction",
-        restriction: "cant-sing",
-        target: "SELF",
-      },
-    },
+      text: "VOICELESS This character can't {E} to sing songs.",
+      effect: restrict("cant-sing", "SELF"),
+    }),
   ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };

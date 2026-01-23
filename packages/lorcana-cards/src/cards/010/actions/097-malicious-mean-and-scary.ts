@@ -19,33 +19,3 @@ export const maliciousMeanAndScary: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { eachOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { putDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const maliciousMeanAndScary: LorcanitoActionCard = {
-//   id: "dat",
-//   name: "Malicious, Mean, and Scary",
-//   characteristics: ["action", "song"],
-//   text: "Put 1 damage counter on each opposing character.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       effects: [putDamageEffect(1, eachOpposingCharacter)],
-//     },
-//   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   illustrator: "Marcelo Vignali",
-//   number: 97,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659188,
-//   },
-//   rarity: "uncommon",
-// };
-//

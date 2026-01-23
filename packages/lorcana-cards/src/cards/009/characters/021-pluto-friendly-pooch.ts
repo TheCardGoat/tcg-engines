@@ -23,19 +23,3 @@ export const plutoFriendlyPooch: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { plutoFriendlyPooch as ogPlutoFriendlyPooch } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const plutoFriendlyPooch: LorcanitoCharacterCard = {
-//   ...ogPlutoFriendlyPooch,
-//   id: "gm9",
-//   reprints: [ogPlutoFriendlyPooch.id],
-//   number: 21,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649969,
-//   },
-// };
-//

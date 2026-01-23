@@ -37,8 +37,7 @@ export const demonaScourgeOfTheWyvernClan: CharacterCard = {
             type: "exert",
             target: {
               selector: "all",
-              owner: "opponent",
-              count: "all",
+              controller: "opponent",
             },
           },
           {
@@ -69,48 +68,3 @@ export const demonaScourgeOfTheWyvernClan: CharacterCard = {
   ],
   classifications: ["Storyborn", "Villain", "Gargoyle", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { opponent, self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { stoneByDayAbility } from "@lorcanito/lorcana-engine/cards/010/abilities/stoneByDay";
-// import {
-//   drawCardsUntilYouHaveXCardsInHand,
-//   exertAllOpposingCharacters,
-// } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const demonaScourgeOfTheWyvernClan: LorcanitoCharacterCard = {
-//   id: "max",
-//   name: "Demona",
-//   title: "Scourge of the Wyvern Clan",
-//   characteristics: ["storyborn", "villain", "gargoyle", "sorcerer"],
-//   text: "AD SAXUM COMMUTATE When you play this character, exert all opposing characters. Then, each player with fewer than 3 cards in their hand draws until they have 3. STONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 6,
-//   strength: 5,
-//   willpower: 6,
-//   illustrator: "Leonardo Giammichele",
-//   number: 55,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 657887,
-//   },
-//   rarity: "legendary",
-//   lore: 2,
-//   abilities: [
-//     stoneByDayAbility,
-//     whenYouPlayThisCharacter({
-//       name: "AD SAXUM COMMUTATE",
-//       text: "When you play this character, exert all opposing characters. Then, each player with fewer than 3 cards in their hand draws until they have 3.",
-//       effects: [
-//         exertAllOpposingCharacters,
-//         drawCardsUntilYouHaveXCardsInHand(3, self),
-//         drawCardsUntilYouHaveXCardsInHand(3, opponent),
-//       ],
-//     }),
-//   ],
-// };
-//

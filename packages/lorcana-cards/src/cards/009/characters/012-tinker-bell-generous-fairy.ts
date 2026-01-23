@@ -24,19 +24,3 @@ export const tinkerBellGenerousFairy: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Ally", "Fairy"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { tinkerBellGenerousFairy as ogTinkerBellGenerousFairy } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const tinkerBellGenerousFairy: LorcanitoCharacterCard = {
-//   ...ogTinkerBellGenerousFairy,
-//   id: "grh",
-//   reprints: [ogTinkerBellGenerousFairy.id],
-//   number: 12,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649961,
-//   },
-// };
-//

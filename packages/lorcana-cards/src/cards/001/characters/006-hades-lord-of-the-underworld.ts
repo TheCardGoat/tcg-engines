@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { moveCards, whenPlay } from "../../ability-helpers";
 
 export const hadesLordOfTheUnderworld: CharacterCard = {
   id: "1yp",
@@ -20,22 +21,17 @@ export const hadesLordOfTheUnderworld: CharacterCard = {
     ravensburger: "fee01a363b4de2d6f92c340520d2adaea461f380",
   },
   abilities: [
-    {
-      id: "1yp-1",
-      text: "WELL OF SOULS When you play this character, return a character card from your discard to your hand.",
+    whenPlay("1yp-1", {
       name: "WELL OF SOULS",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      effect: {
-        type: "return-from-discard",
+      text: "WELL OF SOULS When you play this character, return a character card from your discard to your hand.",
+      playedBy: "you",
+      playedCard: "SELF",
+      then: moveCards("discard", "hand", {
         cardType: "character",
+        amount: 1,
         target: "CONTROLLER",
-      },
-    },
+      }),
+    }),
   ],
   classifications: ["Storyborn", "Villain", "Deity"],
 };

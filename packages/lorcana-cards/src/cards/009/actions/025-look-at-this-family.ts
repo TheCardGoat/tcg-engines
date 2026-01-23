@@ -19,19 +19,3 @@ export const lookAtThisFamily: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { lookAtThisFamily as ogLookAtThisFamily } from "@lorcanito/lorcana-engine/cards/004/actions/028-look-at-this-family";
-//
-// export const lookAtThisFamily: LorcanitoActionCard = {
-//   ...ogLookAtThisFamily,
-//   id: "h6u",
-//   reprints: [ogLookAtThisFamily.id],
-//   number: 25,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649973,
-//   },
-// };
-//

@@ -24,19 +24,3 @@ export const mulanEliteArcher: CharacterCard = {
   abilities: [],
   classifications: ["Floodborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { mulanEliteArcher as ogMulanEliteArcher } from "@lorcanito/lorcana-engine/cards/004/characters/224-mulan-elite-archer";
-//
-// export const mulanEliteArcher: LorcanitoCharacterCard = {
-//   ...ogMulanEliteArcher,
-//   id: "t4r",
-//   reprints: [ogMulanEliteArcher.id],
-//   number: 126,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650061,
-//   },
-// };
-//

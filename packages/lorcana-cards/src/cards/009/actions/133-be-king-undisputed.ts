@@ -19,19 +19,3 @@ export const beKingUndisputed: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { beKingUndisputed as ogBeKingUndisputed } from "@lorcanito/lorcana-engine/cards/004/actions/129-be-king-undisputed";
-//
-// export const beKingUndisputed: LorcanitoActionCard = {
-//   ...ogBeKingUndisputed,
-//   id: "vg8",
-//   reprints: [ogBeKingUndisputed.id],
-//   number: 133,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650068,
-//   },
-// };
-//

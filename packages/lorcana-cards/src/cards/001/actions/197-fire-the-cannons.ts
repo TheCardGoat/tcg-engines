@@ -1,4 +1,5 @@
 import type { ActionCard } from "@tcg/lorcana-types";
+import { dealDamage } from "../../ability-helpers";
 
 export const fireTheCannonsundefined: ActionCard = {
   id: "lhl",
@@ -21,17 +22,13 @@ export const fireTheCannonsundefined: ActionCard = {
       type: "action",
       id: "lhl-1",
       text: "Deal 2 damage to chosen character.",
-      effect: {
-        type: "deal-damage",
-        amount: 2,
-        target: {
-          selector: "chosen",
-          count: 1,
-          owner: "any",
-          zones: ["play"],
-          cardTypes: ["character"],
-        },
-      },
+      effect: dealDamage(2, {
+        selector: "chosen",
+        count: 1,
+        owner: "any",
+        zones: ["play"],
+        cardTypes: ["character"],
+      }),
     },
   ],
 };

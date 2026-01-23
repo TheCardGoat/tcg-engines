@@ -1,4 +1,5 @@
 import type { ActionCard } from "@tcg/lorcana-types";
+import { dealDamage } from "../../ability-helpers";
 
 export const stampede: ActionCard = {
   id: "1fs",
@@ -19,11 +20,7 @@ export const stampede: ActionCard = {
       id: "1fs-1",
       text: "Deal 2 damage to chosen damaged character.",
       type: "action",
-      effect: {
-        type: "deal-damage",
-        amount: 2,
-        target: "CHOSEN_CHARACTER",
-      },
+      effect: dealDamage(2, "CHOSEN_CHARACTER"),
     },
   ],
 };

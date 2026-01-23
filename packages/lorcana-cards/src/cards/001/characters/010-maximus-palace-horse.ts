@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { bodyguard, support } from "../../ability-helpers";
 
 export const maximusPalaceHorse: CharacterCard = {
   id: "174",
@@ -19,20 +20,7 @@ export const maximusPalaceHorse: CharacterCard = {
   externalIds: {
     ravensburger: "9c79c4e5854191f1b12a381fa7541ea2ea9b38da",
   },
-  abilities: [
-    {
-      id: "174-1",
-      text: "Bodyguard",
-      type: "keyword",
-      keyword: "Bodyguard",
-    },
-    {
-      id: "174-2",
-      text: "Support",
-      type: "keyword",
-      keyword: "Support",
-    },
-  ],
+  abilities: [bodyguard("174-1"), support("174-2")],
   classifications: ["Storyborn", "Ally"],
 };
 

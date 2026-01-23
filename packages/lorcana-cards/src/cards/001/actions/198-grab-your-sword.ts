@@ -1,4 +1,5 @@
 import type { ActionCard } from "@tcg/lorcana-types";
+import { dealDamage } from "../../ability-helpers";
 
 export const grabYourSword: ActionCard = {
   id: "fa7",
@@ -20,11 +21,7 @@ export const grabYourSword: ActionCard = {
       id: "fa7-1",
       text: "Deal 2 damage to each opposing character.",
       type: "action",
-      effect: {
-        type: "deal-damage",
-        amount: 2,
-        target: "ALL_OPPOSING_CHARACTERS",
-      },
+      effect: dealDamage(2, "ALL_OPPOSING_CHARACTERS"),
     },
   ],
 };

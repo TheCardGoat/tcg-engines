@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { optional, whenPlay } from "../../ability-helpers";
 
 export const timonGrubRustler: CharacterCard = {
   id: "1fm",
@@ -20,27 +21,18 @@ export const timonGrubRustler: CharacterCard = {
     ravensburger: "ba040a5f880e4b2b3145703c8510a6d12b985cf9",
   },
   abilities: [
-    {
-      id: "1fm-1",
-      text: "TASTES LIKE CHICKEN When you play this character, you may remove up to 1 damage from chosen character.",
+    whenPlay("1fm-1", {
       name: "TASTES LIKE CHICKEN",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      effect: {
-        type: "optional",
-        effect: {
-          type: "remove-damage",
-          amount: 1,
-          target: "CHOSEN_CHARACTER",
-          upTo: true,
-        },
-        chooser: "CONTROLLER",
-      },
-    },
+      text: "TASTES LIKE CHICKEN When you play this character, you may remove up to 1 damage from chosen character.",
+      playedBy: "you",
+      playedCard: "SELF",
+      then: optional({
+        type: "remove-damage",
+        amount: 1,
+        target: "CHOSEN_CHARACTER",
+        upTo: true,
+      }),
+    }),
   ],
   classifications: ["Storyborn", "Ally"],
 };

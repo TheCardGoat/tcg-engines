@@ -29,32 +29,3 @@ export const fidgetRatigansHenchman: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const fidgetRatigansHenchman: LorcanitoCharacterCard = {
-//   id: "p8b",
-//   name: "Fidget",
-//   title: "Ratigan's Henchman",
-//   characteristics: ["dreamborn", "ally"],
-//   text: "**Evasive** _(Only characters with Evasive can challenge this character.)_",
-//   type: "character",
-//   abilities: [evasiveAbility],
-//   flavour: "When a normal henchman just won't cut it.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Giulia Riva",
-//   number: 108,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527274,
-//   },
-//   rarity: "common",
-// };
-//

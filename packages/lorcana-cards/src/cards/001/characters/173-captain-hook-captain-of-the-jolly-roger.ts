@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { moveCards, optional } from "../../ability-helpers";
 
 export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
   id: "z5q",
@@ -24,10 +25,8 @@ export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
       type: "action",
       id: "c2l-1",
       text: "**CAPTAIN HOOK** You may return target character to their player's hand.",
-      effect: {
-        type: "optional",
-        effect: {
-          type: "return-to-hand",
+      effect: optional(
+        moveCards("play", "hand", {
           target: {
             selector: "chosen",
             count: 1,
@@ -35,9 +34,8 @@ export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
             zones: ["play"],
             cardTypes: ["card"],
           },
-        },
-        chooser: "CONTROLLER",
-      },
+        }),
+      ),
     },
   ],
   classifications: ["Storyborn", "Villain", "Pirate", "Captain"],

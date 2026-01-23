@@ -21,19 +21,3 @@ export const auroraRegalPrincess: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { auroraRegalPrincess as auroraRegalPrincessAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-//
-// export const auroraRegalPrincess: LorcanitoCharacterCard = {
-//   ...auroraRegalPrincessAsOrig,
-//   id: "gc3",
-//   reprints: [auroraRegalPrincessAsOrig.id],
-//   number: 161,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650095,
-//   },
-// };
-//

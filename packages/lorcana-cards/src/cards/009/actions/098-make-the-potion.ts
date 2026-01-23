@@ -18,19 +18,3 @@ export const makeThePotion: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { makeThePotion as makeThePotionAsOrig } from "@lorcanito/lorcana-engine/cards/004/actions/094-make-the-potion";
-//
-// export const makeThePotion: LorcanitoActionCard = {
-//   ...makeThePotionAsOrig,
-//   id: "iiv",
-//   reprints: [makeThePotionAsOrig.id],
-//   number: 98,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650036,
-//   },
-// };
-//

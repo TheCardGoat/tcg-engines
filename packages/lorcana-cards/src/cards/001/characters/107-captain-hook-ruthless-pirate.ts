@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { rush } from "../../ability-helpers";
 
 export const captainHookRuthlessPirate: CharacterCard = {
   id: "1k7",
@@ -20,12 +21,7 @@ export const captainHookRuthlessPirate: CharacterCard = {
     ravensburger: "cb7f49afcece80ca059a1b80ac84424a7d69eeaa",
   },
   abilities: [
-    {
-      id: "1k7-1",
-      text: "Rush",
-      type: "keyword",
-      keyword: "Rush",
-    },
+    rush("1k7-1"),
     {
       id: "1k7-2",
       text: "YOU COWARD! While this character is exerted, opposing characters with Evasive gain Reckless.",

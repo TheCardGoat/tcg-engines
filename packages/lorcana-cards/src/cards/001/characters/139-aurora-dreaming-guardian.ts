@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { shift } from "../../ability-helpers";
 
 export const auroraDreamingGuardian: CharacterCard = {
   id: "wb5",
@@ -20,13 +21,7 @@ export const auroraDreamingGuardian: CharacterCard = {
     ravensburger: "",
   },
   abilities: [
-    {
-      type: "keyword",
-      keyword: "Shift",
-      cost: { ink: 3 },
-      id: "wb5-1",
-      text: "**Shift** 3 (_You may pay 3 {I} to play this on top of one of your characters named Aurora._)",
-    },
+    shift("wb5-1", 3, "Aurora"),
     {
       type: "static",
       id: "wb5-2",

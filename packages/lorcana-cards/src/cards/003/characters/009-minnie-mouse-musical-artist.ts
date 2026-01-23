@@ -8,7 +8,6 @@ export const minnieMouseMusicalArtist: CharacterCard = {
   fullName: "Minnie Mouse - Musical Artist",
   inkType: ["amber"],
   set: "003",
-  franchise: "Mickey and Friends",
   text: "Singer 3 (This character counts as cost 3 to sing songs.)\nENTOURAGE Whenever you play a character with Bodyguard, you may remove up to 2 damage from chosen character.",
   cost: 2,
   strength: 1,

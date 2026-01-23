@@ -21,29 +21,3 @@ export const theWalrusGreedyGourmand: CharacterCard = {
   },
   classifications: ["Storyborn"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const theWalrusGreedyGourmand: LorcanitoCharacterCard = {
-//   id: "dh1",
-//   name: "The Walrus",
-//   title: "Greedy Gourmand",
-//   characteristics: ["storyborn"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 6,
-//   lore: 1,
-//   illustrator: "Carlos Luzzi",
-//   number: 46,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 588074,
-//   },
-//   rarity: "uncommon",
-// };
-//

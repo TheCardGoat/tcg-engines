@@ -1,11 +1,12 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { evasive } from "../../ability-helpers";
 
 export const jetsamUrsulasSpy: CharacterCard = {
   id: "cdv",
   cardType: "character",
   name: "Jetsam",
-  version: "Ursula’s Spy",
-  fullName: "Jetsam - Ursula’s Spy",
+  version: "Ursula's Spy",
+  fullName: "Jetsam - Ursula's Spy",
   inkType: ["amethyst"],
   franchise: "Little Mermaid",
   set: "001",
@@ -20,12 +21,7 @@ export const jetsamUrsulasSpy: CharacterCard = {
     ravensburger: "2ca35abecd4db3d354a35de835504ac0657f0a85",
   },
   abilities: [
-    {
-      id: "cdv-1",
-      text: "Evasive",
-      type: "keyword",
-      keyword: "Evasive",
-    },
+    evasive("cdv-1"),
     {
       id: "cdv-2",
       text: "SINISTER SLITHER Your characters named Flotsam gain Evasive.",

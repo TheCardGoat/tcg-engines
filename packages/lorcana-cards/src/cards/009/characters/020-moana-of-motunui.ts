@@ -24,19 +24,3 @@ export const moanaOfMotunui: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { moanaOfMotunui as ogMoanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/014-moana-of-motunui";
-//
-// export const moanaOfMotunui: LorcanitoCharacterCard = {
-//   ...ogMoanaOfMotunui,
-//   id: "c9q",
-//   reprints: [ogMoanaOfMotunui.id],
-//   number: 20,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649968,
-//   },
-// };
-//

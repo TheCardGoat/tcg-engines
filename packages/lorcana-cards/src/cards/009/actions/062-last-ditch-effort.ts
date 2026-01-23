@@ -18,19 +18,3 @@ export const lastditchEffort: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { lastDitchEffort as ogLastDitchEffort } from "@lorcanito/lorcana-engine/cards/003/actions/062-last-ditch-effort";
-//
-// export const lastditchEffort: LorcanitoActionCard = {
-//   ...ogLastDitchEffort,
-//   id: "qq2",
-//   reprints: [ogLastDitchEffort.id],
-//   number: 62,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650006,
-//   },
-// };
-//

@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { moveCards, optional, whenPlay } from "../../ability-helpers";
 
 export const ladyTremaineWickedStepmother: CharacterCard = {
   id: "qdk",
@@ -20,26 +21,19 @@ export const ladyTremaineWickedStepmother: CharacterCard = {
     ravensburger: "5f10313dc8b4bca05c0fcd2a13d6b70db3cee3a8",
   },
   abilities: [
-    {
-      id: "qdk-1",
-      text: "DO IT AGAIN! When you play this character, you may return an action card from your discard to your hand.",
+    whenPlay("qdk-1", {
       name: "DO IT AGAIN!",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      effect: {
-        type: "optional",
-        effect: {
-          type: "return-from-discard",
+      text: "DO IT AGAIN! When you play this character, you may return an action card from your discard to your hand.",
+      playedBy: "you",
+      playedCard: "SELF",
+      then: optional(
+        moveCards("discard", "hand", {
           cardType: "action",
+          amount: 1,
           target: "CONTROLLER",
-        },
-        chooser: "CONTROLLER",
-      },
-    },
+        }),
+      ),
+    }),
   ],
 };
 

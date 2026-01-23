@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { dealDamage, optional, wheneverQuest } from "../../ability-helpers";
 
 export const hansThirteenthInLine: CharacterCard = {
   id: "1ro",
@@ -20,26 +21,12 @@ export const hansThirteenthInLine: CharacterCard = {
     ravensburger: "e57dd5df690f5083848c5ffe191627af870b3985",
   },
   abilities: [
-    {
-      id: "1ro-1",
-      text: "STAGE A LITTLE ACCIDENT Whenever this character quests, you may deal 1 damage to chosen character.",
+    wheneverQuest("1ro-1", {
       name: "STAGE A LITTLE ACCIDENT",
-      type: "triggered",
-      trigger: {
-        event: "quest",
-        timing: "whenever",
-        on: "SELF",
-      },
-      effect: {
-        type: "optional",
-        effect: {
-          type: "deal-damage",
-          amount: 1,
-          target: "CHOSEN_CHARACTER",
-        },
-        chooser: "CONTROLLER",
-      },
-    },
+      text: "STAGE A LITTLE ACCIDENT Whenever this character quests, you may deal 1 damage to chosen character.",
+      on: "SELF",
+      then: optional(dealDamage(1, "CHOSEN_CHARACTER")),
+    }),
   ],
   classifications: ["Storyborn", "Villain", "Prince"],
 };

@@ -1,4 +1,5 @@
 import type { ItemCard } from "@tcg/lorcana-types";
+import { dealDamage } from "../../ability-helpers";
 
 export const plasmaBlaster: ItemCard = {
   id: "vmw",
@@ -24,11 +25,7 @@ export const plasmaBlaster: ItemCard = {
         exert: true,
         ink: 2,
       },
-      effect: {
-        type: "deal-damage",
-        amount: 1,
-        target: "CHOSEN_CHARACTER",
-      },
+      effect: dealDamage(1, "CHOSEN_CHARACTER"),
     },
   ],
 };

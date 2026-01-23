@@ -21,30 +21,3 @@ export const bagheeraCautiousExplorer: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const bagheeraCautiousExplorer: LorcanitoCharacterCard = {
-//   id: "kou",
-//   name: "Bagheera",
-//   title: "Cautious Explorer",
-//   characteristics: ["storyborn", "ally"],
-//   text: "",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 3,
-//   strength: 4,
-//   willpower: 4,
-//   illustrator: "Brian Weisz",
-//   number: 12,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659180,
-//   },
-//   rarity: "uncommon",
-//   abilities: [],
-//   lore: 1,
-// };
-//

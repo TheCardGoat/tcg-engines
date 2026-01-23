@@ -29,19 +29,3 @@ export const mulanFreeSpirit: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { mulanFreeSpirit as ogMulanFreeSpirit } from "@lorcanito/lorcana-engine/cards/002/characters/015-mulan-free-spirit";
-//
-// export const mulanFreeSpirit: LorcanitoCharacterCard = {
-//   ...ogMulanFreeSpirit,
-//   id: "efk",
-//   reprints: [ogMulanFreeSpirit.id],
-//   number: 10,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649959,
-//   },
-// };
-//

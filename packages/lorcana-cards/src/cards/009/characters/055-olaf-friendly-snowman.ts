@@ -21,19 +21,3 @@ export const olafFriendlySnowman: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { olafFriendlySnowman as olafFriendlySnowmanAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/052-olaf-friendly-snowman";
-//
-// export const olafFriendlySnowman: LorcanitoCharacterCard = {
-//   ...olafFriendlySnowmanAsOrig,
-//   id: "q9w",
-//   reprints: [olafFriendlySnowmanAsOrig.id],
-//   number: 55,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649999,
-//   },
-// };
-//

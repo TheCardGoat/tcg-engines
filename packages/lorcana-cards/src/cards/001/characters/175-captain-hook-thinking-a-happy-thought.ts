@@ -1,4 +1,10 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import {
+  challenger,
+  restrict,
+  shift,
+  staticAbility,
+} from "../../ability-helpers";
 
 export const captainHookThinkingAHappyThought: CharacterCard = {
   id: "4hp",
@@ -20,33 +26,13 @@ export const captainHookThinkingAHappyThought: CharacterCard = {
     ravensburger: "1030555f87af5d3d70406e6d85cf3a40ae98e4f2",
   },
   abilities: [
-    {
-      id: "4hp-1",
-      text: "Shift 3",
-      type: "keyword",
-      keyword: "Shift",
-      cost: {
-        ink: 3,
-      },
-    },
-    {
-      id: "4hp-2",
-      text: "Challenger +3",
-      type: "keyword",
-      keyword: "Challenger",
-      value: 3,
-    },
-    {
-      id: "4hp-3",
-      text: "STOLEN DUST Characters with cost 3 or less can't challenge this character.",
+    shift("4hp-1", 3, "Captain Hook"),
+    challenger("4hp-2", 3),
+    staticAbility("4hp-3", {
       name: "STOLEN DUST",
-      type: "static",
-      effect: {
-        type: "restriction",
-        restriction: "cant-challenge",
-        target: "SELF",
-      },
-    },
+      text: "STOLEN DUST Characters with cost 3 or less can't challenge this character.",
+      effect: restrict("cant-challenge", "SELF"),
+    }),
   ],
   classifications: ["Floodborn", "Villain", "Pirate", "Captain"],
 };

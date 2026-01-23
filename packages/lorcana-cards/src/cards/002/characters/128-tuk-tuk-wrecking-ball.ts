@@ -29,32 +29,3 @@ export const tukTukWreckingBall: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { recklessAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const tukTukWreckingBall: LorcanitoCharacterCard = {
-//   id: "nqd",
-//
-//   name: "Tuk Tuk",
-//   title: "Wrecking Ball",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**Reckless** _(This character can't quest and must challenge each turn if able.)_",
-//   type: "character",
-//   abilities: [recklessAbility],
-//   flavour: "A good friend is always ready to roll.",
-//   colors: ["ruby"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 5,
-//   lore: 0,
-//   illustrator: "Brian Weisz",
-//   number: 128,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527759,
-//   },
-//   rarity: "rare",
-// };
-//

@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { moveCards, optional } from "../../ability-helpers";
 
 export const drFacilierAgentProvocateur: CharacterCard = {
   id: "pyt",
@@ -24,10 +25,8 @@ export const drFacilierAgentProvocateur: CharacterCard = {
       type: "action",
       id: "c3l-1",
       text: "**SLEIGHT OF HAND** When you play this character, you may return target character to their player's hand.",
-      effect: {
-        type: "optional",
-        effect: {
-          type: "return-to-hand",
+      effect: optional(
+        moveCards("play", "hand", {
           target: {
             selector: "chosen",
             count: 1,
@@ -35,9 +34,8 @@ export const drFacilierAgentProvocateur: CharacterCard = {
             zones: ["play"],
             cardTypes: ["card"],
           },
-        },
-        chooser: "CONTROLLER",
-      },
+        }),
+      ),
     },
   ],
   classifications: ["Floodborn", "Sorcerer", "Villain"],

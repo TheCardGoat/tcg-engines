@@ -1,4 +1,11 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import {
+  optional,
+  removeDamage,
+  shift,
+  wheneverQuest,
+  whenPlay,
+} from "../../ability-helpers";
 
 export const jasmineQueenOfAgrabah: CharacterCard = {
   id: "8w9",
@@ -20,36 +27,20 @@ export const jasmineQueenOfAgrabah: CharacterCard = {
     ravensburger: "200fff92d3781279a953ae4972866a4954a0ed17",
   },
   abilities: [
-    {
-      id: "8w9-1",
-      text: "Shift 3",
-      type: "keyword",
-      keyword: "Shift",
-      cost: {
-        ink: 3,
-      },
-    },
-    {
-      id: "8w9-2",
-      text: "CARETAKER When you play this character and whenever she quests, you may remove up to 2 damage from each of your characters.",
+    shift("8w9-1", 3, "Jasmine"),
+    whenPlay("8w9-2", {
       name: "CARETAKER",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      effect: {
-        type: "optional",
-        effect: {
-          type: "remove-damage",
-          amount: 2,
-          target: "YOUR_CHARACTERS",
-          upTo: true,
-        },
-        chooser: "CONTROLLER",
-      },
-    },
+      text: "CARETAKER When you play this character, you may remove up to 2 damage from each of your characters.",
+      playedBy: "you",
+      playedCard: "SELF",
+      then: optional(removeDamage(2, "YOUR_CHARACTERS", true)),
+    }),
+    wheneverQuest("8w9-3", {
+      name: "CARETAKER",
+      text: "CARETAKER Whenever she quests, you may remove up to 2 damage from each of your characters.",
+      on: "SELF",
+      then: optional(removeDamage(2, "YOUR_CHARACTERS", true)),
+    }),
   ],
   classifications: ["Floodborn", "Hero", "Princess", "Queen"],
 };

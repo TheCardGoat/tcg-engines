@@ -21,29 +21,3 @@ export const kingHubertPhillipsFather: CharacterCard = {
   },
   classifications: ["Storyborn", "Mentor", "King"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const kingHubertPhillipsFather: LorcanitoCharacterCard = {
-//   id: "q63",
-//   name: "King Hubert",
-//   title: "Phillip's Father",
-//   characteristics: ["storyborn", "mentor", "king"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Gaku Kumatori",
-//   number: 179,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 587756,
-//   },
-//   rarity: "common",
-// };
-//

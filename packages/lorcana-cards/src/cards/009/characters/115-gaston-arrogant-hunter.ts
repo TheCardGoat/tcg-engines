@@ -29,19 +29,3 @@ export const gastonArrogantHunter: CharacterCard = {
   ],
   classifications: ["Storyborn", "Villain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { gastonArrogantHunter as gastonArrogantHunterAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/110-gaston-arrogant-hunter";
-//
-// export const gastonArrogantHunter: LorcanitoCharacterCard = {
-//   ...gastonArrogantHunterAsOrig,
-//   id: "k2n",
-//   reprints: [gastonArrogantHunterAsOrig.id],
-//   number: 115,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650051,
-//   },
-// };
-//

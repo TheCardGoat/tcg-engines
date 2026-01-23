@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { moveCards, optional } from "../../ability-helpers";
 
 export const mickeyMouseWaywardSorcerer: CharacterCard = {
   id: "kuw",
@@ -24,10 +25,8 @@ export const mickeyMouseWaywardSorcerer: CharacterCard = {
       type: "action",
       id: "kuw-1",
       text: "**CEASELESS WORKER** Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.",
-      effect: {
-        type: "optional",
-        effect: {
-          type: "return-to-hand",
+      effect: optional(
+        moveCards("play", "hand", {
           target: {
             selector: "chosen",
             count: 1,
@@ -35,9 +34,8 @@ export const mickeyMouseWaywardSorcerer: CharacterCard = {
             zones: ["play"],
             cardTypes: ["card"],
           },
-        },
-        chooser: "CONTROLLER",
-      },
+        }),
+      ),
     },
   ],
   classifications: ["Dreamborn", "Sorcerer"],

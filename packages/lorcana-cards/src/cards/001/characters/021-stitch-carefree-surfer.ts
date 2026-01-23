@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { draw, optional, whenPlay } from "../../ability-helpers";
 
 export const stitchCarefreeSurfer: CharacterCard = {
   id: "jzu",
@@ -20,37 +21,21 @@ export const stitchCarefreeSurfer: CharacterCard = {
     ravensburger: "",
   },
   abilities: [
-    {
-      id: "jzu-1",
-      type: "triggered",
+    whenPlay("jzu-1", {
       name: "OHANA",
       text: "When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
+      playedBy: "you",
+      playedCard: "SELF",
+      if: {
+        type: "has-character-count",
+        controller: "you",
+        comparison: "greater-or-equal",
+        count: 2,
+        // Note: The ability text says "2 or more OTHER characters"
+        // The engine should check characters excluding self when resolving
       },
-      effect: {
-        type: "conditional",
-        condition: {
-          type: "has-character-count",
-          controller: "you",
-          comparison: "greater-or-equal",
-          count: 2,
-          // Note: The ability text says "2 or more OTHER characters"
-          // The engine should check characters excluding self when resolving
-        },
-        then: {
-          type: "optional",
-          effect: {
-            type: "draw",
-            amount: 2,
-            target: "CONTROLLER",
-          },
-          chooser: "CONTROLLER",
-        },
-      },
-    },
+      then: optional(draw(2)),
+    }),
   ],
   classifications: ["Hero", "Dreamborn", "Alien"],
 };

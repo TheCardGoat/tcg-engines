@@ -29,32 +29,3 @@ export const basilHypnotizedMouse: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Hero", "Detective"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const basilHypnotizedMouse: LorcanitoCharacterCard = {
-//   id: "i84",
-//   name: "Basil",
-//   title: "Hypnotized Mouse",
-//   characteristics: ["dreamborn", "hero", "detective"],
-//   text: "Evasive (Only characters with Evasive can challenge this character.)",
-//   type: "character",
-//   abilities: [evasiveAbility],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Alice Pisoni",
-//   number: 79,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 587197,
-//   },
-//   rarity: "common",
-// };
-//

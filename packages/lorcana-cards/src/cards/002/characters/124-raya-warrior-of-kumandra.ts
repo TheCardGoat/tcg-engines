@@ -21,29 +21,3 @@ export const rayaWarriorOfKumandra: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const rayaWarriorOfKumandra: LorcanitoCharacterCard = {
-//   id: "goj",
-//   name: "Raya",
-//   title: "Warrior of Kumandra",
-//   characteristics: ["hero", "storyborn", "princess"],
-//   type: "character",
-//   flavour: "My ba dreams of a united Kumandra. I fight to honor that dream.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 4,
-//   strength: 5,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Matthew Robert Davies",
-//   number: 124,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 516427,
-//   },
-//   rarity: "uncommon",
-// };
-//

@@ -24,19 +24,3 @@ export const grandPabbieOldestAndWisest: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Mentor"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { grandPabbieOldestAndWisest as grandPabbieOldestAndWisestAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/148-grand-pabbie-oldest-and-wisest";
-//
-// export const grandPabbieOldestAndWisest: LorcanitoCharacterCard = {
-//   ...grandPabbieOldestAndWisestAsOrig,
-//   id: "rj4",
-//   reprints: [grandPabbieOldestAndWisestAsOrig.id],
-//   number: 150,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650085,
-//   },
-// };
-//

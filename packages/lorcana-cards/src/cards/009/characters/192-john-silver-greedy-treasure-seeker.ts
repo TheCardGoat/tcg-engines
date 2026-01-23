@@ -24,19 +24,3 @@ export const johnSilverGreedyTreasureSeeker: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Villain", "Alien", "Pirate", "Captain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { johnSilverGreedyTreasureSeeker as ogJohnSilverGreedyTreasureSeeker } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const johnSilverGreedyTreasureSeeker: LorcanitoCharacterCard = {
-//   ...ogJohnSilverGreedyTreasureSeeker,
-//   id: "vpb",
-//   reprints: [ogJohnSilverGreedyTreasureSeeker.id],
-//   number: 192,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650125,
-//   },
-// };
-//

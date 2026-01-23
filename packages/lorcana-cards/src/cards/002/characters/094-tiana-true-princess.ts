@@ -21,29 +21,3 @@ export const tianaTruePrincess: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const tianaTruePrincess: LorcanitoCharacterCard = {
-//   id: "fdi",
-//   name: "Tiana",
-//   title: "True Princess",
-//   characteristics: ["hero", "storyborn", "princess"],
-//   type: "character",
-//   flavour: "Finding your true self will set your heart aglow.",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 5,
-//   strength: 5,
-//   willpower: 3,
-//   lore: 3,
-//   illustrator: "Casey Robin",
-//   number: 94,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527751,
-//   },
-//   rarity: "uncommon",
-// };
-//

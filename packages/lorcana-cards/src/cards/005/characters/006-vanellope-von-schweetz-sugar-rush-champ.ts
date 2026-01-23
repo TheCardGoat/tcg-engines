@@ -21,30 +21,3 @@ export const vanellopeVonSchweetzSugarRushChamp: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero", "Princess", "Racer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const vanellopeVonSchweetzSugarRushChamp: LorcanitoCharacterCard = {
-//   id: "huy",
-//   name: "Vanellope von Schweetz",
-//   title: "Sugar Rush Champ",
-//   characteristics: ["hero", "storyborn", "princess", "racer"],
-//   type: "character",
-//   flavour:
-//     "Look, the code may say I'm a princess, but I know who I really am....",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 1,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "César Vergara / Eri Welli",
-//   number: 6,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 555241,
-//   },
-//   rarity: "common",
-// };
-//

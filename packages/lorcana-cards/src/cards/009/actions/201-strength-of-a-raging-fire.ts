@@ -19,19 +19,3 @@ export const strengthOfARagingFire: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { strengthOfARagingFire as ogStrengthOfARagingFire } from "@lorcanito/lorcana-engine/cards/002/actions/201-strength-of-a-raging-fire";
-//
-// export const strengthOfARagingFire: LorcanitoActionCard = {
-//   ...ogStrengthOfARagingFire,
-//   id: "fua",
-//   reprints: [ogStrengthOfARagingFire.id],
-//   number: 201,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 647674,
-//   },
-// };
-//

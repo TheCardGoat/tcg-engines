@@ -18,33 +18,3 @@ export const mosquitoBite: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { putDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const mosquitoBite: LorcanitoActionCard = {
-//   id: "zw6",
-//   name: "Mosquito Bite",
-//   characteristics: ["action"],
-//   text: "Put 1 damage counter on chosen character.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       effects: [putDamageEffect(1, chosenCharacter)],
-//     },
-//   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 1,
-//   illustrator: "Kamil Murzyn",
-//   number: 96,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 592021,
-//   },
-//   rarity: "uncommon",
-// };
-//

@@ -63,6 +63,7 @@ export type {
 // Movement effects
 export type {
   EnablePlayFromUnderEffect,
+  MoveCardsEffect,
   MoveToLocationEffect,
   PlayCardEffect,
   PutIntoInkwellEffect,

@@ -29,32 +29,3 @@ export const pegasusFlyingSteed: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const pegasusFlyingSteed: LorcanitoCharacterCard = {
-//   id: "u8h",
-//   name: "Pegasus",
-//   title: "Flying Steed",
-//   characteristics: ["ally", "storyborn"],
-//   text: "**Evasive** _(Only characters with Evasive can challenge this character.)_",
-//   type: "character",
-//   abilities: [evasiveAbility],
-//   flavour: "It zigs, it zags, what else do you need? \n−Phil",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 2,
-//   strength: 3,
-//   willpower: 1,
-//   lore: 1,
-//   illustrator: "Kenneth Anderson",
-//   number: 120,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550597,
-//   },
-//   rarity: "common",
-// };
-//

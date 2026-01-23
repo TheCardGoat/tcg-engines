@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { evasive, moveCards, optional, whenPlay } from "../../ability-helpers";
 
 export const genieOnTheJob: CharacterCard = {
   id: "n53",
@@ -20,31 +21,18 @@ export const genieOnTheJob: CharacterCard = {
     ravensburger: "53677bcf26b3b3a85ed1c61ea70cfd53296be7c2",
   },
   abilities: [
-    {
-      id: "n53-1",
-      text: "Evasive",
-      type: "keyword",
-      keyword: "Evasive",
-    },
-    {
-      id: "n53-2",
-      text: "DISAPPEAR When you play this character, you may return chosen character to their player's hand.",
+    evasive("n53-1"),
+    whenPlay("n53-2", {
       name: "DISAPPEAR",
-      type: "triggered",
-      trigger: {
-        event: "play",
-        timing: "when",
-        on: "SELF",
-      },
-      effect: {
-        type: "optional",
-        effect: {
-          type: "return-to-hand",
+      text: "DISAPPEAR When you play this character, you may return chosen character to their player's hand.",
+      playedBy: "you",
+      playedCard: "SELF",
+      then: optional(
+        moveCards("play", "hand", {
           target: "CHOSEN_CHARACTER",
-        },
-        chooser: "CONTROLLER",
-      },
-    },
+        }),
+      ),
+    }),
   ],
   classifications: ["Storyborn", "Ally"],
 };

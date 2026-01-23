@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { moveCards, optional } from "../../ability-helpers";
 
 export const cruellaDeVilMiserableAsUsual: CharacterCard = {
   id: "cw0",
@@ -30,14 +31,11 @@ export const cruellaDeVilMiserableAsUsual: CharacterCard = {
         timing: "when",
         on: "SELF",
       },
-      effect: {
-        type: "optional",
-        effect: {
-          type: "return-to-hand",
+      effect: optional(
+        moveCards("play", "hand", {
           target: "CHOSEN_CHARACTER",
-        },
-        chooser: "CONTROLLER",
-      },
+        }),
+      ),
     },
   ],
   classifications: ["Storyborn", "Villain"],

@@ -1,4 +1,5 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { support } from "../../ability-helpers";
 
 export const merlinSelfappointedMentor: CharacterCard = {
   id: "uii",
@@ -19,13 +20,6 @@ export const merlinSelfappointedMentor: CharacterCard = {
   externalIds: {
     ravensburger: "6df9e37cf042bea283043a907feb840a22e7db90",
   },
-  abilities: [
-    {
-      id: "uii-1",
-      type: "keyword",
-      keyword: "Support",
-      text: "Support",
-    },
-  ],
+  abilities: [support("uii-1")],
   classifications: ["Dreamborn", "Mentor", "Sorcerer"],
 };

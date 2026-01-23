@@ -20,12 +20,100 @@ import type {
 import type { EffectDuration } from "./amount-types";
 
 // ============================================================================
-// Zone Movement Effects
+// Unified Movement Effect
+// ============================================================================
+
+/**
+ * Unified card movement effect
+ *
+ * Moves cards between zones with a consistent API.
+ *
+ * @example "Return a character card from your discard to your hand"
+ * ```typescript
+ * {
+ *   type: "move-cards",
+ *   from: "discard",
+ *   to: "hand",
+ *   cardType: "character",
+ *   amount: 1,
+ *   target: "CONTROLLER"
+ * }
+ * ```
+ *
+ * @example "Return chosen character to their player's hand"
+ * ```typescript
+ * {
+ *   type: "move-cards",
+ *   from: "play",
+ *   to: "hand",
+ *   target: "CHOSEN_CHARACTER"
+ * }
+ * ```
+ *
+ * @example "Put the top card of your deck into your inkwell facedown and exerted"
+ * ```typescript
+ * {
+ *   type: "move-cards",
+ *   from: "top-of-deck",
+ *   to: "inkwell",
+ *   amount: 1,
+ *   target: "CONTROLLER",
+ *   exerted: true,
+ *   facedown: true
+ * }
+ * ```
+ */
+export interface MoveCardsEffect {
+  type: "move-cards";
+  /** Source zone */
+  from:
+    | "play"
+    | "hand"
+    | "discard"
+    | "deck"
+    | "inkwell"
+    | "under"
+    | "top-of-deck";
+  /** Destination zone */
+  to:
+    | "hand"
+    | "discard"
+    | "deck"
+    | "inkwell"
+    | "play"
+    | "under"
+    | "deck-top"
+    | "deck-bottom";
+  /** Number of cards to move (default: 1, use "all" for all matching cards) */
+  amount?: number | "all";
+  /** Filter by card type */
+  cardType?: CardType | "song";
+  /** Filter by card name */
+  cardName?: string;
+  /** Target for selection (when from is a zone with multiple cards) */
+  target?: CardTarget | PlayerTarget;
+  /** For deck destinations: whether to shuffle */
+  shuffle?: boolean;
+  /** For deck-bottom: ordering preference */
+  ordering?: "player-choice" | "random";
+  /** For inkwell/play: whether card enters exerted */
+  exerted?: boolean;
+  /** For inkwell: whether card is placed facedown */
+  facedown?: boolean;
+  /** For "under" destination: which card to put under */
+  under?: CharacterTarget | LocationTarget | "self";
+  /** For deck destinations: whose deck */
+  intoDeck?: "owner" | "controller";
+}
+
+// ============================================================================
+// Zone Movement Effects (Legacy - deprecated, use MoveCardsEffect)
 // ============================================================================
 
 /**
  * Return to hand effect
  *
+ * @deprecated Use MoveCardsEffect with from="play" and to="hand"
  * @example "Return chosen character to their player's hand"
  */
 export interface ReturnToHandEffect {
@@ -36,6 +124,7 @@ export interface ReturnToHandEffect {
 /**
  * Return from discard to hand
  *
+ * @deprecated Use MoveCardsEffect with from="discard" and to="hand"
  * @example "Return an action card from your discard to your hand"
  */
 export interface ReturnFromDiscardEffect {
@@ -49,6 +138,7 @@ export interface ReturnFromDiscardEffect {
 /**
  * Put into inkwell effect
  *
+ * @deprecated Use MoveCardsEffect with to="inkwell"
  * @example "Put the top card of your deck into your inkwell facedown and exerted"
  */
 export interface PutIntoInkwellEffect {
@@ -71,6 +161,8 @@ export interface PutIntoInkwellEffect {
 
 /**
  * Put card under another card (Boost mechanic)
+ *
+ * @deprecated Use MoveCardsEffect with to="under"
  */
 export interface PutUnderEffect {
   type: "put-under";
@@ -81,6 +173,8 @@ export interface PutUnderEffect {
 
 /**
  * Shuffle into deck effect
+ *
+ * @deprecated Use MoveCardsEffect with to="deck" and shuffle=true
  */
 export interface ShuffleIntoDeckEffect {
   type: "shuffle-into-deck";
@@ -91,6 +185,8 @@ export interface ShuffleIntoDeckEffect {
 
 /**
  * Put on bottom of deck
+ *
+ * @deprecated Use MoveCardsEffect with to="deck-bottom"
  */
 export interface PutOnBottomEffect {
   type: "put-on-bottom";

@@ -35,35 +35,3 @@ export const mauiHeroToAll: CharacterCard = {
   ],
   classifications: ["Storyborn", "Hero", "Deity"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import {
-//   recklessAbility,
-//   rushAbility,
-// } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const mauiHeroToAll: LorcanitoCharacterCard = {
-//   id: "tkz",
-//   name: "Maui",
-//   title: "Hero to All",
-//   characteristics: ["hero", "storyborn", "deity"],
-//   text: "**Rush** _(This character can challenge the turn they're played.)_\n\n**Reckless** _(This character can't quest and must challenge each turn if able.)_",
-//   type: "character",
-//   illustrator: "Pirel / Marco Giorgianni",
-//   abilities: [rushAbility, recklessAbility],
-//   flavour: "What I believe you were trying to say is 'Thank you.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 5,
-//   strength: 6,
-//   willpower: 5,
-//   lore: 0,
-//   number: 114,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508784,
-//   },
-//   rarity: "rare",
-// };
-//

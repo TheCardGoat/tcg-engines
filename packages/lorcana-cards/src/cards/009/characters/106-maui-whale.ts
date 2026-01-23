@@ -24,19 +24,3 @@ export const mauiWhale: CharacterCard = {
   abilities: [],
   classifications: ["Storyborn", "Hero", "Deity"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { mauiWhale as ogMauiWhale } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const mauiWhale: LorcanitoCharacterCard = {
-//   ...ogMauiWhale,
-//   id: "daf",
-//   reprints: [ogMauiWhale.id],
-//   number: 106,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650044,
-//   },
-// };
-//

@@ -23,19 +23,3 @@ export const mickeyMouseTrumpeter: CharacterCard = {
   abilities: [],
   classifications: ["Dreamborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { mickeyMouseTrumpeter as mickeyMouseTrumpeterAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const mickeyMouseTrumpeter: LorcanitoCharacterCard = {
-//   ...mickeyMouseTrumpeterAsOrig,
-//   id: "ftq",
-//   reprints: [mickeyMouseTrumpeterAsOrig.id],
-//   number: 172,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650106,
-//   },
-// };
-//

@@ -19,28 +19,3 @@ export const forbiddenMountainMaleficentsCastle: LocationCard = {
     ravensburger: "20ce5726b118f589b517e8256dda9873c180ba86",
   },
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-//
-// export const forbiddenMountainMaleficentsCastle: LorcanitoLocationCard = {
-//   id: "k31",
-//   type: "location",
-//   name: "Forbidden Mountain",
-//   title: "Maleficent's Castle",
-//   characteristics: ["location"],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   willpower: 6,
-//   lore: 1,
-//   moveCost: 1,
-//   illustrator: "Jimmy Lo",
-//   number: 66,
-//   set: "ITI",
-//   externalIds: {
-//     tcgPlayer: 531821,
-//   },
-//   rarity: "common",
-// };
-//

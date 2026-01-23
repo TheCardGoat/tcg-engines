@@ -21,29 +21,3 @@ export const agustinMadrigalClumsyDad: CharacterCard = {
   },
   classifications: ["Storyborn", "Mentor", "Madrigal"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const agustinMadrigalClumsyDad: LorcanitoCharacterCard = {
-//   id: "e63",
-//   name: "Agustin Madrigal",
-//   title: "Clumsy Dad",
-//   characteristics: ["storyborn", "mentor", "madrigal"],
-//   type: "character",
-//   flavour: "Falling for Julieta was the easiest thing he'd ever done.",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 1,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Eri Welli",
-//   number: 1,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 549618,
-//   },
-//   rarity: "common",
-// };
-//

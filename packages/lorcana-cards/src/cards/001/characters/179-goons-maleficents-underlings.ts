@@ -21,28 +21,3 @@ export const goonsMaleficentsUnderlings: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// export const goonsMaleficent: LorcanitoCharacterCard = {
-//   id: "blh",
-//   name: "Goons",
-//   title: "Maleficent's Underlings",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   flavour: "They may seem useless, but they came with the castle.",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 1,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Cam Kendell",
-//   number: 179,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508915,
-//   },
-//   rarity: "common",
-// };
-//

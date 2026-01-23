@@ -18,32 +18,3 @@ export const youCameBack: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { readyChosenCharacter } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const youCameBack: LorcanitoActionCard = {
-//   id: "bl8",
-//   name: "You Came Back",
-//   characteristics: ["action"],
-//   text: "Ready chosen character.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       effects: [readyChosenCharacter],
-//     },
-//   ],
-//   inkwell: false,
-//   colors: ["emerald"],
-//   cost: 3,
-//   illustrator: "Michaela Martin",
-//   number: 97,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 591997,
-//   },
-//   rarity: "rare",
-// };
-//

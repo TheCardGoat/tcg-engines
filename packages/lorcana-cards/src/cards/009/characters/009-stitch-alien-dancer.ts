@@ -21,19 +21,3 @@ export const stitchAlienDancer: CharacterCard = {
   },
   classifications: ["Storyborn", "Hero", "Alien"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { stitchAlienDancer as ogStitchAlienDancer } from "@lorcanito/lorcana-engine/cards/004/characters/23-stitch-alien-dancer";
-//
-// export const stitchAlienDancer: LorcanitoCharacterCard = {
-//   ...ogStitchAlienDancer,
-//   id: "g0k",
-//   reprints: [ogStitchAlienDancer.id],
-//   number: 9,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649958,
-//   },
-// };
-//

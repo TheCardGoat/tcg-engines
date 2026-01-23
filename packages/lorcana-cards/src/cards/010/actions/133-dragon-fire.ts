@@ -18,19 +18,3 @@ export const dragonFire: ActionCard = {
   },
   abilities: [],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { dragonFire as ogDragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/130-dragon-fire";
-//
-// export const dragonFire: LorcanitoActionCard = {
-//   ...ogDragonFire,
-//   id: "nns",
-//   reprints: [ogDragonFire.id],
-//   number: 133,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659245,
-//   },
-// };
-//

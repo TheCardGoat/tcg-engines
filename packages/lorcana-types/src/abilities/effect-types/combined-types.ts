@@ -47,6 +47,7 @@ import type {
 } from "./modifier-effects";
 import type {
   EnablePlayFromUnderEffect,
+  MoveCardsEffect,
   MoveToLocationEffect,
   PlayCardEffect,
   PutIntoInkwellEffect,
@@ -83,6 +84,7 @@ export type Effect =
   | ReadyEffect
   | BanishEffect
   // Zone Movement
+  | MoveCardsEffect
   | ReturnToHandEffect
   | ReturnFromDiscardEffect
   | PutIntoInkwellEffect

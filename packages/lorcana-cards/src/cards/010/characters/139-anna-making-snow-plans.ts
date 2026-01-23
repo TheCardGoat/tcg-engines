@@ -29,31 +29,3 @@ export const annaMakingSnowPlans: CharacterCard = {
   ],
   classifications: ["Storyborn", "Hero", "Queen"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { supportAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const annaMakingSnowPlans: LorcanitoCharacterCard = {
-//   id: "myl",
-//   name: "Anna",
-//   title: "Making Snow Plans",
-//   characteristics: ["storyborn", "hero", "queen"],
-//   text: "Support",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 3,
-//   illustrator: "Pauline Voss",
-//   number: 139,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659424,
-//   },
-//   rarity: "common",
-//   abilities: [supportAbility],
-//   lore: 2,
-// };
-//
