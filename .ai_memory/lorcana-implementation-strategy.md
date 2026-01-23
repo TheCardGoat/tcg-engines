@@ -15,7 +15,9 @@ Build production-quality Lorcana card implementations through:
 ## Strategic Objectives
 
 ### Primary Objective
-Implement **423 Lorcana cards** (Sets 1-3+) with **95%+ test coverage** and **80%+ parser accuracy**.
+Implement **407 Lorcana cards** (Sets 2-3) with **95%+ test coverage** and **80%+ parser accuracy**.
+
+> **Note**: Set 1 (204 cards) is already complete. This objective covers Sets 2 (204 cards) and 3 (203 cards).
 
 ### Secondary Objectives
 
@@ -126,7 +128,7 @@ Implement Card → Document Learning → Aggregate Learnings → Improve Parser 
 | Component | Status | Target |
 |-----------|--------|--------|
 | Set 2 (Rise of the Floodborn) | ❌ MISSING | 204 cards |
-| Set 3 (Into the Inklands) | ❌ MISSING | ~200 cards |
+| Set 3 (Into the Inklands) | ❌ MISSING | 203 cards |
 | Subagents | ❌ MISSING | 4 new agents needed |
 | Learning System | ❌ MISSING | Capture + aggregation |
 | Metrics Dashboard | ❌ MISSING | Coverage tracking |
@@ -134,6 +136,112 @@ Implement Card → Document Learning → Aggregate Learnings → Improve Parser 
 ### Key Insight
 
 **Set 1 is already complete!** The project scope is implementing Sets 2-3, not re-implementing Set 1.
+
+## Lorcanito Patterns (Reference Implementation)
+
+This strategy incorporates proven patterns from the Lorcanito repository (`/Users/wazar/projects/lorcanito/`), a similar Lorcana implementation project.
+
+### Adapted Patterns
+
+#### 1. Similarity-Based Implementation
+
+Lorcanito uses multi-category similarity matching to find reference implementations:
+
+```typescript
+// Multi-category matching:
+// - Same name/title
+// - Same color/ink type
+// - Same card type
+// - Similar ability text (word overlap 3+ chars)
+
+// Cards appearing in 2+ categories get higher scores
+```
+
+**Our Adaptation**: The `pattern-matcher` agent implements this approach, searching Set 1 and previously implemented cards for similar mechanics before implementing new cards.
+
+#### 2. Modular Ability System
+
+Lorcanito uses shared ability definitions to reduce duplication:
+
+```typescript
+// abilities.ts - Shared abilities for the set
+export const wakeUpAliceAbility: ResolutionAbility = {
+  type: "resolution",
+  text: "Return chosen damaged character to their player's hand.",
+  effects: [/* ... */]
+};
+
+// Card definition reuses shared abilities
+export const alice = {
+  // ...
+  abilities: [wakeUpAliceAbility]
+};
+```
+
+**Our Adaptation**: We use helper functions from `@tcg/lorcana/abilities` for common patterns, with parser v2 generating these helpers automatically.
+
+#### 3. TestEngine Integration
+
+Lorcanito's TestEngine provides comprehensive testing patterns:
+
+```typescript
+const testEngine = new TestEngine({
+  inkwell: card.cost,
+  hand: [cardUnderTest],
+  setup: otherCards...
+});
+
+await testEngine.playCard(cardUnderTest);
+await testEngine.resolveTopOfStack({ targets: [targetCard] });
+expect(testEngine.getCardModel(targetCard).zone).toBe("hand");
+```
+
+**Our Adaptation**: We use the existing TestEngine from our framework, following the same Arrange-Act-Assert pattern.
+
+#### 4. Semantic Analysis
+
+Lorcanito performs word extraction and stop-word filtering for meaningful ability text comparison:
+
+```typescript
+// Filter common words (the, a, an, to, of, etc.)
+// Focus on mechanics (draw, damage, exert, return, etc.)
+// Calculate word overlap similarity score
+```
+
+**Our Adaptation**: The `pattern-matcher` agent implements similar semantic analysis when finding similar cards.
+
+#### 5. Batch Processing with Quality Gates
+
+Lorcanito processes ~15 cards per batch with validation:
+
+```typescript
+// Process batch
+// Validate each card
+// Run tests
+// Update files
+```
+
+**Our Adaptation**: The `batch-card-processor` agent handles 10-20 cards per batch with comprehensive quality gates.
+
+### Key Differences from Lorcanito
+
+| Aspect | Lorcanito | Our Approach |
+|--------|-----------|--------------|
+| **Format** | Single `LorcanitoCard` type | Separate `CharacterCard`, `ActionCard`, etc. |
+| **Parser** | Manual implementation | Parser v2 with automatic generation |
+| **ID Format** | `{SET}-{NUMBER}-{name}-{title}` | UUID-based branded types |
+| **Organization** | Set-based with type subdirs | Same (matches our structure) |
+| **Tests** | Per-card test files | Same (matches our approach) |
+
+### Learning from Lorcanito's Iteration
+
+Lorcanito demonstrates continuous improvement through:
+1. **Post-implementation updates** to automation scripts based on learnings
+2. **Pattern refinement** as new sets are implemented
+3. **Test template evolution** to cover edge cases
+4. **Ability library growth** with reusable components
+
+**Our Adaptation**: We formalize this through the `learning-aggregator` agent and weekly parser improvement cycles.
 
 ## Risk Management
 
