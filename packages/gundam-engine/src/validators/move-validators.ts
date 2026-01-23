@@ -69,7 +69,11 @@ export const isPhase =
 /**
  * Validate it's the main phase specifically
  *
- * Most Lorcana actions require main phase.
+/**
+ * Validate it's the main phase specifically
+ *
+ * Most Gundam actions require main phase.
+ */
  */
 export const isMainPhase = <TParams = unknown>(): Validator<TParams> =>
   isPhase<TParams>("main");
