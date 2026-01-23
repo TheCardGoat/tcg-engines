@@ -1,7 +1,18 @@
 /**
  * Composable Move Validators
  *
- * Reusable validation functions for Lorcana moves.
+/**
+ * Composable Move Validators
+ *
+ * Reusable validation functions for Gundam moves.
+ * Each validator is a pure predicate that can be composed with others.
+ *
+ * Design principles:
+ * - Small, focused validators
+ * - Composable via &&, ||, !
+ * - Testable in isolation
+ * - Type-safe with proper context
+ */
  * Each validator is a pure predicate that can be composed with others.
  *
  * Design principles:
