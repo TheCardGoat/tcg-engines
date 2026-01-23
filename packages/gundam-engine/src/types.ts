@@ -100,6 +100,11 @@ export type GundamMoves = {
     count: number;
   };
 
+  playCard: {
+    playerId: PlayerId;
+    cardId: CardId;
+  };
+
   /** Deploy a unit to battle area */
   deployUnit: {
     playerId: PlayerId;
