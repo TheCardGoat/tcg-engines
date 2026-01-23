@@ -1,5 +1,5 @@
 # Strategia DSL per Abilità Carte Lorcana
-
+ Prova PR
 ## 📊 Analisi Dati
 
 ### Situazione Attuale
