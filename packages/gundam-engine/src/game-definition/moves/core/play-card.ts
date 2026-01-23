@@ -49,7 +49,8 @@ export const playCard = createMove<
     // Determine target zone (command go to trash, others to play)
     const cardType = ops.getCardType(cardId);
     const targetZone =
-      cardType === "command" ? ("trash" as ZoneId) : ("battleArea" as ZoneId);
+    const cardType = ops.getCardType(cardId);
+    const targetZone = cardType === "COMMAND" ? "trash" : "battleArea";
 
     // Move card
     context.zones.moveCard({
