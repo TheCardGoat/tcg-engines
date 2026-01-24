@@ -2,60 +2,143 @@ import { describe, expect, it } from "bun:test";
 import { parseAbilityTextMulti } from "../../parser";
 
 describe("Set 006 Card Text Parser Tests", () => {
-  it.skip("Owl - Pirate Lookout: should parse card text", () => {
+  it("Owl - Pirate Lookout: should parse card text", () => {
     const text =
       "WELL SPOTTED During your turn, whenever a card is put into your inkwell, chosen opposing character gets -1 {S} until the start of your next turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: WELL SPOTTED
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "WELL SPOTTED",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Lilo - Escape Artist: should parse card text", () => {
+  it("Lilo - Escape Artist: should parse card text", () => {
     const text =
       "NO PLACE I’D RATHER BE At the start of your turn, if this card is in your discard, you may play her and she enters play exerted.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: static
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        effect: expect.objectContaining({
+          type: "conditional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Winnie the Pooh - Hunny Pirate: should parse card text", () => {
+  it("Winnie the Pooh - Hunny Pirate: should parse card text", () => {
     const text =
       "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)\n\nWE'RE PIRATES, YOU SEE Whenever this character quests, you pay 1 {I} less for the next Pirate character you play this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "play-card",
+        }),
+      }),
+    );
   });
 
-  it.skip("Chip - Friend Indeed: should parse card text", () => {
+  it("Chip - Friend Indeed: should parse card text", () => {
     const text =
       "DALE'S PARTNER When you play this character, chosen character gets +1 {L} this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: DALE'S PARTNER
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "DALE'S PARTNER",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Dale - Friend in Need: should parse card text", () => {
+  it("Dale - Friend in Need: should parse card text", () => {
     const text =
       "CHIP'S PARTNER This character enters play exerted unless you have a character named Chip in play.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: CHIP'S PARTNER
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "CHIP'S PARTNER",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
   });
 
-  it.skip("David - Impressive Surfer: should parse card text", () => {
+  it("David - Impressive Surfer: should parse card text", () => {
     const text =
       "SHOWING OFF While you have a character named Nani in play, this character gets +2 {L}.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("Prince Naveen - Vigilant First Mate: should parse card text", () => {
+  it("Prince Naveen - Vigilant First Mate: should parse card text", () => {
     const text =
       "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Prince Naveen.)\nBodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: static
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
   });
 
   it.skip("Chief Bogo - Gazelle Fan: should parse card text", () => {
@@ -66,44 +149,107 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Chip - Ranger Leader: should parse card text", () => {
+  it("Chip - Ranger Leader: should parse card text", () => {
     const text =
       "THE VALUE OF FRIENDSHIP While you have a character named Dale in play, this character gains Support. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
   });
 
-  it.skip("Chip 'n' Dale - Recovery Rangers: should parse card text", () => {
+  it("Chip 'n' Dale - Recovery Rangers: should parse card text", () => {
     const text =
       "Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Chip or Dale.)\n(This character counts as being named both Chip and Dale.)\nSEARCH AND RESCUE During your turn, whenever a card is put into your inkwell, you may return a character card from your discard to your hand.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: SEARCH AND RESCUE
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "SEARCH AND RESCUE",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Judy Hopps - Resourceful Rabbit: should parse card text", () => {
+  it("Judy Hopps - Resourceful Rabbit: should parse card text", () => {
     const text =
       "Support (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)\n\nNEED SOME HELP? At the end of your turn, you may ready another chosen character of yours.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Tiana - Restaurant Owner: should parse card text", () => {
+  it("Tiana - Restaurant Owner: should parse card text", () => {
     const text =
       "SPECIAL RESERVATION Whenever a character of yours is challenged while this character is exerted, the challenging character gets -3 {S} this turn unless their player pays 3 {I}.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: SPECIAL RESERVATION
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "SPECIAL RESERVATION",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Grand Councilwoman - Federation Leader: should parse card text", () => {
+  it("Grand Councilwoman - Federation Leader: should parse card text", () => {
     const text =
       "FIND IT! Whenever this character quests, your other Alien characters get +1 {L} this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: FIND IT!
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "FIND IT!",
+        trigger: expect.objectContaining({
+          event: "quest",
+        }),
+      }),
+    );
   });
 
   it.skip("Dale - Mischievous Ranger: should parse card text", () => {
@@ -114,82 +260,207 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Nani - Caring Sister: should parse card text", () => {
+  it("Nani - Caring Sister: should parse card text", () => {
     const text =
       "Support (Whenever this character quests, you may add their {S} to another chosen character’s {S} this turn.)\nI AM SO SORRY 2 {I} - Chosen character gets -1 {S} until the start of your next turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("Simba - Pride Protector: should parse card text", () => {
+  it("Simba - Pride Protector: should parse card text", () => {
     const text =
       "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Simba.)\nUNDERSTAND THE BALANCE At the end of your turn, if this character is exerted, you may ready your other characters.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Kanga - Nurturing Mother: should parse card text", () => {
+  it("Kanga - Nurturing Mother: should parse card text", () => {
     const text =
       "SAFE AND SOUND Whenever this character quests, choose a character of yours and that character can't be challenged until the start of your next turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: SAFE AND SOUND
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "SAFE AND SOUND",
+        trigger: expect.objectContaining({
+          event: "quest",
+        }),
+      }),
+    );
   });
 
-  it.skip("Rabbit - Indignant Pirate: should parse card text", () => {
+  it("Rabbit - Indignant Pirate: should parse card text", () => {
     const text =
       "BE MORE CAREFUL When you play this character, you may remove up to 1 damage from chosen character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: BE MORE CAREFUL
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "BE MORE CAREFUL",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Roo - Littlest Pirate: should parse card text", () => {
+  it("Roo - Littlest Pirate: should parse card text", () => {
     const text =
       "I'M A PIRATE TOO! When you play this character, you may give chosen character -2 {S} until the start of your next turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: I'M A PIRATE TOO!
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "I'M A PIRATE TOO!",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Mr. Litwak - Arcade Owner: should parse card text", () => {
+  it("Mr. Litwak - Arcade Owner: should parse card text", () => {
     const text =
       "THE GANG'S ALL HERE Once during your turn, whenever you play another character, you may ready this character. He can’t quest or challenge for the rest of this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: THE GANG'S ALL HERE Once
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "THE GANG'S ALL HERE Once",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Jim Hawkins - Honorable Pirate: should parse card text", () => {
+  it("Jim Hawkins - Honorable Pirate: should parse card text", () => {
     const text =
       "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nHIRE A CREW When you play this character, look at the top 4 cards of your deck. You may reveal any number of Pirate character cards and put them into your hand. Put the rest on the bottom of your deck in any order.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: static
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
+
+    // Ability 2: HIRE A CREW
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "HIRE A CREW",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Stitch - Little Trickster: should parse card text", () => {
+  it("Stitch - Little Trickster: should parse card text", () => {
     const text = "NEED A HAND? 1 {I} - This character gets +1 {S} this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("Good Job!: should parse card text", () => {
+  it("Good Job!: should parse card text", () => {
     const text = "Chosen character gets +1 {L} this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("I Won't Give In: should parse card text", () => {
+  it("I Won't Give In: should parse card text", () => {
     const text =
       "Return a character card with cost 2 or less from your discard to your hand.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "return-to-hand",
+        }),
+      }),
+    );
   });
 
   it.skip("Rescue Rangers Away!: should parse card text", () => {
@@ -216,76 +487,178 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Pooh Pirate Ship: should parse card text", () => {
+  it("Pooh Pirate Ship: should parse card text", () => {
     const text =
       "MAKE A RESCUE {E}, 3 {I} – Return a Pirate character card from your discard to your hand.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "return-from-discard",
+        }),
+      }),
+    );
   });
 
-  it.skip("Scrump: should parse card text", () => {
+  it("Scrump: should parse card text", () => {
     const text =
       "I MADE HER {E} one of your characters - Chosen character gets -2 {S} until the start of your next turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("Hundred Acre Island - Pooh's Home: should parse card text", () => {
+  it("Hundred Acre Island - Pooh's Home: should parse card text", () => {
     const text =
       "FRIENDS FOREVER During an opponent's turn, whenever a character is banished here, gain 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "gain-lore",
+        }),
+      }),
+    );
   });
 
-  it.skip("Sugar Rush Speedway - Finish Line: should parse card text", () => {
+  it("Sugar Rush Speedway - Finish Line: should parse card text", () => {
     const text =
       "BRING IT HOME, LITTLE ONE! When you move a character here from another location, you may banish this location to gain 3 lore and draw 3 cards.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Hades - Lord of the Dead: should parse card text", () => {
+  it("Hades - Lord of the Dead: should parse card text", () => {
     const text =
       "SOUL COLLECTOR Whenever one of your other characters is banished during the opponent's turn, gain 2 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: SOUL COLLECTOR
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "SOUL COLLECTOR",
+        trigger: expect.objectContaining({
+          event: "banish",
+        }),
+      }),
+    );
   });
 
-  it.skip("Madam Mim - Tiny Adversary: should parse card text", () => {
+  it("Madam Mim - Tiny Adversary: should parse card text", () => {
     const text =
       "Challenger +1 (While challenging, this character gets +1 {S}.)\nZIM ZABBERIM ZIM Your other characters gain Challenger +1.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: Challenger keyword
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "keyword",
+        keyword: "Challenger",
+        value: 1,
+      }),
+    );
+
+    // Ability 2: ZIM ZABBERIM ZIM Your other
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "ZIM ZABBERIM ZIM Your other",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
   });
 
-  it.skip("Sisu - In Her Element: should parse card text", () => {
+  it("Sisu - In Her Element: should parse card text", () => {
     const text =
       "Challenger +2 (While challenging, this character gets +2 {S}).";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: Challenger keyword
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "keyword",
+        keyword: "Challenger",
+        value: 2,
+      }),
+    );
   });
 
-  it.skip("The White Rose - Jewel of the Garden: should parse card text", () => {
+  it("The White Rose - Jewel of the Garden: should parse card text", () => {
     const text =
       "THE BEAUTY OF THE WORLD When you play this character, gain 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: THE BEAUTY OF THE WORLD
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "THE BEAUTY OF THE WORLD",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Juju - Mama Odie's Companion: should parse card text", () => {
+  it("Juju - Mama Odie's Companion: should parse card text", () => {
     const text =
       "BEES' KNEES When you play this character, move 1 damage counter from chosen character to chosen opposing character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: BEES' KNEES
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "BEES' KNEES",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
   it.skip("Tinker Bell - Fast Flier: should parse card text", () => {
@@ -296,44 +669,106 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("The Carpenter - Dinner Companion: should parse card text", () => {
+  it("The Carpenter - Dinner Companion: should parse card text", () => {
     const text =
       "I'LL GET YOU! When this character is banished, you may exert chosen character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: I'LL GET YOU!
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "I'LL GET YOU!",
+        trigger: expect.objectContaining({
+          event: "banish",
+        }),
+      }),
+    );
   });
 
-  it.skip("Iago - Reappearing Parrot: should parse card text", () => {
+  it("Iago - Reappearing Parrot: should parse card text", () => {
     const text =
       "GUESS WHO When this character is banished in a challenge, return this card to your hand.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: GUESS WHO
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "GUESS WHO",
+        trigger: expect.objectContaining({
+          event: "banish",
+        }),
+      }),
+    );
   });
 
-  it.skip("Scar - Tempestuous Lion: should parse card text", () => {
+  it("Scar - Tempestuous Lion: should parse card text", () => {
     const text =
       "Rush (This character can challenge the turn they're played.)\nChallenger +3 (While challenging, this character gets +3 {S}.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: Challenger keyword
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "keyword",
+        keyword: "Challenger",
+        value: 3,
+      }),
+    );
   });
 
-  it.skip("Tinker Bell - Queen of the Azurite Fairies: should parse card text", () => {
+  it("Tinker Bell - Queen of the Azurite Fairies: should parse card text", () => {
     const text =
       "Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Tinker Bell.)\nEvasive (Only characters with Evasive can challenge this character.)\nSHINING EXAMPLE Whenever this character quests, your other Fairy characters get +1 {L} this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: SHINING EXAMPLE
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "SHINING EXAMPLE",
+        trigger: expect.objectContaining({
+          event: "quest",
+        }),
+      }),
+    );
   });
 
-  it.skip("Diablo - Obedient Raven: should parse card text", () => {
+  it("Diablo - Obedient Raven: should parse card text", () => {
     const text =
       "FLY, MY PET! When this character is banished, you may draw a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
   });
 
   it.skip("March Hare - Absurd Host: should parse card text", () => {
@@ -343,36 +778,89 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Rafiki - Ethereal Guide: should parse card text", () => {
+  it("Rafiki - Ethereal Guide: should parse card text", () => {
     const text =
       "Shift 7 (You may pay 7 {I} to play this on top of one of your characters named Rafiki.)\nASTRAL ATTUNEMENT During your turn, whenever a card is put into your inkwell, you may draw a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: ASTRAL ATTUNEMENT
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "ASTRAL ATTUNEMENT",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Genie - Wish Fulfilled: should parse card text", () => {
+  it("Genie - Wish Fulfilled: should parse card text", () => {
     const text =
       "Evasive (Only characters with Evasive can challenge this character.)\nWHAT HAPPENS NOW? When you play this character, draw a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: WHAT HAPPENS NOW?
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "WHAT HAPPENS NOW?",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Sisu - Uniting Dragon: should parse card text", () => {
+  it("Sisu - Uniting Dragon: should parse card text", () => {
     const text =
       "TRUST BUILDS TRUST Whenever this character quests, reveal the top card of your deck. If it’s a Dragon character card, put it into your hand and repeat this effect. Otherwise, put it on either the top or the bottom of your deck.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: TRUST BUILDS TRUST
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "TRUST BUILDS TRUST",
+        trigger: expect.objectContaining({
+          event: "quest",
+        }),
+      }),
+    );
   });
 
-  it.skip("Madam Mim - Truly Marvelous: should parse card text", () => {
+  it("Madam Mim - Truly Marvelous: should parse card text", () => {
     const text =
       "OH, BAT GIZZARDS 2 {I}, Choose and discard a card - Gain 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "gain-lore",
+        }),
+      }),
+    );
   });
 
   it.skip("Yzma - Conniving Chemist: should parse card text", () => {
@@ -391,12 +879,23 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Peter Pan - Shadow Catcher: should parse card text", () => {
+  it("Peter Pan - Shadow Catcher: should parse card text", () => {
     const text =
       "GOTCHA! During your turn, whenever a card is put into your inkwell, exert chosen opposing character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: GOTCHA!
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "GOTCHA!",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
   it.skip("Mad Hatter - Eccentric Host: should parse card text", () => {
@@ -415,44 +914,125 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Genie - Wonderful Trickster: should parse card text", () => {
+  it("Genie - Wonderful Trickster: should parse card text", () => {
     const text =
       "Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Genie.)\nYOUR REWARD AWAITS Whenever you play a card, draw a card.\nFORBIDDEN TREASURE At the end of your turn, put all the cards in your hand on the bottom of your deck in any order.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(3);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: YOUR REWARD AWAITS
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "YOUR REWARD AWAITS",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
+
+    // Ability 3: action effect
+    expect(result.abilities[2].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "put-on-bottom",
+        }),
+      }),
+    );
   });
 
-  it.skip("Making Magic: should parse card text", () => {
+  it("Making Magic: should parse card text", () => {
     const text =
       "Move 1 damage counter from chosen character to chosen opposing character. Draw a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "draw",
+        }),
+      }),
+    );
   });
 
-  it.skip("Lose the Way: should parse card text", () => {
+  it("Lose the Way: should parse card text", () => {
     const text =
       "Exert chosen character. Then, you may choose and discard a card. If you do, the exerted character can't ready at the start of their next turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "sequence",
+        }),
+      }),
+    );
   });
 
-  it.skip("Seeking the Half Crown: should parse card text", () => {
+  it("Seeking the Half Crown: should parse card text", () => {
     const text =
       "For each Sorcerer character you have in play, you pay 1 {I} less to play this action.\nDraw 2 cards.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "for-each",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "draw",
+        }),
+      }),
+    );
   });
 
-  it.skip("Maleficent's Staff: should parse card text", () => {
+  it("Maleficent's Staff: should parse card text", () => {
     const text =
       "BACK, FOOLS! Whenever one of your opponents' characters, items, or locations is returned to their hand from play, gain 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "gain-lore",
+        }),
+      }),
+    );
   });
 
   it.skip("Mad Hatter's Teapot: should parse card text", () => {
@@ -463,68 +1043,172 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Pixie Dust: should parse card text", () => {
+  it("Pixie Dust: should parse card text", () => {
     const text =
       "FAITH AND TRUST {E}, {2} {I} - Chosen character gains Challenger +2 and Evasive until the start of your next turn. (While challenging, they get +2 {1}. Only characters with Evasive can challenge them.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
   });
 
-  it.skip("Mystical Tree - Mama Odie's Home: should parse card text", () => {
+  it("Mystical Tree - Mama Odie's Home: should parse card text", () => {
     const text =
       "NOT BAD At the start of your turn, you may move 1 damage counter from chosen character here to chosen opposing character.\n\nHARD-EARNED WISDOM At the start of your turn, if you have a character named Mama Odie here, gain 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "conditional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Jasmine - Royal Seafarer: should parse card text", () => {
+  it("Jasmine - Royal Seafarer: should parse card text", () => {
     const text =
       "BY ORDER OF THE PRINCESS When you play this character, choose one: \n* Exert chosen damaged character. \n* Chosen opposing character gains Reckless during their next turn. (They can't quest and must challenge if able.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "sequence",
+        }),
+      }),
+    );
   });
 
-  it.skip("Captain Hook - Underhanded: should parse card text", () => {
+  it("Captain Hook - Underhanded: should parse card text", () => {
     const text =
       "INSPIRES DREAD While this character is exerted, opposing Pirate characters can't quest.\nUPPER HAND Whenever this character is challenged, draw a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: static
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
+
+    // Ability 2: UPPER HAND
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "UPPER HAND",
+        trigger: expect.objectContaining({
+          event: "challenged",
+        }),
+      }),
+    );
   });
 
-  it.skip("Stitch - Alien Buccaneer: should parse card text", () => {
+  it("Stitch - Alien Buccaneer: should parse card text", () => {
     const text =
       "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Stitch.)\nREADY FOR ACTION When you play this character, if you used Shift to play him, you may put an action card from your discard on the top of your deck.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: READY FOR ACTION
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "READY FOR ACTION",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Go Go Tomago - Darting Dynamo: should parse card text", () => {
+  it("Go Go Tomago - Darting Dynamo: should parse card text", () => {
     const text =
       "Evasive (Only characters with Evasive can challenge this character.)\nSTOP WHINING, WOMAN UP When you play this character, you may pay 2 {I} to gain lore equal to the damage on chosen opposing character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "play-card",
+        }),
+      }),
+    );
   });
 
-  it.skip("Honey Lemon - Chemical Genius: should parse card text", () => {
+  it("Honey Lemon - Chemical Genius: should parse card text", () => {
     const text =
       "HERE'S THE BEST PART When you play this character, you may pay 2 {I} to have each opponent choose and discard a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: HERE'S THE BEST PART
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "HERE'S THE BEST PART",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Fred - Mascot by Day: should parse card text", () => {
+  it("Fred - Mascot by Day: should parse card text", () => {
     const text =
       "HOW COOL IS THAT Whenever this character is challenged, gain 2 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: HOW COOL IS THAT
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "HOW COOL IS THAT",
+        trigger: expect.objectContaining({
+          event: "challenged",
+        }),
+      }),
+    );
   });
 
   it.skip("Heathcliff - Stoic Butler: should parse card text", () => {
@@ -543,20 +1227,41 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Donald Duck - First Mate: should parse card text", () => {
+  it("Donald Duck - First Mate: should parse card text", () => {
     const text =
       "CAPTAIN ON DECK While you have a Captain character in play, this character gets +2 {L}.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("Daisy Duck - Pirate Captain: should parse card text", () => {
+  it("Daisy Duck - Pirate Captain: should parse card text", () => {
     const text =
       "DISTANT SHORES Whenever one of your Pirate characters quests while at a location, draw a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: DISTANT SHORES
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "DISTANT SHORES",
+        trigger: expect.objectContaining({
+          event: "banish",
+        }),
+      }),
+    );
   });
 
   it.skip("Prince Phillip - Royal Explorer: should parse card text", () => {
@@ -567,68 +1272,175 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Jasmine - Royal Commodore: should parse card text", () => {
+  it("Jasmine - Royal Commodore: should parse card text", () => {
     const text =
       "Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Jasmine.)\nRULER OF THE SEAS When you play this character, if you used Shift to play her, return all other exerted characters to their players’ hands.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: RULER OF THE SEAS
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "RULER OF THE SEAS",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Peter Pan - Never Land Prankster: should parse card text", () => {
+  it("Peter Pan - Never Land Prankster: should parse card text", () => {
     const text =
       "LOOK INNOCENT This character enters play exerted.\nCAN'T TAKE A JOKE? While this character is exerted, each opposing player can't gain lore unless one of their characters has challenged this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: LOOK INNOCENT
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "LOOK INNOCENT",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
   });
 
-  it.skip("Hercules - Baby Demigod: should parse card text", () => {
+  it("Hercules - Baby Demigod: should parse card text", () => {
     const text =
       "Ward (Opponents can't choose this character except to challenge.)\nSTRONG LIKE HIS DAD 3 {I} - Deal 1 damage to chosen damaged character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "deal-damage",
+        }),
+      }),
+    );
   });
 
-  it.skip("Alistair Krei - Ambitious Entrepreneur: should parse card text", () => {
+  it("Alistair Krei - Ambitious Entrepreneur: should parse card text", () => {
     const text =
       "AN EYE FOR TECH When you play this character, if an opponent has an item in play, gain 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: AN EYE FOR TECH
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "AN EYE FOR TECH",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Gazelle - Angel with Horns: should parse card text", () => {
+  it("Gazelle - Angel with Horns: should parse card text", () => {
     const text =
       "YOU ARE A REALLY HOT DANCER When you play this character, chosen character gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: YOU ARE A REALLY HOT DANCER
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "YOU ARE A REALLY HOT DANCER",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Goofy - Expert Shipwright: should parse card text", () => {
+  it("Goofy - Expert Shipwright: should parse card text", () => {
     const text =
       "Ward (Opponents can't choose this character except to challenge.)\nCLEVER DESIGN Whenever this character quests, chosen character gains Ward until the start of your next turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: CLEVER DESIGN
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "CLEVER DESIGN",
+        trigger: expect.objectContaining({
+          event: "quest",
+        }),
+      }),
+    );
   });
 
-  it.skip("Bellwether - Assistant Mayor: should parse card text", () => {
+  it("Bellwether - Assistant Mayor: should parse card text", () => {
     const text =
       "FEAR ALWAYS WORKS During your turn, whenever a card is put into your inkwell, chosen opposing character gains Reckless during their next turn. (They can't quest and must challenge if able.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: FEAR ALWAYS WORKS
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "FEAR ALWAYS WORKS",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Basil - Disguised Detective: should parse card text", () => {
+  it("Basil - Disguised Detective: should parse card text", () => {
     const text =
       "Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Basil.)\nTWISTS AND TURNS During your turn, whenever a card is put into your inkwell, you may pay 1 {I} to have chosen opponent choose and discard a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: TWISTS AND TURNS
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "TWISTS AND TURNS",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
   it.skip("Bend to My Will: should parse card text", () => {
@@ -638,50 +1450,111 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Prepare to Board!: should parse card text", () => {
+  it("Prepare to Board!: should parse card text", () => {
     const text =
       "Chosen character gets +2 {S} this turn. If a Pirate character is chosen, they get +3 {S} instead.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "conditional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Heffalumps and Woozles: should parse card text", () => {
+  it("Heffalumps and Woozles: should parse card text", () => {
     const text =
       "Chosen opposing character can't quest during their next turn. Draw a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "sequence",
+        }),
+      }),
+    );
   });
 
-  it.skip("Mosquito Bite: should parse card text", () => {
+  it("Mosquito Bite: should parse card text", () => {
     const text = "Put 1 damage counter on chosen character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "put-damage",
+        }),
+      }),
+    );
   });
 
-  it.skip("You Came Back: should parse card text", () => {
+  it("You Came Back: should parse card text", () => {
     const text = "Ready chosen character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "ready",
+        }),
+      }),
+    );
   });
 
-  it.skip("MegaBot: should parse card text", () => {
+  it("MegaBot: should parse card text", () => {
     const text =
       "HAPPY FACE This item enters play exerted.\nDESTROY! {E}, Banish this item - Choose one:\n* Banish chosen item.\n* Banish chosen damaged character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: HAPPY FACE
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "HAPPY FACE",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
   });
 
-  it.skip("Galactic Communicator: should parse card text", () => {
+  it("Galactic Communicator: should parse card text", () => {
     const text =
       "RESOURCE ALLOCATION 1 {I}, Banish this item - Return chosen character with 2 {S} or less to their player's hand.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "return-to-hand",
+        }),
+      }),
+    );
   });
 
   it.skip("Transport Pod: should parse card text", () => {
@@ -692,28 +1565,80 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Perilous Maze - Watery Labyrinth: should parse card text", () => {
+  it("Perilous Maze - Watery Labyrinth: should parse card text", () => {
     const text =
       "LOST IN THE WAVES Whenever a character is challenged while here, each opponent chooses and discards a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: LOST IN THE WAVES
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "LOST IN THE WAVES",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Owl Island - Secluded Entrance: should parse card text", () => {
+  it("Owl Island - Secluded Entrance: should parse card text", () => {
     const text =
       "TEAMWORK For each character you have here, you pay 1 {I} less for the first action you play each turn.\nLOTS TO LEARN Whenever you play a second action in a turn, gain 3 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "play-card",
+        }),
+      }),
+    );
+
+    // Ability 2: LOTS TO LEARN
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "LOTS TO LEARN",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Mickey Mouse - Pirate Captain: should parse card text", () => {
+  it("Mickey Mouse - Pirate Captain: should parse card text", () => {
     const text =
       'Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)\nMARINER’S MIGHT Whenever this character quests, chosen Pirate character gets +2 {S} and gains "This character takes no damage from challenges" this turn.';
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
   it.skip("Kakamora - Boarding Party: should parse card text", () => {
@@ -723,52 +1648,115 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Kakamora - Pirate Pitcher: should parse card text", () => {
+  it("Kakamora - Pirate Pitcher: should parse card text", () => {
     const text =
       "DIZZYING SPEED When you play this character, chosen Pirate character gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: DIZZYING SPEED
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "DIZZYING SPEED",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Jasmine - Rebellious Princess: should parse card text", () => {
+  it("Jasmine - Rebellious Princess: should parse card text", () => {
     const text =
       "YOU'LL NEVER MISS IT Whenever this character quests, each opponent loses 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: YOU'LL NEVER MISS IT
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "YOU'LL NEVER MISS IT",
+        trigger: expect.objectContaining({
+          event: "quest",
+        }),
+      }),
+    );
   });
 
-  it.skip("Raya - Kumandran Rider: should parse card text", () => {
+  it("Raya - Kumandran Rider: should parse card text", () => {
     const text =
       "COME ON, LET'S DO THIS Once during your turn, whenever a card is put into your inkwell, you may ready another chosen character of yours. They can't quest for the rest of this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Wendy Darling - Courageous Captain: should parse card text", () => {
+  it("Wendy Darling - Courageous Captain: should parse card text", () => {
     const text =
       "Evasive (Only characters with Evasive can challenge this character.)\nLOOK LIVELY, CREW! While you have another Pirate character in play, this character gets +1 {S} and +1 {L}.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("John Silver - Ferocious Friend: should parse card text", () => {
+  it("John Silver - Ferocious Friend: should parse card text", () => {
     const text =
       "YOU HAVE TO CHART YOUR OWN COURSE Whenever this character quests, you may deal 1 damage to one of your other characters. If you do, ready that character. They cannot quest this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: YOU HAVE TO CHART YOUR OWN COURSE
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "YOU HAVE TO CHART YOUR OWN COURSE",
+        trigger: expect.objectContaining({
+          event: "quest",
+        }),
+      }),
+    );
   });
 
-  it.skip("Vanellope Von Schweetz - Gutsy Go-Getter: should parse card text", () => {
+  it("Vanellope Von Schweetz - Gutsy Go-Getter: should parse card text", () => {
     const text =
       "AS READY AS I'LL EVER BE At the start of your turn, if this character is at a location, draw a card and gain 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "conditional",
+        }),
+      }),
+    );
   });
 
   it.skip("Markowski - Space Trooper: should parse card text", () => {
@@ -786,52 +1774,135 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Mickey Mouse - Courageous Sailor: should parse card text", () => {
+  it("Mickey Mouse - Courageous Sailor: should parse card text", () => {
     const text =
       "SOLID GROUND While this character is at a location, he gets +2 {S}.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: static
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("Adorabeezle Winterpop - Ice Rocket Racer: should parse card text", () => {
+  it("Adorabeezle Winterpop - Ice Rocket Racer: should parse card text", () => {
     const text =
       "KEEP DRIVING While this character has damage, she gets +1 {L}.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: static
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("Moana - Self-Taught Sailor: should parse card text", () => {
+  it("Moana - Self-Taught Sailor: should parse card text", () => {
     const text =
       "LEARNING THE ROPES This character can't challenge unless you have a Captain character in play.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: LEARNING THE ROPES
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "LEARNING THE ROPES",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
   });
 
-  it.skip("Aladdin - Intrepid Commander: should parse card text", () => {
+  it("Aladdin - Intrepid Commander: should parse card text", () => {
     const text =
       "Shift 2 (You may pay 2 {I} to play this on top of one of your characters named Aladdin.)\nREMEMBER YOUR TRAINING When you play this character, your characters get +2 {S} this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: REMEMBER YOUR TRAINING
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "REMEMBER YOUR TRAINING",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Minnie Mouse - Pirate Lookout: should parse card text", () => {
+  it("Minnie Mouse - Pirate Lookout: should parse card text", () => {
     const text =
       "LAND, HO! Once during your turn, whenever a card is put into your inkwell, you may return a location card from your discard to your hand.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Moana - Kakamora Leader: should parse card text", () => {
+  it("Moana - Kakamora Leader: should parse card text", () => {
     const text =
       "Shift 5 (You may pay 5 {I} to play this on top of one of your characters named Moana.)\nGATHERING FORCES When you play this character, you may move any number of your characters to the same location for free. Gain 1 lore for each character you moved.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: GATHERING FORCES
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "GATHERING FORCES",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
   it.skip("Goofy - Flying Goof: should parse card text", () => {
@@ -842,12 +1913,34 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Maui - Half-Shark: should parse card text", () => {
+  it("Maui - Half-Shark: should parse card text", () => {
     const text =
       "Evasive (Only characters with Evasive can challenge this character.)\nCHEEEEOHOOOO! Whenever this character challenges another character, you may return an action card from your discard to your hand.\nWAYFINDING Whenever you play an action, gain 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: CHEEEEOHOOOO!
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "CHEEEEOHOOOO!",
+        trigger: expect.objectContaining({
+          event: "challenge",
+        }),
+      }),
+    );
+
+    // Ability 2: WAYFINDING
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "WAYFINDING",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
   it.skip("Hades - Strong Arm: should parse card text", () => {
@@ -858,88 +1951,212 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Tigger - In the Crow's Nest: should parse card text", () => {
+  it("Tigger - In the Crow's Nest: should parse card text", () => {
     const text =
       "Evasive (Only characters with Evasive can challenge this character.)\nSWASH YOUR BUCKLES Whenever you play an action, this character gets +1 {S} and +1 {L} this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: SWASH YOUR BUCKLES
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "SWASH YOUR BUCKLES",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Scar - Heartless Hunter: should parse card text", () => {
+  it("Scar - Heartless Hunter: should parse card text", () => {
     const text =
       "BARED TEETH When you play this character, deal 2 damage to chosen character of yours to deal 2 damage to chosen character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: BARED TEETH
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "BARED TEETH",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Thievery: should parse card text", () => {
+  it("Thievery: should parse card text", () => {
     const text = "Chosen opponent loses 1 lore. Gain 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "sequence",
+        }),
+      }),
+    );
   });
 
-  it.skip("Lead the Way: should parse card text", () => {
+  it("Lead the Way: should parse card text", () => {
     const text = "Your characters get +2 {S} this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: static
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("The Islands I Pulled from the Sea: should parse card text", () => {
+  it("The Islands I Pulled from the Sea: should parse card text", () => {
     const text =
       "Search your deck for a location card, reveal that card to all players, and put it into your hand. Then, shuffle your deck.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "search-deck",
+        }),
+      }),
+    );
   });
 
-  it.skip("Energy Blast: should parse card text", () => {
+  it("Energy Blast: should parse card text", () => {
     const text = "Banish chosen character. Draw a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "sequence",
+        }),
+      }),
+    );
   });
 
-  it.skip("Longboat: should parse card text", () => {
+  it("Longboat: should parse card text", () => {
     const text =
       "TAKE IT FOR A SPIN 2 {I} – Chosen character of yours gains Evasive until the start of your next turn. (Only characters with Evasive can challenge them.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
   });
 
-  it.skip("Gold Coin: should parse card text", () => {
+  it("Gold Coin: should parse card text", () => {
     const text =
       "GLITTERING ACCESS {E}, 1 {I}, Banish this item – Ready chosen character of yours. They can't quest for the rest of this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
   });
 
-  it.skip("Card Soldier's Spear: should parse card text", () => {
+  it("Card Soldier's Spear: should parse card text", () => {
     const text = "A SUITABLE WEAPON Your damaged characters get +1 {S}.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: A SUITABLE WEAPON Your damaged
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "A SUITABLE WEAPON Your damaged",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("Flotilla - Coconut Armada: should parse card text", () => {
+  it("Flotilla - Coconut Armada: should parse card text", () => {
     const text =
       "TINY THIEVES At the start of your turn, if you have a character here, all opponents lose 1 lore and you gain lore equal to the lore lost this way.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "conditional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Skull Rock - Isolated Fortress: should parse card text", () => {
+  it("Skull Rock - Isolated Fortress: should parse card text", () => {
     const text =
       "FAMILIAR GROUND Characters get +1 {S} while here.\nSAFE HAVEN At the start of your turn, if you have a Pirate character here, gain 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: FAMILIAR GROUND
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "FAMILIAR GROUND",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "conditional",
+        }),
+      }),
+    );
   });
 
   it.skip("B.E.N. - Eccentric Robot: should parse card text", () => {
@@ -950,419 +2167,1132 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("Aunt Cass - Biggest Fan: should parse card text", () => {
+  it("Aunt Cass - Biggest Fan: should parse card text", () => {
     const text =
       "HAPPY TO HELP Whenever this character quests, chosen Inventor character gets +1 {L} this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: HAPPY TO HELP
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "HAPPY TO HELP",
+        trigger: expect.objectContaining({
+          event: "quest",
+        }),
+      }),
+    );
   });
 
-  it.skip("Gadget Hackwrench - Creative Thinker: should parse card text", () => {
+  it("Gadget Hackwrench - Creative Thinker: should parse card text", () => {
     const text =
       "BRAINSTORM Whenever you play an item, this character gets +1 {L} this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: BRAINSTORM
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "BRAINSTORM",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Gadget Hackwrench - Brilliant Bosun: should parse card text", () => {
+  it("Gadget Hackwrench - Brilliant Bosun: should parse card text", () => {
     const text =
       "Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Gadget Hackwrench.)\nMECHANICALLY SAVVY While you have 3 or more items in play, you pay 1 {I} less to play Inventor characters.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "play-card",
+        }),
+      }),
+    );
   });
 
-  it.skip("Zipper - Astute Decoy: should parse card text", () => {
+  it("Zipper - Astute Decoy: should parse card text", () => {
     const text =
       "Ward (Opponents can't choose this character except to challenge.)\nRUN INTERFERENCE During your turn, whenever a card is put into your inkwell, another chosen character gains Resist +1 until the start of your next turn. (Damage dealt to them is reduced by 1.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: RUN INTERFERENCE
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "RUN INTERFERENCE",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Oswald - The Lucky Rabbit: should parse card text", () => {
+  it("Oswald - The Lucky Rabbit: should parse card text", () => {
     const text =
       "FAVORABLE CHANCE During your turn, whenever a card is put into your inkwell, you may reveal the top card of your deck. If it’s an item card, you may play that item for free and it enters play exerted. Otherwise, put it on the bottom of your deck.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: FAVORABLE CHANCE
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "FAVORABLE CHANCE",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Yokai - Enigmatic Inventor: should parse card text", () => {
+  it("Yokai - Enigmatic Inventor: should parse card text", () => {
     const text =
       "TIME TO UPGRADE Whenever this character quests, you may return one of your items to your hand to pay 2 {I} less for the next item you play this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: TIME TO UPGRADE
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "TIME TO UPGRADE",
+        trigger: expect.objectContaining({
+          event: "quest",
+        }),
+      }),
+    );
   });
 
-  it.skip("Pleakley - Scientific Expert: should parse card text", () => {
+  it("Pleakley - Scientific Expert: should parse card text", () => {
     const text =
       "REPORTING FOR DUTY When you play this character, put chosen character of yours into your inkwell facedown and exerted.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: REPORTING FOR DUTY
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "REPORTING FOR DUTY",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Hiro Hamada - Robotics Prodigy: should parse card text", () => {
+  it("Hiro Hamada - Robotics Prodigy: should parse card text", () => {
     const text =
       "SWEET TECH {2} {E} - Search your deck for an item card or a Robot character card and reveal it to all players. Shuffle your deck and put that card on top of it.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "search-deck",
+        }),
+      }),
+    );
   });
 
-  it.skip("Heihei - Not-So-Tricky Chicken: should parse card text", () => {
+  it("Heihei - Not-So-Tricky Chicken: should parse card text", () => {
     const text =
       "EAT ANYTHING When you play this character, exert chosen opposing item. It can't ready at the start of its next turn.\nOUT TO LUNCH During your turn, this character gains Evasive. (They can challenge characters with Evasive.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: EAT ANYTHING
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "EAT ANYTHING",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
   });
 
-  it.skip("Sour Bill - Surly Henchman: should parse card text", () => {
+  it("Sour Bill - Surly Henchman: should parse card text", () => {
     const text =
       "UNPALATABLE When you play this character, chosen opposing character gets -2 {S} this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: UNPALATABLE
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "UNPALATABLE",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Nick Wilde - Soggy Fox: should parse card text", () => {
+  it("Nick Wilde - Soggy Fox: should parse card text", () => {
     const text =
       "NICE TO HAVE A PARTNER While you have another character with Support in play, this character gets +2 {S}.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("Wasabi - Methodical Engineer: should parse card text", () => {
+  it("Wasabi - Methodical Engineer: should parse card text", () => {
     const text =
       "BLADES OF FURY When you play this character, you may banish chosen item. Its player gains 1 lore.\nQUICK REFLEXES During your turn, this character gains Evasive. (They can challenge characters with Evasive.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: BLADES OF FURY
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "BLADES OF FURY",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
   });
 
-  it.skip("Nick Wilde - Sly Fox: should parse card text", () => {
+  it("Nick Wilde - Sly Fox: should parse card text", () => {
     const text =
       "Shift 1 (You may pay 1 {I} to play this on top of one of your characters named Nick Wilde.)\nCAN'T TOUCH ME While you have an item in play, this character can't be challenged.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
   });
 
-  it.skip("Tadashi Hamada - Baymax Inventor: should parse card text", () => {
+  it("Tadashi Hamada - Baymax Inventor: should parse card text", () => {
     const text =
       "LET'S GET BACK TO WORK This character gets +1 {S} and +1 {W} for each item you have in play.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: static
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("Hiro Hamada - Team Leader: should parse card text", () => {
+  it("Hiro Hamada - Team Leader: should parse card text", () => {
     const text =
       "I NEED TO UPGRADE ALL OF YOU Your other Inventor characters gain Resist +1. (Damage dealt to them is reduced by 1.)\n\nSHAPE THE FUTURE 2 {I} - Look at the top card of your deck. Put it on either the top or the bottom of your deck.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: I NEED TO UPGRADE ALL OF YOU Your other Inventor
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "I NEED TO UPGRADE ALL OF YOU Your other Inventor",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "put-on-bottom",
+        }),
+      }),
+    );
   });
 
-  it.skip("Tadashi Hamada - Gifted Roboticist: should parse card text", () => {
+  it("Tadashi Hamada - Gifted Roboticist: should parse card text", () => {
     const text =
       "SOMEONE HAS TO HELP During an opponent’s turn, when this character is banished, you may put the top card of your deck into your inkwell facedown. Then, put this card into your inkwell facedown.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Baymax - Personal Healthcare Companion: should parse card text", () => {
+  it("Baymax - Personal Healthcare Companion: should parse card text", () => {
     const text =
       "FULLY CHARGED If you have an Inventor character in play, you pay 1 {I} less to play this character.\nYOU SAID 'OW' 2 {I} - Remove up to 1 damage from another chosen character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "conditional",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "remove-damage",
+        }),
+      }),
+    );
   });
 
-  it.skip("Baymax - Armored Companion: should parse card text", () => {
+  it("Baymax - Armored Companion: should parse card text", () => {
     const text =
       "THE TREATMENT IS WORKING When you play this character and whenever he quests, you may remove up to 2 damage from another chosen character of yours. Gain 1 lore for each 1 damage removed this way.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: THE TREATMENT IS WORKING When you play this character and
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "THE TREATMENT IS WORKING When you play this character and",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Yokai - Scientific Supervillain: should parse card text", () => {
+  it("Yokai - Scientific Supervillain: should parse card text", () => {
     const text =
       "Shift 6 (You may pay 6 {I} to play this on top of one of your characters named Yokai.)\nNEUROTRANSMITTER You may play items named Microbots for free.\nTECHNICAL GAIN Whenever this character quests, draw a card for each opposing character with {S}.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(3);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 3: TECHNICAL GAIN
+    expect(result.abilities[2].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "TECHNICAL GAIN",
+        trigger: expect.objectContaining({
+          event: "quest",
+        }),
+      }),
+    );
   });
 
-  it.skip("Alice - Savvy Sailor: should parse card text", () => {
+  it("Alice - Savvy Sailor: should parse card text", () => {
     const text =
       "Ward (Opponents can't choose this character except to challenge.)\nAHOY! Whenever this character quests, another chosen character of yours gets +1 {L} and gains Ward until the start of your next turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: AHOY!
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "AHOY!",
+        trigger: expect.objectContaining({
+          event: "quest",
+        }),
+      }),
+    );
   });
 
-  it.skip("We Could Be Immortals: should parse card text", () => {
+  it("We Could Be Immortals: should parse card text", () => {
     const text =
       "Your Inventor characters gain Resist +6 this turn. Then, put this card into your inkwell facedown and exerted. (Damage dealt to them is reduced by 6.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: Your Inventor
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "Your Inventor",
+        effect: expect.objectContaining({
+          type: "sequence",
+        }),
+      }),
+    );
   });
 
-  it.skip("Sail the Azurite Sea: should parse card text", () => {
+  it("Sail the Azurite Sea: should parse card text", () => {
     const text =
       "This turn, you may put an additional card from your hand into your inkwell facedown. Draw a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Helping Hand: should parse card text", () => {
+  it("Helping Hand: should parse card text", () => {
     const text =
       "Chosen character gains Support this turn. Draw a card. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
   });
 
-  it.skip("Prepare Your Bot: should parse card text", () => {
+  it("Prepare Your Bot: should parse card text", () => {
     const text =
       "Choose one:\n* Ready chosen item.\n* Ready chosen Robot character. They can't quest for the rest of this turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
   });
 
-  it.skip("Baymax's Healthcare Chip: should parse card text", () => {
+  it("Baymax's Healthcare Chip: should parse card text", () => {
     const text =
       "10,000 MEDICAL PROCEDURES {E} - Choose one:\n* Remove up to 1 damage from chosen character. \n* If you have a Robot character in play, remove up to 3 damage from chosen character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "remove-damage",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "conditional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Microbots: should parse card text", () => {
+  it("Microbots: should parse card text", () => {
     const text =
       "LIMITLESS APPLICATIONS You may have any number of cards named Microbots in your deck.\nINSPIRED TECH When you play this item, chosen character gets -1 {S} this turn for each item named Microbots you have in play.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: INSPIRED TECH
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "INSPIRED TECH",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Jumbo Pop: should parse card text", () => {
+  it("Jumbo Pop: should parse card text", () => {
     const text =
       "HERE YOU GO Banish this item – Remove up to 2 damage from each of your characters. Draw a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: static
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        effect: expect.objectContaining({
+          type: "sequence",
+        }),
+      }),
+    );
   });
 
-  it.skip("Rescue Rangers Submarine - Mobile Headquarters: should parse card text", () => {
+  it("Rescue Rangers Submarine - Mobile Headquarters: should parse card text", () => {
     const text =
       "PLANNING SESSION At the start of your turn, if you have a character here, you may put the top card of your deck into your inkwell facedown and exerted.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "conditional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Institute of Technology - Prestigious University: should parse card text", () => {
+  it("Institute of Technology - Prestigious University: should parse card text", () => {
     const text =
       "WELCOME TO THE LAB Inventor characters get +1 {W} while here.\nPUSH THE BOUNDARIES At the start of your turn, if you have a character here, gain 1 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: WELCOME TO THE LAB Inventor
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "WELCOME TO THE LAB Inventor",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "conditional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Kakamora - Long-Range Specialist: should parse card text", () => {
+  it("Kakamora - Long-Range Specialist: should parse card text", () => {
     const text =
       "A LITTLE HELP When you play this character, if you have another Pirate character in play, you may deal 1 damage to chosen character or location.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: A LITTLE HELP
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "A LITTLE HELP",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Kakamora - Pirate Chief: should parse card text", () => {
+  it("Kakamora - Pirate Chief: should parse card text", () => {
     const text =
       "COCONUT LEADER Whenever this character quests, you may draw a card. Then, choose and discard a card to deal 1 damage to chosen character or location. If a Pirate character card was discarded, deal 3 damage to that character or location instead.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: COCONUT LEADER
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "COCONUT LEADER",
+        trigger: expect.objectContaining({
+          event: "quest",
+        }),
+      }),
+    );
   });
 
-  it.skip("Jim Hawkins - Stubborn Cabin Boy: should parse card text", () => {
+  it("Jim Hawkins - Stubborn Cabin Boy: should parse card text", () => {
     const text =
       "COME HERE, COME HERE, COME HERE! During your turn, whenever a card is put into your inkwell, this character gets Challenger +2 this turn. (While challenging, this character gets +2 {S}.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "sequence",
+        }),
+      }),
+    );
   });
 
-  it.skip("Mr. Big - Shrewd Tycoon: should parse card text", () => {
+  it("Mr. Big - Shrewd Tycoon: should parse card text", () => {
     const text =
       "REPUTATION This character can't be challenged by characters with 2 {S} or more.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: REPUTATION
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "REPUTATION",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
   });
 
-  it.skip("Mr. Smee - Steadfast Mate: should parse card text", () => {
+  it("Mr. Smee - Steadfast Mate: should parse card text", () => {
     const text =
       "GOOD CATCH During your turn, this character gains Evasive. (They can challenge characters with Evasive.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
   });
 
-  it.skip("Mr. Smee - Captain of the Jolly Roger: should parse card text", () => {
+  it("Mr. Smee - Captain of the Jolly Roger: should parse card text", () => {
     const text =
       "Shift 4 (You may pay 4 {I} to play this on top of one of your characters named Mr. Smee.)\nRAISE THE COLORS When you play this character, you may deal damage to chosen character equal to the number of your other Pirate characters in play.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
   });
 
-  it.skip("Mullins - Seasoned Shipmate: should parse card text", () => {
+  it("Mullins - Seasoned Shipmate: should parse card text", () => {
     const text =
       "FALL IN LINE While you have a character named Mr. Smee in play, this character gains Resist +1. (Damage dealt to them is reduced by 1.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
   });
 
-  it.skip("Hercules - Unwavering Demigod: should parse card text", () => {
+  it("Hercules - Unwavering Demigod: should parse card text", () => {
     const text =
       "Challenger +2 (While challenging, this character gets +2 {S}).";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: Challenger keyword
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "keyword",
+        keyword: "Challenger",
+        value: 2,
+      }),
+    );
   });
 
-  it.skip("John Silver - Ship's Cook: should parse card text", () => {
+  it("John Silver - Ship's Cook: should parse card text", () => {
     const text =
       "HUNK OF HARDWARE When you play this character, chosen character can't challenge during their next turn.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: HUNK OF HARDWARE
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "HUNK OF HARDWARE",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Mr. Arrow - Legacy's First Mate: should parse card text", () => {
+  it("Mr. Arrow - Legacy's First Mate: should parse card text", () => {
     const text = "Resist +1 (Damage dealt to this character is reduced by 1.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: Resist keyword
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "keyword",
+        keyword: "Resist",
+        value: 1,
+      }),
+    );
   });
 
-  it.skip("Jim Hawkins - Rigging Specialist: should parse card text", () => {
+  it("Jim Hawkins - Rigging Specialist: should parse card text", () => {
     const text =
       "Shift 3 (You may pay 3 {I} to play this on top of one of your characters named Jim Hawkins.)\nBATTLE STATION When you play this character, you may deal 1 damage to chosen character or location.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: BATTLE STATION
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "BATTLE STATION",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("Billy Bones - Space Sailor: should parse card text", () => {
+  it("Billy Bones - Space Sailor: should parse card text", () => {
     const text =
       "KEEP IT HIDDEN When this character is banished, you may banish chosen item or location.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: KEEP IT HIDDEN
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "KEEP IT HIDDEN",
+        trigger: expect.objectContaining({
+          event: "banish",
+        }),
+      }),
+    );
   });
 
-  it.skip("Pluto - Guard Dog: should parse card text", () => {
+  it("Pluto - Guard Dog: should parse card text", () => {
     const text =
       "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nBRAVO While this character has no damage, he gets +4 {S}.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: static
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
+
+    // Ability 2: static
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        effect: expect.objectContaining({
+          type: "modify-stat",
+        }),
+      }),
+    );
   });
 
-  it.skip("Mickey Mouse - Night Watch: should parse card text", () => {
+  it("Mickey Mouse - Night Watch: should parse card text", () => {
     const text =
       "SUPPORT Your Pluto characters get Resist +1. (Damage dealt to them is reduced by 1.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: SUPPORT Your Pluto
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "SUPPORT Your Pluto",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
   });
 
-  it.skip("Cobra Bubbles - Former CIA: should parse card text", () => {
+  it("Cobra Bubbles - Former CIA: should parse card text", () => {
     const text =
       "Bodyguard (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)\nTHINK ABOUT WHAT'S BEST 2 {I} – Draw a card, then choose and discard a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: static
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "sequence",
+        }),
+      }),
+    );
   });
 
-  it.skip("Wreck-It Ralph - Ham Hands: should parse card text", () => {
+  it("Wreck-It Ralph - Ham Hands: should parse card text", () => {
     const text =
       "I WRECK THINGS Whenever this character quests, you may banish chosen item or location to gain 2 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: I WRECK THINGS
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "I WRECK THINGS",
+        trigger: expect.objectContaining({
+          event: "quest",
+        }),
+      }),
+    );
   });
 
-  it.skip("Calhoun - Marine Sergeant: should parse card text", () => {
+  it("Calhoun - Marine Sergeant: should parse card text", () => {
     const text =
       "Resist +1 (Damage dealt to this character is reduced by 1.)\nLEVEL UP During your turn, whenever this character banishes another character in a challenge, gain 2 lore.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: Resist keyword
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "keyword",
+        keyword: "Resist",
+        value: 1,
+      }),
+    );
+
+    // Ability 2: LEVEL UP
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "LEVEL UP",
+        trigger: expect.objectContaining({
+          event: "banish",
+        }),
+      }),
+    );
   });
 
-  it.skip("Captain Amelia - Commander of the Legacy: should parse card text", () => {
+  it("Captain Amelia - Commander of the Legacy: should parse card text", () => {
     const text =
       "DRIVELING GALOOTS This character can't be challenged by Pirate characters.\nEVERYTHING SHIPSHAPE While being challenged, your other characters gain Resist +1. (Damage dealt to them is reduced by 1.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: DRIVELING GALOOTS
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "DRIVELING GALOOTS",
+        effect: expect.objectContaining({
+          type: "restriction",
+        }),
+      }),
+    );
+
+    // Ability 2: static
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
   });
 
-  it.skip("Jafar - Power-Hungry Vizier: should parse card text", () => {
+  it("Jafar - Power-Hungry Vizier: should parse card text", () => {
     const text =
       "YOU WILL BE PAID WHEN THE TIME COMES During your turn, whenever a card is put into your inkwell, deal 1 damage to chosen character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: YOU WILL BE PAID WHEN THE TIME COMES
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "triggered",
+        name: "YOU WILL BE PAID WHEN THE TIME COMES",
+        trigger: expect.objectContaining({
+          event: "play",
+        }),
+      }),
+    );
   });
 
-  it.skip("John Silver - Stern Captain: should parse card text", () => {
+  it("John Silver - Stern Captain: should parse card text", () => {
     const text =
       "Shift 5 (You may pay 5 {I} to play this on top of one of your characters named John Silver.)\nResist +2 (Damage dealt to this character is reduced by 2.)\nDON'T JUST SIT THERE! At the start of your turn, deal 1 damage to each opposing ready character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(3);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
+
+    // Ability 2: Resist keyword
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "keyword",
+        keyword: "Resist",
+        value: 2,
+      }),
+    );
+
+    // Ability 3: action effect
+    expect(result.abilities[2].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "deal-damage",
+        }),
+      }),
+    );
   });
 
-  it.skip("Hot Potato: should parse card text", () => {
+  it("Hot Potato: should parse card text", () => {
     const text =
       "Choose one:\n- Deal 2 damage to chosen character.\n- Banish chosen item.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "deal-damage",
+        }),
+      }),
+    );
   });
 
-  it.skip("I'm Still Here: should parse card text", () => {
+  it("I'm Still Here: should parse card text", () => {
     const text =
       "Chosen character gains Resist +2 until the start of your next turn. Draw a card. (Damage dealt to them is reduced by 2.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
   });
 
-  it.skip("Twin Fire: should parse card text", () => {
+  it("Twin Fire: should parse card text", () => {
     const text =
       "Deal 2 damage to chosen character. Then, you may choose and discard a card to deal 2 damage to another chosen character.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "optional",
+        }),
+      }),
+    );
   });
 
   it.skip("Ambush!: should parse card text", () => {
@@ -1381,27 +3311,68 @@ describe("Set 006 Card Text Parser Tests", () => {
     expect(result.abilities.length).toBeGreaterThan(0);
   });
 
-  it.skip("King's Sensor Core: should parse card text", () => {
+  it("King's Sensor Core: should parse card text", () => {
     const text =
       "SYMBOL OF ROYALTY Your Prince and King characters gain Resist +1. (Damage dealt to them is reduced by 1.)\nROYAL SEARCH {E}, 2 {I} – Reveal the top card of your deck. If it's a Prince or King character card, you may put that card into your hand. Otherwise, put it on the top of your deck.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(2);
+
+    // Ability 1: SYMBOL OF ROYALTY Your Prince and King
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "static",
+        name: "SYMBOL OF ROYALTY Your Prince and King",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
+
+    // Ability 2: action effect
+    expect(result.abilities[1].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "reveal-top-card",
+        }),
+      }),
+    );
   });
 
-  it.skip("Training Dummy: should parse card text", () => {
+  it("Training Dummy: should parse card text", () => {
     const text =
       "HANDLE WITH CARE {E}, 2 {I} – Chosen character gains Bodyguard until the start of your next turn. (An opposing character who challenges one of your characters must choose one with Bodyguard if able.)";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "gain-keyword",
+        }),
+      }),
+    );
   });
 
-  it.skip("Sunglasses: should parse card text", () => {
+  it("Sunglasses: should parse card text", () => {
     const text = "SPYCRAFT {E} - Draw a card, then choose and discard a card.";
     const result = parseAbilityTextMulti(text);
     expect(result.success).toBe(true);
-    expect(result.abilities.length).toBeGreaterThan(0);
+    expect(result.abilities.length).toBe(1);
+
+    // Ability 1: action effect
+    expect(result.abilities[0].ability).toEqual(
+      expect.objectContaining({
+        type: "action",
+        effect: expect.objectContaining({
+          type: "sequence",
+        }),
+      }),
+    );
   });
 
   it.skip("Treasure Mountain - Azurite Sea Island: should parse card text", () => {
