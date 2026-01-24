@@ -9,6 +9,7 @@
  * - Shift keywords: Shift N, Puppy Shift N, Universal Shift N
  */
 
+import { logger } from "./logging";
 import {
   BOOST_PATTERN,
   CHALLENGER_PATTERN,
@@ -17,8 +18,7 @@ import {
   SIMPLE_KEYWORD_PATTERN,
   SING_TOGETHER_PATTERN,
   SINGER_PATTERN,
-} from "../patterns/keywords";
-import { logger } from "./logging";
+} from "./patterns/keywords";
 
 type SimpleKeywordType =
   | "Rush"

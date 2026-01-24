@@ -7,10 +7,10 @@
  */
 
 import { parseAbilityText, parseAbilityTextMulti } from "../../src/parser";
-import { tooComplexText } from "../../src/parser/manual-overrides";
-import { normalizeToPattern } from "../../src/parser/numeric-extractor";
-import { normalizeText } from "../../src/parser/preprocessor";
-import type { AbilityWithText } from "../../src/parser/types";
+import { tooComplexText } from "../../src/parser/v2/manual-overrides";
+import { normalizeToPattern } from "../../src/parser/v2/numeric-extractor";
+import { normalizeText } from "../../src/parser/v2/preprocessor";
+import type { AbilityWithText } from "../../src/parser/v2/types";
 import type { CanonicalCard } from "../types";
 
 /**

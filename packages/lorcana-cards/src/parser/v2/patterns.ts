@@ -1,5 +1,5 @@
 /**
- * Patterns directory stub for v2 tests.
+ * Patterns directory export for v2 parser.
  */
 
-export * from "../patterns";
+export * from "./patterns/index";

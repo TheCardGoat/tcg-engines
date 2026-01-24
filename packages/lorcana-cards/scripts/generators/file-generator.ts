@@ -20,9 +20,9 @@ import {
   getManualEntry,
   resolveManualOverrideValues,
   tooComplexText,
-} from "../../src/parser/manual-overrides";
-import { normalizeToPattern } from "../../src/parser/numeric-extractor";
-import { normalizeText } from "../../src/parser/preprocessor";
+} from "../../src/parser/v2/manual-overrides";
+import { normalizeToPattern } from "../../src/parser/v2/numeric-extractor";
+import { normalizeText } from "../../src/parser/v2/preprocessor";
 import type { CanonicalCard, SetDefinition } from "../types";
 import { normalizeForMatching } from "./parser-validator";
 
