@@ -21,44 +21,16 @@ export const belleHiddenArcher: CharacterCard = {
   externalIds: {
     ravensburger: "bd18d714f4de80dd5f926b8fafd9324dd2543d23",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1gg-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+      text: "Shift 3",
+    },
+  ],
   classifications: ["Floodborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whenChallenged } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { discardAllCards } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const belleHiddenArcher: LorcanitoCharacterCard = {
-//   id: "y10",
-//   name: "Belle",
-//   title: "Hidden Archer",
-//   characteristics: ["hero", "floodborn", "princess"],
-//   text: "**Shift** 3 _You may pay 3 {I} to play this on top of one of your characters named Belle.)_<br>\n**THORNY ARROWS** Whenever this character is challenged, the challenging character's player discards all cards in their hand.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(3, "belle"),
-//     whenChallenged({
-//       name: "Thorny Arrows",
-//       text: "Whenever this character is challenged, the challenging character's player discards all cards in their hand.",
-//       responder: "opponent",
-//       effects: [discardAllCards],
-//     }),
-//   ],
-//   flavour: "She slips through the trees as easily as shadow.",
-//   colors: ["emerald"],
-//   cost: 5,
-//   strength: 3,
-//   willpower: 3,
-//   lore: 3,
-//   illustrator: "Aisha Durmagambetova",
-//   number: 72,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 516417,
-//   },
-//   rarity: "legendary",
-// };
-//

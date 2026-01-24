@@ -16,11 +16,37 @@ export const kidaProtectorOfAtlantis: CharacterCard = {
   lore: 2,
   cardNumber: 7,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a4c575df157436357fc9a63b3d4939d878e0384d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "194-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+      text: "Shift 3",
+    },
+    {
+      id: "194-2",
+      type: "triggered",
+      name: "PERHAPS WE CAN SAVE OUR FUTURE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: -3,
+        target: "CHOSEN_CHARACTER",
+      },
+      text: "PERHAPS WE CAN SAVE OUR FUTURE When you play this character, all characters get -3 {S} until the start of your next turn.",
+    },
+  ],
   classifications: ["Floodborn", "Hero", "Princess"],
 };

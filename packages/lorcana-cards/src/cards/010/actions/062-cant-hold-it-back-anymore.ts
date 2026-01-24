@@ -12,10 +12,25 @@ export const cantHoldItBackAnymore: ActionCard = {
   cost: 4,
   cardNumber: 62,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e68e3ed8d5077f0403fa94bae8428fa62dd34f26",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ry-1",
+      type: "action",
+      effect: {
+        type: "exert",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "Exert chosen opposing character. Move all damage counters from all other characters to that character.",
+    },
+  ],
 };

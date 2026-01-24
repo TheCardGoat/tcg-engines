@@ -12,10 +12,27 @@ export const butImMuchFaster: ActionCard = {
   cost: 1,
   cardNumber: 195,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "b29939d6950700c806a94a667d1390dc2de54fd2",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1dr-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Alert",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        duration: "this-turn",
+      },
+      text: "Chosen character gains Alert and Challenger +2 this turn.",
+    },
+  ],
 };

@@ -21,6 +21,16 @@ export const magicaDeSpellTheMidasTouch: CharacterCard = {
   externalIds: {
     ravensburger: "ef7cabaf8dc312d2e7dedf796b1297f7e1cbabaf",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1u9-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 5,
+      },
+      text: "Shift 5",
+    },
+  ],
   classifications: ["Floodborn", "Villain", "Sorcerer"],
 };

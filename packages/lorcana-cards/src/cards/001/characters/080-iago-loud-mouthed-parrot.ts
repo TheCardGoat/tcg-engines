@@ -16,11 +16,27 @@ export const iagoLoudmouthedParrot: CharacterCard = {
   lore: 1,
   cardNumber: 80,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "44b0d2526e203d60174ddce6f251da6c54c72691",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "j24-1",
+      type: "activated",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Reckless",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "YOU GOT A PROBLEM? {E} — Chosen character gains Reckless during their next turn.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

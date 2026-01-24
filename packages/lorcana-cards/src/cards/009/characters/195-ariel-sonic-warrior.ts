@@ -16,27 +16,49 @@ export const arielSonicWarrior: CharacterCard = {
   lore: 2,
   cardNumber: 195,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "6a0d7fa630c6ddef725f555467e4c5b51515a664",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "tfb-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+      text: "Shift 4 {I}",
+    },
+    {
+      id: "tfb-2",
+      type: "triggered",
+      name: "AMPLIFIED VOICE",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "action",
+        },
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 3,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "AMPLIFIED VOICE Whenever you play a song, you may pay 2 {I} to deal 3 damage to chosen character.",
+    },
+  ],
   classifications: ["Floodborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { arielSonicWarrior as ogArielSonicWarrior } from "@lorcanito/lorcana-engine/cards/004/characters/175-ariel-sonic-warrior";
-//
-// export const arielSonicWarrior: LorcanitoCharacterCard = {
-//   ...ogArielSonicWarrior,
-//   id: "hbk",
-//   reprints: [ogArielSonicWarrior.id],
-//   number: 195,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650128,
-//   },
-// };
-//

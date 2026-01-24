@@ -15,26 +15,22 @@ export const hiddenCoveTranquilHaven: LocationCard = {
   lore: 0,
   cardNumber: 102,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ed1ae5d7eae7e91e80de930096d8be65b9f13e21",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ts-1",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: "CHARACTERS_HERE",
+      },
+      name: "REVITALIZING WATERS",
+      text: "REVITALIZING WATERS Characters get +1 {S} and +1 {W} while here.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { hiddenCoveTranquilHaven as ogHiddenCoveTranquilHaven } from "@lorcanito/lorcana-engine/cards/004/locations/101-hidden-cove-tranquil-haven";
-//
-// export const hiddenCoveTranquilHaven: LorcanitoLocationCard = {
-//   ...ogHiddenCoveTranquilHaven,
-//   id: "sxr",
-//   reprints: [ogHiddenCoveTranquilHaven.id],
-//   number: 102,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650040,
-//   },
-// };
-//

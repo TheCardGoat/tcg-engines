@@ -16,11 +16,29 @@ export const motherGothelUnderhandedSchemer: CharacterCard = {
   lore: 1,
   cardNumber: 110,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a8d28560d4ed027183aa8139f310bd1579b03f24",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1au-1",
+      type: "action",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "a character was banished this turn",
+        },
+        then: {
+          type: "modify-stat",
+          stat: "strength",
+          modifier: 2,
+          target: "SELF",
+        },
+      },
+      text: "SOMEBODY'S GOT TO USE IT If a character was banished this turn, this character gets +2 {S}.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],
 };

@@ -16,27 +16,29 @@ export const tukTukLivelyPartner: CharacterCard = {
   lore: 1,
   cardNumber: 129,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e0924443108d0df64a23851b0300bc32953f3c15",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1qb-1",
+      type: "triggered",
+      name: "Evasive ON A ROLL",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "YOUR_CHARACTERS",
+        duration: "this-turn",
+      },
+      text: "Evasive ON A ROLL When you play this character, you may move him and one of your other characters to the same location for free. If you do, the other character gets +2 {S} this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { tukTukLivelyPartner as ogTukTukLivelyPartner } from "@lorcanito/lorcana-engine/cards/004/characters/127-tuk-tuk-lively-partner";
-//
-// export const tukTukLivelyPartner: LorcanitoCharacterCard = {
-//   ...ogTukTukLivelyPartner,
-//   id: "lts", // New ID for this card
-//   reprints: [ogTukTukLivelyPartner.id],
-//   number: 129,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650064,
-//   },
-// };
-//

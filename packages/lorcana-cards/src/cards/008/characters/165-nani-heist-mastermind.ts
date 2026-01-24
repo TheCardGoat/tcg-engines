@@ -16,11 +16,39 @@ export const naniHeistMastermind: CharacterCard = {
   lore: 1,
   cardNumber: 165,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "2f18349b85491e5971a0a7786eb658f2610a58ae",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "d2e-1",
+      type: "activated",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        value: 2,
+        duration: "this-turn",
+      },
+      text: "STICK TO THE PLAN {E} — Another chosen character gains Resist +2 this turn.",
+    },
+    {
+      id: "d2e-2",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Support",
+        target: "YOUR_CHARACTERS",
+      },
+      text: "IT'S UP TO YOU, LILO Your characters named Lilo gain Support.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

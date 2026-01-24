@@ -21,22 +21,13 @@ export const wildcatMechanic: CharacterCard = {
   externalIds: {
     ravensburger: "d65da805f8e4842f708b27639020b476a285cbb7",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1nh-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wildcatMechanic as wildcatMechanicAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const wildcatMechanic: LorcanitoCharacterCard = {
-//   ...wildcatMechanicAsOrig,
-//   id: "lmm",
-//   reprints: [wildcatMechanicAsOrig.id],
-//   number: 91,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650030,
-//   },
-// };
-//

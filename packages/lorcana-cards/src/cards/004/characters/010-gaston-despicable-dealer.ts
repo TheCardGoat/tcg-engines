@@ -16,11 +16,20 @@ export const gastonDespicableDealer: CharacterCard = {
   lore: 1,
   cardNumber: 10,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "227600aa724c645ab4db45734ad272f904d89fe5",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "9k7-1",
+      type: "activated",
+      effect: {
+        type: "play-card",
+        from: "hand",
+      },
+      text: "DUBIOUS RECRUITMENT {E} — You pay 2 {I} less for the next character you play this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };

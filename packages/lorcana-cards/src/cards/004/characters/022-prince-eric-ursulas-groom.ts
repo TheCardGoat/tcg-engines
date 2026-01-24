@@ -16,11 +16,41 @@ export const princeEricUrsulasGroom: CharacterCard = {
   lore: 2,
   cardNumber: 22,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e529775247b312583f7d987816f1a0041efaf5ad",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1rd-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+      text: "Shift 4",
+    },
+    {
+      id: "1rd-2",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "gain-keyword",
+            keyword: "Bodyguard",
+            target: "SELF",
+          },
+          {
+            type: "modify-stat",
+            stat: "willpower",
+            modifier: 2,
+            target: "CHOSEN_CHARACTER",
+          },
+        ],
+      },
+      text: "UNDER VANESSA'S SPELL While you have a character named Ursula in play, this character gains Bodyguard and gets +2 {W}.",
+    },
+  ],
   classifications: ["Floodborn", "Hero", "Prince"],
 };

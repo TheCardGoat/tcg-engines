@@ -16,11 +16,34 @@ export const gadgetHackwrenchQuirkyScientist: CharacterCard = {
   lore: 2,
   cardNumber: 99,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "fa60b1fa0ad93291d6d2a22286eb5955fb5c309f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1xg-1",
+      type: "triggered",
+      name: "GOLLY!",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "an opponent has more cards in their hand than you",
+        },
+        then: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+      },
+      text: "GOLLY! When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Inventor"],
 };

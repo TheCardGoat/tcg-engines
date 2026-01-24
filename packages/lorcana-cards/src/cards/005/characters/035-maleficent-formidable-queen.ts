@@ -16,11 +16,35 @@ export const maleficentFormidableQueen: CharacterCard = {
   lore: 2,
   cardNumber: 35,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "04a79bb0eca187a8b814a8086f523827a8495e69",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1a2-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 6,
+      },
+      text: "Shift 6",
+    },
+    {
+      id: "1a2-2",
+      type: "action",
+      effect: {
+        type: "return-to-hand",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "LISTEN WELL, ALL OF YOU When you play this character, for each of your characters named Maleficent in play, return a chosen opposing character, item, or location with cost 3 or less to their player's hand.",
+    },
+  ],
   classifications: ["Floodborn", "Villain", "Queen", "Sorcerer"],
 };

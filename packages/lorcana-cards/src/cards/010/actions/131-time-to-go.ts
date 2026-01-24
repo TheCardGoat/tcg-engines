@@ -11,10 +11,27 @@ export const timeToGo: ActionCard = {
   cost: 3,
   cardNumber: 131,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "2ccdbaf5525fefc69a486d32fa6a3e8fd923d02f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "cfj-1",
+      type: "action",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "that character had a card under them",
+        },
+        then: {
+          type: "draw",
+          amount: 3,
+          target: "CONTROLLER",
+        },
+      },
+      text: "Banish chosen character of yours to draw 2 cards. If that character had a card under them, draw 3 cards instead.",
+    },
+  ],
 };

@@ -16,11 +16,31 @@ export const fixitFelixJrNicelandSteward: CharacterCard = {
   lore: 1,
   cardNumber: 12,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "7e4e53714f3c4b1b2397062f8fd5e95894fcab60",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "z1m-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+      text: "Shift 3",
+    },
+    {
+      id: "z1m-2",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "willpower",
+        modifier: 2,
+        target: "CHOSEN_CHARACTER",
+      },
+      text: "BUILDING TOGETHER Your locations get +2 {W}.",
+    },
+  ],
   classifications: ["Floodborn", "Hero"],
 };

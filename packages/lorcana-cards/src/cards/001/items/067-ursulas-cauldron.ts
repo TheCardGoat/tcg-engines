@@ -11,10 +11,36 @@ export const ursulasCauldron: ItemCard = {
   cost: 2,
   cardNumber: 67,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a757b4be52f0de48fe6589a497c72522ca4489c8",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ad-1",
+      type: "activated",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "scry",
+            amount: 2,
+            target: "CONTROLLER",
+            destinations: [
+              {
+                zone: "deck-bottom",
+                remainder: true,
+                ordering: "player-choice",
+              },
+            ],
+          },
+          {
+            type: "put-on-bottom",
+            target: "CHOSEN_CHARACTER",
+          },
+        ],
+      },
+      text: "PEER INTO THE DEPTHS {E} — Look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+    },
+  ],
 };

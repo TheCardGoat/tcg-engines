@@ -16,27 +16,22 @@ export const jafarKeeperOfSecrets: CharacterCard = {
   lore: 2,
   cardNumber: 38,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ee9d82aaf3c52ce93cf24d12435b7bbf781da971",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1u7-1",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: "SELF",
+      },
+      text: "HIDDEN WONDERS This character gets +1 {S} for each card in your hand.",
+    },
+  ],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { jafarKeeperOfSecrets as ogJafarKeeperOfTheSecrets } from "@lorcanito/lorcana-engine/cards/001/characters/044-jafar-keeper-of-secrets";
-//
-// export const jafarKeeperOfSecrets: LorcanitoCharacterCard = {
-//   ...ogJafarKeeperOfTheSecrets,
-//   id: "f6f",
-//   reprints: [ogJafarKeeperOfTheSecrets.id],
-//   number: 38,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649985,
-//   },
-// };
-//

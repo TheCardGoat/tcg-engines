@@ -11,41 +11,25 @@ export const divebomb: ActionCard = {
   cost: 3,
   cardNumber: 128,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "b79271249a893d1000e32bdb11f4305ccf9defd7",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ei-1",
+      type: "action",
+      effect: {
+        type: "banish",
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "you",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "Banish one of your characters with Reckless to banish chosen character with less {S} than that character.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-//
-// export const divebomb: LorcanitoActionCard = {
-//   id: "zm8",
-//   missingTestCase: true,
-//   name: "Divebomb",
-//   characteristics: ["action"],
-//   text: "Banish one of your characters with **Reckless** to banish chosen character with less {S} than that character.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       name: "Banish one of your characters with **Reckless** to banish chosen character with less {S} than that character.",
-//       text: "Banish one of your characters with **Reckless** to banish chosen character with less {S} than that character.",
-//       effects: [],
-//     },
-//   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   illustrator: "Lisanne Koeteeuw",
-//   number: 128,
-//   set: "ITI",
-//   externalIds: {
-//     tcgPlayer: 537755,
-//   },
-//   rarity: "uncommon",
-// };
-//

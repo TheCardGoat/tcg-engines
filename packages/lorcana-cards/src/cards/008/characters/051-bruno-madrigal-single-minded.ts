@@ -16,11 +16,28 @@ export const brunoMadrigalSingleminded: CharacterCard = {
   lore: 1,
   cardNumber: 51,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a7994847594176243295b27ad0e85c4d38457cfc",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1a1-1",
+      type: "triggered",
+      name: "STANDING TALL",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "restriction",
+        restriction: "cant-ready",
+        target: "SELF",
+        duration: "their-next-turn",
+      },
+      text: "STANDING TALL When you play this character, chosen opposing character can't ready at the start of their next turn.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Madrigal"],
 };

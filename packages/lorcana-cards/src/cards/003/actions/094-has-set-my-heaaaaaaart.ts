@@ -11,10 +11,25 @@ export const hasSetMyHeaaaaaaart: ActionCard = {
   cost: 2,
   cardNumber: 94,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "0f90fdf72f661609d43e8e558f069305b91a4e05",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "4bh-1",
+      type: "action",
+      effect: {
+        type: "banish",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["item"],
+        },
+      },
+      text: "Banish chosen item.",
+    },
+  ],
 };

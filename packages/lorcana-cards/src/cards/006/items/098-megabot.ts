@@ -16,33 +16,17 @@ export const megabot: ItemCard = {
   externalIds: {
     ravensburger: "8d39122e87e1603287c1b7a7ea6692a829361d9d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "137-1",
+      type: "static",
+      effect: {
+        type: "restriction",
+        restriction: "enters-play-exerted",
+        target: "SELF",
+      },
+      name: "HAPPY FACE",
+      text: "HAPPY FACE This item enters play exerted.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import {
-//   destroy,
-//   happyFace,
-// } from "@lorcanito/lorcana-engine/cards/006/items/abilities";
-//
-// export const megabot: LorcanitoItemCard = {
-//   id: "zgw",
-//   missingTestCase: true,
-//   name: "Megabot",
-//   characteristics: ["item"],
-//   text: "HAPPY FACE This item enters play exerted.\nDESTROY! {E}, Banish this item - Choose one:\n* Banish chosen item.\n* Banish chosen damaged character.",
-//   type: "item",
-//   abilities: [happyFace, destroy],
-//   inkwell: false,
-//   colors: ["emerald"],
-//   cost: 2,
-//   illustrator: "Kamil Murzyn",
-//   number: 98,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 588322,
-//   },
-//   rarity: "uncommon",
-// };
-//

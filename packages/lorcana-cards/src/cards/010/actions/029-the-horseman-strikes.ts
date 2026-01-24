@@ -11,10 +11,29 @@ export const theHorsemanStrikes: ActionCard = {
   cost: 3,
   cardNumber: 29,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "90fdcaf4b9ec91e3c409fbf4ff9ebb6fc58f0cde",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "14i-1",
+      type: "action",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "banish",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "Draw a card. You may banish chosen character with Evasive.",
+    },
+  ],
 };

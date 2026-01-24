@@ -16,11 +16,30 @@ export const grammaTalaKeeperOfAncientStories: CharacterCard = {
   lore: 1,
   cardNumber: 142,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "bc6fd7ac911a2a70ed405fd12118d2c4d90ec0df",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ga-1",
+      type: "triggered",
+      name: "THERE WAS ONLY OCEAN",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "THERE WAS ONLY OCEAN When you play this character, look at the top 2 cards of your deck. You may put one into your hand. Put the rest on the bottom of your deck in any order.",
+    },
+  ],
   classifications: ["Storyborn", "Mentor"],
 };

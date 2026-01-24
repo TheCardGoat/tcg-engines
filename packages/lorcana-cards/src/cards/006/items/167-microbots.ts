@@ -16,31 +16,30 @@ export const microbots: ItemCard = {
   externalIds: {
     ravensburger: "16564aa9bee85f228a9e033b2c6ce86800ff1717",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "674-2",
+      type: "triggered",
+      name: "INSPIRED TECH",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: -1,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        duration: "this-turn",
+      },
+      text: "INSPIRED TECH When you play this item, chosen character gets -1 {S} this turn for each item named Microbots you have in play.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { limitlessApplications } from "@lorcanito/lorcana-engine/cards/006/items/abilities";
-//
-// export const microbots: LorcanitoItemCard = {
-//   id: "klj",
-//   missingTestCase: true,
-//   name: "Microbots",
-//   characteristics: ["item"],
-//   text: "LIMITLESS APPLICATIONS You may have any number of cards named Microbots in your deck.\nINSPIRED TECH When you play this item, chosen character gets -1 {S} this turn for each item named Microbots you have in play.",
-//   type: "item",
-//   abilities: [limitlessApplications],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   illustrator: "Stefano Spagnuolo",
-//   number: 167,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 588323,
-//   },
-//   rarity: "uncommon",
-//   cardCopyLimit: "no-limit",
-// };
-//

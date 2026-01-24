@@ -16,5 +16,27 @@ export const iceSpikes: ItemCard = {
   externalIds: {
     ravensburger: "4848962185abb4d5b4c61baa3a86c31313853f72",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "k20-1",
+      type: "triggered",
+      name: "HOLD STILL",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "exert",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "HOLD STILL When you play this item, exert chosen opposing character.",
+    },
+  ],
 };

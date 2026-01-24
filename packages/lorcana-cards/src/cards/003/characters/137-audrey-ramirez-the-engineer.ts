@@ -16,11 +16,38 @@ export const audreyRamirezTheEngineer: CharacterCard = {
   lore: 2,
   cardNumber: 137,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "2e16aefcc21576313bee509a1ee6d1b6a30a558a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "csd-1",
+      type: "keyword",
+      keyword: "Ward",
+      text: "Ward",
+    },
+    {
+      id: "csd-2",
+      type: "triggered",
+      name: "SPARE PARTS",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "ready",
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "you",
+          zones: ["play"],
+          cardTypes: ["item"],
+        },
+      },
+      text: "SPARE PARTS Whenever this character quests, ready one of your items.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

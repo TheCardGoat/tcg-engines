@@ -16,11 +16,42 @@ export const aliceClumsyAsCanBe: CharacterCard = {
   lore: 2,
   cardNumber: 104,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "4ebbac71024f902baab0a404f68a139bfc927b05",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "luf-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+      text: "Shift 3",
+    },
+    {
+      id: "luf-2",
+      type: "triggered",
+      name: "ACCIDENT PRONE",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "put-damage",
+        amount: 1,
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "ACCIDENT PRONE Whenever this character quests, put 1 damage counter on each other character.",
+    },
+  ],
   classifications: ["Floodborn", "Hero"],
 };

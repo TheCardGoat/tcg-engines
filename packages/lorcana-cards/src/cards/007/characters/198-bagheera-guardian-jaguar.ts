@@ -16,62 +16,39 @@ export const bagheeraGuardianJaguar: CharacterCard = {
   lore: 2,
   cardNumber: 198,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "8e707e6dd19e262dc08b7529a727f0a41a77b507",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "132-1",
+      type: "keyword",
+      keyword: "Bodyguard",
+      text: "Bodyguard",
+    },
+    {
+      id: "132-2",
+      type: "triggered",
+      name: "YOU MUST BE BRAVE",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "deal-damage",
+        amount: 2,
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "YOU MUST BE BRAVE When this character is banished during an opponent's turn, deal 2 damage to each opposing character.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { bodyguardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const bagheeraGuardianJaguar: LorcanitoCharacterCard = {
-//   id: "dnh",
-//   name: "Bagheera",
-//   title: "Guardian Jaguar",
-//   characteristics: ["storyborn", "ally"],
-//   text: "Bodyguard \nYOU MUST BE BRAVE When this character is banished during an opponent's turn, deal 2 damage to each opposing character.",
-//   type: "character",
-//   abilities: [
-//     bodyguardAbility,
-//     whenThisCharacterBanished({
-//       conditions: [{ type: "during-turn", value: "opponent" }],
-//       name: "You must be brave",
-//       text: "When this character is banished during an opponent's turn, deal 2 damage to each opposing character.",
-//       effects: [
-//         dealDamageEffect(2, {
-//           type: "card",
-//           value: "all",
-//           filters: [
-//             {
-//               filter: "owner",
-//               value: "opponent",
-//             },
-//             { filter: "zone", value: "play" },
-//             { filter: "type", value: "character" },
-//           ],
-//         }),
-//       ],
-//     }),
-//   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 3,
-//   illustrator: "Alice Pisoni",
-//   number: 198,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619522,
-//   },
-//   rarity: "legendary",
-//   lore: 2,
-// };
-//

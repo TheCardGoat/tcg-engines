@@ -16,48 +16,27 @@ export const shereKhanInfamousTiger: CharacterCard = {
   lore: 4,
   cardNumber: 92,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e5c04a374746e0b16d522ecd3804b6024ae6ad38",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1r2-1",
+      type: "triggered",
+      name: "WHAT A PITY",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "discard",
+        amount: -1,
+        target: "CONTROLLER",
+      },
+      text: "WHAT A PITY When you play this character, discard your hand.",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { discardYourHand } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const shereKhanInfamousTiger: LorcanitoCharacterCard = {
-//   id: "gmw",
-//   name: "Shere Khan",
-//   title: "Infamous Tiger",
-//   characteristics: ["storyborn", "villain"],
-//   text: "IT IS REGRETTABLE When you play this character, discard your hand.",
-//   type: "character",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       name: "IT IS REGRETTABLE",
-//       text: "When you play this character, discard your hand.",
-//       optional: false,
-//
-//       effects: [discardYourHand],
-//     },
-//   ],
-//   inkwell: false,
-//   colors: ["emerald"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 4,
-//   illustrator: "Stefano Zanchi",
-//   number: 92,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619455,
-//   },
-//   rarity: "rare",
-//   lore: 4,
-// };
-//

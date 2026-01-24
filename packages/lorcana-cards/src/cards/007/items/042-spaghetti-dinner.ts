@@ -11,34 +11,26 @@ export const spaghettiDinner: ItemCard = {
   cost: 2,
   cardNumber: 42,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a9a9ca2c6a1c80726daf8f1358630264d440c24b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1bi-1",
+      type: "activated",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have 2 or more characters in play",
+        },
+        then: {
+          type: "gain-lore",
+          amount: 1,
+        },
+      },
+      text: "FINE DINING {E}, 1 {I} — If you have 2 or more characters in play, gain 1 lore.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { spaghettiDinnerAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
-//
-// export const spaghettiDinner: LorcanitoItemCard = {
-//   id: "kpp",
-//   name: "Spaghetti Dinner",
-//   characteristics: ["item"],
-//   text: "FINE DINING {E}, 1 {I} – If you have 2 or more characters in play, gain 1 lore.",
-//   type: "item",
-//   abilities: [spaghettiDinnerAbility],
-//   inkwell: false,
-//   colors: ["amber"],
-//   cost: 2,
-//   illustrator: "Roberto Gatto",
-//   number: 42,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618164,
-//   },
-//   rarity: "common",
-// };
-//

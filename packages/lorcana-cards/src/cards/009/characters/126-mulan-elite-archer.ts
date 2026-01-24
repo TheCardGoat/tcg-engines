@@ -21,22 +21,41 @@ export const mulanEliteArcher: CharacterCard = {
   externalIds: {
     ravensburger: "06e306a4259dd86efa3be5c32d8bc2d7de24b052",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1w1-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 5,
+      },
+      text: "Shift 5 {I}",
+    },
+    {
+      id: "1w1-2",
+      type: "triggered",
+      name: "STRAIGHT SHOOTER",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you used Shift to play her",
+        },
+        then: {
+          type: "modify-stat",
+          stat: "strength",
+          modifier: 3,
+          target: "CHOSEN_CHARACTER",
+          duration: "this-turn",
+        },
+      },
+      text: "STRAIGHT SHOOTER When you play this character, if you used Shift to play her, she gets +3 {S} this turn.",
+    },
+  ],
   classifications: ["Floodborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { mulanEliteArcher as ogMulanEliteArcher } from "@lorcanito/lorcana-engine/cards/004/characters/224-mulan-elite-archer";
-//
-// export const mulanEliteArcher: LorcanitoCharacterCard = {
-//   ...ogMulanEliteArcher,
-//   id: "t4r",
-//   reprints: [ogMulanEliteArcher.id],
-//   number: 126,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650061,
-//   },
-// };
-//

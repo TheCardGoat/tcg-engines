@@ -16,11 +16,21 @@ export const pennyTheOrphanCleverChild: CharacterCard = {
   lore: 2,
   cardNumber: 171,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "687a88406aa8c1ed46674b0056434598500a6808",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "szl-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Ward",
+        target: "SELF",
+      },
+      text: "OUR BOTTLE WORKED! While you have a Hero character in play, this character gains Ward.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

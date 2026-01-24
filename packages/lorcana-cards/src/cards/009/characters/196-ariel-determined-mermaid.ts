@@ -16,27 +16,35 @@ export const arielDeterminedMermaid: CharacterCard = {
   lore: 1,
   cardNumber: 196,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "3c90f7d78a7f6faad9aeb5edd3c7f5da84a98a4a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "gsz-1",
+      type: "triggered",
+      name: "I WANT MORE",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "action",
+        },
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "discard",
+          amount: 1,
+          target: "CONTROLLER",
+          chosen: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "I WANT MORE Whenever you play a song, you may draw a card, then choose and discard a card.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { arielDeterminedMermaid as ogArielDeterminedMermaid } from "@lorcanito/lorcana-engine/cards/004/characters/174-ariel-determined-mermaid";
-//
-// export const arielDeterminedMermaid: LorcanitoCharacterCard = {
-//   ...ogArielDeterminedMermaid,
-//   id: "b8l",
-//   reprints: [ogArielDeterminedMermaid.id],
-//   number: 196,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650129,
-//   },
-// };
-//

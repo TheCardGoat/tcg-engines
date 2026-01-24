@@ -16,60 +16,40 @@ export const dopeyKnightApprentice: CharacterCard = {
   lore: 1,
   cardNumber: 181,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f677c49becf6b4fbd214ebd4f49bda04509c285d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1w8-1",
+      type: "triggered",
+      name: "STRONGER TOGETHER",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have another Knight character in play",
+        },
+        then: {
+          type: "deal-damage",
+          amount: 1,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+      },
+      text: "STRONGER TOGETHER When you play this character, if you have another Knight character in play, you may deal 1 damage to chosen character or location.",
+    },
+  ],
   classifications: ["Dreamborn", "Ally", "Knight", "Seven Dwarfs"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacterOrLocation } from "@lorcanito/lorcana-engine/abilities/target";
-// import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const dopeyKnightApprentice: LorcanitoCharacterCard = {
-//   id: "hwb",
-//   missingTestCase: true,
-//   name: "Dopey",
-//   title: "Knight Apprentice",
-//   characteristics: ["dreamborn", "ally", "knight", "seven dwarfs"],
-//   text: "**STRONGER TOGETHER** When you play this character, if you have another Knight character in play, you may deal 1 damage to chosen character or location.",
-//   type: "character",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       name: "Stronger Together",
-//       text: "When you play this character, if you have another Knight character in play, you may deal 1 damage to chosen character or location.",
-//       optional: true,
-//       resolutionConditions: [
-//         {
-//           type: "filter",
-//           filters: [
-//             { filter: "characteristics", value: ["knight"] },
-//             { filter: "owner", value: "self" },
-//             { filter: "zone", value: "play" },
-//           ],
-//           comparison: { operator: "gte", value: 2 },
-//         },
-//       ],
-//       effects: [dealDamageEffect(1, chosenCharacterOrLocation)],
-//     },
-//   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Alice Pisoni",
-//   number: 181,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 559667,
-//   },
-//   rarity: "common",
-// };
-//

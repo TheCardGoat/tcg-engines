@@ -16,11 +16,26 @@ export const scroogeMcduckUncleMoneybags: CharacterCard = {
   lore: 1,
   cardNumber: 155,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "34821210949db285beda99fc388fae434447385b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ekh-1",
+      type: "triggered",
+      name: "TREASURE FINDER",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "play-card",
+        from: "hand",
+      },
+      text: "TREASURE FINDER Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero"],
 };

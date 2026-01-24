@@ -16,11 +16,21 @@ export const captainAmeliaFirstInCommand: CharacterCard = {
   lore: 1,
   cardNumber: 138,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "06f07cce4b8529674c6da0f1709720cf364f1e60",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1xb-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: "SELF",
+      },
+      text: "DISCIPLINE During your turn, this character gains Evasive.",
+    },
+  ],
   classifications: ["Storyborn", "Alien", "Captain"],
 };

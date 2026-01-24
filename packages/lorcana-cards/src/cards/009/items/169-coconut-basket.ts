@@ -11,26 +11,40 @@ export const coconutBasket: ItemCard = {
   cost: 2,
   cardNumber: 169,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "b0aeb53ff83e9f3f9443625e4f795527ca5d86f3",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1d0-1",
+      type: "triggered",
+      name: "CONSIDER THE COCONUT",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "character",
+        },
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "remove-damage",
+          amount: 2,
+          upTo: true,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "CONSIDER THE COCONUT Whenever you play a character, you may remove up to 2 damage from chosen character.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { coconutbasket as ogCoconutBasket } from "@lorcanito/lorcana-engine/cards/001/items/166-coconut-basket";
-//
-// export const coconutBasket: LorcanitoItemCard = {
-//   ...ogCoconutBasket,
-//   id: "bxv",
-//   reprints: [ogCoconutBasket.id],
-//   number: 169,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650103,
-//   },
-// };
-//

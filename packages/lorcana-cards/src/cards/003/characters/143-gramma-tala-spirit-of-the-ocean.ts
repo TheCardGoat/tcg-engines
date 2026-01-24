@@ -16,11 +16,30 @@ export const grammaTalaSpiritOfTheOcean: CharacterCard = {
   lore: 2,
   cardNumber: 143,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "fbf243419cbfdb464f79114d25217e7266819b65",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1xw-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 5,
+      },
+      text: "Shift 5",
+    },
+    {
+      id: "1xw-2",
+      type: "triggered",
+      name: "DO YOU KNOW WHO YOU ARE?",
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+      },
+      text: "DO YOU KNOW WHO YOU ARE? Whenever a card is put into your inkwell, gain 1 lore.",
+    },
+  ],
   classifications: ["Floodborn", "Mentor"],
 };

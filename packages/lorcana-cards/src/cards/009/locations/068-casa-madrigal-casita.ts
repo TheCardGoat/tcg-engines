@@ -15,26 +15,26 @@ export const casaMadrigalCasita: LocationCard = {
   lore: 0,
   cardNumber: 68,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "86c8f197eff8c61973ac292a62a4be6cd966c168",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "115-1",
+      type: "action",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have a character here",
+        },
+        then: {
+          type: "gain-lore",
+          amount: 1,
+        },
+      },
+      text: "OUR HOME At the start of your turn, if you have a character here, gain 1 lore.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { casaMadrigalCasita as ogCasaMadrigalCasita } from "@lorcanito/lorcana-engine/cards/004/locations/67-casa-madrigal-casita";
-//
-// export const casaMadrigalCasita: LorcanitoLocationCard = {
-//   ...ogCasaMadrigalCasita,
-//   id: "jx4",
-//   reprints: [ogCasaMadrigalCasita.id],
-//   number: 68,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650010,
-//   },
-// };
-//

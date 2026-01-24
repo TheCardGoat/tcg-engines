@@ -21,6 +21,13 @@ export const abuIllusoryPachyderm: CharacterCard = {
   externalIds: {
     ravensburger: "fc278a703770bc359b9bcfe2f95aeb009697b0a3",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1xy-1",
+      type: "keyword",
+      keyword: "Vanish",
+      text: "Vanish",
+    },
+  ],
   classifications: ["Dreamborn", "Ally", "Illusion"],
 };

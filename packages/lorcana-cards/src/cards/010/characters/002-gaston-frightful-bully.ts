@@ -16,62 +16,41 @@ export const gastonFrightfulBully: CharacterCard = {
   lore: 1,
   cardNumber: 2,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "93a1e91ad769dd24d137c4b39540e3d3e8e6c5bc",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "14y-1",
+      type: "keyword",
+      keyword: "Boost",
+      value: 2,
+      text: "Boost 2 {I}",
+    },
+    {
+      id: "14y-2",
+      type: "triggered",
+      name: "TOP THAT!",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "there's a card under him",
+        },
+        then: {
+          type: "restriction",
+          restriction: "cant-challenge",
+          target: "SELF",
+        },
+      },
+      text: "TOP THAT! Whenever this character quests, if there's a card under him, chosen opposing character can't challenge and must quest if able during their next turn.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Whisper"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   boostAbility,
-//   ifThereIsACardUnder,
-// } from "@lorcanito/lorcana-engine/abilities/boostAbility";
-// import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-// import { wheneverThisCharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { chosenOpposingCharacterGainsMustQuestDuringNextTurn } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const gastonFrightfulBully: LorcanitoCharacterCard = {
-//   id: "log",
-//   name: "Gaston",
-//   title: "Frightful Bully",
-//   characteristics: ["storyborn", "villain", "whisper"],
-//   text: "Boost 2\n TOP THAT! Whenever this character quests, if there's a card under him, chosen opposing character can't challenge and must quest if able during their next turn.",
-//   type: "character",
-//   inkwell: false,
-//   colors: ["amber"],
-//   cost: 2,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Nicholas Kole",
-//   number: 2,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 658325,
-//   },
-//   rarity: "uncommon",
-//   lore: 1,
-//   abilities: [
-//     boostAbility(2),
-//     wheneverThisCharacterQuests({
-//       name: "TOP THAT!",
-//       text: "Whenever this character quests, if there's a card under him, chosen opposing character can't challenge and must quest if able during their next turn.",
-//       conditions: [ifThereIsACardUnder],
-//       effects: [
-//         {
-//           type: "restriction",
-//           restriction: "challenge",
-//           duration: "next_turn",
-//           until: true,
-//           target: chosenOpposingCharacter,
-//         },
-//         chosenOpposingCharacterGainsMustQuestDuringNextTurn,
-//       ],
-//     }),
-//   ],
-// };
-//

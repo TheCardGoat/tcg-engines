@@ -43,39 +43,3 @@ export const elsaExploringTheUnknown: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Hero", "Queen", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const elsaExploringTheUnknown: LorcanitoCharacterCard = {
-//   id: "mjm",
-//   name: "Elsa",
-//   title: "Exploring the Unknown",
-//   characteristics: ["dreamborn", "hero", "queen", "sorcerer"],
-//   text: "CLOSER LOOK When you play this character, you may draw a card.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 3,
-//   illustrator: "Clio Wolfensberger",
-//   number: 45,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 658466,
-//   },
-//   rarity: "common",
-//   lore: 1,
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       effects: [drawACard],
-//       name: "CLOSER LOOK",
-//       text: "When you play this character, you may draw a card.",
-//       optional: true,
-//     }),
-//   ],
-// };
-//

@@ -16,27 +16,26 @@ export const ursulaDeceiver: CharacterCard = {
   lore: 1,
   cardNumber: 90,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "2f0ee159014b24c95f95963bdfa4b8ec79329fac",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "d21-1",
+      type: "triggered",
+      name: "YOU'LL NEVER EVEN MISS IT",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "play-card",
+        from: "hand",
+      },
+      text: "YOU'LL NEVER EVEN MISS IT When you play this character, chosen opponent reveals their hand and discards a song card of your choice.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { ursulaDeceiver as ogUrsulaDeceiver } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const ursulaDeceiver: LorcanitoCharacterCard = {
-//   ...ogUrsulaDeceiver,
-//   id: "r8u",
-//   reprints: [ogUrsulaDeceiver.id],
-//   number: 90,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650029,
-//   },
-// };
-//

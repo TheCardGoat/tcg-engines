@@ -16,5 +16,38 @@ export const tugofwar: ActionCard = {
   externalIds: {
     ravensburger: "de379a9a8efe4e9448c52cc6876bf5893405ba9c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1pu-2",
+      type: "action",
+      effect: {
+        type: "deal-damage",
+        amount: 1,
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "• Deal 1 damage to each opposing character without Evasive.",
+    },
+    {
+      id: "1pu-3",
+      type: "action",
+      effect: {
+        type: "deal-damage",
+        amount: 3,
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "• Deal 3 damage to each opposing character with Evasive.",
+    },
+  ],
 };

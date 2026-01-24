@@ -16,46 +16,32 @@ export const mulanDisguisedSoldier: CharacterCard = {
   lore: 1,
   cardNumber: 193,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "dc468c676e85ae64384d43f7358b0f77eac28102",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1p3-1",
+      type: "triggered",
+      name: "WHERE DO I SIGN IN?",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "discard",
+          amount: 1,
+          target: "CONTROLLER",
+          chosen: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "WHERE DO I SIGN IN? When you play this character, you may draw a card, then choose and discard a card.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const mulanDisguisedSoldier: LorcanitoCharacterCard = {
-//   id: "xrb",
-//   name: "Mulan",
-//   title: "Disguised Soldier",
-//   characteristics: ["storyborn", "hero", "princess"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 1,
-//   strength: 2,
-//   willpower: 1,
-//   illustrator: "Jochem van Gool",
-//   number: 193,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619519,
-//   },
-//   rarity: "common",
-//   lore: 1,
-//   text: "WHERE DO I SIGN IN? When you play this character, you may draw a card, then choose and discard a card.",
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       ...youMayDrawThenChooseAndDiscard,
-//       name: "WHERE DO I SIGN IN?",
-//       text: "When you play this character, you may draw a card, then choose and discard a card.",
-//     }),
-//   ],
-// };
-//

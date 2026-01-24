@@ -21,22 +21,14 @@ export const rafikiMysticalFighter: CharacterCard = {
   externalIds: {
     ravensburger: "8466dac039964fa9f794e1621d30ef9f87b4ead9",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "10q-1",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 3,
+      text: "Challenger +3",
+    },
+  ],
   classifications: ["Dreamborn", "Mentor", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { rafikiMysticalFighter as ogRafikiMysticalFighter } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const rafikiMysticalFighter: LorcanitoCharacterCard = {
-//   ...ogRafikiMysticalFighter,
-//   id: "b7e",
-//   reprints: [ogRafikiMysticalFighter.id],
-//   number: 36,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649983,
-//   },
-// };
-//

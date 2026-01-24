@@ -16,46 +16,27 @@ export const theMatchmakerUnforgivingExpert: CharacterCard = {
   lore: 1,
   cardNumber: 123,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "37ceefedfc5a4857cf51f3b75ec149712c62fdab",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "fhg-1",
+      type: "triggered",
+      name: "YOU ARE A DISGRACE!",
+      trigger: {
+        event: "challenge",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "lose-lore",
+        amount: 1,
+        target: "EACH_OPPONENT",
+      },
+      text: "YOU ARE A DISGRACE! Whenever this character challenges another character, each opponent loses 1 lore.",
+    },
+  ],
   classifications: ["Storyborn"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { wheneverChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { opponentLoseLore } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const theMatchmakerUnforgivingExpert: LorcanitoCharacterCard = {
-//   id: "wmb",
-//   name: "The Matchmaker",
-//   title: "Unforgiving Expert",
-//   characteristics: ["storyborn"],
-//   text: "YOU ARE A DISGRACE! Whenever this character challenges another character, each opponent loses 1 lore.",
-//   type: "character",
-//   abilities: [
-//     wheneverChallengesAnotherChar({
-//       name: "You are a disgrace!",
-//       text: "Whenever this character challenges another character, each opponent loses 1 lore.",
-//       effects: [opponentLoseLore(1)],
-//     }),
-//   ],
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 3,
-//   illustrator: "Brian Weiss",
-//   number: 123,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618207,
-//   },
-//   rarity: "common",
-//   lore: 1,
-// };
-//

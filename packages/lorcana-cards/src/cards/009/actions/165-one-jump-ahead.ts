@@ -12,26 +12,22 @@ export const oneJumpAhead: ActionCard = {
   cost: 2,
   cardNumber: 165,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "fbc3343ba157343b6f977e1486027bbe0b7ab1f7",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1xl-1",
+      type: "action",
+      effect: {
+        type: "put-into-inkwell",
+        source: "top-of-deck",
+        target: "CONTROLLER",
+        exerted: true,
+        facedown: true,
+      },
+      text: "Put the top card of your deck into your inkwell facedown and exerted.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { oneJumpAhead as ogOneJumpAhead } from "@lorcanito/lorcana-engine/cards/001/songs/164-one-jump-ahead";
-//
-// export const oneJumpAhead: LorcanitoActionCard = {
-//   ...ogOneJumpAhead,
-//   id: "uhq",
-//   reprints: [ogOneJumpAhead.id],
-//   number: 165,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650099,
-//   },
-// };
-//

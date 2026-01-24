@@ -16,59 +16,26 @@ export const henWenPropheticPig: CharacterCard = {
   lore: 1,
   cardNumber: 138,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d3e6bc36dde0bb79b16e1217817d3d1be299ac50",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ms-1",
+      type: "triggered",
+      name: "FUTURE SIGHT",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "put-on-bottom",
+        target: "CHOSEN_CHARACTER",
+      },
+      text: "FUTURE SIGHT Whenever this character quests, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wheneverThisCharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-//
-// export const henWenPropheticPig: LorcanitoCharacterCard = {
-//   id: "v1a",
-//   name: "Hen Wen",
-//   title: "Prophetic Pig",
-//   characteristics: ["storyborn", "ally"],
-//   text: "FUTURE SIGHT Whenever this character quests, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 4,
-//   illustrator: "Kapik",
-//   number: 138,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 657890,
-//   },
-//   rarity: "common",
-//   abilities: [
-//     wheneverThisCharacterQuests({
-//       name: "FUTURE SIGHT",
-//       text: "Whenever this character quests, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
-//       effects: [
-//         {
-//           type: "scry",
-//           amount: 1,
-//           mode: "both",
-//           limits: {
-//             top: 1,
-//             bottom: 1,
-//           },
-//           target: {
-//             type: "player",
-//             value: "self",
-//           },
-//         },
-//       ],
-//     }),
-//   ],
-//   lore: 1,
-// };
-//

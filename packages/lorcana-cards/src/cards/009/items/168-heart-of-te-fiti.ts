@@ -11,26 +11,22 @@ export const heartOfTeFiti: ItemCard = {
   cost: 3,
   cardNumber: 168,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f2d37b460b9e74070319ab78f31a81246eb7f444",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1vi-1",
+      type: "activated",
+      effect: {
+        type: "put-into-inkwell",
+        source: "top-of-deck",
+        target: "CONTROLLER",
+        exerted: true,
+        facedown: true,
+      },
+      text: "CREATE LIFE {E}, 2 {I} — Put the top card of your deck into your inkwell facedown and exerted.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { heartOfTeFiti as heartOfTeFitiAsOrig } from "@lorcanito/lorcana-engine/cards/003/items/164-heart-of-te-fiti";
-//
-// export const heartOfTeFiti: LorcanitoItemCard = {
-//   ...heartOfTeFitiAsOrig,
-//   id: "cl8",
-//   reprints: [heartOfTeFitiAsOrig.id],
-//   number: 168,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650102,
-//   },
-// };
-//

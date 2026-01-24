@@ -15,66 +15,25 @@ export const theBitterwoodUndergroundForest: LocationCard = {
   lore: 0,
   cardNumber: 135,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "3a3459cd9d25b260d30643f438ea1fc29b17f5b4",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "g5d-1",
+      type: "triggered",
+      name: "GATHER RESOURCES Once",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "GATHER RESOURCES Once during your turn, whenever you move a character with 5 {S} or more here, you may draw a card.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { whenYouMoveACharacterHere } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const theBitterwoodUndergroundForest: LorcanitoLocationCard = {
-//   id: "c32",
-//   name: "The Bitterwood",
-//   title: "Underground Forest",
-//   characteristics: ["location"],
-//   text: "GATHER RESOURCES Once during your turn, whenever you move a character with 5 {S} or more here, you may draw a card.",
-//   type: "location",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 4,
-//   willpower: 7,
-//   illustrator: "Maximillien Borie",
-//   number: 135,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 658882,
-//   },
-//   rarity: "rare",
-//   abilities: [
-//     whenYouMoveACharacterHere({
-//       name: "GATHER RESOURCES",
-//       text: "Once during your turn, whenever you move a character with 5 {S} or more here, you may draw a card.",
-//       optional: true,
-//       target: {
-//         type: "card",
-//         value: "all",
-//         filters: [
-//           { filter: "owner", value: "self" },
-//           { filter: "type", value: "character" },
-//           {
-//             filter: "attribute",
-//             value: "strength",
-//             comparison: { operator: "gte", value: 5 },
-//           },
-//         ],
-//       },
-//       conditions: [
-//         { type: "first-time-move-to-location" },
-//         {
-//           type: "during-turn",
-//           value: "self",
-//         },
-//       ],
-//       effects: [drawACard],
-//     }),
-//   ],
-//   moveCost: 2,
-//   lore: 1,
-// };
-//

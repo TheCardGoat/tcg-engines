@@ -16,11 +16,22 @@ export const razoulPalaceGuard: CharacterCard = {
   lore: 1,
   cardNumber: 188,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f8dd4eca93b566669177d2b20df6caf61a1b91ea",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1xc-1",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+      },
+      text: "LOOKY HERE While this character has no damage, he gets +2 {S}.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Captain"],
 };

@@ -16,50 +16,28 @@ export const jafarTyrannicalHypnotist: CharacterCard = {
   lore: 2,
   cardNumber: 172,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "788ce5ab348a5417b600e7c2902097c8a264500b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "xg5-1",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 7,
+      text: "Challenger +7",
+    },
+    {
+      id: "xg5-2",
+      type: "action",
+      effect: {
+        type: "restriction",
+        restriction: "cant-challenge",
+        target: "SELF",
+      },
+      text: "INTIMIDATING GAZE Opposing characters with cost 4 or less can't challenge.",
+    },
+  ],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   challengerAbility,
-//   charactersWithCostXorLessCantChallenge,
-// } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const jafarTyrannicalHypnotist: LorcanitoCharacterCard = {
-//   id: "c2a",
-//   name: "Jafar",
-//   title: "Tyrannical Hypnotist",
-//   characteristics: ["dreamborn", "sorcerer", "villain"],
-//   text: "**Challenger** +7 _(While challenging, this character gets +7 {S}.)_\n \n**INTIMIDATING GAZE** Opposing characters with cost 4 or less can’t challenge.",
-//   type: "character",
-//   abilities: [
-//     challengerAbility(7),
-//     charactersWithCostXorLessCantChallenge({
-//       name: "Intimidating Gaze",
-//       text: "Opposing characters with cost 4 or less can’t challenge.",
-//       cost: 4,
-//     }),
-//   ],
-//   flavour: "No one will keep me from the broken crown!",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 6,
-//   strength: 0,
-//   willpower: 7,
-//   lore: 2,
-//   illustrator: "Cam Kendell",
-//   number: 172,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 561328,
-//   },
-//   rarity: "legendary",
-// };
-//

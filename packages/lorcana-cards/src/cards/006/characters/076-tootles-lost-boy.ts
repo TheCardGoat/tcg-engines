@@ -21,29 +21,3 @@ export const tootlesLostBoy: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const tootlesLostBoy: LorcanitoCharacterCard = {
-//   id: "rad",
-//   name: "Tootles",
-//   title: "Lost Boy",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 1,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Taranesh",
-//   number: 76,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 588068,
-//   },
-//   rarity: "common",
-// };
-//

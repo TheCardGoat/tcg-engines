@@ -128,10 +128,10 @@ export function parseAbilityTexts(
  * Parse ability text that may contain multiple abilities
  *
  * This function handles complex card texts that contain multiple abilities
- * (e.g., "ABILITY ONE Effect. ABILITY TWO Other effect.").
+ * separated by newlines (e.g., "ABILITY ONE Effect.\nABILITY TWO Other effect.").
  *
  * For manual override entries, returns all abilities defined in the entry.
- * For regular texts, attempts to parse as a single ability.
+ * For regular texts, splits by newline and parses each ability individually.
  *
  * @param text - Raw ability text from card (may contain multiple abilities)
  * @param options - Parser options
@@ -139,7 +139,7 @@ export function parseAbilityTexts(
  *
  * @example
  * ```typescript
- * const result = parseAbilityTextMulti("ABILITY ONE Effect. ABILITY TWO Other.");
+ * const result = parseAbilityTextMulti("ABILITY ONE Effect.\nABILITY TWO Other.");
  * if (result.success) {
  *   console.log(`Found ${result.abilities.length} abilities`);
  * }
@@ -149,10 +149,7 @@ export function parseAbilityTextMulti(
   text: string,
   options?: ParseOptions,
 ): MultiParseResult {
-  // Step 1: Preprocess text
-  const normalizedText = normalizeText(text);
-
-  if (!normalizedText) {
+  if (!(text && text.trim())) {
     return {
       success: false,
       abilities: [],
@@ -160,7 +157,7 @@ export function parseAbilityTextMulti(
     };
   }
 
-  // Step 2: Check for manual override by card name first
+  // Step 1: Check for manual override by card name first
   if (options?.cardName && MANUAL_ENTRIES_BY_NAME[options.cardName]) {
     const entry = MANUAL_ENTRIES_BY_NAME[options.cardName];
     const entries = Array.isArray(entry) ? entry : [entry];
@@ -170,7 +167,8 @@ export function parseAbilityTextMulti(
     };
   }
 
-  // Step 3: Check for manual override by text pattern
+  // Step 2: Check for manual override by text pattern (normalized)
+  const normalizedText = normalizeText(text);
   if (tooComplexText(normalizedText)) {
     const manualEntries = getManualEntries(normalizedText, options?.cardName);
     if (manualEntries && manualEntries.length > 0) {
@@ -186,21 +184,59 @@ export function parseAbilityTextMulti(
     };
   }
 
-  // Step 4: Fall back to single ability parsing
-  const singleResult = parseAbilityText(text, options);
+  // Step 3: Split by newlines and parse each ability individually
+  const abilityTexts = text
+    .split("\n")
+    .map((t) => t.trim())
+    .filter((t) => t.length > 0);
 
-  if (singleResult.success && singleResult.ability) {
+  // If no newlines, parse as single ability
+  if (abilityTexts.length <= 1) {
+    const singleResult = parseAbilityText(text.trim(), options);
+
+    if (singleResult.success && singleResult.ability) {
+      return {
+        success: true,
+        abilities: [singleResult.ability],
+        warnings: singleResult.warnings,
+      };
+    }
+
+    return {
+      success: false,
+      abilities: [],
+      error: singleResult.error || singleResult.warnings?.join(", "),
+      warnings: singleResult.warnings,
+    };
+  }
+
+  // Step 4: Parse each ability text individually
+  const abilities: AbilityWithText[] = [];
+  const warnings: string[] = [];
+
+  for (const abilityText of abilityTexts) {
+    const result = parseAbilityText(abilityText, options);
+
+    if (result.success && result.ability) {
+      abilities.push(result.ability);
+    } else {
+      warnings.push(`Failed to parse: "${abilityText}"`);
+    }
+  }
+
+  // Success if at least one ability parsed
+  if (abilities.length > 0) {
     return {
       success: true,
-      abilities: [singleResult.ability],
-      warnings: singleResult.warnings,
+      abilities,
+      warnings: warnings.length > 0 ? warnings : undefined,
     };
   }
 
   return {
     success: false,
     abilities: [],
-    error: singleResult.error || singleResult.warnings?.join(", "),
-    warnings: singleResult.warnings,
+    error: "Failed to parse any abilities",
+    warnings,
   };
 }

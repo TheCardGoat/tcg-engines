@@ -16,47 +16,31 @@ export const beastRelentless: CharacterCard = {
   lore: 2,
   cardNumber: 70,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "1f998b8d166c57c497364060cda6ba1cc7a4a1bf",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "8rn-1",
+      type: "triggered",
+      name: "SECOND WIND",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "ready",
+          target: {
+            selector: "self",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "SECOND WIND Whenever an opposing character is damaged, you may ready this character.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wheneverOppCharIsDamaged } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { readyThisCharacter } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const beastRelentless: LorcanitoCharacterCard = {
-//   id: "ky8",
-//   name: "Beast",
-//   title: "Relentless",
-//   characteristics: ["hero", "storyborn", "prince"],
-//   text: "**SECOND WIND** Whenever an opposing character is damaged, you may ready this character.",
-//   type: "character",
-//   abilities: [
-//     wheneverOppCharIsDamaged({
-//       name: "Second Wind",
-//       text: "Whenever an opposing character is damaged, you may ready this character.",
-//       optional: true,
-//       effects: [readyThisCharacter],
-//     }),
-//   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 6,
-//   strength: 4,
-//   willpower: 5,
-//   lore: 2,
-//   illustrator: "Eri Welli",
-//   number: 70,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 520858,
-//   },
-//   rarity: "legendary",
-// };
-//

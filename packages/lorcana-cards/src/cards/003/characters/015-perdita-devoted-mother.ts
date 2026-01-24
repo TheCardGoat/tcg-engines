@@ -16,11 +16,25 @@ export const perditaDevotedMother: CharacterCard = {
   lore: 2,
   cardNumber: 15,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "b1005675a4c65117f039b0b5707c31167707af7b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1dc-1",
+      type: "action",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "play-card",
+          from: "discard",
+          cost: "free",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "COME ALONG, CHILDREN When you play this character and whenever she quests, you may play a character with cost 2 or less from your discard for free.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

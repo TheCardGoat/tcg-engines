@@ -16,11 +16,27 @@ export const jetsamRiffraff: CharacterCard = {
   lore: 2,
   cardNumber: 76,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "df5150338f9402043e441bce48da10db7dde0b61",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1py-1",
+      type: "keyword",
+      keyword: "Ward",
+      text: "Ward",
+    },
+    {
+      id: "1py-2",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Ward",
+        target: "YOUR_CHARACTERS",
+      },
+      text: "EERIE PAIR Your characters named Flotsam gain Ward.",
+    },
+  ],
   classifications: ["Dreamborn", "Ally"],
 };

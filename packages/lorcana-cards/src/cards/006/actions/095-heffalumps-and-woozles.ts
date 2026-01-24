@@ -12,45 +12,31 @@ export const heffalumpsAndWoozles: ActionCard = {
   cost: 2,
   cardNumber: 95,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "852f102ef952d51be8cdcfe9a21537a060be160a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "10y-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "restriction",
+            restriction: "cant-quest",
+            target: "SELF",
+            duration: "their-next-turn",
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+      text: "Chosen opposing character can't quest during their next turn. Draw a card.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenOpposingCharacterCantQuestNextTurn,
-//   drawACard,
-// } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const heffalumpsAndWoozles: LorcanitoActionCard = {
-//   id: "kml",
-//   name: "Heffalumps And Woozles",
-//   characteristics: ["song", "action"],
-//   text: "(A character with cost 2 or more can {E} to sing this song for free.)\nChosen opposing character can't quest during their next turn. Draw a card.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 2,
-//   illustrator: "Domenico Russo",
-//   number: 95,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 587355,
-//   },
-//   rarity: "common",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       name: "Heffalumps And Woozles",
-//       text: "Chosen opposing character can't quest during their next turn. Draw a card.",
-//       resolveEffectsIndividually: true,
-//       effects: [drawACard, chosenOpposingCharacterCantQuestNextTurn],
-//     },
-//   ],
-// };
-//

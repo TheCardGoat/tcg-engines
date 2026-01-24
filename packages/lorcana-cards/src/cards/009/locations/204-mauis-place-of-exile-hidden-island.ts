@@ -15,10 +15,22 @@ export const mauisPlaceOfExileHiddenIsland: LocationCard = {
   lore: 0,
   cardNumber: 204,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "df63a319ee65f482a2cbc5479c989fcbcebad344",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1pe-1",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        target: "CHARACTERS_HERE",
+        value: 1,
+      },
+      name: "ISOLATED",
+      text: "ISOLATED Characters gain Resist +1 while here.",
+    },
+  ],
 };

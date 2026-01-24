@@ -15,27 +15,20 @@ export const plutoFriendlyPooch: CharacterCard = {
   lore: 1,
   cardNumber: 21,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "98a41ededf0b9cfe8fa7096aaf97b6290be8f370",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "16c-1",
+      type: "activated",
+      effect: {
+        type: "play-card",
+        from: "hand",
+      },
+      text: "GOOD DOG {E} — You pay 1 {I} less for the next character you play this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { plutoFriendlyPooch as ogPlutoFriendlyPooch } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const plutoFriendlyPooch: LorcanitoCharacterCard = {
-//   ...ogPlutoFriendlyPooch,
-//   id: "gm9",
-//   reprints: [ogPlutoFriendlyPooch.id],
-//   number: 21,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649969,
-//   },
-// };
-//

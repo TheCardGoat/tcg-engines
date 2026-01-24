@@ -16,11 +16,21 @@ export const figaroTuxedoCat: CharacterCard = {
   lore: 1,
   cardNumber: 133,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f682275599ccf863e9becb5cac4f455052ec7d83",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1w3-1",
+      type: "static",
+      effect: {
+        type: "restriction",
+        restriction: "enters-play-exerted",
+        target: "SELF",
+      },
+      text: "PLAYFULNESS Opposing items enter play exerted.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

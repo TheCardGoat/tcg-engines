@@ -16,27 +16,36 @@ export const mamaOdieMysticalMaven: CharacterCard = {
   lore: 1,
   cardNumber: 152,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "bef7418632eb34baeafeaecab51aad74cb7191b3",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1gz-1",
+      type: "triggered",
+      name: "THIS GOING TO BE GOOD",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "action",
+        },
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          source: "top-of-deck",
+          target: "CONTROLLER",
+          exerted: true,
+          facedown: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "THIS GOING TO BE GOOD Whenever you play a song, you may put the top card of your deck into your inkwell facedown and exerted.",
+    },
+  ],
   classifications: ["Storyborn", "Mentor"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { mamaOdieMysticalMaven as mamaOdieMysticalMavenAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const mamaOdieMysticalMaven: LorcanitoCharacterCard = {
-//   ...mamaOdieMysticalMavenAsOrig,
-//   id: "j6p",
-//   reprints: [mamaOdieMysticalMavenAsOrig.id],
-//   number: 152,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650087,
-//   },
-// };
-//

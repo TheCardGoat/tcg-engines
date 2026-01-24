@@ -16,11 +16,33 @@ export const peterPansShadowNotSewnOn: CharacterCard = {
   lore: 2,
   cardNumber: 42,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d5557ab7eb7b97bdfce53586c13fcb4c32995437",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1n6-1",
+      type: "keyword",
+      keyword: "Rush",
+      text: "Rush",
+    },
+    {
+      id: "1n6-2",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "1n6-3",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: "YOUR_CHARACTERS",
+      },
+      text: "TIPTOE Your other characters with Rush gain Evasive.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

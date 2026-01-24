@@ -16,27 +16,27 @@ export const pongoDeterminedFather: CharacterCard = {
   lore: 1,
   cardNumber: 2,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f2e3f62dba601d0b7718e2d5a5a6d161f72cd084",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ve-1",
+      type: "action",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "it's a character card",
+        },
+        then: {
+          type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
+        },
+      },
+      text: "TWILIGHT BARK Once during your turn, you may pay 2 {I} to reveal the top card of your deck. If it's a character card, put it into your hand. Otherwise, put it on the bottom of your deck.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { pongoDeterminedFather as ogPongoDeterminedFather } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const pongoDeterminedFather: LorcanitoCharacterCard = {
-//   ...ogPongoDeterminedFather,
-//   id: "nn4",
-//   reprints: [ogPongoDeterminedFather.id],
-//   number: 2,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649951,
-//   },
-// };
-//

@@ -16,27 +16,20 @@ export const belleUntrainedMystic: CharacterCard = {
   lore: 1,
   cardNumber: 39,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "978ddff2c7a02c8c94056556dc73c364c4039837",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "161-1",
+      type: "action",
+      effect: {
+        type: "play-card",
+        from: "hand",
+      },
+      text: "HERE NOW, DON'T DO THAT When you play this character, move up to 1 damage counter from chosen character to chosen opposing character.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { belleUntrainedMystic as ogBelleUntrainedMystic } from "@lorcanito/lorcana-engine/cards/004/characters/037-belle-untrained-mystic";
-//
-// export const belleUntrainedMystic: LorcanitoCharacterCard = {
-//   ...ogBelleUntrainedMystic,
-//   id: "k6t",
-//   reprints: [ogBelleUntrainedMystic.id],
-//   number: 39,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649986,
-//   },
-// };
-//

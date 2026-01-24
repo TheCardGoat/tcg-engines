@@ -21,6 +21,16 @@ export const teKElementalTerror: CharacterCard = {
   externalIds: {
     ravensburger: "060b34992cdf3b51d872b1f70f9d808ba0b3be9a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1od-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 7,
+      },
+      text: "Shift 7",
+    },
+  ],
   classifications: ["Floodborn", "Villain", "Deity"],
 };

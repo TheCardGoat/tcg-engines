@@ -16,11 +16,28 @@ export const tinkerBellVeryCleverFairy: CharacterCard = {
   lore: 2,
   cardNumber: 157,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "fd89ea25a0c3cdeeea1cff6ca1da06b611c4a945",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1y4-1",
+      type: "triggered",
+      name: "I CAN USE THAT",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          source: "hand",
+          target: "CONTROLLER",
+          exerted: true,
+          facedown: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "I CAN USE THAT Whenever one of your items is banished, you may put that card into your inkwell facedown and exerted.",
+    },
+  ],
   classifications: ["Dreamborn", "Ally", "Fairy"],
 };

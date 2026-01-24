@@ -16,11 +16,35 @@ export const darlingDearBelovedWife: CharacterCard = {
   lore: 1,
   cardNumber: 16,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "c79b2be577f57d10e268462d5266900613098ea1",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1j2-1",
+      type: "triggered",
+      name: "HOW SWEET",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 2,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        duration: "this-turn",
+      },
+      text: "HOW SWEET When you play this character, chosen character gets +2 {L} this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

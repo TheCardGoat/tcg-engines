@@ -12,10 +12,34 @@ export const itMeansNoWorries: ActionCard = {
   cost: 9,
   cardNumber: 42,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "41430a33d61146dd95a179122a74a0b04e5c2502",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "i3v-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "return-to-hand",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+          {
+            type: "play-card",
+            from: "hand",
+          },
+        ],
+      },
+      text: "Sing Together 9 Return up to 3 character cards from your discard to your hand. You pay 2 {I} less for the next character you play this turn.",
+    },
+  ],
 };

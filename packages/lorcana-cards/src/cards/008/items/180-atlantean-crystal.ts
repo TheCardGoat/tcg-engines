@@ -11,10 +11,27 @@ export const atlanteanCrystal: ItemCard = {
   cost: 2,
   cardNumber: 180,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "fe914af5333fd24dcec411e67a9a6c5f596db9df",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1y7-1",
+      type: "activated",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        value: 2,
+      },
+      text: "SHIELDING LIGHT {E}, 2 {I} — Chosen character gains Resist +2 and Support until the start of your next turn.",
+    },
+  ],
 };

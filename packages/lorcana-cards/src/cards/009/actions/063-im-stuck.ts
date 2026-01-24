@@ -11,10 +11,21 @@ export const imStuck: ActionCard = {
   cost: 1,
   cardNumber: 63,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "acc10f3d5e369e92d864fbc4fc5b78c3b73e21bc",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1bx-1",
+      type: "action",
+      effect: {
+        type: "restriction",
+        restriction: "cant-ready",
+        target: "SELF",
+        duration: "their-next-turn",
+      },
+      text: "Chosen exerted character can't ready at the start of their next turn.",
+    },
+  ],
 };

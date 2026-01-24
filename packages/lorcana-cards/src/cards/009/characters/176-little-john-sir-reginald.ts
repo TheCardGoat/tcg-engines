@@ -16,89 +16,54 @@ export const littleJohnSirReginald: CharacterCard = {
   lore: 1,
   cardNumber: 176,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d409daa7c57554709734ba935a4ef64ae6db2b51",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1mt-1",
+      type: "triggered",
+      name: "WHAT A BEAUTIFUL BRAWL!",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "play-card",
+        from: "hand",
+      },
+      text: "WHAT A BEAUTIFUL BRAWL! When you play this character, choose one:",
+    },
+    {
+      id: "1mt-2",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        target: "CHOSEN_CHARACTER",
+        value: 2,
+        duration: "this-turn",
+      },
+      text: "- Chosen Hero character gains Resist +2 this turn.",
+    },
+    {
+      id: "1mt-3",
+      type: "action",
+      effect: {
+        type: "deal-damage",
+        amount: 2,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "- Deal 2 damage to chosen Villain character.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { targetCardGainsResist } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const littleJohnSirReginald: LorcanitoCharacterCard = {
-//   id: "kkx",
-//   name: "Little John",
-//   title: "Sir Reginald",
-//   characteristics: ["storyborn", "ally"],
-//   text: "WHAT A BEAUTIFUL BRAWL! When you play this character, choose one:\n- Chosen Hero character gains Resist +2 this turn. (Damage dealt to them is reduced by 2.)\n- Deal 2 damage to chosen Villain character.",
-//   type: "character",
-//   inkwell: false,
-//   colors: ["steel"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 2,
-//   illustrator: "Cristian Romero",
-//   number: 176,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650109,
-//   },
-//   rarity: "uncommon",
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       effects: [
-//         {
-//           type: "modal",
-//           // TODO: Get rid of target
-//           target: chosenCharacter,
-//           modes: [
-//             {
-//               id: "1",
-//               text: "Chosen Hero character gains Resist +2 this turn. (Damage dealt to them is reduced by 2.)",
-//               effects: [
-//                 targetCardGainsResist({
-//                   target: {
-//                     type: "card",
-//                     value: 1,
-//                     filters: [
-//                       { filter: "zone", value: "play" },
-//                       { filter: "characteristics", value: ["hero"] },
-//                     ],
-//                   },
-//                   amount: 2,
-//                   duration: "turn",
-//                 }),
-//               ],
-//             },
-//             {
-//               id: "2",
-//               text: "Deal 2 damage to chosen Villain character.",
-//               effects: [
-//                 {
-//                   type: "damage",
-//                   amount: 2,
-//                   target: {
-//                     type: "card",
-//                     value: 1,
-//                     filters: [
-//                       { filter: "zone", value: "play" },
-//                       { filter: "characteristics", value: ["villain"] },
-//                     ],
-//                   },
-//                 },
-//               ],
-//             },
-//           ],
-//         },
-//       ],
-//     }),
-//   ],
-//   lore: 1,
-// };
-//

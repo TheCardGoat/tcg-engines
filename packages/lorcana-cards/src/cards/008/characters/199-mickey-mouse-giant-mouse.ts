@@ -15,11 +15,39 @@ export const mickeyMouseGiantMouse: CharacterCard = {
   lore: 5,
   cardNumber: 199,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "9d90f566a3400873ee6d58692fa1bec880d0b149",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "17p-1",
+      type: "keyword",
+      keyword: "Bodyguard",
+      text: "Bodyguard",
+    },
+    {
+      id: "17p-2",
+      type: "triggered",
+      name: "THE BIGGEST STAR EVER",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "deal-damage",
+        amount: 5,
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "THE BIGGEST STAR EVER When this character is banished, deal 5 damage to each opposing character.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero"],
 };

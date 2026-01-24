@@ -16,11 +16,36 @@ export const princeJohnFraidycat: CharacterCard = {
   lore: 1,
   cardNumber: 146,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "3716bbbbc0261b3fecc0b6ae8298ef4193facf52",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "fa9-1",
+      type: "triggered",
+      name: "HELP! HELP!",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "opponent",
+          cardType: "character",
+        },
+      },
+      effect: {
+        type: "deal-damage",
+        amount: 1,
+        target: {
+          selector: "self",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "HELP! HELP! Whenever an opponent plays a character, deal 1 damage to this character.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Prince"],
 };

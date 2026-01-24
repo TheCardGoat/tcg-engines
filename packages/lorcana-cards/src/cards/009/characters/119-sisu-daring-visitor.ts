@@ -16,27 +16,32 @@ export const sisuDaringVisitor: CharacterCard = {
   lore: 1,
   cardNumber: 119,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "fc67550a3eb2e05ff941e3dd9ba390ad5570186e",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1y1-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "1y1-2",
+      type: "triggered",
+      name: "BRING ON THE HEAT!",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "play-card",
+        from: "hand",
+      },
+      text: "BRING ON THE HEAT! When you play this character, banish chosen opposing character with 1 {S} or less.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Deity", "Dragon"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { sisuDaringVisitor as sisuDaringVisitorAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/123-sisu-daring-visitor";
-//
-// export const sisuDaringVisitor: LorcanitoCharacterCard = {
-//   ...sisuDaringVisitorAsOrig,
-//   id: "eyu",
-//   reprints: [sisuDaringVisitorAsOrig.id],
-//   number: 119,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650055,
-//   },
-// };
-//

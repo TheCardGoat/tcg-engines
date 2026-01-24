@@ -16,11 +16,22 @@ export const scroopBackstabber: CharacterCard = {
   lore: 2,
   cardNumber: 122,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "12e992ed5c1b1f3b4983f8fe3780e871b2743fb4",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "58w-1",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 3,
+        target: "SELF",
+      },
+      text: "BRUTE While this character has damage, he gets +3 {S}.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Alien", "Pirate"],
 };

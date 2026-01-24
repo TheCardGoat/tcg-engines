@@ -16,11 +16,36 @@ export const donKarnageAirPirateLeader: CharacterCard = {
   lore: 1,
   cardNumber: 108,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "0dc717cd37ae1be2d1173b144c114628a1e411d5",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "3tm-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "3tm-2",
+      type: "triggered",
+      name: "SCORNFUL TAUNT",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "action",
+        },
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Reckless",
+        target: "CHOSEN_CHARACTER",
+      },
+      text: "SCORNFUL TAUNT Whenever you play an action that isn’t a song, chosen opposing character gains Reckless during their next turn.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Prince", "Pirate"],
 };

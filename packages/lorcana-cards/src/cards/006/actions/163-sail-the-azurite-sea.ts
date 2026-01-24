@@ -11,47 +11,25 @@ export const sailTheAzuriteSea: ActionCard = {
   cost: 2,
   cardNumber: 163,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "7cf280d8897d60a0cb50595020fb50df421ba296",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "yo2-1",
+      type: "action",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          source: "hand",
+          target: "CONTROLLER",
+          facedown: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "This turn, you may put an additional card from your hand into your inkwell facedown. Draw a card.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import {
-//   drawACard,
-//   youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-// } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const sailTheAzuriteSea: LorcanitoActionCard = {
-//   id: "dwo",
-//   name: "Sail The Azurite Sea",
-//   characteristics: ["action"],
-//   text: "This turn, you may put an additional card from your hand into your inkwell facedown. Draw a card.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       resolveEffectsIndividually: true,
-//       effects: [
-//         youMayPutAnAdditionalCardFromYourHandIntoYourInkwell,
-//         drawACard,
-//       ],
-//     },
-//   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   strength: 0,
-//   illustrator: "Valerio Buonfantino",
-//   number: 163,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 592008,
-//   },
-//   rarity: "common",
-// };
-//

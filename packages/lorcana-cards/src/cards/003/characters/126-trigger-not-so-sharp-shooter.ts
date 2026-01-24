@@ -16,11 +16,22 @@ export const triggerNotsosharpShooter: CharacterCard = {
   lore: 1,
   cardNumber: 126,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "8b2da5c9c177bac4e285d0fbfae3e11d7ffe9792",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "125-1",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "YOUR_CHARACTERS",
+      },
+      text: "OLD BETSY Your characters named Nutsy get +1 {L}.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

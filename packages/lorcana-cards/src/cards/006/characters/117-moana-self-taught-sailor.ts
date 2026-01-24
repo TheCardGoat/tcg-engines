@@ -16,11 +16,22 @@ export const moanaSelftaughtSailor: CharacterCard = {
   lore: 1,
   cardNumber: 117,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "8eff1d2190a411b5fb11b72010f471fd055dde07",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "13o-1",
+      type: "static",
+      effect: {
+        type: "restriction",
+        restriction: "cant-challenge",
+        target: "SELF",
+      },
+      name: "LEARNING THE ROPES",
+      text: "LEARNING THE ROPES This character can't challenge unless you have a Captain character in play.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Princess", "Pirate"],
 };

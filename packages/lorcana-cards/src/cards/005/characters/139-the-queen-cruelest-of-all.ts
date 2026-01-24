@@ -29,33 +29,3 @@ export const theQueenCruelestOfAll: CharacterCard = {
   ],
   classifications: ["Storyborn", "Villain", "Queen", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const theQueenCruelestOfAll: LorcanitoCharacterCard = {
-//   id: "mjg",
-//   name: "The Queen",
-//   title: "Cruelest of All",
-//   characteristics: ["queen", "sorcerer", "storyborn", "villain"],
-//   text: "**Ward** _(Opponents can’t choose this character except to challenge.)_",
-//   type: "character",
-//   abilities: [wardAbility],
-//   flavour:
-//     "She’d seen what the ink could do for other glimmers. What could it do for her?",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   willpower: 4,
-//   strength: 0,
-//   lore: 1,
-//   illustrator: "Carmine Pucci",
-//   number: 139,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 561641,
-//   },
-//   rarity: "common",
-// };
-//

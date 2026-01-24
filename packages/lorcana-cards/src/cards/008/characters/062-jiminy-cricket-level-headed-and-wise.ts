@@ -16,11 +16,27 @@ export const jiminyCricketLevelheadedAndWise: CharacterCard = {
   lore: 1,
   cardNumber: 62,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "c2d952bc046311e7e80e6aa1f93f0c3a5dd37fe1",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1i2-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "1i2-2",
+      type: "static",
+      effect: {
+        type: "restriction",
+        restriction: "enters-play-exerted",
+        target: "SELF",
+      },
+      text: "ENOUGH'S ENOUGH While this character is exerted, opposing characters with Rush enter play exerted.",
+    },
+  ],
   classifications: ["Storyborn", "Mentor"],
 };

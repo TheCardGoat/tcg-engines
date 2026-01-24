@@ -16,27 +16,32 @@ export const tinkerBellTinyTactician: CharacterCard = {
   lore: 1,
   cardNumber: 189,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "53e3a38f0b94170b6766ad77868a9a1f3f572889",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "n9y-1",
+      type: "activated",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+          {
+            type: "discard",
+            amount: 1,
+            target: "CONTROLLER",
+            chosen: true,
+          },
+        ],
+      },
+      text: "BATTLE PLANS {E} — Draw a card, then choose and discard a card.",
+    },
+  ],
   classifications: ["Dreamborn", "Ally", "Fairy"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { tinkerBellTinyTactician as tinkerBellTinyTacticianAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-//
-// export const tinkerBellTinyTactician: LorcanitoCharacterCard = {
-//   ...tinkerBellTinyTacticianAsOrig,
-//   id: "ahg",
-//   reprints: [tinkerBellTinyTacticianAsOrig.id],
-//   number: 189,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650122,
-//   },
-// };
-//

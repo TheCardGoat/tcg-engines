@@ -11,34 +11,41 @@ export const restoringTheHeart: ActionCard = {
   cost: 1,
   cardNumber: 39,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "433c65f67c223f90311aefde360c4a70f5b3776e",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "inl-1",
+      type: "action",
+      effect: {
+        type: "choice",
+        options: [
+          {
+            type: "remove-damage",
+            amount: 3,
+            upTo: true,
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+        optionLabels: [
+          "Remove up to 3 damage from chosen character",
+          "location. Draw a card.",
+        ],
+      },
+      text: "Remove up to 3 damage from chosen character or location. Draw a card.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { restoringTheHeartAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
-//
-// export const restoringTheHeart: LorcanitoActionCard = {
-//   id: "gk9",
-//   name: "Restoring The Heart",
-//   characteristics: ["action"],
-//   text: "Remove up to 3 damage from chosen character or location. Draw a card.",
-//   type: "action",
-//   abilities: [restoringTheHeartAbility],
-//   inkwell: true,
-//   colors: ["amber", "sapphire"],
-//   cost: 1,
-//   illustrator: "Nicola Saviori / Livio Cacciatore",
-//   number: 39,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618132,
-//   },
-//   rarity: "uncommon",
-// };
-//

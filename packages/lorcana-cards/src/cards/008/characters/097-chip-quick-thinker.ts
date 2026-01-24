@@ -16,11 +16,20 @@ export const chipQuickThinker: CharacterCard = {
   lore: 1,
   cardNumber: 97,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a86f28f1777738ea9148dc4fa0844fe6fc65452d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1aq-1",
+      type: "action",
+      effect: {
+        type: "play-card",
+        from: "hand",
+      },
+      text: "I’LL HANDLE THIS When you play this character, chosen opponent chooses and discards a card.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

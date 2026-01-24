@@ -16,11 +16,22 @@ export const theColonelOldSheepdog: CharacterCard = {
   lore: 1,
   cardNumber: 17,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e3655a27dae1da92cf77d60d195ea2b3b71bc4cd",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1r3-1",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+      },
+      text: "WE'VE GOT 'EM OUTNUMBERED While you have 3 or more Puppy characters in play, this character gets +2 {S} and +2 {L}.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

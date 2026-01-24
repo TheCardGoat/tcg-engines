@@ -12,10 +12,39 @@ export const howFarIllGo: ActionCard = {
   cost: 4,
   cardNumber: 161,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "eddcb5e8b24a67d1fe9ba072650341d9017300d3",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1tk-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "scry",
+            amount: 2,
+            target: "CONTROLLER",
+            destinations: [
+              {
+                zone: "deck-bottom",
+                remainder: true,
+                ordering: "player-choice",
+              },
+            ],
+          },
+          {
+            type: "put-into-inkwell",
+            source: "hand",
+            target: "CONTROLLER",
+            exerted: true,
+            facedown: true,
+          },
+        ],
+      },
+      text: "Look at the top 2 cards of your deck. Put one into your hand and the other into your inkwell facedown and exerted.",
+    },
+  ],
 };

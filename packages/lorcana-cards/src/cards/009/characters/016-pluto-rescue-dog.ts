@@ -15,27 +15,38 @@ export const plutoRescueDog: CharacterCard = {
   lore: 2,
   cardNumber: 16,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "90509aa765f200ec9ee3743bb833e8fd9c8dfbb2",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "141-1",
+      type: "triggered",
+      name: "TO THE RESCUE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "remove-damage",
+          amount: 3,
+          upTo: true,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "TO THE RESCUE When you play this character, you may remove up to 3 damage from chosen character of yours.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { plutoRescueDog as ogPlutoRescueDog } from "@lorcanito/lorcana-engine/cards/004/characters/20-pluto-rescue-dog";
-//
-// export const plutoRescueDog: LorcanitoCharacterCard = {
-//   ...ogPlutoRescueDog,
-//   id: "baa",
-//   reprints: [ogPlutoRescueDog.id],
-//   number: 16,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649964,
-//   },
-// };
-//

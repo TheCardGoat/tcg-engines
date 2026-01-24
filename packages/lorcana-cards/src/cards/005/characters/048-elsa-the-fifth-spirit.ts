@@ -16,58 +16,44 @@ export const elsaTheFifthSpirit: CharacterCard = {
   lore: 1,
   cardNumber: 48,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "3219378181dc565b5d4b7488cccbc75d171bb04f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "dwf-1",
+      type: "keyword",
+      keyword: "Rush",
+      text: "Rush",
+    },
+    {
+      id: "dwf-2",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "dwf-3",
+      type: "triggered",
+      name: "CRYSTALLIZE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "exert",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "CRYSTALLIZE When you play this character, exert chosen opposing character.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Queen", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   evasiveAbility,
-//   rushAbility,
-// } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-//
-// export const elsaTheFifthSpirit: LorcanitoCharacterCard = {
-//   id: "pm7",
-//   name: "Elsa",
-//   title: "The Fifth Spirit",
-//   characteristics: ["hero", "dreamborn", "queen", "sorcerer"],
-//   text: "**Rush** _(This character can challenge the turn they’re played.)_   **Evasive** _(Only characters with Evasive can challenge this character.)_   **CRYSTALLIZE** When you play this character, exert chosen opposing character.",
-//   type: "character",
-//   abilities: [
-//     rushAbility,
-//     evasiveAbility,
-//     {
-//       type: "resolution",
-//       name: "CRYSTALLIZE",
-//       text: "When you play this character, exert chosen opposing character.",
-//       effects: [
-//         {
-//           type: "exert",
-//           exert: true,
-//           target: chosenOpposingCharacter,
-//         },
-//       ],
-//     },
-//   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 5,
-//   strength: 2,
-//   willpower: 5,
-//   lore: 1,
-//   illustrator: "Lisanne Koeteeuw",
-//   number: 48,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 555245,
-//   },
-//   rarity: "super_rare",
-// };
-//

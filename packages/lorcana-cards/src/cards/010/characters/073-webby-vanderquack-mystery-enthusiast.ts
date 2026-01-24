@@ -16,55 +16,35 @@ export const webbyVanderquackMysteryEnthusiast: CharacterCard = {
   lore: 1,
   cardNumber: 73,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "cb242024f4792a7b34ea392bfe4dd7009f475856",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1kd-1",
+      type: "triggered",
+      name: "CONTAGIOUS ENERGY",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        duration: "this-turn",
+      },
+      text: "CONTAGIOUS ENERGY When you play this character, chosen character gets +1 {S} this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-//
-// export const webbyVanderquackMysteryEnthusiast: LorcanitoCharacterCard = {
-//   id: "jx5",
-//   name: "Webby Vanderquack",
-//   title: "Mystery Enthusiast",
-//   characteristics: ["storyborn", "ally"],
-//   text: "CONTAGIOUS ENERGY When you play this character, chosen character gets +1 {S} this turn.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 2,
-//   illustrator: "Rosa la Barbera / Livio Cacciatore",
-//   number: 73,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 658465,
-//   },
-//   rarity: "common",
-//   lore: 1,
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       name: "CONTAGIOUS ENERGY",
-//       text: "When you play this character, chosen character gets +1 {S} this turn.",
-//       effects: [
-//         {
-//           type: "attribute",
-//           attribute: "strength",
-//           modifier: "add",
-//           amount: 1,
-//           duration: "turn",
-//           target: chosenCharacter,
-//         },
-//       ],
-//     }),
-//   ],
-// };
-//

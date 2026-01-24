@@ -16,11 +16,21 @@ export const flowerShySkunk: CharacterCard = {
   lore: 1,
   cardNumber: 76,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "64bcc8dbec56c1a40e869de72bbf82705d067936",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ry8-1",
+      type: "triggered",
+      name: "LOOKING FOR FRIENDS",
+      effect: {
+        type: "put-on-bottom",
+        target: "CHOSEN_CHARACTER",
+      },
+      text: "LOOKING FOR FRIENDS Whenever you play another character, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

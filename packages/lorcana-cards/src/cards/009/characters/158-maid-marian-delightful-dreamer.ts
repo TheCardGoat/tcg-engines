@@ -16,27 +16,35 @@ export const maidMarianDelightfulDreamer: CharacterCard = {
   lore: 2,
   cardNumber: 158,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "dc73989b7f4878a33e227c586b83d6f59aeef98c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1p6-1",
+      type: "triggered",
+      name: "HIGHBORN LADY",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: -2,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        duration: "this-turn",
+      },
+      text: "HIGHBORN LADY When you play this character, chosen character gets -2 {S} this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { ladyMarianAdorableDreamer } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const maidMarianDelightfulDreamer: LorcanitoCharacterCard = {
-//   ...ladyMarianAdorableDreamer,
-//   id: "c8w",
-//   reprints: [ladyMarianAdorableDreamer.id],
-//   number: 158,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650093,
-//   },
-// };
-//

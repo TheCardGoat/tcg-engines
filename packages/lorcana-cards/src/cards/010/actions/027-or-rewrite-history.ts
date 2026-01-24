@@ -12,10 +12,20 @@ export const orRewriteHistory: ActionCard = {
   cost: 3,
   cardNumber: 27,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "0e6aabe440055238206922c66bdad3dcbe1453e5",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "400-1",
+      type: "action",
+      effect: {
+        type: "return-from-discard",
+        target: "CONTROLLER",
+        cardType: "character",
+      },
+      text: "Return a character card from your discard to your hand.",
+    },
+  ],
 };

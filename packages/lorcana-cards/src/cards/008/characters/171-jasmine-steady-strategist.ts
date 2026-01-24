@@ -16,11 +16,39 @@ export const jasmineSteadyStrategist: CharacterCard = {
   lore: 1,
   cardNumber: 171,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "8e61e3ca51b3ebb4328a02e52cc3c45757b3e641",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "13i-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 2,
+      },
+      text: "Shift 2",
+    },
+    {
+      id: "13i-2",
+      type: "triggered",
+      name: "ALWAYS PLANNING",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "ALWAYS PLANNING Whenever this character quests, look at the top 3 cards of your deck. You may reveal an Ally character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    },
+  ],
   classifications: ["Floodborn", "Hero", "Princess"],
 };

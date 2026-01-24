@@ -11,10 +11,36 @@ export const quickShot: ActionCard = {
   cost: 2,
   cardNumber: 203,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "b7869c5472bc41c5832262ed91df5e977a88dd47",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ex-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "deal-damage",
+            amount: 1,
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+      text: "Deal 1 damage to chosen character. Draw a card.",
+    },
+  ],
 };

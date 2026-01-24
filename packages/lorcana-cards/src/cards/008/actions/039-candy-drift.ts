@@ -11,10 +11,28 @@ export const candyDrift: ActionCard = {
   cost: 2,
   cardNumber: 39,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a0153cbf8a3efb1e35d6007278e22a7c7006135b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "18h-1",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 5,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        duration: "this-turn",
+      },
+      text: "Draw a card. Chosen character of yours gets +5 {S} this turn. At the end of your turn, banish them.",
+    },
+  ],
 };

@@ -16,11 +16,27 @@ export const littleJohnRobinsPal: CharacterCard = {
   lore: 1,
   cardNumber: 179,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "eb37093fa52ddaa39641f1fb0952282638b7a6d9",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ta-1",
+      type: "keyword",
+      keyword: "Bodyguard",
+      text: "Bodyguard",
+    },
+    {
+      id: "1ta-2",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: "SELF",
+      },
+      text: "DISGUISED During your turn, this character gains Evasive.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

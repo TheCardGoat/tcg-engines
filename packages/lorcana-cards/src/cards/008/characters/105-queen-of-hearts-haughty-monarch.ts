@@ -16,11 +16,22 @@ export const queenOfHeartsHaughtyMonarch: CharacterCard = {
   lore: 3,
   cardNumber: 105,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "b347cdaf0ef46c30b3701852557d77f69853cee3",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1dq-1",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 3,
+        target: "SELF",
+      },
+      text: "COUNT OFF! While there are 5 or more characters with damage in play, this character gets +3 {L}.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Queen"],
 };

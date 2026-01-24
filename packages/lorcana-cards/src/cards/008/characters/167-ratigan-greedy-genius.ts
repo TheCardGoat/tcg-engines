@@ -16,11 +16,39 @@ export const ratiganGreedyGenius: CharacterCard = {
   lore: 4,
   cardNumber: 167,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "33748d6ee65b52b4bdc850aff7d2e12b9ce0276c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "e9z-1",
+      type: "keyword",
+      keyword: "Ward",
+      text: "Ward",
+    },
+    {
+      id: "e9z-2",
+      type: "action",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you didn't put any cards into your inkwell this turn",
+        },
+        then: {
+          type: "banish",
+          target: {
+            selector: "self",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+      },
+      text: "TIME RUNS OUT At the end of your turn, if you didn't put any cards into your inkwell this turn, banish this character.",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };

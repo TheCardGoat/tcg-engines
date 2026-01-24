@@ -11,10 +11,21 @@ export const theSwordOfShanyu: ItemCard = {
   cost: 1,
   cardNumber: 152,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f53cefd9fc2611fc223d96dff8640a4eeaf9068d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1wb-1",
+      type: "activated",
+      effect: {
+        type: "restriction",
+        restriction: "cant-quest",
+        target: "SELF",
+        duration: "this-turn",
+      },
+      text: "WORTHY WEAPON {E}, {E} one of your characters — Ready chosen character. They can't quest for the rest of this turn.",
+    },
+  ],
 };

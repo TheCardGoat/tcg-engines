@@ -11,54 +11,27 @@ export const quickPatch: ActionCard = {
   cost: 1,
   cardNumber: 27,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "61c39a8f8d441689638761be897e2f215f6def30",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "r4j-1",
+      type: "action",
+      effect: {
+        type: "remove-damage",
+        amount: 3,
+        upTo: true,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["location"],
+        },
+      },
+      text: "Remove up to 3 damage from chosen location.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-//
-// export const quickPatch: LorcanitoActionCard = {
-//   id: "p6z",
-//   missingTestCase: true,
-//   name: "Quick Patch",
-//   characteristics: ["action"],
-//   text: "Remove up to 3 damage from chosen location.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       effects: [
-//         {
-//           type: "heal",
-//           amount: 3,
-//           upTo: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
-//               { filter: "type", value: "location" },
-//               { filter: "zone", value: "play" },
-//             ],
-//           },
-//         },
-//       ],
-//     },
-//   ],
-//   flavour: "Good as new! Well, almost.",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 1,
-//   illustrator: "Wouter Bruneel",
-//   number: 27,
-//   set: "ITI",
-//   externalIds: {
-//     tcgPlayer: 538310,
-//   },
-//   rarity: "common",
-// };
-//

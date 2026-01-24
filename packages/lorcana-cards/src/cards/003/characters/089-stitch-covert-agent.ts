@@ -16,11 +16,27 @@ export const stitchCovertAgent: CharacterCard = {
   lore: 2,
   cardNumber: 89,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ad3cc196c4a8bfac7a7bfd593107b6b1e1bebe29",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1c3-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "1c3-2",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Ward",
+        target: "SELF",
+      },
+      text: "HIDE While this character is at a location, he gains Ward.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Alien"],
 };

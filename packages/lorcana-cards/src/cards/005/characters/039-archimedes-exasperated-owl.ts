@@ -29,33 +29,3 @@ export const archimedesExasperatedOwl: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const archimedesExasperatedOwl: LorcanitoCharacterCard = {
-//   id: "fyr",
-//   name: "Archimedes",
-//   title: "Exasperated Owl",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**Evasive** _(Only characters with Evasive can challenge this character.)_",
-//   type: "character",
-//   abilities: [evasiveAbility],
-//   flavour:
-//     "Hmph. What does an owl have to do to get a little peace and quite around here?",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 2,
-//   illustrator: "Kendall Hale",
-//   number: 39,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 561467,
-//   },
-//   rarity: "common",
-// };
-//

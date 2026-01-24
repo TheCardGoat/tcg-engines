@@ -16,11 +16,32 @@ export const madameMedusaTheBoss: CharacterCard = {
   lore: 1,
   cardNumber: 112,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "979f3dc046126dfc16cd552ce9c772ada607ad11",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "162-1",
+      type: "triggered",
+      name: "THAT TERRIBLE WOMAN",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "banish",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "THAT TERRIBLE WOMAN When you play this character, banish chosen opposing character with 3 {S} or less.",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };

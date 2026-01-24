@@ -16,11 +16,36 @@ export const pyrosLavaTitan: CharacterCard = {
   lore: 1,
   cardNumber: 187,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "8ff79abe1dc3be06d9d67421be126ceb63898677",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "13y-1",
+      type: "triggered",
+      name: "ERUPTION",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "OPPONENT_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "ready",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "ERUPTION During your turn, whenever this character banishes another character in a challenge, you may ready chosen character.",
+    },
+  ],
   classifications: ["Storyborn", "Titan"],
 };

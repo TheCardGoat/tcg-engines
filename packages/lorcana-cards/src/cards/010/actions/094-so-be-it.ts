@@ -11,10 +11,29 @@ export const soBeIt: ActionCard = {
   cost: 2,
   cardNumber: 94,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "1ccae9d2a058bbe7b500eaf114eec2d90af8b144",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "7zl-1",
+      type: "action",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "banish",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["item"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "Each of your characters gets +1 {S} this turn. You may banish chosen item.",
+    },
+  ],
 };

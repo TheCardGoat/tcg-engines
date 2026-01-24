@@ -11,52 +11,31 @@ export const hypnotize: ActionCard = {
   cost: 3,
   cardNumber: 98,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "cbba562b84a9e94b1f0e30aceba74976a88608a3",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1kn-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "discard",
+            amount: 1,
+            target: "EACH_OPPONENT",
+            chosen: true,
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+      text: "Each opponent chooses and discards a card. Draw a card.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { discardACard } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// const self = {
-//   type: "player" as const,
-//   value: "self" as const,
-// };
-//
-// export const hypnotize: LorcanitoActionCard = {
-//   id: "awj",
-//   name: "Hypnotize",
-//   characteristics: ["action"],
-//   text: "Each opponent chooses and discards a card. Draw a card.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       optional: false,
-//       responder: "opponent",
-//       effects: [discardACard],
-//     },
-//     {
-//       type: "resolution",
-//       optional: false,
-//       effects: [{ type: "draw", amount: 1, target: self }],
-//     },
-//   ],
-//   flavour: "Look me in the eye when I'm speaking to you.",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   illustrator: "Lauren Levering",
-//   number: 98,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 518790,
-//   },
-//   rarity: "common",
-// };
-//

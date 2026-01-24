@@ -16,11 +16,20 @@ export const vinnieGreenPigeon: CharacterCard = {
   lore: 1,
   cardNumber: 194,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "5827dd1bd5d9fc8a64b9e611432fefae1a0c5449",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ogk-1",
+      type: "action",
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+      },
+      text: "LEARNING EXPERIENCE During an opponent's turn, whenever one of your other characters is banished, gain 1 lore.",
+    },
+  ],
   classifications: ["Storyborn"],
 };

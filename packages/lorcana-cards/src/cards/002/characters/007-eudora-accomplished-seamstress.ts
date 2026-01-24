@@ -21,29 +21,3 @@ export const eudoraAccomplishedSeamstress: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const eudoraAccomplishedSeamstress: LorcanitoCharacterCard = {
-//   id: "dgv",
-//   name: "Eudora",
-//   title: "Accomplished Seamstress",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   flavour: "Love holds everything together.",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 5,
-//   strength: 1,
-//   willpower: 9,
-//   lore: 2,
-//   illustrator: "Lissette Carrera",
-//   number: 7,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 527710,
-//   },
-//   rarity: "common",
-// };
-//

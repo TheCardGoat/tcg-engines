@@ -16,11 +16,37 @@ export const madameMedusaDeceivingPartner: CharacterCard = {
   lore: 1,
   cardNumber: 47,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "320735e6ade9a3fa1537db3f280a6ae5318ee328",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "dvp-1",
+      type: "triggered",
+      name: "DOUBLE-CROSS",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 2,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "DOUBLE-CROSS When you play this character, you may deal 2 damage to another chosen character of yours to return chosen character with cost 2 or less to their player’s hand.",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };

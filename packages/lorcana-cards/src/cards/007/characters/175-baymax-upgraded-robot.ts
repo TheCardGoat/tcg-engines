@@ -16,68 +16,36 @@ export const baymaxUpgradedRobot: CharacterCard = {
   lore: 1,
   cardNumber: 175,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "840d0b3ebdf82a8bbc65833ecdf99654ac7ab5ab",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "10n-1",
+      type: "keyword",
+      keyword: "Support",
+      text: "Support",
+    },
+    {
+      id: "10n-2",
+      type: "triggered",
+      name: "ADVANCED SCANNER",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "ADVANCED SCANNER When you play this character, look at the top 4 cards of your deck. You may reveal a Floodborn character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Robot"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { supportAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const baymaxUpgradedRobot: LorcanitoCharacterCard = {
-//   id: "kru",
-//   name: "Baymax",
-//   title: "Upgraded Robot",
-//   characteristics: ["storyborn", "hero", "robot"],
-//   text: "Support\nADVANCED SCANNER When you play this character, look at the top 4 cards of your deck. You may reveal a Floodborn character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
-//   type: "character",
-//   abilities: [
-//     supportAbility,
-//     {
-//       type: "resolution",
-//       name: "ADVANCED SCANNER",
-//       text: "When you play this character, look at the top 4 cards of your deck. You may reveal a Floodborn character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
-//       effects: [
-//         {
-//           type: "scry",
-//           amount: 4,
-//           mode: "bottom",
-//           shouldRevealTutored: true,
-//           target: self,
-//           limits: {
-//             bottom: 4,
-//             top: 0,
-//             hand: 1,
-//             inkwell: 0,
-//           },
-//           tutorFilters: [
-//             { filter: "owner", value: "self" },
-//             { filter: "zone", value: "deck" },
-//             { filter: "type", value: "character" },
-//             { filter: "characteristics", value: ["floodborn"] },
-//           ],
-//         },
-//       ],
-//     },
-//   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 5,
-//   strength: 3,
-//   willpower: 5,
-//   illustrator: "Dustin Panzino",
-//   number: 175,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619507,
-//   },
-//   rarity: "rare",
-//   lore: 1,
-// };
-//

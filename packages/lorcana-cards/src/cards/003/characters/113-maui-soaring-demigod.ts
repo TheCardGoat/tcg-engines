@@ -16,11 +16,30 @@ export const mauiSoaringDemigod: CharacterCard = {
   lore: 0,
   cardNumber: 113,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "5dbaface98eade9dac7b113a051ff1632bc17fc4",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "q08-1",
+      type: "keyword",
+      keyword: "Reckless",
+      text: "Reckless",
+    },
+    {
+      id: "q08-2",
+      type: "triggered",
+      name: "IN MA BELLY",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "SELF",
+        duration: "this-turn",
+      },
+      text: "IN MA BELLY Whenever a character of yours named HeiHei quests, this character gets +1 {L} and loses Reckless this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Deity"],
 };

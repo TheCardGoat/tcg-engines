@@ -20,6 +20,29 @@ export const ludwigVonDrakeAllaroundExpert: CharacterCard = {
   externalIds: {
     ravensburger: "ad987e8ceb30c109d82e7245edd9c0a4d8d95146",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1c5-2",
+      type: "triggered",
+      name: "LASTING LEGACY",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          source: "this-card",
+          target: "CONTROLLER",
+          exerted: true,
+          facedown: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "LASTING LEGACY When this character is banished, you may put this card into your inkwell facedown and exerted.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

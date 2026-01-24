@@ -21,22 +21,16 @@ export const belleAccomplishedMystic: CharacterCard = {
   externalIds: {
     ravensburger: "8b86289e61950b00539d3ef5740fe6097f42fc88",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "12p-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+      text: "Shift 3 {I}",
+    },
+  ],
   classifications: ["Floodborn", "Hero", "Princess", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { belleAccomplishedMystic as ogBelleAccomplishedMystic } from "@lorcanito/lorcana-engine/cards/004/characters/036-belle-accomplished-mystic";
-//
-// export const belleAccomplishedMystic: LorcanitoCharacterCard = {
-//   ...ogBelleAccomplishedMystic,
-//   id: "cqp",
-//   reprints: [ogBelleAccomplishedMystic.id],
-//   number: 40,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649987,
-//   },
-// };
-//

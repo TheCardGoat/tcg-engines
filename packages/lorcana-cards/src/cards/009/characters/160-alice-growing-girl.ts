@@ -16,27 +16,33 @@ export const aliceGrowingGirl: CharacterCard = {
   lore: 1,
   cardNumber: 160,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a8457457371219443c6138ae91ffc24bee944433",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ao-1",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Support",
+        target: "YOUR_CHARACTERS",
+      },
+      name: "GOOD ADVICE Your other",
+      text: "GOOD ADVICE Your other characters gain Support.",
+    },
+    {
+      id: "1ao-2",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 4,
+        target: "SELF",
+      },
+      text: "WHAT DID I DO? While this character has 10 {S} or more, she gets +4 {L}.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { aliceGrowingGirl as ogAliceGrowingGirl } from "@lorcanito/lorcana-engine/cards/002/characters/137-alice-growing-girl";
-//
-// export const aliceGrowingGirl: LorcanitoCharacterCard = {
-//   ...ogAliceGrowingGirl,
-//   id: "rtw", // New ID for this card
-//   reprints: [ogAliceGrowingGirl.id],
-//   number: 160,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 647672,
-//   },
-// };
-//

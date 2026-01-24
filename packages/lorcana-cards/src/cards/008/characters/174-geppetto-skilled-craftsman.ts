@@ -16,11 +16,30 @@ export const geppettoSkilledCraftsman: CharacterCard = {
   lore: 2,
   cardNumber: 174,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a73496316fa073149d81e6831fb59c5170aa9689",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ae-1",
+      type: "triggered",
+      name: "SEEKING INSPIRATION",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "gain-lore",
+          amount: 1,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "SEEKING INSPIRATION Whenever this character quests, you may choose and discard any number of item cards to gain 1 lore for each item card discarded this way.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Inventor"],
 };

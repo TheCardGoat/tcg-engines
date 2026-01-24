@@ -16,64 +16,34 @@ export const jasmineInspiredResearcher: CharacterCard = {
   lore: 2,
   cardNumber: 173,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "10b04e532f811271010fabf5d712bcce0f547d7a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "4mp-1",
+      type: "triggered",
+      name: "EXTRA ASSISTANCE",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have no cards in your hand",
+        },
+        then: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+      },
+      text: "EXTRA ASSISTANCE Whenever this character quests, if you have no cards in your hand, draw a card for each Ally character you have in play.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const jasmineInspiredResearcher: LorcanitoCharacterCard = {
-//   id: "i0v",
-//   name: "Jasmine",
-//   title: "Inspired Researcher",
-//   characteristics: ["storyborn", "hero", "princess"],
-//   text: "EXTRA ASSISTANCE Whenever this character quests, if you have no cards in your hand, draw a card for each Ally character you have in play.",
-//   type: "character",
-//   abilities: [
-//     wheneverQuests({
-//       name: "EXTRA ASSISTANCE",
-//       text: "Whenever this character quests, if you have no cards in your hand, draw a card for each Ally character you have in play.",
-//       conditions: [
-//         {
-//           type: "hand",
-//           amount: 0,
-//           player: "self",
-//         },
-//       ],
-//       effects: [
-//         drawXCards({
-//           dynamic: true,
-//           filters: [
-//             { filter: "type", value: "character" },
-//             { filter: "zone", value: "play" },
-//             { filter: "owner", value: "self" },
-//             { filter: "characteristics", value: ["ally"] },
-//           ],
-//         }),
-//       ],
-//     }),
-//   ],
-//   inkwell: false,
-//
-//   colors: ["sapphire", "steel"],
-//   cost: 5,
-//   strength: 3,
-//   willpower: 5,
-//   illustrator: "Milica Celtikovic",
-//   number: 173,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619505,
-//   },
-//   rarity: "rare",
-//   lore: 2,
-// };
-//

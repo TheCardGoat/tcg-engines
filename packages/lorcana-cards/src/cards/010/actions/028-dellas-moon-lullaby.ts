@@ -12,10 +12,31 @@ export const dellasMoonLullaby: ActionCard = {
   cost: 2,
   cardNumber: 28,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "041d3dff81da0e22be26f50d6affa034c191634f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "154-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "modify-stat",
+            stat: "strength",
+            modifier: -2,
+            target: "CHOSEN_CHARACTER",
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+      text: "Chosen opposing character gets -2 {S} until the start of your next turn. Draw a card.",
+    },
+  ],
 };

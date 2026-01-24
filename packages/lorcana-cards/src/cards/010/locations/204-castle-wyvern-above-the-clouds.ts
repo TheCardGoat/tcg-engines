@@ -15,53 +15,22 @@ export const castleWyvernAboveTheClouds: LocationCard = {
   lore: 0,
   cardNumber: 204,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "3feacecee6585dbc2d6c700e8829954a5add3131",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "hqg-1",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Challenger",
+        target: "CHARACTERS_HERE",
+        value: 1,
+      },
+      name: "PROTECT THIS CASTLE",
+      text: "PROTECT THIS CASTLE Characters gain Challenger +1 and Resist +1 while here.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import {
-//   challengerAbility,
-//   gainAbilityWhileHere,
-//   resistAbility,
-// } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const castleWyvernAboveTheClouds: LorcanitoLocationCard = {
-//   id: "wki",
-//   name: "Castle Wyvern",
-//   title: "Above the Clouds",
-//   characteristics: ["location"],
-//   text: "PROTECT THIS CASTLE Characters gain Challenger +1 and Resist +1 while here.",
-//   type: "location",
-//   abilities: [
-//     gainAbilityWhileHere({
-//       name: "PROTECT THIS CASTLE",
-//       text: "Characters gain **Challenger** +1  while here.",
-//       ability: challengerAbility(1),
-//     }),
-//     gainAbilityWhileHere({
-//       name: "PROTECT THIS CASTLE",
-//       text: "Characters gain **Resist** +1 while here.",
-//       ability: resistAbility(1),
-//     }),
-//   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 2,
-//   willpower: 5,
-//   illustrator: "Etienne Savoie",
-//   number: 204,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659594,
-//   },
-//   rarity: "rare",
-//   moveCost: 1,
-//   lore: 1,
-// };
-//

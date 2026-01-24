@@ -16,64 +16,45 @@ export const kingCandySweetAbomination: CharacterCard = {
   lore: 2,
   cardNumber: 154,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "5e50dc86485330fa31a424a5ef8789c56472efd4",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "q61-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+      text: "Shift 3",
+    },
+    {
+      id: "q61-2",
+      type: "triggered",
+      name: "CHANGING THE CODE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-on-bottom",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["card"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "CHANGING THE CODE When you play this character, you may draw 2 cards, then put a card from your hand on the bottom of your deck.",
+    },
+  ],
   classifications: ["Floodborn", "Villain", "King", "Racer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { drawXCards } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const kingCandySweetAbomination: LorcanitoCharacterCard = {
-//   id: "puc",
-//   name: "King Candy",
-//   title: "Sweet Abomination",
-//   characteristics: ["floodborn", "villain", "king"],
-//   text: "**Shift** 3 _(You may pay 3 {I} to play this on top of one of your characters named King Candy.)_\n \n**CHANGING THE CODE** When you play this character, you may draw 2 cards, then put a card from your hand on the bottom of your deck.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(3, "King Candy"),
-//     {
-//       type: "resolution",
-//       name: "Changing The Code",
-//       text: "When you play this character, you may draw 2 cards, then put a card from your hand on the bottom of your deck.",
-//       optional: true,
-//       resolveEffectsIndividually: true,
-//       effects: [
-//         drawXCards(2),
-//         {
-//           type: "move",
-//           to: "deck",
-//           bottom: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
-//               { filter: "zone", value: "hand" },
-//               { filter: "owner", value: "self" },
-//             ],
-//           },
-//         },
-//       ],
-//     },
-//   ],
-//   colors: ["sapphire"],
-//   cost: 5,
-//   strength: 3,
-//   willpower: 3,
-//   lore: 2,
-//   illustrator: "Jake Parker",
-//   number: 154,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 559790,
-//   },
-//   rarity: "uncommon",
-// };
-//

@@ -16,11 +16,20 @@ export const nathanielFlintNotoriousPirate: CharacterCard = {
   lore: 2,
   cardNumber: 196,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "eefa3140edf0c08825c839aecce68111a0e5f778",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ub-1",
+      type: "static",
+      effect: {
+        type: "play-card",
+        from: "hand",
+      },
+      text: "PREDATORY INSTINCT You can't play this character unless an opposing character was damaged this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Alien", "Pirate", "Captain"],
 };

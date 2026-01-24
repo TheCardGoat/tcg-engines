@@ -16,46 +16,22 @@ export const drCalicoGreeneyedMan: CharacterCard = {
   lore: 1,
   cardNumber: 181,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "6e241493e0ee6543ecca03f5f5e315161367b063",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "uk6-1",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        target: "SELF",
+        value: 2,
+      },
+      text: "YOU'RE BEGINNING TO IRK ME While this character has no damage, he gains Resist +2.",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { resistAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const drCalicoGreeneyedMan: LorcanitoCharacterCard = {
-//   id: "q5s",
-//   name: "Dr. Calico",
-//   title: "Green-Eyed Man",
-//   characteristics: ["storyborn", "villain"],
-//   text: "YOU'RE BEGINNING TO IRK ME While this character has no damage, he gains Resist +2.",
-//   type: "character",
-//   abilities: [
-//     {
-//       ...resistAbility(2),
-//       conditions: [
-//         { type: "damage", comparison: { operator: "eq", value: 0 } },
-//       ],
-//     },
-//   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 4,
-//   illustrator: "Wouter Bruneel",
-//   number: 181,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618160,
-//   },
-//   rarity: "common",
-//   lore: 1,
-// };
-//

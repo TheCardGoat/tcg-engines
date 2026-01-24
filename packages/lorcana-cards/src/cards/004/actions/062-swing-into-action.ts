@@ -11,39 +11,27 @@ export const swingIntoAction: ActionCard = {
   cost: 1,
   cardNumber: 62,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "619c55ff131a58ac8714449f5ee1788379659e58",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "r30-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Rush",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        duration: "this-turn",
+      },
+      text: "Chosen character gains Rush this turn.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacterGainsRush } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const swingIntoAction: LorcanitoActionCard = {
-//   id: "bho",
-//   name: "Swing Into Action",
-//   characteristics: ["action"],
-//   text: "Chosen character gains **Rush** this turn. _(They can challenge the turn they're played.)_",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       effects: [chosenCharacterGainsRush],
-//     },
-//   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 1,
-//   illustrator: "Wouter Bruneel",
-//   number: 62,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550571,
-//   },
-//   rarity: "common",
-// };
-//

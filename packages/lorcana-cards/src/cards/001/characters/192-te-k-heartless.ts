@@ -16,11 +16,26 @@ export const teKHeartless: CharacterCard = {
   lore: 2,
   cardNumber: 192,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "29e6f53be8b584a90a734c8e03db35d6c7221778",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "bmj-1",
+      type: "triggered",
+      name: "SEEK THE HEART",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "OPPONENT_CHARACTERS",
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 2,
+      },
+      text: "SEEK THE HEART During your turn, whenever this character banishes another character in a challenge, you gain 2 lore.",
+    },
+  ],
   classifications: ["Dreamborn", "Villain", "Deity"],
 };

@@ -15,11 +15,28 @@ export const minnieMouseDaringDefender: CharacterCard = {
   lore: 1,
   cardNumber: 6,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "1b3d746d7aa4f780ac8c228578c6f4d72b29685a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "7k3-1",
+      type: "keyword",
+      keyword: "Bodyguard",
+      text: "Bodyguard",
+    },
+    {
+      id: "7k3-2",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: "SELF",
+      },
+      text: "TRUE VALOR This character gets +1 {S} for each 1 damage on her.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero"],
 };

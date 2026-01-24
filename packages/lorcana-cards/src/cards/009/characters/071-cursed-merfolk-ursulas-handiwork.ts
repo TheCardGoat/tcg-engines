@@ -16,11 +16,28 @@ export const cursedMerfolkUrsulasHandiwork: CharacterCard = {
   lore: 2,
   cardNumber: 71,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ddbb33e43b310ecb59a6a51a6478e65366db0275",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1pi-1",
+      type: "triggered",
+      name: "POOR SOULS",
+      trigger: {
+        event: "challenged",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "discard",
+        amount: 1,
+        target: "EACH_OPPONENT",
+        chosen: true,
+      },
+      text: "POOR SOULS Whenever this character is challenged, each opponent chooses and discards a card.",
+    },
+  ],
   classifications: ["Storyborn"],
 };

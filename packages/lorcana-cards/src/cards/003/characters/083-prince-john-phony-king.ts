@@ -16,11 +16,27 @@ export const princeJohnPhonyKing: CharacterCard = {
   lore: 2,
   cardNumber: 83,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "4fe5203a587a4cc07595526f729193ba91b0f403",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "m61-1",
+      type: "triggered",
+      name: "COLLECT TAXES",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "lose-lore",
+        amount: 2,
+        target: "EACH_OPPONENT",
+      },
+      text: "COLLECT TAXES Whenever this character quests, each opponent with more lore than you loses 2 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Prince"],
 };

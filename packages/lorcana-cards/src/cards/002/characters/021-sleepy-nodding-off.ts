@@ -16,44 +16,22 @@ export const sleepyNoddingOff: CharacterCard = {
   lore: 2,
   cardNumber: 21,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "b4eb2bf849d3bb89970a17f46fdc273773c1fe65",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1e7-1",
+      type: "static",
+      effect: {
+        type: "restriction",
+        restriction: "enters-play-exerted",
+        target: "SELF",
+      },
+      name: "YAWN!",
+      text: "YAWN! This character enters play exerted.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Seven Dwarfs"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { entersPlayExerted } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const sleepyNoddingOff: LorcanitoCharacterCard = {
-//   id: "w0u",
-//   name: "Sleepy",
-//   title: "Nodding Off",
-//   characteristics: ["storyborn", "ally", "seven dwarfs"],
-//   text: "**YAWN!** This character enters play exerted.",
-//   type: "character",
-//   abilities: [
-//     entersPlayExerted({
-//       name: "Yawn!",
-//     }),
-//   ],
-//   flavour: "He never gets tired of naps.",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 2,
-//   illustrator: "Kendall Hale",
-//   number: 21,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 526366,
-//   },
-//   rarity: "common",
-// };
-//

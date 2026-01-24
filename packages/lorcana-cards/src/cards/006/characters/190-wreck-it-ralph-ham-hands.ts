@@ -16,11 +16,30 @@ export const wreckitRalphHamHands: CharacterCard = {
   lore: 3,
   cardNumber: 190,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "bfd14e420afb55f030d821dddadf7a624938d2af",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1h8-1",
+      type: "triggered",
+      name: "I WRECK THINGS",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "gain-lore",
+          amount: 2,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "I WRECK THINGS Whenever this character quests, you may banish chosen item or location to gain 2 lore.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero"],
 };

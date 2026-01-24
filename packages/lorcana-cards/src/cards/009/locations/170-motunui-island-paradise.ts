@@ -15,26 +15,32 @@ export const motunuiIslandParadise: LocationCard = {
   lore: 0,
   cardNumber: 170,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ca779946f1d6ce99fca6248ffe6424994ad3ce8c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ke-1",
+      type: "triggered",
+      name: "REINCARNATION",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "ANY_CHARACTER",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          source: "hand",
+          target: "CONTROLLER",
+          exerted: true,
+          facedown: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "REINCARNATION Whenever a character is banished while here, you may put that card into your inkwell facedown and exerted.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { motunuiIslandParadise as ogMotunuiIslandParadise } from "@lorcanito/lorcana-engine/cards/003/locations/170-motunui-island-paradise";
-//
-// export const motunuiIslandParadise: LorcanitoLocationCard = {
-//   ...ogMotunuiIslandParadise,
-//   id: "jiu",
-//   reprints: [ogMotunuiIslandParadise.id],
-//   number: 170,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650104,
-//   },
-// };
-//

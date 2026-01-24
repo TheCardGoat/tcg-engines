@@ -11,10 +11,22 @@ export const bellesFavoriteBook: ItemCard = {
   cost: 3,
   cardNumber: 179,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "be83ae44047d977d177acf42b3c89db7cebcdc03",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1gu-1",
+      type: "activated",
+      effect: {
+        type: "put-into-inkwell",
+        source: "top-of-deck",
+        target: "CONTROLLER",
+        exerted: true,
+        facedown: true,
+      },
+      text: "CHAPTER THREE {E}, Banish one of your other items — Put the top card of your deck into your inkwell facedown and exerted.",
+    },
+  ],
 };

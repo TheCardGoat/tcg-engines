@@ -16,11 +16,30 @@ export const nickWildeSlyFox: CharacterCard = {
   lore: 1,
   cardNumber: 150,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "4751ba64de3e64839f07b1768815e5a2c4b2186c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "jsd-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 1,
+      },
+      text: "Shift 1",
+    },
+    {
+      id: "jsd-2",
+      type: "action",
+      effect: {
+        type: "restriction",
+        restriction: "cant-be-challenged",
+        target: "SELF",
+      },
+      text: "CAN'T TOUCH ME While you have an item in play, this character can't be challenged.",
+    },
+  ],
   classifications: ["Floodborn", "Ally"],
 };

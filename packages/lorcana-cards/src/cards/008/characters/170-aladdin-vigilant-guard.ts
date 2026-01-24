@@ -16,11 +16,44 @@ export const aladdinVigilantGuard: CharacterCard = {
   lore: 1,
   cardNumber: 170,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "37c91d4c1e7468929e01ddc735e84693e87bfe36",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "fh8-1",
+      type: "keyword",
+      keyword: "Bodyguard",
+      text: "Bodyguard",
+    },
+    {
+      id: "fh8-2",
+      type: "triggered",
+      name: "SAFE PASSAGE",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "remove-damage",
+          amount: 2,
+          upTo: true,
+          target: {
+            selector: "self",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "SAFE PASSAGE Whenever one of your Ally characters quests, you may remove up to 2 damage from this character.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Prince"],
 };

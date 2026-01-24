@@ -16,27 +16,42 @@ export const kuzcoTemperamentalEmperor: CharacterCard = {
   lore: 3,
   cardNumber: 69,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d9db9f6bf253381915cb4e979201f2ce3217677d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1og-1",
+      type: "keyword",
+      keyword: "Ward",
+      text: "Ward",
+    },
+    {
+      id: "1og-2",
+      type: "triggered",
+      name: "NO TOUCHY!",
+      trigger: {
+        event: "challenged",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "banish",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "NO TOUCHY! When this character is challenged and banished, you may banish the challenging character.",
+    },
+  ],
   classifications: ["Storyborn", "King"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { kuzcoTemperamentalEmperor as ogKuzcoTemperamentalEmperor } from "@lorcanito/lorcana-engine/cards/001/characters/084-kuzco-temperamental-emperor";
-//
-// export const kuzcoTemperamentalEmperor: LorcanitoCharacterCard = {
-//   ...ogKuzcoTemperamentalEmperor,
-//   id: "l2r",
-//   reprints: [ogKuzcoTemperamentalEmperor.id],
-//   number: 69,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650011,
-//   },
-// };
-//

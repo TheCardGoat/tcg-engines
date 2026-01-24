@@ -15,10 +15,40 @@ export const ursulasLairEyeOfTheStorm: LocationCard = {
   lore: 0,
   cardNumber: 68,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ccaa3f7bc222e079977804dc188974a4198a6eab",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ks-1",
+      type: "triggered",
+      name: "SLIPPERY HALLS",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "ANY_CHARACTER",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "return-to-hand",
+          target: "CHOSEN_CHARACTER",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "SLIPPERY HALLS Whenever a character is banished in a challenge while here, you may return them to your hand.",
+    },
+    {
+      id: "1ks-2",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "CHARACTERS_HERE",
+      },
+      text: "SEAT OF POWER Characters named Ursula get +1 {L} while here.",
+    },
+  ],
 };

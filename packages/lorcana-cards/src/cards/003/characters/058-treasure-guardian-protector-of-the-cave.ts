@@ -16,11 +16,22 @@ export const treasureGuardianProtectorOfTheCave: CharacterCard = {
   lore: 2,
   cardNumber: 58,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "acade7659b357fc4d7e2b6b6bd99e61e7df82605",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1bw-1",
+      type: "static",
+      effect: {
+        type: "restriction",
+        restriction: "cant-challenge",
+        target: "SELF",
+      },
+      name: "WHO DISTURBS MY SLUMBER?",
+      text: "WHO DISTURBS MY SLUMBER? This character can't challenge or quest unless it is at a location.",
+    },
+  ],
   classifications: ["Storyborn"],
 };

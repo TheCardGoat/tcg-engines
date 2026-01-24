@@ -29,32 +29,3 @@ export const heathcliffStoicButler: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wardAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const heathcliffStoicButler: LorcanitoCharacterCard = {
-//   id: "rhq",
-//   name: "Heathcliff",
-//   title: "Stoic Butler",
-//   characteristics: ["storyborn", "ally"],
-//   text: "Ward (Opponents can't choose this character except to challenge.)",
-//   type: "character",
-//   abilities: [wardAbility],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   lore: 2,
-//   illustrator: "Veronica Di Lorenzo / Livio Cacciatore",
-//   number: 78,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 593010,
-//   },
-//   rarity: "uncommon",
-// };
-//

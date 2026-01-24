@@ -16,11 +16,37 @@ export const motherGothelKnowsWhatsBest: CharacterCard = {
   lore: 1,
   cardNumber: 70,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "dec10104b65a50c0342904a30cb954c857f8035e",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1pt-1",
+      type: "triggered",
+      name: "LOOK WHAT YOU'VE DONE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 2,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: 'LOOK WHAT YOU\'VE DONE When you play this character, you may deal 2 damage to another chosen character of yours to give that character Challenger +1 and "When this character is banished in a challenge, return this card to your hand" this turn.',
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],
 };

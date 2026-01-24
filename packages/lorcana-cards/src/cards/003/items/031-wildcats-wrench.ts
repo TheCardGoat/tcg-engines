@@ -11,10 +11,27 @@ export const wildcatsWrench: ItemCard = {
   cost: 2,
   cardNumber: 31,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f6b270ae0092ca7fdae55368f489fc60ad77d484",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1wk-1",
+      type: "activated",
+      effect: {
+        type: "remove-damage",
+        amount: 2,
+        upTo: true,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["location"],
+        },
+      },
+      text: "REBUILD {E} — Remove up to 2 damage from chosen location.",
+    },
+  ],
 };

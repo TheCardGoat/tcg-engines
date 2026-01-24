@@ -16,11 +16,29 @@ export const magicCarpetPhantomRug: CharacterCard = {
   lore: 2,
   cardNumber: 183,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "0e0dd82cdf94b229510d946d0e2f25817f051751",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "3wd-1",
+      type: "keyword",
+      keyword: "Vanish",
+      text: "Vanish",
+    },
+    {
+      id: "3wd-2",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Challenger",
+        target: "CHOSEN_CHARACTER",
+        value: 1,
+      },
+      name: "SPECTRAL FORCE Your other Illusion",
+      text: "SPECTRAL FORCE Your other Illusion characters gain Challenger +1.",
+    },
+  ],
   classifications: ["Dreamborn", "Ally", "Illusion"],
 };

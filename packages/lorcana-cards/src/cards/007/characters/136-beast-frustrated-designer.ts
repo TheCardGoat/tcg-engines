@@ -16,11 +16,27 @@ export const beastFrustratedDesigner: CharacterCard = {
   lore: 2,
   cardNumber: 136,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "eea594c1f8504db74823bfd75c4ed44f1a518599",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1u2-1",
+      type: "activated",
+      effect: {
+        type: "deal-damage",
+        amount: 5,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "I'VE HAD IT! {E}, 2 {I}, Banish 2 of your items — Deal 5 damage to chosen character.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Prince", "Inventor"],
 };

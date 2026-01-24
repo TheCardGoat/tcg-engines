@@ -16,55 +16,29 @@ export const jafarAspiringRuler: CharacterCard = {
   lore: 2,
   cardNumber: 190,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ac6a2901f00291b5613e65f0a4c17baf9607964c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1bu-1",
+      type: "triggered",
+      name: "THAT'S BETTER",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Challenger",
+        target: "SELF",
+        value: 2,
+        duration: "this-turn",
+      },
+      text: "THAT'S BETTER When you play this character, chosen character gains Challenger +2 this turn.",
+    },
+  ],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-// import { whenYouPlayThis } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const jafarAspiringRuler: LorcanitoCharacterCard = {
-//   id: "t9f",
-//   name: "Jafar",
-//   title: "Aspiring Ruler",
-//   characteristics: ["dreamborn", "villain", "sorcerer"],
-//   text: "THAT'S BETTER When you play this character, chosen character gains Challenger +2 this turn.",
-//   type: "character",
-//   abilities: [
-//     whenYouPlayThis({
-//       name: "THAT'S BETTER",
-//       text: "When you play this character, chosen character gains Challenger +2 this turn.",
-//       effects: [
-//         {
-//           type: "ability",
-//           ability: "challenger",
-//           amount: 2,
-//           modifier: "add",
-//           duration: "turn",
-//           target: chosenCharacter,
-//         },
-//       ],
-//     }),
-//   ],
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 2,
-//   illustrator: "César Vergara",
-//   number: 190,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618177,
-//   },
-//   rarity: "common",
-//   lore: 2,
-// };
-//

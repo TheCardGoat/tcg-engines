@@ -16,27 +16,22 @@ export const princePhillipWardenOfTheWoods: CharacterCard = {
   lore: 2,
   cardNumber: 72,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "cb670ebd52463f804846e1f401536397d24fa5ac",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1kf-1",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Ward",
+        target: "CHOSEN_CHARACTER",
+      },
+      name: "SHINING BEACON Your other Hero",
+      text: "SHINING BEACON Your other Hero characters gain Ward.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Prince"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { princePhillipWardenOfTheWoods as ogPrincePhillipWardenOfTheWoods } from "@lorcanito/lorcana-engine/cards/004/characters/088-prince-phillip-warden-of-the-woods";
-//
-// export const princePhillipWardenOfTheWoods: LorcanitoCharacterCard = {
-//   ...ogPrincePhillipWardenOfTheWoods,
-//   id: "l8f",
-//   reprints: [ogPrincePhillipWardenOfTheWoods.id],
-//   number: 72,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650014,
-//   },
-// };
-//

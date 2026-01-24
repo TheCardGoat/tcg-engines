@@ -16,11 +16,26 @@ export const camiloMadrigalCenterStage: CharacterCard = {
   lore: 2,
   cardNumber: 75,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "5a8a5dd382df9f6c3af7d8d7853cf5237f17914a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "p4d-1",
+      type: "triggered",
+      name: "ENCORE! ENCORE!",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "return-to-hand",
+        target: "SELF",
+      },
+      text: "ENCORE! ENCORE! When this character is banished in a challenge, return this card to your hand.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Madrigal"],
 };

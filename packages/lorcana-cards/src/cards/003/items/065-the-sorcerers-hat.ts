@@ -11,10 +11,19 @@ export const theSorcerersHat: ItemCard = {
   cost: 2,
   cardNumber: 65,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ea5687ceaf322e37471f2bad55629dd134dcd65f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1tg-1",
+      type: "activated",
+      effect: {
+        type: "reveal-top-card",
+        target: "CONTROLLER",
+      },
+      text: "INCREDIBLE ENERGY {E}, 1 {I} — Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand. Otherwise, put it on the top of your deck.",
+    },
+  ],
 };

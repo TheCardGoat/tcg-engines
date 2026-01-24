@@ -16,11 +16,22 @@ export const crikeePartOfTheTeam: CharacterCard = {
   lore: 1,
   cardNumber: 131,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "9d087d32f656197a9ff3c8e60cf33a925d94003d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "17k-1",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 2,
+        target: "SELF",
+      },
+      text: "AT HER SIDE While you have 2 or more other exerted characters in play, this character gets +2 {L}.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

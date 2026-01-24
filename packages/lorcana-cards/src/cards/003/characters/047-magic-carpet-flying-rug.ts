@@ -21,6 +21,13 @@ export const magicCarpetFlyingRug: CharacterCard = {
   externalIds: {
     ravensburger: "9057e685beb641fbff4086da8f552e1388fa0350",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "14a-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

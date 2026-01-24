@@ -44,43 +44,26 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
               type: "banish",
               target: {
                 selector: "chosen",
-                owner: "opponent",
-                count: 1,
+                controller: "opponent",
               },
             },
             {
               type: "conditional",
               condition: {
-                type: "if",
-                expression: "target banished",
+                type: "if-you-do",
               },
               then: {
-                type: "scry",
+                type: "look-at-cards",
                 amount: 1,
+                from: "top-of-deck",
                 target: "OPPONENT",
-                revealAll: true,
-                destinations: [
-                  {
-                    zone: "play",
-                    min: 0,
-                    max: 1,
-                    filter: {
-                      type: "or",
-                      filters: [
-                        { type: "card-type", cardType: "character" },
-                        { type: "card-type", cardType: "item" },
-                      ],
-                    },
-                    cost: "free",
-                  },
-                  { zone: "deck-bottom", remainder: true },
-                ],
               },
             },
           ],
         },
       },
       text: "STUNNING TRANSFORMATION Whenever you put a card under this character, you may banish chosen opposing character. If you do, their player may reveal the top card of their deck. If that card is a character or item card, they may play it for free. Otherwise, they put it on the bottom of their deck.",
+      name: "STUNNING TRANSFORMATION",
     },
   ],
   classifications: ["Storyborn", "Ally", "Fairy", "Sorcerer", "Whisper"],

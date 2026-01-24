@@ -16,11 +16,22 @@ export const zazuStewardOfThePrideLands: CharacterCard = {
   lore: 1,
   cardNumber: 93,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a032ed20032f8c710c904a4c2acaa648433e35c1",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "18g-1",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "SELF",
+      },
+      text: "IT'S TIME TO GO! While this character is at a location, he gets +1 {L}.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

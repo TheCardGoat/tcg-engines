@@ -15,11 +15,31 @@ export const peteSpacePirate: CharacterCard = {
   lore: 2,
   cardNumber: 114,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "3f8bdad905e5495556f0eee78e68c291fe1c0160",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "hmq-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+      text: "Shift 4",
+    },
+    {
+      id: "hmq-2",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        target: "SELF",
+        value: 1,
+      },
+      text: "FRIGHTFUL SCHEME While this character is exerted, opposing characters can't exert to sing songs and your Pirate characters gain Resist +1.",
+    },
+  ],
   classifications: ["Floodborn", "Villain", "Pirate"],
 };

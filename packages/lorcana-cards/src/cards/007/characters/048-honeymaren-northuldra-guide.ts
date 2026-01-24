@@ -16,39 +16,33 @@ export const honeymarenNorthuldraGuide: CharacterCard = {
   lore: 1,
   cardNumber: 48,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "b37f54cccdfd81e4fac8a77d3054a00ee72b292d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1d4-1",
+      type: "triggered",
+      name: "TALE OF THE FIFTH SPIRIT",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "an opponent has an exerted character in play",
+        },
+        then: {
+          type: "gain-lore",
+          amount: 1,
+        },
+      },
+      text: "TALE OF THE FIFTH SPIRIT When you play this character, if an opponent has an exerted character in play, gain 1 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { taleOfTheFifthSpiritAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const honeymarenNorthuldraGuide: LorcanitoCharacterCard = {
-//   id: "q36",
-//   name: "Honeymaren",
-//   title: "Northuldra Guide",
-//   characteristics: ["storyborn", "ally"],
-//   text: "TALE OF THE FIFTH SPIRIT When you play this character, if an opponent has an exerted character in play, gain 1 lore.",
-//   type: "character",
-//   abilities: [taleOfTheFifthSpiritAbility],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 2,
-//   illustrator: "Alexandria Neonakis",
-//   number: 48,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619432,
-//   },
-//   rarity: "common",
-//   lore: 1,
-// };
-//

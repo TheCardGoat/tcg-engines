@@ -16,81 +16,31 @@ export const robinHoodSharpshooter: CharacterCard = {
   lore: 2,
   cardNumber: 118,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f66d5ab4d3a54fec003c4f80526a7a6667ce7c86",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1w7-1",
+      type: "triggered",
+      name: "MY GREATEST PERFORMANCE",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "play-card",
+          from: "hand",
+          cost: "free",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "MY GREATEST PERFORMANCE Whenever this character quests, look at the top 4 cards of your deck. You may reveal an action card with cost 6 or less and play it for free. Put the rest in your discard.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-//
-// export const robinHoodSharpshooter: LorcanitoCharacterCard = {
-//   id: "zti",
-//   name: "Robin Hood",
-//   title: "Sharpshooter",
-//   characteristics: ["hero", "storyborn"],
-//   text: "**MY GREATEST PERFORMANCE** Whenever this character quests, look at the top 4 cards of your deck. You may reveal an action card with cost 6 or less and play it for free. Put the rest in your discard.",
-//   type: "character",
-//   abilities: [
-//     wheneverQuests({
-//       name: "My Greatest Performance",
-//       text: "Whenever this character quests, look at the top 4 cards of your deck. You may reveal an action card with cost 6 or less and play it for free. Put the rest in your discard.",
-//       effects: [
-//         {
-//           type: "scry",
-//           mode: "discard",
-//           shouldRevealTutored: true,
-//           amount: 4,
-//           target: self,
-//           tutorFilters: [
-//             { filter: "owner", value: "self" },
-//             { filter: "zone", value: "deck" },
-//             { filter: "characteristics", value: ["action"] },
-//             {
-//               filter: "attribute",
-//               value: "cost",
-//               comparison: { operator: "lte", value: 6 },
-//             },
-//           ],
-//           playFilters: [
-//             { filter: "owner", value: "self" },
-//             { filter: "zone", value: "deck" },
-//             { filter: "characteristics", value: ["action"] },
-//             {
-//               filter: "attribute",
-//               value: "cost",
-//               comparison: { operator: "lte", value: 6 },
-//             },
-//           ],
-//           limits: {
-//             play: 1,
-//             bottom: 0,
-//             top: 0,
-//             hand: 0,
-//             inkwell: 0,
-//             discard: 4,
-//           },
-//         },
-//       ],
-//     }),
-//   ],
-//   colors: ["ruby"],
-//   cost: 4,
-//   strength: 1,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Federico Maria Cugliari",
-//   number: 118,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 561646,
-//   },
-//   rarity: "legendary",
-// };
-//

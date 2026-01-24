@@ -16,11 +16,22 @@ export const tobyTurtleWaryFriend: CharacterCard = {
   lore: 1,
   cardNumber: 190,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ceee5141d95bd0a4e22bf7d9d0353bf2e3c36418",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1le-1",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        target: "SELF",
+        value: 1,
+      },
+      text: "HARD SHELL While this character is exerted, he gains Resist +1.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

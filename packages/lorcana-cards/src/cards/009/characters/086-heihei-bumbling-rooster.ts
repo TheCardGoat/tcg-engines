@@ -16,27 +16,36 @@ export const heiheiBumblingRooster: CharacterCard = {
   lore: 2,
   cardNumber: 86,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "69d8809376697e97b2de10221febd0aee79c5d45",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "td9-1",
+      type: "triggered",
+      name: "FATTEN YOU UP",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "an opponent has more cards in their inkwell than you",
+        },
+        then: {
+          type: "put-into-inkwell",
+          source: "top-of-deck",
+          target: "CONTROLLER",
+          exerted: true,
+          facedown: true,
+        },
+      },
+      text: "FATTEN YOU UP When you play this character, if an opponent has more cards in their inkwell than you, you may put the top card of your deck into your inkwell facedown and exerted.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { heiheiBumblingRooster as ogHeiheiBumblingRooster } from "@lorcanito/lorcana-engine/cards/004/characters/075-heihei-bumbling-rooster";
-//
-// export const heiheiBumblingRooster: LorcanitoCharacterCard = {
-//   ...ogHeiheiBumblingRooster,
-//   id: "yeh",
-//   reprints: ["rmn"],
-//   number: 86,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650026,
-//   },
-// };
-//

@@ -16,27 +16,26 @@ export const belleInventiveEngineer: CharacterCard = {
   lore: 2,
   cardNumber: 156,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "86b4fc6edf4957af2c46cf5c14f83207899645cc",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "11d-1",
+      type: "triggered",
+      name: "TINKER",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "play-card",
+        from: "hand",
+      },
+      text: "TINKER Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Princess", "Inventor"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { belleInventive as belleInventiveEngineerAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/characters";
-//
-// export const belleInventiveEngineer: LorcanitoCharacterCard = {
-//   ...belleInventiveEngineerAsOrig,
-//   id: "siv",
-//   reprints: [belleInventiveEngineerAsOrig.id],
-//   number: 156,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650091,
-//   },
-// };
-//

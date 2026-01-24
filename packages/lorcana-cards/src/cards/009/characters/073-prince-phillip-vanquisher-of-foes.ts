@@ -16,27 +16,47 @@ export const princePhillipVanquisherOfFoes: CharacterCard = {
   lore: 3,
   cardNumber: 73,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "b1cbda0ae6f55030e3e718582adc878a6ebba693",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1db-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 6,
+      },
+      text: "Shift 6 {I}",
+    },
+    {
+      id: "1db-2",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "1db-3",
+      type: "triggered",
+      name: "SWIFT AND SURE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "banish",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "SWIFT AND SURE When you play this character, banish all opposing damaged characters.",
+    },
+  ],
   classifications: ["Floodborn", "Hero", "Prince"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { princePhillipVanquisherOfFoes as ogPrincePhillipVanquisherOfFoes } from "@lorcanito/lorcana-engine/cards/004/characters/087-prince-phillip-vanquisher-of-foes";
-//
-// export const princePhillipVanquisherOfFoes: LorcanitoCharacterCard = {
-//   ...ogPrincePhillipVanquisherOfFoes,
-//   id: "wj7",
-//   reprints: [ogPrincePhillipVanquisherOfFoes.id],
-//   number: 73,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650015,
-//   },
-// };
-//

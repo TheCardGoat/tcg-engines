@@ -11,45 +11,35 @@ export const energyBlast: ActionCard = {
   cost: 7,
   cardNumber: 131,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "c679d181159ab4450f19fa0e4f60c90439382f17",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1j8-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "banish",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+      text: "Banish chosen character. Draw a card.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import {
-//   drawACard,
-//   mayBanish,
-// } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const energyBlast: LorcanitoActionCard = {
-//   id: "e8s",
-//   name: "Energy Blast",
-//   characteristics: ["action"],
-//   text: "Banish chosen character. Draw a card.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       resolveEffectsIndividually: true,
-//       effects: [mayBanish(chosenCharacter), drawACard],
-//     },
-//   ],
-//   inkwell: false,
-//   colors: ["ruby"],
-//   cost: 7,
-//   strength: 0,
-//   illustrator: "Marco Giorgini",
-//   number: 131,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 591982,
-//   },
-//   rarity: "rare",
-// };
-//

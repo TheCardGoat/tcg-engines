@@ -16,11 +16,42 @@ export const magicaDeSpellShadowForm: CharacterCard = {
   lore: 2,
   cardNumber: 66,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "67257d2a601938a9c43bb080208e5a3081a49939",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "sma-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "sma-2",
+      type: "triggered",
+      name: "DANCE OF DARKNESS",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "return-to-hand",
+          target: {
+            selector: "all",
+            count: "all",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "DANCE OF DARKNESS When you play this character, you may return one of your other characters to your hand to draw a card.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],
 };

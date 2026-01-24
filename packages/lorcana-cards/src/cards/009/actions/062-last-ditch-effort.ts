@@ -11,26 +11,43 @@ export const lastditchEffort: ActionCard = {
   cost: 3,
   cardNumber: 62,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "cf37b6d51b29ef3781307521b75714776bf0549a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1lj-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "exert",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "opponent",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+          {
+            type: "gain-keyword",
+            keyword: "Challenger",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+            value: 2,
+            duration: "this-turn",
+          },
+        ],
+      },
+      text: "Exert chosen opposing character. Chosen character of yours gains Challenger +2 this turn.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { lastDitchEffort as ogLastDitchEffort } from "@lorcanito/lorcana-engine/cards/003/actions/062-last-ditch-effort";
-//
-// export const lastditchEffort: LorcanitoActionCard = {
-//   ...ogLastDitchEffort,
-//   id: "qq2",
-//   reprints: [ogLastDitchEffort.id],
-//   number: 62,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650006,
-//   },
-// };
-//

@@ -16,58 +16,39 @@ export const fidgetSneakyBat: CharacterCard = {
   lore: 2,
   cardNumber: 106,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "cfdd9e04d6917aac14c9f8b2e100a587bf16ce09",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1lo-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "1lo-2",
+      type: "triggered",
+      name: "I TOOK CARE OF EVERYTHING",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "I TOOK CARE OF EVERYTHING Whenever this character quests, another chosen character of yours gains Evasive until the start of your next turn.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { chosenCharacterOfYours } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const fidgetSneakyBat: LorcanitoCharacterCard = {
-//   id: "zgb",
-//   name: "Fidget",
-//   title: "Sneaky Bat",
-//   characteristics: ["storyborn", "ally"],
-//   text: "EVASIVE\nI TOOK CARE OF EVERYTHING Whenever this character quests, another chosen character of yours gain Evasive until the start of your next turn.",
-//   type: "character",
-//   abilities: [
-//     evasiveAbility,
-//     wheneverQuests({
-//       name: "TOOK CARE OF EVERYTHING",
-//       text: "Whenever this character quests, another chosen character of yours gain Evasive until the start of your next turn.",
-//       effects: [
-//         {
-//           type: "ability",
-//           ability: "evasive",
-//           modifier: "add",
-//           duration: "next_turn",
-//           until: true,
-//           target: chosenCharacterOfYours,
-//         },
-//       ],
-//     }),
-//   ],
-//   inkwell: true,
-//
-//   colors: ["emerald", "ruby"],
-//   cost: 4,
-//   strength: 2,
-//   willpower: 3,
-//   illustrator: "Ian MacDonald",
-//   number: 106,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619464,
-//   },
-//   rarity: "uncommon",
-//   lore: 2,
-// };
-//

@@ -16,27 +16,26 @@ export const shereKhanMenacingPredator: CharacterCard = {
   lore: 1,
   cardNumber: 104,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d699b7284880df41462554acf1e1f68689fab0bd",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1nj-1",
+      type: "triggered",
+      name: "DON'T INSULT MY INTELLIGENCE",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+      },
+      text: "DON'T INSULT MY INTELLIGENCE Whenever one of your characters challenges another character, gain 1 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shereKhanMenacingPredator as ogShereKhanMenacingPredator } from "@lorcanito/lorcana-engine/cards/002/characters/126-shere-khan-menacing-predator";
-//
-// export const shereKhanMenacingPredator: LorcanitoCharacterCard = {
-//   ...ogShereKhanMenacingPredator,
-//   id: "nzy",
-//   reprints: [ogShereKhanMenacingPredator.id],
-//   number: 104,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650042,
-//   },
-// };
-//

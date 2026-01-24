@@ -16,27 +16,29 @@ export const annaTruehearted: CharacterCard = {
   lore: 2,
   cardNumber: 137,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e1b3cea0cee4d2729aad03d87771e607533f1d94",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1qm-1",
+      type: "triggered",
+      name: "LET ME HELP YOU",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "CHOSEN_CHARACTER",
+        duration: "this-turn",
+      },
+      text: "LET ME HELP YOU Whenever this character quests, your other Hero characters get +1 {L} this turn.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Queen", "Knight"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { annaTrueHearted as annaTrueheartedAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/138-anna-true-hearted";
-//
-// export const annaTruehearted: LorcanitoCharacterCard = {
-//   ...annaTrueheartedAsOrig,
-//   id: "p5i",
-//   reprints: [annaTrueheartedAsOrig.id],
-//   number: 137,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650072,
-//   },
-// };
-//

@@ -16,27 +16,35 @@ export const cinderellaGentleAndKind: CharacterCard = {
   lore: 2,
   cardNumber: 19,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "933453208f4cab4b5eacd5391db6a6cf95b7e691",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "14u-1",
+      type: "keyword",
+      keyword: "Singer",
+      value: 5,
+      text: "Singer 5",
+    },
+    {
+      id: "14u-2",
+      type: "activated",
+      effect: {
+        type: "remove-damage",
+        amount: 3,
+        upTo: true,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "A WONDERFUL DREAM {E} — Remove up to 3 damage from chosen Princess character.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { cinderellaGentleAndKind as ogCinderellaGentleAndKind } from "@lorcanito/lorcana-engine/cards/001/characters/003-cinderella-gentle-and-kind";
-//
-// export const cinderellaGentleAndKind: LorcanitoCharacterCard = {
-//   ...ogCinderellaGentleAndKind,
-//   id: "xks",
-//   reprints: [ogCinderellaGentleAndKind.id],
-//   number: 19,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649967,
-//   },
-// };
-//

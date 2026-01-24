@@ -16,27 +16,22 @@ export const annaBravingTheStorm: CharacterCard = {
   lore: 1,
   cardNumber: 146,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "511e7eed599c91d73d5cc4ea8991964dc1efe12a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "mi9-1",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "SELF",
+      },
+      text: "I WAS BORN READY While you have another Hero character in play, this character gets +1 {L}.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Queen"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { annaBravingTheStorm as ogAnnaBravingTheStorm } from "@lorcanito/lorcana-engine/cards/004/characters/137-anna-braving-the-storm";
-//
-// export const annaBravingTheStorm: LorcanitoCharacterCard = {
-//   ...ogAnnaBravingTheStorm,
-//   id: "ads", // New ID for this card
-//   reprints: [ogAnnaBravingTheStorm.id],
-//   number: 146,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650081,
-//   },
-// };
-//

@@ -16,11 +16,22 @@ export const flotsamRiffraff: CharacterCard = {
   lore: 1,
   cardNumber: 72,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "2bb99c6ebaa84faa87f503ede5ffc12cd846451b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "c4r-1",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 3,
+        target: "YOUR_CHARACTERS",
+      },
+      text: "EERIE PAIR Your characters named Jetsam get +3 {S}.",
+    },
+  ],
   classifications: ["Dreamborn", "Ally"],
 };

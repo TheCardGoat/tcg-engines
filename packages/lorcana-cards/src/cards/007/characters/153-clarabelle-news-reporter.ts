@@ -15,66 +15,28 @@ export const clarabelleNewsReporter: CharacterCard = {
   lore: 2,
   cardNumber: 153,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e3b5dbe6ce01c2ada369d0b5792e10567e35497f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1r6-1",
+      type: "keyword",
+      keyword: "Support",
+      text: "Support",
+    },
+    {
+      id: "1r6-2",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: "YOUR_CHARACTERS",
+      },
+      text: "BREAKING STORY Your other characters with Support get +1 {S}.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { supportAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const clarabelleNewsReporter: LorcanitoCharacterCard = {
-//   id: "ftn",
-//   name: "Clarabelle",
-//   title: "News Reporter",
-//   characteristics: ["storyborn", "ally"],
-//   text: "SUPPORTBREAKING STORY Your other characters with Support gain +1 {S}.",
-//   type: "character",
-//   abilities: [
-//     supportAbility,
-//     {
-//       type: "static",
-//       ability: "effects",
-//       name: "BREAKING STORY",
-//       text: "Your other characters with Support gain +1 {S}.",
-//       effects: [
-//         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 1,
-//           modifier: "add",
-//           target: {
-//             type: "card",
-//             value: "all",
-//             excludeSelf: true,
-//             filters: [
-//               { filter: "owner", value: "self" },
-//               { filter: "type", value: "character" },
-//               { filter: "zone", value: "play" },
-//               { filter: "ability", value: "support" },
-//             ],
-//           },
-//         },
-//       ],
-//     },
-//   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Stefano Spagnuolo",
-//   number: 153,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618711,
-//   },
-//   rarity: "rare",
-//   lore: 2,
-// };
-//

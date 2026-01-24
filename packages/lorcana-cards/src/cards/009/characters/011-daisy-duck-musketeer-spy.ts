@@ -15,27 +15,28 @@ export const daisyDuckMusketeerSpy: CharacterCard = {
   lore: 1,
   cardNumber: 11,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a34164ff051a6a764bee43f9f9096b7deeec2e20",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "19a-1",
+      type: "triggered",
+      name: "INFILTRATION",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "discard",
+        amount: 1,
+        target: "EACH_OPPONENT",
+        chosen: true,
+      },
+      text: "INFILTRATION When you play this character, each opponent chooses and discards a card.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Musketeer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { daisyDuckMusketeerSpy as ogDaisyDuckMusketeerSpy } from "@lorcanito/lorcana-engine/cards/004/characters/7-daisy-duck-musketeer-spy";
-//
-// export const daisyDuckMusketeerSpy: LorcanitoCharacterCard = {
-//   ...ogDaisyDuckMusketeerSpy,
-//   id: "ex3",
-//   reprints: [ogDaisyDuckMusketeerSpy.id],
-//   number: 11,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649960,
-//   },
-// };
-//

@@ -11,10 +11,45 @@ export const pouncingPractice: ActionCard = {
   cost: 2,
   cardNumber: 176,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "12f96e5edbcf8a1a75344eb8f5097aaec5b6c67a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "59j-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "modify-stat",
+            stat: "strength",
+            modifier: -2,
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+            duration: "this-turn",
+          },
+          {
+            type: "gain-keyword",
+            keyword: "Evasive",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+            duration: "this-turn",
+          },
+        ],
+      },
+      text: "Chosen character gets -2 {S} this turn. Chosen character of yours gains Evasive this turn.",
+    },
+  ],
 };

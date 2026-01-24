@@ -16,11 +16,36 @@ export const gastonArrogantShowoff: CharacterCard = {
   lore: 1,
   cardNumber: 129,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "43ad90059e880643ed35509ac9f1453d0931a266",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "is0-1",
+      type: "triggered",
+      name: "BREAK APART",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "banish",
+          target: {
+            selector: "all",
+            count: "all",
+            owner: "you",
+            zones: ["play"],
+            cardTypes: ["item"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "BREAK APART When you play this character, you may banish one of your items to give chosen character +2 {S} this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };

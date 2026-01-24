@@ -21,6 +21,16 @@ export const miloThatchKingOfAtlantis: CharacterCard = {
   externalIds: {
     ravensburger: "6171faef1161c353aae832650702ac027410eea5",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "r1c-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+      text: "Shift 4",
+    },
+  ],
   classifications: ["Floodborn", "Hero", "King"],
 };

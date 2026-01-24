@@ -16,11 +16,30 @@ export const lefouCakeThief: CharacterCard = {
   lore: 1,
   cardNumber: 138,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "8e79bca168af9ababf4c78ca6193a25f88168742",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "13j-1",
+      type: "activated",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "lose-lore",
+            amount: 1,
+            target: "OPPONENT",
+          },
+          {
+            type: "gain-lore",
+            amount: 1,
+          },
+        ],
+      },
+      text: "ALL FOR ME {E}, Banish one of your items — Chosen opponent loses 1 lore and you gain 1 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

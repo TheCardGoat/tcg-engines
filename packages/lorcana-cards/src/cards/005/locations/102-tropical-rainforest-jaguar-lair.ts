@@ -15,62 +15,21 @@ export const tropicalRainforestJaguarLair: LocationCard = {
   lore: 0,
   cardNumber: 102,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "52ec9a7c34475277f634f704e9058f3740be19fe",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "n0b-1",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Reckless",
+        target: "CHOSEN_CHARACTER",
+      },
+      name: "SNACK TIME Opposing damaged",
+      text: "SNACK TIME Opposing damaged characters gain Reckless.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { recklessAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const tropicalRainforestJaguarLair: LorcanitoLocationCard = {
-//   id: "voi",
-//   missingTestCase: true,
-//   name: "Tropical Rainforest",
-//   title: "Jaguar Lair",
-//   characteristics: ["location"],
-//   text: "**SNACK TIME** Opposing damaged characters gain **Reckless**. _(They can’t quest and must challenge if able.)_",
-//   type: "location",
-//   abilities: [
-//     {
-//       type: "static",
-//       ability: "gain-ability",
-//       name: "Snack Time",
-//       text: "Opposing damaged characters gain **Reckless**. _(They can’t quest and must challenge if able.)_",
-//       gainedAbility: recklessAbility,
-//       target: {
-//         type: "card",
-//         value: "all",
-//         excludeSelf: true,
-//         filters: [
-//           { filter: "zone", value: "play" },
-//           { filter: "type", value: "character" },
-//           { filter: "owner", value: "opponent" },
-//           {
-//             filter: "status",
-//             value: "damage",
-//             comparison: { operator: "gte", value: 1 },
-//           },
-//         ],
-//       },
-//     },
-//   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   willpower: 6,
-//   lore: 1,
-//   illustrator: "Andreas Rocha",
-//   number: 102,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 560240,
-//   },
-//   rarity: "uncommon",
-//   moveCost: 1,
-// };
-//

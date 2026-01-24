@@ -11,26 +11,25 @@ export const dragonFire: ActionCard = {
   cost: 5,
   cardNumber: 133,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d9ec006d3956dca4006cbf745c589057a0ba0663",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1o2-1",
+      type: "action",
+      effect: {
+        type: "banish",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "Banish chosen character.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { dragonFire as ogDragonFire } from "@lorcanito/lorcana-engine/cards/001/actions/130-dragon-fire";
-//
-// export const dragonFire: LorcanitoActionCard = {
-//   ...ogDragonFire,
-//   id: "nns",
-//   reprints: [ogDragonFire.id],
-//   number: 133,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659245,
-//   },
-// };
-//

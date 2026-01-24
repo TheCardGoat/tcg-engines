@@ -16,11 +16,35 @@ export const mrSmeeBumblingMate: CharacterCard = {
   lore: 2,
   cardNumber: 184,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "9a550d6d1adb8c9c50c770cd0354b54e62316cdd",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "16t-1",
+      type: "action",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression:
+            "this character is exerted and you don't have a Captain character in play",
+        },
+        then: {
+          type: "deal-damage",
+          amount: 1,
+          target: {
+            selector: "self",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+      },
+      text: "OH DEAR, DEAR, DEAR At the end of your turn, if this character is exerted and you don't have a Captain character in play, deal 1 damage to this character.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Pirate"],
 };

@@ -16,11 +16,22 @@ export const theDodoOutlandishStoryteller: CharacterCard = {
   lore: 1,
   cardNumber: 126,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "2fe3c2368d9375dae2898ac0160a32854bd5601b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "dac-1",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: "SELF",
+      },
+      text: "EXTRAORDINARY SITUATION This character gets +1 {S} for each 1 damage on him.",
+    },
+  ],
   classifications: ["Storyborn"],
 };

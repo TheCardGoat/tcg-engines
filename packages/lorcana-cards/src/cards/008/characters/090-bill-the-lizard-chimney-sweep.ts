@@ -16,11 +16,21 @@ export const billTheLizardChimneySweep: CharacterCard = {
   lore: 1,
   cardNumber: 90,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "69b9facbf15d57278b8ed4a2118c589d75a4b24f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "tc2-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: "SELF",
+      },
+      text: "NOTHING TO IT While another character in play has damage, this character gains Evasive.",
+    },
+  ],
   classifications: ["Storyborn"],
 };

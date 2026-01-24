@@ -54,6 +54,8 @@ export {
 export {
   extractNumericValues,
   normalizeToPattern,
+  replacePlaceholders,
+  resolvePlaceholders,
 } from "./v2/numeric-extractor";
 export type { MultiParseResult } from "./v2/parser";
 // Main parser functions

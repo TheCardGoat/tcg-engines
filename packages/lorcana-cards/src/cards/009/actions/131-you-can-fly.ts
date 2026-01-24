@@ -12,26 +12,26 @@ export const youCanFly: ActionCard = {
   cost: 2,
   cardNumber: 131,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "58776f4069675bc00ffc50d5d4cc8aaf7b95b0fc",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ojo-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "Chosen character gains Evasive until the start of your next turn.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { youCanFly as youCanFlyAsOrig } from "@lorcanito/lorcana-engine/cards/002/actions/133-you-can-fly";
-//
-// export const youCanFly: LorcanitoActionCard = {
-//   ...youCanFlyAsOrig,
-//   id: "uv6",
-//   reprints: [youCanFlyAsOrig.id],
-//   number: 131,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650066,
-//   },
-// };
-//

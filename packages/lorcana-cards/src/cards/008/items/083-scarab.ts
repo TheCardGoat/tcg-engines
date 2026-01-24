@@ -11,10 +11,19 @@ export const scarab: ItemCard = {
   cost: 2,
   cardNumber: 83,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f664f18da2600606537df66ca9d9663d72b4a7b8",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1wa-1",
+      type: "action",
+      effect: {
+        type: "return-from-discard",
+        target: "CONTROLLER",
+      },
+      text: "SEARCH THE SANDS {E} 2 {I} – Return an Illusion character card from your discard to your hand.",
+    },
+  ],
 };

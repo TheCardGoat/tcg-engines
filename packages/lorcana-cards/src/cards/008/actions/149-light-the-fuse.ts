@@ -11,10 +11,26 @@ export const lightTheFuse: ActionCard = {
   cost: 1,
   cardNumber: 149,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "3614498b58e0cf1cc33837d6960c31671cbd30a9",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "f06-1",
+      type: "action",
+      effect: {
+        type: "deal-damage",
+        amount: 1,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "Deal 1 damage to chosen character for each exerted character you have in play.",
+    },
+  ],
 };

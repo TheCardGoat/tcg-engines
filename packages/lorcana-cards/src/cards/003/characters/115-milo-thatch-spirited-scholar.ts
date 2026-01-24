@@ -16,11 +16,22 @@ export const miloThatchSpiritedScholar: CharacterCard = {
   lore: 1,
   cardNumber: 115,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "afc915c8e0d6e76a43d923beb2bf5400009bad5e",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1cr-1",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+      },
+      text: "I'M YOUR MAN! While this character is at a location, he gets +2 {S}.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

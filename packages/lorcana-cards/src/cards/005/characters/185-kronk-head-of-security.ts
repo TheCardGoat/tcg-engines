@@ -16,67 +16,44 @@ export const kronkHeadOfSecurity: CharacterCard = {
   lore: 1,
   cardNumber: 185,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "94767179059f954952263718c06a54472353a854",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "156-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 5,
+      },
+      text: "Shift 5",
+    },
+    {
+      id: "156-2",
+      type: "triggered",
+      name: "ARE YOU ON THE LIST?",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "OPPONENT_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "play-card",
+          from: "hand",
+          cost: "free",
+          costRestriction: {
+            comparison: "less-or-equal",
+            value: 5,
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "ARE YOU ON THE LIST? During your turn, whenever this character banishes another character in a challenge, you may play a character with cost 5 or less for free.",
+    },
+  ],
   classifications: ["Floodborn", "Ally", "Captain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { wheneverBanishesAnotherCharacterInChallenge } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-//
-// export const kronkHeadOfSecurity: LorcanitoCharacterCard = {
-//   id: "y86",
-//   missingTestCase: true,
-//   name: "Kronk",
-//   title: "Head of Security",
-//   characteristics: ["floodborn", "captain", "ally"],
-//   text: "**Shift** 5 _You may pay 5 {I} to play this on top of one of your characters named Kronk.)_ **ARE YOU ON THE LIST?** During your turn, whenever this character banishes another character in a challenge, you may play a character with cost 5 or less for free.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(5, "Kronk"),
-//     wheneverBanishesAnotherCharacterInChallenge({
-//       name: "ARE YOU ON THE LIST?",
-//       text: "During your turn, whenever this character banishes another character in a challenge, you may play a character with cost 5 or less for free.",
-//       optional: true,
-//       effects: [
-//         {
-//           type: "play",
-//           forFree: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
-//               { filter: "owner", value: "self" },
-//               { filter: "zone", value: "hand" },
-//               { filter: "type", value: "character" },
-//               {
-//                 filter: "attribute",
-//                 value: "cost",
-//                 comparison: { operator: "lte", value: 5 },
-//               },
-//             ],
-//           },
-//         },
-//       ],
-//     }),
-//   ],
-//   colors: ["steel"],
-//   cost: 7,
-//   strength: 6,
-//   willpower: 6,
-//   lore: 1,
-//   illustrator: "Nicholas Kole",
-//   number: 185,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 555273,
-//   },
-//   rarity: "super_rare",
-// };
-//
