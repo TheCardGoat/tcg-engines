@@ -30,7 +30,7 @@ export type ActionSubtype = "song" | null;
  */
 export interface BaseAbilityDefinition {
   /** Unique identifier for this ability instance */
-  id: string;
+  id?: string;
 
   /**
    * Optional name for named abilities (e.g., "I SUMMON THEE", "DISASSEMBLE")
@@ -42,7 +42,7 @@ export interface BaseAbilityDefinition {
    * Original card text for this ability
    * Used for display and debugging
    */
-  text: string;
+  text?: string;
 }
 
 /**
@@ -160,10 +160,10 @@ export type AbilityDefinition =
  */
 export interface BaseCardProperties {
   /** Unique identifier for the card */
-  id: string;
+  id?: string;
 
   /** Card name (Rule 6.2.4) - e.g., "Elsa" */
-  name: string;
+  name?: string;
 
   /** Card version (Rule 6.2.5) - e.g., "Ice Queen" */
   version?: string;

@@ -111,13 +111,19 @@ export type {
  */
 export interface AbilityWithText {
   ability: AbilityType;
-  /** Original card text for this ability */
-  text: string;
+  /** Original card text for this ability (optional) */
+  text?: string;
   /**
    * Named ability prefix (ALL CAPS text before the effect)
    * e.g., "DARK KNOWLEDGE" from "DARK KNOWLEDGE Whenever this character quests..."
    */
   name?: string;
+  /**
+   * Unique identifier for this ability instance
+   * Generated when generateAbilityUids option is enabled
+   * Format: "{cardId}-{index}" (e.g., "17t-1", "17t-2")
+   */
+  id?: string;
 }
 
 /**
