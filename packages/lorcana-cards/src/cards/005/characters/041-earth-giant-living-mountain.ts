@@ -39,39 +39,3 @@ export const earthGiantLivingMountain: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { opponentDrawXCards } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const earthGiantLivingMountain: LorcanitoCharacterCard = {
-//   id: "k6x",
-//   name: "Earth Giant",
-//   title: "Living Mountain",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**UNEARTHED** When you play this character, each opponent draws a card.",
-//   type: "character",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       name: "UNEARTHED",
-//       text: "When you play this character, each opponent draws a card.",
-//       effects: [opponentDrawXCards(1)],
-//     },
-//   ],
-//   flavour: "Who woke up the big guy?",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 5,
-//   lore: 2,
-//   illustrator: "Alice Pisoni",
-//   number: 41,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 561487,
-//   },
-//   rarity: "common",
-// };
-//

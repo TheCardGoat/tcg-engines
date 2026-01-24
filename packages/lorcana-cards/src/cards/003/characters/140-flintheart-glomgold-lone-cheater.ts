@@ -16,11 +16,21 @@ export const flintheartGlomgoldLoneCheater: CharacterCard = {
   lore: 2,
   cardNumber: 140,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "456a3064e0e69929c0b9426e3bc37b6341b3573a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "j9d-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: "SELF",
+      },
+      text: "THEY'LL NEVER SEE IT COMING! During your turn, this character gains Evasive.",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };

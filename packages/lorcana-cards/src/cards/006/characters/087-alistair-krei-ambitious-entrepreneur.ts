@@ -16,48 +16,33 @@ export const alistairKreiAmbitiousEntrepreneur: CharacterCard = {
   lore: 1,
   cardNumber: 87,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "5caba947c087604d4db6f1463a4c61faab71effb",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ppn-1",
+      type: "triggered",
+      name: "AN EYE FOR TECH",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "an opponent has an item in play",
+        },
+        then: {
+          type: "gain-lore",
+          amount: 1,
+        },
+      },
+      text: "AN EYE FOR TECH When you play this character, if an opponent has an item in play, gain 1 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Inventor"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const alistairKreiAmbitiousEntrepreneur: LorcanitoCharacterCard = {
-//   id: "v7y",
-//   missingTestCase: true,
-//   name: "Alistair Krei",
-//   title: "Ambitious Entrepreneur",
-//   characteristics: ["storyborn", "inventor"],
-//   text: "AN EYE FOR TECH When you play this character, if an opponent has an item in play, gain 1 lore.",
-//   type: "character",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       name: "An Eye For Tech",
-//       text: "When you play this character, if an opponent has an item in play, gain 1 lore.",
-//       effects: [youGainLore(1)],
-//     },
-//   ],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Diogo Saito",
-//   number: 87,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 588368,
-//   },
-//   rarity: "common",
-// };
-//

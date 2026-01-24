@@ -15,11 +15,22 @@ export const mickeyMouseStalwartExplorer: CharacterCard = {
   lore: 1,
   cardNumber: 181,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "455e0ad8701e0c3a71632e7c7d3de965c41fe998",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "j8w-1",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: "SELF",
+      },
+      text: "LET'S TAKE A LOOK This character gets +1 {S} for each location you have in play.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero"],
 };

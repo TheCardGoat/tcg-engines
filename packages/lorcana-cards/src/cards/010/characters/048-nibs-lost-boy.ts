@@ -16,55 +16,26 @@ export const nibsLostBoy: CharacterCard = {
   lore: 2,
   cardNumber: 48,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a88d8cf7ffba8d2838430c343d109ca60f006c2b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ar-1",
+      type: "triggered",
+      name: "LOOK WHO'S BACK",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "return-to-hand",
+        target: "SELF",
+      },
+      text: "LOOK WHO'S BACK When this character is banished in a challenge, return this card to your hand.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-//
-// export const nibsLostBoy: LorcanitoCharacterCard = {
-//   id: "qfp",
-//   name: "Nibs",
-//   title: "Lost Boy",
-//   characteristics: ["storyborn", "ally"],
-//   text: "LOOK WHO'S BACK When this character is banished in a challenge, return this card to your hand.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 3,
-//   illustrator: "Isabella Ceravolo",
-//   number: 48,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 658335,
-//   },
-//   rarity: "uncommon",
-//   abilities: [
-//     whenThisCharacterBanishedInAChallenge({
-//       name: "LOOK WHO'S BACK",
-//       text: "When this character is banished in a challenge, return this card to your hand.",
-//       effects: [
-//         {
-//           type: "move",
-//           to: "hand",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [{ filter: "source", value: "self" }],
-//           },
-//         },
-//       ],
-//     }),
-//   ],
-//   lore: 2,
-// };
-//

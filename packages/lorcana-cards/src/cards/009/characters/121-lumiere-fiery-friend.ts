@@ -16,27 +16,23 @@ export const lumiereFieryFriend: CharacterCard = {
   lore: 1,
   cardNumber: 121,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "7a69f5139f712cc9898120eee5736b7a23f360ca",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "xyr-1",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 1,
+        target: "YOUR_CHARACTERS",
+      },
+      name: "FERVENT ADDRESS Your other",
+      text: "FERVENT ADDRESS Your other characters get +1 {S}.",
+    },
+  ],
   classifications: ["Dreamborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { lumiereFieryFriend as ogLumiereFieryFriend } from "@lorcanito/lorcana-engine/cards/004/characters/113-lumiere-fiery-friend";
-//
-// export const lumiereFieryFriend: LorcanitoCharacterCard = {
-//   ...ogLumiereFieryFriend,
-//   id: "bk1",
-//   reprints: [ogLumiereFieryFriend.id],
-//   number: 121,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650056,
-//   },
-// };
-//

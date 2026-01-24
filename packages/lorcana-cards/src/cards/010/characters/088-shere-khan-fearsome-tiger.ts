@@ -16,74 +16,43 @@ export const shereKhanFearsomeTiger: CharacterCard = {
   lore: 2,
   cardNumber: 88,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "bd5700db4398aef9046429719282594d5034b5a8",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1gj-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "1gj-2",
+      type: "triggered",
+      name: "ON THE HUNT",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-damage",
+          amount: 1,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "ON THE HUNT Whenever this character quests, banish chosen opposing damaged character. Then, you may put 1 damage counter on another chosen character.",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import {
-//   anotherChosenCharacter,
-//   chosenOpposingDamagedCharacter,
-// } from "@lorcanito/lorcana-engine/abilities/target";
-// import { self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import {
-//   mayBanish,
-//   putDamageEffect,
-// } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const shereKhanFearsomeTiger: LorcanitoCharacterCard = {
-//   id: "j1t",
-//   name: "Shere Khan",
-//   title: "Fearsome Tiger",
-//   characteristics: ["storyborn", "villain"],
-//   text: "Evasive\n\nON THE HUNT Whenever this character quests, banish chosen opposing damaged character. Then, you may put 1 damage counter on another chosen character.",
-//   type: "character",
-//   inkwell: false,
-//   colors: ["emerald"],
-//   cost: 6,
-//   strength: 5,
-//   willpower: 4,
-//   illustrator: "Luis Huerta",
-//   number: 88,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659623,
-//   },
-//   rarity: "legendary",
-//   lore: 2,
-//   abilities: [
-//     evasiveAbility,
-//     wheneverQuests({
-//       name: "ON THE HUNT",
-//       text: "Whenever this character quests, banish chosen opposing damaged character. Then, you may put 1 damage counter on another chosen character.",
-//       effects: [
-//         {
-//           ...mayBanish(chosenOpposingDamagedCharacter, true),
-//           afterEffect: [
-//             {
-//               type: "create-layer-for-player",
-//               target: self,
-//               layer: {
-//                 type: "resolution",
-//                 responder: "self",
-//                 name: "ON THE HUNT",
-//                 text: "You may put 1 damage counter on another chosen character.",
-//                 optional: true,
-//                 effects: [putDamageEffect(1, anotherChosenCharacter)],
-//               },
-//             },
-//           ],
-//         },
-//       ],
-//     }),
-//   ],
-// };
-//

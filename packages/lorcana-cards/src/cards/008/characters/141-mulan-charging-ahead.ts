@@ -16,11 +16,38 @@ export const mulanChargingAhead: CharacterCard = {
   lore: 0,
   cardNumber: 141,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "9c393a7998141f73d43ba96eda262c943deb3402",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "17c-1",
+      type: "keyword",
+      keyword: "Reckless",
+      text: "Reckless",
+    },
+    {
+      id: "17c-2",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: "SELF",
+      },
+      text: "BURST OF SPEED During your turn, this character gains Evasive.",
+    },
+    {
+      id: "17c-3",
+      type: "static",
+      effect: {
+        type: "grant-ability",
+        ability: "can-challenge-ready",
+        target: "SELF",
+      },
+      name: "LONG RANGE",
+      text: "LONG RANGE This character can challenge ready characters.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };

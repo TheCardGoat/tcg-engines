@@ -16,11 +16,32 @@ export const mushuYourWorstNightmare: CharacterCard = {
   lore: 2,
   cardNumber: 142,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "02aa1e9aa98646eadca05cdb2ebc4c786a06f1a2",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "qm5-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+      text: "Shift 4",
+    },
+    {
+      id: "qm5-2",
+      type: "triggered",
+      name: "ALL FIRED UP",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Rush",
+        target: "CHOSEN_CHARACTER",
+        duration: "this-turn",
+      },
+      text: "ALL FIRED UP Whenever you play another character, they gain Rush, Reckless, and Evasive this turn.",
+    },
+  ],
   classifications: ["Floodborn", "Ally", "Dragon"],
 };

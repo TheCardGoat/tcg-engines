@@ -16,11 +16,26 @@ export const anitaRadcliffeDogLover: CharacterCard = {
   lore: 1,
   cardNumber: 155,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "4230300eaeb78b87c38720c57b3d4dbe9b489baa",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "id4-1",
+      type: "triggered",
+      name: "I'LL TAKE CARE OF YOU",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "play-card",
+        from: "hand",
+      },
+      text: "I'LL TAKE CARE OF YOU When you play this character, you may give chosen Puppy character Resist +1 until the start of your next turn.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

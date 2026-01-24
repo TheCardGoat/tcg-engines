@@ -272,10 +272,9 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
   // Output abilities with proper AbilityDefinition format
   // AbilityDefinition requires: id, text, type (triggered|activated|static|keyword|action)
   // Now uses parser to extract structured effects
+  // Partial parsing: try to parse all abilities, include those that succeed
   if (card.rulesText && !card.vanilla) {
-    if (card.missingImplementation) {
-      result.abilities = [];
-    } else {
+    {
       const engineAbilities: Array<AbilityDefinition> = [];
 
       // Check if this card has a manual override entry (complex texts that bypass parsing)
@@ -317,22 +316,9 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
           }
         }
       } else {
-        // Not a manual override - use line-by-line parsing
+        // Not a manual override - use line-by-line parsing with partial success support
         const abilityTexts = card.rulesText.split("\n").filter((t) => t.trim());
-
-        // Simple keywords (no value) - keep for fallback
-        const simpleKeywords = [
-          "bodyguard",
-          "evasive",
-          "reckless",
-          "rush",
-          "support",
-          "vanish",
-          "ward",
-          "alert",
-        ];
-        // Parameterized keywords (have a +N value) - keep for fallback
-        const parameterizedKeywords = ["challenger", "resist", "singer"];
+        let failedParseCount = 0;
 
         for (let i = 0; i < abilityTexts.length; i++) {
           const rawText = abilityTexts[i].trim();
@@ -362,102 +348,26 @@ function convertToLorcanaCard(card: CanonicalCard): Record<string, unknown> {
 
             engineAbilities.push(engineAbility);
           } else {
-            // Parser failed - fall back to simple text-based detection
-            // Try to extract ability name (all caps at start)
-            const namedMatch = text.match(/^([A-Z][A-Z\s]+[A-Z])\s+(.+)$/);
-            const name = namedMatch ? namedMatch[1].trim() : undefined;
-
-            // Determine ability type
-            let abilityType: "triggered" | "activated" | "static" | "keyword" =
-              "static";
-            const lower = text.toLowerCase();
-            let keyword: string | undefined;
-            let value: number | undefined;
-
-            // Check for simple keywords
-            const simpleKeywordMatch = simpleKeywords.find((kw) =>
-              lower.startsWith(kw),
-            );
-            if (simpleKeywordMatch) {
-              abilityType = "keyword";
-              keyword =
-                simpleKeywordMatch.charAt(0).toUpperCase() +
-                simpleKeywordMatch.slice(1);
-            }
-            // Check for parameterized keywords (e.g., "Challenger +3", "Resist +2", "Singer 5")
-            else if (parameterizedKeywords.some((kw) => lower.startsWith(kw))) {
-              const paramMatch = text.match(
-                /^(Challenger|Resist|Singer)\s*\+?(\d+)/i,
-              );
-              if (paramMatch) {
-                abilityType = "keyword";
-                keyword =
-                  paramMatch[1].charAt(0).toUpperCase() +
-                  paramMatch[1].slice(1).toLowerCase();
-                value = Number.parseInt(paramMatch[2], 10);
-              }
-            }
-            // Check for Shift keyword (e.g., "Shift 5")
-            else if (lower.startsWith("shift")) {
-              const shiftMatch = text.match(/^Shift\s+(\d+)/i);
-              if (shiftMatch) {
-                abilityType = "keyword";
-                keyword = "Shift";
-                // For Shift, we need to construct a cost object
-                const shiftValue = Number.parseInt(shiftMatch[1], 10);
-                engineAbilities.push({
-                  id: abilityId,
-                  ...(name && { name }),
-                  text,
-                  type: "keyword",
-                  keyword: "Shift",
-                  cost: { ink: shiftValue },
-                } as AbilityDefinition);
-                continue;
-              }
-            }
-            // Not a keyword - check for triggered/activated
-            else {
-              // Triggered abilities
-              if (
-                lower.includes("whenever") ||
-                lower.includes("when you play") ||
-                lower.includes("when this") ||
-                lower.includes("at the start") ||
-                lower.includes("at the end")
-              ) {
-                abilityType = "triggered";
-              }
-              // Activated abilities (have exert cost)
-              else if (lower.includes("{e}") || lower.includes("⬡")) {
-                abilityType = "activated";
-              }
-              // For action cards, default to "action" type if no other match
-              else if (card.cardType === "action") {
-                abilityType = "static"; // Keep as static for backwards compatibility in fallback
-              }
-            }
-
-            const fallbackAbility: any = {
-              id: abilityId,
-              ...(name && { name }),
-              text,
-              type: abilityType,
-              ...(keyword && { keyword }),
-              ...(value !== undefined && { value }),
-            };
-
-            // For fallback non-keyword abilities, we might be missing required fields like 'trigger' or 'cost'
-            // Ideally we shouldn't hit fallback often if the parser is good.
-            // If we do, these objects might not fully satisfy AbilityDefinition, but we cast to satisfy TS in generator.
-            engineAbilities.push(fallbackAbility as AbilityDefinition);
+            // Parser failed - track failure count
+            // Partial parsing: we only include abilities that parse successfully
+            failedParseCount++;
           }
+        }
+
+        // Update missingImplementation based on partial parsing success
+        // If some abilities failed to parse, mark as missing implementation
+        if (failedParseCount > 0) {
+          result.missingImplementation = true;
+          result.missingTests = true;
+        } else if (abilityTexts.length > 0 && engineAbilities.length > 0) {
+          // All abilities parsed successfully - remove missing flags if they were set
+          delete result.missingImplementation;
+          // Keep missingTests if no tests exist yet
         }
       }
 
-      if (engineAbilities.length > 0) {
-        result.abilities = engineAbilities;
-      }
+      // Always output abilities array (even if empty for partial parsing)
+      result.abilities = engineAbilities;
     }
   }
   if ("classifications" in card && card.classifications?.length) {

@@ -16,27 +16,68 @@ export const tinkerBellGiantFairy: CharacterCard = {
   lore: 2,
   cardNumber: 188,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "5ba0aae83bc08edf19274cb2f525d456366f647f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "pf8-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+      text: "Shift 4 {I}",
+    },
+    {
+      id: "pf8-2",
+      type: "triggered",
+      name: "ROCK THE BOAT",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "deal-damage",
+        amount: 1,
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "ROCK THE BOAT When you play this character, deal 1 damage to each opposing character.",
+    },
+    {
+      id: "pf8-3",
+      type: "triggered",
+      name: "PUNY PIRATE!",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "OPPONENT_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 2,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "opponent",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "PUNY PIRATE! During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen opposing character.",
+    },
+  ],
   classifications: ["Floodborn", "Ally", "Fairy"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { tinkerBellGiantFairy as ogTinkerBellGiantFairy } from "@lorcanito/lorcana-engine/cards/001/characters/193-tinker-bell-giant-fairy";
-//
-// export const tinkerBellGiantFairy: LorcanitoCharacterCard = {
-//   ...ogTinkerBellGiantFairy,
-//   id: "rtd",
-//   reprints: [ogTinkerBellGiantFairy.id],
-//   number: 188,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650121,
-//   },
-// };
-//

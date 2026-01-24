@@ -21,22 +21,31 @@ export const camiloMadrigalPrankster: CharacterCard = {
   externalIds: {
     ravensburger: "06c33d8303cbe3698922ef017c553b693cb45e56",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1vj-2",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "SELF",
+        duration: "this-turn",
+      },
+      text: "- This character gets +1 {L} this turn.",
+    },
+    {
+      id: "1vj-3",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Challenger",
+        target: "SELF",
+        value: 2,
+        duration: "this-turn",
+      },
+      text: "- This character gains Challenger +2 this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Madrigal"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { camiloMadrigalPrankster as ogCamiloMadrigalPrankster } from "@lorcanito/lorcana-engine/cards/004/characters/040-camilo-madrigal-prankster";
-//
-// export const camiloMadrigalPrankster: LorcanitoCharacterCard = {
-//   ...ogCamiloMadrigalPrankster,
-//   id: "bij",
-//   reprints: [ogCamiloMadrigalPrankster.id],
-//   number: 52,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649996,
-//   },
-// };
-//

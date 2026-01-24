@@ -16,11 +16,41 @@ export const powerlineWorldsGreatestRockStar: CharacterCard = {
   lore: 2,
   cardNumber: 110,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "4908b40f487702590869bdde1fc8f15501f2b8c7",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "k9i-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+      text: "Shift 4 {I}",
+    },
+    {
+      id: "k9i-2",
+      type: "keyword",
+      keyword: "Singer",
+      value: 9,
+      text: "Singer 9",
+    },
+    {
+      id: "k9i-3",
+      type: "triggered",
+      name: "MASH-UP Once",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "MASH-UP Once during your turn, whenever this character sings a song, look at the top 4 cards of your deck. You may reveal a song card with cost 9 or less and play it for free. Put the rest on the bottom of your deck in any order.",
+    },
+  ],
   classifications: ["Floodborn"],
 };

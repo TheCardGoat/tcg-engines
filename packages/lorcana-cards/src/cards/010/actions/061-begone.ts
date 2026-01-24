@@ -11,10 +11,25 @@ export const begone: ActionCard = {
   cost: 3,
   cardNumber: 61,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "5e471c30152b4c4e8533f95c63bfdfd4dd5af197",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "q5p-1",
+      type: "action",
+      effect: {
+        type: "return-to-hand",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "Return chosen character, item, or location with cost 3 or less to their player's hand.",
+    },
+  ],
 };

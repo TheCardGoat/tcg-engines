@@ -16,46 +16,26 @@ export const galeWindSpirit: CharacterCard = {
   lore: 2,
   cardNumber: 42,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ee97b532e414172bb38c8157f657b9cd0e101f22",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1u4-1",
+      type: "triggered",
+      name: "RECURRING GUST",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "return-to-hand",
+        target: "SELF",
+      },
+      text: "RECURRING GUST When this character is banished in a challenge, return this card to your hand.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { returnThisCardToHand } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const galeWindSpirit: LorcanitoCharacterCard = {
-//   id: "coq",
-//   name: "Gale",
-//   title: "Wind Spirit",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**RECURRING GUST** When this character is banished, return this card to your hand.",
-//   type: "character",
-//   abilities: [
-//     whenThisCharacterBanished({
-//       name: "Recurring Gust",
-//       text: "When this character is banished, return this card to your hand.",
-//       effects: [returnThisCardToHand],
-//     }),
-//   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 2,
-//   lore: 2,
-//   illustrator: "Amber Kommavongsa",
-//   number: 42,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 561488,
-//   },
-//   rarity: "common",
-// };
-//

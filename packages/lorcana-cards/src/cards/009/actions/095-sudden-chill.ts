@@ -12,26 +12,21 @@ export const suddenChill: ActionCard = {
   cost: 2,
   cardNumber: 95,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "af0402088e469d5b1093c6206c115b0e96e599c3",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ck-1",
+      type: "action",
+      effect: {
+        type: "discard",
+        amount: 1,
+        target: "EACH_OPPONENT",
+        chosen: true,
+      },
+      text: "Each opponent chooses and discards a card.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { suddenChill as suddenChillAsOrig } from "@lorcanito/lorcana-engine/cards/001/songs/098-sudden-chill";
-//
-// export const suddenChill: LorcanitoActionCard = {
-//   ...suddenChillAsOrig,
-//   id: "f3l",
-//   reprints: [suddenChillAsOrig.id],
-//   number: 95,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650033,
-//   },
-// };
-//

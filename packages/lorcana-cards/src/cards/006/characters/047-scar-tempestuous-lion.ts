@@ -36,35 +36,3 @@ export const scarTempestuousLion: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   challengerAbility,
-//   rushAbility,
-// } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const scarTempestuousLion: LorcanitoCharacterCard = {
-//   id: "i6n",
-//   name: "Scar",
-//   title: "Tempestuous Lion",
-//   characteristics: ["dreamborn", "villain", "sorcerer"],
-//   text: "Rush (This character can challenge the turn they're played.)\nChallenger +3 (While challenging, this character gets +3 {S}.)",
-//   type: "character",
-//   abilities: [rushAbility, challengerAbility(3)],
-//   inkwell: false,
-//   colors: ["amethyst"],
-//   cost: 6,
-//   strength: 4,
-//   willpower: 4,
-//   lore: 2,
-//   illustrator: "Peter Broeckhammer",
-//   number: 47,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 588320,
-//   },
-//   rarity: "uncommon",
-// };
-//

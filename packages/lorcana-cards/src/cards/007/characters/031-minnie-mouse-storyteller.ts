@@ -20,61 +20,28 @@ export const minnieMouseStoryteller: CharacterCard = {
   externalIds: {
     ravensburger: "40e23a6aa4e9b85c3ae4a6b8a3433cc2c36a426c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "i03-1",
+      type: "triggered",
+      name: "GATHER AROUND",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "character",
+        },
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "SELF",
+        duration: "this-turn",
+      },
+      text: "GATHER AROUND Whenever you play a character, this character gets +1 {L} this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { chosenOpposingCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import {
-//   wheneverQuests,
-//   wheneverYouPlayACharacter,
-// } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { thisCharacterGetsLore } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const minnieMouseStoryteller: LorcanitoCharacterCard = {
-//   id: "m22",
-//   name: "Minnie Mouse",
-//   title: "Storyteller",
-//   characteristics: ["storyborn", "hero"],
-//   text: "GATHER AROUND Whenever you play a character, this character gets +1 {L} this turn.\nJUST ONE MORE Whenever this character quests, chosen opposing character loses {S} equal to this character's {L} until the start of your next turn.",
-//   type: "character",
-//   abilities: [
-//     wheneverYouPlayACharacter({
-//       name: "GATHER AROUND",
-//       text: "Whenever you play a character, this character gets +1 {L} this turn.",
-//       effects: [thisCharacterGetsLore(1)],
-//     }),
-//     wheneverQuests({
-//       name: "JUST ONE MORE",
-//       text: "Whenever this character quests, chosen opposing character loses {S} equal to this character's {L} until the start of your next turn.",
-//       effects: [
-//         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: { dynamic: true, sourceAttribute: "lore" },
-//           modifier: "subtract",
-//           duration: "next_turn",
-//           resolveAmountBeforeCreatingLayer: true,
-//           until: true,
-//           target: chosenOpposingCharacter,
-//         },
-//       ],
-//     }),
-//   ],
-//   inkwell: false,
-//   colors: ["amber"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 2,
-//   illustrator: "SCG",
-//   number: 31,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619424,
-//   },
-//   rarity: "legendary",
-//   lore: 0,
-// };
-//

@@ -16,27 +16,33 @@ export const johnSilverGreedyTreasureSeeker: CharacterCard = {
   lore: 1,
   cardNumber: 192,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "47e5c25af32615987611612bbee8871f3cb76552",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "jy5-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "gain-keyword",
+            keyword: "Resist",
+            target: "SELF",
+            value: 1,
+          },
+          {
+            type: "modify-stat",
+            stat: "lore",
+            modifier: 1,
+            target: "CHOSEN_CHARACTER",
+          },
+        ],
+      },
+      text: "CHART YOUR OWN COURSE For each location you have in play, this character gains Resist +1 and gets +1 {L}.",
+    },
+  ],
   classifications: ["Dreamborn", "Villain", "Alien", "Pirate", "Captain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { johnSilverGreedyTreasureSeeker as ogJohnSilverGreedyTreasureSeeker } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const johnSilverGreedyTreasureSeeker: LorcanitoCharacterCard = {
-//   ...ogJohnSilverGreedyTreasureSeeker,
-//   id: "vpb",
-//   reprints: [ogJohnSilverGreedyTreasureSeeker.id],
-//   number: 192,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650125,
-//   },
-// };
-//

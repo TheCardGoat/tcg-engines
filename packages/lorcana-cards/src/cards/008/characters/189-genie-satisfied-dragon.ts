@@ -16,11 +16,21 @@ export const genieSatisfiedDragon: CharacterCard = {
   lore: 1,
   cardNumber: 189,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "58188cff25274db6e36a6b7e5ffcb2c216184095",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ofy-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: "SELF",
+      },
+      text: "BUG CATCHER During your turn, this character gains Evasive.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Dragon"],
 };

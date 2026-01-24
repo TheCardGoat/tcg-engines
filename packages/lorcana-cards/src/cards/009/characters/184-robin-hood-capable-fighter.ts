@@ -16,27 +16,27 @@ export const robinHoodCapableFighter: CharacterCard = {
   lore: 1,
   cardNumber: 184,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "5f83698b937b20863589246dc016340a7d70828f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "qi2-1",
+      type: "activated",
+      effect: {
+        type: "deal-damage",
+        amount: 1,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "SKIRMISH {E} — Deal 1 damage to chosen character.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { robinHoodCapableFighter as ogRobinHoodCapableFighter } from "@lorcanito/lorcana-engine/cards/002/characters/193-robin-hood-capable-fighter";
-//
-// export const robinHoodCapableFighter: LorcanitoCharacterCard = {
-//   ...ogRobinHoodCapableFighter,
-//   id: "kjo",
-//   reprints: [ogRobinHoodCapableFighter.id],
-//   number: 184,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650117,
-//   },
-// };
-//

@@ -16,5 +16,40 @@ export const mauisFishHook: ItemCard = {
   externalIds: {
     ravensburger: "a9e7ec404bfc922091cf146ebf47177ce8ea39db",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1bn-3",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "• Chosen character gains Evasive until the start of your next turn.",
+    },
+    {
+      id: "1bn-4",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 3,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        duration: "this-turn",
+      },
+      text: "• Chosen character gets +3 {S} this turn.",
+    },
+  ],
 };

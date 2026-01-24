@@ -16,11 +16,37 @@ export const marchHareHarebrainedEccentric: CharacterCard = {
   lore: 1,
   cardNumber: 91,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "8a1715bb3a41a990bfa9cca9be698c8944be40d8",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "12b-1",
+      type: "triggered",
+      name: "LIGHT THE CANDLES",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 2,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "LIGHT THE CANDLES When you play this character, you may deal 2 damage to chosen damaged character.",
+    },
+  ],
   classifications: ["Storyborn"],
 };

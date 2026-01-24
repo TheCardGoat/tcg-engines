@@ -16,27 +16,21 @@ export const cruellaDeVilFashionableCruiser: CharacterCard = {
   lore: 1,
   cardNumber: 145,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "39d81f72fb13e512ea913ac8dd9ab95f2688be81",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "g1s-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: "SELF",
+      },
+      text: "NOW GET GOING During your turn, this character gains Evasive.",
+    },
+  ],
   classifications: ["Dreamborn", "Villain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { cruellaDeVilFashionableCruiser as cruellaDeVilFashionableCruiserAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/144-cruella-de-vil-fashionable-cruiser";
-//
-// export const cruellaDeVilFashionableCruiser: LorcanitoCharacterCard = {
-//   ...cruellaDeVilFashionableCruiserAsOrig,
-//   id: "ej7",
-//   reprints: [cruellaDeVilFashionableCruiserAsOrig.id],
-//   number: 145,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650080,
-//   },
-// };
-//

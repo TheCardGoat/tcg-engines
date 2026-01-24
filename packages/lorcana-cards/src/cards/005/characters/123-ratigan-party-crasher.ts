@@ -16,70 +16,38 @@ export const ratiganPartyCrasher: CharacterCard = {
   lore: 3,
   cardNumber: 123,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "aaff3438b44616c9f93796643e4f12b9bdd8d044",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1b4-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+      text: "Shift 4",
+    },
+    {
+      id: "1b4-2",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "1b4-3",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "YOUR_CHARACTERS",
+      },
+      name: "DELIGHTFULLY WICKED Your damaged",
+      text: "DELIGHTFULLY WICKED Your damaged characters get +2 {S}.",
+    },
+  ],
   classifications: ["Floodborn", "Villain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   evasiveAbility,
-//   shiftAbility,
-//   yourOtherCharactersWithGain,
-// } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-//
-// export const ratiganPartyCrasher: LorcanitoCharacterCard = {
-//   id: "enx",
-//   missingTestCase: true,
-//   name: "Ratigan",
-//   title: "Party Crasher",
-//   characteristics: ["floodborn", "villain"],
-//   text: "**Shift** 4 _(You may pay 4 {I} to play this on top of one of your characters named Ratigan.)_ **Evasive** _(Only characters with Evasive can challenge this character.)_\n **DELIGHTFULLY WICKED** Your damaged characters get +2 {S}.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(4, "ratigan"),
-//     evasiveAbility,
-//     yourOtherCharactersWithGain({
-//       name: "Delightfully Wicked",
-//       text: "Your damaged characters get -2 {S}.",
-//       filter: {
-//         filter: "status",
-//         value: "damage",
-//         comparison: { operator: "gte", value: 1 },
-//       },
-//       gainedAbility: {
-//         type: "static",
-//         ability: "effects",
-//         effects: [
-//           {
-//             type: "attribute",
-//             attribute: "strength",
-//             amount: 2,
-//             modifier: "add",
-//             duration: "static",
-//             target: thisCharacter,
-//           },
-//         ],
-//       },
-//     }),
-//   ],
-//   colors: ["ruby"],
-//   cost: 7,
-//   strength: 5,
-//   willpower: 5,
-//   lore: 3,
-//   illustrator: "Nicholas Kole",
-//   number: 123,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 557537,
-//   },
-//   rarity: "rare",
-// };
-//

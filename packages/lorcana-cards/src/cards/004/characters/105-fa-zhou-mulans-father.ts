@@ -16,11 +16,33 @@ export const faZhouMulansFather: CharacterCard = {
   lore: 1,
   cardNumber: 105,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "3ade52ca8750abaa4717ad4df3cc61186242ddd6",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "gc0-1",
+      type: "static",
+      effect: {
+        type: "restriction",
+        restriction: "cant-challenge",
+        target: "SELF",
+      },
+      name: "WAR INJURY",
+      text: "WAR INJURY This character can't challenge.",
+    },
+    {
+      id: "gc0-2",
+      type: "activated",
+      effect: {
+        type: "restriction",
+        restriction: "cant-quest",
+        target: "SELF",
+        duration: "this-turn",
+      },
+      text: "HEAD OF THE HOUSEHOLD {E} — Ready chosen character named Mulan. She can't quest for the rest of this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Mentor"],
 };

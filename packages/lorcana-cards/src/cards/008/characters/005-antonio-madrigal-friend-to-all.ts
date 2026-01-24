@@ -16,11 +16,32 @@ export const antonioMadrigalFriendToAll: CharacterCard = {
   lore: 2,
   cardNumber: 5,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "032142a4ff0a2d57c066e32be096f9670d1c7182",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "v9i-1",
+      type: "triggered",
+      name: "OF COURSE THEY CAN COME Once",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "search-deck",
+          putInto: "hand",
+          shuffle: true,
+          cardType: "character",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "OF COURSE THEY CAN COME Once during your turn, whenever one of your characters sings a song, you may search your deck for a character card with cost 3 or less and reveal that card to all players. Put that card into your hand and shuffle your deck.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Madrigal"],
 };

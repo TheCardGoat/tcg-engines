@@ -16,11 +16,32 @@ export const calhounHardnosedLeader: CharacterCard = {
   lore: 2,
   cardNumber: 32,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "33b9c6a65331f2a7dd61ada4198a004de3dca94a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "eco-1",
+      type: "keyword",
+      keyword: "Bodyguard",
+      text: "Bodyguard",
+    },
+    {
+      id: "eco-2",
+      type: "triggered",
+      name: "LOOT DROP",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+      },
+      text: "LOOT DROP When this character is banished, gain 1 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

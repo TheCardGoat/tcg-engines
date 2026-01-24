@@ -15,11 +15,29 @@ export const donaldDuckGhostHunter: CharacterCard = {
   lore: 1,
   cardNumber: 172,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ee4403fdc349e124edd32c403fda6877f4f8c500",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1u3-1",
+      type: "triggered",
+      name: "RAISE A RUCKUS",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Challenger",
+        target: "CHOSEN_CHARACTER",
+        value: 2,
+        duration: "this-turn",
+      },
+      text: "RAISE A RUCKUS When you play this character, chosen Detective character gains Challenger +2 this turn.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Detective"],
 };

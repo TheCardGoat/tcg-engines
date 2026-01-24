@@ -21,19 +21,3 @@ export const liShangImperialCaptain: CharacterCard = {
   },
   classifications: ["Dreamborn", "Hero", "Captain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { liShangImperialCaptain as liShangImperialCaptainAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/182-li-shang-imperial-captain";
-//
-// export const liShangImperialCaptain: LorcanitoCharacterCard = {
-//   ...liShangImperialCaptainAsOrig,
-//   id: "swm",
-//   reprints: [liShangImperialCaptainAsOrig.id],
-//   number: 193,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650126,
-//   },
-// };
-//

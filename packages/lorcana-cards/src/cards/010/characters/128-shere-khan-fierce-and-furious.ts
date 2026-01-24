@@ -16,57 +16,47 @@ export const shereKhanFierceAndFurious: CharacterCard = {
   lore: 2,
   cardNumber: 128,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ef72f964d64111f6e9cb2f86c285f530b47afe0c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1uf-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 5,
+      },
+      text: "Shift 5 {I}",
+    },
+    {
+      id: "1uf-2",
+      type: "activated",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "deal-damage",
+            amount: 1,
+            target: {
+              selector: "self",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+          {
+            type: "restriction",
+            restriction: "cant-quest",
+            target: "SELF",
+            duration: "this-turn",
+          },
+        ],
+      },
+      text: "WILD RAGE 1 {I}, Deal 1 damage to this character — Ready this character. He can't quest for the rest of this turn.",
+    },
+  ],
   classifications: ["Floodborn", "Villain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import type { ActivatedAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { readyAndCantQuest } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// const wildRage: ActivatedAbility = {
-//   type: "activated",
-//   name: "WILD RAGE",
-//   text: "1 {I}, Deal 1 damage to this character — Ready this character. He can't quest for the rest of this turn.",
-//   costs: [{ type: "ink", amount: 1 }],
-//   effects: [
-//     {
-//       type: "damage",
-//       amount: 1,
-//       target: thisCharacter,
-//     },
-//     ...readyAndCantQuest(thisCharacter),
-//   ],
-// };
-//
-// export const shereKhanFierceAndFurious: LorcanitoCharacterCard = {
-//   id: "fee",
-//   name: "Shere Khan",
-//   title: "Fierce and Furious",
-//   characteristics: ["floodborn", "villain"],
-//   text: "Shift 5 {I}\n\nWILD RAGE 1 {I}, Deal 1 damage to this character — Ready this character. He can't quest for the rest of this turn.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 8,
-//   strength: 8,
-//   willpower: 8,
-//   illustrator: "Roger Pérez",
-//   number: 128,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659419,
-//   },
-//   rarity: "rare",
-//   lore: 2,
-//   abilities: [shiftAbility(5, "Shere Khan"), wildRage],
-// };
-//

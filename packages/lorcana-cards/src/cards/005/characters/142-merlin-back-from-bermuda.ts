@@ -16,11 +16,22 @@ export const merlinBackFromBermuda: CharacterCard = {
   lore: 2,
   cardNumber: 142,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "347d00b2ec3b7fe514eaa09b0beb11bffd12ca34",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "eka-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        target: "YOUR_CHARACTERS",
+        value: 1,
+      },
+      text: "LONG LIVE THE KING! Your characters named Arthur gain Resist +1.",
+    },
+  ],
   classifications: ["Storyborn", "Mentor", "Sorcerer"],
 };

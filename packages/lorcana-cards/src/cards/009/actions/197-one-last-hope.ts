@@ -12,26 +12,28 @@ export const oneLastHope: ActionCard = {
   cost: 3,
   cardNumber: 197,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "8f6416c63cac0fad17fdf749cf9ede58f5fd446b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "13s-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        value: 2,
+        duration: "this-turn",
+      },
+      text: "Chosen character gains Resist +2 until the start of your next turn. If a Hero character is chosen, they can also challenge ready characters this turn.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { oneLastHope as ogOneLastHope } from "@lorcanito/lorcana-engine/cards/004/actions/197-one-last-hope";
-//
-// export const oneLastHope: LorcanitoActionCard = {
-//   ...ogOneLastHope,
-//   id: "i3n",
-//   reprints: [ogOneLastHope.id],
-//   number: 197,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650130,
-//   },
-// };
-//

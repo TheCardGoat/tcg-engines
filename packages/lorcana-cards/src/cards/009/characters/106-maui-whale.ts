@@ -16,27 +16,33 @@ export const mauiWhale: CharacterCard = {
   lore: 1,
   cardNumber: 106,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "0fcf0e2feea7eeb8a66963a14505ba849931709b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "4dw-1",
+      type: "static",
+      effect: {
+        type: "restriction",
+        restriction: "cant-ready",
+        target: "SELF",
+      },
+      name: "THIS MISSION IS CURSED",
+      text: "THIS MISSION IS CURSED This character can't ready at the start of your turn.",
+    },
+    {
+      id: "4dw-2",
+      type: "action",
+      effect: {
+        type: "restriction",
+        restriction: "cant-quest",
+        target: "SELF",
+        duration: "this-turn",
+      },
+      text: "I GOT YOUR BACK 2 {I} – Ready this character. He can't quest for the rest of this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Deity"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { mauiWhale as ogMauiWhale } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const mauiWhale: LorcanitoCharacterCard = {
-//   ...ogMauiWhale,
-//   id: "daf",
-//   reprints: [ogMauiWhale.id],
-//   number: 106,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650044,
-//   },
-// };
-//

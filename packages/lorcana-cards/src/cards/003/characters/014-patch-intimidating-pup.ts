@@ -16,11 +16,28 @@ export const patchIntimidatingPup: CharacterCard = {
   lore: 1,
   cardNumber: 14,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "dcd8b13bdaaf51885db54956f3a56d6f87a5f371",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1p9-1",
+      type: "activated",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: -2,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "BARK {E} — Chosen character gets -2 {S} until the start of your next turn.",
+    },
+  ],
   classifications: ["Storyborn", "Puppy"],
 };

@@ -16,27 +16,28 @@ export const rapunzelSunshine: CharacterCard = {
   lore: 1,
   cardNumber: 8,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "7f320853572087cd1fb899a7ceb5a7132c41758c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "zai-1",
+      type: "activated",
+      effect: {
+        type: "remove-damage",
+        amount: 2,
+        upTo: true,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "MAGIC HAIR {E} — Remove up to 2 damage from chosen character.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { rapunzelSunshine as ogRapunzelSunshine } from "@lorcanito/lorcana-engine/cards/002/characters/020-rapunzel-sunshine";
-//
-// export const rapunzelSunshine: LorcanitoCharacterCard = {
-//   ...ogRapunzelSunshine,
-//   id: "p6p",
-//   reprints: [ogRapunzelSunshine.id],
-//   number: 8,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649957,
-//   },
-// };
-//

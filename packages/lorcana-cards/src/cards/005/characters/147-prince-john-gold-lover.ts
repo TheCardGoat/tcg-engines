@@ -16,68 +16,25 @@ export const princeJohnGoldLover: CharacterCard = {
   lore: 1,
   cardNumber: 147,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a9c072cf5b48edda82d051442b832712beead027",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1b5-1",
+      type: "activated",
+      effect: {
+        type: "play-card",
+        from: "hand",
+        cost: "free",
+        costRestriction: {
+          comparison: "less-or-equal",
+          value: 5,
+        },
+      },
+      text: "BEAUTIFUL, LOVELY TAXES {E} — Play an item from your hand or discard with cost 5 or less for free, exerted.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Prince"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const princeJohnGoldLover: LorcanitoCharacterCard = {
-//   id: "vxl",
-//   missingTestCase: true,
-//   name: "Prince John",
-//   title: "Gold Lover",
-//   characteristics: ["storyborn", "villain", "prince"],
-//   text: "**BEAUTIFUL, LOVELY TAXES** {E} – Play an item from your hand or discard with cost 5 or less for free, exerted.",
-//   type: "character",
-//   abilities: [
-//     {
-//       type: "activated",
-//       name: "**BEAUTIFUL, LOVELY TAXES** ",
-//       text: "{E} – Play an item from your hand or discard with cost 5 or less for free, exerted.",
-//       costs: [{ type: "exert" }],
-//       effects: [
-//         {
-//           type: "play",
-//           forFree: true,
-//           exerted: true,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
-//               { filter: "owner", value: "self" },
-//               { filter: "zone", value: ["discard", "hand"] },
-//               { filter: "type", value: "item" },
-//               {
-//                 filter: "attribute",
-//                 value: "cost",
-//                 comparison: { operator: "lte", value: 5 },
-//               },
-//             ],
-//           },
-//         },
-//       ],
-//     },
-//   ],
-//   flavour: "A villainous schemer from day to night.",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Koni",
-//   number: 147,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 556439,
-//   },
-//   rarity: "super_rare",
-// };
-//

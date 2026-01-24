@@ -16,11 +16,28 @@ export const friarTuckPriestOfNottingham: CharacterCard = {
   lore: 2,
   cardNumber: 73,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "36d317eaeebe671e69cbcdf9e312cd7ae4db6a4d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "f7m-1",
+      type: "triggered",
+      name: "YOU THIEVING SCOUNDREL",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "discard",
+        amount: 1,
+        target: "CONTROLLER",
+        chosen: true,
+      },
+      text: "YOU THIEVING SCOUNDREL When you play this character, the player or players with the most cards in their hand chooses and discards a card.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

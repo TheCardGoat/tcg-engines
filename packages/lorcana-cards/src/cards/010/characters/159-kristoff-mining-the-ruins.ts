@@ -16,52 +16,43 @@ export const kristoffMiningTheRuins: CharacterCard = {
   lore: 2,
   cardNumber: 159,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "25306da70d3153e36ca5d991f62a889aab375668",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "abh-1",
+      type: "keyword",
+      keyword: "Boost",
+      value: 1,
+      text: "Boost 1 {I}",
+    },
+    {
+      id: "abh-2",
+      type: "triggered",
+      name: "WORTH MINING",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "there's a card under him",
+        },
+        then: {
+          type: "put-into-inkwell",
+          source: "top-of-deck",
+          target: "CONTROLLER",
+          exerted: true,
+          facedown: true,
+        },
+      },
+      text: "WORTH MINING Whenever this character quests, if there's a card under him, put the top card of your deck into your inkwell facedown and exerted.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Whisper"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   boostAbility,
-//   ifThereIsACardUnder,
-// } from "@lorcanito/lorcana-engine/abilities/boostAbility";
-// import { wheneverThisCharacterQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { putTopCardOfYourDeckIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const kristoffMiningTheRuins: LorcanitoCharacterCard = {
-//   id: "fnv",
-//   name: "Kristoff",
-//   title: "Mining the Ruins",
-//   characteristics: ["storyborn", "ally"],
-//   text: "Boost 1 {I}\n\nA TREASURE THAT MUST BE EARNED Whenever this character quests, if there is a card under it, put the top card of your deck into your inkwell, facedown and exerted.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 3,
-//   illustrator: "Alejandro Hernandez",
-//   number: 159,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659386,
-//   },
-//   rarity: "rare",
-//   abilities: [
-//     boostAbility(1),
-//     wheneverThisCharacterQuests({
-//       name: "A TREASURE THAT MUST BE EARNED",
-//       text: "Whenever this character quests, if there is a card under it, put the top card of your deck into your inkwell, facedown and exerted.",
-//       conditions: [ifThereIsACardUnder],
-//       effects: [putTopCardOfYourDeckIntoYourInkwellExerted],
-//     }),
-//   ],
-//   lore: 2,
-// };
-//

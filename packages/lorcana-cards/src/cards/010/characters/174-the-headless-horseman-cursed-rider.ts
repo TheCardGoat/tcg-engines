@@ -16,66 +16,52 @@ export const theHeadlessHorsemanCursedRider: CharacterCard = {
   lore: 2,
   cardNumber: 174,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "fbb6977c78837de7431436c9a91dcd55431e7847",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1xu-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 5,
+      },
+      text: "Shift 5 {I}",
+    },
+    {
+      id: "1xu-2",
+      type: "triggered",
+      name: "WITCHING HOUR",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "draw",
+            amount: 3,
+            target: "EACH_PLAYER",
+          },
+          {
+            type: "deal-damage",
+            amount: 2,
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["card"],
+            },
+          },
+        ],
+      },
+      text: "WITCHING HOUR When you play this character, each player draws 3 cards, then discards 3 cards at random. Choose an opposing character and deal 2 damage to them for each action card discarded this way.",
+    },
+  ],
   classifications: ["Floodborn", "Villain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { allPlayers } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { DrawDiscardCountActionsEffect } from "@lorcanito/lorcana-engine/effects/effectTypes";
-//
-// const witchingHourEffect: DrawDiscardCountActionsEffect = {
-//   type: "draw-discard-count-actions",
-//   target: allPlayers,
-//   drawAmount: 3,
-//   discardAmount: 3,
-//   damagePerAction: 2,
-//   damageTarget: {
-//     type: "card",
-//     value: 1,
-//     filters: [
-//       { filter: "zone", value: "play" },
-//       { filter: "owner", value: "opponent" },
-//       { filter: "type", value: "character" },
-//     ],
-//   },
-// };
-//
-// export const theHeadlessHorsemanCursedRider: LorcanitoCharacterCard = {
-//   id: "od7",
-//   name: "The Headless Horseman",
-//   title: "Cursed Rider",
-//   characteristics: ["floodborn", "villain"],
-//   text: "Shift 5\n\nWITCHING HOUR When you play this character, each player draws 3 cards, then discards 3 cards at random. Choose an opposing character and deal 2 damage to them for each action card discarded this way.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 8,
-//   strength: 5,
-//   willpower: 7,
-//   illustrator: "Marcel Berg",
-//   number: 174,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 660020,
-//   },
-//   rarity: "super_rare",
-//   lore: 2,
-//   abilities: [
-//     shiftAbility(5, "The Headless Horseman"),
-//     whenYouPlayThisCharacter({
-//       name: "WITCHING HOUR",
-//       text: "When you play this character, each player draws 3 cards, then discards 3 cards at random. Choose an opposing character and deal 2 damage to them for each action card discarded this way.",
-//       effects: [witchingHourEffect],
-//     }),
-//   ],
-// };
-//

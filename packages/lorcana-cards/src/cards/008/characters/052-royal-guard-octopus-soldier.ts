@@ -16,11 +16,24 @@ export const royalGuardOctopusSoldier: CharacterCard = {
   lore: 1,
   cardNumber: 52,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "22bcaf985cf7458b8c12396023a332712fd7f998",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "9mz-1",
+      type: "triggered",
+      name: "HEAVILY ARMED",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Challenger",
+        target: "SELF",
+        value: 1,
+        duration: "this-turn",
+      },
+      text: "HEAVILY ARMED Whenever you draw a card, this character gains Challenger +1 this turn.",
+    },
+  ],
   classifications: ["Storyborn"],
 };

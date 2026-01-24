@@ -16,27 +16,55 @@ export const robinHoodChampionOfSherwood: CharacterCard = {
   lore: 2,
   cardNumber: 177,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "dae8c3a792a698cb6ccee25e5671d6b03e79414c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1oq-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+      text: "Shift 3 {I}",
+    },
+    {
+      id: "1oq-2",
+      type: "triggered",
+      name: "SKILLED COMBATANT",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "OPPONENT_CHARACTERS",
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 2,
+      },
+      text: "SKILLED COMBATANT During your turn, whenever this character banishes another character in a challenge, gain 2 lore.",
+    },
+    {
+      id: "1oq-3",
+      type: "triggered",
+      name: "THE GOOD OF OTHERS",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "THE GOOD OF OTHERS When this character is banished in a challenge, you may draw a card.",
+    },
+  ],
   classifications: ["Floodborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { robinHoodChampionOfSherwood as robinHoodChampionOfSherwoodAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const robinHoodChampionOfSherwood: LorcanitoCharacterCard = {
-//   ...robinHoodChampionOfSherwoodAsOrig,
-//   id: "mfa",
-//   reprints: [robinHoodChampionOfSherwoodAsOrig.id],
-//   number: 177,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650110,
-//   },
-// };
-//

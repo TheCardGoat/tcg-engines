@@ -16,27 +16,38 @@ export const theQueenMirrorSeeker: CharacterCard = {
   lore: 1,
   cardNumber: 149,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "371c9acb79a2f91a8f8547ba6113431120735ea8",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "fah-1",
+      type: "triggered",
+      name: "CALCULATING AND VAIN",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "scry",
+          amount: 3,
+          target: "CONTROLLER",
+          destinations: [
+            {
+              zone: "deck-top",
+              remainder: true,
+              ordering: "player-choice",
+            },
+          ],
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "CALCULATING AND VAIN Whenever this character quests, you may look at the top 3 cards of your deck and put them back in any order.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Queen", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { theQueenMirrorSeeker as theQueenMirrorSeekerAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const theQueenMirrorSeeker: LorcanitoCharacterCard = {
-//   ...theQueenMirrorSeekerAsOrig,
-//   id: "yku",
-//   reprints: [theQueenMirrorSeekerAsOrig.id],
-//   number: 149,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650084,
-//   },
-// };
-//

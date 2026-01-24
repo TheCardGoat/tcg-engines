@@ -16,11 +16,25 @@ export const ursulaDeceiverOfAll: CharacterCard = {
   lore: 1,
   cardNumber: 91,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "bccdff72dc44581df3cb3328c67dd24f72bbc799",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1gd-1",
+      type: "triggered",
+      name: "WHAT A DEAL",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "WHAT A DEAL Whenever this character sings a song, you may play that song again from your discard for free, then put it on the bottom of your deck.",
+    },
+  ],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],
 };

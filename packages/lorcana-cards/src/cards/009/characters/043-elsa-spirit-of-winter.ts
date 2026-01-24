@@ -16,27 +16,41 @@ export const elsaSpiritOfWinter: CharacterCard = {
   lore: 3,
   cardNumber: 43,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "2106d745670d1cd790b5b9a3761e99544502433f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "95w-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 6,
+      },
+      text: "Shift 6 {I}",
+    },
+    {
+      id: "95w-2",
+      type: "triggered",
+      name: "DEEP FREEZE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "exert",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "DEEP FREEZE When you play this character, exert up to 2 chosen characters. They can’t ready at the start of their next turn.",
+    },
+  ],
   classifications: ["Floodborn", "Hero", "Queen", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { elsaSpiritOfWinter as ogElsaSpiritOfWinter } from "@lorcanito/lorcana-engine/cards/001/characters/042-elsa-spirit-of-winter";
-//
-// export const elsaSpiritOfWinter: LorcanitoCharacterCard = {
-//   ...ogElsaSpiritOfWinter,
-//   id: "qun",
-//   reprints: [ogElsaSpiritOfWinter.id],
-//   number: 43,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649990,
-//   },
-// };
-//

@@ -16,11 +16,21 @@ export const wreckitRalphDemolitionDude: CharacterCard = {
   lore: 1,
   cardNumber: 104,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "2da73ef591ab60b75c73c4ba1a17446a87ea8fea",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "co0-1",
+      type: "triggered",
+      name: "REFRESHING BREAK",
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+      },
+      text: "REFRESHING BREAK Whenever you ready this character, gain 1 lore for each 1 damage on him.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

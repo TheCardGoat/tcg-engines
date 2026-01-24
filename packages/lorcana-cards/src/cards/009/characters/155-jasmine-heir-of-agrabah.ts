@@ -16,27 +16,34 @@ export const jasmineHeirOfAgrabah: CharacterCard = {
   lore: 1,
   cardNumber: 155,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e9c6176500a03f40326172c37792d499cd93be4a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1sv-1",
+      type: "triggered",
+      name: "I'M A FAST LEARNER",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "remove-damage",
+        amount: 1,
+        upTo: true,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "I'M A FAST LEARNER When you play this character, remove up to 1 damage from chosen character of yours.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { jasmineHeirOfAgrabah as jasmineHeirOfAgrabahAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/151-jasmine-heir-of-agrabah";
-//
-// export const jasmineHeirOfAgrabah: LorcanitoCharacterCard = {
-//   ...jasmineHeirOfAgrabahAsOrig,
-//   id: "cqu",
-//   reprints: [jasmineHeirOfAgrabahAsOrig.id],
-//   number: 155,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650090,
-//   },
-// };
-//

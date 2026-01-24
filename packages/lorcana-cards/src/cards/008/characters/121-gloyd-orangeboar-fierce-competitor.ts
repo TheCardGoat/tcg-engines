@@ -16,11 +16,36 @@ export const gloydOrangeboarFierceCompetitor: CharacterCard = {
   lore: 1,
   cardNumber: 121,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d23fb62e58a5e37fc9f04d4ead58b2087a98c49d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1mc-1",
+      type: "triggered",
+      name: "PUMPKIN SPICE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "lose-lore",
+            amount: 1,
+            target: "EACH_OPPONENT",
+          },
+          {
+            type: "gain-lore",
+            amount: 1,
+          },
+        ],
+      },
+      text: "PUMPKIN SPICE When you play this character, each opponent loses 1 lore and you gain 1 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Racer"],
 };

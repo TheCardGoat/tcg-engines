@@ -29,19 +29,3 @@ export const louieChillNephew: CharacterCard = {
   ],
   classifications: ["Dreamborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { louieChillNephew as louieChillNephewAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const louieChillNephew: LorcanitoCharacterCard = {
-//   ...louieChillNephewAsOrig,
-//   id: "pec",
-//   reprints: [louieChillNephewAsOrig.id],
-//   number: 140,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650075,
-//   },
-// };
-//

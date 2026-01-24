@@ -16,11 +16,26 @@ export const theWhiteRoseJewelOfTheGarden: CharacterCard = {
   lore: 1,
   cardNumber: 40,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f24c96bb99a75300d87a9bca53bc799622d05a06",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1v8-1",
+      type: "triggered",
+      name: "THE BEAUTY OF THE WORLD",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+      },
+      text: "THE BEAUTY OF THE WORLD When you play this character, gain 1 lore.",
+    },
+  ],
   classifications: ["Storyborn"],
 };

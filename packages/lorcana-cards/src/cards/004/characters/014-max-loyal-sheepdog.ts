@@ -16,11 +16,27 @@ export const maxLoyalSheepdog: CharacterCard = {
   lore: 1,
   cardNumber: 14,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "b250a8edcddaa91a173c4dbc846a67a388852f79",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1d6-1",
+      type: "action",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have a character named Prince Eric in play",
+        },
+        then: {
+          type: "play-card",
+          from: "hand",
+        },
+      },
+      text: "HERE BOY If you have a character named Prince Eric in play, you pay 1 {I} less to play this character.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

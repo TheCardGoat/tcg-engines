@@ -16,11 +16,37 @@ export const dormouseEasilyAgitated: CharacterCard = {
   lore: 1,
   cardNumber: 103,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f968b2b0712de866dd279b16a93ac01a742952af",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1x7-1",
+      type: "triggered",
+      name: "VERY RUDE INDEED",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-damage",
+          amount: 1,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "VERY RUDE INDEED When you play this character, you may put 1 damage counter on chosen character.",
+    },
+  ],
   classifications: ["Storyborn"],
 };

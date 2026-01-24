@@ -16,11 +16,38 @@ export const geneNicelandResident: CharacterCard = {
   lore: 1,
   cardNumber: 13,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "509735c520ba2565357da084b01feb2f43038387",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "mcz-1",
+      type: "triggered",
+      name: "I GUESS YOU EARNED THIS",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "remove-damage",
+          amount: 2,
+          upTo: true,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "I GUESS YOU EARNED THIS Whenever this character quests, you may remove up to 2 damage from chosen character.",
+    },
+  ],
   classifications: ["Storyborn"],
 };

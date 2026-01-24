@@ -16,11 +16,37 @@ export const goGoTomagoMechanicalEngineer: CharacterCard = {
   lore: 1,
   cardNumber: 159,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "40846eae71b4a2f0477743719c11a08182d09375",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "hwg-1",
+      type: "triggered",
+      name: "NEED THIS!",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: {
+          controller: "you",
+          cardType: "character",
+          classification: "Floodborn",
+        },
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          source: "top-of-deck",
+          target: "CONTROLLER",
+          exerted: true,
+          facedown: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "NEED THIS! When you play a Floodborn character on this card, you may put the top card of your deck into your inkwell facedown and exerted.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Inventor"],
 };

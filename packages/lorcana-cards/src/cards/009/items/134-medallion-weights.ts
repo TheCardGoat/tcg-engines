@@ -18,7 +18,6 @@ export const medallionWeights: ItemCard = {
     {
       id: "1rm-1",
       type: "activated",
-      cost: {},
       effect: {
         type: "optional",
         effect: {
@@ -32,19 +31,3 @@ export const medallionWeights: ItemCard = {
     },
   ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { medallionWeights as ogMedallionWeights } from "@lorcanito/lorcana-engine/cards/004/items/132-medallion-weights";
-//
-// export const medallionWeights: LorcanitoItemCard = {
-//   ...ogMedallionWeights,
-//   id: "c57",
-//   reprints: [ogMedallionWeights.id],
-//   number: 134,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650069,
-//   },
-// };
-//

@@ -16,11 +16,33 @@ export const flynnRiderBreakingAndEntering: CharacterCard = {
   lore: 3,
   cardNumber: 102,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "577d26f1ad1c747203aca439a701bc0b4705224c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "o9w-1",
+      type: "triggered",
+      name: "THIS IS A VERY BIG DAY",
+      trigger: {
+        event: "challenged",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "they don't",
+        },
+        then: {
+          type: "gain-lore",
+          amount: 2,
+        },
+      },
+      text: "THIS IS A VERY BIG DAY Whenever this character is challenged, the challenging player may choose and discard a card. If they don't, you gain 2 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };

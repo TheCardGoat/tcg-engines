@@ -15,11 +15,32 @@ export const goofyGroundbreakingChef: CharacterCard = {
   lore: 2,
   cardNumber: 4,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "68b90a0038800e642717b1cfd159e7738b522975",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "t21-1",
+      type: "action",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "remove-damage",
+          amount: 1,
+          upTo: true,
+          target: {
+            selector: "all",
+            count: "all",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "PLENTY TO GO AROUND At the end of your turn, you may remove up to 1 damage from each of your other characters. Ready each character you removed damage from this way.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

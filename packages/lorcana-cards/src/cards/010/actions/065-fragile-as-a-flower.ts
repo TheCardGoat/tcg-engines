@@ -12,53 +12,41 @@ export const fragileAsAFlower: ActionCard = {
   cost: 3,
   cardNumber: 65,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "c4520386e5b3c0d4137f1da2eb502d9c3b7e6820",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1im-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+          {
+            type: "exert",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+          {
+            type: "restriction",
+            restriction: "cant-ready",
+            target: "SELF",
+            duration: "their-next-turn",
+          },
+        ],
+      },
+      text: "Draw a card. Exert chosen character with cost 2 or less. They can't ready at the start of their next turn.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacterWithCostXorLess } from "@lorcanito/lorcana-engine/abilities/targets";
-// import {
-//   drawACard,
-//   exertAndCantReadyAtTheeStartOfTheirTurn,
-// } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const fragileAsAFlower: LorcanitoActionCard = {
-//   id: "qw8",
-//   name: "Fragile As A Flower",
-//   characteristics: ["action", "song"],
-//   text: "Draw a card. Exert chosen character with cost 2 or less. They can't ready at the start of their next turn.",
-//   type: "action",
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 3,
-//   illustrator: "Janel Reh",
-//   number: 65,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659418,
-//   },
-//   rarity: "common",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       name: "Fragile As A Flower",
-//       text: "Draw a card.",
-//       effects: [drawACard],
-//     },
-//     {
-//       type: "resolution",
-//       name: "Fragile As A Flower",
-//       text: "Exert chosen character with cost 2 or less. They can't ready at the start of their next turn.",
-//       effects: exertAndCantReadyAtTheeStartOfTheirTurn(
-//         chosenCharacterWithCostXorLess(2),
-//       ),
-//     },
-//   ],
-// };
-//

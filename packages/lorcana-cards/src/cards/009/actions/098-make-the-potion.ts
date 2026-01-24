@@ -11,26 +11,45 @@ export const makeThePotion: ActionCard = {
   cost: 2,
   cardNumber: 98,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "2ff92870c51a6d0ed82d95f43850abf04ef72c3d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "db6-1",
+      type: "action",
+      effect: {
+        type: "choice",
+        options: [
+          {
+            type: "banish",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["item"],
+            },
+          },
+          {
+            type: "deal-damage",
+            amount: 2,
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+        ],
+        optionLabels: [
+          "Banish chosen item.",
+          "Deal 2 damage to chosen damaged character.",
+        ],
+      },
+      text: "Choose one: • Banish chosen item. • Deal 2 damage to chosen damaged character.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { makeThePotion as makeThePotionAsOrig } from "@lorcanito/lorcana-engine/cards/004/actions/094-make-the-potion";
-//
-// export const makeThePotion: LorcanitoActionCard = {
-//   ...makeThePotionAsOrig,
-//   id: "iiv",
-//   reprints: [makeThePotionAsOrig.id],
-//   number: 98,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650036,
-//   },
-// };
-//

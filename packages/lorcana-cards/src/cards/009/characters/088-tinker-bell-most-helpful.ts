@@ -16,27 +16,40 @@ export const tinkerBellMostHelpful: CharacterCard = {
   lore: 2,
   cardNumber: 88,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "7d6f88911941e9ab84662a1acc5938a3572d710b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ysx-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "ysx-2",
+      type: "triggered",
+      name: "PIXIE DUST",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        duration: "this-turn",
+      },
+      text: "PIXIE DUST When you play this character, chosen character gains Evasive this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Fairy"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { tinkerBellMostHelpful as ogTinkerBellMostHelpful } from "@lorcanito/lorcana-engine/cards/001/characters/093-tinker-bell-most-helpful";
-//
-// export const tinkerBellMostHelpful: LorcanitoCharacterCard = {
-//   ...ogTinkerBellMostHelpful,
-//   id: "rxt",
-//   reprints: [ogTinkerBellMostHelpful.id],
-//   number: 88,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650028,
-//   },
-// };
-//

@@ -16,11 +16,21 @@ export const kingOfHeartsPickyRuler: CharacterCard = {
   lore: 2,
   cardNumber: 111,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "58b431f0b98bc1d4b41d41d858487fce9f552032",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "om1-1",
+      type: "action",
+      effect: {
+        type: "restriction",
+        restriction: "cant-challenge",
+        target: "SELF",
+      },
+      text: "OBJECTIONABLE STATE Damaged characters can't challenge your characters.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "King"],
 };

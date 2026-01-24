@@ -16,27 +16,31 @@ export const genieSupportiveFriend: CharacterCard = {
   lore: 1,
   cardNumber: 54,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "90d80de24ee17049d48985b4d1fdfe1c6f9af560",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "146-1",
+      type: "triggered",
+      name: "THREE WISHES",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "shuffle-into-deck",
+          target: "SELF",
+          intoDeck: "owner",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "THREE WISHES Whenever this character quests, you may shuffle this card into your deck to draw 3 cards.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { genieSupportiveFriend as genieSupportiveFriendAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const genieSupportiveFriend: LorcanitoCharacterCard = {
-//   ...genieSupportiveFriendAsOrig,
-//   id: "gm5",
-//   reprints: [genieSupportiveFriendAsOrig.id],
-//   number: 54,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649998,
-//   },
-// };
-//

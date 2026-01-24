@@ -16,27 +16,36 @@ export const shenziHyenaPackLeader: CharacterCard = {
   lore: 1,
   cardNumber: 87,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "5fb748398e1696271b4a787f6c9bb1200b4a5b1e",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "qk2-1",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 3,
+        target: "SELF",
+      },
+      text: "I'LL HANDLE THIS While this character is at a location, she gets +3 {S}.",
+    },
+    {
+      id: "qk2-2",
+      type: "static",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "WHAT'S THE HURRY? While this character is at a location, whenever she challenges another character, you may draw a card.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Hyena"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shenziHyenaPackLeader as shenziHyenaPackLeaderAsOrig } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const shenziHyenaPackLeader: LorcanitoCharacterCard = {
-//   ...shenziHyenaPackLeaderAsOrig,
-//   id: "bh1",
-//   reprints: [shenziHyenaPackLeaderAsOrig.id],
-//   number: 87,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650027,
-//   },
-// };
-//

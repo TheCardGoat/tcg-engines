@@ -12,10 +12,29 @@ export const aPiratesLife: ActionCard = {
   cost: 6,
   cardNumber: 132,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "740b1d11aff60c73e623704984ea2d1ed98a312f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "w74-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "lose-lore",
+            amount: 2,
+            target: "EACH_OPPONENT",
+          },
+          {
+            type: "gain-lore",
+            amount: 2,
+          },
+        ],
+      },
+      text: "Sing Together 6 Each opponent loses 2 lore. You gain 2 lore.",
+    },
+  ],
 };

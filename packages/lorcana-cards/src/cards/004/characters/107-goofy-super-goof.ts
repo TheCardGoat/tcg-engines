@@ -15,49 +15,32 @@ export const goofySuperGoof: CharacterCard = {
   lore: 1,
   cardNumber: 107,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d68e1198d53d0e18c6b1f08b1308f124fed05118",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1n2-1",
+      type: "keyword",
+      keyword: "Rush",
+      text: "Rush",
+    },
+    {
+      id: "1n2-2",
+      type: "triggered",
+      name: "SUPER PEANUT POWERS",
+      trigger: {
+        event: "challenge",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 2,
+      },
+      text: "SUPER PEANUT POWERS Whenever this character challenges another character, gain 2 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { rushAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { wheneverChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const goofySuperGoof: LorcanitoCharacterCard = {
-//   id: "f8o",
-//   name: "Goofy",
-//   title: "Super Goof",
-//   characteristics: ["hero", "storyborn"],
-//   text: "**Rush** _(This character can challenge the turn they're played)_\n\n**SUPER PEANUT POWERS** Whenever this character challenges another character, gain 2 lore",
-//   type: "character",
-//   abilities: [
-//     rushAbility,
-//     wheneverChallengesAnotherChar({
-//       name: "**SUPER PEANUT POWERS**",
-//       text: "Whenever this character challenges another character, gain 2 lore.",
-//       effects: [youGainLore(2)],
-//     }),
-//   ],
-//   flavour: "Never underestimate the power of a Goof.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 4,
-//   strength: 2,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Justin Runfola",
-//   number: 107,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 543912,
-//   },
-//   rarity: "rare",
-// };
-//

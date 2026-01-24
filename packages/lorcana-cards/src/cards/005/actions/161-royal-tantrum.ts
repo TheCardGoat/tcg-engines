@@ -11,54 +11,42 @@ export const royalTantrum: ActionCard = {
   cost: 4,
   cardNumber: 161,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "211fa6f2c714f9c7c38c603759096a5a87b2f7c3",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "96v-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "banish",
+            target: {
+              selector: "all",
+              count: "all",
+              owner: "you",
+              zones: ["play"],
+              cardTypes: ["item"],
+            },
+          },
+          {
+            type: "for-each",
+            counter: {
+              type: "items",
+              controller: "you",
+            },
+            effect: {
+              type: "draw",
+              amount: 1,
+              target: "CONTROLLER",
+            },
+          },
+        ],
+      },
+      text: "Banish any number of your items, then draw a card for each item banished this way.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const royalTantrum: LorcanitoActionCard = {
-//   id: "v3q",
-//   name: "Royal Tantrum",
-//   characteristics: ["action"],
-//   text: "Banish any number of your items, then draw a card for each item banished this way.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       effects: [
-//         {
-//           type: "banish",
-//           forEach: [drawACard],
-//           target: {
-//             type: "card",
-//             value: 99,
-//             upTo: true,
-//             filters: [
-//               { filter: "owner", value: "self" },
-//               { filter: "type", value: "item" },
-//               { filter: "zone", value: "play" },
-//             ],
-//           },
-//         },
-//       ],
-//     },
-//   ],
-//   flavour: "I am King! King! King!",
-//   colors: ["sapphire"],
-//   cost: 4,
-//   illustrator: "Michela Cacciatore / Giulia Riva",
-//   number: 161,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 560510,
-//   },
-//   rarity: "rare",
-// };
-//

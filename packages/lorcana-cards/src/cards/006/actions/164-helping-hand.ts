@@ -11,45 +11,37 @@ export const helpingHand: ActionCard = {
   cost: 1,
   cardNumber: 164,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f86b89b67c0d769c407b76fcf395e4d3a14bbd31",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1wv-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "gain-keyword",
+            keyword: "Support",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+            duration: "this-turn",
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+      text: "Chosen character gains Support this turn. Draw a card.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenCharacterGainsSupport,
-//   drawACard,
-// } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const helpingHand: LorcanitoActionCard = {
-//   id: "vl0",
-//   name: "Helping Hand",
-//   characteristics: ["action"],
-//   text: "Chosen character gains Support this turn. Draw a card.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       name: "Helping Hand",
-//       text: "Chosen character gains Support this turn. Draw a card.",
-//       resolveEffectsIndividually: true,
-//       effects: [chosenCharacterGainsSupport("turn"), drawACard],
-//     },
-//   ],
-//   inkwell: false,
-//   colors: ["sapphire"],
-//   cost: 1,
-//   illustrator: "Therese Vildefall",
-//   number: 164,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 586975,
-//   },
-//   rarity: "common",
-// };
-//

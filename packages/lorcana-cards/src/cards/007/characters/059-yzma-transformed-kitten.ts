@@ -16,55 +16,33 @@ export const yzmaTransformedKitten: CharacterCard = {
   lore: 1,
   cardNumber: 59,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a338053c5fc78cd2976092628447d8a80725dbad",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "192-1",
+      type: "triggered",
+      name: "I WIN",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have more cards in your hand than each opponent",
+        },
+        then: {
+          type: "return-to-hand",
+          target: "SELF",
+        },
+      },
+      text: "I WIN When this character is banished, if you have more cards in your hand than each opponent, you may return this card to your hand.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { haveMoreCardsThanOpponent } from "@lorcanito/lorcana-engine/abilities/conditions/conditions";
-// import { thisCharacter } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const yzmaChangedIntoAKitten: LorcanitoCharacterCard = {
-//   id: "ol1",
-//   name: "Yzma",
-//   title: "Transformed Kitten",
-//   characteristics: ["storyborn", "villain", "mage"],
-//   text: "I WON When this character is banished, if you have more cards in hand than any opponent, you may return this character to your hand.",
-//   type: "character",
-//   abilities: [
-//     whenThisCharacterBanished({
-//       name: "I WON",
-//       text: "When this character is banished, if you have more cards in hand than any opponent, you may return this character to your hand.",
-//       optional: true,
-//       conditions: [haveMoreCardsThanOpponent],
-//       effects: [
-//         {
-//           type: "move",
-//           to: "hand",
-//           target: thisCharacter,
-//         },
-//       ],
-//     }),
-//   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 1,
-//   illustrator: "Oospognant",
-//   number: 59,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619437,
-//   },
-//   rarity: "common",
-//   lore: 1,
-// };
-//

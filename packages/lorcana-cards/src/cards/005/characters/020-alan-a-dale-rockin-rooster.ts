@@ -16,11 +16,29 @@ export const alanadaleRockinRooster: CharacterCard = {
   lore: 2,
   cardNumber: 20,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "59b96144e20a1e20918bd0fd047597fe1d9505a7",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ow8-1",
+      type: "triggered",
+      name: "FAN FAVORITE",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "action",
+        },
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+      },
+      text: "FAN FAVORITE Whenever you play a song, gain 1 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

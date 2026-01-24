@@ -15,27 +15,43 @@ export const plutoDeterminedDefender: CharacterCard = {
   lore: 2,
   cardNumber: 14,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "7fd9befad39f19fd09370a0976c47a9fe3a3593d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "zh2-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 5,
+      },
+      text: "Shift 5 {I}",
+    },
+    {
+      id: "zh2-2",
+      type: "keyword",
+      keyword: "Bodyguard",
+      text: "Bodyguard",
+    },
+    {
+      id: "zh2-3",
+      type: "action",
+      effect: {
+        type: "remove-damage",
+        amount: 3,
+        upTo: true,
+        target: {
+          selector: "self",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "GUARD DOG At the start of your turn, remove up to 3 damage from this character.",
+    },
+  ],
   classifications: ["Floodborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { plutoDeterminedDefender as ogPlutoDeterminedDefender } from "@lorcanito/lorcana-engine/cards/003/characters/characters";
-//
-// export const plutoDeterminedDefender: LorcanitoCharacterCard = {
-//   ...ogPlutoDeterminedDefender,
-//   id: "gnw",
-//   reprints: [ogPlutoDeterminedDefender.id],
-//   number: 14,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649963,
-//   },
-// };
-//

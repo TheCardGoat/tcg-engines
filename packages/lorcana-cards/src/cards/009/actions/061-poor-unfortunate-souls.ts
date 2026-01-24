@@ -12,26 +12,25 @@ export const poorUnfortunateSouls: ActionCard = {
   cost: 2,
   cardNumber: 61,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ed007086370af05d97b329a2a69bacfeebcf26e7",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ti-1",
+      type: "action",
+      effect: {
+        type: "return-to-hand",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "Return chosen character, item, or location with cost 2 or less to their player's hand.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { poorUnfortunateSouls as ogPoorUnfortunateSouls } from "@lorcanito/lorcana-engine/cards/004/actions/060-poor-unfortunate-souls";
-//
-// export const poorUnfortunateSouls: LorcanitoActionCard = {
-//   ...ogPoorUnfortunateSouls,
-//   id: "k1n",
-//   reprints: [ogPoorUnfortunateSouls.id],
-//   number: 61,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650005,
-//   },
-// };
-//

@@ -16,11 +16,37 @@ export const magicBroomSwiftCleaner: CharacterCard = {
   lore: 2,
   cardNumber: 45,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "869358d9f809656d6013e88df0dee2b50724aab8",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "114-1",
+      type: "keyword",
+      keyword: "Rush",
+      text: "Rush",
+    },
+    {
+      id: "114-2",
+      type: "action",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "shuffle-into-deck",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["card"],
+          },
+          intoDeck: "owner",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "CLEAN THIS, CLEAN THAT When you play this character, you may shuffle all Broom cards from your discard into your deck.",
+    },
+  ],
   classifications: ["Dreamborn", "Broom"],
 };

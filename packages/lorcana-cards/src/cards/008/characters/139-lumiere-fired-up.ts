@@ -21,6 +21,28 @@ export const lumiereFiredUp: CharacterCard = {
   externalIds: {
     ravensburger: "cd39c54678ac991587db8497726dcd78b478b748",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1k1-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+      text: "Shift 3",
+    },
+    {
+      id: "1k1-3",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "SELF",
+        duration: "this-turn",
+      },
+      text: "SACREBLEU!: Whenever one of your items is banished, this character gets +1 {L} this turn.",
+    },
+  ],
   classifications: ["Floodborn", "Ally"],
 };

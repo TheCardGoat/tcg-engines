@@ -15,11 +15,23 @@ export const mickeyMouseNightWatch: CharacterCard = {
   lore: 2,
   cardNumber: 187,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "2b1fcd131a99f947ccd1d9c4c82fc6ae8c9837e1",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "byr-1",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        target: "YOUR_CHARACTERS",
+        value: 1,
+      },
+      name: "SUPPORT Your Pluto",
+      text: "SUPPORT Your Pluto characters get Resist +1.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

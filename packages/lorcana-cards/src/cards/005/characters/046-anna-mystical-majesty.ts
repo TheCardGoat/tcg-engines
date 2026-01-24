@@ -16,47 +16,41 @@ export const annaMysticalMajesty: CharacterCard = {
   lore: 2,
   cardNumber: 46,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "435579c3cb397e6133a748ff09f53a84bb5a48ff",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "iok-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+      text: "Shift 4",
+    },
+    {
+      id: "iok-2",
+      type: "triggered",
+      name: "EXCEPTIONAL POWER",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "exert",
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "EXCEPTIONAL POWER When you play this character, exert all opposing characters.",
+    },
+  ],
   classifications: ["Floodborn", "Hero", "Queen", "Sorcerer"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { exertAllOpposingCharacters } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const annaMysticalMajesty: LorcanitoCharacterCard = {
-//   id: "e80",
-//   name: "Anna",
-//   title: "Mystical Majesty",
-//   characteristics: ["hero", "floodborn", "queen", "sorcerer"],
-//   text: "**Shift** 4 _You may pay 4 {I} to play this on top of one of your characters named Anna.)_\n  \n**EXCEPTIONAL POWER** When you play this character, exert all opposing characters.",
-//   type: "character",
-//   abilities: [
-//     shiftAbility(4, "Anna"),
-//     {
-//       type: "resolution",
-//       name: "EXCEPTIONAL POWER",
-//       text: "When you play this character, exert all opposing characters.",
-//       effects: [exertAllOpposingCharacters],
-//     },
-//   ],
-//   colors: ["amethyst"],
-//   cost: 7,
-//   strength: 4,
-//   willpower: 5,
-//   lore: 2,
-//   illustrator: "Jackie Droujko",
-//   number: 46,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 561952,
-//   },
-//   rarity: "rare",
-// };
-//

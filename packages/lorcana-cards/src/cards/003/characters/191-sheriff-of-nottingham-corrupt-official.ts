@@ -16,11 +16,32 @@ export const sheriffOfNottinghamCorruptOfficial: CharacterCard = {
   lore: 1,
   cardNumber: 191,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d20d32a55ec2df0ff6790459048a6633003d8cd3",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1mi-1",
+      type: "triggered",
+      name: "TAXES SHOULD HURT",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 1,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "opponent",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "TAXES SHOULD HURT Whenever you discard a card, you may deal 1 damage to chosen opposing character.",
+    },
+  ],
   classifications: ["Dreamborn", "Villain"],
 };

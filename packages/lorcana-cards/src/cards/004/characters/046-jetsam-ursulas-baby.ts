@@ -16,11 +16,29 @@ export const jetsamUrsulasBaby: CharacterCard = {
   lore: 1,
   cardNumber: 46,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "31df3c1a9447af75e663dd163f81735bf0f32fd8",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "du5-1",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 2,
+      text: "Challenger +2",
+    },
+    {
+      id: "du5-2",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Challenger",
+        target: "YOUR_CHARACTERS",
+        value: 2,
+      },
+      text: "OMINOUS PAIR Your characters named Flotsam gain Challenger +2.",
+    },
+  ],
   classifications: ["Dreamborn", "Ally"],
 };

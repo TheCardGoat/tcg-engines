@@ -11,10 +11,27 @@ export const whiteRabbitsPocketWatch: ItemCard = {
   cost: 3,
   cardNumber: 66,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "33b357a4ae708cc24a69167fda5f9129aa942bb6",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ecf-1",
+      type: "activated",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Rush",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        duration: "this-turn",
+      },
+      text: "I'M LATE! {E}, 1 {I} — Chosen character gains Rush this turn.",
+    },
+  ],
 };

@@ -15,11 +15,33 @@ export const goldenHarpEnchanterOfTheLand: CharacterCard = {
   lore: 2,
   cardNumber: 11,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f4f450832cdc1e0cb2bf7a119554af0e031d4a98",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1vy-1",
+      type: "action",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you didn't play a song this turn",
+        },
+        then: {
+          type: "banish",
+          target: {
+            selector: "self",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+      },
+      text: "STOLEN AWAY At the end of your turn, if you didn't play a song this turn, banish this character.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

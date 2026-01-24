@@ -16,11 +16,33 @@ export const slightlyLostBoy: CharacterCard = {
   lore: 1,
   cardNumber: 124,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "de6fe4fac9e60d6e1826bcce2255508984e7abfe",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1pb-1",
+      type: "action",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have a character named Peter Pan in play",
+        },
+        then: {
+          type: "play-card",
+          from: "hand",
+        },
+      },
+      text: "THE FOX If you have a character named Peter Pan in play, you pay 1 {I} less to play this character.",
+    },
+    {
+      id: "1pb-2",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

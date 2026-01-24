@@ -52,19 +52,3 @@ export const queenOfHeartsSensingWeakness: CharacterCard = {
   ],
   classifications: ["Floodborn", "Villain", "Queen"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { queenOfHeartsSensingWeakness as ogQueenOfHeartsSensingWeakness } from "@lorcanito/lorcana-engine/cards/002/characters/120-queen-of-hearts-sensing-weakness";
-//
-// export const queenOfHeartsSensingWeakness: LorcanitoCharacterCard = {
-//   ...ogQueenOfHeartsSensingWeakness,
-//   id: "a6w",
-//   reprints: [ogQueenOfHeartsSensingWeakness.id],
-//   number: 120,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 647670,
-//   },
-// };
-//

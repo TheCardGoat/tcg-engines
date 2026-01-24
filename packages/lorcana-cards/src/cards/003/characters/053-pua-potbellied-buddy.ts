@@ -16,11 +16,31 @@ export const puaPotbelliedBuddy: CharacterCard = {
   lore: 2,
   cardNumber: 53,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a41b9d6c76e9b057ca90c96cd1935027b2a84c1e",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "19j-1",
+      type: "triggered",
+      name: "ALWAYS THERE",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "shuffle-into-deck",
+          target: "SELF",
+          intoDeck: "owner",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "ALWAYS THERE When this character is banished, you may shuffle this card into your deck.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

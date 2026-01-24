@@ -16,49 +16,36 @@ export const theCarpenterDinnerCompanion: CharacterCard = {
   lore: 1,
   cardNumber: 44,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "5ba5435695ac12a2a4f8697877c36e2691c34826",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "pff-1",
+      type: "triggered",
+      name: "I'LL GET YOU!",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "exert",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "I'LL GET YOU! When this character is banished, you may exert chosen character.",
+    },
+  ],
   classifications: ["Storyborn"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenThisCharacterBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { exertChosenCharacter } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const theCarpenterDinnerCompanion: LorcanitoCharacterCard = {
-//   id: "wn7",
-//   missingTestCase: true,
-//   name: "The Carpenter",
-//   title: "Dinner Companion",
-//   characteristics: ["storyborn"],
-//   text: "I'LL GET YOU! When this character is banished, you may exert chosen character.",
-//   type: "character",
-//   abilities: [
-//     whenThisCharacterBanished({
-//       name: "The Carpenter",
-//       text: "When this character is banished, you may exert chosen character.",
-//       optional: true,
-//       effects: [exertChosenCharacter],
-//     }),
-//   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   strength: 1,
-//   willpower: 1,
-//   lore: 1,
-//   illustrator: "Andrea Parisi",
-//   number: 44,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 587934,
-//   },
-//   rarity: "common",
-// };
-//

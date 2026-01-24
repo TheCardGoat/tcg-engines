@@ -15,27 +15,32 @@ export const donaldDuckSleepwalker: CharacterCard = {
   lore: 1,
   cardNumber: 83,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d6d3d90026710636cf01bb4bba63c880361772bc",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1nl-1",
+      type: "triggered",
+      name: "STARTLED AWAKE",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "action",
+        },
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+        duration: "this-turn",
+      },
+      text: "STARTLED AWAKE Whenever you play an action, this character gets +2 {S} this turn.",
+    },
+  ],
   classifications: ["Storyborn"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { donaldDuckSleepwalker as donaldDuckSleepwalkerAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/078-donald-duck-sleepwalker";
-//
-// export const donaldDuckSleepwalker: LorcanitoCharacterCard = {
-//   ...donaldDuckSleepwalkerAsOrig,
-//   id: "w9x",
-//   reprints: [donaldDuckSleepwalkerAsOrig.id],
-//   number: 83,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650023,
-//   },
-// };
-//

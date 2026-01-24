@@ -16,11 +16,46 @@ export const helgaSinclairFemmeFatale: CharacterCard = {
   lore: 2,
   cardNumber: 74,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "eaf9c3a56b636b27f3a06bfc0f95746b3aefbb0b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1t9-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+      text: "Shift 3",
+    },
+    {
+      id: "1t9-2",
+      type: "triggered",
+      name: "THIS CHANGES EVERYTHING",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 3,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "THIS CHANGES EVERYTHING Whenever this character quests, you may deal 3 damage to chosen damaged character.",
+    },
+  ],
   classifications: ["Floodborn", "Villain"],
 };

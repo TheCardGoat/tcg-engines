@@ -11,10 +11,26 @@ export const twitterpated: ActionCard = {
   cost: 1,
   cardNumber: 150,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "8796f4cb21d5e4fb185646eae3e02d2b25ce1fc6",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "11m-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "Chosen character gains Evasive until the start of your next turn.",
+    },
+  ],
 };

@@ -16,27 +16,36 @@ export const maleficentMonstrousDragon: CharacterCard = {
   lore: 2,
   cardNumber: 108,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a3c5b9ffeb759ea92fe07213aadc27902cf0ddbf",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "19f-1",
+      type: "triggered",
+      name: "DRAGON FIRE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "banish",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "DRAGON FIRE When you play this character, you may banish chosen character.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Dragon"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { maleficentMonstrousDragon as ogMaleficentMonstrousDragon } from "@lorcanito/lorcana-engine/cards/001/characters/113-maleficent-monstrous-dragon";
-//
-// export const maleficentMonstrousDragon: LorcanitoCharacterCard = {
-//   ...ogMaleficentMonstrousDragon,
-//   id: "c6o",
-//   reprints: [ogMaleficentMonstrousDragon.id],
-//   number: 108,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650046,
-//   },
-// };
-//

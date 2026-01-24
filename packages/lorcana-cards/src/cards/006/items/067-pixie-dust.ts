@@ -11,35 +11,27 @@ export const pixieDust: ItemCard = {
   cost: 4,
   cardNumber: 67,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "81bfe47645b7451e9719f784418d39de85304651",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "100-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Challenger",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        value: 2,
+      },
+      text: "FAITH AND TRUST {E}, {2} {I} - Chosen character gains Challenger +2 and Evasive until the start of your next turn.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { faithAndTrust } from "@lorcanito/lorcana-engine/cards/006/items/abilities";
-//
-// export const pixieDust: LorcanitoItemCard = {
-//   id: "t1s",
-//   missingTestCase: true,
-//   name: "Pixie Dust",
-//   characteristics: ["item"],
-//   text: "FAITH AND TRUST {E}, {2} {I} - Chosen character gains Challenger +2 and Evasive until the start of your next turn. (While challenging, they get +2 {1}. Only characters with Evasive can challenge them.)",
-//   type: "item",
-//   abilities: [faithAndTrust],
-//   inkwell: false,
-//   colors: ["amethyst"],
-//   cost: 4,
-//   illustrator: "Ellie Horie / Mara Tango",
-//   number: 67,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 583854,
-//   },
-//   rarity: "uncommon",
-// };
-//

@@ -16,11 +16,31 @@ export const almaMadrigalAcceptingGrandmother: CharacterCard = {
   lore: 2,
   cardNumber: 34,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e9f25b54329962c4e6a6b6b1c3fdd15db57fab7d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1sw-1",
+      type: "triggered",
+      name: "THE MIRACLE IS YOU Once",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "ready",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "THE MIRACLE IS YOU Once during your turn, whenever one or more of your characters sings a song, you may ready those characters.",
+    },
+  ],
   classifications: ["Storyborn", "Mentor", "Madrigal"],
 };

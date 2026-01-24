@@ -16,27 +16,33 @@ export const hansNobleScoundrel: CharacterCard = {
   lore: 2,
   cardNumber: 148,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f7ae3c4a9105e86a37c801caf8ee53341d140429",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1wq-1",
+      type: "triggered",
+      name: "ROYAL SCHEMES",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "a Princess or Queen character is in play",
+        },
+        then: {
+          type: "gain-lore",
+          amount: 1,
+        },
+      },
+      text: "ROYAL SCHEMES When you play this character, if a Princess or Queen character is in play, gain 1 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Prince"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { hansNobleScoundrel as hansNobleScoundrelAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/146-hans-noble-scoundrel";
-//
-// export const hansNobleScoundrel: LorcanitoCharacterCard = {
-//   ...hansNobleScoundrelAsOrig,
-//   id: "e93",
-//   reprints: [hansNobleScoundrelAsOrig.id],
-//   number: 148,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650083,
-//   },
-// };
-//

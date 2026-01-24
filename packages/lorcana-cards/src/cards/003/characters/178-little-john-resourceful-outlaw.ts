@@ -16,11 +16,42 @@ export const littleJohnResourcefulOutlaw: CharacterCard = {
   lore: 2,
   cardNumber: 178,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "4956d247c5c7ffb227f85ae9fef3452d613bf2d5",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "kck-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+      text: "Shift 4",
+    },
+    {
+      id: "kck-2",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "gain-keyword",
+            keyword: "Resist",
+            target: "SELF",
+            value: 1,
+          },
+          {
+            type: "modify-stat",
+            stat: "lore",
+            modifier: 1,
+            target: "CHOSEN_CHARACTER",
+          },
+        ],
+      },
+      text: "OKAY, BIG SHOT While this character is exerted, your characters with Bodyguard gain Resist +1 and get +1 {L}.",
+    },
+  ],
   classifications: ["Floodborn", "Hero"],
 };

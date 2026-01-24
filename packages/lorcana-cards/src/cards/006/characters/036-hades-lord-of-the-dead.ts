@@ -16,11 +16,26 @@ export const hadesLordOfTheDead: CharacterCard = {
   lore: 3,
   cardNumber: 36,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "59d2486d57383b48c7dce89671fcb6798edad839",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ox7-1",
+      type: "triggered",
+      name: "SOUL COLLECTOR",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 2,
+      },
+      text: "SOUL COLLECTOR Whenever one of your other characters is banished during the opponent's turn, gain 2 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Deity"],
 };

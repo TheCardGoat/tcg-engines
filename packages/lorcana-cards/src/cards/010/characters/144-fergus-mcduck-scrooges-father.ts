@@ -16,11 +16,33 @@ export const fergusMcduckScroogesFather: CharacterCard = {
   lore: 2,
   cardNumber: 144,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "7a06ac544be3d4466e87e321002e6ed7ff044757",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "xuv-1",
+      type: "triggered",
+      name: "TOUGHEN UP",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Ward",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "TOUGHEN UP When you play this character, chosen character of yours gains Ward until the start of your next turn.",
+    },
+  ],
   classifications: ["Storyborn", "Mentor"],
 };

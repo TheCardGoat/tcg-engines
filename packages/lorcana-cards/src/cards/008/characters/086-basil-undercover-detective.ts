@@ -21,6 +21,32 @@ export const basilUndercoverDetective: CharacterCard = {
   externalIds: {
     ravensburger: "d557e83f557eeed52f4528785eb15321f03c453c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1n7-1",
+      type: "triggered",
+      name: "INCAPACITATE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "return-to-hand",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "INCAPACITATE When you play this character, you may return chosen character to their player's hand.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Detective"],
 };

@@ -16,11 +16,28 @@ export const sirPellinoreSeasonedKnight: CharacterCard = {
   lore: 1,
   cardNumber: 154,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "175a1ce711b1cd4735cd50baf660818ce2375922",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "6h9-1",
+      type: "triggered",
+      name: "CODE OF HONOR",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Support",
+        target: "YOUR_CHARACTERS",
+        duration: "this-turn",
+      },
+      text: "CODE OF HONOR Whenever this character quests, your other characters gain Support this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Knight"],
 };

@@ -16,5 +16,27 @@ export const pullTheLever: ActionCard = {
   externalIds: {
     ravensburger: "443fdfdb48d4bec4a4157b8fa1372ce2ca8187fa",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ixq-2",
+      type: "action",
+      effect: {
+        type: "draw",
+        amount: 2,
+        target: "CONTROLLER",
+      },
+      text: "- Draw 2 cards.",
+    },
+    {
+      id: "ixq-3",
+      type: "action",
+      effect: {
+        type: "discard",
+        amount: 1,
+        target: "EACH_OPPONENT",
+        chosen: true,
+      },
+      text: "- Each opponent chooses and discards a card.",
+    },
+  ],
 };

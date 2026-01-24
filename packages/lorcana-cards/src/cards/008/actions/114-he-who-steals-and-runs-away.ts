@@ -11,10 +11,35 @@ export const heWhoStealsAndRunsAway: ActionCard = {
   cost: 3,
   cardNumber: 114,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "3d45421a0885dfede8dd05b57fef4f66b00074e9",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "h00-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "banish",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["item"],
+            },
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+      text: "Banish chosen item. Draw a card.",
+    },
+  ],
 };

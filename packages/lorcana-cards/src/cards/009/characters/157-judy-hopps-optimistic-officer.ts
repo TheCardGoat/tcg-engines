@@ -16,27 +16,46 @@ export const judyHoppsOptimisticOfficer: CharacterCard = {
   lore: 2,
   cardNumber: 157,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "939cd97703bd3991f17d78942c5d5c9e4db17b28",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "142-1",
+      type: "triggered",
+      name: "DON'T CALL ME CUTE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "optional",
+            effect: {
+              type: "banish",
+              target: {
+                selector: "chosen",
+                count: 1,
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["item"],
+              },
+            },
+            chooser: "CONTROLLER",
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+      text: "DON'T CALL ME CUTE When you play this character, you may banish chosen item. If you do, its player draws a card.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { judyHoppsOptimisticOfficer as judyHoppsOptimisticOfficerAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/152-judy-hopps-optimistic-officer";
-//
-// export const judyHoppsOptimisticOfficer: LorcanitoCharacterCard = {
-//   ...judyHoppsOptimisticOfficerAsOrig,
-//   id: "bcu",
-//   reprints: [judyHoppsOptimisticOfficerAsOrig.id],
-//   number: 157,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650092,
-//   },
-// };
-//

@@ -16,47 +16,32 @@ export const cinderellaKnightInTraining: CharacterCard = {
   lore: 1,
   cardNumber: 176,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "1e54202930de5a3bff06a70d10c2b29821631820",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "8ex-1",
+      type: "triggered",
+      name: "HAVE COURAGE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "discard",
+          amount: 1,
+          target: "CONTROLLER",
+          chosen: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "HAVE COURAGE When you play this character, you may draw a card, then choose and discard a card.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Princess", "Knight"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const cinderellaKnightInTraining: LorcanitoCharacterCard = {
-//   id: "y7h",
-//   name: "Cinderella",
-//   title: "Knight in Training",
-//   characteristics: ["hero", "dreamborn", "princess", "knight"],
-//   text: "**HAVE COURAGE** When you play this character, you may draw a card, then choose and discard a card.",
-//   type: "character",
-//   abilities: [
-//     {
-//       ...youMayDrawThenChooseAndDiscard,
-//       name: "Have Courage",
-//       text: "When you play this character, you may draw a card, then choose and discard a card.",
-//     },
-//   ],
-//   flavour:
-//     "She's always had the heart of a champion - now she'll have the skills, too.",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 2,
-//   lore: 1,
-//   illustrator: "Grace Tran",
-//   number: 176,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 521726,
-//   },
-//   rarity: "common",
-// };
-//

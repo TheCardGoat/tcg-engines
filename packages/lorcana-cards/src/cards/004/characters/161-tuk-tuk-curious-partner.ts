@@ -21,29 +21,3 @@ export const tukTukCuriousPartner: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const tukTukCuriousPartner: LorcanitoCharacterCard = {
-//   id: "un6",
-//   name: "Tuk Tuk",
-//   title: "Curious Partner",
-//   characteristics: ["storyborn", "ally"],
-//   type: "character",
-//   flavour: "Some say he's easily distracted. They're not wrong . . .\"\n−Raya",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Oggy Christiansson",
-//   number: 161,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550613,
-//   },
-//   rarity: "common",
-// };
-//

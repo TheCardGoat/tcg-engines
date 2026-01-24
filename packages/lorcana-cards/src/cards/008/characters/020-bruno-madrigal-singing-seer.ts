@@ -16,11 +16,35 @@ export const brunoMadrigalSingingSeer: CharacterCard = {
   lore: 2,
   cardNumber: 20,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "af817278afe783681674103e4c50e09941209817",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1cp-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 5,
+      },
+      text: "Shift 5",
+    },
+    {
+      id: "1cp-2",
+      type: "triggered",
+      name: "BRIGHT FUTURE",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "BRIGHT FUTURE Whenever this character sings a song, you may draw a card for each character you have in play.",
+    },
+  ],
   classifications: ["Floodborn", "Ally", "Madrigal"],
 };

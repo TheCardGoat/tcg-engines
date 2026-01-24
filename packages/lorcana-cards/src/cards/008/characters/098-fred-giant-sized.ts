@@ -16,11 +16,36 @@ export const fredGiantsized: CharacterCard = {
   lore: 3,
   cardNumber: 98,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "b251af6ff8f7c4f65248576fe4c9c6d0cb47cdf1",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1d3-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 5,
+      },
+      text: "Shift 5",
+    },
+    {
+      id: "1d3-2",
+      type: "triggered",
+      name: "I LIKE WHERE THIS IS HEADING",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "shuffle-into-deck",
+        target: "CHOSEN_CHARACTER",
+        intoDeck: "owner",
+      },
+      text: "I LIKE WHERE THIS IS HEADING Whenever this character quests, reveal cards from the top of your deck until you reveal a Floodborn character card. Put that card into your hand and shuffle the rest into your deck.",
+    },
+  ],
   classifications: ["Floodborn", "Hero"],
 };

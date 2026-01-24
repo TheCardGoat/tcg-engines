@@ -16,58 +16,36 @@ export const launchpadExceptionalPilot: CharacterCard = {
   lore: 1,
   cardNumber: 83,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "4f77725589536ddc85294a41b48dcd409ec34d34",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "m1r-1",
+      type: "triggered",
+      name: "OFF THE MAP",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "banish",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["location"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "OFF THE MAP When you play this character, you may banish chosen location.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-//
-// export const launchpadExceptionalPilot: LorcanitoCharacterCard = {
-//   id: "g4q",
-//   name: "Launchpad",
-//   title: "Exceptional Pilot",
-//   characteristics: ["storyborn", "ally"],
-//   text: "OFF THE MAP When you play this character, you may banish chosen location.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 4,
-//   illustrator: "Aristeidis Zentelis",
-//   number: 83,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 658464,
-//   },
-//   rarity: "common",
-//   lore: 1,
-//   abilities: [
-//     whenYouPlayThisCharacter({
-//       name: "OFF THE MAP",
-//       text: "When you play this character, you may banish chosen location.",
-//       optional: true,
-//       effects: [
-//         {
-//           type: "banish",
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
-//               { filter: "type", value: "location" },
-//               { filter: "zone", value: "play" },
-//             ],
-//           },
-//         },
-//       ],
-//     }),
-//   ],
-// };
-//

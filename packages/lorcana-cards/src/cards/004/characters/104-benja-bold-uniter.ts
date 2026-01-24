@@ -21,29 +21,3 @@ export const benjaBoldUniter: CharacterCard = {
   },
   classifications: ["Storyborn", "Mentor", "King"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const benjaBoldUniter: LorcanitoCharacterCard = {
-//   id: "pti",
-//   name: "Benja",
-//   title: "Bold Uniter",
-//   characteristics: ["storyborn", "king", "mentor"],
-//   type: "character",
-//   flavour: "We must work together to heal the entanglements.",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 4,
-//   strength: 5,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Eri Welli",
-//   number: 104,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550589,
-//   },
-//   rarity: "common",
-// };
-//

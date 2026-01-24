@@ -16,67 +16,32 @@ export const tiggerOneOfAKind: CharacterCard = {
   lore: 1,
   cardNumber: 127,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d777770ea1c3e9501c20b77a65e2cfcce67bd0d6",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ns-1",
+      type: "triggered",
+      name: "ENERGETIC",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "action",
+        },
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+        duration: "this-turn",
+      },
+      text: "ENERGETIC Whenever you play an action, this character gets +2 {S} this turn.",
+    },
+  ],
   classifications: ["Dreamborn", "Tigger"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { wheneverPlays } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-//
-// export const tiggerOneOfAKind: LorcanitoCharacterCard = {
-//   id: "gaw",
-//   name: "Tigger",
-//   title: "One of a Kind",
-//   characteristics: ["dreamborn", "tigger"],
-//   text: "**ENERGETIC** Whenever you play an action, this character gets +2 {S} this turn.",
-//   type: "character",
-//   abilities: [
-//     wheneverPlays({
-//       name: "Enegetic",
-//       text: "Whenever you play an action, this character gets +2 {S} this turn.",
-//       triggerTarget: {
-//         type: "card",
-//         value: 1,
-//         filters: [
-//           { filter: "type", value: "action" },
-//           { filter: "characteristics", value: ["action"] },
-//           { filter: "owner", value: "self" },
-//         ],
-//       },
-//       effects: [
-//         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 2,
-//           modifier: "add",
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [{ filter: "source", value: "self" }],
-//           },
-//         },
-//       ],
-//     }),
-//   ],
-//   flavour: "Bouncing in to save the day!",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   strength: 3,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "P. Gaylord / L. Giammichele",
-//   number: 127,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 524189,
-//   },
-//   rarity: "common",
-// };
-//

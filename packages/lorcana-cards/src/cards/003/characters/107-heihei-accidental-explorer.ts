@@ -16,11 +16,22 @@ export const heiheiAccidentalExplorer: CharacterCard = {
   lore: 1,
   cardNumber: 107,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "455defcf78009f1d2942d2ea1cc9a69334c1b7ff",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "j8v-1",
+      type: "triggered",
+      name: "MINDLESS WANDERING",
+      effect: {
+        type: "lose-lore",
+        amount: 1,
+        target: "EACH_OPPONENT",
+      },
+      text: "MINDLESS WANDERING Once per turn, when this character moves to a location, each opponent loses 1 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

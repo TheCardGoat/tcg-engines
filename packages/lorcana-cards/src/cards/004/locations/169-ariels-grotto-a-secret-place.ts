@@ -15,58 +15,21 @@ export const arielsGrottoASecretPlace: LocationCard = {
   lore: 0,
   cardNumber: 169,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ade3b9a1cc4c9a87627a75f1318e62b804de153e",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ca-1",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 2,
+        target: "CHOSEN_CHARACTER",
+      },
+      text: "TREASURE TROVE While you have 3 or more items in play, this location gets +2 {L}.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoLocationCard } from "@lorcanito/lorcana-engine";
-// import { propertyStaticAbilities } from "../../../abilities/propertyStaticAbilities";
-//
-// export const arielsGrottoASecretPlace: LorcanitoLocationCard = {
-//   id: "ip4",
-//   name: "Ariel's Grotto",
-//   title: "A Secret Place",
-//   characteristics: ["location"],
-//   text: "**TREASURE TROVE** While you have 3 or more items in play, this location gets +2 {L}.",
-//   type: "location",
-//   abilities: [
-//     propertyStaticAbilities({
-//       name: "Treasure Trove",
-//       text: "While you have 3 or more items in play, this location gets +2 {L}.",
-//       conditions: [
-//         {
-//           type: "filter",
-//           filters: [
-//             { filter: "type", value: "item" },
-//             { filter: "zone", value: "play" },
-//             { filter: "owner", value: "self" },
-//           ],
-//           comparison: {
-//             operator: "gte",
-//             value: 3,
-//           },
-//         },
-//       ],
-//       attribute: "lore",
-//       amount: 2,
-//     }),
-//   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   moveCost: 2,
-//   willpower: 7,
-//   illustrator: "Jeremy Adams",
-//   number: 169,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 549337,
-//   },
-//   rarity: "rare",
-// };
-//

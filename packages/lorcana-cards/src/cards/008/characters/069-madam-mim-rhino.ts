@@ -16,11 +16,48 @@ export const madamMimRhino: CharacterCard = {
   lore: 1,
   cardNumber: 69,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "c8ed6402654f8ce22d7183f9306ce8d843f760b2",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1jr-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 2,
+      },
+      text: "Shift 2",
+    },
+    {
+      id: "1jr-2",
+      type: "action",
+      effect: {
+        type: "choice",
+        options: [
+          {
+            type: "play-card",
+            from: "hand",
+          },
+          {
+            type: "return-to-hand",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+        ],
+        optionLabels: [
+          "MAKE WAY, COMING THROUGH! When you play this character, banish her",
+          "return another chosen character of yours to your hand.",
+        ],
+      },
+      text: "MAKE WAY, COMING THROUGH! When you play this character, banish her or return another chosen character of yours to your hand.",
+    },
+  ],
   classifications: ["Floodborn", "Villain", "Sorcerer"],
 };

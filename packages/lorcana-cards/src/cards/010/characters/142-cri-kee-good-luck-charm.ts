@@ -29,31 +29,3 @@ export const crikeeGoodLuckCharm: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { alertAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const crikeeGoodLuckCharm: LorcanitoCharacterCard = {
-//   id: "xht",
-//   name: "Cri-Kee",
-//   title: "Good Luck Charm",
-//   characteristics: ["storyborn", "ally"],
-//   text: "Alert (This character can challenge as if they had Evasive.)",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   strength: 3,
-//   willpower: 2,
-//   illustrator: "Kapik",
-//   number: 142,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659454,
-//   },
-//   rarity: "common",
-//   abilities: [alertAbility],
-//   lore: 1,
-// };
-//

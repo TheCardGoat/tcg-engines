@@ -16,27 +16,47 @@ export const moanaOfMotunui: CharacterCard = {
   lore: 3,
   cardNumber: 20,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "0253f6c8757d9698e3b28f4f973b3ccc6d5bd4ae",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "n94-1",
+      type: "triggered",
+      name: "WE CAN FIX IT",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "optional",
+            effect: {
+              type: "ready",
+              target: {
+                selector: "chosen",
+                count: 1,
+                owner: "any",
+                zones: ["play"],
+                cardTypes: ["character"],
+              },
+            },
+            chooser: "CONTROLLER",
+          },
+          {
+            type: "restriction",
+            restriction: "cant-quest",
+            target: "SELF",
+            duration: "this-turn",
+          },
+        ],
+      },
+      text: "WE CAN FIX IT Whenever this character quests, you may ready your other exerted Princess characters. If you do, they can't quest for the rest of this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { moanaOfMotunui as ogMoanaOfMotunui } from "@lorcanito/lorcana-engine/cards/001/characters/014-moana-of-motunui";
-//
-// export const moanaOfMotunui: LorcanitoCharacterCard = {
-//   ...ogMoanaOfMotunui,
-//   id: "c9q",
-//   reprints: [ogMoanaOfMotunui.id],
-//   number: 20,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649968,
-//   },
-// };
-//

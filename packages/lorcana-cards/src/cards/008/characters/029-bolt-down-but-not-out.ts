@@ -16,11 +16,22 @@ export const boltDownButNotOut: CharacterCard = {
   lore: 4,
   cardNumber: 29,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e040a528160f7b3956e6235a08255d4cfd7ef81a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1q7-1",
+      type: "static",
+      effect: {
+        type: "restriction",
+        restriction: "enters-play-exerted",
+        target: "SELF",
+      },
+      name: "NONE OF YOUR POWERS ARE WORKING",
+      text: "NONE OF YOUR POWERS ARE WORKING This character enters play exerted.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

@@ -11,62 +11,40 @@ export const magicalManeuvers: ActionCard = {
   cost: 2,
   cardNumber: 80,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d587c3f09f6a2381566ef6cc840935c84c29d8dc",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1nx-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "return-to-hand",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+          {
+            type: "exert",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+        ],
+      },
+      text: "Return chosen character of yours to your hand. Exert chosen character.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import {
-//   chosenCharacter,
-//   chosenCharacterOfYours,
-// } from "@lorcanito/lorcana-engine/abilities/targets";
-//
-// export const magicalManeuvers: LorcanitoActionCard = {
-//   id: "y05",
-//   name: "Magical Maneuvers",
-//   characteristics: ["action"],
-//   text: "Return chosen character of yours to your hand. Exert chosen character.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       text: " Exert chosen character.",
-//       resolveEffectsIndividually: true,
-//       effects: [
-//         {
-//           type: "exert",
-//           exert: true,
-//           target: chosenCharacter,
-//         },
-//       ],
-//     },
-//     {
-//       type: "resolution",
-//       text: "Return chosen character of yours to your hand.",
-//       resolveEffectsIndividually: true,
-//       effects: [
-//         {
-//           type: "move",
-//           to: "hand",
-//           target: chosenCharacterOfYours,
-//         },
-//       ],
-//     },
-//   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   illustrator: "Jennifer Wu",
-//   number: 80,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618702,
-//   },
-//   rarity: "uncommon",
-// };
-//

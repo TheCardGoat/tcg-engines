@@ -16,49 +16,41 @@ export const moanaIslandExplorer: CharacterCard = {
   lore: 1,
   cardNumber: 134,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e4393d614409dae5df4ecdd00e5bd3f488227461",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1rb-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "1rb-2",
+      type: "triggered",
+      name: "ADVENTUROUS SPIRIT",
+      trigger: {
+        event: "challenge",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 3,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        duration: "this-turn",
+      },
+      text: "ADVENTUROUS SPIRIT Whenever this character challenges another character, another chosen character of yours gets +3 {S} this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { anotherChosenCharOfYours } from "@lorcanito/lorcana-engine/abilities/target";
-// import { wheneverChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { getStrengthThisTurn } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const moanaIslandExplorer: LorcanitoCharacterCard = {
-//   id: "fa3",
-//   name: "Moana",
-//   title: "Island Explorer",
-//   characteristics: ["storyborn", "hero", "princess"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 4,
-//   strength: 4,
-//   willpower: 3,
-//   illustrator: "Jackie Droujko",
-//   number: 134,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619480,
-//   },
-//   rarity: "uncommon",
-//   lore: 1,
-//   text: "Evasive\nADVENTUROUS SPIRIT Whenever this character challenges another character, another chosen character of yours gets +3 {S} this turn.",
-//   abilities: [
-//     evasiveAbility,
-//     wheneverChallengesAnotherChar({
-//       name: "ADVENTUROUS SPIRIT",
-//       text: "Whenever this character challenges another character, another chosen character of yours gets +3 {S} this turn.",
-//       effects: [getStrengthThisTurn(3, anotherChosenCharOfYours)],
-//     }),
-//   ],
-// };
-//

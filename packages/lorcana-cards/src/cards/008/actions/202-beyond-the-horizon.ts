@@ -12,10 +12,20 @@ export const beyondTheHorizon: ActionCard = {
   cost: 7,
   cardNumber: 202,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ad132a4c53b4856d48b36de8985d765bed38f07f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1cf-1",
+      type: "action",
+      effect: {
+        type: "draw",
+        amount: 3,
+        target: "CONTROLLER",
+      },
+      text: "Sing Together 7 Choose any number of players. They discard their hands and draw 3 cards each.",
+    },
+  ],
 };

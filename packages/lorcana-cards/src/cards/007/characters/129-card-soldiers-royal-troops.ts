@@ -16,11 +16,22 @@ export const cardSoldiersRoyalTroops: CharacterCard = {
   lore: 1,
   cardNumber: 129,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "dcb1ec98a56ada4be8acd345b0b77737465de130",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1p8-1",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+      },
+      text: "TAKE POINT While a damaged character is in play, this character gets +2 {S}.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

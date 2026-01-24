@@ -12,10 +12,25 @@ export const worldsGreatestCriminalMind: ActionCard = {
   cost: 3,
   cardNumber: 30,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "1471d83012de7c7df9cd43e860b8cd5eda891838",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "5o7-1",
+      type: "action",
+      effect: {
+        type: "banish",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "Banish chosen character with 5 {S} or more.",
+    },
+  ],
 };

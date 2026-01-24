@@ -16,11 +16,27 @@ export const vanellopeVonSchweetzGutsyGogetter: CharacterCard = {
   lore: 1,
   cardNumber: 110,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "7d1cddbc896d563c2bd0ab7099bc2f9a464d85cc",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ypp-1",
+      type: "action",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "this character is at a location",
+        },
+        then: {
+          type: "gain-lore",
+          amount: 1,
+        },
+      },
+      text: "AS READY AS I'LL EVER BE At the start of your turn, if this character is at a location, draw a card and gain 1 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Princess", "Racer"],
 };

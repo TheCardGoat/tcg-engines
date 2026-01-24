@@ -16,11 +16,36 @@ export const perditaDeterminedMother: CharacterCard = {
   lore: 2,
   cardNumber: 27,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "9849851df328fe0b986033d99e6d4ab4ed054ed8",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "169-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+      text: "Shift 4",
+    },
+    {
+      id: "169-2",
+      type: "action",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          source: "discard",
+          target: "CONTROLLER",
+          exerted: true,
+          facedown: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "QUICK, EVERYONE HIDE When you play this character, you may put all Puppy character cards from your discard into your inkwell facedown and exerted.",
+    },
+  ],
   classifications: ["Floodborn", "Hero"],
 };

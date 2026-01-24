@@ -16,11 +16,35 @@ export const mirabelMadrigalGiftOfTheFamily: CharacterCard = {
   lore: 2,
   cardNumber: 18,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a80ea3347166fc9a06f7ab61484c236899f23496",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1a6-1",
+      type: "keyword",
+      keyword: "Support",
+      text: "Support",
+    },
+    {
+      id: "1a6-2",
+      type: "triggered",
+      name: "SAVING THE MIRACLE",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "CHOSEN_CHARACTER",
+        duration: "this-turn",
+      },
+      text: "SAVING THE MIRACLE Whenever this character quests, your other Madrigal characters get +1 {L} this turn.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Madrigal"],
 };

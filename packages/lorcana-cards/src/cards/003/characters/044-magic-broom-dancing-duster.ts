@@ -16,11 +16,35 @@ export const magicBroomDancingDuster: CharacterCard = {
   lore: 1,
   cardNumber: 44,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "cb2138848bcc8eaa3b83ee763a9e79f2de568321",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1k5-1",
+      type: "triggered",
+      name: "POWER CLEAN",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have a Sorcerer character in play",
+        },
+        then: {
+          type: "restriction",
+          restriction: "cant-ready",
+          target: "SELF",
+          duration: "their-next-turn",
+        },
+      },
+      text: "POWER CLEAN When you play this character, if you have a Sorcerer character in play, you may exert chosen opposing character. They can't ready at the start of their next turn.",
+    },
+  ],
   classifications: ["Dreamborn", "Broom"],
 };

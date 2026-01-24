@@ -15,27 +15,35 @@ export const mickeyMouseStandardBearer: CharacterCard = {
   lore: 1,
   cardNumber: 185,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "48839e24171f940246ad8c892880d562b4dcffc4",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "k4b-1",
+      type: "triggered",
+      name: "STAND STRONG",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Challenger",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        value: 2,
+        duration: "this-turn",
+      },
+      text: "STAND STRONG When you play this character, chosen character gains Challenger +2 this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { mickeyMouseStandardBearer as ogMickeyMouseStandardBearer } from "@lorcanito/lorcana-engine/cards/004/characters/188-mickey-mouse-standard-bearer";
-//
-// export const mickeyMouseStandardBearer: LorcanitoCharacterCard = {
-//   ...ogMickeyMouseStandardBearer,
-//   id: "fax", // New ID for this card
-//   reprints: [ogMickeyMouseStandardBearer.id],
-//   number: 185,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650118,
-//   },
-// };
-//

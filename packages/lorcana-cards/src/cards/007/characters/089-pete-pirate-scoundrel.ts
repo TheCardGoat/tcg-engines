@@ -15,39 +15,39 @@ export const petePirateScoundrel: CharacterCard = {
   lore: 1,
   cardNumber: 89,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d89b25a8952e36576cfdd04557b3a45e0ca9dc07",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1o3-1",
+      type: "triggered",
+      name: "PILFER AND PLUNDER",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "action",
+        },
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "banish",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["item"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "PILFER AND PLUNDER Whenever you play an action that isn't a song, you may banish chosen item.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Pirate"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { pilferAndPlunderAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const petePirateScoundrel: LorcanitoCharacterCard = {
-//   id: "h8f",
-//   name: "Pete",
-//   title: "Pirate Scoundrel",
-//   characteristics: ["storyborn", "villain", "pirate"],
-//   text: "PILFER AND PLUNDER Whenever you play an action that isn’t a song, you may banish chosen item.",
-//   type: "character",
-//   abilities: [pilferAndPlunderAbility],
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 2,
-//   illustrator: "Serena Malyon",
-//   number: 89,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618703,
-//   },
-//   rarity: "common",
-//   lore: 1,
-// };
-//

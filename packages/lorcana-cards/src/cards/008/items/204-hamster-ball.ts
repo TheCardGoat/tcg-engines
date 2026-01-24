@@ -11,10 +11,27 @@ export const hamsterBall: ItemCard = {
   cost: 3,
   cardNumber: 204,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e6ae8927db279459b45121c140306a0e025a5c26",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1s0-1",
+      type: "activated",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        value: 2,
+      },
+      text: "ROLL WITH THE PUNCHES {E}, 1 {I} — Chosen character with no damage gains Resist +2 until the start of your next turn.",
+    },
+  ],
 };

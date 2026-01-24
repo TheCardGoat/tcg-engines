@@ -16,11 +16,39 @@ export const tinkerBellInsistentFairy: CharacterCard = {
   lore: 1,
   cardNumber: 136,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "277378a21856338f8273ccfc4abe9e49ad10589d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ay2-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "ay2-2",
+      type: "triggered",
+      name: "PAY ATTENTION",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "character",
+        },
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "gain-lore",
+          amount: 2,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "PAY ATTENTION Whenever you play a character with 5 {S} or more, you may exert them to gain 2 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Fairy"],
 };

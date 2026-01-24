@@ -16,49 +16,37 @@ export const stitchTeamUnderdog: CharacterCard = {
   lore: 1,
   cardNumber: 171,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "46c74815d938940a1435bdae976105ce9951db9f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "jmz-1",
+      type: "triggered",
+      name: "HEAVE HO!",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 2,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "HEAVE HO! When you play this character, you may deal 2 damage to chosen character.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Alien"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-// import { dealDamageEffect } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const stitchTeamUnderdog: LorcanitoCharacterCard = {
-//   id: "ovo",
-//   missingTestCase: true,
-//   name: "Stitch",
-//   title: "Team Underdog",
-//   characteristics: ["hero", "alien", "storyborn"],
-//   text: "**HEAVE HO!** When you play this character, you may deal 2 damage to chosen character.",
-//   type: "character",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       name: "HEAVE HO!",
-//       text: "When you play this character, you may deal 2 damage to chosen character.",
-//       effects: [dealDamageEffect(2, chosenCharacter)],
-//     },
-//   ],
-//   flavour:
-//     "He's not the biggest glimmer on the team, but he still packs a wallop.",
-//   colors: ["steel"],
-//   cost: 4,
-//   strength: 1,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Karen Hellon",
-//   number: 171,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 557295,
-//   },
-//   rarity: "uncommon",
-// };
-//

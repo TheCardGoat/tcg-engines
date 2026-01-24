@@ -11,10 +11,26 @@ export const televisionSet: ItemCard = {
   cost: 3,
   cardNumber: 178,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "5b45cb0bebfa4d4f18e8a0e2778ff4f77a31480b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "pbp-1",
+      type: "activated",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "it's a Puppy character card",
+        },
+        then: {
+          type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
+        },
+      },
+      text: "IS IT ON YET? {E}, 1 {I} —  Look at the top card of your deck. If it's a Puppy character card, you may reveal it and put it into your hand. Otherwise, put it on the bottom of your deck.",
+    },
+  ],
 };

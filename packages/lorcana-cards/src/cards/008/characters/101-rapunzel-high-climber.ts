@@ -16,11 +16,34 @@ export const rapunzelHighClimber: CharacterCard = {
   lore: 2,
   cardNumber: 101,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d96ca6b70852fff25f38145aaf2d764a4e530e4f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ob-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "1ob-2",
+      type: "triggered",
+      name: "WRAPPED UP",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "restriction",
+        restriction: "cant-quest",
+        target: "SELF",
+        duration: "their-next-turn",
+      },
+      text: "WRAPPED UP Whenever this character quests, chosen opposing character can't quest during their next turn.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Princess"],
 };

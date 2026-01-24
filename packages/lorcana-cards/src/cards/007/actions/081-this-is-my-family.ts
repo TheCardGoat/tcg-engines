@@ -12,34 +12,29 @@ export const thisIsMyFamily: ActionCard = {
   cost: 2,
   cardNumber: 81,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "c3565f192febee8aaadc4da67348a3246ad959eb",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1io-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "gain-lore",
+            amount: 1,
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+      text: "Gain 1 lore. Draw a card.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { thisIsMyFamilyAbility } from "@lorcanito/lorcana-engine/cards/007/abilities";
-//
-// export const thisIsMyFamily: LorcanitoActionCard = {
-//   id: "nk5",
-//   name: "This Is My Family",
-//   characteristics: ["action", "song"],
-//   text: "Gain 1 lore. Draw a card.",
-//   type: "action",
-//   abilities: [thisIsMyFamilyAbility],
-//   inkwell: false,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   illustrator: "Cristian Romero",
-//   number: 81,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 619448,
-//   },
-//   rarity: "common",
-// };
-//

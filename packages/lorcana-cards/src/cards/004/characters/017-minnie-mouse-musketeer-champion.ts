@@ -15,11 +15,38 @@ export const minnieMouseMusketeerChampion: CharacterCard = {
   lore: 2,
   cardNumber: 17,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "cafbe429486948b0c90695e0d88422c1815a0ad8",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1kb-1",
+      type: "keyword",
+      keyword: "Bodyguard",
+      text: "Bodyguard",
+    },
+    {
+      id: "1kb-2",
+      type: "triggered",
+      name: "DRAMATIC ENTRANCE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "banish",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "DRAMATIC ENTRANCE When you play this character, banish chosen opposing character with 5 {S} or more.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Musketeer"],
 };

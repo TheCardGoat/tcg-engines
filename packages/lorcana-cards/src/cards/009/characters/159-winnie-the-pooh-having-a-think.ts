@@ -16,27 +16,32 @@ export const winnieThePoohHavingAThink: CharacterCard = {
   lore: 2,
   cardNumber: 159,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "a0ac5d7c21c80cd3df94d836790d6e371f81ae76",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "18k-1",
+      type: "triggered",
+      name: "HUNNY POT",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          source: "hand",
+          target: "CONTROLLER",
+          facedown: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "HUNNY POT Whenever this character quests, you may put a card from your hand into your inkwell facedown.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { winnieThePoohHavingAThink as winnieThePoohHavingAThinkAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/161-winnie-the-pooh-having-a-think";
-//
-// export const winnieThePoohHavingAThink: LorcanitoCharacterCard = {
-//   ...winnieThePoohHavingAThinkAsOrig,
-//   id: "vvd",
-//   reprints: [winnieThePoohHavingAThinkAsOrig.id],
-//   number: 159,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650094,
-//   },
-// };
-//

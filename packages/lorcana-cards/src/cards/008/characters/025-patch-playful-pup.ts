@@ -16,11 +16,28 @@ export const patchPlayfulPup: CharacterCard = {
   lore: 1,
   cardNumber: 25,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f8f789eb2731caf4efdb21cc3438d0dc6b1ab4cf",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1x2-1",
+      type: "keyword",
+      keyword: "Ward",
+      text: "Ward",
+    },
+    {
+      id: "1x2-2",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "SELF",
+      },
+      text: "PUPPY BARKING While you have another Puppy character in play, this character gets +1 {L}.",
+    },
+  ],
   classifications: ["Storyborn", "Puppy"],
 };

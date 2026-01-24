@@ -29,31 +29,3 @@ export const peterPanHighFlyer: CharacterCard = {
   ],
   classifications: ["Storyborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const peterPanHighFlyer: LorcanitoCharacterCard = {
-//   id: "rp8",
-//   name: "Peter Pan",
-//   title: "High Flyer",
-//   characteristics: ["storyborn", "hero"],
-//   text: "Evasive (Only characters with Evasive can challenge this character.)",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 3,
-//   illustrator: "Marcel Berg",
-//   number: 105,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659189,
-//   },
-//   rarity: "common",
-//   abilities: [evasiveAbility],
-//   lore: 2,
-// };
-//

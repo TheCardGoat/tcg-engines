@@ -11,57 +11,26 @@ export const baboom: ActionCard = {
   cost: 2,
   cardNumber: 196,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "c59c3bcfed28db27429200453a290d6c6b63217c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1it-1",
+      type: "action",
+      effect: {
+        type: "deal-damage",
+        amount: 2,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "Deal 2 damage to chosen character or location.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
-//   DamageEffect,
-//   LorcanitoActionCard,
-// } from "@lorcanito/lorcana-engine";
-//
-// export const baBoom: LorcanitoActionCard = {
-//   id: "oaj",
-//   name: "Ba-Boom!",
-//   characteristics: ["action"],
-//   text: "Deal 2 damage to chosen character or location.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       name: "Ba-Boom!",
-//       text: "Deal 2 damage to chosen character or location.",
-//       effects: [
-//         {
-//           type: "damage",
-//           amount: 2,
-//           target: {
-//             type: "card",
-//             value: 1,
-//             filters: [
-//               { filter: "type", value: ["location", "character"] },
-//               { filter: "zone", value: "play" },
-//             ],
-//           },
-//         } as DamageEffect,
-//       ],
-//     },
-//   ],
-//   flavour: "Bigger than your average boom!",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 2,
-//   illustrator: "Heidi Neunhoffer",
-//   number: 196,
-//   set: "ITI",
-//   externalIds: {
-//     tcgPlayer: 537636,
-//   },
-//   rarity: "common",
-// };
-//

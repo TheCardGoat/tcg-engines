@@ -21,88 +21,37 @@ export const balooCarefreeBear: CharacterCard = {
   externalIds: {
     ravensburger: "f304562c399fc869cd5b049872d5cbb222aac97d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1vf-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+      text: "Shift 3 {I}",
+    },
+    {
+      id: "1vf-3",
+      type: "action",
+      effect: {
+        type: "draw",
+        amount: 1,
+        target: "EACH_PLAYER",
+      },
+      text: "- Each player draws a card.",
+    },
+    {
+      id: "1vf-4",
+      type: "action",
+      effect: {
+        type: "discard",
+        amount: 1,
+        target: "EACH_PLAYER",
+        chosen: true,
+      },
+      text: "- Each player chooses and discards a card.",
+    },
+  ],
   classifications: ["Floodborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { shiftAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-// import { opponent, self } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenYouPlayThisCharacter } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import {
-//   discardACard,
-//   drawXCards,
-// } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const balooCarefreeBear: LorcanitoCharacterCard = {
-//   id: "aoe",
-//   name: "Baloo",
-//   title: "Carefree Bear",
-//   characteristics: ["floodborn", "ally"],
-//   text: "Shift 3\n\nROLL WITH IT When you play this character, choose one: • Each player draws a card. • Each player chooses and discards a card.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 5,
-//   strength: 4,
-//   willpower: 5,
-//   illustrator: "Luis Huerta",
-//   number: 85,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 658345,
-//   },
-//   rarity: "rare",
-//   lore: 2,
-//   abilities: [
-//     shiftAbility(3, "Baloo"),
-//     whenYouPlayThisCharacter({
-//       name: "ROLL WITH IT",
-//       text: "When you play this character, choose one: • Each player draws a card. • Each player chooses and discards a card.",
-//       effects: [
-//         {
-//           type: "modal",
-//           // TODO: Get rid of target
-//           target: chosenCharacter,
-//           modes: [
-//             {
-//               id: "1",
-//               text: "Each player draws a card.",
-//               effects: [drawXCards(1, self), drawXCards(1, opponent)],
-//             },
-//             {
-//               id: "2",
-//               text: "Each player chooses and discards a card.",
-//               effects: [
-//                 {
-//                   type: "create-layer-for-player",
-//                   target: opponent,
-//                   layer: {
-//                     type: "resolution",
-//                     responder: "opponent",
-//                     name: "ROLL WITH IT",
-//                     text: "Each player chooses and discards a card.",
-//                     effects: [discardACard],
-//                   },
-//                 },
-//                 {
-//                   type: "create-layer-for-player",
-//                   target: self,
-//                   layer: {
-//                     type: "resolution",
-//                     name: "ROLL WITH IT",
-//                     text: "Each player chooses and discards a card.",
-//                     effects: [discardACard],
-//                   },
-//                 },
-//               ],
-//             },
-//           ],
-//         },
-//       ],
-//     }),
-//   ],
-// };
-//

@@ -16,27 +16,31 @@ export const auroraDreamingGuardian: CharacterCard = {
   lore: 2,
   cardNumber: 153,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "88f3b49fc2874d9eb1cb392887fe8c005c52bba9",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "11z-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+      text: "Shift 3 {I}",
+    },
+    {
+      id: "11z-2",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Ward",
+        target: "YOUR_CHARACTERS",
+      },
+      name: "PROTECTIVE EMBRACE Your other",
+      text: "PROTECTIVE EMBRACE Your other characters gain Ward.",
+    },
+  ],
   classifications: ["Floodborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { auroraDreamingGuardian as ogAuroraDreamingGuardian } from "@lorcanito/lorcana-engine/cards/001/characters/139-aurora-dreaming-guardian";
-//
-// export const auroraDreamingGuardian: LorcanitoCharacterCard = {
-//   ...ogAuroraDreamingGuardian,
-//   id: "kjf",
-//   reprints: ["wb5"],
-//   number: 153,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650088,
-//   },
-// };
-//

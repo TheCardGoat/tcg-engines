@@ -25,24 +25,9 @@ export const princeEricDashingAndBrave: CharacterCard = {
       type: "keyword",
       keyword: "Challenger",
       value: 2,
+      condition: ".",
       text: "Challenger +2.",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { priceEricDashingAndBrave as ogPrinceEricDashingAndBrave } from "@lorcanito/lorcana-engine/cards/001/characters/187-prince-eric-dashing-and-brave";
-//
-// export const princeEricDashingAndBrave: LorcanitoCharacterCard = {
-//   ...ogPrinceEricDashingAndBrave,
-//   id: "rfl",
-//   reprints: [ogPrinceEricDashingAndBrave.id],
-//   number: 194,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650127,
-//   },
-// };
-//

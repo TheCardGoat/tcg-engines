@@ -21,29 +21,3 @@ export const gopherShipsCarpenter: CharacterCard = {
   },
   classifications: ["Storyborn", "Ally", "Pirate"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// // TODO: Once the set is released, we organize the cards by set and type
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-//
-// export const gopherShipsCarpenter: LorcanitoCharacterCard = {
-//   id: "jxg",
-//   name: "Gopher",
-//   title: "Ship's Carpenter",
-//   characteristics: ["storyborn", "ally", "pirate"],
-//   type: "character",
-//   inkwell: true,
-//   colors: ["amber"],
-//   cost: 4,
-//   strength: 1,
-//   willpower: 6,
-//   lore: 2,
-//   illustrator: "Wouter Bruneel",
-//   number: 4,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 591986,
-//   },
-//   rarity: "uncommon",
-// };
-//

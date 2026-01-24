@@ -16,11 +16,24 @@ export const morphSpaceGoo: CharacterCard = {
   lore: 1,
   cardNumber: 81,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "7224e6e62fbce5a57e8680667aef2f012bf27b3b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "vo5-1",
+      type: "static",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "play-card",
+          from: "hand",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "MIMICRY You may play any character with Shift on this character as if this character had any name.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Alien"],
 };

@@ -16,11 +16,51 @@ export const goGoTomagoCuttingEdge: CharacterCard = {
   lore: 2,
   cardNumber: 107,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "cdc3c66cf9a3541d7db1be9979f16c88c14c6113",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1l3-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 4,
+      },
+      text: "Shift 4",
+    },
+    {
+      id: "1l3-2",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "1l3-3",
+      type: "triggered",
+      name: "ZERO RESISTANCE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you used Shift to play her",
+        },
+        then: {
+          type: "put-into-inkwell",
+          source: "chosen-character",
+          target: "OPPONENT",
+          exerted: true,
+          facedown: true,
+        },
+      },
+      text: "ZERO RESISTANCE When you play this character, if you used Shift to play her, you may put chosen character into their player's inkwell facedown and exerted.",
+    },
+  ],
   classifications: ["Floodborn", "Hero", "Inventor"],
 };

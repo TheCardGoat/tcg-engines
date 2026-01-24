@@ -15,10 +15,21 @@ export const badanonVillainSupportCenter: LocationCard = {
   lore: 0,
   cardNumber: 203,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "cc71c1618903c39c8004b62c6773737e15c61cef",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1kj-1",
+      type: "activated",
+      effect: {
+        type: "play-card",
+        from: "hand",
+        cardType: "character",
+        cost: "free",
+      },
+      text: "THERE'S NO ONE I'D RATHER BE THAN ME Villain characters gain “{E}, 3 {I} — Play a character with the same name as this character for free” while here.",
+    },
+  ],
 };

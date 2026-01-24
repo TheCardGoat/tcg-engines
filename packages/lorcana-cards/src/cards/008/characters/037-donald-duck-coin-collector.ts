@@ -20,6 +20,16 @@ export const donaldDuckCoinCollector: CharacterCard = {
   externalIds: {
     ravensburger: "dd6c52d4053aac638074d3abc199bab3ea390b4b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1pf-1",
+      type: "action",
+      effect: {
+        type: "play-card",
+        from: "hand",
+      },
+      text: "HERE, PIGGY, PIGGY For each item named The Nephews' Piggy Bank you have in play, you pay 2 {I} less to play this character.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

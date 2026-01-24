@@ -16,11 +16,32 @@ export const pjPeteCaughtUpInTheMusic: CharacterCard = {
   lore: 1,
   cardNumber: 114,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "24576a183be2edf6bfc1f38f147eb03943d01bdc",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "a30-1",
+      type: "triggered",
+      name: "SHOUT OUT LOUD!",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "action",
+        },
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+        duration: "this-turn",
+      },
+      text: "SHOUT OUT LOUD! Whenever you play a song, this character gets +2 {S} this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

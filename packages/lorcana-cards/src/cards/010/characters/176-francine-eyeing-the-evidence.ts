@@ -30,31 +30,3 @@ export const francineEyeingTheEvidence: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally", "Detective"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { resistAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-//
-// export const francineEyeingTheEvidence: LorcanitoCharacterCard = {
-//   id: "h3k",
-//   name: "Francine",
-//   title: "Eyeing the Evidence",
-//   characteristics: ["storyborn", "ally", "detective"],
-//   text: "Resist +1",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   strength: 4,
-//   willpower: 3,
-//   illustrator: "Sandra Rios",
-//   number: 176,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659422,
-//   },
-//   rarity: "common",
-//   abilities: [resistAbility(1)],
-//   lore: 1,
-// };
-//

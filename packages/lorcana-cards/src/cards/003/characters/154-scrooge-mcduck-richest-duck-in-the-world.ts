@@ -16,11 +16,42 @@ export const scroogeMcduckRichestDuckInTheWorld: CharacterCard = {
   lore: 1,
   cardNumber: 154,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "b91ab841ba2a2c52983687a609e0d1a647a704f8",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1f8-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: "SELF",
+      },
+      text: "I'M GOING HOME! During your turn, this character gains Evasive.",
+    },
+    {
+      id: "1f8-2",
+      type: "triggered",
+      name: "I DIDN'T GET RICH BY BEING STUPID",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "OPPONENT_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "play-card",
+          from: "hand",
+          cardType: "item",
+          cost: "free",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "I DIDN'T GET RICH BY BEING STUPID During your turn, whenever this character banishes another character in a challenge, you may play an item for free.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

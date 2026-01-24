@@ -16,79 +16,46 @@ export const ladyTremaineSinisterSocialite: CharacterCard = {
   lore: 2,
   cardNumber: 124,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "242d9e84ef714b95089283f0534b5f2a23b01f50",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "a1d-1",
+      type: "keyword",
+      keyword: "Boost",
+      value: 2,
+      text: "Boost 2 {I}",
+    },
+    {
+      id: "a1d-2",
+      type: "triggered",
+      name: "EXPEDIENT SCHEMES",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you've put a card under her this turn",
+        },
+        then: {
+          type: "put-on-bottom",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["card"],
+          },
+        },
+      },
+      text: "EXPEDIENT SCHEMES Whenever this character quests, if you've put a card under her this turn, you may play an action with cost 5 or less from your discard for free, then put that action card on the bottom of your deck instead of into your discard.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Whisper"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type {
-//   CardEffectTarget,
-//   LorcanitoCharacterCard,
-//   PlayEffect,
-// } from "@lorcanito/lorcana-engine";
-// import { boostAbility } from "@lorcanito/lorcana-engine/abilities/boostAbility";
-// import { wheneverQuests } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-//
-// const actionWithCostFiveOrLess: CardEffectTarget = {
-//   type: "card",
-//   value: 1,
-//   filters: [
-//     { filter: "type", value: "action" },
-//     { filter: "zone", value: "discard" },
-//     { filter: "owner", value: "self" },
-//     {
-//       filter: "attribute",
-//       value: "cost",
-//       comparison: { operator: "lte", value: 5 },
-//     },
-//   ],
-// };
-//
-// const playEffect: PlayEffect = {
-//   type: "play",
-//   forFree: true,
-//   bottomCardAfterPlaying: true,
-//   target: actionWithCostFiveOrLess,
-// };
-//
-// export const ladyTremaineSinisterSocialite: LorcanitoCharacterCard = {
-//   id: "pz6",
-//   name: "Lady Tremaine",
-//   title: "Sinister Socialite",
-//   characteristics: ["storyborn", "villain", "whisper"],
-//   text: "Boost 2 {I} (Once during your turn, you may pay 2 {I} to put the top card of your deck facedown under this character.)\nEXPEDIENT SCHEMES Whenever this character quests, if you've put a card under her this turn, you may play an action with cost 5 or less from your discard for free, then put that action card on the bottom of your deck instead of into your discard.",
-//   type: "character",
-//   inkwell: false,
-//   colors: ["ruby"],
-//   cost: 5,
-//   strength: 5,
-//   willpower: 4,
-//   illustrator: "Mariana Moreno",
-//   number: 124,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 658881,
-//   },
-//   rarity: "super_rare",
-//   lore: 2,
-//   abilities: [
-//     boostAbility(2),
-//     wheneverQuests({
-//       name: "EXPEDIENT SCHEMES",
-//       text: "Whenever this character quests, if you've put a card under her this turn, you may play an action with cost 5 or less from your discard for free, then put that action card on the bottom of your deck instead of into your discard.",
-//       optional: true,
-//       conditions: [
-//         {
-//           type: "has-put-a-card-under-this-turn",
-//         },
-//       ],
-//       effects: [playEffect],
-//     }),
-//   ],
-// };
-//

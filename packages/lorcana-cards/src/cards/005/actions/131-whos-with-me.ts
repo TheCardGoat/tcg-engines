@@ -11,78 +11,36 @@ export const whosWithMe: ActionCard = {
   cost: 3,
   cardNumber: 131,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "1034a66870b0c85f4a8a50bb74815569f3ec4b74",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "4hv-1",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "YOUR_CHARACTERS",
+        duration: "this-turn",
+      },
+      text: "Your characters get +2 {S} this turn.",
+    },
+    {
+      id: "4hv-2",
+      type: "triggered",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 2,
+      },
+      text: "Whenever one of your characters with Reckless challenges another character this turn, gain 2 lore.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { yourCharacters } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { wheneverChallengesAnotherChar } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { youGainLore } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const whosWithMe: LorcanitoActionCard = {
-//   id: "hlq",
-//   missingTestCase: true,
-//   name: "Who's With Me?",
-//   characteristics: ["action"],
-//   text: "Your characters get +2 {S} this turn. \nWhenever one of your characters with **Reckless** challenges another character this turn, gain 2 lore.",
-//   type: "action",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       effects: [
-//         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 2,
-//           modifier: "add",
-//           duration: "turn",
-//           target: yourCharacters,
-//         },
-//       ],
-//     },
-//     {
-//       type: "resolution",
-//       effects: [
-//         {
-//           type: "ability",
-//           duration: "turn",
-//           modifier: "add",
-//           ability: "custom",
-//           customAbility: wheneverChallengesAnotherChar({
-//             name: "Who's With Me?",
-//             text: "Whenever one of your characters with **Reckless** challenges another character this turn, gain 2 lore.",
-//             effects: [youGainLore(2)],
-//           }),
-//           target: {
-//             type: "card",
-//             value: "all",
-//             filters: [
-//               { filter: "zone", value: "play" },
-//               { filter: "type", value: "character" },
-//               { filter: "owner", value: "self" },
-//               { filter: "ability", value: "reckless" },
-//             ],
-//           },
-//         },
-//       ],
-//     },
-//   ],
-//   flavour: '"Don\'t forget, the purple unicorn is mine!"',
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 3,
-//   illustrator: "Denny Minonne",
-//   number: 131,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 560637,
-//   },
-//   rarity: "super_rare",
-// };
-//

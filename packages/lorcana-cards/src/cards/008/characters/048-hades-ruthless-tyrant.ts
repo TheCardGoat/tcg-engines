@@ -16,11 +16,32 @@ export const hadesRuthlessTyrant: CharacterCard = {
   lore: 2,
   cardNumber: 48,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "498704459556a4ba90662e632e5370a2645ae1b8",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "keg-1",
+      type: "triggered",
+      name: "SHORT ON PATIENCE When you play this character and",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 2,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "SHORT ON PATIENCE When you play this character and whenever he quests, you may deal 2 damage to another chosen character of yours to draw 2 cards.",
+    },
+  ],
   classifications: ["Dreamborn", "Villain", "Deity"],
 };

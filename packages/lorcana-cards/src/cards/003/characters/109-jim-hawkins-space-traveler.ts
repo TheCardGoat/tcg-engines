@@ -21,6 +21,31 @@ export const jimHawkinsSpaceTraveler: CharacterCard = {
   externalIds: {
     ravensburger: "69de13009dc28237f575685f6879507f0b8a9a5e",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "tdh-1",
+      type: "triggered",
+      name: "THIS IS IT!",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "play-card",
+          from: "hand",
+          cost: "free",
+          costRestriction: {
+            comparison: "less-or-equal",
+            value: 4,
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "THIS IS IT! When you play this character, you may play a location with cost 4 or less for free.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

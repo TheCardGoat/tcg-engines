@@ -16,11 +16,27 @@ export const trampObservantGuardian: CharacterCard = {
   lore: 1,
   cardNumber: 87,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "387626e5bd66b83cacd57f2c76f83f9a8e014257",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "fnz-1",
+      type: "triggered",
+      name: "HOW DO I GET IN?",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "gain-keyword",
+        keyword: "Ward",
+        target: "SELF",
+      },
+      text: "HOW DO I GET IN? When you play this character, chosen character gains Ward until the start of your next turn.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

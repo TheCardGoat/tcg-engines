@@ -12,26 +12,37 @@ export const healWhatHasBeenHurt: ActionCard = {
   cost: 3,
   cardNumber: 27,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "d45af62e889fec250e32e95abea7832ebf5ac8c3",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1mx-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "remove-damage",
+            amount: 3,
+            upTo: true,
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
+        ],
+      },
+      text: "Remove up to 3 damage from chosen character. Draw a card.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { healWhatHasBeenHurt as ogHealWhatHasBeenHurt } from "@lorcanito/lorcana-engine/cards/003/actions/026-heal-what-has-been-hurt";
-//
-// export const healWhatHasBeenHurt: LorcanitoActionCard = {
-//   ...ogHealWhatHasBeenHurt,
-//   id: "z47",
-//   reprints: [ogHealWhatHasBeenHurt.id],
-//   number: 27,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649974,
-//   },
-// };
-//

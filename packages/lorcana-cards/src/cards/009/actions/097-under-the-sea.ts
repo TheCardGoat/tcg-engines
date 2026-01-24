@@ -12,26 +12,25 @@ export const underTheSea: ActionCard = {
   cost: 8,
   cardNumber: 97,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e81fec386fd1647801df51920cfaf2d60ad090b5",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1se-1",
+      type: "action",
+      effect: {
+        type: "put-on-bottom",
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "Sing Together 8 Put all opposing characters with 2 {S} or less on the bottom of their players’ decks in any order.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { underTheSea as ogUnderTheSea } from "@lorcanito/lorcana-engine/cards/004/actions/095-under-the-sea";
-//
-// export const underTheSea: LorcanitoActionCard = {
-//   ...ogUnderTheSea,
-//   id: "wlg",
-//   reprints: [ogUnderTheSea.id],
-//   number: 97,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650035,
-//   },
-// };
-//

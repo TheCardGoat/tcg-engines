@@ -16,11 +16,30 @@ export const belleApprenticeInventor: CharacterCard = {
   lore: 1,
   cardNumber: 159,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "66089bac792b605815e7eb1bf3d028980fa7039a",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "sb6-1",
+      type: "action",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "banish",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["item"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "WHAT A MESS During your turn, you may banish chosen item of yours to play this character for free.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Princess", "Inventor"],
 };

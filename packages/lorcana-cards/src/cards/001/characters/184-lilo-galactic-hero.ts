@@ -21,29 +21,3 @@ export const liloGalacticHero: CharacterCard = {
   },
   classifications: ["Dreamborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-//
-// export const liloGalacticHero: LorcanitoCharacterCard = {
-//   id: "x99",
-//   name: "Lilo",
-//   title: "Galactic Hero",
-//   characteristics: ["hero", "dreamborn"],
-//   type: "character",
-//   flavour: "Space. That's where aliens come from. And also tourists!",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 3,
-//   strength: 4,
-//   willpower: 2,
-//   lore: 2,
-//   illustrator: "Jared Nickerl",
-//   number: 184,
-//   set: "TFC",
-//   externalIds: {
-//     tcgPlayer: 508920,
-//   },
-//   rarity: "uncommon",
-// };
-//

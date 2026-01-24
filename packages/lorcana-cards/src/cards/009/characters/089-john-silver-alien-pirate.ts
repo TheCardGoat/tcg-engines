@@ -16,27 +16,22 @@ export const johnSilverAlienPirate: CharacterCard = {
   lore: 2,
   cardNumber: 89,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "11558c64b32cb39749583bcfb6fd5638e6a0ea03",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "4t5-1",
+      type: "triggered",
+      name: "PICK YOUR FIGHTS When you play this character and",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Reckless",
+        target: "CHOSEN_CHARACTER",
+      },
+      text: "PICK YOUR FIGHTS When you play this character and whenever he quests, chosen opposing character gains Reckless during their next turn.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Alien", "Pirate", "Captain"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { johnSilverAlienPirate as ogJohnSilverAlienPirate } from "@lorcanito/lorcana-engine/cards/001/characters/082-john-silver-alien-pirate";
-//
-// export const johnSilverAlienPirate: LorcanitoCharacterCard = {
-//   ...ogJohnSilverAlienPirate,
-//   id: "hsz",
-//   reprints: [ogJohnSilverAlienPirate.id],
-//   number: 89,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 647668,
-//   },
-// };
-//

@@ -16,40 +16,34 @@ export const brooklynSecondInCommand: CharacterCard = {
   lore: 1,
   cardNumber: 120,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "543925fbb545a12396337e7712d953e7dd0f5651",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "nda-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+    {
+      id: "nda-2",
+      type: "action",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have 3 or more cards in your hand",
+        },
+        then: {
+          type: "restriction",
+          restriction: "cant-ready",
+          target: "SELF",
+        },
+      },
+      text: "STONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Gargoyle"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { evasiveAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { stoneByDayAbility } from "@lorcanito/lorcana-engine/cards/010/abilities/stoneByDay";
-//
-// export const brooklynSecondInCommand: LorcanitoCharacterCard = {
-//   id: "wcy",
-//   name: "Brooklyn",
-//   title: "Second in Command",
-//   characteristics: ["storyborn", "ally", "gargoyle"],
-//   text: "Evasive (Only characters with Evasive can challenge this character.)\nSTONE BY DAY If you have 3 or more cards in your hand, this character can't ready.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["ruby"],
-//   cost: 2,
-//   strength: 3,
-//   willpower: 2,
-//   illustrator: "Cam Kendell",
-//   number: 120,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 659241,
-//   },
-//   rarity: "common",
-//   abilities: [evasiveAbility, stoneByDayAbility],
-//   lore: 1,
-// };
-//

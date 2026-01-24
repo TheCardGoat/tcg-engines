@@ -11,47 +11,30 @@ export const inkAmplifier: ItemCard = {
   cost: 3,
   cardNumber: 167,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "bcc3489fe6383dec57016732d9934c6102fcd605",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1gc-1",
+      type: "triggered",
+      name: "ENERGY CAPTURE",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "it's the second card they've drawn this turn",
+        },
+        then: {
+          type: "put-into-inkwell",
+          source: "top-of-deck",
+          target: "CONTROLLER",
+          exerted: true,
+          facedown: true,
+        },
+      },
+      text: "ENERGY CAPTURE Whenever an opponent draws a card during their turn, if it's the second card they've drawn this turn, you may put the top card of your deck into your inkwell facedown and exerted.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { opponentHasDrawnXCardsThisTurn } from "@lorcanito/lorcana-engine/abilities/conditions";
-// import { wheneverOpponentDrawsACard } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import { putTopCardOfYourDeckIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const inkAmplifier: LorcanitoItemCard = {
-//   id: "peg",
-//   name: "Ink Amplifier",
-//   characteristics: ["item"],
-//   text: "ENERGY CAPTURE Whenever an opponent draws a card during their turn, if it's the second card they've drawn this turn, you may put the top card of your deck into your inkwell facedown and exerted.",
-//   type: "item",
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 3,
-//   illustrator: "Puny Bubble",
-//   number: 167,
-//   set: "010",
-//   externalIds: {
-//     tcgPlayer: 658883,
-//   },
-//   rarity: "rare",
-//   abilities: [
-//     wheneverOpponentDrawsACard({
-//       name: "Energy Capture",
-//       text: "Whenever an opponent draws a card during their turn, if it's the second card they've drawn this turn, you may put the top card of your deck into your inkwell facedown and exerted.",
-//       optional: true,
-//       effects: [putTopCardOfYourDeckIntoYourInkwellExerted],
-//       conditions: [
-//         { type: "during-turn", value: "opponent" },
-//         opponentHasDrawnXCardsThisTurn(2),
-//       ],
-//     }),
-//   ],
-// };
-//

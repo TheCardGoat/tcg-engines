@@ -15,27 +15,28 @@ export const daisyDuckSecretAgent: CharacterCard = {
   lore: 2,
   cardNumber: 93,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f7619092cc3f72796ad99666c3375f2c35ba256f",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1wn-1",
+      type: "triggered",
+      name: "THWART",
+      trigger: {
+        event: "quest",
+        timing: "whenever",
+        on: "SELF",
+      },
+      effect: {
+        type: "discard",
+        amount: 1,
+        target: "EACH_OPPONENT",
+        chosen: true,
+      },
+      text: "THWART Whenever this character quests, each opponent chooses and discards a card.",
+    },
+  ],
   classifications: ["Dreamborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { daisyDuckSecretAgent as daisyDuckSecretAgentAsOrig } from "@lorcanito/lorcana-engine/cards/002/characters/076-daisy-duck-secret-agent";
-//
-// export const daisyDuckSecretAgent: LorcanitoCharacterCard = {
-//   ...daisyDuckSecretAgentAsOrig,
-//   id: "pqa",
-//   reprints: [daisyDuckSecretAgentAsOrig.id],
-//   number: 93,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650032,
-//   },
-// };
-//

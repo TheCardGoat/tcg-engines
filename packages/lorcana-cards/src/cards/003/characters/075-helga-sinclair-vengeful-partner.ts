@@ -16,11 +16,32 @@ export const helgaSinclairVengefulPartner: CharacterCard = {
   lore: 1,
   cardNumber: 75,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "b5dc77f02c6bd98a899931617aa411e51cb55e4e",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1eg-1",
+      type: "triggered",
+      name: "NOTHING PERSONAL",
+      trigger: {
+        event: "challenged",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "banish",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "NOTHING PERSONAL When this character is challenged and banished, banish the challenging character.",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };

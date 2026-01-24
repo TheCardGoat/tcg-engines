@@ -16,11 +16,36 @@ export const lythosRockTitan: CharacterCard = {
   lore: 1,
   cardNumber: 180,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "2577f4cffb832d0b016b61a458da02cb03a8fb23",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "ae9-1",
+      type: "keyword",
+      keyword: "Resist",
+      value: 2,
+      text: "Resist +2",
+    },
+    {
+      id: "ae9-2",
+      type: "activated",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Resist",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        value: 2,
+        duration: "this-turn",
+      },
+      text: "STONE SKIN {E} — Chosen character gains Resist +2 this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Titan"],
 };

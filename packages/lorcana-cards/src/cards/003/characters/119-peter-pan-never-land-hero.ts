@@ -16,11 +16,28 @@ export const peterPanNeverLandHero: CharacterCard = {
   lore: 2,
   cardNumber: 119,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "3d77178da6fc4c690c8c13e19ea96bad2ba4627b",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "h1y-1",
+      type: "keyword",
+      keyword: "Rush",
+      text: "Rush",
+    },
+    {
+      id: "h1y-2",
+      type: "action",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: "SELF",
+      },
+      text: "OVER HERE, TINK While you have a character named Tinker Bell in play, this character gets +2 {S}.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };

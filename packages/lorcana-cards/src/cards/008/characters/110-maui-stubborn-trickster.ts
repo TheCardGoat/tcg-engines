@@ -21,6 +21,23 @@ export const mauiStubbornTrickster: CharacterCard = {
   externalIds: {
     ravensburger: "d2a45653b90b954304d34f83f5eeafae952d560d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1m3-2",
+      type: "action",
+      effect: {
+        type: "put-damage",
+        amount: 2,
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "opponent",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "- Put 2 damage counters on all opposing characters.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Deity"],
 };

@@ -11,10 +11,27 @@ export const amberChromicon: ItemCard = {
   cost: 2,
   cardNumber: 32,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "ff6fa7884f48d5a7efc043dc128bbb578edad508",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1yv-1",
+      type: "activated",
+      effect: {
+        type: "remove-damage",
+        amount: 1,
+        upTo: true,
+        target: {
+          selector: "all",
+          count: "all",
+          owner: "you",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "AMBER LIGHT {E} — Remove up to 1 damage from each of your characters.",
+    },
+  ],
 };

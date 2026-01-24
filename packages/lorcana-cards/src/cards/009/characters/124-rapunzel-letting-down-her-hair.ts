@@ -16,27 +16,27 @@ export const rapunzelLettingDownHerHair: CharacterCard = {
   lore: 2,
   cardNumber: 124,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "74021e80777ac22b8eccc6e3c94d0662b00fcf9c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "w6r-1",
+      type: "triggered",
+      name: "TANGLE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "lose-lore",
+        amount: 1,
+        target: "EACH_OPPONENT",
+      },
+      text: "TANGLE When you play this character, each opponent loses 1 lore.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Princess"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { rapunzelLettingHerHairDown as rapunzelLettingDownHerHairAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/121-rapunzel-letting-down-her-hair";
-//
-// export const rapunzelLettingDownHerHair: LorcanitoCharacterCard = {
-//   ...rapunzelLettingDownHerHairAsOrig,
-//   id: "aq6",
-//   reprints: [rapunzelLettingDownHerHairAsOrig.id],
-//   number: 124,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650059,
-//   },
-// };
-//

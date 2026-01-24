@@ -16,27 +16,42 @@ export const philoctetesNononsenseInstructor: CharacterCard = {
   lore: 2,
   cardNumber: 171,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "e37669ed7364c22a0dc38be227ed36b062d4c5cf",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1r4-1",
+      type: "static",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Challenger",
+        target: "YOUR_CHARACTERS",
+        value: 1,
+      },
+      name: "YOU GOTTA STAY FOCUSED Your Hero",
+      text: "YOU GOTTA STAY FOCUSED Your Hero characters gain Challenger +1.",
+    },
+    {
+      id: "1r4-2",
+      type: "triggered",
+      name: "SHAMELESS PROMOTER",
+      trigger: {
+        event: "play",
+        timing: "whenever",
+        on: {
+          controller: "you",
+          cardType: "character",
+          classification: "Hero",
+        },
+      },
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+      },
+      text: "SHAMELESS PROMOTER Whenever you play a Hero character, gain 1 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { philoctetesNoNonsenseInstructor as philoctetesNononsenseInstructorAsOrig } from "@lorcanito/lorcana-engine/cards/004/characters/190-philoctetes-no-nonsense-instructor";
-//
-// export const philoctetesNononsenseInstructor: LorcanitoCharacterCard = {
-//   ...philoctetesNononsenseInstructorAsOrig,
-//   id: "g10",
-//   reprints: [philoctetesNononsenseInstructorAsOrig.id],
-//   number: 171,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650105,
-//   },
-// };
-//

@@ -16,27 +16,32 @@ export const hadesInfernalSchemer: CharacterCard = {
   lore: 2,
   cardNumber: 151,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "89f9ee7889da4ebacb49419bd4b8dae4220a5c7c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "12a-1",
+      type: "triggered",
+      name: "IS THERE A DOWNSIDE TO THIS?",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          source: "chosen-character",
+          target: "OPPONENT",
+          facedown: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "IS THERE A DOWNSIDE TO THIS? When you play this character, you may put chosen opposing character into their player's inkwell facedown.",
+    },
+  ],
   classifications: ["Dreamborn", "Villain", "Deity"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { hadesInfernalSchemer as hadesInfernalSchemerAsOrig } from "@lorcanito/lorcana-engine/cards/001/characters/147-hades-infernal-schemer";
-//
-// export const hadesInfernalSchemer: LorcanitoCharacterCard = {
-//   ...hadesInfernalSchemerAsOrig,
-//   id: "a03",
-//   reprints: [hadesInfernalSchemerAsOrig.id],
-//   number: 151,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650086,
-//   },
-// };
-//

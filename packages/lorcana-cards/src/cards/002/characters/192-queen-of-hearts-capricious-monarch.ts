@@ -16,49 +16,31 @@ export const queenOfHeartsCapriciousMonarch: CharacterCard = {
   lore: 1,
   cardNumber: 192,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "5f88c9d9b2d3f07479499c3c01721501feaa1469",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "qi9-1",
+      type: "triggered",
+      name: "OFF WITH THEIR HEADS!",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "ready",
+          target: {
+            selector: "self",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "OFF WITH THEIR HEADS! Whenever an opposing character is banished, you may ready this character.",
+    },
+  ],
   classifications: ["Storyborn", "Villain", "Queen"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { wheneverOpposingCharIsBanished } from "@lorcanito/lorcana-engine/abilities/wheneverAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import { readyThisCharacter } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const queenOfHeartsCapriciousMonarch: LorcanitoCharacterCard = {
-//   id: "m85",
-//
-//   name: "Queen of Hearts",
-//   title: "Capricious Monarch",
-//   characteristics: ["queen", "storyborn", "villain"],
-//   text: "**OFF WITH THEIR HEADS!** Whenever an opposing character is banished, you may ready this character.",
-//   type: "character",
-//   abilities: [
-//     wheneverOpposingCharIsBanished({
-//       name: "Off with their heads!",
-//       text: "Whenever an opposing character is banished, you may ready this character.",
-//       optional: true,
-//       effects: [readyThisCharacter],
-//     }),
-//   ],
-//   flavour: "The fourth Rule of Villainy: Do whatever it takes to get ahead.",
-//   inkwell: true,
-//   colors: ["steel"],
-//   cost: 7,
-//   strength: 5,
-//   willpower: 6,
-//   lore: 1,
-//   illustrator: "Jenna Gray",
-//   number: 192,
-//   set: "ROF",
-//   externalIds: {
-//     tcgPlayer: 525269,
-//   },
-//   rarity: "rare",
-// };
-//

@@ -21,6 +21,13 @@ export const stratosTornadoTitan: CharacterCard = {
   externalIds: {
     ravensburger: "9155d58b6e558f58fcffee4ccc7f4308e8834c1d",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "14b-1",
+      type: "keyword",
+      keyword: "Evasive",
+      text: "Evasive",
+    },
+  ],
   classifications: ["Storyborn", "Titan"],
 };

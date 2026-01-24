@@ -16,11 +16,46 @@ export const jimHawkinsRiggingSpecialist: CharacterCard = {
   lore: 2,
   cardNumber: 183,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "75c2f2b59b5e5ac1e89500e05b1f13ffb995b892",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "woa-1",
+      type: "keyword",
+      keyword: "Shift",
+      cost: {
+        ink: 3,
+      },
+      text: "Shift 3",
+    },
+    {
+      id: "woa-2",
+      type: "triggered",
+      name: "BATTLE STATION",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "deal-damage",
+          amount: 1,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "BATTLE STATION When you play this character, you may deal 1 damage to chosen character or location.",
+    },
+  ],
   classifications: ["Floodborn", "Hero"],
 };

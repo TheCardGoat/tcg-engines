@@ -16,64 +16,38 @@ export const tritonYoungPrince: CharacterCard = {
   lore: 1,
   cardNumber: 160,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "02da76ce172aef8ef2082d7b7a8bfd252dcefa0c",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "si2-1",
+      type: "action",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Evasive",
+        target: "SELF",
+      },
+      text: "SUPERIOR SWIMMER During your turn, this character gains Evasive.",
+    },
+    {
+      id: "si2-2",
+      type: "triggered",
+      name: "KEEPER OF ATLANTICA",
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-into-inkwell",
+          source: "hand",
+          target: "CONTROLLER",
+          exerted: true,
+          facedown: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "KEEPER OF ATLANTICA Whenever one of your locations is banished, you may put that card into your inkwell facedown and exerted.",
+    },
+  ],
   classifications: ["Dreamborn", "Prince"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import {
-//   duringYourTurnGains,
-//   evasiveAbility,
-// } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { yourBanishedLocations } from "@lorcanito/lorcana-engine/abilities/targets";
-// import { whenXIsBanished } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import { putThisCardIntoYourInkwellExerted } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const tritonYoungPrince: LorcanitoCharacterCard = {
-//   id: "wlm",
-//   name: "Triton",
-//   title: "Young Prince",
-//   characteristics: ["dreamborn", "prince"],
-//   text: "**SUPERIOR SWIMMER** During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_\n\n\n**KEEPER OF ATLANTICA** Whenever one of your locations is banished, you may put that card into your inkwell facedown and exerted.",
-//   type: "character",
-//   abilities: [
-//     {
-//       type: "static",
-//       ability: "gain-ability",
-//       name: "Keeper Of Atlantica",
-//       text: "Whenever one of your locations is banished, you may put that card into your inkwell facedown and exerted.",
-//       target: yourBanishedLocations,
-//       gainedAbility: whenXIsBanished({
-//         name: "Keeper Of Atlantica",
-//         text: "Whenever one of your locations is banished, you may put that card into your inkwell facedown and exerted.",
-//         optional: true,
-//         effects: [putThisCardIntoYourInkwellExerted],
-//       }),
-//     },
-//     duringYourTurnGains(
-//       "Superior Swimmer",
-//       "During your turn, this character gains **Evasive**. _(They can challenge characters with Evasive.)_",
-//       evasiveAbility,
-//     ),
-//   ],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 4,
-//   strength: 3,
-//   willpower: 4,
-//   lore: 1,
-//   illustrator: "Malia Ewart",
-//   number: 160,
-//   set: "URR",
-//   externalIds: {
-//     tcgPlayer: 550612,
-//   },
-//   rarity: "uncommon",
-// };
-//

@@ -16,11 +16,21 @@ export const iagoOutOfReach: CharacterCard = {
   lore: 2,
   cardNumber: 195,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "21b8caf084ceffd01eb6823459d541ea9f8ba4de",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "9cu-1",
+      type: "action",
+      effect: {
+        type: "restriction",
+        restriction: "cant-be-challenged",
+        target: "SELF",
+      },
+      text: "SELF-PRESERVATION While you have another exerted character in play, this character can't be challenged.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };

@@ -16,40 +16,32 @@ export const bobbyZimuruskiSprayCheeseKid: CharacterCard = {
   lore: 1,
   cardNumber: 78,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "cb878152b6ffe069a87f49091e1ef762cd612744",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1kg-1",
+      type: "triggered",
+      name: "SO CHEESY",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "discard",
+          amount: 1,
+          target: "CONTROLLER",
+          chosen: true,
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "SO CHEESY When you play this character, you may draw a card, then choose and discard a card.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { youMayDrawThenChooseAndDiscard } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const bobbyZimuruskiSprayCheeseKid: LorcanitoCharacterCard = {
-//   id: "wcd",
-//   missingTestCase: true,
-//   name: "Bobby Zimuruski",
-//   title: "Spray Cheese Kid",
-//   characteristics: ["storyborn", "ally"],
-//   text: "SO CHEESY When you play this character, you may draw a card, then choose and discard a card.",
-//   type: "character",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 1,
-//   strength: 1,
-//   willpower: 2,
-//   illustrator: "Stefano Spagnuolo",
-//   number: 78,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650018,
-//   },
-//   rarity: "uncommon",
-//   abilities: [youMayDrawThenChooseAndDiscard],
-//   lore: 1,
-// };
-//

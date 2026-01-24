@@ -16,58 +16,42 @@ export const kenaiMagicalBear: CharacterCard = {
   lore: 1,
   cardNumber: 70,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "7696e481f25492ef90ec0b0ac819144fbe6fcffa",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "wwk-1",
+      type: "keyword",
+      keyword: "Challenger",
+      value: 2,
+      text: "Challenger +2",
+    },
+    {
+      id: "wwk-2",
+      type: "triggered",
+      name: "WISDOM OF HIS STORY",
+      trigger: {
+        event: "banish",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "return-to-hand",
+            target: "SELF",
+          },
+          {
+            type: "gain-lore",
+            amount: 1,
+          },
+        ],
+      },
+      text: "WISDOM OF HIS STORY During your turn, when this character is banished in a challenge, return this card to your hand and gain 1 lore.",
+    },
+  ],
   classifications: ["Storyborn", "Hero"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import { challengerAbility } from "@lorcanito/lorcana-engine/abilities/abilities";
-// import { whenThisCharacterBanishedInAChallenge } from "@lorcanito/lorcana-engine/abilities/whenAbilities";
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine/cards/cardTypes";
-// import {
-//   returnThisCardToHand,
-//   youGainLore,
-// } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const kenaiMagicalBear: LorcanitoCharacterCard = {
-//   id: "upm",
-//   name: "Kenai",
-//   title: "Magical Bear",
-//   characteristics: ["storyborn", "hero"],
-//   text: "Challenger +2. WISDOM OF HIS STORY During your turn, when this character is banished in a challenge, return this card to your hand and gain 1 lore.",
-//   type: "character",
-//   abilities: [
-//     challengerAbility(2),
-//     whenThisCharacterBanishedInAChallenge({
-//       name: "Durable",
-//       optional: true,
-//       text: "During your turn, when this character is banished in a challenge, return this card to your hand and gain 1 lore.",
-//       conditions: [
-//         {
-//           type: "during-turn",
-//           value: "self",
-//         },
-//       ],
-//       effects: [returnThisCardToHand, youGainLore(1)],
-//     }),
-//   ],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 3,
-//   strength: 1,
-//   willpower: 4,
-//   illustrator: "Jeanne Plounevez",
-//   number: 70,
-//   set: "007",
-//   externalIds: {
-//     tcgPlayer: 618326,
-//   },
-//   rarity: "rare",
-//   lore: 1,
-// };
-//

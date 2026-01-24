@@ -16,11 +16,28 @@ export const mushuFasttalkingDragon: CharacterCard = {
   lore: 1,
   cardNumber: 130,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "9dbaa3dffdbc156936656131874c3454e8bb1e64",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "17r-1",
+      type: "activated",
+      effect: {
+        type: "gain-keyword",
+        keyword: "Rush",
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        duration: "this-turn",
+      },
+      text: "LET'S GET THIS SHOW ON THE ROAD {E} — Chosen character gains Rush this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Ally", "Dragon"],
 };

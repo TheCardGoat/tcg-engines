@@ -16,11 +16,32 @@ export const theCoachmanGreedyDeceiver: CharacterCard = {
   lore: 1,
   cardNumber: 140,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "fe8f963a16dbcc2a2786f70afc4ac7042a25a0d2",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1ym-1",
+      type: "action",
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "modify-stat",
+            stat: "strength",
+            modifier: 2,
+            target: "SELF",
+          },
+          {
+            type: "gain-keyword",
+            keyword: "Evasive",
+            target: "SELF",
+          },
+        ],
+      },
+      text: "WILD RIDE While 2 or more characters of yours are exerted, this character gets +2 {S} and gains Evasive.",
+    },
+  ],
   classifications: ["Storyborn", "Villain"],
 };

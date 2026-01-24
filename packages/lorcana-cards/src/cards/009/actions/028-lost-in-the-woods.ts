@@ -12,26 +12,22 @@ export const lostInTheWoods: ActionCard = {
   cost: 4,
   cardNumber: 28,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "17618cced0ecdbed9cd4811b627105e902448fa6",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "6hj-1",
+      type: "static",
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: -2,
+        target: "CHOSEN_CHARACTER",
+      },
+      name: "All opposing",
+      text: "All opposing characters get -2 {S} until the start of your next turn.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoActionCard } from "@lorcanito/lorcana-engine";
-// import { lostInTheWoods as ogLostInTheWoods } from "@lorcanito/lorcana-engine/cards/004/actions/029-lost-in-the-woods";
-//
-// export const lostInTheWoods: LorcanitoActionCard = {
-//   ...ogLostInTheWoods,
-//   id: "vre",
-//   reprints: [ogLostInTheWoods.id],
-//   number: 28,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 649975,
-//   },
-// };
-//

@@ -11,34 +11,19 @@ export const maleficentsStaff: ItemCard = {
   cost: 2,
   cardNumber: 65,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f0af7b77ab79602de64eaa232f48153d20f4cada",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1uj-1",
+      type: "action",
+      effect: {
+        type: "gain-lore",
+        amount: 1,
+      },
+      text: "BACK, FOOLS! Whenever one of your opponents' characters, items, or locations is returned to their hand from play, gain 1 lore.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { backFools } from "@lorcanito/lorcana-engine/cards/006/items/abilities";
-//
-// export const maleficentsStaff: LorcanitoItemCard = {
-//   id: "o37",
-//   name: "Maleficent's Staff",
-//   characteristics: ["item"],
-//   text: "BACK, FOOLS! Whenever one of your opponents' characters, items, or locations is returned to their hand from play, gain 1 lore.",
-//   type: "item",
-//   abilities: [backFools],
-//   inkwell: true,
-//   colors: ["amethyst"],
-//   cost: 2,
-//   illustrator: "Gabriel Angelo",
-//   number: 65,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 588369,
-//   },
-//   rarity: "rare",
-// };
-//

@@ -11,26 +11,29 @@ export const aurelianGyrosensor: ItemCard = {
   cost: 2,
   cardNumber: 167,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "1cefdacf3020720d8e94c7f2e9c50039ba1f9d22",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "811-1",
+      type: "triggered",
+      name: "SEEKING KNOWLEDGE",
+      trigger: {
+        event: "banish",
+        timing: "whenever",
+        on: "YOUR_OTHER_CHARACTERS",
+      },
+      effect: {
+        type: "optional",
+        effect: {
+          type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
+        },
+        chooser: "CONTROLLER",
+      },
+      text: "SEEKING KNOWLEDGE Whenever one of your characters quests, you may look at the top card of your deck. Put it on either the top or the bottom of your deck.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { aurelianGyrosensor as ogAurelianGyrosensor } from "@lorcanito/lorcana-engine/cards/003/items/163-aurelian-gyrosensor";
-//
-// export const aurelianGyrosensor: LorcanitoItemCard = {
-//   ...ogAurelianGyrosensor,
-//   id: "dbv",
-//   reprints: [ogAurelianGyrosensor.id],
-//   number: 167,
-//   set: "009",
-//   externalIds: {
-//     tcgPlayer: 650101,
-//   },
-// };
-//

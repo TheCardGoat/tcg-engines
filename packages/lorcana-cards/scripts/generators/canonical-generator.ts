@@ -6,7 +6,7 @@
  * Uses merged text from Lorcast (which has symbols) and Ravensburger data.
  */
 
-import { resolvePlaceholders } from "../../src/parser/numeric-extractor";
+import { resolvePlaceholders } from "../../src/parser";
 import { getMergedRulesText } from "../parsers/data-merger";
 import {
   generatePrintingId,

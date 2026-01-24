@@ -16,30 +16,47 @@ export const baymaxsHealthcareChip: ItemCard = {
   externalIds: {
     ravensburger: "b33bfde84513a383239b388b7a1c80ab8e6d98e2",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1di-2",
+      type: "action",
+      effect: {
+        type: "remove-damage",
+        amount: 1,
+        upTo: true,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+      },
+      text: "* Remove up to 1 damage from chosen character.",
+    },
+    {
+      id: "1di-3",
+      type: "action",
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "you have a Robot character in play",
+        },
+        then: {
+          type: "remove-damage",
+          amount: 3,
+          upTo: true,
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+      },
+      text: "* If you have a Robot character in play, remove up to 3 damage from chosen character.",
+    },
+  ],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoItemCard } from "@lorcanito/lorcana-engine";
-// import { tenThousandMedicalProcedures } from "@lorcanito/lorcana-engine/cards/006/items/abilities";
-//
-// export const baymaxsHealthcareChip: LorcanitoItemCard = {
-//   id: "ele",
-//   missingTestCase: true,
-//   name: "Baymax's Healthcare Chip",
-//   characteristics: ["item"],
-//   text: "10,000 MEDICAL PROCEDURES {E} - Choose one:\n* Remove up to 1 damage from chosen character. \n* If you have a Robot character in play, remove up to 3 damage from chosen character.",
-//   type: "item",
-//   abilities: [tenThousandMedicalProcedures],
-//   inkwell: true,
-//   colors: ["sapphire"],
-//   cost: 2,
-//   illustrator: "Rudy Hill",
-//   number: 166,
-//   set: "006",
-//   externalIds: {
-//     tcgPlayer: 587969,
-//   },
-//   rarity: "uncommon",
-// };
-//

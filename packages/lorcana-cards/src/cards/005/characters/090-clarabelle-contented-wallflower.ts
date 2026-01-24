@@ -15,56 +15,34 @@ export const clarabelleContentedWallflower: CharacterCard = {
   lore: 1,
   cardNumber: 90,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f2123da0366f4fab7d748e1632bb5c20732c94ab",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1v9-1",
+      type: "triggered",
+      name: "ONE STEP BEHIND",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "conditional",
+        condition: {
+          type: "if",
+          expression: "an opponent has more cards in their hand than you",
+        },
+        then: {
+          type: "draw",
+          amount: 1,
+          target: "CONTROLLER",
+        },
+      },
+      text: "ONE STEP BEHIND When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { drawACard } from "@lorcanito/lorcana-engine/effects/effects";
-//
-// export const clarabelleContentedWallflower: LorcanitoCharacterCard = {
-//   id: "qp1",
-//   missingTestCase: true,
-//   name: "Clarabelle",
-//   title: "Contented Wallflower",
-//   characteristics: ["storyborn", "ally"],
-//   text: "**ONE STEP BEHIND** When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
-//   type: "character",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       name: "ONE STEP BEHIND",
-//       text: "When you play this character, if an opponent has more cards in their hand than you, you may draw a card.",
-//       optional: true,
-//       resolutionConditions: [
-//         {
-//           type: "hand",
-//           amount: "lt",
-//           player: "self",
-//         },
-//       ],
-//       effects: [drawACard],
-//     },
-//   ],
-//   flavour: "Golly! Those dancers can really moo-ve!",
-//   inkwell: true,
-//   colors: ["emerald"],
-//   cost: 3,
-//   strength: 2,
-//   willpower: 3,
-//   lore: 1,
-//   illustrator: "Lissette Carrera",
-//   number: 90,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 559513,
-//   },
-//   rarity: "uncommon",
-// };
-//

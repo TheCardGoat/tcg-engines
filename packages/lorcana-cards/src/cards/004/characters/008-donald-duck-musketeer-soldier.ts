@@ -15,11 +15,35 @@ export const donaldDuckMusketeerSoldier: CharacterCard = {
   lore: 1,
   cardNumber: 8,
   inkable: true,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "c1c6f67d0f2105260caa599f400e2bff4df22c37",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1hr-1",
+      type: "keyword",
+      keyword: "Bodyguard",
+      text: "Bodyguard",
+    },
+    {
+      id: "1hr-2",
+      type: "triggered",
+      name: "WAIT FOR ME!",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "SELF",
+        duration: "this-turn",
+      },
+      text: "WAIT FOR ME! When you play this character, chosen character gets +1 {L} this turn.",
+    },
+  ],
   classifications: ["Dreamborn", "Hero", "Musketeer"],
 };

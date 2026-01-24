@@ -16,54 +16,35 @@ export const simbaAdventurousSuccessor: CharacterCard = {
   lore: 1,
   cardNumber: 125,
   inkable: false,
-  missingImplementation: true,
   missingTests: true,
   externalIds: {
     ravensburger: "f366b5591bf174421106ad9ef1b368decafc6ace",
   },
-  abilities: [],
+  abilities: [
+    {
+      id: "1vb-1",
+      type: "triggered",
+      name: "I LAUGH IN THE FACE OF DANGER",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
+      effect: {
+        type: "modify-stat",
+        stat: "strength",
+        modifier: 2,
+        target: {
+          selector: "chosen",
+          count: 1,
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+        },
+        duration: "this-turn",
+      },
+      text: "I LAUGH IN THE FACE OF DANGER When you play this character, chosen character gets +2 {S} this turn.",
+    },
+  ],
   classifications: ["Storyborn", "Hero", "Prince"],
 };
-
-// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
-// import type { LorcanitoCharacterCard } from "@lorcanito/lorcana-engine";
-// import { chosenCharacter } from "@lorcanito/lorcana-engine/abilities/target";
-//
-// export const simbaAdventurousSuccessor: LorcanitoCharacterCard = {
-//   id: "y3p",
-//   missingTestCase: true,
-//   name: "Simba",
-//   title: "Adventurous Successor",
-//   characteristics: ["hero", "storyborn", "prince"],
-//   text: "**I LAUGH IN THE FACE OF DANGER** When you play this character, chosen character gets +2 {S} this turn.",
-//   type: "character",
-//   abilities: [
-//     {
-//       type: "resolution",
-//       name: "I LAUGH IN THE FACE OF DANGER",
-//       text: "When you play this character, chosen character gets +2 {S} this turn.",
-//       effects: [
-//         {
-//           type: "attribute",
-//           attribute: "strength",
-//           amount: 2,
-//           modifier: "add",
-//           target: chosenCharacter,
-//         },
-//       ],
-//     },
-//   ],
-//   colors: ["ruby"],
-//   cost: 1,
-//   strength: 2,
-//   willpower: 1,
-//   lore: 1,
-//   illustrator: "Valentin Palombo",
-//   number: 125,
-//   set: "SSK",
-//   externalIds: {
-//     tcgPlayer: 560135,
-//   },
-//   rarity: "common",
-// };
-//
