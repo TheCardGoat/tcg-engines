@@ -25,6 +25,7 @@ export const rayaGuidanceSeeker: CharacterCard = {
       id: "1id-1",
       type: "triggered",
       name: "A GREATER PURPOSE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-keyword",
         keyword: "Resist",

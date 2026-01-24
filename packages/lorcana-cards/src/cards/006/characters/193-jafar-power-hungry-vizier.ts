@@ -25,6 +25,7 @@ export const jafarPowerhungryVizier: CharacterCard = {
       id: "1w6-1",
       type: "triggered",
       name: "YOU WILL BE PAID WHEN THE TIME COMES",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "deal-damage",
         amount: 1,

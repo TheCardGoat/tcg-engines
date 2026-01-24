@@ -127,7 +127,11 @@ export type CharacterTargetEnum =
   | "YOUR_CHARACTERS" // All of your characters
   | "YOUR_OTHER_CHARACTERS" // All of your characters except self
   | "EACH_CHARACTER" // Same as ALL_CHARACTERS
-  | "EACH_OPPOSING_CHARACTER"; // Same as ALL_OPPOSING_CHARACTERS
+  | "EACH_OPPOSING_CHARACTER" // Same as ALL_OPPOSING_CHARACTERS
+
+  // Challenge context
+  | "challenging-character" // The character doing the challenge
+  | "challenged-character"; // The character being challenged
 
 // ============================================================================
 // Character Targeting - Query-Based (Complex)
@@ -152,7 +156,10 @@ export type ComparisonOperator =
   | "less"
   | "greater"
   | "less-or-equal"
-  | "greater-or-equal";
+  | "greater-or-equal"
+  // Alternative naming conventions (for parser compatibility)
+  | "greater-than"
+  | "less-than";
 
 // ============================================================================
 // Shared Filter Types (used across Character, Location, Item targeting)
@@ -475,7 +482,8 @@ export type LocationTargetEnum =
   | "CHOSEN_OPPOSING_LOCATION"
   | "YOUR_LOCATIONS"
   | "ALL_OPPOSING_LOCATIONS"
-  | "THIS_LOCATION"; // For abilities on locations
+  | "THIS_LOCATION" // For abilities on locations
+  | "CHARACTERS_HERE"; // Characters at this location (for location abilities)
 
 // ============================================================================
 // Location Targeting - Strict Query Variants

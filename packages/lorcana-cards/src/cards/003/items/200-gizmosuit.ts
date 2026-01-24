@@ -19,6 +19,7 @@ export const gizmosuit: ItemCard = {
     {
       id: "1ip-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Resist",

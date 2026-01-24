@@ -19,6 +19,7 @@ export const perplexingSignposts: ItemCard = {
     {
       id: "nv1-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "return-to-hand",
         target: {

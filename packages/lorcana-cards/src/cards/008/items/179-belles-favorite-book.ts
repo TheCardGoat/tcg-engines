@@ -19,6 +19,7 @@ export const bellesFavoriteBook: ItemCard = {
     {
       id: "1gu-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "put-into-inkwell",
         source: "top-of-deck",

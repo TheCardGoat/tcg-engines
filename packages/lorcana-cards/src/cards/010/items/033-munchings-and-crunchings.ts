@@ -19,6 +19,7 @@ export const munchingsAndCrunchings: ItemCard = {
     {
       id: "16w-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "remove-damage",
         amount: 2,

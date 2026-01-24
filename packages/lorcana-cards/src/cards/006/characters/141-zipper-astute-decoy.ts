@@ -31,6 +31,7 @@ export const zipperAstuteDecoy: CharacterCard = {
       id: "n08-2",
       type: "triggered",
       name: "RUN INTERFERENCE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-keyword",
         keyword: "Resist",

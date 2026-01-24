@@ -30,6 +30,11 @@ export const chichaDedicatedMother: CharacterCard = {
       id: "q5f-2",
       type: "triggered",
       name: "ONE ON THE WAY",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
       effect: {
         type: "conditional",
         condition: {

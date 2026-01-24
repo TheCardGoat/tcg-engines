@@ -35,6 +35,7 @@ export const queensSensorCore: ItemCard = {
     {
       id: "1xk-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "reveal-top-card",
         target: "CONTROLLER",

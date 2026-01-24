@@ -25,6 +25,7 @@ export const dawsonPuzzlingSleuth: CharacterCard = {
       id: "1t5-1",
       type: "triggered",
       name: "BE SENSIBLE Once",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

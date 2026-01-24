@@ -34,6 +34,7 @@ export const mushuYourWorstNightmare: CharacterCard = {
       id: "qm5-2",
       type: "triggered",
       name: "ALL FIRED UP",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-keyword",
         keyword: "Rush",

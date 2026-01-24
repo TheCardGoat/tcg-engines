@@ -39,6 +39,7 @@ export const plutoSteelChampion: CharacterCard = {
       id: "1g1-2",
       type: "triggered",
       name: "MAKE ROOM",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

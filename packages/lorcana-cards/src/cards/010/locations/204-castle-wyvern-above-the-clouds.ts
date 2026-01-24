@@ -26,6 +26,7 @@ export const castleWyvernAboveTheClouds: LocationCard = {
       effect: {
         type: "gain-keyword",
         keyword: "Challenger",
+        // @ts-expect-error - CHARACTERS_HERE needs special location handling
         target: "CHARACTERS_HERE",
         value: 1,
       },

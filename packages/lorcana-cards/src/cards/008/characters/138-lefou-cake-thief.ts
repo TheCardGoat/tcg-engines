@@ -24,6 +24,7 @@ export const lefouCakeThief: CharacterCard = {
     {
       id: "13j-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "sequence",
         steps: [

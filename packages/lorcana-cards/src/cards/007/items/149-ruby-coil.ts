@@ -20,6 +20,7 @@ export const rubyCoil: ItemCard = {
       id: "1mn-1",
       type: "triggered",
       name: "CRIMSON SPARK",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "modify-stat",
         stat: "strength",

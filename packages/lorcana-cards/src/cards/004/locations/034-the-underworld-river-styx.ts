@@ -24,6 +24,7 @@ export const theUnderworldRiverStyx: LocationCard = {
       id: "6fe-1",
       type: "triggered",
       name: "SAVE A SOUL",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

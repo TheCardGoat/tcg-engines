@@ -34,6 +34,7 @@ export const brunoMadrigalSingingSeer: CharacterCard = {
       id: "1cp-2",
       type: "triggered",
       name: "BRIGHT FUTURE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

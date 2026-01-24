@@ -25,6 +25,7 @@ export const tianaRestaurantOwner: CharacterCard = {
       id: "6kc-1",
       type: "triggered",
       name: "SPECIAL RESERVATION",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "modify-stat",
         stat: "strength",

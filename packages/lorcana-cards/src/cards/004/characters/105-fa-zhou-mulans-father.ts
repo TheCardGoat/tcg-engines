@@ -35,6 +35,7 @@ export const faZhouMulansFather: CharacterCard = {
     {
       id: "gc0-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "restriction",
         restriction: "cant-quest",

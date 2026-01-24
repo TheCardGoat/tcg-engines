@@ -37,6 +37,7 @@ export const aladdinBarrelingThrough: CharacterCard = {
     {
       id: "1tr-3",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-lore",
         amount: 1,

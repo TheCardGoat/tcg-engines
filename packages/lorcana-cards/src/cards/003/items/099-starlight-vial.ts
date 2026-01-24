@@ -19,6 +19,7 @@ export const starlightVial: ItemCard = {
     {
       id: "1ec-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "play-card",
         from: "hand",
@@ -28,6 +29,7 @@ export const starlightVial: ItemCard = {
     {
       id: "1ec-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "sequence",
         steps: [

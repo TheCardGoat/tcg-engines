@@ -25,6 +25,7 @@ export const mrLitwakArcadeOwner: CharacterCard = {
       id: "byt-1",
       type: "triggered",
       name: "THE GANG'S ALL HERE Once",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

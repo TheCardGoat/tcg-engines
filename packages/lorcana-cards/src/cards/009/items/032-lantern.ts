@@ -19,6 +19,7 @@ export const lantern: ItemCard = {
     {
       id: "o5u-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "play-card",
         from: "hand",

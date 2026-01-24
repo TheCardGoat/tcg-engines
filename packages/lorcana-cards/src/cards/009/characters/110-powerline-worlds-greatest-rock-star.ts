@@ -41,6 +41,7 @@ export const powerlineWorldsGreatestRockStar: CharacterCard = {
       id: "k9i-3",
       type: "triggered",
       name: "MASH-UP Once",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

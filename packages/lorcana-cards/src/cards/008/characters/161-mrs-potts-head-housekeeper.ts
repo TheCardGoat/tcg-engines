@@ -23,6 +23,9 @@ export const mrsPottsHeadHousekeeper: CharacterCard = {
     {
       id: "cpn-1",
       type: "activated",
+      cost: {
+        exert: true,
+      },
       effect: {
         type: "draw",
         amount: 1,

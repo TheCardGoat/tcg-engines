@@ -33,6 +33,11 @@ export const rafikiEtherealGuide: CharacterCard = {
       id: "yg2-2",
       type: "triggered",
       name: "ASTRAL ATTUNEMENT",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
       effect: {
         type: "optional",
         effect: {

@@ -24,6 +24,7 @@ export const theBitterwoodUndergroundForest: LocationCard = {
       id: "g5d-1",
       type: "triggered",
       name: "GATHER RESOURCES Once",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

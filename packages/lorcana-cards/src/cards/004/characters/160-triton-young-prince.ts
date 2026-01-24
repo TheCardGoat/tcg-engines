@@ -35,6 +35,7 @@ export const tritonYoungPrince: CharacterCard = {
       id: "si2-2",
       type: "triggered",
       name: "KEEPER OF ATLANTICA",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

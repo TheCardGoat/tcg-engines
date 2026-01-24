@@ -32,6 +32,7 @@ export const auroraWakingBeauty: CharacterCard = {
       id: "cy2-2",
       type: "triggered",
       name: "SWEET DREAMS",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "sequence",
         steps: [

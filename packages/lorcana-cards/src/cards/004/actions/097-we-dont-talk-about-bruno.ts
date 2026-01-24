@@ -27,6 +27,7 @@ export const weDontTalkAboutBruno: ActionCard = {
             type: "return-to-hand",
             target: {
               selector: "chosen",
+              count: 1,
             },
           },
           {

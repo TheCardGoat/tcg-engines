@@ -46,6 +46,7 @@ export const theHeadlessHorsemanTerrorOfSleepyHollow: CharacterCard = {
       id: "171-2",
       type: "triggered",
       name: "GATHERING STRENGTH",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "modify-stat",
         stat: "strength",

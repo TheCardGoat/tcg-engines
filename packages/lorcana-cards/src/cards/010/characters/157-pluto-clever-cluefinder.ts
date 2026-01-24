@@ -23,6 +23,7 @@ export const plutoCleverCluefinder: CharacterCard = {
     {
       id: "cpr-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "conditional",
         condition: {

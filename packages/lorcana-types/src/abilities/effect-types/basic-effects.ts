@@ -163,3 +163,30 @@ export interface BanishEffect {
   type: "banish";
   target: CharacterTarget | ItemTarget | LocationTarget;
 }
+
+// ============================================================================
+// Look At / Reveal Effects
+// ============================================================================
+
+/**
+ * Look at cards effect
+ *
+ * @example "Look at the top 3 cards of your deck"
+ */
+export interface LookAtCardsEffect {
+  type: "look-at-cards";
+  amount: Amount;
+  source: "deck" | "hand" | "discard";
+  target: PlayerTarget;
+}
+
+/**
+ * Put card into hand effect
+ *
+ * @example "Put a card into your hand"
+ */
+export interface PutInHandEffect {
+  type: "put-in-hand";
+  source: "deck" | "discard" | "revealed";
+  target: PlayerTarget;
+}

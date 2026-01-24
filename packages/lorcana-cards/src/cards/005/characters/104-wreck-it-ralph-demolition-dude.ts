@@ -25,6 +25,7 @@ export const wreckitRalphDemolitionDude: CharacterCard = {
       id: "co0-1",
       type: "triggered",
       name: "REFRESHING BREAK",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-lore",
         amount: 1,

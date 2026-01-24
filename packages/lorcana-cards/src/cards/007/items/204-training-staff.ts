@@ -19,6 +19,7 @@ export const trainingStaff: ItemCard = {
     {
       id: "1rn-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Challenger",

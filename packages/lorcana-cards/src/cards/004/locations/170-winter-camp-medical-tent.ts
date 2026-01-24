@@ -24,6 +24,7 @@ export const winterCampMedicalTent: LocationCard = {
       id: "129-1",
       type: "triggered",
       name: "HELP THE WOUNDED",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "remove-damage",
         amount: 2,

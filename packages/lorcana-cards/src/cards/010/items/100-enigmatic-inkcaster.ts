@@ -19,6 +19,7 @@ export const enigmaticInkcaster: ItemCard = {
     {
       id: "pr8-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "conditional",
         condition: {

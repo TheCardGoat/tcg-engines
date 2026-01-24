@@ -19,6 +19,7 @@ export const hamsterBall: ItemCard = {
     {
       id: "1s0-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Resist",

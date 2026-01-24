@@ -40,7 +40,7 @@ export const rapunzelHighClimber: CharacterCard = {
         type: "restriction",
         restriction: "cant-quest",
         target: "SELF",
-        duration: "their-next-turn",
+        duration: "until-start-of-next-turn",
       },
       text: "WRAPPED UP Whenever this character quests, chosen opposing character can't quest during their next turn.",
     },

@@ -25,6 +25,7 @@ export const hiramFlavershamToymaker: CharacterCard = {
       id: "slt-1",
       type: "triggered",
       name: "ARTIFICER When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

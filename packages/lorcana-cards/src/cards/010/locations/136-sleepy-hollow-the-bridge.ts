@@ -24,6 +24,7 @@ export const sleepyHollowTheBridge: LocationCard = {
       id: "z63-1",
       type: "triggered",
       name: "HEAD FOR THE BRIDGE!",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

@@ -24,6 +24,7 @@ export const theBayouMysteriousSwamp: LocationCard = {
       id: "2bw-1",
       type: "triggered",
       name: "SHOW ME THE WAY",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

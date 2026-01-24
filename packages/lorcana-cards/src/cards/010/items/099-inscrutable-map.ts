@@ -19,6 +19,7 @@ export const inscrutableMap: ItemCard = {
     {
       id: "fpa-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "modify-stat",
         stat: "lore",

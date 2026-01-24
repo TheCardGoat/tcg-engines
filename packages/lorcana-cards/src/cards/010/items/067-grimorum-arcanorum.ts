@@ -20,6 +20,7 @@ export const grimorumArcanorum: ItemCard = {
       id: "177-1",
       type: "triggered",
       name: "DOCTRINA ADDUCERE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-lore",
         amount: 1,

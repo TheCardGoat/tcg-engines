@@ -24,6 +24,7 @@ export const duckburgFunsosFunzone: LocationCard = {
       id: "bzp-1",
       type: "triggered",
       name: "WHERE FUN IS IN THE ZONE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "play-card",
         from: "hand",

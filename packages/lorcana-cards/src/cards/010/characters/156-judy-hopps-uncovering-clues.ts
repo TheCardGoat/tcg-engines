@@ -25,6 +25,7 @@ export const judyHoppsUncoveringClues: CharacterCard = {
       id: "1mf-1",
       type: "triggered",
       name: "THOROUGH INVESTIGATION When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

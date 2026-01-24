@@ -25,6 +25,7 @@ export const bellwetherAssistantMayor: CharacterCard = {
       id: "vwg-1",
       type: "triggered",
       name: "FEAR ALWAYS WORKS",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-keyword",
         keyword: "Reckless",

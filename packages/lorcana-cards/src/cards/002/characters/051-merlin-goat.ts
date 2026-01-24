@@ -25,6 +25,7 @@ export const merlinGoat: CharacterCard = {
       id: "198-1",
       type: "triggered",
       name: "HERE I COME! When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "sequence",
         steps: [

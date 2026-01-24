@@ -18,6 +18,9 @@ export const magicMirror: ItemCard = {
     {
       id: "6c3-1",
       type: "activated",
+      cost: {
+        exert: true,
+      },
       effect: {
         type: "draw",
         amount: 1,

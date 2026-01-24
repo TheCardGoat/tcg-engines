@@ -33,6 +33,7 @@ export const shereKhanFierceAndFurious: CharacterCard = {
     {
       id: "1uf-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "sequence",
         steps: [

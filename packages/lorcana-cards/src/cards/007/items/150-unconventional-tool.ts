@@ -20,6 +20,7 @@ export const unconventionalTool: ItemCard = {
       id: "qyw-1",
       type: "triggered",
       name: "FIXED IN NO TIME",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "play-card",
         from: "hand",

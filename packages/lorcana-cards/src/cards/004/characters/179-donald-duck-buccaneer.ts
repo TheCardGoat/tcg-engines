@@ -24,6 +24,7 @@ export const donaldDuckBuccaneer: CharacterCard = {
       id: "va5-1",
       type: "triggered",
       name: "BOARDING PARTY",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "modify-stat",
         stat: "lore",

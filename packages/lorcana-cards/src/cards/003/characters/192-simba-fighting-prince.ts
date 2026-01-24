@@ -25,6 +25,7 @@ export const simbaFightingPrince: CharacterCard = {
       id: "1sf-1",
       type: "triggered",
       name: "STEP DOWN OR FIGHT When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "choice",
         options: [

@@ -34,7 +34,7 @@ export const chernabogCreatureOfTheNight: CharacterCard = {
         type: "restriction",
         restriction: "cant-ready",
         target: "SELF",
-        duration: "their-next-turn",
+        duration: "until-start-of-next-turn",
       },
       text: "MIDNIGHT REVEL When you play this character, each opponent chooses and exerts one of their ready characters. They can't ready at the start of their next turn.",
     },

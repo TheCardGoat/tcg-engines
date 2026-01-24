@@ -19,6 +19,7 @@ export const atlanteanCrystal: ItemCard = {
     {
       id: "1y7-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Resist",

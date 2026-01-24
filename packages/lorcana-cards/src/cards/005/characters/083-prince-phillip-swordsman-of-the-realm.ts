@@ -46,6 +46,7 @@ export const princePhillipSwordsmanOfTheRealm: CharacterCard = {
       id: "1ov-2",
       type: "triggered",
       name: "PRESSING THE ADVANTAGE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "ready",
         target: {

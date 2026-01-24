@@ -19,6 +19,7 @@ export const heartOfTeFiti: ItemCard = {
     {
       id: "1vi-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "put-into-inkwell",
         source: "top-of-deck",

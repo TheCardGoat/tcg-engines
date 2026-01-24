@@ -19,6 +19,7 @@ export const ratigansMarvelousTrap: ItemCard = {
     {
       id: "1wo-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "lose-lore",
         amount: 2,

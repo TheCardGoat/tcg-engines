@@ -286,6 +286,12 @@ export interface BaseTrigger {
    * Uses the shared Restriction type from ability-types
    */
   restrictions?: TriggerRestriction[];
+
+  /**
+   * Challenge context - alternative to defender/attacker for challenge events
+   * Used by parser for simpler challenge-related triggers
+   */
+  challengeContext?: ChallengeTriggerContext;
 }
 
 export type Trigger = BaseTrigger | ChallengeTrigger;

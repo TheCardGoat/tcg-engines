@@ -31,6 +31,7 @@ export const princeJohnGreediestOfAll: CharacterCard = {
       id: "9so-2",
       type: "triggered",
       name: "I SENTENCE YOU",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

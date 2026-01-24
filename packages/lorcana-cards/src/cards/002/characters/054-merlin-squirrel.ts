@@ -25,6 +25,7 @@ export const merlinSquirrel: CharacterCard = {
       id: "1qe-1",
       type: "triggered",
       name: "LOOK BEFORE YOU LEAP When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "put-on-bottom",
         target: "CHOSEN_CHARACTER",

@@ -19,6 +19,7 @@ export const medalOfHeroes: ItemCard = {
     {
       id: "b7p-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "modify-stat",
         stat: "lore",

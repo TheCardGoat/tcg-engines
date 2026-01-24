@@ -25,6 +25,7 @@ export const merlinTurtle: CharacterCard = {
       id: "1ed-1",
       type: "triggered",
       name: "GIVE ME TIME TO THINK When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "sequence",
         steps: [

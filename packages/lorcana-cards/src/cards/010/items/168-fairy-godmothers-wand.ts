@@ -20,6 +20,7 @@ export const fairyGodmothersWand: ItemCard = {
       id: "1y8-1",
       type: "triggered",
       name: "ONLY TILL MIDNIGHT",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-keyword",
         keyword: "Ward",

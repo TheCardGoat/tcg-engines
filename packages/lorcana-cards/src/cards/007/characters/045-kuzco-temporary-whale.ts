@@ -25,6 +25,7 @@ export const kuzcoTemporaryWhale: CharacterCard = {
       id: "122-1",
       type: "triggered",
       name: "DON'T YOU SAY A WORD Once",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

@@ -24,6 +24,7 @@ export const ladyTremaineBitterlyJealous: CharacterCard = {
     {
       id: "1n1-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "return-to-hand",
         target: {

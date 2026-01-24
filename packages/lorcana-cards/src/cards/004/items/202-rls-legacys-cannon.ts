@@ -19,6 +19,7 @@ export const rlsLegacysCannon: ItemCard = {
     {
       id: "1rt-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "deal-damage",
         amount: 2,

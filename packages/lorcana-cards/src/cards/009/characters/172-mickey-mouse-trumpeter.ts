@@ -23,6 +23,7 @@ export const mickeyMouseTrumpeter: CharacterCard = {
     {
       id: "6jz-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "play-card",
         from: "hand",

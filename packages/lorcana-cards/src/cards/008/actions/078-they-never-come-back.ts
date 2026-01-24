@@ -26,7 +26,7 @@ export const theyNeverComeBack: ActionCard = {
             type: "restriction",
             restriction: "cant-ready",
             target: "SELF",
-            duration: "their-next-turn",
+            duration: "until-start-of-next-turn",
           },
           {
             type: "draw",

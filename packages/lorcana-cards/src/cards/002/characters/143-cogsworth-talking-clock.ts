@@ -24,6 +24,7 @@ export const cogsworthTalkingClock: CharacterCard = {
     {
       id: "y7r-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-lore",
         amount: 1,

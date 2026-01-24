@@ -24,6 +24,7 @@ export const naniHeistMastermind: CharacterCard = {
     {
       id: "d2e-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Resist",

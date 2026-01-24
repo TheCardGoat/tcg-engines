@@ -25,6 +25,7 @@ export const heiheiAccidentalExplorer: CharacterCard = {
       id: "j8v-1",
       type: "triggered",
       name: "MINDLESS WANDERING",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "lose-lore",
         amount: 1,

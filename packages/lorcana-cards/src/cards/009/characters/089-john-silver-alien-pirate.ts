@@ -25,6 +25,7 @@ export const johnSilverAlienPirate: CharacterCard = {
       id: "4t5-1",
       type: "triggered",
       name: "PICK YOUR FIGHTS When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-keyword",
         keyword: "Reckless",

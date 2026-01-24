@@ -24,11 +24,12 @@ export const kingOfHeartsMonarchOfWonderland: CharacterCard = {
     {
       id: "3sp-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "restriction",
         restriction: "cant-ready",
         target: "SELF",
-        duration: "their-next-turn",
+        duration: "until-start-of-next-turn",
       },
       text: "PLEASING THE QUEEN {E} — Chosen exerted character can't ready at the start of their next turn.",
     },

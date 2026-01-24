@@ -32,6 +32,7 @@ export const simbaKingInTheMaking: CharacterCard = {
       id: "dbt-2",
       type: "triggered",
       name: "TIMELY ALLIANCE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "conditional",
         condition: {

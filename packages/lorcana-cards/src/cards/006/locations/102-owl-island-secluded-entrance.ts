@@ -33,6 +33,7 @@ export const owlIslandSecludedEntrance: LocationCard = {
       id: "y11-2",
       type: "triggered",
       name: "LOTS TO LEARN",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-lore",
         amount: 3,

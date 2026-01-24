@@ -44,6 +44,7 @@ export const theMagicFeather: ItemCard = {
     {
       id: "cfx-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "return-to-hand",
         target: {

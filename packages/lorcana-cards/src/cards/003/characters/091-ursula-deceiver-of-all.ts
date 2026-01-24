@@ -25,6 +25,7 @@ export const ursulaDeceiverOfAll: CharacterCard = {
       id: "1gd-1",
       type: "triggered",
       name: "WHAT A DEAL",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

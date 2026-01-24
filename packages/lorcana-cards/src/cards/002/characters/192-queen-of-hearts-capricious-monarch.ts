@@ -25,6 +25,7 @@ export const queenOfHeartsCapriciousMonarch: CharacterCard = {
       id: "qi9-1",
       type: "triggered",
       name: "OFF WITH THEIR HEADS!",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

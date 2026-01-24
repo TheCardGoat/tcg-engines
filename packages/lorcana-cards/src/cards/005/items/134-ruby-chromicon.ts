@@ -19,6 +19,7 @@ export const rubyChromicon: ItemCard = {
     {
       id: "1tf-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "modify-stat",
         stat: "strength",

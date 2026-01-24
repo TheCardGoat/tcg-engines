@@ -25,6 +25,7 @@ export const tinkerBellVeryCleverFairy: CharacterCard = {
       id: "1y4-1",
       type: "triggered",
       name: "I CAN USE THAT",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

@@ -60,4 +60,6 @@ export type EffectDuration =
   | "until-end-of-turn"
   | "permanent"
   | "while-condition"
-  | "next-play-this-turn"; // Used with static abilities
+  | "next-play-this-turn" // Used with static abilities
+  | "next-turn" // Until the start/end of their next turn
+  | "their-next-turn"; // Until the opponent's next turn

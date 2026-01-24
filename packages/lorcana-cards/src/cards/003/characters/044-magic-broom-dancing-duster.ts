@@ -40,7 +40,7 @@ export const magicBroomDancingDuster: CharacterCard = {
           type: "restriction",
           restriction: "cant-ready",
           target: "SELF",
-          duration: "their-next-turn",
+          duration: "until-start-of-next-turn",
         },
       },
       text: "POWER CLEAN When you play this character, if you have a Sorcerer character in play, you may exert chosen opposing character. They can't ready at the start of their next turn.",

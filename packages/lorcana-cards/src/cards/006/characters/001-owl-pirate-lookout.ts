@@ -25,6 +25,7 @@ export const owlPirateLookout: CharacterCard = {
       id: "kq3-1",
       type: "triggered",
       name: "WELL SPOTTED",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "modify-stat",
         stat: "strength",

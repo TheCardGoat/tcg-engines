@@ -25,6 +25,7 @@ export const fixitFelixJrPintsizedHero: CharacterCard = {
       id: "b28-1",
       type: "triggered",
       name: "LET'S GET TO WORK",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

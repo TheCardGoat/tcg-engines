@@ -256,12 +256,17 @@ export class LorcanaParserV2 {
         } as unknown as Ability;
       }
 
-      // Failed to parse trigger - fall back to basic triggered ability
-      // This maintains backward compatibility while we improve trigger parsing
+      // Failed to parse trigger - create triggered ability with a valid default trigger
+      // Use a generic "when you play this" trigger as a placeholder
       logger.debug("Failed to parse trigger metadata", { text: originalText });
       return {
         type: "triggered",
         name,
+        trigger: {
+          event: "play",
+          timing: "when",
+          on: "SELF",
+        },
         effect,
       } as unknown as Ability;
     }
@@ -277,6 +282,7 @@ export class LorcanaParserV2 {
     if (hasEmDashSeparator || hasCostWithSeparator || hasStandaloneCost) {
       return {
         type: "activated",
+        cost: { exert: true },
         effect,
       } as unknown as Ability;
     }

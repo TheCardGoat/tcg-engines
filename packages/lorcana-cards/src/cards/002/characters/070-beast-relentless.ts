@@ -25,6 +25,7 @@ export const beastRelentless: CharacterCard = {
       id: "8rn-1",
       type: "triggered",
       name: "SECOND WIND",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

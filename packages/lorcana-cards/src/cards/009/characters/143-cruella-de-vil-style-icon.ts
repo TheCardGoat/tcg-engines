@@ -25,6 +25,7 @@ export const cruellaDeVilStyleIcon: CharacterCard = {
       id: "1r1-1",
       type: "triggered",
       name: "OUT OF SEASON Once",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "put-into-inkwell",
         source: "top-of-deck",

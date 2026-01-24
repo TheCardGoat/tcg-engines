@@ -25,6 +25,7 @@ export const hadesRuthlessTyrant: CharacterCard = {
       id: "keg-1",
       type: "triggered",
       name: "SHORT ON PATIENCE When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

@@ -24,6 +24,7 @@ export const perilousMazeWateryLabyrinth: LocationCard = {
       id: "1w9-1",
       type: "triggered",
       name: "LOST IN THE WAVES",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "discard",
         amount: 1,

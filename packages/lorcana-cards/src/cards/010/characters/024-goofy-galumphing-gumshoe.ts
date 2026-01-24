@@ -33,6 +33,7 @@ export const goofyGalumphingGumshoe: CharacterCard = {
       id: "1mo-2",
       type: "triggered",
       name: "HOT PURSUIT When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "modify-stat",
         stat: "strength",

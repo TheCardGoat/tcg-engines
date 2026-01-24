@@ -19,6 +19,7 @@ export const wildcatsWrench: ItemCard = {
     {
       id: "1wk-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "remove-damage",
         amount: 2,

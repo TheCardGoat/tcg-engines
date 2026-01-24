@@ -19,6 +19,7 @@ export const steelChromicon: ItemCard = {
     {
       id: "1lw-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "deal-damage",
         amount: 1,

@@ -24,6 +24,7 @@ export const kuzcosPalaceHomeOfTheEmperor: LocationCard = {
       id: "aae-1",
       type: "triggered",
       name: "CITY WALLS",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "banish",
         target: {

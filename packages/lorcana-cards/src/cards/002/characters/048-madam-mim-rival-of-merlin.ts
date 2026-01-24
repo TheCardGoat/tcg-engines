@@ -33,6 +33,7 @@ export const madamMimRivalOfMerlin: CharacterCard = {
     {
       id: "dz2-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Rush",

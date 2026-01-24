@@ -32,6 +32,7 @@ export const cinderellaMelodyWeaver: CharacterCard = {
       id: "juj-2",
       type: "triggered",
       name: "BEAUTIFUL VOICE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "modify-stat",
         stat: "lore",

@@ -25,6 +25,7 @@ export const merlinCrab: CharacterCard = {
       id: "1ih-1",
       type: "triggered",
       name: "READY OR NOT! When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "sequence",
         steps: [
