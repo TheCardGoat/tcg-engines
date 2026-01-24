@@ -30,6 +30,7 @@ export const sapphireChromicon: ItemCard = {
     {
       id: "cxg-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-lore",
         amount: 2,

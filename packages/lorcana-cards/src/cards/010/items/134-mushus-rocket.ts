@@ -42,6 +42,7 @@ export const mushusRocket: ItemCard = {
     {
       id: "u0o-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Rush",

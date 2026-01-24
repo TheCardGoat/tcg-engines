@@ -31,6 +31,7 @@ export const lythosRockTitan: CharacterCard = {
     {
       id: "ae9-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Resist",

@@ -19,6 +19,7 @@ export const croquetMallet: ItemCard = {
     {
       id: "1s8-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Rush",

@@ -19,6 +19,7 @@ export const vitalisphere: ItemCard = {
     {
       id: "fzw-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "sequence",
         steps: [

@@ -39,6 +39,7 @@ export const fortisphere: ItemCard = {
     {
       id: "s5n-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Bodyguard",

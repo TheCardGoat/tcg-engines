@@ -24,6 +24,11 @@ export const madHatterUnrulyEccentric: CharacterCard = {
       id: "11o-1",
       type: "triggered",
       name: "UNBIRTHDAY PRESENT",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
       effect: {
         type: "optional",
         effect: {

@@ -20,6 +20,7 @@ export const amberCoil: ItemCard = {
       id: "7an-1",
       type: "triggered",
       name: "HEALING AURA",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

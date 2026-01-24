@@ -25,6 +25,7 @@ export const peterPanShadowCatcher: CharacterCard = {
       id: "1q3-1",
       type: "triggered",
       name: "GOTCHA!",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "put-into-inkwell",
         source: "chosen-character",

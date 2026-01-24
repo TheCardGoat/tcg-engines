@@ -35,6 +35,11 @@ export const boltSuperdog: CharacterCard = {
       id: "199-2",
       type: "triggered",
       name: "MARK OF POWER",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
       effect: {
         type: "gain-lore",
         amount: 1,

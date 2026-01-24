@@ -20,6 +20,7 @@ export const inkAmplifier: ItemCard = {
       id: "1gc-1",
       type: "triggered",
       name: "ENERGY CAPTURE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "conditional",
         condition: {

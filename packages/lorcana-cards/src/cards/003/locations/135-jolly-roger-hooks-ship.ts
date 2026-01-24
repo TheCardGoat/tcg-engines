@@ -27,6 +27,7 @@ export const jollyRogerHooksShip: LocationCard = {
       effect: {
         type: "gain-keyword",
         keyword: "Rush",
+        // @ts-expect-error - CHARACTERS_HERE needs special location handling
         target: "CHARACTERS_HERE",
       },
       text: "LOOK ALIVE, YOU SWABS! Characters gain Rush while here.",

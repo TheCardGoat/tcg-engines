@@ -19,6 +19,7 @@ export const potionOfMalice: ItemCard = {
     {
       id: "ifu-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "put-damage",
         amount: 1,

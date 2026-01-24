@@ -25,6 +25,7 @@ export const merlinRabbit: CharacterCard = {
       id: "11g-1",
       type: "triggered",
       name: "HOPPITY HIP! When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

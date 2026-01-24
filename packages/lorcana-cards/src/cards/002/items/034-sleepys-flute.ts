@@ -19,6 +19,7 @@ export const sleepysFlute: ItemCard = {
     {
       id: "1aa-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "conditional",
         condition: {

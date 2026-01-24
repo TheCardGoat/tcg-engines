@@ -34,6 +34,7 @@ export const basilDisguisedDetective: CharacterCard = {
       id: "fop-2",
       type: "triggered",
       name: "TWISTS AND TURNS",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

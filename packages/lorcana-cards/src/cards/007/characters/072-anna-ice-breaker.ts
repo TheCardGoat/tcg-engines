@@ -40,7 +40,7 @@ export const annaIceBreaker: CharacterCard = {
         type: "restriction",
         restriction: "cant-ready",
         target: "SELF",
-        duration: "their-next-turn",
+        duration: "until-start-of-next-turn",
       },
       text: "WINTER AMBUSH When you play this character, chosen opposing character can't ready at the start of their next turn.",
     },

@@ -24,6 +24,7 @@ export const tritonDiscerningKing: CharacterCard = {
     {
       id: "rj9-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-lore",
         amount: 3,

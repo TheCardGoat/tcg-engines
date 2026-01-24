@@ -23,6 +23,7 @@ export const plutoFriendlyPooch: CharacterCard = {
     {
       id: "16c-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "play-card",
         from: "hand",

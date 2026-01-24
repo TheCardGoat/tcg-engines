@@ -21,11 +21,13 @@ export const firstAid: ActionCard = {
       type: "action",
       effect: {
         type: "remove-damage",
-        amount: 3,
+        amount: 1,
         target: {
           selector: "all",
-          controller: "you",
-          cardType: "character",
+          count: "all",
+          owner: "you",
+          zones: ["play"],
+          cardTypes: ["character"],
         },
         upTo: true,
       },

@@ -20,6 +20,7 @@ export const steelCoil: ItemCard = {
       id: "1y9-1",
       type: "triggered",
       name: "METALLIC FLOW",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

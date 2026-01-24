@@ -25,6 +25,7 @@ export const basilTenaciousMouse: CharacterCard = {
       id: "l21-1",
       type: "triggered",
       name: "HOLD YOUR GROUND",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-keyword",
         keyword: "Resist",

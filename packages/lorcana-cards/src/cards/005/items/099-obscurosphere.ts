@@ -19,6 +19,7 @@ export const obscurosphere: ItemCard = {
     {
       id: "wfc-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Ward",

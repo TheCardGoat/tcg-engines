@@ -24,6 +24,7 @@ export const beastFrustratedDesigner: CharacterCard = {
     {
       id: "1u2-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "deal-damage",
         amount: 5,

@@ -19,6 +19,7 @@ export const devilsEyeDiamond: ItemCard = {
     {
       id: "136-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "conditional",
         condition: {

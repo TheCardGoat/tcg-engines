@@ -19,6 +19,7 @@ export const robinsBow: ItemCard = {
     {
       id: "1mp-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "deal-damage",
         amount: 1,
@@ -36,6 +37,7 @@ export const robinsBow: ItemCard = {
       id: "1mp-2",
       type: "triggered",
       name: "A BIT OF A LARK",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

@@ -24,6 +24,7 @@ export const rapunzelSunshine: CharacterCard = {
     {
       id: "zai-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "remove-damage",
         amount: 2,

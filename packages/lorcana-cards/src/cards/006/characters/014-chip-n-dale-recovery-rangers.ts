@@ -35,6 +35,11 @@ export const chipNDaleRecoveryRangers: CharacterCard = {
       id: "1bs-3",
       type: "triggered",
       name: "SEARCH AND RESCUE",
+      trigger: {
+        event: "play",
+        timing: "when",
+        on: "SELF",
+      },
       effect: {
         type: "optional",
         effect: {

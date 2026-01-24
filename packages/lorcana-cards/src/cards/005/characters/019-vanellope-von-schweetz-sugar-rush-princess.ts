@@ -34,6 +34,7 @@ export const vanellopeVonSchweetzSugarRushPrincess: CharacterCard = {
       id: "s65-2",
       type: "triggered",
       name: "I HEREBY DECREE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "modify-stat",
         stat: "strength",

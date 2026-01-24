@@ -34,6 +34,7 @@ export const grammaTalaSpiritOfTheOcean: CharacterCard = {
       id: "1xw-2",
       type: "triggered",
       name: "DO YOU KNOW WHO YOU ARE?",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-lore",
         amount: 1,

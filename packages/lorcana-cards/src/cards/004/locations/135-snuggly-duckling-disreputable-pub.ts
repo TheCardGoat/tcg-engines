@@ -24,6 +24,7 @@ export const snugglyDucklingDisreputablePub: LocationCard = {
       id: "1o0-1",
       type: "triggered",
       name: "ROUTINE RUCKUS",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "choice",
         options: [

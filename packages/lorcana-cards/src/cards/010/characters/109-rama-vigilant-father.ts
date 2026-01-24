@@ -25,6 +25,7 @@ export const ramaVigilantFather: CharacterCard = {
       id: "1d1-1",
       type: "triggered",
       name: "PROTECTION OF THE PACK",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "sequence",
         steps: [

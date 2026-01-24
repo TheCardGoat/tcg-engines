@@ -25,7 +25,6 @@ export const sisuInHerElement: CharacterCard = {
       type: "keyword",
       keyword: "Challenger",
       value: 2,
-      condition: ".",
       text: "Challenger +2.",
     },
   ],

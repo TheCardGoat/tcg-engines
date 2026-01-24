@@ -24,6 +24,7 @@ export const mushuFasttalkingDragon: CharacterCard = {
     {
       id: "17r-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Rush",

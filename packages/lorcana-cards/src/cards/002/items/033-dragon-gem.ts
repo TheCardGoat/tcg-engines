@@ -19,6 +19,7 @@ export const dragonGem: ItemCard = {
     {
       id: "1oa-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "return-to-hand",
         target: {

@@ -24,6 +24,7 @@ export const luckyThe15thPuppy: CharacterCard = {
     {
       id: "5ql-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "optional",
         effect: {

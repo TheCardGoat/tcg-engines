@@ -19,6 +19,7 @@ export const ursulasCauldron: ItemCard = {
     {
       id: "1ad-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "sequence",
         steps: [

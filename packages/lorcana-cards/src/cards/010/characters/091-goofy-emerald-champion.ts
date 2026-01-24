@@ -48,10 +48,12 @@ export const goofyEmeraldChampion: CharacterCard = {
       effect: {
         type: "gain-keyword",
         keyword: "Ward",
-      },
-      affects: {
-        controller: "you",
-        excludeSelf: true,
+        target: {
+          selector: "all",
+          count: "all",
+          filter: [{ type: "owner", owner: "you" }],
+          excludeSelf: true,
+        },
       },
     },
   ],

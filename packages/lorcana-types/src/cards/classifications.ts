@@ -18,6 +18,7 @@ export const CLASSIFICATIONS = [
   "Fairy",
   "Floodborn",
   "Gargoyle",
+  "Ghost",
   "Hero",
   "Hunny",
   "Hyena",

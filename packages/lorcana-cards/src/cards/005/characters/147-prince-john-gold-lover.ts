@@ -24,6 +24,7 @@ export const princeJohnGoldLover: CharacterCard = {
     {
       id: "1b5-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "play-card",
         from: "hand",

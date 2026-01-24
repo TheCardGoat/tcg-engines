@@ -34,6 +34,7 @@ export const jasmineFearlessPrincess: CharacterCard = {
     {
       id: "t89-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Challenger",

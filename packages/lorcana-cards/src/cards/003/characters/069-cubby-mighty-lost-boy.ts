@@ -25,6 +25,7 @@ export const cubbyMightyLostBoy: CharacterCard = {
       id: "1y3-1",
       type: "triggered",
       name: "THE BEAR",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "modify-stat",
         stat: "strength",

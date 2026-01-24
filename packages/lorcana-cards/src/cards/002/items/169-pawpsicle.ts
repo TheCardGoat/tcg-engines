@@ -39,6 +39,7 @@ export const pawpsicle: ItemCard = {
     {
       id: "s1u-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "remove-damage",
         amount: 2,

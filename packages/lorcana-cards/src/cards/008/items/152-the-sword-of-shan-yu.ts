@@ -19,6 +19,7 @@ export const theSwordOfShanyu: ItemCard = {
     {
       id: "1wb-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "restriction",
         restriction: "cant-quest",

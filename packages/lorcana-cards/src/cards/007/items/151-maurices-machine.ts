@@ -20,6 +20,7 @@ export const mauricesMachine: ItemCard = {
       id: "1fj-1",
       type: "triggered",
       name: "BREAK DOWN",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

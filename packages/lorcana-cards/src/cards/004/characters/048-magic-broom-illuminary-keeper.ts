@@ -25,6 +25,7 @@ export const magicBroomIlluminaryKeeper: CharacterCard = {
       id: "1ct-1",
       type: "triggered",
       name: "NICE AND TIDY",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

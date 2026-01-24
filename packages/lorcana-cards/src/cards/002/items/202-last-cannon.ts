@@ -19,6 +19,7 @@ export const lastCannon: ItemCard = {
     {
       id: "u1y-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Challenger",

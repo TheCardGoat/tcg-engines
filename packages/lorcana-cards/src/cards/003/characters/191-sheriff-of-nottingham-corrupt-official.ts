@@ -25,6 +25,7 @@ export const sheriffOfNottinghamCorruptOfficial: CharacterCard = {
       id: "1mi-1",
       type: "triggered",
       name: "TAXES SHOULD HURT",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

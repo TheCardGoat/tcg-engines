@@ -26,7 +26,6 @@ export const helgaSinclairToughAsNails: CharacterCard = {
       type: "keyword",
       keyword: "Challenger",
       value: 3,
-      condition: ".",
       text: "Challenger +3.",
     },
     {

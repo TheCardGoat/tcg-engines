@@ -40,3 +40,4 @@ apps/card-database/project.inlang/cache/plugins/ygx0uiahq6uw
 .gitignore
 .gitignore
 apps/card-database/.env
+apps/operating-system/.svelte-kit/

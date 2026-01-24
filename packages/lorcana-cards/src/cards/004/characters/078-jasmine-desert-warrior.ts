@@ -25,6 +25,7 @@ export const jasmineDesertWarrior: CharacterCard = {
       id: "160-1",
       type: "triggered",
       name: "CUNNING MANEUVER When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "discard",
         amount: 1,

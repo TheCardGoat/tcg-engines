@@ -19,6 +19,7 @@ export const spaghettiDinner: ItemCard = {
     {
       id: "1bi-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "conditional",
         condition: {

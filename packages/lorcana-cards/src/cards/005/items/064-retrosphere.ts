@@ -19,6 +19,7 @@ export const retrosphere: ItemCard = {
     {
       id: "u85-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "return-to-hand",
         target: {

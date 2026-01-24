@@ -129,6 +129,20 @@ export interface RevealedMatchesNamedCondition {
 }
 
 /**
+ * Check if revealed card matches a chosen name
+ */
+export interface RevealedMatchesChosenNameCondition {
+  type: "revealed-matches-chosen-name";
+}
+
+/**
+ * "If you do" condition - effect was successfully resolved
+ */
+export interface IfYouDoCondition {
+  type: "if-you-do";
+}
+
+/**
  * Check if a specific count of locations exists
  */
 export interface HasLocationCountCondition {
@@ -571,6 +585,9 @@ export type Condition =
   | ZoneCondition
   | HasCharacterHereCondition
   | RevealedMatchesNamedCondition
+  | RevealedMatchesChosenNameCondition
+  // Effect resolution
+  | IfYouDoCondition
   // Combat Context
   | InChallengeCondition
   // Choice

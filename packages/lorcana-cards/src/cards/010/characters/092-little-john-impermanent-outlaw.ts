@@ -32,6 +32,7 @@ export const littleJohnImpermanentOutlaw: CharacterCard = {
       id: "196-2",
       type: "triggered",
       name: "READY TO RASSLE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "ready",
         target: "CHOSEN_CHARACTER",

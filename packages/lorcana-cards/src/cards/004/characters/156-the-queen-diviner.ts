@@ -24,6 +24,7 @@ export const theQueenDiviner: CharacterCard = {
     {
       id: "aeu-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "conditional",
         condition: {

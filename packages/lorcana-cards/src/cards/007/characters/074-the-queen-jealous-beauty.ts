@@ -24,6 +24,7 @@ export const theQueenJealousBeauty: CharacterCard = {
     {
       id: "ce7-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "conditional",
         condition: {

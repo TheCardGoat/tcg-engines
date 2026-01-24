@@ -19,6 +19,7 @@ export const theLamp: ItemCard = {
     {
       id: "1ik-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "conditional",
         condition: {

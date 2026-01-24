@@ -34,6 +34,7 @@ export const wreckitRalphBigLug: CharacterCard = {
       id: "1ic-2",
       type: "triggered",
       name: "BACK ON TRACK When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "sequence",
         steps: [

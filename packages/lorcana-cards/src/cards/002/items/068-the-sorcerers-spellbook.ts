@@ -19,6 +19,7 @@ export const theSorcerersSpellbook: ItemCard = {
     {
       id: "1pk-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-lore",
         amount: 1,

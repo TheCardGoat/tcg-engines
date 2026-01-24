@@ -23,7 +23,7 @@ export const ursulasPlan: ActionCard = {
         type: "restriction",
         restriction: "cant-ready",
         target: "SELF",
-        duration: "their-next-turn",
+        duration: "until-start-of-next-turn",
       },
       text: "Each opponent chooses and exerts one of their characters. Those characters can't ready at the start of their next turn.",
     },

@@ -20,6 +20,7 @@ export const emeraldCoil: ItemCard = {
       id: "1xj-1",
       type: "triggered",
       name: "SHIMMERING WINGS",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-keyword",
         keyword: "Evasive",

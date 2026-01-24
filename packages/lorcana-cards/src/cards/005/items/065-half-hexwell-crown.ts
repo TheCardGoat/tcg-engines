@@ -20,6 +20,9 @@ export const halfHexwellCrown: ItemCard = {
     {
       id: "1fp-1",
       type: "activated",
+      cost: {
+        exert: true,
+      },
       effect: {
         type: "draw",
         amount: 1,

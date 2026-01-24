@@ -20,6 +20,7 @@ export const mauricesWorkshop: ItemCard = {
       id: "18c-1",
       type: "triggered",
       name: "LOOKING FOR THIS?",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

@@ -34,6 +34,7 @@ export const taffytaMuttonfudgeSourSpeedster: CharacterCard = {
       id: "1a5-2",
       type: "triggered",
       name: "NEW ROSTER",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-lore",
         amount: 2,

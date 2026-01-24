@@ -19,6 +19,7 @@ export const merlinsCarpetbag: ItemCard = {
     {
       id: "1ya-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "return-from-discard",
         target: "CONTROLLER",

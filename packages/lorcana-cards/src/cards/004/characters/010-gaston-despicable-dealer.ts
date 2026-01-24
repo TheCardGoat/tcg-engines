@@ -24,6 +24,7 @@ export const gastonDespicableDealer: CharacterCard = {
     {
       id: "9k7-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "play-card",
         from: "hand",

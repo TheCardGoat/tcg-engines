@@ -19,6 +19,7 @@ export const televisionSet: ItemCard = {
     {
       id: "pbp-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "conditional",
         condition: {

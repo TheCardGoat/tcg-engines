@@ -39,6 +39,7 @@ export const minnieMouseWideeyedDiver: CharacterCard = {
       id: "974-3",
       type: "triggered",
       name: "UNDERSEA ADVENTURE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "modify-stat",
         stat: "lore",

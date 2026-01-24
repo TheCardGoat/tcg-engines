@@ -19,6 +19,7 @@ export const miracleCandle: ItemCard = {
     {
       id: "1cb-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "conditional",
         condition: {

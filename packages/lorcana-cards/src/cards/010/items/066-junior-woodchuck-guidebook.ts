@@ -18,6 +18,9 @@ export const juniorWoodchuckGuidebook: ItemCard = {
     {
       id: "ebe-1",
       type: "activated",
+      cost: {
+        exert: true,
+      },
       effect: {
         type: "draw",
         amount: 2,

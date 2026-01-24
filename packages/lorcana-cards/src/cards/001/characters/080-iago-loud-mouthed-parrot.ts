@@ -24,16 +24,13 @@ export const iagoLoudmouthedParrot: CharacterCard = {
     {
       id: "j24-1",
       type: "activated",
+      name: "YOU GOT A PROBLEM?",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Reckless",
-        target: {
-          selector: "chosen",
-          count: 1,
-          owner: "any",
-          zones: ["play"],
-          cardTypes: ["character"],
-        },
+        target: "CHOSEN_CHARACTER",
+        duration: "until-start-of-next-turn",
       },
       text: "YOU GOT A PROBLEM? {E} — Chosen character gains Reckless during their next turn.",
     },

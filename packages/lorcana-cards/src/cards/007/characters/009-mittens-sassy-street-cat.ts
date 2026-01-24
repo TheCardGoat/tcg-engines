@@ -31,6 +31,7 @@ export const mittensSassyStreetCat: CharacterCard = {
       id: "et6-2",
       type: "triggered",
       name: "NO THANKS NECESSARY Once",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "modify-stat",
         stat: "lore",

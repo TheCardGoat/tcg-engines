@@ -25,6 +25,7 @@ export const flowerShySkunk: CharacterCard = {
       id: "ry8-1",
       type: "triggered",
       name: "LOOKING FOR FRIENDS",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "put-on-bottom",
         target: "CHOSEN_CHARACTER",

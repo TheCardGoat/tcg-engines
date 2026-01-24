@@ -25,6 +25,7 @@ export const almaMadrigalAcceptingGrandmother: CharacterCard = {
       id: "1sw-1",
       type: "triggered",
       name: "THE MIRACLE IS YOU Once",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

@@ -19,6 +19,7 @@ export const potionOfMight: ItemCard = {
     {
       id: "6dr-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "conditional",
         condition: {

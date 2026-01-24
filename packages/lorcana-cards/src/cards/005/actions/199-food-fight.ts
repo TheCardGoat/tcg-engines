@@ -18,6 +18,7 @@ export const foodFight: ActionCard = {
     {
       id: "1ww-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "deal-damage",
         amount: 1,

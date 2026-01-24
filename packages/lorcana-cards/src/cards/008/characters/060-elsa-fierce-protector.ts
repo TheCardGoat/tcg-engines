@@ -24,6 +24,7 @@ export const elsaFierceProtector: CharacterCard = {
     {
       id: "x49-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "discard",
         amount: 1,

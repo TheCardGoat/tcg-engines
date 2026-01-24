@@ -19,6 +19,7 @@ export const whiteRabbitsPocketWatch: ItemCard = {
     {
       id: "ecf-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Rush",

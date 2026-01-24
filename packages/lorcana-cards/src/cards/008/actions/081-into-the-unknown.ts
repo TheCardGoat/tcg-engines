@@ -25,11 +25,6 @@ export const intoTheUnknown: ActionCard = {
         source: "chosen-character",
         target: "CARD_OWNER",
         exerted: true,
-        targetFilters: [
-          {
-            type: "is-exerted",
-          },
-        ],
       },
     },
   ],

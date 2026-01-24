@@ -25,6 +25,7 @@ export const baymaxArmoredCompanion: CharacterCard = {
       id: "12n-1",
       type: "triggered",
       name: "THE TREATMENT IS WORKING When you play this character and",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

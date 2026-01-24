@@ -25,6 +25,7 @@ export const royalGuardOctopusSoldier: CharacterCard = {
       id: "9mz-1",
       type: "triggered",
       name: "HEAVILY ARMED",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "gain-keyword",
         keyword: "Challenger",

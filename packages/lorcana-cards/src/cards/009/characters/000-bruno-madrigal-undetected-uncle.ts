@@ -30,6 +30,7 @@ export const brunoMadrigalUndetectedUncle: CharacterCard = {
     {
       id: "13f-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "conditional",
         condition: {

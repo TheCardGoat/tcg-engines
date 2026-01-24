@@ -24,6 +24,7 @@ export const oswaldTheLuckyRabbit: CharacterCard = {
       id: "tu2-1",
       type: "triggered",
       name: "FAVORABLE CHANCE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "conditional",
         condition: {

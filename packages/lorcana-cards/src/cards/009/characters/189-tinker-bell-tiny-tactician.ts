@@ -24,6 +24,7 @@ export const tinkerBellTinyTactician: CharacterCard = {
     {
       id: "n9y-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "sequence",
         steps: [

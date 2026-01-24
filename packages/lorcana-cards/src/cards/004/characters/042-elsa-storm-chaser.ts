@@ -24,6 +24,7 @@ export const elsaStormChaser: CharacterCard = {
     {
       id: "ih5-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Challenger",

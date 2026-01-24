@@ -32,6 +32,7 @@ export const scarEerilyPrepared: CharacterCard = {
       id: "1rg-2",
       type: "triggered",
       name: "SURVIVAL OF THE FITTEST",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "modify-stat",
         stat: "strength",

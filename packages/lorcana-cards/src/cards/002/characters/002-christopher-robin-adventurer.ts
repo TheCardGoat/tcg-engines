@@ -25,6 +25,7 @@ export const christopherRobinAdventurer: CharacterCard = {
       id: "2pm-1",
       type: "triggered",
       name: "WE'LL ALWAYS BE TOGETHER",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "conditional",
         condition: {

@@ -31,6 +31,7 @@ export const mauiSoaringDemigod: CharacterCard = {
       id: "q08-2",
       type: "triggered",
       name: "IN MA BELLY",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "modify-stat",
         stat: "lore",

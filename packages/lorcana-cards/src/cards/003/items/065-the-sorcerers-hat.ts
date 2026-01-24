@@ -19,6 +19,7 @@ export const theSorcerersHat: ItemCard = {
     {
       id: "1tg-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "reveal-top-card",
         target: "CONTROLLER",

@@ -25,6 +25,7 @@ export const kingLouieJungleVip: CharacterCard = {
       id: "3ec-1",
       type: "triggered",
       name: "LAY IT ON THE LINE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "optional",
         effect: {

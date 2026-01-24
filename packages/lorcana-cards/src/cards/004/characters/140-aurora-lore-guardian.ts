@@ -34,6 +34,9 @@ export const auroraLoreGuardian: CharacterCard = {
     {
       id: "124-3",
       type: "activated",
+      cost: {
+        exert: true,
+      },
       effect: {
         type: "put-on-bottom",
         target: "CHOSEN_CHARACTER",

@@ -19,6 +19,7 @@ export const plateArmor: ItemCard = {
     {
       id: "14f-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Resist",

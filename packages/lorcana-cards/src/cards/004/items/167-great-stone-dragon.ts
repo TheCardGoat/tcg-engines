@@ -30,6 +30,7 @@ export const greatStoneDragon: ItemCard = {
     {
       id: "19h-2",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "put-into-inkwell",
         source: "discard",

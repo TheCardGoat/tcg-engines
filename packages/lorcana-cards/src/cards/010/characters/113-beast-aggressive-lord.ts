@@ -32,6 +32,7 @@ export const beastAggressiveLord: CharacterCard = {
       id: "6u1-2",
       type: "triggered",
       name: "THAT'S MINE",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "conditional",
         condition: {

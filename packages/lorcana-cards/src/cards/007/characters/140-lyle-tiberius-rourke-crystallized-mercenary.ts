@@ -25,6 +25,7 @@ export const lyleTiberiusRourkeCrystallizedMercenary: CharacterCard = {
       id: "1ug-1",
       type: "triggered",
       name: "EXPLOSIVE Once",
+      trigger: { event: "play", timing: "when", on: "SELF" },
       effect: {
         type: "deal-damage",
         amount: 2,

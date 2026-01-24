@@ -23,7 +23,7 @@ export const imStuck: ActionCard = {
         type: "restriction",
         restriction: "cant-ready",
         target: "SELF",
-        duration: "their-next-turn",
+        duration: "until-start-of-next-turn",
       },
       text: "Chosen exerted character can't ready at the start of their next turn.",
     },

@@ -19,6 +19,7 @@ export const mouseArmor: ItemCard = {
     {
       id: "1as-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Resist",

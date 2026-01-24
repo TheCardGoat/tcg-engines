@@ -19,6 +19,7 @@ export const detectivesBadge: ItemCard = {
     {
       id: "rkh-1",
       type: "activated",
+      cost: { exert: true },
       effect: {
         type: "gain-keyword",
         keyword: "Resist",
