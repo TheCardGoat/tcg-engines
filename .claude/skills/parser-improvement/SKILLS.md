@@ -7,7 +7,7 @@ description: Incrementally improve the Lorcana card text parser through pattern 
 
 ## Overview
 
-This skill set enables a virtuous loop for incrementally improving the card text parser in `packages/lorcana-cards/src/parser/`. The workflow coordinates:
+This skill set enables a virtuous loop for incrementally improving the card text parser in `packages/lorcana-cards/src/parser/` while also updating the type definitions in `packages/lorcana-types`. The workflow coordinates:
 
 1. **Discovery** - Find unimplemented cards (prioritize latest sets)
 2. **Pattern Development** - Analyze text, design patterns, implement, test (TDD)
