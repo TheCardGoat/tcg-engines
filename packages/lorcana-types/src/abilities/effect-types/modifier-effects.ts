@@ -107,7 +107,8 @@ export interface RestrictionEffect {
     | "cant-sing"
     | "cant-move"
     | "enters-play-exerted"
-    | "skip-draw-step";
+    | "skip-draw-step"
+    | "must-quest"; // Forces character to quest if able
   target: CharacterTarget | PlayerTarget;
   duration?: EffectDuration;
 }

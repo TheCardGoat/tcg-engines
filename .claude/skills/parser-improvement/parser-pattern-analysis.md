@@ -7,7 +7,7 @@ description: Design regex patterns for Lorcana card text parsing. Analyzes text 
 
 ## Purpose
 
-Design optimal regex patterns for parsing Lorcana card text. This skill covers pattern structure, capture group design, and pattern ordering strategies.
+Design optimal regex patterns for parsing Lorcana card text. This skill covers pattern structure, capture group design, and pattern ordering strategies. Update the type definitions in `packages/lorcana-types` if needed.
 
 ## Pattern Design Workflow
 

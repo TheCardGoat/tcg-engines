@@ -7,7 +7,7 @@ description: Compare abilities before and after parser updates. Identifies added
 
 ## Purpose
 
-Compare card abilities before and after parser regeneration to verify changes are correct and identify any regressions.
+Compare card abilities before and after parser regeneration to verify changes are correct and identify any regressions. Suggesting improvements to the parser or the type definitions if needed.
 
 ## Comparison Structure
 
