@@ -30,7 +30,7 @@ export type ActionSubtype = "song" | null;
  */
 export interface BaseAbilityDefinition {
   /** Unique identifier for this ability instance */
-  id: string;
+  id?: string;
 
   /**
    * Optional name for named abilities (e.g., "I SUMMON THEE", "DISASSEMBLE")
@@ -42,7 +42,7 @@ export interface BaseAbilityDefinition {
    * Original card text for this ability
    * Used for display and debugging
    */
-  text: string;
+  text?: string;
 }
 
 /**

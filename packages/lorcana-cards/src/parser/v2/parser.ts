@@ -15,6 +15,47 @@ import type { AbilityWithText, ParseResult } from "./types";
 interface ParseOptions {
   cardName?: string;
   strict?: boolean;
+  generateAbilityUids?: boolean;
+  generateEffectUids?: boolean;
+  /** Card ID prefix for generating ability IDs (e.g., "17t" for "17t-1", "17t-2") */
+  cardId?: string;
+}
+
+/**
+ * Generate an ability ID from card ID and index
+ * @param cardId - Card ID prefix (e.g., "17t")
+ * @param index - 1-based ability index
+ * @returns Ability ID (e.g., "17t-1")
+ */
+function generateAbilityId(cardId: string, index: number): string {
+  return `${cardId}-${index}`;
+}
+
+/**
+ * Add ID to ability if generation is enabled
+ * @param ability - Ability to add ID to
+ * @param options - Parse options
+ * @param index - 1-based ability index (for multi-ability parsing)
+ * @param override - If true, override existing ID (default: false)
+ * @returns Ability with ID if enabled, otherwise original ability
+ */
+function addAbilityIdIfEnabled(
+  ability: AbilityWithText,
+  options: ParseOptions | undefined,
+  index = 1,
+  override = false,
+): AbilityWithText {
+  if (
+    options?.generateAbilityUids &&
+    options?.cardId &&
+    (override || !ability.id)
+  ) {
+    return {
+      ...ability,
+      id: generateAbilityId(options.cardId, index),
+    };
+  }
+  return ability;
 }
 
 /**
@@ -48,13 +89,16 @@ export function parseAbilityText(
     // entry can be AbilityWithText or AbilityWithText[]
     const singleEntry = Array.isArray(entry) ? entry[0] : entry;
     // Ensure we return the entry as AbilityWithText structure
+    const entryName = (singleEntry as { name?: string }).name;
+    const entryText = (singleEntry as { text?: string }).text || text;
+    const ability: AbilityWithText = {
+      ability: (singleEntry as { ability: unknown }).ability,
+      ...(entryName && entryName.trim() && { name: entryName }),
+      ...(entryText && entryText.trim() && { text: entryText }),
+    } as AbilityWithText;
     return {
       success: true,
-      ability: {
-        name: (singleEntry as { name?: string }).name,
-        ability: (singleEntry as { ability: unknown }).ability,
-        text: (singleEntry as { text?: string }).text || text,
-      } as AbilityWithText,
+      ability: addAbilityIdIfEnabled(ability, options, 1),
       warnings: [],
     };
   }
@@ -66,7 +110,7 @@ export function parseAbilityText(
     if (manualEntries && manualEntries.length > 0) {
       return {
         success: true,
-        ability: manualEntries[0],
+        ability: addAbilityIdIfEnabled(manualEntries[0], options, 1),
         warnings: [],
       };
     }
@@ -76,18 +120,19 @@ export function parseAbilityText(
   if (ability) {
     // Extract name from ability if present (for named abilities)
     const name = (ability as { name?: string }).name;
+    const abilityWithText: AbilityWithText = {
+      ability: ability as AbilityWithText["ability"],
+      // TODO: Type assertion needed because @tcg/lorcana-engine and @tcg/lorcana-types
+      // have incompatible Ability, Trigger, and Target types. This is a broader
+      // architectural issue that needs to be resolved by re-exporting all ability
+      // types from lorcana-types in the engine, similar to what was done for Condition.
+      // See: packages/lorcana-engine/src/cards/abilities/types/condition-types.ts
+      ...(name && name.trim() && { name }),
+      ...(text && text.trim() && { text }),
+    };
     return {
       success: true,
-      ability: {
-        name,
-        // TODO: Type assertion needed because @tcg/lorcana-engine and @tcg/lorcana-types
-        // have incompatible Ability, Trigger, and Target types. This is a broader
-        // architectural issue that needs to be resolved by re-exporting all ability
-        // types from lorcana-types in the engine, similar to what was done for Condition.
-        // See: packages/lorcana-engine/src/cards/abilities/types/condition-types.ts
-        ability: ability as AbilityWithText["ability"],
-        text, // Include original text
-      },
+      ability: addAbilityIdIfEnabled(abilityWithText, options, 1),
       warnings: [],
     };
   }
@@ -161,9 +206,13 @@ export function parseAbilityTextMulti(
   if (options?.cardName && MANUAL_ENTRIES_BY_NAME[options.cardName]) {
     const entry = MANUAL_ENTRIES_BY_NAME[options.cardName];
     const entries = Array.isArray(entry) ? entry : [entry];
+    // Add IDs if generation is enabled
+    const abilitiesWithIds = entries.map((ability, index) =>
+      addAbilityIdIfEnabled(ability as AbilityWithText, options, index + 1),
+    );
     return {
       success: true,
-      abilities: entries as AbilityWithText[],
+      abilities: abilitiesWithIds,
     };
   }
 
@@ -172,9 +221,13 @@ export function parseAbilityTextMulti(
   if (tooComplexText(normalizedText)) {
     const manualEntries = getManualEntries(normalizedText, options?.cardName);
     if (manualEntries && manualEntries.length > 0) {
+      // Add IDs if generation is enabled
+      const abilitiesWithIds = manualEntries.map((ability, index) =>
+        addAbilityIdIfEnabled(ability, options, index + 1),
+      );
       return {
         success: true,
-        abilities: manualEntries,
+        abilities: abilitiesWithIds,
       };
     }
     return {
@@ -195,6 +248,7 @@ export function parseAbilityTextMulti(
     const singleResult = parseAbilityText(text.trim(), options);
 
     if (singleResult.success && singleResult.ability) {
+      // ID is already added in parseAbilityText with index 1
       return {
         success: true,
         abilities: [singleResult.ability],
@@ -214,11 +268,22 @@ export function parseAbilityTextMulti(
   const abilities: AbilityWithText[] = [];
   const warnings: string[] = [];
 
-  for (const abilityText of abilityTexts) {
+  for (let i = 0; i < abilityTexts.length; i++) {
+    const abilityText = abilityTexts[i];
+    // Create options with ability index for ID generation
+    const abilityIndex = i + 1;
     const result = parseAbilityText(abilityText, options);
 
     if (result.success && result.ability) {
-      abilities.push(result.ability);
+      // Add ID if generation is enabled (parseAbilityText already adds it with index 1,
+      // but we need to override with the correct index for multi-ability parsing)
+      const abilityWithId = addAbilityIdIfEnabled(
+        result.ability,
+        options,
+        abilityIndex,
+        true, // Override existing ID from parseAbilityText
+      );
+      abilities.push(abilityWithId);
     } else {
       warnings.push(`Failed to parse: "${abilityText}"`);
     }

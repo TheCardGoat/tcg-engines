@@ -1138,7 +1138,7 @@ describe("Set 004 Card Text Parser Tests", () => {
         type: "triggered",
         name: "SAD-EYED PUPPY",
         trigger: expect.objectContaining({
-          event: "challenged-and-banished",
+          event: "banish-in-challenge",
           on: "SELF",
         }),
         effect: expect.objectContaining({

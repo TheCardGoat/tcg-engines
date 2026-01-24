@@ -1261,7 +1261,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
         name: "READY OR NOT!",
         trigger: expect.objectContaining({
           timing: "when",
-          events: ["play", "leaves-play"],
+          events: ["play", "leave-play"],
           on: "SELF",
         }),
         effect: expect.objectContaining({
@@ -1289,7 +1289,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
         name: "HERE I COME!",
         trigger: expect.objectContaining({
           timing: "when",
-          events: ["play", "leaves-play"],
+          events: ["play", "leave-play"],
           on: "SELF",
         }),
         effect: expect.objectContaining({
@@ -1314,7 +1314,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
         name: "HOPPITY HIP!",
         trigger: expect.objectContaining({
           timing: "when",
-          events: ["play", "leaves-play"],
+          events: ["play", "leave-play"],
           on: "SELF",
         }),
         effect: expect.objectContaining({
@@ -1374,7 +1374,7 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
         name: "LOOK BEFORE YOU LEAP",
         trigger: expect.objectContaining({
           timing: "when",
-          events: ["play", "leaves-play"],
+          events: ["play", "leave-play"],
           on: "SELF",
         }),
         effect: expect.objectContaining({
@@ -3888,18 +3888,17 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
     expect(result.abilities[0].name).toBe("SHIELD ANOTHER");
     expect(result.abilities[0].ability).toEqual(
       expect.objectContaining({
-        type: "triggered",
+        type: "replacement",
         name: "SHIELD ANOTHER",
-        trigger: expect.objectContaining({
-          timing: "whenever",
-          event: "would-be-dealt-damage",
-          on: expect.objectContaining({
+        replaces: "damage-to-character",
+        condition: expect.objectContaining({
+          target: expect.objectContaining({
             controller: "you",
             cardType: "character",
             excludeSelf: true,
           }),
         }),
-        effect: expect.objectContaining({
+        replacement: expect.objectContaining({
           type: "redirect-damage",
           target: "SELF",
           amount: "ALL",
