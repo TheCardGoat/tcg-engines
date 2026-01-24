@@ -19,6 +19,7 @@ import type {
   Player,
 } from "@tcg/core";
 import { createPlayerId, createZoneId } from "@tcg/core";
+import { playCard } from "./game-definition/moves/core/play-card";
 import {
   attackMove,
   deployBaseMove,
@@ -142,6 +143,7 @@ const moves: GameMoveDefinitions<GundamGameState, GundamMoves> = {
   playResource: playResourceMove,
   attack: attackMove,
   pass: passMove,
+  playCard: playCard,
 
   concede: {
     reducer: (draft, context) => {
