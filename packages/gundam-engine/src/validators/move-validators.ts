@@ -10,15 +10,6 @@
  * Design principles:
  * - Small, focused validators
  * - Composable via &&, ||, !
- * - Testable in isolation
- * - Type-safe with proper context
- */
- * Each validator is a pure predicate that can be composed with others.
- *
- * Design principles:
- * - Small, focused validators
- * - Composable via &&, ||, !
- * - Testable in isolation
  * - Type-safe with proper context
  */
 
@@ -74,7 +65,7 @@ export const isPhase =
  *
  * Most Gundam actions require main phase.
  */
- */
+
 export const isMainPhase = <TParams = unknown>(): Validator<TParams> =>
   isPhase<TParams>("main");
 
