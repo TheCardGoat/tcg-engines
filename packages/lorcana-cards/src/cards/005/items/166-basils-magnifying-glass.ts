@@ -27,15 +27,8 @@ export const basilsMagnifyingGlass: ItemCard = {
       effect: {
         type: "look-at-cards",
         amount: 0,
-        from: "top-of-deck",
+        source: "deck",
         target: "CONTROLLER",
-        then: {
-          action: "put-in-hand",
-          filter: {
-            type: "card-type",
-            cardType: "item",
-          },
-        },
       },
     },
   ],

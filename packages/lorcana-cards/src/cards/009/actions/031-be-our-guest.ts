@@ -24,16 +24,8 @@ export const beOurGuest: ActionCard = {
       effect: {
         type: "look-at-cards",
         amount: 4,
-        from: "top-of-deck",
+        source: "deck",
         target: "CONTROLLER",
-        then: {
-          action: "put-in-hand",
-          filter: {
-            type: "card-type",
-            cardType: "character",
-          },
-          reveal: true,
-        },
       },
     },
   ],

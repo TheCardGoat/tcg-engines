@@ -49,7 +49,8 @@ export const shenziHeadHyena: CharacterCard = {
           classification: "Hyena",
         },
         challengeContext: {
-          defenderState: "damaged",
+          role: "attacker",
+          filters: [{ type: "damaged" }],
         },
       },
       effect: {

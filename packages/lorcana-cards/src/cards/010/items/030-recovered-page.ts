@@ -28,15 +28,8 @@ export const recoveredPage: ItemCard = {
       effect: {
         type: "look-at-cards",
         amount: 1,
-        from: "top-of-deck",
+        source: "deck",
         target: "CONTROLLER",
-        then: {
-          action: "put-in-hand",
-          filter: {
-            type: "card-type",
-            cardType: "character",
-          },
-        },
       },
     },
     {
@@ -53,12 +46,10 @@ export const recoveredPage: ItemCard = {
         source: "top-of-deck",
         under: {
           selector: "chosen",
-          controller: "you",
-          filters: [
-            {
-              type: "has-keyword",
-              keyword: "Boost",
-            },
+          count: 1,
+          filter: [
+            { type: "owner", owner: "you" },
+            { type: "has-keyword", keyword: "Boost" },
           ],
         },
       },

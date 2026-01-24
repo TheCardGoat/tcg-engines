@@ -27,7 +27,8 @@ export const weKnowTheWay: ActionCard = {
             type: "shuffle-into-deck",
             target: {
               selector: "chosen",
-              zone: "discard",
+              count: 1,
+              filter: [{ type: "zone", zone: "discard" }],
             },
           },
           {
@@ -43,13 +44,14 @@ export const weKnowTheWay: ActionCard = {
               type: "optional",
               effect: {
                 type: "play-card",
-                from: "revealed",
+                from: "deck",
                 cost: "free",
               },
             },
             else: {
               type: "put-in-hand",
-              from: "revealed",
+              target: "CONTROLLER",
+              source: "deck",
             },
           },
         ],

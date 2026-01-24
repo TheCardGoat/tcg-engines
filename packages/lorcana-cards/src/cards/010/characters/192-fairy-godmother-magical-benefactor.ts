@@ -44,7 +44,8 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
               type: "banish",
               target: {
                 selector: "chosen",
-                controller: "opponent",
+                count: 1,
+                filter: [{ type: "owner", owner: "opponent" }],
               },
             },
             {
@@ -55,7 +56,7 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
               then: {
                 type: "look-at-cards",
                 amount: 1,
-                from: "top-of-deck",
+                source: "deck",
                 target: "OPPONENT",
               },
             },
