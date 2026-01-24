@@ -97,17 +97,20 @@ cat packages/lorcana-cards/src/parser/patterns/effects.ts
 export const EFFECT_PATTERNS = {
   // Existing patterns...
 
-  // New pattern
+  // New pattern with capture groups for 'each' and optional amount
   opponentChoiceDiscard: {
     name: "opponent-choice-discard",
-    pattern: /(?:have )?(?:each )?opponent(?:s)? choose (?:and )?discard (?:a )?cards?/i,
+    // Capture groups: (1) "each " if present, (2) numeric amount if present
+    pattern: /(?:have )?(each )?opponent(?:s)? choose(?:s)? (?:and )?discard(?:s)? (?:(\d+) |a )?cards?/i,
     type: "opponent-choice-discard",
     extractor: (match: RegExpMatchArray): ParsedEffect => ({
       type: "opponent-choice-discard",
       parameters: {
-        target: "each-opponent",
+        // Derive target from capture group 1: "each " present -> "each-opponent"
+        target: match[1] ? "each-opponent" : "opponent",
         effect: "discard",
-        amount: 1
+        // Derive amount from capture group 2, default to 1
+        amount: match[2] ? parseInt(match[2], 10) : 1
       }
     })
   }
@@ -119,7 +122,8 @@ export const EFFECT_PATTERNS = {
 If new effect type, add to types:
 
 ```typescript
-// In packages/lorcana-types/src/effect-types.ts or relevant type file
+// In packages/lorcana-types/src/abilities/effect-types/ directory
+// Create new file or add to existing effect type file
 export interface OpponentChoiceDiscardEffect {
   type: "opponent-choice-discard";
   parameters: {
@@ -374,10 +378,10 @@ Report pattern creation result:
   success: true,
   patternName: "opponent-choice-discard",
   patternFile: "packages/lorcana-cards/src/parser/patterns/effects.ts",
-  typeFile: "packages/lorcana-types/src/effect-types.ts",
+  typeFile: "packages/lorcana-types/src/abilities/effect-types/",
   changes: [
     { file: "effects.ts", action: "added-pattern" },
-    { file: "effect-types.ts", action: "added-type" }
+    { file: "effect-types/index.ts", action: "added-type" }
   ],
   nextStep: "run-tests"
 }
@@ -398,8 +402,12 @@ Report pattern creation result:
 
 ### Type Files
 
-- `packages/lorcana-types/src/effect-types.ts`
-- `packages/lorcana-types/src/ability-types.ts`
+- `packages/lorcana-types/src/abilities/ability-types.ts`
+- `packages/lorcana-types/src/abilities/effect-types/` (directory)
+- `packages/lorcana-types/src/abilities/effect-types/index.ts`
+- `packages/lorcana-types/src/abilities/trigger-types.ts`
+- `packages/lorcana-types/src/abilities/condition-types.ts`
+- `packages/lorcana-types/src/abilities/target-types.ts`
 
 ## Keywords
 

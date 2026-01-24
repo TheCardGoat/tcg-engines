@@ -40,16 +40,41 @@ interface AbilityDiff {
 ### Step 1: Extract Abilities
 
 ```typescript
-function extractAbilities(cardContent: string): Ability[] {
-  const match = cardContent.match(/abilities:\s*(\[[\s\S]*?\])/);
-  if (!match) return [];
+import * as ts from "typescript";
 
-  try {
-    // Note: This is simplified - actual parsing may need AST
-    return JSON.parse(match[1]);
-  } catch {
-    return [];
+// NOTE: JSON.parse won't work on TypeScript object literals (unquoted keys,
+// trailing commas, comments). Use TypeScript compiler API for reliable parsing.
+function extractAbilities(cardContent: string): Ability[] {
+  // Create a source file from the card content
+  const sourceFile = ts.createSourceFile(
+    "card.ts",
+    cardContent,
+    ts.ScriptTarget.Latest,
+    true
+  );
+
+  // Traverse AST to find abilities property
+  let abilities: Ability[] = [];
+
+  function visit(node: ts.Node) {
+    if (ts.isPropertyAssignment(node) &&
+        node.name.getText() === "abilities" &&
+        ts.isArrayLiteralExpression(node.initializer)) {
+      // Parse ability objects from AST
+      abilities = parseAbilitiesFromASTNode(node.initializer);
+    }
+    ts.forEachChild(node, visit);
   }
+
+  visit(sourceFile);
+  return abilities;
+}
+
+// Helper to parse ability objects from AST (implementation depends on needs)
+function parseAbilitiesFromASTNode(node: ts.ArrayLiteralExpression): Ability[] {
+  // Convert AST nodes to Ability objects
+  // This is a simplified placeholder - real implementation needs full AST traversal
+  return [];
 }
 ```
 

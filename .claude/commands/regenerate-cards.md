@@ -9,7 +9,7 @@ user_invokable: true
 ## Usage
 
 ```
-/regenerate-cards [set|card-id]
+/regenerate-cards <set|card-id|--all>
 ```
 
 ## Arguments
@@ -18,7 +18,9 @@ user_invokable: true
 |----------|-------------|----------|
 | `set` | Three-digit set number | `010`, `011` |
 | `card-id` | Full card identifier | `010-043`, `011-003-pudge` |
-| (none) | Regenerate all sets | - |
+| `--all` | Regenerate all sets (requires confirmation) | `--all` |
+
+**Note:** At least one argument is required. Use `--all` with caution.
 
 ## Examples
 
@@ -29,7 +31,7 @@ user_invokable: true
 # Regenerate specific card
 /regenerate-cards 010-043
 
-# Regenerate all cards (use with caution)
+# Regenerate all cards (requires confirmation)
 /regenerate-cards --all
 ```
 

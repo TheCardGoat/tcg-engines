@@ -37,12 +37,18 @@ interface CardState {
 }
 
 // Extract text from card file
-const textMatch = cardContent.match(/text:\s*["'`]([^"'`]+)["'`]/);
+// NOTE: Real implementation should use TypeScript AST parsing
+const textMatch = cardContent.match(/text:\s*["'`]([\s\S]*?)["'`]\s*,/);
 const cardText = textMatch?.[1];
 
 // Extract current abilities
-const abilitiesMatch = cardContent.match(/abilities:\s*(\[[\s\S]*?\])/);
-const currentAbilities = abilitiesMatch ? JSON.parse(abilitiesMatch[1]) : [];
+// NOTE: JSON.parse won't work on TS object literals (unquoted keys, trailing commas).
+// Use TypeScript compiler API to properly parse the source file:
+//   import * as ts from "typescript";
+//   const sourceFile = ts.createSourceFile("card.ts", cardContent, ts.ScriptTarget.Latest);
+//   // Then traverse AST to find abilities property
+const abilitiesMatch = cardContent.match(/abilities:\s*(\[[\s\S]*?\])\s*,/);
+const currentAbilities = parseAbilitiesFromAST(cardContent); // Use AST, not JSON.parse
 ```
 
 ### Step 3: Re-Parse Text

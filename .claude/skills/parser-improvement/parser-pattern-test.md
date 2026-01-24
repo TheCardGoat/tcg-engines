@@ -104,6 +104,8 @@ Improve pattern without breaking tests.
 
 ```typescript
 describe("pattern matching", () => {
+  // Pattern with capture groups for 'each' and optional amount:
+  // /(?:have )?(each )?opponent(?:s)? choose(?:s)? (?:and )?discard(?:s)? (?:(\d+) )?cards?/i
   const pattern = EFFECT_PATTERNS.opponentChoiceDiscard.pattern;
 
   it("should match basic text", () => {
@@ -111,9 +113,16 @@ describe("pattern matching", () => {
     expect(match).not.toBeNull();
   });
 
-  it("should capture correctly", () => {
+  it("should capture 'each' when present", () => {
+    const match = "each opponent chooses and discards a card".match(pattern);
+    expect(match).not.toBeNull();
+    expect(match?.[1]).toBe("each "); // First capture group
+  });
+
+  it("should capture numeric amount when present", () => {
     const match = "opponent chooses and discards 2 cards".match(pattern);
-    expect(match?.[1]).toBe("2"); // Capture group
+    expect(match).not.toBeNull();
+    expect(match?.[2]).toBe("2"); // Second capture group (amount)
   });
 
   it("should be case insensitive", () => {

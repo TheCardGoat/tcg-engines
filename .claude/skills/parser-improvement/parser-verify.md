@@ -105,8 +105,13 @@ function verifySemantics(text: string, ability: Ability): SemanticCheck {
 ### Trigger Verification
 
 ```typescript
+// NOTE: Trigger shape in this codebase is an object: { type: string, ... }
+// e.g., trigger: { type: "play-this-character" }
+// NOT a string like trigger: "play-this-character"
+// See packages/lorcana-types/src/abilities/trigger-types.ts for schema
+
 function verifyTrigger(text: string, ability: Ability): boolean {
-  const triggerKeywords = {
+  const triggerKeywords: Record<string, RegExp> = {
     "play-this-character": /when(?:ever)? you play this (?:character|card)/i,
     "this-quests": /when(?:ever)? this (?:character )?quests/i,
     "start-of-turn": /at the (?:start|beginning) of (?:your|each) turn/i,
@@ -118,7 +123,9 @@ function verifyTrigger(text: string, ability: Ability): boolean {
     return !Object.values(triggerKeywords).some(p => p.test(text));
   }
 
-  const expectedPattern = triggerKeywords[ability.trigger.type];
+  // Access trigger.type since trigger is an object, not a string
+  const triggerType = typeof ability.trigger === "object" ? ability.trigger.type : ability.trigger;
+  const expectedPattern = triggerKeywords[triggerType];
   return expectedPattern?.test(text) ?? false;
 }
 ```

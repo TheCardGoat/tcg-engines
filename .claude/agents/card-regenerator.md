@@ -78,10 +78,13 @@ const beforeState = cards.map(card => ({
 ```typescript
 import { parseCardText } from "../parser";
 
-// Extract card text
+// Extract card text from TypeScript source
+// NOTE: This is simplified pseudocode. Real implementation should use
+// TypeScript AST parsing to handle quotes, apostrophes, and multiline text.
 function extractCardText(cardContent: string): string {
-  const match = cardContent.match(/text:\s*["'`]([^"'`]+)["'`]/);
-  return match?.[1] ?? "";
+  // Use TypeScript compiler API or regex that handles escaped quotes
+  const match = cardContent.match(/text:\s*["'`]([\s\S]*?)["'`]\s*,/);
+  return match?.[1]?.replace(/\\'/g, "'").replace(/\\"/g, '"') ?? "";
 }
 
 // Regenerate for each card
