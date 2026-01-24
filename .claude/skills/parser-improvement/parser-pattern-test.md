@@ -11,19 +11,6 @@ Write comprehensive tests for parser patterns following TDD methodology. Ensures
 
 ## Test File Locations
 
-### V1 Pattern Tests
-
-```
-packages/lorcana-cards/src/parser/__tests__/
-├── patterns.test.ts           # General pattern tests
-├── trigger-patterns.test.ts   # Trigger-specific tests
-├── effect-parser.test.ts      # Effect parsing tests
-├── target-parser.test.ts      # Target parsing tests
-├── conditional-effects.test.ts
-├── choice-effects.test.ts
-└── ...
-```
-
 ### V2 Pattern Tests
 
 ```

@@ -79,8 +79,10 @@ Implementing patterns...
 For each pattern:
 1. Design regex pattern
 2. Add to appropriate pattern file
-3. Write tests
-4. Verify tests pass
+3. Update type definitions if needed
+4. Ensure that typecheck passes
+5. Write tests
+6. Verify tests pass
 
 Output:
 ```
@@ -95,7 +97,7 @@ Pattern: conditional-play-free
   Status: SUCCESS
 ```
 
-### 4. Regeneration Phase
+### 4. Regeneration Phase and Formatting
 
 ```
 Regenerating card files...
