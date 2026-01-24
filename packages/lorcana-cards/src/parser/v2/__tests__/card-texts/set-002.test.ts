@@ -1,4 +1,11 @@
 import { describe, expect, it } from "bun:test";
+import type {
+  ActionAbilityDefinition,
+  ActivatedAbilityDefinition,
+  KeywordAbilityDefinition,
+  StaticAbilityDefinition,
+  TriggeredAbilityDefinition,
+} from "@tcg/lorcana-types";
 import { parseAbilityTextMulti } from "../../parser";
 
 describe("Set 002 Card Text Parser Tests", () => {
