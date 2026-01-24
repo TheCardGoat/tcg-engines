@@ -1,6 +1,9 @@
 /**
- * Patterns index stub for v2 tests.
- * Re-exports from the parent parser directory.
+ * Pattern Registry
+ *
+ * Central export point for all pattern modules.
  */
 
-export * from "../../patterns";
+export * from "./costs";
+export * from "./keywords";
+export * from "./triggers";

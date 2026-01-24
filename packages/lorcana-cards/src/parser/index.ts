@@ -3,7 +3,7 @@
  *
  * Public API for parsing Lorcana card ability text into type-safe Ability objects.
  *
- * Now using v2 parser by default - see @tcg/lorcana/parser/v2 for implementation.
+ * Uses v2 parser - see ./v2/ for implementation.
  *
  * @example Basic usage
  * ```typescript
@@ -23,57 +23,56 @@
  * const results = parseAbilityTexts(texts);
  * console.log(`Parsed ${results.successful}/${results.total} abilities`);
  * ```
+ *
+ * @example Multi-ability parsing
+ * ```typescript
+ * import { parseAbilityTextMulti } from "@tcg/lorcana/parser";
+ *
+ * const result = parseAbilityTextMulti("ABILITY ONE Effect. ABILITY TWO Other.");
+ * if (result.success) {
+ *   console.log(`Found ${result.abilities.length} abilities`);
+ * }
+ * ```
  */
 
 // ============================================================================
-// V2 PARSER EXPORTS (Primary)
+// V2 Parser Exports
 // ============================================================================
 
+export type { ClassificationResult } from "./v2/classifier";
+// Classifier
+export { classifyAbility } from "./v2/classifier";
 // Main v2 parser class
 export { LorcanaParserV2, parserV2 } from "./v2/index";
-
-// Main parser functions (v2 compatibility wrappers)
+// Manual overrides
+export {
+  getManualEntry,
+  MANUAL_ENTRIES,
+  tooComplexText,
+} from "./v2/manual-overrides";
+// Numeric extractor utilities
+export {
+  extractNumericValues,
+  normalizeToPattern,
+} from "./v2/numeric-extractor";
+export type { MultiParseResult } from "./v2/parser";
+// Main parser functions
 export {
   parseAbilityText,
+  parseAbilityTextMulti,
   parseAbilityTexts,
 } from "./v2/parser";
-
-// ============================================================================
-// V1 PARSER EXPORTS (Deprecated - use v2)
-// ============================================================================
-
-export { classifyAbility } from "./classifier";
-export type { MultiParseResult } from "./parser";
-export { parseAbilityTextMulti } from "./parser";
-export { parseActivatedAbility } from "./parsers/activated-parser";
-export {
-  extractConditionText,
-  parseCondition,
-} from "./parsers/condition-parser";
-// Effect/Target/Condition parsers for advanced use
-export { parseEffect } from "./parsers/effect-parser";
-// Advanced use cases - individual parsers
-export { parseKeywordAbility } from "./parsers/keyword-parser";
-export { parseReplacementAbility } from "./parsers/replacement-parser";
-export { parseStaticAbility } from "./parsers/static-parser";
-export {
-  parseCharacterTarget,
-  parseItemTarget,
-  parseLocationTarget,
-  parsePlayerTarget,
-} from "./parsers/target-parser";
-export { parseTriggeredAbility } from "./parsers/triggered-parser";
-// Utilities
+// Preprocessor utilities
 export {
   extractNamedAbilityPrefix,
   normalizeText,
   resolveSymbols,
-} from "./preprocessor";
+} from "./v2/preprocessor";
+
 // Types
 export type {
   AbilityWithText,
   BatchParseResult,
-  ClassificationResult,
   ParseResult,
   ParserOptions,
-} from "./types";
+} from "./v2/types";

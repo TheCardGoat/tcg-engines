@@ -3,13 +3,13 @@
  * Provides a high-level API for parsing ability text into typed Ability objects.
  */
 
-import { MANUAL_ENTRIES } from "../manual-overrides";
 import { parseAtomicEffect } from "./effects/atomic";
 import { parseCompositeEffect } from "./effects/composite";
 import { LorcanaAbilityParser } from "./grammar";
 import { parseKeywordAbility } from "./keyword-ability-parser";
 import { LorcanaLexer } from "./lexer";
 import { logger } from "./logging";
+import { MANUAL_ENTRIES } from "./manual-overrides";
 import { parseTrigger } from "./trigger-parser";
 import type { Ability, Effect } from "./types";
 import { AbilityVisitor } from "./visitors";
@@ -338,6 +338,11 @@ export class LorcanaParserV2 {
 export const parserV2 = new LorcanaParserV2();
 
 export { logger } from "./logging";
-export { parseAbilityText, parseAbilityTexts } from "./parser";
+export type { MultiParseResult } from "./parser";
+export {
+  parseAbilityText,
+  parseAbilityTextMulti,
+  parseAbilityTexts,
+} from "./parser";
 // Re-export types and utilities
-export type { Ability, Effect } from "./types";
+export type { Ability, AbilityWithText, Effect, ParseResult } from "./types";
