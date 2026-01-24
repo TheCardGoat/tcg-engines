@@ -160,10 +160,10 @@ export type AbilityDefinition =
  */
 export interface BaseCardProperties {
   /** Unique identifier for the card */
-  id?: string;
+  id: string;
 
   /** Card name (Rule 6.2.4) - e.g., "Elsa" */
-  name?: string;
+  name: string;
 
   /** Card version (Rule 6.2.5) - e.g., "Ice Queen" */
   version?: string;
