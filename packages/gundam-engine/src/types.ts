@@ -105,19 +105,6 @@ export type GundamMoves = {
     cardId: CardId;
   };
 
-  /** Deploy a unit to battle area */
-  deployUnit: {
-    playerId: PlayerId;
-    cardId: CardId;
-    position?: number;
-  };
-
-  /** Deploy a base to base section */
-  deployBase: {
-    playerId: PlayerId;
-    cardId: CardId;
-  };
-
   /** Place a resource */
   playResource: {
     playerId: PlayerId;

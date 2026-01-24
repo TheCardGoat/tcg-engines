@@ -50,8 +50,6 @@
  */
 
 export { attackMove } from "./attack";
-export { deployBaseMove } from "./deploy-base";
-export { deployUnitMove } from "./deploy-unit";
 export { drawMove } from "./draw";
 export { passMove } from "./pass";
 export { playResourceMove } from "./play-resource";

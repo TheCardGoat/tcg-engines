@@ -20,14 +20,7 @@ import type {
 } from "@tcg/core";
 import { createPlayerId, createZoneId } from "@tcg/core";
 import { playCard } from "./game-definition/moves/core/play-card";
-import {
-  attackMove,
-  deployBaseMove,
-  deployUnitMove,
-  drawMove,
-  passMove,
-  playResourceMove,
-} from "./moves";
+import { attackMove, drawMove, passMove, playResourceMove } from "./moves";
 import type { GundamGameState, GundamMoves } from "./types";
 import {
   createBaseSectionZone,
@@ -138,8 +131,6 @@ function endIf(state: GundamGameState): GameEndResult | undefined {
  */
 const moves: GameMoveDefinitions<GundamGameState, GundamMoves> = {
   draw: drawMove,
-  deployUnit: deployUnitMove,
-  deployBase: deployBaseMove,
   playResource: playResourceMove,
   attack: attackMove,
   pass: passMove,
